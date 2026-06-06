@@ -44,6 +44,7 @@ class GiteeAILLM {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.constructor.name}]\x1b[0m ${text}`, ...args);
   }
 
@@ -234,6 +235,7 @@ async function giteeAiModels() {
       return validModels;
     })
     .catch((e) => {
+      // eslint-disable-next-line no-console
       console.error(e);
       return {};
     });

@@ -16,6 +16,7 @@ const AgentPlugins = {
         return true;
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -34,6 +35,7 @@ const AgentPlugins = {
         return true;
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -48,6 +50,7 @@ const AgentPlugins = {
         return true;
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });

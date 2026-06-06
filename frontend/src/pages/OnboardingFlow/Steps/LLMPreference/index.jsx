@@ -397,6 +397,7 @@ export default function LLMPreference({
     try {
       await System.markOnboardingComplete();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Onboarding complete failed", error);
     } finally {
       if (hiddenSubmitButtonRef.current) {

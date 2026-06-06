@@ -48,6 +48,7 @@ const MIN_CHATS_TO_PROCESS = 5;
 
     log("Memory extraction complete.");
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     log(`errored with ${e.message}`);
   } finally {

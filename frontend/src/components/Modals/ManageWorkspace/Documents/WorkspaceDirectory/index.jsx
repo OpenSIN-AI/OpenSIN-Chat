@@ -89,6 +89,7 @@ function WorkspaceDirectory({
       await fetchKeys(true);
       setSelectedItems({});
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to remove documents:", error);
     }
 

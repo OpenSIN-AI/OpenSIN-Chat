@@ -35,6 +35,7 @@ export default function WorkspaceFileRow({
       });
       await fetchKeys(true);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to remove document:", error);
     }
     setSelectedItems({});

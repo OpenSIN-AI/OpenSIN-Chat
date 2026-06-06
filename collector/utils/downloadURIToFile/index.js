@@ -35,6 +35,7 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
     const abortController = new AbortController();
     const timeout = setTimeout(() => {
       abortController.abort();
+      // eslint-disable-next-line no-console
       console.error(
         `Timeout ${maxTimeout}ms reached while downloading file for URL:`,
         url.toString()
@@ -65,6 +66,7 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
       const contentType = parseContentType(res.headers.get("Content-Type"));
       const inferredExt = mimeToExtension(contentType);
       if (inferredExt) {
+        // eslint-disable-next-line no-console
         console.log(
           `[Collector] URL path has no recognized extension. Inferred ${inferredExt} from Content-Type: ${contentType}`
         );
@@ -76,9 +78,11 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
     const writeStream = fs.createWriteStream(localFilePath);
     await pipeline(res.body, writeStream);
 
+    // eslint-disable-next-line no-console
     console.log(`[SUCCESS]: File ${localFilePath} downloaded to hotdir.`);
     return { success: true, fileLocation: localFilePath, reason: null };
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(`Error writing to hotdir: ${error} for URL: ${url}`);
     return { success: false, reason: error.message, fileLocation: null };
   }

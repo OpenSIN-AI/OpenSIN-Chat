@@ -48,6 +48,7 @@ async function loadConfluence(
 
   const normalizedBaseUrl = resolveConfluenceBaseUrl(baseUrl, cloud);
   const { hostname } = new URL(normalizedBaseUrl);
+  // eslint-disable-next-line no-console
   console.log(`-- Working Confluence ${normalizedBaseUrl} --`);
   const loader = new ConfluencePagesLoader({
     baseUrl: normalizedBaseUrl,
@@ -120,6 +121,7 @@ async function loadConfluence(
       token_count_estimate: tokenizeString(doc.pageContent),
     };
 
+    // eslint-disable-next-line no-console
     console.log(
       `[Confluence Loader]: Saving ${doc.metadata.title} to ${outFolder}`
     );
@@ -182,6 +184,7 @@ async function fetchConfluencePage({
     };
   }
 
+  // eslint-disable-next-line no-console
   console.log(`-- Working Confluence Page ${pageUrl} --`);
   const normalizedBaseUrl = resolveConfluenceBaseUrl(baseUrl, cloud);
   const loader = new ConfluencePagesLoader({

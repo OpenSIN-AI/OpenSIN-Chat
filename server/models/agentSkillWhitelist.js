@@ -27,6 +27,7 @@ const AgentSkillWhitelist = {
       });
       return safeJsonParse(setting?.value, []);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("AgentSkillWhitelist.get error:", error.message);
       return [];
     }
@@ -61,6 +62,7 @@ const AgentSkillWhitelist = {
 
       return { success: true, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("AgentSkillWhitelist.add error:", error.message);
       return { success: false, error: error.message };
     }
@@ -88,6 +90,7 @@ const AgentSkillWhitelist = {
       });
       return { success: true, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(
         "AgentSkillWhitelist.clearSingleUserWhitelist error:",
         error.message,

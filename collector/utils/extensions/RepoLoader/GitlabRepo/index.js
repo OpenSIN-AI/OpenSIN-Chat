@@ -22,6 +22,7 @@ async function loadGitlabRepo(args, response) {
       reason: "Could not prepare Gitlab repo for loading! Check URL",
     };
 
+  // eslint-disable-next-line no-console
   console.log(
     `-- Working GitLab ${repo.author}/${repo.project}:${repo.branch} --`
   );
@@ -33,6 +34,7 @@ async function loadGitlabRepo(args, response) {
     };
   }
 
+  // eslint-disable-next-line no-console
   console.log(`[GitLab Loader]: Found ${docs.length} source files. Saving...`);
   const outFolder = slugify(
     `${repo.author}-${repo.project}-${repo.branch}-${v4().slice(0, 4)}`
@@ -94,6 +96,7 @@ async function loadGitlabRepo(args, response) {
     data.token_count_estimate = tokenizeString(pageContent);
     data.pageContent = pageContent;
 
+    // eslint-disable-next-line no-console
     console.log(
       `[GitLab Loader]: Saving ${doc.metadata.source} to ${outFolder}`
     );
@@ -138,6 +141,7 @@ async function fetchGitlabFile({
       content: null,
       reason: "Could not prepare GitLab repo for loading! Check URL or PAT.",
     };
+  // eslint-disable-next-line no-console
   console.log(
     `-- Working GitLab ${repo.author}/${repo.project}:${repo.branch} file:${sourceFilePath} --`
   );

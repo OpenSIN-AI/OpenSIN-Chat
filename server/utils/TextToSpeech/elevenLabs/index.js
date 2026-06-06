@@ -43,6 +43,7 @@ class ElevenLabsTTS {
       });
       return Buffer.from(await this.#stream2buffer(audio));
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
     return null;

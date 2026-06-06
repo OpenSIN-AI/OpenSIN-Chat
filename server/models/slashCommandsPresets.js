@@ -18,6 +18,7 @@ const SlashCommandPresets = {
       });
       return preset || null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return null;
     }
@@ -31,6 +32,7 @@ const SlashCommandPresets = {
       });
       return presets;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -61,6 +63,7 @@ const SlashCommandPresets = {
       });
       return preset;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to create preset", error.message);
       return null;
     }
@@ -80,6 +83,7 @@ const SlashCommandPresets = {
         description: preset.description,
       }));
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to get user presets", error.message);
       return [];
     }
@@ -93,6 +97,7 @@ const SlashCommandPresets = {
       });
       return preset;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to update preset", error.message);
       return null;
     }
@@ -105,6 +110,7 @@ const SlashCommandPresets = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to delete preset", error.message);
       return false;
     }
@@ -126,6 +132,7 @@ const SlashCommandPresets = {
         },
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(
         "Error migrating slash command presets to multi-user mode:",
         error,

@@ -15,6 +15,7 @@ class PaperlessNgxLoader {
       const documents = await this.fetchAllDocuments();
       return documents.map((doc) => this.createDocumentFromPage(doc));
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error:", error);
       throw error;
     }
@@ -31,6 +32,7 @@ class PaperlessNgxLoader {
       let page = 1;
 
       while (nextUrl) {
+        // eslint-disable-next-line no-console
         console.log(`Fetching documents page ${page} from Paperless-ngx`);
         try {
           const data = await fetch(nextUrl, {
@@ -55,6 +57,7 @@ class PaperlessNgxLoader {
           nextUrl = data.next || null;
           page++;
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error(
             `Error fetching page ${page} from Paperless-ngx:`,
             error
@@ -63,6 +66,7 @@ class PaperlessNgxLoader {
         }
       }
 
+      // eslint-disable-next-line no-console
       console.log(
         `Fetched ${documents.length} documents from Paperless-ngx (Pages: ${
           page - 1
@@ -112,6 +116,7 @@ class PaperlessNgxLoader {
           return await response.text();
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(
         `Failed to fetch content for document ${documentId}:`,
         error
@@ -125,6 +130,7 @@ class PaperlessNgxLoader {
       const data = await pdf(Buffer.from(buffer));
       return data.text;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to parse PDF content:", error);
       return "";
     }

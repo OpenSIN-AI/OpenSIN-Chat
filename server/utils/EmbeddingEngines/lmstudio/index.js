@@ -26,6 +26,7 @@ class LMStudioEmbedder {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -101,6 +102,7 @@ class LMStudioEmbedder {
 
     if (errors.length > 0) {
       let uniqueErrors = new Set();
+      // eslint-disable-next-line no-console
       console.error(errors);
       errors.map((error) =>
         uniqueErrors.add(`[${error.type}]: ${error.message}`),

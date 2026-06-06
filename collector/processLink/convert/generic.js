@@ -34,8 +34,10 @@ async function scrapeGenericUrl({
   saveAsDocument = true,
 }) {
   /** @type {'web' | 'file' | 'youtube'} */
+  // eslint-disable-next-line no-console
   console.log(`-- Working URL ${link} => (captureAs: ${captureAs}) --`);
   let { contentType, processVia } = await determineContentType(link);
+  // eslint-disable-next-line no-console
   console.log(`-- URL determined to be ${contentType} (${processVia}) --`);
 
   /**
@@ -58,6 +60,7 @@ async function scrapeGenericUrl({
     headers: scraperHeaders,
   });
   if (!content || !content.length) {
+    // eslint-disable-next-line no-console
     console.error(`Resulting URL content was empty at ${link}.`);
     return returnResult({
       success: false,
@@ -99,6 +102,7 @@ async function scrapeGenericUrl({
     data,
     filename: `url-${slugify(filename)}-${data.id}`,
   });
+  // eslint-disable-next-line no-console
   console.log(`[SUCCESS]: URL ${link} converted & ready for embedding.\n`);
   return { success: true, reason: null, documents: [document] };
 }
@@ -121,6 +125,7 @@ function validatedHeaders(headers = {}) {
     }
     return validHeaders;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error validating headers", error);
     return {};
   }
@@ -153,6 +158,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
       process.platform === "darwin" &&
       process.env.NODE_ENV === "development"
     ) {
+      // eslint-disable-next-line no-console
       console.log(
         "Darwin Development Mode: Disabling headless mode to prevent Chromium from crashing."
       );
@@ -211,6 +217,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
     for (const doc of docs) pageContents.push(doc.pageContent);
     return pageContents.join(" ");
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(
       "getPageContent failed to be fetched by puppeteer - falling back to fetch!",
       error
@@ -229,6 +236,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
     }).then((res) => res.text());
     return htmlToMarkdown(pageText, link);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("getPageContent failed to be fetched by any method.", error);
   }
 

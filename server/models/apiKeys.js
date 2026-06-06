@@ -23,6 +23,7 @@ const ApiKey = {
 
       return { apiKey, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO CREATE API KEY.", error.message);
       return { apiKey: null, error: error.message };
     }
@@ -33,6 +34,7 @@ const ApiKey = {
       const apiKey = await prisma.api_keys.findFirst({ where: clause });
       return apiKey;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO GET API KEY.", error.message);
       return null;
     }
@@ -43,6 +45,7 @@ const ApiKey = {
       const count = await prisma.api_keys.count({ where: clause });
       return count;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO COUNT API KEYS.", error.message);
       return 0;
     }
@@ -53,6 +56,7 @@ const ApiKey = {
       await prisma.api_keys.deleteMany({ where: clause });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO DELETE API KEY.", error.message);
       return false;
     }
@@ -66,6 +70,7 @@ const ApiKey = {
       });
       return apiKeys;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO GET API KEYS.", error.message);
       return [];
     }
@@ -90,6 +95,7 @@ const ApiKey = {
 
       return apiKeys;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO GET API KEYS WITH USER.", error.message);
       return [];
     }

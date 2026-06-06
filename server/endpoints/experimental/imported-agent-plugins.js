@@ -21,6 +21,7 @@ function importedAgentPluginEndpoints(app) {
         });
         response.status(200).json(updatedConfig);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(500).end();
       }
@@ -40,6 +41,7 @@ function importedAgentPluginEndpoints(app) {
         );
         response.status(200).json(updatedConfig);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(500).end();
       }
@@ -55,6 +57,7 @@ function importedAgentPluginEndpoints(app) {
         const result = ImportedPlugin.deletePlugin(hubId);
         response.status(200).json(result);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(500).end();
       }

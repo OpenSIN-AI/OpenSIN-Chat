@@ -12,6 +12,7 @@ async function resyncLink({ link }, response) {
     if (!success) throw new Error(`Failed to sync link content. ${reason}`);
     response.status(200).json({ success, content });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     response.status(200).json({
       success: false,
@@ -40,6 +41,7 @@ async function resyncYouTube({ link }, response) {
       throw new Error(`Failed to sync YouTube video transcript. ${reason}`);
     response.status(200).json({ success, content });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     response.status(200).json({
       success: false,
@@ -77,6 +79,7 @@ async function resyncConfluence({ chunkSource }, response) {
       throw new Error(`Failed to sync Confluence page content. ${reason}`);
     response.status(200).json({ success, content });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     response.status(200).json({
       success: false,
@@ -111,6 +114,7 @@ async function resyncGithub({ chunkSource }, response) {
       throw new Error(`Failed to sync GitHub file content. ${reason}`);
     response.status(200).json({ success, content });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     response.status(200).json({
       success: false,
@@ -139,6 +143,7 @@ async function resyncDrupalWiki({ chunkSource }, response) {
     });
 
     if (!success) {
+      // eslint-disable-next-line no-console
       console.error(`Failed to sync DrupalWiki page content. ${reason}`);
       response.status(200).json({
         success: false,
@@ -148,6 +153,7 @@ async function resyncDrupalWiki({ chunkSource }, response) {
       response.status(200).json({ success, content });
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     response.status(200).json({
       success: false,
@@ -179,6 +185,7 @@ async function resyncPaperlessNgx({ chunkSource }, response) {
     if (!content) throw new Error("Failed to fetch document content");
     response.status(200).json({ success: true, content });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     response.status(200).json({
       success: false,

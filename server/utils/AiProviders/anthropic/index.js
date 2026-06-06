@@ -50,6 +50,7 @@ class AnthropicLLM {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -93,6 +94,7 @@ class AnthropicLLM {
       const model = await anthropic.models.retrieve(modelName);
       return Number(model.max_tokens ?? 4096);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(`Error fetching model max tokens for ${modelName}:`, error);
       return 4096;
     }
@@ -217,6 +219,7 @@ class AnthropicLLM {
         },
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       return { textResponse: error, metrics: {} };
     }

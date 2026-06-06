@@ -23,6 +23,7 @@ function scheduledJobEndpoints(app) {
         const tools = await ScheduledJob.availableTools();
         return response.status(200).json({ tools });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).json({ tools: [] });
       }
@@ -53,6 +54,7 @@ function scheduledJobEndpoints(app) {
           job,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -130,6 +132,7 @@ function scheduledJobEndpoints(app) {
 
         return response.status(200).json({ jobs: jobsWithStatus });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -187,6 +190,7 @@ function scheduledJobEndpoints(app) {
         Telemetry.sendTelemetry("scheduled_job_created").catch(() => {});
         return response.status(201).json({ job, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -209,6 +213,7 @@ function scheduledJobEndpoints(app) {
         }
         return response.status(200).json({ job });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -265,6 +270,7 @@ function scheduledJobEndpoints(app) {
 
         return response.status(200).json({ job, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -282,6 +288,7 @@ function scheduledJobEndpoints(app) {
         const success = await ScheduledJob.delete(Number(request.params.id));
         return response.status(200).json({ success });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -323,6 +330,7 @@ function scheduledJobEndpoints(app) {
 
         return response.status(200).json({ job: updated });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -347,6 +355,7 @@ function scheduledJobEndpoints(app) {
           .status(200)
           .json({ success: true, skipped: !run, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -366,6 +375,7 @@ function scheduledJobEndpoints(app) {
         );
         return response.status(200).json({ runs });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }

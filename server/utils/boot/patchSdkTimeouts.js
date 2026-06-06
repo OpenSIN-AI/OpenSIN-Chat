@@ -22,6 +22,7 @@ function patchSdkTimeouts() {
   if (envDefinedTimeout) {
     const parsed = parseInt(envDefinedTimeout, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) {
+      // eslint-disable-next-line no-console
       console.warn(
         `${LOG_PREFIX} ANYTHINGLLM_FETCH_TIMEOUT="${envDefinedTimeout}" is not a valid positive integer — using default ${DEFAULT_TIMEOUT_MS}ms.`,
       );
@@ -33,6 +34,7 @@ function patchSdkTimeouts() {
   if (envDefinedMaxRetries) {
     const parsed = parseInt(envDefinedMaxRetries, 10);
     if (!Number.isFinite(parsed) || parsed < 0) {
+      // eslint-disable-next-line no-console
       console.warn(
         `${LOG_PREFIX} ANYTHINGLLM_MAX_RETRIES="${envDefinedMaxRetries}" is not a valid non-negative integer — using default ${DEFAULT_MAX_RETRIES}.`,
       );
@@ -47,10 +49,12 @@ function patchSdkTimeouts() {
     setGlobalDispatcher(
       new Agent({ headersTimeout: timeoutMs, bodyTimeout: timeoutMs }),
     );
+    // eslint-disable-next-line no-console
     console.log(
       `${LOG_PREFIX} undici global dispatcher — headersTimeout & bodyTimeout ${humanSecs}`,
     );
   } catch {
+    // eslint-disable-next-line no-console
     console.warn(
       `${LOG_PREFIX} undici not available — transport-level timeout not patched.`,
     );
@@ -86,6 +90,7 @@ function patchSdkTimeouts() {
         };
       }
 
+      // eslint-disable-next-line no-console
       console.log(
         `${LOG_PREFIX} ${label} SDK — timeout ${humanSecs}, maxRetries ${maxRetries}`,
       );

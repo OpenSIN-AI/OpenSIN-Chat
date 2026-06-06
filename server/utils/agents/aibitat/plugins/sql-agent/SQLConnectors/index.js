@@ -65,6 +65,7 @@ async function validateConnection(identifier = "", connectionConfig = {}) {
     const client = getDBClient(identifier, connectionConfig);
     return await client.validateConnection();
   } catch {
+    // eslint-disable-next-line no-console
     console.error(`Failed to connect to ${identifier} database.`);
     return {
       success: false,

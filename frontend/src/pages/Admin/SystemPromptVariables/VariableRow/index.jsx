@@ -33,6 +33,7 @@ export default function VariableRow({ variable, onRefresh }) {
       showToast("Variable deleted successfully", "success", { clear: true });
       if (onRefresh) onRefresh();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error deleting variable:", error);
       showToast("Failed to delete variable", "error", { clear: true });
     }

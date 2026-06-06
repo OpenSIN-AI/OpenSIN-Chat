@@ -24,6 +24,7 @@ const OutlookAgent = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -40,6 +41,7 @@ const OutlookAgent = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -56,6 +58,7 @@ const OutlookAgent = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });

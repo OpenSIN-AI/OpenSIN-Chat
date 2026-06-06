@@ -101,6 +101,7 @@ function apiWorkspaceEndpoints(app) {
       });
       response.status(200).json({ workspace, message });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -155,6 +156,7 @@ function apiWorkspaceEndpoints(app) {
       });
       response.status(200).json({ workspaces });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -220,6 +222,7 @@ function apiWorkspaceEndpoints(app) {
 
       response.status(200).json({ workspace });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -266,10 +269,12 @@ function apiWorkspaceEndpoints(app) {
         try {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.error(e.message);
         }
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -348,6 +353,7 @@ function apiWorkspaceEndpoints(app) {
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -445,6 +451,7 @@ function apiWorkspaceEndpoints(app) {
             });
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -522,6 +529,7 @@ function apiWorkspaceEndpoints(app) {
         });
         response.status(200).json({ workspace: updatedWorkspace });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -590,6 +598,7 @@ function apiWorkspaceEndpoints(app) {
           .json({ message: "Pin status updated successfully" })
           .end();
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
@@ -717,6 +726,7 @@ function apiWorkspaceEndpoints(app) {
         });
         return response.status(200).json({ ...result });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.status(500).json({
           id: uuidv4(),
@@ -878,6 +888,7 @@ function apiWorkspaceEndpoints(app) {
         });
         response.end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         writeResponseChunk(response, {
           id: uuidv4(),
@@ -1021,6 +1032,7 @@ function apiWorkspaceEndpoints(app) {
           })),
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }

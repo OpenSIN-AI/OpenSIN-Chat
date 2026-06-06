@@ -95,6 +95,7 @@ class Milvus extends VectorDatabase {
     const { value } = await client
       .hasCollection({ collection_name: this.normalize(namespace) })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(`${this.name}::namespaceExists`, e.message);
         return { value: false };
       });
@@ -200,6 +201,7 @@ class Milvus extends VectorDatabase {
             });
             return { vectorized: true, error: null };
           } catch (insertError) {
+            // eslint-disable-next-line no-console
             console.error(
               "Error inserting cached chunks:",
               insertError.message,

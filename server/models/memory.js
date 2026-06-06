@@ -60,6 +60,7 @@ const Memory = {
       });
       return memories;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -81,6 +82,7 @@ const Memory = {
       });
       return memories;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -123,6 +125,7 @@ const Memory = {
       });
       return { memory, message: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { memory: null, message: error.message };
     }
@@ -145,6 +148,7 @@ const Memory = {
       });
       return { memory, message: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { memory: null, message: error.message };
     }
@@ -162,6 +166,7 @@ const Memory = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -199,6 +204,7 @@ const Memory = {
       });
       return { memory, message: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { memory: null, message: error.message };
     }
@@ -244,6 +250,7 @@ const Memory = {
       });
       return { memory, message: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { memory: null, message: error.message };
     }
@@ -262,6 +269,7 @@ const Memory = {
         data: { lastUsedAt: new Date() },
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
     }
   },
@@ -283,6 +291,7 @@ const Memory = {
         where.workspaceId = this.validations.workspaceId(workspaceId);
       return await prisma.memories.count({ where });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return 0;
     }
@@ -325,6 +334,7 @@ const Memory = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -409,6 +419,7 @@ const Memory = {
       result.globalCount = newGlobal.length;
       result.updatedCount = updates.length;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
     }
     return result;
@@ -427,6 +438,7 @@ const Memory = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -442,6 +454,7 @@ const Memory = {
       const memory = await prisma.memories.findFirst({ where: clause });
       return memory || null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return null;
     }

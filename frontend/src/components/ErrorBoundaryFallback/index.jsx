@@ -34,6 +34,7 @@ ${details.stack}
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Failed to copy error details:", err);
     }
   };

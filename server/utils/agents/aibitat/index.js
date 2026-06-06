@@ -669,6 +669,7 @@ class AIbitat {
     // TODO: move this to when the group is created
     // warn if the group is underpopulated
     if (nodes.length < 3) {
+      // eslint-disable-next-line no-console
       console.warn(
         `- Group (${channel}) is underpopulated with ${nodes.length} agents. Direct communication would be more efficient.`,
       );
@@ -941,6 +942,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
     try {
       return await providerCall();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(`[AIbitat] Provider error: ${error.message}`, {
         hide_meta: true,
       });

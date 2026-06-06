@@ -11,9 +11,11 @@ const EventLogs = {
           occurredAt: new Date(),
         },
       });
+      // eslint-disable-next-line no-console
       console.info(`\x1b[32m[Event Logged]\x1b[0m - ${event}`);
       return { eventLog, message: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(
         `\x1b[31m[Event Logging Failed]\x1b[0m - ${event}`,
         error.message,
@@ -33,6 +35,7 @@ const EventLogs = {
       });
       return logs;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -49,6 +52,7 @@ const EventLogs = {
       });
       return logs;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -71,6 +75,7 @@ const EventLogs = {
       });
       return logs;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -96,6 +101,7 @@ const EventLogs = {
 
       return results;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -108,6 +114,7 @@ const EventLogs = {
       });
       return count;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return 0;
     }
@@ -120,6 +127,7 @@ const EventLogs = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }

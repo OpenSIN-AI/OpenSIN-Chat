@@ -48,6 +48,7 @@ class GenericOpenAiLLM {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -406,6 +407,7 @@ class GenericOpenAiLLM {
           }
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
         writeResponseChunk(response, {
           uuid,
@@ -455,6 +457,7 @@ class GenericOpenAiLLM {
         vision: this.#supportsCapabilityFromENV("vision"),
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error getting model capabilities:", error);
       return {
         tools: "unknown",

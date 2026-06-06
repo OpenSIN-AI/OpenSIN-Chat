@@ -27,6 +27,7 @@ export default function SystemPromptVariables() {
       const { variables } = await System.promptVariables.getAll();
       setVariables(variables || []);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error fetching variables:", error);
       showToast("No variables found", "error");
     } finally {

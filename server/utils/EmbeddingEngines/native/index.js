@@ -51,6 +51,7 @@ class NativeEmbedder {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -124,6 +125,7 @@ class NativeEmbedder {
     try {
       await fs.promises.appendFile(filePath, data, { encoding: "utf8" });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(`Error writing to tempfile: ${e}`);
     }
   }
@@ -151,6 +153,7 @@ class NativeEmbedder {
                 // Show download progress if we need to download any files
                 progress_callback: (data) => {
                   if (!data.hasOwnProperty("progress")) return;
+                  // eslint-disable-next-line no-console
                   console.log(
                     `\x1b[36m[NativeEmbedder - Downloading model]\x1b[0m ${
                       data.file

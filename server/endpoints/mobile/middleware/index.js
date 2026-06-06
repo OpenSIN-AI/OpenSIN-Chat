@@ -36,6 +36,7 @@ async function validDeviceToken(request, response, next) {
     response.locals.device = device;
     next();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("validDeviceToken", error);
     response.status(500).json({ error: "Invalid middleware response" });
   }
@@ -84,6 +85,7 @@ async function validRegistrationToken(request, response, next) {
 
     next();
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("validRegistrationToken:error", error);
     response.status(500).json({
       error: "Invalid middleware response from validRegistrationToken",

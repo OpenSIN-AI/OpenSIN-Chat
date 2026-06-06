@@ -23,10 +23,12 @@ const SystemPromptVariable = {
       })
         .then((res) => res.json())
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error("Error fetching system prompt variables:", error);
           return { variables: [] };
         });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error fetching system prompt variables:", error);
       return { variables: [] };
     }
@@ -46,10 +48,12 @@ const SystemPromptVariable = {
       })
         .then((res) => res.json())
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error("Error creating system prompt variable:", error);
           return { success: false, error };
         });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error creating system prompt variable:", error);
       return { success: false, error };
     }
@@ -70,10 +74,12 @@ const SystemPromptVariable = {
       })
         .then((res) => res.json())
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error("Error updating system prompt variable:", error);
           return { success: false, error };
         });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error updating system prompt variable:", error);
       return { success: false, error };
     }
@@ -93,10 +99,12 @@ const SystemPromptVariable = {
       })
         .then((res) => res.json())
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error("Error deleting system prompt variable:", error);
           return { success: false, error };
         });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error deleting system prompt variable:", error);
       return { success: false, error };
     }

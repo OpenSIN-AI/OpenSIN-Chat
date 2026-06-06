@@ -78,6 +78,7 @@ const httpSocket = {
         aibitat.onError(async (error) => {
           let errorMessage =
             error?.message || "An error occurred while running the agent.";
+          // eslint-disable-next-line no-console
           console.error(chalk.red(`   error: ${errorMessage}`), error);
           aibitat.introspect(
             `Error encountered while running: ${errorMessage}`,
@@ -134,6 +135,7 @@ const httpSocket = {
             null,
           );
           if (isWhitelisted) {
+            // eslint-disable-next-line no-console
             console.log(
               chalk.green(`Skill ${skillName} is whitelisted - auto-approved.`),
             );
@@ -146,6 +148,7 @@ const httpSocket = {
           // Tool approval only available in Telegram worker context
           const ipc = getWorkerIPC();
           if (!telegramChatId || !ipc) {
+            // eslint-disable-next-line no-console
             console.log(
               chalk.yellow(
                 `Tool approval requested for ${skillName} but no Telegram context available. Auto-denying for safety.`,
@@ -159,6 +162,7 @@ const httpSocket = {
           }
 
           const requestId = uuidv4();
+          // eslint-disable-next-line no-console
           console.log(
             chalk.blue(
               `Requesting tool approval for ${skillName} (${requestId})`,
@@ -181,6 +185,7 @@ const httpSocket = {
               clearTimeout(timeoutId);
 
               if (msg.approved) {
+                // eslint-disable-next-line no-console
                 console.log(
                   chalk.green(
                     `Tool ${skillName} approved by user via Telegram`,
@@ -192,6 +197,7 @@ const httpSocket = {
                 });
               }
 
+              // eslint-disable-next-line no-console
               console.log(
                 chalk.yellow(`Tool ${skillName} denied by user via Telegram`),
               );
@@ -216,6 +222,7 @@ const httpSocket = {
 
             timeoutId = setTimeout(() => {
               ipc.removeListener("message", messageHandler);
+              // eslint-disable-next-line no-console
               console.log(
                 chalk.yellow(
                   `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,

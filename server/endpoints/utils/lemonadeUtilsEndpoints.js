@@ -98,6 +98,7 @@ function lemonadeUtilsEndpoints(app) {
           }
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.write(
           `data: ${JSON.stringify({ type: "error", message: e.message })}\n\n`,
@@ -155,6 +156,7 @@ function lemonadeUtilsEndpoints(app) {
           message: data.message || `Deleted model: ${modelId}`,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         return response.status(500).json({
           success: false,

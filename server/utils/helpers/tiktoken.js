@@ -30,6 +30,7 @@ class TokenManager {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[35m[TokenManager]\x1b[0m ${text}`, ...args);
   }
 
@@ -51,6 +52,7 @@ class TokenManager {
       const tokens = this.encoder.encode(String(input), undefined, []);
       return tokens;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       return [];
     }

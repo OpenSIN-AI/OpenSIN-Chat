@@ -39,6 +39,7 @@ async function runSectionAgent({
   conversationContext = "",
   sectionPrefix = "",
 }) {
+  // eslint-disable-next-line no-console
   const log = parentAibitat.handlerProps?.log || console.log;
 
   const childAibitat = new AIbitat({

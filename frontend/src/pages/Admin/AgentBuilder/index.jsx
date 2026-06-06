@@ -76,6 +76,7 @@ export default function AgentBuilder() {
       if (!success) throw new Error(error);
       setAvailableFlows(flows);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       showToast("Failed to load available flows", "error", { clear: true });
     }
@@ -121,6 +122,7 @@ export default function AgentBuilder() {
       setCurrentFlowUuid(flow.uuid);
       setBlocks(flowBlocks);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       showToast("Failed to load flow", "error", { clear: true });
     }
@@ -222,6 +224,7 @@ export default function AgentBuilder() {
       showToast("Agent flow saved successfully!", "success", { clear: true });
       await loadAvailableFlows();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Save error details:", error);
       showToast(`Failed to save agent flow. ${error.message}`, "error", {
         clear: true,

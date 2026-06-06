@@ -50,6 +50,7 @@ function PiperTTSModelSelection({ settings }) {
           clear: true,
         }),
       )
+      // eslint-disable-next-line no-console
       .catch((e) => console.error(e));
   }
 
@@ -60,6 +61,7 @@ function PiperTTSModelSelection({ settings }) {
         throw new Error("Could not fetch voices from web worker.");
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
       })
       .finally(() => setLoading(false));
@@ -159,6 +161,7 @@ function DemoVoiceSample({ voiceId }) {
         playerRef.current.play();
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       setLoading(false);
       setSpeaking(false);

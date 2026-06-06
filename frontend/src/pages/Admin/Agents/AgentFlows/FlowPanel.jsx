@@ -84,6 +84,7 @@ export default function FlowPanel({ flow, toggleFlow, enabled, onDelete }) {
       if (!success) throw new Error(error);
       toggleFlow(flow.uuid);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to toggle flow:", error);
       showToast("Failed to toggle flow", "error", { clear: true });
     }

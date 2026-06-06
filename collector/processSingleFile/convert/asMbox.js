@@ -15,16 +15,19 @@ async function asMbox({
   options = {},
   metadata = {},
 }) {
+  // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
 
   const mails = await mboxParser(fs.createReadStream(fullFilePath))
     .then((mails) => mails)
     .catch((error) => {
+      // eslint-disable-next-line no-console
       console.error(`Could not parse mail items`, error);
       return [];
     });
 
   if (!mails.length) {
+    // eslint-disable-next-line no-console
     console.error(`Resulting mail items was empty for ${filename}.`);
     if (!options.absolutePath) trashFile(fullFilePath);
     return {
@@ -41,6 +44,7 @@ async function asMbox({
 
     const content = mail.text;
     if (!content) continue;
+    // eslint-disable-next-line no-console
     console.log(
       `-- Working on message "${mail.subject || "Unknown subject"}" --`
     );
@@ -74,6 +78,7 @@ async function asMbox({
   }
 
   if (!options.absolutePath) trashFile(fullFilePath);
+  // eslint-disable-next-line no-console
   console.log(
     `[SUCCESS]: ${filename} messages converted & ready for embedding.\n`
   );

@@ -58,6 +58,7 @@ class NovitaLLM {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -159,6 +160,7 @@ class NovitaLLM {
         vision: modelInfo.input_modalities.includes("image"),
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error getting model capabilities:", error);
       return {
         tools: "unknown",
@@ -449,6 +451,7 @@ async function fetchNovitaModels() {
       return models;
     })
     .catch((e) => {
+      // eslint-disable-next-line no-console
       console.error(e);
       return {};
     });

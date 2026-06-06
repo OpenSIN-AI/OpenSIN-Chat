@@ -186,6 +186,7 @@ async function wipeCollectorStorage() {
   });
 
   await Promise.all([cleanHotDir, cleanTmpDir]);
+  // eslint-disable-next-line no-console
   console.log(`Collector hot directory and tmp storage wiped!`);
   return;
 }

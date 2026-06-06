@@ -263,6 +263,7 @@ async function streamChat({
       }); // rewrite to OpenAI format
       response.write(`data: ${JSON.stringify(modified)}\n\n`);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   });

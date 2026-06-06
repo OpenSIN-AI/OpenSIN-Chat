@@ -36,6 +36,7 @@ class PostgresSQLConnector {
       result.rows = query.rows;
       result.count = query.rowCount;
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(this.className, err);
       result.error = err.message;
     } finally {

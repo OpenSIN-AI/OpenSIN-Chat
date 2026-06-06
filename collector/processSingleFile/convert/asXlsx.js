@@ -53,6 +53,7 @@ async function asXlsx({
       }
 
       if (allSheetContents.length === 0) {
+        // eslint-disable-next-line no-console
         console.log(`No valid sheets found in ${filename}.`);
         return {
           success: false,
@@ -92,6 +93,7 @@ async function asXlsx({
         options: { parseOnly: true },
       });
       documents.push(document);
+      // eslint-disable-next-line no-console
       console.log(`[SUCCESS]: ${filename} converted & ready for embedding.`);
     } else {
       const folderName = slugify(
@@ -132,12 +134,14 @@ async function asXlsx({
           options: { parseOnly: options.parseOnly },
         });
         documents.push(document);
+        // eslint-disable-next-line no-console
         console.log(
           `[SUCCESS]: Sheet "${name}" converted & ready for embedding.`
         );
       }
     }
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error("Could not process xlsx file!", err);
     return {
       success: false,
@@ -149,6 +153,7 @@ async function asXlsx({
   }
 
   if (documents.length === 0) {
+    // eslint-disable-next-line no-console
     console.error(`No valid sheets found in ${filename}.`);
     return {
       success: false,
@@ -157,6 +162,7 @@ async function asXlsx({
     };
   }
 
+  // eslint-disable-next-line no-console
   console.log(
     `[SUCCESS]: ${filename} fully processed. Created ${documents.length} document(s).\n`
   );
@@ -174,10 +180,12 @@ function processSheet(sheet) {
     const content = convertToCSV(data);
 
     if (!content?.length) {
+      // eslint-disable-next-line no-console
       console.log(`Sheet "${name}" is empty. Skipping.`);
       return null;
     }
 
+    // eslint-disable-next-line no-console
     console.log(`-- Processing sheet: ${name} --`);
     return {
       name,
@@ -185,6 +193,7 @@ function processSheet(sheet) {
       wordCount: content.split(/\s+/).length,
     };
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`Error processing sheet "${sheet.name}":`, err);
     return null;
   }

@@ -31,6 +31,7 @@ class AgentFlows {
       fs.mkdirSync(AgentFlows.flowsDir, { recursive: true });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to create flows directory:", error);
       return false;
     }
@@ -54,6 +55,7 @@ class AgentFlows {
         const id = file.replace(".json", "");
         flows[id] = config;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(`Error reading flow file ${file}:`, error);
       }
     }
@@ -86,6 +88,7 @@ class AgentFlows {
         config: flow,
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to load flow:", error);
       return null;
     }
@@ -123,6 +126,7 @@ class AgentFlows {
       fs.writeFileSync(filePath, JSON.stringify({ ...config, name }, null, 2));
       return { success: true, uuid };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to save flow:", error);
       return { success: false, error: error.message };
     }
@@ -142,6 +146,7 @@ class AgentFlows {
         active: flow.active !== false,
       }));
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to list flows:", error);
       return [];
     }
@@ -162,6 +167,7 @@ class AgentFlows {
       fs.rmSync(filePath);
       return { success: true };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to delete flow:", error);
       return { success: false, error: error.message };
     }

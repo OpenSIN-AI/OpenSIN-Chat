@@ -139,6 +139,7 @@ const System = {
         return data;
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -157,6 +158,7 @@ const System = {
         return data;
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -185,6 +187,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { newValues: null, error: e.message };
       });
@@ -197,6 +200,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -209,6 +213,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -221,6 +226,7 @@ const System = {
       .then((res) => res.json())
       .then((res) => res?.multiUserMode)
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -233,6 +239,7 @@ const System = {
     })
       .then((res) => res.ok)
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -245,6 +252,7 @@ const System = {
     })
       .then((res) => res.ok)
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -257,6 +265,7 @@ const System = {
     })
       .then((res) => res.ok)
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -272,6 +281,7 @@ const System = {
         return { success: true, error: null };
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -287,6 +297,7 @@ const System = {
         return { success: true, error: null };
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -310,6 +321,7 @@ const System = {
     )
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { footerData: [], error: e.message };
       });
@@ -342,6 +354,7 @@ const System = {
     )
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { email: "", error: e.message };
       });
@@ -373,6 +386,7 @@ const System = {
     )
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { customAppName: "", error: e.message };
       });
@@ -403,6 +417,7 @@ const System = {
         saneDefaultSystemPrompt: res.saneDefaultSystemPrompt,
       }))
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { defaultSystemPrompt: "", saneDefaultSystemPrompt: "" };
       });
@@ -417,6 +432,7 @@ const System = {
       const data = await res.json();
       return data;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       return { success: false, message: e.message };
     }
@@ -442,6 +458,7 @@ const System = {
         throw new Error("Failed to fetch logo!");
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { isCustomLogo: false, logoURL: null };
       });
@@ -471,6 +488,7 @@ const System = {
         throw new Error("Failed to remove pfp.");
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -487,6 +505,7 @@ const System = {
       })
       .then((res) => res?.isDefaultLogo)
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return null;
       });
@@ -500,6 +519,7 @@ const System = {
         throw new Error("Error removing logo!");
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -516,6 +536,7 @@ const System = {
         return res.json();
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { apiKey: null, error: e.message };
       });
@@ -533,6 +554,7 @@ const System = {
         return res.json();
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { apiKey: null, error: e.message };
       });
@@ -544,6 +566,7 @@ const System = {
     })
       .then((res) => res.ok)
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -578,6 +601,7 @@ const System = {
         return res.json();
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { models: [], error: e.message };
       });
@@ -590,6 +614,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -602,6 +627,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -613,6 +639,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -624,6 +651,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -641,6 +669,7 @@ const System = {
         throw new Error(res.statusText);
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return null;
       });
@@ -653,6 +682,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -670,6 +700,7 @@ const System = {
       })
       .then((res) => res.presets)
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -691,6 +722,7 @@ const System = {
       })
       .then((res) => ({ preset: res.preset, error: null }))
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { preset: null, error: e.message };
       });
@@ -712,6 +744,7 @@ const System = {
       })
       .then((res) => ({ preset: res.preset, error: null }))
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { preset: null, error: e.message };
       });
@@ -727,6 +760,7 @@ const System = {
         return true;
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -780,6 +814,7 @@ const System = {
         return await res.json();
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { valid: false, user: null, token: null, message: e.message };
       });
@@ -829,6 +864,7 @@ const System = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error("Failed to validate SQL connection:", e);
         return { success: false, error: e.message };
       });

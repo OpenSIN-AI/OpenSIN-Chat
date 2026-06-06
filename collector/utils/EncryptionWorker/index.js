@@ -11,6 +11,7 @@ class EncryptionWorker {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[EncryptionManager]\x1b[0m ${text}`, ...args);
   }
 
@@ -35,6 +36,7 @@ class EncryptionWorker {
       );
       return url;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
     return new URL(chunkSource);

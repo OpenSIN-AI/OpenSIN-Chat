@@ -15,6 +15,7 @@ export default function AutoSpeak() {
     try {
       Appearance.updateSettings({ autoPlayAssistantTtsResponse: checked });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to update appearance settings:", error);
       setAutoPlayAssistantTtsResponse(!checked);
     }

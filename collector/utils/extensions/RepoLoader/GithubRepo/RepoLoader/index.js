@@ -43,6 +43,7 @@ class GitHubRepoLoader {
         url.pathname = url.pathname.slice(0, -4);
       return url.toString();
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(
         `[GitHub Loader]: Error processing repository URL ${this.repo}: ${e.message}`
       );
@@ -64,6 +65,7 @@ class GitHubRepoLoader {
 
       // Not a github url at all.
       if (url.hostname !== "github.com") {
+        // eslint-disable-next-line no-console
         console.log(
           `[GitHub Loader]: Invalid GitHub URL provided! Hostname must be 'github.com'. Got ${url.hostname}`
         );
@@ -74,6 +76,7 @@ class GitHubRepoLoader {
       // Remove the first slash from the pathname so we can split it properly.
       const [author, project, ..._rest] = url.pathname.slice(1).split("/");
       if (!author || !project) {
+        // eslint-disable-next-line no-console
         console.log(
           `[GitHub Loader]: Invalid GitHub URL provided! URL must be in the format of 'github.com/{author}/{project}'. Got ${url.pathname}`
         );
@@ -84,6 +87,7 @@ class GitHubRepoLoader {
       this.project = project;
       return true;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(
         `[GitHub Loader]: Invalid GitHub URL provided! Error: ${e.message}`
       );
@@ -97,10 +101,12 @@ class GitHubRepoLoader {
     await this.getRepoBranches();
     if (!!this.branch && this.branches.includes(this.branch)) return;
 
+    // eslint-disable-next-line no-console
     console.log(
       "[GitHub Loader]: Branch not set! Auto-assigning to a default branch."
     );
     this.branch = this.branches.includes("main") ? "main" : "master";
+    // eslint-disable-next-line no-console
     console.log(`[GitHub Loader]: Branch auto-assigned to ${this.branch}.`);
     return;
   }
@@ -119,6 +125,7 @@ class GitHubRepoLoader {
         return res.ok;
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(
           "Invalid GitHub Access Token provided! Access token will not be used",
           e.message
@@ -154,6 +161,7 @@ class GitHubRepoLoader {
     } = require("@langchain/community/document_loaders/web/github");
 
     if (this.accessToken)
+      // eslint-disable-next-line no-console
       console.log(
         `[GitHub Loader]: Access token set! Recursive loading enabled!`
       );
@@ -194,6 +202,7 @@ class GitHubRepoLoader {
     const branches = [];
 
     while (polling) {
+      // eslint-disable-next-line no-console
       console.log(`Fetching page ${page} of branches for ${this.project}`);
       await fetch(
         `https://api.github.com/repos/${this.author}/${this.project}/branches?per_page=100&page=${page}`,
@@ -218,6 +227,7 @@ class GitHubRepoLoader {
         })
         .catch((err) => {
           polling = false;
+          // eslint-disable-next-line no-console
           console.error(`RepoLoader.branches`, err);
         });
     }
@@ -256,6 +266,7 @@ class GitHubRepoLoader {
           return atob(json.content);
         });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(`RepoLoader.fetchSingleFile`, e);
       return null;
     }

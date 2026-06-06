@@ -34,6 +34,7 @@ async function loadPaperlessNgx({ baseUrl = null, apiToken = null }, response) {
   }
 
   const { origin, hostname } = new URL(baseUrl);
+  // eslint-disable-next-line no-console
   console.log(`-- Working Paperless-ngx ${origin} --`);
   const loader = new PaperlessNgxLoader({
     baseUrl: origin,
@@ -84,6 +85,7 @@ async function loadPaperlessNgx({ baseUrl = null, apiToken = null }, response) {
       token_count_estimate: tokenizeString(doc.pageContent),
     };
 
+    // eslint-disable-next-line no-console
     console.log(
       `[Paperless-ngx Loader]: Saving ${doc.metadata.title} to ${outFolder}`
     );

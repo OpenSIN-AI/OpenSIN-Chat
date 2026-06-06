@@ -26,6 +26,7 @@ function mobileEndpoints(app) {
         });
         return response.status(200).json({ devices });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -51,6 +52,7 @@ function mobileEndpoints(app) {
           return response.status(400).json({ error: updates.error });
         return response.status(200).json({ updates });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -75,6 +77,7 @@ function mobileEndpoints(app) {
         await MobileDevice.delete(device.id);
         return response.status(200).json({ message: "Device deleted" });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -90,6 +93,7 @@ function mobileEndpoints(app) {
           connectionUrl: MobileDevice.connectionURL(response.locals?.user),
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -106,6 +110,7 @@ function mobileEndpoints(app) {
         .status(200)
         .json({ success: true, message: "Device authenticated" });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.sendStatus(500).end();
     }
@@ -137,6 +142,7 @@ function mobileEndpoints(app) {
           platform: MobileDevice.platform,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -150,6 +156,7 @@ function mobileEndpoints(app) {
       try {
         return handleMobileCommand(request, response);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }

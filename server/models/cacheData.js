@@ -8,6 +8,7 @@ const CacheData = {
       });
       return { cache, message: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { cache: null, message: error.message };
     }
@@ -22,6 +23,7 @@ const CacheData = {
       });
       return cache || null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return null;
     }
@@ -34,6 +36,7 @@ const CacheData = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -48,6 +51,7 @@ const CacheData = {
       });
       return caches;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -60,6 +64,7 @@ const CacheData = {
       });
       return count;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return 0;
     }

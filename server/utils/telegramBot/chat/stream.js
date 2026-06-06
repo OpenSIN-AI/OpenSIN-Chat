@@ -168,6 +168,7 @@ async function streamResponse({
       chatId,
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error streaming response:", error);
     await ctx.bot.sendMessage(
       chatId,

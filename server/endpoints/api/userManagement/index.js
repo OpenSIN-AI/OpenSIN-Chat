@@ -59,6 +59,7 @@ function apiUserManagementEndpoints(app) {
       }));
       response.status(200).json({ users: filteredUsers });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -114,6 +115,7 @@ function apiUserManagementEndpoints(app) {
           loginPath: `/sso/simple?token=${token}`,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }

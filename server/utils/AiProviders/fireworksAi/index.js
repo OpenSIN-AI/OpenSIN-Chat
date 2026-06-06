@@ -43,6 +43,7 @@ class FireworksAiLLM {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -237,6 +238,7 @@ async function fireworksAiModels(providedApiKey = null) {
       });
 
       if (Object.keys(validModels).length === 0) {
+        // eslint-disable-next-line no-console
         console.warn("fireworksAi: No models found");
         return {};
       }
@@ -262,6 +264,7 @@ async function fireworksAiModels(providedApiKey = null) {
       return validModels;
     })
     .catch((e) => {
+      // eslint-disable-next-line no-console
       console.error(e);
       return {};
     });

@@ -32,6 +32,7 @@ class NativeEmbeddingReranker {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[NativeEmbeddingReranker]\x1b[0m ${text}`, ...args);
   }
 
@@ -63,6 +64,7 @@ class NativeEmbeddingReranker {
       );
       return;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       this.log(
         `Failed to preload reranker suite. Reranking will be available on the first rerank call.`,

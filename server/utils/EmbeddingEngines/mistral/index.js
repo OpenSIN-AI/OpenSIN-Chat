@@ -29,6 +29,7 @@ class MistralEmbedder {
         throw new Error("Mistral returned empty embeddings for batch");
       return embeddings;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to get embeddings from Mistral.", error.message);
       throw new Error(`Mistral Failed to embed: ${error.message}`);
     }

@@ -52,6 +52,7 @@ async function getMemoriesForPrompt(userId, workspaceId, prompt, rawHistory) {
 
     return formatMemories(globalMemories, selectedWorkspace);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("[Memory Injection] Error:", error.message);
     return "";
   }
@@ -86,6 +87,7 @@ async function rerankMemories(memories, prompt, rawHistory) {
 
     return reranked.map((r) => memories[r.rerank_corpus_id]);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(
       "[Memory Injection] Reranker failed, falling back to recent:",
       error.message,

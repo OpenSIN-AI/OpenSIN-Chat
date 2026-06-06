@@ -22,6 +22,7 @@ async function loadGithubRepo(args, response) {
       reason: "Could not prepare GitHub repo for loading! Check URL",
     };
 
+  // eslint-disable-next-line no-console
   console.log(
     `-- Working GitHub ${repo.author}/${repo.project}:${repo.branch} --`
   );
@@ -33,6 +34,7 @@ async function loadGithubRepo(args, response) {
     };
   }
 
+  // eslint-disable-next-line no-console
   console.log(`[GitHub Loader]: Found ${docs.length} source files. Saving...`);
   const outFolder = slugify(
     `${repo.author}-${repo.project}-${repo.branch}-${v4().slice(0, 4)}`
@@ -68,6 +70,7 @@ async function loadGithubRepo(args, response) {
       pageContent: doc.pageContent,
       token_count_estimate: tokenizeString(doc.pageContent),
     };
+    // eslint-disable-next-line no-console
     console.log(
       `[GitHub Loader]: Saving ${doc.metadata.source} to ${outFolder}`
     );
@@ -115,6 +118,7 @@ async function fetchGithubFile({
       reason: "Could not prepare GitHub repo for loading! Check URL or PAT.",
     };
 
+  // eslint-disable-next-line no-console
   console.log(
     `-- Working GitHub ${repo.author}/${repo.project}:${repo.branch} file:${sourceFilePath} --`
   );

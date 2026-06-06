@@ -109,6 +109,7 @@ function htmlToMarkdown(html, baseUrl) {
     markdown = markdown.replace(/\n{4,}/g, "\n\n\n").trim();
     return markdown;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("htmlToMarkdown failed:", error);
     try {
       return parse(html).text.trim();

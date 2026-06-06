@@ -38,6 +38,7 @@ function patchSlowBuffer() {
   const bufferModule = require("buffer");
   bufferModule.SlowBuffer = SlowBuffer;
 
+  // eslint-disable-next-line no-console
   console.log(
     `${LOG_PREFIX} Buffer.SlowBuffer shim installed (Node ${process.versions.node})`,
   );

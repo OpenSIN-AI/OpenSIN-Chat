@@ -14,6 +14,7 @@ const SW_VERSION = "1.0.0";
 function log(message, ...args) {
   if (process.env.NODE_ENV === "production") return;
   if (typeof message === "object") message = JSON.stringify(message, null, 2);
+  // eslint-disable-next-line no-console
   console.log(`[useWebPushNotifications] ${message}`, ...args);
 }
 

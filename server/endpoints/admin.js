@@ -43,6 +43,7 @@ function adminEndpoints(app) {
         const users = await User.where();
         response.status(200).json({ users });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -79,6 +80,7 @@ function adminEndpoints(app) {
 
         response.status(200).json({ user: newUser, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -120,6 +122,7 @@ function adminEndpoints(app) {
         const { success, error } = await User.update(id, updates);
         response.status(200).json({ success, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -153,6 +156,7 @@ function adminEndpoints(app) {
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -167,6 +171,7 @@ function adminEndpoints(app) {
         const invites = await Invite.whereWithUsers();
         response.status(200).json({ invites });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -199,6 +204,7 @@ function adminEndpoints(app) {
         );
         response.status(200).json({ invite, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -219,6 +225,7 @@ function adminEndpoints(app) {
         );
         response.status(200).json({ success, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -233,6 +240,7 @@ function adminEndpoints(app) {
         const workspaces = await Workspace.whereWithUsers();
         response.status(200).json({ workspaces });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -248,6 +256,7 @@ function adminEndpoints(app) {
         const users = await Workspace.workspaceUsers(workspaceId);
         response.status(200).json({ users });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -267,6 +276,7 @@ function adminEndpoints(app) {
         );
         response.status(200).json({ workspace, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -286,6 +296,7 @@ function adminEndpoints(app) {
         );
         response.status(200).json({ success, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -316,11 +327,13 @@ function adminEndpoints(app) {
         try {
           await VectorDb["delete-namespace"]({ namespace: workspace.slug });
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.error(e.message);
         }
 
         response.status(200).json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -453,6 +466,7 @@ function adminEndpoints(app) {
 
         response.status(200).json({ settings: requestedSettings });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -490,6 +504,7 @@ function adminEndpoints(app) {
         await SystemSettings.updateSettings(updates);
         response.status(200).json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -507,6 +522,7 @@ function adminEndpoints(app) {
           error: null,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
         response.status(500).json({
           apiKey: null,
@@ -534,6 +550,7 @@ function adminEndpoints(app) {
           error,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -556,6 +573,7 @@ function adminEndpoints(app) {
         );
         return response.status(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }

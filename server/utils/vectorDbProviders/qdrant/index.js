@@ -205,6 +205,7 @@ class QDrant extends VectorDatabase {
                 submission.vectors.push(chunk.vector);
                 submission.payloads.push(payload);
               } else {
+                // eslint-disable-next-line no-console
                 console.error(
                   "The 'id' property is not defined in chunk.payload - it will be omitted from being inserted in QDrant collection.",
                 );

@@ -36,6 +36,7 @@ function apiPoliticianEndpoints(app) {
       const results = await db.searchPoliticians(q || "", filters);
       response.status(200).json({ politicians: results, total: results.length });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -53,6 +54,7 @@ function apiPoliticianEndpoints(app) {
       });
       response.status(200).json({ results, total: results.length });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -64,6 +66,7 @@ function apiPoliticianEndpoints(app) {
       const parties = await db.getParties();
       response.status(200).json({ parties });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -75,6 +78,7 @@ function apiPoliticianEndpoints(app) {
       const states = await db.getStates();
       response.status(200).json({ states });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -90,6 +94,7 @@ function apiPoliticianEndpoints(app) {
         ...vectorStats,
       });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -103,6 +108,7 @@ function apiPoliticianEndpoints(app) {
       if (!politician) return response.status(404).json({ error: "Politician not found" });
       response.status(200).json({ politician });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -123,6 +129,7 @@ function apiPoliticianEndpoints(app) {
       });
       response.status(200).json({ votes, total: votes.length });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -143,6 +150,7 @@ function apiPoliticianEndpoints(app) {
       });
       response.status(200).json({ speeches, total: speeches.length });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -155,6 +163,7 @@ function apiPoliticianEndpoints(app) {
       const mandates = await db.getMandates(id);
       response.status(200).json({ mandates, total: mandates.length });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }

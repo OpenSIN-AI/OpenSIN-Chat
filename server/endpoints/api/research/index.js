@@ -36,6 +36,7 @@ function apiResearchEndpoints(app) {
       });
       response.status(200).json(result);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.status(500).json({ error: err.message });
     }
@@ -47,6 +48,7 @@ function apiResearchEndpoints(app) {
       const jobs = pipeline.listJobs();
       response.status(200).json({ jobs });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -60,6 +62,7 @@ function apiResearchEndpoints(app) {
       if (!status) return response.status(404).json({ error: "Job not found" });
       response.status(200).json(status);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -73,6 +76,7 @@ function apiResearchEndpoints(app) {
       if (!results) return response.status(404).json({ error: "Job not found" });
       response.status(200).json(results);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }

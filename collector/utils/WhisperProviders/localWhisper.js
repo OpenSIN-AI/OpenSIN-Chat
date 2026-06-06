@@ -26,6 +26,7 @@ class LocalWhisper {
   }
 
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[32m[LocalWhisper]\x1b[0m ${text}`, ...args);
   }
 
@@ -110,6 +111,7 @@ class LocalWhisper {
 
       return audioData;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(`convertToWavAudioData`, error);
       return null;
     }
@@ -135,6 +137,7 @@ class LocalWhisper {
               // Show download progress if we need to download any files
               progress_callback: (data) => {
                 if (!data.hasOwnProperty("progress")) return;
+                // eslint-disable-next-line no-console
                 console.log(
                   `\x1b[34m[ONNXWhisper - Downloading Model Files]\x1b[0m ${
                     data.file

@@ -68,6 +68,7 @@ export default function Footer() {
         const { footerData } = await System.fetchCustomFooterIcons();
         setFooterData(Array.isArray(footerData) ? footerData : []);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Footer-Icons konnten nicht geladen werden:", error);
         setFooterData([]);
       }

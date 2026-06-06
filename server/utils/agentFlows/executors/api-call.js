@@ -52,6 +52,7 @@ async function executeApiCall(config, context) {
         safeJsonParse(text, "Failed to parse output from API call block"),
       );
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     throw new Error(`API Call failed: ${error.message}`);
   }

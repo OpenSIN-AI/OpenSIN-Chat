@@ -37,6 +37,7 @@ async function loadObsidianVault({ files = [] }) {
   if (!fs.existsSync(outFolderPath))
     fs.mkdirSync(outFolderPath, { recursive: true });
 
+  // eslint-disable-next-line no-console
   console.log(
     `Processing ${files.length} files from Obsidian Vault ${
       vaultName ? `"${vaultName}"` : ""
@@ -73,6 +74,7 @@ async function loadObsidianVault({ files = [] }) {
       });
       results.push({ file: file.path, status: "success" });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(`Failed to process ${file.path}:`, e);
       results.push({ file: file.path, status: "failed", reason: e.message });
     }

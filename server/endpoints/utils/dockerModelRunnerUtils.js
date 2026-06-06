@@ -78,6 +78,7 @@ function dockerModelRunnerUtilsEndpoints(app) {
           }
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.write(
           `data: ${JSON.stringify({ type: "error", message: e.message })}\n\n`,

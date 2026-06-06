@@ -22,6 +22,7 @@ export default forwardRef(function ChatPromptHistory(
         setHistory(historyData);
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.error(error);
       })
       .finally(() => {
@@ -37,6 +38,7 @@ export default forwardRef(function ChatPromptHistory(
           if (success) setHistory([]);
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error(error);
         });
     }

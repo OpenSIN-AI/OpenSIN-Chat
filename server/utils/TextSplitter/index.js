@@ -35,6 +35,7 @@ class TextSplitter {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[35m[TextSplitter]\x1b[0m ${text}`, ...args);
   }
 
@@ -50,6 +51,7 @@ class TextSplitter {
       : Number(preferred);
     const limit = Number(embedderLimit);
     if (prefValue > limit)
+      // eslint-disable-next-line no-console
       console.log(
         `\x1b[43m[WARN]\x1b[0m Text splitter chunk length of ${prefValue} exceeds embedder model max of ${embedderLimit}. Will use ${embedderLimit}.`,
       );
@@ -188,6 +190,7 @@ class RecursiveSplitter {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[35m[RecursiveSplitter]\x1b[0m ${text}`, ...args);
   }
 

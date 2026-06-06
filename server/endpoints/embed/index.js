@@ -52,6 +52,7 @@ function embeddedEndpoints(app) {
         });
         response.end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         writeResponseChunk(response, {
           id: uuidv4(),
@@ -83,6 +84,7 @@ function embeddedEndpoints(app) {
 
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -100,6 +102,7 @@ function embeddedEndpoints(app) {
         await EmbedChats.markHistoryInvalid(embed.id, sessionId);
         response.status(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }

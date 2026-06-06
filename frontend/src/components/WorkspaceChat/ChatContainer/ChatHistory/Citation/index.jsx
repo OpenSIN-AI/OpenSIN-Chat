@@ -415,6 +415,7 @@ export function parseChunkSource({ title = "", chunks = [] }) {
       icon,
     };
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.warn(`Unsupported source identifier ${chunks[0].chunkSource}`, err);
   }
   return nullResponse;

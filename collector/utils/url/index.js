@@ -27,6 +27,7 @@ const runtimeSettings = new RuntimeSettings();
 function isInvalidIp({ hostname }) {
   if (runtimeSettings.get("allowAnyIp")) {
     if (!runtimeSettings.get("seenAnyIpWarning")) {
+      // eslint-disable-next-line no-console
       console.warn(
         "\x1b[33mURL IP local address restrictions have been disabled by administrator!\x1b[0m"
       );
@@ -125,6 +126,7 @@ function validYoutubeVideoUrl(link, returnVideoId = false) {
     if (returnVideoId) return match?.[1] ?? null;
     return !!match?.[1];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error validating YouTube video URL", error);
     return returnVideoId ? null : false;
   }

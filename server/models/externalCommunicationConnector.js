@@ -21,6 +21,7 @@ const ExternalCommunicationConnector = {
         config: safeJsonParse(connector.config, {}),
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("ExternalCommunicationConnector.get", error.message);
       return null;
     }
@@ -69,6 +70,7 @@ const ExternalCommunicationConnector = {
         error: null,
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("ExternalCommunicationConnector.upsert", error.message);
       return { connector: null, error: error.message };
     }
@@ -101,6 +103,7 @@ const ExternalCommunicationConnector = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("ExternalCommunicationConnector.delete", error.message);
       return false;
     }

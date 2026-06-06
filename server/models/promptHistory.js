@@ -12,6 +12,7 @@ const PromptHistory = {
       });
       return { history, message: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { history: null, message: error.message };
     }
@@ -47,6 +48,7 @@ const PromptHistory = {
       });
       return history;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -70,6 +72,7 @@ const PromptHistory = {
       });
       return history || null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return null;
     }
@@ -80,6 +83,7 @@ const PromptHistory = {
       await prisma.prompt_history.deleteMany({ where: clause });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -99,6 +103,7 @@ const PromptHistory = {
         modifiedBy: user?.id,
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to create prompt history:", error.message);
     }
   },

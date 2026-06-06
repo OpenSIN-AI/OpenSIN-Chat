@@ -77,6 +77,7 @@ function apiAdminEndpoints(app) {
       const users = await User.where();
       response.status(200).json({ users });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.sendStatus(500).end();
     }
@@ -135,6 +136,7 @@ function apiAdminEndpoints(app) {
       const { user: newUser, error } = await User.create(newUserParams);
       response.status(newUser ? 200 : 400).json({ user: newUser, error });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.sendStatus(500).end();
     }
@@ -207,6 +209,7 @@ function apiAdminEndpoints(app) {
       const { success, error } = await User.update(id, updates);
       response.status(200).json({ success, error });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.sendStatus(500).end();
     }
@@ -261,6 +264,7 @@ function apiAdminEndpoints(app) {
         });
         response.status(200).json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -308,6 +312,7 @@ function apiAdminEndpoints(app) {
       const invites = await Invite.whereWithUsers();
       response.status(200).json({ invites });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.sendStatus(500).end();
     }
@@ -366,6 +371,7 @@ function apiAdminEndpoints(app) {
       });
       response.status(200).json({ invite, error });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.sendStatus(500).end();
     }
@@ -416,6 +422,7 @@ function apiAdminEndpoints(app) {
         const { success, error } = await Invite.deactivate(id);
         response.status(200).json({ success, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -471,6 +478,7 @@ function apiAdminEndpoints(app) {
 
         response.status(200).json({ users });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -538,6 +546,7 @@ function apiAdminEndpoints(app) {
         );
         response.status(200).json({ success, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -653,6 +662,7 @@ function apiAdminEndpoints(app) {
           users: await Workspace.workspaceUsers(workspace.id),
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -709,6 +719,7 @@ function apiAdminEndpoints(app) {
         const hasPages = (await WorkspaceChats.count()) > (offset + 1) * pgSize;
         response.status(200).json({ chats: chats, hasPages });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -765,6 +776,7 @@ function apiAdminEndpoints(app) {
         await SystemSettings.updateSettings(updates);
         response.status(200).json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }

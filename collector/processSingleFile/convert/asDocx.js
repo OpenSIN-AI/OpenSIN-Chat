@@ -16,16 +16,19 @@ async function asDocX({
 }) {
   const loader = new DocxLoader(fullFilePath);
 
+  // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
   let pageContent = [];
   const docs = await loader.load();
   for (const doc of docs) {
+    // eslint-disable-next-line no-console
     console.log(`-- Parsing content from docx page --`);
     if (!doc.pageContent.length) continue;
     pageContent.push(doc.pageContent);
   }
 
   if (!pageContent.length) {
+    // eslint-disable-next-line no-console
     console.error(`Resulting text content was empty for ${filename}.`);
     if (!options.absolutePath) trashFile(fullFilePath);
     return {
@@ -56,6 +59,7 @@ async function asDocX({
     options: { parseOnly: options.parseOnly },
   });
   if (!options.absolutePath) trashFile(fullFilePath);
+  // eslint-disable-next-line no-console
   console.log(`[SUCCESS]: ${filename} converted & ready for embedding.\n`);
   return { success: true, reason: null, documents: [document] };
 }

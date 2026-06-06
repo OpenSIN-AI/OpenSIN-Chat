@@ -29,10 +29,12 @@ const PromptHistory = {
         .then((res) => res.json())
         .then((res) => res.history || [])
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error("Error fetching prompt history:", error);
           return [];
         });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error fetching prompt history:", error);
       return [];
     }
@@ -54,10 +56,12 @@ const PromptHistory = {
       )
         .then((res) => res.json())
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error("Error clearing prompt history:", error);
           return { success: false, error };
         });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error clearing prompt history:", error);
       return { success: false, error };
     }
@@ -71,10 +75,12 @@ const PromptHistory = {
       })
         .then((res) => res.json())
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error("Error deleting prompt history:", error);
           return { success: false, error };
         });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error deleting prompt history:", error);
       return { success: false, error };
     }

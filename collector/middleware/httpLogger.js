@@ -7,6 +7,7 @@ const httpLogger =
     res.end = function (chunk, encoding) {
       // Log the request method, status code, and path
       const statusColor = res.statusCode >= 400 ? "\x1b[31m" : "\x1b[32m"; // Red for errors, green for success
+      // eslint-disable-next-line no-console
       console.info(
         `\x1b[32m[HTTP]\x1b[0m ${statusColor}${res.statusCode}\x1b[0m ${
           req.method

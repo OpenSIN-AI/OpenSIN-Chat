@@ -56,6 +56,7 @@ class CometApiLLM {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -434,6 +435,7 @@ async function fetchCometApiModels() {
       return models;
     })
     .catch((e) => {
+      // eslint-disable-next-line no-console
       console.error("Error fetching CometAPI models:", e);
       return {};
     });

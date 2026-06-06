@@ -77,6 +77,7 @@ const memory = {
               this.tracker.trackRun(this.name, { action, content });
               return response;
             } catch (error) {
+              // eslint-disable-next-line no-console
               console.error(error);
               return `There was an error while calling the function. ${error.message}`;
             }

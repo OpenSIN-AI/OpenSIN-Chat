@@ -59,6 +59,7 @@ class OCRLoader {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[OCRLoader]\x1b[0m ${text}`, ...args);
   }
 
@@ -287,6 +288,7 @@ class PDFSharp {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[PDFSharp]\x1b[0m ${text}`, ...args);
   }
 

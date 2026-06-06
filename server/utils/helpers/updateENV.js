@@ -1200,6 +1200,7 @@ async function validDockerizedUrl(input = "") {
     if (isPortAvailableFromDocker)
       return "Port is not running a reachable service on loopback address from inside the OpenAfD Chat container. Please use host.docker.internal (for linux use 172.17.0.1), a real machine ip, or domain to connect to your service.";
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error.message);
     return "An error occurred while validating the URL";
   }
@@ -1223,6 +1224,7 @@ function noRestrictedChars(input = "") {
 async function handleVectorStoreReset(key, prevValue, nextValue) {
   if (prevValue === nextValue) return;
   if (key === "VectorDB") {
+    // eslint-disable-next-line no-console
     console.log(
       `Vector configuration changed from ${prevValue} to ${nextValue} - resetting ${prevValue} namespaces`,
     );
@@ -1230,6 +1232,7 @@ async function handleVectorStoreReset(key, prevValue, nextValue) {
   }
 
   if (key === "EmbeddingEngine" || key === "EmbeddingModelPref") {
+    // eslint-disable-next-line no-console
     console.log(
       `${key} changed from ${prevValue} to ${nextValue} - resetting ${process.env.VECTOR_DB} namespaces`,
     );

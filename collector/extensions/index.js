@@ -22,6 +22,7 @@ function extensions(app) {
           throw new Error(`Type "${type}" is not a valid type to sync.`);
         return await RESYNC_METHODS[type](options, response);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(200).json({
           success: false,
@@ -51,6 +52,7 @@ function extensions(app) {
           data,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(200).json({
           success: false,
@@ -80,6 +82,7 @@ function extensions(app) {
           },
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(400).json({
           success: false,
@@ -106,6 +109,7 @@ function extensions(app) {
         );
         response.status(200).json({ success, reason, data });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(400).json({
           success: false,
@@ -132,6 +136,7 @@ function extensions(app) {
         const scrapedData = await websiteDepth(validatedUrl, depth, maxLinks);
         response.status(200).json({ success: true, data: scrapedData });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(400).json({ success: false, reason: e.message });
       }
@@ -151,6 +156,7 @@ function extensions(app) {
         );
         response.status(200).json({ success, reason, data });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(400).json({
           success: false,
@@ -179,6 +185,7 @@ function extensions(app) {
         );
         response.status(200).json({ success, reason, data });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(400).json({
           success: false,
@@ -202,6 +209,7 @@ function extensions(app) {
         const result = await loadObsidianVault({ files });
         response.status(200).json(result);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(400).json({
           success: false,
@@ -224,6 +232,7 @@ function extensions(app) {
         const result = await loadPaperlessNgx(reqBody(request), response);
         response.status(200).json(result);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(400).json({
           success: false,

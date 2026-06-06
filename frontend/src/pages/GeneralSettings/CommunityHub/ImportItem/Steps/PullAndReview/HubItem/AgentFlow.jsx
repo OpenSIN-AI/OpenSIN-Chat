@@ -24,6 +24,7 @@ export default function AgentFlow({ item, setStep }) {
       showToast(`Agent flow imported successfully!`, "success");
       setStep(CommunityHubImportItemSteps.completed.key);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       showToast(`Failed to import agent flow. ${e.message}`, "error");
     } finally {

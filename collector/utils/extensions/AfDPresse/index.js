@@ -166,6 +166,7 @@ async function importSinglePress(url, outFolderPath) {
     const html = await fetchHtml(url);
     const { title, content, date, author } = extractPressArticle(html);
     if (!content) {
+      // eslint-disable-next-line no-console
       console.warn(`afdPresse: kein Inhalt extrahiert für ${url}`);
       return null;
     }
@@ -206,6 +207,7 @@ async function importSinglePress(url, outFolderPath) {
     });
     return data;
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(`afdPresse: Fehler bei ${url}`, err.message);
     return null;
   }
@@ -219,12 +221,15 @@ async function importSinglePress(url, outFolderPath) {
  * @returns {Promise<object[]>} - Array der gespeicherten Dokumente
  */
 async function afdPresseLatest({ limit = 20, baseUrl = AFD_PRESS_BASE } = {}) {
+  // eslint-disable-next-line no-console
   console.log(`afdPresseLatest: Lade Presseliste von ${baseUrl} …`);
   const listHtml = await fetchHtml(baseUrl);
   const links = extractPressLinksFromList(listHtml);
+  // eslint-disable-next-line no-console
   console.log(`afdPresseLatest: ${links.length} Pressemitteilungen gefunden.`);
 
   if (!links.length) {
+    // eslint-disable-next-line no-console
     console.warn(
       "afdPresseLatest: 0 Links gefunden. Hat sich das HTML-Format der Seite geändert?"
     );
@@ -240,6 +245,7 @@ async function afdPresseLatest({ limit = 20, baseUrl = AFD_PRESS_BASE } = {}) {
   const results = [];
   for (let i = 0; i < selected.length; i++) {
     const link = selected[i];
+    // eslint-disable-next-line no-console
     console.log(
       `afdPresseLatest: ${i + 1}/${selected.length} — ${link.title.slice(0, 80)}`
     );
@@ -248,6 +254,7 @@ async function afdPresseLatest({ limit = 20, baseUrl = AFD_PRESS_BASE } = {}) {
     // Schonender Delay, damit wir afd.de nicht überlasten
     await new Promise((r) => setTimeout(r, 500));
   }
+  // eslint-disable-next-line no-console
   console.log(
     `afdPresseLatest: ${results.length}/${selected.length} Pressemitteilungen importiert.`
   );

@@ -77,12 +77,15 @@ class DrupalWiki {
           this.#storePage(page, encryptionWorker);
           await this.#downloadAndProcessAttachments(page.id);
         } else {
+          // eslint-disable-next-line no-console
           console.log(`Skipping page (${page.id}) since it has no content`);
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(
           `Could not process DrupalWiki page ${pageId} (skipping and continuing): `
         );
+        // eslint-disable-next-line no-console
         console.error(e);
       }
     }
@@ -201,6 +204,7 @@ class DrupalWiki {
     };
 
     const fileName = sanitizeFileName(`${slugify(page.title)}-${data.id}`);
+    // eslint-disable-next-line no-console
     console.log(
       `[DrupalWiki Loader]: Saving page '${page.title}' (${page.id}) to '${this.storagePath}/${fileName}'`
     );
@@ -309,6 +313,7 @@ class DrupalWiki {
           headers: this.#getHeaders(),
         });
         if (!attachmentResponse.ok) {
+          // eslint-disable-next-line no-console
           console.log(`Skipping attachment: ${fileName} - Download failed`);
           continue;
         }
@@ -318,6 +323,7 @@ class DrupalWiki {
           sanitizeFileName(path.resolve(WATCH_DIRECTORY, fileName))
         );
         if (!isWithin(path.resolve(WATCH_DIRECTORY), localFilePath)) {
+          // eslint-disable-next-line no-console
           console.error(
             `[DrupalWiki Loader]: File name ${localFilePath} is not within the storage path ${path.resolve(
               WATCH_DIRECTORY
@@ -330,6 +336,7 @@ class DrupalWiki {
         await processSingleFile(localFilePath);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(`Fetching/processing attachments failed:`, err);
     }
   }

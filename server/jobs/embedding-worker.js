@@ -112,6 +112,7 @@ async function processQueue() {
     );
 
     if (!vectorized) {
+      // eslint-disable-next-line no-console
       console.error("Failed to vectorize", metadata?.title || newDoc.filename);
       failedToEmbed.push(metadata?.title || newDoc.filename);
       emit({
@@ -130,6 +131,7 @@ async function processQueue() {
         ...docProgress,
       });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message);
       emit({
         type: "doc_failed",
@@ -169,6 +171,7 @@ process.on("message", async (msg) => {
     userId = msg.userId;
     queue.push(...msg.files);
     processQueue().catch((err) => {
+      // eslint-disable-next-line no-console
       console.error("[embedding-worker] Fatal error:", err);
       process.exit(1);
     });
@@ -180,6 +183,7 @@ process.on("message", async (msg) => {
     // kick off processing immediately.
     if (!processing) {
       processQueue().catch((err) => {
+        // eslint-disable-next-line no-console
         console.error("[embedding-worker] Fatal error:", err);
         process.exit(1);
       });

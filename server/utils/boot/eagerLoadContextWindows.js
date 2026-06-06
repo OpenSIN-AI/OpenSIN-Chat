@@ -10,6 +10,7 @@ async function eagerLoadContextWindows() {
   const currentProvider = process.env.LLM_PROVIDER;
 
   const log = (provider) => {
+    // eslint-disable-next-line no-console
     console.log(`⚡\x1b[32mPre-cached context windows for ${provider}\x1b[0m`);
   };
 

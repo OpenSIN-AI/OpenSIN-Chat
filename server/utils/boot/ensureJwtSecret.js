@@ -58,15 +58,18 @@ function ensureJwtSecret() {
     lines.push(`JWT_SECRET='${secret}'`);
     try {
       fs.writeFileSync(envFile, lines.join("\n") + "\n");
+      // eslint-disable-next-line no-console
       console.log(
         `${LOG_PREFIX} Generated new JWT_SECRET and wrote it to ${path.basename(envFile)}`,
       );
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.warn(
         `${LOG_PREFIX} Could not persist JWT_SECRET to ${envFile}: ${e.message}. Using in-memory value for this session.`,
       );
     }
   } else {
+    // eslint-disable-next-line no-console
     console.log(
       `${LOG_PREFIX} Generated in-memory JWT_SECRET (no .env file found to persist to)`,
     );

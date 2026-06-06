@@ -44,6 +44,7 @@ class MySQLConnector {
       result.rows = query;
       result.count = query?.length;
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(this.className, err);
       result.error = err.message;
     } finally {

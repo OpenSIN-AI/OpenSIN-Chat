@@ -34,10 +34,12 @@ class FoundryLLM {
   }
 
   static #slog(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[FoundryLLM]\x1b[0m ${text}`, ...args);
   }
 
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -312,6 +314,7 @@ class FoundryLLM {
         const diffMs = now - lastChunkTime;
 
         if (diffMs >= timeoutThresholdMs) {
+          // eslint-disable-next-line no-console
           console.warn(
             `Foundry stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
@@ -334,6 +337,7 @@ class FoundryLLM {
 
       try {
         for await (const chunk of stream) {
+          // eslint-disable-next-line no-console
           // console.log(JSON.stringify(chunk, null, 2));
           const message = chunk?.choices?.[0];
           const token = message?.delta?.content;

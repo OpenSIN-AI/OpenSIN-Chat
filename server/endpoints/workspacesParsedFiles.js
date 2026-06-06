@@ -37,6 +37,7 @@ function workspaceParsedFilesEndpoints(app) {
           .status(200)
           .json({ files, contextWindow, currentContextTokenCount });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         return response.sendStatus(500).end();
       }
@@ -61,6 +62,7 @@ function workspaceParsedFilesEndpoints(app) {
         });
         return response.status(success ? 200 : 403).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         return response.sendStatus(500).end();
       }
@@ -112,6 +114,7 @@ function workspaceParsedFilesEndpoints(app) {
           document,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         return response.sendStatus(500).end();
       } finally {
@@ -200,6 +203,7 @@ function workspaceParsedFilesEndpoints(app) {
           files,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         return response.sendStatus(500).end();
       }

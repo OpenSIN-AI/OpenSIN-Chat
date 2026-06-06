@@ -22,6 +22,7 @@ function skillIsAutoApproved({ skillName }) {
   if (!autoApprovedSkills.length || !autoApprovedSkills.includes(skillName))
     return false;
 
+  // eslint-disable-next-line no-console
   console.log(
     chalk.green(
       `Skill ${skillName} is auto-approved by the ENV variable AGENT_AUTO_APPROVED_SKILLS.`,

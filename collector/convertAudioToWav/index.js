@@ -44,6 +44,7 @@ async function convertAudioToWav(filename) {
     await ffmpeg.convertAudioToWav(inputPath, outputPath);
     return { success: true, reason: null, wavFilename };
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     return { success: false, reason: e.message, wavFilename: null };
   } finally {

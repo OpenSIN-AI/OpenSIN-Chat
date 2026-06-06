@@ -219,6 +219,7 @@ async function bundestagDrucksache(params = {}) {
   const data = await dipFetch(url, params.apiKey);
   const docs = Array.isArray(data.documents) ? data.documents : [];
   if (!docs.length) {
+    // eslint-disable-next-line no-console
     console.warn(
       `bundestagDrucksache: DIP-API lieferte 0 Dokumente für ${params.drucksache}`
     );
@@ -252,9 +253,11 @@ async function bundestagSearch(params = {}) {
   const data = await dipFetch(url, params.apiKey);
   const docs = Array.isArray(data.documents) ? data.documents : [];
   if (!docs.length) {
+    // eslint-disable-next-line no-console
     console.warn(`bundestagSearch: DIP-API lieferte 0 Treffer für "${q}"`);
     return [];
   }
+  // eslint-disable-next-line no-console
   console.log(
     `bundestagSearch: ${docs.length} Treffer für "${q}" — Importiere…`
   );

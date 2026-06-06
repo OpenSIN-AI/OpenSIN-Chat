@@ -187,6 +187,7 @@ class PerplexityLLM {
         const now = Number(new Date());
         const diffMs = now - lastChunkTime;
         if (diffMs >= timeoutThresholdMs) {
+          // eslint-disable-next-line no-console
           console.warn(
             `Perplexity stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
@@ -266,6 +267,7 @@ class PerplexityLLM {
           }
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
         writeResponseChunk(response, {
           uuid,
