@@ -6,6 +6,7 @@ import PersonalizationToggle from "./PersonalizationToggle";
 import MemoryTabs from "./MemoryTabs";
 import MemoryCard from "./MemoryCard";
 import MemoryModal from "./MemoryModal";
+import SidebarTabs from "../ChatSidebar/SidebarTabs";
 
 export { useMemoriesSidebar } from "../ChatSidebar";
 
@@ -25,7 +26,7 @@ function MemoriesSidebarContent() {
     <>
       <ChatSidebar isOpen={sidebarOpen}>
         <SidebarPanel>
-          <SidebarHeader />
+          <SidebarHeaderWithTabs />
           <PersonalizationToggle />
           <MemoryList />
         </SidebarPanel>
@@ -51,23 +52,15 @@ function MemoryList() {
 
   if (!enabled) return null;
   if (activeMemories.length === 0) {
-    return (
-      <>
-        <MemoryTabs />
-        <EmptyState />
-      </>
-    );
+    return <EmptyState />;
   }
 
   return (
-    <>
-      <MemoryTabs />
-      <div className="flex flex-col gap-1.5 pb-4">
-        {activeMemories.map((memory) => (
-          <MemoryCard key={memory.id} memory={memory} />
-        ))}
-      </div>
-    </>
+    <div className="flex flex-col gap-1.5 pb-4">
+      {activeMemories.map((memory) => (
+        <MemoryCard key={memory.id} memory={memory} />
+      ))}
+    </div>
   );
 }
 
@@ -99,24 +92,27 @@ function MemoryModalWrapper() {
   );
 }
 
-function SidebarHeader() {
+function SidebarHeaderWithTabs() {
   const { t } = useTranslation();
   const { closeSidebar } = useMemoriesContext();
 
   return (
-    <div className="flex items-start justify-between shrink-0">
-      <p className="font-medium text-base leading-6 text-zinc-50 light:text-slate-900">
-        {t("chat_window.memories.title")}
-      </p>
-      <button
-        onClick={closeSidebar}
-        type="button"
-        className="text-zinc-50 light:text-slate-900 hover:text-white light:hover:text-slate-400 transition-colors border-none bg-transparent cursor-pointer"
-      >
-        <X size={16} weight="bold" />
-      </button>
+    <div className="flex flex-col shrink-0 gap-2">
+      <div className="flex items-start justify-between shrink-0">
+        <p className="font-medium text-base leading-6 text-zinc-50 light:text-slate-900">
+          {t("chat_window.memories.title")}
+        </p>
+        <button
+          onClick={closeSidebar}
+          type="button"
+          className="text-zinc-50 light:text-slate-900 hover:text-white light:hover:text-slate-400 transition-colors border-none bg-transparent cursor-pointer"
+        >
+          <X size={16} weight="bold" />
+        </button>
+      </div>
+      <SidebarTabs />
     </div>
-  );
+  >
 }
 
 function EmptyState() {

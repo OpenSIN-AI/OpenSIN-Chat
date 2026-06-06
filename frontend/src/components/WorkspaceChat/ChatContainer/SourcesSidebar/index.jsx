@@ -8,7 +8,8 @@ import {
 } from "../ChatHistory/Citation";
 import MobileCitationModal from "./MobileCitationModal";
 import SourceItem from "./SourceItem";
-import ChatSidebar, { useSourcesSidebar } from "../ChatSidebar";
+import ChatSidebar, { useSourcesSidebar, useMemoriesSidebar } from "../ChatSidebar";
+import SidebarTabs from "../ChatSidebar/SidebarTabs";
 
 // Re-export for backward compat with existing imports
 export { useSourcesSidebar } from "../ChatSidebar";
@@ -17,6 +18,7 @@ export default function SourcesSidebar() {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
   const [selectedSource, setSelectedSource] = useState(null);
+  const { toggleSidebar } = useMemoriesSidebar();
 
   const combined = combineLikeSources(sources);
 
@@ -42,17 +44,20 @@ export default function SourcesSidebar() {
           className="ml-4 w-[350px] bg-zinc-900 light:bg-white light:border-2 light:border-slate-300 md:rounded-[16px] p-4 flex flex-col gap-4 overflow-hidden mt-[72px]"
           style={{ maxHeight: "calc(100% - 88px)" }}
         >
-          <div className="flex items-start justify-between">
-            <p className="font-medium text-base leading-6 text-white light:text-slate-900">
-              {t("chat_window.sources")}
-            </p>
-            <button
-              onClick={closeSidebar}
-              type="button"
-              className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
-            >
-              <X size={16} weight="bold" />
-            </button>
+          <div className="flex flex-col shrink-0 gap-2">
+            <div className="flex items-start justify-between">
+              <p className="font-medium text-base leading-6 text-white light:text-slate-900">
+                {t("chat_window.sources")}
+              </p>
+              <button
+                onClick={closeSidebar}
+                type="button"
+                className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
+              >
+                <X size={16} weight="bold" />
+              </button>
+            </div>
+            <SidebarTabs />
           </div>
           <div className="flex flex-col gap-3 overflow-y-auto no-scroll">
             {combined.map((source, idx) => (
