@@ -26,6 +26,13 @@ ALLOWED_FILES=(
   "LICENSE"
   "LICENSE.md"
   "package.json"                       # contributors[] credits Mintplex Labs
+  "server/package.json"                # upstream npm-scope deps: @mintplex-labs/{bree,express-ws,mdpdf} — these are mintplex-published packages we depend on as-is (no upstream rebrand)
+  "server/index.js"                    # require('@mintplex-labs/express-ws') — upstream WebSocket layer
+  "server/utils/boot/index.js"         # require('@mintplex-labs/express-ws') — SSL WebSocket boot
+  "server/utils/BackgroundWorkers/index.js"   # require('@mintplex-labs/bree') + JSDoc @openafd/bree type ref — upstream scheduler
+  "server/utils/agents/aibitat/example/websocket/websock-multi-turn-chat.js"  # require('@mintplex-labs/express-ws') — example
+  "server/utils/agents/aibitat/example/websocket/websock-branding-collab.js"   # require('@mintplex-labs/express-ws') — example
+  "server/utils/agents/aibitat/plugins/create-files/pdf/create-pdf-file.js"    # import('@mintplex-labs/mdpdf') — upstream PDF converter
 
   # ── Self-reference (linter mentions the strings it forbids) ─
   "scripts/check-branding.sh"
