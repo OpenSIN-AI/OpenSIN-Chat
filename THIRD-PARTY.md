@@ -1,15 +1,22 @@
-# THIRD-PARTY NOTICES
+# THIRD-PARTY NOTICES & UPSTREAM-CREDITS
+
+> **OpenAfD Chat ist ein Community-Fork von [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) (MIT).**
+>
+> Ohne die Arbeit des Mintplex-Teams wäre dieses Projekt nicht möglich. Wir
+> danken **Timothy Carambat** und allen Mitwirkenden ausdrücklich für die
+> exzellente Grundlage. 🙏
 
 OpenAfD Chat baut auf Open-Source-Komponenten auf. Wir sind allen Mitwirkenden
 zu großem Dank verpflichtet. Die wichtigsten Bestandteile:
 
-## Upstream
+## Upstream (Hauptgrundlage)
 
 - **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)** by
   [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) — MIT-Lizenz.
-  OpenAfD Chat ist ein direkter Fork dieses Projekts. Wir danken Timothy
-  Carambat und dem gesamten Mintplex-Team für die exzellente Arbeit, ohne
-  die dieses Projekt nicht möglich wäre.
+  OpenAfD Chat ist ein direkter Fork dieses Projekts.
+
+  👉 Bitte unterstütze das Original-Projekt: [github.com/Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm)
+  durch Stars, Sponsoring, Bug-Reports oder Pull-Requests.
 
 - **Upstream-Sync:** Wir empfehlen, das Upstream-Repo als Git-Remote
   hinzuzufügen, um Sicherheits-Patches mitzuziehen:

@@ -92,11 +92,55 @@ Beiträge sind willkommen — siehe [`CONTRIBUTING.md`](./CONTRIBUTING.md). Code
 
 **MIT** — siehe [`LICENSE`](./LICENSE). Du kannst das Projekt frei nutzen, verändern und weitergeben, solange der Lizenztext erhalten bleibt.
 
-## 🙏 Danksagung
+## 🙏 Danksagung — Upstream-Credit
 
-OpenAfD Chat baut auf der exzellenten Arbeit von **Family Team Projects** und ihrem Open-Source-Projekt [OpenAfD Chat](https://github.com/Family-Team-Projects/openafd-chat) auf (MIT-Lizenz). Ohne diese Grundlage wäre dieses Projekt nicht möglich. Wir danken der Community und allen Mitwirkenden.
+OpenAfD Chat ist ein Community-Fork von **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)**, entwickelt von **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** unter MIT-Lizenz.
 
-Eine vollständige Liste der Drittanbieter-Komponenten findest du in [`THIRD-PARTY.md`](./THIRD-PARTY.md).
+Ohne die hervorragende Arbeit von **Timothy Carambat** und dem gesamten Mintplex-Team, der AnythingLLM-Community und allen Mitwirkenden wäre dieses Projekt nicht möglich gewesen. Wir stehen auf den Schultern von Riesen — und das soll hier ausdrücklich gewürdigt werden.
+
+> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as a reference during chatting. Built and maintained by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) — used here as the foundation for OpenAfD Chat.*
+
+**Was wir von AnythingLLM übernommen haben:**
+
+- Komplette Architektur (Frontend, Server, Collector, Vector-DB-Layer)
+- LLM-, Embedding- und Vektor-Datenbank-Provider-Landschaft
+- Agent-Framework, MCP-Integration, Web-Scraping
+- Sicherheits-, Auth- und Multi-User-Konzept
+- `@mintplex-labs/*` NPM-Pakete (WebSocket, Bree Scheduler, Piper-TTS)
+
+**Was OpenAfD Chat draufsetzt:**
+
+- Komplettes Rebranding (AfD-Blau, deutsche Sprache, eigenes Logo)
+- Telemetrie **komplett** entfernt (statt nur abschaltbar)
+- DSGVO-affine Defaults (kein Phone-Home, kein CDN-Tracking)
+- Branding-Strategie auf einen deutschsprachigen politischen Use-Case
+- Mittelfristig: Bundestag-Drucksachen-Connector, Pressemitteilungs-Importer
+
+**Upstream synchronisieren:** Wir empfehlen, das Original-Repo als Git-Remote hinzuzufügen, um Sicherheits-Patches mitzuziehen:
+
+```bash
+git remote add upstream https://github.com/Mintplex-Labs/anything-llm.git
+git fetch upstream
+```
+
+Eine vollständige Liste aller Drittanbieter-Komponenten findest du in [`THIRD-PARTY.md`](./THIRD-PARTY.md).
+
+---
+
+<div align="center">
+
+### 💙 Thank you, Mintplex Labs!
+
+[![Upstream](https://img.shields.io/badge/Upstream-AnythingLLM-009ee0?logo=github)](https://github.com/Mintplex-Labs/anything-llm)
+[![Original Repo](https://img.shields.io/badge/Mintplex--Labs-anything--llm-black?logo=github)](https://github.com/Mintplex-Labs/anything-llm)
+[![MIT License](https://img.shields.io/badge/License-MIT-green)](https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE)
+[![Discord (Original)](https://img.shields.io/badge/Discord-Original%20Community-blueviolet?logo=discord)](https://discord.gg/6UyHPeGZAC)
+
+*OpenAfD Chat is a community fork. All credit for the original codebase goes to the Mintplex Labs team and the AnythingLLM contributors.*
+
+</div>
+
+---
 
 ---
 

@@ -1,5 +1,11 @@
 # Branding-Guidelines — OpenAfD Chat
 
+> **Upstream-Credit:** OpenAfD Chat ist ein Community-Fork von
+> [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by
+> [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) (MIT). Wir danken
+> dem Mintplex-Team ausdrücklich für die exzellente Grundlage, ohne die
+> dieses Projekt nicht möglich wäre. 🙏
+
 ## Farben
 
 | Token | Hex | Verwendung |

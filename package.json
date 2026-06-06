@@ -5,6 +5,23 @@
   "main": "index.js",
   "type": "module",
   "author": "Family Team Projects (OpenAfD Chat)",
+  "contributors": [
+    {
+      "name": "Mintplex Labs Inc.",
+      "email": "team@mintplexlabs.com",
+      "url": "https://github.com/Mintplex-Labs/anything-llm",
+      "role": "Original Upstream Author (AnythingLLM)"
+    },
+    {
+      "name": "Timothy Carambat",
+      "url": "https://github.com/TimothyCarambat",
+      "role": "Original Creator of AnythingLLM"
+    }
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/anythingllm"
+  },
   "license": "MIT",
   "private": false,
   "repository": {
