@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Unified Agent Orchestrator — coordinates multiple OpenAfD-Chat modules
  * (PoliticianDB, Deep Research, PDF Reports, Browser Agent) into

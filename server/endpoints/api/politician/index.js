@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Politician REST API endpoints.
  *

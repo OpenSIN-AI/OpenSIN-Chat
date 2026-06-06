@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Bundestag API client — fetches politician data from the official "Offene Daten"
  * Abgeordnetendatenbank.

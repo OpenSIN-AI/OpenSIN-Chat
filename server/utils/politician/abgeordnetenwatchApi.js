@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Abgeordnetenwatch API client — fetches voting records, mandates, and politician
  * profiles from the official Abgeordnetenwatch.de API.

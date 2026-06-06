@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Research REST API endpoints.
  *

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * LLM Summarizer — generates structured summaries of research results.
  *

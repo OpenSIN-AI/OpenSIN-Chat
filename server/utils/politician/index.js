@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Politician Database Module — unified entry point for politician search,
  * retrieval, voting records, speeches, and mandates.

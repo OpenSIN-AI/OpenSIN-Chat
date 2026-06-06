@@ -8,12 +8,19 @@ const { normalizePath, sanitizeFileName } = require(".");
  * Handle File uploads for auto-uploading.
  * Mostly used for internal GUI/API uploads.
  */
+const _storageDir =
+  process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage");
+const _collectorDir =
+  process.env.STORAGE_DIR
+    ? path.resolve(process.env.STORAGE_DIR, "../../collector")
+    : path.resolve(__dirname, "../../../collector");
+
 const fileUploadStorage = multer.diskStorage({
   destination: function (_, __, cb) {
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../../collector/hotdir`)
-        : path.resolve(process.env.STORAGE_DIR, `../../collector/hotdir`);
+        : path.resolve(_collectorDir, `hotdir`);
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {
@@ -33,7 +40,7 @@ const fileAPIUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../../collector/hotdir`)
-        : path.resolve(process.env.STORAGE_DIR, `../../collector/hotdir`);
+        : path.resolve(_collectorDir, `hotdir`);
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {
@@ -50,7 +57,7 @@ const assetUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../storage/assets`)
-        : path.resolve(process.env.STORAGE_DIR, "assets");
+        : path.resolve(_storageDir, "assets");
     fs.mkdirSync(uploadOutput, { recursive: true });
     return cb(null, uploadOutput);
   },
@@ -70,7 +77,7 @@ const pfpUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../storage/assets/pfp`)
-        : path.resolve(process.env.STORAGE_DIR, "assets/pfp");
+        : path.resolve(_storageDir, "assets/pfp");
     fs.mkdirSync(uploadOutput, { recursive: true });
     return cb(null, uploadOutput);
   },

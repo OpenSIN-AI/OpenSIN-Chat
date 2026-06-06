@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Plenarprotokolle parser — extracts speech texts from Bundestag plenary protocols
  * (XML/PDF/HTML formats).

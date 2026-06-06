@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Bree job: sync-politician-data
  *

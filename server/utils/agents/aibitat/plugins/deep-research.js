@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Deep Research agent plugin for aibitat.
  *

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Report generation agent plugin for aibitat.
  *

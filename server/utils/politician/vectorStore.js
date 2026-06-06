@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Vector store operations for politician speeches — uses existing PGVector
  * provider for semantic search over speech contents.

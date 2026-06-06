@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Politician Database model — thin data-access wrapper around Prisma queries
  * for politician-related tables.

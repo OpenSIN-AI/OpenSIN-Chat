@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Content extractor — fetches URL content and converts to clean text.
  *

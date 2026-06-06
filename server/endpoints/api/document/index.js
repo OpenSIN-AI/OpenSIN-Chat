@@ -16,10 +16,12 @@ const path = require("path");
 const { Document } = require("../../../models/documents");
 const { purgeFolder } = require("../../../utils/files/purgeDocument");
 const createFilesLib = require("../../../utils/agents/aibitat/plugins/create-files/lib");
+const _storageDir =
+  process.env.STORAGE_DIR || path.resolve(__dirname, "../../../storage");
 const documentsPath =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, "../../../storage/documents")
-    : path.resolve(process.env.STORAGE_DIR, `documents`);
+    : path.resolve(_storageDir, `documents`);
 
 /**
  * Runs a simple validation check on the addToWorkspaces query parameter to ensure it is a string of comma-separated workspace slugs.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Embedding utility for politician speeches — chunking + vector embedding
  * using the existing NativeEmbedder from OpenAfD.

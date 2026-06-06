@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Report generation REST API endpoints.
  *
@@ -24,10 +25,12 @@ function getResearchPipeline() {
   return getResearchPipeline();
 }
 
+const _storageDir =
+  process.env.STORAGE_DIR || path.resolve(__dirname, "../../../storage");
 const STORAGE_DIR =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, "../../../storage/generated-reports")
-    : path.resolve(process.env.STORAGE_DIR, "generated-reports");
+    : path.resolve(_storageDir, "generated-reports");
 
 function apiReportsEndpoints(app) {
   if (!app) return;

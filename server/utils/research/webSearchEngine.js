@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Web search engine wrapper — delegates to the configured search provider
  * from SystemSettings (SerpAPI, DuckDuckGo, etc.).

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Deep Research Pipeline — multi-step research: search → fetch → extract → summarize.
  *
