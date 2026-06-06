@@ -9,6 +9,9 @@ const { apiUserManagementEndpoints } = require("./userManagement");
 const { apiOpenAICompatibleEndpoints } = require("./openai");
 const { apiEmbedEndpoints } = require("./embed");
 const { apiPoliticianEndpoints } = require("./politician");
+const { apiResearchEndpoints } = require("./research");
+const { apiReportsEndpoints } = require("./reports");
+const { apiOrchestratorEndpoints } = require("./orchestrator");
 
 // All endpoints must be documented and pass through the validApiKey Middleware.
 // How to JSDoc an endpoint
@@ -26,6 +29,9 @@ function developerEndpoints(app, router) {
   apiOpenAICompatibleEndpoints(router);
   apiEmbedEndpoints(router);
   apiPoliticianEndpoints(router);
+  apiResearchEndpoints(router);
+  apiReportsEndpoints(router);
+  apiOrchestratorEndpoints(router);
 }
 
 module.exports = { developerEndpoints };

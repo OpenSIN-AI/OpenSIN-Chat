@@ -13,6 +13,9 @@ const { outlookAgent } = require("./outlook/index.js");
 const { googleCalendarAgent } = require("./google-calendar/index.js");
 const { requestUserInput } = require("./request-user-input.js");
 const { politicianSearch } = require("./politician-search.js");
+const { deepResearch } = require("./deep-research.js");
+const { generateReport } = require("./generate-report.js");
+const { orchestratorAgent } = require("./orchestrator.js");
 
 module.exports = {
   webScraping,
@@ -30,6 +33,9 @@ module.exports = {
   googleCalendarAgent,
   requestUserInput,
   politicianSearch,
+  deepResearch,
+  generateReport,
+  orchestratorAgent,
 
   // Plugin name aliases so they can be pulled by slug as well.
   [webScraping.name]: webScraping,
@@ -47,4 +53,7 @@ module.exports = {
   [googleCalendarAgent.name]: googleCalendarAgent,
   [requestUserInput.name]: requestUserInput,
   [politicianSearch.name]: politicianSearch,
+  [deepResearch.name]: deepResearch,
+  [generateReport.name]: generateReport,
+  [orchestratorAgent.name]: orchestratorAgent,
 };
