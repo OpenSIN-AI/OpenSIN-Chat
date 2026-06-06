@@ -301,6 +301,22 @@ function systemEndpoints(app) {
         return;
       } else {
         const { password } = reqBody(request);
+        // Single-user mode WITHOUT an AUTH_TOKEN env var: auth is disabled.
+        // Auto-grant a session token instead of crashing on
+        // `bcrypt.hashSync(undefined, 10)`.
+        if (!process.env.AUTH_TOKEN) {
+          await Telemetry.sendTelemetry("login_event", { multiUserMode: false });
+          await EventLogs.logEvent("login_event", {
+            ip: request.ip || "Unknown IP",
+            multiUserMode: false,
+          });
+          response.status(200).json({
+            valid: true,
+            token: makeJWT({ p: null }, process.env.JWT_EXPIRY),
+            message: null,
+          });
+          return;
+        }
         if (
           !bcrypt.compareSync(
             password,
