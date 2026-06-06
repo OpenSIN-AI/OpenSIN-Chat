@@ -470,7 +470,7 @@ class AgentHandler {
   }
 
   async #resolveRouterProvider(prompt = null) {
-    const { OpenAfD ChatModelRouter } = require("../AiProviders/modelRouter");
+    const { OpenAfDChatModelRouter } = require("../AiProviders/modelRouter");
     const routerWorkspace = this.invocation.workspace.router_id
       ? this.invocation.workspace
       : {
@@ -494,7 +494,7 @@ class AgentHandler {
       thread = this._threadSlug ? { slug: this._threadSlug } : null;
     }
 
-    const router = new OpenAfD ChatModelRouter(routerWorkspace);
+    const router = new OpenAfDChatModelRouter(routerWorkspace);
     const { ModelRouterService } = require("../router");
     const workspace = this.invocation.workspace;
     const user = this.invocation.user_id

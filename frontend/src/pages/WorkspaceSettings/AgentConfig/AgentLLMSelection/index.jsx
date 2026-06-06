@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import OpenAfD ChatIcon from "@/media/logo/openafd-chat-icon.png";
+import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
 import AgentLLMItem from "./AgentLLMItem";
 import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 import { CaretUpDown, Gauge, MagnifyingGlass, X } from "@phosphor-icons/react";

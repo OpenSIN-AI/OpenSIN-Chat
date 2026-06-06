@@ -255,10 +255,10 @@ function getLLMProvider({ provider = null, model = null } = {}) {
       const { CerebrasLLM } = require("../AiProviders/cerebras");
       return new CerebrasLLM(embedder, model);
     case "openafd-router":
-      // Model router is handled separately in stream.js via OpenAfD ChatModelRouter.
+      // Model router is handled separately in stream.js via OpenAfDChatModelRouter.
       // This case should not be hit directly - if it is, throw a descriptive error.
       throw new Error(
-        "openafd-router provider must be resolved via OpenAfD ChatModelRouter class, not getLLMProvider directly."
+        "openafd-router provider must be resolved via OpenAfDChatModelRouter class, not getLLMProvider directly."
       );
     default:
       throw new Error(
@@ -449,8 +449,8 @@ function getLLMProviderClass({ provider = null } = {}) {
       const { CerebrasLLM } = require("../AiProviders/cerebras");
       return CerebrasLLM;
     case "openafd-router":
-      const { OpenAfD ChatModelRouter } = require("../AiProviders/modelRouter");
-      return OpenAfD ChatModelRouter;
+      const { OpenAfDChatModelRouter } = require("../AiProviders/modelRouter");
+      return OpenAfDChatModelRouter;
     default:
       return null;
   }
@@ -662,7 +662,7 @@ async function resolveProviderConnector({
     };
   }
 
-  const { OpenAfD ChatModelRouter } = require("../AiProviders/modelRouter");
+  const { OpenAfDChatModelRouter } = require("../AiProviders/modelRouter");
   const { ModelRouterService } = require("../router");
 
   const routerWorkspace = workspace?.router_id
@@ -674,7 +674,7 @@ async function resolveProviderConnector({
           : null,
       };
 
-  const router = new OpenAfD ChatModelRouter(routerWorkspace);
+  const router = new OpenAfDChatModelRouter(routerWorkspace);
   const ctx = await ModelRouterService.gatherRoutingContext({
     workspace,
     user,

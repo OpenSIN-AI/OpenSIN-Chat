@@ -206,7 +206,7 @@ function getDeploymentVersion() {
  * Returns the user agent for the OpenAfD Chat deployment.
  * @returns {string} The user agent.
  */
-function getOpenAfD ChatUserAgent() {
+function getOpenAfDChatUserAgent() {
   const version = getDeploymentVersion() || "unknown";
   return `OpenAfD Chat/${version}`;
 }
@@ -215,6 +215,6 @@ module.exports = {
   utilEndpoints,
   getGitVersion,
   getModelTag,
-  getOpenAfD ChatUserAgent,
+  getOpenAfDChatUserAgent,
   getDeploymentVersion,
 };

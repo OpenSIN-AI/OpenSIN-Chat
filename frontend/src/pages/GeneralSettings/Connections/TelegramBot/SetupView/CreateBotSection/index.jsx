@@ -1,6 +1,6 @@
 import { QRCodeSVG } from "qrcode.react";
 import { TelegramLogo } from "@phosphor-icons/react";
-import Logo from "@/media/logo/openafd-chat-infinity.png";
+import Logo from "@/media/logo/openafd-icon.svg";
 import { Trans, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 

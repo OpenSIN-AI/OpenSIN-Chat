@@ -313,8 +313,8 @@ class CreateFilesManager {
     // Does not honor Whitelabeling changes/preferences right now.
     const assetsPath = path.join(__dirname, "assets");
     const filename = forDarkBackground
-      ? "openafd-chat.png"
-      : "openafd-chat-invert.png";
+      ? "openafd-logo.png"
+      : "openafd-logo-dark.png";
     try {
       if (format === "dataUri") {
         const base64 = fsSync.readFileSync(

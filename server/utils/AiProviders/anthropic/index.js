@@ -9,7 +9,7 @@ const { MODEL_MAP } = require("../modelMap");
 const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
-const { getOpenAfD ChatUserAgent } = require("../../../endpoints/utils");
+const { getOpenAfDChatUserAgent } = require("../../../endpoints/utils");
 
 class AnthropicLLM {
   constructor(embedder = null, modelPreference = null) {
@@ -22,7 +22,7 @@ class AnthropicLLM {
     const anthropic = new AnthropicAI({
       apiKey: process.env.ANTHROPIC_API_KEY,
       defaultHeaders: {
-        "User-Agent": getOpenAfD ChatUserAgent(),
+        "User-Agent": getOpenAfDChatUserAgent(),
       },
     });
     this.anthropic = anthropic;

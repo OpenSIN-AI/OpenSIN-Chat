@@ -6,7 +6,7 @@ import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
 import CTAButton from "@/components/lib/CTAButton";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import DeepgramLogo from "@/media/ttsproviders/deepgram.png";
-import OpenAfD ChatIcon from "@/media/logo/openafd-chat-icon.png";
+import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
 import LemonadeLogo from "@/media/llmprovider/lemonade.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 

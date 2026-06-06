@@ -218,7 +218,7 @@ class EphemeralAgentHandler extends AgentHandler {
   }
 
   async #resolveRouterProvider(prompt = null) {
-    const { OpenAfD ChatModelRouter } = require("../AiProviders/modelRouter");
+    const { OpenAfDChatModelRouter } = require("../AiProviders/modelRouter");
     const routerWorkspace = this.#workspace?.router_id
       ? this.#workspace
       : {
@@ -228,7 +228,7 @@ class EphemeralAgentHandler extends AgentHandler {
             : null,
         };
 
-    const router = new OpenAfD ChatModelRouter(routerWorkspace);
+    const router = new OpenAfDChatModelRouter(routerWorkspace);
     const { ModelRouterService } = require("../router");
     const workspace = this.#workspace;
     const user = this.#userId ? { id: this.#userId } : null;

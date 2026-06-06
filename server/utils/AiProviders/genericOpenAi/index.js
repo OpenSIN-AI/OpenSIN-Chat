@@ -9,7 +9,7 @@ const {
 } = require("../../helpers/chat/responses");
 const { v4: uuidv4 } = require("uuid");
 const { toValidNumber } = require("../../http");
-const { getOpenAfD ChatUserAgent } = require("../../../endpoints/utils");
+const { getOpenAfDChatUserAgent } = require("../../../endpoints/utils");
 
 class GenericOpenAiLLM {
   constructor(embedder = null, modelPreference = null) {
@@ -25,7 +25,7 @@ class GenericOpenAiLLM {
       baseURL: this.basePath,
       apiKey: process.env.GENERIC_OPEN_AI_API_KEY ?? null,
       defaultHeaders: {
-        "User-Agent": getOpenAfD ChatUserAgent(),
+        "User-Agent": getOpenAfDChatUserAgent(),
         ...GenericOpenAiLLM.parseCustomHeaders(),
       },
     });
