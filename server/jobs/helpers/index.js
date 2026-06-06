@@ -1,3 +1,10 @@
+// Shim `Buffer.SlowBuffer` for Node ≥18. Required by `jsonwebtoken`
+// (transitive dep via `buffer-equal-constant-time`) which crashes on
+// require if the symbol is undefined. This helpers file is loaded by
+// every Bree-spawned worker job, so installing the shim here covers all
+// of them with a single point of change.
+require("../../utils/boot/patchSlowBuffer")();
+
 const path = require("node:path");
 const fs = require("node:fs");
 const { parentPort } = require("node:worker_threads");
