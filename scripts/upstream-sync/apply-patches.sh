@@ -72,16 +72,36 @@ for group in "${groups[@]}"; do
 
   for patch in "${patches[@]}"; do
     pname="$(basename "$patch")"
+    # Detect if patch is already applied by checking the patch's subject
+    # against git log (works across rebases / SHA changes).
+    patch_subject=$(grep -m1 '^Subject: ' "$patch" | sed 's/^Subject: //' | sed 's/^\[PATCH[^]]*\] //')
+    if [ -n "$patch_subject" ] && git log --oneline | grep -F "$patch_subject" >/dev/null 2>&1; then
+      echo "  ⏭  $pname  (already applied: \"$patch_subject\")"
+      continue
+    fi
     # --3way: use merge to apply even if the patch doesn't apply cleanly
     if git am --3way --quiet "$patch" 2>/dev/null; then
       echo "  ✓ $pname"
     else
-      # Check if it's already applied (same commit already in our tree)
-      sha_line=$(grep -m1 '^From [0-9a-f]' "$patch" | awk '{print $2}')
-      if git log --oneline | grep -q "${sha_line:0:8}"; then
-        echo "  ⏭  $pname  (already applied)"
-        git am --skip --quiet 2>/dev/null || true
-        continue
+      # If am is mid-conflict, auto-resolve by accepting HEAD content
+      # (our rebrand wins over upstream strings). If the resulting tree
+      # is identical to HEAD, the patch is a no-op (skip silently).
+      if [ -d .git/rebase-apply ] || [ -d .git/sequencer ]; then
+        # We're in a conflict. Auto-resolve all conflicted files to HEAD.
+        conflicted=$(git diff --name-only --diff-filter=U 2>/dev/null)
+        if [ -n "$conflicted" ]; then
+          for f in $conflicted; do
+            # Use git checkout --ours to keep HEAD content
+            git checkout --ours -- "$f" 2>/dev/null
+            git add "$f" 2>/dev/null
+          done
+          # Check if the resulting tree differs from HEAD
+          if git diff --cached --quiet 2>/dev/null; then
+            echo "  ⏭  $pname  (no-op: changes already in tree)"
+            git am --skip --quiet 2>/dev/null || true
+            continue
+          fi
+        fi
       fi
       echo "  ⚠  CONFLICT in $pname — resolve, commit, then re-run this script."
       echo "     Patch file: $patch"
