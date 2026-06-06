@@ -18,3 +18,4 @@ node_modules
 # SIN-Code tool local state (do not commit)
 .sin/
 sin_goal_mode.db
+.sin_evidence/
