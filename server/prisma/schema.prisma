@@ -428,6 +428,158 @@ model scheduled_job_runs {
   @@index([jobId])
 }
 
+model politicians {
+  id              String    @id // UUID
+  externalId      String?   @unique // Bundestag-ID or Abgeordnetenwatch-ID
+  source          String    @default("bundestag") // bundestag | abgeordnetenwatch
+  title           String?   // Dr., Prof. Dr., etc.
+  firstName       String
+  lastName        String
+  fullName        String
+  party           String?   // current party
+  faction         String?   // current faction
+  gender          String?
+  birthDate       DateTime?
+  birthPlace      String?
+  deathDate       DateTime?
+  profession      String?
+  education       String?
+  religion        String?
+  familyStatus    String?
+  photoUrl        String?
+  websiteUrl      String?
+  email           String?
+  twitterHandle   String?
+  facebookUrl     String?
+  linkedinUrl     String?
+  instagramUrl    String?
+  youtubeUrl      String?
+  tiktokUrl       String?
+  bio             String?   // full biography text
+  profileUrl      String?   // link to Bundestag profile
+  electoralDistrict String? // Wahlkreis
+  electoralList  String?   // Landesliste
+  state           String?   // Bundesland
+  rawData         String?   // JSON blob of raw API response
+  lastSyncedAt    DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  mandates          politician_mandates[]
+  votes            politician_votes[]
+  speeches         politician_speeches[]
+  committeeMemberships politician_committee_memberships[]
+
+  @@index([source])
+  @@index([lastName])
+  @@index([party])
+  @@index([state])
+}
+
+model politician_mandates {
+  id            String    @id @default(uuid())
+  politicianId  String
+  type          String    @default("bundestag") // bundestag | landtag | europaparlament | minister
+  position      String?   // Abgeordneter, Minister, Staatssekretaer, etc.
+  party         String?
+  faction       String?
+  electoralDistrict String? // Wahlkreis
+  state         String?
+  startDate     DateTime?
+  endDate       DateTime?
+  info          String?   // committee membership summary
+  rawData       String?   // JSON blob
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  politician    politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+
+  @@index([politicianId])
+  @@index([type])
+}
+
+model politician_votes {
+  id            String    @id @default(uuid())
+  politicianId  String
+  session       Int?       // Wahlperiode
+  sitting       Int?       // Sitzungsnummer
+  voteId        String?    // external vote ID
+  voteTitle     String?    // Beschlusstext Kurzfassung
+  voteDescription String?  // full description
+  voteResult    String?    // Ja / Nein / Enthaltung / Nicht abgestimmt
+  voteDate      DateTime?
+  documentUrl   String?    // Link to Drucksache
+  plenaryProtocolUrl String? // Link to Plenarprotokoll
+  rawData       String?    // JSON blob
+  createdAt     DateTime   @default(now())
+
+  politician    politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+
+  @@index([politicianId])
+  @@index([session])
+  @@index([voteDate])
+}
+
+model politician_speeches {
+  id            String    @id @default(uuid())
+  politicianId  String
+  session       Int?       // Wahlperiode
+  sitting       Int?       // Sitzungsnummer
+  speechTitle   String?    // TOP description
+  speechText    String     // full speech text
+  speechDate    DateTime?
+  documentUrl   String?    // Link to Plenarprotokoll
+  pageNumbers   String?    // e.g. "1234-1236"
+  rawData       String?    // JSON blob
+  vectorized    Boolean    @default(false)
+  createdAt     DateTime   @default(now())
+
+  politician    politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+
+  @@index([politicianId])
+  @@index([speechDate])
+  @@index([vectorized])
+}
+
+model politician_committees {
+  id            String    @id @default(uuid())
+  name          String    @unique
+  fullName      String?
+  type          String?    // Ausschuss | Unterausschuss | Enquete | etc.
+  description   String?
+  createdAt     DateTime   @default(now())
+
+  members       politician_committee_memberships[]
+}
+
+model politician_committee_memberships {
+  id            String    @id @default(uuid())
+  politicianId  String
+  committeeId   String
+  role          String?    // Mitglied | Vorsitzender | Stellv. Vorsitzender | etc.
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime   @default(now())
+
+  politician    politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+  committee     politician_committees @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+
+  @@unique([politicianId, committeeId])
+}
+
+model politician_sync_log {
+  id            Int       @id @default(autoincrement())
+  source        String    // bundestag | abgeordnetenwatch | plenarprotokolle
+  status        String    @default("started") // started | running | completed | failed
+  itemsTotal    Int       @default(0)
+  itemsProcessed Int      @default(0)
+  itemsFailed   Int       @default(0)
+  error         String?
+  details       String?   // JSON metadata
+  startedAt     DateTime  @default(now())
+  completedAt   DateTime?
+}
+
 model memories {
   id          Int       @id @default(autoincrement())
   userId      Int?      @map("user_id")

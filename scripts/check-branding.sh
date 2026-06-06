@@ -33,6 +33,7 @@ ALLOWED_FILES=(
   "server/utils/agents/aibitat/example/websocket/websock-multi-turn-chat.js"  # require('@mintplex-labs/express-ws') — example
   "server/utils/agents/aibitat/example/websocket/websock-branding-collab.js"   # require('@mintplex-labs/express-ws') — example
   "server/utils/agents/aibitat/plugins/create-files/pdf/create-pdf-file.js"    # import('@mintplex-labs/mdpdf') — upstream PDF converter
+  "frontend/package.json"                # upstream npm-scope dep: @mintplex-labs/piper-tts-web — mintplex-published TTS voice package we depend on as-is
 
   # ── Self-reference (linter mentions the strings it forbids) ─
   "scripts/check-branding.sh"

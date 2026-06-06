@@ -36,6 +36,11 @@ class BackgroundService {
       timeout: "5m",
       interval: "8hr",
     },
+    {
+      name: "sync-politician-data",
+      timeout: "30m",
+      interval: "6hr",
+    },
   ];
 
   #memoryJobs = [
