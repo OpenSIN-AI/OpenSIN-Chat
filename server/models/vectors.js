@@ -20,6 +20,7 @@ const DocumentVectors = {
       await prisma.$transaction(inserts);
       return { documentsInserted: inserts.length };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Bulk insert failed", error);
       return { documentsInserted: 0 };
     }
@@ -33,6 +34,7 @@ const DocumentVectors = {
       });
       return results;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Where query failed", error);
       return [];
     }
@@ -48,6 +50,7 @@ const DocumentVectors = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Delete for workspace failed", error);
       return false;
     }
@@ -60,6 +63,7 @@ const DocumentVectors = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Delete IDs failed", error);
       return false;
     }
@@ -70,6 +74,7 @@ const DocumentVectors = {
       await prisma.document_vectors.deleteMany({ where: clause });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Delete failed", error);
       return false;
     }

@@ -46,10 +46,12 @@ class OllamaAILLM {
   }
 
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[32m[Ollama]\x1b[0m ${text}`, ...args);
   }
 
   static #slog(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[32m[Ollama]\x1b[0m ${text}`, ...args);
   }
 
@@ -485,6 +487,7 @@ class OllamaAILLM {
         vision: capabilities.includes("vision") ? true : false,
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error getting model capabilities:", error);
       return {
         tools: "unknown",

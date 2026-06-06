@@ -29,6 +29,7 @@ async function getContentTypeFromURL(url) {
     const abortController = new AbortController();
     const timeout = setTimeout(() => {
       abortController.abort();
+      // eslint-disable-next-line no-console
       console.error("Timeout fetching content type for URL:", url.toString());
     }, 5_000);
 
@@ -106,6 +107,7 @@ async function determineContentType(uri) {
 
   return await getContentTypeFromURL(uri)
     .then((result) => {
+      // eslint-disable-next-line no-console
       if (!!result.reason) console.error(result.reason);
 
       // If the content type is not text/html or text/plain, and it is in the ACCEPTED_MIMES,
@@ -120,6 +122,7 @@ async function determineContentType(uri) {
       return { contentType: result.contentType, processVia };
     })
     .catch((error) => {
+      // eslint-disable-next-line no-console
       console.error("Error getting content type from URL", error);
       return { contentType: null, processVia };
     });

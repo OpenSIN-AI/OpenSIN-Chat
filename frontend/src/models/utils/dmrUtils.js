@@ -62,6 +62,7 @@ const DMRUtils = {
           }
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error downloading model:", error);
         resolve({
           success: false,

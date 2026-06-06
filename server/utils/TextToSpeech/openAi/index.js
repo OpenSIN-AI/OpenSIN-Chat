@@ -18,6 +18,7 @@ class OpenAiTTS {
       });
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
     return null;

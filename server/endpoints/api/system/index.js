@@ -26,6 +26,7 @@ function apiSystemEndpoints(app) {
       dumpENV();
       response.sendStatus(200).end();
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -63,6 +64,7 @@ function apiSystemEndpoints(app) {
       const settings = await SystemSettings.currentSettings();
       response.status(200).json({ settings });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -95,6 +97,7 @@ function apiSystemEndpoints(app) {
       const vectorCount = await VectorDb.totalVectors();
       response.status(200).json({ vectorCount });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -143,6 +146,7 @@ function apiSystemEndpoints(app) {
         const { newValues, error } = await updateENV(body);
         response.status(200).json({ newValues, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -199,6 +203,7 @@ function apiSystemEndpoints(app) {
         response.setHeader("Content-Type", contentType);
         response.status(200).send(data);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -265,6 +270,7 @@ function apiSystemEndpoints(app) {
           .json({ success: true, message: "Documents removed successfully" })
           .end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }

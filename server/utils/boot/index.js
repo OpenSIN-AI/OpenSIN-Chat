@@ -19,6 +19,7 @@ const { TelegramBotService } = require("../telegramBot");
 // build and copy frontend to server/public with correct API_BASE and start server in prod model and all should be ok
 function bootSSL(app, port = 3001) {
   try {
+    // eslint-disable-next-line no-console
     console.log(
       `\x1b[33m[SSL BOOT ENABLED]\x1b[0m Loading the certificate and key for HTTPS mode...`,
     );
@@ -39,6 +40,7 @@ function bootSSL(app, port = 3001) {
         await eagerLoadContextWindows();
         await PushNotifications.setupPushNotificationService();
         await TelegramBotService.bootIfActive();
+        // eslint-disable-next-line no-console
         console.log(`Primary server in HTTPS mode listening on port ${port}`);
       })
       .on("error", catchSigTerms);
@@ -46,6 +48,7 @@ function bootSSL(app, port = 3001) {
     require("@mintplex-labs/express-ws").default(app, server);
     return { app, server };
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(
       `\x1b[31m[SSL BOOT FAILED]\x1b[0m ${e.message} - falling back to HTTP boot.`,
       {
@@ -72,6 +75,7 @@ function bootHTTP(app, port = 3001) {
       await eagerLoadContextWindows();
       await PushNotifications.setupPushNotificationService();
       await TelegramBotService.bootIfActive();
+      // eslint-disable-next-line no-console
       console.log(`Primary server in HTTP mode listening on port ${port}`);
     })
     .on("error", catchSigTerms);

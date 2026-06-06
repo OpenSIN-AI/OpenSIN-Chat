@@ -18,10 +18,12 @@ async function asTxt({
   try {
     content = fs.readFileSync(fullFilePath, "utf8");
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error("Could not read file!", err);
   }
 
   if (!content?.length) {
+    // eslint-disable-next-line no-console
     console.error(`Resulting text content was empty for ${filename}.`);
     if (!options.absolutePath) trashFile(fullFilePath);
     return {
@@ -31,6 +33,7 @@ async function asTxt({
     };
   }
 
+  // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
   const data = {
     id: v4(),
@@ -52,6 +55,7 @@ async function asTxt({
     options: { parseOnly: options.parseOnly },
   });
   if (!options.absolutePath) trashFile(fullFilePath);
+  // eslint-disable-next-line no-console
   console.log(`[SUCCESS]: ${filename} converted & ready for embedding.\n`);
   return { success: true, reason: null, documents: [document] };
 }

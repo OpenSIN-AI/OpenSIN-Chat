@@ -22,6 +22,7 @@ class MessageQueue {
     const chain = prev
       .then(handler)
       .catch((err) =>
+        // eslint-disable-next-line no-console
         console.error(`[MessageQueue] Error processing key ${key}:`, err),
       )
       .finally(() => {

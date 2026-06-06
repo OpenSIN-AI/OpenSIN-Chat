@@ -41,6 +41,7 @@ function agentFlowEndpoints(app) {
           flow,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error saving flow:", error);
         return response.status(500).json({
           success: false,
@@ -62,6 +63,7 @@ function agentFlowEndpoints(app) {
           flows,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error listing flows:", error);
         return response.status(500).json({
           success: false,
@@ -91,6 +93,7 @@ function agentFlowEndpoints(app) {
           flow,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error getting flow:", error);
         return response.status(500).json({
           success: false,
@@ -110,6 +113,7 @@ function agentFlowEndpoints(app) {
   //       const { variables = {} } = request.body;
 
   //       // TODO: Implement flow execution
+  // eslint-disable-next-line no-console
   //       console.log("Running flow with UUID:", uuid);
 
   //       await Telemetry.sendTelemetry("agent_flow_executed", {
@@ -125,6 +129,7 @@ function agentFlowEndpoints(app) {
   //         },
   //       });
   //     } catch (error) {
+  // eslint-disable-next-line no-console
   //       console.error("Error running flow:", error);
   //       return response.status(500).json({
   //         success: false,
@@ -154,6 +159,7 @@ function agentFlowEndpoints(app) {
           success,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error deleting flow:", error);
         return response.status(500).json({
           success: false,
@@ -190,6 +196,7 @@ function agentFlowEndpoints(app) {
 
         return response.json({ success: true, flow });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error toggling flow:", error);
         response.status(500).json({ success: false, error: error.message });
       }

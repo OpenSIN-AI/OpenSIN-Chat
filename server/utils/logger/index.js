@@ -42,12 +42,15 @@ class Logger {
         .join(" ");
     }
 
+    // eslint-disable-next-line no-console
     console.log = function (...args) {
       logger.info(formatArgs(args));
     };
+    // eslint-disable-next-line no-console
     console.error = function (...args) {
       logger.error(formatArgs(args));
     };
+    // eslint-disable-next-line no-console
     console.info = function (...args) {
       logger.warn(formatArgs(args));
     };

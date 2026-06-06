@@ -79,10 +79,12 @@ class GitLabRepoLoader {
     await this.getRepoBranches();
     if (!!this.branch && this.branches.includes(this.branch)) return;
 
+    // eslint-disable-next-line no-console
     console.log(
       "[Gitlab Loader]: Branch not set! Auto-assigning to a default branch."
     );
     this.branch = this.branches.includes("main") ? "main" : "master";
+    // eslint-disable-next-line no-console
     console.log(`[Gitlab Loader]: Branch auto-assigned to ${this.branch}.`);
     return;
   }
@@ -95,6 +97,7 @@ class GitLabRepoLoader {
         headers: this.accessToken ? { "PRIVATE-TOKEN": this.accessToken } : {},
       }).then((res) => res.ok);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(
         "Invalid Gitlab Access Token provided! Access token will not be used",
         e.message
@@ -124,16 +127,19 @@ class GitLabRepoLoader {
     if (!this.ready) throw new Error("[Gitlab Loader]: not in ready state!");
 
     if (this.accessToken)
+      // eslint-disable-next-line no-console
       console.log(
         `[Gitlab Loader]: Access token set! Recursive loading enabled for ${this.repo}!`
       );
 
     const docs = [];
 
+    // eslint-disable-next-line no-console
     console.log(`[Gitlab Loader]: Fetching files.`);
 
     const files = await this.fetchFilesRecursive();
 
+    // eslint-disable-next-line no-console
     console.log(`[Gitlab Loader]: Fetched ${files.length} files.`);
 
     for (const file of files) {
@@ -149,8 +155,10 @@ class GitLabRepoLoader {
     }
 
     if (this.withIssues) {
+      // eslint-disable-next-line no-console
       console.log(`[Gitlab Loader]: Fetching issues.`);
       const issues = await this.fetchIssues();
+      // eslint-disable-next-line no-console
       console.log(
         `[Gitlab Loader]: Fetched ${issues.length} issues with discussions.`
       );
@@ -166,8 +174,10 @@ class GitLabRepoLoader {
     }
 
     if (this.withWikis) {
+      // eslint-disable-next-line no-console
       console.log(`[Gitlab Loader]: Fetching wiki.`);
       const wiki = await this.fetchWiki();
+      // eslint-disable-next-line no-console
       console.log(`[Gitlab Loader]: Fetched ${wiki.length} wiki pages.`);
       docs.push(
         ...wiki.map((wiki) => ({
@@ -248,8 +258,10 @@ class GitLabRepoLoader {
       const pageFiles = await Promise.all(pagePromises);
 
       files.push(...pageFiles.filter((item) => item !== null));
+      // eslint-disable-next-line no-console
       console.log(`Fetched ${files.length} files.`);
     }
+    // eslint-disable-next-line no-console
     console.log(`Total files fetched: ${files.length}`);
     return files;
   }
@@ -300,8 +312,10 @@ ${body}`
       const pageIssues = await Promise.all(pagePromises);
 
       issues.push(...pageIssues);
+      // eslint-disable-next-line no-console
       console.log(`Fetched ${issues.length} issues.`);
     }
+    // eslint-disable-next-line no-console
     console.log(`Total issues fetched: ${issues.length}`);
     return issues;
   }
@@ -320,6 +334,7 @@ ${body}`
 
     const wikiPages = await this.fetchNextPage(wikiRequestData);
     if (!Array.isArray(wikiPages)) return [];
+    // eslint-disable-next-line no-console
     console.log(`Total wiki pages fetched: ${wikiPages.length}`);
     return wikiPages;
   }
@@ -343,12 +358,14 @@ ${body}`
 
       if (response.status === 429) {
         if (retries >= MAX_RETRIES) {
+          // eslint-disable-next-line no-console
           console.warn(
             `[Gitlab Loader]: Rate limit persists for ${sourceFilePath} after ${retries} retries. Skipping.`
           );
           return null;
         }
         const retryAfter = Number(response.headers.get("retry-after")) || 60;
+        // eslint-disable-next-line no-console
         console.warn(
           `[Gitlab Loader]: Rate limit hit fetching ${sourceFilePath}. Waiting ${retryAfter}s...`
         );
@@ -361,6 +378,7 @@ ${body}`
 
       return await response.text();
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(`RepoLoader.fetchSingleFileContents`, e);
       return null;
     }
@@ -391,12 +409,14 @@ ${body}`
 
       if (response.status === 429) {
         if (retries >= MAX_RETRIES) {
+          // eslint-disable-next-line no-console
           console.warn(
             `[Gitlab Loader]: Rate limit persists for ${endpoint} after ${retries} retries. Skipping.`
           );
           return null;
         }
         const retryAfter = Number(response.headers.get("retry-after")) || 60;
+        // eslint-disable-next-line no-console
         console.warn(
           `[Gitlab Loader]: Rate limit hit for ${endpoint}. Waiting ${retryAfter}s before retrying...`
         );
@@ -405,6 +425,7 @@ ${body}`
       }
 
       if (response.status === 401) {
+        // eslint-disable-next-line no-console
         console.warn(
           `[Gitlab Loader]: Unauthorized request for ${endpoint}. Skipping.`
         );
@@ -412,6 +433,7 @@ ${body}`
       }
 
       if (!response.ok) {
+        // eslint-disable-next-line no-console
         console.warn(
           `[Gitlab Loader]: Unexpected status ${response.status} for ${endpoint}. Skipping.`
         );
@@ -420,6 +442,7 @@ ${body}`
 
       const data = await response.json();
       if (!Array.isArray(data)) {
+        // eslint-disable-next-line no-console
         console.warn(`Unexpected response format for ${endpoint}:`, data);
         return [];
       }
@@ -428,6 +451,7 @@ ${body}`
       // as the sole pagination signal — it's empty on the last page.
       const nextPage = response.headers.get("x-next-page");
       const totalPages = response.headers.get("x-total-pages");
+      // eslint-disable-next-line no-console
       console.log(
         `Gitlab RepoLoader: fetched ${endpoint} page ${requestData.page}${
           totalPages ? `/${totalPages}` : ""
@@ -438,6 +462,7 @@ ${body}`
 
       return data;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(`RepoLoader.fetchNextPage`, e);
       return null;
     }

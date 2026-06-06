@@ -231,6 +231,7 @@ function HomeContent({ workspace, setWorkspace, threadSlug, setThreadSlug }) {
         navigate(paths.workspace.chat(targetWorkspace.slug));
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error submitting message:", error);
       showToast("Failed to send message", "error");
       setLoading(false);

@@ -18,6 +18,7 @@ const Invite = {
       });
       return { invite, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO CREATE INVITE.", error.message);
       return { invite: null, error: error.message };
     }
@@ -31,6 +32,7 @@ const Invite = {
       });
       return { success: true, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { success: false, error: error.message };
     }
@@ -56,6 +58,7 @@ const Invite = {
           if (ids.length !== 0) await WorkspaceUser.createMany(user.id, ids);
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(
           "Could not add user to workspaces automatically",
           e.message,
@@ -64,6 +67,7 @@ const Invite = {
 
       return { success: true, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { success: false, error: error.message };
     }
@@ -74,6 +78,7 @@ const Invite = {
       const invite = await prisma.invites.findFirst({ where: clause });
       return invite || null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return null;
     }
@@ -84,6 +89,7 @@ const Invite = {
       const count = await prisma.invites.count({ where: clause });
       return count;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return 0;
     }
@@ -94,6 +100,7 @@ const Invite = {
       await prisma.invites.deleteMany({ where: clause });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -107,6 +114,7 @@ const Invite = {
       });
       return invites;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -135,6 +143,7 @@ const Invite = {
       }
       return invites;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }

@@ -50,6 +50,7 @@ export default function ConfluenceOptions() {
       e.target.reset();
       setLoading(false);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);

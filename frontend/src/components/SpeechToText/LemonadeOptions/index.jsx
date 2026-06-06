@@ -147,6 +147,7 @@ function LemonadeSTTModelSelection({ settings, basePath = null }) {
         );
         setCustomModels(models || []);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Failed to fetch Lemonade STT models:", error);
         setCustomModels([]);
       }

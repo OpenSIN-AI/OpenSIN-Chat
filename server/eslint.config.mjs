@@ -21,6 +21,7 @@ export default defineConfig([
       "no-extra-boolean-cast": "off",
       "no-empty": "off",
       "no-unused-private-class-members": "warn",
+      "no-console": "warn",
       "no-unused-vars": "off",
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [

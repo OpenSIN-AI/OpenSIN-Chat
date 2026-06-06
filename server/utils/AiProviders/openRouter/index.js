@@ -89,6 +89,7 @@ class OpenRouterLLM {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -356,7 +357,8 @@ class OpenRouterLLM {
         const diffMs = now - lastChunkTime;
 
         if (diffMs >= timeoutThresholdMs) {
-          console.log(
+          // eslint-disable-next-line no-console
+          console.warn(
             `OpenRouter stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {
@@ -556,6 +558,7 @@ async function fetchOpenRouterModels() {
       return models;
     })
     .catch((e) => {
+      // eslint-disable-next-line no-console
       console.error(e);
       return {};
     });

@@ -31,6 +31,7 @@ export default function SearchBox({ user, showNewWsModal }) {
         await Workspace.searchWorkspaceOrThread(searchValue);
       setSearchResults(searchResults);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       setSearchResults(DEFAULT_SEARCH_RESULTS);
     } finally {

@@ -22,6 +22,7 @@ class LemonadeSTT {
   }
 
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[32m[LemonadeSTT]\x1b[0m ${text}`, ...args);
   }
 

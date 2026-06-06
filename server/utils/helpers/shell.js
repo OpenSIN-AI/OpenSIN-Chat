@@ -12,9 +12,11 @@ async function patchShellEnvironmentPath() {
     const { default: stripAnsi } = await import("strip-ansi");
     fixPath();
     if (process.env.PATH) process.env.PATH = stripAnsi(process.env.PATH);
+    // eslint-disable-next-line no-console
     console.log("Shell environment path patched successfully.");
     return process.env;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Failed to patch shell environment path:", error);
     return process.env;
   }

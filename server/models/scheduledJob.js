@@ -33,6 +33,7 @@ const ScheduledJob = {
       const next = later.schedule(sched).next(1);
       return next || null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(
         "Failed to compute next run time from cron:",
         error.message,
@@ -69,6 +70,7 @@ const ScheduledJob = {
       });
       return { job, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to create scheduled job:", error.message);
       return { job: null, error: error.message };
     }
@@ -100,6 +102,7 @@ const ScheduledJob = {
       });
       return { job, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to update scheduled job:", error.message);
       return { job: null, error: error.message };
     }
@@ -110,6 +113,7 @@ const ScheduledJob = {
       const job = await prisma.scheduled_jobs.findFirst({ where: clause });
       return job || null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to get scheduled job:", error.message);
       return null;
     }
@@ -132,6 +136,7 @@ const ScheduledJob = {
       });
       return results;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to query scheduled jobs:", error.message);
       return [];
     }
@@ -142,6 +147,7 @@ const ScheduledJob = {
       await prisma.scheduled_jobs.delete({ where: { id: Number(id) } });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to delete scheduled job:", error.message);
       return false;
     }
@@ -153,6 +159,7 @@ const ScheduledJob = {
         where: { enabled: true },
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to get enabled scheduled jobs:", error.message);
       return [];
     }
@@ -174,6 +181,7 @@ const ScheduledJob = {
         },
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to count active scheduled jobs:", error.message);
       return 0;
     }
@@ -212,6 +220,7 @@ const ScheduledJob = {
         data: { nextRunAt, updatedAt: new Date() },
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to recompute nextRunAt:", error.message);
     }
   },
@@ -235,6 +244,7 @@ const ScheduledJob = {
         },
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to update run timestamps:", error.message);
     }
   },
@@ -489,6 +499,7 @@ const ScheduledJob = {
         });
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to load MCP servers for available tools:", error);
     }
 

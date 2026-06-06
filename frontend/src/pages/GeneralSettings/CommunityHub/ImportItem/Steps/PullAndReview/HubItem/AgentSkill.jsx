@@ -24,6 +24,7 @@ export default function AgentSkill({ item, settings, setStep }) {
       showToast(`Agent skill imported successfully!`, "success");
       setStep(CommunityHubImportItemSteps.completed.key);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       showToast(`Failed to import agent skill. ${e.message}`, "error");
     } finally {

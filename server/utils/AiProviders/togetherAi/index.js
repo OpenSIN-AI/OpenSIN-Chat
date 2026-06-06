@@ -65,6 +65,7 @@ async function togetherAiModels(apiKey = null) {
 
     return validModels;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching Together AI models:", error);
     // If cache exists but is stale, still use it as fallback
     if (fs.existsSync(cacheModelPath)) {

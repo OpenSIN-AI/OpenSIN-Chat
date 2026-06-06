@@ -23,6 +23,7 @@ export default function useSimpleSSO() {
           noLoginRedirect: settings?.SimpleSSONoLoginRedirect,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
       } finally {
         setLoading(false);

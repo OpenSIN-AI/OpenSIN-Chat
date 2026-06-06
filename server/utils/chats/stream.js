@@ -276,6 +276,7 @@ async function streamChatWithWorkspace(
   // If streaming is not explicitly enabled for connector
   // we do regular waiting of a response and send a single chunk.
   if (LLMConnector.streamingEnabled() !== true) {
+    // eslint-disable-next-line no-console
     console.log(
       `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`,
     );

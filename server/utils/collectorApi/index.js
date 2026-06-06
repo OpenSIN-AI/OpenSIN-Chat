@@ -39,6 +39,7 @@ class CollectorApi {
     );
     if (Number.isInteger(port) && port > 0 && port <= 65535) return port;
 
+    // eslint-disable-next-line no-console
     console.warn(
       `Invalid COLLECTOR_PORT "${process.env.COLLECTOR_PORT}". Falling back to ${this.DEFAULT_COLLECTOR_PORT}.`,
     );
@@ -52,6 +53,7 @@ class CollectorApi {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[CollectorApi]\x1b[0m ${text}`, ...args);
   }
 

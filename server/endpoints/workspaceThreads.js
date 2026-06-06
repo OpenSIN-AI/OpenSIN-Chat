@@ -56,6 +56,7 @@ function workspaceThreadEndpoints(app) {
         );
         response.status(200).json({ thread, message });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -84,6 +85,7 @@ function workspaceThreadEndpoints(app) {
 
         response.status(200).json({ threads, defaultThreadChatCount });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -103,6 +105,7 @@ function workspaceThreadEndpoints(app) {
         await WorkspaceThread.delete({ id: thread.id });
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -126,6 +129,7 @@ function workspaceThreadEndpoints(app) {
         });
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -158,6 +162,7 @@ function workspaceThreadEndpoints(app) {
 
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -181,6 +186,7 @@ function workspaceThreadEndpoints(app) {
         );
         response.status(200).json({ thread, message });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -210,6 +216,7 @@ function workspaceThreadEndpoints(app) {
 
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -257,6 +264,7 @@ function workspaceThreadEndpoints(app) {
 
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }

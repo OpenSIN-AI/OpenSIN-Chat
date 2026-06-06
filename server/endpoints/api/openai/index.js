@@ -67,6 +67,7 @@ function apiOpenAICompatibleEndpoints(app) {
         data,
       });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -183,6 +184,7 @@ function apiOpenAICompatibleEndpoints(app) {
         });
         response.end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.status(500).end();
       }
@@ -250,6 +252,7 @@ function apiOpenAICompatibleEndpoints(app) {
           model: Embedder.model,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.status(500).end();
       }
@@ -326,6 +329,7 @@ function apiOpenAICompatibleEndpoints(app) {
           has_more: false,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.status(500).end();
       }

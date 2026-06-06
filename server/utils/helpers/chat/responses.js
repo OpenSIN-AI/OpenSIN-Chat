@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require("uuid");
 const moment = require("moment");
 
 function clientAbortedHandler(resolve, fullText) {
+  // eslint-disable-next-line no-console
   console.log(
     "\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client requested to abort stream. Exiting LLM stream handler early.",
   );
@@ -160,6 +161,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
         }
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
       writeResponseChunk(response, {
         uuid,
@@ -184,11 +186,13 @@ function convertToChatHistory(history = []) {
     // In the event that a bad response was stored - we should skip its entire record
     // because it was likely an error and cannot be used in chats and will fail to render on UI.
     if (typeof prompt !== "string") {
+      // eslint-disable-next-line no-console
       console.log(
         `[convertToChatHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`,
       );
       continue;
     } else if (typeof data.text !== "string") {
+      // eslint-disable-next-line no-console
       console.log(
         `[convertToChatHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`,
       );
@@ -270,11 +274,13 @@ function convertToPromptHistory(history = []) {
     // In the event that a bad response was stored - we should skip its entire record
     // because it was likely an error and cannot be used in chats and will fail to render on UI.
     if (typeof prompt !== "string") {
+      // eslint-disable-next-line no-console
       console.log(
         `[convertToPromptHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`,
       );
       continue;
     } else if (typeof data.text !== "string") {
+      // eslint-disable-next-line no-console
       console.log(
         `[convertToPromptHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`,
       );

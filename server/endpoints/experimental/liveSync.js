@@ -51,6 +51,7 @@ function liveSyncEndpoints(app) {
 
         response.status(200).json({ liveSyncEnabled: newStatus === "enabled" });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.status(500).end();
       }
@@ -104,6 +105,7 @@ function liveSyncEndpoints(app) {
         await DocumentSyncQueue.toggleWatchStatus(document, watchStatus);
         return response.status(200).end();
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the watch status update:", error);
         return response.status(500).end();
       }

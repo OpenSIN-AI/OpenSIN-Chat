@@ -57,6 +57,7 @@ const SystemPromptVariables = {
           });
           return user?.username || "[User name is empty or unknown]";
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error("Error fetching user name:", error);
           return "[User name is empty or unknown]";
         }
@@ -76,6 +77,7 @@ const SystemPromptVariables = {
           });
           return user?.bio || "[User bio is empty]";
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error("Error fetching user bio:", error);
           return "[User bio is empty]";
         }
@@ -211,6 +213,7 @@ const SystemPromptVariables = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error deleting variable:", error);
       return false;
     }
@@ -269,6 +272,7 @@ const SystemPromptVariables = {
                   value = await variable.value(userId);
                 else throw new Error(`Invalid class-based variable: ${key}`);
               } catch (error) {
+                // eslint-disable-next-line no-console
                 console.error(
                   `Error processing ${variableTypeDisplay} variable ${key}:`,
                   error,
@@ -286,6 +290,7 @@ const SystemPromptVariables = {
                   value = variable.value(userId);
                 else throw new Error(`Invalid class-based variable: ${key}`);
               } catch (error) {
+                // eslint-disable-next-line no-console
                 console.error(
                   `Error processing ${variableTypeDisplay} variable ${key}:`,
                   error,
@@ -319,6 +324,7 @@ const SystemPromptVariables = {
               result = result.replace(match, value);
             }
           } catch (error) {
+            // eslint-disable-next-line no-console
             console.error(`Error processing dynamic variable ${key}:`, error);
             result = result.replace(match, match);
           }
@@ -328,6 +334,7 @@ const SystemPromptVariables = {
       }
       return result;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error in expandSystemPromptVariables:", error);
       return str;
     }

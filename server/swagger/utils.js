@@ -10,7 +10,8 @@ function faviconUrl() {
 
 function useSwagger(app) {
   if (process.env.DISABLE_SWAGGER_DOCS === "true") {
-    console.log(
+    // eslint-disable-next-line no-console
+    console.info(
       `\x1b[33m[SWAGGER DISABLED]\x1b[0m Swagger documentation is disabled via DISABLE_SWAGGER_DOCS environment variable.`,
     );
     return;

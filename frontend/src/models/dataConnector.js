@@ -20,6 +20,7 @@ const DataConnector = {
           return { branches: data?.branches || [], error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           showToast(e.message, "error");
           return { branches: [], error: e.message };
@@ -37,6 +38,7 @@ const DataConnector = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           return { data: null, error: e.message };
         });
@@ -59,6 +61,7 @@ const DataConnector = {
           return { branches: data?.branches || [], error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           showToast(e.message, "error");
           return { branches: [], error: e.message };
@@ -90,6 +93,7 @@ const DataConnector = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           return { data: null, error: e.message };
         });
@@ -108,6 +112,7 @@ const DataConnector = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           return { data: null, error: e.message };
         });
@@ -126,6 +131,7 @@ const DataConnector = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           return { data: null, error: e.message };
         });
@@ -161,6 +167,7 @@ const DataConnector = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           return { data: null, error: e.message };
         });
@@ -184,6 +191,7 @@ const DataConnector = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           return { data: null, error: e.message };
         });
@@ -204,6 +212,7 @@ const DataConnector = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           return { data: null, error: e.message };
         });
@@ -223,6 +232,7 @@ const DataConnector = {
           return { data: res.data, error: null };
         })
         .catch((e) => {
+          // eslint-disable-next-line no-console
           console.error(e);
           return { data: null, error: e.message };
         });

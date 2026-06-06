@@ -65,6 +65,7 @@ function apiReportsEndpoints(app) {
       const result = await ReportGen.generate(reportData);
       response.status(200).json(result);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.status(500).json({ error: err.message });
     }
@@ -80,6 +81,7 @@ function apiReportsEndpoints(app) {
       }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       response.status(200).json({ reports });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -95,6 +97,7 @@ function apiReportsEndpoints(app) {
       response.setHeader("Content-Disposition", `inline; filename="${safeName}"`);
       fs.createReadStream(filePath).pipe(response);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }

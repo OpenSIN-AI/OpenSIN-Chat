@@ -52,6 +52,7 @@ const { safeJsonParse } = require("../utils/http/index.js");
       `Cleanup complete: deleted ${deletedCount} items, ${failedCount} failures.`,
     );
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(error);
     log(`Error during cleanup: ${error.message}`);
   } finally {
@@ -111,6 +112,7 @@ async function workspaceChatGeneratedFilenames(batchSize = 50) {
       hasMore = chats.length === batchSize;
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("[workspaceChatGeneratedFilenames] Error:", error.message);
   }
 
@@ -153,6 +155,7 @@ async function scheduledJobRunGeneratedFilenames(batchSize = 50) {
       hasMore = runs.length === batchSize;
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("[scheduledJobRunGeneratedFilenames] Error:", error.message);
   }
 

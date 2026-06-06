@@ -58,6 +58,7 @@ const websocket = {
         aibitat.onError(async (error) => {
           let errorMessage =
             error?.message || "An error occurred while running the agent.";
+          // eslint-disable-next-line no-console
           console.error(chalk.red(`   error: ${errorMessage}`), error);
           aibitat.introspect(
             `Error encountered while running: ${errorMessage}`,
@@ -104,6 +105,7 @@ const websocket = {
           description = null,
         }) {
           if (skillIsAutoApproved({ skillName })) {
+            // eslint-disable-next-line no-console
             console.log(
               chalk.green(
                 `Skill ${skillName} is auto-approved by AGENT_AUTO_APPROVED_SKILLS`,
@@ -123,6 +125,7 @@ const websocket = {
             userId,
           );
           if (isWhitelisted) {
+            // eslint-disable-next-line no-console
             console.log(
               chalk.green(
                 userId
@@ -164,6 +167,7 @@ const websocket = {
                   message: "Tool call was rejected by the user.",
                 });
               } catch (e) {
+                // eslint-disable-next-line no-console
                 console.error("Error handling tool approval response:", e);
               }
             };
@@ -181,6 +185,7 @@ const websocket = {
 
             timeoutId = setTimeout(() => {
               delete socket.handleToolApproval;
+              // eslint-disable-next-line no-console
               console.log(
                 chalk.yellow(
                   `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
@@ -255,6 +260,7 @@ const websocket = {
                   answers: normalized,
                 });
               } catch (e) {
+                // eslint-disable-next-line no-console
                 console.error("Error handling clarification response:", e);
               }
             };
@@ -271,6 +277,7 @@ const websocket = {
 
             timeoutId = setTimeout(() => {
               delete socket.handleClarificationResponse;
+              // eslint-disable-next-line no-console
               console.log(
                 chalk.yellow(
                   `Clarification request timed out after ${timeoutMs}ms`,
@@ -286,6 +293,7 @@ const websocket = {
         };
 
         // aibitat.onStart(() => {
+        // eslint-disable-next-line no-console
         //   console.log("🚀 starting chat ...");
         // });
 
@@ -297,6 +305,7 @@ const websocket = {
         });
 
         aibitat.onTerminate(() => {
+          // eslint-disable-next-line no-console
           // console.log("🚀 chat finished");
           socket.close();
         });
@@ -340,6 +349,7 @@ const websocket = {
               };
 
               socketTimeout = setTimeout(() => {
+                // eslint-disable-next-line no-console
                 console.log(
                   chalk.red(
                     `Client took too long to respond, chat thread is dead after ${SOCKET_TIMEOUT_MS}ms`,
@@ -356,6 +366,7 @@ const websocket = {
           )} as ${chalk.yellow(node.from)}.
            Press enter to skip and use auto-reply, or type 'exit' to end the conversation: \n`);
         };
+        // eslint-disable-next-line no-console
         // console.log("🚀 WS plugin is complete.");
       },
     };

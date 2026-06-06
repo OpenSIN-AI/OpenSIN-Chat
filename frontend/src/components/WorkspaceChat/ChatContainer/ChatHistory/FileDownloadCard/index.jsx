@@ -22,6 +22,7 @@ function FileDownloadCard({ props }) {
       if (!blob) throw new Error("Failed to download file");
       saveAs(blob, filename || storageFilename);
     } catch {
+      // eslint-disable-next-line no-console
       console.error("Failed to download file");
     } finally {
       setDownloading(false);

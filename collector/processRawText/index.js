@@ -47,6 +47,7 @@ const METADATA_KEYS = {
 };
 
 async function processRawText(textContent, metadata) {
+  // eslint-disable-next-line no-console
   console.log(`-- Working Raw Text doc ${metadata.title} --`);
   if (!textContent || textContent.length === 0) {
     return {
@@ -74,6 +75,7 @@ async function processRawText(textContent, metadata) {
     data,
     filename: `raw-${stripAndSlug(metadata.title)}-${data.id}`,
   });
+  // eslint-disable-next-line no-console
   console.log(
     `[SUCCESS]: Raw text and metadata saved & ready for embedding.\n`
   );

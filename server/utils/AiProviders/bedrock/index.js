@@ -159,6 +159,7 @@ class AWSBedrockLLM {
    * @private
    */
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[32m[AWSBedrock]\x1b[0m ${text}`, ...args);
   }
 
@@ -167,6 +168,7 @@ class AWSBedrockLLM {
    * @private
    */
   static #slog(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[32m[AWSBedrock]\x1b[0m ${text}`, ...args);
   }
 

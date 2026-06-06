@@ -7,12 +7,15 @@
 function resolveRepoLoader(platform = "github") {
   switch (platform) {
     case "github":
+      // eslint-disable-next-line no-console
       console.log(`Loading GitHub RepoLoader...`);
       return require("./GithubRepo/RepoLoader");
     case "gitlab":
+      // eslint-disable-next-line no-console
       console.log(`Loading GitLab RepoLoader...`);
       return require("./GitlabRepo/RepoLoader");
     default:
+      // eslint-disable-next-line no-console
       console.log(`Loading GitHub RepoLoader...`);
       return require("./GithubRepo/RepoLoader");
   }
@@ -27,12 +30,15 @@ function resolveRepoLoader(platform = "github") {
 function resolveRepoLoaderFunction(platform = "github") {
   switch (platform) {
     case "github":
+      // eslint-disable-next-line no-console
       console.log(`Loading GitHub loader function...`);
       return require("./GithubRepo").loadGithubRepo;
     case "gitlab":
+      // eslint-disable-next-line no-console
       console.log(`Loading GitLab loader function...`);
       return require("./GitlabRepo").loadGitlabRepo;
     default:
+      // eslint-disable-next-line no-console
       console.log(`Loading GitHub loader function...`);
       return require("./GithubRepo").loadGithubRepo;
   }

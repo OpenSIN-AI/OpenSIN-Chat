@@ -86,6 +86,7 @@ class PDFLoader {
       const pdfjs = await import("pdf-parse/lib/pdf.js/v1.10.100/build/pdf.js");
       return { getDocument: pdfjs.getDocument, version: pdfjs.version };
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       throw new Error(
         "Failed to load pdf-parse. Please install it with eg. `npm install pdf-parse`."

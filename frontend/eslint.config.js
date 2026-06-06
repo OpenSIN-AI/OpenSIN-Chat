@@ -64,6 +64,7 @@ export default [
       "no-constant-binary-expression": "off",
 
       // Unused cleanup
+      "no-console": ["warn", { "allow": ["warn", "error"] }],
       "no-unused-vars": "off",
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [

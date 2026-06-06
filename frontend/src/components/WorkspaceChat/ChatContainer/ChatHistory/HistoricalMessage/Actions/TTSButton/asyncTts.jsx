@@ -32,6 +32,7 @@ export default function AsyncTTSMessage({ slug, chatId }) {
         playerRef.current.play();
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       setLoading(false);
       setSpeaking(false);

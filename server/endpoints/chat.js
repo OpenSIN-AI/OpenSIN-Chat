@@ -88,6 +88,7 @@ function chatEndpoints(app) {
         );
         response.end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         writeResponseChunk(response, {
           id: uuidv4(),
@@ -194,6 +195,7 @@ function chatEndpoints(app) {
         );
         response.end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         writeResponseChunk(response, {
           id: uuidv4(),

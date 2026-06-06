@@ -65,6 +65,7 @@ const LemonadeUtils = {
           }
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error downloading model:", error);
         resolve({
           success: false,
@@ -103,6 +104,7 @@ const LemonadeUtils = {
         message: data.message,
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error deleting model:", error);
       return {
         success: false,

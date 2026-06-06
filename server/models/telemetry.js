@@ -104,7 +104,8 @@ const Telemetry = {
       // Silence some events to keep logs from being too messy in production
       // eg: Tool calls from agents spamming the logs.
       if (!silent) {
-        console.log(`\x1b[32m[TELEMETRY SENT]\x1b[0m`, {
+        // eslint-disable-next-line no-console
+        console.info(`\x1b[32m[TELEMETRY SENT]\x1b[0m`, {
           event,
           distinctId,
           properties,

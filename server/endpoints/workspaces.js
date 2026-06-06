@@ -76,6 +76,7 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -106,6 +107,7 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -156,6 +158,7 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -199,6 +202,7 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -265,6 +269,7 @@ function workspaceEndpoints(app) {
               : null,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -308,10 +313,12 @@ function workspaceEndpoints(app) {
         try {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.error(e.message);
         }
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -349,10 +356,12 @@ function workspaceEndpoints(app) {
         try {
           await VectorDb["delete-namespace"]({ namespace: slug });
         } catch (e) {
+          // eslint-disable-next-line no-console
           console.error(e.message);
         }
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -371,6 +380,7 @@ function workspaceEndpoints(app) {
 
         response.status(200).json({ workspaces });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -390,6 +400,7 @@ function workspaceEndpoints(app) {
 
         response.status(200).json({ workspace });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -417,6 +428,7 @@ function workspaceEndpoints(app) {
           : await WorkspaceChats.forWorkspace(workspace.id);
         response.status(200).json({ history: convertToChatHistory(history) });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -448,6 +460,7 @@ function workspaceEndpoints(app) {
 
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -472,6 +485,7 @@ function workspaceEndpoints(app) {
 
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -514,6 +528,7 @@ function workspaceEndpoints(app) {
 
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -538,6 +553,7 @@ function workspaceEndpoints(app) {
         await WorkspaceChats.updateFeedbackScore(chatId, feedback);
         return response.status(200).json({ success: true });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error updating chat feedback:", error);
         response.status(500).end();
       }
@@ -554,6 +570,7 @@ function workspaceEndpoints(app) {
           await WorkspaceSuggestedMessages.getMessages(slug);
         response.status(200).json({ success: true, suggestedMessages });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching suggested messages:", error);
         response
           .status(500)
@@ -582,6 +599,7 @@ function workspaceEndpoints(app) {
           message: "Suggested messages saved successfully.",
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the suggested messages:", error);
         response.status(500).json({
           success: true,
@@ -612,6 +630,7 @@ function workspaceEndpoints(app) {
         await Document.update(document.id, { pinned: pinStatus });
         return response.status(200).end();
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
@@ -657,6 +676,7 @@ function workspaceEndpoints(app) {
         response.end(buffer);
         return;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the TTS request:", error);
         response.status(500).json({ message: "TTS could not be completed" });
       }
@@ -700,6 +720,7 @@ function workspaceEndpoints(app) {
         response.end(buffer);
         return;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -750,6 +771,7 @@ function workspaceEndpoints(app) {
             : message,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the profile picture upload:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -794,6 +816,7 @@ function workspaceEndpoints(app) {
             : message,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the profile picture removal:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -869,6 +892,7 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json({ newThreadSlug: newThread.slug });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -894,6 +918,7 @@ function workspaceEndpoints(app) {
         await WorkspaceChats._update(validChat.id, { include: false });
         response.json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.status(500).json({ success: false, error: "Server error" });
       }
@@ -973,6 +998,7 @@ function workspaceEndpoints(app) {
           document: { id: document.id, location: document.location },
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -1002,6 +1028,7 @@ function workspaceEndpoints(app) {
         await purgeDocument(body.documentLocation);
         response.status(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -1019,6 +1046,7 @@ function workspaceEndpoints(app) {
           }),
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching prompt history:", error);
         response.sendStatus(500).end();
       }
@@ -1040,6 +1068,7 @@ function workspaceEndpoints(app) {
           }),
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error clearing prompt history:", error);
         response.sendStatus(500).end();
       }
@@ -1063,6 +1092,7 @@ function workspaceEndpoints(app) {
           }),
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error deleting prompt history:", error);
         response.sendStatus(500).end();
       }
@@ -1085,6 +1115,7 @@ function workspaceEndpoints(app) {
         );
         response.status(200).json(searchResults);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error searching for workspaces:", error);
         response.sendStatus(500).end();
       }
@@ -1117,6 +1148,7 @@ function workspaceEndpoints(app) {
           removeSSEConnection(workspace.slug, response);
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.status(500).end();
       }
@@ -1145,6 +1177,7 @@ function workspaceEndpoints(app) {
         const sent = removeQueuedFile(workspace.slug, filename);
         response.status(200).json({ success: sent });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.status(500).json({ success: false, error: e.message });
       }
@@ -1162,6 +1195,7 @@ function workspaceEndpoints(app) {
           ),
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error checking if agent command is available:", error);
         response.status(500).json({ showAgentCommand: true });
       }

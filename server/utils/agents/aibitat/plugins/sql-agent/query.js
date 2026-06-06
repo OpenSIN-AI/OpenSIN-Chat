@@ -90,6 +90,7 @@ module.exports.SqlAgentQuery = {
 
               return JSON.stringify(result);
             } catch (e) {
+              // eslint-disable-next-line no-console
               console.error(e);
               return e.message;
             }

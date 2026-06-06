@@ -26,11 +26,13 @@ async function asAudio({
     ? WHISPER_PROVIDERS[options?.whisperProvider]
     : WHISPER_PROVIDERS.local;
 
+  // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
   const whisper = new WhisperProvider({ options });
   const { content, error } = await whisper.processFile(fullFilePath, filename);
 
   if (!!error) {
+    // eslint-disable-next-line no-console
     console.error(`Error encountered for parsing of ${filename}.`);
     if (!options.absolutePath) trashFile(fullFilePath);
     return {
@@ -41,6 +43,7 @@ async function asAudio({
   }
 
   if (!content?.length) {
+    // eslint-disable-next-line no-console
     console.error(`Resulting text content was empty for ${filename}.`);
     if (!options.absolutePath) trashFile(fullFilePath);
     return {
@@ -70,6 +73,7 @@ async function asAudio({
     options: { parseOnly: options.parseOnly },
   });
   if (!options.absolutePath) trashFile(fullFilePath);
+  // eslint-disable-next-line no-console
   console.log(
     `[SUCCESS]: ${filename} transcribed, converted & ready for embedding.\n`
   );

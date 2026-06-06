@@ -40,6 +40,7 @@ async function loadAndStoreSpaces(
     };
   }
 
+  // eslint-disable-next-line no-console
   console.log(`-- Working Drupal Wiki ${baseUrl} for spaceIds: ${spaceIds} --`);
   const drupalWiki = new DrupalWiki({ baseUrl, accessToken });
 
@@ -51,8 +52,10 @@ async function loadAndStoreSpaces(
   for (const spaceId of spaceIdsArr) {
     try {
       await drupalWiki.loadAndStoreAllPagesForSpace(spaceId, encryptionWorker);
+      // eslint-disable-next-line no-console
       console.log(`--- Finished space ${spaceId} ---`);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       return {
         success: false,
@@ -61,6 +64,7 @@ async function loadAndStoreSpaces(
       };
     }
   }
+  // eslint-disable-next-line no-console
   console.log(`-- Finished all spaces--`);
 
   return {
@@ -78,6 +82,7 @@ async function loadAndStoreSpaces(
  * @returns
  */
 async function loadPage({ baseUrl, pageId, accessToken }) {
+  // eslint-disable-next-line no-console
   console.log(`-- Working Drupal Wiki Page ${pageId} of ${baseUrl} --`);
   const drupalWiki = new DrupalWiki({ baseUrl, accessToken });
   try {

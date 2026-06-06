@@ -106,6 +106,7 @@ const Politician = {
           inserted++;
         }
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error(`[Politician] massUpsert error for ${p.fullName}: ${err.message}`);
         errors++;
       }
@@ -118,6 +119,7 @@ const Politician = {
     try {
       return await prisma.politicians.findFirst({ where: clause });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(`[Politician] get error: ${err.message}`);
       return null;
     }
@@ -134,6 +136,7 @@ const Politician = {
         },
       });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(`[Politician] where error: ${err.message}`);
       return [];
     }
@@ -174,6 +177,7 @@ const PoliticianVote = {
       await prisma.$transaction(inserts);
       return inserts.length;
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(`[PoliticianVote] bulkInsert error: ${err.message}`);
       return 0;
     }
@@ -217,6 +221,7 @@ const PoliticianSpeech = {
       await prisma.$transaction(inserts);
       return inserts.length;
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(`[PoliticianSpeech] bulkInsert error: ${err.message}`);
       return 0;
     }
@@ -229,6 +234,7 @@ const PoliticianSpeech = {
         data: { vectorized: true },
       });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(`[PoliticianSpeech] markVectorized error: ${err.message}`);
     }
   },

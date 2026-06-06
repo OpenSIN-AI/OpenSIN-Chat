@@ -62,6 +62,7 @@ async function getPageLinks(url, baseUrl) {
       process.platform === "darwin" &&
       process.env.NODE_ENV === "development"
     ) {
+      // eslint-disable-next-line no-console
       console.log(
         "Darwin Development Mode: Disabling headless mode to prevent Chromium from crashing."
       );
@@ -81,6 +82,7 @@ async function getPageLinks(url, baseUrl) {
     const links = extractLinks(html, baseUrl);
     return links;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(`Failed to get page links from ${url}.`, error);
     return [];
   }
@@ -121,6 +123,7 @@ async function bulkScrapePages(links, outFolderPath) {
    * This is expected behavior if seen in development mode on MacOS 15+
    */
   if (process.platform === "darwin" && process.env.NODE_ENV === "development") {
+    // eslint-disable-next-line no-console
     console.log(
       "Darwin Development Mode: Disabling headless mode to prevent Chromium from crashing."
     );
@@ -131,6 +134,7 @@ async function bulkScrapePages(links, outFolderPath) {
 
   for (let i = 0; i < links.length; i++) {
     const link = links[i];
+    // eslint-disable-next-line no-console
     console.log(`Scraping ${i + 1}/${links.length}: ${link}`);
 
     try {
@@ -151,6 +155,7 @@ async function bulkScrapePages(links, outFolderPath) {
       const content = docs[0].pageContent;
 
       if (!content.length) {
+        // eslint-disable-next-line no-console
         console.warn(`Empty content for ${link}. Skipping.`);
         continue;
       }
@@ -180,8 +185,10 @@ async function bulkScrapePages(links, outFolderPath) {
       });
       scrapedData.push(data);
 
+      // eslint-disable-next-line no-console
       console.log(`Successfully scraped ${link}.`);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(`Failed to scrape ${link}.`, error);
     }
   }
@@ -195,14 +202,18 @@ async function websiteScraper(startUrl, depth = 1, maxLinks = 20) {
     `${slugify(websiteName)}-${v4().slice(0, 4)}`
   ).toLowerCase();
   const outFolderPath = path.resolve(documentsFolder, outFolder);
+  // eslint-disable-next-line no-console
   console.log("Discovering links...");
   const linksToScrape = await discoverLinks(startUrl, depth, maxLinks);
+  // eslint-disable-next-line no-console
   console.log(`Found ${linksToScrape.length} links to scrape.`);
 
   if (!fs.existsSync(outFolderPath))
     fs.mkdirSync(outFolderPath, { recursive: true });
+  // eslint-disable-next-line no-console
   console.log("Starting bulk scraping...");
   const scrapedData = await bulkScrapePages(linksToScrape, outFolderPath);
+  // eslint-disable-next-line no-console
   console.log(`Scraped ${scrapedData.length} pages.`);
 
   return scrapedData;

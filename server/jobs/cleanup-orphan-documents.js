@@ -71,6 +71,7 @@ async function batchDeleteFiles(filesToDelete, batchSize = 500) {
     log(`Deleted ${deletedCount} orphaned files`);
     if (failedCount > 0) log(`Failed to delete ${failedCount} files`);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     log(`errored with ${e.message}`);
   } finally {

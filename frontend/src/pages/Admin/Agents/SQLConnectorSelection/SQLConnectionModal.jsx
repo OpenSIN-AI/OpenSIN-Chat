@@ -242,6 +242,7 @@ export default function SQLConnectionModal({
       setHasChanges(true);
       handleClose();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error validating connection:", error);
       showToast(
         error?.message ||

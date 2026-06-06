@@ -37,6 +37,7 @@ export default function SlashCommands({ entity }) {
       setItemId(itemId);
       setIsSuccess(true);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to publish slash command:", error);
       showToast(`Failed to publish slash command: ${error.message}`, "error", {
         clear: true,

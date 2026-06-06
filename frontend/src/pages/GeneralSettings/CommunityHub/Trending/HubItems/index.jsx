@@ -22,6 +22,7 @@ function useCommunityHubExploreItems() {
         const { success, result } = await CommunityHub.fetchExploreItems();
         if (success) setExploreItems(result || DEFAULT_EXPLORE_ITEMS);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);

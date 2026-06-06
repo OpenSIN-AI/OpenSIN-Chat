@@ -237,6 +237,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
       .invoke(this.#convertToLangchainPrototypes(messages))
       .then((res) => res)
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return null;
       });

@@ -10,6 +10,7 @@ const Embed = {
       .then((res) => res.json())
       .then((res) => res?.embeds || [])
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -22,6 +23,7 @@ const Embed = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { embed: null, error: e.message };
       });
@@ -34,6 +36,7 @@ const Embed = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -48,6 +51,7 @@ const Embed = {
         throw new Error(res.statusText);
       })
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: true, error: e.message };
       });
@@ -60,6 +64,7 @@ const Embed = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -71,6 +76,7 @@ const Embed = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });

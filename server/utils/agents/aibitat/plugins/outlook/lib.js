@@ -512,6 +512,7 @@ class OutlookBridge {
   #isInitialized = false;
 
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[35m[OutlookBridge]\x1b[0m ${text}`, ...args);
   }
 

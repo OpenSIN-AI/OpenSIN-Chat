@@ -17,6 +17,7 @@ class ResearchPipeline {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[38;5;208m[ResearchPipeline]\x1b[0m ${text}`, ...args);
   }
 

@@ -91,6 +91,7 @@ function systemEndpoints(app) {
       const results = await SystemSettings.isOnboardingComplete();
       response.status(200).json({ onboardingComplete: results });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -101,6 +102,7 @@ function systemEndpoints(app) {
       await SystemSettings.markOnboardingComplete();
       response.sendStatus(200).end();
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -111,6 +113,7 @@ function systemEndpoints(app) {
       const results = await SystemSettings.currentSettings();
       response.status(200).json({ results });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -134,6 +137,7 @@ function systemEndpoints(app) {
 
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -352,6 +356,7 @@ function systemEndpoints(app) {
         });
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -417,6 +422,7 @@ function systemEndpoints(app) {
           response.status(400).json({ success, message: error });
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error recovering account:", error);
         response
           .status(500)
@@ -443,6 +449,7 @@ function systemEndpoints(app) {
           response.status(400).json({ success, error });
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error resetting password:", error);
         response.status(500).json({ success: false, message: error.message });
       }
@@ -461,6 +468,7 @@ function systemEndpoints(app) {
           : await VectorDb.totalVectors();
         response.status(200).json({ vectorCount });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -476,6 +484,7 @@ function systemEndpoints(app) {
         await purgeDocument(name);
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -491,6 +500,7 @@ function systemEndpoints(app) {
         for await (const name of names) await purgeDocument(name);
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -506,6 +516,7 @@ function systemEndpoints(app) {
         await purgeFolder(name);
         response.sendStatus(200).end();
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -520,6 +531,7 @@ function systemEndpoints(app) {
         const localFiles = await viewLocalFiles();
         response.status(200).json({ localFiles });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -534,6 +546,7 @@ function systemEndpoints(app) {
         const online = await new CollectorApi().online();
         response.sendStatus(online ? 200 : 503);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -553,6 +566,7 @@ function systemEndpoints(app) {
 
         response.status(200).json({ types });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -572,6 +586,7 @@ function systemEndpoints(app) {
         );
         response.status(200).json({ newValues, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -606,6 +621,7 @@ function systemEndpoints(app) {
         }
         response.status(200).json({ success: !error, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -666,6 +682,7 @@ function systemEndpoints(app) {
           multi_user_mode: false,
         });
 
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
@@ -677,6 +694,7 @@ function systemEndpoints(app) {
       const multiUserMode = await SystemSettings.isMultiUserMode();
       response.status(200).json({ multiUserMode });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }
@@ -712,6 +730,7 @@ function systemEndpoints(app) {
       response.end(Buffer.from(buffer, "base64"));
       return;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error processing the logo request:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -724,6 +743,7 @@ function systemEndpoints(app) {
         JSON.stringify([]);
       response.status(200).json({ footerData: footerData });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error fetching footer data:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -739,6 +759,7 @@ function systemEndpoints(app) {
         )?.value ?? null;
       response.status(200).json({ supportEmail: supportEmail });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error fetching support email:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -755,6 +776,7 @@ function systemEndpoints(app) {
         )?.value ?? null;
       response.status(200).json({ customAppName: customAppName });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error fetching custom app name:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -783,6 +805,7 @@ function systemEndpoints(app) {
         response.end(Buffer.from(buffer, "base64"));
         return;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -823,6 +846,7 @@ function systemEndpoints(app) {
             : error || "Failed to update with new profile picture.",
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the profile picture upload:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -845,6 +869,7 @@ function systemEndpoints(app) {
           saneDefaultSystemPrompt: SystemSettings.saneDefaultSystemPrompt,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching default system prompt:", error);
         response
           .status(500)
@@ -871,6 +896,7 @@ function systemEndpoints(app) {
           message: "Default system prompt updated successfully.",
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error updating default system prompt:", error);
         response.status(500).json({
           success: false,
@@ -910,6 +936,7 @@ function systemEndpoints(app) {
             : error || "Failed to remove profile picture.",
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the profile picture removal:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -949,6 +976,7 @@ function systemEndpoints(app) {
             : error || "Failed to update with new logo.",
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the logo upload:", error);
         response.status(500).json({ message: "Error uploading the logo." });
       }
@@ -962,6 +990,7 @@ function systemEndpoints(app) {
         !currentLogoFilename || currentLogoFilename === LOGO_FILENAME;
       response.status(200).json({ isDefaultLogo });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error processing the logo request:", error);
       response.status(500).json({ message: "Internal server error" });
     }
@@ -984,6 +1013,7 @@ function systemEndpoints(app) {
             : error || "Failed to update with new logo.",
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error processing the logo removal:", error);
         response.status(500).json({ message: "Error removing the logo." });
       }
@@ -1002,6 +1032,7 @@ function systemEndpoints(app) {
         error: null,
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error);
       response.status(500).json({
         apiKey: null,
@@ -1031,6 +1062,7 @@ function systemEndpoints(app) {
           error,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
         response.status(500).json({
           apiKey: null,
@@ -1060,6 +1092,7 @@ function systemEndpoints(app) {
         );
         return response.status(200).end();
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
         response.status(500).end();
       }
@@ -1082,6 +1115,7 @@ function systemEndpoints(app) {
           error,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
         response.status(500).end();
       }
@@ -1102,6 +1136,7 @@ function systemEndpoints(app) {
 
         response.status(200).json({ logs: logs, hasPages, totalLogs });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -1121,6 +1156,7 @@ function systemEndpoints(app) {
         );
         response.json({ success: true });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -1148,6 +1184,7 @@ function systemEndpoints(app) {
 
         response.status(200).json({ chats: chats, hasPages, totalChats });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -1165,6 +1202,7 @@ function systemEndpoints(app) {
           : await WorkspaceChats.delete({ id: Number(id) });
         response.json({ success: true, error: null });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -1193,6 +1231,7 @@ function systemEndpoints(app) {
         response.setHeader("Content-Type", contentType);
         response.status(200).send(data);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500).end();
       }
@@ -1230,6 +1269,7 @@ function systemEndpoints(app) {
       const { success, error } = await User.update(id, updates);
       response.status(200).json({ success, error });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response
         .status(500)
@@ -1246,6 +1286,7 @@ function systemEndpoints(app) {
         const userPresets = await SlashCommandPresets.getUserPresets(user?.id);
         response.status(200).json({ presets: userPresets });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching slash command presets:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -1284,6 +1325,7 @@ function systemEndpoints(app) {
         }
         response.status(201).json({ preset });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error creating slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -1330,6 +1372,7 @@ function systemEndpoints(app) {
         if (!preset) return response.sendStatus(422);
         response.status(200).json({ preset: { ...ownsPreset, ...updates } });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error updating slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -1357,6 +1400,7 @@ function systemEndpoints(app) {
         await SlashCommandPresets.delete(Number(slashCommandId));
         response.sendStatus(204);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error deleting slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
@@ -1372,6 +1416,7 @@ function systemEndpoints(app) {
         const variables = await SystemPromptVariables.getAll(user?.id);
         response.status(200).json({ variables });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching system prompt variables:", error);
         response.status(500).json({
           success: false,
@@ -1408,6 +1453,7 @@ function systemEndpoints(app) {
           variable,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error creating system prompt variable:", error);
         response.status(500).json({
           success: false,
@@ -1450,6 +1496,7 @@ function systemEndpoints(app) {
           variable,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error updating system prompt variable:", error);
         response.status(500).json({
           success: false,
@@ -1478,6 +1525,7 @@ function systemEndpoints(app) {
           success: true,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error deleting system prompt variable:", error);
         response.status(500).json({
           success: false,
@@ -1515,6 +1563,7 @@ function systemEndpoints(app) {
         );
         return response.status(200).json({ success: true, text });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("STT transcription error:", error);
         return response.status(500).json({
           success: false,
@@ -1551,6 +1600,7 @@ function systemEndpoints(app) {
 
         response.status(200).json(result);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("SQL validation error:", error);
         response.status(500).json({
           success: false,

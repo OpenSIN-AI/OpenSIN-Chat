@@ -17,7 +17,6 @@ export function useUserItems({ connectionKey }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("fetching user items", connectionKey);
       if (!connectionKey) return;
       setLoading(true);
       try {
@@ -27,6 +26,7 @@ export function useUserItems({ connectionKey }) {
           setUserItems({ createdByMe, teamItems });
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error fetching user items:", error);
       } finally {
         setLoading(false);

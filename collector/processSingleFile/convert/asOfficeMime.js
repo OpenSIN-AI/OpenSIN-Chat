@@ -14,15 +14,18 @@ async function asOfficeMime({
   options = {},
   metadata = {},
 }) {
+  // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
   let content = "";
   try {
     content = await officeParser.parseOfficeAsync(fullFilePath);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(`Could not parse office or office-like file`, error);
   }
 
   if (!content.length) {
+    // eslint-disable-next-line no-console
     console.error(`Resulting text content was empty for ${filename}.`);
     if (!options.absolutePath) trashFile(fullFilePath);
     return {
@@ -52,6 +55,7 @@ async function asOfficeMime({
     options: { parseOnly: options.parseOnly },
   });
   if (!options.absolutePath) trashFile(fullFilePath);
+  // eslint-disable-next-line no-console
   console.log(`[SUCCESS]: ${filename} converted & ready for embedding.\n`);
   return { success: true, reason: null, documents: [document] };
 }

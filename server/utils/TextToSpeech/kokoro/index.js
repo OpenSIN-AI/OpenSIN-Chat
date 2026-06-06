@@ -21,6 +21,7 @@ class KokoroTTS {
   }
 
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[32m[KokoroTTS]\x1b[0m ${text}`, ...args);
   }
 
@@ -39,6 +40,7 @@ class KokoroTTS {
       });
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
     return null;

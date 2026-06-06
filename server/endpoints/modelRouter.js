@@ -20,6 +20,7 @@ function modelRouterEndpoints(app) {
         const routers = await ModelRouter.getAllWithCounts();
         response.status(200).json({ routers });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }
@@ -43,6 +44,7 @@ function modelRouterEndpoints(app) {
         }
         response.status(200).json({ router });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }
@@ -65,6 +67,7 @@ function modelRouterEndpoints(app) {
         await Telemetry.sendTelemetry("model_router_created");
         return response.status(200).json({ router });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }
@@ -83,6 +86,7 @@ function modelRouterEndpoints(app) {
         ModelRouterService.invalidateRouter(Number(id));
         return response.status(200).json({ router });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }
@@ -103,6 +107,7 @@ function modelRouterEndpoints(app) {
         ModelRouterService.invalidateRouter(Number(id));
         return response.status(200).json({ success: true });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }
@@ -129,6 +134,7 @@ function modelRouterEndpoints(app) {
         ModelRouterService.invalidateRouter(routerId);
         return response.status(200).json({ rule });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }
@@ -153,6 +159,7 @@ function modelRouterEndpoints(app) {
         ModelRouterService.invalidateRouter(Number(id));
         return response.status(200).json({ success });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }
@@ -174,6 +181,7 @@ function modelRouterEndpoints(app) {
         ModelRouterService.invalidateRouter(Number(id));
         return response.status(200).json({ rule });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }
@@ -194,6 +202,7 @@ function modelRouterEndpoints(app) {
         ModelRouterService.invalidateRouter(Number(id));
         return response.status(200).json({ success: true });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         response.sendStatus(500);
       }

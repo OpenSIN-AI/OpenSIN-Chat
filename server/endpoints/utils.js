@@ -17,6 +17,7 @@ function utilEndpoints(app) {
       };
       response.status(200).json(metrics);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.sendStatus(500).end();
     }
@@ -39,6 +40,7 @@ function getGitVersion() {
       .toString()
       .trim();
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error("getGitVersion", e.message);
     return "--";
   }

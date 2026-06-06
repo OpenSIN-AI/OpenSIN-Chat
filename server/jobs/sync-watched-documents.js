@@ -201,6 +201,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
       );
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     log(`errored with ${e.message}`);
   } finally {

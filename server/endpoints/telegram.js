@@ -63,6 +63,7 @@ function telegramEndpoints(app) {
           },
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -152,6 +153,7 @@ function telegramEndpoints(app) {
           bot_username: verification.username,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -169,6 +171,7 @@ function telegramEndpoints(app) {
         await EventLogs.logEvent("telegram_bot_disconnected");
         return response.status(200).json({ success: true });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -187,6 +190,7 @@ function telegramEndpoints(app) {
           bot_username: connector?.config?.bot_username || null,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -203,6 +207,7 @@ function telegramEndpoints(app) {
           .status(200)
           .json({ users: service.pendingPairings || [] });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -218,6 +223,7 @@ function telegramEndpoints(app) {
         const approved = connector?.config?.approved_users || [];
         return response.status(200).json({ users: approved });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -240,6 +246,7 @@ function telegramEndpoints(app) {
         await EventLogs.logEvent("telegram_user_approved", { chatId });
         return response.status(200).json({ success: true });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -262,6 +269,7 @@ function telegramEndpoints(app) {
         await EventLogs.logEvent("telegram_user_denied", { chatId });
         return response.status(200).json({ success: true });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -284,6 +292,7 @@ function telegramEndpoints(app) {
         await EventLogs.logEvent("telegram_user_revoked", { chatId });
         return response.status(200).json({ success: true });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }
@@ -325,6 +334,7 @@ function telegramEndpoints(app) {
 
         return response.status(200).json({ success: true });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
       }

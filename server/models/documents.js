@@ -41,6 +41,7 @@ const Document = {
       await prisma.workspace_documents.deleteMany({ where: clause });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -53,6 +54,7 @@ const Document = {
       });
       return document || null;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return null;
     }
@@ -75,6 +77,7 @@ const Document = {
       });
       return results;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -141,6 +144,7 @@ const Document = {
       );
 
       if (!vectorized) {
+        // eslint-disable-next-line no-console
         console.error(
           "Failed to vectorize",
           metadata?.title || newDoc.filename,
@@ -163,6 +167,7 @@ const Document = {
           ...docProgress,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error.message);
         emitProgress(workspace.slug, {
           type: "doc_failed",
@@ -224,6 +229,7 @@ const Document = {
           where: { docId: document.docId },
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error.message);
       }
     }
@@ -247,6 +253,7 @@ const Document = {
       });
       return count;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO COUNT DOCUMENTS.", error.message);
       return 0;
     }
@@ -267,6 +274,7 @@ const Document = {
       });
       return { document, message: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return { document: null, message: error.message };
     }
@@ -279,6 +287,7 @@ const Document = {
       });
       return true;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -323,7 +332,8 @@ const Document = {
      */
     uploadToWorkspace: async function (wsSlugs = "", docLocation = null) {
       if (!docLocation)
-        return console.log(
+        // eslint-disable-next-line no-console
+        return console.error(
           "No document location provided for embedding",
           docLocation,
         );
@@ -332,12 +342,14 @@ const Document = {
         .split(",")
         .map((slug) => String(slug)?.trim()?.toLowerCase());
       if (slugs.length === 0)
-        return console.log(`No workspaces provided got: ${wsSlugs}`);
+        // eslint-disable-next-line no-console
+        return console.error(`No workspaces provided got: ${wsSlugs}`);
 
       const { Workspace } = require("./workspace");
       const workspaces = await Workspace.where({ slug: { in: slugs } });
       if (workspaces.length === 0)
-        return console.log("No valid workspaces found for slugs: ", slugs);
+        // eslint-disable-next-line no-console
+        return console.error("No valid workspaces found for slugs: ", slugs);
 
       // Upsert the document into each workspace - do this sequentially
       // because the document may be large and we don't want to overwhelm the embedder, plus on the first
@@ -349,11 +361,11 @@ const Document = {
           [docLocation],
         );
         if (failedToEmbed.length > 0)
-          return console.log(
+          // eslint-disable-next-line no-console
+          return console.error(
             `Failed to embed document into workspace ${workspace.slug}`,
             errors,
           );
-        console.log(`Document embedded into workspace ${workspace.slug}...`);
       }
 
       return true;

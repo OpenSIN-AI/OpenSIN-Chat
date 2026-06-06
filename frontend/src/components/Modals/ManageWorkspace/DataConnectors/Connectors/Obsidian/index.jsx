@@ -81,6 +81,7 @@ export default function ObsidianOptions() {
 
       setLoading(false);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);

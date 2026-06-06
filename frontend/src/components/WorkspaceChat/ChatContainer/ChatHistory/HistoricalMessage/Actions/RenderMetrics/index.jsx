@@ -79,7 +79,6 @@ export function MetricsProvider({ children }) {
       if (!e?.detail?.hasOwnProperty("showMetricsAutomatically")) return;
       setShowMetricsAutomatically(e.detail.showMetricsAutomatically);
     }
-    console.log("Adding event listener for metrics visibility");
     window.addEventListener(SHOW_METRICS_EVENT, handleShowingMetricsEvent);
     return () =>
       window.removeEventListener(SHOW_METRICS_EVENT, handleShowingMetricsEvent);

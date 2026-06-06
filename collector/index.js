@@ -60,6 +60,7 @@ app.post(
         .status(200)
         .json({ filename: targetFilename, success, reason, documents });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.status(200).json({
         filename: filename,
@@ -94,6 +95,7 @@ app.post(
         .status(200)
         .json({ filename: targetFilename, success, reason, documents });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.status(200).json({
         filename: filename,
@@ -119,6 +121,7 @@ app.post(
       } = await processLink(link, scraperHeaders, metadata);
       response.status(200).json({ url: link, success, reason, documents });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.status(200).json({
         url: link,
@@ -140,6 +143,7 @@ app.post(
       const { success, content = null } = await getLinkText(link, captureAs);
       response.status(200).json({ url: link, success, content });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.status(200).json({
         url: link,
@@ -164,6 +168,7 @@ app.post(
       } = await convertAudioToWav(filename);
       response.status(200).json({ filename, success, reason, wavFilename });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.status(200).json({
         filename,
@@ -191,6 +196,7 @@ app.post(
         .status(200)
         .json({ filename: metadata.title, success, reason, documents });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
       response.status(200).json({
         filename: metadata?.title || "Unknown-doc.txt",
@@ -216,6 +222,7 @@ app.all("*", function (_, response) {
 app
   .listen(COLLECTOR_PORT, async () => {
     await wipeCollectorStorage();
+    // eslint-disable-next-line no-console
     console.log(`Document processor app listening on port ${COLLECTOR_PORT}`);
   })
   .on("error", function (_) {

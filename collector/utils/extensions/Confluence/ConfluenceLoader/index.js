@@ -31,6 +31,7 @@ class ConfluencePagesLoader {
   }
 
   log(message, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[Confluence Loader]\x1b[0m ${message}`, ...args);
   }
 

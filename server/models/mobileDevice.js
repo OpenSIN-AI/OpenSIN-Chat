@@ -132,6 +132,7 @@ const MobileDevice = {
       });
       return { device, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to create mobile device", error);
       return { device: null, error: error.message };
     }
@@ -177,6 +178,7 @@ const MobileDevice = {
       });
       return device;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO GET MOBILE DEVICE.", error);
       return [];
     }
@@ -194,6 +196,7 @@ const MobileDevice = {
       });
       return { success: true, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to delete mobile device", error);
       return { success: false, error: error.message };
     }
@@ -221,6 +224,7 @@ const MobileDevice = {
       });
       return devices;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO GET MOBILE DEVICES.", error.message);
       return [];
     }
@@ -238,8 +242,8 @@ const MobileDevice = {
         where: { userId: null },
         data: { userId: userId },
       });
-      console.log("Successfully migrated mobile devices to multi-user mode");
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(
         "Error migrating mobile devices to multi-user mode:",
         error,

@@ -163,6 +163,7 @@ class ImportedPlugin {
     }
     for (const [param, definition] of Object.entries(this.config.setup_args)) {
       if (definition.required && !definition?.value) {
+        // eslint-disable-next-line no-console
         console.log(
           `'${param}' required value for '${this.name}' plugin is missing. Plugin may not function or crash agent.`,
         );
@@ -186,7 +187,9 @@ class ImportedPlugin {
           config: this.config,
           runtimeArgs: this.runtimeArgs,
           description: this.config.description,
+          // eslint-disable-next-line no-console
           logger: aibitat?.handlerProps?.log || console.log, // Allows plugin to log to the console.
+          // eslint-disable-next-line no-console
           introspect: aibitat?.introspect || console.log, // Allows plugin to display a "thought" the chat window UI.
           runtime: "docker",
           webScraper: sharedWebScraper,
@@ -230,6 +233,7 @@ class ImportedPlugin {
 
     const pluginFolder = path.resolve(pluginsPath, normalizePath(hubId));
     if (fs.existsSync(pluginFolder))
+      // eslint-disable-next-line no-console
       console.log(
         "ImportedPlugin.importCommunityItemFromUrl - plugin folder already exists - will overwrite",
       );
@@ -240,6 +244,7 @@ class ImportedPlugin {
 
       const downloadZipFile = new Promise(async (resolve) => {
         try {
+          // eslint-disable-next-line no-console
           console.log(
             "ImportedPlugin.importCommunityItemFromUrl - downloading asset from ",
             new URL(url).origin,
@@ -248,6 +253,7 @@ class ImportedPlugin {
           const request = httpLib.get(url, function (response) {
             response.pipe(zipFile);
             zipFile.on("finish", () => {
+              // eslint-disable-next-line no-console
               console.log(
                 "ImportedPlugin.importCommunityItemFromUrl - downloaded zip file",
               );
@@ -256,6 +262,7 @@ class ImportedPlugin {
           });
 
           request.on("error", (error) => {
+            // eslint-disable-next-line no-console
             console.error(
               "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
               error,
@@ -263,6 +270,7 @@ class ImportedPlugin {
             resolve(false);
           });
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error(
             "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
             error,
@@ -300,11 +308,13 @@ class ImportedPlugin {
       pluginJson.hubId = hubId;
       fs.writeFileSync(pluginJsonPath, JSON.stringify(pluginJson, null, 2));
 
+      // eslint-disable-next-line no-console
       console.log(
         `ImportedPlugin.importCommunityItemFromUrl - successfully imported plugin to agent-skills/${hubId}`,
       );
       return { success: true, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(
         "ImportedPlugin.importCommunityItemFromUrl - error: ",
         error,

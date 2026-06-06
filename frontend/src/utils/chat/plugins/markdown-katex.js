@@ -241,7 +241,8 @@ export default function math_plugin(md, options) {
       return katex.renderToString(latex, options);
     } catch (error) {
       if (options.throwOnError) {
-        console.log(error);
+        // eslint-disable-next-line no-console
+        console.error(error);
       }
       return latex;
     }
@@ -259,7 +260,8 @@ export default function math_plugin(md, options) {
       return "<p>" + katex.renderToString(latex, options) + "</p>";
     } catch (error) {
       if (options.throwOnError) {
-        console.log(error);
+        // eslint-disable-next-line no-console
+        console.error(error);
       }
       return latex;
     }

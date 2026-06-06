@@ -268,6 +268,7 @@ function DockerModelRunnerModelSelection({
         setSearchQuery("");
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Error downloading model:", e);
       showToast(
         e.message || "An error occurred while downloading the model",

@@ -172,12 +172,15 @@ if (process.env.NODE_ENV !== "development") {
         const resBody = await VectorDb[command](body);
         response.status(200).json({ ...resBody });
       } catch (e) {
+        // eslint-disable-next-line no-console
         // console.error(e)
+        // eslint-disable-next-line no-console
         console.error(JSON.stringify(e));
         response.status(500).json({ error: e.message });
       }
       return;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e.message, e);
       response.sendStatus(500).end();
     }

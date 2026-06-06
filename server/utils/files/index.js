@@ -182,6 +182,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
   if (checkOnly) return exists;
   if (!exists) return { exists, chunks: [] };
 
+  // eslint-disable-next-line no-console
   console.log(
     `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`,
   );
@@ -193,6 +194,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
 // filename is the fullpath to the doc so we can compare by filename to find cached matches.
 async function storeVectorResult(vectorData = [], filename = null) {
   if (!filename) return;
+  // eslint-disable-next-line no-console
   console.log(
     `Caching vectorized results of ${filename} to prevent duplicated embedding.`,
   );
@@ -216,6 +218,7 @@ async function purgeSourceDocument(filename = null) {
   )
     return;
 
+  // eslint-disable-next-line no-console
   console.log(`Purging source document of ${filename}.`);
   fs.rmSync(filePath);
   return;
@@ -228,6 +231,7 @@ async function purgeVectorCache(filename = null) {
   const filePath = path.resolve(vectorCachePath, `${digest}.json`);
 
   if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) return;
+  // eslint-disable-next-line no-console
   console.log(`Purging vector-cache of ${filename}.`);
   fs.rmSync(filePath);
   return;
@@ -426,6 +430,7 @@ async function fileToPickerData({
       // Remove the pageContent field from the metadata - it is large and not needed for the picker
       delete metadata.pageContent;
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Error parsing file", err);
       return null;
     }
@@ -443,6 +448,7 @@ async function fileToPickerData({
     };
   }
 
+  // eslint-disable-next-line no-console
   console.log(
     `Stream-parsing ${path.basename(pathToFile)} because it exceeds the ${FILE_READ_SIZE_THRESHOLD} byte limit.`,
   );
@@ -461,13 +467,16 @@ async function fileToPickerData({
           resolve(metadata);
         })
         .on("error", (err) => {
+          // eslint-disable-next-line no-console
           console.error("Error parsing file", err);
           reject(null);
         });
     }).catch((err) => {
+      // eslint-disable-next-line no-console
       console.error("Error parsing file", err);
     });
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error("Error parsing file", err);
     metadata = null;
   } finally {
@@ -476,6 +485,7 @@ async function fileToPickerData({
 
   // If the metadata is empty or something went wrong, return null
   if (!metadata || !Object.keys(metadata)?.length) {
+    // eslint-disable-next-line no-console
     console.log(`Stream-parsing failed for ${path.basename(pathToFile)}`);
     return null;
   }

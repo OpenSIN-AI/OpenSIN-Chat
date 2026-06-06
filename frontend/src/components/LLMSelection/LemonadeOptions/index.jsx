@@ -287,6 +287,7 @@ function LemonadeModelSelection({
       setFilteredModels(updatedModels);
       setSearchQuery("");
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Error uninstalling model:", e);
       showToast(
         e.message || "An error occurred while uninstalling the model",
@@ -327,6 +328,7 @@ function LemonadeModelSelection({
         setSearchQuery("");
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Error downloading model:", e);
       showToast(
         e.message || "An error occurred while downloading the model",

@@ -10,6 +10,7 @@ const ModelRouter = {
       .then((res) => res.json())
       .then((res) => res?.routers || [])
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -22,6 +23,7 @@ const ModelRouter = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { router: null, error: e.message };
       });
@@ -35,6 +37,7 @@ const ModelRouter = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { router: null, error: e.message };
       });
@@ -48,6 +51,7 @@ const ModelRouter = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { router: null, error: e.message };
       });
@@ -60,6 +64,7 @@ const ModelRouter = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -73,6 +78,7 @@ const ModelRouter = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { rule: null, error: e.message };
       });
@@ -89,6 +95,7 @@ const ModelRouter = {
     )
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { rule: null, error: e.message };
       });
@@ -104,6 +111,7 @@ const ModelRouter = {
     )
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -117,6 +125,7 @@ const ModelRouter = {
     })
       .then((res) => res.json())
       .catch((e) => {
+        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });

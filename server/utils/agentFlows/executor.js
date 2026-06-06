@@ -8,14 +8,18 @@ const { safeJsonParse } = require("../http");
 class FlowExecutor {
   constructor() {
     this.variables = {};
+    // eslint-disable-next-line no-console
     this.introspect = (...args) => console.log("[introspect] ", ...args);
+    // eslint-disable-next-line no-console
     this.logger = console.info;
     this.aibitat = null;
   }
 
   attachLogging(introspectFn = null, loggerFn = null) {
     this.introspect =
+      // eslint-disable-next-line no-console
       introspectFn || ((...args) => console.log("[introspect] ", ...args));
+    // eslint-disable-next-line no-console
     this.logger = loggerFn || console.info;
   }
 

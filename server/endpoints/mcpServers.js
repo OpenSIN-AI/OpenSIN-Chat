@@ -22,6 +22,7 @@ function mcpServersEndpoints(app) {
           servers: await mcp.servers(),
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error force reloading MCP servers:", error);
         return response.status(500).json({
           success: false,
@@ -43,6 +44,7 @@ function mcpServersEndpoints(app) {
           servers,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error listing MCP servers:", error);
         return response.status(500).json({
           success: false,
@@ -66,6 +68,7 @@ function mcpServersEndpoints(app) {
           error: result.error,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error toggling MCP server:", error);
         return response.status(500).json({
           success: false,
@@ -87,6 +90,7 @@ function mcpServersEndpoints(app) {
           error: result.error,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error deleting MCP server:", error);
         return response.status(500).json({
           success: false,
@@ -113,6 +117,7 @@ function mcpServersEndpoints(app) {
           suppressedTools: result.suppressedTools,
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error toggling MCP tool:", error);
         return response.status(500).json({
           success: false,

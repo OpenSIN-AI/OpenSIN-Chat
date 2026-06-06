@@ -30,6 +30,7 @@ function apiOrchestratorEndpoints(app) {
       const result = await orchestrator.startWorkflow({ goal, steps, options });
       response.status(200).json(result);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.status(500).json({ error: err.message });
     }
@@ -41,6 +42,7 @@ function apiOrchestratorEndpoints(app) {
       const workflows = orchestrator.listWorkflows();
       response.status(200).json({ workflows });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -53,6 +55,7 @@ function apiOrchestratorEndpoints(app) {
       if (!status) return response.status(404).json({ error: "Workflow not found" });
       response.status(200).json(status);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }
@@ -65,6 +68,7 @@ function apiOrchestratorEndpoints(app) {
       if (!results) return response.status(404).json({ error: "Workflow not found" });
       response.status(200).json(results);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(err.message, err);
       response.sendStatus(500).end();
     }

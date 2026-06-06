@@ -40,6 +40,7 @@ function getCollectorPort() {
   const port = Number(process.env.COLLECTOR_PORT);
   if (Number.isInteger(port) && port > 0 && port <= 65535) return port;
 
+  // eslint-disable-next-line no-console
   console.warn(
     `Invalid COLLECTOR_PORT "${process.env.COLLECTOR_PORT}". Falling back to ${DEFAULT_COLLECTOR_PORT}.`
   );

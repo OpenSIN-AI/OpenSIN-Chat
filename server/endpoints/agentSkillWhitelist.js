@@ -19,6 +19,7 @@ function agentSkillWhitelistEndpoints(app) {
           .status(200)
           .json({ available: filesystemTool.isToolAvailable() });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         return response
           .status(500)
@@ -37,6 +38,7 @@ function agentSkillWhitelistEndpoints(app) {
           .status(200)
           .json({ available: createFilesTool.isToolAvailable() });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         return response
           .status(500)
@@ -72,6 +74,7 @@ function agentSkillWhitelistEndpoints(app) {
         );
         return response.status(success ? 200 : 400).json({ success, error });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
         return response.status(500).json({ success: false, error: e.message });
       }

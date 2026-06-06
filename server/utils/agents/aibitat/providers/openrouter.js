@@ -123,6 +123,7 @@ class OpenRouterProvider extends InheritMultiple([Provider, UnTooled]) {
         { provider: this },
       );
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message, error);
       if (error instanceof OpenAI.AuthenticationError) throw error;
       if (

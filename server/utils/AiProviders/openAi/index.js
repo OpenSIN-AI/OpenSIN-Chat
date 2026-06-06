@@ -34,6 +34,7 @@ class OpenAiLLM {
   }
 
   log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
@@ -266,7 +267,8 @@ class OpenAiLLM {
           }
         }
       } catch (e) {
-        console.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
+        // eslint-disable-next-line no-console
+        console.error(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
         writeResponseChunk(response, {
           uuid,
           type: "abort",

@@ -47,6 +47,7 @@ class PushNotifications {
   }
 
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m[PushNotifications]\x1b[0m ${text}`, ...args);
   }
 
@@ -64,6 +65,7 @@ class PushNotifications {
       );
       return webpush;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Failed to set VAPID details", e);
       return null;
     }

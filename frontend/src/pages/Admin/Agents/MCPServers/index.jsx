@@ -38,6 +38,7 @@ export function MCPServerHeader({
           setMcpServers(servers);
         })
         .catch((err) => {
+          // eslint-disable-next-line no-console
           console.error(err);
           showToast(`Failed to refresh MCP servers.`, "error", { clear: true });
         })

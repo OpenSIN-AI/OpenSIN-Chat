@@ -30,6 +30,7 @@ class GenericOpenAiTTS {
   }
 
   #log(text, ...args) {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[32m[OpenAiGenericTTS]\x1b[0m ${text}`, ...args);
   }
 
@@ -47,6 +48,7 @@ class GenericOpenAiTTS {
       });
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
     return null;

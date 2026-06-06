@@ -27,6 +27,7 @@ async function fetchVideoTranscriptContent({ url }) {
     };
   }
 
+  // eslint-disable-next-line no-console
   console.log(`-- Working YouTube ${url} --`);
   const loader = YoutubeLoader.createFromUrl(url, { addVideoInfo: true });
   const { docs, error } = await loader
@@ -134,6 +135,7 @@ async function loadYouTubeTranscript({ url }, options = { parseOnly: false }) {
   const fileName = sanitizeFileName(`${slugify(metadata.title)}-${uuid}`);
 
   if (!isWithin(documentsFolder, path.resolve(outFolderPath, fileName))) {
+    // eslint-disable-next-line no-console
     console.error(
       `[YouTube Loader]: Invalid file path ${path.resolve(
         outFolderPath,
@@ -167,6 +169,7 @@ async function loadYouTubeTranscript({ url }, options = { parseOnly: false }) {
     token_count_estimate: tokenizeString(content),
   };
 
+  // eslint-disable-next-line no-console
   console.log(`[YouTube Loader]: Saving ${metadata.title} to ${outFolder}`);
   const document = writeToServerDocuments({
     data,

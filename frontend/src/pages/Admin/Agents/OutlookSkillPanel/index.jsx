@@ -67,6 +67,7 @@ export default function OutlookSkillPanel({
         }
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Failed to fetch Outlook status:", e);
     }
   };
@@ -112,6 +113,7 @@ export default function OutlookSkillPanel({
       window.history.replaceState({}, document.title, window.location.pathname);
     } else if (outlookAuth === "error") {
       const message = urlParams.get("message");
+      // eslint-disable-next-line no-console
       console.error("Outlook auth error:", message);
       window.history.replaceState({}, document.title, window.location.pathname);
     }
@@ -161,9 +163,11 @@ export default function OutlookSkillPanel({
       if (data.success && data.url) {
         window.open(data.url, "_blank");
       } else {
+        // eslint-disable-next-line no-console
         console.error("Failed to get auth URL:", data.error);
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Auth error:", e);
     } finally {
       setAuthLoading(false);
@@ -178,6 +182,7 @@ export default function OutlookSkillPanel({
         setIsAuthenticated(false);
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Revoke error:", e);
     } finally {
       setAuthLoading(false);

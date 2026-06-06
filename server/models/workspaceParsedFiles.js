@@ -38,6 +38,7 @@ const WorkspaceParsedFiles = {
 
       return { file, error: null };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("FAILED TO CREATE PARSED FILE RECORD.", error.message);
       return { file: null, error: error.message };
     }
@@ -55,6 +56,7 @@ const WorkspaceParsedFiles = {
       });
       return file;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return null;
     }
@@ -75,6 +77,7 @@ const WorkspaceParsedFiles = {
       });
       return files;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return [];
     }
@@ -87,6 +90,7 @@ const WorkspaceParsedFiles = {
       });
       return result.count > 0;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error.message);
       return false;
     }
@@ -154,6 +158,7 @@ const WorkspaceParsedFiles = {
       });
       return { success: true, error: null, document };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to move and embed file:", error);
       return { success: false, error: error.message, document: null };
     } finally {
@@ -195,6 +200,7 @@ const WorkspaceParsedFiles = {
         currentContextTokenCount: totalTokens,
       };
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to get context metadata:", error);
       return {
         files: [],
@@ -237,6 +243,7 @@ const WorkspaceParsedFiles = {
 
       return results;
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to get context files:", error);
       return [];
     }
