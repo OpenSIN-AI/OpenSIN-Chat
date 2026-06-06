@@ -71,16 +71,21 @@ Heuristik:
 ### 3. Branches divergieren schnell
 Wenn der Maintainer auf `ref/upstream-sync-2026-06-06` mitten im Konflikt-Fixen steckenbleibt und ein anderer Maintainer in der Zwischenzeit einen weiteren Sync-Branch startet, gibt's divergent. Lösung: **immer einer zur gleichen Zeit**, Branch-Namen mit Datum machen das offensichtlich.
 
-### 4. ENV-Var-Konflikte
+### 4. Squash-Merged Patches nicht als „schon angewendet" erkannt
+Wenn der vorige Sync per `gh pr merge --squash` gemerged wurde, landen die einzelnen Patch-Subjects als Bullet-Points im Commit-Body — **nicht im oneline-Subject**. Die erste Version von `apply-patches.sh` hat nur `git log --oneline` geprüft und die Patches neu angewendet (was zu Duplikaten wie 2× `STT_PROVIDER` in `systemSettings.js` führte).
+
+**Fix:** Wir grep'en jetzt zusätzlich `git log --all --format=%B` auf den Subject, sodass squash-merged Patches korrekt als No-Op erkannt werden. Funktioniert mit dem typischen `gh pr merge --squash` Flow. Für andere Merge-Strategien (z. B. `git merge --no-ff` mit erhaltenen Original-Commits) reicht die `--oneline`-Suche.
+
+### 5. ENV-Var-Konflikte
 `updateENV.js` enthält eine Allowlist von ENV-Vars. Wenn Upstream eine neue einführt (z. B. `CEREBRAS_API_KEY` für den neuen Cerebras-Provider), muss die Allowlist manuell erweitert werden — `apply-patches.sh` zeigt das als Konflikt.
 
-### 5. Lokale Mods gehen verloren
+### 6. Lokale Mods gehen verloren
 Wenn ein Patch eine Datei touched, die wir lokal modifiziert haben (z. B. `server/utils/files/logo.js` mit unserer Logo-Shim), wird `git am --3way` die Mods erhalten, aber `git am` (ohne `--3way`) würde sie überschreiben. **Immer mit `--3way`.**
 
-### 6. Branding-Linter schlägt nach Sync an
+### 7. Branding-Linter schlägt nach Sync an
 Erwartet. Wenn ein neues Upstream-File `"AnythingLLM"` enthält und nicht auf der Whitelist steht (siehe `scripts/check-branding.sh`), meldet `bash scripts/check-branding.sh` einen Fehler. **Lösung:** Datei zur Whitelist hinzufügen MIT Kommentar, warum.
 
-### 7. Bash 3.2 Inkompatibilität
+### 8. Bash 3.2 Inkompatibilität
 Der Generator nutzt keine `declare -A` (gibt's erst ab Bash 4). Stattdessen parsen wir GROUP_SPECS aus einem Here-Doc. **Niemals `declare -A` einbauen, sonst läuft das Skript auf macOS nicht.**
 
 ## Siehe auch

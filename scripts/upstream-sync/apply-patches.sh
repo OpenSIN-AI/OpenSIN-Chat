@@ -72,12 +72,21 @@ for group in "${groups[@]}"; do
 
   for patch in "${patches[@]}"; do
     pname="$(basename "$patch")"
-    # Detect if patch is already applied by checking the patch's subject
-    # against git log (works across rebases / SHA changes).
+    # Detect if patch is already applied by searching the patch's subject in
+    # git history — both as a commit subject (HEAD) AND in commit bodies
+    # (squash-merge imports leave original subjects as bullets in the body).
+    # Using --stable git patch-id is more robust but slower; this heuristic
+    # covers the typical squash-merge flow used by `gh pr merge --squash`.
     patch_subject=$(grep -m1 '^Subject: ' "$patch" | sed 's/^Subject: //' | sed 's/^\[PATCH[^]]*\] //')
-    if [ -n "$patch_subject" ] && git log --oneline | grep -F "$patch_subject" >/dev/null 2>&1; then
-      echo "  ⏭  $pname  (already applied: \"$patch_subject\")"
-      continue
+    if [ -n "$patch_subject" ]; then
+      if git log --all --oneline | grep -F "$patch_subject" >/dev/null 2>&1; then
+        echo "  ⏭  $pname  (already applied: \"$patch_subject\")"
+        continue
+      fi
+      if git log --all --format='%B' | grep -F "$patch_subject" >/dev/null 2>&1; then
+        echo "  ⏭  $pname  (already applied in squash: \"$patch_subject\")"
+        continue
+      fi
     fi
     # --3way: use merge to apply even if the patch doesn't apply cleanly
     if git am --3way --quiet "$patch" 2>/dev/null; then
