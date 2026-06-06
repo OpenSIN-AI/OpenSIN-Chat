@@ -30,6 +30,7 @@ const ENABLED_PROVIDERS = [
   "apipie",
   "xai",
   "nvidia-nim",
+  "opencode-zen",
   "gemini",
   "moonshotai",
   "cometapi",

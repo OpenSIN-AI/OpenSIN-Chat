@@ -8,6 +8,7 @@ import OllamaLogo from "@/media/llmprovider/ollama.png";
 import TogetherAILogo from "@/media/llmprovider/togetherai.png";
 import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
+import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
 import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
 import LocalAiLogo from "@/media/llmprovider/localai.png";
 import MistralLogo from "@/media/llmprovider/mistral.jpeg";
@@ -75,6 +76,14 @@ const LLM_PROVIDER_PRIVACY_MAP = {
       "Your model and chats are only accessible on the machine running the NVIDIA NIM.",
     ],
     logo: NvidiaNimLogo,
+  },
+  "opencode-zen": {
+    name: "OpenCode Zen",
+    description: [
+      "OpenCode Zen is a curated AI gateway. Free models may log data for improvement. Paid models follow zero-retention policy.",
+    ],
+    policyUrl: "https://opencode.ai/docs/zen/",
+    logo: OpencodeZenLogo,
   },
   lmstudio: {
     name: "LMStudio",

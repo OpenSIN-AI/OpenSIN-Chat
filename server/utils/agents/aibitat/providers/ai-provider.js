@@ -418,6 +418,14 @@ class Provider {
           apiKey: null,
           ...config,
         });
+      case "opencode-zen":
+        return new ChatOpenAI({
+          configuration: {
+            baseURL: process.env.OPENCODE_ZEN_BASE_PATH,
+          },
+          apiKey: process.env.OPENCODE_ZEN_API_KEY ?? null,
+          ...config,
+        });
       case "foundry": {
         return new ChatOpenAI({
           configuration: {

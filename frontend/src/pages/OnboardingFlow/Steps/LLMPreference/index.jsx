@@ -25,6 +25,7 @@ import NovitaLogo from "@/media/llmprovider/novita.png";
 import XAILogo from "@/media/llmprovider/xai.png";
 import ZAiLogo from "@/media/llmprovider/zai.png";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
+import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
 import CohereLogo from "@/media/llmprovider/cohere.png";
 import PPIOLogo from "@/media/llmprovider/ppio.png";
 import DellProAiStudioLogo from "@/media/llmprovider/dpais.png";
@@ -64,6 +65,7 @@ import NovitaLLMOptions from "@/components/LLMSelection/NovitaLLMOptions";
 import XAILLMOptions from "@/components/LLMSelection/XAiLLMOptions";
 import ZAiLLMOptions from "@/components/LLMSelection/ZAiLLMOptions";
 import NvidiaNimOptions from "@/components/LLMSelection/NvidiaNimOptions";
+import OpencodeZenOptions from "@/components/LLMSelection/OpencodeZenOptions";
 import PPIOLLMOptions from "@/components/LLMSelection/PPIOLLMOptions";
 import DellProAiStudioOptions from "@/components/LLMSelection/DPAISOptions";
 import MoonshotAiOptions from "@/components/LLMSelection/MoonshotAiOptions";
@@ -119,6 +121,14 @@ const LLMS = [
     options: (settings) => <NvidiaNimOptions settings={settings} />,
     description:
       "Run full parameter LLMs directly on your NVIDIA RTX GPU using NVIDIA NIM.",
+  },
+  {
+    name: "OpenCode Zen",
+    value: "opencode-zen",
+    logo: OpencodeZenLogo,
+    options: (settings) => <OpencodeZenOptions settings={settings} />,
+    description:
+      "Curated AI models gateway by OpenCode. Free models available (Nemotron, DeepSeek, MiMo).",
   },
   {
     name: "HuggingFace",

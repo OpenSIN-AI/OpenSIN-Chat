@@ -213,6 +213,9 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "nvidia-nim":
       const { NvidiaNimLLM } = require("../AiProviders/nvidiaNim");
       return new NvidiaNimLLM(embedder, model);
+    case "opencode-zen":
+      const { OpencodeZenLLM } = require("../AiProviders/opencodeZen");
+      return new OpencodeZenLLM(embedder, model);
     case "ppio":
       const { PPIOLLM } = require("../AiProviders/ppio");
       return new PPIOLLM(embedder, model);
@@ -407,6 +410,9 @@ function getLLMProviderClass({ provider = null } = {}) {
     case "nvidia-nim":
       const { NvidiaNimLLM } = require("../AiProviders/nvidiaNim");
       return NvidiaNimLLM;
+    case "opencode-zen":
+      const { OpencodeZenLLM } = require("../AiProviders/opencodeZen");
+      return OpencodeZenLLM;
     case "ppio":
       const { PPIOLLM } = require("../AiProviders/ppio");
       return PPIOLLM;
@@ -513,6 +519,8 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
       return process.env.XAI_LLM_MODEL_PREF;
     case "nvidia-nim":
       return process.env.NVIDIA_NIM_LLM_MODEL_PREF;
+    case "opencode-zen":
+      return process.env.OPENCODE_ZEN_MODEL_PREF;
     case "ppio":
       return process.env.PPIO_MODEL_PREF;
     case "dpais":

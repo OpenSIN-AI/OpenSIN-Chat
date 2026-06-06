@@ -1003,6 +1003,12 @@ const SystemSettings = {
       NvidiaNimLLMModelPref: process.env.NVIDIA_NIM_LLM_MODEL_PREF,
       NvidiaNimLLMTokenLimit: process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT,
 
+      // OpenCode Zen Keys
+      OpencodeZenBasePath: process.env.OPENCODE_ZEN_BASE_PATH,
+      OpencodeZenModelPref: process.env.OPENCODE_ZEN_MODEL_PREF,
+      OpencodeZenTokenLimit: process.env.OPENCODE_ZEN_MODEL_TOKEN_LIMIT,
+      OpencodeZenApiKey: !!process.env.OPENCODE_ZEN_API_KEY,
+
       // PPIO API keys
       PPIOApiKey: !!process.env.PPIO_API_KEY,
       PPIOModelPref: process.env.PPIO_MODEL_PREF,

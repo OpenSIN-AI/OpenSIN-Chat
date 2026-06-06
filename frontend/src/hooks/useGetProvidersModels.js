@@ -14,6 +14,18 @@ const PROVIDER_DEFAULT_MODELS = {
   togetherai: [],
   fireworksai: [],
   "nvidia-nim": [],
+  "opencode-zen": [
+    "nemotron-3-ultra-free",
+    "deepseek-v4-flash-free",
+    "mimo-v2.5-free",
+    "big-pickle",
+    "gpt-5.5",
+    "claude-sonnet-4.6",
+    "gemini-3.5-flash",
+    "qwen3.7-max",
+    "deepseek-v4-flash",
+    "kimi-k2.6",
+  ],
   groq: [],
   cohere: [
     "command-r",

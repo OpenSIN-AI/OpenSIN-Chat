@@ -799,6 +799,33 @@ const KEY_MAPPING = {
     ],
   },
 
+  // OpenCode Zen Options
+  OpencodeZenBasePath: {
+    envKey: "OPENCODE_ZEN_BASE_PATH",
+    checks: [isValidURL],
+    postUpdate: [
+      (_, __, nextValue) => {
+        const { parseOpencodeZenBasePath } = require("../AiProviders/opencodeZen");
+        process.env.OPENCODE_ZEN_BASE_PATH =
+          parseOpencodeZenBasePath(nextValue);
+      },
+    ],
+  },
+  OpencodeZenModelPref: {
+    envKey: "OPENCODE_ZEN_MODEL_PREF",
+    checks: [],
+    postUpdate: [
+      async (_, __, nextValue) => {
+        const { OpencodeZenLLM } = require("../AiProviders/opencodeZen");
+        await OpencodeZenLLM.setModelTokenLimit(nextValue);
+      },
+    ],
+  },
+  OpencodeZenApiKey: {
+    envKey: "OPENCODE_ZEN_API_KEY",
+    checks: [isNotEmpty],
+  },
+
   // PPIO Options
   PPIOApiKey: {
     envKey: "PPIO_API_KEY",
@@ -1416,6 +1443,9 @@ function dumpENV() {
 
     // Nvidia NIM Keys that are automatically managed
     "NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT",
+
+    // OpenCode Zen Keys that are automatically managed
+    "OPENCODE_ZEN_MODEL_TOKEN_LIMIT",
 
     // OCR Language Support
     "TARGET_OCR_LANG",
