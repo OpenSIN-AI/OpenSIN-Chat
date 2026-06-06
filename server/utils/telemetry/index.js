@@ -1,5 +1,3 @@
-const { getGitVersion } = require("../../endpoints/utils");
-
 // OpenAfD Chat — Telemetrie wurde im Sinne maximaler Souveränität und
 // Datenschutz-Garantie (DSGVO) vollständig entfernt.
 // Es werden keinerlei Daten an externe Dienste gesendet.
@@ -7,7 +5,7 @@ const { getGitVersion } = require("../../endpoints/utils");
 // Boot-Skripten nicht refaktoriert werden müssen.
 async function setupTelemetry() {
   console.log(
-    `\x1b[32m[OpenAfD Chat]\x1b[0m Telemetrie dauerhaft deaktiviert — keine Outbound-Calls, keine Drittanbieter.`
+    `\x1b[32m[OpenAfD Chat]\x1b[0m Telemetrie dauerhaft deaktiviert — keine Outbound-Calls, keine Drittanbieter.`,
   );
   return true;
 }

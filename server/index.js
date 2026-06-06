@@ -7,6 +7,7 @@ require("./utils/boot/patchSlowBuffer")();
 require("./utils/boot/patchSdkTimeouts")();
 require("./utils/boot/ensureJwtSecret")();
 const express = require("express");
+const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { reqBody } = require("./utils/http");
@@ -59,7 +60,7 @@ if (
   app.use(
     httpLogger({
       enableTimestamps: !!process.env.ENABLE_HTTP_LOGGER_TIMESTAMPS,
-    })
+    }),
   );
 }
 app.use(cors({ origin: true }));
@@ -69,7 +70,7 @@ app.use(
   bodyParser.urlencoded({
     limit: FILE_LIMIT,
     extended: true,
-  })
+  }),
 );
 
 if (!!process.env.ENABLE_HTTPS) {
@@ -123,7 +124,7 @@ if (process.env.NODE_ENV !== "development") {
         res.removeHeader("X-Powered-By");
         res.setHeader("X-Frame-Options", "DENY");
       },
-    })
+    }),
   );
 
   app.get("/robots.txt", function (_, response) {

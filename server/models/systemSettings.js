@@ -143,7 +143,7 @@ const SystemSettings = {
       } catch (e) {
         console.error(
           `Failed to run validation function on text_splitter_chunk_size`,
-          e.message
+          e.message,
         );
         return 1000;
       }
@@ -158,7 +158,7 @@ const SystemSettings = {
       } catch (e) {
         console.error(
           `Failed to run validation function on text_splitter_chunk_overlap`,
-          e.message
+          e.message,
         );
         return 20;
       }
@@ -187,7 +187,7 @@ const SystemSettings = {
       } catch (e) {
         console.error(
           `Failed to run validation function on agent_search_provider`,
-          e.message
+          e.message,
         );
         return null;
       }
@@ -217,7 +217,7 @@ const SystemSettings = {
       } catch (e) {
         console.error(
           `Failed to run validation function on memory_enabled`,
-          e.message
+          e.message,
         );
         return String(update);
       }
@@ -235,7 +235,7 @@ const SystemSettings = {
       } catch (e) {
         console.error(
           `Failed to run validation function on memory_auto_extraction`,
-          e.message
+          e.message,
         );
         return String(update);
       }
@@ -285,7 +285,7 @@ const SystemSettings = {
           typeof update === "string" ? safeJsonParse(update, {}) : update;
         const existingConfig = safeJsonParse(
           (await SystemSettings.get({ label: "gmail_agent_config" }))?.value,
-          {}
+          {},
         );
 
         const mergedConfig = { ...existingConfig };
@@ -295,7 +295,7 @@ const SystemSettings = {
           mergedConfig,
           newConfig,
           "apiKey",
-          (v) => !v.match(/^\*+$/)
+          (v) => !v.match(/^\*+$/),
         );
 
         return JSON.stringify(mergedConfig);
@@ -325,7 +325,7 @@ const SystemSettings = {
         const existingConfig = safeJsonParse(
           (await SystemSettings.get({ label: "google_calendar_agent_config" }))
             ?.value,
-          {}
+          {},
         );
 
         const mergedConfig = { ...existingConfig };
@@ -335,14 +335,14 @@ const SystemSettings = {
           mergedConfig,
           newConfig,
           "apiKey",
-          (v) => !v.match(/^\*+$/)
+          (v) => !v.match(/^\*+$/),
         );
 
         return JSON.stringify(mergedConfig);
       } catch (e) {
         console.error(
           `Could not validate google calendar agent config:`,
-          e.message
+          e.message,
         );
         return JSON.stringify({});
       } finally {
@@ -367,7 +367,7 @@ const SystemSettings = {
           typeof update === "string" ? safeJsonParse(update, {}) : update;
         const existingConfig = safeJsonParse(
           (await SystemSettings.get({ label: "outlook_agent_config" }))?.value,
-          {}
+          {},
         );
 
         const mergedConfig = { ...existingConfig };
@@ -378,7 +378,7 @@ const SystemSettings = {
           mergedConfig,
           newConfig,
           "clientSecret",
-          (v) => !v.match(/^\*+$/)
+          (v) => !v.match(/^\*+$/),
         );
 
         if (newConfig.accessToken !== undefined) {
@@ -402,12 +402,12 @@ const SystemSettings = {
     agent_sql_connections: async (updates) => {
       const existingConnections = safeJsonParse(
         (await SystemSettings.get({ label: "agent_sql_connections" }))?.value,
-        []
+        [],
       );
       try {
         const updatedConnections = mergeConnections(
           existingConnections,
-          safeJsonParse(updates, [])
+          safeJsonParse(updates, []),
         );
         return JSON.stringify(updatedConnections);
       } catch {
@@ -574,24 +574,6 @@ const SystemSettings = {
       STTOpenAICompatibleModel: process.env.STT_OPEN_AI_COMPATIBLE_MODEL,
       STTOpenAICompatibleEndpoint: process.env.STT_OPEN_AI_COMPATIBLE_ENDPOINT,
 
-      // STT Selection
-      SpeechToTextProvider: process.env.STT_PROVIDER || "native",
-      // STT OpenAI
-      STTOpenAIModel: process.env.STT_OPEN_AI_MODEL,
-
-      // STT Lemonade
-      STTLemonadeBasePath: process.env.STT_LEMONADE_BASE_PATH,
-      STTLemonadeModelPref: process.env.STT_LEMONADE_MODEL_PREF,
-
-      // STT Deepgram
-      STTDeepgramApiKey: !!process.env.STT_DEEPGRAM_API_KEY,
-      STTDeepgramModel: process.env.STT_DEEPGRAM_MODEL,
-
-      // STT Generic OpenAI
-      STTOpenAICompatibleKey: !!process.env.STT_OPEN_AI_COMPATIBLE_KEY,
-      STTOpenAICompatibleModel: process.env.STT_OPEN_AI_COMPATIBLE_MODEL,
-      STTOpenAICompatibleEndpoint: process.env.STT_OPEN_AI_COMPATIBLE_ENDPOINT,
-
       // --------------------------------------------------------
       // Agent Settings & Configs
       // --------------------------------------------------------
@@ -633,13 +615,13 @@ const SystemSettings = {
       AgentClarifyingQuestionsEnabled:
         (await this.getValueOrFallback(
           { label: "agent_clarifying_questions_enabled" },
-          "false"
+          "false",
         )) === "true",
       AgentClarifyingQuestionsMaxPerTurn: Number(
         (await this.getValueOrFallback(
           { label: "agent_clarifying_questions_max_per_turn" },
-          "3"
-        )) || 3
+          "3",
+        )) || 3,
       ),
     };
   },
@@ -681,7 +663,7 @@ const SystemSettings = {
   // that will then enforce validations as well.
   updateSettings: async function (updates = {}) {
     const validFields = Object.keys(updates).filter((key) =>
-      this.supportedFields.includes(key)
+      this.supportedFields.includes(key),
     );
 
     Object.entries(updates).forEach(([key]) => {
@@ -732,7 +714,7 @@ const SystemSettings = {
               label: key,
               value: validatedValue === null ? null : String(validatedValue),
             },
-          })
+          }),
         );
       }
 
@@ -1161,7 +1143,7 @@ const SystemSettings = {
  */
 function mergeConnections(existingConnections = [], updates = []) {
   const connectionsMap = new Map(
-    existingConnections.map((conn) => [conn.database_id, conn])
+    existingConnections.map((conn) => [conn.database_id, conn]),
   );
 
   for (const update of updates) {
@@ -1186,7 +1168,7 @@ function mergeConnections(existingConnections = [], updates = []) {
         // Verify original connection exists
         if (!connectionsMap.has(originalDatabaseId)) {
           console.warn(
-            `[mergeConnections] Update skipped: Original connection "${originalDatabaseId}" not found`
+            `[mergeConnections] Update skipped: Original connection "${originalDatabaseId}" not found`,
           );
           break;
         }
@@ -1194,7 +1176,7 @@ function mergeConnections(existingConnections = [], updates = []) {
         // Check for name conflict (excluding the one being updated)
         if (newId !== originalDatabaseId && connectionsMap.has(newId)) {
           console.warn(
-            `[mergeConnections] Update skipped: New name "${newId}" conflicts with existing connection`
+            `[mergeConnections] Update skipped: New name "${newId}" conflicts with existing connection`,
           );
           break;
         }
@@ -1217,7 +1199,7 @@ function mergeConnections(existingConnections = [], updates = []) {
         // Skip if already exists
         if (connectionsMap.has(slugifiedId)) {
           console.warn(
-            `[mergeConnections] Add skipped: Connection "${slugifiedId}" already exists`
+            `[mergeConnections] Add skipped: Connection "${slugifiedId}" already exists`,
           );
           break;
         }
