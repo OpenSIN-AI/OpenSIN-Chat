@@ -1440,9 +1440,9 @@ entities@^4.2.0, entities@^4.4.0:
   resolved "https://registry.yarnpkg.com/entities/-/entities-4.5.0.tgz#5d268ea5e7113ec74c4d033b79ea5a35a488fb48"
   integrity sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==
 
-"epub2@git+https://github.com/Mintplex-Labs/epub2-static.git#main":
+"epub2@git+https://github.com/Family-Team-Projects/epub2-static.git#main":
   version "3.0.2"
-  resolved "git+https://github.com/Mintplex-Labs/epub2-static.git#eb0a45cd41ac1a5b4c97766e9935d97583104d35"
+  resolved "git+https://github.com/Family-Team-Projects/epub2-static.git#eb0a45cd41ac1a5b4c97766e9935d97583104d35"
   dependencies:
     adm-zip "^0.5.10"
     array-hyper-unique "^2.1.4"

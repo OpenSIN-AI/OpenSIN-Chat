@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from 'react'
 import useSWR from 'swr'
 import { Boxes } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { WorkspaceSidebar } from '@/components/anything-llm/workspace-sidebar'
-import { ChatArea } from '@/components/anything-llm/chat-area'
-import { DocumentsDialog } from '@/components/anything-llm/documents-dialog'
+import { WorkspaceSidebar } from '@/components/openafd-chat/workspace-sidebar'
+import { ChatArea } from '@/components/openafd-chat/chat-area'
+import { DocumentsDialog } from '@/components/openafd-chat/documents-dialog'
 import {
   createWorkspace,
   deleteWorkspace,

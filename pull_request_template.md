@@ -1,41 +1,35 @@
+# PR-Titel: Conventional Commits
 
-### Pull Request Type
+Bitte verwende [Conventional Commits](https://www.conventionalcommits.org/)
+für PR-Titel. Beispiele:
 
-<!-- For change type, change [ ] to [x]. -->
+- `feat(workspace): add Bundestag-Drucksachen connector`
+- `fix(telemetry): remove any remaining outbound calls`
+- `docs(readme): update brand colors to AfD-Blau`
+- `refactor(server): rename anythingllm-router → openafd-router (planned v1)`
+- `chore(deps): bump vite to 8.0.16`
+- `test(workspace): add integration tests for workspace deletion protection`
 
-- [ ] ✨ feat (New feature)
-- [ ] 🐛 fix (Bug fix)
-- [ ] ♻️ refactor (Code refactoring without changing behavior)
-- [ ] 💄 style (UI style changes)
-- [ ] 🔨 chore (Build, CI, maintenance)
-- [ ] 📝 docs (Documentation updates)
+## PR-Body
 
-### Relevant Issues
+```markdown
+## Was ändert sich?
 
-<!-- Use "resolves #xxx" to auto resolve on merge. Otherwise, please use "connect #xxx" -->
+<!-- Kurzbeschreibung der Änderung -->
 
-resolves #
+## Warum?
 
-### Description
+<!-- Motivation, GitHub-Issue-Ref, etc. -->
 
-<!-- Describe the changes in this PR that are impactful to the repo. What problem does it solve? -->
+## Wie wurde getestet?
 
+<!-- Unit-Tests manuell ausgeführt? E2E? Screenshots? -->
 
-### Visuals (if applicable)
+## Checklist
 
-<!-- Add screenshots or screen recordings to demonstrate the changes, especially for UI updates. -->
-
-
-### Additional Information
-
-<!-- Add any other context about the Pull Request here that was not captured above. -->
-
-
-### Developer Validations
-
-<!-- All of the applicable items should be checked. -->
-
-- [ ] I ran `yarn lint` from the root of the repo & committed changes
-- [ ] Relevant documentation has been updated (if applicable)
-- [ ] I have tested my code functionality
-- [ ] Docker build succeeds locally
+- [ ] `yarn lint` läuft sauber
+- [ ] `yarn test` läuft sauber
+- [ ] Dokumentation aktualisiert (falls öffentliche API betroffen)
+- [ ] Keine Telemetrie/Outbound-Calls hinzugefügt
+- [ ] Keine Secrets in Commits
+```

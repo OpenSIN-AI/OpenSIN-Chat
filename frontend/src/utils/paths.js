@@ -55,22 +55,19 @@ export default {
     },
   },
   github: () => {
-    return "https://github.com/Mintplex-Labs/anything-llm";
+    return "https://github.com/Family-Team-Projects/OpenAfD-Chat";
   },
   discord: () => {
-    return "https://discord.com/invite/6UyHPeGZAC";
+    return "https://discord.gg/6UyHPeGZAC";
   },
   docs: (path = "") => {
-    return `https://docs.anythingllm.com${path}`;
+    return `https://openafd.delqhi.com/docs${path}`;
   },
   chatModes: () => {
-    return "https://docs.anythingllm.com/features/chat-modes";
+    return "https://openafd.delqhi.com/docs/features/chat-modes";
   },
-  mailToMintplex: () => {
-    return "mailto:team@mintplexlabs.com";
-  },
-  hosting: () => {
-    return "https://my.mintplexlabs.com/aio-checkout?product=anythingllm";
+  mailToSupport: () => {
+    return "mailto:support@openafd.delqhi.com";
   },
   workspace: {
     chat: (slug, options = {}) => {
@@ -179,16 +176,16 @@ export default {
       return `/settings/mobile-connections`;
     },
     experimental: () => {
-      return `/settings/beta-features`;
+      return "/settings/beta-features";
     },
     mobileConnections: () => {
-      return `/settings/mobile-connections`;
+      return "/settings/mobile-connections";
     },
     telegram: () => {
-      return `/settings/external-connections/telegram`;
+      return "/settings/external-connections/telegram";
     },
     scheduledJobs: () => {
-      return `/settings/scheduled-jobs`;
+      return "/settings/scheduled-jobs";
     },
     scheduledJobRuns: (jobId) => {
       return `/settings/scheduled-jobs/${jobId}/runs`;
@@ -207,15 +204,8 @@ export default {
   },
   communityHub: {
     website: () => {
-      return import.meta.env.DEV
-        ? `http://localhost:5173`
-        : `https://hub.anythingllm.com`;
+      return "https://openafd.delqhi.com/hub";
     },
-    /**
-     * View more items of a given type on the community hub.
-     * @param {string} type - The type of items to view more of. Should be kebab-case.
-     * @returns {string} The path to view more items of the given type.
-     */
     viewMoreOfType: function (type) {
       return `${this.website()}/list/${type}`;
     },
@@ -236,17 +226,16 @@ export default {
       return `${this.website()}/me`;
     },
     noPrivateItems: () => {
-      return "https://docs.anythingllm.com/community-hub/faq#no-private-items";
+      return "https://openafd.delqhi.com/docs/community-hub/faq#no-private-items";
     },
   },
 
-  // TODO: Migrate all docs.anythingllm.com links to the new docs.
   documentation: {
     mobileIntroduction: () => {
-      return "https://docs.anythingllm.com/mobile/overview";
+      return "https://openafd.delqhi.com/docs/mobile/overview";
     },
     contextWindows: () => {
-      return "https://docs.anythingllm.com/chatting-with-documents/introduction#you-exceed-the-context-window---what-now";
+      return "https://openafd.delqhi.com/docs/chatting-with-documents/introduction#you-exceed-the-context-window---what-now";
     },
   },
 

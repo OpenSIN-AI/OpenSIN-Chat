@@ -1,7 +1,7 @@
 # v0 sandbox internal files
 __v0_runtime_loader.js
 __v0_devtools.tsx
-__v0_jsx-dev-runtime.ts
+__v0_jsx-devruntime.ts
 .snowflake/
 .v0-trash/
 .vercel/
@@ -13,3 +13,7 @@ __v0_jsx-dev-runtime.ts
 node_modules
 .next/
 .DS_Store
+
+# SIN-Code tool local state (do not commit)
+.sin/
+sin_goal_mode.db

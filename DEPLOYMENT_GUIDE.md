@@ -1,10 +1,10 @@
-# AnythingLLM - Complete Setup Guide
+# OpenAfD Chat - Complete Setup Guide
 
 ## Status: ✅ Frontend Running | Backend Ready for Configuration
 
 ### What We Achieved
 
-We successfully **cloned the official AnythingLLM repository** (61k+ GitHub stars) instead of building from scratch. This gives you a production-ready RAG platform with all enterprise features pre-built.
+We successfully **cloned the official OpenAfD Chat repository** (61k+ GitHub stars) instead of building from scratch. This gives you a production-ready RAG platform with all enterprise features pre-built.
 
 ### Current State
 
@@ -74,8 +74,8 @@ NODE_ENV=development PORT=8000 node index.js
 
 #### Option 2: Docker Deploy (Production)
 ```bash
-# Use official AnythingLLM Docker image
-docker run -v anythingllm:/app/server/storage -p 3001:3001 mintplexlabs/anythingllm:latest
+# Use official OpenAfD Chat Docker image
+docker run -v openafd:/app/server/storage -p 3001:3001 openafd/openafd:latest
 
 # Access at http://localhost:3001
 ```
@@ -105,9 +105,9 @@ docker run -v anythingllm:/app/server/storage -p 3001:3001 mintplexlabs/anything
 
 ### Important Links
 
-- **GitHub**: https://github.com/Mintplex-Labs/anything-llm
-- **Docs**: https://docs.anythingllm.com
-- **API Docs**: https://docs.anythingllm.com/api/api-overview
+- **GitHub**: https://github.com/Family-Team-Projects/openafd-chat
+- **Docs**: https://docs.openafd.com
+- **API Docs**: https://docs.openafd.com/api/api-overview
 
 ### Troubleshooting
 
@@ -126,7 +126,7 @@ docker run -v anythingllm:/app/server/storage -p 3001:3001 mintplexlabs/anything
 
 ### Why We Chose This Approach
 
-Instead of building AnythingLLM features from scratch (which would take months):
+Instead of building OpenAfD Chat features from scratch (which would take months):
 - ✅ 61k GitHub stars - proven production quality
 - ✅ 40+ LLM provider integrations already built
 - ✅ Enterprise features (auth, multi-workspace, RLS)

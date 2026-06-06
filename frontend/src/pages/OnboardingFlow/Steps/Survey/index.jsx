@@ -129,10 +129,10 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
               {t("onboarding.survey.thankYou")}
             </p>
             <a
-              href={paths.mailToMintplex()}
+              href={paths.mailToOpenAfD Team()}
               className="text-sky-400 underline text-xs"
             >
-              team@mintplexlabs.com
+              team@openafd.com
             </a>
           </div>
         </div>

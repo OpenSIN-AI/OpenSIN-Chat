@@ -1,9 +1,9 @@
 {
-  "name": "anything-llm-document-collector",
+  "name": "openafd-chat-document-collector",
   "version": "1.13.0",
   "description": "Document collector server endpoints",
   "main": "index.js",
-  "author": "Timothy Carambat (Mintplex Labs)",
+  "author": "Timothy Carambat (Family Team Projects)",
   "license": "MIT",
   "private": false,
   "engines": {
@@ -21,7 +21,7 @@
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "epub2": "git+https://github.com/Mintplex-Labs/epub2-static.git#main",
+    "epub2": "git+https://github.com/Family-Team-Projects/epub2-static.git#main",
     "express": "^4.21.2",
     "fix-path": "^4.0.0",
     "html-to-text": "^9.0.5",

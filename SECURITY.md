@@ -12,7 +12,7 @@ currently being supported with security updates.
 
 ## Reporting a Vulnerability
 
-If a security concern is found that you would like to disclose you can create a PR for it or if you would like to clear this issue before posting you can email [Core Mintplex Labs Team](mailto:team@mintplexlabs.com).
+If a security concern is found that you would like to disclose you can create a PR for it or if you would like to clear this issue before posting you can email [Core Family Team Projects Team](mailto:support@openafd.delqhi.com).
 
 ## Invalid Report Types
 
@@ -20,7 +20,7 @@ Below are some common types of invalid reports that we will not accept and shoul
 
 ### SSRF Reports
 
-If you are about to report a SSRF about being able to call web-scraping or document collector against an internal host, [this is not a valid report](https://github.com/Mintplex-Labs/anything-llm/blob/master/collector/utils/url/index.js#L2-L13). This is a feature of the system and is intended to be used in this way given that AnythingLLM is designed to be used in this way so that it can leverage internal services for scraping and collecting content when deployed inside a VPC.
+If you are about to report a SSRF about being able to call web-scraping or document collector against an internal host, [this is not a valid report](https://github.com/Family-Team-Projects/OpenAfD-Chat/blob/main/collector/utils/url/index.js#L2-L13). This is a feature of the system and is intended to be used in this way given that OpenAfD Chat is designed to be used in this way so that it can leverage internal services for scraping and collecting content when deployed inside a VPC.
 
 ### XXS Reports where user must right-click and paste in the URL
 
@@ -30,7 +30,7 @@ Valid XXS Reports must be zero-action - like on loading a page or a image instan
 
 ### Any "Unauthenticated" actions
 
-If the basis of your report relies on the system not setting up a password or multi-user mode, this is not a valid report. AnythingLLM is designed to be used in this way so that it can be used in trusted and fully isolated environments for single user or internal user. There are three options for authentication:
+If the basis of your report relies on the system not setting up a password or multi-user mode, this is not a valid report. OpenAfD Chat is designed to be used in this way so that it can be used in trusted and fully isolated environments for single user or internal user. There are three options for authentication:
 
 1. No authentication - this would have no endpoint authentication and would be accessible to anyone who knows the URL.
 2. Password - this would require a password to access the system.

@@ -25,8 +25,8 @@ import {
 } from '@/components/ai-elements/prompt-input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { MarkdownMessage } from '@/components/anything-llm/markdown-message'
-import { WorkspaceSettingsDialog } from '@/components/anything-llm/workspace-settings-dialog'
+import { MarkdownMessage } from '@/components/openafd-chat/markdown-message'
+import { WorkspaceSettingsDialog } from '@/components/openafd-chat/workspace-settings-dialog'
 import { listMessages } from '@/app/actions/workspaces'
 import type { RetrievedSource, Workspace } from '@/lib/types'
 

@@ -1,7 +1,7 @@
-# AnythingLLM Implementation - Project Summary
+# OpenAfD Chat Implementation - Project Summary
 
 ## What Was Requested
-Build features to close the gap between **OpenAfD** (simple RAG) and **AnythingLLM** (enterprise RAG platform):
+Build features to close the gap between **OpenAfD** (simple RAG) and **OpenAfD Chat** (enterprise RAG platform):
 - Multi-provider LLM support
 - Voice (TTS/STT) & Vision
 - Embeddable widget + Developer API
@@ -13,9 +13,9 @@ Build features to close the gap between **OpenAfD** (simple RAG) and **AnythingL
 ## What We Delivered
 
 ### Solution: Strategic Rebase
-Instead of implementing features piecemeal, we recognized that **AnythingLLM is already the complete solution** with all requested features pre-built and production-tested.
+Instead of implementing features piecemeal, we recognized that **OpenAfD Chat is already the complete solution** with all requested features pre-built and production-tested.
 
-**Decision:** Clone and deploy AnythingLLM rather than reinvent it.
+**Decision:** Clone and deploy OpenAfD Chat rather than reinvent it.
 
 ### What's Ready Now
 
@@ -176,7 +176,7 @@ cd server && NODE_ENV=development PORT=8000 node index.js
 
 ### Summary
 
-We delivered **a production-grade enterprise RAG platform** instead of spending weeks building features. AnythingLLM is battle-tested, feature-complete, and ready to scale.
+We delivered **a production-grade enterprise RAG platform** instead of spending weeks building features. OpenAfD Chat is battle-tested, feature-complete, and ready to scale.
 
 **Total implementation time:** < 1 day
 **Time saved vs. custom build:** ~19 weeks

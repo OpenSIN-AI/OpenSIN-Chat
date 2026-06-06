@@ -77,7 +77,7 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ["@mintplex-labs/piper-tts-web"],
+    include: ["@openafd/piper-tts-web"],
     esbuildOptions: {
       define: {
         global: "globalThis"

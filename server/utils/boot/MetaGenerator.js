@@ -6,16 +6,8 @@
  */
 
 /**
- * This class serves the default index.html page that is not present when built in production.
- * and therefore this class should not be called when in development mode since it is unused.
- * All this class does is basically emulate SSR for the meta-tag generation of the root index page.
- * Since we are an SPA, we can just render the primary page and the known entrypoints for the index.{js,css}
- * we can always start at the right place and dynamically load in lazy-loaded as we typically normally would
- * and we dont have any of the overhead that would normally come with having the rewrite the whole app in next or something.
- * Lastly, this class is singleton, so once instantiate the same reference is shared for as long as the server is alive.
- * the main function is `.generate()` which will return the index HTML. These settings are stored in the #customConfig
- * static property and will not be reloaded until the page is loaded AND #customConfig is explicitly null. So anytime a setting
- * for meta-props is updated you should get this singleton class and call `.clearConfig` so the next page load will show the new props.
+ * OpenAfD Chat — Default-Meta-Tags.
+ * Setzt Titel, Beschreibung und OG/Twitter-Karten für die Sovereign-AI-Workbench.
  */
 class MetaGenerator {
   name = "MetaGenerator";
@@ -27,8 +19,8 @@ class MetaGenerator {
   #customConfig = null;
 
   #defaultManifest = {
-    name: "AnythingLLM",
-    short_name: "AnythingLLM",
+    name: "OpenAfD Chat",
+    short_name: "OpenAfD Chat",
     display: "standalone",
     orientation: "portrait",
     start_url: "/",
@@ -59,21 +51,22 @@ class MetaGenerator {
       {
         tag: "title",
         props: null,
-        content: "AnythingLLM | Your personal LLM trained on anything",
+        content: "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
       },
 
       {
         tag: "meta",
         props: {
           name: "title",
-          content: "AnythingLLM | Your personal LLM trained on anything",
+          content: "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
         },
       },
       {
         tag: "meta",
         props: {
-          description: "title",
-          content: "AnythingLLM | Your personal LLM trained on anything",
+          name: "description",
+          content:
+            "Sovereäner KI-Arbeitsraum für patriotische Politik. Chatte mit deinen Dokumenten, automatisiere Recherche, selbst gehostet, ohne Telemetrie.",
         },
       },
 
@@ -81,29 +74,26 @@ class MetaGenerator {
       { tag: "meta", props: { property: "og:type", content: "website" } },
       {
         tag: "meta",
-        props: { property: "og:url", content: "https://anythingllm.com" },
+        props: { property: "og:url", content: "https://openafd.delqhi.com" },
       },
       {
         tag: "meta",
         props: {
           property: "og:title",
-          content: "AnythingLLM | Your personal LLM trained on anything",
+          content: "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
         },
       },
       {
         tag: "meta",
         props: {
           property: "og:description",
-          content: "AnythingLLM | Your personal LLM trained on anything",
+          content:
+            "Sovereäner KI-Arbeitsraum für patriotische Politik. Selbst gehostet, DSGVO-konform, ohne Telemetrie.",
         },
       },
       {
         tag: "meta",
-        props: {
-          property: "og:image",
-          content:
-            "https://raw.githubusercontent.com/Mintplex-Labs/anything-llm/master/images/promo.png",
-        },
+        props: { property: "og:image", content: "/wordmark.png" },
       },
 
       // <!-- Twitter -->
@@ -113,29 +103,29 @@ class MetaGenerator {
       },
       {
         tag: "meta",
-        props: { property: "twitter:url", content: "https://anythingllm.com" },
+        props: {
+          property: "twitter:url",
+          content: "https://openafd.delqhi.com",
+        },
       },
       {
         tag: "meta",
         props: {
           property: "twitter:title",
-          content: "AnythingLLM | Your personal LLM trained on anything",
+          content: "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
         },
       },
       {
         tag: "meta",
         props: {
           property: "twitter:description",
-          content: "AnythingLLM | Your personal LLM trained on anything",
+          content:
+            "Sovereäner KI-Arbeitsraum für patriotische Politik. Selbst gehostet, DSGVO-konform, ohne Telemetrie.",
         },
       },
       {
         tag: "meta",
-        props: {
-          property: "twitter:image",
-          content:
-            "https://raw.githubusercontent.com/Mintplex-Labs/anything-llm/master/images/promo.png",
-        },
+        props: { property: "twitter:image", content: "/wordmark.png" },
       },
 
       { tag: "link", props: { rel: "icon", href: "/favicon.png" } },
@@ -227,9 +217,7 @@ class MetaGenerator {
           return {
             tag: "title",
             props: null,
-            content:
-              customTitle ??
-              "AnythingLLM | Your personal LLM trained on anything",
+            content: customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
           };
         }
         // Override meta title
@@ -238,9 +226,7 @@ class MetaGenerator {
             tag: "meta",
             props: {
               name: "title",
-              content:
-                customTitle ??
-                "AnythingLLM | Your personal LLM trained on anything",
+              content: customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -250,9 +236,7 @@ class MetaGenerator {
             tag: "meta",
             props: {
               property: "og:title",
-              content:
-                customTitle ??
-                "AnythingLLM | Your personal LLM trained on anything",
+              content: customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -262,9 +246,7 @@ class MetaGenerator {
             tag: "meta",
             props: {
               property: "twitter:title",
-              content:
-                customTitle ??
-                "AnythingLLM | Your personal LLM trained on anything",
+              content: customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -306,7 +288,7 @@ class MetaGenerator {
     if (this.#customConfig === null) await this.#fetchConfg();
     response.status(code).send(`
        <!DOCTYPE html>
-        <html lang="en">
+        <html lang="de">
           <head>
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -330,7 +312,7 @@ class MetaGenerator {
       const { SystemSettings } = require("../../models/systemSettings");
       const manifestName = await SystemSettings.getValueOrFallback(
         { label: "meta_page_title" },
-        "AnythingLLM"
+        "OpenAfD Chat"
       );
       const faviconURL = await SystemSettings.getValueOrFallback(
         { label: "meta_page_favicon" },

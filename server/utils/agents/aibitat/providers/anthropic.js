@@ -4,7 +4,7 @@ const { RetryError } = require("../error.js");
 const Provider = require("./ai-provider.js");
 const { v4 } = require("uuid");
 const { safeJsonParse } = require("../../../http");
-const { getAnythingLLMUserAgent } = require("../../../../endpoints/utils");
+const { getOpenAfD ChatUserAgent } = require("../../../../endpoints/utils");
 
 /**
  * The agent provider for the Anthropic API.
@@ -19,7 +19,7 @@ class AnthropicProvider extends Provider {
       options = {
         apiKey: process.env.ANTHROPIC_API_KEY,
         defaultHeaders: {
-          "User-Agent": getAnythingLLMUserAgent(),
+          "User-Agent": getOpenAfD ChatUserAgent(),
         },
       },
       model = "claude-sonnet-4-6",
