@@ -240,7 +240,12 @@ class OpencodeZenLLM {
 function parseOpencodeZenBasePath(providedBasePath = "") {
   try {
     const baseURL = new URL(providedBasePath);
-    const basePath = `${baseURL.origin}/v1`;
+    // Preserve the full path but ensure it ends in /v1 and has no trailing slash
+    let pathname = baseURL.pathname;
+    if (!pathname.endsWith("/v1")) {
+      pathname = pathname.replace(/\/$/, "") + "/v1";
+    }
+    const basePath = `${baseURL.origin}${pathname}`;
     return basePath;
   } catch {
     return providedBasePath;
