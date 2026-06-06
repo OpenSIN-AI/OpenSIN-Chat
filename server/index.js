@@ -119,10 +119,22 @@ if (process.env.NODE_ENV !== "development") {
   app.use(
     express.static(path.resolve(__dirname, "public"), {
       extensions: ["js"],
-      setHeaders: (res) => {
+      setHeaders: (res, path) => {
         // Disable I-framing of entire site UI
         res.removeHeader("X-Powered-By");
         res.setHeader("X-Frame-Options", "DENY");
+
+        // Prevent cache issues with Vite chunk hashing on rebuilds
+        // HTML always fresh, JS entry points short cache, hashed chunks immutable
+        if (path.endsWith(".html") || path.endsWith("_index.html")) {
+          res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        } else if (path.includes("/assets/index-")) {
+          // Entry chunks — revalidate frequently
+          res.setHeader("Cache-Control", "public, max-age=60, must-revalidate");
+        } else if (path.includes("/assets/")) {
+          // Hashed chunks — immutable since hash changes on content change
+          res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+        }
       },
     }),
   );

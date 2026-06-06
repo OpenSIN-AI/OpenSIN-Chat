@@ -112,7 +112,7 @@ function SidebarHeaderWithTabs() {
       </div>
       <SidebarTabs />
     </div>
-  >
+  );
 }
 
 function EmptyState() {

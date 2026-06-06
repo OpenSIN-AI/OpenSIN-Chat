@@ -16,7 +16,7 @@ class NvidiaNimProvider extends InheritMultiple([Provider, UnTooled]) {
     super();
     const client = new OpenAI({
       baseURL: parseNvidiaNimBasePath(process.env.NVIDIA_NIM_LLM_BASE_PATH),
-      apiKey: null,
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || null,
     });
 
     this._client = client;

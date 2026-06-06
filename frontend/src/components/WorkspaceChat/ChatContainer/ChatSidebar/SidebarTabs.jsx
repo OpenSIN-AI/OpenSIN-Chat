@@ -31,7 +31,7 @@ export default function SidebarTabs() {
           }`}
         >
           <FileText size={12} weight="bold" />
-          <span className="text-zinc-200 light:text-slate-800 truncate max-w-[100px]">
+          <span className="text-zinc-200 light:text-slate-800 truncate max-w-[140px]">
             {t("chat_window.sources")}
           </span>
         </button>
@@ -53,7 +53,7 @@ export default function SidebarTabs() {
             disabled={!isMemoriesActive}
           >
             <FolderOpen size={12} weight="bold" />
-            <span className="text-zinc-200 light:text-slate-800 truncate max-w-[100px]">
+            <span className="text-zinc-200 light:text-slate-800 truncate max-w-[140px]">
               {t("chat_window.memories.tab_workspace")}
             </span>
             <span className="text-zinc-400 light:text-slate-600 font-normal">

@@ -16,7 +16,7 @@ class NvidiaNimLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     this.nvidiaNim = new OpenAIApi({
       baseURL: parseNvidiaNimBasePath(process.env.NVIDIA_NIM_LLM_BASE_PATH),
-      apiKey: null,
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || null,
     });
 
     this.model = modelPreference || process.env.NVIDIA_NIM_LLM_MODEL_PREF;
@@ -62,7 +62,7 @@ class NvidiaNimLLM {
       baseURL: parseNvidiaNimBasePath(
         basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH,
       ),
-      apiKey: null,
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || null,
     });
     const model = await openai.models
       .list()

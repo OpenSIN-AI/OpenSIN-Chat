@@ -476,13 +476,14 @@ export default function ChatContainer({
                 />
               </div>
             </DnDFileUploaderWrapper>
-            <ChatTooltips />
-          </div>
-          <MemoriesSidebar workspace={workspace} />
+          <ChatTooltips />
         </div>
-      </ChatSidebarProvider>
-    );
-  }
+        <SourcesSidebar workspace={workspace} />
+        <MemoriesSidebar workspace={workspace} />
+      </div>
+    </ChatSidebarProvider>
+  );
+}
 
   return (
     <ChatSidebarProvider>
@@ -521,7 +522,7 @@ export default function ChatContainer({
           </DnDFileUploaderWrapper>
           <ChatTooltips />
         </div>
-        <SourcesSidebar />
+        <SourcesSidebar workspace={workspace} />
         <MemoriesSidebar workspace={workspace} />
       </div>
     </ChatSidebarProvider>

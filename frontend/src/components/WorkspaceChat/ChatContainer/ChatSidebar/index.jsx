@@ -1,10 +1,54 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const ChatSidebarContext = createContext();
+
+const SOURCE_FILTERS = {
+  all: "all",
+  documents: "documents",
+  media: "media",
+};
+
+const DOCUMENT_SOURCE_PREFIXES = [
+  "paperless-ngx://",
+  "obsidian://",
+  "confluence://",
+  "drupalwiki://",
+  "github://",
+  "gitlab://",
+];
+
+const MEDIA_SOURCE_PREFIXES = [
+  "youtube://",
+];
+
+function isDocumentSource(chunkSource) {
+  return DOCUMENT_SOURCE_PREFIXES.some((prefix) =>
+    chunkSource?.startsWith(prefix)
+  );
+}
+
+function isMediaSource(chunkSource) {
+  return MEDIA_SOURCE_PREFIXES.some((prefix) =>
+    chunkSource?.startsWith(prefix)
+  );
+}
 
 export function ChatSidebarProvider({ children }) {
   const [activeSidebar, setActiveSidebar] = useState(null);
   const [sidebarData, setSidebarData] = useState(null);
+  const [sourceFilter, setSourceFilter] = useState(() => {
+    try {
+      return localStorage.getItem("openafd_source_filter") || SOURCE_FILTERS.all;
+    } catch {
+      return SOURCE_FILTERS.all;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("openafd_source_filter", sourceFilter);
+    } catch {}
+  }, [sourceFilter]);
 
   function openSidebar(type, data = null) {
     setActiveSidebar(type);
@@ -29,6 +73,11 @@ export function ChatSidebarProvider({ children }) {
         openSidebar,
         closeSidebar,
         toggleSidebar,
+        sourceFilter,
+        setSourceFilter,
+        SOURCE_FILTERS,
+        isDocumentSource,
+        isMediaSource,
       }}
     >
       {children}
