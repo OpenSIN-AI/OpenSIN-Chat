@@ -184,7 +184,10 @@ if (process.env.NODE_ENV !== "development") {
   });
 }
 
-app.all("*", function (_, response) {
+// Catch-all 404 handler. Uses a path-less middleware instead of
+// app.all("*", ...) so it is compatible with both Express 4 and Express 5
+// (Express 5 / path-to-regexp@8 rejects the bare "*" wildcard string).
+app.use(function (_, response) {
   response.sendStatus(404);
 });
 
