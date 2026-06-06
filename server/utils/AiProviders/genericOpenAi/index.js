@@ -406,7 +406,7 @@ class GenericOpenAiLLM {
           }
         }
       } catch (e) {
-        console.log(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
+        console.error(`\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${e.message}`);
         writeResponseChunk(response, {
           uuid,
           type: "abort",

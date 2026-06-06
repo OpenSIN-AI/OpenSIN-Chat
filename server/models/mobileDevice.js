@@ -238,7 +238,6 @@ const MobileDevice = {
         where: { userId: null },
         data: { userId: userId },
       });
-      console.log("Successfully migrated mobile devices to multi-user mode");
     } catch (error) {
       console.error(
         "Error migrating mobile devices to multi-user mode:",

@@ -101,7 +101,7 @@ class LMStudioEmbedder {
 
     if (errors.length > 0) {
       let uniqueErrors = new Set();
-      console.log(errors);
+      console.error(errors);
       errors.map((error) =>
         uniqueErrors.add(`[${error.type}]: ${error.message}`),
       );

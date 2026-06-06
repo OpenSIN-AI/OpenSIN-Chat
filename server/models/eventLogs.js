@@ -11,7 +11,7 @@ const EventLogs = {
           occurredAt: new Date(),
         },
       });
-      console.log(`\x1b[32m[Event Logged]\x1b[0m - ${event}`);
+      console.info(`\x1b[32m[Event Logged]\x1b[0m - ${event}`);
       return { eventLog, message: null };
     } catch (error) {
       console.error(

@@ -172,7 +172,7 @@ class GeminiLLM {
   static async fetchModels(apiKey, limit = 1_000, pageToken = null) {
     if (!apiKey) return [];
     if (fs.existsSync(cacheFolder) && !this.cacheIsStale()) {
-      console.log(
+      console.info(
         `\x1b[32m[GeminiLLM]\x1b[0m Using cached models API response.`,
       );
       return safeJsonParse(
@@ -284,7 +284,7 @@ class GeminiLLM {
       return defaultGeminiModels();
     }
 
-    console.log(
+    console.info(
       `\x1b[32m[GeminiLLM]\x1b[0m Writing cached models API response to disk.`,
     );
     if (!fs.existsSync(cacheFolder))

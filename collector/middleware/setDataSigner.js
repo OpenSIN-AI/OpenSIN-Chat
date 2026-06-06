@@ -29,7 +29,7 @@ function setDataSigner(request, response, next) {
   const comKey = new CommunicationKey();
   const encryptedPayloadSigner = request.header("X-Payload-Signer");
   if (!encryptedPayloadSigner)
-    console.log(
+    console.error(
       "Failed to find signed-payload to set encryption worker! Encryption calls will fail."
     );
 

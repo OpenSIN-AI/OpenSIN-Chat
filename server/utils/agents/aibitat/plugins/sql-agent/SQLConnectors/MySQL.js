@@ -44,7 +44,7 @@ class MySQLConnector {
       result.rows = query;
       result.count = query?.length;
     } catch (err) {
-      console.log(this.className, err);
+      console.error(this.className, err);
       result.error = err.message;
     } finally {
       // Check client is connected before closing since we use this for validation

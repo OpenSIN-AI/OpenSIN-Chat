@@ -180,7 +180,7 @@ const WorkspaceThread = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return false;
       });
   },
@@ -204,7 +204,7 @@ const WorkspaceThread = {
         throw new Error("Failed to update chat.");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return false;
       });
   },

@@ -312,7 +312,7 @@ class FoundryLLM {
         const diffMs = now - lastChunkTime;
 
         if (diffMs >= timeoutThresholdMs) {
-          console.log(
+          console.warn(
             `Foundry stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {

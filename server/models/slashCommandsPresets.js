@@ -45,9 +45,6 @@ const SlashCommandPresets = {
       });
 
       if (existingPreset) {
-        console.log(
-          "SlashCommandPresets.create - preset already exists - will not create",
-        );
         return existingPreset;
       }
 
@@ -128,9 +125,6 @@ const SlashCommandPresets = {
           uid: adminUserId,
         },
       });
-      console.log(
-        "Successfully migrated slash command presets to multi-user mode",
-      );
     } catch (error) {
       console.error(
         "Error migrating slash command presets to multi-user mode:",

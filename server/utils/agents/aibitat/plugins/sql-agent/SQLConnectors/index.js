@@ -65,7 +65,7 @@ async function validateConnection(identifier = "", connectionConfig = {}) {
     const client = getDBClient(identifier, connectionConfig);
     return await client.validateConnection();
   } catch {
-    console.log(`Failed to connect to ${identifier} database.`);
+    console.error(`Failed to connect to ${identifier} database.`);
     return {
       success: false,
       error: `Unable to connect to ${identifier}. Please verify your connection details.`,

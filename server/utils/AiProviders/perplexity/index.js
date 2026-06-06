@@ -187,7 +187,7 @@ class PerplexityLLM {
         const now = Number(new Date());
         const diffMs = now - lastChunkTime;
         if (diffMs >= timeoutThresholdMs) {
-          console.log(
+          console.warn(
             `Perplexity stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {
@@ -250,7 +250,6 @@ class PerplexityLLM {
           }
 
           if (message?.finish_reason) {
-            console.log("closing");
             writeResponseChunk(response, {
               uuid,
               sources,

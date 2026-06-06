@@ -20,7 +20,7 @@ async function asMbox({
   const mails = await mboxParser(fs.createReadStream(fullFilePath))
     .then((mails) => mails)
     .catch((error) => {
-      console.log(`Could not parse mail items`, error);
+      console.error(`Could not parse mail items`, error);
       return [];
     });
 

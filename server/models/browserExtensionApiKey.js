@@ -180,7 +180,6 @@ const BrowserExtensionApiKey = {
           user_id: userId,
         },
       });
-      console.log("Successfully migrated API keys to multi-user mode");
     } catch (error) {
       console.error("Error migrating API keys to multi-user mode:", error);
     }

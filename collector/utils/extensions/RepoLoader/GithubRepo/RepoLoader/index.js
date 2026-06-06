@@ -218,7 +218,7 @@ class GitHubRepoLoader {
         })
         .catch((err) => {
           polling = false;
-          console.log(`RepoLoader.branches`, err);
+          console.error(`RepoLoader.branches`, err);
         });
     }
 

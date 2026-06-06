@@ -356,7 +356,7 @@ class OpenRouterLLM {
         const diffMs = now - lastChunkTime;
 
         if (diffMs >= timeoutThresholdMs) {
-          console.log(
+          console.warn(
             `OpenRouter stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {

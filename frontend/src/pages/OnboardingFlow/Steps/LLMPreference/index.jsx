@@ -396,7 +396,6 @@ export default function LLMPreference({
   async function handleForward() {
     try {
       await System.markOnboardingComplete();
-      console.log("Onboarding complete");
     } catch (error) {
       console.error("Onboarding complete failed", error);
     } finally {

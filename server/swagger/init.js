@@ -75,5 +75,5 @@ swaggerAutogen(outputFile, endpointsFiles, doc).then(({ data }) => {
     encoding: "utf-8",
     flag: "w",
   });
-  console.log(`Swagger-autogen:  \x1b[32mPatched servers.url ✔\x1b[0m`);
+  console.info(`Swagger-autogen:  \x1b[32mPatched servers.url ✔\x1b[0m`);
 });

@@ -237,7 +237,7 @@ async function fireworksAiModels(providedApiKey = null) {
       });
 
       if (Object.keys(validModels).length === 0) {
-        console.log("fireworksAi: No models found");
+        console.warn("fireworksAi: No models found");
         return {};
       }
 

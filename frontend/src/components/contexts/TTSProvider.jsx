@@ -130,7 +130,6 @@ export function useWatchForAutoPlayAssistantTTSResponse() {
         );
       };
     } else {
-      console.log("Assistant TTS auto-play is disabled");
     }
   }, [autoPlayAssistantTtsResponse]);
 }

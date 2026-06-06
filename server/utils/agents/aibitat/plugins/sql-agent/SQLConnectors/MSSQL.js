@@ -78,7 +78,7 @@ class MSSQLConnector {
       result.rows = query.recordset;
       result.count = query.rowsAffected.reduce((sum, a) => sum + a, 0);
     } catch (err) {
-      console.log(this.className, err);
+      console.error(this.className, err);
       result.error = err.message;
     } finally {
       // Check client is connected before closing since we use this for validation

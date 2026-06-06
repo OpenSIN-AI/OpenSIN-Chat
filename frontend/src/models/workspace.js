@@ -99,7 +99,7 @@ const Workspace = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return false;
       });
   },
@@ -368,7 +368,7 @@ const Workspace = {
         return { success: true, error: null };
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -399,7 +399,7 @@ const Workspace = {
         throw new Error("Failed to remove pfp.");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -414,7 +414,7 @@ const Workspace = {
         throw new Error("Failed to update chat.");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return false;
       });
   },
@@ -429,7 +429,7 @@ const Workspace = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return false;
       });
   },

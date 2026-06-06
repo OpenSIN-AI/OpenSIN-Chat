@@ -323,7 +323,7 @@ const Document = {
      */
     uploadToWorkspace: async function (wsSlugs = "", docLocation = null) {
       if (!docLocation)
-        return console.log(
+        return console.error(
           "No document location provided for embedding",
           docLocation,
         );
@@ -332,12 +332,12 @@ const Document = {
         .split(",")
         .map((slug) => String(slug)?.trim()?.toLowerCase());
       if (slugs.length === 0)
-        return console.log(`No workspaces provided got: ${wsSlugs}`);
+        return console.error(`No workspaces provided got: ${wsSlugs}`);
 
       const { Workspace } = require("./workspace");
       const workspaces = await Workspace.where({ slug: { in: slugs } });
       if (workspaces.length === 0)
-        return console.log("No valid workspaces found for slugs: ", slugs);
+        return console.error("No valid workspaces found for slugs: ", slugs);
 
       // Upsert the document into each workspace - do this sequentially
       // because the document may be large and we don't want to overwhelm the embedder, plus on the first
@@ -349,11 +349,10 @@ const Document = {
           [docLocation],
         );
         if (failedToEmbed.length > 0)
-          return console.log(
+          return console.error(
             `Failed to embed document into workspace ${workspace.slug}`,
             errors,
           );
-        console.log(`Document embedded into workspace ${workspace.slug}...`);
       }
 
       return true;

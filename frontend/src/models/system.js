@@ -272,7 +272,7 @@ const System = {
         return { success: true, error: null };
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -287,7 +287,7 @@ const System = {
         return { success: true, error: null };
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -310,7 +310,7 @@ const System = {
     )
       .then((res) => res.json())
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { footerData: [], error: e.message };
       });
 
@@ -342,7 +342,7 @@ const System = {
     )
       .then((res) => res.json())
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { email: "", error: e.message };
       });
 
@@ -373,7 +373,7 @@ const System = {
     )
       .then((res) => res.json())
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { customAppName: "", error: e.message };
       });
 
@@ -442,7 +442,7 @@ const System = {
         throw new Error("Failed to fetch logo!");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { isCustomLogo: false, logoURL: null };
       });
   },
@@ -471,7 +471,7 @@ const System = {
         throw new Error("Failed to remove pfp.");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { success: false, error: e.message };
       });
   },
@@ -487,7 +487,7 @@ const System = {
       })
       .then((res) => res?.isDefaultLogo)
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return null;
       });
   },
@@ -500,7 +500,7 @@ const System = {
         throw new Error("Error removing logo!");
       })
       .catch((e) => {
-        console.log(e);
+        console.error(e);
         return { success: false, error: e.message };
       });
   },

@@ -77,7 +77,7 @@ const memory = {
               this.tracker.trackRun(this.name, { action, content });
               return response;
             } catch (error) {
-              console.log(error);
+              console.error(error);
               return `There was an error while calling the function. ${error.message}`;
             }
           },

@@ -12,6 +12,7 @@ const PUSH_USER_SUBSCRIBE_URL = `${API_BASE}/web-push/subscribe`;
 const SW_VERSION = "1.0.0";
 
 function log(message, ...args) {
+  if (process.env.NODE_ENV === "production") return;
   if (typeof message === "object") message = JSON.stringify(message, null, 2);
   console.log(`[useWebPushNotifications] ${message}`, ...args);
 }

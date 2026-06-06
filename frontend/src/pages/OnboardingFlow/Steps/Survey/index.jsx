@@ -8,7 +8,6 @@ import Workspace from "@/models/workspace";
 
 async function sendQuestionnaire({ email, useCase, comment }) {
   if (import.meta.env.DEV) {
-    console.log("sendQuestionnaire", { email, useCase, comment });
     return;
   }
 
@@ -20,14 +19,12 @@ async function sendQuestionnaire({ email, useCase, comment }) {
   });
 
   if (!navigator.sendBeacon) {
-    console.log("navigator.sendBeacon not supported, falling back to fetch");
     fetch(paths.survey(), {
       method: "POST",
       body: data,
     })
       .then(() => {
         window.localStorage.setItem(COMPLETE_QUESTIONNAIRE, true);
-        console.log(`✅ Questionnaire responses sent.`);
       })
       .catch((error) => {
         console.error(`sendQuestionnaire`, error.message);
@@ -35,7 +32,6 @@ async function sendQuestionnaire({ email, useCase, comment }) {
   }
 
   window.localStorage.setItem(COMPLETE_QUESTIONNAIRE, true);
-  console.log(`✅ Questionnaire responses sent.`);
 }
 
 export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
