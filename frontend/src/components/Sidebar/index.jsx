@@ -65,7 +65,7 @@ export default function Sidebar() {
                   <div className="flex flex-col gap-y-[14px]">
                     <SearchBox user={user} showNewWsModal={showNewWsModal} />
                     <ActiveWorkspaces />
-      </header>
+                  </div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 pb-3 rounded-b-[16px] bg-theme-bg-sidebar light:bg-slate-200 bg-opacity-80 backdrop-filter backdrop-blur-md z-10">
                   <Footer />
@@ -131,7 +131,7 @@ export function SidebarMobileHeader() {
           />
         </div>
         <div className="w-12"></div>
-      </div>
+      </header>
       <div
         style={{
           transform: showSidebar ? `translateX(0vw)` : `translateX(-100vw)`,

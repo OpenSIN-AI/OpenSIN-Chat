@@ -73,6 +73,7 @@ const TRANSLATIONS = {
     notAssigned:
       "You currently aren't assigned to any workspaces.\nPlease contact your administrator to request access to a workspace.",
     goToWorkspace: 'Go to "{{workspace}}"',
+    logoAlt: "Logo",
   },
   settings: {
     title: "Instance Settings",
