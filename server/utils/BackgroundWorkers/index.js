@@ -1,6 +1,6 @@
 const path = require("path");
 const Graceful = require("@ladjs/graceful");
-const Bree = require("@openafd/bree");
+const Bree = require("@mintplex-labs/bree");
 const later = require("@breejs/later");
 const PQueue = require("p-queue").default;
 const setLogger = require("../logger");
@@ -156,7 +156,7 @@ class BackgroundService {
     this.#log("Service stopped");
   }
 
-  /** @returns {import("@openafd/bree").Job[]} */
+  /** @returns {import("@mintplex-labs/bree").Job[]} */
   jobs() {
     const activeJobs = [...this.#alwaysRunJobs];
     if (this.memoryExtractionEnabled) activeJobs.push(...this.#memoryJobs);

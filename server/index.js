@@ -3,6 +3,7 @@ process.env.NODE_ENV === "development"
   : require("dotenv").config();
 
 require("./utils/logger")();
+require("./utils/boot/patchSlowBuffer")();
 require("./utils/boot/patchSdkTimeouts")();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -74,7 +75,7 @@ app.use(
 if (!!process.env.ENABLE_HTTPS) {
   bootSSL(app, process.env.SERVER_PORT || 3001);
 } else {
-  require("@openafd/express-ws").default(app); // load WebSockets in non-SSL mode.
+  require("@mintplex-labs/express-ws").default(app); // load WebSockets in non-SSL mode.
 }
 
 app.use("/api", apiRouter);
