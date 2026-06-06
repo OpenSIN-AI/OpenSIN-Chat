@@ -1,0 +1,142 @@
+From 43e0d9a43d68a1adada2a645b6f8e5f6e26759d9 Mon Sep 17 00:00:00 2001
+From: Sanidhya Singh <91531068+sanidhyasin@users.noreply.github.com>
+Date: Wed, 3 Jun 2026 21:37:49 +0530
+Subject: [PATCH 20/23] feat: make document sync stale-after interval
+ configurable (#5747)
+
+The document sync/watch feature hardcoded the stale-after interval to 7
+days (604800000ms), which is too infrequent for operational documents
+that change often. This makes it configurable via the new
+DOCUMENT_SYNC_STALE_AFTER_MS environment variable.
+
+- defaultStaleAfter now reads DOCUMENT_SYNC_STALE_AFTER_MS, falling back
+  to the 7-day default for unset/invalid/non-positive values and
+  enforcing a 1-hour minimum to avoid overloading embedders.
+- watch() now persists staleAfterMs on the queue record so the
+  configured interval governs recurring syncs, not just the first one.
+- Documented the variable in server/ and docker/ .env.example files.
+
+Resolves #3988
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+---
+ docker/.env.example                           |  5 +++
+ server/.env.example                           |  5 +++
+ .../models/documentSyncQueue.test.js          | 41 +++++++++++++++++++
+ server/models/documentSyncQueue.js            | 19 ++++++++-
+ 4 files changed, 69 insertions(+), 1 deletion(-)
+ create mode 100644 server/__tests__/models/documentSyncQueue.test.js
+
+diff --git a/docker/.env.example b/docker/.env.example
+index bdc4c26e..6ba2d5e8 100644
+--- a/docker/.env.example
++++ b/docker/.env.example
+@@ -504,3 +504,8 @@ GID='1000'
+ # (optional) Comma-separated list of skills that are auto-approved.
+ # This will allow the skill to be invoked without user interaction.
+ # AGENT_AUTO_APPROVED_SKILLS=create-pdf-file,create-word-file
++
++# (optional) How long (in milliseconds) a watched document waits before it is
++# re-synced by the document sync background worker.
++# Default is 7 days (604800000ms). A minimum of 1 hour (3600000ms) is enforced.
++# DOCUMENT_SYNC_STALE_AFTER_MS=604800000
+diff --git a/server/.env.example b/server/.env.example
+index e3ce0e39..3afb8a4f 100644
+--- a/server/.env.example
++++ b/server/.env.example
+@@ -516,3 +516,8 @@ STT_PROVIDER="native"
+ # (optional) Comma-separated list of skills that are auto-approved.
+ # This will allow the skill to be invoked without user interaction.
+ # AGENT_AUTO_APPROVED_SKILLS=create-pdf-file,create-word-file
++
++# (optional) How long (in milliseconds) a watched document waits before it is
++# re-synced by the document sync background worker.
++# Default is 7 days (604800000ms). A minimum of 1 hour (3600000ms) is enforced.
++# DOCUMENT_SYNC_STALE_AFTER_MS=604800000
+diff --git a/server/__tests__/models/documentSyncQueue.test.js b/server/__tests__/models/documentSyncQueue.test.js
+new file mode 100644
+index 00000000..c94a7c95
+--- /dev/null
++++ b/server/__tests__/models/documentSyncQueue.test.js
+@@ -0,0 +1,41 @@
++const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
++
++const DEFAULT_STALE_AFTER = 604800000; // 7 days in MS
++const MIN_STALE_AFTER = 3600000; // 1 hour in MS
++
++describe("DocumentSyncQueue.defaultStaleAfter", () => {
++  const ORIGINAL_ENV = process.env.DOCUMENT_SYNC_STALE_AFTER_MS;
++
++  afterEach(() => {
++    if (ORIGINAL_ENV === undefined) delete process.env.DOCUMENT_SYNC_STALE_AFTER_MS;
++    else process.env.DOCUMENT_SYNC_STALE_AFTER_MS = ORIGINAL_ENV;
++  });
++
++  it("defaults to 7 days when the env var is unset", () => {
++    delete process.env.DOCUMENT_SYNC_STALE_AFTER_MS;
++    expect(DocumentSyncQueue.defaultStaleAfter).toBe(DEFAULT_STALE_AFTER);
++  });
++
++  it("uses a valid env value (e.g. 1 day)", () => {
++    process.env.DOCUMENT_SYNC_STALE_AFTER_MS = "86400000";
++    expect(DocumentSyncQueue.defaultStaleAfter).toBe(86400000);
++  });
++
++  it("clamps values below the 1 hour minimum", () => {
++    process.env.DOCUMENT_SYNC_STALE_AFTER_MS = "60000"; // 1 minute
++    expect(DocumentSyncQueue.defaultStaleAfter).toBe(MIN_STALE_AFTER);
++  });
++
++  it("falls back to the default for non-numeric values", () => {
++    process.env.DOCUMENT_SYNC_STALE_AFTER_MS = "not-a-number";
++    expect(DocumentSyncQueue.defaultStaleAfter).toBe(DEFAULT_STALE_AFTER);
++  });
++
++  it("falls back to the default for non-positive values", () => {
++    process.env.DOCUMENT_SYNC_STALE_AFTER_MS = "0";
++    expect(DocumentSyncQueue.defaultStaleAfter).toBe(DEFAULT_STALE_AFTER);
++
++    process.env.DOCUMENT_SYNC_STALE_AFTER_MS = "-5000";
++    expect(DocumentSyncQueue.defaultStaleAfter).toBe(DEFAULT_STALE_AFTER);
++  });
++});
+diff --git a/server/models/documentSyncQueue.js b/server/models/documentSyncQueue.js
+index b4e9790c..18289787 100644
+--- a/server/models/documentSyncQueue.js
++++ b/server/models/documentSyncQueue.js
+@@ -18,7 +18,23 @@ const DocumentSyncQueue = {
+     "gitlab",
+     "drupalwiki",
+   ],
+-  defaultStaleAfter: 604800000,
++  /**
++   * The default time (in milliseconds) a watched document waits before it is
++   * considered "stale" and re-synced by the background worker.
++   *
++   * Defaults to 7 days but can be overridden via the
++   * `DOCUMENT_SYNC_STALE_AFTER_MS` environment variable. A minimum of 1 hour is
++   * enforced to avoid overloading embedders by re-syncing documents too
++   * frequently. Invalid or non-positive values fall back to the default.
++   * @returns {number} - the stale-after time in milliseconds
++   */
++  get defaultStaleAfter() {
++    const DEFAULT_STALE_AFTER = 604800000; // 7 days in MS
++    const MIN_STALE_AFTER = 3600000; // 1 hour in MS
++    const envValue = Number(process.env.DOCUMENT_SYNC_STALE_AFTER_MS);
++    if (isNaN(envValue) || envValue <= 0) return DEFAULT_STALE_AFTER;
++    return Math.max(envValue, MIN_STALE_AFTER);
++  },
+   maxRepeatFailures: 5, // How many times a run can fail in a row before pruning.
+   writable: [],
+ 
+@@ -90,6 +106,7 @@ const DocumentSyncQueue = {
+       const queue = await prisma.document_sync_queues.create({
+         data: {
+           workspaceDocId: document.id,
++          staleAfterMs: this.defaultStaleAfter,
+           nextSyncAt: new Date(Number(new Date()) + this.defaultStaleAfter),
+         },
+       });
+-- 
+2.50.1 (Apple Git-155)
+

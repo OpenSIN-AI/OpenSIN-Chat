@@ -1,0 +1,247 @@
+From 35b4132fe4bae06e973b0dd1de37499ad05dba6b Mon Sep 17 00:00:00 2001
+From: Timothy Carambat <rambat1010@gmail.com>
+Date: Tue, 2 Jun 2026 08:49:37 -0700
+Subject: [PATCH 17/23] Generic OpenAI improvements (#5746)
+
+* Generic OpenAI improvements
+- Add dropdown + freeform on failure model picker
+- Show generic for Agent and Workspace LLM selector with dropdown model picker support
+resolves #5337
+closes #5338
+
+* reset
+---
+ .../GenericOpenAiOptions/index.jsx            | 144 ++++++++++++++++--
+ frontend/src/hooks/useGetProvidersModels.js   |   7 +-
+ .../GeneralSettings/LLMPreference/index.jsx   |   7 +-
+ .../WorkspaceLLMSelection/index.jsx           |   2 +-
+ 4 files changed, 133 insertions(+), 27 deletions(-)
+
+diff --git a/frontend/src/components/LLMSelection/GenericOpenAiOptions/index.jsx b/frontend/src/components/LLMSelection/GenericOpenAiOptions/index.jsx
+index 01bfd2aa..feb62f12 100644
+--- a/frontend/src/components/LLMSelection/GenericOpenAiOptions/index.jsx
++++ b/frontend/src/components/LLMSelection/GenericOpenAiOptions/index.jsx
+@@ -1,4 +1,17 @@
++import { useState, useEffect } from "react";
++import System from "@/models/system";
++
+ export default function GenericOpenAiOptions({ settings }) {
++  const [genericOpenAiBasePath, setGenericOpenAiBasePath] = useState(
++    settings?.GenericOpenAiBasePath
++  );
++  const [genericOpenAiApiKey, setGenericOpenAiApiKey] = useState(
++    settings?.GenericOpenAiApiKey
++  );
++  const [genericOpenAiModelPref, setGenericOpenAiModelPref] = useState(
++    settings?.GenericOpenAiModelPref
++  );
++
+   return (
+     <div className="flex flex-col gap-y-7">
+       <div className="flex gap-[36px] mt-1.5 flex-wrap">
+@@ -12,6 +25,7 @@ export default function GenericOpenAiOptions({ settings }) {
+             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+             placeholder="eg: https://proxy.openai.com"
+             defaultValue={settings?.GenericOpenAiBasePath}
++            onChange={(e) => setGenericOpenAiBasePath(e.target.value)}
+             required={true}
+             autoComplete="off"
+             spellCheck={false}
+@@ -27,25 +41,19 @@ export default function GenericOpenAiOptions({ settings }) {
+             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+             placeholder="Generic service API Key"
+             defaultValue={settings?.GenericOpenAiKey ? "*".repeat(20) : ""}
++            onChange={(e) => setGenericOpenAiApiKey(e.target.value)}
+             required={false}
+             autoComplete="off"
+             spellCheck={false}
+           />
+         </div>
+-        <div className="flex flex-col w-60">
+-          <label className="text-white text-sm font-semibold block mb-3">
+-            Chat Model Name
+-          </label>
+-          <input
+-            type="text"
+-            name="GenericOpenAiModelPref"
+-            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+-            placeholder="Model id used for chat requests"
+-            defaultValue={settings?.GenericOpenAiModelPref}
+-            required={true}
+-            autoComplete="off"
+-          />
+-        </div>
++        <GenericOpenAiModelSelection
++          settings={settings}
++          basePath={genericOpenAiBasePath}
++          apiKey={genericOpenAiApiKey}
++          genericOpenAiModelPref={genericOpenAiModelPref}
++          setGenericOpenAiModelPref={setGenericOpenAiModelPref}
++        />
+       </div>
+       <div className="flex gap-[36px] flex-wrap">
+         <div className="flex flex-col w-60">
+@@ -83,3 +91,111 @@ export default function GenericOpenAiOptions({ settings }) {
+     </div>
+   );
+ }
++
++function GenericOpenAiModelSelection({
++  settings,
++  basePath = null,
++  apiKey = null,
++  genericOpenAiModelPref,
++  setGenericOpenAiModelPref,
++}) {
++  const [customModels, setCustomModels] = useState([]);
++  const [loading, setLoading] = useState(true);
++
++  useEffect(() => {
++    async function findCustomModels() {
++      if (!basePath) {
++        setCustomModels([]);
++        setLoading(false);
++        return;
++      }
++      setLoading(true);
++      try {
++        const { models } = await System.customModels(
++          "generic-openai",
++          apiKey,
++          basePath
++        );
++        setCustomModels(models || []);
++      } catch (error) {
++        console.error("Failed to fetch custom models:", error);
++        setCustomModels([]);
++      }
++      setLoading(false);
++    }
++    findCustomModels();
++  }, [basePath, apiKey]);
++
++  if (loading) {
++    return (
++      <div className="flex flex-col w-60">
++        <div className="flex items-center mb-2 gap-x-1">
++          <label className="text-white text-sm font-semibold">
++            Selected Model
++          </label>
++        </div>
++        <select
++          name="GenericOpenAiModelPref"
++          disabled={true}
++          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++        >
++          <option disabled={true} selected={true}>
++            --loading available models--
++          </option>
++        </select>
++      </div>
++    );
++  }
++
++  // If no models are found, just show a free-form input field for the model name
++  if (customModels.length === 0) {
++    return (
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-2">
++          Selected Model
++        </label>
++        <input
++          type="text"
++          name="GenericOpenAiModelPref"
++          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++          placeholder="Model id used for chat requests"
++          defaultValue={genericOpenAiModelPref}
++          onChange={(e) => setGenericOpenAiModelPref(e.target.value)}
++          onBlur={() => setGenericOpenAiModelPref(genericOpenAiModelPref)}
++          required={true}
++          autoComplete="off"
++          spellCheck={false}
++        />
++      </div>
++    );
++  }
++
++  return (
++    <div className="flex flex-col w-60">
++      <label className="text-white text-sm font-semibold block mb-2">
++        Selected Model
++      </label>
++      <select
++        name="GenericOpenAiModelPref"
++        required={true}
++        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++      >
++        {customModels.length > 0 && (
++          <optgroup label="Your loaded models">
++            {customModels.map((model) => {
++              return (
++                <option
++                  key={model.id}
++                  value={model.id}
++                  selected={settings.GenericOpenAiModelPref === model.id}
++                >
++                  {model.id}
++                </option>
++              );
++            })}
++          </optgroup>
++        )}
++      </select>
++    </div>
++  );
++}
+diff --git a/frontend/src/hooks/useGetProvidersModels.js b/frontend/src/hooks/useGetProvidersModels.js
+index b13a1c29..28f32b3d 100644
+--- a/frontend/src/hooks/useGetProvidersModels.js
++++ b/frontend/src/hooks/useGetProvidersModels.js
+@@ -2,12 +2,7 @@ import System from "@/models/system";
+ import { useEffect, useState } from "react";
+ 
+ // Providers which cannot use this feature for workspace<>model selection
+-export const DISABLED_PROVIDERS = [
+-  "azure",
+-  "textgenwebui",
+-  "generic-openai",
+-  "bedrock",
+-];
++export const DISABLED_PROVIDERS = ["azure", "textgenwebui", "bedrock"];
+ const PROVIDER_DEFAULT_MODELS = {
+   openai: [],
+   gemini: [],
+diff --git a/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx b/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
+index 889b92f4..e45b9baf 100644
+--- a/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
++++ b/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
+@@ -438,12 +438,7 @@ export const AVAILABLE_LLM_PROVIDERS = [
+     options: (settings) => <GenericOpenAiOptions settings={settings} />,
+     description:
+       "Connect to any OpenAi-compatible service via a custom configuration",
+-    requiredConfig: [
+-      "GenericOpenAiBasePath",
+-      "GenericOpenAiModelPref",
+-      "GenericOpenAiTokenLimit",
+-      "GenericOpenAiKey",
+-    ],
++    requiredConfig: ["GenericOpenAiBasePath", "GenericOpenAiModelPref"],
+     connectionConfig: ["GenericOpenAiBasePath"],
+   },
+ ];
+diff --git a/frontend/src/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/index.jsx b/frontend/src/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/index.jsx
+index e909e30e..e8dbd6a5 100644
+--- a/frontend/src/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/index.jsx
++++ b/frontend/src/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/index.jsx
+@@ -12,7 +12,7 @@ import paths from "@/utils/paths";
+ // Some providers do not support model selection via /models.
+ // In that case we allow the user to enter the model name manually and hope they
+ // type it correctly.
+-const FREE_FORM_LLM_SELECTION = ["bedrock", "azure", "generic-openai"];
++const FREE_FORM_LLM_SELECTION = ["bedrock", "azure"];
+ 
+ // Some providers do not support model selection via /models
+ // and only have a fixed single-model they can use.
+-- 
+2.50.1 (Apple Git-155)
+

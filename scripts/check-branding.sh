@@ -52,6 +52,14 @@ ALLOWED_FILES=(
   #    The filename + minified body legitimately contain "AnythingLLM" —
   #    renaming the asset would break every existing embed on the web.
   "frontend/public/embed/anythingllm-chat-widget.min.js"
+
+  # ── Upstream-sync tooling ───────────────────────────────
+  #    docs/UPSTREAM-SYNC.md + scripts/upstream-sync/* explain and execute
+  #    the snapshot-sync from Mintplex-Labs/anything-llm. They legitimately
+  #    reference upstream names + URLs + the raw patch files (which are
+  #    verbatim from upstream and need to remain intact for `git am`).
+  "docs/UPSTREAM-SYNC.md"
+  "scripts/upstream-sync/"
 )
 
 # Build ripgrep exclude-from-file
@@ -59,7 +67,12 @@ EXCLUDE_FILE="$(mktemp -t openafd-branding-XXXXXX)"
 trap 'rm -f "$EXCLUDE_FILE"' EXIT
 {
   for f in "${ALLOWED_FILES[@]}"; do
-    echo "!^${f}\$"
+    if [[ "$f" == */ ]]; then
+      # Directory wildcard — exclude everything under it
+      echo "!^${f}.*"
+    else
+      echo "!^${f}\$"
+    fi
   done
   # Standard excludes
   echo "!^\\.git/"
@@ -101,12 +114,18 @@ PATTERNS=(
 # ── Run ─────────────────────────────────────────────────────────────
 # Build the allow-list regex dynamically from ALLOWED_FILES.
 # This guarantees the filter stays in sync with the whitelist above.
+# Directory wildcards (entries ending in `/`) match everything under that dir.
 allow_re_pretty='^(\./)?('
 allow_re_pretty_alt=()
 for f in "${ALLOWED_FILES[@]}"; do
   # Escape regex metachars in filename
   esc=$(printf '%s' "$f" | sed 's/\./\\./g')
-  allow_re_pretty_alt+=("$esc")
+  if [[ "$f" == */ ]]; then
+    # Directory entry — match the dir and everything under it
+    allow_re_pretty_alt+=("${esc}.*")
+  else
+    allow_re_pretty_alt+=("$esc")
+  fi
 done
 allow_re_pretty+=$(IFS='|'; echo "${allow_re_pretty_alt[*]}")
 allow_re_pretty+='):'

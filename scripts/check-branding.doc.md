@@ -68,6 +68,13 @@ verfällt die Linter-Semantik.
 Wenn Upstream z. B. eine neue Subdomain `cdn2.anythingllm.com` einführt:
 
 1. Pattern zur `PATTERNS` Array hinzufügen
-2. Test mit `rg "cdn2\.anythingllm\.com" .` lokal
+2. Test mit `rg "cdn2\.anythingllm.com" .` lokal
 3. Wenn false-positives in legit-Dateien auftreten → ALLOWED_FILES erweitern
 4. CI pushen
+
+## Directory Wildcards
+
+Ein Eintrag in `ALLOWED_FILES`, der mit `/` endet (z. B. `scripts/upstream-sync/`),
+wird als **Verzeichnis-Wildcard** behandelt — jede Datei darunter ist whitelisted.
+Nutze das für Bündel, die legitime Upstream-Referenzen enthalten (z. B. das
+Sync-Tool + seine rohen Upstream-Patch-Dateien).

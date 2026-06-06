@@ -1,0 +1,142 @@
+From 54b530942b58f1785dd2a127db2aea9ae7780a7d Mon Sep 17 00:00:00 2001
+From: Timothy Carambat <rambat1010@gmail.com>
+Date: Thu, 4 Jun 2026 14:50:50 -0700
+Subject: [PATCH 22/23] disable model router as main LLM so that
+ getLLMProvider() works since it wont be a router now
+
+---
+ .../PromptInput/LLMSelector/utils.js          |  8 ++---
+ .../GeneralSettings/LLMPreference/index.jsx   | 32 +++++++++++++------
+ .../AgentConfig/AgentLLMSelection/index.jsx   |  6 ++--
+ .../WorkspaceLLMSelection/index.jsx           |  4 +--
+ 4 files changed, 30 insertions(+), 20 deletions(-)
+
+diff --git a/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/utils.js b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/utils.js
+index c5f96fdc..c0aace0d 100644
+--- a/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/utils.js
++++ b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/LLMSelector/utils.js
+@@ -1,4 +1,4 @@
+-import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
++import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
+ import { DISABLED_PROVIDERS } from "@/hooks/useGetProvidersModels";
+ 
+ export function autoScrollToSelectedLLMProvider(
+@@ -45,9 +45,7 @@ export function validatedModelSelection(model) {
+ 
+ export function hasMissingCredentials(settings, provider) {
+   if (!settings) return false;
+-  const providerEntry = AVAILABLE_LLM_PROVIDERS.find(
+-    (p) => p.value === provider
+-  );
++  const providerEntry = ALL_LLM_PROVIDERS.find((p) => p.value === provider);
+   if (!providerEntry) return false;
+ 
+   for (const requiredKey of providerEntry.requiredConfig) {
+@@ -57,6 +55,6 @@ export function hasMissingCredentials(settings, provider) {
+   return false;
+ }
+ 
+-export const WORKSPACE_LLM_PROVIDERS = AVAILABLE_LLM_PROVIDERS.filter(
++export const WORKSPACE_LLM_PROVIDERS = ALL_LLM_PROVIDERS.filter(
+   (provider) => !DISABLED_PROVIDERS.includes(provider.value)
+ );
+diff --git a/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx b/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
+index e45b9baf..271ba3b5 100644
+--- a/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
++++ b/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
+@@ -89,16 +89,21 @@ import LLMItem from "@/components/LLMSelection/LLMItem";
+ import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+ import CTAButton from "@/components/lib/CTAButton";
+ 
++export const MODEL_ROUTER_PROVIDER = {
++  name: "Model Router",
++  value: "anythingllm-router",
++  logo: AnythingLLMIcon,
++  options: (settings) => <ModelRouterOptions settings={settings} />,
++  description:
++    "Route messages to different LLM providers based on rules you define.",
++  requiredConfig: [],
++};
++
++/**
++ * All LLM providers that are available to the user.
++ * This **never** includes the model router provider.
++ */
+ export const AVAILABLE_LLM_PROVIDERS = [
+-  {
+-    name: "Model Router",
+-    value: "anythingllm-router",
+-    logo: AnythingLLMIcon,
+-    options: (settings) => <ModelRouterOptions settings={settings} />,
+-    description:
+-      "Route messages to different LLM providers based on rules you define.",
+-    requiredConfig: [],
+-  },
+   {
+     name: "OpenAI",
+     value: "openai",
+@@ -443,6 +448,15 @@ export const AVAILABLE_LLM_PROVIDERS = [
+   },
+ ];
+ 
++/**
++ * All LLM providers that are available to the user.
++ * This **always** includes the model router provider.
++ */
++export const ALL_LLM_PROVIDERS = [
++  MODEL_ROUTER_PROVIDER,
++  ...AVAILABLE_LLM_PROVIDERS,
++];
++
+ export const LLM_PREFERENCE_CHANGED_EVENT = "llm-preference-changed";
+ export default function GeneralLLMPreference() {
+   const [saving, setSaving] = useState(false);
+diff --git a/frontend/src/pages/WorkspaceSettings/AgentConfig/AgentLLMSelection/index.jsx b/frontend/src/pages/WorkspaceSettings/AgentConfig/AgentLLMSelection/index.jsx
+index bad9c9ee..c21aace8 100644
+--- a/frontend/src/pages/WorkspaceSettings/AgentConfig/AgentLLMSelection/index.jsx
++++ b/frontend/src/pages/WorkspaceSettings/AgentConfig/AgentLLMSelection/index.jsx
+@@ -1,7 +1,7 @@
+ import React, { useEffect, useRef, useState } from "react";
+ import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
+ import AgentLLMItem from "./AgentLLMItem";
+-import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
++import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
+ import { CaretUpDown, Gauge, MagnifyingGlass, X } from "@phosphor-icons/react";
+ import AgentModelSelection from "../AgentModelSelection";
+ import { useTranslation } from "react-i18next";
+@@ -67,9 +67,7 @@ const LLM_DEFAULT = {
+ 
+ const LLMS = [
+   LLM_DEFAULT,
+-  ...AVAILABLE_LLM_PROVIDERS.filter((llm) =>
+-    ENABLED_PROVIDERS.includes(llm.value)
+-  ),
++  ...ALL_LLM_PROVIDERS.filter((llm) => ENABLED_PROVIDERS.includes(llm.value)),
+ ];
+ 
+ export default function AgentLLMSelection({
+diff --git a/frontend/src/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/index.jsx b/frontend/src/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/index.jsx
+index e8dbd6a5..903aad38 100644
+--- a/frontend/src/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/index.jsx
++++ b/frontend/src/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/index.jsx
+@@ -1,7 +1,7 @@
+ import React, { useEffect, useRef, useState } from "react";
+ import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
+ import WorkspaceLLMItem from "./WorkspaceLLMItem";
+-import { AVAILABLE_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
++import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
+ import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+ import ChatModelSelection from "./ChatModelSelection";
+ import RouterSelection from "./RouterSelection";
+@@ -30,7 +30,7 @@ const LLM_DEFAULT = {
+   requiredConfig: [],
+ };
+ 
+-const LLMS = [LLM_DEFAULT, ...AVAILABLE_LLM_PROVIDERS].filter(
++const LLMS = [LLM_DEFAULT, ...ALL_LLM_PROVIDERS].filter(
+   (llm) => !DISABLED_PROVIDERS.includes(llm.value)
+ );
+ 
+-- 
+2.50.1 (Apple Git-155)
+

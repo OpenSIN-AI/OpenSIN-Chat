@@ -1,0 +1,33 @@
+From cc51805666a33dd26bf80b739cdd918c952e1ff0 Mon Sep 17 00:00:00 2001
+From: trick77 <trick77@users.noreply.github.com>
+Date: Mon, 1 Jun 2026 17:12:18 +0200
+Subject: [PATCH 06/23] fix: avoid double-encoding SearXNG search queries
+ (#5723)
+
+* fix: avoid double-encoding SearXNG search queries
+
+* remove test
+
+---------
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+---
+ server/utils/agents/aibitat/plugins/web-browsing.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/server/utils/agents/aibitat/plugins/web-browsing.js b/server/utils/agents/aibitat/plugins/web-browsing.js
+index 23d5b38c..25c20bc2 100644
+--- a/server/utils/agents/aibitat/plugins/web-browsing.js
++++ b/server/utils/agents/aibitat/plugins/web-browsing.js
+@@ -810,7 +810,7 @@ const webBrowsing = {
+ 
+             try {
+               searchURL = new URL(process.env.AGENT_SEARXNG_API_URL);
+-              searchURL.searchParams.append("q", encodeURIComponent(query));
++              searchURL.searchParams.append("q", query);
+               searchURL.searchParams.append("format", "json");
+             } catch (e) {
+               this.super.handlerProps.log(`SearXNG Search: ${e.message}`);
+-- 
+2.50.1 (Apple Git-155)
+

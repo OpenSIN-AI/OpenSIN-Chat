@@ -1,0 +1,318 @@
+From d81a7847e9bc05d99fe29b66198147b6da521145 Mon Sep 17 00:00:00 2001
+From: Timothy Carambat <rambat1010@gmail.com>
+Date: Wed, 27 May 2026 14:47:02 -0700
+Subject: [PATCH 03/23] fix provider override in agents (#5716)
+
+---
+ server/utils/agents/aibitat/index.js          | 75 +++++++++++--------
+ .../agents/aibitat/plugins/chat-history.js    |  4 +-
+ .../agents/aibitat/providers/ai-provider.js   | 31 +++++++-
+ 3 files changed, 74 insertions(+), 36 deletions(-)
+
+diff --git a/server/utils/agents/aibitat/index.js b/server/utils/agents/aibitat/index.js
+index 76089666..8e9d168b 100644
+--- a/server/utils/agents/aibitat/index.js
++++ b/server/utils/agents/aibitat/index.js
+@@ -28,7 +28,11 @@ class AIbitat {
+    */
+   skipHandleExecution = false;
+ 
+-  provider = null;
++  _provider = null;
++
++  /** @type {import("./providers/ai-provider").AgentProviderInstance|null} */
++  _providerInstance = null;
++
+   defaultProvider = null;
+   defaultInterrupt;
+   maxRounds;
+@@ -115,6 +119,31 @@ class AIbitat {
+     return this._chats;
+   }
+ 
++  get provider() {
++    return this._provider;
++  }
++
++  set provider(value) {
++    if (value !== null && typeof value !== "string") {
++      console.trace(); // print this for user report debugging so call stack is visible
++      throw new TypeError(
++        `aibitat.provider must be a string tag (e.g. "openai"), got ${typeof value}. ` +
++          `Use aibitat.providerInstance to to get/store the provider instance.`
++      );
++    }
++    this._provider = value;
++  }
++
++  /** @returns {import("./providers/ai-provider").AgentProviderInstance} */
++  get providerInstance() {
++    return this._providerInstance;
++  }
++
++  /** @param {import("./providers/ai-provider").AgentProviderInstance|null} value */
++  set providerInstance(value) {
++    this._providerInstance = value;
++  }
++
+   /**
+    * Install a plugin.
+    */
+@@ -873,19 +902,18 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+       }
+     }
+ 
+-    const provider = this.getProviderForConfig({
++    this.providerInstance = this.getProviderForConfig({
+       ...this.defaultProvider,
+       ...fromConfig,
+     });
+-    provider.attachHandlerProps(this.handlerProps);
++    this.providerInstance.attachHandlerProps(this.handlerProps);
+ 
+     let content;
+-    if (provider.supportsAgentStreaming) {
++    if (this.providerInstance.supportsAgentStreaming) {
+       this.handlerProps.log?.(
+         "[DEBUG] Provider supports agent streaming - will use async execution!"
+       );
+       content = await this.handleAsyncExecution(
+-        provider,
+         messages,
+         functions,
+         route.from
+@@ -894,16 +922,9 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+       this.handlerProps.log?.(
+         "[DEBUG] Provider does not support agent streaming - will use synchronous execution!"
+       );
+-      content = await this.handleExecution(
+-        provider,
+-        messages,
+-        functions,
+-        route.from
+-      );
++      content = await this.handleExecution(messages, functions, route.from);
+     }
+ 
+-    // Store the active provider so plugins can access usage metrics
+-    this.provider = provider;
+     this.newMessage({ ...route, content });
+     return content;
+   }
+@@ -929,9 +950,8 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+ 
+   /**
+    * Handle the async (streaming) execution of the provider
+-   * with tool calls.
++   * with tool calls. Reads the provider from this.providerInstance.
+    *
+-   * @param provider
+    * @param messages
+    * @param functions
+    * @param byAgent
+@@ -939,7 +959,6 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+    * @returns {Promise<string>}
+    */
+   async handleAsyncExecution(
+-    provider,
+     messages = [],
+     functions = [],
+     byAgent = null,
+@@ -954,7 +973,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+ 
+     /** @type {{ functionCall: { name: string, arguments: string }, textResponse: string }} */
+     const completionStream = await this.#safeProviderCall(() =>
+-      provider.stream(messages, functions, eventHandler)
++      this.providerInstance.stream(messages, functions, eventHandler)
+     );
+ 
+     if (completionStream.functionCall) {
+@@ -973,7 +992,6 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+ 
+       if (!fn) {
+         return await this.handleAsyncExecution(
+-          provider,
+           [
+             ...messages,
+             {
+@@ -991,7 +1009,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+ 
+       fn.caller = byAgent || "agent";
+ 
+-      if (provider?.verbose) {
++      if (this.providerInstance?.verbose) {
+         this?.introspect?.(
+           `${fn.caller} is executing \`${name}\` tool ${JSON.stringify(args, null, 2)}`
+         );
+@@ -1033,7 +1051,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+         eventHandler?.("reportStreamEvent", {
+           type: "usageMetrics",
+           uuid: directOutputUUID,
+-          metrics: provider.getUsage(),
++          metrics: this.providerInstance.getUsage(),
+         });
+         this?.flushCitations?.(directOutputUUID);
+         this?.emitChatId?.(directOutputUUID);
+@@ -1063,7 +1081,6 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+       }
+ 
+       return await this.handleAsyncExecution(
+-        provider,
+         newMessages,
+         reachedToolLimit ? [] : functions,
+         byAgent,
+@@ -1075,7 +1092,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+     eventHandler?.("reportStreamEvent", {
+       type: "usageMetrics",
+       uuid: responseUuid,
+-      metrics: provider.getUsage(),
++      metrics: this.providerInstance.getUsage(),
+     });
+     this?.flushCitations?.(responseUuid);
+     this?.emitChatId?.(responseUuid);
+@@ -1084,9 +1101,8 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+ 
+   /**
+    * Handle the synchronous (non-streaming) execution of the provider
+-   * with tool calls.
++   * with tool calls. Reads the provider from this.providerInstance.
+    *
+-   * @param provider
+    * @param messages
+    * @param functions
+    * @param byAgent
+@@ -1096,7 +1112,6 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+    * @returns {Promise<string>}
+    */
+   async handleExecution(
+-    provider,
+     messages = [],
+     functions = [],
+     byAgent = null,
+@@ -1114,7 +1129,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+ 
+     // get the chat completion
+     const completion = await this.#safeProviderCall(() =>
+-      provider.complete(messages, functions)
++      this.providerInstance.complete(messages, functions)
+     );
+ 
+     if (completion.functionCall) {
+@@ -1133,7 +1148,6 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+ 
+       if (!fn) {
+         return await this.handleExecution(
+-          provider,
+           [
+             ...messages,
+             {
+@@ -1152,7 +1166,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+ 
+       fn.caller = byAgent || "agent";
+ 
+-      if (provider?.verbose) {
++      if (this.providerInstance?.verbose) {
+         this?.introspect?.(
+           `[debug]: ${fn.caller} is attempting to call \`${name}\` tool`
+         );
+@@ -1182,7 +1196,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+         eventHandler?.("reportStreamEvent", {
+           type: "usageMetrics",
+           uuid: msgUUID,
+-          metrics: provider.getUsage(),
++          metrics: this.providerInstance.getUsage(),
+         });
+         this?.flushCitations?.(msgUUID);
+         return result;
+@@ -1211,7 +1225,6 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+       }
+ 
+       return await this.handleExecution(
+-        provider,
+         newMessages,
+         reachedToolLimit ? [] : functions,
+         byAgent,
+@@ -1223,7 +1236,7 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+     eventHandler?.("reportStreamEvent", {
+       type: "usageMetrics",
+       uuid: msgUUID,
+-      metrics: provider.getUsage(),
++      metrics: this.providerInstance.getUsage(),
+     });
+     this?.flushCitations?.(msgUUID);
+     this?.emitChatId?.(msgUUID);
+diff --git a/server/utils/agents/aibitat/plugins/chat-history.js b/server/utils/agents/aibitat/plugins/chat-history.js
+index 9a2759ca..257a3bba 100644
+--- a/server/utils/agents/aibitat/plugins/chat-history.js
++++ b/server/utils/agents/aibitat/plugins/chat-history.js
+@@ -99,7 +99,7 @@ const chatHistory = {
+         { prompt, response, attachments = [] } = {}
+       ) {
+         const invocation = aibitat.handlerProps.invocation;
+-        const metrics = aibitat.provider?.getUsage?.() ?? {};
++        const metrics = aibitat.providerInstance?.getUsage?.() ?? {};
+         const citations = aibitat._pendingCitations ?? [];
+         const outputs = aibitat._pendingOutputs ?? [];
+         const clarifyingQuestions =
+@@ -134,7 +134,7 @@ const chatHistory = {
+         { prompt, response, attachments = [], options = {} } = {}
+       ) {
+         const invocation = aibitat.handlerProps.invocation;
+-        const metrics = aibitat.provider?.getUsage?.() ?? {};
++        const metrics = aibitat.providerInstance?.getUsage?.() ?? {};
+         const citations = aibitat._pendingCitations ?? [];
+         const outputs = aibitat._pendingOutputs ?? [];
+         const clarifyingQuestions =
+diff --git a/server/utils/agents/aibitat/providers/ai-provider.js b/server/utils/agents/aibitat/providers/ai-provider.js
+index 137f4d74..2c57d86b 100644
+--- a/server/utils/agents/aibitat/providers/ai-provider.js
++++ b/server/utils/agents/aibitat/providers/ai-provider.js
+@@ -40,8 +40,20 @@ const DEFAULT_WORKSPACE_PROMPT =
+  * @property {number} total_tokens - Total tokens used
+  * @property {number} duration - Duration in seconds
+  * @property {number} outputTps - Output tokens per second
+- * @property {string} model - Model name
+- * @property {Date} timestamp - Timestamp of the completion
++ * @property {string|null} model - Model name
++ * @property {string|null} provider - Provider class name
++ * @property {Date|null} timestamp - Timestamp of the completion
++ */
++
++/**
++ * @typedef {Object} AgentProviderInstance
++ * @property {string} model - The model identifier string.
++ * @property {boolean} [verbose] - Whether to log verbose introspection messages.
++ * @property {boolean} supportsAgentStreaming - Whether the provider supports streaming tool-call execution.
++ * @property {(handlerProps: Object) => void} attachHandlerProps - Attach invocation/handler context to the provider.
++ * @property {(messages: Array, functions?: Array, eventHandler?: Function) => Promise<{functionCall: any, textResponse: string}>} stream - Stream a chat completion with tool calling.
++ * @property {(messages: Array, functions?: Array) => Promise<{functionCall: any, textResponse: string, result?: string}>} complete - Non-streaming chat completion with tool calling.
++ * @property {() => ProviderUsageMetrics} getUsage - Get usage metrics from the last completion.
+  */
+ 
+ class Provider {
+@@ -435,8 +447,21 @@ class Provider {
+    * @returns {number}
+    */
+   static contextLimit(provider = "openai", modelName) {
++    if (typeof provider !== "string") {
++      console.log(
++        `\x1b[43m\x1b[30m[.contextLimit warning] A non-string provider for .contextLimit was given — Returning fallback context limit of 8000.\x1b[0m\n\x1b[43m\x1b[30mThis is a bug and should be reported so that context windows are properly managed by AnythingLLM.\x1b[0m`
++      );
++      console.trace();
++      return 8_000;
++    }
++
+     const llm = getLLMProviderClass({ provider });
+-    if (!llm || !llm.hasOwnProperty("promptWindowLimit")) return 8_000;
++    if (!llm || !llm.hasOwnProperty("promptWindowLimit")) {
++      console.warn(
++        `\x1b[33m[.contextLimit warning]\x1b[0m Could not determine .promptWindowLimit for provider ${provider}. This could lead to incorrect context window management by AnythingLLM since we cannot determine the context window limit for this provider/model combination.`
++      );
++      return 8_000;
++    }
+     return llm.promptWindowLimit(modelName);
+   }
+ 
+-- 
+2.50.1 (Apple Git-155)
+

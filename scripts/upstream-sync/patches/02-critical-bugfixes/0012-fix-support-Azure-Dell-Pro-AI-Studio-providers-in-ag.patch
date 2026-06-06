@@ -1,0 +1,72 @@
+From 7db6d233ffc8b5fa3c67c86da79babef0cc3021b Mon Sep 17 00:00:00 2001
+From: Sanidhya Singh <91531068+sanidhyasin@users.noreply.github.com>
+Date: Tue, 2 Jun 2026 09:58:00 +0530
+Subject: [PATCH 12/23] fix: support Azure & Dell Pro AI Studio providers in
+ agent summarization fallback (#5738)
+
+fix: support Azure & Dell Pro AI Studio in agent summarization provider
+
+The web-scraping and document-summarizer agent skills fall back to
+LangChainChatModel (via summarizeContent) when scraped/loaded content
+exceeds the model context window. That switch was missing the `azure`
+and `dpais` providers even though both are valid agent chat providers
+in getProviderForConfig, so summarization crashed with
+"Unsupported provider ... for this task." for those workspaces.
+
+Add both cases using the same OpenAI-compatible base URL pattern the
+providers already use elsewhere (Azure via AzureOpenAiLLM.formatBaseUrl,
+dpais via DellProAiStudioLLM.parseBasePath).
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+---
+ .../agents/aibitat/providers/ai-provider.js   | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/server/utils/agents/aibitat/providers/ai-provider.js b/server/utils/agents/aibitat/providers/ai-provider.js
+index 2c57d86b..1276ceda 100644
+--- a/server/utils/agents/aibitat/providers/ai-provider.js
++++ b/server/utils/agents/aibitat/providers/ai-provider.js
+@@ -22,6 +22,8 @@ const {
+   parseDockerModelRunnerEndpoint,
+ } = require("../../../AiProviders/dockerModelRunner");
+ const { parseFoundryBasePath } = require("../../../AiProviders/foundry");
++const { AzureOpenAiLLM } = require("../../../AiProviders/azureOpenAi");
++const { DellProAiStudioLLM } = require("../../../AiProviders/dellProAiStudio");
+ const {
+   SystemPromptVariables,
+ } = require("../../../../models/systemPromptVariables");
+@@ -226,6 +228,16 @@ class Provider {
+         });
+       case "bedrock":
+         return createBedrockChatClient(config);
++      case "azure":
++        return new ChatOpenAI({
++          configuration: {
++            baseURL: AzureOpenAiLLM.formatBaseUrl(
++              process.env.AZURE_OPENAI_ENDPOINT
++            ),
++          },
++          apiKey: process.env.AZURE_OPENAI_KEY,
++          ...config,
++        });
+       case "fireworksai":
+         return new ChatOpenAI({
+           apiKey: process.env.FIREWORKS_AI_LLM_API_KEY,
+@@ -433,6 +445,14 @@ class Provider {
+           apiKey: process.env.LEMONADE_LLM_API_KEY || null,
+           ...config,
+         });
++      case "dpais":
++        return new ChatOpenAI({
++          configuration: {
++            baseURL: DellProAiStudioLLM.parseBasePath(),
++          },
++          apiKey: null,
++          ...config,
++        });
+       default:
+         throw new Error(
+           `Unsupported provider ${JSON.stringify(provider)} for this task.`
+-- 
+2.50.1 (Apple Git-155)
+

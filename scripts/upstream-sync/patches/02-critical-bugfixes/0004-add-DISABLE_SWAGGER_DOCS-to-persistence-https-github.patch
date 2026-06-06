@@ -1,0 +1,25 @@
+From c0e9414889f618db38e8d98969db905cabedabf7 Mon Sep 17 00:00:00 2001
+From: Timothy Carambat <rambat1010@gmail.com>
+Date: Wed, 27 May 2026 20:33:07 -0700
+Subject: [PATCH 04/23] add DISABLE_SWAGGER_DOCS to persistence
+ https://github.com/Mintplex-Labs/anything-llm/issues/5710#issuecomment-4560623700
+
+---
+ server/utils/helpers/updateENV.js | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/server/utils/helpers/updateENV.js b/server/utils/helpers/updateENV.js
+index 5fffe3f1..d55d3548 100644
+--- a/server/utils/helpers/updateENV.js
++++ b/server/utils/helpers/updateENV.js
+@@ -1334,6 +1334,7 @@ function dumpENV() {
+     "HTTPS_KEY_PATH",
+     // Other Configuration Keys
+     "DISABLE_VIEW_CHAT_HISTORY",
++    "DISABLE_SWAGGER_DOCS",
+     // Simple SSO
+     "SIMPLE_SSO_ENABLED",
+     "SIMPLE_SSO_NO_LOGIN",
+-- 
+2.50.1 (Apple Git-155)
+

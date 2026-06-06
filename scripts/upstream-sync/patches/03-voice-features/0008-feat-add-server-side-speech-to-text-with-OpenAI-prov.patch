@@ -1,0 +1,3565 @@
+From 9c6ab7cadbf45f4ba47e0ffbfa42649295817fec Mon Sep 17 00:00:00 2001
+From: Sean Hatfield <seanhatfield5@gmail.com>
+Date: Mon, 1 Jun 2026 15:47:00 -0700
+Subject: [PATCH 08/23] feat: add server-side speech-to-text with OpenAI
+ provider (#5596)
+
+* feat: add server-side speech-to-text with OpenAI provider
+
+* extract shared mic button and silence detector for STT
+
+* dynamically fetch openai stt models from api
+
+* add STT entries to .env.example
+
+* filter non-audio uploads in handleAudioUpload
+
+* update translations for STT
+
+* Deepgram provider for STT (#5612)
+
+* add deepgram provider for speech-to-text
+
+* add deepgram STT entries to .env.example
+
+* add comment to clarify successful api key usage
+
+* revert unintentional embed submodule change
+
+* resize deepgram.png to 300x300
+
+* filter lots of dupe models from picker
+
+---------
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+
+* deepgram nit
+
+* Lemonade provider for STT (#5610)
+
+* add lemonade provider for speech-to-text
+
+* add lemonade STT entries to .env.example
+
+* convert lemonade STT audio to wav via collector
+
+* clarify lemonade STT api key reuse in env examples
+
+* extract STT wav conversion into reusable helper
+
+* use async fs in collector convertAudioToWav
+
+* return result object from convertAudioToWav on empty filename
+
+* apply filtering
+
+* DiD path name
+
+---------
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+
+* Generic OpenAI provider for STT (#5609)
+
+* add generic openai provider for speech-to-text
+
+* add generic-openai STT entries to .env.example
+
+* wav conversion
+
+* remove log
+
+---------
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+
+* i18n (#5740)
+
+---------
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+---
+ collector/convertAudioToWav/index.js          |  54 +++++
+ collector/index.js                            |  26 +++
+ docker/.env.example                           |  20 ++
+ .../SpeechToText/DeepgramOptions/index.jsx    |  89 ++++++++
+ .../GenericOpenAiOptions/index.jsx            |  66 ++++++
+ .../SpeechToText/LemonadeOptions/index.jsx    | 207 ++++++++++++++++++
+ .../SpeechToText/OpenAiOptions/index.jsx      |  87 ++++++++
+ .../SpeechToText/BrowserNative/index.jsx      |  91 ++++++++
+ .../SpeechToText/MicButton/index.jsx          |  85 +++++++
+ .../SpeechToText/ServerSTT/index.jsx          | 132 +++++++++++
+ .../PromptInput/SpeechToText/index.jsx        | 159 ++------------
+ .../SpeechToText/useSilenceDetector.js        |  69 ++++++
+ frontend/src/locales/ar/common.js             |   4 +
+ frontend/src/locales/ca/common.js             |   4 +
+ frontend/src/locales/cs/common.js             |   4 +
+ frontend/src/locales/da/common.js             |   4 +
+ frontend/src/locales/de/common.js             |   5 +
+ frontend/src/locales/en/common.js             |   4 +
+ frontend/src/locales/es/common.js             |   5 +
+ frontend/src/locales/et/common.js             |   4 +
+ frontend/src/locales/fa/common.js             |   4 +
+ frontend/src/locales/fr/common.js             |   5 +
+ frontend/src/locales/he/common.js             |   3 +
+ frontend/src/locales/it/common.js             |   5 +
+ frontend/src/locales/ja/common.js             |   5 +
+ frontend/src/locales/ko/common.js             |   4 +
+ frontend/src/locales/lt/common.js             |   4 +
+ frontend/src/locales/lv/common.js             |   4 +
+ frontend/src/locales/nl/common.js             |   5 +
+ frontend/src/locales/pl/common.js             |   5 +
+ frontend/src/locales/pt_BR/common.js          |   4 +
+ frontend/src/locales/ro/common.js             |   4 +
+ frontend/src/locales/ru/common.js             |   6 +
+ frontend/src/locales/tr/common.js             |   4 +
+ frontend/src/locales/vn/common.js             |   4 +
+ frontend/src/locales/zh/common.js             |   3 +
+ frontend/src/locales/zh_TW/common.js          |   3 +
+ frontend/src/media/ttsproviders/deepgram.png  | Bin 0 -> 49751 bytes
+ frontend/src/models/system.js                 |  24 ++
+ .../GeneralSettings/AudioPreference/stt.jsx   |  38 ++++
+ server/.env.example                           |  20 ++
+ server/endpoints/system.js                    |  43 +++-
+ server/models/systemSettings.js               |  18 ++
+ server/utils/AiProviders/lemonade/index.js    |   4 +-
+ server/utils/SpeechToText/deepgram/index.js   |  79 +++++++
+ server/utils/SpeechToText/helpers.js          |  36 +++
+ server/utils/SpeechToText/index.js            |  23 ++
+ server/utils/SpeechToText/lemonade/index.js   |  54 +++++
+ server/utils/SpeechToText/openAi/index.js     |  28 +++
+ .../utils/SpeechToText/openAiGeneric/index.js |  58 +++++
+ server/utils/collectorApi/index.js            |  38 ++++
+ server/utils/files/multer.js                  |  26 +++
+ server/utils/helpers/customModels.js          | 108 +++++++++
+ server/utils/helpers/updateENV.js             |  57 +++++
+ 54 files changed, 1707 insertions(+), 138 deletions(-)
+ create mode 100644 collector/convertAudioToWav/index.js
+ create mode 100644 frontend/src/components/SpeechToText/DeepgramOptions/index.jsx
+ create mode 100644 frontend/src/components/SpeechToText/GenericOpenAiOptions/index.jsx
+ create mode 100644 frontend/src/components/SpeechToText/LemonadeOptions/index.jsx
+ create mode 100644 frontend/src/components/SpeechToText/OpenAiOptions/index.jsx
+ create mode 100644 frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/BrowserNative/index.jsx
+ create mode 100644 frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/MicButton/index.jsx
+ create mode 100644 frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/ServerSTT/index.jsx
+ create mode 100644 frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/useSilenceDetector.js
+ create mode 100644 frontend/src/media/ttsproviders/deepgram.png
+ create mode 100644 server/utils/SpeechToText/deepgram/index.js
+ create mode 100644 server/utils/SpeechToText/helpers.js
+ create mode 100644 server/utils/SpeechToText/index.js
+ create mode 100644 server/utils/SpeechToText/lemonade/index.js
+ create mode 100644 server/utils/SpeechToText/openAi/index.js
+ create mode 100644 server/utils/SpeechToText/openAiGeneric/index.js
+
+diff --git a/collector/convertAudioToWav/index.js b/collector/convertAudioToWav/index.js
+new file mode 100644
+index 00000000..8db1759f
+--- /dev/null
++++ b/collector/convertAudioToWav/index.js
+@@ -0,0 +1,54 @@
++const fs = require("fs/promises");
++const path = require("path");
++const { WATCH_DIRECTORY } = require("../utils/constants");
++const { isWithin, trashFile, normalizePath } = require("../utils/files");
++const { FFMPEGWrapper } = require("../utils/WhisperProviders/ffmpeg");
++
++/**
++ * Convert an audio file in the hotdir to a 16kHz mono WAV in the same directory.
++ * The source file is trashed; caller must read and trash the resulting wav.
++ * @param {string} filename - The filename of the source audio in the hotdir
++ * @returns {Promise<{success: boolean, reason: string, wavFilename: string|null}>}
++ */
++async function convertAudioToWav(filename) {
++  if (!filename)
++    return {
++      success: false,
++      reason: "No filename provided.",
++      wavFilename: null,
++    };
++
++  const inputPath = normalizePath(path.resolve(WATCH_DIRECTORY, filename));
++  if (!isWithin(path.resolve(WATCH_DIRECTORY), inputPath))
++    return {
++      success: false,
++      reason: "Filename is outside the hotdir.",
++      wavFilename: null,
++    };
++
++  try {
++    await fs.access(inputPath);
++  } catch {
++    return {
++      success: false,
++      reason: `${filename} does not exist in hotdir.`,
++      wavFilename: null,
++    };
++  }
++
++  const wavFilename = `${path.parse(filename).name}.wav`;
++  const outputPath = path.resolve(WATCH_DIRECTORY, wavFilename);
++
++  try {
++    const ffmpeg = new FFMPEGWrapper();
++    await ffmpeg.convertAudioToWav(inputPath, outputPath);
++    return { success: true, reason: null, wavFilename };
++  } catch (e) {
++    console.error(e);
++    return { success: false, reason: e.message, wavFilename: null };
++  } finally {
++    trashFile(inputPath);
++  }
++}
++
++module.exports = { convertAudioToWav };
+diff --git a/collector/index.js b/collector/index.js
+index cbcfbca4..b9707c76 100644
+--- a/collector/index.js
++++ b/collector/index.js
+@@ -14,6 +14,7 @@ const { processLink, getLinkText } = require("./processLink");
+ const { wipeCollectorStorage } = require("./utils/files");
+ const extensions = require("./extensions");
+ const { processRawText } = require("./processRawText");
++const { convertAudioToWav } = require("./convertAudioToWav");
+ const { verifyPayloadIntegrity } = require("./middleware/verifyIntegrity");
+ const { httpLogger } = require("./middleware/httpLogger");
+ const app = express();
+@@ -150,6 +151,31 @@ app.post(
+   }
+ );
+ 
++app.post(
++  "/util/convert-audio-to-wav",
++  [verifyPayloadIntegrity],
++  async function (request, response) {
++    const { filename } = reqBody(request);
++    try {
++      const {
++        success,
++        reason,
++        wavFilename = null,
++      } = await convertAudioToWav(filename);
++      response.status(200).json({ filename, success, reason, wavFilename });
++    } catch (e) {
++      console.error(e);
++      response.status(200).json({
++        filename,
++        success: false,
++        reason: "An audio conversion error occurred.",
++        wavFilename: null,
++      });
++    }
++    return;
++  }
++);
++
+ app.post(
+   "/process-raw-text",
+   [verifyPayloadIntegrity],
+diff --git a/docker/.env.example b/docker/.env.example
+index f5345e27..cf41589b 100644
+--- a/docker/.env.example
++++ b/docker/.env.example
+@@ -335,6 +335,26 @@ GID='1000'
+ # TTS_ELEVEN_LABS_KEY=
+ # TTS_ELEVEN_LABS_VOICE_MODEL=21m00Tcm4TlvDq8ikWAM # Rachel
+ 
++# STT_PROVIDER="native"
++
++# Server-side STT via OpenAI. Reuses OPEN_AI_KEY set above.
++# STT_PROVIDER="openai"
++# STT_OPEN_AI_MODEL=whisper-1
++
++# Server-side STT via Lemonade. Reuses LEMONADE_LLM_API_KEY set above.
++# STT_PROVIDER="lemonade"
++# STT_LEMONADE_BASE_PATH='http://127.0.0.1:8000'
++# STT_LEMONADE_MODEL_PREF=whisper-1
++
++# STT_PROVIDER="deepgram"
++# STT_DEEPGRAM_API_KEY=
++# STT_DEEPGRAM_MODEL=nova-3
++
++# STT_PROVIDER="generic-openai"
++# STT_OPEN_AI_COMPATIBLE_KEY=sk-example
++# STT_OPEN_AI_COMPATIBLE_MODEL=whisper-1
++# STT_OPEN_AI_COMPATIBLE_ENDPOINT="https://api.openai.com/v1"
++
+ # CLOUD DEPLOYMENT VARIRABLES ONLY
+ # AUTH_TOKEN="hunter2" # This is the password to your application if remote hosting.
+ # DISABLE_TELEMETRY="false"
+diff --git a/frontend/src/components/SpeechToText/DeepgramOptions/index.jsx b/frontend/src/components/SpeechToText/DeepgramOptions/index.jsx
+new file mode 100644
+index 00000000..0b705aa5
+--- /dev/null
++++ b/frontend/src/components/SpeechToText/DeepgramOptions/index.jsx
+@@ -0,0 +1,89 @@
++import { useEffect, useState } from "react";
++import System from "@/models/system";
++
++export default function DeepgramSpeechToTextOptions({ settings }) {
++  const [inputValue, setInputValue] = useState(settings?.STTDeepgramApiKey);
++  const [deepgramApiKey, setDeepgramApiKey] = useState(
++    settings?.STTDeepgramApiKey
++  );
++
++  return (
++    <div className="flex gap-x-4">
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          API Key
++        </label>
++        <input
++          type="password"
++          name="STTDeepgramApiKey"
++          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++          placeholder="Deepgram API Key"
++          defaultValue={settings?.STTDeepgramApiKey ? "*".repeat(20) : ""}
++          required={true}
++          autoComplete="off"
++          spellCheck={false}
++          onChange={(e) => setInputValue(e.target.value)}
++          onBlur={() => setDeepgramApiKey(inputValue)}
++        />
++      </div>
++      <DeepgramSttModelSelection apiKey={deepgramApiKey} settings={settings} />
++    </div>
++  );
++}
++
++function DeepgramSttModelSelection({ apiKey, settings }) {
++  const [models, setModels] = useState([]);
++  const [loading, setLoading] = useState(true);
++
++  useEffect(() => {
++    async function findModels() {
++      setLoading(true);
++      const { models } = await System.customModels(
++        "deepgram-stt",
++        typeof apiKey === "boolean" ? null : apiKey
++      );
++      setModels(models || []);
++      setLoading(false);
++    }
++    findModels();
++  }, [apiKey]);
++
++  if (loading) {
++    return (
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          Transcription Model
++        </label>
++        <select
++          name="STTDeepgramModel"
++          disabled={true}
++          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++        >
++          <option disabled={true} selected={true}>
++            -- loading available models --
++          </option>
++        </select>
++      </div>
++    );
++  }
++
++  return (
++    <div className="flex flex-col w-60">
++      <label className="text-white text-sm font-semibold block mb-3">
++        Transcription Model
++      </label>
++      <select
++        name="STTDeepgramModel"
++        required={true}
++        defaultValue={settings?.STTDeepgramModel ?? "nova-3"}
++        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++      >
++        {models.map((model) => (
++          <option key={model.id} value={model.id}>
++            {model.name}
++          </option>
++        ))}
++      </select>
++    </div>
++  );
++}
+diff --git a/frontend/src/components/SpeechToText/GenericOpenAiOptions/index.jsx b/frontend/src/components/SpeechToText/GenericOpenAiOptions/index.jsx
+new file mode 100644
+index 00000000..01ba20d4
+--- /dev/null
++++ b/frontend/src/components/SpeechToText/GenericOpenAiOptions/index.jsx
+@@ -0,0 +1,66 @@
++export default function GenericOpenAiSpeechToTextOptions({ settings }) {
++  return (
++    <div className="w-full flex flex-col gap-y-7">
++      <div className="flex gap-x-4">
++        <div className="flex flex-col w-60">
++          <label className="text-white text-sm font-semibold block mb-2">
++            Base URL
++          </label>
++          <input
++            type="url"
++            name="STTOpenAICompatibleEndpoint"
++            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++            placeholder="http://localhost:8000/v1"
++            defaultValue={settings?.STTOpenAICompatibleEndpoint}
++            required={true}
++            autoComplete="off"
++            spellCheck={false}
++          />
++          <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
++            This should be the base URL of the OpenAI compatible STT service you
++            will transcribe audio with.
++          </p>
++        </div>
++        <div className="flex flex-col w-60">
++          <label className="text-white text-sm font-semibold block mb-2">
++            API Key
++          </label>
++          <input
++            type="password"
++            name="STTOpenAICompatibleKey"
++            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++            placeholder="API Key"
++            defaultValue={
++              settings?.STTOpenAICompatibleKey ? "*".repeat(20) : ""
++            }
++            autoComplete="off"
++            spellCheck={false}
++          />
++          <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
++            Some STT services require an API key to transcribe audio - this is
++            optional if your service does not require one.
++          </p>
++        </div>
++        <div className="flex flex-col w-60">
++          <label className="text-white text-sm font-semibold block mb-2">
++            Transcription Model
++          </label>
++          <input
++            type="text"
++            name="STTOpenAICompatibleModel"
++            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++            placeholder="Your STT model identifier"
++            defaultValue={settings?.STTOpenAICompatibleModel}
++            required={true}
++            autoComplete="off"
++            spellCheck={false}
++          />
++          <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
++            The <code>model</code> parameter passed to the transcription
++            endpoint (e.g. <code>whisper-1</code>).
++          </p>
++        </div>
++      </div>
++    </div>
++  );
++}
+diff --git a/frontend/src/components/SpeechToText/LemonadeOptions/index.jsx b/frontend/src/components/SpeechToText/LemonadeOptions/index.jsx
+new file mode 100644
+index 00000000..0c578bae
+--- /dev/null
++++ b/frontend/src/components/SpeechToText/LemonadeOptions/index.jsx
+@@ -0,0 +1,207 @@
++import { useEffect, useState } from "react";
++import System from "@/models/system";
++import { LEMONADE_COMMON_URLS } from "@/utils/constants";
++import { CircleNotch, Info } from "@phosphor-icons/react";
++import { Tooltip } from "react-tooltip";
++import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
++import { cleanBasePath } from "@/components/LLMSelection/LemonadeOptions";
++
++export default function LemonadeSpeechToTextOptions({ settings }) {
++  const {
++    autoDetecting: loading,
++    basePath,
++    basePathValue,
++    handleAutoDetectClick,
++  } = useProviderEndpointAutoDiscovery({
++    provider: "lemonade",
++    initialBasePath: settings?.STTLemonadeBasePath,
++    ENDPOINTS: LEMONADE_COMMON_URLS,
++  });
++
++  return (
++    <div className="w-full flex flex-col gap-y-7">
++      <div className="flex gap-[36px] mt-1.5 flex-wrap">
++        <div className="flex flex-col w-60">
++          <div className="flex items-center gap-1 mb-3">
++            <div className="flex justify-between items-center gap-x-2">
++              <label className="text-white text-sm font-semibold">
++                Base URL
++              </label>
++              {loading ? (
++                <CircleNotch className="w-4 h-4 text-theme-text-secondary animate-spin" />
++              ) : (
++                <>
++                  {!basePathValue.value && (
++                    <button
++                      type="button"
++                      onClick={handleAutoDetectClick}
++                      className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
++                    >
++                      Auto-Detect
++                    </button>
++                  )}
++                </>
++              )}
++            </div>
++            <Tooltip
++              id="lemonade-stt-base-url"
++              place="top"
++              delayShow={300}
++              delayHide={800}
++              clickable={true}
++              className="tooltip !text-xs !opacity-100 z-99"
++              style={{
++                maxWidth: "250px",
++                whiteSpace: "normal",
++                wordWrap: "break-word",
++              }}
++            >
++              Enter the URL where your Lemonade server is running.
++            </Tooltip>
++            <div
++              className="text-theme-text-secondary cursor-pointer hover:bg-theme-bg-primary flex items-center justify-center rounded-full"
++              data-tooltip-id="lemonade-stt-base-url"
++              data-tooltip-place="top"
++              data-tooltip-delay-hide={800}
++            >
++              <Info size={18} className="text-theme-text-secondary" />
++            </div>
++          </div>
++          <input
++            type="url"
++            name="STTLemonadeBasePath"
++            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++            placeholder="http://localhost:13305"
++            value={cleanBasePath(basePathValue.value)}
++            required={true}
++            autoComplete="off"
++            spellCheck={false}
++            onChange={basePath.onChange}
++            onBlur={basePath.onBlur}
++          />
++        </div>
++        <LemonadeSTTModelSelection
++          settings={settings}
++          basePath={basePathValue.value}
++        />
++        <div className="flex flex-col w-60">
++          <div className="flex items-center gap-1 mb-3">
++            <label className="text-white text-sm font-semibold block">
++              API Key (optional)
++            </label>
++            <Tooltip
++              id="lemonade-stt-api-key"
++              place="top"
++              delayShow={300}
++              delayHide={800}
++              clickable={true}
++              className="tooltip !text-xs !opacity-100 z-99"
++              style={{
++                maxWidth: "350px",
++                whiteSpace: "normal",
++                wordWrap: "break-word",
++              }}
++            >
++              The API key for your Lemonade server. Shared with the Lemonade LLM
++              and embedder settings.
++            </Tooltip>
++            <div
++              className="text-theme-text-secondary cursor-pointer hover:bg-theme-bg-primary flex items-center justify-center rounded-full"
++              data-tooltip-id="lemonade-stt-api-key"
++              data-tooltip-place="top"
++              data-tooltip-delay-hide={800}
++            >
++              <Info size={18} className="text-theme-text-secondary" />
++            </div>
++          </div>
++          <input
++            type="password"
++            name="LemonadeLLMApiKey"
++            defaultValue={settings?.LemonadeLLMApiKey ? "*".repeat(20) : ""}
++            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++            autoComplete="off"
++          />
++        </div>
++      </div>
++    </div>
++  );
++}
++
++function LemonadeSTTModelSelection({ settings, basePath = null }) {
++  const [customModels, setCustomModels] = useState([]);
++  const [loading, setLoading] = useState(true);
++
++  useEffect(() => {
++    async function findCustomModels() {
++      if (!basePath) {
++        setCustomModels([]);
++        setLoading(false);
++        return;
++      }
++      setLoading(true);
++      try {
++        const { models } = await System.customModels(
++          "lemonade-stt",
++          null,
++          basePath
++        );
++        setCustomModels(models || []);
++      } catch (error) {
++        console.error("Failed to fetch Lemonade STT models:", error);
++        setCustomModels([]);
++      }
++      setLoading(false);
++    }
++    findCustomModels();
++  }, [basePath]);
++
++  if (loading || customModels.length === 0) {
++    return (
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          Transcription Model
++        </label>
++        <select
++          name="STTLemonadeModelPref"
++          disabled={true}
++          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++        >
++          <option disabled={true} selected={true}>
++            {basePath
++              ? "-- no transcription models found --"
++              : "Enter Lemonade URL first"}
++          </option>
++        </select>
++        <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
++          Load a Whisper or transcription model into your Lemonade server, then
++          it will appear here.
++        </p>
++      </div>
++    );
++  }
++
++  return (
++    <div className="flex flex-col w-60">
++      <label className="text-white text-sm font-semibold block mb-3">
++        Transcription Model
++      </label>
++      <select
++        name="STTLemonadeModelPref"
++        required={true}
++        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++      >
++        <optgroup label="Your loaded models">
++          {customModels.map((model) => (
++            <option
++              key={model.id}
++              value={model.id}
++              selected={settings?.STTLemonadeModelPref === model.id}
++            >
++              {model.id}
++            </option>
++          ))}
++        </optgroup>
++      </select>
++    </div>
++  );
++}
+diff --git a/frontend/src/components/SpeechToText/OpenAiOptions/index.jsx b/frontend/src/components/SpeechToText/OpenAiOptions/index.jsx
+new file mode 100644
+index 00000000..1d13f431
+--- /dev/null
++++ b/frontend/src/components/SpeechToText/OpenAiOptions/index.jsx
+@@ -0,0 +1,87 @@
++import { useEffect, useState } from "react";
++import System from "@/models/system";
++
++export default function OpenAiSpeechToTextOptions({ settings }) {
++  const [inputValue, setInputValue] = useState(settings?.OpenAiKey);
++  const [openAIKey, setOpenAIKey] = useState(settings?.OpenAiKey);
++
++  return (
++    <div className="flex gap-x-4">
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          API Key
++        </label>
++        <input
++          type="password"
++          name="OpenAiKey"
++          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++          placeholder="OpenAI API Key"
++          defaultValue={settings?.OpenAiKey ? "*".repeat(20) : ""}
++          required={true}
++          autoComplete="off"
++          spellCheck={false}
++          onChange={(e) => setInputValue(e.target.value)}
++          onBlur={() => setOpenAIKey(inputValue)}
++        />
++      </div>
++      <OpenAiSttModelSelection settings={settings} apiKey={openAIKey} />
++    </div>
++  );
++}
++
++function OpenAiSttModelSelection({ apiKey, settings }) {
++  const [models, setModels] = useState([]);
++  const [loading, setLoading] = useState(true);
++
++  useEffect(() => {
++    async function findModels() {
++      setLoading(true);
++      const { models } = await System.customModels(
++        "openai-stt",
++        typeof apiKey === "boolean" ? null : apiKey
++      );
++      setModels(models || []);
++      setLoading(false);
++    }
++    findModels();
++  }, [apiKey]);
++
++  if (loading) {
++    return (
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          Transcription Model
++        </label>
++        <select
++          name="STTOpenAIModel"
++          disabled={true}
++          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++        >
++          <option disabled={true} selected={true}>
++            -- loading available models --
++          </option>
++        </select>
++      </div>
++    );
++  }
++
++  return (
++    <div className="flex flex-col w-60">
++      <label className="text-white text-sm font-semibold block mb-3">
++        Transcription Model
++      </label>
++      <select
++        name="STTOpenAIModel"
++        required={true}
++        defaultValue={settings?.STTOpenAIModel ?? "whisper-1"}
++        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++      >
++        {models.map((model) => (
++          <option key={model.id} value={model.id}>
++            {model.name}
++          </option>
++        ))}
++      </select>
++    </div>
++  );
++}
+diff --git a/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/BrowserNative/index.jsx b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/BrowserNative/index.jsx
+new file mode 100644
+index 00000000..54c0b4f8
+--- /dev/null
++++ b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/BrowserNative/index.jsx
+@@ -0,0 +1,91 @@
++import { useEffect, useRef } from "react";
++import "regenerator-runtime"; //required polyfill for speech recognition;
++import SpeechRecognition, {
++  useSpeechRecognition,
++} from "react-speech-recognition";
++import Appearance from "@/models/appearance";
++import MicButton from "../MicButton";
++
++let timeout;
++const SILENCE_INTERVAL = 3_200; // wait in seconds of silence before closing.
++
++/**
++ * Browser-native speech-to-text using the Web Speech API.
++ * @param {Object} props - The component props
++ * @param {(textToAppend: string, autoSubmit: boolean) => void} props.sendCommand - The function to send the command
++ * @returns {React.ReactElement} The SpeechToText component
++ */
++export default function BrowserNativeSTT({ sendCommand }) {
++  const previousTranscriptRef = useRef("");
++  const {
++    transcript,
++    listening,
++    resetTranscript,
++    browserSupportsSpeechRecognition,
++    browserSupportsContinuousListening,
++    isMicrophoneAvailable,
++  } = useSpeechRecognition({
++    clearTranscriptOnListen: true,
++  });
++
++  function startSTTSession() {
++    if (!isMicrophoneAvailable) {
++      alert(
++        "AnythingLLM does not have access to microphone. Please enable for this site to use this feature."
++      );
++      return;
++    }
++
++    resetTranscript();
++    previousTranscriptRef.current = "";
++    SpeechRecognition.startListening({
++      continuous: browserSupportsContinuousListening,
++      language: window?.navigator?.language ?? "en-US",
++    });
++  }
++
++  function endSTTSession() {
++    SpeechRecognition.stopListening();
++
++    // If auto submit is enabled, send an empty string to the chat window to submit the current transcript
++    // since every chunk of text should have been streamed to the chat window by now.
++    if (Appearance.get("autoSubmitSttInput")) {
++      sendCommand({
++        text: "",
++        autoSubmit: true,
++        writeMode: "append",
++      });
++    }
++
++    resetTranscript();
++    previousTranscriptRef.current = "";
++    clearTimeout(timeout);
++  }
++
++  useEffect(() => {
++    if (transcript?.length > 0 && listening) {
++      const previousTranscript = previousTranscriptRef.current;
++      const newContent = transcript.slice(previousTranscript.length);
++
++      // Stream just the diff of the new content since transcript is an accumulating string.
++      // and not just the new content transcribed.
++      if (newContent.length > 0)
++        sendCommand({ text: newContent, writeMode: "append" });
++
++      previousTranscriptRef.current = transcript;
++      clearTimeout(timeout);
++      timeout = setTimeout(() => {
++        endSTTSession();
++      }, SILENCE_INTERVAL);
++    }
++  }, [transcript, listening]);
++
++  if (!browserSupportsSpeechRecognition) return null;
++  return (
++    <MicButton
++      listening={listening}
++      onStart={startSTTSession}
++      onStop={endSTTSession}
++    />
++  );
++}
+diff --git a/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/MicButton/index.jsx b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/MicButton/index.jsx
+new file mode 100644
+index 00000000..e1cf8279
+--- /dev/null
++++ b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/MicButton/index.jsx
+@@ -0,0 +1,85 @@
++import { useCallback, useEffect } from "react";
++import { Microphone, CircleNotch } from "@phosphor-icons/react";
++import { Tooltip } from "react-tooltip";
++import { useTranslation } from "react-i18next";
++import { PROMPT_INPUT_EVENT } from "../../../PromptInput";
++
++/**
++ * Shared microphone button for all speech-to-text providers. Owns the Ctrl+M
++ * shortcut and the PROMPT_INPUT_EVENT listener so each provider only has to
++ * implement start/stop.
++ * @param {Object} props - The component props
++ * @param {boolean} props.listening - Whether the provider is actively listening
++ * @param {boolean} [props.processing] - Whether a transcription request is in flight
++ * @param {() => void} props.onStart - Called to begin listening
++ * @param {() => void} props.onStop - Called to end listening
++ * @returns {React.ReactElement} The MicButton component
++ */
++export default function MicButton({
++  listening,
++  processing = false,
++  onStart,
++  onStop,
++}) {
++  const { t } = useTranslation();
++
++  const toggle = useCallback(() => {
++    if (processing) return;
++    if (listening) onStop();
++    else onStart();
++  }, [listening, processing, onStart, onStop]);
++
++  useEffect(() => {
++    const onKey = (event) => {
++      // CTRL + m on Mac and Windows to toggle STT listening
++      if (event.ctrlKey && event.keyCode === 77) toggle();
++    };
++    document.addEventListener("keydown", onKey);
++    return () => document.removeEventListener("keydown", onKey);
++  }, [toggle]);
++
++  useEffect(() => {
++    const onPromptUpdate = (e) => {
++      if (!e?.detail && listening) onStop();
++    };
++    window.addEventListener(PROMPT_INPUT_EVENT, onPromptUpdate);
++    return () => window.removeEventListener(PROMPT_INPUT_EVENT, onPromptUpdate);
++  }, [listening, onStop]);
++
++  const active = listening || processing;
++  return (
++    <div
++      data-tooltip-id="tooltip-microphone-btn"
++      data-tooltip-content={`${t("chat_window.microphone")} (CTRL + M)`}
++      aria-label={t("chat_window.microphone")}
++      onClick={toggle}
++      className={`group border-none relative flex justify-center items-center cursor-pointer w-8 h-8 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200 ${
++        active ? "bg-zinc-700 light:bg-slate-200" : ""
++      }`}
++    >
++      {processing ? (
++        <CircleNotch
++          size={18}
++          weight="bold"
++          className="pointer-events-none text-white light:text-slate-800 animate-spin shrink-0"
++        />
++      ) : (
++        <Microphone
++          weight="regular"
++          size={18}
++          className={`pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-600 shrink-0 ${
++            listening
++              ? "animate-pulse-glow !text-white light:!text-slate-800"
++              : ""
++          }`}
++        />
++      )}
++      <Tooltip
++        id="tooltip-microphone-btn"
++        place="top"
++        delayShow={300}
++        className="tooltip !text-xs z-99"
++      />
++    </div>
++  );
++}
+diff --git a/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/ServerSTT/index.jsx b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/ServerSTT/index.jsx
+new file mode 100644
+index 00000000..972eff77
+--- /dev/null
++++ b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/ServerSTT/index.jsx
+@@ -0,0 +1,132 @@
++import { useCallback, useRef, useState } from "react";
++import { useTranslation } from "react-i18next";
++import Appearance from "@/models/appearance";
++import System from "@/models/system";
++import showToast from "@/utils/toast";
++import MicButton from "../MicButton";
++import useSilenceDetector from "../useSilenceDetector";
++
++const SILENCE_INTERVAL = 3_200; // ms of silence before auto-stop, matches BrowserNative.
++const MIME_CANDIDATES = [
++  "audio/webm;codecs=opus",
++  "audio/webm",
++  "audio/ogg;codecs=opus",
++];
++
++/**
++ * Records mic audio with MediaRecorder and uploads it to the configured
++ * server-side STT provider. Auto-stops after SILENCE_INTERVAL of mic silence
++ * via useSilenceDetector. Honors `autoSubmitSttInput` on completion.
++ * @param {Object} props - The component props
++ * @param {(textToAppend: string, autoSubmit: boolean) => void} props.sendCommand - The function to send the command
++ * @returns {React.ReactElement} The ServerSTT component
++ */
++export default function ServerSTT({ sendCommand }) {
++  const { t } = useTranslation();
++  const [listening, setListening] = useState(false);
++  const [processing, setProcessing] = useState(false);
++  const [stream, setStream] = useState(null);
++  const recorderRef = useRef(null);
++  const chunksRef = useRef([]);
++
++  const stopListening = useCallback(() => {
++    const recorder = recorderRef.current;
++    if (recorder && recorder.state !== "inactive") recorder.stop();
++  }, []);
++
++  useSilenceDetector(listening ? stream : null, {
++    onSilence: stopListening,
++    silenceMs: SILENCE_INTERVAL,
++  });
++
++  const startListening = useCallback(async () => {
++    if (!navigator.mediaDevices?.getUserMedia) {
++      showToast(t("chat_window.stt_unsupported"), "error");
++      return;
++    }
++
++    try {
++      const audioStream = await navigator.mediaDevices.getUserMedia({
++        audio: true,
++      });
++      const mimeType = MIME_CANDIDATES.find((m) =>
++        MediaRecorder.isTypeSupported(m)
++      );
++      const recorder = mimeType
++        ? new MediaRecorder(audioStream, { mimeType })
++        : new MediaRecorder(audioStream);
++
++      chunksRef.current = [];
++      recorder.ondataavailable = (e) => {
++        if (e.data?.size > 0) chunksRef.current.push(e.data);
++      };
++      recorder.onstop = async () => {
++        audioStream.getTracks().forEach((t) => t.stop());
++        setStream(null);
++        setListening(false);
++        recorderRef.current = null;
++
++        const chunks = chunksRef.current;
++        chunksRef.current = [];
++        if (!chunks.length) return;
++        const blob = new Blob(chunks, { type: recorder.mimeType });
++        if (blob.size === 0) return;
++
++        await uploadAndDispatch(
++          blob,
++          recorder.mimeType,
++          sendCommand,
++          setProcessing,
++          t
++        );
++      };
++
++      recorderRef.current = recorder;
++      recorder.start();
++      setStream(audioStream);
++      setListening(true);
++    } catch (e) {
++      console.error("Failed to start microphone:", e);
++      showToast(t("chat_window.stt_mic_denied"), "error", { clear: true });
++    }
++  }, [sendCommand, t]);
++
++  return (
++    <MicButton
++      listening={listening}
++      processing={processing}
++      onStart={startListening}
++      onStop={stopListening}
++    />
++  );
++}
++
++async function uploadAndDispatch(
++  blob,
++  mimeType,
++  sendCommand,
++  setProcessing,
++  t
++) {
++  setProcessing(true);
++  const extension = mimeType.includes("ogg") ? "ogg" : "webm";
++  const { text, error } = await System.transcribeAudio(
++    blob,
++    `audio.${extension}`
++  );
++  setProcessing(false);
++
++  if (error) {
++    showToast(t("chat_window.stt_transcription_failed", { error }), "error", {
++      clear: true,
++    });
++    return;
++  }
++  if (!text) return;
++
++  sendCommand({
++    text,
++    autoSubmit: !!Appearance.get("autoSubmitSttInput"),
++    writeMode: "append",
++  });
++}
+diff --git a/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/index.jsx b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/index.jsx
+index 9265baa0..b1d34e78 100644
+--- a/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/index.jsx
++++ b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/index.jsx
+@@ -1,149 +1,36 @@
+-import { useEffect, useCallback, useRef } from "react";
+-import { Microphone } from "@phosphor-icons/react";
+-import { Tooltip } from "react-tooltip";
+-import "regenerator-runtime"; //required polyfill for speech recognition;
+-import SpeechRecognition, {
+-  useSpeechRecognition,
+-} from "react-speech-recognition";
+-import { PROMPT_INPUT_EVENT } from "../../PromptInput";
+-import { useTranslation } from "react-i18next";
+-import Appearance from "@/models/appearance";
+-
+-let timeout;
+-const SILENCE_INTERVAL = 3_200; // wait in seconds of silence before closing.
++import { useEffect, useState } from "react";
++import System from "@/models/system";
++import BrowserNativeSTT from "./BrowserNative";
++import ServerSTT from "./ServerSTT";
+ 
+ /**
+- * Speech-to-text input component for the chat window.
++ * Speech-to-text input dispatcher for the chat window. Loads the configured
++ * provider once and renders either the browser-native implementation or the
++ * server-side implementation that uploads audio to a remote STT service.
+  * @param {Object} props - The component props
+  * @param {(textToAppend: string, autoSubmit: boolean) => void} props.sendCommand - The function to send the command
+- * @returns {React.ReactElement} The SpeechToText component
++ * @returns {React.ReactElement|null} The SpeechToText component
+  */
+ export default function SpeechToText({ sendCommand }) {
+-  const previousTranscriptRef = useRef("");
+-  const {
+-    transcript,
+-    listening,
+-    resetTranscript,
+-    browserSupportsSpeechRecognition,
+-    browserSupportsContinuousListening,
+-    isMicrophoneAvailable,
+-  } = useSpeechRecognition({
+-    clearTranscriptOnListen: true,
+-  });
+-  const { t } = useTranslation();
+-  function startSTTSession() {
+-    if (!isMicrophoneAvailable) {
+-      alert(
+-        "AnythingLLM does not have access to microphone. Please enable for this site to use this feature."
+-      );
+-      return;
+-    }
+-
+-    resetTranscript();
+-    previousTranscriptRef.current = "";
+-    SpeechRecognition.startListening({
+-      continuous: browserSupportsContinuousListening,
+-      language: window?.navigator?.language ?? "en-US",
+-    });
+-  }
+-
+-  function endSTTSession() {
+-    SpeechRecognition.stopListening();
+-
+-    // If auto submit is enabled, send an empty string to the chat window to submit the current transcript
+-    // since every chunk of text should have been streamed to the chat window by now.
+-    if (Appearance.get("autoSubmitSttInput")) {
+-      sendCommand({
+-        text: "",
+-        autoSubmit: true,
+-        writeMode: "append",
+-      });
+-    }
+-
+-    resetTranscript();
+-    previousTranscriptRef.current = "";
+-    clearTimeout(timeout);
+-  }
+-
+-  const handleKeyPress = useCallback(
+-    (event) => {
+-      // CTRL + m on Mac and Windows to toggle STT listening
+-      if (event.ctrlKey && event.keyCode === 77) {
+-        if (listening) {
+-          endSTTSession();
+-        } else {
+-          startSTTSession();
+-        }
+-      }
+-    },
+-    [listening, endSTTSession, startSTTSession]
+-  );
+-
+-  function handlePromptUpdate(e) {
+-    if (!e?.detail && timeout) {
+-      endSTTSession();
+-      clearTimeout(timeout);
+-    }
+-  }
++  const [provider, setProvider] = useState(null);
+ 
+   useEffect(() => {
+-    document.addEventListener("keydown", handleKeyPress);
++    let cancelled = false;
++    System.keys()
++      .then((settings) => {
++        if (cancelled) return;
++        setProvider(settings?.SpeechToTextProvider || "native");
++      })
++      .catch(() => {
++        if (!cancelled) setProvider("native");
++      });
+     return () => {
+-      document.removeEventListener("keydown", handleKeyPress);
++      cancelled = true;
+     };
+-  }, [handleKeyPress]);
+-
+-  useEffect(() => {
+-    if (!!window)
+-      window.addEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
+-    return () =>
+-      window?.removeEventListener(PROMPT_INPUT_EVENT, handlePromptUpdate);
+   }, []);
+ 
+-  useEffect(() => {
+-    if (transcript?.length > 0 && listening) {
+-      const previousTranscript = previousTranscriptRef.current;
+-      const newContent = transcript.slice(previousTranscript.length);
+-
+-      // Stream just the diff of the new content since transcript is an accumulating string.
+-      // and not just the new content transcribed.
+-      if (newContent.length > 0)
+-        sendCommand({ text: newContent, writeMode: "append" });
+-
+-      previousTranscriptRef.current = transcript;
+-      clearTimeout(timeout);
+-      timeout = setTimeout(() => {
+-        endSTTSession();
+-      }, SILENCE_INTERVAL);
+-    }
+-  }, [transcript, listening]);
+-
+-  if (!browserSupportsSpeechRecognition) return null;
+-  return (
+-    <div
+-      data-tooltip-id="tooltip-microphone-btn"
+-      data-tooltip-content={`${t("chat_window.microphone")} (CTRL + M)`}
+-      aria-label={t("chat_window.microphone")}
+-      onClick={listening ? endSTTSession : startSTTSession}
+-      className={`group border-none relative flex justify-center items-center cursor-pointer w-8 h-8 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200 ${
+-        listening ? "bg-zinc-700 light:bg-slate-200" : ""
+-      }`}
+-    >
+-      <Microphone
+-        weight="regular"
+-        size={18}
+-        className={`pointer-events-none text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-600 shrink-0 ${
+-          listening
+-            ? "animate-pulse-glow !text-white light:!text-slate-800"
+-            : ""
+-        }`}
+-      />
+-      <Tooltip
+-        id="tooltip-microphone-btn"
+-        place="top"
+-        delayShow={300}
+-        className="tooltip !text-xs z-99"
+-      />
+-    </div>
+-  );
++  if (provider === null) return null;
++  if (provider === "native")
++    return <BrowserNativeSTT sendCommand={sendCommand} />;
++  return <ServerSTT sendCommand={sendCommand} />;
+ }
+diff --git a/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/useSilenceDetector.js b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/useSilenceDetector.js
+new file mode 100644
+index 00000000..9d670e2b
+--- /dev/null
++++ b/frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/useSilenceDetector.js
+@@ -0,0 +1,69 @@
++import { useEffect, useRef } from "react";
++
++const RMS_THRESHOLD = 0.02; // 0..1 — RMS volume below which we treat the mic as silent.
++const FFT_SIZE = 2048;
++
++/**
++ * Watches a MediaStream's amplitude via the Web Audio API and fires
++ * `onSilence` after `silenceMs` of mic input below the RMS threshold —
++ * but only once speech has been detected, so the timer never fires
++ * before the user has actually spoken.
++ *
++ * Pass `stream = null` to disable detection (e.g., when not listening).
++ * @param {MediaStream | null} stream - Active mic stream, or null to disable
++ * @param {Object} options
++ * @param {() => void} options.onSilence - Called when sustained silence is detected
++ * @param {number} options.silenceMs - Milliseconds of continuous silence before firing
++ */
++export default function useSilenceDetector(stream, { onSilence, silenceMs }) {
++  const onSilenceRef = useRef(onSilence);
++  useEffect(() => {
++    onSilenceRef.current = onSilence;
++  }, [onSilence]);
++
++  useEffect(() => {
++    if (!stream) return;
++    const AudioCtx = window.AudioContext || window.webkitAudioContext;
++    if (!AudioCtx) return;
++
++    const ctx = new AudioCtx();
++    const analyser = ctx.createAnalyser();
++    analyser.fftSize = FFT_SIZE;
++    analyser.smoothingTimeConstant = 0.3;
++    ctx.createMediaStreamSource(stream).connect(analyser);
++    const buffer = new Uint8Array(analyser.fftSize);
++
++    let raf = null;
++    let silenceTimer = null;
++    let hasSpoken = false;
++
++    const tick = () => {
++      analyser.getByteTimeDomainData(buffer);
++      let sumSquares = 0;
++      for (let i = 0; i < buffer.length; i++) {
++        const sample = buffer[i] / 128 - 1;
++        sumSquares += sample * sample;
++      }
++      const rms = Math.sqrt(sumSquares / buffer.length);
++
++      if (rms > RMS_THRESHOLD) {
++        hasSpoken = true;
++        if (silenceTimer) {
++          clearTimeout(silenceTimer);
++          silenceTimer = null;
++        }
++      } else if (hasSpoken && !silenceTimer) {
++        silenceTimer = setTimeout(() => onSilenceRef.current?.(), silenceMs);
++      }
++
++      raf = requestAnimationFrame(tick);
++    };
++    raf = requestAnimationFrame(tick);
++
++    return () => {
++      if (raf) cancelAnimationFrame(raf);
++      if (silenceTimer) clearTimeout(silenceTimer);
++      if (ctx.state !== "closed") ctx.close().catch(() => {});
++    };
++  }, [stream, silenceMs]);
++}
+diff --git a/frontend/src/locales/ar/common.js b/frontend/src/locales/ar/common.js
+index 2c96e00c..733d3e37 100644
+--- a/frontend/src/locales/ar/common.js
++++ b/frontend/src/locales/ar/common.js
+@@ -1243,6 +1243,10 @@ const TRANSLATIONS = {
+         cancel: "إلغاء",
+       },
+     },
++    stt_unsupported: "لا يتم دعم الوصول إلى الميكروفون في هذا المتصفح.",
++    stt_mic_denied:
++      "لم يتمكن من الوصول إلى الميكروفون. يرجى منح الإذن ومحاولة مرة أخرى.",
++    stt_transcription_failed: "فشلت عملية النسخ: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "تحرير الحساب",
+diff --git a/frontend/src/locales/ca/common.js b/frontend/src/locales/ca/common.js
+index cc241cc2..a0825062 100644
+--- a/frontend/src/locales/ca/common.js
++++ b/frontend/src/locales/ca/common.js
+@@ -1469,6 +1469,10 @@ const TRANSLATIONS = {
+         cancel: "Cancel·lar",
+       },
+     },
++    stt_unsupported: "L'accés al mic no està suportat en aquest navegador.",
++    stt_mic_denied:
++      "No s'ha pogut accedir al mic. Si us plau, concedeix l'autorització i prova de nou.",
++    stt_transcription_failed: "No s'ha pogut transmetre: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Edita el compte",
+diff --git a/frontend/src/locales/cs/common.js b/frontend/src/locales/cs/common.js
+index 6df1819b..978367da 100644
+--- a/frontend/src/locales/cs/common.js
++++ b/frontend/src/locales/cs/common.js
+@@ -1378,6 +1378,10 @@ const TRANSLATIONS = {
+         cancel: "Zrušit",
+       },
+     },
++    stt_unsupported: "Přístup k mikrofonu není v tomto prohlížeči podporován.",
++    stt_mic_denied:
++      "Není možné přístup k mikrofonu. Prosím, udělejte potřebná oprávnění a zkuste to znovu.",
++    stt_transcription_failed: "Přepis selhal: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Upravit účet",
+diff --git a/frontend/src/locales/da/common.js b/frontend/src/locales/da/common.js
+index 247d8b79..8d381657 100644
+--- a/frontend/src/locales/da/common.js
++++ b/frontend/src/locales/da/common.js
+@@ -1258,6 +1258,10 @@ const TRANSLATIONS = {
+         cancel: "Annullér",
+       },
+     },
++    stt_unsupported: "Mikrofonadgang understøttes ikke i denne browser.",
++    stt_mic_denied:
++      "Kunne ikke få adgang til mikrofonen. Vær venligst opmærksom på, at du skal give tilladelse, og prøv igen.",
++    stt_transcription_failed: "Transkribering mislykkedes: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Rediger konto",
+diff --git a/frontend/src/locales/de/common.js b/frontend/src/locales/de/common.js
+index e8b13bc1..83727b20 100644
+--- a/frontend/src/locales/de/common.js
++++ b/frontend/src/locales/de/common.js
+@@ -1375,6 +1375,11 @@ const TRANSLATIONS = {
+         cancel: "Abbrechen",
+       },
+     },
++    stt_unsupported:
++      "Die Verwendung eines Mikrofons ist in diesem Browser nicht möglich.",
++    stt_mic_denied:
++      "Es konnte nicht auf das Mikrofon zugegriffen werden. Bitte erteilen Sie die erforderlichen Berechtigungen und versuchen Sie es erneut.",
++    stt_transcription_failed: "Transkription fehlgeschlagen: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Account bearbeiten",
+diff --git a/frontend/src/locales/en/common.js b/frontend/src/locales/en/common.js
+index d03a63ea..86a1721b 100644
+--- a/frontend/src/locales/en/common.js
++++ b/frontend/src/locales/en/common.js
+@@ -1477,6 +1477,10 @@ const TRANSLATIONS = {
+     attach_file: "Attach a file to this chat",
+     text_size: "Change text size.",
+     microphone: "Speak your prompt.",
++    stt_unsupported: "Microphone access is not supported in this browser.",
++    stt_mic_denied:
++      "Could not access the microphone. Please grant permission and try again.",
++    stt_transcription_failed: "Transcription failed: {{error}}",
+     send: "Send prompt message to workspace",
+     tts_speak_message: "TTS Speak message",
+     copy: "Copy",
+diff --git a/frontend/src/locales/es/common.js b/frontend/src/locales/es/common.js
+index 1662f63d..b4be5c28 100644
+--- a/frontend/src/locales/es/common.js
++++ b/frontend/src/locales/es/common.js
+@@ -1390,6 +1390,11 @@ const TRANSLATIONS = {
+         cancel: "Cancelar",
+       },
+     },
++    stt_unsupported:
++      "El acceso al micrófono no está soportado en este navegador.",
++    stt_mic_denied:
++      "No se pudo acceder al micrófono. Por favor, conceda los permisos y vuelva a intentarlo.",
++    stt_transcription_failed: "No se pudo realizar la transcripción: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Editar cuenta",
+diff --git a/frontend/src/locales/et/common.js b/frontend/src/locales/et/common.js
+index e203aab2..44cd076f 100644
+--- a/frontend/src/locales/et/common.js
++++ b/frontend/src/locales/et/common.js
+@@ -1316,6 +1316,10 @@ const TRANSLATIONS = {
+         cancel: "Katkuda\nTühista",
+       },
+     },
++    stt_unsupported: "Mikrofoni kasutamine selles brauseris ei toeta.",
++    stt_mic_denied:
++      "Ei suudet mikrofoni kasutada. Palun andke lubadus ja proovige uuesti.",
++    stt_transcription_failed: "Transkribeerimine ebaõnnestunud: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Muuda kontot",
+diff --git a/frontend/src/locales/fa/common.js b/frontend/src/locales/fa/common.js
+index 62103963..c9034abb 100644
+--- a/frontend/src/locales/fa/common.js
++++ b/frontend/src/locales/fa/common.js
+@@ -1250,6 +1250,10 @@ const TRANSLATIONS = {
+         cancel: "لغو کردن",
+       },
+     },
++    stt_unsupported: "دسترسی به میکروفون در این مرورگر پشتیبانی نمی‌شود.",
++    stt_mic_denied:
++      "امکان دسترسی به میکروفون وجود نداشت. لطفاً اجازه دسترسی را بدهید و دوباره امتحان کنید.",
++    stt_transcription_failed: "ترجمه ناموفق: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "ویرایش حساب",
+diff --git a/frontend/src/locales/fr/common.js b/frontend/src/locales/fr/common.js
+index daa6546a..23e60e6f 100644
+--- a/frontend/src/locales/fr/common.js
++++ b/frontend/src/locales/fr/common.js
+@@ -1283,6 +1283,11 @@ const TRANSLATIONS = {
+         cancel: "Annuler",
+       },
+     },
++    stt_unsupported:
++      "L'accès au microphone n'est pas pris en charge dans ce navigateur.",
++    stt_mic_denied:
++      "Impossible d'accéder au microphone. Veuillez accorder les autorisations et réessayer.",
++    stt_transcription_failed: "La transcription a échoué : {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Modifier le compte",
+diff --git a/frontend/src/locales/he/common.js b/frontend/src/locales/he/common.js
+index cba5f577..86279155 100644
+--- a/frontend/src/locales/he/common.js
++++ b/frontend/src/locales/he/common.js
+@@ -1305,6 +1305,9 @@ const TRANSLATIONS = {
+         cancel: "בטל",
+       },
+     },
++    stt_unsupported: "אין תמיכה בגישה למイクרופון בדפדפן זה.",
++    stt_mic_denied: "לא ניתן לגשת למכשיר המיקרופון. אנא אפשרו גישה ונסו שוב.",
++    stt_transcription_failed: "לא הצליח הטרנסקריפציה: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "ערוך חשבון",
+diff --git a/frontend/src/locales/it/common.js b/frontend/src/locales/it/common.js
+index 1aa59ea4..1f8324d4 100644
+--- a/frontend/src/locales/it/common.js
++++ b/frontend/src/locales/it/common.js
+@@ -1288,6 +1288,11 @@ const TRANSLATIONS = {
+         cancel: "Annulla",
+       },
+     },
++    stt_unsupported:
++      "L'accesso al microfono non è supportato in questo browser.",
++    stt_mic_denied:
++      "Impossibile accedere al microfono. Si prega di concedere i permessi e riprovare.",
++    stt_transcription_failed: "Errore di trascrizione: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Modifica account",
+diff --git a/frontend/src/locales/ja/common.js b/frontend/src/locales/ja/common.js
+index 98c54dff..4ac4cb55 100644
+--- a/frontend/src/locales/ja/common.js
++++ b/frontend/src/locales/ja/common.js
+@@ -1239,6 +1239,11 @@ const TRANSLATIONS = {
+         cancel: "キャンセル",
+       },
+     },
++    stt_unsupported:
++      "このブラウザではマイクへのアクセスはサポートされていません。",
++    stt_mic_denied:
++      "マイクへのアクセスができません。「許可を付与して、再度お試しください。」",
++    stt_transcription_failed: "文字起こしに失敗しました: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "アカウントを編集",
+diff --git a/frontend/src/locales/ko/common.js b/frontend/src/locales/ko/common.js
+index 2d596ee0..3a40023d 100644
+--- a/frontend/src/locales/ko/common.js
++++ b/frontend/src/locales/ko/common.js
+@@ -1318,6 +1318,10 @@ const TRANSLATIONS = {
+         cancel: "취소",
+       },
+     },
++    stt_unsupported: "이 브라우저에서는 마이크 접근이 지원되지 않습니다.",
++    stt_mic_denied:
++      "마이크에 접근할 수 없습니다. 권한을 부여하고 다시 시도해 주십시오.",
++    stt_transcription_failed: "전사 오류: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "계정 정보 수정",
+diff --git a/frontend/src/locales/lt/common.js b/frontend/src/locales/lt/common.js
+index be10646f..4215b3d9 100644
+--- a/frontend/src/locales/lt/common.js
++++ b/frontend/src/locales/lt/common.js
+@@ -1382,6 +1382,10 @@ const TRANSLATIONS = {
+         cancel: "Atšaukti",
+       },
+     },
++    stt_unsupported: "Mikrofonas negali būti naudojamas šioje naršyklėje.",
++    stt_mic_denied:
++      "Nepavyko prisijungti prie mikrofoną. Prašome suteikti leidimą ir pabandyti dar kartą.",
++    stt_transcription_failed: "Transkripcija nepavyko: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Redaguoti paskyrą",
+diff --git a/frontend/src/locales/lv/common.js b/frontend/src/locales/lv/common.js
+index 51f263b8..89c0b0c7 100644
+--- a/frontend/src/locales/lv/common.js
++++ b/frontend/src/locales/lv/common.js
+@@ -1361,6 +1361,10 @@ const TRANSLATIONS = {
+         cancel: "Atcelt",
+       },
+     },
++    stt_unsupported: "Mikrofona lietošana šajā pārlūkprogrammā nav atbalstīta.",
++    stt_mic_denied:
++      "Neizdevās piekļūt mikrofonam. Lūdzu, atļaujiet piekļaušanu un mēģiniet vēlreiz.",
++    stt_transcription_failed: "Transkripcija neizdevās: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Rediģēt kontu",
+diff --git a/frontend/src/locales/nl/common.js b/frontend/src/locales/nl/common.js
+index acfe4e39..1ea9d20e 100644
+--- a/frontend/src/locales/nl/common.js
++++ b/frontend/src/locales/nl/common.js
+@@ -1267,6 +1267,11 @@ const TRANSLATIONS = {
+         cancel: "Annuleren",
+       },
+     },
++    stt_unsupported:
++      "Toegang tot een microfoon wordt in deze browser niet ondersteund.",
++    stt_mic_denied:
++      "Het was niet mogelijk om de microfoon te gebruiken. Gelieve toestemming te verlenen en opnieuw te proberen.",
++    stt_transcription_failed: "Transcriptie mislukt: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Account bewerken",
+diff --git a/frontend/src/locales/pl/common.js b/frontend/src/locales/pl/common.js
+index e0af12ab..3b129162 100644
+--- a/frontend/src/locales/pl/common.js
++++ b/frontend/src/locales/pl/common.js
+@@ -1368,6 +1368,11 @@ const TRANSLATIONS = {
+         cancel: "Anuluj",
+       },
+     },
++    stt_unsupported:
++      "Dostęp do mikrofonu nie jest obsługiwany w tym przeglądarce.",
++    stt_mic_denied:
++      "Nie udało się uzyskać dostępu do mikrofonu. Prosimy o przyznanie uprawnień i ponowne próby.",
++    stt_transcription_failed: "Błąd transkrypcji: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Edytuj konto",
+diff --git a/frontend/src/locales/pt_BR/common.js b/frontend/src/locales/pt_BR/common.js
+index 17e4782d..4d1b023c 100644
+--- a/frontend/src/locales/pt_BR/common.js
++++ b/frontend/src/locales/pt_BR/common.js
+@@ -1350,6 +1350,10 @@ const TRANSLATIONS = {
+         cancel: "Cancelar",
+       },
+     },
++    stt_unsupported: "O acesso ao microfone não é suportado neste navegador.",
++    stt_mic_denied:
++      "Não foi possível acessar o microfone. Por favor, conceda permissão e tente novamente.",
++    stt_transcription_failed: "Falha na transcrição: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Editar conta",
+diff --git a/frontend/src/locales/ro/common.js b/frontend/src/locales/ro/common.js
+index c09c9f26..2c5d9f5d 100644
+--- a/frontend/src/locales/ro/common.js
++++ b/frontend/src/locales/ro/common.js
+@@ -636,6 +636,10 @@ const TRANSLATIONS = {
+         cancel: "Anula",
+       },
+     },
++    stt_unsupported: "Accesul la microfon nu este suportat în acest browser.",
++    stt_mic_denied:
++      "Nu am putut accesa microfonul. Vă rugăm să acordați permisiunea și să încercați din nou.",
++    stt_transcription_failed: "Transcriere eșuată: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Editează contul",
+diff --git a/frontend/src/locales/ru/common.js b/frontend/src/locales/ru/common.js
+index 636ec9c8..89200ee6 100644
+--- a/frontend/src/locales/ru/common.js
++++ b/frontend/src/locales/ru/common.js
+@@ -1276,6 +1276,12 @@ const TRANSLATIONS = {
+         cancel: "Отменить",
+       },
+     },
++    stt_unsupported:
++      "Функция доступа к микрофону не поддерживается в этом браузере.",
++    stt_mic_denied:
++      "Не удалось получить доступ к микрофону. Пожалуйста, предоставьте разрешение и попробуйте снова.",
++    stt_transcription_failed:
++      "Не удалось выполнить транскрибирование: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Редактировать учётную запись",
+diff --git a/frontend/src/locales/tr/common.js b/frontend/src/locales/tr/common.js
+index b082c9fc..81e6a400 100644
+--- a/frontend/src/locales/tr/common.js
++++ b/frontend/src/locales/tr/common.js
+@@ -1271,6 +1271,10 @@ const TRANSLATIONS = {
+         cancel: "İptal et",
+       },
+     },
++    stt_unsupported: "Bu tarayıcıda mikrofon erişimi desteklenmemektedir.",
++    stt_mic_denied:
++      "Mikrofonu kullanılamadı. Lütfen izin verin ve tekrar deneyin.",
++    stt_transcription_failed: "Transkripsiyon başarısız: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Hesabı Düzenle",
+diff --git a/frontend/src/locales/vn/common.js b/frontend/src/locales/vn/common.js
+index df05dfa1..2f9a93b5 100644
+--- a/frontend/src/locales/vn/common.js
++++ b/frontend/src/locales/vn/common.js
+@@ -1254,6 +1254,10 @@ const TRANSLATIONS = {
+         cancel: "Hủy",
+       },
+     },
++    stt_unsupported:
++      "Chức năng truy cập micro không được hỗ trợ trong trình duyệt này.",
++    stt_mic_denied: "Không thể truy cập micro. Vui lòng cấp quyền và thử lại.",
++    stt_transcription_failed: "Không thể chuyển đổi: {{error}}",
+   },
+   profile_settings: {
+     edit_account: "Chỉnh sửa Tài khoản",
+diff --git a/frontend/src/locales/zh/common.js b/frontend/src/locales/zh/common.js
+index fa6a6b6a..93d83754 100644
+--- a/frontend/src/locales/zh/common.js
++++ b/frontend/src/locales/zh/common.js
+@@ -1263,6 +1263,9 @@ const TRANSLATIONS = {
+         cancel: "取消",
+       },
+     },
++    stt_unsupported: "此浏览器不支持麦克风访问。",
++    stt_mic_denied: "无法访问麦克风。请您先授予权限，然后重新尝试。",
++    stt_transcription_failed: "转录失败：{{error}}",
+   },
+   profile_settings: {
+     edit_account: "编辑帐户",
+diff --git a/frontend/src/locales/zh_TW/common.js b/frontend/src/locales/zh_TW/common.js
+index 2932cbad..d088e2ff 100644
+--- a/frontend/src/locales/zh_TW/common.js
++++ b/frontend/src/locales/zh_TW/common.js
+@@ -1175,6 +1175,9 @@ const TRANSLATIONS = {
+         cancel: "取消",
+       },
+     },
++    stt_unsupported: "本瀏覽器不支援麥克風功能。",
++    stt_mic_denied: "無法存取麥克風。請先授權，然後再嘗試。",
++    stt_transcription_failed: "轉錄失敗：{{error}}",
+   },
+   profile_settings: {
+     edit_account: "編輯帳戶",
+diff --git a/frontend/src/media/ttsproviders/deepgram.png b/frontend/src/media/ttsproviders/deepgram.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..a75da998cfd4beec10b995e8acd84723319bf167
+GIT binary patch
+literal 49751
+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
+Ni3`gJRSM_@{10XmLHPgx
+
+literal 0
+HcmV?d00001
+
+diff --git a/frontend/src/models/system.js b/frontend/src/models/system.js
+index cc682df0..7d7c99f0 100644
+--- a/frontend/src/models/system.js
++++ b/frontend/src/models/system.js
+@@ -864,6 +864,30 @@ const System = {
+       .catch(() => false);
+   },
+ 
++  /**
++   * Send a recorded audio blob to the configured server-side STT provider
++   * for transcription. Returns the transcribed text or an error string.
++   * @param {Blob} audioBlob - Recorded audio (e.g., audio/webm) to transcribe.
++   * @param {string} [filename] - Filename hint for the upload.
++   * @returns {Promise<{text: string|null, error: string|null}>}
++   */
++  transcribeAudio: async function (audioBlob, filename = "audio.webm") {
++    const formData = new FormData();
++    formData.append("audio", audioBlob, filename);
++    return fetch(`${API_BASE}/system/transcribe-audio`, {
++      method: "POST",
++      headers: baseHeaders(),
++      body: formData,
++    })
++      .then(async (res) => {
++        const json = await res.json();
++        if (!res.ok)
++          throw new Error(json?.error || "Failed to transcribe audio.");
++        return { text: json?.text ?? "", error: null };
++      })
++      .catch((e) => ({ text: null, error: e.message }));
++  },
++
+   experimentalFeatures: {
+     liveSync: LiveDocumentSync,
+     agentPlugins: AgentPlugins,
+diff --git a/frontend/src/pages/GeneralSettings/AudioPreference/stt.jsx b/frontend/src/pages/GeneralSettings/AudioPreference/stt.jsx
+index b812dc89..5ee9fecd 100644
+--- a/frontend/src/pages/GeneralSettings/AudioPreference/stt.jsx
++++ b/frontend/src/pages/GeneralSettings/AudioPreference/stt.jsx
+@@ -4,8 +4,17 @@ import showToast from "@/utils/toast";
+ import LLMItem from "@/components/LLMSelection/LLMItem";
+ import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+ import CTAButton from "@/components/lib/CTAButton";
++import OpenAiLogo from "@/media/llmprovider/openai.png";
++import DeepgramLogo from "@/media/ttsproviders/deepgram.png";
+ import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
++import LemonadeLogo from "@/media/llmprovider/lemonade.png";
++import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
++
+ import BrowserNative from "@/components/SpeechToText/BrowserNative";
++import OpenAiSTTOptions from "@/components/SpeechToText/OpenAiOptions";
++import DeepgramSTTOptions from "@/components/SpeechToText/DeepgramOptions";
++import LemonadeSTTOptions from "@/components/SpeechToText/LemonadeOptions";
++import GenericOpenAiSTTOptions from "@/components/SpeechToText/GenericOpenAiOptions";
+ 
+ const PROVIDERS = [
+   {
+@@ -15,6 +24,35 @@ const PROVIDERS = [
+     options: (settings) => <BrowserNative settings={settings} />,
+     description: "Uses your browser's built in STT service if supported.",
+   },
++  {
++    name: "OpenAI",
++    value: "openai",
++    logo: OpenAiLogo,
++    options: (settings) => <OpenAiSTTOptions settings={settings} />,
++    description: "Use OpenAI's Whisper API to transcribe speech to text.",
++  },
++  {
++    name: "Lemonade",
++    value: "lemonade",
++    logo: LemonadeLogo,
++    options: (settings) => <LemonadeSTTOptions settings={settings} />,
++    description: "Transcribe speech via your local Lemonade server.",
++  },
++  {
++    name: "Deepgram",
++    value: "deepgram",
++    logo: DeepgramLogo,
++    options: (settings) => <DeepgramSTTOptions settings={settings} />,
++    description: "Transcribe speech using Deepgram's hosted Nova models.",
++  },
++  {
++    name: "Generic OpenAI",
++    value: "generic-openai",
++    logo: GenericOpenAiLogo,
++    options: (settings) => <GenericOpenAiSTTOptions settings={settings} />,
++    description:
++      "Connect to any OpenAI-compatible STT service via a custom configuration.",
++  },
+ ];
+ 
+ export default function SpeechToTextProvider({ settings }) {
+diff --git a/server/.env.example b/server/.env.example
+index 5b514f32..65c64fe7 100644
+--- a/server/.env.example
++++ b/server/.env.example
+@@ -343,6 +343,26 @@ TTS_PROVIDER="native"
+ # TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL=nova
+ # TTS_OPEN_AI_COMPATIBLE_ENDPOINT="https://api.openai.com/v1"
+ 
++STT_PROVIDER="native"
++
++# Server-side STT via OpenAI. Reuses OPEN_AI_KEY set above.
++# STT_PROVIDER="openai"
++# STT_OPEN_AI_MODEL=whisper-1
++
++# Server-side STT via Lemonade. Reuses LEMONADE_LLM_API_KEY set above.
++# STT_PROVIDER="lemonade"
++# STT_LEMONADE_BASE_PATH='http://127.0.0.1:8000'
++# STT_LEMONADE_MODEL_PREF=whisper-1
++
++# STT_PROVIDER="deepgram"
++# STT_DEEPGRAM_API_KEY=
++# STT_DEEPGRAM_MODEL=nova-3
++
++# STT_PROVIDER="generic-openai"
++# STT_OPEN_AI_COMPATIBLE_KEY=sk-example
++# STT_OPEN_AI_COMPATIBLE_MODEL=whisper-1
++# STT_OPEN_AI_COMPATIBLE_ENDPOINT="https://api.openai.com/v1"
++
+ # CLOUD DEPLOYMENT VARIRABLES ONLY
+ # AUTH_TOKEN="hunter2" # This is the password to your application if remote hosting.
+ # STORAGE_DIR= # absolute filesystem path with no trailing slash
+diff --git a/server/endpoints/system.js b/server/endpoints/system.js
+index e04d1152..cdcdef31 100644
+--- a/server/endpoints/system.js
++++ b/server/endpoints/system.js
+@@ -12,7 +12,11 @@ const {
+   multiUserMode,
+   queryParams,
+ } = require("../utils/http");
+-const { handleAssetUpload, handlePfpUpload } = require("../utils/files/multer");
++const {
++  handleAssetUpload,
++  handlePfpUpload,
++  handleAudioUpload,
++} = require("../utils/files/multer");
+ const { v4 } = require("uuid");
+ const { SystemSettings } = require("../models/systemSettings");
+ const { User } = require("../models/user");
+@@ -1465,6 +1469,43 @@ function systemEndpoints(app) {
+     }
+   );
+ 
++  app.post(
++    "/system/transcribe-audio",
++    [validatedRequest, flexUserRoleValid([ROLES.all]), handleAudioUpload],
++    async (request, response) => {
++      try {
++        if (!request.file?.buffer) {
++          return response
++            .status(400)
++            .json({ success: false, error: "No audio file provided." });
++        }
++
++        const provider = process.env.STT_PROVIDER || "native";
++        if (provider === "native") {
++          return response.status(400).json({
++            success: false,
++            error:
++              "Server-side transcription is disabled. Set STT_PROVIDER to a supported provider.",
++          });
++        }
++
++        const { getSTTProvider } = require("../utils/SpeechToText");
++        const stt = getSTTProvider();
++        const text = await stt.transcribe(
++          request.file.buffer,
++          request.file.originalname || "audio.webm"
++        );
++        return response.status(200).json({ success: true, text });
++      } catch (error) {
++        console.error("STT transcription error:", error);
++        return response.status(500).json({
++          success: false,
++          error: error.message || "Transcription failed",
++        });
++      }
++    }
++  );
++
+   app.post(
+     "/system/validate-sql-connection",
+     [validatedRequest, flexUserRoleValid([ROLES.admin])],
+diff --git a/server/models/systemSettings.js b/server/models/systemSettings.js
+index 976dc749..89565da1 100644
+--- a/server/models/systemSettings.js
++++ b/server/models/systemSettings.js
+@@ -536,6 +536,24 @@ const SystemSettings = {
+         process.env.TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL,
+       TTSOpenAICompatibleEndpoint: process.env.TTS_OPEN_AI_COMPATIBLE_ENDPOINT,
+ 
++      // STT Selection
++      SpeechToTextProvider: process.env.STT_PROVIDER || "native",
++      // STT OpenAI
++      STTOpenAIModel: process.env.STT_OPEN_AI_MODEL,
++
++      // STT Lemonade
++      STTLemonadeBasePath: process.env.STT_LEMONADE_BASE_PATH,
++      STTLemonadeModelPref: process.env.STT_LEMONADE_MODEL_PREF,
++
++      // STT Deepgram
++      STTDeepgramApiKey: !!process.env.STT_DEEPGRAM_API_KEY,
++      STTDeepgramModel: process.env.STT_DEEPGRAM_MODEL,
++
++      // STT Generic OpenAI
++      STTOpenAICompatibleKey: !!process.env.STT_OPEN_AI_COMPATIBLE_KEY,
++      STTOpenAICompatibleModel: process.env.STT_OPEN_AI_COMPATIBLE_MODEL,
++      STTOpenAICompatibleEndpoint: process.env.STT_OPEN_AI_COMPATIBLE_ENDPOINT,
++
+       // --------------------------------------------------------
+       // Agent Settings & Configs
+       // --------------------------------------------------------
+diff --git a/server/utils/AiProviders/lemonade/index.js b/server/utils/AiProviders/lemonade/index.js
+index 590f0633..9dee7255 100644
+--- a/server/utils/AiProviders/lemonade/index.js
++++ b/server/utils/AiProviders/lemonade/index.js
+@@ -393,7 +393,7 @@ function parseLemonadeServerEndpoint(basePath = null, to = "openai") {
+  * This function will fetch the remote models from the Lemonade server as well
+  * as the local models installed on the system.
+  * @param {string} basePath - The base path of the Lemonade server endpoint.
+- * @param {'chat' | 'embedding' | 'reranking'} task - The task to fetch the models for.
++ * @param {'chat' | 'embedding' | 'reranking' | 'transcription' | 'all'} task - The task to fetch the models for.
+  */
+ async function getAllLemonadeModels(basePath = null, task = "chat") {
+   const availableModels = {};
+@@ -401,6 +401,8 @@ async function getAllLemonadeModels(basePath = null, task = "chat") {
+   function isValidForTask(model) {
+     if (task === "reranking") return model.labels?.includes("reranking");
+     if (task === "embedding") return model.labels?.includes("embeddings");
++    if (task === "transcription")
++      return model.labels?.includes("transcription");
+     if (task === "chat")
+       return !["embeddings", "reranking"].some((label) =>
+         model.labels?.includes(label)
+diff --git a/server/utils/SpeechToText/deepgram/index.js b/server/utils/SpeechToText/deepgram/index.js
+new file mode 100644
+index 00000000..ac9df6b7
+--- /dev/null
++++ b/server/utils/SpeechToText/deepgram/index.js
+@@ -0,0 +1,79 @@
++class DeepgramSTT {
++  constructor() {
++    if (!process.env.STT_DEEPGRAM_API_KEY)
++      throw new Error("No Deepgram API key was set.");
++
++    this.apiKey = process.env.STT_DEEPGRAM_API_KEY;
++    this.model = process.env.STT_DEEPGRAM_MODEL ?? "nova-3";
++    this.endpoint = "https://api.deepgram.com/v1/listen";
++    this.#log(`Service ready with model: ${this.model}`);
++  }
++
++  #log(text, ...args) {
++    console.log(`\x1b[32m[DeepgramSTT]\x1b[0m ${text}`, ...args);
++  }
++
++  // Map common audio file extensions to a Content-Type that Deepgram accepts.
++  // Deepgram auto-detects most containers from the bytes but a hint is best.
++  #contentTypeFromFilename(filename) {
++    const ext = filename.split(".").pop()?.toLowerCase();
++    switch (ext) {
++      case "wav":
++        return "audio/wav";
++      case "mp3":
++        return "audio/mpeg";
++      case "ogg":
++      case "oga":
++        return "audio/ogg";
++      case "m4a":
++      case "mp4":
++        return "audio/mp4";
++      case "flac":
++        return "audio/flac";
++      case "webm":
++      default:
++        return "audio/webm";
++    }
++  }
++
++  /**
++   * Transcribes an audio buffer to text using the Deepgram pre-recorded REST API.
++   * @param {Buffer} audioBuffer - The audio buffer to be transcribed.
++   * @param {string} filename - Original filename, used to hint the audio container/codec to Deepgram.
++   * @returns {Promise<string>} The transcribed text.
++   */
++  async transcribe(audioBuffer, filename = "audio.webm") {
++    const url = new URL(this.endpoint);
++    url.searchParams.set("model", this.model);
++    url.searchParams.set("smart_format", "true");
++
++    return await fetch(url.toString(), {
++      method: "POST",
++      headers: {
++        Authorization: `Token ${this.apiKey}`,
++        "Content-Type": this.#contentTypeFromFilename(filename),
++      },
++      body: audioBuffer,
++    })
++      .then(async (response) => {
++        if (!response.ok) {
++          const errBody = await response.text().catch(() => "");
++          throw new Error(
++            `Deepgram transcription failed (${response.status}) - ${errBody}`
++          );
++        }
++        return response.json();
++      })
++      .then((result) => {
++        return (
++          result?.results?.channels?.[0]?.alternatives?.[0]?.transcript ?? ""
++        );
++      })
++      .catch((error) => {
++        this.#log(`Deepgram transcription failed - ${error.message}`);
++        throw new Error(`Deepgram transcription failed - ${error.message}`);
++      });
++  }
++}
++
++module.exports = { DeepgramSTT };
+diff --git a/server/utils/SpeechToText/helpers.js b/server/utils/SpeechToText/helpers.js
+new file mode 100644
+index 00000000..e8baa443
+--- /dev/null
++++ b/server/utils/SpeechToText/helpers.js
+@@ -0,0 +1,36 @@
++const fs = require("fs/promises");
++const path = require("path");
++const { v4 } = require("uuid");
++const { CollectorApi } = require("../collectorApi");
++const { hotdirPath, isWithin } = require("../files");
++
++/**
++ * Convert an audio buffer to a 16kHz mono WAV buffer via the collector's
++ * FFMPEG wrapper. Use this when the downstream STT provider (e.g. Lemonade)
++ * runs a whisper.cpp backend that rejects webm/opus input.
++ * @param {Buffer} audioBuffer - Source audio buffer.
++ * @param {string} extension - Source file extension including the leading dot (e.g. ".webm").
++ * @returns {Promise<Buffer>} The converted WAV buffer.
++ */
++async function convertAudioBufferToWav(audioBuffer, extension) {
++  let wavPath = null;
++  const sourceFilename = `stt-${v4()}${extension}`;
++  const sourcePath = path.resolve(hotdirPath, sourceFilename);
++  if (!isWithin(hotdirPath, sourcePath))
++    throw new Error("Source path is outside the hotdir.");
++
++  try {
++    await fs.writeFile(sourcePath, audioBuffer);
++    const result = await new CollectorApi().convertAudioToWav(sourceFilename);
++    if (!result?.success || !result?.wavFilename)
++      throw new Error(result?.reason || "Audio conversion failed.");
++
++    wavPath = path.resolve(hotdirPath, result.wavFilename);
++    return await fs.readFile(wavPath);
++  } finally {
++    await fs.rm(sourcePath, { force: true }).catch(() => {});
++    if (wavPath) await fs.rm(wavPath, { force: true }).catch(() => {});
++  }
++}
++
++module.exports = { convertAudioBufferToWav };
+diff --git a/server/utils/SpeechToText/index.js b/server/utils/SpeechToText/index.js
+new file mode 100644
+index 00000000..272aeb71
+--- /dev/null
++++ b/server/utils/SpeechToText/index.js
+@@ -0,0 +1,23 @@
++function getSTTProvider() {
++  const provider = process.env.STT_PROVIDER || "native";
++  switch (provider) {
++    case "openai":
++      const { OpenAiSTT } = require("./openAi");
++      return new OpenAiSTT();
++    case "lemonade":
++      const { LemonadeSTT } = require("./lemonade");
++      return new LemonadeSTT();
++    case "deepgram":
++      const { DeepgramSTT } = require("./deepgram");
++      return new DeepgramSTT();
++    case "generic-openai":
++      const { GenericOpenAiSTT } = require("./openAiGeneric");
++      return new GenericOpenAiSTT();
++    default:
++      throw new Error(
++        `STT_PROVIDER "${provider}" is not a server-side provider.`
++      );
++  }
++}
++
++module.exports = { getSTTProvider };
+diff --git a/server/utils/SpeechToText/lemonade/index.js b/server/utils/SpeechToText/lemonade/index.js
+new file mode 100644
+index 00000000..8b5d38ec
+--- /dev/null
++++ b/server/utils/SpeechToText/lemonade/index.js
+@@ -0,0 +1,54 @@
++const path = require("path");
++const { parseLemonadeServerEndpoint } = require("../../AiProviders/lemonade");
++const { convertAudioBufferToWav } = require("../helpers");
++
++class LemonadeSTT {
++  constructor() {
++    if (!process.env.STT_LEMONADE_BASE_PATH)
++      throw new Error("No Lemonade base path was set.");
++
++    const { OpenAI: OpenAIApi } = require("openai");
++    this.openai = new OpenAIApi({
++      baseURL: parseLemonadeServerEndpoint(
++        process.env.STT_LEMONADE_BASE_PATH,
++        "openai"
++      ),
++      apiKey: process.env.LEMONADE_LLM_API_KEY || null,
++    });
++    this.model = process.env.STT_LEMONADE_MODEL_PREF ?? "whisper-1";
++    this.#log(
++      `Service (${process.env.STT_LEMONADE_BASE_PATH}) with model: ${this.model}`
++    );
++  }
++
++  #log(text, ...args) {
++    console.log(`\x1b[32m[LemonadeSTT]\x1b[0m ${text}`, ...args);
++  }
++
++  /**
++   * Transcribes an audio buffer to text using the Lemonade STT service.
++   * Whisper backends behind Lemonade reject webm/opus, so any non-wav input
++   * is converted to 16kHz mono WAV via the collector before being forwarded.
++   * @param {Buffer} audioBuffer - The audio buffer to be transcribed.
++   * @param {string} filename - Original filename, used to hint the audio container/codec to the service.
++   * @returns {Promise<string>} The transcribed text.
++   */
++  async transcribe(audioBuffer, filename = "audio.webm") {
++    const { toFile } = require("openai");
++    const extension = path.extname(filename).toLowerCase() || ".webm";
++    let payloadBuffer = audioBuffer;
++    let payloadFilename = filename;
++    if (extension !== ".wav") {
++      payloadBuffer = await convertAudioBufferToWav(audioBuffer, extension);
++      payloadFilename = "audio.wav";
++    }
++    const file = await toFile(payloadBuffer, payloadFilename);
++    const result = await this.openai.audio.transcriptions.create({
++      file,
++      model: this.model,
++    });
++    return result?.text ?? "";
++  }
++}
++
++module.exports = { LemonadeSTT };
+diff --git a/server/utils/SpeechToText/openAi/index.js b/server/utils/SpeechToText/openAi/index.js
+new file mode 100644
+index 00000000..a657c96f
+--- /dev/null
++++ b/server/utils/SpeechToText/openAi/index.js
+@@ -0,0 +1,28 @@
++class OpenAiSTT {
++  constructor() {
++    if (!process.env.OPEN_AI_KEY) throw new Error("No OpenAI API key was set.");
++    const { OpenAI: OpenAIApi } = require("openai");
++    this.openai = new OpenAIApi({
++      apiKey: process.env.OPEN_AI_KEY,
++    });
++    this.model = process.env.STT_OPEN_AI_MODEL ?? "whisper-1";
++  }
++
++  /**
++   * Transcribes an audio buffer to text using the OpenAI STT service.
++   * @param {Buffer} audioBuffer - The audio buffer to be transcribed.
++   * @param {string} filename - Original filename, used to hint the audio container/codec to OpenAI.
++   * @returns {Promise<string>} The transcribed text.
++   */
++  async transcribe(audioBuffer, filename = "audio.webm") {
++    const { toFile } = require("openai");
++    const file = await toFile(audioBuffer, filename);
++    const result = await this.openai.audio.transcriptions.create({
++      file,
++      model: this.model,
++    });
++    return result?.text ?? "";
++  }
++}
++
++module.exports = { OpenAiSTT };
+diff --git a/server/utils/SpeechToText/openAiGeneric/index.js b/server/utils/SpeechToText/openAiGeneric/index.js
+new file mode 100644
+index 00000000..e60fc223
+--- /dev/null
++++ b/server/utils/SpeechToText/openAiGeneric/index.js
+@@ -0,0 +1,58 @@
++const { convertAudioBufferToWav } = require("../helpers");
++const path = require("path");
++
++class GenericOpenAiSTT {
++  constructor() {
++    if (!process.env.STT_OPEN_AI_COMPATIBLE_ENDPOINT)
++      throw new Error(
++        "No OpenAI compatible endpoint was set. Please set this to use your OpenAI compatible STT service."
++      );
++    if (!process.env.STT_OPEN_AI_COMPATIBLE_KEY)
++      this.#log(
++        "No OpenAI compatible API key was set. You might need to set this to use your OpenAI compatible STT service."
++      );
++    if (!process.env.STT_OPEN_AI_COMPATIBLE_MODEL)
++      this.#log(
++        "No OpenAI compatible STT model was set. We will use the default model 'whisper-1'. This may not exist or be valid for your selected endpoint."
++      );
++
++    const { OpenAI: OpenAIApi } = require("openai");
++    this.openai = new OpenAIApi({
++      apiKey: process.env.STT_OPEN_AI_COMPATIBLE_KEY || null,
++      baseURL: process.env.STT_OPEN_AI_COMPATIBLE_ENDPOINT,
++    });
++    this.model = process.env.STT_OPEN_AI_COMPATIBLE_MODEL ?? "whisper-1";
++    this.#log(
++      `Service (${process.env.STT_OPEN_AI_COMPATIBLE_ENDPOINT}) with model: ${this.model}`
++    );
++  }
++
++  #log(text, ...args) {
++    console.log(`\x1b[32m[OpenAiGenericSTT]\x1b[0m ${text}`, ...args);
++  }
++
++  /**
++   * Transcribes an audio buffer to text using an OpenAI-compatible STT service.
++   * @param {Buffer} audioBuffer - The audio buffer to be transcribed.
++   * @param {string} filename - Original filename, used to hint the audio container/codec to the service.
++   * @returns {Promise<string>} The transcribed text.
++   */
++  async transcribe(audioBuffer, filename = "audio.webm") {
++    const { toFile } = require("openai");
++    const extension = path.extname(filename).toLowerCase() || ".webm";
++    let payloadBuffer = audioBuffer;
++    let payloadFilename = filename;
++    if (extension !== ".wav") {
++      payloadBuffer = await convertAudioBufferToWav(audioBuffer, extension);
++      payloadFilename = "audio.wav";
++    }
++    const file = await toFile(payloadBuffer, payloadFilename);
++    const result = await this.openai.audio.transcriptions.create({
++      file,
++      model: this.model,
++    });
++    return result?.text ?? "";
++  }
++}
++
++module.exports = { GenericOpenAiSTT };
+diff --git a/server/utils/collectorApi/index.js b/server/utils/collectorApi/index.js
+index b3c931ff..a480ae4b 100644
+--- a/server/utils/collectorApi/index.js
++++ b/server/utils/collectorApi/index.js
+@@ -207,6 +207,44 @@ class CollectorApi {
+       });
+   }
+ 
++  /**
++   * Convert an audio file in the shared hotdir to WAV via the collector's
++   * FFMPEG wrapper. The source file is trashed by the collector; caller must
++   * read and trash the resulting wav file.
++   * @param {string} filename - The filename of the source audio in the hotdir
++   * @returns {Promise<{success: boolean, reason: string|null, wavFilename: string|null}>}
++   */
++  async convertAudioToWav(filename = "") {
++    if (!filename)
++      return {
++        success: false,
++        reason: "No filename provided.",
++        wavFilename: null,
++      };
++
++    const data = JSON.stringify({ filename });
++    return await fetch(`${this.endpoint}/util/convert-audio-to-wav`, {
++      method: "POST",
++      headers: {
++        "Content-Type": "application/json",
++        "X-Integrity": this.comkey.sign(data),
++        "X-Payload-Signer": this.comkey.encrypt(
++          new EncryptionManager().xPayload
++        ),
++      },
++      body: data,
++    })
++      .then((res) => {
++        if (!res.ok) throw new Error("Response could not be completed");
++        return res.json();
++      })
++      .then((json) => json)
++      .catch((e) => {
++        this.log(e.message);
++        return { success: false, reason: e.message, wavFilename: null };
++      });
++  }
++
+   // We will not ever expose the document processor to the frontend API so instead we relay
+   // all requests through the server. You can use this function to directly expose a specific endpoint
+   // on the document processor.
+diff --git a/server/utils/files/multer.js b/server/utils/files/multer.js
+index 74c0704a..c394982e 100644
+--- a/server/utils/files/multer.js
++++ b/server/utils/files/multer.js
+@@ -170,9 +170,35 @@ function handlePfpUpload(request, response, next) {
+   });
+ }
+ 
++/**
++ * Handle in-memory audio upload for STT transcription. Audio buffers are
++ * passed straight to the STT provider so we never persist them to disk.
++ */
++function handleAudioUpload(request, response, next) {
++  const upload = multer({
++    storage: multer.memoryStorage(),
++    limits: { fileSize: 25 * 1024 * 1024 }, // 25MB matches OpenAI Whisper limit
++    fileFilter: (_req, file, cb) => {
++      if (!file.mimetype?.startsWith("audio/"))
++        return cb(new Error("Only audio uploads are allowed."));
++      cb(null, true);
++    },
++  }).single("audio");
++  upload(request, response, function (err) {
++    if (err) {
++      return response.status(500).json({
++        success: false,
++        error: `Invalid audio upload. ${err.message}`,
++      });
++    }
++    next();
++  });
++}
++
+ module.exports = {
+   handleFileUpload,
+   handleAPIFileUpload,
+   handleAssetUpload,
+   handlePfpUpload,
++  handleAudioUpload,
+ };
+diff --git a/server/utils/helpers/customModels.js b/server/utils/helpers/customModels.js
+index b63187e3..cdbf9f3f 100644
+--- a/server/utils/helpers/customModels.js
++++ b/server/utils/helpers/customModels.js
+@@ -18,6 +18,7 @@ const { getAllLemonadeModels } = require("../AiProviders/lemonade");
+ 
+ const SUPPORT_CUSTOM_MODELS = [
+   "openai",
++  "openai-stt",
+   "anthropic",
+   "localai",
+   "ollama",
+@@ -57,6 +58,9 @@ const SUPPORT_CUSTOM_MODELS = [
+   "cohere-embedder",
+   "openrouter-embedder",
+   "lemonade-embedder",
++  // STT Engines
++  "deepgram-stt",
++  "lemonade-stt",
+ ];
+ 
+ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
+@@ -66,6 +70,8 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
+   switch (provider) {
+     case "openai":
+       return await openAiModels(apiKey);
++    case "openai-stt":
++      return await openAiSttModels(apiKey);
+     case "anthropic":
+       return await anthropicModels(apiKey);
+     case "localai":
+@@ -134,6 +140,8 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
+       return await getSambaNovaModels(apiKey);
+     case "lemonade":
+       return await getLemonadeModels(basePath);
++    case "lemonade-stt":
++      return await getLemonadeSTTModels(basePath);
+     case "lemonade-embedder":
+       return await getLemonadeModels(basePath, "embedding");
+     case "minimax":
+@@ -142,6 +150,8 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
+       return await getCerebrasModels();
+     case "generic-openai":
+       return await getGenericOpenAiModels(basePath, apiKey);
++    case "deepgram-stt":
++      return await getDeepgramSTTModels(apiKey);
+     default:
+       return { models: [], error: "Invalid provider for custom models" };
+   }
+@@ -252,6 +262,50 @@ async function openAiModels(apiKey = null) {
+   return { models: [...gpts, ...customModels], error: null };
+ }
+ 
++async function openAiSttModels(apiKey = null) {
++  const fallback = [
++    { id: "whisper-1", name: "whisper-1", organization: "OpenAi" },
++    {
++      id: "gpt-4o-transcribe",
++      name: "gpt-4o-transcribe",
++      organization: "OpenAi",
++    },
++    {
++      id: "gpt-4o-mini-transcribe",
++      name: "gpt-4o-mini-transcribe",
++      organization: "OpenAi",
++    },
++  ];
++
++  const { OpenAI: OpenAIApi } = require("openai");
++  const openai = new OpenAIApi({
++    apiKey: apiKey || process.env.OPEN_AI_KEY,
++  });
++
++  const allModels = await openai.models
++    .list()
++    .then((results) => results.data)
++    .catch((e) => {
++      console.error(`OpenAI:listModels (stt)`, e.message);
++      return null;
++    });
++
++  if (!allModels) return { models: fallback, error: null };
++
++  // The /v1/models response has no category/type field, so we filter by id.
++  // Realtime variants use a separate WebSocket API and are not compatible
++  // with the audio.transcriptions.create endpoint we use server-side.
++  const models = allModels
++    .filter(
++      (m) =>
++        (m.id.includes("whisper") || m.id.includes("transcribe")) &&
++        !m.id.includes("realtime")
++    )
++    .map((m) => ({ ...m, name: m.id, organization: "OpenAi" }));
++
++  return { models: models.length ? models : fallback, error: null };
++}
++
+ async function anthropicModels(_apiKey = null) {
+   const apiKey =
+     _apiKey === true
+@@ -984,6 +1038,60 @@ async function getLemonadeModels(basePath = null, task = "chat") {
+   }
+ }
+ 
++async function getLemonadeSTTModels(basePath = null) {
++  try {
++    const models = await getAllLemonadeModels(basePath, "transcription");
++    return { models, error: null };
++  } catch (e) {
++    console.error(`Lemonade:getLemonadeSTTModels`, e.message);
++    return { models: [], error: "Could not fetch Lemonade STT Models" };
++  }
++}
++
++/**
++ * Get Deepgram STT models from the Management API.
++ * https://api.deepgram.com/v1/models returns { stt: [...], tts: [...] }.
++ * @param {string} _apiKey - Deepgram API key. Falls back to STT_DEEPGRAM_API_KEY.
++ * @returns {Promise<{models: Array<{id: string, name: string, organization: string}>, error: string | null}>}
++ */
++async function getDeepgramSTTModels(_apiKey = null) {
++  const apiKey =
++    _apiKey === true
++      ? process.env.STT_DEEPGRAM_API_KEY
++      : _apiKey || process.env.STT_DEEPGRAM_API_KEY || null;
++  if (!apiKey)
++    return { models: [], error: "No Deepgram API key was provided." };
++
++  try {
++    const response = await fetch("https://api.deepgram.com/v1/models", {
++      method: "GET",
++      headers: { Authorization: `Token ${apiKey}` },
++    });
++    if (!response.ok) throw new Error(`Deepgram returned ${response.status}`);
++
++    let models = new Map();
++    const data = await response.json();
++    (data?.stt ?? [])
++      .filter((m) => m.batch !== false)
++      .forEach((m) => {
++        if (models.has(m.canonical_name)) return;
++        models.set(m.canonical_name, {
++          id: m.canonical_name,
++          name: m.canonical_name,
++          organization: "Deepgram",
++        });
++      });
++
++    models = Array.from(models.values());
++    // Api Key was successful so lets save it for future uses
++    if (models.length > 0 && _apiKey) process.env.STT_DEEPGRAM_API_KEY = apiKey;
++    return { models, error: null };
++  } catch (e) {
++    console.error(`Deepgram:getDeepgramSTTModels`, e.message);
++    return { models: [], error: "Could not fetch Deepgram STT models" };
++  }
++}
++
+ /**
+  * Get Privatemode models
+  * @param {string} basePath - The base path of the Privatemode endpoint.
+diff --git a/server/utils/helpers/updateENV.js b/server/utils/helpers/updateENV.js
+index d55d3548..b237b22f 100644
+--- a/server/utils/helpers/updateENV.js
++++ b/server/utils/helpers/updateENV.js
+@@ -666,6 +666,52 @@ const KEY_MAPPING = {
+     checks: [isValidURL],
+   },
+ 
++  // STT Selection
++  SpeechToTextProvider: {
++    envKey: "STT_PROVIDER",
++    checks: [supportedSTTProvider],
++  },
++
++  // STT OpenAI
++  STTOpenAIModel: {
++    envKey: "STT_OPEN_AI_MODEL",
++    checks: [],
++  },
++
++  // STT Lemonade
++  STTLemonadeBasePath: {
++    envKey: "STT_LEMONADE_BASE_PATH",
++    checks: [isValidURL],
++  },
++  STTLemonadeModelPref: {
++    envKey: "STT_LEMONADE_MODEL_PREF",
++    checks: [],
++  },
++
++  // STT Deepgram
++  STTDeepgramApiKey: {
++    envKey: "STT_DEEPGRAM_API_KEY",
++    checks: [isNotEmpty],
++  },
++  STTDeepgramModel: {
++    envKey: "STT_DEEPGRAM_MODEL",
++    checks: [isNotEmpty],
++  },
++
++  // STT OpenAI Generic
++  STTOpenAICompatibleKey: {
++    envKey: "STT_OPEN_AI_COMPATIBLE_KEY",
++    checks: [],
++  },
++  STTOpenAICompatibleModel: {
++    envKey: "STT_OPEN_AI_COMPATIBLE_MODEL",
++    checks: [],
++  },
++  STTOpenAICompatibleEndpoint: {
++    envKey: "STT_OPEN_AI_COMPATIBLE_ENDPOINT",
++    checks: [isValidURL],
++  },
++
+   // DeepSeek Options
+   DeepSeekApiKey: {
+     envKey: "DEEPSEEK_API_KEY",
+@@ -953,6 +999,17 @@ function supportedTTSProvider(input = "") {
+   return validSelection ? null : `${input} is not a valid TTS provider.`;
+ }
+ 
++function supportedSTTProvider(input = "") {
++  const validSelection = [
++    "native",
++    "openai",
++    "lemonade",
++    "deepgram",
++    "generic-openai",
++  ].includes(input);
++  return validSelection ? null : `${input} is not a valid STT provider.`;
++}
++
+ function validLocalWhisper(input = "") {
+   const validSelection = [
+     "Xenova/whisper-small",
+-- 
+2.50.1 (Apple Git-155)
+

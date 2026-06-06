@@ -1,0 +1,562 @@
+From de531042a28707beb45e8c41026b595be85df109 Mon Sep 17 00:00:00 2001
+From: Timothy Carambat <rambat1010@gmail.com>
+Date: Mon, 1 Jun 2026 21:17:02 -0700
+Subject: [PATCH 11/23] apply universal sdk timeout (#5721)
+
+---
+ server/index.js                               |  1 +
+ .../agents/aibitat/providers/anthropic.js     |  1 -
+ .../utils/agents/aibitat/providers/apipie.js  |  1 -
+ .../agents/aibitat/providers/cerebras.js      |  1 -
+ .../agents/aibitat/providers/cometapi.js      |  1 -
+ .../agents/aibitat/providers/deepseek.js      |  1 -
+ .../aibitat/providers/dockerModelRunner.js    |  1 -
+ .../agents/aibitat/providers/fireworksai.js   |  1 -
+ .../utils/agents/aibitat/providers/foundry.js |  1 -
+ .../utils/agents/aibitat/providers/gemini.js  |  1 -
+ .../agents/aibitat/providers/genericOpenAi.js |  1 -
+ .../utils/agents/aibitat/providers/giteeai.js |  1 -
+ server/utils/agents/aibitat/providers/groq.js |  1 -
+ .../agents/aibitat/providers/koboldcpp.js     |  1 -
+ .../agents/aibitat/providers/lemonade.js      |  1 -
+ .../utils/agents/aibitat/providers/litellm.js |  1 -
+ .../agents/aibitat/providers/lmstudio.js      |  1 -
+ .../utils/agents/aibitat/providers/localai.js |  1 -
+ .../utils/agents/aibitat/providers/minimax.js |  1 -
+ .../utils/agents/aibitat/providers/mistral.js |  1 -
+ .../agents/aibitat/providers/moonshotAi.js    |  1 -
+ .../utils/agents/aibitat/providers/novita.js  |  1 -
+ .../agents/aibitat/providers/nvidiaNim.js     |  1 -
+ .../utils/agents/aibitat/providers/openai.js  |  1 -
+ .../agents/aibitat/providers/openrouter.js    |  1 -
+ .../agents/aibitat/providers/perplexity.js    |  1 -
+ server/utils/agents/aibitat/providers/ppio.js |  1 -
+ .../agents/aibitat/providers/privatemode.js   |  1 -
+ .../agents/aibitat/providers/sambanova.js     |  1 -
+ .../agents/aibitat/providers/textgenwebui.js  |  1 -
+ .../agents/aibitat/providers/togetherai.js    |  1 -
+ server/utils/agents/aibitat/providers/xai.js  |  1 -
+ server/utils/agents/aibitat/providers/zai.js  |  1 -
+ server/utils/boot/patchSdkTimeouts.js         | 98 +++++++++++++++++++
+ server/utils/helpers/updateENV.js             |  4 +
+ 35 files changed, 103 insertions(+), 32 deletions(-)
+ create mode 100644 server/utils/boot/patchSdkTimeouts.js
+
+diff --git a/server/index.js b/server/index.js
+index 729a059e..db2b6d1d 100644
+--- a/server/index.js
++++ b/server/index.js
+@@ -3,6 +3,7 @@ process.env.NODE_ENV === "development"
+   : require("dotenv").config();
+ 
+ require("./utils/logger")();
++require("./utils/boot/patchSdkTimeouts")();
+ const express = require("express");
+ const bodyParser = require("body-parser");
+ const cors = require("cors");
+diff --git a/server/utils/agents/aibitat/providers/anthropic.js b/server/utils/agents/aibitat/providers/anthropic.js
+index b29385ed..7d8dbc26 100644
+--- a/server/utils/agents/aibitat/providers/anthropic.js
++++ b/server/utils/agents/aibitat/providers/anthropic.js
+@@ -18,7 +18,6 @@ class AnthropicProvider extends Provider {
+     const {
+       options = {
+         apiKey: process.env.ANTHROPIC_API_KEY,
+-        maxRetries: 3,
+         defaultHeaders: {
+           "User-Agent": getAnythingLLMUserAgent(),
+         },
+diff --git a/server/utils/agents/aibitat/providers/apipie.js b/server/utils/agents/aibitat/providers/apipie.js
+index acf75977..f4e4c779 100644
+--- a/server/utils/agents/aibitat/providers/apipie.js
++++ b/server/utils/agents/aibitat/providers/apipie.js
+@@ -15,7 +15,6 @@ class ApiPieProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://apipie.ai/v1",
+       apiKey: process.env.APIPIE_LLM_API_KEY,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/cerebras.js b/server/utils/agents/aibitat/providers/cerebras.js
+index c444e6f3..bad01653 100644
+--- a/server/utils/agents/aibitat/providers/cerebras.js
++++ b/server/utils/agents/aibitat/providers/cerebras.js
+@@ -20,7 +20,6 @@ class CerebrasProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.cerebras.ai/v1",
+       apiKey: process.env.CEREBRAS_API_KEY,
+-      maxRetries: 1,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/cometapi.js b/server/utils/agents/aibitat/providers/cometapi.js
+index 1e6eefcc..5eee369c 100644
+--- a/server/utils/agents/aibitat/providers/cometapi.js
++++ b/server/utils/agents/aibitat/providers/cometapi.js
+@@ -15,7 +15,6 @@ class CometApiProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.cometapi.com/v1",
+       apiKey: process.env.COMETAPI_LLM_API_KEY,
+-      maxRetries: 3,
+       defaultHeaders: {
+         "HTTP-Referer": "https://anythingllm.com",
+         "X-CometAPI-Source": "anythingllm",
+diff --git a/server/utils/agents/aibitat/providers/deepseek.js b/server/utils/agents/aibitat/providers/deepseek.js
+index e824b6cd..fd72f3e8 100644
+--- a/server/utils/agents/aibitat/providers/deepseek.js
++++ b/server/utils/agents/aibitat/providers/deepseek.js
+@@ -15,7 +15,6 @@ class DeepSeekProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.deepseek.com/v1",
+       apiKey: process.env.DEEPSEEK_API_KEY ?? null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/dockerModelRunner.js b/server/utils/agents/aibitat/providers/dockerModelRunner.js
+index 34461862..560fc906 100644
+--- a/server/utils/agents/aibitat/providers/dockerModelRunner.js
++++ b/server/utils/agents/aibitat/providers/dockerModelRunner.js
+@@ -28,7 +28,6 @@ class DockerModelRunnerProvider extends InheritMultiple([Provider, UnTooled]) {
+         process.env.DOCKER_MODEL_RUNNER_BASE_PATH
+       ),
+       apiKey: null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/fireworksai.js b/server/utils/agents/aibitat/providers/fireworksai.js
+index 46f0fa4a..dfd68e7c 100644
+--- a/server/utils/agents/aibitat/providers/fireworksai.js
++++ b/server/utils/agents/aibitat/providers/fireworksai.js
+@@ -17,7 +17,6 @@ class FireworksAIProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.fireworks.ai/inference/v1",
+       apiKey: process.env.FIREWORKS_AI_LLM_API_KEY,
+-      maxRetries: 0,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/foundry.js b/server/utils/agents/aibitat/providers/foundry.js
+index cda6fb90..5f4816df 100644
+--- a/server/utils/agents/aibitat/providers/foundry.js
++++ b/server/utils/agents/aibitat/providers/foundry.js
+@@ -20,7 +20,6 @@ class FoundryProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: parseFoundryBasePath(process.env.FOUNDRY_BASE_PATH),
+       apiKey: null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/gemini.js b/server/utils/agents/aibitat/providers/gemini.js
+index d1ec0ee3..324dbbec 100644
+--- a/server/utils/agents/aibitat/providers/gemini.js
++++ b/server/utils/agents/aibitat/providers/gemini.js
+@@ -18,7 +18,6 @@ class GeminiProvider extends Provider {
+     const client = new OpenAI({
+       baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+       apiKey: process.env.GEMINI_API_KEY,
+-      maxRetries: 0,
+       fetch: async (url, init) => {
+         const res = await globalThis.fetch(url, init);
+         if (!res.ok) {
+diff --git a/server/utils/agents/aibitat/providers/genericOpenAi.js b/server/utils/agents/aibitat/providers/genericOpenAi.js
+index 64f7a932..f1b10062 100644
+--- a/server/utils/agents/aibitat/providers/genericOpenAi.js
++++ b/server/utils/agents/aibitat/providers/genericOpenAi.js
+@@ -23,7 +23,6 @@ class GenericOpenAiProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: process.env.GENERIC_OPEN_AI_BASE_PATH,
+       apiKey: process.env.GENERIC_OPEN_AI_API_KEY ?? null,
+-      maxRetries: 3,
+       defaultHeaders: {
+         "User-Agent": getAnythingLLMUserAgent(),
+         ...GenericOpenAiLLM.parseCustomHeaders(),
+diff --git a/server/utils/agents/aibitat/providers/giteeai.js b/server/utils/agents/aibitat/providers/giteeai.js
+index 885540ad..f4e22bd2 100644
+--- a/server/utils/agents/aibitat/providers/giteeai.js
++++ b/server/utils/agents/aibitat/providers/giteeai.js
+@@ -12,7 +12,6 @@ class GiteeAIProvider extends InheritMultiple([Provider, UnTooled]) {
+     this._client = new OpenAI({
+       baseURL: "https://ai.gitee.com/v1",
+       apiKey: process.env.GITEE_AI_API_KEY ?? null,
+-      maxRetries: 3,
+     });
+     this.model = model;
+     this.verbose = true;
+diff --git a/server/utils/agents/aibitat/providers/groq.js b/server/utils/agents/aibitat/providers/groq.js
+index 5c7368c4..adb3aa86 100644
+--- a/server/utils/agents/aibitat/providers/groq.js
++++ b/server/utils/agents/aibitat/providers/groq.js
+@@ -19,7 +19,6 @@ class GroqProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.groq.com/openai/v1",
+       apiKey: process.env.GROQ_API_KEY,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/koboldcpp.js b/server/utils/agents/aibitat/providers/koboldcpp.js
+index c3acb738..624cb4d8 100644
+--- a/server/utils/agents/aibitat/providers/koboldcpp.js
++++ b/server/utils/agents/aibitat/providers/koboldcpp.js
+@@ -15,7 +15,6 @@ class KoboldCPPProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: process.env.KOBOLD_CPP_BASE_PATH?.replace(/\/+$/, ""),
+       apiKey: null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/lemonade.js b/server/utils/agents/aibitat/providers/lemonade.js
+index 1c47a2ac..f373dc0b 100644
+--- a/server/utils/agents/aibitat/providers/lemonade.js
++++ b/server/utils/agents/aibitat/providers/lemonade.js
+@@ -28,7 +28,6 @@ class LemonadeProvider extends InheritMultiple([Provider, UnTooled]) {
+         "openai"
+       ),
+       apiKey: process.env.LEMONADE_LLM_API_KEY || null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/litellm.js b/server/utils/agents/aibitat/providers/litellm.js
+index 5c0c9633..d101d11e 100644
+--- a/server/utils/agents/aibitat/providers/litellm.js
++++ b/server/utils/agents/aibitat/providers/litellm.js
+@@ -19,7 +19,6 @@ class LiteLLMProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: process.env.LITE_LLM_BASE_PATH,
+       apiKey: process.env.LITE_LLM_API_KEY ?? null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/lmstudio.js b/server/utils/agents/aibitat/providers/lmstudio.js
+index ecf318ec..17601092 100644
+--- a/server/utils/agents/aibitat/providers/lmstudio.js
++++ b/server/utils/agents/aibitat/providers/lmstudio.js
+@@ -29,7 +29,6 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: parseLMStudioBasePath(process.env.LMSTUDIO_BASE_PATH),
+       apiKey,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/localai.js b/server/utils/agents/aibitat/providers/localai.js
+index 26027361..5c29a1b4 100644
+--- a/server/utils/agents/aibitat/providers/localai.js
++++ b/server/utils/agents/aibitat/providers/localai.js
+@@ -19,7 +19,6 @@ class LocalAiProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: process.env.LOCAL_AI_BASE_PATH,
+       apiKey: process.env.LOCAL_AI_API_KEY ?? null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/minimax.js b/server/utils/agents/aibitat/providers/minimax.js
+index 236704cb..22ef9308 100644
+--- a/server/utils/agents/aibitat/providers/minimax.js
++++ b/server/utils/agents/aibitat/providers/minimax.js
+@@ -14,7 +14,6 @@ class MinimaxProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.minimax.io/v1",
+       apiKey: process.env.MINIMAX_API_KEY ?? null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/mistral.js b/server/utils/agents/aibitat/providers/mistral.js
+index 4c8a0930..72a29f41 100644
+--- a/server/utils/agents/aibitat/providers/mistral.js
++++ b/server/utils/agents/aibitat/providers/mistral.js
+@@ -19,7 +19,6 @@ class MistralProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.mistral.ai/v1",
+       apiKey: process.env.MISTRAL_API_KEY,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/moonshotAi.js b/server/utils/agents/aibitat/providers/moonshotAi.js
+index 5df42b85..86eec95e 100644
+--- a/server/utils/agents/aibitat/providers/moonshotAi.js
++++ b/server/utils/agents/aibitat/providers/moonshotAi.js
+@@ -12,7 +12,6 @@ class MoonshotAiProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.moonshot.ai/v1",
+       apiKey: process.env.MOONSHOT_AI_API_KEY,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/novita.js b/server/utils/agents/aibitat/providers/novita.js
+index f0bfe869..243cc181 100644
+--- a/server/utils/agents/aibitat/providers/novita.js
++++ b/server/utils/agents/aibitat/providers/novita.js
+@@ -20,7 +20,6 @@ class NovitaProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.novita.ai/v3/openai",
+       apiKey: process.env.NOVITA_LLM_API_KEY,
+-      maxRetries: 3,
+       defaultHeaders: {
+         "HTTP-Referer": "https://anythingllm.com",
+         "X-Novita-Source": "anythingllm",
+diff --git a/server/utils/agents/aibitat/providers/nvidiaNim.js b/server/utils/agents/aibitat/providers/nvidiaNim.js
+index 0992a8d9..3396d00e 100644
+--- a/server/utils/agents/aibitat/providers/nvidiaNim.js
++++ b/server/utils/agents/aibitat/providers/nvidiaNim.js
+@@ -17,7 +17,6 @@ class NvidiaNimProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: parseNvidiaNimBasePath(process.env.NVIDIA_NIM_LLM_BASE_PATH),
+       apiKey: null,
+-      maxRetries: 0,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/openai.js b/server/utils/agents/aibitat/providers/openai.js
+index a7f402de..69bc594a 100644
+--- a/server/utils/agents/aibitat/providers/openai.js
++++ b/server/utils/agents/aibitat/providers/openai.js
+@@ -14,7 +14,6 @@ class OpenAIProvider extends Provider {
+     const {
+       options = {
+         apiKey: process.env.OPEN_AI_KEY,
+-        maxRetries: 3,
+       },
+       model = "gpt-4o",
+     } = config;
+diff --git a/server/utils/agents/aibitat/providers/openrouter.js b/server/utils/agents/aibitat/providers/openrouter.js
+index f8400f55..8e196f42 100644
+--- a/server/utils/agents/aibitat/providers/openrouter.js
++++ b/server/utils/agents/aibitat/providers/openrouter.js
+@@ -21,7 +21,6 @@ class OpenRouterProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://openrouter.ai/api/v1",
+       apiKey: process.env.OPENROUTER_API_KEY,
+-      maxRetries: 3,
+       defaultHeaders: {
+         "HTTP-Referer": "https://anythingllm.com",
+         "X-Title": "AnythingLLM",
+diff --git a/server/utils/agents/aibitat/providers/perplexity.js b/server/utils/agents/aibitat/providers/perplexity.js
+index ba288c37..3cc428d9 100644
+--- a/server/utils/agents/aibitat/providers/perplexity.js
++++ b/server/utils/agents/aibitat/providers/perplexity.js
+@@ -15,7 +15,6 @@ class PerplexityProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.perplexity.ai",
+       apiKey: process.env.PERPLEXITY_API_KEY ?? null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/ppio.js b/server/utils/agents/aibitat/providers/ppio.js
+index 9235e5b0..06fa0df8 100644
+--- a/server/utils/agents/aibitat/providers/ppio.js
++++ b/server/utils/agents/aibitat/providers/ppio.js
+@@ -15,7 +15,6 @@ class PPIOProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.ppinfra.com/v3/openai",
+       apiKey: process.env.PPIO_API_KEY,
+-      maxRetries: 3,
+       defaultHeaders: {
+         "HTTP-Referer": "https://anythingllm.com",
+         "X-API-Source": "anythingllm",
+diff --git a/server/utils/agents/aibitat/providers/privatemode.js b/server/utils/agents/aibitat/providers/privatemode.js
+index 387a2f33..78767173 100644
+--- a/server/utils/agents/aibitat/providers/privatemode.js
++++ b/server/utils/agents/aibitat/providers/privatemode.js
+@@ -20,7 +20,6 @@ class PrivatemodelProvider extends InheritMultiple([Provider, UnTooled]) {
+         process.env.PRIVATEMODE_LLM_BASE_PATH
+       ),
+       apiKey: null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/sambanova.js b/server/utils/agents/aibitat/providers/sambanova.js
+index a92db5c2..3f227dad 100644
+--- a/server/utils/agents/aibitat/providers/sambanova.js
++++ b/server/utils/agents/aibitat/providers/sambanova.js
+@@ -12,7 +12,6 @@ class SambaNovaProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.sambanova.ai/v1",
+       apiKey: process.env.SAMBANOVA_LLM_API_KEY,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/textgenwebui.js b/server/utils/agents/aibitat/providers/textgenwebui.js
+index e5183630..c9197c22 100644
+--- a/server/utils/agents/aibitat/providers/textgenwebui.js
++++ b/server/utils/agents/aibitat/providers/textgenwebui.js
+@@ -14,7 +14,6 @@ class TextWebGenUiProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: process.env.TEXT_GEN_WEB_UI_BASE_PATH,
+       apiKey: process.env.TEXT_GEN_WEB_UI_API_KEY ?? null,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/togetherai.js b/server/utils/agents/aibitat/providers/togetherai.js
+index 837d5fed..ea4dccb5 100644
+--- a/server/utils/agents/aibitat/providers/togetherai.js
++++ b/server/utils/agents/aibitat/providers/togetherai.js
+@@ -15,7 +15,6 @@ class TogetherAIProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.together.xyz/v1",
+       apiKey: process.env.TOGETHER_AI_API_KEY,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/xai.js b/server/utils/agents/aibitat/providers/xai.js
+index 1597b2ba..ed578d52 100644
+--- a/server/utils/agents/aibitat/providers/xai.js
++++ b/server/utils/agents/aibitat/providers/xai.js
+@@ -15,7 +15,6 @@ class XAIProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.x.ai/v1",
+       apiKey: process.env.XAI_LLM_API_KEY,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/agents/aibitat/providers/zai.js b/server/utils/agents/aibitat/providers/zai.js
+index 5c2cc066..022abb97 100644
+--- a/server/utils/agents/aibitat/providers/zai.js
++++ b/server/utils/agents/aibitat/providers/zai.js
+@@ -12,7 +12,6 @@ class ZAIProvider extends InheritMultiple([Provider, UnTooled]) {
+     const client = new OpenAI({
+       baseURL: "https://api.z.ai/api/paas/v4",
+       apiKey: process.env.ZAI_API_KEY,
+-      maxRetries: 3,
+     });
+ 
+     this._client = client;
+diff --git a/server/utils/boot/patchSdkTimeouts.js b/server/utils/boot/patchSdkTimeouts.js
+new file mode 100644
+index 00000000..75b5406b
+--- /dev/null
++++ b/server/utils/boot/patchSdkTimeouts.js
+@@ -0,0 +1,98 @@
++const LOG_PREFIX = "\x1b[36m[SDK Timeout Patch]\x1b[0m";
++const DEFAULT_TIMEOUT_MS = 600_000; // 10 minutes default
++const DEFAULT_MAX_RETRIES = 0;
++
++/**
++ * Raises undici's global dispatcher timeouts from the 5-minute default to
++ * at least 10 minutes for the 80% use case so
++ * the transport layer doesn't kill connections before the SDK does.
++ *
++ * When `ANYTHINGLLM_FETCH_TIMEOUT` is set (milliseconds), both the undici
++ * dispatcher and the SDK-level AbortController deadline are raised to that
++ * value instead — for users with slow local models that need even longer.
++ *
++ * Must be called before any provider module is required.
++ */
++function patchSdkTimeouts() {
++  const envDefinedTimeout = process.env.ANYTHINGLLM_FETCH_TIMEOUT;
++  const envDefinedMaxRetries = process.env.ANYTHINGLLM_MAX_RETRIES;
++  let timeoutMs = DEFAULT_TIMEOUT_MS;
++  let maxRetries = DEFAULT_MAX_RETRIES;
++
++  if (envDefinedTimeout) {
++    const parsed = parseInt(envDefinedTimeout, 10);
++    if (!Number.isFinite(parsed) || parsed <= 0) {
++      console.warn(
++        `${LOG_PREFIX} ANYTHINGLLM_FETCH_TIMEOUT="${envDefinedTimeout}" is not a valid positive integer — using default ${DEFAULT_TIMEOUT_MS}ms.`
++      );
++    } else {
++      timeoutMs = parsed;
++    }
++  }
++
++  if (envDefinedMaxRetries) {
++    const parsed = parseInt(envDefinedMaxRetries, 10);
++    if (!Number.isFinite(parsed) || parsed < 0) {
++      console.warn(
++        `${LOG_PREFIX} ANYTHINGLLM_MAX_RETRIES="${envDefinedMaxRetries}" is not a valid non-negative integer — using default ${DEFAULT_MAX_RETRIES}.`
++      );
++    } else {
++      maxRetries = parsed;
++    }
++  }
++
++  const humanSecs = `${(timeoutMs / 1000).toFixed(0)}s`;
++  try {
++    const { Agent, setGlobalDispatcher } = require("undici");
++    setGlobalDispatcher(
++      new Agent({ headersTimeout: timeoutMs, bodyTimeout: timeoutMs })
++    );
++    console.log(
++      `${LOG_PREFIX} undici global dispatcher — headersTimeout & bodyTimeout ${humanSecs}`
++    );
++  } catch {
++    console.warn(
++      `${LOG_PREFIX} undici not available — transport-level timeout not patched.`
++    );
++  }
++
++  for (const [pkg, label] of [
++    ["openai", "OpenAI"],
++    ["@anthropic-ai/sdk", "Anthropic"],
++  ]) {
++    try {
++      const SDK = require(pkg);
++      const ClientClass = SDK.default ?? SDK[label] ?? SDK;
++      let proto = ClientClass?.prototype;
++      while (proto && typeof proto.buildRequest !== "function") {
++        proto = Object.getPrototypeOf(proto);
++      }
++      if (!proto) continue;
++
++      const origBuild = proto.buildRequest;
++      proto.buildRequest = function patchedBuildRequest(options, ...rest) {
++        if (!options.timeout) options.timeout = timeoutMs;
++        return origBuild.call(this, options, ...rest);
++      };
++
++      if (typeof proto.makeRequest === "function") {
++        const origMakeRequest = proto.makeRequest;
++        proto.makeRequest = function patchedMakeRequest(
++          optionsInput,
++          // eslint-disable-next-line
++          retriesRemaining
++        ) {
++          return origMakeRequest.call(this, optionsInput, maxRetries);
++        };
++      }
++
++      console.log(
++        `${LOG_PREFIX} ${label} SDK — timeout ${humanSecs}, maxRetries ${maxRetries}`
++      );
++    } catch {
++      // SDK not installed
++    }
++  }
++}
++
++module.exports = patchSdkTimeouts;
+diff --git a/server/utils/helpers/updateENV.js b/server/utils/helpers/updateENV.js
+index b43f6d5a..b2039c3a 100644
+--- a/server/utils/helpers/updateENV.js
++++ b/server/utils/helpers/updateENV.js
+@@ -1449,6 +1449,10 @@ function dumpENV() {
+ 
+     // Allow auto-approval of skills
+     "AGENT_AUTO_APPROVED_SKILLS",
++
++    // Allow setting a custom fetch timeouts for providers
++    "ANYTHINGLLM_FETCH_TIMEOUT",
++    "ANYTHINGLLM_MAX_RETRIES",
+   ];
+ 
+   // Simple sanitization of each value to prevent ENV injection via newline or quote escaping.
+-- 
+2.50.1 (Apple Git-155)
+

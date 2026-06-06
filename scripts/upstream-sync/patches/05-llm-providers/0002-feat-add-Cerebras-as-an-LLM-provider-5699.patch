@@ -1,0 +1,1896 @@
+From bee224171c1ea2236643b2c6f6622a0a63b6b7b3 Mon Sep 17 00:00:00 2001
+From: Asish Kumar <87874775+officialasishkumar@users.noreply.github.com>
+Date: Thu, 28 May 2026 00:08:30 +0530
+Subject: [PATCH 02/23] feat: add Cerebras as an LLM provider (#5699)
+
+* feat: add Cerebras as an LLM provider
+
+Adds Cerebras (https://www.cerebras.ai) as a first-class LLM provider for
+chat and agents. Cerebras exposes an OpenAI-compatible inference API, so the
+integration mirrors the existing fast-inference providers (Groq/SambaNova):
+
+- New `CerebrasLLM` provider with streaming, prompt-window limits sourced from
+  the shared model map, and dynamic model discovery via the customModels
+  helper (`GET /v1/models`).
+- New `CerebrasProvider` agent provider with the standard UnTooled fallback and
+  optional native OpenAI-compatible tool calling, gated behind the existing
+  `PROVIDER_SUPPORTS_NATIVE_TOOL_CALLING` ENV (since tool-calling support
+  varies per Cerebras model).
+- Wires the provider through getLLMProvider/getLLMProviderClass, agent
+  selection, ENV validation/persistence, system settings, and the agent
+  sub-task client builder so agent helpers (e.g. web-scraping summarization)
+  work for Cerebras.
+- Registers `cerebras` in the context-window model map (tracked LiteLLM
+  provider + legacy fallback values) for accurate context limits.
+- Frontend: API key + model-selection options, onboarding/settings provider
+  entries, agent-provider enablement, privacy-policy entry, and provider logo.
+- Documents the new `CEREBRAS_API_KEY` / `CEREBRAS_MODEL_PREF` env vars in the
+  example env files and adds Cerebras to the supported-provider lists.
+
+resolves #5605
+
+* use proper model fallback
+use public endpoint for model fetching
+
+* context window reporting + better chat repsonses + show thinking
+
+* add Cerebrase agent tool calling, capability detection, context windows, and usage reporting
+
+* add safety caching
+
+* stub out images
+
+---------
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+---
+ README.md                                     |   1 +
+ docker/.env.example                           |   4 +
+ .../LLMSelection/CerebrasLLMOptions/index.jsx | 109 ++++++
+ .../components/ProviderPrivacy/constants.js   |   6 +
+ frontend/src/media/llmprovider/cerebras.png   | Bin 0 -> 32571 bytes
+ .../GeneralSettings/LLMPreference/index.jsx   |  10 +
+ .../Steps/LLMPreference/index.jsx             |   9 +
+ .../AgentConfig/AgentLLMSelection/index.jsx   |   1 +
+ locales/README.fa-IR.md                       |   1 +
+ locales/README.ja-JP.md                       |   1 +
+ locales/README.tr-TR.md                       |   1 +
+ locales/README.zh-CN.md                       |   1 +
+ server/.env.example                           |   4 +
+ server/endpoints/utils.js                     |   3 +
+ server/models/systemSettings.js               |   4 +
+ server/utils/AiProviders/cerebras/index.js    | 314 ++++++++++++++++++
+ server/utils/AiProviders/modelMap/index.js    |   1 +
+ server/utils/AiProviders/modelMap/legacy.js   |   7 +
+ server/utils/agents/aibitat/index.js          |   2 +
+ .../agents/aibitat/providers/ai-provider.js   |  24 +-
+ .../agents/aibitat/providers/cerebras.js      | 208 ++++++++++++
+ .../aibitat/providers/helpers/tooled.js       |   8 +-
+ .../utils/agents/aibitat/providers/index.js   |   2 +
+ server/utils/agents/index.js                  |   6 +
+ server/utils/boot/eagerLoadContextWindows.js  |   5 +
+ server/utils/helpers/chat/responses.js        |  12 +-
+ server/utils/helpers/customModels.js          |  29 ++
+ server/utils/helpers/index.js                 |   8 +
+ server/utils/helpers/updateENV.js             |  11 +
+ 29 files changed, 779 insertions(+), 13 deletions(-)
+ create mode 100644 frontend/src/components/LLMSelection/CerebrasLLMOptions/index.jsx
+ create mode 100644 frontend/src/media/llmprovider/cerebras.png
+ create mode 100644 server/utils/AiProviders/cerebras/index.js
+ create mode 100644 server/utils/agents/aibitat/providers/cerebras.js
+
+diff --git a/README.md b/README.md
+index bee0808a..da474e58 100644
+--- a/README.md
++++ b/README.md
+@@ -115,6 +115,7 @@ AnythingLLM supports multiple users as well where you can control the access and
+ - [SambaNova Cloud (chat models)](https://cloud.sambanova.ai/)
+ - [Lemonade by AMD](https://lemonade-server.ai)
+ - [Minimax](https://platform.minimax.io)
++- [Cerebras (chat models)](https://www.cerebras.ai/)
+ 
+ **Embedder models:**
+ 
+diff --git a/docker/.env.example b/docker/.env.example
+index 4e449de9..f5345e27 100644
+--- a/docker/.env.example
++++ b/docker/.env.example
+@@ -181,6 +181,10 @@ GID='1000'
+ # MINIMAX_API_KEY='sk-cp-...'
+ # MINIMAX_MODEL_PREF='MiniMax-M2.7'
+ 
++# LLM_PROVIDER='cerebras'
++# CEREBRAS_API_KEY='your-cerebras-api-key-here'
++# CEREBRAS_MODEL_PREF='gpt-oss-120b'
++
+ ###########################################
+ ######## Embedding API SElECTION ##########
+ ###########################################
+diff --git a/frontend/src/components/LLMSelection/CerebrasLLMOptions/index.jsx b/frontend/src/components/LLMSelection/CerebrasLLMOptions/index.jsx
+new file mode 100644
+index 00000000..f504c027
+--- /dev/null
++++ b/frontend/src/components/LLMSelection/CerebrasLLMOptions/index.jsx
+@@ -0,0 +1,109 @@
++import { useState, useEffect } from "react";
++import System from "@/models/system";
++
++export default function CerebrasLLMOptions({ settings }) {
++  const [inputValue, setInputValue] = useState(settings?.CerebrasApiKey);
++  const [apiKey, setApiKey] = useState(settings?.CerebrasApiKey);
++
++  return (
++    <div className="flex gap-[36px] mt-1.5">
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          Cerebras API Key
++        </label>
++        <input
++          type="password"
++          name="CerebrasApiKey"
++          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++          placeholder="Cerebras API Key"
++          defaultValue={settings?.CerebrasApiKey ? "*".repeat(20) : ""}
++          required={true}
++          autoComplete="off"
++          spellCheck={false}
++          onChange={(e) => setInputValue(e.target.value)}
++          onBlur={() => setApiKey(inputValue)}
++        />
++      </div>
++
++      {!settings?.credentialsOnly && (
++        <CerebrasModelSelection settings={settings} apiKey={apiKey} />
++      )}
++    </div>
++  );
++}
++
++/**
++ * Cerebras model selection component
++ * @param {Object} props - The component props
++ * @param {string} props.apiKey - The Cerebras API key (not used since we only need public models for now)
++ * @param {Object} props.settings - The system settings
++ * @returns {JSX.Element} The Cerebras model selection component
++ */
++function CerebrasModelSelection({ apiKey: _apiKey, settings }) {
++  const [customModels, setCustomModels] = useState([]);
++  const [loading, setLoading] = useState(true);
++
++  useEffect(() => {
++    async function findCustomModels() {
++      try {
++        setLoading(true);
++        const { models } = await System.customModels("cerebras");
++        setCustomModels(models || []);
++      } catch (error) {
++        console.error("Failed to fetch custom models:", error);
++        setCustomModels([]);
++      } finally {
++        setLoading(false);
++      }
++    }
++    findCustomModels();
++  }, []);
++
++  if (loading) {
++    return (
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          Chat Model Selection
++        </label>
++        <select
++          name="CerebrasModelPref"
++          disabled={true}
++          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++        >
++          <option disabled={true} selected={true}>
++            --loading available models--
++          </option>
++        </select>
++      </div>
++    );
++  }
++
++  return (
++    <div className="flex flex-col w-60">
++      <label className="text-white text-sm font-semibold block mb-3">
++        Chat Model Selection
++      </label>
++      <select
++        name="CerebrasModelPref"
++        required={true}
++        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++      >
++        {customModels.length > 0 && (
++          <optgroup label="Available models">
++            {customModels.map((model) => {
++              return (
++                <option
++                  key={model.id}
++                  value={model.id}
++                  selected={settings?.CerebrasModelPref === model.id}
++                >
++                  {model.name}
++                </option>
++              );
++            })}
++          </optgroup>
++        )}
++      </select>
++    </div>
++  );
++}
+diff --git a/frontend/src/components/ProviderPrivacy/constants.js b/frontend/src/components/ProviderPrivacy/constants.js
+index 1714b275..012e4c3c 100644
+--- a/frontend/src/components/ProviderPrivacy/constants.js
++++ b/frontend/src/components/ProviderPrivacy/constants.js
+@@ -46,6 +46,7 @@ import PrivateModeLogo from "@/media/llmprovider/privatemode.png";
+ import SambaNovaLogo from "@/media/llmprovider/sambanova.png";
+ import LemonadeLogo from "@/media/llmprovider/lemonade.png";
+ import MinimaxLogo from "@/media/llmprovider/minimax.png";
++import CerebrasLogo from "@/media/llmprovider/cerebras.png";
+ 
+ const LLM_PROVIDER_PRIVACY_MAP = {
+   openai: {
+@@ -258,6 +259,11 @@ const LLM_PROVIDER_PRIVACY_MAP = {
+     policyUrl: "https://platform.minimax.io/protocol/privacy-policy",
+     logo: MinimaxLogo,
+   },
++  cerebras: {
++    name: "Cerebras",
++    policyUrl: "https://www.cerebras.ai/privacy-policy",
++    logo: CerebrasLogo,
++  },
+ };
+ 
+ const VECTOR_DB_PROVIDER_PRIVACY_MAP = {
+diff --git a/frontend/src/media/llmprovider/cerebras.png b/frontend/src/media/llmprovider/cerebras.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..012b8ee42eca03e92fd13670b87e41e5ec985849
+GIT binary patch
+literal 32571
+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%0DfT6ocJwx
+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
+W6byg!CWbsp86YjLAXXz{6!?EJnvl2v
+
+literal 0
+HcmV?d00001
+
+diff --git a/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx b/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
+index 6d6a94ca..889b92f4 100644
+--- a/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
++++ b/frontend/src/pages/GeneralSettings/LLMPreference/index.jsx
+@@ -42,6 +42,7 @@ import PrivateModeLogo from "@/media/llmprovider/privatemode.png";
+ import SambaNovaLogo from "@/media/llmprovider/sambanova.png";
+ import LemonadeLogo from "@/media/llmprovider/lemonade.png";
+ import MinimaxLogo from "@/media/llmprovider/minimax.png";
++import CerebrasLogo from "@/media/llmprovider/cerebras.png";
+ 
+ import PreLoader from "@/components/Preloader";
+ import ModelRouterOptions from "@/components/LLMSelection/ModelRouterOptions";
+@@ -82,6 +83,7 @@ import PrivateModeOptions from "@/components/LLMSelection/PrivateModeOptions";
+ import SambaNovaOptions from "@/components/LLMSelection/SambaNovaOptions";
+ import LemonadeOptions from "@/components/LLMSelection/LemonadeOptions";
+ import MinimaxOptions from "@/components/LLMSelection/MinimaxOptions";
++import CerebrasLLMOptions from "@/components/LLMSelection/CerebrasLLMOptions";
+ 
+ import LLMItem from "@/components/LLMSelection/LLMItem";
+ import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+@@ -421,6 +423,14 @@ export const AVAILABLE_LLM_PROVIDERS = [
+     description: "Run Minimax's powerful M2 LLMs.",
+     requiredConfig: ["MinimaxApiKey"],
+   },
++  {
++    name: "Cerebras",
++    value: "cerebras",
++    logo: CerebrasLogo,
++    options: (settings) => <CerebrasLLMOptions settings={settings} />,
++    description: "Run models at instant speed on Cerebras inference.",
++    requiredConfig: ["CerebrasApiKey"],
++  },
+   {
+     name: "Generic OpenAI",
+     value: "generic-openai",
+diff --git a/frontend/src/pages/OnboardingFlow/Steps/LLMPreference/index.jsx b/frontend/src/pages/OnboardingFlow/Steps/LLMPreference/index.jsx
+index f2cdd927..831a7af7 100644
+--- a/frontend/src/pages/OnboardingFlow/Steps/LLMPreference/index.jsx
++++ b/frontend/src/pages/OnboardingFlow/Steps/LLMPreference/index.jsx
+@@ -36,6 +36,7 @@ import PrivateModeLogo from "@/media/llmprovider/privatemode.png";
+ import SambaNovaLogo from "@/media/llmprovider/sambanova.png";
+ import LemonadeLogo from "@/media/llmprovider/lemonade.png";
+ import MinimaxLogo from "@/media/llmprovider/minimax.png";
++import CerebrasLogo from "@/media/llmprovider/cerebras.png";
+ 
+ import OpenAiOptions from "@/components/LLMSelection/OpenAiOptions";
+ import GenericOpenAiOptions from "@/components/LLMSelection/GenericOpenAiOptions";
+@@ -73,6 +74,7 @@ import PrivateModeOptions from "@/components/LLMSelection/PrivateModeOptions";
+ import SambaNovaOptions from "@/components/LLMSelection/SambaNovaOptions";
+ import LemonadeOptions from "@/components/LLMSelection/LemonadeOptions";
+ import MinimaxOptions from "@/components/LLMSelection/MinimaxOptions";
++import CerebrasLLMOptions from "@/components/LLMSelection/CerebrasLLMOptions";
+ 
+ import LLMItem from "@/components/LLMSelection/LLMItem";
+ import System from "@/models/system";
+@@ -345,6 +347,13 @@ const LLMS = [
+     options: (settings) => <MinimaxOptions settings={settings} />,
+     description: "Run Minimax's powerful M2 LLMs.",
+   },
++  {
++    name: "Cerebras",
++    value: "cerebras",
++    logo: CerebrasLogo,
++    options: (settings) => <CerebrasLLMOptions settings={settings} />,
++    description: "Run models at instant speed on Cerebras inference.",
++  },
+ ];
+ 
+ export default function LLMPreference({
+diff --git a/frontend/src/pages/WorkspaceSettings/AgentConfig/AgentLLMSelection/index.jsx b/frontend/src/pages/WorkspaceSettings/AgentConfig/AgentLLMSelection/index.jsx
+index 0798df23..bad9c9ee 100644
+--- a/frontend/src/pages/WorkspaceSettings/AgentConfig/AgentLLMSelection/index.jsx
++++ b/frontend/src/pages/WorkspaceSettings/AgentConfig/AgentLLMSelection/index.jsx
+@@ -42,6 +42,7 @@ const ENABLED_PROVIDERS = [
+   "sambanova",
+   "lemonade",
+   "minimax",
++  "cerebras",
+   // TODO: More agent support.
+   // "huggingface"     // Can be done but already has issues with no-chat templated. Needs to be tested.
+ ];
+diff --git a/locales/README.fa-IR.md b/locales/README.fa-IR.md
+index 59009cd0..df235690 100644
+--- a/locales/README.fa-IR.md
++++ b/locales/README.fa-IR.md
+@@ -111,6 +111,7 @@ AnythingLLM همچنین از چندین کاربر پشتیبانی می‌کن
+ - [SambaNova Cloud (chat models)](https://cloud.sambanova.ai/)
+ - [Lemonade by AMD](https://lemonade-server.ai)
+ - [Minimax](https://platform.minimax.io)
++- [Cerebras (chat models)](https://www.cerebras.ai/)
+ 
+ <div dir="rtl">
+ 
+diff --git a/locales/README.ja-JP.md b/locales/README.ja-JP.md
+index e2108624..fe500584 100644
+--- a/locales/README.ja-JP.md
++++ b/locales/README.ja-JP.md
+@@ -99,6 +99,7 @@ AnythingLLMは複数ユーザーもサポートしており、インスタンス
+ - [SambaNova Cloud (chat models)](https://cloud.sambanova.ai/)
+ - [Lemonade by AMD](https://lemonade-server.ai)
+ - [Minimax](https://platform.minimax.io)
++- [Cerebras (chat models)](https://www.cerebras.ai/)
+ 
+ **埋め込みモデル：**
+ 
+diff --git a/locales/README.tr-TR.md b/locales/README.tr-TR.md
+index 8c86a1f1..7e07a19a 100644
+--- a/locales/README.tr-TR.md
++++ b/locales/README.tr-TR.md
+@@ -106,6 +106,7 @@ AnythingLLM ayrıca birden fazla kullanıcıyı da destekler; burada örneğin g
+ - [SambaNova Cloud (chat models)](https://cloud.sambanova.ai/)
+ - [Lemonade by AMD](https://lemonade-server.ai)
+ - [Minimax](https://platform.minimax.io)
++- [Cerebras (chat models)](https://www.cerebras.ai/)
+ 
+ **Embedder modelleri:**
+ 
+diff --git a/locales/README.zh-CN.md b/locales/README.zh-CN.md
+index f4beb0ed..be03b674 100644
+--- a/locales/README.zh-CN.md
++++ b/locales/README.zh-CN.md
+@@ -108,6 +108,7 @@ AnythingLLM还支持多用户，您可以控制每个用户的访问权限和体
+ - [SambaNova Cloud (chat models)](https://cloud.sambanova.ai/)
+ - [Lemonade by AMD](https://lemonade-server.ai)
+ - [Minimax](https://platform.minimax.io)
++- [Cerebras (chat models)](https://www.cerebras.ai/)
+ 
+ **支持的嵌入模型：**
+ 
+diff --git a/server/.env.example b/server/.env.example
+index 1c06ec42..5b514f32 100644
+--- a/server/.env.example
++++ b/server/.env.example
+@@ -186,6 +186,10 @@ SIG_SALT='salt' # Please generate random string at least 32 chars long.
+ # MINIMAX_API_KEY='sk-cp-...'
+ # MINIMAX_MODEL_PREF='MiniMax-M2.7'
+ 
++# LLM_PROVIDER='cerebras'
++# CEREBRAS_API_KEY='your-cerebras-api-key-here'
++# CEREBRAS_MODEL_PREF='gpt-oss-120b'
++
+ # LLM_PROVIDER='anythingllm-router'
+ # MODEL_ROUTER_ID=1
+ 
+diff --git a/server/endpoints/utils.js b/server/endpoints/utils.js
+index f202ab15..05dec05a 100644
+--- a/server/endpoints/utils.js
++++ b/server/endpoints/utils.js
+@@ -178,6 +178,9 @@ function getModelTag() {
+     case "minimax":
+       model = process.env.MINIMAX_MODEL_PREF;
+       break;
++    case "cerebras":
++      model = process.env.CEREBRAS_MODEL_PREF;
++      break;
+     default:
+       model = "--";
+       break;
+diff --git a/server/models/systemSettings.js b/server/models/systemSettings.js
+index eb237555..976dc749 100644
+--- a/server/models/systemSettings.js
++++ b/server/models/systemSettings.js
+@@ -1014,6 +1014,10 @@ const SystemSettings = {
+       // Minimax Keys
+       MinimaxApiKey: !!process.env.MINIMAX_API_KEY,
+       MinimaxModelPref: process.env.MINIMAX_MODEL_PREF,
++
++      // Cerebras Keys
++      CerebrasApiKey: !!process.env.CEREBRAS_API_KEY,
++      CerebrasModelPref: process.env.CEREBRAS_MODEL_PREF,
+     };
+   },
+ 
+diff --git a/server/utils/AiProviders/cerebras/index.js b/server/utils/AiProviders/cerebras/index.js
+new file mode 100644
+index 00000000..36d3f8d2
+--- /dev/null
++++ b/server/utils/AiProviders/cerebras/index.js
+@@ -0,0 +1,314 @@
++const { NativeEmbedder } = require("../../EmbeddingEngines/native");
++const {
++  LLMPerformanceMonitor,
++} = require("../../helpers/chat/LLMPerformanceMonitor");
++const {
++  handleDefaultStreamResponseV2,
++} = require("../../helpers/chat/responses");
++const { MODEL_MAP } = require("../modelMap");
++
++class CerebrasLLM {
++  static modelContextWindows = {};
++
++  constructor(embedder = null, modelPreference = null) {
++    const { OpenAI: OpenAIApi } = require("openai");
++    if (!process.env.CEREBRAS_API_KEY)
++      throw new Error("No Cerebras API key was set.");
++
++    this.className = "CerebrasLLM";
++    this.openai = new OpenAIApi({
++      baseURL: "https://api.cerebras.ai/v1",
++      apiKey: process.env.CEREBRAS_API_KEY,
++    });
++    this.model =
++      modelPreference || process.env.CEREBRAS_MODEL_PREF || "gpt-oss-120b";
++    // Lazy load the limits to avoid blocking the main thread on cacheContextWindows
++    this.limits = null;
++
++    this.embedder = embedder ?? new NativeEmbedder();
++    this.defaultTemp = 0;
++
++    CerebrasLLM.cacheContextWindows(true);
++    this.#log(`Initialized with model: ${this.model}`);
++  }
++
++  #log(text, ...args) {
++    console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
++  }
++
++  static #slog(text, ...args) {
++    console.log(`\x1b[36m[CerebrasLLM]\x1b[0m ${text}`, ...args);
++  }
++
++  async assertModelContextLimits() {
++    if (this.limits !== null) return;
++    await CerebrasLLM.cacheContextWindows();
++    this.limits = {
++      history: this.promptWindowLimit() * 0.15,
++      system: this.promptWindowLimit() * 0.15,
++      user: this.promptWindowLimit() * 0.7,
++    };
++  }
++
++  /**
++   * Cache the context windows for the LMStudio models.
++   * This is done once and then cached for the lifetime of the server. This is absolutely necessary to ensure that the context windows are correct.
++   *
++   * This is a convenience to ensure that the context windows are correct and that the user
++   * does not have to manually set the context window for each model.
++   * @param {boolean} force - Force the cache to be refreshed.
++   * @returns {Promise<void>} - A promise that resolves when the cache is refreshed.
++   */
++  static async cacheContextWindows(force = false) {
++    try {
++      // Skip if we already have cached context windows and we're not forcing a refresh
++      if (Object.keys(CerebrasLLM.modelContextWindows).length > 0 && !force)
++        return;
++
++      await fetch("https://api.cerebras.ai/public/v1/models")
++        .then((res) => {
++          if (!res.ok)
++            throw new Error(`Cerebras:cacheContextWindows - ${res.statusText}`);
++          return res.json();
++        })
++        .then(({ data: models }) => {
++          models.forEach((model) => {
++            if (!model.limits.max_context_length) return;
++            if (isNaN(model.limits.max_context_length)) return;
++            CerebrasLLM.modelContextWindows[model.id] =
++              model.limits.max_context_length;
++          });
++        })
++        .catch((e) => {
++          CerebrasLLM.#slog(`Error caching context windows`, e);
++          return;
++        });
++
++      CerebrasLLM.#slog(`Context windows cached for all models!`);
++    } catch (e) {
++      CerebrasLLM.#slog(`Error caching context windows`, e);
++      return;
++    }
++  }
++
++  #appendContext(contextTexts = []) {
++    if (!contextTexts || !contextTexts.length) return "";
++    return (
++      "\nContext:\n" +
++      contextTexts
++        .map((text, i) => {
++          return `[CONTEXT ${i}]:\n${text}\n[END CONTEXT ${i}]\n\n`;
++        })
++        .join("")
++    );
++  }
++
++  streamingEnabled() {
++    return "streamGetChatCompletion" in this;
++  }
++
++  static promptWindowLimit(modelName) {
++    if (Object.keys(CerebrasLLM.modelContextWindows).length === 0) {
++      this.#slog(
++        "No context windows cached - Context window may be inaccurately reported."
++      );
++      return (
++        Number(process.env.CEREBRAS_MODEL_TOKEN_LIMIT) || // Legacy support for old ENV
++        MODEL_MAP.get("cerebras", modelName) || // Use the model map for the context window
++        128000 // Default to 128000 if no context window is found and modelMap is not available
++      );
++    }
++    return Number(CerebrasLLM.modelContextWindows[modelName]) || 128000;
++  }
++
++  promptWindowLimit() {
++    return this.constructor.promptWindowLimit(this.model);
++  }
++
++  // The Cerebras inference API is OpenAI-compatible, so any model the account
++  // has access to can be used. The available models are surfaced to the UI via
++  // the customModels helper, so we only need to ensure a model is present here.
++  async isValidChatCompletionModel(_modelName = "") {
++    return true;
++  }
++
++  /**
++   * Generates appropriate content array for a message + attachments.
++   * @param {{userPrompt:string, attachments: import("../../helpers").Attachment[]}}
++   * @returns {string|object[]}
++   */
++  #generateContent({ userPrompt, attachments: _attachments = [] }) {
++    return userPrompt;
++
++    /** @dev-note
++     * There are not cerebras models that support vision - so this can be stubbed out for now.
++     * If the provider ever figures out how to support vision, this can be uncommented so images can be supported.
++     */
++
++    // if (!attachments.length) {
++    //   return userPrompt;
++    // }
++
++    // const content = [{ type: "text", text: userPrompt }];
++    // for (let attachment of attachments) {
++    //   content.push({
++    //     type: "image_url",
++    //     image_url: {
++    //       url: attachment.contentString,
++    //       detail: "auto",
++    //     },
++    //   });
++    // }
++    // return content.flat();
++  }
++
++  constructPrompt({
++    systemPrompt = "",
++    contextTexts = [],
++    chatHistory = [],
++    userPrompt = "",
++    attachments = [],
++  }) {
++    const prompt = {
++      role: "system",
++      content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
++    };
++    return [
++      prompt,
++      ...chatHistory,
++      {
++        role: "user",
++        content: this.#generateContent({ userPrompt, attachments }),
++      },
++    ];
++  }
++
++  /**
++   * Do we need this?
++   * Parses and prepends reasoning from the response and returns the full text response.
++   * Used for getChatCompletions to render thinking text if present in full response.
++   * @param {Object} message - The message object from the LMStudio response.
++   * @returns {string}
++   */
++  #parseReasoningFromResponse({ message }) {
++    let textResponse = message?.content ?? "";
++    if (!!message?.reasoning && message.reasoning.trim().length > 0)
++      textResponse = `<think>${message.reasoning}</think>${textResponse}`;
++    return textResponse;
++  }
++
++  async getChatCompletion(messages = null, { temperature = 0.7 }) {
++    const result = await LLMPerformanceMonitor.measureAsyncFunction(
++      this.openai.chat.completions
++        .create({
++          model: this.model,
++          messages,
++          temperature,
++        })
++        .catch((e) => {
++          console.error(e);
++          throw new Error(e.message);
++        })
++    );
++
++    if (
++      !result.output.hasOwnProperty("choices") ||
++      result.output.choices.length === 0
++    )
++      return null;
++
++    return {
++      textResponse: this.#parseReasoningFromResponse(result.output.choices[0]),
++      metrics: {
++        prompt_tokens: result.output.usage.prompt_tokens || 0,
++        completion_tokens: result.output.usage.completion_tokens || 0,
++        total_tokens: result.output.usage.total_tokens || 0,
++        outputTps:
++          result.output.usage.completion_tokens /
++          result.output.time_info.completion_time,
++        duration: result.output.time_info.completion_time,
++        model: this.model,
++        provider: this.className,
++        timestamp: new Date(),
++      },
++    };
++  }
++
++  async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
++    const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
++      func: this.openai.chat.completions.create({
++        model: this.model,
++        stream: true,
++        messages,
++        temperature,
++      }),
++      messages,
++      runPromptTokenCalculation: false,
++      modelTag: this.model,
++      provider: this.className,
++    });
++    return measuredStreamRequest;
++  }
++
++  handleStream(response, stream, responseProps) {
++    return handleDefaultStreamResponseV2(response, stream, responseProps);
++  }
++
++  /**
++   * Returns the capabilities of the model.
++   * This uses the new /public/v1/models endpoint, which returns the model capabilities.
++   * @returns {Promise<{tools: 'unknown' | boolean, reasoning: 'unknown' | boolean, imageGeneration: 'unknown' | boolean, vision: 'unknown' | boolean}>}
++   */
++  async getModelCapabilities() {
++    try {
++      const capabilities =
++        (await fetch(`https://api.cerebras.ai/public/v1/models/${this.model}`, {
++          headers: {
++            "Content-Type": "application/json",
++          },
++        })
++          .then((res) => {
++            if (!res.ok)
++              throw new Error(
++                `Cerebras:getModelCapabilities - ${res.statusText}`
++              );
++            return res.json();
++          })
++          .then(({ capabilities }) => capabilities)) || {};
++
++      return {
++        tools: capabilities?.tools,
++        reasoning: capabilities?.reasoning,
++        imageGeneration: false,
++        vision: capabilities?.vision,
++      };
++    } catch (error) {
++      console.error("Error getting model capabilities:", error);
++      return {
++        tools: "unknown",
++        reasoning: "unknown",
++        imageGeneration: "unknown",
++        vision: "unknown",
++      };
++    }
++  }
++
++  // Simple wrapper for dynamic embedder & normalize interface for all LLM implementations
++  async embedTextInput(textInput) {
++    return await this.embedder.embedTextInput(textInput);
++  }
++  async embedChunks(textChunks = []) {
++    return await this.embedder.embedChunks(textChunks);
++  }
++
++  async compressMessages(promptArgs = {}, rawHistory = []) {
++    await this.assertModelContextLimits();
++    const { messageArrayCompressor } = require("../../helpers/chat");
++    const messageArray = this.constructPrompt(promptArgs);
++    return await messageArrayCompressor(this, messageArray, rawHistory);
++  }
++}
++
++module.exports = {
++  CerebrasLLM,
++};
+diff --git a/server/utils/AiProviders/modelMap/index.js b/server/utils/AiProviders/modelMap/index.js
+index 2b1d8462..4f879ea5 100644
+--- a/server/utils/AiProviders/modelMap/index.js
++++ b/server/utils/AiProviders/modelMap/index.js
+@@ -22,6 +22,7 @@ class ContextWindowFinder {
+     zai: "vercel_ai_gateway", // Vercel has correct context windows for Z.AI models
+     sambanova: "sambanova",
+     minimax: "minimax",
++    cerebras: "cerebras",
+   };
+   static expiryMs = 1000 * 60 * 60 * 24 * 3; // 3 days
+   static remoteUrl =
+diff --git a/server/utils/AiProviders/modelMap/legacy.js b/server/utils/AiProviders/modelMap/legacy.js
+index 809c3f59..ddbde31c 100644
+--- a/server/utils/AiProviders/modelMap/legacy.js
++++ b/server/utils/AiProviders/modelMap/legacy.js
+@@ -126,6 +126,13 @@ const LEGACY_MODEL_MAP = {
+     "MiniMax-M2.1-highspeed": 196000,
+     "MiniMax-M2": 196000,
+   },
++  cerebras: {
++    "llama-3.3-70b": 128000,
++    "llama3.1-8b": 128000,
++    "gpt-oss-120b": 131072,
++    "qwen-3-32b": 128000,
++    "zai-glm-4.6": 128000,
++  },
+   xai: {
+     "grok-beta": 131072,
+   },
+diff --git a/server/utils/agents/aibitat/index.js b/server/utils/agents/aibitat/index.js
+index 991ac650..76089666 100644
+--- a/server/utils/agents/aibitat/index.js
++++ b/server/utils/agents/aibitat/index.js
+@@ -1404,6 +1404,8 @@ https://docs.anythingllm.com/agent/intelligent-tool-selection
+         return new Providers.LemonadeProvider({ model: config.model });
+       case "minimax":
+         return new Providers.MinimaxProvider({ model: config.model });
++      case "cerebras":
++        return new Providers.CerebrasProvider({ model: config.model });
+       default:
+         throw new Error(
+           `Unknown provider: ${config.provider}. Please use a valid provider.`
+diff --git a/server/utils/agents/aibitat/providers/ai-provider.js b/server/utils/agents/aibitat/providers/ai-provider.js
+index b167572a..137f4d74 100644
+--- a/server/utils/agents/aibitat/providers/ai-provider.js
++++ b/server/utils/agents/aibitat/providers/ai-provider.js
+@@ -320,6 +320,22 @@ class Provider {
+           apiKey: process.env.SAMBANOVA_LLM_API_KEY ?? null,
+           ...config,
+         });
++      case "minimax":
++        return new ChatOpenAI({
++          configuration: {
++            baseURL: "https://api.minimax.io/v1",
++          },
++          apiKey: process.env.MINIMAX_API_KEY || null,
++          ...config,
++        });
++      case "cerebras":
++        return new ChatOpenAI({
++          configuration: {
++            baseURL: "https://api.cerebras.ai/v1",
++          },
++          apiKey: process.env.CEREBRAS_API_KEY || null,
++          ...config,
++        });
+       // OSS Model Runners
+       // case "anythingllm_ollama":
+       //   return new ChatOllama({
+@@ -405,14 +421,6 @@ class Provider {
+           apiKey: process.env.LEMONADE_LLM_API_KEY || null,
+           ...config,
+         });
+-      case "minimax":
+-        return new ChatOpenAI({
+-          configuration: {
+-            baseURL: "https://api.minimax.io/v1",
+-          },
+-          apiKey: process.env.MINIMAX_API_KEY || null,
+-          ...config,
+-        });
+       default:
+         throw new Error(
+           `Unsupported provider ${JSON.stringify(provider)} for this task.`
+diff --git a/server/utils/agents/aibitat/providers/cerebras.js b/server/utils/agents/aibitat/providers/cerebras.js
+new file mode 100644
+index 00000000..c444e6f3
+--- /dev/null
++++ b/server/utils/agents/aibitat/providers/cerebras.js
+@@ -0,0 +1,208 @@
++const OpenAI = require("openai");
++const Provider = require("./ai-provider.js");
++const InheritMultiple = require("./helpers/classes.js");
++const UnTooled = require("./helpers/untooled.js");
++const { tooledStream, tooledComplete } = require("./helpers/tooled.js");
++const { RetryError } = require("../error.js");
++const { CerebrasLLM } = require("../../../AiProviders/cerebras");
++
++/**
++ * The agent provider for the Cerebras provider.
++ * Supports true OpenAI-compatible tool calling when enabled via ENV,
++ * falling back to the UnTooled prompt-based approach otherwise.
++ */
++class CerebrasProvider extends InheritMultiple([Provider, UnTooled]) {
++  model;
++
++  constructor(config = {}) {
++    const { model = "gpt-oss-120b" } = config;
++    super();
++    const client = new OpenAI({
++      baseURL: "https://api.cerebras.ai/v1",
++      apiKey: process.env.CEREBRAS_API_KEY,
++      maxRetries: 1,
++    });
++
++    this._client = client;
++    this.model = model;
++    this.verbose = true;
++    this._supportsToolCalling = null;
++  }
++
++  get client() {
++    return this._client;
++  }
++
++  get supportsAgentStreaming() {
++    return true;
++  }
++
++  /**
++   * Whether this provider supports native OpenAI-compatible tool calling.
++   * @returns {boolean}
++   */
++  async supportsNativeToolCalling() {
++    if (this._supportsToolCalling !== null) return this._supportsToolCalling;
++    const cerebras = new CerebrasLLM(null, this.model);
++    const capabilities = await cerebras.getModelCapabilities();
++    this._supportsToolCalling = capabilities.tools === true;
++    return this._supportsToolCalling;
++  }
++
++  async #handleFunctionCallChat({ messages = [] }) {
++    await CerebrasLLM.cacheContextWindows();
++    return await this.client.chat.completions
++      .create({
++        model: this.model,
++        messages,
++      })
++      .then((result) => {
++        if (!result.hasOwnProperty("choices"))
++          throw new Error("Cerebras chat: No results!");
++        if (result.choices.length === 0)
++          throw new Error("Cerebras chat: No results length!");
++        return result.choices[0].message.content;
++      })
++      .catch((_) => {
++        return null;
++      });
++  }
++
++  async #handleFunctionCallStream({ messages = [] }) {
++    await CerebrasLLM.cacheContextWindows();
++    return await this.client.chat.completions.create({
++      model: this.model,
++      stream: true,
++      messages,
++    });
++  }
++
++  /**
++   * Stream a chat completion with tool calling support.
++   * Uses native tool calling when enabled via ENV, otherwise falls back to UnTooled.
++   */
++  async stream(messages, functions = [], eventHandler = null) {
++    const useNative =
++      functions.length > 0 && (await this.supportsNativeToolCalling());
++
++    if (!useNative) {
++      return await UnTooled.prototype.stream.call(
++        this,
++        messages,
++        functions,
++        this.#handleFunctionCallStream.bind(this),
++        eventHandler
++      );
++    }
++
++    this.providerLog(
++      "Provider.stream (tooled) - will process this chat completion."
++    );
++
++    try {
++      await CerebrasLLM.cacheContextWindows();
++      return await tooledStream(
++        this.client,
++        this.model,
++        messages,
++        functions,
++        eventHandler,
++        { provider: this }
++      );
++    } catch (error) {
++      console.error(error.message, error);
++      if (error instanceof OpenAI.AuthenticationError) throw error;
++      if (
++        error instanceof OpenAI.RateLimitError ||
++        error instanceof OpenAI.InternalServerError ||
++        error instanceof OpenAI.APIError
++      ) {
++        throw new RetryError(error.message);
++      }
++      throw error;
++    }
++  }
++
++  /**
++   * Create a non-streaming completion with tool calling support.
++   * Uses native tool calling when enabled via ENV, otherwise falls back to UnTooled.
++   */
++  async complete(messages, functions = []) {
++    const useNative =
++      functions.length > 0 && (await this.supportsNativeToolCalling());
++
++    if (!useNative) {
++      return await UnTooled.prototype.complete.call(
++        this,
++        messages,
++        functions,
++        this.#handleFunctionCallChat.bind(this)
++      );
++    }
++
++    try {
++      await CerebrasLLM.cacheContextWindows();
++      const result = await tooledComplete(
++        this.client,
++        this.model,
++        messages,
++        functions,
++        this.getCost.bind(this),
++        { provider: this }
++      );
++
++      if (result.retryWithError) {
++        return this.complete([...messages, result.retryWithError], functions);
++      }
++
++      return result;
++    } catch (error) {
++      if (error instanceof OpenAI.AuthenticationError) throw error;
++      if (
++        error instanceof OpenAI.RateLimitError ||
++        error instanceof OpenAI.InternalServerError ||
++        error instanceof OpenAI.APIError
++      ) {
++        throw new RetryError(error.message);
++      }
++      throw error;
++    }
++  }
++
++  /**
++   * Updates the stored usage metrics from a provider response.
++   * Override in subclasses to handle provider-specific usage formats.
++   * @param {Object} usage - The usage object from the provider response
++   * @param {Object} time_info - The time info object from the provider response (Cerebras specific)
++   */
++  recordUsage(usage = {}, time_info = {}) {
++    // assume start time
++    let duration = (Date.now() - this._requestStartTime) / 1000;
++    const promptTokens = usage.prompt_tokens || 0;
++    const completionTokens = usage.completion_tokens || 0;
++    if (time_info?.completion_time) duration = time_info.completion_time;
++
++    this.lastUsage = {
++      prompt_tokens: promptTokens,
++      completion_tokens: completionTokens,
++      total_tokens: usage.total_tokens,
++      outputTps:
++        completionTokens && duration > 0 ? completionTokens / duration : 0,
++      duration,
++      model: this.model,
++      provider: this.constructor.name,
++      timestamp: new Date(),
++    };
++  }
++
++  /**
++   * Get the cost of the completion.
++   * @param _usage The completion to get the cost for.
++   * @returns The cost of the completion.
++   */
++  getCost(_usage) {
++    return 0;
++  }
++}
++
++module.exports = CerebrasProvider;
+diff --git a/server/utils/agents/aibitat/providers/helpers/tooled.js b/server/utils/agents/aibitat/providers/helpers/tooled.js
+index 08b124dd..f0abb865 100644
+--- a/server/utils/agents/aibitat/providers/helpers/tooled.js
++++ b/server/utils/agents/aibitat/providers/helpers/tooled.js
+@@ -204,12 +204,12 @@ async function tooledStream(
+ 
+   const toolCallsByIndex = {};
+   let usage = null;
++  let time_info = null;
+ 
+   for await (const chunk of stream) {
+     // Capture usage from final chunk (some providers send usage after finish_reason)
+-    if (chunk?.usage) {
+-      usage = chunk.usage;
+-    }
++    if (chunk?.usage) usage = chunk.usage;
++    if (chunk?.time_info) time_info = chunk.time_info;
+ 
+     if (!chunk?.choices?.[0]) continue;
+     const choice = chunk.choices[0];
+@@ -262,7 +262,7 @@ async function tooledStream(
+   // Auto-record usage if provider is passed and usage is available
+   if (provider?.recordUsage && usage) {
+     try {
+-      provider.recordUsage(usage);
++      provider.recordUsage(usage, time_info);
+     } catch {}
+   }
+ 
+diff --git a/server/utils/agents/aibitat/providers/index.js b/server/utils/agents/aibitat/providers/index.js
+index 17d7d441..ac2bb8c3 100644
+--- a/server/utils/agents/aibitat/providers/index.js
++++ b/server/utils/agents/aibitat/providers/index.js
+@@ -34,6 +34,7 @@ const PrivatemodeProvider = require("./privatemode.js");
+ const SambaNovaProvider = require("./sambanova.js");
+ const LemonadeProvider = require("./lemonade.js");
+ const MinimaxProvider = require("./minimax.js");
++const CerebrasProvider = require("./cerebras.js");
+ 
+ module.exports = {
+   OpenAIProvider,
+@@ -72,4 +73,5 @@ module.exports = {
+   SambaNovaProvider,
+   LemonadeProvider,
+   MinimaxProvider,
++  CerebrasProvider,
+ };
+diff --git a/server/utils/agents/index.js b/server/utils/agents/index.js
+index ceb7ba48..baefb8df 100644
+--- a/server/utils/agents/index.js
++++ b/server/utils/agents/index.js
+@@ -281,6 +281,10 @@ class AgentHandler {
+         if (!process.env.MINIMAX_API_KEY)
+           throw new Error("Minimax API key must be provided to use agents.");
+         break;
++      case "cerebras":
++        if (!process.env.CEREBRAS_API_KEY)
++          throw new Error("Cerebras API key must be provided to use agents.");
++        break;
+       default:
+         throw new Error(
+           "No workspace agent provider set. Please set your agent provider in the workspace's settings"
+@@ -373,6 +377,8 @@ class AgentHandler {
+         return process.env.LEMONADE_LLM_MODEL_PREF ?? null;
+       case "minimax":
+         return process.env.MINIMAX_MODEL_PREF ?? "MiniMax-M2.7";
++      case "cerebras":
++        return process.env.CEREBRAS_MODEL_PREF ?? "gpt-oss-120b";
+       default:
+         return null;
+     }
+diff --git a/server/utils/boot/eagerLoadContextWindows.js b/server/utils/boot/eagerLoadContextWindows.js
+index 98c1c67e..f5cf8079 100644
+--- a/server/utils/boot/eagerLoadContextWindows.js
++++ b/server/utils/boot/eagerLoadContextWindows.js
+@@ -29,6 +29,11 @@ async function eagerLoadContextWindows() {
+       await FoundryLLM.cacheContextWindows(true);
+       log("Foundry");
+       break;
++    case "cerebras":
++      const { CerebrasLLM } = require("../AiProviders/cerebras");
++      await CerebrasLLM.cacheContextWindows(true);
++      log("Cerebras");
++      break;
+   }
+ }
+ 
+diff --git a/server/utils/helpers/chat/responses.js b/server/utils/helpers/chat/responses.js
+index ff1f6546..ad040d24 100644
+--- a/server/utils/helpers/chat/responses.js
++++ b/server/utils/helpers/chat/responses.js
+@@ -51,7 +51,11 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
+       for await (const chunk of stream) {
+         const message = chunk?.choices?.[0];
+         const token = message?.delta?.content;
+-        const reasoningToken = message?.delta?.reasoning_content;
++
++        // Reasoning token can be in different properties depending on the provider.
++        // eg: Cerebras uses `reasoning` instead of `reasoning_content` like OpenAI.
++        const reasoningToken =
++          message?.delta?.reasoning_content || message?.delta?.reasoning;
+ 
+         // If we see usage metrics in the chunk, we can use them directly
+         // instead of estimating them, but we only want to assign values if
+@@ -69,6 +73,12 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
+             hasUsageMetrics = true; // to stop estimating counter
+             usage.completion_tokens = Number(chunk.usage.completion_tokens);
+           }
++
++          // Some providers, like Cerebras, return the completion time in the usage metrics.
++          // This is used to report the real-time duration of the completion.
++          if (chunk.usage.hasOwnProperty("time_info")) {
++            usage.duration = chunk.usage.time_info.completion_time;
++          }
+         }
+ 
+         // Reasoning models will always return the reasoning text before the token text.
+diff --git a/server/utils/helpers/customModels.js b/server/utils/helpers/customModels.js
+index 50e6ac2a..b63187e3 100644
+--- a/server/utils/helpers/customModels.js
++++ b/server/utils/helpers/customModels.js
+@@ -50,6 +50,7 @@ const SUPPORT_CUSTOM_MODELS = [
+   "sambanova",
+   "lemonade",
+   "minimax",
++  "cerebras",
+   "generic-openai",
+   // Embedding Engines
+   "native-embedder",
+@@ -137,6 +138,8 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
+       return await getLemonadeModels(basePath, "embedding");
+     case "minimax":
+       return await getMinimaxModels(apiKey);
++    case "cerebras":
++      return await getCerebrasModels();
+     case "generic-openai":
+       return await getGenericOpenAiModels(basePath, apiKey);
+     default:
+@@ -1076,6 +1079,32 @@ async function getSambaNovaModels(_apiKey = null) {
+   }
+ }
+ 
++/**
++ * Use the Cerebras PUBLIC API to fetch the public models
++ * @returns {Promise<{models: Array<{id: string, organization: string, name: string}>, error: string | null}>}
++ */
++async function getCerebrasModels() {
++  try {
++    const models = await fetch("https://api.cerebras.ai/public/v1/models")
++      .then((response) => response.json())
++      .then(({ data = [] }) => {
++        return data.map((model) => ({
++          id: model.id,
++          name: model.name,
++          organization: model.owned_by ?? "Cerebras",
++        }));
++      })
++      .catch((error) => {
++        console.error(`Cerebras:listModels`, error.message);
++        return [];
++      });
++    return { models, error: null };
++  } catch (e) {
++    console.error(`Cerebras:getCerebrasModels`, e.message);
++    return { models: [], error: "Could not fetch Cerebras Models" };
++  }
++}
++
+ async function getGenericOpenAiModels(basePath = null, apiKey = null) {
+   try {
+     const { OpenAI: OpenAIApi } = require("openai");
+diff --git a/server/utils/helpers/index.js b/server/utils/helpers/index.js
+index ca37c247..6eb60af7 100644
+--- a/server/utils/helpers/index.js
++++ b/server/utils/helpers/index.js
+@@ -251,6 +251,9 @@ function getLLMProvider({ provider = null, model = null } = {}) {
+     case "minimax":
+       const { MinimaxLLM } = require("../AiProviders/minimax");
+       return new MinimaxLLM(embedder, model);
++    case "cerebras":
++      const { CerebrasLLM } = require("../AiProviders/cerebras");
++      return new CerebrasLLM(embedder, model);
+     case "anythingllm-router":
+       // Model router is handled separately in stream.js via AnythingLLMModelRouter.
+       // This case should not be hit directly - if it is, throw a descriptive error.
+@@ -442,6 +445,9 @@ function getLLMProviderClass({ provider = null } = {}) {
+     case "minimax":
+       const { MinimaxLLM } = require("../AiProviders/minimax");
+       return MinimaxLLM;
++    case "cerebras":
++      const { CerebrasLLM } = require("../AiProviders/cerebras");
++      return CerebrasLLM;
+     case "anythingllm-router":
+       const { AnythingLLMModelRouter } = require("../AiProviders/modelRouter");
+       return AnythingLLMModelRouter;
+@@ -531,6 +537,8 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
+       return process.env.LEMONADE_LLM_MODEL_PREF;
+     case "minimax":
+       return process.env.MINIMAX_MODEL_PREF;
++    case "cerebras":
++      return process.env.CEREBRAS_MODEL_PREF;
+     default:
+       return null;
+   }
+diff --git a/server/utils/helpers/updateENV.js b/server/utils/helpers/updateENV.js
+index 6a6ab6a1..5fffe3f1 100644
+--- a/server/utils/helpers/updateENV.js
++++ b/server/utils/helpers/updateENV.js
+@@ -686,6 +686,16 @@ const KEY_MAPPING = {
+     checks: [isNotEmpty],
+   },
+ 
++  // Cerebras Options
++  CerebrasApiKey: {
++    envKey: "CEREBRAS_API_KEY",
++    checks: [isNotEmpty],
++  },
++  CerebrasModelPref: {
++    envKey: "CEREBRAS_MODEL_PREF",
++    checks: [isNotEmpty],
++  },
++
+   // APIPie Options
+   ApipieLLMApiKey: {
+     envKey: "APIPIE_LLM_API_KEY",
+@@ -992,6 +1002,7 @@ function supportedLLM(input = "") {
+     "sambanova",
+     "lemonade",
+     "minimax",
++    "cerebras",
+     "anythingllm-router",
+   ].includes(input);
+   return validSelection ? null : `${input} is not a valid LLM provider.`;
+-- 
+2.50.1 (Apple Git-155)
+

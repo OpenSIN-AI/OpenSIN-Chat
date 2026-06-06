@@ -1,0 +1,311 @@
+From cc28024cabe50d969f296e047a2e3cc6ca82c555 Mon Sep 17 00:00:00 2001
+From: Timothy Carambat <rambat1010@gmail.com>
+Date: Tue, 2 Jun 2026 06:24:50 -0700
+Subject: [PATCH 13/23] Turn HTML scraped sites to Markdown for better research
+ (#5742)
+
+* Turn HTML scraped sites to Markdown for better research
+
+* pin
+---
+ collector/package.json                        |   1 +
+ collector/processLink/convert/generic.js      |  14 +-
+ .../processLink/helpers/htmlToMarkdown.js     | 203 ++++++++++++++++++
+ collector/yarn.lock                           |  12 ++
+ 4 files changed, 223 insertions(+), 7 deletions(-)
+ create mode 100644 collector/processLink/helpers/htmlToMarkdown.js
+
+diff --git a/collector/package.json b/collector/package.json
+index 20e50f00..c23997b8 100644
+--- a/collector/package.json
++++ b/collector/package.json
+@@ -42,6 +42,7 @@
+     "slugify": "^1.6.6",
+     "strip-ansi": "^7.1.2",
+     "tesseract.js": "^6.0.0",
++    "turndown": "7.2.4",
+     "url-pattern": "^1.0.3",
+     "uuid": "^9.0.0",
+     "wavefile": "^11.0.0",
+diff --git a/collector/processLink/convert/generic.js b/collector/processLink/convert/generic.js
+index 0e8f05e5..6848ade3 100644
+--- a/collector/processLink/convert/generic.js
++++ b/collector/processLink/convert/generic.js
+@@ -14,6 +14,7 @@ const {
+   loadYouTubeTranscript,
+ } = require("../../utils/extensions/YoutubeTranscript");
+ const RuntimeSettings = require("../../utils/runtimeSettings");
++const { htmlToMarkdown } = require("../helpers/htmlToMarkdown");
+ 
+ /**
+  * Scrape a generic URL and return the content in the specified format
+@@ -168,13 +169,12 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
+         waitUntil: "networkidle2",
+       },
+       async evaluate(page, browser) {
+-        const result = await page.evaluate((captureAs) => {
+-          if (captureAs === "text") return document.body.innerText;
+-          if (captureAs === "html") return document.documentElement.innerHTML;
+-          return document.body.innerText;
+-        }, captureAs);
++        const innerHTML = await page.evaluate(
++          () => document.documentElement.innerHTML
++        );
+         await browser.close();
+-        return result;
++        if (captureAs === "html") return innerHTML;
++        return htmlToMarkdown(innerHTML, link);
+       },
+     });
+ 
+@@ -227,7 +227,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
+         ...validatedHeaders(headers),
+       },
+     }).then((res) => res.text());
+-    return pageText;
++    return htmlToMarkdown(pageText, link);
+   } catch (error) {
+     console.error("getPageContent failed to be fetched by any method.", error);
+   }
+diff --git a/collector/processLink/helpers/htmlToMarkdown.js b/collector/processLink/helpers/htmlToMarkdown.js
+new file mode 100644
+index 00000000..4daefb8d
+--- /dev/null
++++ b/collector/processLink/helpers/htmlToMarkdown.js
+@@ -0,0 +1,203 @@
++const TurndownService = require("turndown");
++const { parse } = require("node-html-parser");
++
++// Image URL base paths to strip entirely - these are typically proxied badges,
++// tracking pixels, avatars, or other non-content images that bloat token counts.
++const IGNORED_IMG_BASEPATHS = [
++  "https://camo.githubusercontent.com",
++  "https://avatars.githubusercontent.com",
++  "https://img.shields.io",
++  "https://badge.fury.io",
++  "https://badges.gitter.im",
++  "https://coveralls.io/repos",
++  "https://travis-ci.org",
++  "https://circleci.com",
++  "https://github.com/favicon",
++];
++
++/**
++ * Convert raw page HTML into clean markdown using Turndown.
++ * Strips non-content elements (nav, footer, ads, etc.), hidden elements,
++ * base64 images, scripts, styles, and resolves relative URLs before converting.
++ * @param {string} html - Raw HTML string
++ * @param {string} baseUrl - The URL the page was scraped from
++ * @returns {string} Cleaned markdown string
++ */
++function htmlToMarkdown(html, baseUrl) {
++  if (!html || typeof html !== "string") return "";
++  try {
++    let root = parse(html);
++
++    // Prefer the narrowest content container to avoid page chrome.
++    // article > main because sites like GitHub put the file tree inside <main>
++    // but scope the README to <article>.
++    const content =
++      root.querySelector("article") ||
++      root.querySelector("main") ||
++      root.querySelector('[role="main"]');
++    if (content) root = content;
++
++    const junkSelectors = [
++      "script",
++      "style",
++      "noscript",
++      "nav",
++      "footer",
++      "header",
++      "aside",
++      "iframe",
++      "svg",
++      '[role="navigation"]',
++      '[role="banner"]',
++      '[role="contentinfo"]',
++      '[aria-hidden="true"]',
++      "[hidden]",
++    ];
++    for (const sel of junkSelectors) {
++      root.querySelectorAll(sel).forEach((el) => el.remove());
++    }
++
++    for (const el of root.querySelectorAll("[style]")) {
++      const style = el.getAttribute("style") || "";
++      if (
++        /display\s*:\s*none/i.test(style) ||
++        /visibility\s*:\s*hidden/i.test(style)
++      ) {
++        el.remove();
++      }
++    }
++
++    if (baseUrl) {
++      resolveUrls(root, baseUrl);
++    }
++
++    stripCitations(root);
++
++    const cleanedHtml = root.toString();
++
++    const turndown = new TurndownService({
++      headingStyle: "atx",
++      codeBlockStyle: "fenced",
++      bulletListMarker: "-",
++    });
++    turndown.remove(["script", "style", "noscript", "iframe", "svg"]);
++
++    turndown.addRule("compactLinks", {
++      filter: "a",
++      replacement: function (content, node) {
++        const href = node.getAttribute("href");
++        if (!href) return content;
++        const text = content.replace(/\s+/g, " ").trim();
++        if (!text) return "";
++        return `[${text}](${href})`;
++      },
++    });
++
++    let markdown = turndown.turndown(cleanedHtml);
++
++    // Strip links and images with excessively long URLs (200+ chars)
++    markdown = markdown.replace(/!\[[^\]]*\]\([^)]{200,}\)\s*/g, "");
++    markdown = markdown.replace(/\[[^\]]*\]\([^)]{200,}\)/g, (match) => {
++      const textMatch = match.match(/\[([^\]]*)\]/);
++      return textMatch ? textMatch[1] : "";
++    });
++
++    markdown = markdown.replace(/\[[\d]+\]/g, "");
++    markdown = markdown.replace(/\[#cite[^\]]*\]/g, "");
++    markdown = markdown.replace(/\[edit\]/gi, "");
++
++    markdown = markdown.replace(/\n{4,}/g, "\n\n\n").trim();
++    return markdown;
++  } catch (error) {
++    console.error("htmlToMarkdown failed:", error);
++    try {
++      return parse(html).text.trim();
++    } catch {
++      return "";
++    }
++  }
++}
++
++/**
++ * Resolve relative URLs for links and images. Strips base64 and
++ * ignored-basepath images entirely. Gives alt-less images a filename-based alt.
++ * @param {import('node-html-parser').HTMLElement} root
++ * @param {string} baseUrl
++ */
++function resolveUrls(root, baseUrl) {
++  for (const a of root.querySelectorAll("a[href]")) {
++    const href = a.getAttribute("href");
++    if (!href || /^(https?:|mailto:|tel:|javascript:|#)/i.test(href)) continue;
++    try {
++      a.setAttribute("href", new URL(href, baseUrl).toString());
++    } catch {}
++  }
++
++  for (const img of root.querySelectorAll("img[src]")) {
++    const src = img.getAttribute("src");
++    if (!src) {
++      img.remove();
++      continue;
++    }
++    if (src.startsWith("data:")) {
++      img.remove();
++      continue;
++    }
++
++    const resolvedSrc = /^https?:/i.test(src)
++      ? src
++      : (() => {
++          try {
++            return new URL(src, baseUrl).toString();
++          } catch {
++            return src;
++          }
++        })();
++
++    if (IGNORED_IMG_BASEPATHS.some((base) => resolvedSrc.startsWith(base))) {
++      img.remove();
++      continue;
++    }
++
++    if (!/^https?:/i.test(src)) {
++      try {
++        img.setAttribute("src", new URL(src, baseUrl).toString());
++      } catch {}
++    }
++
++    const alt = (img.getAttribute("alt") || "").trim();
++    if (!alt) {
++      try {
++        const pathname = new URL(img.getAttribute("src")).pathname;
++        const filename = pathname.split("/").pop() || "image";
++        img.setAttribute("alt", filename);
++      } catch {
++        img.setAttribute("alt", "image");
++      }
++    }
++  }
++}
++
++/**
++ * Strip citation/reference superscripts and reference sections
++ * commonly found on Wikipedia and similar sites.
++ * @param {import('node-html-parser').HTMLElement} root
++ */
++function stripCitations(root) {
++  for (const sup of root.querySelectorAll("sup.reference, sup.noprint")) {
++    sup.remove();
++  }
++
++  for (const sel of [
++    ".reflist",
++    ".references",
++    ".refbegin",
++    "#References",
++    ".catlinks",
++    ".mw-authority-control",
++  ]) {
++    root.querySelectorAll(sel).forEach((el) => el.remove());
++  }
++}
++
++module.exports = { htmlToMarkdown };
+diff --git a/collector/yarn.lock b/collector/yarn.lock
+index ef13c3cc..9d08c9df 100644
+--- a/collector/yarn.lock
++++ b/collector/yarn.lock
+@@ -374,6 +374,11 @@
+     "@langchain/core" ">0.2.0 <0.3.0"
+     js-tiktoken "^1.0.12"
+ 
++"@mixmark-io/domino@^2.2.0":
++  version "2.2.0"
++  resolved "https://registry.yarnpkg.com/@mixmark-io/domino/-/domino-2.2.0.tgz#4e8ec69bf1afeb7a14f0628b7e2c0f35bdb336c3"
++  integrity sha512-Y28PR25bHXUg88kCV7nivXrP2Nj2RueZ3/l/jdx6J9f8J4nsEGcgX0Qe6lt7Pa+J79+kPiJU3LguR6O/6zrLOw==
++
+ "@pkgjs/parseargs@^0.11.0":
+   version "0.11.0"
+   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
+@@ -4082,6 +4087,13 @@ tunnel-agent@^0.6.0:
+   dependencies:
+     safe-buffer "^5.0.1"
+ 
++turndown@7.2.4:
++  version "7.2.4"
++  resolved "https://registry.yarnpkg.com/turndown/-/turndown-7.2.4.tgz#42d98202aefa8c188c997b586bc6da78bdf27ea2"
++  integrity sha512-I8yFsfRzmzK0WV1pNNOA4A7y4RDfFxPRxb3t+e3ui14qSGOxGtiSP6GjeX+Y6CHb7HYaFj7ECUD7VE5kQMZWGQ==
++  dependencies:
++    "@mixmark-io/domino" "^2.2.0"
++
+ type-check@^0.4.0, type-check@~0.4.0:
+   version "0.4.0"
+   resolved "https://registry.yarnpkg.com/type-check/-/type-check-0.4.0.tgz#07b8203bfa7056c0657050e3ccd2c37730bab8f1"
+-- 
+2.50.1 (Apple Git-155)
+

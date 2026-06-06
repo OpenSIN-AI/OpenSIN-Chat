@@ -1,0 +1,35 @@
+From 668b27340c2c7f76daf458e34c5c18ab0b26f4ca Mon Sep 17 00:00:00 2001
+From: narutamaaurum <narutamaaurum@gmail.com>
+Date: Wed, 27 May 2026 23:17:38 +0700
+Subject: [PATCH 01/23] docs: list all cloud embedding providers (#5701)
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+---
+ README.md | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/README.md b/README.md
+index 899e0104..bee0808a 100644
+--- a/README.md
++++ b/README.md
+@@ -121,10 +121,17 @@ AnythingLLM supports multiple users as well where you can control the access and
+ - [AnythingLLM Native Embedder](/server/storage/models/README.md) (default)
+ - [OpenAI](https://openai.com)
+ - [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
++- [Gemini](https://ai.google.dev/)
+ - [LocalAI (all)](https://localai.io/)
+ - [Ollama (all)](https://ollama.ai/)
+ - [LM Studio (all)](https://lmstudio.ai)
++- [Lemonade](https://lemonade-server.ai)
++- [OpenRouter](https://openrouter.ai/)
++- [LiteLLM](https://github.com/BerriAI/litellm)
+ - [Cohere](https://cohere.com/)
++- [Voyage AI](https://www.voyageai.com/)
++- [Mistral](https://mistral.ai/)
++- Generic OpenAI-compatible embedding APIs
+ 
+ **Audio Transcription models:**
+ 
+-- 
+2.50.1 (Apple Git-155)
+

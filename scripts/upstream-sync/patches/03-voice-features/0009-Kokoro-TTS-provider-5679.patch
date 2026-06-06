@@ -1,0 +1,757 @@
+From 15b796636621a3a52b9f84f03a1692f0e304b577 Mon Sep 17 00:00:00 2001
+From: Sean Hatfield <seanhatfield5@gmail.com>
+Date: Mon, 1 Jun 2026 16:30:21 -0700
+Subject: [PATCH 09/23] Kokoro TTS provider (#5679)
+
+* add kokoro tts provider
+
+* fix api key fallback + add try/catch around voice fetch
+
+* fix order
+
+* update order and endpoint parsing
+
+* remove log
+
+---------
+
+Co-authored-by: Timothy Carambat <rambat1010@gmail.com>
+---
+ docker/.env.example                           |   6 +
+ .../TextToSpeech/KokoroOptions/index.jsx      | 168 ++++++++++++++++++
+ .../Actions/TTSButton/index.jsx               |   1 +
+ frontend/src/media/ttsproviders/kokoro.png    | Bin 0 -> 14368 bytes
+ .../GeneralSettings/AudioPreference/tts.jsx   |  10 ++
+ server/.env.example                           |   6 +
+ server/models/systemSettings.js               |   4 +
+ server/utils/TextToSpeech/index.js            |   3 +
+ server/utils/TextToSpeech/kokoro/index.js     |  50 ++++++
+ server/utils/helpers/customModels.js          |  46 ++++-
+ server/utils/helpers/updateENV.js             |  15 ++
+ 11 files changed, 308 insertions(+), 1 deletion(-)
+ create mode 100644 frontend/src/components/TextToSpeech/KokoroOptions/index.jsx
+ create mode 100644 frontend/src/media/ttsproviders/kokoro.png
+ create mode 100644 server/utils/TextToSpeech/kokoro/index.js
+
+diff --git a/docker/.env.example b/docker/.env.example
+index cf41589b..bdc4c26e 100644
+--- a/docker/.env.example
++++ b/docker/.env.example
+@@ -335,6 +335,12 @@ GID='1000'
+ # TTS_ELEVEN_LABS_KEY=
+ # TTS_ELEVEN_LABS_VOICE_MODEL=21m00Tcm4TlvDq8ikWAM # Rachel
+ 
++# Self-hosted Kokoro via kokoro-fastapi (OpenAI-compatible).
++# TTS_PROVIDER="kokoro"
++# TTS_KOKORO_ENDPOINT="http://host.docker.internal:8880/v1"
++# TTS_KOKORO_KEY= # optional, only if you front your server with auth
++# TTS_KOKORO_VOICE_MODEL=af_bella
++
+ # STT_PROVIDER="native"
+ 
+ # Server-side STT via OpenAI. Reuses OPEN_AI_KEY set above.
+diff --git a/frontend/src/components/TextToSpeech/KokoroOptions/index.jsx b/frontend/src/components/TextToSpeech/KokoroOptions/index.jsx
+new file mode 100644
+index 00000000..21426fa2
+--- /dev/null
++++ b/frontend/src/components/TextToSpeech/KokoroOptions/index.jsx
+@@ -0,0 +1,168 @@
++import { useEffect, useState } from "react";
++import System from "@/models/system";
++
++export default function KokoroTTSOptions({ settings }) {
++  const [endpoint, setEndpoint] = useState(
++    settings?.TTSKokoroEndpoint || "http://localhost:8880/v1"
++  );
++  const [inputEndpoint, setInputEndpoint] = useState(endpoint);
++  const [apiKey, setApiKey] = useState(settings?.TTSKokoroKey);
++  const [inputApiKey, setInputApiKey] = useState(apiKey);
++
++  return (
++    <div className="w-full flex flex-col gap-y-7">
++      <p className="text-sm font-base text-white text-opacity-60">
++        Connect to a self-hosted{" "}
++        <a
++          href="https://github.com/remsky/Kokoro-FastAPI"
++          target="_blank"
++          rel="noreferrer"
++          className="underline"
++        >
++          kokoro-fastapi
++        </a>{" "}
++        server. The voice list is pulled live from your server.
++      </p>
++      <div className="flex gap-x-4">
++        <div className="flex flex-col w-60">
++          <label className="text-white text-sm font-semibold block mb-2">
++            Base URL
++          </label>
++          <input
++            type="url"
++            name="TTSKokoroEndpoint"
++            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++            placeholder="http://localhost:8880/v1"
++            defaultValue={settings?.TTSKokoroEndpoint}
++            required={true}
++            autoComplete="off"
++            spellCheck={false}
++            onChange={(e) => setInputEndpoint(e.target.value)}
++            onBlur={() => setEndpoint(inputEndpoint)}
++          />
++          <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
++            The OpenAI-compatible base URL of your kokoro-fastapi server.
++          </p>
++        </div>
++        <div className="flex flex-col w-60">
++          <label className="text-white text-sm font-semibold block mb-2">
++            API Key
++          </label>
++          <input
++            type="password"
++            name="TTSKokoroKey"
++            className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++            placeholder="Optional API Key"
++            defaultValue={settings?.TTSKokoroKey ? "*".repeat(20) : ""}
++            autoComplete="off"
++            spellCheck={false}
++            onChange={(e) => setInputApiKey(e.target.value)}
++            onBlur={() => setApiKey(inputApiKey)}
++          />
++          <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
++            Optional — only required if you front your Kokoro server with auth.
++          </p>
++        </div>
++      </div>
++      <div className="flex gap-x-4">
++        <KokoroVoiceSelection
++          settings={settings}
++          endpoint={endpoint}
++          apiKey={apiKey}
++        />
++      </div>
++    </div>
++  );
++}
++
++function KokoroVoiceSelection({ settings, endpoint, apiKey = null }) {
++  const [voices, setVoices] = useState([]);
++  const [loading, setLoading] = useState(true);
++
++  useEffect(() => {
++    async function findVoices() {
++      if (!endpoint) {
++        setVoices([]);
++        setLoading(false);
++        return;
++      }
++      setLoading(true);
++      try {
++        const { models } = await System.customModels(
++          "kokoro-tts",
++          apiKey,
++          endpoint
++        );
++        setVoices(models || []);
++      } catch {
++        setVoices([]);
++      } finally {
++        setLoading(false);
++      }
++    }
++    findVoices();
++  }, [endpoint, apiKey]);
++
++  if (loading) {
++    return (
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          Voice Model
++        </label>
++        <select
++          name="TTSKokoroVoiceModel"
++          disabled={true}
++          className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++        >
++          <option disabled={true} selected={true}>
++            -- loading available voices --
++          </option>
++        </select>
++      </div>
++    );
++  }
++
++  if (voices.length === 0) {
++    return (
++      <div className="flex flex-col w-60">
++        <label className="text-white text-sm font-semibold block mb-3">
++          Voice Model
++        </label>
++        <input
++          type="text"
++          name="TTSKokoroVoiceModel"
++          className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
++          placeholder="af_bella"
++          defaultValue={settings?.TTSKokoroVoiceModel ?? "af_bella"}
++          required={true}
++          autoComplete="off"
++          spellCheck={false}
++        />
++        <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
++          Could not reach the Kokoro server to load voices. Enter a voice id
++          manually.
++        </p>
++      </div>
++    );
++  }
++
++  return (
++    <div className="flex flex-col w-60">
++      <label className="text-white text-sm font-semibold block mb-3">
++        Voice Model
++      </label>
++      <select
++        name="TTSKokoroVoiceModel"
++        required={true}
++        defaultValue={settings?.TTSKokoroVoiceModel ?? "af_bella"}
++        className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
++      >
++        {voices.map((voice) => (
++          <option key={voice.id} value={voice.id}>
++            {voice.name}
++          </option>
++        ))}
++      </select>
++    </div>
++  );
++}
+diff --git a/frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/Actions/TTSButton/index.jsx b/frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/Actions/TTSButton/index.jsx
+index a637c6ff..0ab597a4 100644
+--- a/frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/Actions/TTSButton/index.jsx
++++ b/frontend/src/components/WorkspaceChat/ChatContainer/ChatHistory/HistoricalMessage/Actions/TTSButton/index.jsx
+@@ -15,6 +15,7 @@ export default function TTSMessage({ slug, chatId, message }) {
+     case "openai":
+     case "generic-openai":
+     case "elevenlabs":
++    case "kokoro":
+       return (
+         <WrapTTS>
+           <AsyncTTSMessage chatId={chatId} slug={slug} />
+diff --git a/frontend/src/media/ttsproviders/kokoro.png b/frontend/src/media/ttsproviders/kokoro.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..a8578d9d78e7612c65e102e8dadc1727ab11d082
+GIT binary patch
+literal 14368
+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
+ZB1xBgtXLXZe)tcZlH3b$xy<YL{{wwZV3Ys=
+
+literal 0
+HcmV?d00001
+
+diff --git a/frontend/src/pages/GeneralSettings/AudioPreference/tts.jsx b/frontend/src/pages/GeneralSettings/AudioPreference/tts.jsx
+index 68f19a7b..1d7bb882 100644
+--- a/frontend/src/pages/GeneralSettings/AudioPreference/tts.jsx
++++ b/frontend/src/pages/GeneralSettings/AudioPreference/tts.jsx
+@@ -9,12 +9,14 @@ import AnythingLLMIcon from "@/media/logo/anything-llm-icon.png";
+ import ElevenLabsIcon from "@/media/ttsproviders/elevenlabs.png";
+ import PiperTTSIcon from "@/media/ttsproviders/piper.png";
+ import GenericOpenAiLogo from "@/media/ttsproviders/generic-openai.png";
++import KokoroIcon from "@/media/ttsproviders/kokoro.png";
+ 
+ import BrowserNative from "@/components/TextToSpeech/BrowserNative";
+ import OpenAiTTSOptions from "@/components/TextToSpeech/OpenAiOptions";
+ import ElevenLabsTTSOptions from "@/components/TextToSpeech/ElevenLabsOptions";
+ import PiperTTSOptions from "@/components/TextToSpeech/PiperTTSOptions";
+ import OpenAiGenericTTSOptions from "@/components/TextToSpeech/OpenAiGenericOptions";
++import KokoroTTSOptions from "@/components/TextToSpeech/KokoroOptions";
+ 
+ const PROVIDERS = [
+   {
+@@ -45,6 +47,14 @@ const PROVIDERS = [
+     options: (settings) => <PiperTTSOptions settings={settings} />,
+     description: "Run TTS models locally in your browser privately.",
+   },
++  {
++    name: "Kokoro",
++    value: "kokoro",
++    logo: KokoroIcon,
++    options: (settings) => <KokoroTTSOptions settings={settings} />,
++    description:
++      "Connect to a self-hosted kokoro-fastapi server for high-quality open-source voices.",
++  },
+   {
+     name: "OpenAI Compatible",
+     value: "generic-openai",
+diff --git a/server/.env.example b/server/.env.example
+index 65c64fe7..e3ce0e39 100644
+--- a/server/.env.example
++++ b/server/.env.example
+@@ -343,6 +343,12 @@ TTS_PROVIDER="native"
+ # TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL=nova
+ # TTS_OPEN_AI_COMPATIBLE_ENDPOINT="https://api.openai.com/v1"
+ 
++# Self-hosted Kokoro via kokoro-fastapi (OpenAI-compatible).
++# TTS_PROVIDER="kokoro"
++# TTS_KOKORO_ENDPOINT="http://localhost:8880/v1"
++# TTS_KOKORO_KEY= # optional, only if you front your server with auth
++# TTS_KOKORO_VOICE_MODEL=af_bella
++
+ STT_PROVIDER="native"
+ 
+ # Server-side STT via OpenAI. Reuses OPEN_AI_KEY set above.
+diff --git a/server/models/systemSettings.js b/server/models/systemSettings.js
+index 89565da1..edba1293 100644
+--- a/server/models/systemSettings.js
++++ b/server/models/systemSettings.js
+@@ -535,6 +535,10 @@ const SystemSettings = {
+       TTSOpenAICompatibleVoiceModel:
+         process.env.TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL,
+       TTSOpenAICompatibleEndpoint: process.env.TTS_OPEN_AI_COMPATIBLE_ENDPOINT,
++      // Kokoro TTS
++      TTSKokoroEndpoint: process.env.TTS_KOKORO_ENDPOINT,
++      TTSKokoroKey: !!process.env.TTS_KOKORO_KEY,
++      TTSKokoroVoiceModel: process.env.TTS_KOKORO_VOICE_MODEL,
+ 
+       // STT Selection
+       SpeechToTextProvider: process.env.STT_PROVIDER || "native",
+diff --git a/server/utils/TextToSpeech/index.js b/server/utils/TextToSpeech/index.js
+index 5ed5684d..f1d735ff 100644
+--- a/server/utils/TextToSpeech/index.js
++++ b/server/utils/TextToSpeech/index.js
+@@ -10,6 +10,9 @@ function getTTSProvider() {
+     case "generic-openai":
+       const { GenericOpenAiTTS } = require("./openAiGeneric");
+       return new GenericOpenAiTTS();
++    case "kokoro":
++      const { KokoroTTS } = require("./kokoro");
++      return new KokoroTTS();
+     default:
+       throw new Error("ENV: No TTS_PROVIDER value found in environment!");
+   }
+diff --git a/server/utils/TextToSpeech/kokoro/index.js b/server/utils/TextToSpeech/kokoro/index.js
+new file mode 100644
+index 00000000..9be7541c
+--- /dev/null
++++ b/server/utils/TextToSpeech/kokoro/index.js
+@@ -0,0 +1,50 @@
++class KokoroTTS {
++  constructor() {
++    if (!process.env.TTS_KOKORO_ENDPOINT)
++      throw new Error(
++        "No Kokoro endpoint was set. Please set TTS_KOKORO_ENDPOINT to the base URL of your kokoro-fastapi server (e.g. http://localhost:8880/v1)."
++      );
++
++    const endpoint = new URL(process.env.TTS_KOKORO_ENDPOINT);
++    if (!endpoint.pathname.endsWith("/v1")) endpoint.pathname = "/v1";
++    const { OpenAI: OpenAIApi } = require("openai");
++    this.openai = new OpenAIApi({
++      apiKey: process.env.TTS_KOKORO_KEY || null,
++      baseURL: endpoint.toString(),
++    });
++
++    this.model = "kokoro";
++    this.voice = process.env.TTS_KOKORO_VOICE_MODEL ?? "af_bella";
++    this.#log(
++      `Service (${process.env.TTS_KOKORO_ENDPOINT}) with voice: ${this.voice}`
++    );
++  }
++
++  #log(text, ...args) {
++    console.log(`\x1b[32m[KokoroTTS]\x1b[0m ${text}`, ...args);
++  }
++
++  /**
++   * Generates a buffer from the given text input using a kokoro-fastapi server
++   * via its OpenAI-compatible /audio/speech endpoint.
++   * @param {string} textInput - The text to be converted to audio.
++   * @returns {Promise<Buffer>} A buffer containing the audio data.
++   */
++  async ttsBuffer(textInput) {
++    try {
++      const result = await this.openai.audio.speech.create({
++        model: this.model,
++        voice: this.voice,
++        input: textInput,
++      });
++      return Buffer.from(await result.arrayBuffer());
++    } catch (e) {
++      console.error(e);
++    }
++    return null;
++  }
++}
++
++module.exports = {
++  KokoroTTS,
++};
+diff --git a/server/utils/helpers/customModels.js b/server/utils/helpers/customModels.js
+index cdbf9f3f..2411d9b1 100644
+--- a/server/utils/helpers/customModels.js
++++ b/server/utils/helpers/customModels.js
+@@ -18,7 +18,6 @@ const { getAllLemonadeModels } = require("../AiProviders/lemonade");
+ 
+ const SUPPORT_CUSTOM_MODELS = [
+   "openai",
+-  "openai-stt",
+   "anthropic",
+   "localai",
+   "ollama",
+@@ -59,8 +58,11 @@ const SUPPORT_CUSTOM_MODELS = [
+   "openrouter-embedder",
+   "lemonade-embedder",
+   // STT Engines
++  "openai-stt",
+   "deepgram-stt",
+   "lemonade-stt",
++  // TTS Engines
++  "kokoro-tts",
+ ];
+ 
+ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
+@@ -152,6 +154,8 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
+       return await getGenericOpenAiModels(basePath, apiKey);
+     case "deepgram-stt":
+       return await getDeepgramSTTModels(apiKey);
++    case "kokoro-tts":
++      return await kokoroTtsVoices(basePath, apiKey);
+     default:
+       return { models: [], error: "Invalid provider for custom models" };
+   }
+@@ -1244,6 +1248,46 @@ async function getGenericOpenAiModels(basePath = null, apiKey = null) {
+   }
+ }
+ 
++/**
++ * Pulls the live voice list from a self-hosted kokoro-fastapi server's
++ * /audio/voices endpoint. basePath is the OpenAI-compatible base URL the
++ * user pointed at their kokoro instance (e.g. http://localhost:8880/v1).
++ * @param {string} basePath - The base path to the Kokoro instance.
++ * @param {string} apiKey - The API key to use.
++ * @returns {Promise<{models: Array<{id: string, organization: string, name: string}>, error: string | null}>}
++ */
++async function kokoroTtsVoices(basePath = null, apiKey = null) {
++  let endpoint = basePath || process.env.TTS_KOKORO_ENDPOINT;
++  if (!endpoint)
++    return { models: [], error: "No Kokoro endpoint was provided." };
++
++  endpoint = new URL(endpoint);
++  endpoint.pathname = "/v1/audio/voices";
++  const headers = { "Content-Type": "application/json" };
++  const key = typeof apiKey === "boolean" ? null : apiKey;
++  if (key) headers.Authorization = `Bearer ${key}`;
++
++  const voices = await fetch(endpoint.toString(), { method: "GET", headers })
++    .then((res) => {
++      if (!res.ok) throw new Error(res.statusText || "Failed to load voices");
++      return res.json();
++    })
++    .then((data) => (Array.isArray(data?.voices) ? data.voices : []))
++    .catch((e) => {
++      console.error(`Kokoro:listVoices`, e.message);
++      return null;
++    });
++
++  if (!voices || !Array.isArray(voices))
++    return { models: [], error: "Could not fetch Kokoro voices." };
++  const models = voices.map((voice) => ({
++    id: voice.id,
++    name: voice.name,
++    organization: "Kokoro",
++  }));
++  return { models, error: null };
++}
++
+ module.exports = {
+   getCustomModels,
+   SUPPORT_CUSTOM_MODELS,
+diff --git a/server/utils/helpers/updateENV.js b/server/utils/helpers/updateENV.js
+index b237b22f..b43f6d5a 100644
+--- a/server/utils/helpers/updateENV.js
++++ b/server/utils/helpers/updateENV.js
+@@ -666,6 +666,20 @@ const KEY_MAPPING = {
+     checks: [isValidURL],
+   },
+ 
++  // Kokoro TTS (self-hosted kokoro-fastapi)
++  TTSKokoroEndpoint: {
++    envKey: "TTS_KOKORO_ENDPOINT",
++    checks: [isValidURL],
++  },
++  TTSKokoroKey: {
++    envKey: "TTS_KOKORO_KEY",
++    checks: [],
++  },
++  TTSKokoroVoiceModel: {
++    envKey: "TTS_KOKORO_VOICE_MODEL",
++    checks: [isNotEmpty],
++  },
++
+   // STT Selection
+   SpeechToTextProvider: {
+     envKey: "STT_PROVIDER",
+@@ -995,6 +1009,7 @@ function supportedTTSProvider(input = "") {
+     "elevenlabs",
+     "piper_local",
+     "generic-openai",
++    "kokoro",
+   ].includes(input);
+   return validSelection ? null : `${input} is not a valid TTS provider.`;
+ }
+-- 
+2.50.1 (Apple Git-155)
+

@@ -1,0 +1,246 @@
+From 65086984bd531663426d08852762f798e8d07fed Mon Sep 17 00:00:00 2001
+From: Timothy Carambat <rambat1010@gmail.com>
+Date: Mon, 1 Jun 2026 15:40:24 -0700
+Subject: [PATCH 07/23] Kill `default` thread (#5739)
+
+* no more default thread
+
+* lint
+---
+ .../ThreadContainer/index.jsx                 | 49 +++++++++++++------
+ .../WorkspaceChat/ChatContainer/index.jsx     | 39 +++++++++++++--
+ frontend/src/models/workspaceThread.js        |  6 +--
+ server/endpoints/workspaceThreads.js          | 11 ++++-
+ 4 files changed, 81 insertions(+), 24 deletions(-)
+
+diff --git a/frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/index.jsx b/frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/index.jsx
+index 022e2412..927b1141 100644
+--- a/frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/index.jsx
++++ b/frontend/src/components/Sidebar/ActiveWorkspaces/ThreadContainer/index.jsx
+@@ -13,6 +13,7 @@ export default function ThreadContainer({
+ }) {
+   const { threadSlug = null } = useParams();
+   const [threads, setThreads] = useState([]);
++  const [defaultThreadHasChats, setDefaultThreadHasChats] = useState(false);
+   const [loading, setLoading] = useState(true);
+   const [ctrlPressed, setCtrlPressed] = useState(false);
+ 
+@@ -39,12 +40,15 @@ export default function ThreadContainer({
+   useEffect(() => {
+     async function fetchThreads() {
+       if (!workspace.slug) return;
+-      const { threads } = await Workspace.threads.all(workspace.slug);
++      const { threads, defaultThreadChatCount } = await Workspace.threads.all(
++        workspace.slug
++      );
+       setLoading(false);
+       setThreads(threads);
++      setDefaultThreadHasChats(defaultThreadChatCount > 0);
+     }
+     fetchThreads();
+-  }, [workspace.slug]);
++  }, [workspace.slug, threadSlug]);
+ 
+   // Enable toggling of bulk-deletion by holding meta-key (ctrl on win and cmd/fn on others)
+   useEffect(() => {
+@@ -113,9 +117,15 @@ export default function ThreadContainer({
+   }
+ 
+   function getActiveThreadIdx() {
+-    if (isVirtualThread) return threads.length + 1;
++    if (isVirtualThread)
++      return threads.length + (defaultThreadHasChats ? 1 : 0);
++    // On a bare workspace route with no default chats, show virtual thread as active
++    if (!threadSlug && !defaultThreadHasChats)
++      return threads.length + (defaultThreadHasChats ? 1 : 0);
+     const idx = threads.findIndex((t) => t?.slug === threadSlug);
+-    return idx >= 0 ? idx + 1 : 0;
++    if (idx >= 0) return idx + (defaultThreadHasChats ? 1 : 0);
++    if (!threadSlug && defaultThreadHasChats) return 0;
++    return -1;
+   }
+ 
+   if (loading) {
+@@ -128,31 +138,38 @@ export default function ThreadContainer({
+ 
+   const activeThreadIdx = getActiveThreadIdx();
+ 
++  // Show a virtual thread when on a bare workspace route (no threadSlug) and
++  // the default thread has no chats — mimics the Home page virtual thread behavior.
++  const showVirtualThread =
++    isVirtualThread || (!threadSlug && !defaultThreadHasChats);
++
+   return (
+     <div className="flex flex-col" role="list" aria-label="Threads">
+-      <ThreadItem
+-        idx={0}
+-        activeIdx={activeThreadIdx}
+-        isActive={activeThreadIdx === 0}
+-        workspace={workspace}
+-        thread={{ slug: null, name: "default" }}
+-        hasNext={threads.length > 0 || isVirtualThread}
+-      />
++      {defaultThreadHasChats && (
++        <ThreadItem
++          idx={0}
++          activeIdx={activeThreadIdx}
++          isActive={activeThreadIdx === 0}
++          workspace={workspace}
++          thread={{ slug: null, name: "default" }}
++          hasNext={threads.length > 0 || showVirtualThread}
++        />
++      )}
+       {threads.map((thread, i) => (
+         <ThreadItem
+           key={thread.slug}
+-          idx={i + 1}
++          idx={i + (defaultThreadHasChats ? 1 : 0)}
+           ctrlPressed={ctrlPressed}
+           toggleMarkForDeletion={toggleForDeletion}
+           activeIdx={activeThreadIdx}
+-          isActive={activeThreadIdx === i + 1}
++          isActive={activeThreadIdx === i + (defaultThreadHasChats ? 1 : 0)}
+           workspace={workspace}
+           onRemove={removeThread}
+           thread={thread}
+-          hasNext={i !== threads.length - 1 || isVirtualThread}
++          hasNext={i !== threads.length - 1 || showVirtualThread}
+         />
+       ))}
+-      {isVirtualThread && (
++      {showVirtualThread && (
+         <ThreadItem
+           idx={activeThreadIdx}
+           activeIdx={activeThreadIdx}
+diff --git a/frontend/src/components/WorkspaceChat/ChatContainer/index.jsx b/frontend/src/components/WorkspaceChat/ChatContainer/index.jsx
+index 56745720..1a11ff0d 100644
+--- a/frontend/src/components/WorkspaceChat/ChatContainer/index.jsx
++++ b/frontend/src/components/WorkspaceChat/ChatContainer/index.jsx
+@@ -52,6 +52,7 @@ export default function ChatContainer({
+   const { chatHistoryRef } = useChatContainerQuickScroll();
+   const pendingMessageChecked = useRef(false);
+   const pendingResetRef = useRef(false);
++  const activeThreadSlug = threadSlug;
+ 
+   const isEmpty =
+     chatHistory.length === 0 && !sessionStorage.getItem(PENDING_HOME_MESSAGE);
+@@ -101,7 +102,24 @@ export default function ChatContainer({
+ 
+     // Clear the localStorage draft for this thread/workspace so that if the
+     // PromptInput remounts (empty→chat transition), it won't restore stale text
+-    clearPromptInputDraft(threadSlug ?? workspace.slug);
++    clearPromptInputDraft(activeThreadSlug ?? workspace.slug);
++
++    // If we're on a bare workspace route (no thread) and no chats exist yet,
++    // create a new thread and navigate to it — mimicking Home page behavior.
++    if (!activeThreadSlug && chatHistory.length === 0) {
++      const { thread } = await Workspace.threads.new(workspace.slug);
++      if (thread) {
++        sessionStorage.setItem(
++          PENDING_HOME_MESSAGE,
++          JSON.stringify({
++            message: currentMessage,
++            attachments: parseAttachments(),
++          })
++        );
++        navigate(paths.workspace.thread(workspace.slug, thread.slug));
++        return;
++      }
++    }
+ 
+     const prevChatHistory = [
+       ...chatHistory,
+@@ -120,7 +138,6 @@ export default function ChatContainer({
+     ];
+ 
+     if (listening) {
+-      // Stop the mic if the send button is clicked
+       endSTTSession();
+     }
+     setChatHistory(prevChatHistory);
+@@ -189,10 +206,24 @@ export default function ChatContainer({
+ 
+     if (!text || text === "") return false;
+ 
++    // If on a bare workspace route with no thread and no chat yet, create a
++    // virtual thread and navigate — same as handleSubmit does.
++    if (!activeThreadSlug && chatHistory.length === 0 && history.length === 0) {
++      const { thread } = await Workspace.threads.new(workspace.slug);
++      if (thread) {
++        sessionStorage.setItem(
++          PENDING_HOME_MESSAGE,
++          JSON.stringify({ message: text, attachments })
++        );
++        navigate(paths.workspace.thread(workspace.slug, thread.slug));
++        return;
++      }
++    }
++
+     // Clear the localStorage draft so that if the PromptInput remounts
+     // (e.g. /reset causing empty→chat or chat→empty transitions),
+     // it won't restore stale text.
+-    clearPromptInputDraft(threadSlug ?? workspace.slug);
++    clearPromptInputDraft(activeThreadSlug ?? workspace.slug);
+ 
+     // If we are auto-submitting
+     // Then we can replace the current text since this is not accumulating.
+@@ -288,7 +319,7 @@ export default function ChatContainer({
+ 
+       await Workspace.multiplexStream({
+         workspaceSlug: workspace.slug,
+-        threadSlug,
++        threadSlug: activeThreadSlug,
+         prompt: promptMessage.userMessage,
+         chatHandler: (chatResult) =>
+           handleChat(
+diff --git a/frontend/src/models/workspaceThread.js b/frontend/src/models/workspaceThread.js
+index 44d64ad8..bdc33b93 100644
+--- a/frontend/src/models/workspaceThread.js
++++ b/frontend/src/models/workspaceThread.js
+@@ -6,7 +6,7 @@ import { v4 } from "uuid";
+ 
+ const WorkspaceThread = {
+   all: async function (workspaceSlug) {
+-    const { threads } = await fetch(
++    const { threads, defaultThreadChatCount } = await fetch(
+       `${API_BASE}/workspace/${workspaceSlug}/threads`,
+       {
+         method: "GET",
+@@ -15,10 +15,10 @@ const WorkspaceThread = {
+     )
+       .then((res) => res.json())
+       .catch(() => {
+-        return { threads: [] };
++        return { threads: [], defaultThreadChatCount: 0 };
+       });
+ 
+-    return { threads };
++    return { threads, defaultThreadChatCount };
+   },
+   new: async function (workspaceSlug) {
+     const { thread, error } = await fetch(
+diff --git a/server/endpoints/workspaceThreads.js b/server/endpoints/workspaceThreads.js
+index a9c0a7d2..427751b9 100644
+--- a/server/endpoints/workspaceThreads.js
++++ b/server/endpoints/workspaceThreads.js
+@@ -73,7 +73,16 @@ function workspaceThreadEndpoints(app) {
+           workspace_id: workspace.id,
+           user_id: user?.id || null,
+         });
+-        response.status(200).json({ threads });
++
++        const defaultThreadChatCount = await WorkspaceChats.count({
++          workspaceId: workspace.id,
++          user_id: user?.id || null,
++          thread_id: null,
++          api_session_id: null,
++          include: true,
++        });
++
++        response.status(200).json({ threads, defaultThreadChatCount });
+       } catch (e) {
+         console.error(e.message, e);
+         response.sendStatus(500).end();
+-- 
+2.50.1 (Apple Git-155)
+
