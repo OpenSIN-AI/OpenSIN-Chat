@@ -2,13 +2,13 @@ import { useState } from "react";
 
 export default function OpencodeZenOptions({ settings }) {
   const [opencodeZenBasePath, setOpencodeZenBasePath] = useState(
-    settings?.OpencodeZenBasePath || "https://opencode.ai/zen/v1"
+    settings?.OpencodeZenBasePath || "https://opencode.ai/zen/v1",
   );
   const [opencodeZenApiKey, setOpencodeZenApiKey] = useState(
-    settings?.OpencodeZenApiKey
+    settings?.OpencodeZenApiKey,
   );
   const [opencodeZenModelPref, setOpencodeZenModelPref] = useState(
-    settings?.OpencodeZenModelPref || "nemotron-3-ultra-free"
+    settings?.OpencodeZenModelPref || "nemotron-3-ultra-free",
   );
 
   return (
@@ -23,7 +23,9 @@ export default function OpencodeZenOptions({ settings }) {
             name="OpencodeZenBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="https://opencode.ai/zen/v1"
-            defaultValue={settings?.OpencodeZenBasePath || "https://opencode.ai/zen/v1"}
+            defaultValue={
+              settings?.OpencodeZenBasePath || "https://opencode.ai/zen/v1"
+            }
             onChange={(e) => setOpencodeZenBasePath(e.target.value)}
             required={true}
             autoComplete="off"
@@ -55,7 +57,9 @@ export default function OpencodeZenOptions({ settings }) {
             name="OpencodeZenModelPref"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="e.g. nemotron-3-ultra-free"
-            defaultValue={settings?.OpencodeZenModelPref || "nemotron-3-ultra-free"}
+            defaultValue={
+              settings?.OpencodeZenModelPref || "nemotron-3-ultra-free"
+            }
             onChange={(e) => setOpencodeZenModelPref(e.target.value)}
             required={true}
             autoComplete="off"

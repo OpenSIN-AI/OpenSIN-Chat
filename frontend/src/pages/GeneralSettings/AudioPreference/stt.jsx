@@ -61,7 +61,7 @@ export default function SpeechToTextProvider({ settings }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProviders, setFilteredProviders] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState(
-    settings?.SpeechToTextProvider || "native"
+    settings?.SpeechToTextProvider || "native",
   );
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef(null);
@@ -103,13 +103,13 @@ export default function SpeechToTextProvider({ settings }) {
 
   useEffect(() => {
     const filtered = PROVIDERS.filter((provider) =>
-      provider.name.toLowerCase().includes(searchQuery.toLowerCase())
+      provider.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setFilteredProviders(filtered);
   }, [searchQuery, selectedProvider]);
 
   const selectedProviderObject = PROVIDERS.find(
-    (provider) => provider.value === selectedProvider
+    (provider) => provider.value === selectedProvider,
   );
 
   return (
@@ -220,7 +220,7 @@ export default function SpeechToTextProvider({ settings }) {
         >
           {selectedProvider &&
             PROVIDERS.find(
-              (provider) => provider.value === selectedProvider
+              (provider) => provider.value === selectedProvider,
             )?.options(settings)}
         </div>
       </div>

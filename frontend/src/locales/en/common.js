@@ -1496,7 +1496,8 @@ const TRANSLATIONS = {
     source_filter_media: "Media",
     no_sources_filter: "No sources found for filter '{{filter}}'",
     workspace_sources: "Workspace Sources",
-    no_workspace_sources: "No workspace sources available. Add documents, links, or APIs in workspace settings.",
+    no_workspace_sources:
+      "No workspace sources available. Add documents, links, or APIs in workspace settings.",
     source_count_one: "{{count}} reference",
     source_count_other: "{{count}} references",
     document: "Document",
@@ -1609,7 +1610,8 @@ const TRANSLATIONS = {
           'Memories should be a single, concise statement. e.g. "User prefers Python over JavaScript"',
         edit_description: "Update the content of this memory.",
         label: "Memory",
-        placeholder: "e.g. User's name is Joe, User works on OpenAfD Chat, etc.",
+        placeholder:
+          "e.g. User's name is Joe, User works on OpenAfD Chat, etc.",
         create: "Create",
         save: "Save",
         cancel: "Cancel",

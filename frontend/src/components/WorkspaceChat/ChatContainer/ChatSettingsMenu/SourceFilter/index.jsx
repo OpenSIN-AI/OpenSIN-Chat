@@ -20,12 +20,22 @@ export default function SourceFilterRow({ onClose }) {
   }
 
   return (
-    <div className="relative" onMouseEnter={() => setShowSubmenu(true)} onMouseLeave={() => setShowSubmenu(false)}>
-      <div className={`flex items-center justify-between px-2 py-1 rounded cursor-pointer ${showSubmenu ? "bg-zinc-700 light:bg-slate-200" : "hover:bg-zinc-700 light:hover:bg-slate-200"}`}>
+    <div
+      className="relative"
+      onMouseEnter={() => setShowSubmenu(true)}
+      onMouseLeave={() => setShowSubmenu(false)}
+    >
+      <div
+        className={`flex items-center justify-between px-2 py-1 rounded cursor-pointer ${showSubmenu ? "bg-zinc-700 light:bg-slate-200" : "hover:bg-zinc-700 light:hover:bg-slate-200"}`}
+      >
         <span className="text-sm font-normal text-white light:text-slate-800">
           {t("chat_window.source_filter_label")}
         </span>
-        <CaretRight size={14} weight="bold" className="text-zinc-50 light:text-slate-800" />
+        <CaretRight
+          size={14}
+          weight="bold"
+          className="text-zinc-50 light:text-slate-800"
+        />
       </div>
       {showSubmenu && (
         <SourceFilterSubmenu

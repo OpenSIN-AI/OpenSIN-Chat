@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import ChatSidebar from "../ChatSidebar";
 import { MemoriesProvider, useMemoriesContext } from "./MemoriesContext";
 import PersonalizationToggle from "./PersonalizationToggle";
-import MemoryTabs from "./MemoryTabs";
 import MemoryCard from "./MemoryCard";
 import MemoryModal from "./MemoryModal";
 import SidebarTabs from "../ChatSidebar/SidebarTabs";

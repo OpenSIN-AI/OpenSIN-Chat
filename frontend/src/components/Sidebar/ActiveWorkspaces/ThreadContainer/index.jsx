@@ -26,7 +26,7 @@ export default function ThreadContainer({
             return { ...thread, name: newName };
           }
           return thread;
-        })
+        }),
       );
     };
 
@@ -41,7 +41,7 @@ export default function ThreadContainer({
     async function fetchThreads() {
       if (!workspace.slug) return;
       const { threads, defaultThreadChatCount } = await Workspace.threads.all(
-        workspace.slug
+        workspace.slug,
       );
       setLoading(false);
       setThreads(threads);
@@ -67,7 +67,7 @@ export default function ThreadContainer({
         setThreads((prev) =>
           prev.map((t) => {
             return { ...t, deleted: false };
-          })
+          }),
         );
       }
     };
@@ -86,7 +86,7 @@ export default function ThreadContainer({
       prev.map((t) => {
         if (t.id !== id) return t;
         return { ...t, deleted: !t.deleted };
-      })
+      }),
     );
   };
 
@@ -106,7 +106,7 @@ export default function ThreadContainer({
       prev.map((_t) => {
         if (_t.id !== threadId) return _t;
         return { ..._t, deleted: true };
-      })
+      }),
     );
 
     // Show thread was deleted, but then remove from threads entirely so it will
@@ -200,7 +200,7 @@ function NewThreadButton({ workspace }) {
       return;
     }
     window.location.replace(
-      paths.workspace.thread(workspace.slug, thread.slug)
+      paths.workspace.thread(workspace.slug, thread.slug),
     );
   };
 

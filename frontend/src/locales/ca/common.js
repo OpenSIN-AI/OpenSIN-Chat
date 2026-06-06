@@ -824,7 +824,8 @@ const TRANSLATIONS = {
     },
     chat: {
       title: "Xat",
-      description: "Estableix les teves preferències de xat per a OpenAfD Chat.",
+      description:
+        "Estableix les teves preferències de xat per a OpenAfD Chat.",
       auto_submit: {
         title: "Envia automàticament l'entrada de veu",
         description:

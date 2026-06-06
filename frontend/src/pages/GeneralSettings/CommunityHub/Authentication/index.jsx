@@ -127,8 +127,8 @@ export default function CommunityHubAuthentication() {
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
               Connecting your OpenAfD Chat Community Hub account allows you to
-              access your <b>private</b> OpenAfD Chat Community Hub items as well
-              as upload your own items to the OpenAfD Chat Community Hub.
+              access your <b>private</b> OpenAfD Chat Community Hub items as
+              well as upload your own items to the OpenAfD Chat Community Hub.
             </p>
           </div>
 
@@ -144,8 +144,8 @@ export default function CommunityHubAuthentication() {
                 <p className="text-sm text-theme-text-secondary">
                   Connecting your OpenAfD Chat Community Hub account allows you
                   to pull in your <b>private</b> items from the OpenAfD Chat
-                  Community Hub as well as upload your own items to the
-                  OpenAfD Chat Community Hub.
+                  Community Hub as well as upload your own items to the OpenAfD
+                  Chat Community Hub.
                   <br />
                   <br />
                   <i>

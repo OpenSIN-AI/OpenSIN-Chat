@@ -1298,7 +1298,8 @@ const TRANSLATIONS = {
     source_filter_media: "Medien",
     no_sources_filter: "Keine Quellen für Filter '{{filter}}' gefunden",
     workspace_sources: "Workspace-Quellen",
-    no_workspace_sources: "Keine Workspace-Quellen verfügbar. Füge Dokumente, Links oder APIs in den Workspace-Einstellungen hinzu.",
+    no_workspace_sources:
+      "Keine Workspace-Quellen verfügbar. Füge Dokumente, Links oder APIs in den Workspace-Einstellungen hinzu.",
     document: "Dokument",
     similarity_match: "Spiel",
     source_count_one: "{{count}} Referenz",

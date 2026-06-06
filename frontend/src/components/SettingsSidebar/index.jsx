@@ -196,7 +196,7 @@ function SupportEmail() {
       setSupportEmail(
         supportEmail?.email
           ? `mailto:${supportEmail.email}`
-          : paths.mailToSupport()
+          : paths.mailToSupport(),
       );
     };
     fetchSupportEmail();
@@ -461,8 +461,8 @@ function HoldToReveal({ children, holdForMs = 3_000 }) {
   let timeout = null;
   const [showing, setShowing] = useState(
     window.localStorage.getItem(
-      "openafd_experimental_feature_preview_unlocked"
-    )
+      "openafd_experimental_feature_preview_unlocked",
+    ),
   );
 
   useEffect(() => {
@@ -474,7 +474,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }) {
         showToast("Experimental feature previews unlocked!");
         window.localStorage.setItem(
           "openafd_experimental_feature_preview_unlocked",
-          "enabled"
+          "enabled",
         );
         window.removeEventListener("keypress", onPress);
         window.removeEventListener("keyup", onRelease);

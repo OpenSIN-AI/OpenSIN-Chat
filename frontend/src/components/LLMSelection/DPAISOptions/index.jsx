@@ -120,7 +120,7 @@ function DellProAiStudioModelSelection({ settings, basePath = null }) {
         "dpais",
         null,
         basePath,
-        2_000
+        2_000,
       );
       setCustomModels(models || []);
       setLoading(false);

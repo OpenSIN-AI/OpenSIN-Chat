@@ -1,6 +1,4 @@
-import {
-  COMPLETE_QUESTIONNAIRE,
-} from "@/utils/constants";
+import { COMPLETE_QUESTIONNAIRE } from "@/utils/constants";
 import paths from "@/utils/paths";
 import { CheckCircle } from "@phosphor-icons/react";
 import React, { useState, useEffect, useRef } from "react";
@@ -126,7 +124,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
             <p className="text-white text-lg">
               {t("onboarding.survey.thankYou")}
             </p>
-              <a
+            <a
               href={paths.mailToSupport()}
               className="text-sky-400 underline text-xs"
             >

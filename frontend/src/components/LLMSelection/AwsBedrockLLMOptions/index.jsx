@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function AwsBedrockLLMOptions({ settings }) {
   const [connectionMethod, setConnectionMethod] = useState(
-    settings?.AwsBedrockLLMConnectionMethod ?? "iam"
+    settings?.AwsBedrockLLMConnectionMethod ?? "iam",
   );
 
   return (
