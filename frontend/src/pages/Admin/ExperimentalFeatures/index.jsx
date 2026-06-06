@@ -13,7 +13,7 @@ export default function ExperimentalFeatures() {
   const [featureFlags, setFeatureFlags] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedFeature, setSelectedFeature] = useState(
-    "experimental_live_file_sync"
+    "experimental_live_file_sync",
   );
 
   useEffect(() => {
@@ -177,19 +177,17 @@ function SelectedFeatureComponent({ feature, settings, refresh }) {
 }
 
 function FeatureVerification({ children }) {
-  if (
-    !window.localStorage.getItem("openafd_tos_experimental_feature_set")
-  ) {
+  if (!window.localStorage.getItem("openafd_tos_experimental_feature_set")) {
     function acceptTos(e) {
       e.preventDefault();
 
       window.localStorage.setItem(
         "openafd_tos_experimental_feature_set",
-        "accepted"
+        "accepted",
       );
       showToast(
         "Experimental Feature set enabled. Reloading the page.",
-        "success"
+        "success",
       );
       setTimeout(() => {
         window.location.reload();

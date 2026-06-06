@@ -1,16 +1,4 @@
-import { useState } from "react";
-
 export default function OpencodeZenOptions({ settings }) {
-  const [opencodeZenBasePath, setOpencodeZenBasePath] = useState(
-    settings?.OpencodeZenBasePath || "https://opencode.ai/zen/v1"
-  );
-  const [opencodeZenApiKey, setOpencodeZenApiKey] = useState(
-    settings?.OpencodeZenApiKey
-  );
-  const [opencodeZenModelPref, setOpencodeZenModelPref] = useState(
-    settings?.OpencodeZenModelPref || "nemotron-3-ultra-free"
-  );
-
   return (
     <div className="flex flex-col gap-y-7">
       <div className="flex gap-[36px] mt-1.5 flex-wrap">
@@ -23,8 +11,10 @@ export default function OpencodeZenOptions({ settings }) {
             name="OpencodeZenBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="https://opencode.ai/zen/v1"
-            defaultValue={settings?.OpencodeZenBasePath || "https://opencode.ai/zen/v1"}
-            onChange={(e) => setOpencodeZenBasePath(e.target.value)}
+            defaultValue={
+              settings?.OpencodeZenBasePath || "https://opencode.ai/zen/v1"
+            }
+            onChange={() => {}}
             required={true}
             autoComplete="off"
             spellCheck={false}
@@ -40,7 +30,7 @@ export default function OpencodeZenOptions({ settings }) {
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="OpenCode Zen API Key"
             defaultValue={settings?.OpencodeZenApiKey ? "*".repeat(20) : ""}
-            onChange={(e) => setOpencodeZenApiKey(e.target.value)}
+            onChange={() => {}}
             required={false}
             autoComplete="off"
             spellCheck={false}
@@ -55,8 +45,10 @@ export default function OpencodeZenOptions({ settings }) {
             name="OpencodeZenModelPref"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="e.g. nemotron-3-ultra-free"
-            defaultValue={settings?.OpencodeZenModelPref || "nemotron-3-ultra-free"}
-            onChange={(e) => setOpencodeZenModelPref(e.target.value)}
+            defaultValue={
+              settings?.OpencodeZenModelPref || "nemotron-3-ultra-free"
+            }
+            onChange={() => {}}
             required={true}
             autoComplete="off"
             spellCheck={false}

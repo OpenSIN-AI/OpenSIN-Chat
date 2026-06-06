@@ -80,7 +80,7 @@ export default {
       chatSettings: function (slug, options = {}) {
         return applyOptions(
           `/workspace/${slug}/settings/chat-settings`,
-          options
+          options,
         );
       },
       vectorDatabase: (slug) => {

@@ -155,7 +155,7 @@ export default function AgentWebSearchSelection({
 
   useEffect(() => {
     const filtered = SEARCH_PROVIDERS.filter((provider) =>
-      provider.name.toLowerCase().includes(searchQuery.toLowerCase())
+      provider.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setFilteredResults(filtered);
   }, [searchQuery, selectedProvider]);
@@ -164,8 +164,8 @@ export default function AgentWebSearchSelection({
     Admin.systemPreferencesByFields(["agent_search_provider"])
       .then((res) =>
         setSelectedProvider(
-          res?.settings?.agent_search_provider ?? "duckduckgo-engine"
-        )
+          res?.settings?.agent_search_provider ?? "duckduckgo-engine",
+        ),
       )
       .catch(() => setSelectedProvider("duckduckgo-engine"));
   }, []);

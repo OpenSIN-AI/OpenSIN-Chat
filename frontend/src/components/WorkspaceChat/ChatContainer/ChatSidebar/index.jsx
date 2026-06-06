@@ -17,19 +17,17 @@ const DOCUMENT_SOURCE_PREFIXES = [
   "gitlab://",
 ];
 
-const MEDIA_SOURCE_PREFIXES = [
-  "youtube://",
-];
+const MEDIA_SOURCE_PREFIXES = ["youtube://"];
 
 function isDocumentSource(chunkSource) {
   return DOCUMENT_SOURCE_PREFIXES.some((prefix) =>
-    chunkSource?.startsWith(prefix)
+    chunkSource?.startsWith(prefix),
   );
 }
 
 function isMediaSource(chunkSource) {
   return MEDIA_SOURCE_PREFIXES.some((prefix) =>
-    chunkSource?.startsWith(prefix)
+    chunkSource?.startsWith(prefix),
   );
 }
 
@@ -38,7 +36,9 @@ export function ChatSidebarProvider({ children }) {
   const [sidebarData, setSidebarData] = useState(null);
   const [sourceFilter, setSourceFilter] = useState(() => {
     try {
-      return localStorage.getItem("openafd_source_filter") || SOURCE_FILTERS.all;
+      return (
+        localStorage.getItem("openafd_source_filter") || SOURCE_FILTERS.all
+      );
     } catch {
       return SOURCE_FILTERS.all;
     }

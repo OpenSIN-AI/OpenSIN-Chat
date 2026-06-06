@@ -65,7 +65,7 @@ export default function AgentBuilder() {
 
   useEffect(() => {
     const flowInfoBlock = blocks.find(
-      (block) => block.type === BLOCK_TYPES.FLOW_INFO
+      (block) => block.type === BLOCK_TYPES.FLOW_INFO,
     );
     setAgentName(flowInfoBlock?.config?.name || "");
   }, [blocks]);
@@ -145,8 +145,8 @@ export default function AgentBuilder() {
       blocks.map((block) =>
         block.id === blockId
           ? { ...block, config: { ...block.config, ...config } }
-          : block
-      )
+          : block,
+      ),
     );
   };
 
@@ -160,7 +160,7 @@ export default function AgentBuilder() {
 
   const saveFlow = async () => {
     const flowInfoBlock = blocks.find(
-      (block) => block.type === BLOCK_TYPES.FLOW_INFO
+      (block) => block.type === BLOCK_TYPES.FLOW_INFO,
     );
     const name = flowInfoBlock?.config?.name;
     const description = flowInfoBlock?.config?.description;
@@ -172,8 +172,8 @@ export default function AgentBuilder() {
           blocks.map((block) =>
             block.type === BLOCK_TYPES.FLOW_INFO
               ? { ...block, isExpanded: true }
-              : block
-          )
+              : block,
+          ),
         );
         // Small delay to allow expansion animation to complete
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -189,7 +189,7 @@ export default function AgentBuilder() {
         "error",
         {
           clear: true,
-        }
+        },
       );
       return;
     }
@@ -202,7 +202,7 @@ export default function AgentBuilder() {
         .filter(
           (block) =>
             block.type !== BLOCK_TYPES.FINISH &&
-            block.type !== BLOCK_TYPES.FLOW_INFO
+            block.type !== BLOCK_TYPES.FLOW_INFO,
         )
         .map((block) => ({
           type: block.type,
@@ -214,7 +214,7 @@ export default function AgentBuilder() {
       const { success, error, flow } = await AgentFlows.saveFlow(
         name,
         flowConfig,
-        currentFlowUuid
+        currentFlowUuid,
       );
       if (!success) throw new Error(error);
 
@@ -234,8 +234,8 @@ export default function AgentBuilder() {
       blocks.map((block) =>
         block.id === blockId
           ? { ...block, isExpanded: !block.isExpanded }
-          : block
-      )
+          : block,
+      ),
     );
   };
 
@@ -248,7 +248,7 @@ export default function AgentBuilder() {
   const renderVariableSelect = (
     value,
     onChange,
-    placeholder = "Select variable"
+    placeholder = "Select variable",
   ) => (
     <select
       value={value || ""}
@@ -311,7 +311,7 @@ export default function AgentBuilder() {
   };
 
   const flowInfoBlock = blocks.find(
-    (block) => block.type === BLOCK_TYPES.FLOW_INFO
+    (block) => block.type === BLOCK_TYPES.FLOW_INFO,
   );
   const flowEntity = {
     name: flowInfoBlock?.config?.name || "",
@@ -320,7 +320,7 @@ export default function AgentBuilder() {
       .filter(
         (block) =>
           block.type !== BLOCK_TYPES.FINISH &&
-          block.type !== BLOCK_TYPES.FLOW_INFO
+          block.type !== BLOCK_TYPES.FLOW_INFO,
       )
       .map((block) => ({ type: block.type, config: block.config })),
   };

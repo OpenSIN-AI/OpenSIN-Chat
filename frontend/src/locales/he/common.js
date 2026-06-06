@@ -768,7 +768,8 @@ const TRANSLATIONS = {
     },
     branding: {
       title: "מיתוג והתאמה אישית (Whitelabeling)",
-      description: "התאם אישית את מופע ה-OpenAfD Chat שלך עם מיתוג מותאם אישית.",
+      description:
+        "התאם אישית את מופע ה-OpenAfD Chat שלך עם מיתוג מותאם אישית.",
     },
     chat: {
       title: "צ'אט",

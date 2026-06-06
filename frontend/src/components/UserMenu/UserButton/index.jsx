@@ -54,7 +54,7 @@ export default function UserButton() {
       setSupportEmail(
         supportEmail?.email
           ? `mailto:${supportEmail.email}`
-          : paths.mailToSupport()
+          : paths.mailToSupport(),
       );
     };
     fetchSupportEmail();

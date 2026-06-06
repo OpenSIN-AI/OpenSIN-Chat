@@ -29,7 +29,8 @@ export default function Sidebar() {
 
   return (
     <>
-      <div
+      <nav
+        aria-label="Hauptnavigation"
         style={{
           width: showSidebar ? "292px" : "0px",
           paddingLeft: showSidebar ? "0px" : "16px",
@@ -74,7 +75,7 @@ export default function Sidebar() {
           </div>
         </div>
         {showingNewWsModal && <NewWorkspaceModal hideModal={hideNewWsModal} />}
-      </div>
+      </nav>
       <WorkspaceAndThreadTooltips />
     </>
   );
@@ -109,13 +110,15 @@ export function SidebarMobileHeader() {
 
   return (
     <>
-      <div
-        aria-label="Show sidebar"
+      <header
+        aria-label="Obere Navigation - Mobile"
         className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-theme-bg-sidebar light:bg-white text-slate-200 shadow-lg h-16"
       >
         <button
           onClick={() => setShowSidebar(true)}
-          className="rounded-md p-2 flex items-center justify-center text-theme-text-secondary"
+          className="rounded-md p-2 flex items-center justify-center text-theme-text-secondary hover:bg-white/10 transition-colors"
+          aria-label="Seitenleiste öffnen"
+          aria-expanded={showSidebar}
         >
           <List className="h-6 w-6" />
         </button>
@@ -128,7 +131,7 @@ export function SidebarMobileHeader() {
           />
         </div>
         <div className="w-12"></div>
-      </div>
+      </header>
       <div
         style={{
           transform: showSidebar ? `translateX(0vw)` : `translateX(-100vw)`,
@@ -138,14 +141,17 @@ export function SidebarMobileHeader() {
         <div
           className={`${
             showBgOverlay
-              ? "transition-all opacity-1"
-              : "transition-none opacity-0"
+              ? "transition-all opacity-1 pointer-events-auto"
+              : "transition-none opacity-0 pointer-events-none"
           }  duration-500 fixed top-0 left-0 bg-theme-bg-secondary bg-opacity-75 w-screen h-screen`}
           onClick={() => setShowSidebar(false)}
+          role="presentation"
         />
         <div
           ref={sidebarRef}
-          className="relative h-[100vh] fixed top-0 left-0  rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px] "
+          className="relative h-[100vh] fixed top-0 left-0  rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
+          role="navigation"
+          aria-label="Seitenleisten-Navigation - Mobile"
         >
           <div className="w-full h-full flex flex-col overflow-x-hidden items-between">
             {/* Header Information */}
@@ -235,6 +241,6 @@ function WorkspaceAndThreadTooltips() {
         className="tooltip !text-xs z-99"
       />
     </React.Fragment>,
-    document.body
+    document.body,
   );
 }

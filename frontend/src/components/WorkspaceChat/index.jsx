@@ -117,7 +117,7 @@ function copyCodeSnippet(uuid) {
   if (!target) return false;
   const markdown =
     target.parentElement?.parentElement?.querySelector(
-      "pre:first-of-type"
+      "pre:first-of-type",
     )?.innerText;
   if (!markdown) return false;
 

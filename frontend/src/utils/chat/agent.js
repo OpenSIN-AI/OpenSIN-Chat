@@ -36,7 +36,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
       window.dispatchEvent(
         new CustomEvent(THREAD_RENAME_EVENT, {
           detail: { threadSlug: slug, newName: name },
-        })
+        }),
       );
     }
     return;
@@ -89,7 +89,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
         if (!data.content.routedTo) return prev;
         return [
           ...prev.filter(
-            (msg) => !(msg.role === "assistant" && msg.pending && !msg.content)
+            (msg) => !(msg.role === "assistant" && msg.pending && !msg.content),
           ),
           {
             uuid: data.content.uuid,
@@ -179,7 +179,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
         if (type === "usageMetrics") {
           if (!data.content.metrics) return prev;
           return prev.map((msg) =>
-            msg.uuid === uuid ? { ...msg, metrics: data.content.metrics } : msg
+            msg.uuid === uuid ? { ...msg, metrics: data.content.metrics } : msg,
           );
         }
 
@@ -191,14 +191,14 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
                   ...msg,
                   sources: [...(msg.sources || []), ...data.content.citations],
                 }
-              : msg
+              : msg,
           );
         }
 
         if (type === "chatId") {
           if (!data.content.chatId) return prev;
           return prev.map((msg) =>
-            msg.uuid === uuid ? { ...msg, chatId: data.content.chatId } : msg
+            msg.uuid === uuid ? { ...msg, chatId: data.content.chatId } : msg,
           );
         }
 
@@ -213,7 +213,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
                   }
                 : msg?.content
                   ? msg
-                  : null
+                  : null,
             )
             .filter((msg) => !!msg);
         }
@@ -222,7 +222,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
         return prev.map((msg) =>
           msg.uuid === data.content.uuid
             ? { ...msg, content: msg.content + data.content.content }
-            : msg
+            : msg,
         );
       }
     });
@@ -367,13 +367,13 @@ export function getAgentSessionActive() {
 
 export function useIsAgentSessionActive() {
   const [activeSession, setActiveSession] = useState(
-    () => !!getAgentSessionActive()
+    () => !!getAgentSessionActive(),
   );
   useEffect(() => {
     function listenForAgentSession() {
       if (!window) return;
       window.addEventListener(AGENT_SESSION_START, () =>
-        setActiveSession(true)
+        setActiveSession(true),
       );
       window.addEventListener(AGENT_SESSION_END, () => setActiveSession(false));
     }

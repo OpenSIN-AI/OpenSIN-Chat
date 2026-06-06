@@ -30,108 +30,106 @@ export const ICON_COMPONENTS = {
   Info: Info,
 };
 
+// Standard-Icons des Footers. Zentral definiert, damit Links, Tooltips und
+// Accessibility-Labels nur an einer Stelle gepflegt werden müssen.
+const DEFAULT_FOOTER_ITEMS = [
+  {
+    key: "github",
+    Icon: GithubLogo,
+    url: paths.github(),
+    ariaLabel: "OpenAfD Chat auf GitHub ansehen",
+    tooltip: "Quellcode auf GitHub ansehen",
+  },
+  {
+    key: "docs",
+    Icon: BookOpen,
+    url: paths.docs(),
+    ariaLabel: "Dokumentation öffnen",
+    tooltip: "OpenAfD Chat Hilfe-Dokumentation öffnen",
+  },
+  {
+    key: "discord",
+    Icon: DiscordLogo,
+    url: paths.discord(),
+    ariaLabel: "Dem Discord-Server beitreten",
+    tooltip: "Dem OpenAfD Chat Discord beitreten",
+  },
+];
+
+const ICON_LINK_CLASSES =
+  "transition-all duration-300 flex items-center justify-center p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70";
+
 export default function Footer() {
   const [footerData, setFooterData] = useState(false);
 
   useEffect(() => {
     async function fetchFooterData() {
-      const { footerData } = await System.fetchCustomFooterIcons();
-      setFooterData(footerData);
+      try {
+        const { footerData } = await System.fetchCustomFooterIcons();
+        setFooterData(Array.isArray(footerData) ? footerData : []);
+      } catch (error) {
+        console.error("Footer-Icons konnten nicht geladen werden:", error);
+        setFooterData([]);
+      }
     }
     fetchFooterData();
   }, []);
 
-  // wait for some kind of non-false response from footer data first
-  // to prevent pop-in.
+  // Warten auf eine erste Antwort (nicht `false`), um ein Aufpoppen zu vermeiden.
   if (footerData === false) return null;
 
-  if (!Array.isArray(footerData) || footerData.length === 0) {
-    return (
-      <div className="flex justify-center mb-2">
-        <div className="flex space-x-4">
-          <div className="flex w-fit">
-            <Link
-              to={paths.github()}
-              target="_blank"
-              rel="noreferrer"
-              className="transition-all duration-300 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover"
-              aria-label="Find us on GitHub"
-              data-tooltip-id="footer-item"
-              data-tooltip-content="View Source Code"
-            >
-              <GithubLogo
-                weight="fill"
-                className="h-5 w-5 text-white light:text-slate-800"
-              />
-            </Link>
-          </div>
-          <div className="flex w-fit">
-            <Link
-              to={paths.docs()}
-              target="_blank"
-              rel="noreferrer"
-              className="transition-all duration-300 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover"
-              aria-label="Docs"
-              data-tooltip-id="footer-item"
-              data-tooltip-content="Open OpenAfD Chat help docs"
-            >
-              <BookOpen
-                weight="fill"
-                className="h-5 w-5 text-white light:text-slate-800"
-              />
-            </Link>
-          </div>
-          <div className="flex w-fit">
-            <Link
-              to={paths.discord()}
-              target="_blank"
-              rel="noreferrer"
-              className="transition-all duration-300 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover"
-              aria-label="Join our Discord server"
-              data-tooltip-id="footer-item"
-              data-tooltip-content="Join the OpenAfD Chat Discord"
-            >
-              <DiscordLogo
-                weight="fill"
-                className="h-5 w-5 text-white light:text-slate-800"
-              />
-            </Link>
-          </div>
-          {!isMobile && <SettingsButton />}
-        </div>
-        <Tooltip
-          id="footer-item"
-          place="top"
-          delayShow={300}
-          className="tooltip !text-xs z-99"
-        />
-      </div>
-    );
-  }
+  const hasCustomIcons = Array.isArray(footerData) && footerData.length > 0;
 
   return (
     <div className="flex justify-center mb-2">
-      <div className="flex space-x-4">
-        {footerData.map((item, index) => (
-          <a
-            key={index}
-            href={item.url}
-            target="_blank"
-            rel="noreferrer"
-            className="transition-all duration-300 flex w-fit h-fit p-2 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover hover:border-slate-100"
-          >
-            {React.createElement(
-              ICON_COMPONENTS?.[item.icon] ?? ICON_COMPONENTS.Info,
-              {
-                weight: "fill",
-                className: "h-5 w-5",
-                color: "var(--theme-sidebar-footer-icon-fill)",
-              }
+      <nav
+        aria-label="Footer-Links"
+        className="flex flex-wrap items-center justify-center gap-3"
+      >
+        {hasCustomIcons
+          ? footerData.map((item, index) => {
+              const IconComponent =
+                ICON_COMPONENTS?.[item.icon] ?? ICON_COMPONENTS.Info;
+              return (
+                <a
+                  key={index}
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={ICON_LINK_CLASSES}
+                  aria-label={item.url}
+                  data-tooltip-id="footer-item"
+                  data-tooltip-content={item.url}
+                >
+                  <IconComponent
+                    weight="fill"
+                    className="h-5 w-5"
+                    color="var(--theme-sidebar-footer-icon-fill)"
+                  />
+                </a>
+              );
+            })
+          : DEFAULT_FOOTER_ITEMS.map(
+              ({ key, Icon, url, ariaLabel, tooltip }) => (
+                <Link
+                  key={key}
+                  to={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={ICON_LINK_CLASSES}
+                  aria-label={ariaLabel}
+                  data-tooltip-id="footer-item"
+                  data-tooltip-content={tooltip}
+                >
+                  <Icon
+                    weight="fill"
+                    className="h-5 w-5 text-white light:text-slate-800"
+                  />
+                </Link>
+              ),
             )}
-          </a>
-        ))}
         {!isMobile && <SettingsButton />}
-      </div>
+      </nav>
       <Tooltip
         id="footer-item"
         place="top"

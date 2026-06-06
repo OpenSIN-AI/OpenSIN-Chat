@@ -89,7 +89,7 @@ export default function WebScrapingNode({
           config.resultVariable,
           (value) => onConfigChange({ ...config, resultVariable: value }),
           "Select or create variable",
-          true
+          true,
         )}
       </div>
     </div>

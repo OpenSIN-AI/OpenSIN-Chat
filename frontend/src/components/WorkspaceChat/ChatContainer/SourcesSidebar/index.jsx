@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
-import { X, Globe, FileText, Database, Link } from "@phosphor-icons/react";
+import { X, Globe, FileText, Database } from "@phosphor-icons/react";
 import {
   combineLikeSources,
   CitationDetailModal,
 } from "../ChatHistory/Citation";
 import MobileCitationModal from "./MobileCitationModal";
 import SourceItem from "./SourceItem";
-import ChatSidebar, { useSourcesSidebar, useMemoriesSidebar, useChatSidebar } from "../ChatSidebar";
+import ChatSidebar, { useSourcesSidebar, useChatSidebar } from "../ChatSidebar";
 import SidebarTabs from "../ChatSidebar/SidebarTabs";
 import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
 
@@ -21,12 +21,23 @@ function getWorkspaceSourceType(doc) {
   const filename = doc.filename || "";
 
   // URL/Link detection
-  if (metadata?.url || metadata?.sourceUrl || docpath.includes("link") || filename.startsWith("http")) {
+  if (
+    metadata?.url ||
+    metadata?.sourceUrl ||
+    docpath.includes("link") ||
+    filename.startsWith("http")
+  ) {
     return { type: "url", icon: Globe, label: "URL" };
   }
 
   // Database/API detection (heuristic based on common patterns)
-  if (docpath.includes("api") || docpath.includes("db") || docpath.includes("connector") || metadata?.connectionString || metadata?.apiEndpoint) {
+  if (
+    docpath.includes("api") ||
+    docpath.includes("db") ||
+    docpath.includes("connector") ||
+    metadata?.connectionString ||
+    metadata?.apiEndpoint
+  ) {
     return { type: "db", icon: Database, label: "Datenbank" };
   }
 
@@ -35,7 +46,7 @@ function getWorkspaceSourceType(doc) {
 }
 
 function WorkspaceSourceItem({ doc, onClick }) {
-  const { type, icon: Icon, label } = getWorkspaceSourceType(doc);
+  const { type: _type, icon: Icon, label } = getWorkspaceSourceType(doc);
   const metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
 
   return (
@@ -54,9 +65,7 @@ function WorkspaceSourceItem({ doc, onClick }) {
       </div>
       <div className="flex flex-col gap-[2px] pl-[22px] text-[10px] text-zinc-400 light:text-slate-500 leading-[14px]">
         <p>{label}</p>
-        {metadata?.wordCount && (
-          <p>{metadata.wordCount} Wörter</p>
-        )}
+        {metadata?.wordCount && <p>{metadata.wordCount} Wörter</p>}
       </div>
     </button>
   );
@@ -66,7 +75,7 @@ export default function SourcesSidebar({ workspace }) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
   const [selectedSource, setSelectedSource] = useState(null);
-  const { sourceFilter, setSourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
+  const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
 
   const combined = combineLikeSources(sources);
 
@@ -88,7 +97,9 @@ export default function SourcesSidebar({ workspace }) {
   });
 
   const hasChatSources = filteredChatSources.length > 0;
-  const displaySources = hasChatSources ? filteredChatSources : filteredWorkspaceDocs;
+  const displaySources = hasChatSources
+    ? filteredChatSources
+    : filteredWorkspaceDocs;
   const isWorkspaceMode = !hasChatSources;
 
   if (isMobile) {
@@ -135,10 +146,12 @@ export default function SourcesSidebar({ workspace }) {
               <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-4">
                 {isWorkspaceMode
                   ? t("chat_window.no_workspace_sources")
-                  : t("chat_window.no_sources_filter", { filter: t(`chat_window.source_filter_${sourceFilter}`) })}
+                  : t("chat_window.no_sources_filter", {
+                      filter: t(`chat_window.source_filter_${sourceFilter}`),
+                    })}
               </p>
             ) : (
-              displaySources.map((source, idx) => (
+              displaySources.map((source, idx) =>
                 isWorkspaceMode ? (
                   <WorkspaceSourceItem
                     key={source.docId || idx}
@@ -151,8 +164,8 @@ export default function SourcesSidebar({ workspace }) {
                     source={source}
                     onClick={() => setSelectedSource(source)}
                   />
-                )
-              ))
+                ),
+              )
             )}
           </div>
         </div>

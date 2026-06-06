@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import debounce from "lodash.debounce";
 import { ArrowUp, At } from "@phosphor-icons/react";
 import StopGenerationButton from "./StopGenerationButton";
@@ -75,7 +75,7 @@ export default function PromptInput({
       sendCommand({ text: "@agent " });
       textareaRef.current?.focus();
     }
-  }, [textareaRef.current]);
+  }, []);
 
   /**
    * To prevent too many re-renders we remotely listen for updates from the parent
@@ -107,7 +107,7 @@ export default function PromptInput({
    * Save the current state before changes
    * @param {number} adjustment
    */
-  function saveCurrentState(adjustment = 0) {
+  const saveCurrentStateRef = useRef((adjustment = 0) => {
     if (undoStack.current.length >= MAX_EDIT_STACK_SIZE)
       undoStack.current.shift();
     undoStack.current.push({
@@ -115,8 +115,15 @@ export default function PromptInput({
       cursorPositionStart: textareaRef.current.selectionStart + adjustment,
       cursorPositionEnd: textareaRef.current.selectionEnd + adjustment,
     });
-  }
-  const debouncedSaveState = debounce(saveCurrentState, 250);
+  });
+  const saveCurrentState = useCallback(
+    (adjustment = 0) => saveCurrentStateRef.current(adjustment),
+    [],
+  );
+  const debouncedSaveState = useCallback(
+    (...args) => debounce(() => saveCurrentStateRef.current(...args), 250)(),
+    [],
+  );
 
   function handleSubmit(e) {
     // Ignore submits from portaled modals (slash command preset forms)
@@ -146,7 +153,7 @@ export default function PromptInput({
         window.dispatchEvent(
           new CustomEvent(TOOLS_MENU_KEYBOARD_EVENT, {
             detail: { key: event.key },
-          })
+          }),
         );
         return;
       }
@@ -157,7 +164,7 @@ export default function PromptInput({
         window.dispatchEvent(
           new CustomEvent(TOOLS_MENU_KEYBOARD_EVENT, {
             detail: { key: "Enter" },
-          })
+          }),
         );
         return;
       }
@@ -212,7 +219,7 @@ export default function PromptInput({
       setTimeout(() => {
         textareaRef.current.setSelectionRange(
           nextState.cursorPositionStart,
-          nextState.cursorPositionEnd
+          nextState.cursorPositionEnd,
         );
       }, 0);
     }
@@ -236,7 +243,7 @@ export default function PromptInput({
       setTimeout(() => {
         textareaRef.current.setSelectionRange(
           lastState.cursorPositionStart,
-          lastState.cursorPositionEnd
+          lastState.cursorPositionEnd,
         );
       }, 0);
     }
@@ -259,7 +266,7 @@ export default function PromptInput({
         window.dispatchEvent(
           new CustomEvent(PASTE_ATTACHMENT_EVENT, {
             detail: { files: [file] },
-          })
+          }),
         );
         continue;
       }
@@ -270,7 +277,7 @@ export default function PromptInput({
         window.dispatchEvent(
           new CustomEvent(PASTE_ATTACHMENT_EVENT, {
             detail: { files: [file] },
-          })
+          }),
         );
         continue;
       }

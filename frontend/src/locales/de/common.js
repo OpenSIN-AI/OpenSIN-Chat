@@ -1298,7 +1298,8 @@ const TRANSLATIONS = {
     source_filter_media: "Medien",
     no_sources_filter: "Keine Quellen für Filter '{{filter}}' gefunden",
     workspace_sources: "Workspace-Quellen",
-    no_workspace_sources: "Keine Workspace-Quellen verfügbar. Füge Dokumente, Links oder APIs in den Workspace-Einstellungen hinzu.",
+    no_workspace_sources:
+      "Keine Workspace-Quellen verfügbar. Füge Dokumente, Links oder APIs in den Workspace-Einstellungen hinzu.",
     document: "Dokument",
     similarity_match: "Spiel",
     source_count_one: "{{count}} Referenz",
@@ -1546,6 +1547,7 @@ const TRANSLATIONS = {
     notAssigned:
       "Sie sind nicht zugewiesen zu einem Arbeitsbereich.\nBitte kontaktieren Sie Ihren Administrator, um Zugriff auf einen Arbeitsbereich zu erhalten.",
     goToWorkspace: 'Zurück zum Arbeitsbereich "{{workspace}}"',
+    logoAlt: "Logo",
   },
   telegram: {
     title: "Telegram-Bot",
