@@ -126,7 +126,7 @@ export default function Footer() {
                     className="h-5 w-5 text-white light:text-slate-800"
                   />
                 </Link>
-              )
+              ),
             )}
         {!isMobile && <SettingsButton />}
       </nav>

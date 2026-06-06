@@ -1,17 +1,23 @@
 import { BookOpen, FileText, FolderOpen } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import { useChatSidebar, useMemoriesSidebar, useSourcesSidebar } from ".";
+import { useChatSidebar } from ".";
 import { useMemoriesContext, LIMITS } from "../MemoriesSidebar/MemoriesContext";
 
 export default function SidebarTabs() {
   const { t } = useTranslation();
-  const { activeSidebar, sidebarData, openSidebar, closeSidebar, toggleSidebar } = useChatSidebar();
-  const { activeTab: memoriesActiveTab, setActiveTab: setMemoriesActiveTab, memories } = useMemoriesContext();
-  const workspaceName = t("chat_window.memories.tab_workspace");
-  const workspaceCount = memories.workspace.length;
-  const globalCount = memories.global.length;
+  const {
+    activeSidebar,
+    sidebarData,
+    openSidebar,
+    closeSidebar,
+    toggleSidebar,
+  } = useChatSidebar();
+  const {
+    activeTab: memoriesActiveTab,
+    setActiveTab: setMemoriesActiveTab,
+    memories,
+  } = useMemoriesContext();
 
-  const isSourcesActive = activeSidebar === "sources";
   const isMemoriesActive = activeSidebar === "memories";
 
   return (
@@ -37,7 +43,9 @@ export default function SidebarTabs() {
         </button>
 
         {/* Erinnerungen Tab (mit Sub-Tabs Workspace/Global) */}
-        <div className={`flex items-center gap-1 ${isMemoriesActive ? "" : "opacity-50 pointer-events-none"}`}>
+        <div
+          className={`flex items-center gap-1 ${isMemoriesActive ? "" : "opacity-50 pointer-events-none"}`}
+        >
           <button
             type="button"
             onClick={() => {
@@ -50,7 +58,6 @@ export default function SidebarTabs() {
                 ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
                 : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
             }`}
-            disabled={!isMemoriesActive}
           >
             <FolderOpen size={12} weight="bold" />
             <span className="text-zinc-200 light:text-slate-800 truncate max-w-[140px]">
@@ -69,7 +76,6 @@ export default function SidebarTabs() {
                 ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
                 : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
             }`}
-            disabled={!isMemoriesActive}
           >
             <BookOpen size={12} weight="bold" />
             <span className="text-zinc-200 light:text-slate-800">

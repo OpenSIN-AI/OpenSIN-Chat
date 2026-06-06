@@ -241,6 +241,6 @@ function WorkspaceAndThreadTooltips() {
         className="tooltip !text-xs z-99"
       />
     </React.Fragment>,
-    document.body
+    document.body,
   );
 }
