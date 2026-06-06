@@ -54,7 +54,7 @@ export function AvailableAgents({
   useEffect(() => {
     if (searchParams.get("action") === "set-agent-chat" && !showing)
       handleAgentClick();
-  }, [promptRef.current]);
+  }, []);
 
   useEffect(() => {
     function listenForOutsideClick() {
@@ -62,7 +62,7 @@ export function AvailableAgents({
       document.addEventListener("click", closeIfOutside);
     }
     listenForOutsideClick();
-  }, [showing, formRef.current]);
+  }, [showing]);
 
   const closeIfOutside = ({ target }) => {
     if (target.id === "agent-list-btn") return;

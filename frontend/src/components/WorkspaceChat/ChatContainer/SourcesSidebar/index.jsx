@@ -46,7 +46,7 @@ function getWorkspaceSourceType(doc) {
 }
 
 function WorkspaceSourceItem({ doc, onClick }) {
-  const { type, icon: Icon, label } = getWorkspaceSourceType(doc);
+  const { type: _type, icon: Icon, label } = getWorkspaceSourceType(doc);
   const metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
 
   return (
@@ -75,8 +75,7 @@ export default function SourcesSidebar({ workspace }) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
   const [selectedSource, setSelectedSource] = useState(null);
-  const { sourceFilter, setSourceFilter, isDocumentSource, isMediaSource } =
-    useChatSidebar();
+  const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
 
   const combined = combineLikeSources(sources);
 
