@@ -35,6 +35,19 @@ ALLOWED_FILES=(
   "server/utils/agents/aibitat/plugins/create-files/pdf/create-pdf-file.js"    # import('@mintplex-labs/mdpdf') — upstream PDF converter
   "frontend/package.json"                # upstream npm-scope dep: @mintplex-labs/piper-tts-web — mintplex-published TTS voice package we depend on as-is
 
+  # ── Upstream npm-scope deps used as-is in code ────────────
+  "server/utils/reports/index.js"        # require('@mintplex-labs/mdpdf') — upstream Markdown-to-PDF converter
+  "frontend/src/utils/piperTTS/index.js"   # JSDoc type refs to @mintplex-labs/piper-tts-web
+  "frontend/src/utils/piperTTS/worker.js"  # import '@mintplex-labs/piper-tts-web' — upstream TTS voice engine
+
+  # ── Module docs that credit the upstream package they wrap ─
+  "server/utils/reports/index.doc.md"        # documents @mintplex-labs/mdpdf dependency
+  "server/utils/research/webSearchEngine.doc.md"  # credits reused AnythingLLM agent search infra
+  "ROADMAP.md"                               # changelog rows reference @mintplex-labs/* package reverts
+
+  # ── CEO audit reports (reference upstream codebase lineage) ─
+  "ceo-audits/"                              # audit docs describe the AnythingLLM codebase OpenAfD-Chat is built on
+
   # ── Self-reference (linter mentions the strings it forbids) ─
   "scripts/check-branding.sh"
   "scripts/check-branding.doc.md"
