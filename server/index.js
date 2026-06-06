@@ -5,10 +5,10 @@ process.env.NODE_ENV === "development"
 require("./utils/logger")();
 require("./utils/boot/patchSlowBuffer")();
 require("./utils/boot/patchSdkTimeouts")();
+require("./utils/boot/ensureJwtSecret")();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const path = require("path");
 const { reqBody } = require("./utils/http");
 const { systemEndpoints } = require("./endpoints/system");
 const { workspaceEndpoints } = require("./endpoints/workspaces");
