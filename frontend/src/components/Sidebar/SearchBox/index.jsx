@@ -99,7 +99,7 @@ function SearchResults({ searchResults, searchTerm, loading }) {
         <div className="flex flex-col gap-y-[8px] h-[200px] justify-center items-center">
           <Preloader size={5} />
           <p className="text-theme-text-secondary text-xs font-semibold text-center">
-            Searching for "{searchTerm}"
+            {t("search.searching-for")} "{searchTerm}"
           </p>
         </div>
       </SearchResultWrapper>
@@ -113,7 +113,7 @@ function SearchResults({ searchResults, searchTerm, loading }) {
       <SearchResultWrapper>
         <div className="flex flex-col gap-y-[8px] h-[200px] justify-center items-center">
           <p className="text-theme-text-secondary text-xs font-semibold text-center">
-            No results found for
+            {t("search.no-results-found")}
             <br />
             <span className="text-theme-text-primary font-semibold text-sm">
               "{searchTerm}"
@@ -127,7 +127,7 @@ function SearchResults({ searchResults, searchTerm, loading }) {
   return (
     <SearchResultWrapper>
       <SearchResultCategory
-        name="Workspaces"
+        name={t("common.workspaces")}
         items={searchResults.workspaces?.map((workspace) => ({
           id: workspace.slug,
           to: paths.workspace.chat(workspace.slug),
@@ -135,7 +135,7 @@ function SearchResults({ searchResults, searchTerm, loading }) {
         }))}
       />
       <SearchResultCategory
-        name="Threads"
+        name={t("common.threads")}
         items={searchResults.threads?.map((thread) => ({
           id: thread.slug,
           to: paths.workspace.thread(thread.workspace.slug, thread.slug),
