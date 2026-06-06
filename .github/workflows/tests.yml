@@ -1,0 +1,47 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  frontend:
+    name: Frontend (Vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile --network-timeout 100000
+
+      - name: Run frontend tests
+        working-directory: frontend
+        run: yarn test
+
+  server:
+    name: Server (Jest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: "yarn"
+          cache-dependency-path: server/yarn.lock
+
+      - name: Install server dependencies
+        working-directory: server
+        run: yarn install --frozen-lockfile --network-timeout 100000
+
+      - name: Run server tests
+        run: yarn test
