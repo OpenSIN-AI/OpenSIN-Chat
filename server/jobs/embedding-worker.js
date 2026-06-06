@@ -108,7 +108,7 @@ async function processQueue() {
     const { vectorized, error } = await VectorDb.addDocumentToNamespace(
       workspaceSlug,
       { ...data, docId },
-      filePath
+      filePath,
     );
 
     if (!vectorized) {

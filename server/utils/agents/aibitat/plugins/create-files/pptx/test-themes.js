@@ -83,7 +83,7 @@ async function generateThemePreview(themeName, outputDir) {
     titleSlide,
     pptx,
     { title: `${theme.name} Theme`, author: "OpenAfD Chat Theme Preview" },
-    theme
+    theme,
   );
 
   SAMPLE_SLIDES.forEach((slideData, index) => {
@@ -100,7 +100,7 @@ async function generateThemePreview(themeName, outputDir) {
           slideData,
           theme,
           slideNumber,
-          totalSlides
+          totalSlides,
         );
         break;
       case "blank":
@@ -113,7 +113,7 @@ async function generateThemePreview(themeName, outputDir) {
           slideData,
           theme,
           slideNumber,
-          totalSlides
+          totalSlides,
         );
         break;
     }

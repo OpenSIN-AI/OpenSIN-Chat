@@ -44,7 +44,7 @@ async function searchWorkspaceAndThreads(searchTerm, user = null) {
         fastLevenshtein.get(wsName, searchTerm) <= FAST_LEVENSHTEIN_DISTANCE
       )
         results.workspaces.add(
-          JSON.stringify({ slug: workspace.slug, name: workspace.name })
+          JSON.stringify({ slug: workspace.slug, name: workspace.name }),
         );
     }
   }
@@ -55,7 +55,7 @@ async function searchWorkspaceAndThreads(searchTerm, user = null) {
           { user_id: user.id },
           undefined,
           undefined,
-          { workspace: { select: { slug: true, name: true } } }
+          { workspace: { select: { slug: true, name: true } } },
         )
       : await WorkspaceThread.where(undefined, undefined, undefined, {
           workspace: { select: { slug: true, name: true } },
@@ -77,7 +77,7 @@ async function searchWorkspaceAndThreads(searchTerm, user = null) {
               slug: thread.workspace.slug,
               name: thread.workspace.name,
             },
-          })
+          }),
         );
     }
   }

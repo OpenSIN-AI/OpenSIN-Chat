@@ -102,7 +102,7 @@ const BrowserExtensionApiKey = {
     } catch (error) {
       console.error(
         "Failed to delete browser extension API keys for user",
-        error
+        error,
       );
       return { success: false, error: error.message };
     }
@@ -142,7 +142,7 @@ const BrowserExtensionApiKey = {
     user,
     clause = {},
     limit = null,
-    orderBy = null
+    orderBy = null,
   ) {
     // Admin can view and use any keys
     if ([ROLES.admin].includes(user.role))

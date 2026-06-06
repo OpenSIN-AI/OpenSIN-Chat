@@ -71,7 +71,7 @@ const docSummarizer = {
           listDocuments: async function () {
             try {
               this.super.introspect(
-                `${this.caller}: Looking at the available documents.`
+                `${this.caller}: Looking at the available documents.`,
               );
               const documents = await Document.where({
                 workspaceId: this.super.handlerProps.invocation.workspace_id,
@@ -80,7 +80,7 @@ const docSummarizer = {
                 return "No documents found - nothing can be done. Stop.";
 
               this.super.introspect(
-                `${this.caller}: Found ${documents.length} documents`
+                `${this.caller}: Found ${documents.length} documents`,
               );
               const foundDocuments = documents.map((doc) => {
                 const metadata = safeJsonParse(doc.metadata, {});
@@ -94,7 +94,7 @@ const docSummarizer = {
               return JSON.stringify(foundDocuments);
             } catch (error) {
               this.super.handlerProps.log(
-                `document-summarizer.list raised an error. ${error.message}`
+                `document-summarizer.list raised an error. ${error.message}`,
               );
               return `Let the user know this action was not successful. An error was raised while listing available files. ${error.message}`;
             }
@@ -104,21 +104,21 @@ const docSummarizer = {
             try {
               const availableDocs = safeJsonParse(
                 await this.listDocuments(),
-                []
+                [],
               );
               if (!availableDocs.length) {
                 this.super.handlerProps.log(
-                  `${this.caller}: No available documents to summarize.`
+                  `${this.caller}: No available documents to summarize.`,
                 );
                 return "No documents were found.";
               }
 
               const docInfo = availableDocs.find(
-                (info) => info.filename === filename
+                (info) => info.filename === filename,
               );
               if (!docInfo) {
                 this.super.handlerProps.log(
-                  `${this.caller}: No available document by the name "${filename}".`
+                  `${this.caller}: No available document by the name "${filename}".`,
                 );
                 return `No available document by the name "${filename}".`;
               }
@@ -127,12 +127,12 @@ const docSummarizer = {
               this.super.introspect(
                 `${this.caller}: Grabbing all content for ${
                   filename ?? "a discovered file."
-                }`
+                }`,
               );
 
               if (!document.content || document.content.length === 0) {
                 throw new Error(
-                  "This document has no readable content that could be found."
+                  "This document has no readable content that could be found.",
                 );
               }
 
@@ -148,19 +148,19 @@ const docSummarizer = {
               const { TokenManager } = require("../../../helpers/tiktoken");
               if (
                 new TokenManager(this.super.model).countFromString(
-                  document.content
+                  document.content,
                 ) < Provider.contextLimit(this.super.provider, this.super.model)
               ) {
                 return document.content;
               }
 
               this.super.introspect(
-                `${this.caller}: Summarizing ${filename ?? ""}...`
+                `${this.caller}: Summarizing ${filename ?? ""}...`,
               );
 
               this.super.onAbort(() => {
                 this.super.handlerProps.log(
-                  "Abort was triggered, exiting summarization early."
+                  "Abort was triggered, exiting summarization early.",
                 );
                 this.controller.abort();
               });
@@ -174,7 +174,7 @@ const docSummarizer = {
               });
             } catch (error) {
               this.super.handlerProps.log(
-                `document-summarizer.summarizeDoc raised an error. ${error.message}`
+                `document-summarizer.summarizeDoc raised an error. ${error.message}`,
               );
               return `Let the user know this action was not successful. An error was raised while summarizing the file. ${error.message}`;
             }

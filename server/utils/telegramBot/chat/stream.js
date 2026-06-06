@@ -29,7 +29,8 @@ const { handleAgentResponse } = require("./agent");
 function historyIsAgentic(chatMode, chatHistory) {
   if (chatMode !== "chat") return false;
   return chatHistory.some(
-    (message) => message.role === "user" && message.content.startsWith("@agent")
+    (message) =>
+      message.role === "user" && message.content.startsWith("@agent"),
   );
 }
 
@@ -89,7 +90,7 @@ async function streamResponse({
       thread,
       message,
       voiceResponse,
-      attachments
+      attachments,
     );
   }
 
@@ -141,7 +142,7 @@ async function streamResponse({
       chatHistory,
       attachments,
     },
-    rawHistory
+    rawHistory,
   );
 
   try {
@@ -170,7 +171,7 @@ async function streamResponse({
     console.error("Error streaming response:", error);
     await ctx.bot.sendMessage(
       chatId,
-      "An error occurred while streaming the response."
+      "An error occurred while streaming the response.",
     );
   } finally {
     clearInterval(typingInterval);
@@ -383,7 +384,7 @@ function createStreamHandler({ ctx, chatId }) {
       messageId,
       completeText.slice(msgOffset, msgOffset + MAX_MSG_LEN),
       ctx.log,
-      { format: true }
+      { format: true },
     ).catch(() => {});
     msgOffset += MAX_MSG_LEN;
     messageId = null;
@@ -423,7 +424,7 @@ function createStreamHandler({ ctx, chatId }) {
         chatId,
         messageId,
         currentText() + CURSOR_CHAR,
-        ctx.log
+        ctx.log,
       ).catch(() => {});
     } else if (!editTimer) {
       editTimer = setTimeout(() => {
@@ -433,7 +434,7 @@ function createStreamHandler({ ctx, chatId }) {
           chatId,
           messageId,
           currentText() + CURSOR_CHAR,
-          ctx.log
+          ctx.log,
         ).catch(() => {});
         editTimer = null;
       }, STREAM_EDIT_INTERVAL);

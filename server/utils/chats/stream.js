@@ -22,7 +22,7 @@ async function streamChatWithWorkspace(
   chatMode = "automatic",
   user = null,
   thread = null,
-  attachments = []
+  attachments = [],
 ) {
   const uuid = uuidv4();
   const updatedMessage = await grepCommand(message, user);
@@ -33,7 +33,7 @@ async function streamChatWithWorkspace(
       message,
       uuid,
       user,
-      thread
+      thread,
     );
     writeResponseChunk(response, data);
     return;
@@ -162,7 +162,7 @@ async function streamChatWithWorkspace(
     (await WorkspaceParsedFiles.getContextFiles(
       workspace,
       thread || null,
-      user || null
+      user || null,
     ));
   parsedFiles.forEach((doc) => {
     const { pageContent, ...metadata } = doc;
@@ -270,14 +270,14 @@ async function streamChatWithWorkspace(
       chatHistory,
       attachments,
     },
-    rawHistory
+    rawHistory,
   );
 
   // If streaming is not explicitly enabled for connector
   // we do regular waiting of a response and send a single chunk.
   if (LLMConnector.streamingEnabled() !== true) {
     console.log(
-      `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`
+      `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`,
     );
     const { textResponse, metrics: performanceMetrics } =
       await LLMConnector.getChatCompletion(messages, {

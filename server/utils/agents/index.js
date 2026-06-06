@@ -84,7 +84,7 @@ class AgentHandler {
             include: true,
           },
           limit,
-          { id: "desc" }
+          { id: "desc" },
         )
       ).reverse();
 
@@ -102,7 +102,7 @@ class AgentHandler {
             to: USER_AGENT.name,
             content: safeJsonParse(chatLog.response)?.text || "",
             state: "success",
-          }
+          },
         );
       });
       return agentHistory;
@@ -141,19 +141,19 @@ class AgentHandler {
       case "azure":
         if (!process.env.AZURE_OPENAI_ENDPOINT || !process.env.AZURE_OPENAI_KEY)
           throw new Error(
-            "Azure OpenAI API endpoint and key must be provided to use agents."
+            "Azure OpenAI API endpoint and key must be provided to use agents.",
           );
         break;
       case "koboldcpp":
         if (!process.env.KOBOLD_CPP_BASE_PATH)
           throw new Error(
-            "KoboldCPP must have a valid base path to use for the api."
+            "KoboldCPP must have a valid base path to use for the api.",
           );
         break;
       case "localai":
         if (!process.env.LOCAL_AI_BASE_PATH)
           throw new Error(
-            "LocalAI must have a valid base path to use for the api."
+            "LocalAI must have a valid base path to use for the api.",
           );
         break;
       case "openrouter":
@@ -175,7 +175,7 @@ class AgentHandler {
       case "textgenwebui":
         if (!process.env.TEXT_GEN_WEB_UI_BASE_PATH)
           throw new Error(
-            "TextWebGenUI API base path must be provided to use agents."
+            "TextWebGenUI API base path must be provided to use agents.",
           );
         break;
       case "bedrock":
@@ -184,7 +184,7 @@ class AgentHandler {
       case "fireworksai":
         if (!process.env.FIREWORKS_AI_LLM_API_KEY)
           throw new Error(
-            "FireworksAI API Key must be provided to use agents."
+            "FireworksAI API Key must be provided to use agents.",
           );
         break;
       case "deepseek":
@@ -194,7 +194,7 @@ class AgentHandler {
       case "litellm":
         if (!process.env.LITE_LLM_BASE_PATH)
           throw new Error(
-            "LiteLLM API base path and key must be provided to use agents."
+            "LiteLLM API base path and key must be provided to use agents.",
           );
         break;
       case "apipie":
@@ -216,7 +216,7 @@ class AgentHandler {
       case "nvidia-nim":
         if (!process.env.NVIDIA_NIM_LLM_BASE_PATH)
           throw new Error(
-            "NVIDIA NIM base path must be provided to use agents."
+            "NVIDIA NIM base path must be provided to use agents.",
           );
         break;
       case "ppio":
@@ -230,11 +230,11 @@ class AgentHandler {
       case "dpais":
         if (!process.env.DPAIS_LLM_BASE_PATH)
           throw new Error(
-            "Dell Pro AI Studio base path must be provided to use agents."
+            "Dell Pro AI Studio base path must be provided to use agents.",
           );
         if (!process.env.DPAIS_LLM_MODEL_PREF)
           throw new Error(
-            "Dell Pro AI Studio model must be set to use agents."
+            "Dell Pro AI Studio model must be set to use agents.",
           );
         break;
       case "moonshotai":
@@ -260,13 +260,13 @@ class AgentHandler {
       case "docker-model-runner":
         if (!process.env.DOCKER_MODEL_RUNNER_BASE_PATH)
           throw new Error(
-            "Docker Model Runner base path must be provided to use agents."
+            "Docker Model Runner base path must be provided to use agents.",
           );
         break;
       case "privatemode":
         if (!process.env.PRIVATEMODE_LLM_BASE_PATH)
           throw new Error(
-            "Privatemode base path must be provided to use agents."
+            "Privatemode base path must be provided to use agents.",
           );
         break;
       case "sambanova":
@@ -287,7 +287,7 @@ class AgentHandler {
         break;
       default:
         throw new Error(
-          "No workspace agent provider set. Please set your agent provider in the workspace's settings"
+          "No workspace agent provider set. Please set your agent provider in the workspace's settings",
         );
     }
   }
@@ -517,7 +517,7 @@ class AgentHandler {
         conversationMessageCount: ctx.conversationMessageCount,
         attachments: this.attachments || [],
       },
-      { user, thread }
+      { user, thread },
     );
 
     this.provider = router.resolvedRoute.provider;
@@ -543,7 +543,7 @@ class AgentHandler {
           args[param] === null)
       ) {
         this.log(
-          `'${param}' required parameter for '${pluginName}' plugin is missing. Plugin may not function or crash agent.`
+          `'${param}' required parameter for '${pluginName}' plugin is missing. Plugin may not function or crash agent.`,
         );
         continue;
       }
@@ -561,17 +561,17 @@ class AgentHandler {
         const [parent, childPluginName] = name.split("#");
         if (!Object.prototype.hasOwnProperty.call(AgentPlugins, parent)) {
           this.log(
-            `${parent} is not a valid plugin. Skipping inclusion to agent cluster.`
+            `${parent} is not a valid plugin. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
 
         const childPlugin = AgentPlugins[parent].plugin.find(
-          (child) => child.name === childPluginName
+          (child) => child.name === childPluginName,
         );
         if (!childPlugin) {
           this.log(
-            `${parent} does not have child plugin named ${childPluginName}. Skipping inclusion to agent cluster.`
+            `${parent} does not have child plugin named ${childPluginName}. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
@@ -579,11 +579,11 @@ class AgentHandler {
         const callOpts = this.parseCallOptions(
           args,
           childPlugin?.startupConfig?.params,
-          name
+          name,
         );
         this.aibitat.use(childPlugin.plugin(callOpts));
         this.log(
-          `Attached ${parent}:${childPluginName} plugin to Agent cluster`
+          `Attached ${parent}:${childPluginName} plugin to Agent cluster`,
         );
         continue;
       }
@@ -596,7 +596,7 @@ class AgentHandler {
         const plugin = AgentFlows.loadFlowPlugin(uuid, this.aibitat);
         if (!plugin) {
           this.log(
-            `Flow ${uuid} not found in flows directory. Skipping inclusion to agent cluster.`
+            `Flow ${uuid} not found in flows directory. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
@@ -608,7 +608,7 @@ class AgentHandler {
 
         this.aibitat.use(plugin.plugin());
         this.log(
-          `Attached flow ${plugin.name} (${plugin.flowName}) plugin to Agent cluster`
+          `Attached flow ${plugin.name} (${plugin.flowName}) plugin to Agent cluster`,
         );
         continue;
       }
@@ -624,11 +624,11 @@ class AgentHandler {
         const plugins =
           await new MCPCompatibilityLayer().convertServerToolsToPlugins(
             mcpPluginName,
-            this.aibitat
+            this.aibitat,
           );
         if (!plugins) {
           this.log(
-            `MCP ${mcpPluginName} not found in MCP server config. Skipping inclusion to agent cluster.`
+            `MCP ${mcpPluginName} not found in MCP server config. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
@@ -644,7 +644,7 @@ class AgentHandler {
         plugins.forEach((plugin) => {
           this.aibitat.use(plugin.plugin());
           this.log(
-            `Attached MCP::${plugin.toolName} MCP tool to Agent cluster`
+            `Attached MCP::${plugin.toolName} MCP tool to Agent cluster`,
           );
         });
         continue;
@@ -657,7 +657,7 @@ class AgentHandler {
         const valid = ImportedPlugin.validateImportedPluginHandler(hubId);
         if (!valid) {
           this.log(
-            `Imported plugin by hubId ${hubId} not found in plugin directory. Skipping inclusion to agent cluster.`
+            `Imported plugin by hubId ${hubId} not found in plugin directory. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
@@ -666,7 +666,7 @@ class AgentHandler {
         const callOpts = plugin.parseCallOptions();
         this.aibitat.use(plugin.plugin(callOpts));
         this.log(
-          `Attached ${plugin.name} (${hubId}) imported plugin to Agent cluster`
+          `Attached ${plugin.name} (${hubId}) imported plugin to Agent cluster`,
         );
         continue;
       }
@@ -674,14 +674,14 @@ class AgentHandler {
       // Load single-stage plugin.
       if (!Object.prototype.hasOwnProperty.call(AgentPlugins, name)) {
         this.log(
-          `${name} is not a valid plugin. Skipping inclusion to agent cluster.`
+          `${name} is not a valid plugin. Skipping inclusion to agent cluster.`,
         );
         continue;
       }
 
       const callOpts = this.parseCallOptions(
         args,
-        AgentPlugins[name].startupConfig.params
+        AgentPlugins[name].startupConfig.params,
       );
       const AIbitatPlugin = AgentPlugins[name];
       this.aibitat.use(AIbitatPlugin.plugin(callOpts));
@@ -700,7 +700,7 @@ class AgentHandler {
       this.provider,
       this.invocation.workspace,
       user,
-      this.invocation.prompt
+      this.invocation.prompt,
     );
 
     this.aibitat.agent(USER_AGENT.name, userAgentDef);
@@ -741,7 +741,7 @@ class AgentHandler {
       WorkspaceParsedFiles.getContextFiles(
         this.invocation.workspace,
         thread,
-        user
+        user,
       ),
       documentManager.pinnedDocs(),
     ])
@@ -760,11 +760,11 @@ class AgentHandler {
         if (allDocuments.length === 0) return "";
         if (parsedFiles?.length > 0)
           this.log(
-            `Injecting ${parsedFiles.length} parsed file(s) into user message`
+            `Injecting ${parsedFiles.length} parsed file(s) into user message`,
           );
         if (pinnedDocs?.length > 0)
           this.log(
-            `Injecting ${pinnedDocs.length} pinned document(s) into user message`
+            `Injecting ${pinnedDocs.length} pinned document(s) into user message`,
           );
 
         return (
@@ -787,7 +787,7 @@ class AgentHandler {
   async createAIbitat(
     args = {
       socket: null,
-    }
+    },
   ) {
     this.aibitat = new AIbitat({
       provider: this.provider ?? "openai",
@@ -823,7 +823,7 @@ class AgentHandler {
         } catch (e) {
           this.log(
             "Router re-resolution failed, keeping current route",
-            e.message
+            e.message,
           );
           return null;
         }
@@ -838,12 +838,12 @@ class AgentHandler {
         muteUserReply: true,
         introspection: true,
         userId: this.invocation.user_id || null,
-      })
+      }),
     );
 
     // Attach standard chat-history plugin for message storage.
     this.log(
-      `Attached ${AgentPlugins.chatHistory.name} plugin to Agent cluster`
+      `Attached ${AgentPlugins.chatHistory.name} plugin to Agent cluster`,
     );
     this.aibitat.use(AgentPlugins.chatHistory.plugin());
 

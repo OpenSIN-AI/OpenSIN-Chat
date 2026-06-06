@@ -13,7 +13,7 @@ class OpenAfDChatModelRouter {
     this.delegateProvider = null;
     this.defaultTemp = 0.7;
     this.routerService.log(
-      `Initialized for workspace "${workspace?.name || workspace?.slug}"`
+      `Initialized for workspace "${workspace?.name || workspace?.slug}"`,
     );
   }
 
@@ -32,7 +32,7 @@ class OpenAfDChatModelRouter {
    */
   async resolve(context = {}, { user = null, thread = null } = {}) {
     this.router = await this.routerService.resolveRouterForWorkspace(
-      this.workspace
+      this.workspace,
     );
     if (!this.router)
       throw new Error("No model router found for this workspace.");
@@ -42,7 +42,7 @@ class OpenAfDChatModelRouter {
     this._routeKey = this.routerService.routeCacheKey(
       user?.id,
       this.workspace.slug,
-      thread?.slug
+      thread?.slug,
     );
 
     this.routerService.logRoutingContext(this.router, rules, context);
@@ -50,7 +50,7 @@ class OpenAfDChatModelRouter {
     // Step 1: Calculated rules (always re-evaluated, they're instant)
     const calcResult = this.routerService.evaluateCalculatedRules(
       rules,
-      context
+      context,
     );
     if (calcResult) {
       this.resolvedRoute = calcResult;
@@ -65,7 +65,7 @@ class OpenAfDChatModelRouter {
       rules,
       context,
       this.router,
-      stickyMs
+      stickyMs,
     );
     if (llmResult) {
       this.resolvedRoute = llmResult;
@@ -79,7 +79,7 @@ class OpenAfDChatModelRouter {
     if (sticky) {
       this.resolvedRoute = sticky;
       this.routerService.log(
-        `No rules matched → Sticky route active: ${sticky.provider}/${sticky.model} (rule: ${sticky.ruleTitle || "unknown"})`
+        `No rules matched → Sticky route active: ${sticky.provider}/${sticky.model} (rule: ${sticky.ruleTitle || "unknown"})`,
       );
       this.#finalize();
       return;
@@ -94,7 +94,7 @@ class OpenAfDChatModelRouter {
       isFallback: true,
     };
     this.routerService.log(
-      `No rules matched, sticky expired → Fallback: ${this.router.fallback_provider}/${this.router.fallback_model}`
+      `No rules matched, sticky expired → Fallback: ${this.router.fallback_provider}/${this.router.fallback_model}`,
     );
     this.#finalize();
   }
@@ -117,7 +117,7 @@ class OpenAfDChatModelRouter {
         isFallback: this.resolvedRoute.isFallback,
         shouldNotify: this.routerService.shouldNotify(
           this._routeKey,
-          this.resolvedRoute
+          this.resolvedRoute,
         ),
         routerName: this.router?.name,
         fallbackProvider: this.router?.fallback_provider,

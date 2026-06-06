@@ -30,7 +30,7 @@ class XAiLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.log(
-      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`
+      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`,
     );
   }
 
@@ -118,7 +118,7 @@ class XAiLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.isValidChatCompletionModel(this.model))
       throw new Error(
-        `xAI chat: ${this.model} is not valid for chat completion!`
+        `xAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -130,7 +130,7 @@ class XAiLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -157,7 +157,7 @@ class XAiLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.isValidChatCompletionModel(this.model))
       throw new Error(
-        `xAI chat: ${this.model} is not valid for chat completion!`
+        `xAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

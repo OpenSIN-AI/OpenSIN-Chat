@@ -84,7 +84,7 @@ async function loadLatestChats(userId, workspaceId) {
   const latest = await WorkspaceChats.where(
     { user_id: userId, workspaceId, include: true },
     CHATS_PER_RUN_LIMIT,
-    { createdAt: "desc" }
+    { createdAt: "desc" },
   );
   return latest
     .filter((c) => {
@@ -118,7 +118,7 @@ function buildObserverUserMessage(chats) {
       const parsed = safeJsonParse(chat.response);
       if (parsed?.text)
         lines.push(
-          `Assistant: ${truncate(parsed.text, MAX_CHARS_PER_MESSAGE)}`
+          `Assistant: ${truncate(parsed.text, MAX_CHARS_PER_MESSAGE)}`,
         );
       return lines.join("\n");
     })
@@ -192,7 +192,7 @@ async function runObserver({ provider, model, userMessage }) {
                   o !== null &&
                   typeof o.content === "string" &&
                   o.content.trim().length > 0 &&
-                  ["high", "medium", "low"].includes(o.confidence)
+                  ["high", "medium", "low"].includes(o.confidence),
               )
               .slice(0, MAX_CANDIDATES_PER_RUN)
           : null;
@@ -221,7 +221,7 @@ function buildReflectorUserMessage(
   candidates,
   workspaceMemories,
   globalMemories,
-  globalSlots
+  globalSlots,
 ) {
   const formatMemoryList = (memories) => {
     if (memories.length === 0) return "None.";
@@ -232,24 +232,24 @@ function buildReflectorUserMessage(
     obs
       .map(
         (o, i) =>
-          `${i + 1}. "${o.content}" (confidence: ${o.confidence}) — ${o.reasoning}`
+          `${i + 1}. "${o.content}" (confidence: ${o.confidence}) — ${o.reasoning}`,
       )
       .join("\n");
 
   const sections = [];
 
   sections.push(
-    `Candidate observations from the Observer:\n${formatCandidates(candidates)}`
+    `Candidate observations from the Observer:\n${formatCandidates(candidates)}`,
   );
 
   sections.push(
-    `Existing GLOBAL memories:\n${formatMemoryList(globalMemories)}`
+    `Existing GLOBAL memories:\n${formatMemoryList(globalMemories)}`,
   );
   if (globalSlots > 0) sections.push(`Available GLOBAL slots: ${globalSlots}`);
   else sections.push(`GLOBAL is full — do not return any GLOBAL memories.`);
 
   sections.push(
-    `Existing WORKSPACE memories:\n${formatMemoryList(workspaceMemories)}`
+    `Existing WORKSPACE memories:\n${formatMemoryList(workspaceMemories)}`,
   );
 
   return sections.join("\n\n");
@@ -331,7 +331,7 @@ async function runReflector({ provider, model, userMessage }) {
                   typeof m.content === "string" &&
                   m.content.trim().length > 0 &&
                   ["WORKSPACE", "GLOBAL"].includes(m.scope) &&
-                  ["create", "update", "skip"].includes(m.action)
+                  ["create", "update", "skip"].includes(m.action),
               )
               .filter((m) => m.action !== "skip")
               .slice(0, MAX_CANDIDATES_PER_RUN)

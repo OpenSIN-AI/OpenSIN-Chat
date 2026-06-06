@@ -66,7 +66,7 @@ function chatEndpoints(app) {
           workspace?.chatMode,
           user,
           null,
-          attachments
+          attachments,
         );
         await Telemetry.sendTelemetry("sent_chat", {
           multiUserMode: multiUserMode(response),
@@ -84,7 +84,7 @@ function chatEndpoints(app) {
             workspaceName: workspace?.name,
             chatModel: workspace?.chatModel || "System Default",
           },
-          user?.id
+          user?.id,
         );
         response.end();
       } catch (e) {
@@ -99,7 +99,7 @@ function chatEndpoints(app) {
         });
         response.end();
       }
-    }
+    },
   );
 
   app.post(
@@ -153,7 +153,7 @@ function chatEndpoints(app) {
           workspace?.chatMode,
           user,
           thread,
-          attachments
+          attachments,
         );
 
         // If thread was renamed emit event to frontend via special `action` response.
@@ -190,7 +190,7 @@ function chatEndpoints(app) {
             thread: thread.name,
             chatModel: workspace?.chatModel || "System Default",
           },
-          user?.id
+          user?.id,
         );
         response.end();
       } catch (e) {
@@ -205,7 +205,7 @@ function chatEndpoints(app) {
         });
         response.end();
       }
-    }
+    },
   );
 }
 

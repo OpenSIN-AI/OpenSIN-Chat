@@ -22,7 +22,7 @@ const {
 
 const OUTPUT_DIR = path.resolve(
   __dirname,
-  "../../../../../../storage/generated-files/docx-theme-previews"
+  "../../../../../../storage/generated-files/docx-theme-previews",
 );
 
 const SAMPLE_CONTENT = `# Sample Document
@@ -113,14 +113,14 @@ async function generateThemePreview(themeName, themeConfig, options = {}) {
     html,
     libs,
     console.log,
-    themeConfig
+    themeConfig,
   );
 
   if (docElements.length === 0) {
     docElements.push(
       new Paragraph({
         children: [new TextRun({ text: content })],
-      })
+      }),
     );
   }
 
@@ -142,7 +142,7 @@ async function generateThemePreview(themeName, themeConfig, options = {}) {
         theme: themeConfig,
         margins: marginConfig,
         logoBuffer: null,
-      })
+      }),
     );
 
     sections.push({
@@ -261,7 +261,7 @@ async function main() {
       const sizeKB = (buffer.length / 1024).toFixed(1);
       const titlePage = config.includeTitlePage ? "✓ title" : "  -    ";
       console.log(
-        `✓ ${config.name.padEnd(30)} [${config.theme.padEnd(7)}] [${config.margins.padEnd(6)}] ${titlePage} (${sizeKB}KB)`
+        `✓ ${config.name.padEnd(30)} [${config.theme.padEnd(7)}] [${config.margins.padEnd(6)}] ${titlePage} (${sizeKB}KB)`,
       );
     } catch (error) {
       console.error(`✗ ${config.name.padEnd(30)} → Error: ${error.message}`);
@@ -271,7 +271,7 @@ async function main() {
 
   console.log(`\n✅ Done! Files saved to: ${OUTPUT_DIR}`);
   console.log(
-    "\nOpen the .docx files in Microsoft Word or LibreOffice to preview each configuration."
+    "\nOpen the .docx files in Microsoft Word or LibreOffice to preview each configuration.",
   );
 
   console.log("\n--- Theme Color Reference ---");
@@ -290,7 +290,7 @@ async function main() {
     const inchTop = (margins.top / 1440).toFixed(2);
     const inchLeft = (margins.left / 1440).toFixed(2);
     console.log(
-      `${name.padEnd(8)}: top/bottom=${inchTop}" left/right=${inchLeft}"`
+      `${name.padEnd(8)}: top/bottom=${inchTop}" left/right=${inchLeft}"`,
     );
   }
 }

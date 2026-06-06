@@ -6,7 +6,7 @@ class PostgresSQLConnector {
     config = {
       connectionString: null,
       schema: null,
-    }
+    },
   ) {
     this.className = "PostgresSQLConnector";
     this.connectionString = config.connectionString;

@@ -51,14 +51,14 @@ module.exports.FilesystemMoveFile = {
           handler: async function ({ source = "", destination = "" }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-move-file tool.`
+                `Using the filesystem-move-file tool.`,
               );
 
               const validSourcePath = await filesystem.validatePath(source);
               const validDestPath = await filesystem.validatePath(destination);
 
               this.super.introspect(
-                `${this.caller}: Moving ${source} to ${destination}`
+                `${this.caller}: Moving ${source} to ${destination}`,
               );
 
               if (this.super.requestToolApproval) {
@@ -69,7 +69,7 @@ module.exports.FilesystemMoveFile = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -77,12 +77,12 @@ module.exports.FilesystemMoveFile = {
 
               await fs.rename(validSourcePath, validDestPath);
               this.super.introspect(
-                `Successfully moved ${source} to ${destination}`
+                `Successfully moved ${source} to ${destination}`,
               );
               return `Successfully moved ${source} to ${destination}`;
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-move-file error: ${e.message}`
+                `filesystem-move-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error moving file: ${e.message}`;

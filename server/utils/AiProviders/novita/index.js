@@ -14,7 +14,7 @@ const {
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "novita")
-    : path.resolve(__dirname, `../../../storage/models/novita`)
+    : path.resolve(__dirname, `../../../storage/models/novita`),
 );
 
 class NovitaLLM {
@@ -69,7 +69,7 @@ class NovitaLLM {
    */
   #parseTimeout() {
     this.log(
-      `Novita timeout is set to ${process.env.NOVITA_LLM_TIMEOUT_MS ?? this.defaultTimeout}ms`
+      `Novita timeout is set to ${process.env.NOVITA_LLM_TIMEOUT_MS ?? this.defaultTimeout}ms`,
     );
     if (isNaN(Number(process.env.NOVITA_LLM_TIMEOUT_MS)))
       return this.defaultTimeout;
@@ -119,7 +119,7 @@ class NovitaLLM {
     if (!fs.existsSync(this.cacheModelPath)) return {};
     return safeJsonParse(
       fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
+      {},
     );
   }
 
@@ -132,7 +132,7 @@ class NovitaLLM {
     const availableModels = fs.existsSync(cacheModelPath)
       ? safeJsonParse(
           fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-          {}
+          {},
         )
       : {};
     return availableModels[modelName]?.maxLength || 4096;
@@ -222,7 +222,7 @@ class NovitaLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `Novita chat: ${this.model} is not valid for chat completion!`
+        `Novita chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -234,7 +234,7 @@ class NovitaLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -261,7 +261,7 @@ class NovitaLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `Novita chat: ${this.model} is not valid for chat completion!`
+        `Novita chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -320,7 +320,7 @@ class NovitaLLM {
         const diffMs = now - lastChunkTime;
         if (diffMs >= timeoutThresholdMs) {
           this.log(
-            `Novita stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`
+            `Novita stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {
             uuid,
@@ -437,14 +437,14 @@ async function fetchNovitaModels() {
         JSON.stringify(models),
         {
           encoding: "utf-8",
-        }
+        },
       );
       fs.writeFileSync(
         path.resolve(cacheFolder, ".cached_at"),
         String(Number(new Date())),
         {
           encoding: "utf-8",
-        }
+        },
       );
       return models;
     })

@@ -192,11 +192,11 @@ class MetaGenerator {
     const { SystemSettings } = require("../../models/systemSettings");
     const customTitle = await SystemSettings.getValueOrFallback(
       { label: "meta_page_title" },
-      null
+      null,
     );
     const faviconURL = await SystemSettings.getValueOrFallback(
       { label: "meta_page_favicon" },
-      null
+      null,
     );
 
     // If nothing defined - assume defaults.
@@ -226,7 +226,8 @@ class MetaGenerator {
             tag: "meta",
             props: {
               name: "title",
-              content: customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+              content:
+                customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -236,7 +237,8 @@ class MetaGenerator {
             tag: "meta",
             props: {
               property: "og:title",
-              content: customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+              content:
+                customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -246,7 +248,8 @@ class MetaGenerator {
             tag: "meta",
             props: {
               property: "twitter:title",
-              content: customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+              content:
+                customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -312,11 +315,11 @@ class MetaGenerator {
       const { SystemSettings } = require("../../models/systemSettings");
       const manifestName = await SystemSettings.getValueOrFallback(
         { label: "meta_page_title" },
-        "OpenAfD Chat"
+        "OpenAfD Chat",
       );
       const faviconURL = await SystemSettings.getValueOrFallback(
         { label: "meta_page_favicon" },
-        null
+        null,
       );
 
       let iconUrl = "/favicon.png";

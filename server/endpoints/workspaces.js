@@ -64,7 +64,7 @@ function workspaceEndpoints(app) {
             TTSSelection: process.env.TTS_PROVIDER || "native",
             LLMModel: getModelTag(),
           },
-          user?.id
+          user?.id,
         );
 
         await EventLogs.logEvent(
@@ -72,14 +72,14 @@ function workspaceEndpoints(app) {
           {
             workspaceName: workspace?.name || "Unknown Workspace",
           },
-          user?.id
+          user?.id,
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -102,14 +102,14 @@ function workspaceEndpoints(app) {
         await Workspace.trackChange(currWorkspace, data, user);
         const { workspace, message } = await Workspace.update(
           currWorkspace.id,
-          data
+          data,
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -144,7 +144,7 @@ function workspaceEndpoints(app) {
         }
 
         Collector.log(
-          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`
+          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`,
         );
         await Telemetry.sendTelemetry("document_uploaded");
         await EventLogs.logEvent(
@@ -152,14 +152,14 @@ function workspaceEndpoints(app) {
           {
             documentName: originalname,
           },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -189,20 +189,20 @@ function workspaceEndpoints(app) {
         }
 
         Collector.log(
-          `Link ${link} uploaded processed and successfully. It is now available in documents.`
+          `Link ${link} uploaded processed and successfully. It is now available in documents.`,
         );
         await Telemetry.sendTelemetry("link_uploaded");
         await EventLogs.logEvent(
           "link_uploaded",
           { link },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -225,7 +225,7 @@ function workspaceEndpoints(app) {
         await Document.removeDocuments(
           currWorkspace,
           deletes,
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
 
         const {
@@ -238,7 +238,7 @@ function workspaceEndpoints(app) {
             currWorkspace.slug,
             adds,
             currWorkspace.id,
-            response.locals?.user?.id ?? null
+            response.locals?.user?.id ?? null,
           );
           const updatedWorkspace = await Workspace.get({
             id: currWorkspace.id,
@@ -252,7 +252,7 @@ function workspaceEndpoints(app) {
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           currWorkspace,
           adds,
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
         const updatedWorkspace = await Workspace.get({ id: currWorkspace.id });
         response.status(200).json({
@@ -268,7 +268,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -302,7 +302,7 @@ function workspaceEndpoints(app) {
           {
             workspaceName: workspace?.name || "Unknown Workspace",
           },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
 
         try {
@@ -315,7 +315,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -343,7 +343,7 @@ function workspaceEndpoints(app) {
           {
             workspaceName: workspace?.name || "Unknown Workspace",
           },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
 
         try {
@@ -356,7 +356,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -374,7 +374,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -393,7 +393,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -420,7 +420,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -451,7 +451,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -475,7 +475,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -517,7 +517,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -541,7 +541,7 @@ function workspaceEndpoints(app) {
         console.error("Error updating chat feedback:", error);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -559,7 +559,7 @@ function workspaceEndpoints(app) {
           .status(500)
           .json({ success: false, message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -588,7 +588,7 @@ function workspaceEndpoints(app) {
           message: "Error saving the suggested messages.",
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -615,7 +615,7 @@ function workspaceEndpoints(app) {
         console.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -660,7 +660,7 @@ function workspaceEndpoints(app) {
         console.error("Error processing the TTS request:", error);
         response.status(500).json({ message: "TTS could not be completed" });
       }
-    }
+    },
   );
 
   app.get(
@@ -703,7 +703,7 @@ function workspaceEndpoints(app) {
         console.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -730,7 +730,7 @@ function workspaceEndpoints(app) {
           const storagePath = path.join(__dirname, "../storage/assets/pfp");
           const oldPfpPath = path.join(
             storagePath,
-            normalizePath(workspaceRecord.pfpFilename)
+            normalizePath(workspaceRecord.pfpFilename),
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
@@ -741,7 +741,7 @@ function workspaceEndpoints(app) {
           workspaceRecord.id,
           {
             pfpFilename: uploadedFileName,
-          }
+          },
         );
 
         return response.status(workspace ? 200 : 500).json({
@@ -753,7 +753,7 @@ function workspaceEndpoints(app) {
         console.error("Error processing the profile picture upload:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.delete(
@@ -771,7 +771,7 @@ function workspaceEndpoints(app) {
           const storagePath = path.join(__dirname, "../storage/assets/pfp");
           const oldPfpPath = path.join(
             storagePath,
-            normalizePath(oldPfpFilename)
+            normalizePath(oldPfpFilename),
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
@@ -782,7 +782,7 @@ function workspaceEndpoints(app) {
           workspaceRecord.id,
           {
             pfpFilename: null,
-          }
+          },
         );
 
         // Clear the cache
@@ -797,7 +797,7 @@ function workspaceEndpoints(app) {
         console.error("Error processing the profile picture removal:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -831,7 +831,7 @@ function workspaceEndpoints(app) {
             id: { lte: Number(chatId) },
           },
           null,
-          { id: "asc" }
+          { id: "asc" },
         );
 
         const { thread: newThread, message: threadError } =
@@ -865,14 +865,14 @@ function workspaceEndpoints(app) {
             workspaceName: workspace?.name || "Unknown Workspace",
             threadName: newThread.name,
           },
-          user?.id
+          user?.id,
         );
         response.status(200).json({ newThreadSlug: newThread.slug });
       } catch (e) {
         console.error(e.message, e);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.put(
@@ -897,7 +897,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.status(500).json({ success: false, error: "Server error" });
       }
-    }
+    },
   );
 
   /** Handles the uploading and embedding in one-call by uploading via drag-and-drop in chat container. */
@@ -944,7 +944,7 @@ function workspaceEndpoints(app) {
         }
 
         Collector.log(
-          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`
+          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`,
         );
         await Telemetry.sendTelemetry("document_uploaded");
         await EventLogs.logEvent(
@@ -952,14 +952,14 @@ function workspaceEndpoints(app) {
           {
             documentName: originalname,
           },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
 
         const document = documents[0];
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           currWorkspace,
           [document.location],
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
 
         if (failedToEmbed.length > 0)
@@ -976,7 +976,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -1005,7 +1005,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -1022,7 +1022,7 @@ function workspaceEndpoints(app) {
         console.error("Error fetching prompt history:", error);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -1043,7 +1043,7 @@ function workspaceEndpoints(app) {
         console.error("Error clearing prompt history:", error);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -1066,7 +1066,7 @@ function workspaceEndpoints(app) {
         console.error("Error deleting prompt history:", error);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   /**
@@ -1081,14 +1081,14 @@ function workspaceEndpoints(app) {
         const { searchTerm } = reqBody(request);
         const searchResults = await searchWorkspaceAndThreads(
           searchTerm,
-          response.locals?.user
+          response.locals?.user,
         );
         response.status(200).json(searchResults);
       } catch (error) {
         console.error("Error searching for workspaces:", error);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   // SSE endpoint for embedding progress
@@ -1120,7 +1120,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -1148,7 +1148,7 @@ function workspaceEndpoints(app) {
         console.error(e.message, e);
         response.status(500).json({ success: false, error: e.message });
       }
-    }
+    },
   );
 
   app.get(
@@ -1158,14 +1158,14 @@ function workspaceEndpoints(app) {
       try {
         response.status(200).json({
           showAgentCommand: await Workspace.isAgentCommandAvailable(
-            response.locals.workspace
+            response.locals.workspace,
           ),
         });
       } catch (error) {
         console.error("Error checking if agent command is available:", error);
         response.status(500).json({ showAgentCommand: true });
       }
-    }
+    },
   );
 
   // Parsed Files in separate endpoint just to keep the workspace endpoints clean

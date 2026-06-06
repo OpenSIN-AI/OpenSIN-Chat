@@ -119,7 +119,7 @@ function getVectorDbClass(getExactly = null) {
       return new PGVector();
     default:
       console.error(
-        `\x1b[31m[ENV ERROR]\x1b[0m No VECTOR_DB value found in environment! Falling back to LanceDB`
+        `\x1b[31m[ENV ERROR]\x1b[0m No VECTOR_DB value found in environment! Falling back to LanceDB`,
       );
       const { LanceDb: DefaultLanceDb } = require("../vectorDbProviders/lance");
       return new DefaultLanceDb();
@@ -258,11 +258,11 @@ function getLLMProvider({ provider = null, model = null } = {}) {
       // Model router is handled separately in stream.js via OpenAfDChatModelRouter.
       // This case should not be hit directly - if it is, throw a descriptive error.
       throw new Error(
-        "openafd-router provider must be resolved via OpenAfDChatModelRouter class, not getLLMProvider directly."
+        "openafd-router provider must be resolved via OpenAfDChatModelRouter class, not getLLMProvider directly.",
       );
     default:
       throw new Error(
-        `ENV: No valid LLM_PROVIDER value found in environment! Using ${process.env.LLM_PROVIDER}`
+        `ENV: No valid LLM_PROVIDER value found in environment! Using ${process.env.LLM_PROVIDER}`,
       );
   }
 }
@@ -560,7 +560,7 @@ function maximumChunkLength() {
 
 function toChunks(arr, size) {
   return Array.from({ length: Math.ceil(arr.length / size) }, (_v, i) =>
-    arr.slice(i * size, i * size + size)
+    arr.slice(i * size, i * size + size),
   );
 }
 
@@ -692,7 +692,7 @@ async function resolveProviderConnector({
       conversationMessageCount: ctx.conversationMessageCount,
       attachments,
     },
-    { user, thread }
+    { user, thread },
   );
 
   return {

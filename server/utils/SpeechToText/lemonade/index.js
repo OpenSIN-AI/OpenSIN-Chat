@@ -11,13 +11,13 @@ class LemonadeSTT {
     this.openai = new OpenAIApi({
       baseURL: parseLemonadeServerEndpoint(
         process.env.STT_LEMONADE_BASE_PATH,
-        "openai"
+        "openai",
       ),
       apiKey: process.env.LEMONADE_LLM_API_KEY || null,
     });
     this.model = process.env.STT_LEMONADE_MODEL_PREF ?? "whisper-1";
     this.#log(
-      `Service (${process.env.STT_LEMONADE_BASE_PATH}) with model: ${this.model}`
+      `Service (${process.env.STT_LEMONADE_BASE_PATH}) with model: ${this.model}`,
     );
   }
 

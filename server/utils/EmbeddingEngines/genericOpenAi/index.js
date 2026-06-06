@@ -8,7 +8,7 @@ class GenericOpenAiEmbedder {
   constructor() {
     if (!process.env.EMBEDDING_BASE_PATH)
       throw new Error(
-        "GenericOpenAI must have a valid base path to use for the api."
+        "GenericOpenAI must have a valid base path to use for the api.",
       );
     this.className = "GenericOpenAiEmbedder";
     const { OpenAI: OpenAIApi } = require("openai");
@@ -46,7 +46,7 @@ class GenericOpenAiEmbedder {
     if (isNaN(Number(process.env.GENERIC_OPEN_AI_EMBEDDING_API_DELAY_MS)))
       return null;
     const delayTimeout = Number(
-      process.env.GENERIC_OPEN_AI_EMBEDDING_API_DELAY_MS
+      process.env.GENERIC_OPEN_AI_EMBEDDING_API_DELAY_MS,
     );
     if (delayTimeout < 500) return 500; // minimum delay of 500ms
     return delayTimeout;
@@ -79,7 +79,7 @@ class GenericOpenAiEmbedder {
 
   async embedTextInput(textInput) {
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
     return result?.[0] || [];
   }

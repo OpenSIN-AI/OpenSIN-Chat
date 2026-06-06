@@ -91,7 +91,7 @@ class MinimaxProvider extends InheritMultiple([Provider, UnTooled]) {
     });
     if (hasAttachments) {
       this.providerLog(
-        "Minimax does not support vision - stripped image attachments from messages."
+        "Minimax does not support vision - stripped image attachments from messages.",
       );
     }
     return stripped;
@@ -107,12 +107,12 @@ class MinimaxProvider extends InheritMultiple([Provider, UnTooled]) {
         cleanedMessages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -122,7 +122,7 @@ class MinimaxProvider extends InheritMultiple([Provider, UnTooled]) {
         cleanedMessages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -147,7 +147,7 @@ class MinimaxProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         cleanedMessages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -158,7 +158,7 @@ class MinimaxProvider extends InheritMultiple([Provider, UnTooled]) {
         cleanedMessages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

@@ -63,7 +63,7 @@ module.exports.FilesystemReadTextFile = {
           handler: async function ({ path: filePath = "", head, tail }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-read-text-file tool.`
+                `Using the filesystem-read-text-file tool.`,
               );
 
               if (head && tail) {
@@ -74,7 +74,7 @@ module.exports.FilesystemReadTextFile = {
 
               if (filesystem.isImageFile(validPath)) {
                 this.super.introspect(
-                  `${this.caller}: Detected image file ${filePath}, attaching for viewing`
+                  `${this.caller}: Detected image file ${filePath}, attaching for viewing`,
                 );
                 const attachment =
                   await filesystem.readImageAsAttachment(validPath);
@@ -92,12 +92,12 @@ module.exports.FilesystemReadTextFile = {
               if (tail) {
                 content = await filesystem.tailFile(validPath, tail);
                 this.super.introspect(
-                  `Retrieved last ${tail} lines of ${filePath}`
+                  `Retrieved last ${tail} lines of ${filePath}`,
                 );
               } else if (head) {
                 content = await filesystem.headFile(validPath, head);
                 this.super.introspect(
-                  `Retrieved first ${head} lines of ${filePath}`
+                  `Retrieved first ${head} lines of ${filePath}`,
                 );
               } else {
                 content = await filesystem.readFileContent(validPath);
@@ -108,12 +108,12 @@ module.exports.FilesystemReadTextFile = {
                 filesystem.truncateContentForContext(
                   content,
                   this.super,
-                  "[Content truncated - file exceeds context limit. Use head/tail parameters to read specific portions.]"
+                  "[Content truncated - file exceeds context limit. Use head/tail parameters to read specific portions.]",
                 );
 
               if (wasTruncated) {
                 this.super.introspect(
-                  `${this.caller}: File content was truncated to fit context limit`
+                  `${this.caller}: File content was truncated to fit context limit`,
                 );
               }
 
@@ -129,7 +129,7 @@ module.exports.FilesystemReadTextFile = {
               return finalContent;
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-read-text-file error: ${e.message}`
+                `filesystem-read-text-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error reading file: ${e.message}`;

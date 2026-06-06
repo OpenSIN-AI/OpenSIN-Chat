@@ -48,33 +48,33 @@ module.exports.GmailMarkUnread = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Marking thread ${threadId} as unread`
+                `${this.caller}: Marking thread ${threadId} as unread`,
               );
 
               const result = await gmailLib.markUnread(threadId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to mark thread as unread - ${result.error}`
+                  `${this.caller}: Failed to mark thread as unread - ${result.error}`,
                 );
                 return `Error marking thread as unread: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully marked thread ${threadId} as unread`
+                `${this.caller}: Successfully marked thread ${threadId} as unread`,
               );
 
               return `Successfully marked thread ${threadId} as unread.`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-mark-unread error: ${e.message}`
+                `gmail-mark-unread error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error marking thread as unread: ${e.message}`;

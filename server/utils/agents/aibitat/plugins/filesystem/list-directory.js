@@ -66,13 +66,13 @@ module.exports.FilesystemListDirectory = {
           }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-list-directory tool.`
+                `Using the filesystem-list-directory tool.`,
               );
 
               const validPath = await filesystem.validatePath(dirPath);
 
               this.super.introspect(
-                `${this.caller}: Listing directory ${dirPath}`
+                `${this.caller}: Listing directory ${dirPath}`,
               );
 
               const entries = await fs.readdir(validPath, {
@@ -85,12 +85,12 @@ module.exports.FilesystemListDirectory = {
                   .sort((a, b) => a.name.localeCompare(b.name))
                   .map(
                     (entry) =>
-                      `${entry.isDirectory() ? "[DIR]" : "[FILE]"} ${entry.name}`
+                      `${entry.isDirectory() ? "[DIR]" : "[FILE]"} ${entry.name}`,
                   )
                   .join("\n");
 
                 this.super.introspect(
-                  `Found ${entries.length} items in ${dirPath}`
+                  `Found ${entries.length} items in ${dirPath}`,
                 );
 
                 return formatted || "Directory is empty";
@@ -116,7 +116,7 @@ module.exports.FilesystemListDirectory = {
                       mtime: new Date(0),
                     };
                   }
-                })
+                }),
               );
 
               // Sort entries
@@ -134,19 +134,19 @@ module.exports.FilesystemListDirectory = {
                     entry.isDirectory
                       ? ""
                       : humanFileSize(entry.size, true, 2).padStart(10)
-                  }`
+                  }`,
               );
 
               // Add summary
               const totalFiles = detailedEntries.filter(
-                (e) => !e.isDirectory
+                (e) => !e.isDirectory,
               ).length;
               const totalDirs = detailedEntries.filter(
-                (e) => e.isDirectory
+                (e) => e.isDirectory,
               ).length;
               const totalSize = detailedEntries.reduce(
                 (sum, entry) => sum + (entry.isDirectory ? 0 : entry.size),
-                0
+                0,
               );
 
               const summary = [
@@ -156,13 +156,13 @@ module.exports.FilesystemListDirectory = {
               ];
 
               this.super.introspect(
-                `Found ${entries.length} items (${totalFiles} files, ${totalDirs} directories) in ${dirPath}`
+                `Found ${entries.length} items (${totalFiles} files, ${totalDirs} directories) in ${dirPath}`,
               );
 
               return [...formattedEntries, ...summary].join("\n");
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-list-directory error: ${e.message}`
+                `filesystem-list-directory error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error listing directory: ${e.message}`;

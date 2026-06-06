@@ -16,7 +16,7 @@ const EventLogs = {
     } catch (error) {
       console.error(
         `\x1b[31m[Event Logging Failed]\x1b[0m - ${event}`,
-        error.message
+        error.message,
       );
       return { eventLog: null, message: error.message };
     }
@@ -58,7 +58,7 @@ const EventLogs = {
     clause = {},
     limit = null,
     orderBy = null,
-    offset = null
+    offset = null,
   ) {
     try {
       const logs = await prisma.event_logs.findMany({
@@ -80,7 +80,7 @@ const EventLogs = {
     clause = {},
     limit = null,
     offset = null,
-    orderBy = null
+    orderBy = null,
   ) {
     const { User } = require("./user");
 

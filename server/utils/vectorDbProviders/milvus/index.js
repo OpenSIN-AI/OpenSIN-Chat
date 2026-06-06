@@ -45,7 +45,7 @@ class Milvus extends VectorDatabase {
     const { isHealthy } = await client.checkHealth();
     if (!isHealthy)
       throw new Error(
-        `${this.name}::Invalid Heartbeat received - is the instance online?`
+        `${this.name}::Invalid Heartbeat received - is the instance online?`,
       );
 
     return { client };
@@ -114,7 +114,7 @@ class Milvus extends VectorDatabase {
     if (!isExists) {
       if (!dimensions)
         throw new Error(
-          `${this.name}::getOrCreateCollection Unable to infer vector dimension from input. Open an issue on GitHub for support.`
+          `${this.name}::getOrCreateCollection Unable to infer vector dimension from input. Open an issue on GitHub for support.`,
         );
 
       await client.createCollection({
@@ -156,7 +156,7 @@ class Milvus extends VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     const { DocumentVectors } = require("../../../models/vectors");
     try {
@@ -190,7 +190,7 @@ class Milvus extends VectorDatabase {
 
               if (insertResult?.status.error_code !== "Success") {
                 throw new Error(
-                  `Error embedding into ${this.name}! Reason:${insertResult?.status.reason}`
+                  `Error embedding into ${this.name}! Reason:${insertResult?.status.reason}`,
                 );
               }
             }
@@ -202,7 +202,7 @@ class Milvus extends VectorDatabase {
           } catch (insertError) {
             console.error(
               "Error inserting cached chunks:",
-              insertError.message
+              insertError.message,
             );
             return { vectorized: false, error: insertError.message };
           }
@@ -215,11 +215,11 @@ class Milvus extends VectorDatabase {
           await SystemSettings.getValueOrFallback({
             label: "text_splitter_chunk_size",
           }),
-          EmbedderEngine?.embeddingMaxChunkLength
+          EmbedderEngine?.embeddingMaxChunkLength,
         ),
         chunkOverlap: await SystemSettings.getValueOrFallback(
           { label: "text_splitter_chunk_overlap" },
-          20
+          20,
         ),
         chunkHeaderMeta: TextSplitter.buildHeaderMeta(metadata),
         chunkPrefix: EmbedderEngine?.embeddingPrefix,
@@ -247,7 +247,7 @@ class Milvus extends VectorDatabase {
         }
       } else {
         throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
+          "Could not embed document chunks! This document will not be recorded.",
         );
       }
 
@@ -270,7 +270,7 @@ class Milvus extends VectorDatabase {
 
           if (insertResult?.status.error_code !== "Success") {
             throw new Error(
-              `Error embedding into ${this.name}! Reason:${insertResult?.status.reason}`
+              `Error embedding into ${this.name}! Reason:${insertResult?.status.reason}`,
             );
           }
         }
@@ -375,7 +375,7 @@ class Milvus extends VectorDatabase {
       if (match.score < similarityThreshold) return;
       if (filterIdentifiers.includes(sourceIdentifier(match.metadata))) {
         this.logger(
-          `${this.name}: A source was filtered from context as its parent document is pinned.`
+          `${this.name}: A source was filtered from context as its parent document is pinned.`,
         );
         return;
       }

@@ -33,7 +33,7 @@ function extensionEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -60,7 +60,7 @@ function extensionEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -82,7 +82,7 @@ function extensionEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -104,7 +104,7 @@ function extensionEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
   app.post(
     "/ext/website-depth",
@@ -125,7 +125,7 @@ function extensionEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
   app.post(
     "/ext/drupalwiki",
@@ -146,7 +146,7 @@ function extensionEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -168,7 +168,7 @@ function extensionEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -190,7 +190,7 @@ function extensionEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

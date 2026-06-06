@@ -67,7 +67,7 @@ const client = new OpenAI({
   console.log(
     `First few values:`,
     embedding.data[0].embedding.slice(0, 5),
-    `+ ${embedding.data[0].embedding.length - 5} more`
+    `+ ${embedding.data[0].embedding.length - 5} more`,
   );
 
   // Vector DB functionality

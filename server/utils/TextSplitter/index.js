@@ -51,7 +51,7 @@ class TextSplitter {
     const limit = Number(embedderLimit);
     if (prefValue > limit)
       console.log(
-        `\x1b[43m[WARN]\x1b[0m Text splitter chunk length of ${prefValue} exceeds embedder model max of ${embedderLimit}. Will use ${embedderLimit}.`
+        `\x1b[43m[WARN]\x1b[0m Text splitter chunk length of ${prefValue} exceeds embedder model max of ${embedderLimit}. Will use ${embedderLimit}.`,
       );
     return prefValue > limit ? limit : prefValue;
   }
@@ -88,7 +88,7 @@ class TextSplitter {
             !metadata?.chunkSource.length || // Is not empty
             typeof metadata.chunkSource !== "string" || // Is a string
             !validPrefixes.some(
-              (prefix) => metadata.chunkSource.startsWith(prefix) // Has a valid prefix we respect
+              (prefix) => metadata.chunkSource.startsWith(prefix), // Has a valid prefix we respect
             )
           )
             return null;
@@ -142,7 +142,7 @@ class TextSplitter {
 
     if (!content) return this.#applyPrefix(content);
     return this.#applyPrefix(
-      `<document_metadata>\n${content}</document_metadata>\n\n`
+      `<document_metadata>\n${content}</document_metadata>\n\n`,
     );
   }
 

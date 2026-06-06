@@ -80,7 +80,7 @@ async function classifyWithLLM(rules, prompt, router) {
 
   const systemPrompt = CLASSIFIER_SYSTEM_PROMPT.replace(
     "{categories}",
-    categoryList
+    categoryList,
   );
 
   try {
@@ -95,7 +95,7 @@ async function classifyWithLLM(rules, prompt, router) {
     aibitat.use(
       routerClassifier.plugin({
         categories: validRules.map((rule) => rule.title),
-      })
+      }),
     );
     aibitat.agent(CLASSIFIER_AGENT, {
       role: systemPrompt,

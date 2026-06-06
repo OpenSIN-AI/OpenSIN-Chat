@@ -93,7 +93,7 @@ module.exports.GmailCreateDraftReply = {
           }) {
             try {
               this.super.handlerProps.log(
-                `Using the gmail-create-draft-reply tool.`
+                `Using the gmail-create-draft-reply tool.`,
               );
 
               if (!threadId || !body) {
@@ -106,14 +106,14 @@ module.exports.GmailCreateDraftReply = {
 
               if (Array.isArray(attachments) && attachments.length > 0) {
                 this.super.introspect(
-                  `${this.caller}: Validating ${attachments.length} attachment(s)...`
+                  `${this.caller}: Validating ${attachments.length} attachment(s)...`,
                 );
 
                 for (const filePath of attachments) {
                   const result = prepareAttachment(filePath);
                   if (!result.success) {
                     this.super.introspect(
-                      `${this.caller}: Attachment validation failed - ${result.error}`
+                      `${this.caller}: Attachment validation failed - ${result.error}`,
                     );
                     return `Error with attachment: ${result.error}`;
                   }
@@ -122,20 +122,20 @@ module.exports.GmailCreateDraftReply = {
                   if (totalAttachmentSize > MAX_TOTAL_ATTACHMENT_SIZE) {
                     const totalFormatted = humanFileSize(
                       totalAttachmentSize,
-                      true
+                      true,
                     );
                     this.super.introspect(
-                      `${this.caller}: Total attachment size (${totalFormatted}) exceeds 20MB limit`
+                      `${this.caller}: Total attachment size (${totalFormatted}) exceeds 20MB limit`,
                     );
                     return `Error: Total attachment size (${totalFormatted}) exceeds the 20MB limit. Please reduce the number or size of attachments.`;
                   }
 
                   preparedAttachments.push(result.attachment);
                   attachmentSummaries.push(
-                    `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`
+                    `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`,
                   );
                   this.super.introspect(
-                    `${this.caller}: Prepared attachment "${result.fileInfo.name}"`
+                    `${this.caller}: Prepared attachment "${result.fileInfo.name}"`,
                   );
                 }
               }
@@ -156,14 +156,14 @@ module.exports.GmailCreateDraftReply = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Creating draft reply to thread ${threadId}${replyAll ? " (reply all)" : ""}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`
+                `${this.caller}: Creating draft reply to thread ${threadId}${replyAll ? " (reply all)" : ""}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`,
               );
 
               const options = {};
@@ -178,19 +178,19 @@ module.exports.GmailCreateDraftReply = {
                 threadId,
                 body,
                 replyAll,
-                options
+                options,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to create draft reply - ${result.error}`
+                  `${this.caller}: Failed to create draft reply - ${result.error}`,
                 );
                 return `Error creating Gmail draft reply: ${result.error}`;
               }
 
               const draft = result.data;
               this.super.introspect(
-                `${this.caller}: Successfully created draft reply (ID: ${draft.draftId})`
+                `${this.caller}: Successfully created draft reply (ID: ${draft.draftId})`,
               );
 
               return (
@@ -207,7 +207,7 @@ module.exports.GmailCreateDraftReply = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-create-draft-reply error: ${e.message}`
+                `gmail-create-draft-reply error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating Gmail draft reply: ${e.message}`;

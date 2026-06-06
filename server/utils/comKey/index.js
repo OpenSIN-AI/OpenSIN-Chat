@@ -6,7 +6,7 @@ const keyPath =
     ? path.resolve(__dirname, `../../storage/comkey`)
     : path.resolve(
         process.env.STORAGE_DIR ?? path.resolve(__dirname, `../../storage`),
-        `comkey`
+        `comkey`,
       );
 
 // What does this class do?
@@ -54,14 +54,14 @@ class CommunicationKey {
       fs.mkdirSync(this.#storageLoc, { recursive: true });
     fs.writeFileSync(
       `${path.resolve(this.#storageLoc, this.#privKeyName)}`,
-      keyPair.privateKey
+      keyPair.privateKey,
     );
     fs.writeFileSync(
       `${path.resolve(this.#storageLoc, this.#pubKeyName)}`,
-      keyPair.publicKey
+      keyPair.publicKey,
     );
     this.log(
-      "RSA key pair generated for signed payloads within OpenAfD Chat services."
+      "RSA key pair generated for signed payloads within OpenAfD Chat services.",
     );
   }
 

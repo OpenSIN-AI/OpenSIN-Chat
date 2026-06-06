@@ -27,7 +27,7 @@ const PromptHistory = {
   forWorkspace: async function (
     workspaceId = null,
     limit = null,
-    orderBy = null
+    orderBy = null,
   ) {
     if (!workspaceId) return [];
     try {

@@ -227,7 +227,7 @@ async function openAiModels(apiKey = null) {
     .filter(
       (model) =>
         (model.id.includes("gpt") && !model.id.startsWith("ft:")) ||
-        model.id.startsWith("o") // o1, o1-mini, o3, etc
+        model.id.startsWith("o"), // o1, o1-mini, o3, etc
     )
     .filter(
       (model) =>
@@ -237,7 +237,7 @@ async function openAiModels(apiKey = null) {
         !model.id.includes("realtime") &&
         !model.id.includes("image") &&
         !model.id.includes("moderation") &&
-        !model.id.includes("transcribe")
+        !model.id.includes("transcribe"),
     )
     .map((model) => {
       return {
@@ -250,7 +250,7 @@ async function openAiModels(apiKey = null) {
   const customModels = allModels
     .filter(
       (model) =>
-        !model.owned_by.includes("openai") && model.owned_by !== "system"
+        !model.owned_by.includes("openai") && model.owned_by !== "system",
     )
     .map((model) => {
       return {
@@ -303,7 +303,7 @@ async function openAiSttModels(apiKey = null) {
     .filter(
       (m) =>
         (m.id.includes("whisper") || m.id.includes("transcribe")) &&
-        !m.id.includes("realtime")
+        !m.id.includes("realtime"),
     )
     .map((m) => ({ ...m, name: m.id, organization: "OpenAi" }));
 
@@ -378,7 +378,7 @@ async function getGroqAiModels(_apiKey = null) {
         return [];
       })
   ).filter(
-    (model) => !model.id.includes("whisper") && !model.id.includes("tool-use")
+    (model) => !model.id.includes("whisper") && !model.id.includes("tool-use"),
   );
 
   // Api Key was successful so lets save it for future uses
@@ -415,7 +415,7 @@ async function getLMStudioModels(basePath = null, _apiKey = null) {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: parseLMStudioBasePath(
-        basePath || process.env.LMSTUDIO_BASE_PATH
+        basePath || process.env.LMSTUDIO_BASE_PATH,
       ),
       apiKey: apiKey || null,
     });
@@ -480,7 +480,7 @@ async function ollamaAIModels(basePath = null, _authToken = null) {
     .then((models) =>
       models.map((model) => {
         return { id: model.name };
-      })
+      }),
     )
     .catch((e) => {
       console.error(e);
@@ -614,7 +614,7 @@ async function getMistralModels(apiKey = null) {
   const models = await openai.models
     .list()
     .then((results) =>
-      results.data.filter((model) => !model.id.includes("embed"))
+      results.data.filter((model) => !model.id.includes("embed")),
     )
     .catch((e) => {
       console.error(`Mistral:listModels`, e.message);
@@ -670,7 +670,7 @@ async function getMinimaxModels(_apiKey = null) {
         id: model.id,
         name: model.id,
         organization: model.owned_by || "minimax",
-      }))
+      })),
     )
     .catch((e) => {
       console.error(`Minimax:listModels`, e.message);
@@ -732,7 +732,7 @@ async function getDeepSeekModels(apiKey = null) {
         id: model.id,
         name: model.id,
         organization: model.owned_by,
-      }))
+      })),
     )
     .catch((e) => {
       console.error(`DeepSeek:listModels`, e.message);
@@ -803,7 +803,7 @@ async function getNvidiaNimModels(basePath = null) {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: parseNvidiaNimBasePath(
-        basePath ?? process.env.NVIDIA_NIM_LLM_BASE_PATH
+        basePath ?? process.env.NVIDIA_NIM_LLM_BASE_PATH,
       ),
       apiKey: null,
     });
@@ -857,7 +857,7 @@ async function getDellProAiStudioModels(basePath = null) {
   const { OpenAI: OpenAIApi } = require("openai");
   try {
     const { origin } = new URL(
-      basePath || process.env.DELL_PRO_AI_STUDIO_BASE_PATH
+      basePath || process.env.DELL_PRO_AI_STUDIO_BASE_PATH,
     );
     const openai = new OpenAIApi({
       baseURL: `${origin}/v1/openai`,
@@ -869,7 +869,7 @@ async function getDellProAiStudioModels(basePath = null) {
       .then((models) => {
         return models
           .filter(
-            (model) => model?.capability?.includes("TextToText") // Only include text-to-text models for this handler
+            (model) => model?.capability?.includes("TextToText"), // Only include text-to-text models for this handler
           )
           .map((model) => {
             return {
@@ -934,7 +934,7 @@ async function getFoundryModels(basePath = null) {
         results.data.map((model) => ({
           ...model,
           name: model.id,
-        }))
+        })),
       )
       .catch((e) => {
         console.error(`Foundry:listModels`, e.message);
@@ -971,7 +971,7 @@ async function getCohereModels(_apiKey = null, type = "chat") {
       models.map((model) => ({
         id: model.name,
         name: model.name,
-      }))
+      })),
     )
     .catch((e) => {
       console.error(`Cohere:listModels`, e.message);
@@ -1108,7 +1108,7 @@ async function getPrivatemodeModels(basePath = null, task = "any") {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: PrivatemodeLLM.parseBasePath(
-        basePath || process.env.PRIVATEMODE_LLM_BASE_PATH
+        basePath || process.env.PRIVATEMODE_LLM_BASE_PATH,
       ),
       apiKey: null,
     });
@@ -1120,8 +1120,8 @@ async function getPrivatemodeModels(basePath = null, task = "any") {
           models
             .filter((model) => !model.id.includes("/")) // remove legacy prefixed models
             .filter((model) =>
-              task === "any" ? true : model.tasks.includes(task)
-            ) // filter by task or show all if task is any
+              task === "any" ? true : model.tasks.includes(task),
+            ), // filter by task or show all if task is any
       )
       .then((models) =>
         models.map((model) => ({
@@ -1131,7 +1131,7 @@ async function getPrivatemodeModels(basePath = null, task = "any") {
             .split("-")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
             .join(" "),
-        }))
+        })),
       )
       .catch((e) => {
         console.error(`Privatemode:listModels`, e.message);
@@ -1164,7 +1164,7 @@ async function getSambaNovaModels(_apiKey = null) {
       .list()
       .then((results) => results.data)
       .then((models) =>
-        models.filter((model) => !model.id.toLowerCase().startsWith("whisper"))
+        models.filter((model) => !model.id.toLowerCase().startsWith("whisper")),
       )
       .then((models) =>
         models.map((model) => {
@@ -1178,7 +1178,7 @@ async function getSambaNovaModels(_apiKey = null) {
             organization,
             name: model.id,
           };
-        })
+        }),
       )
       .catch((e) => {
         console.error(`SambaNova:listModels`, e.message);
@@ -1232,7 +1232,7 @@ async function getGenericOpenAiModels(basePath = null, apiKey = null) {
           id: model.id,
           name: model.id,
           organization: model.owned_by ?? "generic-openai",
-        }))
+        })),
       )
       .catch((e) => {
         console.error(`GenericOpenAI:listModels`, e.message);

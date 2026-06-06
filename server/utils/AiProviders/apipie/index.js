@@ -15,7 +15,7 @@ const {
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "apipie")
-    : path.resolve(__dirname, `../../../storage/models/apipie`)
+    : path.resolve(__dirname, `../../../storage/models/apipie`),
 );
 
 class ApiPieLLM {
@@ -95,7 +95,7 @@ class ApiPieLLM {
     if (!fs.existsSync(this.cacheModelPath)) return {};
     return safeJsonParse(
       fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
+      {},
     );
   }
 
@@ -113,7 +113,7 @@ class ApiPieLLM {
         }
         return chatModels;
       },
-      {}
+      {},
     );
   }
 
@@ -126,7 +126,7 @@ class ApiPieLLM {
     const availableModels = fs.existsSync(cacheModelPath)
       ? safeJsonParse(
           fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-          {}
+          {},
         )
       : {};
     return availableModels[modelName]?.maxLength || 4096;
@@ -190,7 +190,7 @@ class ApiPieLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `ApiPie chat: ${this.model} is not valid for chat completion!`
+        `ApiPie chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -202,7 +202,7 @@ class ApiPieLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -230,7 +230,7 @@ class ApiPieLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `ApiPie chat: ${this.model} is not valid for chat completion!`
+        `ApiPie chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -362,14 +362,14 @@ async function fetchApiPieModels(providedApiKey = null) {
         JSON.stringify(models),
         {
           encoding: "utf-8",
-        }
+        },
       );
       fs.writeFileSync(
         path.resolve(cacheFolder, ".cached_at"),
         String(Number(new Date())),
         {
           encoding: "utf-8",
-        }
+        },
       );
 
       return models;

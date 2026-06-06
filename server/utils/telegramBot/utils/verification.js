@@ -28,7 +28,7 @@ function enforcePendingCap(pendingPairings) {
 
   // Sort by requestedAt ascending (oldest first) and remove excess
   const entries = [...pendingPairings.entries()].sort(
-    (a, b) => new Date(a[1].requestedAt) - new Date(b[1].requestedAt)
+    (a, b) => new Date(a[1].requestedAt) - new Date(b[1].requestedAt),
   );
 
   const toRemove = entries.length - MAX_PENDING_PAIRINGS + 1;
@@ -46,7 +46,7 @@ function enforcePendingCap(pendingPairings) {
  */
 function isVerified(approvedUsers, chatId) {
   return (approvedUsers || []).some(
-    (u) => (typeof u === "string" ? u : u.chatId) === String(chatId)
+    (u) => (typeof u === "string" ? u : u.chatId) === String(chatId),
   );
 }
 
@@ -85,7 +85,7 @@ In OpenAfD Chat, go to Settings → Connections → Telegram and approve your re
 Make sure the pairing code shown here matches what is displayed in the settings page.
 
 This ensures no one else is trying to connect on your behalf.`,
-    { escapeHtml: false }
+    { escapeHtml: false },
   );
 
   await bot.sendMessage(chatId, formattedMessage, { parse_mode: "HTML" });
@@ -120,7 +120,7 @@ async function approveUser(bot, chatId, config, pendingPairings) {
     try {
       await bot.sendMessage(
         chatId,
-        "You've been approved! Send a message to start chatting."
+        "You've been approved! Send a message to start chatting.",
       );
     } catch {
       // User may have blocked bot
@@ -153,7 +153,7 @@ async function denyUser(bot, chatId, pendingPairings) {
  */
 async function revokeUser(chatId, config) {
   const approved = (config.approved_users || []).filter(
-    (u) => (typeof u === "string" ? u : u.chatId) !== String(chatId)
+    (u) => (typeof u === "string" ? u : u.chatId) !== String(chatId),
   );
   config.approved_users = approved;
   await ExternalCommunicationConnector.updateConfig("telegram", {

@@ -30,7 +30,7 @@ class OllamaEmbedder {
       fetch: OllamaAILLM.applyOllamaFetch(),
     });
     this.log(
-      `initialized with model ${this.model} at ${this.basePath}. Batch size: ${this.maxConcurrentChunks}, num_ctx: ${this.embeddingMaxChunkLength}`
+      `initialized with model ${this.model} at ${this.basePath}. Batch size: ${this.maxConcurrentChunks}, num_ctx: ${this.embeddingMaxChunkLength}`,
     );
   }
 
@@ -53,7 +53,7 @@ class OllamaEmbedder {
 
   async embedTextInput(textInput) {
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
     return result?.[0] || [];
   }
@@ -75,10 +75,10 @@ class OllamaEmbedder {
   async embedChunks(textChunks = []) {
     if (!(await this.#isAlive()))
       throw new Error(
-        `Ollama service could not be reached. Is Ollama running?`
+        `Ollama service could not be reached. Is Ollama running?`,
       );
     this.log(
-      `Embedding ${textChunks.length} chunks of text with ${this.model} in batches of ${this.maxConcurrentChunks}.`
+      `Embedding ${textChunks.length} chunks of text with ${this.model} in batches of ${this.maxConcurrentChunks}.`,
     );
 
     let data = [];
@@ -86,7 +86,7 @@ class OllamaEmbedder {
 
     // Process chunks in batches based on maxConcurrentChunks
     const totalBatches = Math.ceil(
-      textChunks.length / this.maxConcurrentChunks
+      textChunks.length / this.maxConcurrentChunks,
     );
     let currentBatch = 0;
 
@@ -116,7 +116,7 @@ class OllamaEmbedder {
         data.push(...embeddings);
         reportEmbeddingProgress(data.length, textChunks.length);
         this.log(
-          `Batch ${currentBatch}/${totalBatches}: Embedded ${embeddings.length} chunks. Total: ${data.length}/${textChunks.length}`
+          `Batch ${currentBatch}/${totalBatches}: Embedded ${embeddings.length} chunks. Total: ${data.length}/${textChunks.length}`,
         );
       } catch (err) {
         this.log(err.message);

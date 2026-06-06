@@ -38,7 +38,7 @@ function getDBClient(identifier = "", connectionConfig = {}) {
       return new MSSQLConnector(connectionConfig);
     default:
       throw new Error(
-        `There is no supported database connector for ${identifier}`
+        `There is no supported database connector for ${identifier}`,
       );
   }
 }
@@ -50,7 +50,7 @@ function getDBClient(identifier = "", connectionConfig = {}) {
 async function listSQLConnections() {
   return safeJsonParse(
     (await SystemSettings.get({ label: "agent_sql_connections" }))?.value,
-    []
+    [],
   );
 }
 

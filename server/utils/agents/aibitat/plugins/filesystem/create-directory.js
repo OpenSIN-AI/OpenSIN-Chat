@@ -41,12 +41,12 @@ module.exports.FilesystemCreateDirectory = {
           handler: async function ({ path: dirPath = "" }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-create-directory tool.`
+                `Using the filesystem-create-directory tool.`,
               );
 
               const validPath = await filesystem.validatePath(dirPath);
               this.super.introspect(
-                `${this.caller}: Creating directory ${dirPath}`
+                `${this.caller}: Creating directory ${dirPath}`,
               );
 
               if (this.super.requestToolApproval) {
@@ -58,7 +58,7 @@ module.exports.FilesystemCreateDirectory = {
 
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -66,12 +66,12 @@ module.exports.FilesystemCreateDirectory = {
 
               await fs.mkdir(validPath, { recursive: true });
               this.super.introspect(
-                `Successfully created directory ${dirPath}`
+                `Successfully created directory ${dirPath}`,
               );
               return `Successfully created directory ${dirPath}`;
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-create-directory error: ${e.message}`
+                `filesystem-create-directory error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating directory: ${e.message}`;

@@ -117,7 +117,7 @@ function apiUserManagementEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

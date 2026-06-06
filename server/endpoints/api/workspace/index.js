@@ -80,7 +80,7 @@ function apiWorkspaceEndpoints(app) {
       const { workspace, message } = await Workspace.new(
         name,
         null,
-        additionalFields
+        additionalFields,
       );
 
       if (!workspace) {
@@ -273,7 +273,7 @@ function apiWorkspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -344,14 +344,14 @@ function apiWorkspaceEndpoints(app) {
 
         const { workspace, message } = await Workspace.update(
           currWorkspace.id,
-          data
+          data,
         );
         response.status(200).json({ workspace, message });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -438,7 +438,7 @@ function apiWorkspaceEndpoints(app) {
               workspace.id,
               apiSessionId,
               validLimit,
-              { createdAt: validOrderBy }
+              { createdAt: validOrderBy },
             )
           : await WorkspaceChats.forWorkspace(workspace.id, validLimit, {
               createdAt: validOrderBy,
@@ -448,7 +448,7 @@ function apiWorkspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -525,7 +525,7 @@ function apiWorkspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -593,7 +593,7 @@ function apiWorkspaceEndpoints(app) {
         console.error("Error processing the pin status update:", error);
         return response.status(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -727,7 +727,7 @@ function apiWorkspaceEndpoints(app) {
           error: e.message,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -889,7 +889,7 @@ function apiWorkspaceEndpoints(app) {
         });
         response.end();
       }
-    }
+    },
   );
 
   app.post(
@@ -1024,7 +1024,7 @@ function apiWorkspaceEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

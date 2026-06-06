@@ -12,7 +12,7 @@ class TextGenWebUILLM {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.TEXT_GEN_WEB_UI_BASE_PATH)
       throw new Error(
-        "TextGenWebUI must have a valid base path to use for the api."
+        "TextGenWebUI must have a valid base path to use for the api.",
       );
 
     this.className = "TextGenWebUILLM";
@@ -133,7 +133,7 @@ class TextGenWebUILLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (

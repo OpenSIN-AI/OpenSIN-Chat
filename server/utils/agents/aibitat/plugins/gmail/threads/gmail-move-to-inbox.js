@@ -35,7 +35,7 @@ module.exports.GmailMoveToInbox = {
           handler: async function ({ threadId }) {
             try {
               this.super.handlerProps.log(
-                `Using the gmail-move-to-inbox tool.`
+                `Using the gmail-move-to-inbox tool.`,
               );
 
               if (!threadId) {
@@ -50,33 +50,33 @@ module.exports.GmailMoveToInbox = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Moving thread ${threadId} to inbox`
+                `${this.caller}: Moving thread ${threadId} to inbox`,
               );
 
               const result = await gmailLib.moveToInbox(threadId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to move thread to inbox - ${result.error}`
+                  `${this.caller}: Failed to move thread to inbox - ${result.error}`,
                 );
                 return `Error moving thread to inbox: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully moved thread ${threadId} to inbox`
+                `${this.caller}: Successfully moved thread ${threadId} to inbox`,
               );
 
               return `Successfully moved thread ${threadId} to inbox.`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-move-to-inbox error: ${e.message}`
+                `gmail-move-to-inbox error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error moving thread to inbox: ${e.message}`;

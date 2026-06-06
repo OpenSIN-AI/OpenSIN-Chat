@@ -80,10 +80,10 @@ const httpSocket = {
             error?.message || "An error occurred while running the agent.";
           console.error(chalk.red(`   error: ${errorMessage}`), error);
           aibitat.introspect(
-            `Error encountered while running: ${errorMessage}`
+            `Error encountered while running: ${errorMessage}`,
           );
           handler.send(
-            JSON.stringify({ type: "wssFailure", content: errorMessage })
+            JSON.stringify({ type: "wssFailure", content: errorMessage }),
           );
           aibitat.terminate();
         });
@@ -91,7 +91,7 @@ const httpSocket = {
         aibitat.introspect = (messageText) => {
           if (!introspection) return; // Dump thoughts when not wanted.
           handler.send(
-            JSON.stringify({ type: "statusResponse", content: messageText })
+            JSON.stringify({ type: "statusResponse", content: messageText }),
           );
         };
 
@@ -131,11 +131,11 @@ const httpSocket = {
           } = require("../../../../models/agentSkillWhitelist");
           const isWhitelisted = await AgentSkillWhitelist.isWhitelisted(
             skillName,
-            null
+            null,
           );
           if (isWhitelisted) {
             console.log(
-              chalk.green(`Skill ${skillName} is whitelisted - auto-approved.`)
+              chalk.green(`Skill ${skillName} is whitelisted - auto-approved.`),
             );
             return {
               approved: true,
@@ -148,8 +148,8 @@ const httpSocket = {
           if (!telegramChatId || !ipc) {
             console.log(
               chalk.yellow(
-                `Tool approval requested for ${skillName} but no Telegram context available. Auto-denying for safety.`
-              )
+                `Tool approval requested for ${skillName} but no Telegram context available. Auto-denying for safety.`,
+              ),
             );
             return {
               approved: false,
@@ -161,13 +161,13 @@ const httpSocket = {
           const requestId = uuidv4();
           console.log(
             chalk.blue(
-              `Requesting tool approval for ${skillName} (${requestId})`
-            )
+              `Requesting tool approval for ${skillName} (${requestId})`,
+            ),
           );
 
           // Send introspection message before the approval UI appears
           aibitat.introspect(
-            `Requesting approval to execute: ${skillName}${description ? ` - ${description}` : ""}`
+            `Requesting approval to execute: ${skillName}${description ? ` - ${description}` : ""}`,
           );
 
           return new Promise((resolve) => {
@@ -182,7 +182,9 @@ const httpSocket = {
 
               if (msg.approved) {
                 console.log(
-                  chalk.green(`Tool ${skillName} approved by user via Telegram`)
+                  chalk.green(
+                    `Tool ${skillName} approved by user via Telegram`,
+                  ),
                 );
                 return resolve({
                   approved: true,
@@ -191,7 +193,7 @@ const httpSocket = {
               }
 
               console.log(
-                chalk.yellow(`Tool ${skillName} denied by user via Telegram`)
+                chalk.yellow(`Tool ${skillName} denied by user via Telegram`),
               );
               return resolve({
                 approved: false,
@@ -216,8 +218,8 @@ const httpSocket = {
               ipc.removeListener("message", messageHandler);
               console.log(
                 chalk.yellow(
-                  `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`
-                )
+                  `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
+                ),
               );
               resolve({
                 approved: false,

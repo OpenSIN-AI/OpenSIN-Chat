@@ -20,7 +20,7 @@ async function showModelMenu(ctx, chatId, page = 0, messageId = null) {
   if (!workspace) {
     await ctx.bot.sendMessage(
       chatId,
-      "No workspace configured. Use /switch to select a workspace."
+      "No workspace configured. Use /switch to select a workspace.",
     );
     return;
   }
@@ -29,7 +29,7 @@ async function showModelMenu(ctx, chatId, page = 0, messageId = null) {
   if (!SUPPORT_CUSTOM_MODELS.includes(provider)) {
     await ctx.bot.sendMessage(
       chatId,
-      `The "${provider}" provider does not support model selection via API.`
+      `The "${provider}" provider does not support model selection via API.`,
     );
     return;
   }
@@ -38,7 +38,7 @@ async function showModelMenu(ctx, chatId, page = 0, messageId = null) {
   if (error || !models?.length) {
     await ctx.bot.sendMessage(
       chatId,
-      error || `No models available for "${provider}".`
+      error || `No models available for "${provider}".`,
     );
     return;
   }

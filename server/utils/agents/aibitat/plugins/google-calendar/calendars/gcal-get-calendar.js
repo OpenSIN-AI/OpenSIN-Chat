@@ -36,21 +36,21 @@ module.exports.GCalGetCalendar = {
             try {
               this.super.handlerProps.log(`Using the gcal-get-calendar tool.`);
               this.super.introspect(
-                `${this.caller}: Fetching calendar details${calendarId ? ` for ${calendarId}` : " for primary calendar"}...`
+                `${this.caller}: Fetching calendar details${calendarId ? ` for ${calendarId}` : " for primary calendar"}...`,
               );
 
               const result = await googleCalendarLib.getCalendar(calendarId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get calendar - ${result.error}`
+                  `${this.caller}: Failed to get calendar - ${result.error}`,
                 );
                 return `Error getting calendar: ${result.error}`;
               }
 
               const cal = result.data;
               this.super.introspect(
-                `${this.caller}: Retrieved calendar "${cal.name}"`
+                `${this.caller}: Retrieved calendar "${cal.name}"`,
               );
 
               return (
@@ -66,7 +66,7 @@ module.exports.GCalGetCalendar = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gcal-get-calendar error: ${e.message}`
+                `gcal-get-calendar error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error getting calendar: ${e.message}`;

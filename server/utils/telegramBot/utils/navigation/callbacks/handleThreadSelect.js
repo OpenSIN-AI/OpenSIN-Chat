@@ -36,7 +36,7 @@ async function handleThreadSelect({ ctx, chatId, query, data } = {}) {
   await ctx.bot.answerCallbackQuery(query.id, { text: "Switched!" });
   await ctx.bot.sendMessage(
     chatId,
-    `Switched to "${workspace.name}" → ${threadName}`
+    `Switched to "${workspace.name}" → ${threadName}`,
   );
 }
 

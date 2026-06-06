@@ -22,7 +22,7 @@ class MessageQueue {
     const chain = prev
       .then(handler)
       .catch((err) =>
-        console.error(`[MessageQueue] Error processing key ${key}:`, err)
+        console.error(`[MessageQueue] Error processing key ${key}:`, err),
       )
       .finally(() => {
         // Clean up if this is the last item in the chain

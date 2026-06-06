@@ -35,7 +35,7 @@ const ScheduledJob = {
     } catch (error) {
       console.error(
         "Failed to compute next run time from cron:",
-        error.message
+        error.message,
       );
       return null;
     }
@@ -119,7 +119,7 @@ const ScheduledJob = {
     clause = {},
     limit = null,
     orderBy = null,
-    include = {}
+    include = {},
   ) {
     try {
       const results = await prisma.scheduled_jobs.findMany({
@@ -401,7 +401,7 @@ const ScheduledJob = {
     // Google Calendar Agent (has sub-skills)
     const googleCalendarItems = buildSubSkillItems(
       "googleCalendarAgent",
-      "gcal"
+      "gcal",
     );
     if (googleCalendarItems.length > 0) {
       categories.push({

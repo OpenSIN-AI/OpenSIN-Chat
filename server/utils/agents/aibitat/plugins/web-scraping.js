@@ -51,10 +51,10 @@ const webScraping = {
             } catch (error) {
               const errorMessage = error?.message ?? JSON.stringify(error);
               this.super.handlerProps.log(
-                `Web Scraping Error: ${errorMessage}`
+                `Web Scraping Error: ${errorMessage}`,
               );
               this.super.introspect(
-                `${this.caller}: Web Scraping Error: ${errorMessage}`
+                `${this.caller}: Web Scraping Error: ${errorMessage}`,
               );
               return `There was an error while calling the function. No data or response was found. Let the user know this was the error: ${errorMessage}`;
             }
@@ -97,17 +97,17 @@ const webScraping = {
            */
           scrape: async function (url) {
             this.super.introspect(
-              `${this.caller}: Scraping the content of ${url}`
+              `${this.caller}: Scraping the content of ${url}`,
             );
             const { success, content } =
               await new CollectorApi().getLinkContent(url);
 
             if (!success) {
               this.super.introspect(
-                `${this.caller}: could not scrape ${url}. I can't use this page's content.`
+                `${this.caller}: could not scrape ${url}. I can't use this page's content.`,
               );
               throw new Error(
-                `URL could not be scraped and no content was found.`
+                `URL could not be scraped and no content was found.`,
               );
             }
 
@@ -118,24 +118,24 @@ const webScraping = {
             this.reportUrlCitation(url, content);
             const { TokenManager } = require("../../../helpers/tiktoken");
             const tokenEstimate = new TokenManager(
-              this.super.model
+              this.super.model,
             ).countFromString(content);
             if (
               tokenEstimate <
               Provider.contextLimit(this.super.provider, this.super.model)
             ) {
               this.super.introspect(
-                `${this.caller}: Looking over the content of the page. ~${tokenEstimate} tokens.`
+                `${this.caller}: Looking over the content of the page. ~${tokenEstimate} tokens.`,
               );
               return content;
             }
 
             this.super.introspect(
-              `${this.caller}: This page's content exceeds the model's context limit. Summarizing it right now.`
+              `${this.caller}: This page's content exceeds the model's context limit. Summarizing it right now.`,
             );
             this.super.onAbort(() => {
               this.super.handlerProps.log(
-                "Abort was triggered, exiting summarization early."
+                "Abort was triggered, exiting summarization early.",
               );
               this.controller.abort();
             });

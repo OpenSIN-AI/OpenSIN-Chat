@@ -36,7 +36,7 @@ class NativeEmbedder {
     this.cacheDir = path.resolve(
       process.env.STORAGE_DIR
         ? path.resolve(process.env.STORAGE_DIR, `models`)
-        : path.resolve(__dirname, `../../../storage/models`)
+        : path.resolve(__dirname, `../../../storage/models`),
     );
     this.modelPath = path.resolve(this.cacheDir, ...this.model.split("/"));
     this.modelDownloaded = fs.existsSync(this.modelPath);
@@ -80,7 +80,7 @@ class NativeEmbedder {
    */
   static availableModels() {
     return Object.values(NativeEmbedder.supportedModels).map(
-      (model) => model.apiInfo
+      (model) => model.apiInfo,
     );
   }
 
@@ -154,7 +154,7 @@ class NativeEmbedder {
                   console.log(
                     `\x1b[36m[NativeEmbedder - Downloading model]\x1b[0m ${
                       data.file
-                    } ${~~data?.progress}%`
+                    } ${~~data?.progress}%`,
                   );
                 },
               }
@@ -180,7 +180,7 @@ class NativeEmbedder {
   async embedderClient() {
     if (!this.modelDownloaded)
       this.log(
-        "The native embedding model has never been run and will be downloaded right now. Subsequent runs will be faster. (~23MB)"
+        "The native embedding model has never been run and will be downloaded right now. Subsequent runs will be faster. (~23MB)",
       );
 
     let fetchResponse = await this.#fetchWithHost();
@@ -190,7 +190,7 @@ class NativeEmbedder {
     }
 
     this.log(
-      `Failed to download model from primary URL. Using fallback ${fetchResponse.retry}`
+      `Failed to download model from primary URL. Using fallback ${fetchResponse.retry}`,
     );
     if (!!fetchResponse.retry)
       fetchResponse = await this.#fetchWithHost(fetchResponse.retry);
@@ -224,7 +224,7 @@ class NativeEmbedder {
   async embedTextInput(textInput) {
     textInput = this.#applyQueryPrefix(textInput);
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
     return result?.[0] || [];
   }
@@ -270,7 +270,7 @@ class NativeEmbedder {
 
       reportEmbeddingProgress(
         Math.min((idx + 1) * this.maxConcurrentChunks, totalChunks),
-        totalChunks
+        totalChunks,
       );
       pipeline = null;
       output = null;
@@ -278,7 +278,7 @@ class NativeEmbedder {
     }
 
     const embeddingResults = JSON.parse(
-      fs.readFileSync(tmpFilePath, { encoding: "utf-8" })
+      fs.readFileSync(tmpFilePath, { encoding: "utf-8" }),
     );
     fs.rmSync(tmpFilePath, { force: true });
     return embeddingResults.length > 0 ? embeddingResults.flat() : null;

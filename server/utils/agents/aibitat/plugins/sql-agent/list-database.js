@@ -33,7 +33,7 @@ module.exports.SqlAgentListDatabase = {
           handler: async function () {
             this.super.handlerProps.log(`Using the sql-list-databases tool.`);
             this.super.introspect(
-              `${this.caller}: Checking what are the available databases.`
+              `${this.caller}: Checking what are the available databases.`,
             );
 
             const connections = (await listSQLConnections()).map((conn) => {

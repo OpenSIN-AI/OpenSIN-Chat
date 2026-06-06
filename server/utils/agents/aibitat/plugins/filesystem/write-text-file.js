@@ -50,12 +50,12 @@ module.exports.FilesystemWriteTextFile = {
           handler: async function ({ path: filePath = "", content = "" }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-write-text-file tool.`
+                `Using the filesystem-write-text-file tool.`,
               );
 
               const validPath = await filesystem.validatePath(filePath);
               this.super.introspect(
-                `${this.caller}: Writing to file ${filePath}`
+                `${this.caller}: Writing to file ${filePath}`,
               );
 
               if (this.super.requestToolApproval) {
@@ -66,7 +66,7 @@ module.exports.FilesystemWriteTextFile = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -77,7 +77,7 @@ module.exports.FilesystemWriteTextFile = {
               return `Successfully wrote to ${filePath}`;
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-write-text-file error: ${e.message}`
+                `filesystem-write-text-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error writing file: ${e.message}`;

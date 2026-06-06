@@ -43,14 +43,14 @@ module.exports.GmailReadThread = {
               }
 
               this.super.introspect(
-                `${this.caller}: Reading Gmail thread ${threadId}`
+                `${this.caller}: Reading Gmail thread ${threadId}`,
               );
 
               const result = await gmailLib.readThread(threadId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to read thread - ${result.error}`
+                  `${this.caller}: Failed to read thread - ${result.error}`,
                 );
                 return `Error reading Gmail thread: ${result.error}`;
               }
@@ -84,7 +84,7 @@ module.exports.GmailReadThread = {
                 .join("\n\n");
 
               this.super.introspect(
-                `${this.caller}: Successfully read thread with ${thread.messageCount} messages`
+                `${this.caller}: Successfully read thread with ${thread.messageCount} messages`,
               );
 
               this.super.addCitation?.({
@@ -109,7 +109,7 @@ module.exports.GmailReadThread = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-read-thread error: ${e.message}`
+                `gmail-read-thread error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error reading Gmail thread: ${e.message}`;

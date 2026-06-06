@@ -146,7 +146,7 @@ function apiSystemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -191,7 +191,7 @@ function apiSystemEndpoints(app) {
         const { type = "jsonl" } = request.query;
         const { contentType, data } = await exportChatsAsType(
           type,
-          "workspace"
+          "workspace",
         );
         await EventLogs.logEvent("exported_chats", {
           type,
@@ -202,7 +202,7 @@ function apiSystemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
   app.delete(
     "/v1/system/remove-documents",
@@ -268,7 +268,7 @@ function apiSystemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

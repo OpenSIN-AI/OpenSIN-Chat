@@ -137,7 +137,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   /**
@@ -183,7 +183,7 @@ function systemEndpoints(app) {
           message: e.message,
         });
       }
-    }
+    },
   );
 
   app.post("/request-token", async (request, response) => {
@@ -212,7 +212,7 @@ function systemEndpoints(app) {
               ip: request.ip || "Unknown IP",
               username: username || "Unknown user",
             },
-            existingUser?.id
+            existingUser?.id,
           );
           response.status(200).json({
             user: null,
@@ -230,7 +230,7 @@ function systemEndpoints(app) {
               ip: request.ip || "Unknown IP",
               username: username || "Unknown user",
             },
-            existingUser?.id
+            existingUser?.id,
           );
           response.status(200).json({
             user: null,
@@ -248,7 +248,7 @@ function systemEndpoints(app) {
               ip: request.ip || "Unknown IP",
               username: username || "Unknown user",
             },
-            existingUser?.id
+            existingUser?.id,
           );
           response.status(200).json({
             user: null,
@@ -262,7 +262,7 @@ function systemEndpoints(app) {
         await Telemetry.sendTelemetry(
           "login_event",
           { multiUserMode: false },
-          existingUser?.id
+          existingUser?.id,
         );
 
         await EventLogs.logEvent(
@@ -271,14 +271,14 @@ function systemEndpoints(app) {
             ip: request.ip || "Unknown IP",
             username: existingUser.username || "Unknown user",
           },
-          existingUser?.id
+          existingUser?.id,
         );
 
         // Generate a session token for the user then check if they have seen the recovery codes
         // and if not, generate recovery codes and return them to the frontend.
         const sessionToken = makeJWT(
           { id: existingUser.id, username: existingUser.username },
-          process.env.JWT_EXPIRY
+          process.env.JWT_EXPIRY,
         );
         if (!existingUser.seen_recovery_codes) {
           const plainTextCodes = await generateRecoveryCodes(existingUser.id);
@@ -305,7 +305,9 @@ function systemEndpoints(app) {
         // Auto-grant a session token instead of crashing on
         // `bcrypt.hashSync(undefined, 10)`.
         if (!process.env.AUTH_TOKEN) {
-          await Telemetry.sendTelemetry("login_event", { multiUserMode: false });
+          await Telemetry.sendTelemetry("login_event", {
+            multiUserMode: false,
+          });
           await EventLogs.logEvent("login_event", {
             ip: request.ip || "Unknown IP",
             multiUserMode: false,
@@ -320,7 +322,7 @@ function systemEndpoints(app) {
         if (
           !bcrypt.compareSync(
             password,
-            bcrypt.hashSync(process.env.AUTH_TOKEN, 10)
+            bcrypt.hashSync(process.env.AUTH_TOKEN, 10),
           )
         ) {
           await EventLogs.logEvent("failed_login_invalid_password", {
@@ -344,7 +346,7 @@ function systemEndpoints(app) {
           valid: true,
           token: makeJWT(
             { p: new EncryptionManager().encrypt(password) },
-            process.env.JWT_EXPIRY
+            process.env.JWT_EXPIRY,
           ),
           message: null,
         });
@@ -378,7 +380,7 @@ function systemEndpoints(app) {
       await Telemetry.sendTelemetry(
         "login_event",
         { multiUserMode: true },
-        token.user.id
+        token.user.id,
       );
       await EventLogs.logEvent(
         "login_event",
@@ -386,7 +388,7 @@ function systemEndpoints(app) {
           ip: request.ip || "Unknown IP",
           username: token.user.username || "Unknown user",
         },
-        token.user.id
+        token.user.id,
       );
 
       response.status(200).json({
@@ -395,7 +397,7 @@ function systemEndpoints(app) {
         token: sessionToken,
         message: null,
       });
-    }
+    },
   );
 
   app.post(
@@ -406,7 +408,7 @@ function systemEndpoints(app) {
         const { username, recoveryCodes } = reqBody(request);
         const { success, resetToken, error } = await recoverAccount(
           username,
-          recoveryCodes
+          recoveryCodes,
         );
 
         if (success) {
@@ -420,7 +422,7 @@ function systemEndpoints(app) {
           .status(500)
           .json({ success: false, message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -432,7 +434,7 @@ function systemEndpoints(app) {
         const { success, message, error } = await resetPassword(
           token,
           newPassword,
-          confirmPassword
+          confirmPassword,
         );
 
         if (success) {
@@ -444,7 +446,7 @@ function systemEndpoints(app) {
         console.error("Error resetting password:", error);
         response.status(500).json({ success: false, message: error.message });
       }
-    }
+    },
   );
 
   app.get(
@@ -462,7 +464,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -477,7 +479,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -492,7 +494,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -507,7 +509,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -521,7 +523,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -535,7 +537,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -554,7 +556,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -566,14 +568,14 @@ function systemEndpoints(app) {
         const { newValues, error } = await updateENV(
           body,
           false,
-          response?.locals?.user?.id
+          response?.locals?.user?.id,
         );
         response.status(200).json({ newValues, error });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -599,7 +601,7 @@ function systemEndpoints(app) {
               AuthToken: newPassword,
               JWTSecret: v4(),
             },
-            true
+            true,
           )?.error;
         }
         response.status(200).json({ success: !error, error });
@@ -607,7 +609,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -651,7 +653,7 @@ function systemEndpoints(app) {
           {
             JWTSecret: process.env.JWT_SECRET || v4(),
           },
-          true
+          true,
         );
         await Telemetry.sendTelemetry("enabled_multi_user_mode", {
           multiUserMode: true,
@@ -667,7 +669,7 @@ function systemEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get("/system/multi-user-mode", async (_, response) => {
@@ -699,7 +701,7 @@ function systemEndpoints(app) {
           "Content-Disposition,X-Is-Custom-Logo,Content-Type,Content-Length",
         "Content-Type": mime || "image/png",
         "Content-Disposition": `attachment; filename=${path.basename(
-          logoPath
+          logoPath,
         )}`,
         "Content-Length": size,
         "X-Is-Custom-Logo":
@@ -784,7 +786,7 @@ function systemEndpoints(app) {
         console.error("Error processing the logo request:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -804,7 +806,7 @@ function systemEndpoints(app) {
           const storagePath = path.join(__dirname, "../storage/assets/pfp");
           const oldPfpPath = path.join(
             storagePath,
-            normalizePath(userRecord.pfpFilename)
+            normalizePath(userRecord.pfpFilename),
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
@@ -824,7 +826,7 @@ function systemEndpoints(app) {
         console.error("Error processing the profile picture upload:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
   app.get(
     "/system/default-system-prompt",
@@ -848,7 +850,7 @@ function systemEndpoints(app) {
           .status(500)
           .json({ success: false, message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -862,7 +864,7 @@ function systemEndpoints(app) {
         });
         if (!success)
           throw new Error(
-            error.message || "Failed to update default system prompt."
+            error.message || "Failed to update default system prompt.",
           );
         response.status(200).json({
           success: true,
@@ -875,7 +877,7 @@ function systemEndpoints(app) {
           message: error.message || "Internal server error",
         });
       }
-    }
+    },
   );
 
   app.delete(
@@ -891,7 +893,7 @@ function systemEndpoints(app) {
           const storagePath = path.join(__dirname, "../storage/assets/pfp");
           const oldPfpPath = path.join(
             storagePath,
-            normalizePath(oldPfpFilename)
+            normalizePath(oldPfpFilename),
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
@@ -911,7 +913,7 @@ function systemEndpoints(app) {
         console.error("Error processing the profile picture removal:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -950,7 +952,7 @@ function systemEndpoints(app) {
         console.error("Error processing the logo upload:", error);
         response.status(500).json({ message: "Error uploading the logo." });
       }
-    }
+    },
   );
 
   app.get("/system/is-default-logo", async (_, response) => {
@@ -985,7 +987,7 @@ function systemEndpoints(app) {
         console.error("Error processing the logo removal:", error);
         response.status(500).json({ message: "Error removing the logo." });
       }
-    }
+    },
   );
 
   app.get("/system/api-keys", [validatedRequest], async (_, response) => {
@@ -1022,7 +1024,7 @@ function systemEndpoints(app) {
         await EventLogs.logEvent(
           "api_key_created",
           { name: apiKey?.name },
-          response?.locals?.user?.id
+          response?.locals?.user?.id,
         );
         return response.status(200).json({
           apiKey,
@@ -1035,7 +1037,7 @@ function systemEndpoints(app) {
           error: "Error generating api key.",
         });
       }
-    }
+    },
   );
 
   // TODO: This endpoint is replicated in the admin endpoints file.
@@ -1054,14 +1056,14 @@ function systemEndpoints(app) {
         await EventLogs.logEvent(
           "api_key_deleted",
           { deletedBy: response.locals?.user?.username },
-          response?.locals?.user?.id
+          response?.locals?.user?.id,
         );
         return response.status(200).end();
       } catch (error) {
         console.error(error);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -1073,7 +1075,7 @@ function systemEndpoints(app) {
         const { models, error } = await getCustomModels(
           provider,
           apiKey,
-          basePath
+          basePath,
         );
         return response.status(200).json({
           models,
@@ -1083,7 +1085,7 @@ function systemEndpoints(app) {
         console.error(error);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -1103,7 +1105,7 @@ function systemEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -1115,14 +1117,14 @@ function systemEndpoints(app) {
         await EventLogs.logEvent(
           "event_logs_cleared",
           {},
-          response?.locals?.user?.id
+          response?.locals?.user?.id,
         );
         response.json({ success: true });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -1139,7 +1141,7 @@ function systemEndpoints(app) {
           {},
           limit,
           offset * limit,
-          { id: "desc" }
+          { id: "desc" },
         );
         const totalChats = await WorkspaceChats.count();
         const hasPages = totalChats > (offset + 1) * limit;
@@ -1149,7 +1151,7 @@ function systemEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -1166,7 +1168,7 @@ function systemEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -1186,7 +1188,7 @@ function systemEndpoints(app) {
             type,
             chatType,
           },
-          response.locals.user?.id
+          response.locals.user?.id,
         );
         response.setHeader("Content-Type", contentType);
         response.status(200).send(data);
@@ -1194,7 +1196,7 @@ function systemEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   // Used for when a user in multi-user updates their own profile
@@ -1247,7 +1249,7 @@ function systemEndpoints(app) {
         console.error("Error fetching slash command presets:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -1258,7 +1260,7 @@ function systemEndpoints(app) {
         const user = await userFromSession(request, response);
         const { command, prompt, description } = reqBody(request);
         const formattedCommand = SlashCommandPresets.formatCommand(
-          String(command)
+          String(command),
         );
 
         if (Object.keys(VALID_COMMANDS).includes(formattedCommand)) {
@@ -1285,7 +1287,7 @@ function systemEndpoints(app) {
         console.error("Error creating slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.post(
@@ -1297,7 +1299,7 @@ function systemEndpoints(app) {
         const { slashCommandId } = request.params;
         const { command, prompt, description } = reqBody(request);
         const formattedCommand = SlashCommandPresets.formatCommand(
-          String(command)
+          String(command),
         );
 
         if (Object.keys(VALID_COMMANDS).includes(formattedCommand)) {
@@ -1323,7 +1325,7 @@ function systemEndpoints(app) {
 
         const preset = await SlashCommandPresets.update(
           Number(slashCommandId),
-          updates
+          updates,
         );
         if (!preset) return response.sendStatus(422);
         response.status(200).json({ preset: { ...ownsPreset, ...updates } });
@@ -1331,7 +1333,7 @@ function systemEndpoints(app) {
         console.error("Error updating slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.delete(
@@ -1358,7 +1360,7 @@ function systemEndpoints(app) {
         console.error("Error deleting slash command preset:", error);
         response.status(500).json({ message: "Internal server error" });
       }
-    }
+    },
   );
 
   app.get(
@@ -1376,7 +1378,7 @@ function systemEndpoints(app) {
           error: `Failed to fetch system prompt variables: ${error.message}`,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -1412,7 +1414,7 @@ function systemEndpoints(app) {
           error: `Failed to create system prompt variable: ${error.message}`,
         });
       }
-    }
+    },
   );
 
   app.put(
@@ -1454,7 +1456,7 @@ function systemEndpoints(app) {
           error: `Failed to update system prompt variable: ${error.message}`,
         });
       }
-    }
+    },
   );
 
   app.delete(
@@ -1482,7 +1484,7 @@ function systemEndpoints(app) {
           error: `Failed to delete system prompt variable: ${error.message}`,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -1509,7 +1511,7 @@ function systemEndpoints(app) {
         const stt = getSTTProvider();
         const text = await stt.transcribe(
           request.file.buffer,
-          request.file.originalname || "audio.webm"
+          request.file.originalname || "audio.webm",
         );
         return response.status(200).json({ success: true, text });
       } catch (error) {
@@ -1519,7 +1521,7 @@ function systemEndpoints(app) {
           error: error.message || "Transcription failed",
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -1555,7 +1557,7 @@ function systemEndpoints(app) {
           error: `Unable to connect to ${engine}. Please verify your connection details.`,
         });
       }
-    }
+    },
   );
 }
 

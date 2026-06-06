@@ -33,7 +33,7 @@ class Weaviate extends VectorDatabase {
     const isAlive = await await client.misc.liveChecker().do();
     if (!isAlive)
       throw new Error(
-        "Weaviate::Invalid Alive signal received - is the service online?"
+        "Weaviate::Invalid Alive signal received - is the service online?",
       );
     return { client };
   }
@@ -123,7 +123,7 @@ class Weaviate extends VectorDatabase {
       if (certainty < similarityThreshold) return;
       if (filterIdentifiers.includes(sourceIdentifier(rest))) {
         this.logger(
-          "A source was filtered from context as it's parent document is pinned."
+          "A source was filtered from context as it's parent document is pinned.",
         );
         return;
       }
@@ -200,7 +200,7 @@ class Weaviate extends VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     const { DocumentVectors } = require("../../../models/vectors");
     try {
@@ -224,7 +224,7 @@ class Weaviate extends VectorDatabase {
               .withClass({
                 class: camelCase(namespace),
                 description: `Class created by OpenAfD Chat named ${camelCase(
-                  namespace
+                  namespace,
                 )}`,
                 vectorizer: "none",
               })
@@ -241,7 +241,7 @@ class Weaviate extends VectorDatabase {
             chunk.forEach((chunk) => {
               const id = uuidv4();
               const flattenedMetadata = this.flattenObjectForWeaviate(
-                chunk.properties ?? chunk.metadata
+                chunk.properties ?? chunk.metadata,
               );
               documentVectors.push({ docId, vectorId: id });
               const vectorRecord = {
@@ -276,11 +276,11 @@ class Weaviate extends VectorDatabase {
           await SystemSettings.getValueOrFallback({
             label: "text_splitter_chunk_size",
           }),
-          EmbedderEngine?.embeddingMaxChunkLength
+          EmbedderEngine?.embeddingMaxChunkLength,
         ),
         chunkOverlap: await SystemSettings.getValueOrFallback(
           { label: "text_splitter_chunk_overlap" },
-          20
+          20,
         ),
         chunkHeaderMeta: TextSplitter.buildHeaderMeta(metadata),
         chunkPrefix: EmbedderEngine?.embeddingPrefix,
@@ -319,7 +319,7 @@ class Weaviate extends VectorDatabase {
         }
       } else {
         throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
+          "Could not embed document chunks! This document will not be recorded.",
         );
       }
 
@@ -331,7 +331,7 @@ class Weaviate extends VectorDatabase {
           .withClass({
             class: camelCase(namespace),
             description: `Class created by OpenAfD Chat named ${camelCase(
-              namespace
+              namespace,
             )}`,
             vectorizer: "none",
           })
@@ -345,7 +345,7 @@ class Weaviate extends VectorDatabase {
         this.logger("Inserting vectorized chunks into Weaviate collection.");
         const { success: additionResult, errors = [] } = await this.addVectors(
           client,
-          vectors
+          vectors,
         );
         if (!additionResult) {
           this.logger("addVectors failed to insert", errors);

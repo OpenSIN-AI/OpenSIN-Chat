@@ -35,7 +35,7 @@ async function handleAgentResponse(
   thread,
   message,
   voiceResponse = false,
-  attachments = []
+  attachments = [],
 ) {
   let finalResponse = "";
   let metrics = {};
@@ -68,7 +68,7 @@ async function handleAgentResponse(
         responseMsgId,
         streamingText.slice(msgOffset, msgOffset + MAX_MSG_LEN),
         ctx.log,
-        { format: true }
+        { format: true },
       ).catch(() => {});
       msgOffset += MAX_MSG_LEN;
       responseMsgId = null;
@@ -101,7 +101,7 @@ async function handleAgentResponse(
         chatId,
         responseMsgId,
         currentResponseText() + CURSOR_CHAR,
-        ctx.log
+        ctx.log,
       ).catch(() => {});
     } else if (!editTimer) {
       editTimer = setTimeout(() => {
@@ -111,7 +111,7 @@ async function handleAgentResponse(
           chatId,
           responseMsgId,
           currentResponseText() + CURSOR_CHAR,
-          ctx.log
+          ctx.log,
         ).catch(() => {});
         editTimer = null;
       }, STREAM_EDIT_INTERVAL);
@@ -191,7 +191,7 @@ async function handleAgentResponse(
     if (flushing || thoughts.length === 0) {
       thoughtFlushTimeout = setTimeout(
         flushThoughts,
-        THOUGHT_FLUSH_INTERVAL_MS
+        THOUGHT_FLUSH_INTERVAL_MS,
       );
       return;
     }
@@ -199,7 +199,7 @@ async function handleAgentResponse(
     if (text === lastThoughtText) {
       thoughtFlushTimeout = setTimeout(
         flushThoughts,
-        THOUGHT_FLUSH_INTERVAL_MS
+        THOUGHT_FLUSH_INTERVAL_MS,
       );
       return;
     }
@@ -212,7 +212,7 @@ async function handleAgentResponse(
         thoughtMsgId,
         text,
         ctx.log,
-        { html: true, disableLinkPreview: true }
+        { html: true, disableLinkPreview: true },
       );
     } catch (err) {
       ctx.log?.error?.("Failed to update thought message:", err);
@@ -220,7 +220,7 @@ async function handleAgentResponse(
       flushing = false;
       thoughtFlushTimeout = setTimeout(
         flushThoughts,
-        THOUGHT_FLUSH_INTERVAL_MS
+        THOUGHT_FLUSH_INTERVAL_MS,
       );
     }
   };
@@ -273,12 +273,12 @@ async function handleAgentResponse(
             filename: "chart.png",
             contentType: "image/png",
             knownLength: buffer.length,
-          }
+          },
         );
       } catch {
         await ctx.bot.sendMessage(
           chatId,
-          `${chart.title}: failed to render chart.`
+          `${chart.title}: failed to render chart.`,
         );
       }
     }
@@ -315,7 +315,7 @@ async function handleAgentResponse(
           ctx.log,
           {
             format: true,
-          }
+          },
         ).catch(() => {});
       } else {
         await sendFormattedMessage(ctx.bot, chatId, responseText);
@@ -352,11 +352,11 @@ async function sendFilesAsTelegramDocuments(ctx, chatId, files) {
     try {
       ctx.log?.info?.(`Retrieving file: ${file.storageFilename}`);
       const result = await createFilesLib.getGeneratedFile(
-        file.storageFilename
+        file.storageFilename,
       );
       if (!result?.buffer) {
         ctx.log?.warn?.(
-          `Could not retrieve generated file: ${file.storageFilename}`
+          `Could not retrieve generated file: ${file.storageFilename}`,
         );
         continue;
       }
@@ -365,7 +365,7 @@ async function sendFilesAsTelegramDocuments(ctx, chatId, files) {
       const mimeType = createFilesLib.getMimeType(extension);
 
       ctx.log?.info?.(
-        `Sending document: ${file.filename} (${result.buffer.length} bytes, ${mimeType})`
+        `Sending document: ${file.filename} (${result.buffer.length} bytes, ${mimeType})`,
       );
       await ctx.bot.sendDocument(
         chatId,
@@ -374,13 +374,13 @@ async function sendFilesAsTelegramDocuments(ctx, chatId, files) {
         {
           filename: file.filename,
           contentType: mimeType,
-        }
+        },
       );
       ctx.log?.info?.(`Successfully sent document: ${file.filename}`);
     } catch (err) {
       ctx.log?.error?.(
         `Failed to send document ${file.filename}:`,
-        err.message
+        err.message,
       );
     }
   }

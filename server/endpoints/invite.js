@@ -66,7 +66,7 @@ function inviteEndpoints(app) {
           {
             username: user.username,
           },
-          user.id
+          user.id,
         );
 
         response.status(200).json({ success: true, error: null });
@@ -74,7 +74,7 @@ function inviteEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

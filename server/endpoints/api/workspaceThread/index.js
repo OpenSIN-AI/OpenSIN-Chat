@@ -87,7 +87,7 @@ function apiWorkspaceThreadEndpoints(app) {
         const { thread, message } = await WorkspaceThread.new(
           workspace,
           userId ? Number(userId) : null,
-          { name, slug }
+          { name, slug },
         );
 
         await Telemetry.sendTelemetry("workspace_thread_created", {
@@ -105,7 +105,7 @@ function apiWorkspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -179,14 +179,14 @@ function apiWorkspaceThreadEndpoints(app) {
 
         const { thread: updatedThread, message } = await WorkspaceThread.update(
           thread,
-          { name }
+          { name },
         );
         response.status(200).json({ thread: updatedThread, message });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -235,7 +235,7 @@ function apiWorkspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -307,7 +307,7 @@ function apiWorkspaceThreadEndpoints(app) {
             include: true,
           },
           null,
-          { id: "asc" }
+          { id: "asc" },
         );
 
         response.status(200).json({ history: convertToChatHistory(history) });
@@ -315,7 +315,7 @@ function apiWorkspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -461,7 +461,7 @@ function apiWorkspaceThreadEndpoints(app) {
           error: e.message,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -642,7 +642,7 @@ function apiWorkspaceThreadEndpoints(app) {
         });
         response.end();
       }
-    }
+    },
   );
 }
 

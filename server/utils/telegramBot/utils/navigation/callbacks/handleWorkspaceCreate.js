@@ -26,7 +26,7 @@ async function handleWorkspaceCreate({ ctx, chatId, query } = {}) {
   });
   await ctx.bot.sendMessage(
     chatId,
-    `Created and switched to "${workspace.name}". You can start chatting now!`
+    `Created and switched to "${workspace.name}". You can start chatting now!`,
   );
 }
 

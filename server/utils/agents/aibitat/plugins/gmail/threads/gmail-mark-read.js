@@ -48,33 +48,33 @@ module.exports.GmailMarkRead = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Marking thread ${threadId} as read`
+                `${this.caller}: Marking thread ${threadId} as read`,
               );
 
               const result = await gmailLib.markRead(threadId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to mark thread as read - ${result.error}`
+                  `${this.caller}: Failed to mark thread as read - ${result.error}`,
                 );
                 return `Error marking thread as read: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully marked thread ${threadId} as read`
+                `${this.caller}: Successfully marked thread ${threadId} as read`,
               );
 
               return `Successfully marked thread ${threadId} as read.`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-mark-read error: ${e.message}`
+                `gmail-mark-read error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error marking thread as read: ${e.message}`;

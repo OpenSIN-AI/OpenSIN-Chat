@@ -21,7 +21,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
     }
 
     log(
-      `${queuesToProcess.length} watched documents have been found to be stale and will be updated now.`
+      `${queuesToProcess.length} watched documents have been found to be stale and will be updated now.`,
     );
     for (const queue of queuesToProcess) {
       let newContent = null;
@@ -33,7 +33,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
       if (!metadata || !DocumentSyncQueue.validFileTypes.includes(type)) {
         // Document is either broken, invalid, or not supported so drop it from future queues.
         log(
-          `Document ${document.filename} has no metadata, is broken, or invalid and has been removed from all future runs.`
+          `Document ${document.filename} has no metadata, is broken, or invalid and has been removed from all future runs.`,
         );
         await DocumentSyncQueue.unwatch(document);
         continue;
@@ -69,21 +69,21 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
           await DocumentSyncRun.where(
             { queueId: queue.id },
             DocumentSyncQueue.maxRepeatFailures,
-            { createdAt: "desc" }
+            { createdAt: "desc" },
           )
         ).filter(
-          (run) => run.status === DocumentSyncRun.statuses.failed
+          (run) => run.status === DocumentSyncRun.statuses.failed,
         ).length;
         if (failedRunCount >= DocumentSyncQueue.maxRepeatFailures) {
           log(
-            `Document ${document.filename} has failed to refresh ${failedRunCount} times continuously and will now be removed from the watched document set.`
+            `Document ${document.filename} has failed to refresh ${failedRunCount} times continuously and will now be removed from the watched document set.`,
           );
           await DocumentSyncQueue.unwatch(document);
           continue;
         }
 
         log(
-          `Failed to get a new content response from collector for source ${source}. Skipping, but will retry next worker interval. Attempt ${failedRunCount === 0 ? 1 : failedRunCount}/${DocumentSyncQueue.maxRepeatFailures}`
+          `Failed to get a new content response from collector for source ${source}. Skipping, but will retry next worker interval. Attempt ${failedRunCount === 0 ? 1 : failedRunCount}/${DocumentSyncQueue.maxRepeatFailures}`,
         );
         await DocumentSyncQueue.saveRun(
           queue.id,
@@ -92,7 +92,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
             filename: document.filename,
             workspacesModified: [],
             reason: "No content found.",
-          }
+          },
         );
         continue;
       }
@@ -101,7 +101,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
       if (currentDocumentData.pageContent === newContent) {
         const nextSync = DocumentSyncQueue.calcNextSync(queue);
         log(
-          `Source ${source} is unchanged and will be skipped. Next sync will be ${nextSync.toLocaleString()}.`
+          `Source ${source} is unchanged and will be skipped. Next sync will be ${nextSync.toLocaleString()}.`,
         );
         await DocumentSyncQueue._update(queue.id, {
           lastSyncedAt: new Date().toISOString(),
@@ -114,7 +114,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
             filename: document.filename,
             workspacesModified: [],
             reason: "Content unchanged.",
-          }
+          },
         );
         continue;
       }
@@ -124,7 +124,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
       const vectorDatabase = getVectorDbClass();
       await vectorDatabase.deleteDocumentFromNamespace(
         workspace.slug,
-        document.docId
+        document.docId,
       );
       await vectorDatabase.addDocumentToNamespace(
         workspace.slug,
@@ -134,7 +134,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
           docId: document.docId,
         },
         document.docpath,
-        true
+        true,
       );
       updateSourceDocument(document.docpath, {
         ...currentDocumentData,
@@ -144,7 +144,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
         // Todo: Update word count and token_estimate?
       });
       log(
-        `Workspace "${workspace.name}" vectors of ${source} updated. Document and vector cache updated.`
+        `Workspace "${workspace.name}" vectors of ${source} updated. Document and vector cache updated.`,
       );
 
       // Now we can bloom the results to all matching documents in all other workspaces
@@ -156,12 +156,12 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
         },
         null,
         null,
-        { workspace: true }
+        { workspace: true },
       );
 
       if (moreReferences.length !== 0) {
         log(
-          `${source} is referenced in ${moreReferences.length} other workspaces. Updating those workspaces as well...`
+          `${source} is referenced in ${moreReferences.length} other workspaces. Updating those workspaces as well...`,
         );
         for (const additionalDocumentRef of moreReferences) {
           const additionalWorkspace = additionalDocumentRef.workspace;
@@ -169,7 +169,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
 
           await vectorDatabase.deleteDocumentFromNamespace(
             additionalWorkspace.slug,
-            additionalDocumentRef.docId
+            additionalDocumentRef.docId,
           );
           await vectorDatabase.addDocumentToNamespace(
             additionalWorkspace.slug,
@@ -178,17 +178,17 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
               pageContent: newContent,
               docId: additionalDocumentRef.docId,
             },
-            additionalDocumentRef.docpath
+            additionalDocumentRef.docpath,
           );
           log(
-            `Workspace "${additionalWorkspace.name}" vectors for ${source} was also updated with the new content from cache.`
+            `Workspace "${additionalWorkspace.name}" vectors for ${source} was also updated with the new content from cache.`,
           );
         }
       }
 
       const nextRefresh = DocumentSyncQueue.calcNextSync(queue);
       log(
-        `${source} has been refreshed in all workspaces it is currently referenced in. Next refresh will be ${nextRefresh.toLocaleString()}.`
+        `${source} has been refreshed in all workspaces it is currently referenced in. Next refresh will be ${nextRefresh.toLocaleString()}.`,
       );
       await DocumentSyncQueue._update(queue.id, {
         lastSyncedAt: new Date().toISOString(),
@@ -197,7 +197,7 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
       await DocumentSyncQueue.saveRun(
         queue.id,
         DocumentSyncRun.statuses.success,
-        { filename: document.filename, workspacesModified }
+        { filename: document.filename, workspacesModified },
       );
     }
   } catch (e) {

@@ -56,7 +56,7 @@ async function validatedRequest(request, response, next) {
   if (
     !bcrypt.compareSync(
       EncryptionMgr.decrypt(p),
-      bcrypt.hashSync(process.env.AUTH_TOKEN, 10)
+      bcrypt.hashSync(process.env.AUTH_TOKEN, 10),
     )
   ) {
     response.status(401).json({

@@ -43,7 +43,7 @@ class AstraDB extends VectorDatabase {
 
     const client = new AstraClient(
       process?.env?.ASTRA_DB_APPLICATION_TOKEN,
-      process?.env?.ASTRA_DB_ENDPOINT
+      process?.env?.ASTRA_DB_ENDPOINT,
     );
     return { client };
   }
@@ -131,7 +131,7 @@ class AstraDB extends VectorDatabase {
       if (!exists) {
         if (!dimensions) {
           throw new Error(
-            `AstraDB:getOrCreateCollection Unable to infer vector dimension from input. Open an issue on Github for support.`
+            `AstraDB:getOrCreateCollection Unable to infer vector dimension from input. Open an issue on Github for support.`,
           );
         }
 
@@ -158,7 +158,7 @@ class AstraDB extends VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     const { DocumentVectors } = require("../../../models/vectors");
     try {
@@ -178,7 +178,7 @@ class AstraDB extends VectorDatabase {
           const collection = await this.getOrCreateCollection(
             client,
             namespace,
-            vectorDimension
+            vectorDimension,
           );
           if (!(await this.isRealCollection(collection)))
             throw new Error("Failed to create new AstraDB collection!", {
@@ -213,12 +213,12 @@ class AstraDB extends VectorDatabase {
             await SystemSettings.getValueOrFallback({
               label: "text_splitter_chunk_size",
             }),
-            EmbedderEngine?.embeddingMaxChunkLength
-          )
+            EmbedderEngine?.embeddingMaxChunkLength,
+          ),
         ),
         chunkOverlap: await SystemSettings.getValueOrFallback(
           { label: "text_splitter_chunk_overlap" },
-          20
+          20,
         ),
         chunkHeaderMeta: TextSplitter.buildHeaderMeta(metadata),
         chunkPrefix: EmbedderEngine?.embeddingPrefix,
@@ -244,14 +244,14 @@ class AstraDB extends VectorDatabase {
         }
       } else {
         throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
+          "Could not embed document chunks! This document will not be recorded.",
         );
       }
       const { client } = await this.connect();
       const collection = await this.getOrCreateCollection(
         client,
         namespace,
-        vectorDimension
+        vectorDimension,
       );
       if (!(await this.isRealCollection(collection)))
         throw new Error("Failed to create new AstraDB collection!", {
@@ -271,7 +271,7 @@ class AstraDB extends VectorDatabase {
           chunks.push(
             chunk.map((c) => {
               return { id: c._id, values: c.$vector, metadata: c.metadata };
-            })
+            }),
           );
           await collection.insertMany(chunk);
         }
@@ -292,7 +292,7 @@ class AstraDB extends VectorDatabase {
     namespace = sanitizeNamespace(namespace);
     if (!(await this.namespaceExists(client, namespace)))
       throw new Error(
-        "Invalid namespace - has it been collected and populated yet?"
+        "Invalid namespace - has it been collected and populated yet?",
       );
     const collection = await client.collection(namespace);
 
@@ -378,7 +378,7 @@ class AstraDB extends VectorDatabase {
           sort: { $vector: queryVector },
           limit: topN,
           includeSimilarity: true,
-        }
+        },
       )
       .toArray();
 
@@ -386,7 +386,7 @@ class AstraDB extends VectorDatabase {
       if (response.$similarity < similarityThreshold) return;
       if (filterIdentifiers.includes(sourceIdentifier(response.metadata))) {
         this.logger(
-          "A source was filtered from context as it's parent document is pinned."
+          "A source was filtered from context as it's parent document is pinned.",
         );
         return;
       }

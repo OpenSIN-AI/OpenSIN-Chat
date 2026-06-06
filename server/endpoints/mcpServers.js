@@ -29,7 +29,7 @@ function mcpServersEndpoints(app) {
           servers: [],
         });
       }
-    }
+    },
   );
 
   app.get(
@@ -49,7 +49,7 @@ function mcpServersEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -59,7 +59,7 @@ function mcpServersEndpoints(app) {
       try {
         const { name } = reqBody(request);
         const result = await new MCPCompatibilityLayer().toggleServerStatus(
-          name
+          name,
         );
         return response.status(200).json({
           success: result.success,
@@ -72,7 +72,7 @@ function mcpServersEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -93,7 +93,7 @@ function mcpServersEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -105,7 +105,7 @@ function mcpServersEndpoints(app) {
         const result = await new MCPCompatibilityLayer().toggleToolSuppression(
           serverName,
           toolName,
-          enabled
+          enabled,
         );
         return response.status(200).json({
           success: result.success,
@@ -120,7 +120,7 @@ function mcpServersEndpoints(app) {
           suppressedTools: [],
         });
       }
-    }
+    },
   );
 }
 

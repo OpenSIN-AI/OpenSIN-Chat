@@ -78,7 +78,7 @@ class LMStudioLLM {
 
       const apiKey = process.env.LMSTUDIO_AUTH_TOKEN ?? null;
       const endpoint = new URL(
-        parseLMStudioBasePath(process.env.LMSTUDIO_BASE_PATH)
+        parseLMStudioBasePath(process.env.LMSTUDIO_BASE_PATH),
       );
       endpoint.pathname = "/api/v0/models";
       await fetch(endpoint.toString(), {
@@ -130,7 +130,7 @@ class LMStudioLLM {
   static promptWindowLimit(modelName) {
     if (Object.keys(LMStudioLLM.modelContextWindows).length === 0) {
       this.#slog(
-        "No context windows cached - Context window may be inaccurately reported."
+        "No context windows cached - Context window may be inaccurately reported.",
       );
       return process.env.LMSTUDIO_MODEL_TOKEN_LIMIT || 16384;
     }
@@ -231,7 +231,7 @@ class LMStudioLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `LMStudio chat: ${this.model} is not valid or defined model for chat completion!`
+        `LMStudio chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -239,7 +239,7 @@ class LMStudioLLM {
         model: this.model,
         messages,
         temperature,
-      })
+      }),
     );
 
     if (
@@ -266,7 +266,7 @@ class LMStudioLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `LMStudio chat: ${this.model} is not valid or defined model for chat completion!`
+        `LMStudio chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -296,7 +296,7 @@ class LMStudioLLM {
   async getModelCapabilities() {
     try {
       const endpoint = new URL(
-        parseLMStudioBasePath(process.env.LMSTUDIO_BASE_PATH, "v1")
+        parseLMStudioBasePath(process.env.LMSTUDIO_BASE_PATH, "v1"),
       );
       const apiKey = process.env.LMSTUDIO_AUTH_TOKEN ?? null;
       endpoint.pathname += "/models";
@@ -310,12 +310,12 @@ class LMStudioLLM {
           .then((res) => {
             if (!res.ok)
               throw new Error(
-                `LMStudio:getModelCapabilities - ${res.statusText}`
+                `LMStudio:getModelCapabilities - ${res.statusText}`,
               );
             return res.json();
           })
           .then(({ models = [] }) =>
-            models.find((model) => model.key === this.model)
+            models.find((model) => model.key === this.model),
           )) || {};
 
       const capabilities = modelInfo.hasOwnProperty("capabilities")

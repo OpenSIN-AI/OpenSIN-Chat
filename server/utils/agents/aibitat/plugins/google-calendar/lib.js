@@ -31,7 +31,7 @@ class GoogleCalendarBridge {
   static async getConfig() {
     const configJson = await SystemSettings.getValueOrFallback(
       { label: "google_calendar_agent_config" },
-      "{}"
+      "{}",
     );
     return safeJsonParse(configJson, {});
   }

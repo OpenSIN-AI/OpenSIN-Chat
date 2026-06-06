@@ -21,8 +21,8 @@ function lemonadeUtilsEndpoints(app) {
         const lemonadeUrl = new URL(
           parseLemonadeServerEndpoint(
             basePath ?? process.env.LEMONADE_LLM_BASE_PATH,
-            "base"
-          )
+            "base",
+          ),
         );
         lemonadeUrl.pathname += "api/v1/pull";
         response.writeHead(200, {
@@ -47,7 +47,7 @@ function lemonadeUtilsEndpoints(app) {
         if (!lemonadeResponse.ok)
           throw new Error(
             lemonadeResponse.statusText ||
-              "An error occurred while downloading the model"
+              "An error occurred while downloading the model",
           );
         const reader = lemonadeResponse.body.getReader();
         let done = false;
@@ -76,11 +76,11 @@ function lemonadeUtilsEndpoints(app) {
               if (currentEvent === "error") {
                 throw new Error(
                   data.message ||
-                    "An error occurred while downloading the model"
+                    "An error occurred while downloading the model",
                 );
               } else if (currentEvent === "complete") {
                 response.write(
-                  `data: ${JSON.stringify({ type: "success", percentage: 100, message: "Model downloaded successfully" })}\n\n`
+                  `data: ${JSON.stringify({ type: "success", percentage: 100, message: "Model downloaded successfully" })}\n\n`,
                 );
                 done = true;
               } else if (currentEvent === "progress") {
@@ -89,7 +89,7 @@ function lemonadeUtilsEndpoints(app) {
                   ? `Downloading ${data.file}`
                   : "Downloading model...";
                 response.write(
-                  `data: ${JSON.stringify({ type: "progress", percentage, message })}\n\n`
+                  `data: ${JSON.stringify({ type: "progress", percentage, message })}\n\n`,
                 );
               }
 
@@ -100,12 +100,12 @@ function lemonadeUtilsEndpoints(app) {
       } catch (e) {
         console.error(e);
         response.write(
-          `data: ${JSON.stringify({ type: "error", message: e.message })}\n\n`
+          `data: ${JSON.stringify({ type: "error", message: e.message })}\n\n`,
         );
       } finally {
         response.end();
       }
-    }
+    },
   );
 
   app.post(
@@ -124,8 +124,8 @@ function lemonadeUtilsEndpoints(app) {
         const lemonadeUrl = new URL(
           parseLemonadeServerEndpoint(
             basePath ?? process.env.LEMONADE_LLM_BASE_PATH,
-            "base"
-          )
+            "base",
+          ),
         );
         lemonadeUrl.pathname += "api/v1/delete";
 
@@ -161,7 +161,7 @@ function lemonadeUtilsEndpoints(app) {
           error: e.message || "An error occurred while deleting the model",
         });
       }
-    }
+    },
   );
 }
 

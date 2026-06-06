@@ -52,23 +52,23 @@ function ensureJwtSecret() {
     } catch {
       // file unreadable; fall through and just set the env var
     }
-    const lines = content.split(/\r?\n/).filter(
-      (l) => !/^JWT_SECRET\s*=/.test(l)
-    );
+    const lines = content
+      .split(/\r?\n/)
+      .filter((l) => !/^JWT_SECRET\s*=/.test(l));
     lines.push(`JWT_SECRET='${secret}'`);
     try {
       fs.writeFileSync(envFile, lines.join("\n") + "\n");
       console.log(
-        `${LOG_PREFIX} Generated new JWT_SECRET and wrote it to ${path.basename(envFile)}`
+        `${LOG_PREFIX} Generated new JWT_SECRET and wrote it to ${path.basename(envFile)}`,
       );
     } catch (e) {
       console.warn(
-        `${LOG_PREFIX} Could not persist JWT_SECRET to ${envFile}: ${e.message}. Using in-memory value for this session.`
+        `${LOG_PREFIX} Could not persist JWT_SECRET to ${envFile}: ${e.message}. Using in-memory value for this session.`,
       );
     }
   } else {
     console.log(
-      `${LOG_PREFIX} Generated in-memory JWT_SECRET (no .env file found to persist to)`
+      `${LOG_PREFIX} Generated in-memory JWT_SECRET (no .env file found to persist to)`,
     );
   }
 

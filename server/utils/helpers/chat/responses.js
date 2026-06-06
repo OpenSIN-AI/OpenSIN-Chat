@@ -3,7 +3,7 @@ const moment = require("moment");
 
 function clientAbortedHandler(resolve, fullText) {
   console.log(
-    "\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client requested to abort stream. Exiting LLM stream handler early."
+    "\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client requested to abort stream. Exiting LLM stream handler early.",
   );
   resolve(fullText);
   return;
@@ -185,12 +185,12 @@ function convertToChatHistory(history = []) {
     // because it was likely an error and cannot be used in chats and will fail to render on UI.
     if (typeof prompt !== "string") {
       console.log(
-        `[convertToChatHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`
+        `[convertToChatHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`,
       );
       continue;
     } else if (typeof data.text !== "string") {
       console.log(
-        `[convertToChatHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`
+        `[convertToChatHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`,
       );
       continue;
     }
@@ -271,12 +271,12 @@ function convertToPromptHistory(history = []) {
     // because it was likely an error and cannot be used in chats and will fail to render on UI.
     if (typeof prompt !== "string") {
       console.log(
-        `[convertToPromptHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`
+        `[convertToPromptHistory] ChatHistory #${record.id} prompt property is not a string - skipping record.`,
       );
       continue;
     } else if (typeof data.text !== "string") {
       console.log(
-        `[convertToPromptHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`
+        `[convertToPromptHistory] ChatHistory #${record.id} response.text property is not a string - skipping record.`,
       );
       continue;
     }
@@ -340,7 +340,7 @@ function writeResponseChunk(response, data) {
 function formatChatHistory(
   chatHistory = [],
   formatterFunction,
-  mode = "asProperty"
+  mode = "asProperty",
 ) {
   return chatHistory.map((historicalMessage) => {
     if (

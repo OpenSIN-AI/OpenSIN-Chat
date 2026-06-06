@@ -53,7 +53,7 @@ const ModelRouterRule = {
     if (type === "calculated") {
       const validated = this._validateConditions(
         data.condition_logic,
-        data.conditions
+        data.conditions,
       );
       if (validated.error) return { rule: null, error: validated.error };
       conditionLogic = validated.condition_logic;
@@ -179,7 +179,7 @@ const ModelRouterRule = {
       } else {
         const validated = this._validateConditions(
           data.condition_logic,
-          data.conditions
+          data.conditions,
         );
         if (validated.error) return { rule: null, error: validated.error };
         updates.condition_logic = validated.condition_logic;
@@ -231,8 +231,8 @@ const ModelRouterRule = {
           prisma.model_router_rules.update({
             where: { id: Number(id) },
             data: { priority: Number(priority) },
-          })
-        )
+          }),
+        ),
       );
       return { success: true, error: null };
     } catch (error) {

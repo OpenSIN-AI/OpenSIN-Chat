@@ -17,7 +17,7 @@ class PrivatemodelProvider extends InheritMultiple([Provider, UnTooled]) {
     super();
     const client = new OpenAI({
       baseURL: PrivatemodeLLM.parseBasePath(
-        process.env.PRIVATEMODE_LLM_BASE_PATH
+        process.env.PRIVATEMODE_LLM_BASE_PATH,
       ),
       apiKey: null,
     });
@@ -78,7 +78,7 @@ class PrivatemodelProvider extends InheritMultiple([Provider, UnTooled]) {
       messages,
       functions,
       this.#handleFunctionCallStream.bind(this),
-      eventHandler
+      eventHandler,
     );
   }
 
@@ -87,7 +87,7 @@ class PrivatemodelProvider extends InheritMultiple([Provider, UnTooled]) {
       this,
       messages,
       functions,
-      this.#handleFunctionCallChat.bind(this)
+      this.#handleFunctionCallChat.bind(this),
     );
   }
 

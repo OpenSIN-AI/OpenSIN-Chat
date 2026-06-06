@@ -102,12 +102,12 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -118,7 +118,7 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -147,7 +147,7 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         messages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -159,7 +159,7 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

@@ -48,33 +48,33 @@ module.exports.GmailDeleteDraft = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Deleting Gmail draft ${draftId}`
+                `${this.caller}: Deleting Gmail draft ${draftId}`,
               );
 
               const result = await gmailLib.deleteDraft(draftId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to delete draft - ${result.error}`
+                  `${this.caller}: Failed to delete draft - ${result.error}`,
                 );
                 return `Error deleting Gmail draft: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully deleted draft ${draftId}`
+                `${this.caller}: Successfully deleted draft ${draftId}`,
               );
 
               return `Successfully deleted Gmail draft (ID: ${draftId}).`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-delete-draft error: ${e.message}`
+                `gmail-delete-draft error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error deleting Gmail draft: ${e.message}`;

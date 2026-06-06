@@ -69,12 +69,12 @@ class MCPHypervisor {
       process.env.NODE_ENV === "development"
         ? path.resolve(
             __dirname,
-            `../../../storage/plugins/openafd_mcp_servers.json`
+            `../../../storage/plugins/openafd_mcp_servers.json`,
           )
         : path.resolve(
             process.env.STORAGE_DIR ??
               path.resolve(__dirname, `../../../storage`),
-            `plugins/openafd_mcp_servers.json`
+            `plugins/openafd_mcp_servers.json`,
           );
 
     if (!fs.existsSync(this.mcpServerJSONPath)) {
@@ -82,7 +82,7 @@ class MCPHypervisor {
       fs.writeFileSync(
         this.mcpServerJSONPath,
         JSON.stringify({ mcpServers: {} }, null, 2),
-        { encoding: "utf8" }
+        { encoding: "utf8" },
       );
     }
 
@@ -100,7 +100,7 @@ class MCPHypervisor {
   get mcpServerConfigs() {
     const servers = safeJsonParse(
       fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-      { mcpServers: {} }
+      { mcpServers: {} },
     );
     return Object.entries(servers.mcpServers).map(([name, server]) => ({
       name,
@@ -116,7 +116,7 @@ class MCPHypervisor {
   removeMCPServerFromConfig(name) {
     const servers = safeJsonParse(
       fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-      { mcpServers: {} }
+      { mcpServers: {} },
     );
     if (!servers.mcpServers[name]) return false;
 
@@ -124,7 +124,7 @@ class MCPHypervisor {
     fs.writeFileSync(
       this.mcpServerJSONPath,
       JSON.stringify(servers, null, 2),
-      "utf8"
+      "utf8",
     );
     this.log(`MCP server ${name} removed from config file`);
     return true;
@@ -140,7 +140,7 @@ class MCPHypervisor {
   updateSuppressedTools(serverName, toolName, enabled) {
     const servers = safeJsonParse(
       fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-      { mcpServers: {} }
+      { mcpServers: {} },
     );
 
     if (!servers.mcpServers[serverName]) {
@@ -171,11 +171,11 @@ class MCPHypervisor {
     fs.writeFileSync(
       this.mcpServerJSONPath,
       JSON.stringify(servers, null, 2),
-      "utf8"
+      "utf8",
     );
 
     this.log(
-      `MCP server ${serverName} tool ${toolName} ${enabled ? "enabled" : "suppressed"}`
+      `MCP server ${serverName} tool ${toolName} ${enabled ? "enabled" : "suppressed"}`,
     );
     return { success: true, error: null, suppressedTools };
   }
@@ -369,7 +369,7 @@ class MCPHypervisor {
     ) {
       if (!server.url) {
         throw new Error(
-          `MCP server "${name}": missing required "url" for ${server.type} transport`
+          `MCP server "${name}": missing required "url" for ${server.type} transport`,
         );
       }
 
@@ -472,7 +472,7 @@ class MCPHypervisor {
     const timeoutPromise = new Promise((_, reject) => {
       timeoutId = setTimeout(
         () => reject(new Error("Connection timeout")),
-        30_000
+        30_000,
       ); // 30 second timeout
     });
 
@@ -504,7 +504,7 @@ class MCPHypervisor {
         server.openafd.autoStart === false
       ) {
         this.log(
-          `MCP server ${name} has openafd.autoStart property set to false, skipping boot!`
+          `MCP server ${name} has openafd.autoStart property set to false, skipping boot!`,
         );
         this.mcpLoadingResults[name] = {
           status: "failed",
@@ -545,7 +545,7 @@ class MCPHypervisor {
     const runningServers = Object.keys(this.mcps);
     this.log(
       `Successfully started ${runningServers.length} MCP servers:`,
-      runningServers
+      runningServers,
     );
     return this.mcpLoadingResults;
   }

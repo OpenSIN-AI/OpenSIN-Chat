@@ -17,7 +17,7 @@ async function handleNewThread(ctx, chatId) {
   const { thread, message: error } = await WorkspaceThread.new(
     workspace,
     null,
-    { name: "Telegram Thread" }
+    { name: "Telegram Thread" },
   );
 
   if (error || !thread) {
@@ -28,7 +28,7 @@ async function handleNewThread(ctx, chatId) {
   ctx.setState(chatId, { threadSlug: thread.slug });
   await ctx.bot.sendMessage(
     chatId,
-    `New thread created in "${workspace.name}". Your messages will now go here.`
+    `New thread created in "${workspace.name}". Your messages will now go here.`,
   );
 }
 

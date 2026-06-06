@@ -104,14 +104,14 @@ module.exports.GmailCreateDraft = {
 
               if (Array.isArray(attachments) && attachments.length > 0) {
                 this.super.introspect(
-                  `${this.caller}: Validating ${attachments.length} attachment(s)...`
+                  `${this.caller}: Validating ${attachments.length} attachment(s)...`,
                 );
 
                 for (const filePath of attachments) {
                   const result = prepareAttachment(filePath);
                   if (!result.success) {
                     this.super.introspect(
-                      `${this.caller}: Attachment validation failed - ${result.error}`
+                      `${this.caller}: Attachment validation failed - ${result.error}`,
                     );
                     return `Error with attachment: ${result.error}`;
                   }
@@ -120,20 +120,20 @@ module.exports.GmailCreateDraft = {
                   if (totalAttachmentSize > MAX_TOTAL_ATTACHMENT_SIZE) {
                     const totalFormatted = humanFileSize(
                       totalAttachmentSize,
-                      true
+                      true,
                     );
                     this.super.introspect(
-                      `${this.caller}: Total attachment size (${totalFormatted}) exceeds 20MB limit`
+                      `${this.caller}: Total attachment size (${totalFormatted}) exceeds 20MB limit`,
                     );
                     return `Error: Total attachment size (${totalFormatted}) exceeds the 20MB limit. Please reduce the number or size of attachments.`;
                   }
 
                   preparedAttachments.push(result.attachment);
                   attachmentSummaries.push(
-                    `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`
+                    `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`,
                   );
                   this.super.introspect(
-                    `${this.caller}: Prepared attachment "${result.fileInfo.name}"`
+                    `${this.caller}: Prepared attachment "${result.fileInfo.name}"`,
                   );
                 }
               }
@@ -154,14 +154,14 @@ module.exports.GmailCreateDraft = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Creating Gmail draft to ${to}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`
+                `${this.caller}: Creating Gmail draft to ${to}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`,
               );
 
               const options = {};
@@ -176,19 +176,19 @@ module.exports.GmailCreateDraft = {
                 to,
                 subject,
                 body,
-                options
+                options,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to create draft - ${result.error}`
+                  `${this.caller}: Failed to create draft - ${result.error}`,
                 );
                 return `Error creating Gmail draft: ${result.error}`;
               }
 
               const draft = result.data;
               this.super.introspect(
-                `${this.caller}: Successfully created draft (ID: ${draft.draftId})`
+                `${this.caller}: Successfully created draft (ID: ${draft.draftId})`,
               );
 
               return (
@@ -204,7 +204,7 @@ module.exports.GmailCreateDraft = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-create-draft error: ${e.message}`
+                `gmail-create-draft error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating Gmail draft: ${e.message}`;

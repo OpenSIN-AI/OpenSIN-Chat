@@ -1197,14 +1197,14 @@ async function handleVectorStoreReset(key, prevValue, nextValue) {
   if (prevValue === nextValue) return;
   if (key === "VectorDB") {
     console.log(
-      `Vector configuration changed from ${prevValue} to ${nextValue} - resetting ${prevValue} namespaces`
+      `Vector configuration changed from ${prevValue} to ${nextValue} - resetting ${prevValue} namespaces`,
     );
     return await resetAllVectorStores({ vectorDbKey: prevValue });
   }
 
   if (key === "EmbeddingEngine" || key === "EmbeddingModelPref") {
     console.log(
-      `${key} changed from ${prevValue} to ${nextValue} - resetting ${process.env.VECTOR_DB} namespaces`
+      `${key} changed from ${prevValue} to ${nextValue} - resetting ${process.env.VECTOR_DB} namespaces`,
     );
     return await resetAllVectorStores({ vectorDbKey: process.env.VECTOR_DB });
   }
@@ -1300,7 +1300,7 @@ async function updateENV(newENVs = {}, force = false, userId = null) {
   const runAfterAll = [];
   const validKeys = Object.keys(KEY_MAPPING);
   const ENV_KEYS = Object.keys(newENVs).filter(
-    (key) => validKeys.includes(key) && !newENVs[key].includes("******") // strip out answers where the value is all asterisks
+    (key) => validKeys.includes(key) && !newENVs[key].includes("******"), // strip out answers where the value is all asterisks
   );
   const newValues = {};
 
@@ -1355,7 +1355,7 @@ async function updateENV(newENVs = {}, force = false, userId = null) {
 
 async function executeValidationChecks(checks, value, force) {
   const results = await Promise.all(
-    checks.map((validator) => validator(value, force))
+    checks.map((validator) => validator(value, force)),
   );
   return results.filter((err) => typeof err === "string");
 }

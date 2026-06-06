@@ -45,7 +45,7 @@ function logEmbeddingEvent(msg) {
       embedded: msg.embedded ?? 0,
       failed: msg.failed ?? 0,
     },
-    msg.userId ?? null
+    msg.userId ?? null,
   ).catch(() => {});
 }
 
@@ -139,7 +139,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
   worker.on("error", (err) => {
     console.error(
       `[EmbeddingWorkerManager] Worker error for ${slug}:`,
-      err.message
+      err.message,
     );
     if (runningWorkers.get(slug)?.worker === worker) {
       runningWorkers.delete(slug);
@@ -174,7 +174,7 @@ function removeQueuedFile(slug, filename) {
   const history = eventHistory.get(slug);
   if (history) {
     const cleaned = history.filter(
-      (e) => !(e.filename === filename && e.type !== "file_removed")
+      (e) => !(e.filename === filename && e.type !== "file_removed"),
     );
     for (const e of cleaned) {
       if (e.type === "batch_starting" && e.filenames) {

@@ -126,7 +126,7 @@ function validateImageMagicBytes(buffer) {
     if (matches) {
       if (signature.offset4) {
         const offset4Matches = signature.offset4.every(
-          (byte, i) => buffer[8 + i] === byte
+          (byte, i) => buffer[8 + i] === byte,
         );
         if (!offset4Matches) continue;
       }
@@ -155,7 +155,7 @@ async function fetchImage(src, log) {
 
         if (imageBuffer.length > MAX_IMAGE_SIZE) {
           log(
-            `create-docx-file: Base64 image too large (${(imageBuffer.length / 1024 / 1024).toFixed(2)}MB), max ${MAX_IMAGE_SIZE / 1024 / 1024}MB`
+            `create-docx-file: Base64 image too large (${(imageBuffer.length / 1024 / 1024).toFixed(2)}MB), max ${MAX_IMAGE_SIZE / 1024 / 1024}MB`,
           );
           return null;
         }
@@ -163,14 +163,14 @@ async function fetchImage(src, log) {
         const validation = validateImageMagicBytes(imageBuffer);
         if (!validation.valid) {
           log(
-            `create-docx-file: Base64 data is not a valid image (magic bytes check failed)`
+            `create-docx-file: Base64 data is not a valid image (magic bytes check failed)`,
           );
           return null;
         }
         imageType = validation.type;
 
         log(
-          `create-docx-file: Processed base64 image, type: ${imageType}, size: ${imageBuffer.length} bytes`
+          `create-docx-file: Processed base64 image, type: ${imageType}, size: ${imageBuffer.length} bytes`,
         );
       } else {
         log(`create-docx-file: Invalid base64 image format, skipping`);
@@ -193,7 +193,7 @@ async function fetchImage(src, log) {
       const controller = new AbortController();
       const timeoutId = setTimeout(
         () => controller.abort(),
-        IMAGE_FETCH_TIMEOUT_MS
+        IMAGE_FETCH_TIMEOUT_MS,
       );
 
       try {
@@ -204,7 +204,7 @@ async function fetchImage(src, log) {
 
         if (!response.ok) {
           log(
-            `create-docx-file: Failed to fetch image from ${src}: ${response.status}`
+            `create-docx-file: Failed to fetch image from ${src}: ${response.status}`,
           );
           return null;
         }
@@ -212,7 +212,7 @@ async function fetchImage(src, log) {
         const contentLength = response.headers.get("content-length");
         if (contentLength && parseInt(contentLength, 10) > MAX_IMAGE_SIZE) {
           log(
-            `create-docx-file: Image too large (${(parseInt(contentLength, 10) / 1024 / 1024).toFixed(2)}MB), max ${MAX_IMAGE_SIZE / 1024 / 1024}MB`
+            `create-docx-file: Image too large (${(parseInt(contentLength, 10) / 1024 / 1024).toFixed(2)}MB), max ${MAX_IMAGE_SIZE / 1024 / 1024}MB`,
           );
           return null;
         }
@@ -222,7 +222,7 @@ async function fetchImage(src, log) {
 
         if (imageBuffer.length > MAX_IMAGE_SIZE) {
           log(
-            `create-docx-file: Downloaded image too large (${(imageBuffer.length / 1024 / 1024).toFixed(2)}MB), max ${MAX_IMAGE_SIZE / 1024 / 1024}MB`
+            `create-docx-file: Downloaded image too large (${(imageBuffer.length / 1024 / 1024).toFixed(2)}MB), max ${MAX_IMAGE_SIZE / 1024 / 1024}MB`,
           );
           return null;
         }
@@ -230,24 +230,24 @@ async function fetchImage(src, log) {
         const validation = validateImageMagicBytes(imageBuffer);
         if (!validation.valid) {
           log(
-            `create-docx-file: Fetched content is not a valid image (magic bytes check failed)`
+            `create-docx-file: Fetched content is not a valid image (magic bytes check failed)`,
           );
           return null;
         }
         imageType = validation.type;
 
         log(
-          `create-docx-file: Fetched remote image from ${src}, type: ${imageType}, size: ${imageBuffer.length} bytes`
+          `create-docx-file: Fetched remote image from ${src}, type: ${imageType}, size: ${imageBuffer.length} bytes`,
         );
       } catch (fetchError) {
         clearTimeout(timeoutId);
         if (fetchError.name === "AbortError") {
           log(
-            `create-docx-file: Image fetch timed out after ${IMAGE_FETCH_TIMEOUT_MS}ms: ${src}`
+            `create-docx-file: Image fetch timed out after ${IMAGE_FETCH_TIMEOUT_MS}ms: ${src}`,
           );
         } else {
           log(
-            `create-docx-file: Error fetching image from ${src}: ${fetchError.message}`
+            `create-docx-file: Error fetching image from ${src}: ${fetchError.message}`,
           );
         }
         return null;
@@ -284,7 +284,7 @@ async function fetchImage(src, log) {
       }
     } catch (sizeError) {
       log(
-        `create-docx-file: Could not determine image size: ${sizeError.message}, using defaults`
+        `create-docx-file: Could not determine image size: ${sizeError.message}, using defaults`,
       );
     }
 
@@ -320,7 +320,7 @@ async function processInlineElements(element, docx, styles = {}, log) {
             font: styles.font || "Calibri",
             size: styles.size || 24,
             color: styles.color,
-          })
+          }),
         );
       } else if (text && text.includes(" ")) {
         children.push(new TextRun({ text: " " }));
@@ -336,8 +336,8 @@ async function processInlineElements(element, docx, styles = {}, log) {
               node,
               docx,
               { ...styles, bold: true },
-              log
-            ))
+              log,
+            )),
           );
           break;
         case "em":
@@ -347,8 +347,8 @@ async function processInlineElements(element, docx, styles = {}, log) {
               node,
               docx,
               { ...styles, italics: true },
-              log
-            ))
+              log,
+            )),
           );
           break;
         case "del":
@@ -358,8 +358,8 @@ async function processInlineElements(element, docx, styles = {}, log) {
               node,
               docx,
               { ...styles, strike: true },
-              log
-            ))
+              log,
+            )),
           );
           break;
         case "code":
@@ -369,7 +369,7 @@ async function processInlineElements(element, docx, styles = {}, log) {
               font: "Consolas",
               size: 20,
               shading: { fill: "E8E8E8" },
-            })
+            }),
           );
           break;
         case "a": {
@@ -387,7 +387,7 @@ async function processInlineElements(element, docx, styles = {}, log) {
                   }),
                 ],
                 link: href,
-              })
+              }),
             );
           } else {
             children.push(new TextRun({ text: node.textContent }));
@@ -407,7 +407,7 @@ async function processInlineElements(element, docx, styles = {}, log) {
                     height: imageData.height,
                   },
                   type: imageData.type,
-                })
+                }),
               );
             }
           }
@@ -418,7 +418,7 @@ async function processInlineElements(element, docx, styles = {}, log) {
           break;
         default:
           children.push(
-            ...(await processInlineElements(node, docx, styles, log))
+            ...(await processInlineElements(node, docx, styles, log)),
           );
       }
     }
@@ -484,7 +484,7 @@ async function processTable(tableElement, docx, log, theme = null) {
           ],
           width: { size: columnWidthPercent, type: WidthType.PERCENTAGE },
           shading: shadingFill ? { fill: shadingFill } : undefined,
-        })
+        }),
       );
     }
 
@@ -547,14 +547,14 @@ async function processList(listElement, docx, isOrdered, level = 0, log) {
           const wrapper = li.ownerDocument.createElement("span");
           wrapper.appendChild(child.cloneNode(true));
           inlineChildren.push(
-            ...(await processInlineElements(wrapper, docx, {}, log))
+            ...(await processInlineElements(wrapper, docx, {}, log)),
           );
         }
       } else if (child.nodeType === 3 && child.textContent.trim()) {
         const wrapper = li.ownerDocument.createElement("span");
         wrapper.textContent = child.textContent;
         inlineChildren.push(
-          ...(await processInlineElements(wrapper, docx, {}, log))
+          ...(await processInlineElements(wrapper, docx, {}, log)),
         );
       }
     }
@@ -567,7 +567,7 @@ async function processList(listElement, docx, isOrdered, level = 0, log) {
           numbering: isOrdered
             ? { reference: "default-numbering", level }
             : undefined,
-        })
+        }),
       );
     }
 
@@ -578,8 +578,8 @@ async function processList(listElement, docx, isOrdered, level = 0, log) {
           docx,
           nested.ordered,
           level + 1,
-          log
-        ))
+          log,
+        )),
       );
     }
   }
@@ -623,7 +623,7 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
           child,
           docx,
           { size, bold: true, color: colors.heading },
-          log
+          log,
         );
         elements.push(
           new Paragraph({
@@ -640,21 +640,21 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
                   ],
             heading: level,
             spacing: { before: 240, after: 120 },
-          })
+          }),
         );
       } else if (tagName === "p") {
         const inlineChildren = await processInlineElements(
           child,
           docx,
           {},
-          log
+          log,
         );
         if (inlineChildren.length > 0) {
           elements.push(
             new Paragraph({
               children: inlineChildren,
               spacing: { after: 200 },
-            })
+            }),
           );
         }
       } else if (tagName === "ul") {
@@ -669,7 +669,7 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
           child,
           docx,
           { italics: true, color: "666666" },
-          log
+          log,
         );
         elements.push(
           new Paragraph({
@@ -679,7 +679,7 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
               left: { style: "single", size: 24, color: colors.accent },
             },
             spacing: { before: 200, after: 200 },
-          })
+          }),
         );
       } else if (tagName === "pre") {
         const codeElement = child.querySelector("code");
@@ -700,7 +700,7 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
               ],
               shading: { fill: "F5F5F5" },
               spacing: { before: 0, after: 0 },
-            })
+            }),
           );
         }
         elements.push(new Paragraph({ children: [], spacing: { after: 200 } }));
@@ -712,7 +712,7 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
               bottom: { style: "single", size: 6, color: colors.border },
             },
             spacing: { before: 200, after: 200 },
-          })
+          }),
         );
       } else if (tagName === "img") {
         const src = child.getAttribute("src");
@@ -733,7 +733,7 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
                 ],
                 alignment: AlignmentType.CENTER,
                 spacing: { before: 200, after: 200 },
-              })
+              }),
             );
           }
         }
@@ -742,7 +742,7 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
           child,
           docx,
           {},
-          log
+          log,
         );
         if (inlineChildren.length > 0) {
           elements.push(new Paragraph({ children: inlineChildren }));
@@ -750,7 +750,7 @@ async function htmlToDocxElements(html, libs, log, theme = null) {
       }
     } catch (err) {
       log(
-        `create-docx-file: Error processing element ${tagName}: ${err.message}`
+        `create-docx-file: Error processing element ${tagName}: ${err.message}`,
       );
     }
   }
@@ -783,7 +783,7 @@ function createCoverPageSection(docx, options) {
     new Paragraph({
       children: [],
       spacing: { before: 2400 },
-    })
+    }),
   );
 
   coverChildren.push(
@@ -799,7 +799,7 @@ function createCoverPageSection(docx, options) {
       ],
       alignment: AlignmentType.CENTER,
       spacing: { after: 400 },
-    })
+    }),
   );
 
   if (subtitle) {
@@ -815,7 +815,7 @@ function createCoverPageSection(docx, options) {
         ],
         alignment: AlignmentType.CENTER,
         spacing: { after: 800 },
-      })
+      }),
     );
   }
 
@@ -823,7 +823,7 @@ function createCoverPageSection(docx, options) {
     new Paragraph({
       children: [],
       spacing: { before: 4800 },
-    })
+    }),
   );
 
   if (author) {
@@ -839,7 +839,7 @@ function createCoverPageSection(docx, options) {
         ],
         alignment: AlignmentType.CENTER,
         spacing: { after: 200 },
-      })
+      }),
     );
   }
 
@@ -856,7 +856,7 @@ function createCoverPageSection(docx, options) {
         ],
         alignment: AlignmentType.CENTER,
         spacing: { after: 200 },
-      })
+      }),
     );
   }
 
@@ -872,7 +872,7 @@ function createCoverPageSection(docx, options) {
             type: "png",
           }),
         ],
-      })
+      }),
     );
   }
 

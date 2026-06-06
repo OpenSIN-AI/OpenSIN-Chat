@@ -210,7 +210,7 @@ const MobileDevice = {
     clause = {},
     limit = null,
     orderBy = null,
-    include = null
+    include = null,
   ) {
     try {
       const devices = await prisma.desktop_mobile_devices.findMany({
@@ -242,7 +242,7 @@ const MobileDevice = {
     } catch (error) {
       console.error(
         "Error migrating mobile devices to multi-user mode:",
-        error
+        error,
       );
     }
   },

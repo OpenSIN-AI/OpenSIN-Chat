@@ -16,7 +16,7 @@ async function showThreadMenu(
   chatId,
   workspaceId,
   page = 0,
-  messageId = null
+  messageId = null,
 ) {
   const pageNum = typeof page === "number" && !isNaN(page) ? page : 0;
   const workspace = await Workspace.get({ id: workspaceId });

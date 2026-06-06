@@ -77,7 +77,7 @@ const ScheduledJobRun = {
     } catch (error) {
       console.error(
         "Failed to transition scheduled job run to running:",
-        error.message
+        error.message,
       );
       return false;
     }
@@ -109,7 +109,7 @@ const ScheduledJobRun = {
     } catch (error) {
       console.error(
         "Failed to conditionally fail scheduled job run:",
-        error.message
+        error.message,
       );
       return false;
     }
@@ -152,7 +152,7 @@ const ScheduledJobRun = {
     } catch (error) {
       console.error(
         "Failed to mark scheduled job run as failed:",
-        error.message
+        error.message,
       );
       return null;
     }
@@ -178,7 +178,7 @@ const ScheduledJobRun = {
     } catch (error) {
       console.error(
         "Failed to mark scheduled job run as timed out:",
-        error.message
+        error.message,
       );
       return null;
     }
@@ -232,7 +232,7 @@ const ScheduledJobRun = {
     limit = null,
     orderBy = null,
     include = {},
-    offset = 0
+    offset = 0,
   ) {
     try {
       const results = await prisma.scheduled_job_runs.findMany({
@@ -321,7 +321,7 @@ const ScheduledJobRun = {
           name: "Scheduled Jobs",
           slug: "scheduled-jobs",
           chatMode: "automatic",
-        }
+        },
       );
       if (workspaceError)
         throw new Error(workspaceError || "Failed to create workspace");

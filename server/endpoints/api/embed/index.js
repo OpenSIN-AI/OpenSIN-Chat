@@ -134,7 +134,7 @@ function apiEmbedEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -195,7 +195,7 @@ function apiEmbedEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post("/v1/embed/new", [validApiKey], async (request, response) => {
@@ -402,7 +402,7 @@ function apiEmbedEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

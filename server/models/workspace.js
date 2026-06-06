@@ -314,7 +314,7 @@ const Workspace = {
         documents: await Document.forWorkspace(workspace.id),
         contextWindow: this._getContextWindow(workspace),
         currentContextTokenCount: await this._getCurrentContextTokenCount(
-          workspace.id
+          workspace.id,
         ),
       };
     } catch (error) {
@@ -373,7 +373,7 @@ const Workspace = {
         ...workspace,
         contextWindow: this._getContextWindow(workspace),
         currentContextTokenCount: await this._getCurrentContextTokenCount(
-          workspace.id
+          workspace.id,
         ),
       };
     } catch (error) {
@@ -412,7 +412,7 @@ const Workspace = {
     user,
     clause = {},
     limit = null,
-    orderBy = null
+    orderBy = null,
   ) {
     if ([ROLES.admin, ROLES.manager].includes(user.role))
       return await this.where(clause, limit, orderBy);
@@ -548,7 +548,7 @@ const Workspace = {
         prevSystemPrompt: prevData?.openAiPrompt || this.defaultPrompt,
         newSystemPrompt: newData?.openAiPrompt,
       },
-      user?.id
+      user?.id,
     );
     return;
   },
@@ -686,7 +686,7 @@ const Workspace = {
         model: router.fallback_model,
       };
       const fallbackProvider = new AIbitat(fallbackConfig).getProviderForConfig(
-        fallbackConfig
+        fallbackConfig,
       );
       return (await fallbackProvider.supportsNativeToolCalling?.()) ?? false;
     }
@@ -697,7 +697,7 @@ const Workspace = {
       getBaseLLMProviderModel({ provider });
     const agentConfig = { provider, model };
     const agentProvider = new AIbitat(agentConfig).getProviderForConfig(
-      agentConfig
+      agentConfig,
     );
     const nativeToolCalling = await agentProvider.supportsNativeToolCalling?.();
     return nativeToolCalling;

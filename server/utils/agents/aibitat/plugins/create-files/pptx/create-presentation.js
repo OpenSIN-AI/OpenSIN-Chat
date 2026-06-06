@@ -166,7 +166,7 @@ module.exports.CreatePptxPresentation = {
           }) {
             try {
               this.super.handlerProps.log(
-                `Using the create-pptx-presentation tool.`
+                `Using the create-pptx-presentation tool.`,
               );
 
               // Strip XML 1.0 illegal control characters so PowerPoint can open
@@ -181,7 +181,7 @@ module.exports.CreatePptxPresentation = {
               const totalSections = sections.length;
 
               this.super.introspect(
-                `${this.caller}: Planning presentation "${title}" — ${totalSections} section${totalSections !== 1 ? "s" : ""}, ${theme.name} theme`
+                `${this.caller}: Planning presentation "${title}" — ${totalSections} section${totalSections !== 1 ? "s" : ""}, ${theme.name} theme`,
               );
 
               // Ask for approval BEFORE kicking off the expensive sub-agent work
@@ -198,14 +198,14 @@ module.exports.CreatePptxPresentation = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               const conversationContext = extractConversationContext(
-                this.super._chats
+                this.super._chats,
               );
 
               // Run a focused sub-agent for each section sequentially.
@@ -216,7 +216,7 @@ module.exports.CreatePptxPresentation = {
               for (let i = 0; i < sections.length; i++) {
                 const section = sections[i];
                 this.super.introspect(
-                  `${this.caller}: [${i + 1}/${totalSections}] Building section "${section.title}"…`
+                  `${this.caller}: [${i + 1}/${totalSections}] Building section "${section.title}"…`,
                 );
 
                 const sectionResult = await runSectionAgent({
@@ -233,7 +233,7 @@ module.exports.CreatePptxPresentation = {
                   allCitations.push(...sectionResult.citations);
 
                 this.super.introspect(
-                  `${this.caller}: [${i + 1}/${totalSections}] Section "${section.title}" complete — ${slideCount} slide${slideCount !== 1 ? "s" : ""}`
+                  `${this.caller}: [${i + 1}/${totalSections}] Section "${section.title}" complete — ${slideCount} slide${slideCount !== 1 ? "s" : ""}`,
                 );
               }
 
@@ -243,7 +243,7 @@ module.exports.CreatePptxPresentation = {
 
               // Assemble the final PPTX from all section outputs
               this.super.introspect(
-                `${this.caller}: Assembling final deck — ${allSlides.length} slides total`
+                `${this.caller}: Assembling final deck — ${allSlides.length} slides total`,
               );
 
               const PptxGenJS = require("pptxgenjs");
@@ -280,7 +280,7 @@ module.exports.CreatePptxPresentation = {
                       slideData,
                       theme,
                       slideNumber,
-                      totalSlideCount
+                      totalSlideCount,
                     );
                     break;
                   case "blank":
@@ -289,7 +289,7 @@ module.exports.CreatePptxPresentation = {
                       pptx,
                       theme,
                       slideNumber,
-                      totalSlideCount
+                      totalSlideCount,
                     );
                     break;
                   default:
@@ -299,7 +299,7 @@ module.exports.CreatePptxPresentation = {
                       slideData,
                       theme,
                       slideNumber,
-                      totalSlideCount
+                      totalSlideCount,
                     );
                     break;
                 }
@@ -309,7 +309,7 @@ module.exports.CreatePptxPresentation = {
               const bufferSizeKB = (buffer.length / 1024).toFixed(2);
               const bufferSizeMB = (buffer.length / (1024 * 1024)).toFixed(2);
               this.super.handlerProps.log(
-                `create-pptx-presentation: Generated buffer - size: ${bufferSizeKB}KB (${bufferSizeMB}MB), slides: ${totalSlideCount}, theme: ${theme.name}`
+                `create-pptx-presentation: Generated buffer - size: ${bufferSizeKB}KB (${bufferSizeMB}MB), slides: ${totalSlideCount}, theme: ${theme.name}`,
               );
 
               const displayFilename = filename.split("/").pop();
@@ -334,13 +334,13 @@ module.exports.CreatePptxPresentation = {
               });
 
               this.super.introspect(
-                `${this.caller}: Successfully created presentation "${title}"`
+                `${this.caller}: Successfully created presentation "${title}"`,
               );
 
               return `Successfully created presentation "${title}" with ${totalSlideCount} slides across ${totalSections} sections using the ${theme.name} theme.`;
             } catch (e) {
               this.super.handlerProps.log(
-                `create-pptx-presentation error: ${e.message}`
+                `create-pptx-presentation error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating presentation: ${e.message}`;

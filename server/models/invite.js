@@ -48,7 +48,7 @@ const Invite = {
           const { Workspace } = require("./workspace");
           const { WorkspaceUser } = require("./workspaceUsers");
           const workspaceIds = (await Workspace.where({})).map(
-            (workspace) => workspace.id
+            (workspace) => workspace.id,
           );
           const ids = safeJsonParse(invite.workspaceIds)
             .map((id) => Number(id))
@@ -58,7 +58,7 @@ const Invite = {
       } catch (e) {
         console.error(
           "Could not add user to workspaces automatically",
-          e.message
+          e.message,
         );
       }
 

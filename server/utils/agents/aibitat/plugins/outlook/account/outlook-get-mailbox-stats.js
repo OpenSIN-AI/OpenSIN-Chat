@@ -32,24 +32,24 @@ module.exports.OutlookGetMailboxStats = {
           handler: async function () {
             try {
               this.super.handlerProps.log(
-                `Using the outlook-get-mailbox-stats tool.`
+                `Using the outlook-get-mailbox-stats tool.`,
               );
               this.super.introspect(
-                `${this.caller}: Getting Outlook mailbox statistics...`
+                `${this.caller}: Getting Outlook mailbox statistics...`,
               );
 
               const result = await outlookLib.getMailboxStats();
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get mailbox stats - ${result.error}`
+                  `${this.caller}: Failed to get mailbox stats - ${result.error}`,
                 );
                 return `Error getting mailbox statistics: ${result.error}`;
               }
 
               const { email, displayName, folders } = result.data;
               this.super.introspect(
-                `${this.caller}: Successfully retrieved mailbox statistics`
+                `${this.caller}: Successfully retrieved mailbox statistics`,
               );
 
               let folderStats = "";

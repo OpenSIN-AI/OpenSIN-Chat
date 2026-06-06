@@ -123,7 +123,7 @@ module.exports.FilesystemSearchFiles = {
           }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-search-files tool.`
+                `Using the filesystem-search-files tool.`,
               );
 
               await filesystem.ensureInitialized();
@@ -150,7 +150,7 @@ module.exports.FilesystemSearchFiles = {
                     ? ` (using pattern: ${effectivePatterns.join(" or ")})`
                     : "";
                 this.super.introspect(
-                  `${this.caller}: Searching for "${pattern}"${patternNote} in ${allowedDirs.length} allowed director${allowedDirs.length === 1 ? "y" : "ies"}`
+                  `${this.caller}: Searching for "${pattern}"${patternNote} in ${allowedDirs.length} allowed director${allowedDirs.length === 1 ? "y" : "ies"}`,
                 );
 
                 for (const dir of allowedDirs) {
@@ -175,7 +175,7 @@ module.exports.FilesystemSearchFiles = {
 
                 const limitedResults = allResults.slice(0, maxResults);
                 this.super.introspect(
-                  `Found ${allResults.length} matching files${allResults.length > maxResults ? ` (showing first ${maxResults})` : ""}`
+                  `Found ${allResults.length} matching files${allResults.length > maxResults ? ` (showing first ${maxResults})` : ""}`,
                 );
 
                 if (limitedResults.length === 0) return "No matches found";
@@ -184,7 +184,7 @@ module.exports.FilesystemSearchFiles = {
                   return await readMatchingFileContents.call(
                     this,
                     limitedResults,
-                    maxFilesToRead
+                    maxFilesToRead,
                   );
                 }
 
@@ -193,7 +193,7 @@ module.exports.FilesystemSearchFiles = {
 
               // Content search mode using ripgrep across all allowed directories
               this.super.introspect(
-                `${this.caller}: Searching for "${pattern}" in file contents across ${allowedDirs.length} allowed director${allowedDirs.length === 1 ? "y" : "ies"}`
+                `${this.caller}: Searching for "${pattern}" in file contents across ${allowedDirs.length} allowed director${allowedDirs.length === 1 ? "y" : "ies"}`,
               );
 
               const allResults = [];
@@ -225,7 +225,7 @@ module.exports.FilesystemSearchFiles = {
               }
 
               this.super.introspect(
-                `Found ${allResults.length} matches${allResults.length > maxResults ? ` (showing first ${maxResults})` : ""}`
+                `Found ${allResults.length} matches${allResults.length > maxResults ? ` (showing first ${maxResults})` : ""}`,
               );
 
               if (includeFileContents) {
@@ -233,14 +233,14 @@ module.exports.FilesystemSearchFiles = {
                 return await readMatchingFileContents.call(
                   this,
                   uniqueFiles,
-                  maxFilesToRead
+                  maxFilesToRead,
                 );
               }
 
               return formatSearchResults(allResults, maxResults);
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-search-files error: ${e.message}`
+                `filesystem-search-files error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error searching files: ${e.message}`;
@@ -290,7 +290,7 @@ function searchFilesWithRipgrepGlob({
 
   if (result.status > 1) {
     throw new Error(
-      result.stderr || `ripgrep exited with code ${result.status}`
+      result.stderr || `ripgrep exited with code ${result.status}`,
     );
   }
 
@@ -355,14 +355,14 @@ function searchWithRipgrep({
   // Exit code 1 means no matches (not an error)
   if (result.status > 1) {
     throw new Error(
-      result.stderr || `ripgrep exited with code ${result.status}`
+      result.stderr || `ripgrep exited with code ${result.status}`,
     );
   }
 
   const results = [];
   if (!result.stdout) return results;
   const matches = safeJsonParse(result.stdout, []).filter(
-    (m) => m.type === "match" && m.data
+    (m) => m.type === "match" && m.data,
   );
 
   for (const match of matches) {
@@ -408,7 +408,7 @@ async function readMatchingFileContents(filePaths, maxFiles) {
   const skippedCount = filePaths.length - filesToRead.length;
 
   this.super.introspect(
-    `${this.caller}: Reading contents of ${filesToRead.length} file${filesToRead.length === 1 ? "" : "s"}${skippedCount > 0 ? ` (${skippedCount} more files not read)` : ""}`
+    `${this.caller}: Reading contents of ${filesToRead.length} file${filesToRead.length === 1 ? "" : "s"}${skippedCount > 0 ? ` (${skippedCount} more files not read)` : ""}`,
   );
 
   const results = [];
@@ -443,7 +443,7 @@ async function readMatchingFileContents(filePaths, maxFiles) {
     .map((r) =>
       r.success
         ? `=== ${r.path} ===\n${r.content}`
-        : `=== ${r.path} ===\n${r.content}`
+        : `=== ${r.path} ===\n${r.content}`,
     )
     .join("\n\n---\n\n");
 
@@ -451,12 +451,12 @@ async function readMatchingFileContents(filePaths, maxFiles) {
     filesystem.truncateContentForContext(
       combinedContent,
       this.super,
-      `[Content truncated - file contents exceed context limit. Try reducing maxFilesToRead or searching more specifically.]`
+      `[Content truncated - file contents exceed context limit. Try reducing maxFilesToRead or searching more specifically.]`,
     );
 
   if (wasTruncated) {
     this.super.introspect(
-      `${this.caller}: File contents were truncated to fit context limit`
+      `${this.caller}: File contents were truncated to fit context limit`,
     );
   }
 

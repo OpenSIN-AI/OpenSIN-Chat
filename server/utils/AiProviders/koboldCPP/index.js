@@ -14,7 +14,7 @@ class KoboldCPPLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.KOBOLD_CPP_BASE_PATH)
       throw new Error(
-        "KoboldCPP must have a valid base path to use for the api."
+        "KoboldCPP must have a valid base path to use for the api.",
       );
 
     this.className = "KoboldCPPLLM";
@@ -138,7 +138,7 @@ class KoboldCPPLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (

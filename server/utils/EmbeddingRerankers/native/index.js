@@ -19,14 +19,14 @@ class NativeEmbeddingReranker {
     this.cacheDir = path.resolve(
       process.env.STORAGE_DIR
         ? path.resolve(process.env.STORAGE_DIR, `models`)
-        : path.resolve(__dirname, `../../../storage/models`)
+        : path.resolve(__dirname, `../../../storage/models`),
     );
     this.modelPath = path.resolve(this.cacheDir, ...this.model.split("/"));
     // Make directory when it does not exist in existing installations
     if (!fs.existsSync(this.cacheDir)) fs.mkdirSync(this.cacheDir);
 
     this.modelDownloaded = fs.existsSync(
-      path.resolve(this.cacheDir, this.model)
+      path.resolve(this.cacheDir, this.model),
     );
     this.log("Initialized");
   }
@@ -59,13 +59,13 @@ class NativeEmbeddingReranker {
       this.log(`Preloading reranker suite...`);
       await this.initClient();
       this.log(
-        `Preloaded reranker suite. Reranking is available as a service now.`
+        `Preloaded reranker suite. Reranking is available as a service now.`,
       );
       return;
     } catch (e) {
       console.error(e);
       this.log(
-        `Failed to preload reranker suite. Reranking will be available on the first rerank call.`
+        `Failed to preload reranker suite. Reranking will be available on the first rerank call.`,
       );
       return;
     }
@@ -131,12 +131,12 @@ class NativeEmbeddingReranker {
             progress_callback: (p) => {
               if (!this.modelDownloaded && p.status === "progress") {
                 this.log(
-                  `[${this.host}] Loading model ${this.model}... ${p?.progress}%`
+                  `[${this.host}] Loading model ${this.model}... ${p?.progress}%`,
                 );
               }
             },
             cache_dir: this.cacheDir,
-          }
+          },
         );
       this.log(`Loaded model ${this.model}`);
       NativeEmbeddingReranker.#model = model;
@@ -145,7 +145,7 @@ class NativeEmbeddingReranker {
       this.log(
         `Failed to load model ${this.model} from ${this.host}.`,
         e.message,
-        e.stack
+        e.stack,
       );
       if (
         NativeEmbeddingReranker.#transformers.env.remoteHost ===
@@ -182,12 +182,12 @@ class NativeEmbeddingReranker {
             progress_callback: (p) => {
               if (!this.modelDownloaded && p.status === "progress") {
                 this.log(
-                  `[${this.host}] Loading tokenizer ${this.model}... ${p?.progress}%`
+                  `[${this.host}] Loading tokenizer ${this.model}... ${p?.progress}%`,
                 );
               }
             },
             cache_dir: this.cacheDir,
-          }
+          },
         );
       this.log(`Loaded tokenizer ${this.model}`);
       NativeEmbeddingReranker.#tokenizer = tokenizer;
@@ -196,7 +196,7 @@ class NativeEmbeddingReranker {
       this.log(
         `Failed to load tokenizer ${this.model} from ${this.host}.`,
         e.message,
-        e.stack
+        e.stack,
       );
       if (
         NativeEmbeddingReranker.#transformers.env.remoteHost ===
@@ -246,7 +246,7 @@ class NativeEmbeddingReranker {
       .slice(0, options.topK);
 
     this.log(
-      `Reranking ${documents.length} documents to top ${options.topK} took ${Date.now() - start}ms`
+      `Reranking ${documents.length} documents to top ${options.topK} took ${Date.now() - start}ms`,
     );
     return reranked;
   }

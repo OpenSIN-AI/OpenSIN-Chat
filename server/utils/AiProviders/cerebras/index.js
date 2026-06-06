@@ -110,7 +110,7 @@ class CerebrasLLM {
   static promptWindowLimit(modelName) {
     if (Object.keys(CerebrasLLM.modelContextWindows).length === 0) {
       this.#slog(
-        "No context windows cached - Context window may be inaccurately reported."
+        "No context windows cached - Context window may be inaccurately reported.",
       );
       return (
         Number(process.env.CEREBRAS_MODEL_TOKEN_LIMIT) || // Legacy support for old ENV
@@ -208,7 +208,7 @@ class CerebrasLLM {
         .catch((e) => {
           console.error(e);
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -270,7 +270,7 @@ class CerebrasLLM {
           .then((res) => {
             if (!res.ok)
               throw new Error(
-                `Cerebras:getModelCapabilities - ${res.statusText}`
+                `Cerebras:getModelCapabilities - ${res.statusText}`,
               );
             return res.json();
           })

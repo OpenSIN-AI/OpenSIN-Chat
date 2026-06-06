@@ -79,7 +79,7 @@ module.exports.FilesystemEditFile = {
           }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-edit-file tool.`
+                `Using the filesystem-edit-file tool.`,
               );
 
               if (!Array.isArray(edits) || edits.length === 0) {
@@ -89,7 +89,7 @@ module.exports.FilesystemEditFile = {
               const validPath = await filesystem.validatePath(filePath);
 
               this.super.introspect(
-                `${this.caller}: ${dryRun ? "Previewing" : "Applying"} ${edits.length} edit(s) to ${filePath}`
+                `${this.caller}: ${dryRun ? "Previewing" : "Applying"} ${edits.length} edit(s) to ${filePath}`,
               );
 
               if (this.super.requestToolApproval && !dryRun) {
@@ -101,7 +101,7 @@ module.exports.FilesystemEditFile = {
 
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -110,7 +110,7 @@ module.exports.FilesystemEditFile = {
               const result = await filesystem.applyFileEdits(
                 validPath,
                 edits,
-                dryRun
+                dryRun,
               );
 
               if (dryRun)
@@ -120,7 +120,7 @@ module.exports.FilesystemEditFile = {
               return result;
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-edit-file error: ${e.message}`
+                `filesystem-edit-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error editing file: ${e.message}`;

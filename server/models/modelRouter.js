@@ -32,7 +32,7 @@ const ModelRouter = {
     if (!name) return { router: null, error: "Name is required." };
 
     const fallback_provider = this.validations.fallback_provider(
-      data.fallback_provider
+      data.fallback_provider,
     );
     const fallback_model = this.validations.fallback_model(data.fallback_model);
     if (!fallback_provider || !fallback_model)
@@ -162,7 +162,7 @@ const ModelRouter = {
           ...router,
           ruleCount: _count.rules,
           workspaceCount: await this.workspaceCount(router.id),
-        }))
+        })),
       );
       return results;
     } catch (error) {
@@ -184,7 +184,7 @@ const ModelRouter = {
       updates.description = this.validations.description(data.description);
     if (data.fallback_provider !== undefined) {
       const provider = this.validations.fallback_provider(
-        data.fallback_provider
+        data.fallback_provider,
       );
       if (!provider)
         return { router: null, error: "Fallback provider is required." };

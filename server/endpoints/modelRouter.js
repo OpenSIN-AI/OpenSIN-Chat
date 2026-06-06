@@ -23,7 +23,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
@@ -46,7 +46,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -58,7 +58,7 @@ function modelRouterEndpoints(app) {
         const data = reqBody(request);
         const { router, error } = await ModelRouter.create(
           data,
-          user?.id || null
+          user?.id || null,
         );
 
         if (error) return response.status(400).json({ router, error });
@@ -68,7 +68,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.put(
@@ -86,7 +86,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.delete(
@@ -106,7 +106,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -121,7 +121,7 @@ function modelRouterEndpoints(app) {
         const { rule, error } = await ModelRouterRule.create(
           routerId,
           data,
-          user?.id || null
+          user?.id || null,
         );
         if (error) return response.status(400).json({ rule, error });
 
@@ -132,7 +132,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.put(
@@ -156,7 +156,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.put(
@@ -168,7 +168,7 @@ function modelRouterEndpoints(app) {
         const data = reqBody(request);
         const { rule, error } = await ModelRouterRule.update(
           Number(ruleId),
-          data
+          data,
         );
         if (error) return response.status(400).json({ rule, error });
         ModelRouterService.invalidateRouter(Number(id));
@@ -177,7 +177,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.delete(
@@ -197,7 +197,7 @@ function modelRouterEndpoints(app) {
         console.error(e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 }
 

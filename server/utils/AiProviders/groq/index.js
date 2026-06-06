@@ -118,7 +118,7 @@ class GroqLLM {
     if (!attachments.length) return DEFAULT_PROMPT_STRUCT;
     if (!VISION_MODELS.includes(this.model)) {
       this.#log(
-        `${this.model} is not an explicitly supported vision model! Will omit attachments.`
+        `${this.model} is not an explicitly supported vision model! Will omit attachments.`,
       );
       return DEFAULT_PROMPT_STRUCT;
     }
@@ -173,7 +173,7 @@ class GroqLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `GroqAI:chatCompletion: ${this.model} is not valid for chat completion!`
+        `GroqAI:chatCompletion: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -185,7 +185,7 @@ class GroqLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -214,7 +214,7 @@ class GroqLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `GroqAI:streamChatCompletion: ${this.model} is not valid for chat completion!`
+        `GroqAI:streamChatCompletion: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

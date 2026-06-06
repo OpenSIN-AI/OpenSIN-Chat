@@ -264,7 +264,7 @@ function apiAdminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get("/v1/admin/invites", [validApiKey], async (request, response) => {
@@ -419,7 +419,7 @@ function apiAdminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -474,7 +474,7 @@ function apiAdminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -534,14 +534,14 @@ function apiAdminEndpoints(app) {
         const { userIds } = reqBody(request);
         const { success, error } = await Workspace.updateUsers(
           workspaceId,
-          userIds
+          userIds,
         );
         response.status(200).json({ success, error });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -631,7 +631,7 @@ function apiAdminEndpoints(app) {
         if (reset) {
           const { success, error } = await Workspace.updateUsers(
             workspace.id,
-            userIds
+            userIds,
           );
           return response.status(200).json({
             success,
@@ -643,7 +643,7 @@ function apiAdminEndpoints(app) {
         // Add new users to the workspace if they are not already in the workspace
         const existingUserIds = workspaceUsers.map((user) => user.userId);
         const usersToAdd = userIds.filter(
-          (userId) => !existingUserIds.includes(userId)
+          (userId) => !existingUserIds.includes(userId),
         );
         if (usersToAdd.length > 0)
           await WorkspaceUser.createManyUsers(usersToAdd, workspace.id);
@@ -656,7 +656,7 @@ function apiAdminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -703,7 +703,7 @@ function apiAdminEndpoints(app) {
           {},
           pgSize,
           offset * pgSize,
-          { id: "desc" }
+          { id: "desc" },
         );
 
         const hasPages = (await WorkspaceChats.count()) > (offset + 1) * pgSize;
@@ -712,7 +712,7 @@ function apiAdminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -768,7 +768,7 @@ function apiAdminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

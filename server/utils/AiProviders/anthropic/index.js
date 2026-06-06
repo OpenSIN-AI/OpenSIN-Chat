@@ -40,7 +40,7 @@ class AnthropicLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.log(
-      `Initialized with ${this.model}. Cache ${this.cacheControl ? `enabled (${this.cacheControl.ttl})` : "disabled"}`
+      `Initialized with ${this.model}. Cache ${this.cacheControl ? `enabled (${this.cacheControl.ttl})` : "disabled"}`,
     );
 
     AnthropicLLM.fetchModelMaxTokens(this.model).then((maxTokens) => {
@@ -82,7 +82,7 @@ class AnthropicLLM {
    * @returns {Promise<number>} The maximum output tokens limit for API calls.
    */
   static async fetchModelMaxTokens(
-    modelName = process.env.ANTHROPIC_MODEL_PREF
+    modelName = process.env.ANTHROPIC_MODEL_PREF,
   ) {
     try {
       const AnthropicAI = require("@anthropic-ai/sdk");
@@ -197,7 +197,7 @@ class AnthropicLLM {
           system: this.#buildSystemPrompt(systemContent),
           messages: messages.slice(1), // Pop off the system message
           temperature: Number(temperature ?? this.defaultTemp),
-        })
+        }),
       );
 
       const promptTokens = result.output.usage.input_tokens;
@@ -353,7 +353,7 @@ class AnthropicLLM {
     const compressedPrompt = await messageStringCompressor(
       this,
       promptArgs,
-      rawHistory
+      rawHistory,
     );
     return compressedPrompt;
   }

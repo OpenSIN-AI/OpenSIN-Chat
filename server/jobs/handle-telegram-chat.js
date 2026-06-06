@@ -33,7 +33,7 @@ process.on("message", async (payload) => {
     if (!workspace) {
       await bot.sendMessage(
         chatId,
-        "No workspace configured. Use /switch to select one."
+        "No workspace configured. Use /switch to select one.",
       );
       conclude();
       return;
@@ -58,7 +58,7 @@ process.on("message", async (payload) => {
       const bot = new TelegramBot(botToken, { polling: false });
       await bot.sendMessage(
         chatId,
-        "Sorry, something went wrong. Please try again."
+        "Sorry, something went wrong. Please try again.",
       );
     } catch {}
   } finally {

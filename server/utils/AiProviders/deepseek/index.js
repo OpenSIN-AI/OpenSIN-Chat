@@ -29,7 +29,7 @@ class DeepSeekLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.log(
-      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`
+      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`,
     );
   }
 
@@ -97,7 +97,7 @@ class DeepSeekLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `DeepSeek chat: ${this.model} is not valid for chat completion!`
+        `DeepSeek chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -109,7 +109,7 @@ class DeepSeekLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -117,7 +117,7 @@ class DeepSeekLLM {
       result?.output?.choices?.length === 0
     )
       throw new Error(
-        `Invalid response body returned from DeepSeek: ${JSON.stringify(result.output)}`
+        `Invalid response body returned from DeepSeek: ${JSON.stringify(result.output)}`,
       );
 
     return {
@@ -138,7 +138,7 @@ class DeepSeekLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `DeepSeek chat: ${this.model} is not valid for chat completion!`
+        `DeepSeek chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

@@ -37,7 +37,7 @@ module.exports.OutlookReadThread = {
           handler: async function ({ conversationId }) {
             try {
               this.super.handlerProps.log(
-                `Using the outlook-read-thread tool.`
+                `Using the outlook-read-thread tool.`,
               );
 
               if (!conversationId) {
@@ -45,14 +45,14 @@ module.exports.OutlookReadThread = {
               }
 
               this.super.introspect(
-                `${this.caller}: Reading Outlook conversation...`
+                `${this.caller}: Reading Outlook conversation...`,
               );
 
               const result = await outlookLib.readThread(conversationId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to read thread - ${result.error}`
+                  `${this.caller}: Failed to read thread - ${result.error}`,
                 );
                 return `Error reading Outlook thread: ${result.error}`;
               }
@@ -92,7 +92,7 @@ module.exports.OutlookReadThread = {
                 .join("\n\n");
 
               this.super.introspect(
-                `${this.caller}: Successfully read thread with ${thread.messageCount} messages`
+                `${this.caller}: Successfully read thread with ${thread.messageCount} messages`,
               );
 
               // Report citation for the thread (without attachments)

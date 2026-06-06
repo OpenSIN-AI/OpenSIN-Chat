@@ -26,7 +26,7 @@ class Zilliz extends Milvus {
     const { isHealthy } = await client.checkHealth();
     if (!isHealthy)
       throw new Error(
-        `${this.name}::Invalid Heartbeat received - is the instance online?`
+        `${this.name}::Invalid Heartbeat received - is the instance online?`,
       );
 
     return { client };

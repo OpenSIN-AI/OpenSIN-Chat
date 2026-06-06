@@ -146,14 +146,14 @@ module.exports.CreateDocxFile = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Creating Word document "${displayFilename}"${includeTitlePage ? " with title page" : ""}`
+                `${this.caller}: Creating Word document "${displayFilename}"${includeTitlePage ? " with title page" : ""}`,
               );
 
               const libs = await loadLibraries();
@@ -169,7 +169,7 @@ module.exports.CreateDocxFile = {
 
               const html = marked.parse(content);
               this.super.handlerProps.log(
-                `create-docx-file: Parsed markdown to HTML (${html.length} chars), theme: ${theme}, margins: ${margins}`
+                `create-docx-file: Parsed markdown to HTML (${html.length} chars), theme: ${theme}, margins: ${margins}`,
               );
 
               const logoBuffer = createFilesLib.getLogo({
@@ -181,14 +181,14 @@ module.exports.CreateDocxFile = {
                 html,
                 libs,
                 this.super.handlerProps.log,
-                themeColors
+                themeColors,
               );
 
               if (docElements.length === 0) {
                 docElements.push(
                   new Paragraph({
                     children: [new TextRun({ text: content })],
-                  })
+                  }),
                 );
               }
 
@@ -210,7 +210,7 @@ module.exports.CreateDocxFile = {
                     theme: themeColors,
                     margins: marginConfig,
                     logoBuffer,
-                  })
+                  }),
                 );
 
                 sections.push({
@@ -224,7 +224,7 @@ module.exports.CreateDocxFile = {
                     default: createRunningHeader(
                       docx,
                       documentTitle,
-                      themeColors
+                      themeColors,
                     ),
                   },
                   footers: {
@@ -257,7 +257,7 @@ module.exports.CreateDocxFile = {
               const bufferSizeKB = (buffer.length / 1024).toFixed(2);
 
               this.super.handlerProps.log(
-                `create-docx-file: Generated buffer - size: ${bufferSizeKB}KB, title: "${documentTitle}", theme: ${theme}`
+                `create-docx-file: Generated buffer - size: ${bufferSizeKB}KB, title: "${documentTitle}", theme: ${theme}`,
               );
 
               const savedFile = await createFilesLib.saveGeneratedFile({
@@ -280,7 +280,7 @@ module.exports.CreateDocxFile = {
               });
 
               this.super.introspect(
-                `${this.caller}: Successfully created Word document "${displayFilename}"`
+                `${this.caller}: Successfully created Word document "${displayFilename}"`,
               );
 
               const styleInfo = [
@@ -295,7 +295,7 @@ module.exports.CreateDocxFile = {
               return `Successfully created Word document "${displayFilename}" (${bufferSizeKB}KB)${styleDesc}. The document includes formatted content with tables, images, Page X of Y footer, and professional styling.`;
             } catch (e) {
               this.super.handlerProps.log(
-                `create-docx-file error: ${e.message}`
+                `create-docx-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating Word document: ${e.message}`;

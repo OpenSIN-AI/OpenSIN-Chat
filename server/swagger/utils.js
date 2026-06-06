@@ -11,7 +11,7 @@ function faviconUrl() {
 function useSwagger(app) {
   if (process.env.DISABLE_SWAGGER_DOCS === "true") {
     console.log(
-      `\x1b[33m[SWAGGER DISABLED]\x1b[0m Swagger documentation is disabled via DISABLE_SWAGGER_DOCS environment variable.`
+      `\x1b[33m[SWAGGER DISABLED]\x1b[0m Swagger documentation is disabled via DISABLE_SWAGGER_DOCS environment variable.`,
     );
     return;
   }
@@ -34,7 +34,7 @@ function useSwagger(app) {
         customJsStr:
           'window.SWAGGER_DOCS_ENV = "production";\n\n' +
           fs.readFileSync(path.resolve(__dirname, "index.js"), "utf8"),
-      })
+      }),
     );
   } else {
     // we regenerate the html page only in development mode to ensure it is up-to-date when the code is hot-reloaded.
@@ -47,7 +47,7 @@ function useSwagger(app) {
           customJsStr:
             'window.SWAGGER_DOCS_ENV = "development";\n\n' +
             fs.readFileSync(path.resolve(__dirname, "index.js"), "utf8"),
-        })
+        }),
       );
     });
   }

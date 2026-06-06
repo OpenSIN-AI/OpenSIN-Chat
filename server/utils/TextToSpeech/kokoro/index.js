@@ -2,7 +2,7 @@ class KokoroTTS {
   constructor() {
     if (!process.env.TTS_KOKORO_ENDPOINT)
       throw new Error(
-        "No Kokoro endpoint was set. Please set TTS_KOKORO_ENDPOINT to the base URL of your kokoro-fastapi server (e.g. http://localhost:8880/v1)."
+        "No Kokoro endpoint was set. Please set TTS_KOKORO_ENDPOINT to the base URL of your kokoro-fastapi server (e.g. http://localhost:8880/v1).",
       );
 
     const endpoint = new URL(process.env.TTS_KOKORO_ENDPOINT);
@@ -16,7 +16,7 @@ class KokoroTTS {
     this.model = "kokoro";
     this.voice = process.env.TTS_KOKORO_VOICE_MODEL ?? "af_bella";
     this.#log(
-      `Service (${process.env.TTS_KOKORO_ENDPOINT}) with voice: ${this.voice}`
+      `Service (${process.env.TTS_KOKORO_ENDPOINT}) with voice: ${this.voice}`,
     );
   }
 

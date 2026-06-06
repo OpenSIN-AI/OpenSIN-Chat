@@ -16,7 +16,7 @@ async function streamChatWithForEmbed(
   message,
   /** @type {String} */
   sessionId,
-  { promptOverride, modelOverride, temperatureOverride, username }
+  { promptOverride, modelOverride, temperatureOverride, username },
 ) {
   // Automatic mode is NOT valid for embeds, so we default to chat mode.
   let chatMode = embed.chat_mode ?? "chat";
@@ -176,14 +176,14 @@ async function streamChatWithForEmbed(
       contextTexts,
       chatHistory,
     },
-    rawHistory
+    rawHistory,
   );
 
   // If streaming is not explicitly enabled for connector
   // we do regular waiting of a response and send a single chunk.
   if (LLMConnector.streamingEnabled() !== true) {
     console.log(
-      `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`
+      `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`,
     );
     const { textResponse, metrics: performanceMetrics } =
       await LLMConnector.getChatCompletion(messages, {
@@ -260,7 +260,7 @@ async function resolveLLMConnectorForEmbed({
     const embedHistory = await recentEmbedChatHistory(
       sessionId,
       embed,
-      messageLimit
+      messageLimit,
     );
     const embedMessageCount = await EmbedChats.count({
       embed_id: embed.id,

@@ -28,7 +28,7 @@ async function grepCommand(message, user = null) {
   for (const preset of userPresets) {
     const regex = new RegExp(
       `(?:\\b\\s|^)(${preset.command})(?:\\b\\s|$)`,
-      "g"
+      "g",
     );
     updatedMessage = updatedMessage.replace(regex, preset.prompt);
   }
@@ -50,7 +50,7 @@ async function grepAllSlashCommands(message) {
   for (const preset of allPresets) {
     const regex = new RegExp(
       `(?:\\b\\s|^)(${preset.command})(?:\\b\\s|$)`,
-      "g"
+      "g",
     );
     updatedMessage = updatedMessage.replace(regex, preset.prompt);
   }
@@ -75,7 +75,7 @@ async function recentChatHistory({
         include: true,
       },
       messageLimit,
-      { id: "desc" }
+      { id: "desc" },
     )
   ).reverse();
   return { rawHistory, chatHistory: convertToPromptHistory(rawHistory) };
@@ -97,7 +97,7 @@ async function chatPrompt(workspace, user = null, opts = {}) {
   const systemPrompt = await SystemPromptVariables.expandSystemPromptVariables(
     basePrompt,
     user?.id,
-    workspace?.id
+    workspace?.id,
   );
   return promptWithMemories({
     systemPrompt,

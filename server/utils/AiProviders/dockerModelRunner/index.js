@@ -17,7 +17,7 @@ class DockerModelRunnerLLM {
   static cacheFolder = path.resolve(
     process.env.STORAGE_DIR
       ? path.resolve(process.env.STORAGE_DIR, "models", "docker-model-runner")
-      : path.resolve(__dirname, `../../../storage/models/docker-model-runner`)
+      : path.resolve(__dirname, `../../../storage/models/docker-model-runner`),
   );
 
   constructor(embedder = null, modelPreference = null) {
@@ -29,7 +29,7 @@ class DockerModelRunnerLLM {
     this.className = "DockerModelRunnerLLM";
     this.dmr = new OpenAIApi({
       baseURL: parseDockerModelRunnerEndpoint(
-        process.env.DOCKER_MODEL_RUNNER_BASE_PATH
+        process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
       ),
       apiKey: null,
     });
@@ -148,7 +148,7 @@ class DockerModelRunnerLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `Docker Model Runner chat: ${this.model} is not valid or defined model for chat completion!`
+        `Docker Model Runner chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -156,7 +156,7 @@ class DockerModelRunnerLLM {
         model: this.model,
         messages,
         temperature,
-      })
+      }),
     );
 
     if (
@@ -183,7 +183,7 @@ class DockerModelRunnerLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `Docker Model Runner chat: ${this.model} is not valid or defined model for chat completion!`
+        `Docker Model Runner chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -217,8 +217,8 @@ class DockerModelRunnerLLM {
       const endpoint = new URL(
         parseDockerModelRunnerEndpoint(
           process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
-          "dmr"
-        )
+          "dmr",
+        ),
       );
       // eg: /models/ai/qwen3:4B-UD-Q4_K_XL
       endpoint.pathname = `/models/${this.model}`;
@@ -323,11 +323,11 @@ function filterByTask(task = "chat", models = {}) {
 async function fetchRemoteModels(task = "chat") {
   const cachePath = path.resolve(
     DockerModelRunnerLLM.cacheFolder,
-    "models.json"
+    "models.json",
   );
   const cachedAtPath = path.resolve(
     DockerModelRunnerLLM.cacheFolder,
-    ".cached_at"
+    ".cached_at",
   );
   let cacheTime = 0;
 
@@ -336,7 +336,7 @@ async function fetchRemoteModels(task = "chat") {
     if (Date.now() - cacheTime < DockerModelRunnerLLM.cacheTime)
       return filterByTask(
         task,
-        safeJsonParse(fs.readFileSync(cachePath, "utf8"))
+        safeJsonParse(fs.readFileSync(cachePath, "utf8")),
       );
   }
 
@@ -355,7 +355,7 @@ async function fetchRemoteModels(task = "chat") {
               result.namespace &&
               result.name &&
               result.content_types.includes("model") &&
-              result.namespace === "ai"
+              result.namespace === "ai",
           )
           .map((result) => result.namespace + "/" + result.name);
         availableNamespaces.push(...namespaces);
@@ -363,7 +363,7 @@ async function fetchRemoteModels(task = "chat") {
       .catch((e) => {
         DockerModelRunnerLLM.slog(
           `Error fetching remote models from Docker Hub`,
-          e
+          e,
         );
         return [];
       });
@@ -380,7 +380,7 @@ async function fetchRemoteModels(task = "chat") {
   for (let i = 0; i < availableNamespaces.length; i += BATCH_SIZE) {
     const batch = availableNamespaces.slice(i, i + BATCH_SIZE);
     DockerModelRunnerLLM.slog(
-      `Fetching tags for batch ${Math.floor(i / BATCH_SIZE) + 1} of ${Math.ceil(availableNamespaces.length / BATCH_SIZE)}`
+      `Fetching tags for batch ${Math.floor(i / BATCH_SIZE) + 1} of ${Math.ceil(availableNamespaces.length / BATCH_SIZE)}`,
     );
 
     await Promise.all(
@@ -389,11 +389,11 @@ async function fetchRemoteModels(task = "chat") {
         const namespaceUrl = new URL(
           "https://hub.docker.com/v2/namespaces/ai/repositories/" +
             model +
-            "/tags"
+            "/tags",
         );
 
         DockerModelRunnerLLM.slog(
-          `Fetching tags for ${namespaceUrl.toString()}`
+          `Fetching tags for ${namespaceUrl.toString()}`,
         );
         await fetch(namespaceUrl.toString())
           .then((res) => res.json())
@@ -411,16 +411,16 @@ async function fetchRemoteModels(task = "chat") {
           .catch((e) => {
             DockerModelRunnerLLM.slog(
               `Error fetching tags for ${namespaceUrl.toString()}`,
-              e
+              e,
             );
           });
-      })
+      }),
     );
   }
 
   if (Object.keys(availableRemoteModels).length === 0) {
     DockerModelRunnerLLM.slog(
-      `No remote models found - API may be down or not available`
+      `No remote models found - API may be down or not available`,
     );
     return {};
   }
@@ -452,8 +452,8 @@ async function getDockerModels(basePath = null, task = "chat") {
     const dmrUrl = new URL(
       parseDockerModelRunnerEndpoint(
         basePath ?? process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
-        "dmr"
-      )
+        "dmr",
+      ),
     );
     dmrUrl.pathname = "/models";
 

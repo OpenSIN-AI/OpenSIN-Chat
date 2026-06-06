@@ -30,7 +30,7 @@ function workspaceParsedFilesEndpoints(app) {
           await WorkspaceParsedFiles.getContextMetadataAndLimits(
             workspace,
             thread || null,
-            multiUserMode(response) ? user : null
+            multiUserMode(response) ? user : null,
           );
 
         return response
@@ -40,7 +40,7 @@ function workspaceParsedFilesEndpoints(app) {
         console.error(e.message, e);
         return response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -64,7 +64,7 @@ function workspaceParsedFilesEndpoints(app) {
         console.error(e.message, e);
         return response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -86,7 +86,7 @@ function workspaceParsedFilesEndpoints(app) {
           await WorkspaceParsedFiles.moveToDocumentsAndEmbed(
             user,
             fileId,
-            workspace
+            workspace,
           );
 
         if (!success) {
@@ -103,7 +103,7 @@ function workspaceParsedFilesEndpoints(app) {
             documentName: document?.name || "unknown",
             workspaceId: workspace.id,
           },
-          user?.id
+          user?.id,
         );
 
         return response.status(200).json({
@@ -119,7 +119,7 @@ function workspaceParsedFilesEndpoints(app) {
         if (!fileId) return;
         await WorkspaceParsedFiles.delete({ id: parseInt(fileId) });
       }
-    }
+    },
   );
 
   app.post(
@@ -180,7 +180,7 @@ function workspaceParsedFilesEndpoints(app) {
 
             if (dbError) throw new Error(dbError);
             return file;
-          })
+          }),
         );
 
         Collector.log(`Document ${originalname} parsed successfully.`);
@@ -191,7 +191,7 @@ function workspaceParsedFilesEndpoints(app) {
             workspace: workspace.slug,
             thread: thread?.name || null,
           },
-          user?.id
+          user?.id,
         );
 
         return response.status(200).json({
@@ -203,7 +203,7 @@ function workspaceParsedFilesEndpoints(app) {
         console.error(e.message, e);
         return response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

@@ -76,14 +76,14 @@ module.exports.CreatePdfFile = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Creating PDF document "${filename}"`
+                `${this.caller}: Creating PDF document "${filename}"`,
               );
 
               const { markdownToPdf } = await import("@mintplex-labs/mdpdf");
@@ -119,13 +119,13 @@ module.exports.CreatePdfFile = {
               });
 
               this.super.introspect(
-                `${this.caller}: Successfully created PDF document "${displayFilename}"`
+                `${this.caller}: Successfully created PDF document "${displayFilename}"`,
               );
 
               return `Successfully created PDF document "${displayFilename}" (${bufferSizeKB}KB).`;
             } catch (e) {
               this.super.handlerProps.log(
-                `create-pdf-file error: ${e.message}`
+                `create-pdf-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating PDF document: ${e.message}`;

@@ -38,7 +38,7 @@ function browserExtensionEndpoints(app) {
           .status(500)
           .json({ connected: false, error: "Failed to fetch workspaces" });
       }
-    }
+    },
   );
 
   app.delete(
@@ -57,7 +57,7 @@ function browserExtensionEndpoints(app) {
           .status(500)
           .json({ error: "Failed to disconnect and revoke API key" });
       }
-    }
+    },
   );
 
   app.get(
@@ -75,7 +75,7 @@ function browserExtensionEndpoints(app) {
         console.error(error);
         response.status(500).json({ error: "Failed to fetch workspaces" });
       }
-    }
+    },
   );
 
   app.post(
@@ -97,7 +97,7 @@ function browserExtensionEndpoints(app) {
         const Collector = new CollectorApi();
         const { success, reason, documents } = await Collector.processRawText(
           textContent,
-          metadata
+          metadata,
         );
 
         if (!success) {
@@ -108,7 +108,7 @@ function browserExtensionEndpoints(app) {
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           workspace,
           [documents[0].location],
-          user?.id
+          user?.id,
         );
 
         if (failedToEmbed.length > 0) {
@@ -122,7 +122,7 @@ function browserExtensionEndpoints(app) {
         console.error(error);
         response.status(500).json({ error: "Failed to embed content" });
       }
-    }
+    },
   );
 
   app.post(
@@ -134,7 +134,7 @@ function browserExtensionEndpoints(app) {
         const Collector = new CollectorApi();
         const { success, reason } = await Collector.processRawText(
           textContent,
-          metadata
+          metadata,
         );
 
         if (!success) {
@@ -148,7 +148,7 @@ function browserExtensionEndpoints(app) {
         console.error(error);
         response.status(500).json({ error: "Failed to embed content" });
       }
-    }
+    },
   );
 
   // Internal endpoints for managing API keys
@@ -169,7 +169,7 @@ function browserExtensionEndpoints(app) {
           .status(500)
           .json({ success: false, error: "Failed to fetch API keys" });
       }
-    }
+    },
   );
 
   app.post(
@@ -179,7 +179,7 @@ function browserExtensionEndpoints(app) {
       try {
         const user = await userFromSession(request, response);
         const { apiKey, error } = await BrowserExtensionApiKey.create(
-          user?.id || null
+          user?.id || null,
         );
         if (error) throw new Error(error);
         response.status(200).json({
@@ -189,7 +189,7 @@ function browserExtensionEndpoints(app) {
         console.error(error);
         response.status(500).json({ error: "Failed to create API key" });
       }
-    }
+    },
   );
 
   app.delete(
@@ -217,7 +217,7 @@ function browserExtensionEndpoints(app) {
         console.error(error);
         response.status(500).json({ error: "Failed to revoke API key" });
       }
-    }
+    },
   );
 }
 

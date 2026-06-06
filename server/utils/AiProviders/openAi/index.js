@@ -29,7 +29,7 @@ class OpenAiLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.log(
-      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`
+      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`,
     );
   }
 
@@ -146,7 +146,7 @@ class OpenAiLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `OpenAI chat: ${this.model} is not valid for chat completion!`
+        `OpenAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -159,7 +159,7 @@ class OpenAiLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (!result.output.hasOwnProperty("output_text")) return null;
@@ -185,7 +185,7 @@ class OpenAiLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `OpenAI chat: ${this.model} is not valid for chat completion!`
+        `OpenAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

@@ -171,25 +171,25 @@ class PGVector extends VectorDatabase {
 
     if (result.rows.length === 0)
       throw new Error(
-        `The table '${tableName}' was found but does not contain any columns or cannot be accessed by role. It cannot be used as an embedding table in OpenAfD Chat.`
+        `The table '${tableName}' was found but does not contain any columns or cannot be accessed by role. It cannot be used as an embedding table in OpenAfD Chat.`,
       );
 
     for (const rowDef of expectedSchema) {
       const column = result.rows.find(
-        (c) => c.column_name === rowDef.column_name
+        (c) => c.column_name === rowDef.column_name,
       );
       if (!column)
         throw new Error(
-          `The column '${rowDef.column_name}' was expected but not found in the table '${tableName}'.`
+          `The column '${rowDef.column_name}' was expected but not found in the table '${tableName}'.`,
         );
       if (!rowDef.validation(column.data_type))
         throw new Error(
-          `Invalid data type for column: '${column.column_name}'. Got '${column.data_type}' but expected '${rowDef.expected}'`
+          `Invalid data type for column: '${column.column_name}'. Got '${column.data_type}' but expected '${rowDef.expected}'`,
         );
     }
 
     this.logger(
-      `✅ The pgvector table '${tableName}' was found and meets the minimum expected schema for an embedding table.`
+      `✅ The pgvector table '${tableName}' was found and meets the minimum expected schema for an embedding table.`,
     );
     return true;
   }
@@ -227,12 +227,12 @@ class PGVector extends VectorDatabase {
 
           if (result.rows.length !== 0 && !!tableName) {
             const tableExists = result.rows.some(
-              (row) => row.tablename === tableName
+              (row) => row.tablename === tableName,
             );
             if (tableExists)
               await instance.validateExistingEmbeddingTableSchema(
                 pgClient,
-                tableName
+                tableName,
               );
           }
           resolve({ error: null, success: true });
@@ -310,7 +310,7 @@ class PGVector extends VectorDatabase {
       const tables = await connection.query(this.getTablesSql);
       if (tables.rows.length === 0) return false;
       const tableExists = tables.rows.some(
-        (row) => row.tablename === PGVector.tableName()
+        (row) => row.tablename === PGVector.tableName(),
       );
       return !!tableExists;
     } catch {
@@ -326,7 +326,7 @@ class PGVector extends VectorDatabase {
     try {
       connection = await this.connect();
       const result = await connection.query(
-        `SELECT COUNT(id) FROM "${PGVector.tableName()}"`
+        `SELECT COUNT(id) FROM "${PGVector.tableName()}"`,
       );
       return result.rows[0].count;
     } catch {
@@ -351,7 +351,7 @@ class PGVector extends VectorDatabase {
       connection = await this.connect();
       const result = await connection.query(
         `SELECT COUNT(id) FROM "${PGVector.tableName()}" WHERE namespace = $1`,
-        [namespace]
+        [namespace],
       );
       return result.rows[0].count;
     } catch {
@@ -389,14 +389,14 @@ class PGVector extends VectorDatabase {
     const embedding = `[${queryVector.map(Number).join(",")}]`;
     const response = await client.query(
       `SELECT embedding ${this.operator.cosine} $1 AS _distance, metadata FROM "${PGVector.tableName()}" WHERE namespace = $2 ORDER BY _distance ASC LIMIT $3`,
-      [embedding, namespace, topN]
+      [embedding, namespace, topN],
     );
     response.rows.forEach((item) => {
       if (this.distanceToSimilarity(item._distance) < similarityThreshold)
         return;
       if (filterIdentifiers.includes(sourceIdentifier(item.metadata))) {
         this.logger(
-          "A source was filtered from context as it's parent document is pinned."
+          "A source was filtered from context as it's parent document is pinned.",
         );
         return;
       }
@@ -414,7 +414,7 @@ class PGVector extends VectorDatabase {
 
   normalizeVector(vector) {
     const magnitude = Math.sqrt(
-      vector.reduce((sum, val) => sum + val * val, 0)
+      vector.reduce((sum, val) => sum + val * val, 0),
     );
     if (magnitude === 0) return vector; // Avoid division by zero
     return vector.map((val) => val / magnitude);
@@ -446,7 +446,7 @@ class PGVector extends VectorDatabase {
         const sanitizedMetadata = this.sanitizeForJsonb(submission.metadata);
         await connection.query(
           `INSERT INTO "${PGVector.tableName()}" (id, namespace, embedding, metadata) VALUES ($1, $2, $3, $4)`,
-          [submission.id, namespace, embedding, sanitizedMetadata]
+          [submission.id, namespace, embedding, sanitizedMetadata],
         );
       }
       this.logger(`Committing ${submissions.length} vectors to ${namespace}`);
@@ -454,7 +454,7 @@ class PGVector extends VectorDatabase {
     } catch (err) {
       this.logger(
         `Rolling back ${submissions.length} vectors to ${namespace}`,
-        err
+        err,
       );
       await connection.query(`ROLLBACK`);
     }
@@ -484,7 +484,7 @@ class PGVector extends VectorDatabase {
     if (!namespace) throw new Error("No namespace provided");
     const result = await connection.query(
       `SELECT COUNT(id) FROM "${PGVector.tableName()}" WHERE namespace = $1`,
-      [namespace]
+      [namespace],
     );
     return { name: namespace, vectorCount: result.rows[0].count };
   }
@@ -517,7 +517,7 @@ class PGVector extends VectorDatabase {
     if (!namespace) throw new Error("No namespace provided");
     const result = await connection.query(
       `SELECT COUNT(id) FROM "${PGVector.tableName()}" WHERE namespace = $1 LIMIT 1`,
-      [namespace]
+      [namespace],
     );
     return result.rows[0].count > 0;
   }
@@ -532,7 +532,7 @@ class PGVector extends VectorDatabase {
     if (!namespace) throw new Error("No namespace provided");
     await connection.query(
       `DELETE FROM "${PGVector.tableName()}" WHERE namespace = $1`,
-      [namespace]
+      [namespace],
     );
     return true;
   }
@@ -541,7 +541,7 @@ class PGVector extends VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     const { DocumentVectors } = require("../../../models/vectors");
     const {
@@ -594,11 +594,11 @@ class PGVector extends VectorDatabase {
           await SystemSettings.getValueOrFallback({
             label: "text_splitter_chunk_size",
           }),
-          EmbedderEngine?.embeddingMaxChunkLength
+          EmbedderEngine?.embeddingMaxChunkLength,
         ),
         chunkOverlap: await SystemSettings.getValueOrFallback(
           { label: "text_splitter_chunk_overlap" },
-          20
+          20,
         ),
         chunkHeaderMeta: TextSplitter.buildHeaderMeta(metadata),
         chunkPrefix: EmbedderEngine?.embeddingPrefix,
@@ -631,7 +631,7 @@ class PGVector extends VectorDatabase {
         }
       } else {
         throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
+          "Could not embed document chunks! This document will not be recorded.",
         );
       }
 
@@ -675,12 +675,12 @@ class PGVector extends VectorDatabase {
       const exists = await this.namespaceExists(connection, namespace);
       if (!exists)
         throw new Error(
-          `PGVector:deleteDocumentFromNamespace - namespace ${namespace} does not exist.`
+          `PGVector:deleteDocumentFromNamespace - namespace ${namespace} does not exist.`,
         );
 
       const { DocumentVectors } = require("../../../models/vectors");
       const vectorIds = (await DocumentVectors.where({ docId })).map(
-        (record) => record.vectorId
+        (record) => record.vectorId,
       );
       if (vectorIds.length === 0) return;
 
@@ -689,7 +689,7 @@ class PGVector extends VectorDatabase {
         for (const vectorId of vectorIds)
           await connection.query(
             `DELETE FROM "${PGVector.tableName()}" WHERE id = $1`,
-            [vectorId]
+            [vectorId],
           );
         await connection.query(`COMMIT`);
       } catch (err) {
@@ -698,12 +698,12 @@ class PGVector extends VectorDatabase {
       }
 
       this.logger(
-        `Deleted ${vectorIds.length} vectors from namespace ${namespace}`
+        `Deleted ${vectorIds.length} vectors from namespace ${namespace}`,
       );
       return true;
     } catch (err) {
       this.logger(
-        `Error deleting document from namespace ${namespace}: ${err.message}`
+        `Error deleting document from namespace ${namespace}: ${err.message}`,
       );
       return false;
     } finally {
@@ -728,7 +728,7 @@ class PGVector extends VectorDatabase {
       const exists = await this.namespaceExists(connection, namespace);
       if (!exists) {
         this.logger(
-          `The namespace ${namespace} does not exist or has no vectors. Returning empty results.`
+          `The namespace ${namespace} does not exist or has no vectors. Returning empty results.`,
         );
         return {
           contextTexts: [],

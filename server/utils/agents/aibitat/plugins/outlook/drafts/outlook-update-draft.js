@@ -67,7 +67,7 @@ module.exports.OutlookUpdateDraft = {
           handler: async function ({ draftId, to, subject, body, cc, isHtml }) {
             try {
               this.super.handlerProps.log(
-                `Using the outlook-update-draft tool.`
+                `Using the outlook-update-draft tool.`,
               );
 
               if (!draftId) {
@@ -86,14 +86,14 @@ module.exports.OutlookUpdateDraft = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Updating draft ${draftId}...`
+                `${this.caller}: Updating draft ${draftId}...`,
               );
 
               const updates = { isHtml };
@@ -106,13 +106,13 @@ module.exports.OutlookUpdateDraft = {
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to update draft - ${result.error}`
+                  `${this.caller}: Failed to update draft - ${result.error}`,
                 );
                 return `Error updating draft: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully updated draft`
+                `${this.caller}: Successfully updated draft`,
               );
 
               return (

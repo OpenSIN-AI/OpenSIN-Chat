@@ -89,7 +89,7 @@ class PerplexityLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `Perplexity chat: ${this.model} is not valid for chat completion!`
+        `Perplexity chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -101,7 +101,7 @@ class PerplexityLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -128,7 +128,7 @@ class PerplexityLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `Perplexity chat: ${this.model} is not valid for chat completion!`
+        `Perplexity chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -188,7 +188,7 @@ class PerplexityLLM {
         const diffMs = now - lastChunkTime;
         if (diffMs >= timeoutThresholdMs) {
           console.log(
-            `Perplexity stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`
+            `Perplexity stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {
             uuid,

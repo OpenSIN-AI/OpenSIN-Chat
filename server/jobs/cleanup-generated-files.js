@@ -49,7 +49,7 @@ const { safeJsonParse } = require("../utils/http/index.js");
     }
 
     log(
-      `Cleanup complete: deleted ${deletedCount} items, ${failedCount} failures.`
+      `Cleanup complete: deleted ${deletedCount} items, ${failedCount} failures.`,
     );
   } catch (error) {
     console.error(error);
@@ -86,7 +86,7 @@ async function workspaceChatGeneratedFilenames(batchSize = 50) {
         { include: true },
         batchSize,
         { id: "asc" },
-        offset
+        offset,
       );
 
       if (chats.length === 0) {
@@ -129,7 +129,7 @@ async function scheduledJobRunGeneratedFilenames(batchSize = 50) {
         batchSize,
         { id: "asc" },
         {},
-        offset
+        offset,
       );
 
       if (runs.length === 0) {

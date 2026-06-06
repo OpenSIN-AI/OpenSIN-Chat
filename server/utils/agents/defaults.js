@@ -64,7 +64,7 @@ const WORKSPACE_AGENT = {
     provider = null,
     workspace = null,
     user = null,
-    prompt = ""
+    prompt = "",
   ) => {
     let [role, clarifyingQuestionsSkills] = await Promise.all([
       Provider.systemPrompt({
@@ -105,7 +105,7 @@ async function clarifyingQuestionsSkillIfEnabled() {
   const enabled =
     (await SystemSettings.getValueOrFallback(
       { label: "agent_clarifying_questions_enabled" },
-      "false"
+      "false",
     )) === "true";
   if (!enabled) return [];
 
@@ -127,9 +127,9 @@ async function agentSkillsFromSystemSettings() {
   const _disabledDefaultSkills = safeJsonParse(
     await SystemSettings.getValueOrFallback(
       { label: "disabled_agent_skills" },
-      "[]"
+      "[]",
     ),
-    []
+    [],
   );
   DEFAULT_SKILLS.forEach((skill) => {
     if (!_disabledDefaultSkills.includes(skill))
@@ -140,9 +140,9 @@ async function agentSkillsFromSystemSettings() {
   const _setting = safeJsonParse(
     await SystemSettings.getValueOrFallback(
       { label: "default_agent_skills" },
-      "[]"
+      "[]",
     ),
-    []
+    [],
   );
 
   // Pre-load disabled sub-skills and availability for configured skills
@@ -155,9 +155,9 @@ async function agentSkillsFromSystemSettings() {
       disabledSubSkills: safeJsonParse(
         await SystemSettings.getValueOrFallback(
           { label: config.disabledSettingKey },
-          "[]"
+          "[]",
         ),
-        []
+        [],
       ),
     };
   }
@@ -177,7 +177,7 @@ async function agentSkillsFromSystemSettings() {
         }
 
         systemFunctions.push(
-          `${AgentPlugins[skillName].name}#${subPlugin.name}`
+          `${AgentPlugins[skillName].name}#${subPlugin.name}`,
         );
       }
       continue;

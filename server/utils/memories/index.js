@@ -88,7 +88,7 @@ async function rerankMemories(memories, prompt, rawHistory) {
   } catch (error) {
     console.error(
       "[Memory Injection] Reranker failed, falling back to recent:",
-      error.message
+      error.message,
     );
     return memories.slice(0, Memory.MAX_INJECTED_WORKSPACE_LIMIT);
   }
@@ -129,7 +129,7 @@ async function promptWithMemories({
     userId,
     workspaceId,
     prompt,
-    rawHistory
+    rawHistory,
   );
   return memoriesContext
     ? `${systemPrompt}\n\n${memoriesContext}`

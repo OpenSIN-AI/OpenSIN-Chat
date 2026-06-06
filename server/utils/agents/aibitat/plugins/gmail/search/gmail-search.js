@@ -79,21 +79,21 @@ module.exports.GmailSearch = {
             try {
               this.super.handlerProps.log(`Using the gmail-search tool.`);
               this.super.introspect(
-                `${this.caller}: Searching Gmail with query "${query}"`
+                `${this.caller}: Searching Gmail with query "${query}"`,
               );
 
               const result = await gmailLib.search(query, limit, start);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Gmail search failed - ${result.error}`
+                  `${this.caller}: Gmail search failed - ${result.error}`,
                 );
                 return `Error searching Gmail: ${result.error}`;
               }
 
               const { threads, resultCount } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${resultCount} email threads matching query`
+                `${this.caller}: Found ${resultCount} email threads matching query`,
               );
 
               if (resultCount === 0) {
@@ -103,7 +103,7 @@ module.exports.GmailSearch = {
               const summary = threads
                 .map(
                   (t, i) =>
-                    `${i + 1}. [${t.isUnread ? "UNREAD" : "READ"}] "${t.subject}" (ID: ${t.id}, ${t.messageCount} messages, Last: ${new Date(t.lastMessageDate).toLocaleString()})`
+                    `${i + 1}. [${t.isUnread ? "UNREAD" : "READ"}] "${t.subject}" (ID: ${t.id}, ${t.messageCount} messages, Last: ${new Date(t.lastMessageDate).toLocaleString()})`,
                 )
                 .join("\n");
 

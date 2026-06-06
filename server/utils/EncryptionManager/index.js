@@ -28,7 +28,7 @@ class EncryptionManager {
   #loadOrCreateKeySalt(_key = null, _salt = null) {
     if (!!_key && !!_salt) {
       this.log(
-        "Pre-assigned key & salt for encrypting arbitrary data was used."
+        "Pre-assigned key & salt for encrypting arbitrary data was used.",
       );
       this.#encryptionKey = _key;
       this.#encryptionSalt = _salt;
@@ -72,7 +72,7 @@ class EncryptionManager {
       const decipher = crypto.createDecipheriv(
         this.algorithm,
         this.key,
-        Buffer.from(iv, "hex")
+        Buffer.from(iv, "hex"),
       );
       return decipher.update(encrypted, "hex", "utf8") + decipher.final("utf8");
     } catch (e) {

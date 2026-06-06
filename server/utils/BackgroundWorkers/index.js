@@ -109,7 +109,7 @@ class BackgroundService {
     const orphanedCount = await ScheduledJobRun.failOrphanedRuns();
     if (orphanedCount > 0) {
       this.#log(
-        `Marked ${orphanedCount} orphaned scheduled job run(s) as failed`
+        `Marked ${orphanedCount} orphaned scheduled job run(s) as failed`,
       );
     }
 
@@ -130,7 +130,7 @@ class BackgroundService {
     this.bree.start();
     this.#log(
       `Service started with ${jobsToRun.length} jobs`,
-      jobsToRun.map((j) => j.name)
+      jobsToRun.map((j) => j.name),
     );
 
     await this.#bootScheduledJobs();
@@ -174,7 +174,7 @@ class BackgroundService {
 
     const jobName = this.#memoryJobs[0].name;
     const isCurrentlyRunning = this.bree.config.jobs.some(
-      (j) => j.name === jobName
+      (j) => j.name === jobName,
     );
 
     if (enabled && !isCurrentlyRunning) {
@@ -277,7 +277,7 @@ class BackgroundService {
     if (enabledJobs.length > 0) {
       this.#log(
         `Registered ${enabledJobs.length} scheduled job(s) (max concurrent: ${this.#scheduledJobQueue.concurrency})`,
-        enabledJobs.map((j) => `${j.name} (${j.schedule})`)
+        enabledJobs.map((j) => `${j.name} (${j.schedule})`),
       );
     }
   }
@@ -381,7 +381,7 @@ class BackgroundService {
       this.#runScheduledJobWorker(jobId, run.id).catch(async (err) => {
         this.#log(`Scheduled job ${jobId} failed: ${err.message}`);
         await ScheduledJobRun.failIfNotTerminal(run.id, err.message);
-      })
+      }),
     );
     return run;
   }

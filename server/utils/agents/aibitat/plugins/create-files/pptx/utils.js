@@ -153,7 +153,7 @@ function renderSectionSlide(
   slideData,
   theme,
   slideNumber,
-  totalSlides
+  totalSlides,
 ) {
   slide.background = { color: theme.titleSlideBackground };
 
@@ -211,7 +211,7 @@ function renderContentSlide(
   slideData,
   theme,
   slideNumber,
-  totalSlides
+  totalSlides,
 ) {
   slide.background = { color: theme.background };
 
@@ -251,7 +251,7 @@ function renderContentSlide(
       pptx,
       MARGIN_X,
       contentStartY + 0.05,
-      theme.accentColor
+      theme.accentColor,
     );
     contentStartY += 0.25;
   }
@@ -267,7 +267,7 @@ function renderContentSlide(
       slideData.content,
       theme,
       contentStartY,
-      contentHeight
+      contentHeight,
     );
   }
 
@@ -325,7 +325,7 @@ function addTableContent(slide, pptx, tableData, theme, startY) {
           valign: "middle",
           margin: [4, 8, 4, 8],
         },
-      }))
+      })),
     );
   }
 
@@ -345,7 +345,7 @@ function addTableContent(slide, pptx, tableData, theme, startY) {
             valign: "middle",
             margin: [4, 8, 4, 8],
           },
-        }))
+        })),
       );
     });
   }

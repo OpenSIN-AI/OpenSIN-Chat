@@ -18,7 +18,7 @@ const fileUploadStorage = multer.diskStorage({
   },
   filename: function (_, file, cb) {
     file.originalname = sanitizeFileName(
-      normalizePath(Buffer.from(file.originalname, "latin1").toString("utf8"))
+      normalizePath(Buffer.from(file.originalname, "latin1").toString("utf8")),
     );
     cb(null, file.originalname);
   },
@@ -38,7 +38,7 @@ const fileAPIUploadStorage = multer.diskStorage({
   },
   filename: function (_, file, cb) {
     file.originalname = sanitizeFileName(
-      normalizePath(Buffer.from(file.originalname, "latin1").toString("utf8"))
+      normalizePath(Buffer.from(file.originalname, "latin1").toString("utf8")),
     );
     cb(null, file.originalname);
   },
@@ -56,7 +56,7 @@ const assetUploadStorage = multer.diskStorage({
   },
   filename: function (_, file, cb) {
     file.originalname = sanitizeFileName(
-      normalizePath(Buffer.from(file.originalname, "latin1").toString("utf8"))
+      normalizePath(Buffer.from(file.originalname, "latin1").toString("utf8")),
     );
     cb(null, file.originalname);
   },
@@ -76,7 +76,7 @@ const pfpUploadStorage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const randomFileName = `${v4()}${path.extname(
-      normalizePath(file.originalname)
+      normalizePath(file.originalname),
     )}`;
     req.randomFileName = randomFileName;
     cb(null, randomFileName);

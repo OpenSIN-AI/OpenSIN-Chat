@@ -90,7 +90,7 @@ const AgentSkillWhitelist = {
     } catch (error) {
       console.error(
         "AgentSkillWhitelist.clearSingleUserWhitelist error:",
-        error.message
+        error.message,
       );
       return { success: false, error: error.message };
     }

@@ -108,7 +108,7 @@ class EphemeralAgentHandler extends AgentHandler {
             include: true,
           },
           limit,
-          { id: "desc" }
+          { id: "desc" },
         )
       ).reverse();
 
@@ -126,7 +126,7 @@ class EphemeralAgentHandler extends AgentHandler {
             to: USER_AGENT.name,
             content: safeJsonParse(chatLog.response)?.text || "",
             state: "success",
-          }
+          },
         );
       });
       return agentHistory;
@@ -248,7 +248,7 @@ class EphemeralAgentHandler extends AgentHandler {
         conversationMessageCount: ctx.conversationMessageCount,
         attachments: this.#attachments || [],
       },
-      { user, thread: this.#threadId ? { id: this.#threadId } : null }
+      { user, thread: this.#threadId ? { id: this.#threadId } : null },
     );
 
     this.provider = router.resolvedRoute.provider;
@@ -263,17 +263,17 @@ class EphemeralAgentHandler extends AgentHandler {
         const [parent, childPluginName] = name.split("#");
         if (!AgentPlugins.hasOwnProperty(parent)) {
           this.log(
-            `${parent} is not a valid plugin. Skipping inclusion to agent cluster.`
+            `${parent} is not a valid plugin. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
 
         const childPlugin = AgentPlugins[parent].plugin.find(
-          (child) => child.name === childPluginName
+          (child) => child.name === childPluginName,
         );
         if (!childPlugin) {
           this.log(
-            `${parent} does not have child plugin named ${childPluginName}. Skipping inclusion to agent cluster.`
+            `${parent} does not have child plugin named ${childPluginName}. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
@@ -281,11 +281,11 @@ class EphemeralAgentHandler extends AgentHandler {
         const callOpts = this.parseCallOptions(
           args,
           childPlugin?.startupConfig?.params,
-          name
+          name,
         );
         this.aibitat.use(childPlugin.plugin(callOpts));
         this.log(
-          `Attached ${parent}:${childPluginName} plugin to Agent cluster`
+          `Attached ${parent}:${childPluginName} plugin to Agent cluster`,
         );
         continue;
       }
@@ -298,7 +298,7 @@ class EphemeralAgentHandler extends AgentHandler {
         const plugin = AgentFlows.loadFlowPlugin(uuid, this.aibitat);
         if (!plugin) {
           this.log(
-            `Flow ${uuid} not found in flows directory. Skipping inclusion to agent cluster.`
+            `Flow ${uuid} not found in flows directory. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
@@ -310,7 +310,7 @@ class EphemeralAgentHandler extends AgentHandler {
 
         this.aibitat.use(plugin.plugin());
         this.log(
-          `Attached flow ${plugin.name} (${plugin.flowName}) plugin to Agent cluster`
+          `Attached flow ${plugin.name} (${plugin.flowName}) plugin to Agent cluster`,
         );
         continue;
       }
@@ -326,11 +326,11 @@ class EphemeralAgentHandler extends AgentHandler {
         const plugins =
           await new MCPCompatibilityLayer().convertServerToolsToPlugins(
             mcpPluginName,
-            this.aibitat
+            this.aibitat,
           );
         if (!plugins) {
           this.log(
-            `MCP ${mcpPluginName} not found in MCP server config. Skipping inclusion to agent cluster.`
+            `MCP ${mcpPluginName} not found in MCP server config. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
@@ -346,7 +346,7 @@ class EphemeralAgentHandler extends AgentHandler {
         plugins.forEach((plugin) => {
           this.aibitat.use(plugin.plugin());
           this.log(
-            `Attached MCP::${plugin.toolName} MCP tool to Agent cluster`
+            `Attached MCP::${plugin.toolName} MCP tool to Agent cluster`,
           );
         });
         continue;
@@ -359,7 +359,7 @@ class EphemeralAgentHandler extends AgentHandler {
         const valid = ImportedPlugin.validateImportedPluginHandler(hubId);
         if (!valid) {
           this.log(
-            `Imported plugin by hubId ${hubId} not found in plugin directory. Skipping inclusion to agent cluster.`
+            `Imported plugin by hubId ${hubId} not found in plugin directory. Skipping inclusion to agent cluster.`,
           );
           continue;
         }
@@ -368,7 +368,7 @@ class EphemeralAgentHandler extends AgentHandler {
         const callOpts = plugin.parseCallOptions();
         this.aibitat.use(plugin.plugin(callOpts));
         this.log(
-          `Attached ${plugin.name} (${hubId}) imported plugin to Agent cluster`
+          `Attached ${plugin.name} (${hubId}) imported plugin to Agent cluster`,
         );
         continue;
       }
@@ -376,14 +376,14 @@ class EphemeralAgentHandler extends AgentHandler {
       // Load single-stage plugin.
       if (!AgentPlugins.hasOwnProperty(name)) {
         this.log(
-          `${name} is not a valid plugin. Skipping inclusion to agent cluster.`
+          `${name} is not a valid plugin. Skipping inclusion to agent cluster.`,
         );
         continue;
       }
 
       const callOpts = this.parseCallOptions(
         args,
-        AgentPlugins[name].startupConfig.params
+        AgentPlugins[name].startupConfig.params,
       );
       const AIbitatPlugin = AgentPlugins[name];
       this.aibitat.use(AIbitatPlugin.plugin(callOpts));
@@ -405,8 +405,8 @@ class EphemeralAgentHandler extends AgentHandler {
         this.provider,
         this.#workspace,
         user,
-        this.#prompt
-      )
+        this.#prompt,
+      ),
     );
 
     this.#funcsToLoad = [
@@ -456,11 +456,11 @@ class EphemeralAgentHandler extends AgentHandler {
 
         if (parsedFiles?.length > 0)
           this.log(
-            `Injecting ${parsedFiles.length} parsed file(s) into user message`
+            `Injecting ${parsedFiles.length} parsed file(s) into user message`,
           );
         if (pinnedDocs?.length > 0)
           this.log(
-            `Injecting ${pinnedDocs.length} pinned document(s) into user message`
+            `Injecting ${pinnedDocs.length} pinned document(s) into user message`,
           );
 
         return (
@@ -501,7 +501,7 @@ class EphemeralAgentHandler extends AgentHandler {
       handler: null,
       telegramChatId: null,
       toolOverrides: null,
-    }
+    },
   ) {
     this.aibitat = new AIbitat({
       provider: this.provider ?? "openai",
@@ -533,7 +533,7 @@ class EphemeralAgentHandler extends AgentHandler {
         } catch (e) {
           this.log(
             "Router re-resolution failed, keeping current route",
-            e.message
+            e.message,
           );
           return null;
         }
@@ -549,7 +549,7 @@ class EphemeralAgentHandler extends AgentHandler {
         muteUserReply: true,
         introspection: true,
         telegramChatId: args.telegramChatId,
-      })
+      }),
     );
 
     // Load required agents (Default + custom)

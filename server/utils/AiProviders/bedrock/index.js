@@ -94,13 +94,13 @@ class AWSBedrockLLM {
 
     this.bedrockClient = createBedrockRuntimeClient(
       this.authMethod,
-      this.credentials
+      this.credentials,
     );
 
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.#log(
-      `Initialized with model: ${this.model}. Auth: ${this.authMethod}. Context Window: ${contextWindowLimit}.`
+      `Initialized with model: ${this.model}. Auth: ${this.authMethod}. Context Window: ${contextWindowLimit}.`,
     );
   }
 
@@ -194,7 +194,7 @@ class AWSBedrockLLM {
     const numericLimit = Number(limit);
     if (isNaN(numericLimit) || numericLimit <= 0) {
       this.#slog(
-        `[AWSBedrock ERROR] Invalid AWS_BEDROCK_LLM_MODEL_TOKEN_LIMIT found: "${limit}". Must be a positive number - returning default ${DEFAULT_CONTEXT_WINDOW_TOKENS}.`
+        `[AWSBedrock ERROR] Invalid AWS_BEDROCK_LLM_MODEL_TOKEN_LIMIT found: "${limit}". Must be a positive number - returning default ${DEFAULT_CONTEXT_WINDOW_TOKENS}.`,
       );
       return DEFAULT_CONTEXT_WINDOW_TOKENS;
     }
@@ -219,7 +219,7 @@ class AWSBedrockLLM {
     const outputLimitSource = process.env.AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS;
     if (isNaN(Number(outputLimitSource))) {
       this.#log(
-        `[AWSBedrock ERROR] Invalid AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS found: "${outputLimitSource}". Must be a positive number - returning default ${DEFAULT_MAX_OUTPUT_TOKENS}.`
+        `[AWSBedrock ERROR] Invalid AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS found: "${outputLimitSource}". Must be a positive number - returning default ${DEFAULT_MAX_OUTPUT_TOKENS}.`,
       );
       return DEFAULT_MAX_OUTPUT_TOKENS;
     }
@@ -227,7 +227,7 @@ class AWSBedrockLLM {
     const numericOutputLimit = Number(outputLimitSource);
     if (numericOutputLimit <= 0) {
       this.#log(
-        `[AWSBedrock ERROR] Invalid AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS found: "${outputLimitSource}". Must be a greater than 0 - returning default ${DEFAULT_MAX_OUTPUT_TOKENS}.`
+        `[AWSBedrock ERROR] Invalid AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS found: "${outputLimitSource}". Must be a greater than 0 - returning default ${DEFAULT_MAX_OUTPUT_TOKENS}.`,
       );
       return DEFAULT_MAX_OUTPUT_TOKENS;
     }
@@ -262,7 +262,7 @@ class AWSBedrockLLM {
       // Strip data URI prefix (e.g., "data:image/png;base64,")
       const base64Data = attachment.contentString.replace(
         /^data:image\/\w+;base64,/,
-        ""
+        "",
       );
 
       const format = getImageFormatFromMime(attachment.mime);
@@ -274,7 +274,7 @@ class AWSBedrockLLM {
 
       if (!attachmentInfo.valid) {
         this.#log(
-          `Skipping attachment with unsupported/invalid MIME type: ${attachment.mime}`
+          `Skipping attachment with unsupported/invalid MIME type: ${attachment.mime}`,
         );
         continue;
       }
@@ -337,7 +337,7 @@ class AWSBedrockLLM {
     if (this.noSystemPromptModels.includes(this.model)) {
       if (systemMessageContent.trim().length > 0) {
         this.#log(
-          `Model ${this.model} doesn't support system prompts; simulating.`
+          `Model ${this.model} doesn't support system prompts; simulating.`,
         );
         messages.push(
           {
@@ -346,7 +346,7 @@ class AWSBedrockLLM {
               userPrompt: systemMessageContent,
             }),
           },
-          { role: "assistant", content: [{ text: "Okay." }] }
+          { role: "assistant", content: [{ text: "Okay." }] },
         );
       }
     } else if (systemMessageContent.trim().length > 0) {
@@ -364,7 +364,7 @@ class AWSBedrockLLM {
           userPrompt: msg.content,
           attachments: Array.isArray(msg.attachments) ? msg.attachments : [],
         }),
-      }))
+      })),
     );
 
     // Add final user prompt
@@ -394,7 +394,7 @@ class AWSBedrockLLM {
 
     // Find the reasoning block and grab the reasoning text
     const reasoningBlock = content.find(
-      (block) => block.reasoningContent?.reasoningText?.text
+      (block) => block.reasoningContent?.reasoningText?.text,
     );
     if (reasoningBlock) {
       const reasoningText =
@@ -416,7 +416,7 @@ class AWSBedrockLLM {
   async getChatCompletion(messages = null, { temperature }) {
     if (!messages?.length)
       throw new Error(
-        "AWSBedrock::getChatCompletion requires a non-empty messages array."
+        "AWSBedrock::getChatCompletion requires a non-empty messages array.",
       );
 
     const hasSystem = messages[0]?.role === "system";
@@ -435,26 +435,26 @@ class AWSBedrockLLM {
               ...this.temperatureConfig(temperature),
             },
             system: systemBlock,
-          })
+          }),
         )
         .catch((e) => {
           this.#log(
             `Bedrock Converse API Error (getChatCompletion): ${e.message}`,
-            e
+            e,
           );
           AWSBedrockLLM.errorToHumanReadable(e, {
             model: this.model,
             maxTokens: maxTokensToSend,
             method: "getChatCompletion",
           });
-        })
+        }),
     );
 
     const response = result.output;
     if (!response?.output?.message) {
       this.#log(
         "Bedrock response missing expected output.message structure.",
-        response
+        response,
       );
       return null;
     }
@@ -490,7 +490,7 @@ class AWSBedrockLLM {
   async streamGetChatCompletion(messages = null, { temperature }) {
     if (!Array.isArray(messages) || messages.length === 0) {
       throw new Error(
-        "AWSBedrock::streamGetChatCompletion requires a non-empty messages array."
+        "AWSBedrock::streamGetChatCompletion requires a non-empty messages array.",
       );
     }
 
@@ -510,7 +510,7 @@ class AWSBedrockLLM {
             ...this.temperatureConfig(temperature),
           },
           system: systemBlock,
-        })
+        }),
       );
 
       // If successful, wrap the stream with performance monitoring
@@ -526,7 +526,7 @@ class AWSBedrockLLM {
       // Catch errors during the initial .send() call (e.g., validation errors)
       this.#log(
         `Bedrock Converse API Error (streamGetChatCompletion setup): ${e.message}`,
-        e
+        e,
       );
       AWSBedrockLLM.errorToHumanReadable(e, {
         model: this.model,
@@ -717,7 +717,7 @@ class AWSBedrockLLM {
         // Handle errors during stream processing
         this.#log(
           `\x1b[43m\x1b[34m[STREAMING ERROR]\x1b[0m ${error.message}`,
-          error
+          error,
         );
         if (response && !response.writableEnded) {
           writeResponseChunk(response, {
@@ -755,14 +755,14 @@ class AWSBedrockLLM {
 
   static errorToHumanReadable(
     error,
-    options = { method: "chat", model: "unknown", maxTokens: "unknown" }
+    options = { method: "chat", model: "unknown", maxTokens: "unknown" },
   ) {
     if (
       error.name === "ValidationException" &&
       error.message.includes("maximum tokens")
     ) {
       throw new Error(
-        `AWSBedrock::${options.method} failed during setup. Model ${options.model} rejected maxTokens value of ${options.maxTokens}. Check model documentation for its maximum output token limit and set AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS if needed. Original error: ${error.message}`
+        `AWSBedrock::${options.method} failed during setup. Model ${options.model} rejected maxTokens value of ${options.maxTokens}. Check model documentation for its maximum output token limit and set AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS if needed. Original error: ${error.message}`,
       );
     }
 
@@ -771,13 +771,13 @@ class AWSBedrockLLM {
       error.message.includes("Could not load credentials from any providers")
     ) {
       throw new Error(
-        `AWSBedrock::${options.method} authentication failed. AWS Bedrock requires a discoverable IAM credentials to be available in the environment (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) or by resolving credentials from ~/.aws/credentials or ~/.aws/config files. Original error: ${error.message}`
+        `AWSBedrock::${options.method} authentication failed. AWS Bedrock requires a discoverable IAM credentials to be available in the environment (AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY) or by resolving credentials from ~/.aws/credentials or ~/.aws/config files. Original error: ${error.message}`,
       );
     }
 
     // Generic error
     throw new Error(
-      `AWSBedrock::${options.method} failed during setup. ${error.message}`
+      `AWSBedrock::${options.method} failed during setup. ${error.message}`,
     );
   }
 }

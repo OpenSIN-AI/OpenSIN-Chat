@@ -32,24 +32,24 @@ module.exports.GCalListCalendars = {
           handler: async function () {
             try {
               this.super.handlerProps.log(
-                `Using the gcal-list-calendars tool.`
+                `Using the gcal-list-calendars tool.`,
               );
               this.super.introspect(
-                `${this.caller}: Fetching list of Google Calendars...`
+                `${this.caller}: Fetching list of Google Calendars...`,
               );
 
               const result = await googleCalendarLib.listCalendars();
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to list calendars - ${result.error}`
+                  `${this.caller}: Failed to list calendars - ${result.error}`,
                 );
                 return `Error listing calendars: ${result.error}`;
               }
 
               const { totalCalendars, calendars } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${totalCalendars} calendar(s)`
+                `${this.caller}: Found ${totalCalendars} calendar(s)`,
               );
 
               if (totalCalendars === 0) {
@@ -62,14 +62,14 @@ module.exports.GCalListCalendars = {
                     `${i + 1}. "${cal.name}"${cal.isPrimary ? " (Primary)" : ""}\n` +
                     `   ID: ${cal.calendarId}\n` +
                     `   Time Zone: ${cal.timeZone}\n` +
-                    `   Owned by me: ${cal.isOwnedByMe ? "Yes" : "No"}`
+                    `   Owned by me: ${cal.isOwnedByMe ? "Yes" : "No"}`,
                 )
                 .join("\n\n");
 
               return `Found ${totalCalendars} calendar(s):\n\n${summary}`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gcal-list-calendars error: ${e.message}`
+                `gcal-list-calendars error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error listing calendars: ${e.message}`;

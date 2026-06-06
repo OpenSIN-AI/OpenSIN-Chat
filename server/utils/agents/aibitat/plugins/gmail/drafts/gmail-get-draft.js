@@ -41,21 +41,21 @@ module.exports.GmailGetDraft = {
               }
 
               this.super.introspect(
-                `${this.caller}: Retrieving Gmail draft ${draftId}`
+                `${this.caller}: Retrieving Gmail draft ${draftId}`,
               );
 
               const result = await gmailLib.getDraft(draftId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get draft - ${result.error}`
+                  `${this.caller}: Failed to get draft - ${result.error}`,
                 );
                 return `Error retrieving Gmail draft: ${result.error}`;
               }
 
               const draft = result.data;
               this.super.introspect(
-                `${this.caller}: Successfully retrieved draft (ID: ${draft.draftId})`
+                `${this.caller}: Successfully retrieved draft (ID: ${draft.draftId})`,
               );
 
               return (
@@ -71,7 +71,7 @@ module.exports.GmailGetDraft = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-get-draft error: ${e.message}`
+                `gmail-get-draft error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error retrieving Gmail draft: ${e.message}`;

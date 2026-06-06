@@ -140,7 +140,7 @@ function apiDocumentEndpoints(app) {
 
         const { success, reason, documents } = await Collector.processDocument(
           originalname,
-          metadata
+          metadata,
         );
 
         if (!success) {
@@ -151,7 +151,7 @@ function apiDocumentEndpoints(app) {
         }
 
         Collector.log(
-          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`
+          `Document ${originalname} uploaded processed and successfully. It is now available in documents.`,
         );
         await Telemetry.sendTelemetry("document_uploaded");
         await EventLogs.logEvent("api_document_uploaded", {
@@ -161,14 +161,14 @@ function apiDocumentEndpoints(app) {
         if (!!addToWorkspaces)
           await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -294,7 +294,7 @@ function apiDocumentEndpoints(app) {
         // Process the uploaded document with metadata
         const { success, reason, documents } = await Collector.processDocument(
           originalname,
-          metadata
+          metadata,
         );
         if (!success) {
           return response
@@ -310,11 +310,11 @@ function apiDocumentEndpoints(app) {
           if (currentFolder !== folder) {
             const sourcePath = path.join(
               documentsPath,
-              normalizePath(doc.location)
+              normalizePath(doc.location),
             );
             const destinationPath = path.join(
               targetFolderPath,
-              path.basename(doc.location)
+              path.basename(doc.location),
             );
 
             if (
@@ -330,7 +330,7 @@ function apiDocumentEndpoints(app) {
         }
 
         Collector.log(
-          `Document ${originalname} uploaded, processed, and moved to folder ${folder} successfully.`
+          `Document ${originalname} uploaded, processed, and moved to folder ${folder} successfully.`,
         );
 
         await Telemetry.sendTelemetry("document_uploaded");
@@ -342,14 +342,14 @@ function apiDocumentEndpoints(app) {
         if (!!addToWorkspaces)
           await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -446,7 +446,7 @@ function apiDocumentEndpoints(app) {
         const { success, reason, documents } = await Collector.processLink(
           link,
           scraperHeaders,
-          metadata
+          metadata,
         );
         if (!success) {
           return response
@@ -456,7 +456,7 @@ function apiDocumentEndpoints(app) {
         }
 
         Collector.log(
-          `Link ${link} uploaded processed and successfully. It is now available in documents.`
+          `Link ${link} uploaded processed and successfully. It is now available in documents.`,
         );
         await Telemetry.sendTelemetry("link_uploaded");
         await EventLogs.logEvent("api_link_uploaded", {
@@ -466,14 +466,14 @@ function apiDocumentEndpoints(app) {
         if (!!addToWorkspaces)
           await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -566,7 +566,7 @@ function apiDocumentEndpoints(app) {
         if (
           !requiredMetadata.every(
             (reqKey) =>
-              Object.keys(metadata).includes(reqKey) && !!metadata[reqKey]
+              Object.keys(metadata).includes(reqKey) && !!metadata[reqKey],
           )
         ) {
           return response
@@ -592,7 +592,7 @@ function apiDocumentEndpoints(app) {
 
         const { success, reason, documents } = await Collector.processRawText(
           textContent,
-          metadata
+          metadata,
         );
         if (!success) {
           return response
@@ -602,7 +602,7 @@ function apiDocumentEndpoints(app) {
         }
 
         Collector.log(
-          `Document created successfully. It is now available in documents.`
+          `Document created successfully. It is now available in documents.`,
         );
         await Telemetry.sendTelemetry("raw_document_uploaded");
         await EventLogs.logEvent("api_raw_document_uploaded");
@@ -610,14 +610,14 @@ function apiDocumentEndpoints(app) {
         if (!!addToWorkspaces)
           await Document.api.uploadToWorkspace(
             addToWorkspaces,
-            documents?.[0].location
+            documents?.[0].location,
           );
         response.status(200).json({ success: true, error: null, documents });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get("/v1/documents", [validApiKey], async (_, response) => {
@@ -725,7 +725,7 @@ function apiDocumentEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -782,7 +782,7 @@ function apiDocumentEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -832,7 +832,7 @@ function apiDocumentEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   // Be careful and place as last route to prevent override of the other /document/ GET
@@ -955,7 +955,7 @@ function apiDocumentEndpoints(app) {
           message: `Failed to create folder: ${e.message}`,
         });
       }
-    }
+    },
   );
 
   app.delete(
@@ -1014,7 +1014,7 @@ function apiDocumentEndpoints(app) {
           message: `Failed to remove folder: ${e.message}`,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -1068,7 +1068,7 @@ function apiDocumentEndpoints(app) {
         const documents = await Document.where({ docpath: { in: docpaths } });
         const embeddedFiles = documents.map((doc) => doc.docpath);
         const moveableFiles = files.filter(
-          ({ from }) => !embeddedFiles.includes(from)
+          ({ from }) => !embeddedFiles.includes(from),
         );
         const movePromises = moveableFiles.map(({ from, to }) => {
           const sourcePath = path.join(documentsPath, normalizePath(from));
@@ -1117,7 +1117,7 @@ function apiDocumentEndpoints(app) {
           .status(500)
           .json({ success: false, message: "Failed to move files." });
       }
-    }
+    },
   );
 
   app.get(
@@ -1196,7 +1196,7 @@ function apiDocumentEndpoints(app) {
         response.setHeader("Content-Type", mimeType);
         response.setHeader(
           "Content-Disposition",
-          `attachment; filename="${safeFilename}"`
+          `attachment; filename="${safeFilename}"`,
         );
         response.setHeader("Content-Length", fileData.buffer.length);
         response.send(fileData.buffer);
@@ -1207,11 +1207,11 @@ function apiDocumentEndpoints(app) {
       } catch (error) {
         console.error(
           "[document/generated-files] Download error:",
-          error.message
+          error.message,
         );
         return response.status(500).json({ error: "Failed to download file" });
       }
-    }
+    },
   );
 }
 

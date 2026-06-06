@@ -46,11 +46,11 @@ class LiteLLMProvider extends InheritMultiple([Provider, UnTooled]) {
     const supportsToolCalling = this.supportsNativeToolCallingViaEnv("litellm");
     if (supportsToolCalling)
       this.providerLog(
-        "LiteLLM supports native tool calling is ENABLED via ENV."
+        "LiteLLM supports native tool calling is ENABLED via ENV.",
       );
     else
       this.providerLog(
-        "LiteLLM supports native tool calling is DISABLED via ENV. Will use UnTooled instead."
+        "LiteLLM supports native tool calling is DISABLED via ENV. Will use UnTooled instead.",
       );
     this._supportsToolCalling = supportsToolCalling;
     return supportsToolCalling;
@@ -96,12 +96,12 @@ class LiteLLMProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -111,7 +111,7 @@ class LiteLLMProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -140,7 +140,7 @@ class LiteLLMProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         messages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -151,7 +151,7 @@ class LiteLLMProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

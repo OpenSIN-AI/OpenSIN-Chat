@@ -18,7 +18,7 @@ function log(stringContent = "") {
     parentPort.postMessage(`\x1b[33m[${process.pid}]\x1b[0m: ${stringContent}`); // running as worker
   else
     process.send(
-      `\x1b[33m[${process.ppid}:${process.pid}]\x1b[0m: ${stringContent}`
+      `\x1b[33m[${process.ppid}:${process.pid}]\x1b[0m: ${stringContent}`,
     ); // running as child_process
 }
 
@@ -44,9 +44,9 @@ const THOUGHT_KEYWORDS = ["thought", "thinking", "think", "thought_chain"];
 const THOUGHT_REGEX_COMPLETE = new RegExp(
   THOUGHT_KEYWORDS.map(
     (keyword) =>
-      `<${keyword}\\s*(?:[^>]*?)?\\s*>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`
+      `<${keyword}\\s*(?:[^>]*?)?\\s*>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
   ).join("|"),
-  "gi"
+  "gi",
 );
 
 function stripThinkingFromText(text = "") {

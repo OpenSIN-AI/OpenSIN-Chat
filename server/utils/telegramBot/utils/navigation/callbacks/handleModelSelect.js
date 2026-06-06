@@ -45,7 +45,7 @@ async function handleModelSelect({ ctx, chatId, query, messageId, data } = {}) {
   await ctx.bot.deleteMessage(chatId, messageId);
   await ctx.bot.sendMessage(
     chatId,
-    `Model changed to "${selectedModel.name || modelId}" in "${workspace.name}".`
+    `Model changed to "${selectedModel.name || modelId}" in "${workspace.name}".`,
   );
 }
 

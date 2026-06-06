@@ -41,7 +41,7 @@ class LMStudioEmbedder {
 
   async embedTextInput(textInput) {
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
     return result?.[0] || [];
   }
@@ -49,11 +49,11 @@ class LMStudioEmbedder {
   async embedChunks(textChunks = []) {
     if (!(await this.#isAlive()))
       throw new Error(
-        `LMStudio service could not be reached. Is LMStudio running?`
+        `LMStudio service could not be reached. Is LMStudio running?`,
       );
 
     this.log(
-      `Embedding ${textChunks.length} chunks of text with ${this.model}.`
+      `Embedding ${textChunks.length} chunks of text with ${this.model}.`,
     );
 
     // LMStudio will drop all queued requests now? So if there are many going on
@@ -88,7 +88,7 @@ class LMStudioEmbedder {
             e.message = e?.response?.data?.error?.message || e.message;
             hasError = true;
             return { data: [], error: e };
-          })
+          }),
       );
     }
 
@@ -103,12 +103,12 @@ class LMStudioEmbedder {
       let uniqueErrors = new Set();
       console.log(errors);
       errors.map((error) =>
-        uniqueErrors.add(`[${error.type}]: ${error.message}`)
+        uniqueErrors.add(`[${error.type}]: ${error.message}`),
       );
 
       if (errors.length > 0)
         throw new Error(
-          `LMStudio Failed to embed: ${Array.from(uniqueErrors).join(", ")}`
+          `LMStudio Failed to embed: ${Array.from(uniqueErrors).join(", ")}`,
         );
     }
 

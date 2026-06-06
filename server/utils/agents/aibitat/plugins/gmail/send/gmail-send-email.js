@@ -109,14 +109,14 @@ module.exports.GmailSendEmail = {
 
               if (Array.isArray(attachments) && attachments.length > 0) {
                 this.super.introspect(
-                  `${this.caller}: Validating ${attachments.length} attachment(s)...`
+                  `${this.caller}: Validating ${attachments.length} attachment(s)...`,
                 );
 
                 for (const filePath of attachments) {
                   const result = prepareAttachment(filePath);
                   if (!result.success) {
                     this.super.introspect(
-                      `${this.caller}: Attachment validation failed - ${result.error}`
+                      `${this.caller}: Attachment validation failed - ${result.error}`,
                     );
                     return `Error with attachment: ${result.error}`;
                   }
@@ -125,10 +125,10 @@ module.exports.GmailSendEmail = {
                   if (totalAttachmentSize > MAX_TOTAL_ATTACHMENT_SIZE) {
                     const totalFormatted = humanFileSize(
                       totalAttachmentSize,
-                      true
+                      true,
                     );
                     this.super.introspect(
-                      `${this.caller}: Total attachment size (${totalFormatted}) exceeds 20MB limit`
+                      `${this.caller}: Total attachment size (${totalFormatted}) exceeds 20MB limit`,
                     );
                     return `Error: Total attachment size (${totalFormatted}) exceeds the 20MB limit. Please reduce the number or size of attachments.`;
                   }
@@ -148,7 +148,7 @@ module.exports.GmailSendEmail = {
 
                     if (!approval.approved) {
                       this.super.introspect(
-                        `${this.caller}: User rejected attaching "${result.fileInfo.name}"`
+                        `${this.caller}: User rejected attaching "${result.fileInfo.name}"`,
                       );
                       return `Attachment rejected by user: ${result.fileInfo.name}. ${approval.message || ""}`;
                     }
@@ -156,10 +156,10 @@ module.exports.GmailSendEmail = {
 
                   preparedAttachments.push(result.attachment);
                   attachmentSummaries.push(
-                    `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`
+                    `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`,
                   );
                   this.super.introspect(
-                    `${this.caller}: Prepared attachment "${result.fileInfo.name}"`
+                    `${this.caller}: Prepared attachment "${result.fileInfo.name}"`,
                   );
                 }
               }
@@ -180,14 +180,14 @@ module.exports.GmailSendEmail = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Sending email to ${to}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`
+                `${this.caller}: Sending email to ${to}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`,
               );
 
               const options = {};
@@ -203,18 +203,18 @@ module.exports.GmailSendEmail = {
                 to,
                 subject,
                 body,
-                options
+                options,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to send email - ${result.error}`
+                  `${this.caller}: Failed to send email - ${result.error}`,
                 );
                 return `Error sending email: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully sent email to ${to}`
+                `${this.caller}: Successfully sent email to ${to}`,
               );
 
               return (
@@ -229,7 +229,7 @@ module.exports.GmailSendEmail = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-send-email error: ${e.message}`
+                `gmail-send-email error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error sending email: ${e.message}`;

@@ -93,7 +93,7 @@ function formatMessageSummary(messages) {
   return messages
     .map(
       (m, i) =>
-        `${i + 1}. [${m.isRead ? "READ" : "UNREAD"}] "${m.subject}" from ${m.fromName || m.from} (${new Date(m.receivedDateTime).toLocaleString()})${m.hasAttachments ? " 📎" : ""}\n   ID: ${m.id}\n   Conversation ID: ${m.conversationId}`
+        `${i + 1}. [${m.isRead ? "READ" : "UNREAD"}] "${m.subject}" from ${m.fromName || m.from} (${new Date(m.receivedDateTime).toLocaleString()})${m.hasAttachments ? " 📎" : ""}\n   ID: ${m.id}\n   Conversation ID: ${m.conversationId}`,
     )
     .join("\n\n");
 }
@@ -133,7 +133,7 @@ function normalizeTokenExpiry(expiry) {
 async function prepareAttachmentsWithValidation(
   context,
   attachmentPaths,
-  options = {}
+  options = {},
 ) {
   if (!Array.isArray(attachmentPaths) || attachmentPaths.length === 0) {
     return { success: true, attachments: [], summaries: [], totalSize: 0 };
@@ -144,14 +144,14 @@ async function prepareAttachmentsWithValidation(
   let totalAttachmentSize = 0;
 
   context.super.introspect(
-    `${context.caller}: Validating ${attachmentPaths.length} attachment(s)...`
+    `${context.caller}: Validating ${attachmentPaths.length} attachment(s)...`,
   );
 
   for (const filePath of attachmentPaths) {
     const result = prepareAttachment(filePath);
     if (!result.success) {
       context.super.introspect(
-        `${context.caller}: Attachment validation failed - ${result.error}`
+        `${context.caller}: Attachment validation failed - ${result.error}`,
       );
       return { success: false, error: result.error };
     }
@@ -160,7 +160,7 @@ async function prepareAttachmentsWithValidation(
     if (totalAttachmentSize > MAX_TOTAL_ATTACHMENT_SIZE) {
       const totalFormatted = humanFileSize(totalAttachmentSize, true);
       context.super.introspect(
-        `${context.caller}: Total attachment size (${totalFormatted}) exceeds 25MB limit`
+        `${context.caller}: Total attachment size (${totalFormatted}) exceeds 25MB limit`,
       );
       return {
         success: false,
@@ -183,7 +183,7 @@ async function prepareAttachmentsWithValidation(
 
       if (!approval.approved) {
         context.super.introspect(
-          `${context.caller}: User rejected attaching "${result.fileInfo.name}"`
+          `${context.caller}: User rejected attaching "${result.fileInfo.name}"`,
         );
         return {
           success: false,
@@ -194,10 +194,10 @@ async function prepareAttachmentsWithValidation(
 
     preparedAttachments.push(result.attachment);
     attachmentSummaries.push(
-      `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`
+      `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`,
     );
     context.super.introspect(
-      `${context.caller}: Prepared attachment "${result.fileInfo.name}"`
+      `${context.caller}: Prepared attachment "${result.fileInfo.name}"`,
     );
   }
 
@@ -280,7 +280,7 @@ async function parseAttachment(attachment) {
   const safeFilename = attachment.name.replace(/[^a-zA-Z0-9._-]/g, "_");
   const tempFilePath = path.join(
     tempDir,
-    `outlook-attachment-${Date.now()}-${safeFilename}`
+    `outlook-attachment-${Date.now()}-${safeFilename}`,
   );
 
   try {
@@ -381,7 +381,7 @@ async function handleAttachments(context, messages) {
   });
 
   const parseableAttachments = allAttachments.filter((att) =>
-    isParseableMimeType(att.contentType)
+    isParseableMimeType(att.contentType),
   );
 
   let parsedContent = "";
@@ -399,24 +399,24 @@ async function handleAttachments(context, messages) {
 
     if (approval.approved) {
       context.super.introspect(
-        `${context.caller}: Downloading and parsing ${parseableAttachments.length} attachment(s)...`
+        `${context.caller}: Downloading and parsing ${parseableAttachments.length} attachment(s)...`,
       );
 
       const parsedResults = [];
       for (const attachment of parseableAttachments) {
         if (!attachment.contentBytes) {
           context.super.introspect(
-            `${context.caller}: Skipping "${attachment.name}" - no content available`
+            `${context.caller}: Skipping "${attachment.name}" - no content available`,
           );
           continue;
         }
         context.super.introspect(
-          `${context.caller}: Parsing "${attachment.name}"...`
+          `${context.caller}: Parsing "${attachment.name}"...`,
         );
         const parseResult = await parseAttachment(attachment);
         if (!parseResult.success) {
           context.super.introspect(
-            `${context.caller}: Failed to parse "${attachment.name}": ${parseResult.error}`
+            `${context.caller}: Failed to parse "${attachment.name}": ${parseResult.error}`,
           );
           continue;
         }
@@ -440,17 +440,17 @@ async function handleAttachments(context, messages) {
           "\n\n--- Parsed Attachment Content ---\n" +
           parsedResults
             .map(
-              (r) => `\n[Message ${r.messageIndex}: ${r.name}]\n${r.content}`
+              (r) => `\n[Message ${r.messageIndex}: ${r.name}]\n${r.content}`,
             )
             .join("\n");
       }
 
       context.super.introspect(
-        `${context.caller}: Finished parsing attachments (${parsedResults.length}/${parseableAttachments.length} successful)`
+        `${context.caller}: Finished parsing attachments (${parsedResults.length}/${parseableAttachments.length} successful)`,
       );
     } else {
       context.super.introspect(
-        `${context.caller}: User declined to parse attachments`
+        `${context.caller}: User declined to parse attachments`,
       );
     }
   }
@@ -527,7 +527,7 @@ class OutlookBridge {
       if (parts.length !== 3) return null;
       const payload = JSON.parse(Buffer.from(parts[1], "base64").toString());
       this.#log(
-        `${context} for: ${payload.upn || payload.email || payload.unique_name || "unknown"}`
+        `${context} for: ${payload.upn || payload.email || payload.unique_name || "unknown"}`,
       );
       return payload;
     } catch {
@@ -551,7 +551,7 @@ class OutlookBridge {
   static async getConfig() {
     const configJson = await SystemSettings.getValueOrFallback(
       { label: "outlook_agent_config" },
-      "{}"
+      "{}",
     );
     return safeJsonParse(configJson, {});
   }
@@ -633,7 +633,7 @@ class OutlookBridge {
       const authority = getAuthority(authType, config.tenantId);
       const tokenUrl = `${MICROSOFT_AUTH_URL}/${authority}/oauth2/v2.0/token`;
       this.#log(
-        `Token exchange using authType: ${authType}, authority: ${authority}`
+        `Token exchange using authType: ${authType}, authority: ${authority}`,
       );
 
       const params = new URLSearchParams({
@@ -708,7 +708,7 @@ class OutlookBridge {
       const authority = getAuthority(authType, config.tenantId);
       const tokenUrl = `${MICROSOFT_AUTH_URL}/${authority}/oauth2/v2.0/token`;
       this.#log(
-        `Token refresh using authType: ${authType}, authority: ${authority}`
+        `Token refresh using authType: ${authType}, authority: ${authority}`,
       );
 
       const params = new URLSearchParams({
@@ -776,7 +776,7 @@ class OutlookBridge {
     const now = Date.now();
     const timeUntilExpiry = expiryTime - now;
     this.#log(
-      `Token check: expires in ${Math.round(timeUntilExpiry / 1000)}s (at ${new Date(expiryTime).toISOString()})`
+      `Token check: expires in ${Math.round(timeUntilExpiry / 1000)}s (at ${new Date(expiryTime).toISOString()})`,
     );
 
     const payload = this.#decodeAndLogToken(config.accessToken, "Token check");
@@ -827,7 +827,7 @@ class OutlookBridge {
       }
 
       this.#log(
-        `Initializing with authType: ${config.authType || AUTH_TYPES.common}`
+        `Initializing with authType: ${config.authType || AUTH_TYPES.common}`,
       );
 
       if (!config.accessToken) {
@@ -924,7 +924,7 @@ class OutlookBridge {
           `API request failed: ${response.status} ${response.statusText}`,
           `\n  Endpoint: ${endpoint}`,
           `\n  Headers: ${JSON.stringify(Object.fromEntries(response.headers.entries()))}`,
-          `\n  Error: ${JSON.stringify(errorData, null, 2)}`
+          `\n  Error: ${JSON.stringify(errorData, null, 2)}`,
         );
         return {
           success: false,
@@ -1033,7 +1033,7 @@ class OutlookBridge {
 
     // Sort by receivedDateTime ascending (oldest first) client-side
     messages.sort(
-      (a, b) => new Date(a.receivedDateTime) - new Date(b.receivedDateTime)
+      (a, b) => new Date(a.receivedDateTime) - new Date(b.receivedDateTime),
     );
 
     return {
@@ -1043,7 +1043,7 @@ class OutlookBridge {
         subject: messages[0]?.subject || "No Subject",
         messageCount: messages.length,
         messages: messages.map((msg) =>
-          mapGraphMessage(msg, { includeBody: true, includeAttachments: true })
+          mapGraphMessage(msg, { includeBody: true, includeAttachments: true }),
         ),
       },
     };
@@ -1111,7 +1111,7 @@ class OutlookBridge {
           {
             method: "POST",
             body: JSON.stringify(attachment),
-          }
+          },
         );
         if (!attachResult.success) {
           this.#log(`Failed to add attachment: ${attachResult.error}`);
@@ -1369,7 +1369,7 @@ class OutlookBridge {
 
     for (const folder of folders) {
       const result = await this.request(
-        `/me/mailFolders/${folder}?$select=displayName,totalItemCount,unreadItemCount`
+        `/me/mailFolders/${folder}?$select=displayName,totalItemCount,unreadItemCount`,
       );
       if (result.success) {
         stats[folder] = {

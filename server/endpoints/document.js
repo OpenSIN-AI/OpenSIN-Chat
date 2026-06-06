@@ -38,7 +38,7 @@ function documentEndpoints(app) {
           message: `Failed to create folder: ${e.message} `,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -52,7 +52,7 @@ function documentEndpoints(app) {
 
         const embeddedFiles = documents.map((doc) => doc.docpath);
         const moveableFiles = files.filter(
-          ({ from }) => !embeddedFiles.includes(from)
+          ({ from }) => !embeddedFiles.includes(from),
         );
 
         const movePromises = moveableFiles.map(({ from, to }) => {
@@ -104,7 +104,7 @@ function documentEndpoints(app) {
           .status(500)
           .json({ success: false, message: "Failed to move files." });
       }
-    }
+    },
   );
 }
 

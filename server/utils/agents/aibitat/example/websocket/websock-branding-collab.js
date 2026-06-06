@@ -42,7 +42,7 @@ app.ws("/ws", function (ws, _response) {
           from: "AI",
           to: "HUMAN",
           content: error.message,
-        })
+        }),
       );
     });
   } catch {}

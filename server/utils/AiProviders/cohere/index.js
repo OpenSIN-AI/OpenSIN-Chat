@@ -27,7 +27,7 @@ class CohereLLM {
 
     this.embedder = embedder ?? new NativeEmbedder();
     this.#log(
-      `Initialized with model ${this.model}. ctx: ${this.promptWindowLimit()}`
+      `Initialized with model ${this.model}. ctx: ${this.promptWindowLimit()}`,
     );
   }
 
@@ -105,7 +105,7 @@ class CohereLLM {
         message: message,
         chatHistory: cohereHistory,
         temperature,
-      })
+      }),
     );
 
     if (

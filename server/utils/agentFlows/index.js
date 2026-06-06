@@ -69,7 +69,7 @@ class AgentFlows {
   static loadFlow(uuid) {
     try {
       const flowJsonPath = normalizePath(
-        path.join(AgentFlows.flowsDir, `${uuid}.json`)
+        path.join(AgentFlows.flowsDir, `${uuid}.json`),
       );
       if (
         !uuid ||
@@ -110,14 +110,14 @@ class AgentFlows {
       // Prevent saving flows with unsupported blocks or importing
       // flows with unsupported blocks (eg: file writing or code execution on Desktop importing to Docker)
       const supportedFlowTypes = Object.values(FLOW_TYPES).map(
-        (definition) => definition.type
+        (definition) => definition.type,
       );
       const supportsAllBlocks = config.steps.every((step) =>
-        supportedFlowTypes.includes(step.type)
+        supportedFlowTypes.includes(step.type),
       );
       if (!supportsAllBlocks)
         throw new Error(
-          "This flow includes unsupported blocks. They may not be supported by your version of OpenAfD Chat or are not available on this platform."
+          "This flow includes unsupported blocks. They may not be supported by your version of OpenAfD Chat or are not available on this platform.",
         );
 
       fs.writeFileSync(filePath, JSON.stringify({ ...config, name }, null, 2));
@@ -155,7 +155,7 @@ class AgentFlows {
   static deleteFlow(uuid) {
     try {
       const filePath = normalizePath(
-        path.join(AgentFlows.flowsDir, `${uuid}.json`)
+        path.join(AgentFlows.flowsDir, `${uuid}.json`),
       );
       if (!fs.existsSync(filePath) || !isWithin(AgentFlows.flowsDir, filePath))
         throw new Error(`Flow ${uuid} not found`);
@@ -253,7 +253,7 @@ class AgentFlows {
               const result = await AgentFlows.executeFlow(uuid, args, aibitat);
               if (!result.success) {
                 aibitat.introspect(
-                  `Flow failed: ${result.results[0]?.error || "Unknown error"}`
+                  `Flow failed: ${result.results[0]?.error || "Unknown error"}`,
                 );
                 return `Flow execution failed: ${result.results[0]?.error || "Unknown error"}`;
               }

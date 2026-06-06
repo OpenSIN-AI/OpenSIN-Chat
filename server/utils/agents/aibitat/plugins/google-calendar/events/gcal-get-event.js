@@ -43,24 +43,24 @@ module.exports.GCalGetEvent = {
             try {
               this.super.handlerProps.log(`Using the gcal-get-event tool.`);
               this.super.introspect(
-                `${this.caller}: Fetching event ${eventId}...`
+                `${this.caller}: Fetching event ${eventId}...`,
               );
 
               const result = await googleCalendarLib.getEvent(
                 eventId,
-                calendarId
+                calendarId,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get event - ${result.error}`
+                  `${this.caller}: Failed to get event - ${result.error}`,
                 );
                 return `Error getting event: ${result.error}`;
               }
 
               const event = result.data;
               this.super.introspect(
-                `${this.caller}: Retrieved event "${event.title}"`
+                `${this.caller}: Retrieved event "${event.title}"`,
               );
 
               let timeInfo;

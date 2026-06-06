@@ -11,7 +11,7 @@ const {
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "ppio")
-    : path.resolve(__dirname, `../../../storage/models/ppio`)
+    : path.resolve(__dirname, `../../../storage/models/ppio`),
 );
 
 class PPIOLLM {
@@ -87,7 +87,7 @@ class PPIOLLM {
     if (!fs.existsSync(this.cacheModelPath)) return {};
     return safeJsonParse(
       fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
+      {},
     );
   }
 
@@ -148,7 +148,7 @@ class PPIOLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `PPIO chat: ${this.model} is not valid for chat completion!`
+        `PPIO chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -160,7 +160,7 @@ class PPIOLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -187,7 +187,7 @@ class PPIOLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `PPIO chat: ${this.model} is not valid for chat completion!`
+        `PPIO chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -251,14 +251,14 @@ async function fetchPPIOModels() {
         JSON.stringify(models),
         {
           encoding: "utf-8",
-        }
+        },
       );
       fs.writeFileSync(
         path.resolve(cacheFolder, ".cached_at"),
         String(Number(new Date())),
         {
           encoding: "utf-8",
-        }
+        },
       );
       return models;
     })

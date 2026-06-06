@@ -14,7 +14,7 @@ async function markOnboarded() {
     const alreadyOnboarded = await isLegacyOnboarded();
     if (alreadyOnboarded === true) {
       console.log(
-        "\x1b[33m[ONBOARDING PATCH]\x1b[0m Legacy instance is already onboarded, marking onboarding as complete. You will not see this message again."
+        "\x1b[33m[ONBOARDING PATCH]\x1b[0m Legacy instance is already onboarded, marking onboarding as complete. You will not see this message again.",
       );
       await SystemSettings.markOnboardingComplete();
       return true;
@@ -24,7 +24,7 @@ async function markOnboarded() {
     console.error(
       "\x1b[31m[ONBOARDING PATCH]\x1b[0m Error marking onboarding as complete",
       e.message,
-      e
+      e,
     );
     return false;
   }

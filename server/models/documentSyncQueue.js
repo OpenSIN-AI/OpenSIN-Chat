@@ -100,7 +100,7 @@ const DocumentSyncQueue = {
         (await this.count({ workspaceDocId: { in: workspaceDocIds } })) > 0;
       if (hasRecords)
         throw new Error(
-          `Cannot watch this document again - it already has a queue set.`
+          `Cannot watch this document again - it already has a queue set.`,
         );
 
       const queue = await prisma.document_sync_queues.create({
@@ -112,7 +112,7 @@ const DocumentSyncQueue = {
       });
       await Document._updateAll(
         { filename: document.filename },
-        { watched: true }
+        { watched: true },
       );
       return queue || null;
     } catch (error) {
@@ -138,7 +138,7 @@ const DocumentSyncQueue = {
       await this.delete({ workspaceDocId: { in: workspaceDocIds } });
       await Document._updateAll(
         { filename: document.filename },
-        { watched: false }
+        { watched: false },
       );
       return true;
     } catch (error) {
@@ -178,7 +178,7 @@ const DocumentSyncQueue = {
     clause = {},
     limit = null,
     orderBy = null,
-    include = {}
+    include = {},
   ) {
     try {
       const results = await prisma.document_sync_queues.findMany({
@@ -240,7 +240,7 @@ const DocumentSyncQueue = {
             workspace: true,
           },
         },
-      }
+      },
     );
     return queues;
   },

@@ -55,12 +55,12 @@ class PushNotifications {
       const vapidKeys = this.existingVapidKeys;
       if (!vapidKeys.publicKey || !vapidKeys.privateKey)
         throw new Error(
-          "VAPID keys not found. Make sure they are generated in the main process first."
+          "VAPID keys not found. Make sure they are generated in the main process first.",
         );
       webpush.setVapidDetails(
         `mailto:${this.mailTo}`,
         vapidKeys.publicKey,
-        vapidKeys.privateKey
+        vapidKeys.privateKey,
       );
       return webpush;
     } catch (e) {
@@ -89,7 +89,7 @@ class PushNotifications {
       return { publicKey: null, privateKey: null };
 
     const existingVapidKeys = JSON.parse(
-      fs.readFileSync(vapidKeysPath, "utf8")
+      fs.readFileSync(vapidKeysPath, "utf8"),
     );
     this.#log(`Loaded existing VAPID keys!`);
     this.#vapidKeys.publicKey = existingVapidKeys.publicKey;
@@ -117,7 +117,7 @@ class PushNotifications {
       for (const user of users) {
         const subscription = safeJsonParse(
           user.web_push_subscription_config,
-          null
+          null,
         );
         if (subscription) this.#subscriptions.set(user.id, subscription);
       }
@@ -128,7 +128,7 @@ class PushNotifications {
     this.#log("Loading single user mode subscriptions...");
     if (!fs.existsSync(this.primarySubscriptionPath)) return;
     const subscription = JSON.parse(
-      fs.readFileSync(this.primarySubscriptionPath, "utf8")
+      fs.readFileSync(this.primarySubscriptionPath, "utf8"),
     );
     if (subscription) this.#subscriptions.set("primary", subscription);
     this.#log(`Loaded primary user's existing subscription.`);
@@ -158,7 +158,7 @@ class PushNotifications {
         fs.mkdirSync(this.storagePath, { recursive: true });
       fs.writeFileSync(
         this.primarySubscriptionPath,
-        JSON.stringify(subscription, null, 2)
+        JSON.stringify(subscription, null, 2),
       );
       this.#log(`Registered or updated primary user's subscription.`);
     }
@@ -177,14 +177,14 @@ class PushNotifications {
       return this.#log(".sendNotification() - No subscriptions found");
     if (!this.#subscriptions.has(to))
       return this.#log(
-        `.sendNotification() - Subscription for user ${to} not found`
+        `.sendNotification() - Subscription for user ${to} not found`,
       );
     this.#log(`.sendNotification() - Sending notification to user ${to}`);
     return this.pushService
       .sendNotification(this.#subscriptions.get(to), JSON.stringify(payload))
       .then((res) => {
         this.#log(
-          `.sendNotification() - Delivered (status: ${res.statusCode})`
+          `.sendNotification() - Delivered (status: ${res.statusCode})`,
         );
       })
       .catch((err) => {
@@ -212,7 +212,7 @@ class PushNotifications {
         fs.mkdirSync(instance.storagePath, { recursive: true });
       fs.writeFileSync(
         path.resolve(instance.storagePath, `vapid-keys.json`),
-        JSON.stringify(vapidKeys, null, 2)
+        JSON.stringify(vapidKeys, null, 2),
       );
     }
 

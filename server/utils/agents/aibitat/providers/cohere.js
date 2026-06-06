@@ -87,10 +87,10 @@ class CohereProvider extends InheritMultiple([Provider, UnTooled]) {
     messages,
     functions,
     chatCb = null,
-    eventHandler = null
+    eventHandler = null,
   ) {
     const history = [...messages].filter((msg) =>
-      ["user", "assistant"].includes(msg.role)
+      ["user", "assistant"].includes(msg.role),
     );
     if (history[history.length - 1]?.role !== "user") return null;
 
@@ -137,7 +137,7 @@ class CohereProvider extends InheritMultiple([Provider, UnTooled]) {
       this.deduplicator.isDuplicate(call.name, call.arguments);
     if (isDuplicate) {
       this.providerLog(
-        `Cannot call ${call.name} again because ${duplicateReason}.`
+        `Cannot call ${call.name} again because ${duplicateReason}.`,
       );
       eventHandler?.("reportStreamEvent", {
         type: "removeStatusResponse",
@@ -167,7 +167,7 @@ class CohereProvider extends InheritMultiple([Provider, UnTooled]) {
    */
   async stream(messages, functions = [], eventHandler = null) {
     this.providerLog(
-      "CohereProvider.stream - will process this chat completion."
+      "CohereProvider.stream - will process this chat completion.",
     );
     // eslint-disable-next-line
     try {
@@ -181,7 +181,7 @@ class CohereProvider extends InheritMultiple([Provider, UnTooled]) {
           messages,
           functions,
           this.#handleFunctionCallStream.bind(this),
-          eventHandler
+          eventHandler,
         );
 
         if (toolCall !== null) {
@@ -201,7 +201,7 @@ class CohereProvider extends InheritMultiple([Provider, UnTooled]) {
 
         if (text) {
           this.providerLog(
-            `No tool call found in the response - will send as a full text response.`
+            `No tool call found in the response - will send as a full text response.`,
           );
           completion.content = text;
           eventHandler?.("reportStreamEvent", {
@@ -230,7 +230,7 @@ class CohereProvider extends InheritMultiple([Provider, UnTooled]) {
         });
 
         this.providerLog(
-          "Will assume chat completion without tool call inputs."
+          "Will assume chat completion without tool call inputs.",
         );
         const msgUUID = v4();
         completion = { content: "" };

@@ -94,7 +94,7 @@ module.exports.GmailReplyToThread = {
           }) {
             try {
               this.super.handlerProps.log(
-                `Using the gmail-reply-to-thread tool.`
+                `Using the gmail-reply-to-thread tool.`,
               );
 
               if (!threadId || !body) {
@@ -107,14 +107,14 @@ module.exports.GmailReplyToThread = {
 
               if (Array.isArray(attachments) && attachments.length > 0) {
                 this.super.introspect(
-                  `${this.caller}: Validating ${attachments.length} attachment(s)...`
+                  `${this.caller}: Validating ${attachments.length} attachment(s)...`,
                 );
 
                 for (const filePath of attachments) {
                   const result = prepareAttachment(filePath);
                   if (!result.success) {
                     this.super.introspect(
-                      `${this.caller}: Attachment validation failed - ${result.error}`
+                      `${this.caller}: Attachment validation failed - ${result.error}`,
                     );
                     return `Error with attachment: ${result.error}`;
                   }
@@ -123,10 +123,10 @@ module.exports.GmailReplyToThread = {
                   if (totalAttachmentSize > MAX_TOTAL_ATTACHMENT_SIZE) {
                     const totalFormatted = humanFileSize(
                       totalAttachmentSize,
-                      true
+                      true,
                     );
                     this.super.introspect(
-                      `${this.caller}: Total attachment size (${totalFormatted}) exceeds 20MB limit`
+                      `${this.caller}: Total attachment size (${totalFormatted}) exceeds 20MB limit`,
                     );
                     return `Error: Total attachment size (${totalFormatted}) exceeds the 20MB limit. Please reduce the number or size of attachments.`;
                   }
@@ -146,7 +146,7 @@ module.exports.GmailReplyToThread = {
 
                     if (!approval.approved) {
                       this.super.introspect(
-                        `${this.caller}: User rejected attaching "${result.fileInfo.name}"`
+                        `${this.caller}: User rejected attaching "${result.fileInfo.name}"`,
                       );
                       return `Attachment rejected by user: ${result.fileInfo.name}. ${approval.message || ""}`;
                     }
@@ -154,10 +154,10 @@ module.exports.GmailReplyToThread = {
 
                   preparedAttachments.push(result.attachment);
                   attachmentSummaries.push(
-                    `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`
+                    `${result.fileInfo.name} (${result.fileInfo.sizeFormatted})`,
                   );
                   this.super.introspect(
-                    `${this.caller}: Prepared attachment "${result.fileInfo.name}"`
+                    `${this.caller}: Prepared attachment "${result.fileInfo.name}"`,
                   );
                 }
               }
@@ -178,14 +178,14 @@ module.exports.GmailReplyToThread = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Replying to thread ${threadId}${replyAll ? " (reply all)" : ""}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`
+                `${this.caller}: Replying to thread ${threadId}${replyAll ? " (reply all)" : ""}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`,
               );
 
               const options = {};
@@ -200,18 +200,18 @@ module.exports.GmailReplyToThread = {
                 threadId,
                 body,
                 replyAll,
-                options
+                options,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to reply to thread - ${result.error}`
+                  `${this.caller}: Failed to reply to thread - ${result.error}`,
                 );
                 return `Error replying to thread: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully replied to thread ${threadId}`
+                `${this.caller}: Successfully replied to thread ${threadId}`,
               );
 
               return (
@@ -225,7 +225,7 @@ module.exports.GmailReplyToThread = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-reply-to-thread error: ${e.message}`
+                `gmail-reply-to-thread error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error replying to thread: ${e.message}`;

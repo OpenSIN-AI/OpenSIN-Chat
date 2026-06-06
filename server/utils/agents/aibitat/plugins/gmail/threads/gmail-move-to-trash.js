@@ -35,7 +35,7 @@ module.exports.GmailMoveToTrash = {
           handler: async function ({ threadId }) {
             try {
               this.super.handlerProps.log(
-                `Using the gmail-move-to-trash tool.`
+                `Using the gmail-move-to-trash tool.`,
               );
 
               if (!threadId) {
@@ -50,33 +50,33 @@ module.exports.GmailMoveToTrash = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Moving thread ${threadId} to trash`
+                `${this.caller}: Moving thread ${threadId} to trash`,
               );
 
               const result = await gmailLib.moveToTrash(threadId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to move thread to trash - ${result.error}`
+                  `${this.caller}: Failed to move thread to trash - ${result.error}`,
                 );
                 return `Error moving thread to trash: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully moved thread ${threadId} to trash`
+                `${this.caller}: Successfully moved thread ${threadId} to trash`,
               );
 
               return `Successfully moved thread ${threadId} to trash. It can be recovered within 30 days.`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-move-to-trash error: ${e.message}`
+                `gmail-move-to-trash error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error moving thread to trash: ${e.message}`;

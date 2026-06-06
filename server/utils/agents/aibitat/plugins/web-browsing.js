@@ -157,7 +157,7 @@ const webBrowsing = {
           _serpApi: async function (query) {
             if (!process.env.AGENT_SERPAPI_API_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use SerpApi searching because the user has not defined the required API key.\nVisit: https://serpapi.com/ to create the API key for free.`
+                `${this.caller}: I can't use SerpApi searching because the user has not defined the required API key.\nVisit: https://serpapi.com/ to create the API key for free.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -165,7 +165,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using SerpApi to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const engine = process.env.AGENT_SERPAPI_ENGINE;
@@ -185,7 +185,7 @@ const webBrowsing = {
               .then((res) => {
                 if (res.ok) return res.json();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPAPI_API_KEY, 5), q: query })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPAPI_API_KEY, 5), q: query })}`,
                 );
               })
               .then((data) => {
@@ -403,7 +403,7 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
@@ -416,7 +416,7 @@ const webBrowsing = {
           _searchApi: async function (query) {
             if (!process.env.AGENT_SEARCHAPI_API_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use SearchApi searching because the user has not defined the required API key.\nVisit: https://www.searchapi.io/ to create the API key for free.`
+                `${this.caller}: I can't use SearchApi searching because the user has not defined the required API key.\nVisit: https://www.searchapi.io/ to create the API key for free.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -424,7 +424,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using SearchApi to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const engine = process.env.AGENT_SEARCHAPI_ENGINE;
@@ -445,7 +445,7 @@ const webBrowsing = {
               .then((res) => {
                 if (res.ok) return res.json();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SEARCHAPI_API_KEY, 5), q: query })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SEARCHAPI_API_KEY, 5), q: query })}`,
                 );
               })
               .then((data) => {
@@ -478,7 +478,7 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
@@ -491,7 +491,7 @@ const webBrowsing = {
           _serperDotDev: async function (query) {
             if (!process.env.AGENT_SERPER_DEV_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use Serper.dev searching because the user has not defined the required API key.\nVisit: https://serper.dev to create the API key for free.`
+                `${this.caller}: I can't use Serper.dev searching because the user has not defined the required API key.\nVisit: https://serper.dev to create the API key for free.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -499,7 +499,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using Serper.dev to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
             const { response, error } = await fetch(
               "https://google.serper.dev/search",
@@ -511,12 +511,12 @@ const webBrowsing = {
                 },
                 body: JSON.stringify({ q: query }),
                 redirect: "follow",
-              }
+              },
             )
               .then((res) => {
                 if (res.ok) return res.json();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPER_DEV_KEY, 5), q: query })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPER_DEV_KEY, 5), q: query })}`,
                 );
               })
               .then((data) => {
@@ -547,27 +547,27 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
           _bingWebSearch: async function (query) {
             if (!process.env.AGENT_BING_SEARCH_API_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use Bing Web Search because the user has not defined the required API key.\nVisit: https://portal.azure.com/ to create the API key.`
+                `${this.caller}: I can't use Bing Web Search because the user has not defined the required API key.\nVisit: https://portal.azure.com/ to create the API key.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
 
             const searchURL = new URL(
-              "https://api.bing.microsoft.com/v7.0/search"
+              "https://api.bing.microsoft.com/v7.0/search",
             );
             searchURL.searchParams.append("q", query);
 
             this.super.introspect(
               `${this.caller}: Using Bing Web Search to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const searchResponse = await fetch(searchURL, {
@@ -579,7 +579,7 @@ const webBrowsing = {
               .then((res) => {
                 if (res.ok) return res.json();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_BING_SEARCH_API_KEY, 5), q: query })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_BING_SEARCH_API_KEY, 5), q: query })}`,
                 );
               })
               .then((data) => {
@@ -592,7 +592,7 @@ const webBrowsing = {
               })
               .catch((e) => {
                 this.super.handlerProps.log(
-                  `Bing Web Search Error: ${e.message}`
+                  `Bing Web Search Error: ${e.message}`,
                 );
                 return [];
               });
@@ -603,14 +603,14 @@ const webBrowsing = {
             this.reportSearchResultsCitations(searchResponse);
             const result = JSON.stringify(searchResponse);
             this.super.introspect(
-              `${this.caller}: I found ${searchResponse.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${searchResponse.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
           _baiduSearch: async function (query) {
             if (!process.env.AGENT_BAIDU_SEARCH_API_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use Baidu Search because the user has not defined the required API key.\nVisit: https://cloud.baidu.com/doc/qianfan-api/s/Wmbq4z7e5 to create the API key.`
+                `${this.caller}: I can't use Baidu Search because the user has not defined the required API key.\nVisit: https://cloud.baidu.com/doc/qianfan-api/s/Wmbq4z7e5 to create the API key.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -618,7 +618,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using Baidu Search to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const { response, error } = await fetch(
@@ -634,7 +634,7 @@ const webBrowsing = {
                   messages: [{ role: "user", content: query }],
                   resource_type_filter: [{ type: "web", top_k: 10 }],
                 }),
-              }
+              },
             )
               .then(async (res) => {
                 if (res.ok) return res.json();
@@ -644,11 +644,11 @@ const webBrowsing = {
                   `${res.status} - ${res.statusText}. params: ${JSON.stringify({
                     auth: this.middleTruncate(
                       process.env.AGENT_BAIDU_SEARCH_API_KEY,
-                      5
+                      5,
                     ),
                     q: query,
                     body: body.slice(0, 300),
-                  })}`
+                  })}`,
                 );
               })
               .then((data) => {
@@ -682,17 +682,17 @@ const webBrowsing = {
                 .filter((reference) => {
                   if (!reference) return false;
                   const referenceType = String(
-                    reference.type || reference.resource_type || "web"
+                    reference.type || reference.resource_type || "web",
                   ).toLowerCase();
                   return referenceType === "web";
                 })
                 .map((reference) => {
                   const title = String(
-                    reference.title || reference.web_anchor || ""
+                    reference.title || reference.web_anchor || "",
                   ).trim();
                   const link = String(reference.url || "").trim();
                   const snippet = String(
-                    reference.snippet || reference.content || ""
+                    reference.snippet || reference.content || "",
                   ).trim();
 
                   if (!title || !link || seenLinks.has(link)) return null;
@@ -710,7 +710,7 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
@@ -721,7 +721,7 @@ const webBrowsing = {
             //eslint-disable-next-line
             limit = 100,
             device_type = "desktop",
-            proxy_location = "US"
+            proxy_location = "US",
           ) {
             //  query (str): The query to search for
             //  hl (str): Host Language code to display results in (reference https://developers.google.com/custom-search/docs/xml_results?hl=en#wsInterfaceLanguages)
@@ -730,7 +730,7 @@ const webBrowsing = {
 
             if (!process.env.AGENT_SERPLY_API_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use Serply.io searching because the user has not defined the required API key.\nVisit: https://serply.io to create the API key for free.`
+                `${this.caller}: I can't use Serply.io searching because the user has not defined the required API key.\nVisit: https://serply.io to create the API key for free.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -738,7 +738,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using Serply to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const params = new URLSearchParams({
@@ -761,13 +761,13 @@ const webBrowsing = {
               .then((res) => {
                 if (res.ok) return res.json();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPLY_API_KEY, 5), q: query })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_SERPLY_API_KEY, 5), q: query })}`,
                 );
               })
               .then((data) => {
                 if (data?.message === "Unauthorized")
                   throw new Error(
-                    "Unauthorized. Please double check your AGENT_SERPLY_API_KEY"
+                    "Unauthorized. Please double check your AGENT_SERPLY_API_KEY",
                   );
                 return { response: data, error: null };
               })
@@ -795,7 +795,7 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
@@ -803,7 +803,7 @@ const webBrowsing = {
             let searchURL;
             if (!process.env.AGENT_SEARXNG_API_URL) {
               this.super.introspect(
-                `${this.caller}: I can't use SearXNG searching because the user has not defined the required base URL.\nPlease set this value in the agent skill settings.`
+                `${this.caller}: I can't use SearXNG searching because the user has not defined the required base URL.\nPlease set this value in the agent skill settings.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -815,7 +815,7 @@ const webBrowsing = {
             } catch (e) {
               this.super.handlerProps.log(`SearXNG Search: ${e.message}`);
               this.super.introspect(
-                `${this.caller}: I can't use SearXNG searching because the url provided is not a valid URL.`
+                `${this.caller}: I can't use SearXNG searching because the url provided is not a valid URL.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -823,7 +823,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using SearXNG to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const { response, error } = await fetch(searchURL.toString(), {
@@ -836,7 +836,7 @@ const webBrowsing = {
               .then((res) => {
                 if (res.ok) return res.json();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ url: searchURL.toString() })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ url: searchURL.toString() })}`,
                 );
               })
               .then((data) => {
@@ -844,7 +844,7 @@ const webBrowsing = {
               })
               .catch((e) => {
                 this.super.handlerProps.log(
-                  `SearXNG Search Error: ${e.message}`
+                  `SearXNG Search Error: ${e.message}`,
                 );
                 return { response: null, error: e.message };
               });
@@ -868,14 +868,14 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
           _tavilySearch: async function (query) {
             if (!process.env.AGENT_TAVILY_API_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use Tavily searching because the user has not defined the required API key.\nVisit: https://tavily.com/ to create the API key.`
+                `${this.caller}: I can't use Tavily searching because the user has not defined the required API key.\nVisit: https://tavily.com/ to create the API key.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -883,7 +883,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using Tavily to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const url = "https://api.tavily.com/search";
@@ -900,7 +900,7 @@ const webBrowsing = {
               .then((res) => {
                 if (res.ok) return res.json();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_TAVILY_API_KEY, 5), q: query })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_TAVILY_API_KEY, 5), q: query })}`,
                 );
               })
               .then((data) => {
@@ -908,7 +908,7 @@ const webBrowsing = {
               })
               .catch((e) => {
                 this.super.handlerProps.log(
-                  `Tavily Search Error: ${e.message}`
+                  `Tavily Search Error: ${e.message}`,
                 );
                 return { response: null, error: e.message };
               });
@@ -932,7 +932,7 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
@@ -960,7 +960,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using DuckDuckGo to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const searchURL = new URL("https://html.duckduckgo.com/html");
@@ -970,12 +970,12 @@ const webBrowsing = {
               .then((res) => {
                 if (res.ok) return res.text();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ url: searchURL.toString() })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ url: searchURL.toString() })}`,
                 );
               })
               .catch((e) => {
                 this.super.handlerProps.log(
-                  `DuckDuckGo Search Error: ${e.message}`
+                  `DuckDuckGo Search Error: ${e.message}`,
                 );
                 return null;
               });
@@ -991,19 +991,19 @@ const webBrowsing = {
 
               // Extract title
               const titleMatch = result.match(
-                /<a[^>]*class="result__a"[^>]*>(.*?)<\/a>/
+                /<a[^>]*class="result__a"[^>]*>(.*?)<\/a>/,
               );
               const title = titleMatch ? titleMatch[1].trim() : "";
 
               // Extract URL and clean DDG redirect
               const urlMatch = result.match(
-                /<a[^>]*class="result__a"[^>]*href="([^"]*)">/
+                /<a[^>]*class="result__a"[^>]*href="([^"]*)">/,
               );
               const link = extractUrl(urlMatch ? urlMatch[1] : "");
 
               // Extract snippet
               const snippetMatch = result.match(
-                /<a[^>]*class="result__snippet"[^>]*>(.*?)<\/a>/
+                /<a[^>]*class="result__snippet"[^>]*>(.*?)<\/a>/,
               );
               const snippet = snippetMatch
                 ? snippetMatch[1].replace(/<\/?b>/g, "").trim()
@@ -1021,14 +1021,14 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
           _exaSearch: async function (query) {
             if (!process.env.AGENT_EXA_API_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use Exa searching because the user has not defined the required API key.\nVisit: https://exa.ai to create the API key.`
+                `${this.caller}: I can't use Exa searching because the user has not defined the required API key.\nVisit: https://exa.ai to create the API key.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -1036,7 +1036,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using Exa to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const url = "https://api.exa.ai/search";
@@ -1058,7 +1058,7 @@ const webBrowsing = {
               .then((res) => {
                 if (res.ok) return res.json();
                 throw new Error(
-                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_EXA_API_KEY, 5), q: query })}`
+                  `${res.status} - ${res.statusText}. params: ${JSON.stringify({ auth: this.middleTruncate(process.env.AGENT_EXA_API_KEY, 5), q: query })}`,
                 );
               })
               .then((data) => {
@@ -1089,7 +1089,7 @@ const webBrowsing = {
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
             return result;
           },
@@ -1097,7 +1097,7 @@ const webBrowsing = {
           _perplexitySearch: async function (query) {
             if (!process.env.AGENT_PERPLEXITY_API_KEY) {
               this.super.introspect(
-                `${this.caller}: I can't use Perplexity searching because the user has not defined the required API key.\nVisit: [https://console.perplexity.ai](https://console.perplexity.ai) to create the API key.`
+                `${this.caller}: I can't use Perplexity searching because the user has not defined the required API key.\nVisit: [https://console.perplexity.ai](https://console.perplexity.ai) to create the API key.`,
               );
               return `Search is disabled and no content was found. This functionality is disabled because the user has not set it up yet.`;
             }
@@ -1105,7 +1105,7 @@ const webBrowsing = {
             this.super.introspect(
               `${this.caller}: Using Perplexity to search for "${
                 query.length > 100 ? `${query.slice(0, 100)}...` : query
-              }"`
+              }"`,
             );
 
             const { response, error } = await fetch(
@@ -1121,7 +1121,7 @@ const webBrowsing = {
                   max_results: 5,
                   max_tokens_per_page: 2048,
                 }),
-              }
+              },
             )
               .then((res) => {
                 if (res.ok) return res.json();
@@ -1129,10 +1129,10 @@ const webBrowsing = {
                   `${res.status} - ${res.statusText}. params: ${JSON.stringify({
                     auth: this.middleTruncate(
                       process.env.AGENT_PERPLEXITY_API_KEY,
-                      5
+                      5,
                     ),
                     q: query,
-                  })}`
+                  })}`,
                 );
               })
               .then((data) => {
@@ -1140,7 +1140,7 @@ const webBrowsing = {
               })
               .catch((e) => {
                 this.super.handlerProps.log(
-                  `Perplexity Search Error: ${e.message}`
+                  `Perplexity Search Error: ${e.message}`,
                 );
                 return { response: null, error: e.message };
               });
@@ -1166,7 +1166,7 @@ const webBrowsing = {
 
             const result = JSON.stringify(data);
             this.super.introspect(
-              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
             );
 
             return result;

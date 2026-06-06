@@ -29,7 +29,7 @@ class NvidiaNimLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.#log(
-      `Loaded with model: ${this.model} with context window: ${this.promptWindowLimit()}`
+      `Loaded with model: ${this.model} with context window: ${this.promptWindowLimit()}`,
     );
   }
 
@@ -60,7 +60,7 @@ class NvidiaNimLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: parseNvidiaNimBasePath(
-        basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH
+        basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH,
       ),
       apiKey: null,
     });
@@ -75,7 +75,7 @@ class NvidiaNimLLM {
     const modelInfo = model.find((model) => model.id === modelId);
     if (!modelInfo) return;
     process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT = Number(
-      modelInfo.max_model_len || 4096
+      modelInfo.max_model_len || 4096,
     );
   }
 
@@ -155,7 +155,7 @@ class NvidiaNimLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `NVIDIA NIM chat: ${this.model} is not valid or defined model for chat completion!`
+        `NVIDIA NIM chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -167,7 +167,7 @@ class NvidiaNimLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -194,7 +194,7 @@ class NvidiaNimLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `NVIDIA NIM chat: ${this.model} is not valid or defined model for chat completion!`
+        `NVIDIA NIM chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

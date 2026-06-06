@@ -37,7 +37,7 @@ const aibitat = new AIbitat({
 async function main() {
   if (!process.env.OPEN_AI_KEY)
     throw new Error(
-      "This example requires a valid OPEN_AI_KEY in the env.development file"
+      "This example requires a valid OPEN_AI_KEY in the env.development file",
     );
   await aibitat.start({
     from: "pm",

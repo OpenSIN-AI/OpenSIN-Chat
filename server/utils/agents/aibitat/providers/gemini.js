@@ -25,7 +25,7 @@ class GeminiProvider extends Provider {
           const text = await cloned.text().catch(() => "(unreadable)");
           this.providerLog(
             `[Gemini.fetch] ${res.status} from ${typeof url === "string" ? url : url?.toString()}\n` +
-              `  Response body: ${text}`
+              `  Response body: ${text}`,
           );
           try {
             const json = safeJsonParse(text, {});
@@ -57,7 +57,7 @@ class GeminiProvider extends Provider {
   get supportsAgentStreaming() {
     if (!this.model.startsWith("gemini")) {
       this.providerLog(
-        `Gemini: ${this.model} does not support tool call streaming.`
+        `Gemini: ${this.model} does not support tool call streaming.`,
       );
       return false;
     }
@@ -131,14 +131,14 @@ class GeminiProvider extends Provider {
         if (!message.hasOwnProperty("originalFunctionCall")) {
           this.providerLog(
             "[Gemini.#formatMessages]: message did not pass back the originalFunctionCall. We need this to map the function call to the correct id.",
-            { message: JSON.stringify(message, null, 2) }
+            { message: JSON.stringify(message, null, 2) },
           );
           return;
         }
 
         const prefixedName = this.prefixToolCall(
           message.originalFunctionCall.name,
-          "add"
+          "add",
         );
         formattedMessages.push(
           {
@@ -154,7 +154,7 @@ class GeminiProvider extends Provider {
                   : {}),
                 function: {
                   arguments: JSON.stringify(
-                    message.originalFunctionCall.arguments
+                    message.originalFunctionCall.arguments,
                   ),
                   name: prefixedName,
                 },
@@ -167,7 +167,7 @@ class GeminiProvider extends Provider {
             tool_call_id: message.originalFunctionCall.id,
             name: prefixedName,
             content: message.content,
-          }
+          },
         );
         return;
       }
@@ -295,7 +295,7 @@ class GeminiProvider extends Provider {
           // Keep the first call only; extra calls would cause a 400 next request.
           if (completion.functionCall) {
             this.providerLog(
-              `Discarding parallel tool call (only one tool per turn is supported): ${toolCall?.function?.name}`
+              `Discarding parallel tool call (only one tool per turn is supported): ${toolCall?.function?.name}`,
             );
             continue;
           }
@@ -317,7 +317,7 @@ class GeminiProvider extends Provider {
       if (completion.functionCall) {
         completion.functionCall.arguments = safeJsonParse(
           completion.functionCall.arguments,
-          {}
+          {},
         );
         return {
           textResponse: completion.content,

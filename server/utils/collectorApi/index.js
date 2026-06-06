@@ -35,12 +35,12 @@ class CollectorApi {
   static getCollectorPort() {
     if (!("COLLECTOR_PORT" in process.env)) return this.DEFAULT_COLLECTOR_PORT;
     const port = Number(
-      process.env.COLLECTOR_PORT || this.DEFAULT_COLLECTOR_PORT
+      process.env.COLLECTOR_PORT || this.DEFAULT_COLLECTOR_PORT,
     );
     if (Number.isInteger(port) && port > 0 && port <= 65535) return port;
 
     console.warn(
-      `Invalid COLLECTOR_PORT "${process.env.COLLECTOR_PORT}". Falling back to ${this.DEFAULT_COLLECTOR_PORT}.`
+      `Invalid COLLECTOR_PORT "${process.env.COLLECTOR_PORT}". Falling back to ${this.DEFAULT_COLLECTOR_PORT}.`,
     );
     return this.DEFAULT_COLLECTOR_PORT;
   }
@@ -115,7 +115,7 @@ class CollectorApi {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
         "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
+          new EncryptionManager().xPayload,
         ),
       },
       body: data,
@@ -156,7 +156,7 @@ class CollectorApi {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
         "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
+          new EncryptionManager().xPayload,
         ),
       },
       body: data,
@@ -191,7 +191,7 @@ class CollectorApi {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
         "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
+          new EncryptionManager().xPayload,
         ),
       },
       body: data,
@@ -229,7 +229,7 @@ class CollectorApi {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
         "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
+          new EncryptionManager().xPayload,
         ),
       },
       body: data,
@@ -257,7 +257,7 @@ class CollectorApi {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
         "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
+          new EncryptionManager().xPayload,
         ),
       },
       // Extensions do a lot of work, and may take a while to complete so we need to increase the timeout
@@ -296,7 +296,7 @@ class CollectorApi {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
         "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
+          new EncryptionManager().xPayload,
         ),
       },
       body: data,
@@ -337,7 +337,7 @@ class CollectorApi {
         "Content-Type": "application/json",
         "X-Integrity": this.comkey.sign(data),
         "X-Payload-Signer": this.comkey.encrypt(
-          new EncryptionManager().xPayload
+          new EncryptionManager().xPayload,
         ),
       },
       body: data,

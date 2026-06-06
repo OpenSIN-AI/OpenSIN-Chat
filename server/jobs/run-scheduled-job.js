@@ -47,13 +47,13 @@ process.on("message", async (payload) => {
     const transitioned = await ScheduledJobRun.markRunning(runId);
     if (!transitioned) {
       log(
-        `Scheduled job "${job.name}" (id=${job.id}) is no longer queued, skipping`
+        `Scheduled job "${job.name}" (id=${job.id}) is no longer queued, skipping`,
       );
       return;
     }
 
     log(
-      `Starting scheduled job: "${job.name}" (id=${job.id}) with timeout ${SCHEDULED_JOB_TIMEOUT_MS}ms`
+      `Starting scheduled job: "${job.name}" (id=${job.id}) with timeout ${SCHEDULED_JOB_TIMEOUT_MS}ms`,
     );
     await ScheduledJob.updateRunTimestamps(job.id);
     const { handler, thoughts, toolCalls, state } = agentActionCb();
@@ -91,7 +91,7 @@ process.on("message", async (payload) => {
           result,
           timestamp: Date.now(),
         });
-      }
+      },
     );
 
     const startTime = Date.now();
@@ -100,7 +100,7 @@ process.on("message", async (payload) => {
       new Promise((_, reject) => {
         timeoutId = setTimeout(
           () => reject(new Error("SCHEDULED_JOB_TIMEOUT")),
-          SCHEDULED_JOB_TIMEOUT_MS
+          SCHEDULED_JOB_TIMEOUT_MS,
         );
       }),
     ]).finally(() => {

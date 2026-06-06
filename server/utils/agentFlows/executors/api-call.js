@@ -49,7 +49,7 @@ async function executeApiCall(config, context) {
     return await response
       .text()
       .then((text) =>
-        safeJsonParse(text, "Failed to parse output from API call block")
+        safeJsonParse(text, "Failed to parse output from API call block"),
       );
   } catch (error) {
     console.error(error);

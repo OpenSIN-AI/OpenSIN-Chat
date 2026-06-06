@@ -128,7 +128,7 @@ class AIbitat {
       console.trace(); // print this for user report debugging so call stack is visible
       throw new TypeError(
         `aibitat.provider must be a string tag (e.g. "openai"), got ${typeof value}. ` +
-          `Use aibitat.providerInstance to to get/store the provider instance.`
+          `Use aibitat.providerInstance to to get/store the provider instance.`,
       );
     }
     this._provider = value;
@@ -487,7 +487,7 @@ class AIbitat {
        */
       // eslint-disable-next-line
       {}
-    ) => null
+    ) => null,
   ) {
     this.emitter.on("replyError", listener);
     return this;
@@ -670,13 +670,13 @@ class AIbitat {
     // warn if the group is underpopulated
     if (nodes.length < 3) {
       console.warn(
-        `- Group (${channel}) is underpopulated with ${nodes.length} agents. Direct communication would be more efficient.`
+        `- Group (${channel}) is underpopulated with ${nodes.length} agents. Direct communication would be more efficient.`,
       );
     }
 
     // get the nodes that have not reached the maximum number of rounds
     const availableNodes = nodes.filter(
-      (node) => !this.hasReachedMaximumRounds(channel, node)
+      (node) => !this.hasReachedMaximumRounds(channel, node),
     );
 
     // remove the last node that chatted with the channel, so it doesn't chat again
@@ -882,7 +882,7 @@ ${this.getHistory({ to: route.to })
 Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token usage from tool call bloat by up to \x1b[0;93m80% per request\x1b[0m.
 https://docs.openafd.com/agent/intelligent-tool-selection
 
-`
+`,
         );
       }
     }
@@ -911,16 +911,16 @@ https://docs.openafd.com/agent/intelligent-tool-selection
     let content;
     if (this.providerInstance.supportsAgentStreaming) {
       this.handlerProps.log?.(
-        "[DEBUG] Provider supports agent streaming - will use async execution!"
+        "[DEBUG] Provider supports agent streaming - will use async execution!",
       );
       content = await this.handleAsyncExecution(
         messages,
         functions,
-        route.from
+        route.from,
       );
     } else {
       this.handlerProps.log?.(
-        "[DEBUG] Provider does not support agent streaming - will use synchronous execution!"
+        "[DEBUG] Provider does not support agent streaming - will use synchronous execution!",
       );
       content = await this.handleExecution(messages, functions, route.from);
     }
@@ -962,7 +962,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
     messages = [],
     functions = [],
     byAgent = null,
-    depth = 0
+    depth = 0,
   ) {
     const eventHandler = (type, data) => {
       this?.socket?.send(type, data);
@@ -973,7 +973,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
 
     /** @type {{ functionCall: { name: string, arguments: string }, textResponse: string }} */
     const completionStream = await this.#safeProviderCall(() =>
-      this.providerInstance.stream(messages, functions, eventHandler)
+      this.providerInstance.stream(messages, functions, eventHandler),
     );
 
     if (completionStream.functionCall) {
@@ -983,10 +983,10 @@ https://docs.openafd.com/agent/intelligent-tool-selection
 
       if (reachedToolLimit) {
         this.handlerProps?.log?.(
-          `[warning]: Maximum tool call limit (${this.maxToolCalls}) reached. Executing final tool call then generating response.`
+          `[warning]: Maximum tool call limit (${this.maxToolCalls}) reached. Executing final tool call then generating response.`,
         );
         this?.introspect?.(
-          `Maximum tool call limit (${this.maxToolCalls}) reached. After this tool I will generate a final response.`
+          `Maximum tool call limit (${this.maxToolCalls}) reached. After this tool I will generate a final response.`,
         );
       }
 
@@ -1003,7 +1003,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
           ],
           reachedToolLimit ? [] : functions,
           byAgent,
-          depth + 1
+          depth + 1,
         );
       }
 
@@ -1011,12 +1011,12 @@ https://docs.openafd.com/agent/intelligent-tool-selection
 
       if (this.providerInstance?.verbose) {
         this?.introspect?.(
-          `${fn.caller} is executing \`${name}\` tool ${JSON.stringify(args, null, 2)}`
+          `${fn.caller} is executing \`${name}\` tool ${JSON.stringify(args, null, 2)}`,
         );
       }
 
       this.handlerProps?.log?.(
-        `[debug]: ${fn.caller} is attempting to call \`${name}\` tool ${JSON.stringify(args, null, 2)}`
+        `[debug]: ${fn.caller} is attempting to call \`${name}\` tool ${JSON.stringify(args, null, 2)}`,
       );
 
       const result = await fn.handler(args);
@@ -1036,11 +1036,11 @@ https://docs.openafd.com/agent/intelligent-tool-selection
       if (this.skipHandleExecution) {
         this.skipHandleExecution = false;
         this?.introspect?.(
-          `The tool call has direct output enabled! The result will be returned directly to the chat without any further processing and no further tool calls will be run.`
+          `The tool call has direct output enabled! The result will be returned directly to the chat without any further processing and no further tool calls will be run.`,
         );
         this?.introspect?.(`Tool use completed.`);
         this.handlerProps?.log?.(
-          `${fn.caller} tool call resulted in direct output! Returning raw result as string. NO MORE TOOL CALLS WILL BE EXECUTED.`
+          `${fn.caller} tool call resulted in direct output! Returning raw result as string. NO MORE TOOL CALLS WILL BE EXECUTED.`,
         );
         const directOutputUUID = completionStream?.uuid || v4();
         eventHandler?.("reportStreamEvent", {
@@ -1071,7 +1071,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
 
       if (toolAttachments.length > 0) {
         this.handlerProps?.log?.(
-          `[debug]: Injecting ${toolAttachments.length} image attachment(s) from tool result`
+          `[debug]: Injecting ${toolAttachments.length} image attachment(s) from tool result`,
         );
         newMessages.push({
           role: "user",
@@ -1084,7 +1084,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
         newMessages,
         reachedToolLimit ? [] : functions,
         byAgent,
-        depth + 1
+        depth + 1,
       );
     }
 
@@ -1116,7 +1116,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
     functions = [],
     byAgent = null,
     depth = 0,
-    msgUUID = null
+    msgUUID = null,
   ) {
     // Create a stable UUID at the start of execution for event correlation
     if (!msgUUID) msgUUID = v4();
@@ -1129,7 +1129,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
 
     // get the chat completion
     const completion = await this.#safeProviderCall(() =>
-      this.providerInstance.complete(messages, functions)
+      this.providerInstance.complete(messages, functions),
     );
 
     if (completion.functionCall) {
@@ -1139,10 +1139,10 @@ https://docs.openafd.com/agent/intelligent-tool-selection
 
       if (reachedToolLimit) {
         this.handlerProps?.log?.(
-          `[warning]: Maximum tool call limit (${this.maxToolCalls}) reached. Executing final tool call then generating response.`
+          `[warning]: Maximum tool call limit (${this.maxToolCalls}) reached. Executing final tool call then generating response.`,
         );
         this?.introspect?.(
-          `Maximum tool call limit (${this.maxToolCalls}) reached. After this tool I will generate a final response.`
+          `Maximum tool call limit (${this.maxToolCalls}) reached. After this tool I will generate a final response.`,
         );
       }
 
@@ -1160,7 +1160,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
           reachedToolLimit ? [] : functions,
           byAgent,
           depth + 1,
-          msgUUID
+          msgUUID,
         );
       }
 
@@ -1168,12 +1168,12 @@ https://docs.openafd.com/agent/intelligent-tool-selection
 
       if (this.providerInstance?.verbose) {
         this?.introspect?.(
-          `[debug]: ${fn.caller} is attempting to call \`${name}\` tool`
+          `[debug]: ${fn.caller} is attempting to call \`${name}\` tool`,
         );
       }
 
       this.handlerProps?.log?.(
-        `[debug]: ${fn.caller} is attempting to call \`${name}\` tool`
+        `[debug]: ${fn.caller} is attempting to call \`${name}\` tool`,
       );
 
       const result = await fn.handler(args);
@@ -1187,11 +1187,11 @@ https://docs.openafd.com/agent/intelligent-tool-selection
       if (this.skipHandleExecution) {
         this.skipHandleExecution = false;
         this?.introspect?.(
-          `The tool call has direct output enabled! The result will be returned directly to the chat without any further processing and no further tool calls will be run.`
+          `The tool call has direct output enabled! The result will be returned directly to the chat without any further processing and no further tool calls will be run.`,
         );
         this?.introspect?.(`Tool use completed.`);
         this.handlerProps?.log?.(
-          `${fn.caller} tool call resulted in direct output! Returning raw result as string. NO MORE TOOL CALLS WILL BE EXECUTED.`
+          `${fn.caller} tool call resulted in direct output! Returning raw result as string. NO MORE TOOL CALLS WILL BE EXECUTED.`,
         );
         eventHandler?.("reportStreamEvent", {
           type: "usageMetrics",
@@ -1215,7 +1215,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
 
       if (toolAttachments.length > 0) {
         this.handlerProps?.log?.(
-          `[debug]: Injecting ${toolAttachments.length} image attachment(s) from tool result`
+          `[debug]: Injecting ${toolAttachments.length} image attachment(s) from tool result`,
         );
         newMessages.push({
           role: "user",
@@ -1229,7 +1229,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
         reachedToolLimit ? [] : functions,
         byAgent,
         depth + 1,
-        msgUUID
+        msgUUID,
       );
     }
 
@@ -1421,7 +1421,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
         return new Providers.CerebrasProvider({ model: config.model });
       default:
         throw new Error(
-          `Unknown provider: ${config.provider}. Please use a valid provider.`
+          `Unknown provider: ${config.provider}. Please use a valid provider.`,
         );
     }
   }

@@ -12,7 +12,7 @@ class LiteLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.LITE_LLM_BASE_PATH)
       throw new Error(
-        "LiteLLM must have a valid base path to use for the api."
+        "LiteLLM must have a valid base path to use for the api.",
       );
 
     this.className = "LiteLLM";
@@ -135,7 +135,7 @@ class LiteLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (

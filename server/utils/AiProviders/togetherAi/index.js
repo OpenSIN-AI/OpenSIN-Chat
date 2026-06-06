@@ -12,7 +12,7 @@ const { safeJsonParse } = require("../../http");
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "togetherAi")
-    : path.resolve(__dirname, `../../../storage/models/togetherAi`)
+    : path.resolve(__dirname, `../../../storage/models/togetherAi`),
 );
 
 async function togetherAiModels(apiKey = null) {
@@ -27,7 +27,7 @@ async function togetherAiModels(apiKey = null) {
       // 1 Week in MS
       return safeJsonParse(
         fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-        []
+        [],
       );
     }
   }
@@ -70,7 +70,7 @@ async function togetherAiModels(apiKey = null) {
     if (fs.existsSync(cacheModelPath)) {
       return safeJsonParse(
         fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-        []
+        [],
       );
     }
     return [];
@@ -181,7 +181,7 @@ class TogetherAiLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `TogetherAI chat: ${this.model} is not valid for chat completion!`
+        `TogetherAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -193,7 +193,7 @@ class TogetherAiLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -220,7 +220,7 @@ class TogetherAiLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `TogetherAI chat: ${this.model} is not valid for chat completion!`
+        `TogetherAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

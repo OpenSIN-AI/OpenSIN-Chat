@@ -54,12 +54,12 @@ class CohereEmbedder {
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
-        })
+        }),
       );
     }
 
     const { data = [], error = null } = await Promise.all(
-      embeddingRequests
+      embeddingRequests,
     ).then((results) => {
       const errors = results
         .filter((res) => !!res.error)
@@ -69,7 +69,7 @@ class CohereEmbedder {
       if (errors.length > 0) {
         let uniqueErrors = new Set();
         errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
+          uniqueErrors.add(`[${error.type}]: ${error.message}`),
         );
         return { data: [], error: Array.from(uniqueErrors).join(", ") };
       }

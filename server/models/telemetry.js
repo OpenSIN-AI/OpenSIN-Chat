@@ -90,7 +90,7 @@ const Telemetry = {
     event,
     eventProperties = {},
     subUserId = null,
-    silent = false
+    silent = false,
   ) {
     try {
       const { client, distinctId: systemId } = await this.connect();

@@ -14,7 +14,7 @@ const {
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "openrouter")
-    : path.resolve(__dirname, `../../../storage/models/openrouter`)
+    : path.resolve(__dirname, `../../../storage/models/openrouter`),
 );
 
 class OpenRouterLLM {
@@ -100,7 +100,7 @@ class OpenRouterLLM {
    */
   #parseTimeout() {
     this.log(
-      `OpenRouter timeout is set to ${process.env.OPENROUTER_TIMEOUT_MS ?? this.defaultTimeout}ms`
+      `OpenRouter timeout is set to ${process.env.OPENROUTER_TIMEOUT_MS ?? this.defaultTimeout}ms`,
     );
     if (isNaN(Number(process.env.OPENROUTER_TIMEOUT_MS)))
       return this.defaultTimeout;
@@ -130,7 +130,7 @@ class OpenRouterLLM {
       return false;
 
     this.log(
-      "Model cache is not present or stale. Fetching from OpenRouter API."
+      "Model cache is not present or stale. Fetching from OpenRouter API.",
     );
     await fetchOpenRouterModels();
     return;
@@ -152,7 +152,7 @@ class OpenRouterLLM {
     if (!fs.existsSync(this.cacheModelPath)) return {};
     return safeJsonParse(
       fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
+      {},
     );
   }
 
@@ -165,7 +165,7 @@ class OpenRouterLLM {
     const availableModels = fs.existsSync(cacheModelPath)
       ? safeJsonParse(
           fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-          {}
+          {},
         )
       : {};
     return availableModels[modelName]?.maxLength || 4096;
@@ -241,7 +241,7 @@ class OpenRouterLLM {
   async getChatCompletion(messages = null, { temperature = 0.7, user = null }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `OpenRouter chat: ${this.model} is not valid for chat completion!`
+        `OpenRouter chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -257,7 +257,7 @@ class OpenRouterLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -265,7 +265,7 @@ class OpenRouterLLM {
       result?.output?.choices?.length === 0
     )
       throw new Error(
-        `Invalid response body returned from OpenRouter: ${result.output?.error?.message || "Unknown error"} ${result.output?.error?.code || "Unknown code"}`
+        `Invalid response body returned from OpenRouter: ${result.output?.error?.message || "Unknown error"} ${result.output?.error?.code || "Unknown code"}`,
       );
 
     return {
@@ -285,11 +285,11 @@ class OpenRouterLLM {
 
   async streamGetChatCompletion(
     messages = null,
-    { temperature = 0.7, user = null }
+    { temperature = 0.7, user = null },
   ) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `OpenRouter chat: ${this.model} is not valid for chat completion!`
+        `OpenRouter chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -357,7 +357,7 @@ class OpenRouterLLM {
 
         if (diffMs >= timeoutThresholdMs) {
           console.log(
-            `OpenRouter stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`
+            `OpenRouter stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {
             uuid,
@@ -543,14 +543,14 @@ async function fetchOpenRouterModels() {
         JSON.stringify(models),
         {
           encoding: "utf-8",
-        }
+        },
       );
       fs.writeFileSync(
         path.resolve(cacheFolder, ".cached_at"),
         String(Number(new Date())),
         {
           encoding: "utf-8",
-        }
+        },
       );
 
       return models;

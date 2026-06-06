@@ -25,7 +25,7 @@ async function handleReset(ctx, chatId) {
 
   await ctx.bot.sendMessage(
     chatId,
-    "Chat history has been cleared for the LLM. Previous messages still appear above but won't be used as context."
+    "Chat history has been cleared for the LLM. Previous messages still appear above but won't be used as context.",
   );
 }
 

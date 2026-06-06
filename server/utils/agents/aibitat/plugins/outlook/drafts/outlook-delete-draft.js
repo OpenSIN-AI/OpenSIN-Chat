@@ -36,7 +36,7 @@ module.exports.OutlookDeleteDraft = {
           handler: async function ({ draftId }) {
             try {
               this.super.handlerProps.log(
-                `Using the outlook-delete-draft tool.`
+                `Using the outlook-delete-draft tool.`,
               );
 
               if (!draftId) {
@@ -51,27 +51,27 @@ module.exports.OutlookDeleteDraft = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Deleting draft ${draftId}...`
+                `${this.caller}: Deleting draft ${draftId}...`,
               );
 
               const result = await outlookLib.deleteDraft(draftId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to delete draft - ${result.error}`
+                  `${this.caller}: Failed to delete draft - ${result.error}`,
                 );
                 return `Error deleting draft: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully deleted draft`
+                `${this.caller}: Successfully deleted draft`,
               );
 
               return `Successfully deleted draft (ID: ${draftId}).`;

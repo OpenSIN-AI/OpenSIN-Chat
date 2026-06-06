@@ -77,7 +77,7 @@ function validateCSVData(data) {
 
   if (maxColumns !== minColumns) {
     warnings.push(
-      `Inconsistent column count: rows have between ${minColumns} and ${maxColumns} columns. Missing cells will be empty.`
+      `Inconsistent column count: rows have between ${minColumns} and ${maxColumns} columns. Missing cells will be empty.`,
     );
   }
 
@@ -240,7 +240,7 @@ function autoFitColumns(worksheet, minWidth = 8, maxWidth = 50) {
         } else if (typeof cellValue === "object" && cellValue.richText) {
           cellLength = cellValue.richText.reduce(
             (acc, rt) => acc + (rt.text?.length || 0),
-            0
+            0,
           );
         } else {
           cellLength = String(cellValue).length;
@@ -264,7 +264,7 @@ function autoFitColumns(worksheet, minWidth = 8, maxWidth = 50) {
  */
 function applyHeaderStyle(
   worksheet,
-  { bold = true, fill = "FF4472C4", fontColor = "FFFFFFFF" } = {}
+  { bold = true, fill = "FF4472C4", fontColor = "FFFFFFFF" } = {},
 ) {
   const headerRow = worksheet.getRow(1);
   if (!headerRow || headerRow.cellCount === 0) return;

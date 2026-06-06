@@ -40,13 +40,13 @@ module.exports.FilesystemGetFileInfo = {
           handler: async function ({ path: filePath = "" }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-get-file-info tool.`
+                `Using the filesystem-get-file-info tool.`,
               );
 
               const validPath = await filesystem.validatePath(filePath);
 
               this.super.introspect(
-                `${this.caller}: Getting info for ${filePath}`
+                `${this.caller}: Getting info for ${filePath}`,
               );
 
               const info = await filesystem.getFileStats(validPath);
@@ -56,13 +56,13 @@ module.exports.FilesystemGetFileInfo = {
                 .join("\n");
 
               this.super.introspect(
-                `Successfully retrieved info for ${filePath}`
+                `Successfully retrieved info for ${filePath}`,
               );
 
               return formatted;
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-get-file-info error: ${e.message}`
+                `filesystem-get-file-info error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error getting file info: ${e.message}`;

@@ -72,7 +72,7 @@ class ConnectionStringParser {
             (option) =>
               encodeURIComponent(option) +
               "=" +
-              encodeURIComponent(connectionStringObject.options[option])
+              encodeURIComponent(connectionStringObject.options[option]),
           )
           .join("&");
     }
@@ -94,7 +94,7 @@ class ConnectionStringParser {
         "(?:/([^:@,/?=&]+)?)?" + // Endpoint (Group 5)
         "(?:\\?([^:@,/?]+)?)?" + // Options (Group 6)
         "\\s*$", // Optional whitespace padding at the end of the line
-      "gi"
+      "gi",
     );
     const connectionStringObject = {};
 
@@ -137,7 +137,7 @@ class ConnectionStringParser {
           encodeURIComponent(address.host) +
           (address.port
             ? ":" + encodeURIComponent(address.port.toString(10))
-            : "")
+            : ""),
       )
       .join(",");
   }
@@ -171,7 +171,7 @@ class ConnectionStringParser {
 
       if (i >= 0) {
         result[decodeURIComponent(option.substring(0, i))] = decodeURIComponent(
-          option.substring(i + 1)
+          option.substring(i + 1),
         );
       }
     });

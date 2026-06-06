@@ -83,7 +83,7 @@ function outlookAgentEndpoints(app) {
         console.error("Outlook auth URL error:", e);
         response.status(500).json({ success: false, error: e.message });
       }
-    }
+    },
   );
 
   app.get(
@@ -96,13 +96,13 @@ function outlookAgentEndpoints(app) {
         if (error) {
           console.error("Outlook OAuth error:", error, error_description);
           return response.redirect(
-            `/?outlook_auth=error&message=${encodeURIComponent(error_description || error)}`
+            `/?outlook_auth=error&message=${encodeURIComponent(error_description || error)}`,
           );
         }
 
         if (!code) {
           return response.redirect(
-            "/?outlook_auth=error&message=No authorization code received"
+            "/?outlook_auth=error&message=No authorization code received",
           );
         }
 
@@ -115,20 +115,20 @@ function outlookAgentEndpoints(app) {
 
         if (!result.success) {
           return response.redirect(
-            `${frontendUrl}/settings/agents?outlook_auth=error&message=${encodeURIComponent(result.error)}`
+            `${frontendUrl}/settings/agents?outlook_auth=error&message=${encodeURIComponent(result.error)}`,
           );
         }
 
         return response.redirect(
-          `${frontendUrl}/settings/agents?outlook_auth=success`
+          `${frontendUrl}/settings/agents?outlook_auth=success`,
         );
       } catch (e) {
         console.error("Outlook OAuth callback error:", e);
         response.redirect(
-          `/?outlook_auth=error&message=${encodeURIComponent(e.message)}`
+          `/?outlook_auth=error&message=${encodeURIComponent(e.message)}`,
         );
       }
-    }
+    },
   );
 
   app.get(
@@ -166,7 +166,7 @@ function outlookAgentEndpoints(app) {
         console.error("Outlook status error:", e);
         response.status(500).json({ success: false, error: e.message });
       }
-    }
+    },
   );
 
   app.post(
@@ -183,7 +183,7 @@ function outlookAgentEndpoints(app) {
         console.error("Outlook revoke error:", e);
         response.status(500).json({ success: false, error: e.message });
       }
-    }
+    },
   );
 }
 

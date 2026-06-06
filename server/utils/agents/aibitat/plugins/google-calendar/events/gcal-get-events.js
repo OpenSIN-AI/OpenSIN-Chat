@@ -71,7 +71,7 @@ module.exports.GCalGetEvents = {
             try {
               this.super.handlerProps.log(`Using the gcal-get-events tool.`);
               this.super.introspect(
-                `${this.caller}: Fetching events from ${startDate} to ${endDate}${query ? ` matching "${query}"` : ""}...`
+                `${this.caller}: Fetching events from ${startDate} to ${endDate}${query ? ` matching "${query}"` : ""}...`,
               );
 
               const result = await googleCalendarLib.getEvents(
@@ -79,19 +79,19 @@ module.exports.GCalGetEvents = {
                 endDate,
                 calendarId,
                 query,
-                limit
+                limit,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get events - ${result.error}`
+                  `${this.caller}: Failed to get events - ${result.error}`,
                 );
                 return `Error getting events: ${result.error}`;
               }
 
               const { totalEvents, returnedEvents, events } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${totalEvents} event(s), returning ${returnedEvents}`
+                `${this.caller}: Found ${totalEvents} event(s), returning ${returnedEvents}`,
               );
 
               if (totalEvents === 0) {
@@ -146,7 +146,7 @@ module.exports.GCalGetEvents = {
               return response;
             } catch (e) {
               this.super.handlerProps.log(
-                `gcal-get-events error: ${e.message}`
+                `gcal-get-events error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error getting events: ${e.message}`;

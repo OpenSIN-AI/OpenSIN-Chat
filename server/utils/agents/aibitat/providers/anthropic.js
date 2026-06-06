@@ -128,7 +128,7 @@ class AnthropicProvider extends Provider {
           const prevMessage = chatMessages[index - 1];
           if (prevMessage?.role === "assistant") {
             const toolUse = prevMessage.content.find(
-              (item) => item.type === "tool_use"
+              (item) => item.type === "tool_use",
             );
             if (toolUse) {
               processedMessages.push({
@@ -154,7 +154,7 @@ class AnthropicProvider extends Provider {
           : [{ type: "text", text: message.content }];
         content = content.filter(
           (item) =>
-            item.type !== "text" || (item.text && item.text.trim().length > 0)
+            item.type !== "text" || (item.text && item.text.trim().length > 0),
         );
 
         // Add image attachments if present (for vision/multimodal support)
@@ -200,7 +200,7 @@ class AnthropicProvider extends Provider {
 
         return processedMessages;
       },
-      []
+      [],
     );
 
     // The first message must be from the user.
@@ -256,7 +256,7 @@ class AnthropicProvider extends Provider {
             ? { tools: this.#formatFunctions(functions) }
             : {}),
         },
-        { headers: { "anthropic-beta": "tools-2024-04-04" } } // Required to we can use tools.
+        { headers: { "anthropic-beta": "tools-2024-04-04" } }, // Required to we can use tools.
       );
 
       const result = {
@@ -331,7 +331,7 @@ class AnthropicProvider extends Provider {
       if (result.functionCall) {
         result.functionCall.arguments = safeJsonParse(
           result.functionCall.arguments,
-          {}
+          {},
         );
         messages.push({
           role: "assistant",
@@ -403,7 +403,7 @@ class AnthropicProvider extends Provider {
             ? { tools: this.#formatFunctions(functions) }
             : {}),
         },
-        { headers: { "anthropic-beta": "tools-2024-04-04" } } // Required to we can use tools.
+        { headers: { "anthropic-beta": "tools-2024-04-04" } }, // Required to we can use tools.
       );
 
       // Record usage from response (Anthropic uses input_tokens/output_tokens)
@@ -414,7 +414,7 @@ class AnthropicProvider extends Provider {
       if (response.stop_reason === "tool_use") {
         // Get the tool call explicitly.
         const toolCall = response.content.find(
-          (res) => res.type === "tool_use"
+          (res) => res.type === "tool_use",
         );
 
         // Here we need the chain of thought the model may or may not have generated alongside the call.

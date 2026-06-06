@@ -67,21 +67,21 @@ module.exports.OutlookSearch = {
             try {
               this.super.handlerProps.log(`Using the outlook-search tool.`);
               this.super.introspect(
-                `${this.caller}: Searching Outlook with query "${query}"`
+                `${this.caller}: Searching Outlook with query "${query}"`,
               );
 
               const result = await outlookLib.search(query, limit, skip);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Outlook search failed - ${result.error}`
+                  `${this.caller}: Outlook search failed - ${result.error}`,
                 );
                 return `Error searching Outlook: ${result.error}`;
               }
 
               const { messages, resultCount } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${resultCount} messages matching query`
+                `${this.caller}: Found ${resultCount} messages matching query`,
               );
 
               if (resultCount === 0) {

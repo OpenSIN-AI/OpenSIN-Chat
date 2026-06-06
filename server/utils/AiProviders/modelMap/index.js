@@ -31,7 +31,7 @@ class ContextWindowFinder {
   cacheLocation = path.resolve(
     process.env.STORAGE_DIR
       ? path.resolve(process.env.STORAGE_DIR, "models", "context-windows")
-      : path.resolve(__dirname, `../../../storage/models/context-windows`)
+      : path.resolve(__dirname, `../../../storage/models/context-windows`),
   );
   cacheFilePath = path.resolve(this.cacheLocation, "context-windows.json");
   cacheFileExpiryPath = path.resolve(this.cacheLocation, ".cached_at");
@@ -46,7 +46,7 @@ class ContextWindowFinder {
     // If the cache is stale or not found at all, pull the model map from remote
     if (this.isCacheStale || !fs.existsSync(this.cacheFilePath)) {
       this.#pullRemoteModelMap().catch((err) =>
-        this.log("Background model map pull failed:", err)
+        this.log("Background model map pull failed:", err),
       );
     }
   }
@@ -86,13 +86,13 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
 
     if (this.isCacheStale && !this.seenStaleCacheWarning) {
       this.log(
-        "Model map cache is stale - some model context windows may be incorrect. This is OK and the model map will be re-pulled on next boot."
+        "Model map cache is stale - some model context windows may be incorrect. This is OK and the model map will be re-pulled on next boot.",
       );
       this.seenStaleCacheWarning = true;
     }
 
     return JSON.parse(
-      fs.readFileSync(this.cacheFilePath, { encoding: "utf8" })
+      fs.readFileSync(this.cacheFilePath, { encoding: "utf8" }),
     );
   }
 
@@ -106,7 +106,7 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
       const response = await fetch(ContextWindowFinder.remoteUrl);
       if (response.status !== 200) {
         throw new Error(
-          "Failed to fetch remote model map - non 200 status code"
+          "Failed to fetch remote model map - non 200 status code",
         );
       }
 
@@ -115,7 +115,7 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
       await Promise.all([
         fs.promises.writeFile(
           this.cacheFilePath,
-          JSON.stringify(modelMap, null, 2)
+          JSON.stringify(modelMap, null, 2),
         ),
         fs.promises.writeFile(this.cacheFileExpiryPath, Date.now().toString()),
       ]);
@@ -133,7 +133,7 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
       // If the models is null/falsey or has no keys, throw an error
       if (typeof models !== "object")
         throw new Error(
-          `Invalid model map for ${provider} - models is not an object`
+          `Invalid model map for ${provider} - models is not an object`,
         );
       if (!models || Object.keys(models).length === 0)
         throw new Error(`Invalid model map for ${provider} - no models found!`);
@@ -142,7 +142,7 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
       for (const [model, contextWindow] of Object.entries(models)) {
         if (isNaN(contextWindow) || contextWindow <= 0) {
           this.log(
-            `${provider}:${model} - context window is not a positive number. Got ${contextWindow}.`
+            `${provider}:${model} - context window is not a positive number. Got ${contextWindow}.`,
           );
           delete models[model];
           continue;
@@ -162,11 +162,11 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
     const formattedModelMap = {};
 
     for (const [provider, liteLLMProviderTag] of Object.entries(
-      ContextWindowFinder.trackedProviders
+      ContextWindowFinder.trackedProviders,
     )) {
       formattedModelMap[provider] = {};
       const matches = Object.entries(modelMap).filter(
-        ([_key, config]) => config.litellm_provider === liteLLMProviderTag
+        ([_key, config]) => config.litellm_provider === liteLLMProviderTag,
       );
       for (const [key, config] of matches) {
         const contextWindow = Number(config.max_input_tokens);

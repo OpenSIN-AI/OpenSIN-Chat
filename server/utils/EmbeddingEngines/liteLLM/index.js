@@ -9,7 +9,7 @@ class LiteLLMEmbedder {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.LITE_LLM_BASE_PATH)
       throw new Error(
-        "LiteLLM must have a valid base path to use for the api."
+        "LiteLLM must have a valid base path to use for the api.",
       );
     this.basePath = process.env.LITE_LLM_BASE_PATH;
     this.openai = new OpenAIApi({
@@ -25,7 +25,7 @@ class LiteLLMEmbedder {
 
   async embedTextInput(textInput) {
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
     return result?.[0] || [];
   }
@@ -59,12 +59,12 @@ class LiteLLMEmbedder {
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
-        })
+        }),
       );
     }
 
     const { data = [], error = null } = await Promise.all(
-      embeddingRequests
+      embeddingRequests,
     ).then((results) => {
       // If any errors were returned from LiteLLM abort the entire sequence because the embeddings
       // will be incomplete.
@@ -75,7 +75,7 @@ class LiteLLMEmbedder {
       if (errors.length > 0) {
         let uniqueErrors = new Set();
         errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
+          uniqueErrors.add(`[${error.type}]: ${error.message}`),
         );
 
         return {

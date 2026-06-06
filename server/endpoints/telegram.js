@@ -66,7 +66,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   /**
@@ -87,7 +87,7 @@ function telegramEndpoints(app) {
 
         // Verify the token with Telegram API
         const verification = await TelegramBotService.verifyToken(
-          String(bot_token)
+          String(bot_token),
         );
         if (!verification.valid) {
           return response.status(400).json({
@@ -105,7 +105,7 @@ function telegramEndpoints(app) {
             const { workspace } = await Workspace.new(
               `${verification.username} Workspace`,
               null,
-              { chatMode: "automatic" }
+              { chatMode: "automatic" },
             );
             if (workspace) workspaceSlug = workspace.slug;
           }
@@ -135,7 +135,7 @@ function telegramEndpoints(app) {
             ...storedConfig,
             bot_token: encryptToken(String(bot_token)),
             active: true,
-          }
+          },
         );
         if (error) return response.status(500).json({ success: false, error });
 
@@ -155,7 +155,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -172,7 +172,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
@@ -190,7 +190,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
@@ -206,7 +206,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.get(
@@ -221,7 +221,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -243,7 +243,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -265,7 +265,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -287,7 +287,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -313,7 +313,7 @@ function telegramEndpoints(app) {
 
         const { error } = await ExternalCommunicationConnector.updateConfig(
           "telegram",
-          updates
+          updates,
         );
         if (error) {
           return response.status(500).json({ success: false, error });
@@ -328,7 +328,7 @@ function telegramEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 }
 

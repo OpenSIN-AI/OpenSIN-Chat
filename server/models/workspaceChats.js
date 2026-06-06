@@ -34,7 +34,7 @@ const WorkspaceChats = {
     workspaceId = null,
     userId = null,
     limit = null,
-    orderBy = null
+    orderBy = null,
   ) {
     if (!workspaceId || !userId) return [];
     try {
@@ -60,7 +60,7 @@ const WorkspaceChats = {
     workspaceId = null,
     apiSessionId = null,
     limit = null,
-    orderBy = null
+    orderBy = null,
   ) {
     if (!workspaceId || !apiSessionId) return [];
     try {
@@ -84,7 +84,7 @@ const WorkspaceChats = {
   forWorkspace: async function (
     workspaceId = null,
     limit = null,
-    orderBy = null
+    orderBy = null,
   ) {
     if (!workspaceId) return [];
     try {
@@ -133,7 +133,7 @@ const WorkspaceChats = {
   markThreadHistoryInvalid: async function (
     workspaceId = null,
     user = null,
-    threadId = null
+    threadId = null,
   ) {
     if (!workspaceId || !threadId) return;
     try {
@@ -205,7 +205,7 @@ const WorkspaceChats = {
     clause = {},
     limit = null,
     orderBy = null,
-    offset = null
+    offset = null,
   ) {
     try {
       const chats = await prisma.workspace_chats.findMany({
@@ -237,7 +237,7 @@ const WorkspaceChats = {
     clause = {},
     limit = null,
     offset = null,
-    orderBy = null
+    orderBy = null,
   ) {
     const { Workspace } = require("./workspace");
     const { User } = require("./user");
@@ -352,7 +352,7 @@ const WorkspaceChats = {
       threadId: null,
       include: true,
       apiSessionId: null,
-    }
+    },
   ) {
     try {
       const payload = {

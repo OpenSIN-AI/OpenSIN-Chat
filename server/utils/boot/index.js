@@ -20,7 +20,7 @@ const { TelegramBotService } = require("../telegramBot");
 function bootSSL(app, port = 3001) {
   try {
     console.log(
-      `\x1b[33m[SSL BOOT ENABLED]\x1b[0m Loading the certificate and key for HTTPS mode...`
+      `\x1b[33m[SSL BOOT ENABLED]\x1b[0m Loading the certificate and key for HTTPS mode...`,
     );
     const fs = require("fs");
     const https = require("https");
@@ -53,7 +53,7 @@ function bootSSL(app, port = 3001) {
         HTTPS_KEY_PATH: process.env.HTTPS_KEY_PATH,
         HTTPS_CERT_PATH: process.env.HTTPS_CERT_PATH,
         stacktrace: e.stack,
-      }
+      },
     );
     return bootHTTP(app, port);
   }

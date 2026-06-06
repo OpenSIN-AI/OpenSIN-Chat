@@ -5,14 +5,14 @@ async function resetMemory(
   _message,
   msgUUID,
   user = null,
-  thread = null
+  thread = null,
 ) {
   // If thread is present we are wanting to reset this specific thread. Not the whole workspace.
   thread
     ? await WorkspaceChats.markThreadHistoryInvalid(
         workspace.id,
         user,
-        thread.id
+        thread.id,
       )
     : await WorkspaceChats.markHistoryInvalid(workspace.id, user);
 

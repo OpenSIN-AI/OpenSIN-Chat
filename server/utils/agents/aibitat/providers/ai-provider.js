@@ -107,7 +107,7 @@ class Provider {
   providerLog(text, ...args) {
     console.log(
       `\x1b[36m[AgentLLM${this?.model ? ` - ${this.model}` : ""}]\x1b[0m ${text}`,
-      ...args
+      ...args,
     );
   }
 
@@ -138,7 +138,7 @@ class Provider {
     if (!providerTag) return false;
     return (
       process.env.PROVIDER_SUPPORTS_NATIVE_TOOL_CALLING?.includes(
-        providerTag
+        providerTag,
       ) || false
     );
   }
@@ -222,7 +222,7 @@ class Provider {
           apiKey: process.env.GENERIC_OPEN_AI_API_KEY,
           maxTokens: toValidNumber(
             process.env.GENERIC_OPEN_AI_MAX_TOKENS,
-            1024
+            1024,
           ),
           ...config,
         });
@@ -232,7 +232,7 @@ class Provider {
         return new ChatOpenAI({
           configuration: {
             baseURL: AzureOpenAiLLM.formatBaseUrl(
-              process.env.AZURE_OPENAI_ENDPOINT
+              process.env.AZURE_OPENAI_ENDPOINT,
             ),
           },
           apiKey: process.env.AZURE_OPENAI_KEY,
@@ -431,7 +431,7 @@ class Provider {
         return new ChatOpenAI({
           configuration: {
             baseURL: parseDockerModelRunnerEndpoint(
-              process.env.DOCKER_MODEL_RUNNER_BASE_PATH
+              process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
             ),
           },
           apiKey: null,
@@ -455,7 +455,7 @@ class Provider {
         });
       default:
         throw new Error(
-          `Unsupported provider ${JSON.stringify(provider)} for this task.`
+          `Unsupported provider ${JSON.stringify(provider)} for this task.`,
         );
     }
   }
@@ -469,7 +469,7 @@ class Provider {
   static contextLimit(provider = "openai", modelName) {
     if (typeof provider !== "string") {
       console.log(
-        `\x1b[43m\x1b[30m[.contextLimit warning] A non-string provider for .contextLimit was given — Returning fallback context limit of 8000.\x1b[0m\n\x1b[43m\x1b[30mThis is a bug and should be reported so that context windows are properly managed by OpenAfD Chat.\x1b[0m`
+        `\x1b[43m\x1b[30m[.contextLimit warning] A non-string provider for .contextLimit was given — Returning fallback context limit of 8000.\x1b[0m\n\x1b[43m\x1b[30mThis is a bug and should be reported so that context windows are properly managed by OpenAfD Chat.\x1b[0m`,
       );
       console.trace();
       return 8_000;
@@ -478,7 +478,7 @@ class Provider {
     const llm = getLLMProviderClass({ provider });
     if (!llm || !llm.hasOwnProperty("promptWindowLimit")) {
       console.warn(
-        `\x1b[33m[.contextLimit warning]\x1b[0m Could not determine .promptWindowLimit for provider ${provider}. This could lead to incorrect context window management by OpenAfD Chat since we cannot determine the context window limit for this provider/model combination.`
+        `\x1b[33m[.contextLimit warning]\x1b[0m Could not determine .promptWindowLimit for provider ${provider}. This could lead to incorrect context window management by OpenAfD Chat since we cannot determine the context window limit for this provider/model combination.`,
       );
       return 8_000;
     }
@@ -515,7 +515,7 @@ class Provider {
       : await SystemPromptVariables.expandSystemPromptVariables(
           workspace.openAiPrompt,
           user?.id || null,
-          workspace.id
+          workspace.id,
         );
     return promptWithMemories({
       systemPrompt: basePrompt,
@@ -591,7 +591,7 @@ class Provider {
    */
   formatMessagesWithAttachments(messages = []) {
     return messages.map((message) =>
-      this.formatMessageWithAttachments(message)
+      this.formatMessageWithAttachments(message),
     );
   }
 
@@ -689,7 +689,7 @@ class Provider {
     if (!!result.functionCall?.arguments)
       result.functionCall.arguments = safeJsonParse(
         result.functionCall.arguments,
-        {}
+        {},
       );
 
     return {

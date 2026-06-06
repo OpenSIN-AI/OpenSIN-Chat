@@ -54,7 +54,7 @@ function liveSyncEndpoints(app) {
         console.error(e);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -75,10 +75,10 @@ function liveSyncEndpoints(app) {
               workspace: true,
             },
           },
-        }
+        },
       );
       response.status(200).json({ queues });
-    }
+    },
   );
 
   // Should be in workspace routes, but is here for now.
@@ -107,7 +107,7 @@ function liveSyncEndpoints(app) {
         console.error("Error processing the watch status update:", error);
         return response.status(500).end();
       }
-    }
+    },
   );
 }
 

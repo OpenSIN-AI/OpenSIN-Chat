@@ -32,7 +32,7 @@ function workspaceThreadEndpoints(app) {
         const workspace = response.locals.workspace;
         const { thread, message } = await WorkspaceThread.new(
           workspace,
-          user?.id
+          user?.id,
         );
         await Telemetry.sendTelemetry(
           "workspace_thread_created",
@@ -44,7 +44,7 @@ function workspaceThreadEndpoints(app) {
             TTSSelection: process.env.TTS_PROVIDER || "native",
             LLMModel: getModelTag(),
           },
-          user?.id
+          user?.id,
         );
 
         await EventLogs.logEvent(
@@ -52,14 +52,14 @@ function workspaceThreadEndpoints(app) {
           {
             workspaceName: workspace?.name || "Unknown Workspace",
           },
-          user?.id
+          user?.id,
         );
         response.status(200).json({ thread, message });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -87,7 +87,7 @@ function workspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -106,7 +106,7 @@ function workspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -129,7 +129,7 @@ function workspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -153,7 +153,7 @@ function workspaceThreadEndpoints(app) {
             include: true,
           },
           null,
-          { id: "asc" }
+          { id: "asc" },
         );
 
         response.status(200).json({ history: convertToChatHistory(history) });
@@ -161,7 +161,7 @@ function workspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -177,14 +177,14 @@ function workspaceThreadEndpoints(app) {
         const currentThread = response.locals.thread;
         const { thread, message } = await WorkspaceThread.update(
           currentThread,
-          data
+          data,
         );
         response.status(200).json({ thread, message });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -213,7 +213,7 @@ function workspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -260,7 +260,7 @@ function workspaceThreadEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

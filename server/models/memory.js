@@ -185,7 +185,7 @@ const Memory = {
       const globalCount = await this.countForScope(
         existing.userId,
         null,
-        "global"
+        "global",
       );
       if (globalCount >= this.GLOBAL_LIMIT)
         return {
@@ -226,7 +226,7 @@ const Memory = {
       const wsCount = await this.countForScope(
         existing.userId,
         workspaceId,
-        "workspace"
+        "workspace",
       );
       if (wsCount >= this.WORKSPACE_LIMIT)
         return {
@@ -346,7 +346,7 @@ const Memory = {
     userId,
     workspaceId,
     newMemories,
-    globalSlots
+    globalSlots,
   ) {
     const result = { workspaceCount: 0, globalCount: 0, updatedCount: 0 };
     try {
@@ -358,13 +358,13 @@ const Memory = {
               typeof m.content === "string" &&
               m.content.trim().length > 0 &&
               ["WORKSPACE", "GLOBAL"].includes(m.scope) &&
-              ["create", "update"].includes(m.action)
+              ["create", "update"].includes(m.action),
           )
         : [];
 
       const creates = safeMemories.filter((m) => m.action === "create");
       const updates = safeMemories.filter(
-        (m) => m.action === "update" && typeof m.updateId === "number"
+        (m) => m.action === "update" && typeof m.updateId === "number",
       );
 
       const newWorkspace = creates

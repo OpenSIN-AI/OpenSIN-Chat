@@ -107,7 +107,7 @@ module.exports.OutlookCreateDraft = {
           }) {
             try {
               this.super.handlerProps.log(
-                `Using the outlook-create-draft tool.`
+                `Using the outlook-create-draft tool.`,
               );
 
               const isReply = !!replyToMessageId;
@@ -122,7 +122,7 @@ module.exports.OutlookCreateDraft = {
 
               const attachmentResult = await prepareAttachmentsWithValidation(
                 this,
-                attachments
+                attachments,
               );
               if (!attachmentResult.success) {
                 return `Error with attachment: ${attachmentResult.error}`;
@@ -153,7 +153,7 @@ module.exports.OutlookCreateDraft = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -162,16 +162,16 @@ module.exports.OutlookCreateDraft = {
               let result;
               if (isReply) {
                 this.super.introspect(
-                  `${this.caller}: Creating draft ${replyAll ? "reply-all" : "reply"} to message...`
+                  `${this.caller}: Creating draft ${replyAll ? "reply-all" : "reply"} to message...`,
                 );
                 result = await outlookLib.createDraftReply(
                   replyToMessageId,
                   body,
-                  replyAll
+                  replyAll,
                 );
               } else {
                 this.super.introspect(
-                  `${this.caller}: Creating Outlook draft to ${to}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`
+                  `${this.caller}: Creating Outlook draft to ${to}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`,
                 );
 
                 const options = { isHtml };
@@ -185,20 +185,20 @@ module.exports.OutlookCreateDraft = {
                   to,
                   subject,
                   body,
-                  options
+                  options,
                 );
               }
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to create draft - ${result.error}`
+                  `${this.caller}: Failed to create draft - ${result.error}`,
                 );
                 return `Error creating draft: ${result.error}`;
               }
 
               const draft = result.data;
               this.super.introspect(
-                `${this.caller}: Successfully created draft (ID: ${draft.draftId})`
+                `${this.caller}: Successfully created draft (ID: ${draft.draftId})`,
               );
 
               if (isReply) {

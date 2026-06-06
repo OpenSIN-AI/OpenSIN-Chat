@@ -47,7 +47,7 @@ function agentFlowEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   // List all available flows
@@ -68,7 +68,7 @@ function agentFlowEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   // Get a specific flow by UUID
@@ -97,7 +97,7 @@ function agentFlowEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   // Run a specific flow
@@ -160,7 +160,7 @@ function agentFlowEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   // Toggle flow active status
@@ -193,7 +193,7 @@ function agentFlowEndpoints(app) {
         console.error("Error toggling flow:", error);
         response.status(500).json({ success: false, error: error.message });
       }
-    }
+    },
   );
 }
 

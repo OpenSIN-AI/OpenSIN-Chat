@@ -63,7 +63,7 @@ const Document = {
     limit = null,
     orderBy = null,
     include = null,
-    select = null
+    select = null,
   ) {
     try {
       const results = await prisma.workspace_documents.findMany({
@@ -137,13 +137,13 @@ const Document = {
       const { vectorized, error } = await VectorDb.addDocumentToNamespace(
         workspace.slug,
         { ...data, docId },
-        path
+        path,
       );
 
       if (!vectorized) {
         console.error(
           "Failed to vectorize",
-          metadata?.title || newDoc.filename
+          metadata?.title || newDoc.filename,
         );
         failedToEmbed.push(metadata?.title || newDoc.filename);
         errors.add(error);
@@ -196,7 +196,7 @@ const Document = {
         workspaceName: workspace?.name || "Unknown Workspace",
         numberOfDocumentsAdded: additions.length,
       },
-      userId
+      userId,
     );
     return { failedToEmbed, errors: Array.from(errors), embedded };
   },
@@ -213,7 +213,7 @@ const Document = {
       if (!document) continue;
       await VectorDb.deleteDocumentFromNamespace(
         workspace.slug,
-        document.docId
+        document.docId,
       );
 
       try {
@@ -234,7 +234,7 @@ const Document = {
         workspaceName: workspace?.name || "Unknown Workspace",
         numberOfDocuments: removals.length,
       },
-      userId
+      userId,
     );
     return true;
   },
@@ -255,7 +255,7 @@ const Document = {
     if (!id) throw new Error("No workspace document id provided for update");
 
     const validKeys = Object.keys(data).filter((key) =>
-      this.writable.includes(key)
+      this.writable.includes(key),
     );
     if (validKeys.length === 0)
       return { document: { id }, message: "No valid fields to update!" };
@@ -325,7 +325,7 @@ const Document = {
       if (!docLocation)
         return console.log(
           "No document location provided for embedding",
-          docLocation
+          docLocation,
         );
 
       const slugs = wsSlugs
@@ -346,12 +346,12 @@ const Document = {
       for (const workspace of workspaces) {
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           workspace,
-          [docLocation]
+          [docLocation],
         );
         if (failedToEmbed.length > 0)
           return console.log(
             `Failed to embed document into workspace ${workspace.slug}`,
-            errors
+            errors,
           );
         console.log(`Document embedded into workspace ${workspace.slug}...`);
       }

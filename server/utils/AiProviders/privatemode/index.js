@@ -37,7 +37,7 @@ class PrivatemodeLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.log(
-      `Privatemode LLM initialized with ${this.model}. ctx: ${this.promptWindowLimit()}`
+      `Privatemode LLM initialized with ${this.model}. ctx: ${this.promptWindowLimit()}`,
     );
   }
 
@@ -48,7 +48,7 @@ class PrivatemodeLLM {
    * @returns {string}
    */
   static parseBasePath(
-    providedBasePath = process.env.PRIVATEMODE_LLM_BASE_PATH
+    providedBasePath = process.env.PRIVATEMODE_LLM_BASE_PATH,
   ) {
     try {
       const baseURL = new URL(providedBasePath);
@@ -143,7 +143,7 @@ class PrivatemodeLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `Privatemode chat: ${this.model} is not valid or defined model for chat completion!`
+        `Privatemode chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -151,7 +151,7 @@ class PrivatemodeLLM {
         model: this.model,
         messages,
         temperature,
-      })
+      }),
     );
 
     if (
@@ -178,7 +178,7 @@ class PrivatemodeLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `Privatemode chat: ${this.model} is not valid or defined model for chat completion!`
+        `Privatemode chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

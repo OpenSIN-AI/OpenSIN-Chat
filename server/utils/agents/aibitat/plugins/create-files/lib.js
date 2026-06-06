@@ -34,7 +34,7 @@ class CreateFilesManager {
       await fs.mkdir(this.#outputDirectory, { recursive: true });
     } catch (error) {
       console.error(
-        `Warning: Could not create output directory ${this.#outputDirectory}: ${error.message}`
+        `Warning: Could not create output directory ${this.#outputDirectory}: ${error.message}`,
       );
     }
 
@@ -81,14 +81,14 @@ class CreateFilesManager {
     const fileSizeMB = (fileSizeBytes / (1024 * 1024)).toFixed(2);
 
     console.log(
-      `[CreateFilesManager] writeBinaryFile starting - path: ${filePath}, size: ${fileSizeKB}KB (${fileSizeMB}MB)`
+      `[CreateFilesManager] writeBinaryFile starting - path: ${filePath}, size: ${fileSizeKB}KB (${fileSizeMB}MB)`,
     );
 
     await fs.mkdir(parentDir, { recursive: true });
     await fs.writeFile(filePath, buffer);
 
     console.log(
-      `[CreateFilesManager] writeBinaryFile completed - file saved to: ${filePath}`
+      `[CreateFilesManager] writeBinaryFile completed - file saved to: ${filePath}`,
     );
   }
 
@@ -158,7 +158,7 @@ class CreateFilesManager {
   registerOutput(aibitat, type, payload) {
     if (!aibitat) {
       console.warn(
-        "[CreateFilesManager] Cannot register output - aibitat instance not provided"
+        "[CreateFilesManager] Cannot register output - aibitat instance not provided",
       );
       return;
     }
@@ -169,7 +169,7 @@ class CreateFilesManager {
 
     aibitat._pendingOutputs.push({ type, payload });
     console.log(
-      `[CreateFilesManager] Registered output: type=${type}, total pending=${aibitat._pendingOutputs.length}`
+      `[CreateFilesManager] Registered output: type=${type}, total pending=${aibitat._pendingOutputs.length}`,
     );
   }
 
@@ -219,7 +219,7 @@ class CreateFilesManager {
     await this.writeBinaryFile(storagePath, buffer);
 
     console.log(
-      `[CreateFilesManager] saveGeneratedFile - saved ${filename} (${(buffer.length / 1024).toFixed(2)}KB)`
+      `[CreateFilesManager] saveGeneratedFile - saved ${filename} (${(buffer.length / 1024).toFixed(2)}KB)`,
     );
 
     return {
@@ -241,7 +241,7 @@ class CreateFilesManager {
     // Defense-in-depth: validate filename format to prevent path traversal
     if (!this.parseFilename(filename)) {
       console.warn(
-        `[CreateFilesManager] getGeneratedFile - rejected invalid filename format: ${filename}`
+        `[CreateFilesManager] getGeneratedFile - rejected invalid filename format: ${filename}`,
       );
       return null;
     }
@@ -319,7 +319,7 @@ class CreateFilesManager {
       if (format === "dataUri") {
         const base64 = fsSync.readFileSync(
           path.join(assetsPath, filename),
-          "base64"
+          "base64",
         );
         return `image/png;base64,${base64}`;
       }

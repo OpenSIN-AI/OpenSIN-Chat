@@ -150,12 +150,12 @@ async function runSectionAgent({
   ];
 
   const provider = childAibitat.getProviderForConfig(
-    childAibitat.defaultProvider
+    childAibitat.defaultProvider,
   );
   provider.attachHandlerProps(childAibitat.handlerProps);
 
   log(
-    `[SectionAgent] Running sub-agent for section: "${section.title}" with ${functions.length} tools`
+    `[SectionAgent] Running sub-agent for section: "${section.title}" with ${functions.length} tools`,
   );
 
   let agentName = `@section-builder`;
@@ -166,14 +166,14 @@ async function runSectionAgent({
         provider,
         messages,
         functions,
-        agentName
+        agentName,
       );
     } else {
       await childAibitat.handleExecution(
         provider,
         messages,
         functions,
-        agentName
+        agentName,
       );
     }
   } catch (error) {
@@ -188,13 +188,13 @@ async function runSectionAgent({
   const slides = childAibitat._submittedSlides;
   if (!Array.isArray(slides) || slides.length === 0) {
     log(
-      `[SectionAgent] No slides submitted for "${section.title}", using fallback`
+      `[SectionAgent] No slides submitted for "${section.title}", using fallback`,
     );
     return { ...buildFallbackSlides(section), citations };
   }
 
   log(
-    `[SectionAgent] Section "${section.title}" produced ${slides.length} slides, ${citations.length} citations`
+    `[SectionAgent] Section "${section.title}" produced ${slides.length} slides, ${citations.length} citations`,
   );
   return { slides, citations };
 }
@@ -211,7 +211,7 @@ function buildSectionPrompt({
 
   if (section.keyPoints?.length > 0) {
     parts.push(
-      `\nKey Points to Cover:\n${section.keyPoints.map((p) => `- ${p}`).join("\n")}`
+      `\nKey Points to Cover:\n${section.keyPoints.map((p) => `- ${p}`).join("\n")}`,
     );
   }
 
@@ -224,7 +224,7 @@ function buildSectionPrompt({
   }
 
   parts.push(
-    `\nCreate 2-5 detailed slides and submit them using the submit-section-slides tool. Only use web search/scraping if you genuinely lack the information needed.`
+    `\nCreate 2-5 detailed slides and submit them using the submit-section-slides tool. Only use web search/scraping if you genuinely lack the information needed.`,
   );
 
   return parts.join("\n");

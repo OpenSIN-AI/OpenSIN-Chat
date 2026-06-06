@@ -58,19 +58,19 @@ module.exports.SqlAgentListTables = {
             try {
               this.super.handlerProps.log(`Using the sql-list-tables tool.`);
               const databaseConfig = (await listSQLConnections()).find(
-                (db) => db.database_id === database_id
+                (db) => db.database_id === database_id,
               );
               if (!databaseConfig) {
                 this.super.handlerProps.log(
                   `sql-list-tables failed to find config!`,
-                  database_id
+                  database_id,
                 );
                 return `No database connection for ${database_id} was found!`;
               }
 
               const db = getDBClient(databaseConfig.engine, databaseConfig);
               this.super.introspect(
-                `${this.caller}: Checking what are the available tables in the ${databaseConfig.database_id} database.`
+                `${this.caller}: Checking what are the available tables in the ${databaseConfig.database_id} database.`,
               );
 
               const sqlQuery = db.getTablesSql();
@@ -80,13 +80,13 @@ module.exports.SqlAgentListTables = {
               const queryParams = isParameterized ? sqlQuery.params : [];
 
               this.super.introspect(
-                `Running SQL: ${formatQueryForDisplay(queryString, queryParams)}`
+                `Running SQL: ${formatQueryForDisplay(queryString, queryParams)}`,
               );
               const result = await db.runQuery(queryString, queryParams);
               if (result.error) {
                 this.super.handlerProps.log(
                   `sql-list-tables tool reported error`,
-                  result.error
+                  result.error,
                 );
                 this.super.introspect(`Error: ${result.error}`);
                 return `There was an error running the query: ${result.error}`;

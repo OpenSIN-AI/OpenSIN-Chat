@@ -55,7 +55,7 @@ class AzureOpenAiProvider extends Provider {
         messages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -86,7 +86,7 @@ class AzureOpenAiProvider extends Provider {
         messages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

@@ -29,7 +29,7 @@ function mobileEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   /**
@@ -45,7 +45,7 @@ function mobileEndpoints(app) {
         const body = reqBody(request);
         const updates = await MobileDevice.update(
           Number(request.params.id),
-          body
+          body,
         );
         if (updates.error)
           return response.status(400).json({ error: updates.error });
@@ -54,7 +54,7 @@ function mobileEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   /**
@@ -78,7 +78,7 @@ function mobileEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -93,7 +93,7 @@ function mobileEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   /**
@@ -140,7 +140,7 @@ function mobileEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -153,7 +153,7 @@ function mobileEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

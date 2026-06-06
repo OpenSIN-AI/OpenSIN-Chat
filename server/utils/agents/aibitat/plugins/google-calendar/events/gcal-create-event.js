@@ -164,21 +164,21 @@ module.exports.GCalCreateEvent = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Creating event "${params.title}"...`
+                `${this.caller}: Creating event "${params.title}"...`,
               );
 
               const result = await googleCalendarLib.createEvent(params);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to create event - ${result.error}`
+                  `${this.caller}: Failed to create event - ${result.error}`,
                 );
                 return `Error creating event: ${result.error}`;
               }
@@ -187,7 +187,7 @@ module.exports.GCalCreateEvent = {
               const eventData = result.data.event || result.data.eventSeries;
 
               this.super.introspect(
-                `${this.caller}: Created ${isRecurring ? "recurring " : ""}event "${eventData.title}"`
+                `${this.caller}: Created ${isRecurring ? "recurring " : ""}event "${eventData.title}"`,
               );
 
               let timeInfo;
@@ -220,7 +220,7 @@ module.exports.GCalCreateEvent = {
               return response;
             } catch (e) {
               this.super.handlerProps.log(
-                `gcal-create-event error: ${e.message}`
+                `gcal-create-event error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating event: ${e.message}`;

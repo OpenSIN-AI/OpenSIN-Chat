@@ -63,7 +63,7 @@ async function processDocumentAttachments(attachments = []) {
   const processingOnline = await Collector.online();
   if (!processingOnline) {
     console.warn(
-      "Collector API is not online, skipping document attachment processing"
+      "Collector API is not online, skipping document attachment processing",
     );
     return { parsedDocuments: [], imageAttachments };
   }
@@ -78,7 +78,7 @@ async function processDocumentAttachments(attachments = []) {
 
       const buffer = Buffer.from(base64Data, "base64");
       const filename = sanitizeFileName(
-        normalizePath(attachment.name || `attachment-${uuidv4()}`)
+        normalizePath(attachment.name || `attachment-${uuidv4()}`),
       );
       const filePath = normalizePath(path.join(hotdirPath, filename));
       if (!isWithin(hotdirPath, filePath))
@@ -92,7 +92,7 @@ async function processDocumentAttachments(attachments = []) {
     } catch (error) {
       console.error(
         `Error processing attachment ${attachment.name}:`,
-        error.message
+        error.message,
       );
     }
   }
@@ -413,7 +413,7 @@ async function chatSync({
       chatHistory,
       attachments,
     },
-    rawHistory
+    rawHistory,
   );
 
   // Send the text completion.
@@ -790,14 +790,14 @@ async function streamChat({
       chatHistory,
       attachments,
     },
-    rawHistory
+    rawHistory,
   );
 
   // If streaming is not explicitly enabled for connector
   // we do regular waiting of a response and send a single chunk.
   if (LLMConnector.streamingEnabled() !== true) {
     console.log(
-      `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`
+      `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`,
     );
     const { textResponse, metrics: performanceMetrics } =
       await LLMConnector.getChatCompletion(messages, {

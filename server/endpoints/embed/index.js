@@ -63,7 +63,7 @@ function embeddedEndpoints(app) {
         });
         response.end();
       }
-    }
+    },
   );
 
   app.get(
@@ -78,7 +78,7 @@ function embeddedEndpoints(app) {
           sessionId,
           null,
           null,
-          true
+          true,
         );
 
         response.status(200).json({ history: convertToChatHistory(history) });
@@ -86,7 +86,7 @@ function embeddedEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -103,7 +103,7 @@ function embeddedEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

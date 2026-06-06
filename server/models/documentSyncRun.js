@@ -11,7 +11,7 @@ const DocumentSyncRun = {
     try {
       if (!this.statuses.hasOwnProperty(status))
         throw new Error(
-          `DocumentSyncRun status ${status} is not a valid status.`
+          `DocumentSyncRun status ${status} is not a valid status.`,
         );
 
       const run = await prisma.document_sync_executions.create({
@@ -44,7 +44,7 @@ const DocumentSyncRun = {
     clause = {},
     limit = null,
     orderBy = null,
-    include = {}
+    include = {},
   ) {
     try {
       const results = await prisma.document_sync_executions.findMany({

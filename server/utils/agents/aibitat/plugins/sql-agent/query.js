@@ -62,18 +62,18 @@ module.exports.SqlAgentQuery = {
             this.super.handlerProps.log(`Using the sql-query tool.`);
             try {
               const databaseConfig = (await listSQLConnections()).find(
-                (db) => db.database_id === database_id
+                (db) => db.database_id === database_id,
               );
               if (!databaseConfig) {
                 this.super.handlerProps.log(
                   `sql-query failed to find config!`,
-                  database_id
+                  database_id,
                 );
                 return `No database connection for ${database_id} was found!`;
               }
 
               this.super.introspect(
-                `${this.caller}: Im going to run a query on the ${database_id} to get an answer.`
+                `${this.caller}: Im going to run a query on the ${database_id} to get an answer.`,
               );
               const db = getDBClient(databaseConfig.engine, databaseConfig);
 
@@ -82,7 +82,7 @@ module.exports.SqlAgentQuery = {
               if (result.error) {
                 this.super.handlerProps.log(
                   `sql-query tool reported error`,
-                  result.error
+                  result.error,
                 );
                 this.super.introspect(`Error: ${result.error}`);
                 return `There was an error running the query: ${result.error}`;

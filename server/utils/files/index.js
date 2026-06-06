@@ -65,7 +65,7 @@ async function viewLocalFiles() {
             pathToFile: path.join(folderPath, subfile),
             liveSyncAvailable,
             cachefilename,
-          })
+          }),
         );
         filenames[cachefilename] = subfile;
       }
@@ -155,7 +155,7 @@ async function getDocumentsByFolder(folderName = "") {
     doc.pinnedWorkspaces = pinnedWorkspacesByDocument[doc.name] || [];
     doc.watched = Object.prototype.hasOwnProperty.call(
       watchedDocumentsFilenames,
-      doc.name
+      doc.name,
     );
   }
 
@@ -180,7 +180,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
   if (!exists) return { exists, chunks: [] };
 
   console.log(
-    `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`
+    `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`,
   );
   const rawData = fs.readFileSync(file, "utf8");
   return { exists: true, chunks: JSON.parse(rawData) };
@@ -191,7 +191,7 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
 async function storeVectorResult(vectorData = [], filename = null) {
   if (!filename) return;
   console.log(
-    `Caching vectorized results of ${filename} to prevent duplicated embedding.`
+    `Caching vectorized results of ${filename} to prevent duplicated embedding.`,
   );
   if (!fs.existsSync(vectorCachePath)) fs.mkdirSync(vectorCachePath);
 
@@ -307,7 +307,7 @@ function sanitizeFileName(fileName) {
   if (!fileName) return fileName;
   return fileName.replace(
     /[<>:"/\\|?*\u201C\u201D\u201E\u201F\u2018\u2019\u201A\u201B]/g,
-    ""
+    "",
   );
 }
 
@@ -343,7 +343,7 @@ async function getPinnedWorkspacesByDocument(filenames = []) {
       {
         workspaceId: true,
         docpath: true,
-      }
+      },
     )
   ).reduce((result, { workspaceId, docpath }) => {
     const filename = filenames[docpath];
@@ -370,7 +370,7 @@ async function getWatchedDocumentFilenames(filenames = []) {
       null,
       null,
       null,
-      { workspaceId: true, docpath: true }
+      { workspaceId: true, docpath: true },
     )
   ).reduce((result, { workspaceId, docpath }) => {
     const filename = filenames[docpath];
@@ -441,7 +441,7 @@ async function fileToPickerData({
   }
 
   console.log(
-    `Stream-parsing ${path.basename(pathToFile)} because it exceeds the ${FILE_READ_SIZE_THRESHOLD} byte limit.`
+    `Stream-parsing ${path.basename(pathToFile)} because it exceeds the ${FILE_READ_SIZE_THRESHOLD} byte limit.`,
   );
   const stream = fs.createReadStream(pathToFile, { encoding: "utf8" });
   try {
@@ -507,7 +507,7 @@ const REQUIRED_FILE_OBJECT_FIELDS = [
  */
 function hasRequiredMetadata(metadata = {}) {
   return REQUIRED_FILE_OBJECT_FIELDS.every((field) =>
-    metadata.hasOwnProperty(field)
+    metadata.hasOwnProperty(field),
   );
 }
 

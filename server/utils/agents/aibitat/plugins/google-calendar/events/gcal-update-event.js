@@ -113,32 +113,32 @@ module.exports.GCalUpdateEvent = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Updating event ${eventId}...`
+                `${this.caller}: Updating event ${eventId}...`,
               );
 
               const result = await googleCalendarLib.updateEvent(
                 eventId,
                 calendarId,
-                updates
+                updates,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to update event - ${result.error}`
+                  `${this.caller}: Failed to update event - ${result.error}`,
                 );
                 return `Error updating event: ${result.error}`;
               }
 
               const event = result.data.event;
               this.super.introspect(
-                `${this.caller}: Updated event "${event.title}"`
+                `${this.caller}: Updated event "${event.title}"`,
               );
 
               let timeInfo;
@@ -160,7 +160,7 @@ module.exports.GCalUpdateEvent = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gcal-update-event error: ${e.message}`
+                `gcal-update-event error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error updating event: ${e.message}`;

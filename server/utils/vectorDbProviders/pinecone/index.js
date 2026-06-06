@@ -37,7 +37,7 @@ class PineconeDB extends VectorDatabase {
 
     return Object.values(namespaces).reduce(
       (a, b) => a + (b?.recordCount || 0),
-      0
+      0,
     );
   }
 
@@ -72,7 +72,7 @@ class PineconeDB extends VectorDatabase {
       if (match.score < similarityThreshold) return;
       if (filterIdentifiers.includes(sourceIdentifier(match.metadata))) {
         this.logger(
-          "Pinecone: A source was filtered from context as it's parent document is pinned."
+          "Pinecone: A source was filtered from context as it's parent document is pinned.",
         );
         return;
       }
@@ -116,7 +116,7 @@ class PineconeDB extends VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     const { DocumentVectors } = require("../../../models/vectors");
     try {
@@ -159,11 +159,11 @@ class PineconeDB extends VectorDatabase {
           await SystemSettings.getValueOrFallback({
             label: "text_splitter_chunk_size",
           }),
-          EmbedderEngine?.embeddingMaxChunkLength
+          EmbedderEngine?.embeddingMaxChunkLength,
         ),
         chunkOverlap: await SystemSettings.getValueOrFallback(
           { label: "text_splitter_chunk_overlap" },
-          20
+          20,
         ),
         chunkHeaderMeta: TextSplitter.buildHeaderMeta(metadata),
         chunkPrefix: EmbedderEngine?.embeddingPrefix,
@@ -191,7 +191,7 @@ class PineconeDB extends VectorDatabase {
         }
       } else {
         throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
+          "Could not embed document chunks! This document will not be recorded.",
         );
       }
 
@@ -274,7 +274,7 @@ class PineconeDB extends VectorDatabase {
     const { pineconeIndex } = await this.connect();
     if (!(await this.namespaceExists(pineconeIndex, namespace)))
       throw new Error(
-        "Invalid namespace - has it been collected and populated yet?"
+        "Invalid namespace - has it been collected and populated yet?",
       );
 
     const queryVector = await LLMConnector.embedTextInput(input);

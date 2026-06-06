@@ -53,7 +53,7 @@ async function getLastAssistantMessage(workspaceId, threadId) {
       include: true,
     },
     1,
-    { id: "desc" }
+    { id: "desc" },
   );
 
   if (!chat) return null;
@@ -134,7 +134,7 @@ async function showSourcesMenu(ctx, chatId, page = 0, messageId = null) {
 
   const lastMessage = await getLastAssistantMessage(
     workspace.id,
-    thread?.id || null
+    thread?.id || null,
   );
 
   if (!lastMessage) {

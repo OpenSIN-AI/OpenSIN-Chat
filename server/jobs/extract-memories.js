@@ -16,7 +16,7 @@ const {
 
 // 20 minutes default; 0 disables the idle check.
 const IDLE_THRESHOLD_MS = Number(
-  process.env.MEMORY_IDLE_THRESHOLD_MS ?? 20 * 60 * 1000
+  process.env.MEMORY_IDLE_THRESHOLD_MS ?? 20 * 60 * 1000,
 );
 
 // Minimum chats required before processing memories for a user/workspace pair.
@@ -34,7 +34,7 @@ const MIN_CHATS_TO_PROCESS = 5;
     const allUnprocessed = await WorkspaceChats.where(
       { memoryProcessed: null, include: true },
       null,
-      { createdAt: "asc" }
+      { createdAt: "asc" },
     );
     if (allUnprocessed.length === 0) {
       log("No unprocessed chats found. Exiting.");
@@ -68,7 +68,7 @@ async function processGroup(groupChats) {
 
   if (groupChats.length < MIN_CHATS_TO_PROCESS) {
     log(
-      `${tag} has only ${groupChats.length} chat(s). Need at least ${MIN_CHATS_TO_PROCESS}. Skipping.`
+      `${tag} has only ${groupChats.length} chat(s). Need at least ${MIN_CHATS_TO_PROCESS}. Skipping.`,
     );
     return;
   }
@@ -100,7 +100,7 @@ async function processGroup(groupChats) {
 
     const workspaceMemories = await Memory.forUserWorkspace(
       userId,
-      workspaceId
+      workspaceId,
     );
     const globalMemories = await Memory.globalForUser(userId);
 
@@ -114,7 +114,7 @@ async function processGroup(groupChats) {
     }
 
     log(
-      `Running Observer for ${tag} using ${llm.provider}/${llm.model} on ${chats.length} chat(s).`
+      `Running Observer for ${tag} using ${llm.provider}/${llm.model} on ${chats.length} chat(s).`,
     );
     const observerMessage = buildObserverUserMessage(chats);
     const { candidates, rawText: observerRaw } = await runObserver({
@@ -128,7 +128,7 @@ async function processGroup(groupChats) {
         log(`Observer raw response:\n${truncate(observerRaw, 2000)}`);
       if (candidates === null)
         log(
-          `(Tool handler was never called — model may not have produced a tool call.)`
+          `(Tool handler was never called — model may not have produced a tool call.)`,
         );
       return;
     }
@@ -141,7 +141,7 @@ async function processGroup(groupChats) {
       candidates,
       workspaceMemories,
       globalMemories,
-      globalSlots
+      globalSlots,
     );
     const { memories: finalMemories, rawText: reflectorRaw } =
       await runReflector({
@@ -155,7 +155,7 @@ async function processGroup(groupChats) {
         log(`Reflector raw response:\n${truncate(reflectorRaw, 2000)}`);
       if (finalMemories === null)
         log(
-          `(Tool handler was never called — model may not have produced a tool call.)`
+          `(Tool handler was never called — model may not have produced a tool call.)`,
         );
       return;
     }
@@ -163,17 +163,17 @@ async function processGroup(groupChats) {
     log(`Reflector approved ${finalMemories.length} memory/ies for ${tag}:`);
     for (const m of finalMemories)
       log(
-        `  [${m.scope}/${m.action}${m.action === "update" ? `#${m.updateId}` : ""}] "${m.content}" — ${m.reasoning}`
+        `  [${m.scope}/${m.action}${m.action === "update" ? `#${m.updateId}` : ""}] "${m.content}" — ${m.reasoning}`,
       );
 
     const result = await Memory.applyExtractedMemories(
       userId,
       workspaceId,
       finalMemories,
-      globalSlots
+      globalSlots,
     );
     log(
-      `Applied ${result.workspaceCount} workspace + ${result.globalCount} global + ${result.updatedCount} updated memories for ${tag} in "${workspace.name}". Reviewed ${chats.length} chat(s).`
+      `Applied ${result.workspaceCount} workspace + ${result.globalCount} global + ${result.updatedCount} updated memories for ${tag} in "${workspace.name}". Reviewed ${chats.length} chat(s).`,
     );
   } catch (error) {
     log(`Error processing ${tag}: ${error.message}`);

@@ -98,7 +98,7 @@ class VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     throw new Error("Must be implemented by provider");
   }

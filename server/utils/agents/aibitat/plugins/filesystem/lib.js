@@ -64,7 +64,7 @@ class FilesystemManager {
   async #initializeFilesystem(directories = null) {
     if (directories && directories.length > 0) {
       this.#allowedDirectories = directories.map((dir) =>
-        path.resolve(this.#expandHome(dir))
+        path.resolve(this.#expandHome(dir)),
       );
     } else {
       const defaultRoot = this.#getDefaultFilesystemRoot();
@@ -76,7 +76,7 @@ class FilesystemManager {
         await fs.mkdir(dir, { recursive: true });
       } catch (error) {
         console.error(
-          `Warning: Could not create directory ${dir}: ${error.message}`
+          `Warning: Could not create directory ${dir}: ${error.message}`,
         );
       }
     }
@@ -162,7 +162,7 @@ class FilesystemManager {
       if (
         this.#isPathWithinAllowedDirectories(
           normalizedCandidate,
-          this.#allowedDirectories
+          this.#allowedDirectories,
         )
       ) {
         return candidate;
@@ -232,7 +232,7 @@ class FilesystemManager {
       normalizedOriginal,
       normalizedNew,
       "original",
-      "modified"
+      "modified",
     );
   }
 
@@ -420,11 +420,11 @@ class FilesystemManager {
 
     const isAllowed = this.#isPathWithinAllowedDirectories(
       normalizedRequested,
-      this.#allowedDirectories
+      this.#allowedDirectories,
     );
     if (!isAllowed) {
       console.log(
-        `[validatePath] Access denied - path outside allowed directories: ${absolute} not in ${this.#allowedDirectories.join(", ")}`
+        `[validatePath] Access denied - path outside allowed directories: ${absolute} not in ${this.#allowedDirectories.join(", ")}`,
       );
       throw new Error(`Access denied - path outside allowed directories.`);
     }
@@ -435,14 +435,14 @@ class FilesystemManager {
       if (
         !this.#isPathWithinAllowedDirectories(
           normalizedReal,
-          this.#allowedDirectories
+          this.#allowedDirectories,
         )
       ) {
         console.log(
-          `[validatePath] Access denied - symlink target outside allowed directories: ${realPath} not in ${this.#allowedDirectories.join(", ")}`
+          `[validatePath] Access denied - symlink target outside allowed directories: ${realPath} not in ${this.#allowedDirectories.join(", ")}`,
         );
         throw new Error(
-          `Access denied - symlink target outside allowed directories.`
+          `Access denied - symlink target outside allowed directories.`,
         );
       }
       return realPath;
@@ -455,14 +455,14 @@ class FilesystemManager {
           if (
             !this.#isPathWithinAllowedDirectories(
               normalizedParent,
-              this.#allowedDirectories
+              this.#allowedDirectories,
             )
           ) {
             console.log(
-              `[validatePath] Access denied - parent directory outside allowed directories: ${realParentPath} not in ${this.#allowedDirectories.join(", ")}`
+              `[validatePath] Access denied - parent directory outside allowed directories: ${realParentPath} not in ${this.#allowedDirectories.join(", ")}`,
             );
             throw new Error(
-              `Access denied - parent directory outside allowed directories.`
+              `Access denied - parent directory outside allowed directories.`,
             );
           }
           return absolute;
@@ -503,7 +503,7 @@ class FilesystemManager {
     return this.#withCollectorFallback(
       filePath,
       (content) => content,
-      () => this.#readFileContentRaw(filePath, encoding)
+      () => this.#readFileContentRaw(filePath, encoding),
     );
   }
 
@@ -534,7 +534,7 @@ class FilesystemManager {
    */
   async applyFileEdits(filePath, edits, dryRun = false) {
     const content = this.#normalizeLineEndings(
-      await fs.readFile(filePath, "utf-8")
+      await fs.readFile(filePath, "utf-8"),
     );
 
     let modifiedContent = content;
@@ -585,7 +585,7 @@ class FilesystemManager {
 
       if (!matchFound) {
         throw new Error(
-          `Could not find exact match for edit:\n${edit.oldText}`
+          `Could not find exact match for edit:\n${edit.oldText}`,
         );
       }
     }
@@ -593,7 +593,7 @@ class FilesystemManager {
     const diffResult = this.#createUnifiedDiff(
       content,
       modifiedContent,
-      filePath
+      filePath,
     );
 
     let numBackticks = 3;
@@ -622,7 +622,7 @@ class FilesystemManager {
         const lines = this.#normalizeLineEndings(content).split("\n");
         return lines.slice(-numLines).join("\n");
       },
-      () => this.#tailFileRaw(filePath, numLines)
+      () => this.#tailFileRaw(filePath, numLines),
     );
   }
 
@@ -639,7 +639,7 @@ class FilesystemManager {
         const lines = this.#normalizeLineEndings(content).split("\n");
         return lines.slice(0, numLines).join("\n");
       },
-      () => this.#headFileRaw(filePath, numLines)
+      () => this.#headFileRaw(filePath, numLines),
     );
   }
 
@@ -670,7 +670,7 @@ class FilesystemManager {
           const shouldExclude = excludePatterns.some(
             (excludePattern) =>
               minimatch(relativePath, excludePattern, matchOptions) ||
-              minimatch(entry.name, excludePattern, matchOptions)
+              minimatch(entry.name, excludePattern, matchOptions),
           );
 
           if (shouldExclude) continue;
@@ -708,7 +708,7 @@ class FilesystemManager {
 
     const contextLimit = Provider.contextLimit(aibitat.provider, aibitat.model);
     const reserveForResponse = Math.floor(
-      contextLimit * FilesystemManager.CONTEXT_RESERVE_RATIO
+      contextLimit * FilesystemManager.CONTEXT_RESERVE_RATIO,
     );
     const maxTokens = contextLimit - reserveForResponse;
 

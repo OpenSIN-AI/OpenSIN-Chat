@@ -32,31 +32,31 @@ const EmbedConfig = {
           chat_mode: validatedCreationData(data?.chat_mode, "chat_mode"),
           allowlist_domains: validatedCreationData(
             data?.allowlist_domains,
-            "allowlist_domains"
+            "allowlist_domains",
           ),
           allow_model_override: validatedCreationData(
             data?.allow_model_override,
-            "allow_model_override"
+            "allow_model_override",
           ),
           allow_temperature_override: validatedCreationData(
             data?.allow_temperature_override,
-            "allow_temperature_override"
+            "allow_temperature_override",
           ),
           allow_prompt_override: validatedCreationData(
             data?.allow_prompt_override,
-            "allow_prompt_override"
+            "allow_prompt_override",
           ),
           max_chats_per_day: validatedCreationData(
             data?.max_chats_per_day,
-            "max_chats_per_day"
+            "max_chats_per_day",
           ),
           max_chats_per_session: validatedCreationData(
             data?.max_chats_per_session,
-            "max_chats_per_session"
+            "max_chats_per_session",
           ),
           message_limit: validatedCreationData(
             data?.message_limit,
-            "message_limit"
+            "message_limit",
           ),
           createdBy: creatorId != null ? Number(creatorId) : null,
           workspace: {
@@ -74,7 +74,7 @@ const EmbedConfig = {
   update: async function (embedId = null, data = {}) {
     if (!embedId) throw new Error("No embed id provided for update");
     const validKeys = Object.keys(data).filter((key) =>
-      this.writable.includes(key)
+      this.writable.includes(key),
     );
     if (validKeys.length === 0)
       return { embed: { id: embedId }, message: "No valid fields to update!" };
@@ -154,7 +154,7 @@ const EmbedConfig = {
   whereWithWorkspace: async function (
     clause = {},
     limit = null,
-    orderBy = null
+    orderBy = null,
   ) {
     try {
       const results = await prisma.embed_configs.findMany({
@@ -230,7 +230,7 @@ function validatedCreationData(value, field) {
               return null;
             }
           })
-          .filter((u) => !!u)
+          .filter((u) => !!u),
       );
     } catch {
       return null;

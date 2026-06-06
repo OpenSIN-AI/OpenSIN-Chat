@@ -101,13 +101,13 @@ const memory = {
 
               if (contextTexts.length === 0) {
                 this.super.introspect(
-                  `${this.caller}: I didn't find anything locally that would help answer this question.`
+                  `${this.caller}: I didn't find anything locally that would help answer this question.`,
                 );
                 return "There was no additional context found for that query. We should search the web for this information.";
               }
 
               this.super.introspect(
-                `${this.caller}: Found ${contextTexts.length} additional piece of context to help answer this question.`
+                `${this.caller}: Found ${contextTexts.length} additional piece of context to help answer this question.`,
               );
 
               let combinedText = "Additional context for query:\n";
@@ -115,7 +115,7 @@ const memory = {
               return combinedText;
             } catch (error) {
               this.super.handlerProps.log(
-                `memory.search raised an error. ${error.message}`
+                `memory.search raised an error. ${error.message}`,
               );
               return `An error was raised while searching the vector database. ${error.message}`;
             }
@@ -140,18 +140,18 @@ const memory = {
                   pageContent: content,
                   token_count_estimate: 0,
                 },
-                null
+                null,
               );
 
               if (!!error)
                 return "The content was failed to be embedded properly.";
               this.super.introspect(
-                `${this.caller}: I saved the content to long-term memory in this workspaces vector database.`
+                `${this.caller}: I saved the content to long-term memory in this workspaces vector database.`,
               );
               return "The content given was successfully embedded. There is nothing else to do.";
             } catch (error) {
               this.super.handlerProps.log(
-                `memory.store raised an error. ${error.message}`
+                `memory.store raised an error. ${error.message}`,
               );
               return `Let the user know this action was not successful. An error was raised while storing data in the vector database. ${error.message}`;
             }

@@ -197,7 +197,7 @@ module.exports.CreateExcelFile = {
 
               const sheetCount = sheetDefinitions.length;
               this.super.introspect(
-                `${this.caller}: Creating Excel file "${filename}" with ${sheetCount} sheet(s)`
+                `${this.caller}: Creating Excel file "${filename}" with ${sheetCount} sheet(s)`,
               );
 
               if (this.super.requestToolApproval) {
@@ -212,7 +212,7 @@ module.exports.CreateExcelFile = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -256,7 +256,7 @@ module.exports.CreateExcelFile = {
 
                 if (validation.warnings) {
                   allWarnings.push(
-                    ...validation.warnings.map((w) => `${sheetName}: ${w}`)
+                    ...validation.warnings.map((w) => `${sheetName}: ${w}`),
                   );
                 }
 
@@ -319,7 +319,7 @@ module.exports.CreateExcelFile = {
               const displayFilename = filename.split("/").pop();
 
               this.super.handlerProps.log(
-                `create-excel-file: Generated buffer - size: ${bufferSizeKB}KB, sheets: ${sheetDefinitions.length}`
+                `create-excel-file: Generated buffer - size: ${bufferSizeKB}KB, sheets: ${sheetDefinitions.length}`,
               );
 
               const savedFile = await createFilesLib.saveGeneratedFile({
@@ -342,7 +342,7 @@ module.exports.CreateExcelFile = {
               });
 
               this.super.introspect(
-                `${this.caller}: Successfully created Excel file "${displayFilename}"`
+                `${this.caller}: Successfully created Excel file "${displayFilename}"`,
               );
 
               let result = `Successfully created Excel spreadsheet "${displayFilename}" (${bufferSizeKB}KB) with ${sheetDefinitions.length} sheet(s).`;
@@ -354,7 +354,7 @@ module.exports.CreateExcelFile = {
               return result;
             } catch (e) {
               this.super.handlerProps.log(
-                `create-excel-file error: ${e.message}`
+                `create-excel-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating Excel file: ${e.message}`;

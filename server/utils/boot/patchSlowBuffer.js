@@ -39,7 +39,7 @@ function patchSlowBuffer() {
   bufferModule.SlowBuffer = SlowBuffer;
 
   console.log(
-    `${LOG_PREFIX} Buffer.SlowBuffer shim installed (Node ${process.versions.node})`
+    `${LOG_PREFIX} Buffer.SlowBuffer shim installed (Node ${process.versions.node})`,
   );
 }
 

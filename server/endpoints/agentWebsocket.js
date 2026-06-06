@@ -42,7 +42,7 @@ function agentWebsocket(app) {
         const content = safeJsonParse(data)?.feedback;
         if (WEBSOCKET_BAIL_COMMANDS.includes(content)) {
           agentHandler.log(
-            `User invoked bail command while processing. Closing session now.`
+            `User invoked bail command while processing. Closing session now.`,
           );
           agentHandler.aibitat.abort();
           socket.close();

@@ -8,7 +8,7 @@ const { parseAuthHeader } = require("../../http");
 const { sourceIdentifier } = require("../../chats");
 const { VectorDatabase } = require("../base");
 const COLLECTION_REGEX = new RegExp(
-  /^(?!\d+\.\d+\.\d+\.\d+$)(?!.*\.\.)(?=^[a-zA-Z0-9][a-zA-Z0-9_-]{1,61}[a-zA-Z0-9]$).{3,63}$/
+  /^(?!\d+\.\d+\.\d+\.\d+$)(?!.*\.\.)(?=^[a-zA-Z0-9][a-zA-Z0-9_-]{1,61}[a-zA-Z0-9]$).{3,63}$/,
 );
 
 class Chroma extends VectorDatabase {
@@ -75,7 +75,7 @@ class Chroma extends VectorDatabase {
             fetchOptions: {
               headers: parseAuthHeader(
                 process.env.CHROMA_API_HEADER || "X-Api-Key",
-                process.env.CHROMA_API_KEY
+                process.env.CHROMA_API_KEY,
               ),
             },
           }
@@ -85,7 +85,7 @@ class Chroma extends VectorDatabase {
     const isAlive = await client.heartbeat();
     if (!isAlive)
       throw new Error(
-        "ChromaDB::Invalid Heartbeat received - is the instance online?"
+        "ChromaDB::Invalid Heartbeat received - is the instance online?",
       );
     return { client };
   }
@@ -152,7 +152,7 @@ class Chroma extends VectorDatabase {
         filterIdentifiers.includes(sourceIdentifier(response.metadatas[0][i]))
       ) {
         this.logger(
-          "A source was filtered from context as it's parent document is pinned."
+          "A source was filtered from context as it's parent document is pinned.",
         );
         return;
       }
@@ -204,7 +204,7 @@ class Chroma extends VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     const { DocumentVectors } = require("../../../models/vectors");
     try {
@@ -262,11 +262,11 @@ class Chroma extends VectorDatabase {
           await SystemSettings.getValueOrFallback({
             label: "text_splitter_chunk_size",
           }),
-          EmbedderEngine?.embeddingMaxChunkLength
+          EmbedderEngine?.embeddingMaxChunkLength,
         ),
         chunkOverlap: await SystemSettings.getValueOrFallback(
           { label: "text_splitter_chunk_overlap" },
-          20
+          20,
         ),
         chunkHeaderMeta: TextSplitter.buildHeaderMeta(metadata),
         chunkPrefix: EmbedderEngine?.embeddingPrefix,
@@ -305,7 +305,7 @@ class Chroma extends VectorDatabase {
         }
       } else {
         throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
+          "Could not embed document chunks! This document will not be recorded.",
         );
       }
 
@@ -323,7 +323,7 @@ class Chroma extends VectorDatabase {
         try {
           await this.smartAdd(collection, submission);
           this.logger(
-            `Successfully added ${submission.ids.length} vectors to collection ${this.normalize(namespace)}`
+            `Successfully added ${submission.ids.length} vectors to collection ${this.normalize(namespace)}`,
           );
         } catch (error) {
           this.logger("Error adding to ChromaDB:", error);

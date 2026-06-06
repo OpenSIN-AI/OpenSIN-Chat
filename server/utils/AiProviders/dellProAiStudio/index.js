@@ -30,7 +30,7 @@ class DellProAiStudioLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.log(
-      `Dell Pro AI Studio LLM initialized with ${this.model}. ctx: ${this.promptWindowLimit()}`
+      `Dell Pro AI Studio LLM initialized with ${this.model}. ctx: ${this.promptWindowLimit()}`,
     );
   }
 
@@ -140,7 +140,7 @@ class DellProAiStudioLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `Dell Pro AI Studio chat: ${this.model} is not valid or defined model for chat completion!`
+        `Dell Pro AI Studio chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -148,7 +148,7 @@ class DellProAiStudioLLM {
         model: this.model,
         messages,
         temperature,
-      })
+      }),
     );
 
     if (
@@ -175,7 +175,7 @@ class DellProAiStudioLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `Dell Pro AI Studio chat: ${this.model} is not valid or defined model for chat completion!`
+        `Dell Pro AI Studio chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

@@ -7,7 +7,7 @@ async function copyRecursive(source, destination) {
 
   if (lstat.isSymbolicLink()) {
     throw new Error(
-      `Cannot copy symbolic link: ${source}. Symlinks are not allowed during copy operations.`
+      `Cannot copy symbolic link: ${source}. Symlinks are not allowed during copy operations.`,
     );
   }
 
@@ -17,7 +17,7 @@ async function copyRecursive(source, destination) {
     for (const entry of entries) {
       await copyRecursive(
         path.join(source, entry),
-        path.join(destination, entry)
+        path.join(destination, entry),
       );
     }
   } else {
@@ -74,14 +74,14 @@ module.exports.FilesystemCopyFile = {
           handler: async function ({ source = "", destination = "" }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-copy-file tool.`
+                `Using the filesystem-copy-file tool.`,
               );
 
               const validSourcePath = await filesystem.validatePath(source);
               const validDestPath = await filesystem.validatePath(destination);
 
               this.super.introspect(
-                `${this.caller}: Copying ${source} to ${destination}`
+                `${this.caller}: Copying ${source} to ${destination}`,
               );
 
               if (this.super.requestToolApproval) {
@@ -92,7 +92,7 @@ module.exports.FilesystemCopyFile = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -109,12 +109,12 @@ module.exports.FilesystemCopyFile = {
 
               await copyRecursive(validSourcePath, validDestPath);
               this.super.introspect(
-                `Successfully copied ${source} to ${destination}`
+                `Successfully copied ${source} to ${destination}`,
               );
               return `Successfully copied ${source} to ${destination}`;
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-copy-file error: ${e.message}`
+                `filesystem-copy-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error copying file: ${e.message}`;

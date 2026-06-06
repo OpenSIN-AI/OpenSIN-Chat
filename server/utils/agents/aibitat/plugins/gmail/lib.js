@@ -77,7 +77,7 @@ async function parseAttachment(attachment) {
   const safeFilename = attachment.name.replace(/[^a-zA-Z0-9._-]/g, "_");
   const tempFilePath = path.join(
     tempDir,
-    `gmail-attachment-${Date.now()}-${safeFilename}`
+    `gmail-attachment-${Date.now()}-${safeFilename}`,
   );
 
   try {
@@ -159,14 +159,14 @@ async function handleAttachments(context, messages) {
 
     if (approval.approved) {
       context.super.introspect(
-        `${context.caller}: Parsing ${allAttachments.length} attachment(s)...`
+        `${context.caller}: Parsing ${allAttachments.length} attachment(s)...`,
       );
 
       const parsedResults = [];
       for (const attachment of allAttachments) {
         if (!attachment.data) continue;
         context.super.introspect(
-          `${context.caller}: Parsing "${attachment.name}"...`
+          `${context.caller}: Parsing "${attachment.name}"...`,
         );
         const parseResult = await parseAttachment(attachment);
         if (!parseResult.success) continue;
@@ -192,11 +192,11 @@ async function handleAttachments(context, messages) {
           .join("\n");
 
       context.super.introspect(
-        `${context.caller}: Finished parsing attachments`
+        `${context.caller}: Finished parsing attachments`,
       );
     } else {
       context.super.introspect(
-        `${context.caller}: User declined to parse attachments`
+        `${context.caller}: User declined to parse attachments`,
       );
     }
   }
@@ -235,7 +235,7 @@ class GmailBridge {
   static async getConfig() {
     const configJson = await SystemSettings.getValueOrFallback(
       { label: "gmail_agent_config" },
-      "{}"
+      "{}",
     );
     return safeJsonParse(configJson, {});
   }

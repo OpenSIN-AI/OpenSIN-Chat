@@ -70,7 +70,7 @@ class TextWebGenUiProvider extends InheritMultiple([Provider, UnTooled]) {
       messages,
       functions,
       this.#handleFunctionCallStream.bind(this),
-      eventHandler
+      eventHandler,
     );
   }
 
@@ -79,7 +79,7 @@ class TextWebGenUiProvider extends InheritMultiple([Provider, UnTooled]) {
       this,
       messages,
       functions,
-      this.#handleFunctionCallChat.bind(this)
+      this.#handleFunctionCallChat.bind(this),
     );
   }
 

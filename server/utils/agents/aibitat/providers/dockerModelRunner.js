@@ -25,7 +25,7 @@ class DockerModelRunnerProvider extends InheritMultiple([Provider, UnTooled]) {
       config?.model || process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF || null;
     const client = new OpenAI({
       baseURL: parseDockerModelRunnerEndpoint(
-        process.env.DOCKER_MODEL_RUNNER_BASE_PATH
+        process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
       ),
       apiKey: null,
     });
@@ -97,12 +97,12 @@ class DockerModelRunnerProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -112,7 +112,7 @@ class DockerModelRunnerProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -141,7 +141,7 @@ class DockerModelRunnerProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         messages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -152,7 +152,7 @@ class DockerModelRunnerProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

@@ -66,9 +66,9 @@ async function grepAgents({
         type: "statusResponse",
         textResponse: `${pluralize(
           "Agent",
-          agentHandles.length
+          agentHandles.length,
         )} ${agentHandles.join(
-          ", "
+          ", ",
         )} could not be called. Chat will be handled as default chat.`,
         sources: [],
         close: true,

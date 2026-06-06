@@ -15,7 +15,7 @@ class ImportedPlugin {
     this.handlerLocation = path.resolve(
       pluginsPath,
       this.config.hubId,
-      "handler.js"
+      "handler.js",
     );
     delete require.cache[require.resolve(this.handlerLocation)];
     this.handler = require(this.handlerLocation);
@@ -34,7 +34,7 @@ class ImportedPlugin {
     const configLocation = path.resolve(
       pluginsPath,
       normalizePath(hubId),
-      "plugin.json"
+      "plugin.json",
     );
     if (!this.isValidLocation(configLocation)) return;
     const config = safeJsonParse(fs.readFileSync(configLocation, "utf8"));
@@ -69,7 +69,7 @@ class ImportedPlugin {
       const configLocation = path.resolve(
         pluginsPath,
         normalizePath(folder),
-        "plugin.json"
+        "plugin.json",
       );
       if (!this.isValidLocation(configLocation)) continue;
       const config = safeJsonParse(fs.readFileSync(configLocation, "utf8"));
@@ -92,7 +92,7 @@ class ImportedPlugin {
       const configLocation = path.resolve(
         pluginsPath,
         normalizePath(folder),
-        "plugin.json"
+        "plugin.json",
       );
       if (!this.isValidLocation(configLocation)) continue;
       const config = safeJsonParse(fs.readFileSync(configLocation, "utf8"));
@@ -111,13 +111,13 @@ class ImportedPlugin {
     const configLocation = path.resolve(
       pluginsPath,
       normalizePath(hubId),
-      "plugin.json"
+      "plugin.json",
     );
     if (!this.isValidLocation(configLocation)) return;
 
     const currentConfig = safeJsonParse(
       fs.readFileSync(configLocation, "utf8"),
-      null
+      null,
     );
     if (!currentConfig) return;
 
@@ -149,7 +149,7 @@ class ImportedPlugin {
     const handlerLocation = path.resolve(
       pluginsPath,
       normalizePath(hubId),
-      "handler.js"
+      "handler.js",
     );
     return this.isValidLocation(handlerLocation);
   }
@@ -162,7 +162,7 @@ class ImportedPlugin {
     for (const [param, definition] of Object.entries(this.config.setup_args)) {
       if (definition.required && !definition?.value) {
         console.log(
-          `'${param}' required value for '${this.name}' plugin is missing. Plugin may not function or crash agent.`
+          `'${param}' required value for '${this.name}' plugin is missing. Plugin may not function or crash agent.`,
         );
         continue;
       }
@@ -218,7 +218,7 @@ class ImportedPlugin {
 
     const zipFilePath = path.resolve(pluginsPath, `${item.id}.zip`);
     const pluginFile = item.manifest.files.find(
-      (file) => file.name === "plugin.json"
+      (file) => file.name === "plugin.json",
     );
     if (!pluginFile)
       return {
@@ -229,7 +229,7 @@ class ImportedPlugin {
     const pluginFolder = path.resolve(pluginsPath, normalizePath(hubId));
     if (fs.existsSync(pluginFolder))
       console.log(
-        "ImportedPlugin.importCommunityItemFromUrl - plugin folder already exists - will overwrite"
+        "ImportedPlugin.importCommunityItemFromUrl - plugin folder already exists - will overwrite",
       );
 
     try {
@@ -240,14 +240,14 @@ class ImportedPlugin {
         try {
           console.log(
             "ImportedPlugin.importCommunityItemFromUrl - downloading asset from ",
-            new URL(url).origin
+            new URL(url).origin,
           );
           const zipFile = fs.createWriteStream(zipFilePath);
           const request = httpLib.get(url, function (response) {
             response.pipe(zipFile);
             zipFile.on("finish", () => {
               console.log(
-                "ImportedPlugin.importCommunityItemFromUrl - downloaded zip file"
+                "ImportedPlugin.importCommunityItemFromUrl - downloaded zip file",
               );
               resolve(true);
             });
@@ -256,14 +256,14 @@ class ImportedPlugin {
           request.on("error", (error) => {
             console.error(
               "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
-              error
+              error,
             );
             resolve(false);
           });
         } catch (error) {
           console.error(
             "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
-            error
+            error,
           );
           resolve(false);
         }
@@ -283,7 +283,7 @@ class ImportedPlugin {
         const entryPath = path.resolve(pluginFolder, entry.entryName);
         if (!isWithin(pluginFolder, entryPath) && pluginFolder !== entryPath) {
           throw new Error(
-            `[ImportedPlugin.importCommunityItemFromUrl]: Entry "${entry.entryName}" would extract outside plugin folder - not allowed.`
+            `[ImportedPlugin.importCommunityItemFromUrl]: Entry "${entry.entryName}" would extract outside plugin folder - not allowed.`,
           );
         }
       }
@@ -299,13 +299,13 @@ class ImportedPlugin {
       fs.writeFileSync(pluginJsonPath, JSON.stringify(pluginJson, null, 2));
 
       console.log(
-        `ImportedPlugin.importCommunityItemFromUrl - successfully imported plugin to agent-skills/${hubId}`
+        `ImportedPlugin.importCommunityItemFromUrl - successfully imported plugin to agent-skills/${hubId}`,
       );
       return { success: true, error: null };
     } catch (error) {
       console.error(
         "ImportedPlugin.importCommunityItemFromUrl - error: ",
-        error
+        error,
       );
       return { success: false, error: error.message };
     } finally {

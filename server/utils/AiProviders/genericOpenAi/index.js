@@ -16,7 +16,7 @@ class GenericOpenAiLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     if (!process.env.GENERIC_OPEN_AI_BASE_PATH)
       throw new Error(
-        "GenericOpenAI must have a valid base path to use for the api."
+        "GenericOpenAI must have a valid base path to use for the api.",
       );
 
     this.className = "GenericOpenAiLLM";
@@ -235,7 +235,7 @@ class GenericOpenAiLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (

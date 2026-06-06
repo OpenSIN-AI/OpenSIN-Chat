@@ -17,7 +17,7 @@ async function validDeviceToken(request, response, next) {
 
     const device = await MobileDevice.get(
       { token: String(token) },
-      { user: true }
+      { user: true },
     );
     if (!device)
       return response.status(400).json({ error: "Device not found" });

@@ -46,7 +46,7 @@ class MCPCompatibilityLayer extends MCPHypervisor {
 
     if (suppressedCount > 0) {
       this.log(
-        `MCP server ${name}: ${suppressedCount} tool(s) suppressed, ${tools.length} tool(s) enabled`
+        `MCP server ${name}: ${suppressedCount} tool(s) suppressed, ${tools.length} tool(s) enabled`,
       );
     }
 
@@ -81,15 +81,15 @@ class MCPCompatibilityLayer extends MCPHypervisor {
                     const currentMcp = mcpLayer.mcps[name];
                     if (!currentMcp)
                       throw new Error(
-                        `MCP server ${name} is not currently running`
+                        `MCP server ${name} is not currently running`,
                       );
 
                     aibitat.handlerProps.log(
                       `Executing MCP server: ${name}:${tool.name} with args:`,
-                      args
+                      args,
                     );
                     aibitat.introspect(
-                      `Executing MCP server: ${name} with ${JSON.stringify(args, null, 2)}`
+                      `Executing MCP server: ${name} with ${JSON.stringify(args, null, 2)}`,
                     );
                     const result = await currentMcp.callTool({
                       name: tool.name,
@@ -97,20 +97,20 @@ class MCPCompatibilityLayer extends MCPHypervisor {
                     });
                     aibitat.handlerProps.log(
                       `MCP server: ${name}:${tool.name} completed successfully`,
-                      result
+                      result,
                     );
                     aibitat.introspect(
-                      `MCP server: ${name}:${tool.name} completed successfully`
+                      `MCP server: ${name}:${tool.name} completed successfully`,
                     );
                     return MCPCompatibilityLayer.returnMCPResult(result);
                   } catch (error) {
                     aibitat.handlerProps.log(
                       `MCP server: ${name}:${tool.name} failed with error:`,
-                      error
+                      error,
                     );
                     aibitat.introspect(
                       `MCP server: ${name}:${tool.name} failed with error:`,
-                      error
+                      error,
                     );
                     return `The tool ${name}:${tool.name} failed with error: ${error?.message || "An unknown error occurred"}`;
                   }
@@ -164,7 +164,7 @@ class MCPCompatibilityLayer extends MCPHypervisor {
 
       const online = !!(await mcp.ping());
       const tools = (online ? (await mcp.listTools()).tools : []).filter(
-        (tool) => !tool.name.startsWith("handle_mcp_connection_mcp_")
+        (tool) => !tool.name.startsWith("handle_mcp_connection_mcp_"),
       );
       servers.push({
         name,

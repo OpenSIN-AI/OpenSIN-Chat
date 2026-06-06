@@ -46,7 +46,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -73,7 +73,7 @@ function adminEndpoints(app) {
               userName: newUser.username,
               createdBy: currUser.username,
             },
-            currUser.id
+            currUser.id,
           );
         }
 
@@ -82,7 +82,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -123,7 +123,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -149,14 +149,14 @@ function adminEndpoints(app) {
             userName: user.username,
             deletedBy: currUser.username,
           },
-          currUser.id
+          currUser.id,
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -170,7 +170,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -195,14 +195,14 @@ function adminEndpoints(app) {
             inviteCode: invite.code,
             createdBy: response.locals?.user?.username,
           },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
         response.status(200).json({ invite, error });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -215,14 +215,14 @@ function adminEndpoints(app) {
         await EventLogs.logEvent(
           "invite_deleted",
           { deletedBy: response.locals?.user?.username },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
         response.status(200).json({ success, error });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -236,7 +236,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -251,7 +251,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -263,14 +263,14 @@ function adminEndpoints(app) {
         const { name } = reqBody(request);
         const { workspace, message: error } = await Workspace.new(
           name,
-          user.id
+          user.id,
         );
         response.status(200).json({ workspace, error });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -282,14 +282,14 @@ function adminEndpoints(app) {
         const { userIds } = reqBody(request);
         const { success, error } = await Workspace.updateUsers(
           workspaceId,
-          userIds
+          userIds,
         );
         response.status(200).json({ success, error });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -324,7 +324,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   // System preferences but only by array of labels
@@ -456,7 +456,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -493,7 +493,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -513,7 +513,7 @@ function adminEndpoints(app) {
           error: "Could not find an API Keys.",
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -527,7 +527,7 @@ function adminEndpoints(app) {
         await EventLogs.logEvent(
           "api_key_created",
           { createdBy: user?.username, name: apiKey?.name },
-          user?.id
+          user?.id,
         );
         return response.status(200).json({
           apiKey,
@@ -537,7 +537,7 @@ function adminEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -552,14 +552,14 @@ function adminEndpoints(app) {
         await EventLogs.logEvent(
           "api_key_deleted",
           { deletedBy: response.locals?.user?.username },
-          response?.locals?.user?.id
+          response?.locals?.user?.id,
         );
         return response.status(200).end();
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

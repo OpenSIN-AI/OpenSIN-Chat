@@ -15,7 +15,7 @@ function getSTTProvider() {
       return new GenericOpenAiSTT();
     default:
       throw new Error(
-        `STT_PROVIDER "${provider}" is not a server-side provider.`
+        `STT_PROVIDER "${provider}" is not a server-side provider.`,
       );
   }
 }

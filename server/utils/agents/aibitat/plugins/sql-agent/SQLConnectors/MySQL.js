@@ -7,7 +7,7 @@ class MySQLConnector {
   constructor(
     config = {
       connectionString: null,
-    }
+    },
   ) {
     this.className = "MySQLConnector";
     this.connectionString = config.connectionString;

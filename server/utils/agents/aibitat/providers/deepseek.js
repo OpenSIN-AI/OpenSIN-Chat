@@ -120,7 +120,7 @@ class DeepSeekProvider extends InheritMultiple([Provider, UnTooled]) {
     });
     if (hasAttachments) {
       this.providerLog(
-        "DeepSeek does not support vision - stripped image attachments from messages."
+        "DeepSeek does not support vision - stripped image attachments from messages.",
       );
     }
     return stripped;
@@ -136,12 +136,12 @@ class DeepSeekProvider extends InheritMultiple([Provider, UnTooled]) {
         cleanedMessages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -151,7 +151,7 @@ class DeepSeekProvider extends InheritMultiple([Provider, UnTooled]) {
         cleanedMessages,
         functions,
         eventHandler,
-        this.#tooledOptions
+        this.#tooledOptions,
       );
     } catch (error) {
       console.error(error.message, error);
@@ -176,7 +176,7 @@ class DeepSeekProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         cleanedMessages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -187,7 +187,7 @@ class DeepSeekProvider extends InheritMultiple([Provider, UnTooled]) {
         cleanedMessages,
         functions,
         this.getCost.bind(this),
-        this.#tooledOptions
+        this.#tooledOptions,
       );
 
       if (result.retryWithError) {

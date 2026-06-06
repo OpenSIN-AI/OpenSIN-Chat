@@ -46,7 +46,7 @@ module.exports.CreateTextFile = {
                     },
                   },
                   null,
-                  2
+                  2,
                 ),
               }),
             },
@@ -93,14 +93,14 @@ module.exports.CreateTextFile = {
               const finalExtension = filename.split(".").pop().toLowerCase();
 
               this.super.introspect(
-                `${this.caller}: Creating text file "${filename}"`
+                `${this.caller}: Creating text file "${filename}"`,
               );
 
               const buffer = Buffer.from(content, "utf-8");
               const bufferSizeKB = (buffer.length / 1024).toFixed(2);
 
               this.super.handlerProps.log(
-                `create-text-file: Generated buffer - size: ${bufferSizeKB}KB, extension: ${finalExtension}`
+                `create-text-file: Generated buffer - size: ${bufferSizeKB}KB, extension: ${finalExtension}`,
               );
 
               if (this.super.requestToolApproval) {
@@ -111,7 +111,7 @@ module.exports.CreateTextFile = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -139,13 +139,13 @@ module.exports.CreateTextFile = {
               });
 
               this.super.introspect(
-                `${this.caller}: Successfully created text file "${displayFilename}"`
+                `${this.caller}: Successfully created text file "${displayFilename}"`,
               );
 
               return `Successfully created text file "${displayFilename}" (${bufferSizeKB}KB).`;
             } catch (e) {
               this.super.handlerProps.log(
-                `create-text-file error: ${e.message}`
+                `create-text-file error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error creating text file: ${e.message}`;

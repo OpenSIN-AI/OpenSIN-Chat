@@ -24,8 +24,8 @@ function skillIsAutoApproved({ skillName }) {
 
   console.log(
     chalk.green(
-      `Skill ${skillName} is auto-approved by the ENV variable AGENT_AUTO_APPROVED_SKILLS.`
-    )
+      `Skill ${skillName} is auto-approved by the ENV variable AGENT_AUTO_APPROVED_SKILLS.`,
+    ),
   );
   return true;
 }

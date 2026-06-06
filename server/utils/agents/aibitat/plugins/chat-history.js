@@ -34,7 +34,7 @@ const chatHistory = {
             let userMessage = message.content;
             if (userMessage.startsWith("@agent:")) {
               const lastUserMsgIndex = aibitat._chats.findLastIndex(
-                (c) => c.from === "USER" && !c.content.startsWith("@agent:")
+                (c) => c.from === "USER" && !c.content.startsWith("@agent:"),
               );
 
               // When regenerating a message, we need to use the last user message as the prompt.
@@ -96,7 +96,7 @@ const chatHistory = {
       },
       _store: async function (
         aibitat,
-        { prompt, response, attachments = [] } = {}
+        { prompt, response, attachments = [] } = {},
       ) {
         const invocation = aibitat.handlerProps.invocation;
         const metrics = aibitat.providerInstance?.getUsage?.() ?? {};
@@ -124,14 +124,14 @@ const chatHistory = {
         if (!aibitat._threadRenamed) {
           aibitat._threadRenamed = await this._autoRenameThread(
             aibitat,
-            prompt
+            prompt,
           );
         }
         this._cleanup(aibitat);
       },
       _storeSpecial: async function (
         aibitat,
-        { prompt, response, attachments = [], options = {} } = {}
+        { prompt, response, attachments = [], options = {} } = {},
       ) {
         const invocation = aibitat.handlerProps.invocation;
         const metrics = aibitat.providerInstance?.getUsage?.() ?? {};
@@ -164,7 +164,7 @@ const chatHistory = {
         if (!aibitat._threadRenamed) {
           aibitat._threadRenamed = await this._autoRenameThread(
             aibitat,
-            prompt
+            prompt,
           );
         }
         options?.postSave();

@@ -47,7 +47,7 @@ async function ensureState(aibitat) {
 
   const maxPerTurnRaw = await SystemSettings.getValueOrFallback(
     { label: "agent_clarifying_questions_max_per_turn" },
-    String(DEFAULT_MAX_PER_TURN)
+    String(DEFAULT_MAX_PER_TURN),
   );
 
   const maxPerTurn = Number(maxPerTurnRaw);
@@ -230,7 +230,7 @@ const AskUser = {
             state.asked += truncated.length;
 
             this.super.introspect(
-              `Asking the user ${truncated.length} clarifying question${truncated.length === 1 ? "" : "s"}${truncatedNote}.`
+              `Asking the user ${truncated.length} clarifying question${truncated.length === 1 ? "" : "s"}${truncatedNote}.`,
             );
             const result = await this.super.requestUserClarification({
               questions: truncated,

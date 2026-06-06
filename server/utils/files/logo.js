@@ -65,7 +65,7 @@ async function determineLogoFilepath(defaultFilename = LOGO_FILENAME) {
   if (currentLogoFilename && validFilename(currentLogoFilename)) {
     const customLogoPath = path.join(
       basePath,
-      normalizePath(currentLogoFilename)
+      normalizePath(currentLogoFilename),
     );
     if (!isWithin(path.resolve(basePath), path.resolve(customLogoPath)))
       return defaultFilepath;
@@ -78,7 +78,7 @@ async function determineLogoFilepath(defaultFilename = LOGO_FILENAME) {
   // Fallback: legacy AnythingLLM default (covers the upgrade-without-rename
   // scenario). Only consulted when the OpenAfD default is missing on disk.
   const legacyFilename = getLegacyDefaultFilename(
-    defaultFilename === LOGO_FILENAME_DARK
+    defaultFilename === LOGO_FILENAME_DARK,
   );
   const legacyFilepath = path.join(basePath, legacyFilename);
   if (fs.existsSync(legacyFilepath)) return legacyFilepath;
@@ -114,7 +114,7 @@ async function renameLogoFile(originalFilename = null) {
     : path.join(__dirname, `../../storage/assets`);
   const originalFilepath = path.join(
     assetsDirectory,
-    normalizePath(originalFilename)
+    normalizePath(originalFilename),
   );
   if (!isWithin(path.resolve(assetsDirectory), path.resolve(originalFilepath)))
     throw new Error("Invalid file path.");

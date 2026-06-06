@@ -66,7 +66,7 @@ const EmbedChats = {
     sessionId = null,
     limit = null,
     orderBy = null,
-    filterSources = false
+    filterSources = false,
   ) {
     if (!embedId || !sessionId) return [];
 
@@ -136,7 +136,7 @@ const EmbedChats = {
     clause = {},
     limit = null,
     orderBy = null,
-    offset = null
+    offset = null,
   ) {
     try {
       const chats = await prisma.embed_chats.findMany({
@@ -156,7 +156,7 @@ const EmbedChats = {
     clause = {},
     limit = null,
     orderBy = null,
-    offset = null
+    offset = null,
   ) {
     try {
       const chats = await prisma.embed_chats.findMany({

@@ -41,7 +41,7 @@ class AzureOpenAiLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.#log(
-      `Initialized. Model "${this.model}" @ ${this.promptWindowLimit()} tokens.\nAPI-Version: ${this.apiVersion}.\nModel Type: ${this.isOTypeModel ? "reasoning" : "default"}`
+      `Initialized. Model "${this.model}" @ ${this.promptWindowLimit()} tokens.\nAPI-Version: ${this.apiVersion}.\nModel Type: ${this.isOTypeModel ? "reasoning" : "default"}`,
     );
   }
 
@@ -60,7 +60,7 @@ class AzureOpenAiLLM {
       return url.href;
     } catch {
       throw new Error(
-        `"${azureOpenAiEndpoint}" is not a valid URL. Check your settings for the Azure OpenAI provider and set a valid endpoint URL.`
+        `"${azureOpenAiEndpoint}" is not a valid URL. Check your settings for the Azure OpenAI provider and set a valid endpoint URL.`,
       );
     }
   }
@@ -153,7 +153,7 @@ class AzureOpenAiLLM {
   async getChatCompletion(messages = [], { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        "No AZURE_OPENAI_MODEL_PREF ENV defined. This must the name of a deployment on your Azure account for an LLM chat model like GPT-3.5."
+        "No AZURE_OPENAI_MODEL_PREF ENV defined. This must the name of a deployment on your Azure account for an LLM chat model like GPT-3.5.",
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -161,7 +161,7 @@ class AzureOpenAiLLM {
         messages,
         model: this.model,
         ...(this.isOTypeModel ? {} : { temperature }),
-      })
+      }),
     );
 
     if (
@@ -188,7 +188,7 @@ class AzureOpenAiLLM {
   async streamGetChatCompletion(messages = [], { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        "No AZURE_OPENAI_MODEL_PREF ENV defined. This must the name of a deployment on your Azure account for an LLM chat model like GPT-3.5."
+        "No AZURE_OPENAI_MODEL_PREF ENV defined. This must the name of a deployment on your Azure account for an LLM chat model like GPT-3.5.",
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

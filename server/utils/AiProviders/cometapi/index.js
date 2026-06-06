@@ -15,7 +15,7 @@ const { COMETAPI_IGNORE_PATTERNS } = require("./constants");
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "cometapi")
-    : path.resolve(__dirname, `../../../storage/models/cometapi`)
+    : path.resolve(__dirname, `../../../storage/models/cometapi`),
 );
 
 class CometApiLLM {
@@ -67,7 +67,7 @@ class CometApiLLM {
    */
   #parseTimeout() {
     this.log(
-      `CometAPI timeout is set to ${process.env.COMETAPI_LLM_TIMEOUT_MS ?? this.defaultTimeout}ms`
+      `CometAPI timeout is set to ${process.env.COMETAPI_LLM_TIMEOUT_MS ?? this.defaultTimeout}ms`,
     );
     if (isNaN(Number(process.env.COMETAPI_LLM_TIMEOUT_MS)))
       return this.defaultTimeout;
@@ -97,7 +97,7 @@ class CometApiLLM {
       return false;
 
     this.log(
-      "Model cache is not present or stale. Fetching from CometAPI API."
+      "Model cache is not present or stale. Fetching from CometAPI API.",
     );
     await fetchCometApiModels();
     return;
@@ -119,7 +119,7 @@ class CometApiLLM {
     if (!fs.existsSync(this.cacheModelPath)) return {};
     return safeJsonParse(
       fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
+      {},
     );
   }
 
@@ -132,7 +132,7 @@ class CometApiLLM {
     const availableModels = fs.existsSync(cacheModelPath)
       ? safeJsonParse(
           fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-          {}
+          {},
         )
       : {};
     return availableModels[modelName]?.maxLength || 4096;
@@ -196,7 +196,7 @@ class CometApiLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `CometAPI chat: ${this.model} is not valid for chat completion!`
+        `CometAPI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -208,7 +208,7 @@ class CometApiLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -235,7 +235,7 @@ class CometApiLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `CometAPI chat: ${this.model} is not valid for chat completion!`
+        `CometAPI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -294,7 +294,7 @@ class CometApiLLM {
         const diffMs = now - lastChunkTime;
         if (diffMs >= timeoutThresholdMs) {
           this.log(
-            `CometAPI stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`
+            `CometAPI stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {
             uuid,
@@ -400,7 +400,7 @@ async function fetchCometApiModels() {
       const chatModels = data.filter((model) => {
         const modelId = model.id.toLowerCase();
         return !COMETAPI_IGNORE_PATTERNS.some((pattern) =>
-          modelId.includes(pattern.toLowerCase())
+          modelId.includes(pattern.toLowerCase()),
         );
       });
 
@@ -422,14 +422,14 @@ async function fetchCometApiModels() {
         JSON.stringify(models),
         {
           encoding: "utf-8",
-        }
+        },
       );
       fs.writeFileSync(
         path.resolve(cacheFolder, ".cached_at"),
         String(Number(new Date())),
         {
           encoding: "utf-8",
-        }
+        },
       );
       return models;
     })

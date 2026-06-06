@@ -116,7 +116,7 @@ class LocalAiLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `LocalAI chat: ${this.model} is not valid for chat completion!`
+        `LocalAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -124,7 +124,7 @@ class LocalAiLLM {
         model: this.model,
         messages,
         temperature,
-      })
+      }),
     );
 
     if (
@@ -135,7 +135,7 @@ class LocalAiLLM {
 
     const promptTokens = LLMPerformanceMonitor.countTokens(messages);
     const completionTokens = LLMPerformanceMonitor.countTokens(
-      result.output.choices[0].message.content
+      result.output.choices[0].message.content,
     );
 
     return {
@@ -156,7 +156,7 @@ class LocalAiLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `LocalAi chat: ${this.model} is not valid for chat completion!`
+        `LocalAi chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({

@@ -48,7 +48,7 @@ class GroqProvider extends InheritMultiple([Provider, UnTooled]) {
       this.providerLog("Groq supports native tool calling is ENABLED via ENV.");
     else
       this.providerLog(
-        "Groq supports native tool calling is DISABLED via ENV. Will use UnTooled instead."
+        "Groq supports native tool calling is DISABLED via ENV. Will use UnTooled instead.",
       );
     this._supportsToolCalling = supportsToolCalling;
     return supportsToolCalling;
@@ -94,12 +94,12 @@ class GroqProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -109,7 +109,7 @@ class GroqProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -138,7 +138,7 @@ class GroqProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         messages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -149,7 +149,7 @@ class GroqProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

@@ -24,7 +24,7 @@ function importedAgentPluginEndpoints(app) {
         console.error(e);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -36,14 +36,14 @@ function importedAgentPluginEndpoints(app) {
         const { updates } = reqBody(request);
         const updatedConfig = ImportedPlugin.updateImportedPlugin(
           hubId,
-          updates
+          updates,
         );
         response.status(200).json(updatedConfig);
       } catch (e) {
         console.error(e);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -58,7 +58,7 @@ function importedAgentPluginEndpoints(app) {
         console.error(e);
         response.status(500).end();
       }
-    }
+    },
   );
 }
 

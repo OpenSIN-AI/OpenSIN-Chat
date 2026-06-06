@@ -226,7 +226,7 @@ const SystemPromptVariables = {
   expandSystemPromptVariables: async function (
     str,
     userId = null,
-    workspaceId = null
+    workspaceId = null,
   ) {
     if (!str) return str;
 
@@ -243,7 +243,7 @@ const SystemPromptVariables = {
 
         // Determine if the variable is a class-based variable (workspace.X or user.X)
         const isWorkspaceOrUserVariable = ["workspace.", "user."].some(
-          (prefix) => key.startsWith(prefix)
+          (prefix) => key.startsWith(prefix),
         );
 
         // Handle class-based variables with current workspace's or user's data
@@ -271,7 +271,7 @@ const SystemPromptVariables = {
               } catch (error) {
                 console.error(
                   `Error processing ${variableTypeDisplay} variable ${key}:`,
-                  error
+                  error,
                 );
                 value = `[${variableTypeDisplay} ${prop}]`;
               }
@@ -288,7 +288,7 @@ const SystemPromptVariables = {
               } catch (error) {
                 console.error(
                   `Error processing ${variableTypeDisplay} variable ${key}:`,
-                  error
+                  error,
                 );
                 value = `[${variableTypeDisplay} ${prop}]`;
               }

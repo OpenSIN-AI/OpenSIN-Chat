@@ -42,27 +42,27 @@ module.exports.GCalGetEventsForDay = {
           handler: async function ({ date, calendarId }) {
             try {
               this.super.handlerProps.log(
-                `Using the gcal-get-events-for-day tool.`
+                `Using the gcal-get-events-for-day tool.`,
               );
               this.super.introspect(
-                `${this.caller}: Fetching events for ${date}...`
+                `${this.caller}: Fetching events for ${date}...`,
               );
 
               const result = await googleCalendarLib.getEventsForDay(
                 date,
-                calendarId
+                calendarId,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get events - ${result.error}`
+                  `${this.caller}: Failed to get events - ${result.error}`,
                 );
                 return `Error getting events: ${result.error}`;
               }
 
               const { eventCount, events } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${eventCount} event(s) for ${date}`
+                `${this.caller}: Found ${eventCount} event(s) for ${date}`,
               );
 
               if (eventCount === 0) return `No events scheduled for ${date}.`;
@@ -76,7 +76,7 @@ module.exports.GCalGetEventsForDay = {
                 } else {
                   const start = new Date(event.startTime).toLocaleTimeString(
                     [],
-                    { hour: "2-digit", minute: "2-digit" }
+                    { hour: "2-digit", minute: "2-digit" },
                   );
                   const end = new Date(event.endTime).toLocaleTimeString([], {
                     hour: "2-digit",
@@ -104,7 +104,7 @@ module.exports.GCalGetEventsForDay = {
               return `Events for ${date} (${eventCount} total):\n\n${summary}`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gcal-get-events-for-day error: ${e.message}`
+                `gcal-get-events-for-day error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error getting events: ${e.message}`;

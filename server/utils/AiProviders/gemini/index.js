@@ -14,7 +14,7 @@ const { safeJsonParse } = require("../../http");
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "gemini")
-    : path.resolve(__dirname, `../../../storage/models/gemini`)
+    : path.resolve(__dirname, `../../../storage/models/gemini`),
 );
 
 const NO_SYSTEM_PROMPT_MODELS = [
@@ -57,7 +57,7 @@ class GeminiLLM {
     this.cacheModelPath = path.resolve(cacheFolder, "models.json");
     this.cacheAtPath = path.resolve(cacheFolder, ".cached_at");
     this.#log(
-      `Initialized with model: ${this.model} ${isExperimental ? "[Experimental v1beta]" : "[Stable v1]"} - ctx: ${this.promptWindowLimit()}`
+      `Initialized with model: ${this.model} ${isExperimental ? "[Experimental v1beta]" : "[Stable v1]"} - ctx: ${this.promptWindowLimit()}`,
     );
   }
 
@@ -83,7 +83,7 @@ class GeminiLLM {
     if (!fs.existsSync(path.resolve(cacheFolder, ".cached_at"))) return true;
     const now = Number(new Date());
     const timestampMs = Number(
-      fs.readFileSync(path.resolve(cacheFolder, ".cached_at"))
+      fs.readFileSync(path.resolve(cacheFolder, ".cached_at")),
     );
     return now - timestampMs > MAX_STALE;
   }
@@ -114,7 +114,7 @@ class GeminiLLM {
       const model = models.find((model) => model.id === modelName);
       if (!model)
         throw new Error(
-          "Model not found in cache - falling back to default model."
+          "Model not found in cache - falling back to default model.",
         );
       return model.contextWindow;
     } catch (e) {
@@ -131,7 +131,7 @@ class GeminiLLM {
       const model = models.find((model) => model.id === this.model);
       if (!model)
         throw new Error(
-          "Model not found in cache - falling back to default model."
+          "Model not found in cache - falling back to default model.",
         );
       return model.contextWindow;
     } catch (e) {
@@ -152,7 +152,7 @@ class GeminiLLM {
       fs.existsSync(path.resolve(cacheFolder, "models.json"))
     ) {
       const models = safeJsonParse(
-        fs.readFileSync(path.resolve(cacheFolder, "models.json"))
+        fs.readFileSync(path.resolve(cacheFolder, "models.json")),
       );
       const model = models.find((model) => model.id === modelName);
       if (!model) return false;
@@ -173,10 +173,10 @@ class GeminiLLM {
     if (!apiKey) return [];
     if (fs.existsSync(cacheFolder) && !this.cacheIsStale()) {
       console.log(
-        `\x1b[32m[GeminiLLM]\x1b[0m Using cached models API response.`
+        `\x1b[32m[GeminiLLM]\x1b[0m Using cached models API response.`,
       );
       return safeJsonParse(
-        fs.readFileSync(path.resolve(cacheFolder, "models.json"))
+        fs.readFileSync(path.resolve(cacheFolder, "models.json")),
       );
     }
 
@@ -186,7 +186,7 @@ class GeminiLLM {
     // Fetch from v1
     try {
       const url = new URL(
-        "https://generativelanguage.googleapis.com/v1/models"
+        "https://generativelanguage.googleapis.com/v1/models",
       );
       url.searchParams.set("pageSize", limit);
       url.searchParams.set("key", apiKey);
@@ -203,15 +203,15 @@ class GeminiLLM {
         .then((models) => {
           return models
             .filter(
-              (model) => !model.displayName?.toLowerCase()?.includes("tuning")
+              (model) => !model.displayName?.toLowerCase()?.includes("tuning"),
             ) // remove tuning models
             .filter(
               (model) =>
-                !model.description?.toLowerCase()?.includes("deprecated")
+                !model.description?.toLowerCase()?.includes("deprecated"),
             ) // remove deprecated models (in comment)
             .filter((model) =>
               //  Only generateContent is supported
-              model.supportedGenerationMethods.includes("generateContent")
+              model.supportedGenerationMethods.includes("generateContent"),
             )
             .map((model) => {
               stableModels.push(model.name);
@@ -234,7 +234,7 @@ class GeminiLLM {
     // Fetch from v1beta
     try {
       const url = new URL(
-        "https://generativelanguage.googleapis.com/v1beta/models"
+        "https://generativelanguage.googleapis.com/v1beta/models",
       );
       url.searchParams.set("pageSize", limit);
       url.searchParams.set("key", apiKey);
@@ -252,15 +252,15 @@ class GeminiLLM {
           return models
             .filter((model) => !stableModels.includes(model.name)) // remove stable models that are already in the v1 list
             .filter(
-              (model) => !model.displayName?.toLowerCase()?.includes("tuning")
+              (model) => !model.displayName?.toLowerCase()?.includes("tuning"),
             ) // remove tuning models
             .filter(
               (model) =>
-                !model.description?.toLowerCase()?.includes("deprecated")
+                !model.description?.toLowerCase()?.includes("deprecated"),
             ) // remove deprecated models (in comment)
             .filter((model) =>
               //  Only generateContent is supported
-              model.supportedGenerationMethods.includes("generateContent")
+              model.supportedGenerationMethods.includes("generateContent"),
             )
             .map((model) => {
               allModels.push({
@@ -285,17 +285,17 @@ class GeminiLLM {
     }
 
     console.log(
-      `\x1b[32m[GeminiLLM]\x1b[0m Writing cached models API response to disk.`
+      `\x1b[32m[GeminiLLM]\x1b[0m Writing cached models API response to disk.`,
     );
     if (!fs.existsSync(cacheFolder))
       fs.mkdirSync(cacheFolder, { recursive: true });
     fs.writeFileSync(
       path.resolve(cacheFolder, "models.json"),
-      JSON.stringify(allModels)
+      JSON.stringify(allModels),
     );
     fs.writeFileSync(
       path.resolve(cacheFolder, ".cached_at"),
-      new Date().getTime().toString()
+      new Date().getTime().toString(),
     );
 
     return allModels;
@@ -353,7 +353,7 @@ class GeminiLLM {
       });
     } else {
       this.#log(
-        `${this.model} - does not support system prompts - emulating...`
+        `${this.model} - does not support system prompts - emulating...`,
       );
       prompt.push(
         {
@@ -363,7 +363,7 @@ class GeminiLLM {
         {
           role: "assistant",
           content: "Okay.",
-        }
+        },
       );
     }
 
@@ -388,7 +388,7 @@ class GeminiLLM {
         .catch((e) => {
           console.error(e);
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (

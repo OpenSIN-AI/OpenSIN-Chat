@@ -12,7 +12,7 @@ class LemonadeEmbedder {
     this.lemonade = new OpenAIApi({
       baseURL: parseLemonadeServerEndpoint(
         process.env.EMBEDDING_BASE_PATH,
-        "openai"
+        "openai",
       ),
       apiKey: process.env.LEMONADE_LLM_API_KEY || null,
     });
@@ -29,14 +29,14 @@ class LemonadeEmbedder {
 
   async embedTextInput(textInput) {
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
     return result?.[0] || [];
   }
 
   async embedChunks(textChunks = []) {
     this.log(
-      `Embedding ${textChunks.length} chunks of text with ${this.model}.`
+      `Embedding ${textChunks.length} chunks of text with ${this.model}.`,
     );
 
     const allResults = [];
@@ -83,7 +83,7 @@ class LemonadeEmbedder {
       allResults.push(...(data || []));
       reportEmbeddingProgress(
         Math.min(allResults.length, textChunks.length),
-        textChunks.length
+        textChunks.length,
       );
     }
 

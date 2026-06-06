@@ -118,7 +118,7 @@ class LanceDb extends VectorDatabase {
      */
     const searchLimit = Math.max(
       10,
-      Math.min(50, Math.ceil(totalEmbeddings * 0.1))
+      Math.min(50, Math.ceil(totalEmbeddings * 0.1)),
     );
     const vectorSearchResults = await collection
       .vectorSearch(queryVector)
@@ -135,7 +135,7 @@ class LanceDb extends VectorDatabase {
           const { vector: _, ...rest } = item;
           if (filterIdentifiers.includes(sourceIdentifier(rest))) {
             this.logger(
-              "A source was filtered from context as it's parent document is pinned."
+              "A source was filtered from context as it's parent document is pinned.",
             );
             return;
           }
@@ -196,7 +196,7 @@ class LanceDb extends VectorDatabase {
       const { vector: _, ...rest } = item;
       if (filterIdentifiers.includes(sourceIdentifier(rest))) {
         this.logger(
-          "A source was filtered from context as it's parent document is pinned."
+          "A source was filtered from context as it's parent document is pinned.",
         );
         return;
       }
@@ -282,7 +282,7 @@ class LanceDb extends VectorDatabase {
     const exists = await this.namespaceExists(client, namespace);
     if (!exists) {
       this.logger(
-        `deleteDocumentFromNamespace - namespace ${namespace} does not exist.`
+        `deleteDocumentFromNamespace - namespace ${namespace} does not exist.`,
       );
       return;
     }
@@ -290,7 +290,7 @@ class LanceDb extends VectorDatabase {
     const { DocumentVectors } = require("../../../models/vectors");
     const table = await client.openTable(namespace);
     const vectorIds = (await DocumentVectors.where({ docId })).map(
-      (record) => record.vectorId
+      (record) => record.vectorId,
     );
 
     if (vectorIds.length === 0) return;
@@ -302,7 +302,7 @@ class LanceDb extends VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     const { DocumentVectors } = require("../../../models/vectors");
     try {
@@ -343,11 +343,11 @@ class LanceDb extends VectorDatabase {
           await SystemSettings.getValueOrFallback({
             label: "text_splitter_chunk_size",
           }),
-          EmbedderEngine?.embeddingMaxChunkLength
+          EmbedderEngine?.embeddingMaxChunkLength,
         ),
         chunkOverlap: await SystemSettings.getValueOrFallback(
           { label: "text_splitter_chunk_overlap" },
-          20
+          20,
         ),
         chunkHeaderMeta: TextSplitter.buildHeaderMeta(metadata),
         chunkPrefix: EmbedderEngine?.embeddingPrefix,
@@ -381,7 +381,7 @@ class LanceDb extends VectorDatabase {
         }
       } else {
         throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
+          "Could not embed document chunks! This document will not be recorded.",
         );
       }
 

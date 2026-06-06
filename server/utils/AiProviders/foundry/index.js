@@ -93,7 +93,7 @@ class FoundryLLM {
           const contextWindow =
             Number(model.maxInputTokens) + Number(model.maxOutputTokens);
           FoundryLLM.modelContextWindows[model.id] = contextWindow;
-        }
+        },
       );
       FoundryLLM.#slog(`Context windows cached for all models!`);
     } catch (e) {
@@ -123,7 +123,7 @@ class FoundryLLM {
   static promptWindowLimit(modelName) {
     if (Object.keys(FoundryLLM.modelContextWindows).length === 0) {
       this.#slog(
-        "No context windows cached - Context window may be inaccurately reported."
+        "No context windows cached - Context window may be inaccurately reported.",
       );
       return process.env.FOUNDRY_MODEL_TOKEN_LIMIT || 4096;
     }
@@ -206,7 +206,7 @@ class FoundryLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `Foundry chat: ${this.model} is not valid or defined model for chat completion!`
+        `Foundry chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -219,7 +219,7 @@ class FoundryLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -246,7 +246,7 @@ class FoundryLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!this.model)
       throw new Error(
-        `Foundry chat: ${this.model} is not valid or defined model for chat completion!`
+        `Foundry chat: ${this.model} is not valid or defined model for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -313,7 +313,7 @@ class FoundryLLM {
 
         if (diffMs >= timeoutThresholdMs) {
           console.log(
-            `Foundry stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`
+            `Foundry stream did not self-close and has been stale for >${timeoutThresholdMs}ms. Closing response stream.`,
           );
           writeResponseChunk(response, {
             uuid,

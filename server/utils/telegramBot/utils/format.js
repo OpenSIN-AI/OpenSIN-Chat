@@ -10,7 +10,7 @@
  */
 function markdownToTelegram(
   text,
-  { escapeHtml = true, closeUnclosedTags = true } = {}
+  { escapeHtml = true, closeUnclosedTags = true } = {},
 ) {
   if (!text) return "";
 
@@ -30,7 +30,7 @@ function markdownToTelegram(
     const trimmed = content.trim();
     const tag = trimmed.length > 200 ? "blockquote expandable" : "blockquote";
     thinkBlocks.push(
-      `<${tag}>💭 <b>Thinking:</b>\n${escapeHTML(trimmed)}</blockquote>`
+      `<${tag}>💭 <b>Thinking:</b>\n${escapeHTML(trimmed)}</blockquote>`,
     );
     return placeholder;
   });
@@ -42,7 +42,7 @@ function markdownToTelegram(
       const trimmed = content.trim();
       const tag = trimmed.length > 200 ? "blockquote expandable" : "blockquote";
       thinkBlocks.push(
-        `<${tag}>💭 <b>Thinking:</b>\n${escapeHTML(trimmed)}</blockquote>`
+        `<${tag}>💭 <b>Thinking:</b>\n${escapeHTML(trimmed)}</blockquote>`,
       );
       return placeholder;
     });
@@ -55,7 +55,7 @@ function markdownToTelegram(
       const trimmed = content.trim();
       const tag = trimmed.length > 200 ? "blockquote expandable" : "blockquote";
       thinkBlocks.push(
-        `<${tag}>💭 <b>Thinking continued:</b>\n${escapeHTML(trimmed)}</blockquote>`
+        `<${tag}>💭 <b>Thinking continued:</b>\n${escapeHTML(trimmed)}</blockquote>`,
       );
       return placeholder;
     });
@@ -76,7 +76,7 @@ function markdownToTelegram(
       const placeholder = `\x00CODEBLOCK${codeBlocks.length}\x00`;
       codeBlocks.push(`<pre>${escapeHTML(converted)}</pre>`);
       return `\n${placeholder}`;
-    }
+    },
   );
 
   // Extract inline code (`...`)
@@ -95,7 +95,7 @@ function markdownToTelegram(
   result = result.replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, "<i>$1</i>");
   result = result.replace(
     /(?<![a-zA-Z0-9])_([^_]+)_(?![a-zA-Z0-9])/g,
-    "<i>$1</i>"
+    "<i>$1</i>",
   );
   result = result.replace(/~~(.+?)~~/g, "<s>$1</s>");
   result = result.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');

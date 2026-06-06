@@ -33,7 +33,7 @@ class Deduplicator {
       cooldown: false,
       cooldownInMs: DEFAULT_COOLDOWN_MS,
       markUnique: false,
-    }
+    },
   ) {
     const hash = crypto
       .createHash("sha256")
@@ -106,7 +106,7 @@ class Deduplicator {
     key,
     parameters = {
       cooldownInMs: DEFAULT_COOLDOWN_MS,
-    }
+    },
   ) {
     const cooldownDelay = parameters.cooldownInMs || DEFAULT_COOLDOWN_MS;
     this.log(`Starting cooldown for ${key} for ${cooldownDelay}ms`);

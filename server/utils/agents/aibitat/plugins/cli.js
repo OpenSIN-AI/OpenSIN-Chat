@@ -70,7 +70,7 @@ const cli = {
       print: async function (message = {}, simulateStream = true) {
         const replying = chalk.dim(`(to ${message.to})`);
         const reference = `${chalk.magenta("✎")} ${chalk.bold(
-          message.from
+          message.from,
         )} ${replying}:`;
 
         if (!simulateStream) {
@@ -94,8 +94,8 @@ const cli = {
                 setTimeout(
                   r,
                   // get a random number between 10ms and 50ms to simulate a random delay
-                  Math.floor(Math.random() * 40) + 10
-                )
+                  Math.floor(Math.random() * 40) + 10,
+                ),
               );
             }
             controller.close();
@@ -121,9 +121,9 @@ const cli = {
       askForFeedback: function (node = {}) {
         return input({
           message: `Provide feedback to ${chalk.yellow(
-            node.to
+            node.to,
           )} as ${chalk.yellow(
-            node.from
+            node.from,
           )}. Press enter to skip and use auto-reply, or type 'exit' to end the conversation: `,
         });
       },

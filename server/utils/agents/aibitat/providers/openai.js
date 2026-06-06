@@ -57,7 +57,7 @@ class OpenAIProvider extends Provider {
         if (!message.hasOwnProperty("originalFunctionCall")) {
           this.providerLog(
             "[OpenAI.#formatToResponsesInput]: message did not pass back the originalFunctionCall. We need this to map the function call to the correct id.",
-            { message: JSON.stringify(message, null, 2) }
+            { message: JSON.stringify(message, null, 2) },
           );
           return;
         }
@@ -73,7 +73,7 @@ class OpenAIProvider extends Provider {
             type: "function_call_output",
             call_id: message.originalFunctionCall.id,
             output: message.content,
-          }
+          },
         );
         return;
       }
@@ -214,7 +214,7 @@ class OpenAIProvider extends Provider {
       if (completion.functionCall) {
         completion.functionCall.arguments = safeJsonParse(
           completion.functionCall.arguments,
-          {}
+          {},
         );
         return {
           textResponse: completion.content,
@@ -298,7 +298,7 @@ class OpenAIProvider extends Provider {
       if (completion.functionCall) {
         completion.functionCall.arguments = safeJsonParse(
           completion.functionCall.arguments,
-          {}
+          {},
         );
         return {
           textResponse: completion.content,

@@ -35,7 +35,7 @@ class AzureOpenAiEmbedder {
 
   async embedTextInput(textInput) {
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
     return result?.[0] || [];
   }
@@ -72,12 +72,12 @@ class AzureOpenAiEmbedder {
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
-        })
+        }),
       );
     }
 
     const { data = [], error = null } = await Promise.all(
-      embeddingRequests
+      embeddingRequests,
     ).then((results) => {
       // If any errors were returned from Azure abort the entire sequence because the embeddings
       // will be incomplete.
@@ -88,7 +88,7 @@ class AzureOpenAiEmbedder {
       if (errors.length > 0) {
         let uniqueErrors = new Set();
         errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
+          uniqueErrors.add(`[${error.type}]: ${error.message}`),
         );
 
         return {

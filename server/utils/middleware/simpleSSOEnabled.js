@@ -13,7 +13,7 @@ async function simpleSSOEnabled(_, response, next) {
     return response
       .status(403)
       .send(
-        "Simple SSO is not enabled. It must be enabled to validate or issue temporary auth tokens."
+        "Simple SSO is not enabled. It must be enabled to validate or issue temporary auth tokens.",
       );
   }
 
@@ -27,7 +27,7 @@ async function simpleSSOEnabled(_, response, next) {
     return response
       .status(403)
       .send(
-        "Multi-User mode is not enabled. It must be enabled to use Simple SSO."
+        "Multi-User mode is not enabled. It must be enabled to use Simple SSO.",
       );
   }
 

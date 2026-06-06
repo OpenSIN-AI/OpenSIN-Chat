@@ -62,7 +62,7 @@ class OllamaAILLM {
       user: this.promptWindowLimit() * 0.7,
     };
     this.#log(
-      `model ${this.model} is using a max context window of ${this.promptWindowLimit()}/${OllamaAILLM.maxContextWindow(this.model)} tokens.`
+      `model ${this.model} is using a max context window of ${this.promptWindowLimit()}/${OllamaAILLM.maxContextWindow(this.model)} tokens.`,
     );
   }
 
@@ -94,13 +94,13 @@ class OllamaAILLM {
       const infoPromises = models.map((model) =>
         client
           .show({ model: model.name })
-          .then((info) => ({ name: model.name, ...info }))
+          .then((info) => ({ name: model.name, ...info })),
       );
       const infos = await Promise.all(infoPromises);
       infos.forEach((showInfo) => {
         if (showInfo.capabilities.includes("embedding")) return;
         const contextWindowKey = Object.keys(showInfo.model_info).find((key) =>
-          key.endsWith(".context_length")
+          key.endsWith(".context_length"),
         );
         if (!contextWindowKey)
           return (OllamaAILLM.modelContextWindows[showInfo.name] = 4096);
@@ -142,7 +142,7 @@ class OllamaAILLM {
       if (!timeout || isNaN(Number(timeout)) || Number(timeout) <= 5 * 60_000) {
         OllamaAILLM.#slog(
           "Timeout option was not set, is not a number, or is less than 5 minutes in ms - falling back to default",
-          { timeout }
+          { timeout },
         );
         return fetch;
       } else timeout = Number(timeout);
@@ -160,7 +160,7 @@ class OllamaAILLM {
     } catch (error) {
       OllamaAILLM.#slog(
         "Error applying custom fetch - using default fetch",
-        error
+        error,
       );
       return fetch;
     }
@@ -173,7 +173,7 @@ class OllamaAILLM {
   static promptWindowLimit(modelName) {
     if (Object.keys(OllamaAILLM.modelContextWindows).length === 0) {
       this.#slog(
-        "No context windows cached - Context window may be inaccurately reported."
+        "No context windows cached - Context window may be inaccurately reported.",
       );
       return Number(process.env.OLLAMA_MODEL_TOKEN_LIMIT) || 4096;
     }
@@ -221,7 +221,7 @@ class OllamaAILLM {
   #generateContent({ userPrompt, attachments = [] }) {
     if (!attachments.length) return { content: userPrompt };
     const images = attachments.map(
-      (attachment) => attachment.contentString.split("base64,").slice(-1)[0]
+      (attachment) => attachment.contentString.split("base64,").slice(-1)[0],
     );
     return { content: userPrompt, images };
   }
@@ -234,7 +234,7 @@ class OllamaAILLM {
     switch (e.message) {
       case "fetch failed":
         throw new Error(
-          "Your Ollama instance could not be reached or is not responding. Please make sure it is running the API server and your connection information is correct in OpenAfD Chat."
+          "Your Ollama instance could not be reached or is not responding. Please make sure it is running the API server and your connection information is correct in OpenAfD Chat.",
         );
       default:
         return e;
@@ -296,9 +296,9 @@ class OllamaAILLM {
         })
         .catch((e) => {
           throw new Error(
-            `Ollama::getChatCompletion failed to communicate with Ollama. ${this.#errorHandler(e).message}`
+            `Ollama::getChatCompletion failed to communicate with Ollama. ${this.#errorHandler(e).message}`,
           );
-        })
+        }),
     );
 
     if (!result.output.content || !result.output.content.length)
@@ -374,7 +374,7 @@ class OllamaAILLM {
         for await (const chunk of stream) {
           if (chunk === undefined)
             throw new Error(
-              "Stream returned undefined chunk. Aborting reply - check model provider logs."
+              "Stream returned undefined chunk. Aborting reply - check model provider logs.",
             );
 
           if (chunk.done) {

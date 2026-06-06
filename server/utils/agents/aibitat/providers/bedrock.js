@@ -29,7 +29,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
       {},
       this.authMethod,
       this.credentials,
-      model
+      model,
     );
 
     this._client = client;
@@ -62,7 +62,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
       this.providerLog("AWS Bedrock native tool calling is ENABLED via ENV.");
     else
       this.providerLog(
-        "AWS Bedrock native tool calling is DISABLED via ENV. Will use UnTooled instead."
+        "AWS Bedrock native tool calling is DISABLED via ENV. Will use UnTooled instead.",
       );
     this._supportsToolCalling = supportsToolCalling;
     return supportsToolCalling;
@@ -101,7 +101,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
         langchainChats.push(
           new HumanMessage({
             content: this.#formatContentWithAttachments(chat),
-          })
+          }),
         );
       } else if (chat.role === "assistant") {
         langchainChats.push(new AIMessage({ content: chat.content }));
@@ -168,7 +168,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
                     id: chat.originalFunctionCall.id,
                   },
                 ],
-              })
+              }),
             );
           }
           langchainChats.push(
@@ -178,7 +178,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
                   ? chat.content
                   : JSON.stringify(chat.content),
               tool_call_id: chat.originalFunctionCall.id,
-            })
+            }),
           );
         } else {
           const toolCallId = `call_${v4()}`;
@@ -186,7 +186,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
             new AIMessage({
               content: "",
               tool_calls: [{ name: chat.name, args: {}, id: toolCallId }],
-            })
+            }),
           );
           langchainChats.push(
             new ToolMessage({
@@ -195,7 +195,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
                   ? chat.content
                   : JSON.stringify(chat.content),
               tool_call_id: toolCallId,
-            })
+            }),
           );
         }
       } else if (chat.role === "system") {
@@ -204,7 +204,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
         langchainChats.push(
           new HumanMessage({
             content: this.#formatContentWithAttachments(chat),
-          })
+          }),
         );
       } else if (chat.role === "assistant") {
         langchainChats.push(new AIMessage({ content: chat.content }));
@@ -305,7 +305,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
           messages,
           functions,
           this.#handleFunctionCallStream.bind(this),
-          eventHandler
+          eventHandler,
         )
         .catch((e) => {
           AWSBedrockLLM.errorToHumanReadable(e, {
@@ -316,7 +316,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -396,7 +396,7 @@ class AWSBedrockProvider extends InheritMultiple([Provider, UnTooled]) {
           this,
           messages,
           functions,
-          this.#handleFunctionCallChat.bind(this)
+          this.#handleFunctionCallChat.bind(this),
         )
         .catch((e) => {
           AWSBedrockLLM.errorToHumanReadable(e, {

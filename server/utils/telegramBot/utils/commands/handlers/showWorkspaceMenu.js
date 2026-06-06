@@ -21,7 +21,7 @@ async function showWorkspaceMenu(ctx, chatId, page = 0, messageId = null) {
             [{ text: "➕ Create Workspace", callback_data: "ws-create" }],
           ],
         },
-      }
+      },
     );
     return;
   }
@@ -40,7 +40,7 @@ async function showWorkspaceMenu(ctx, chatId, page = 0, messageId = null) {
   const startIdx = safePage * WORKSPACES_PER_PAGE;
   const pageWorkspaces = sortedWorkspaces.slice(
     startIdx,
-    startIdx + WORKSPACES_PER_PAGE
+    startIdx + WORKSPACES_PER_PAGE,
   );
 
   const buttons = pageWorkspaces.map((ws) => {

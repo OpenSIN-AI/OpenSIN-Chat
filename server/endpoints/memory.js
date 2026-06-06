@@ -65,7 +65,7 @@ function memoryEndpoints(app) {
         console.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -94,7 +94,7 @@ function memoryEndpoints(app) {
         console.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.put(
@@ -119,7 +119,7 @@ function memoryEndpoints(app) {
         console.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.delete(
@@ -139,7 +139,7 @@ function memoryEndpoints(app) {
         console.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -161,7 +161,7 @@ function memoryEndpoints(app) {
         console.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 
   app.post(
@@ -180,7 +180,7 @@ function memoryEndpoints(app) {
 
         const { memory, message } = await Memory.demoteToWorkspace(
           memoryId,
-          targetWorkspace.id
+          targetWorkspace.id,
         );
 
         if (!memory) return response.status(400).json({ error: message });
@@ -189,7 +189,7 @@ function memoryEndpoints(app) {
         console.error(e);
         return response.sendStatus(500);
       }
-    }
+    },
   );
 }
 

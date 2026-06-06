@@ -35,7 +35,7 @@ module.exports.GmailMoveToArchive = {
           handler: async function ({ threadId }) {
             try {
               this.super.handlerProps.log(
-                `Using the gmail-move-to-archive tool.`
+                `Using the gmail-move-to-archive tool.`,
               );
 
               if (!threadId) {
@@ -50,33 +50,33 @@ module.exports.GmailMoveToArchive = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Archiving thread ${threadId}`
+                `${this.caller}: Archiving thread ${threadId}`,
               );
 
               const result = await gmailLib.moveToArchive(threadId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to archive thread - ${result.error}`
+                  `${this.caller}: Failed to archive thread - ${result.error}`,
                 );
                 return `Error archiving thread: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully archived thread ${threadId}`
+                `${this.caller}: Successfully archived thread ${threadId}`,
               );
 
               return `Successfully archived thread ${threadId}. It can still be found in All Mail or by searching.`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-move-to-archive error: ${e.message}`
+                `gmail-move-to-archive error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error archiving thread: ${e.message}`;

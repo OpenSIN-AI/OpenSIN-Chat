@@ -30,7 +30,7 @@ class SambaNovaLLM {
     this.embedder = embedder ?? new NativeEmbedder();
     this.defaultTemp = 0.7;
     this.log(
-      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`
+      `Initialized ${this.model} with context window ${this.promptWindowLimit()}`,
     );
   }
 
@@ -122,7 +122,7 @@ class SambaNovaLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (

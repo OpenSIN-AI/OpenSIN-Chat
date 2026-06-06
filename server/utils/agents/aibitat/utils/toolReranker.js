@@ -88,7 +88,7 @@ class ToolReranker {
       const totalChunks = Math.ceil(totalDocs / CHUNK_SIZE);
 
       this.log(
-        `Processing chunk ${chunkNum}/${totalChunks} (${chunk.length} docs)...`
+        `Processing chunk ${chunkNum}/${totalChunks} (${chunk.length} docs)...`,
       );
 
       const chunkResults = await reranker.rerank(query, chunk, {
@@ -177,7 +177,7 @@ class ToolReranker {
       const documents = tools.map((tool) => this.#toolToDocument(tool));
       const originalTokenCount = documents.reduce(
         (acc, doc) => acc + doc.tokens,
-        0
+        0,
       );
 
       const startTime = Date.now();
@@ -195,14 +195,14 @@ class ToolReranker {
       }));
 
       const rerankedTools = rerankedIndices.map(
-        ({ index }) => documents[index].tool
+        ({ index }) => documents[index].tool,
       );
       const newTokenCount = rerankedIndices.reduce(
         (acc, { index }) => acc + documents[index].tokens,
-        0
+        0,
       );
       const percentSaved = Math.round(
-        ((originalTokenCount - newTokenCount) / originalTokenCount) * 100
+        ((originalTokenCount - newTokenCount) / originalTokenCount) * 100,
       );
       this.log(`
 Identified top ${rerankedTools.length} of ${tools.length} tools in ${elapsedMs}ms

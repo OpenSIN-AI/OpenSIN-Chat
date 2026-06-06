@@ -59,7 +59,7 @@ class DeepgramSTT {
         if (!response.ok) {
           const errBody = await response.text().catch(() => "");
           throw new Error(
-            `Deepgram transcription failed (${response.status}) - ${errBody}`
+            `Deepgram transcription failed (${response.status}) - ${errBody}`,
           );
         }
         return response.json();

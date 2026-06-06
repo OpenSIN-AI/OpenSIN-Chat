@@ -121,7 +121,7 @@ module.exports.OutlookSendEmail = {
               const attachmentResult = await prepareAttachmentsWithValidation(
                 this,
                 attachments,
-                { requireApprovalPerFile: true, recipientInfo: to }
+                { requireApprovalPerFile: true, recipientInfo: to },
               );
               if (!attachmentResult.success) {
                 return `Error with attachment: ${attachmentResult.error}`;
@@ -152,7 +152,7 @@ module.exports.OutlookSendEmail = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
@@ -161,16 +161,16 @@ module.exports.OutlookSendEmail = {
               let result;
               if (isReply) {
                 this.super.introspect(
-                  `${this.caller}: Sending ${replyAll ? "reply-all" : "reply"} to message...`
+                  `${this.caller}: Sending ${replyAll ? "reply-all" : "reply"} to message...`,
                 );
                 result = await outlookLib.replyToMessage(
                   replyToMessageId,
                   body,
-                  replyAll
+                  replyAll,
                 );
               } else {
                 this.super.introspect(
-                  `${this.caller}: Sending email to ${to}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`
+                  `${this.caller}: Sending email to ${to}${preparedAttachments.length > 0 ? ` with ${preparedAttachments.length} attachment(s)` : ""}`,
                 );
 
                 const options = { isHtml };
@@ -185,20 +185,20 @@ module.exports.OutlookSendEmail = {
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to send - ${result.error}`
+                  `${this.caller}: Failed to send - ${result.error}`,
                 );
                 return `Error sending: ${result.error}`;
               }
 
               if (isReply) {
                 this.super.introspect(
-                  `${this.caller}: Successfully sent ${replyAll ? "reply-all" : "reply"}`
+                  `${this.caller}: Successfully sent ${replyAll ? "reply-all" : "reply"}`,
                 );
                 return `Successfully sent ${replyAll ? "reply-all" : "reply"} to message (ID: ${replyToMessageId}). The reply has been delivered.`;
               }
 
               this.super.introspect(
-                `${this.caller}: Successfully sent email to ${to}`
+                `${this.caller}: Successfully sent email to ${to}`,
               );
 
               return (

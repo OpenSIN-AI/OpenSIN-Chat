@@ -59,16 +59,16 @@ async function handleToolApproval({
       if (worker && typeof worker.send === "function") {
         worker.send(response);
         _log(
-          `Sent tool approval response to worker via send(): ${approved ? "approved" : "denied"}`
+          `Sent tool approval response to worker via send(): ${approved ? "approved" : "denied"}`,
         );
       } else if (worker && typeof worker.postMessage === "function") {
         worker.postMessage(response);
         _log(
-          `Sent tool approval response to worker via postMessage(): ${approved ? "approved" : "denied"}`
+          `Sent tool approval response to worker via postMessage(): ${approved ? "approved" : "denied"}`,
         );
       } else {
         _log(
-          `Worker not available to send approval response (send: ${typeof worker?.send}, postMessage: ${typeof worker?.postMessage})`
+          `Worker not available to send approval response (send: ${typeof worker?.send}, postMessage: ${typeof worker?.postMessage})`,
         );
       }
     } catch (err) {

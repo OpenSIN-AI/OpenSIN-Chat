@@ -41,7 +41,7 @@ class VoyageAiEmbedder {
 
   async embedTextInput(textInput) {
     const result = await this.voyage.embedDocuments(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
 
     // If given an array return the native Array[Array] format since that should be the outcome.
@@ -57,7 +57,7 @@ class VoyageAiEmbedder {
       console.error("Voyage AI Failed to embed:", error);
       if (
         error.message.includes(
-          "Cannot read properties of undefined (reading '0')"
+          "Cannot read properties of undefined (reading '0')",
         )
       )
         throw new Error("Voyage AI failed to embed: Rate limit reached");

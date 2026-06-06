@@ -86,13 +86,13 @@ const CommunityHub = {
             ? { Authorization: `Bearer ${connectionKey}` }
             : {}),
         },
-      }
+      },
     )
       .then((response) => response.json())
       .catch((error) => {
         console.error(
           `Error fetching bundle item for import ID ${importId}:`,
-          error
+          error,
         );
         return { url: null, item: null, error: error.message };
       });

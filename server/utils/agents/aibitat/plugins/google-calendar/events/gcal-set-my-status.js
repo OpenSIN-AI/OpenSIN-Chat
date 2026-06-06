@@ -71,31 +71,31 @@ module.exports.GCalSetMyStatus = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Setting RSVP status to ${status} for event ${eventId}...`
+                `${this.caller}: Setting RSVP status to ${status} for event ${eventId}...`,
               );
 
               const result = await googleCalendarLib.setMyStatus(
                 eventId,
                 status,
-                calendarId
+                calendarId,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to set status - ${result.error}`
+                  `${this.caller}: Failed to set status - ${result.error}`,
                 );
                 return `Error setting RSVP status: ${result.error}`;
               }
 
               this.super.introspect(
-                `${this.caller}: RSVP status set to ${result.data.newStatus}`
+                `${this.caller}: RSVP status set to ${result.data.newStatus}`,
               );
 
               const statusMessages = {
@@ -112,7 +112,7 @@ module.exports.GCalSetMyStatus = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gcal-set-my-status error: ${e.message}`
+                `gcal-set-my-status error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error setting RSVP status: ${e.message}`;

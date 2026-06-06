@@ -60,31 +60,31 @@ module.exports.GCalQuickAdd = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Creating event from "${description}"...`
+                `${this.caller}: Creating event from "${description}"...`,
               );
 
               const result = await googleCalendarLib.quickAdd(
                 description,
-                calendarId
+                calendarId,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to create event - ${result.error}`
+                  `${this.caller}: Failed to create event - ${result.error}`,
                 );
                 return `Error creating event: ${result.error}`;
               }
 
               const event = result.data.event;
               this.super.introspect(
-                `${this.caller}: Created event "${event.title}"`
+                `${this.caller}: Created event "${event.title}"`,
               );
 
               let timeInfo;

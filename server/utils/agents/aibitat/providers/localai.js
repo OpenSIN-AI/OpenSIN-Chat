@@ -46,11 +46,11 @@ class LocalAiProvider extends InheritMultiple([Provider, UnTooled]) {
     const supportsToolCalling = this.supportsNativeToolCallingViaEnv("localai");
     if (supportsToolCalling)
       this.providerLog(
-        "LocalAI supports native tool calling is ENABLED via ENV."
+        "LocalAI supports native tool calling is ENABLED via ENV.",
       );
     else
       this.providerLog(
-        "LocalAI supports native tool calling is DISABLED via ENV. Will use UnTooled instead."
+        "LocalAI supports native tool calling is DISABLED via ENV. Will use UnTooled instead.",
       );
     this._supportsToolCalling = supportsToolCalling;
     return supportsToolCalling;
@@ -98,12 +98,12 @@ class LocalAiProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -113,7 +113,7 @@ class LocalAiProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -142,7 +142,7 @@ class LocalAiProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         messages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -153,7 +153,7 @@ class LocalAiProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

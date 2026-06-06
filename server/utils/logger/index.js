@@ -21,8 +21,8 @@ class Logger {
             winston.format.printf(
               ({ level, message, service, origin = "" }) => {
                 return `\x1b[36m[${service}]\x1b[0m${origin ? `\x1b[33m[${origin}]\x1b[0m` : ""} ${level}: ${message}`;
-              }
-            )
+              },
+            ),
           ),
         }),
       ],

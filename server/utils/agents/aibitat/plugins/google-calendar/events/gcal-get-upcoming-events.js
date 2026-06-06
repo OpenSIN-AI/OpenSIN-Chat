@@ -64,7 +64,7 @@ function getDateRangeForPeriod(period) {
 
     default:
       throw new Error(
-        `Invalid period: "${period}". Use "today", "tomorrow", "week", "this week", "next week", "month", "this month", or "next month".`
+        `Invalid period: "${period}". Use "today", "tomorrow", "week", "this week", "next week", "month", "this month", or "next month".`,
       );
   }
 
@@ -152,14 +152,14 @@ module.exports.GCalGetUpcomingEvents = {
           handler: async function ({ period, query, calendarId, limit = 25 }) {
             try {
               this.super.handlerProps.log(
-                `Using the gcal-get-upcoming-events tool.`
+                `Using the gcal-get-upcoming-events tool.`,
               );
 
               const { startDate, endDate, label } =
                 getDateRangeForPeriod(period);
 
               this.super.introspect(
-                `${this.caller}: Fetching events for ${label}${query ? ` matching "${query}"` : ""}...`
+                `${this.caller}: Fetching events for ${label}${query ? ` matching "${query}"` : ""}...`,
               );
 
               const result = await googleCalendarLib.getEvents(
@@ -167,19 +167,19 @@ module.exports.GCalGetUpcomingEvents = {
                 endDate,
                 calendarId,
                 query,
-                limit
+                limit,
               );
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get events - ${result.error}`
+                  `${this.caller}: Failed to get events - ${result.error}`,
                 );
                 return `Error getting events: ${result.error}`;
               }
 
               const { totalEvents, returnedEvents, events } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${totalEvents} event(s) for ${label}`
+                `${this.caller}: Found ${totalEvents} event(s) for ${label}`,
               );
 
               if (totalEvents === 0) {
@@ -236,7 +236,7 @@ module.exports.GCalGetUpcomingEvents = {
               return response;
             } catch (e) {
               this.super.handlerProps.log(
-                `gcal-get-upcoming-events error: ${e.message}`
+                `gcal-get-upcoming-events error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error getting events: ${e.message}`;

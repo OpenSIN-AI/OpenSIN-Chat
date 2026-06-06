@@ -21,8 +21,8 @@ function dockerModelRunnerUtilsEndpoints(app) {
         const dmrUrl = new URL(
           parseDockerModelRunnerEndpoint(
             basePath ?? process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
-            "dmr"
-          )
+            "dmr",
+          ),
         );
         dmrUrl.pathname = "/models/create";
         response.writeHead(200, {
@@ -41,7 +41,7 @@ function dockerModelRunnerUtilsEndpoints(app) {
         if (!dmrResponse.ok)
           throw new Error(
             dmrResponse.statusText ||
-              "An error occurred while downloading the model"
+              "An error occurred while downloading the model",
           );
         const reader = dmrResponse.body.getReader();
         let done = false;
@@ -59,11 +59,11 @@ function dockerModelRunnerUtilsEndpoints(app) {
 
             if (data.type === "error") {
               throw new Error(
-                data.message || "An error occurred while downloading the model"
+                data.message || "An error occurred while downloading the model",
               );
             } else if (data.type === "success") {
               response.write(
-                `data: ${JSON.stringify({ type: "success", percentage: 100, message: "Model downloaded successfully" })}\n\n`
+                `data: ${JSON.stringify({ type: "success", percentage: 100, message: "Model downloaded successfully" })}\n\n`,
               );
               done = true;
             } else if (data.type === "progress") {
@@ -72,7 +72,7 @@ function dockerModelRunnerUtilsEndpoints(app) {
                   ? Math.round((data.pulled / data.total) * 100)
                   : 0;
               response.write(
-                `data: ${JSON.stringify({ type: "progress", percentage, message: data.message })}\n\n`
+                `data: ${JSON.stringify({ type: "progress", percentage, message: data.message })}\n\n`,
               );
             }
           }
@@ -80,12 +80,12 @@ function dockerModelRunnerUtilsEndpoints(app) {
       } catch (e) {
         console.error(e);
         response.write(
-          `data: ${JSON.stringify({ type: "error", message: e.message })}\n\n`
+          `data: ${JSON.stringify({ type: "error", message: e.message })}\n\n`,
         );
       } finally {
         response.end();
       }
-    }
+    },
   );
 }
 

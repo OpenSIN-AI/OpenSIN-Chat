@@ -30,7 +30,7 @@ class QDrant extends VectorDatabase {
     const isAlive = (await client.api("cluster")?.clusterStatus())?.ok || false;
     if (!isAlive)
       throw new Error(
-        "QDrant::Invalid Heartbeat received - is the instance online?"
+        "QDrant::Invalid Heartbeat received - is the instance online?",
       );
 
     return { client };
@@ -83,7 +83,7 @@ class QDrant extends VectorDatabase {
       if (response.score < similarityThreshold) return;
       if (filterIdentifiers.includes(sourceIdentifier(response?.payload))) {
         this.logger(
-          "QDrant: A source was filtered from context as it's parent document is pinned."
+          "QDrant: A source was filtered from context as it's parent document is pinned.",
         );
         return;
       }
@@ -141,7 +141,7 @@ class QDrant extends VectorDatabase {
     }
     if (!dimensions)
       throw new Error(
-        `Qdrant:getOrCreateCollection Unable to infer vector dimension from input. Open an issue on GitHub for support.`
+        `Qdrant:getOrCreateCollection Unable to infer vector dimension from input. Open an issue on GitHub for support.`,
       );
     await client.createCollection(namespace, {
       vectors: {
@@ -156,7 +156,7 @@ class QDrant extends VectorDatabase {
     namespace,
     documentData = {},
     fullFilePath = null,
-    skipCache = false
+    skipCache = false,
   ) {
     const { DocumentVectors } = require("../../../models/vectors");
     try {
@@ -179,7 +179,7 @@ class QDrant extends VectorDatabase {
           const collection = await this.getOrCreateCollection(
             client,
             namespace,
-            vectorDimension
+            vectorDimension,
           );
           if (!collection)
             throw new Error("Failed to create new QDrant collection!", {
@@ -206,7 +206,7 @@ class QDrant extends VectorDatabase {
                 submission.payloads.push(payload);
               } else {
                 console.error(
-                  "The 'id' property is not defined in chunk.payload - it will be omitted from being inserted in QDrant collection."
+                  "The 'id' property is not defined in chunk.payload - it will be omitted from being inserted in QDrant collection.",
                 );
               }
             });
@@ -234,11 +234,11 @@ class QDrant extends VectorDatabase {
           await SystemSettings.getValueOrFallback({
             label: "text_splitter_chunk_size",
           }),
-          EmbedderEngine?.embeddingMaxChunkLength
+          EmbedderEngine?.embeddingMaxChunkLength,
         ),
         chunkOverlap: await SystemSettings.getValueOrFallback(
           { label: "text_splitter_chunk_overlap" },
-          20
+          20,
         ),
         chunkHeaderMeta: TextSplitter.buildHeaderMeta(metadata),
         chunkPrefix: EmbedderEngine?.embeddingPrefix,
@@ -276,7 +276,7 @@ class QDrant extends VectorDatabase {
         }
       } else {
         throw new Error(
-          "Could not embed document chunks! This document will not be recorded."
+          "Could not embed document chunks! This document will not be recorded.",
         );
       }
 
@@ -284,7 +284,7 @@ class QDrant extends VectorDatabase {
       const collection = await this.getOrCreateCollection(
         client,
         namespace,
-        vectorDimension
+        vectorDimension,
       );
       if (!collection)
         throw new Error("Failed to create new QDrant collection!", {

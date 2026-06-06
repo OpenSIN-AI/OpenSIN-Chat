@@ -63,7 +63,7 @@ async function chatSync({
         error: null,
         textResponse,
       },
-      { model: workspace.slug, finish_reason: "abort" }
+      { model: workspace.slug, finish_reason: "abort" },
     );
   }
 
@@ -120,7 +120,7 @@ async function chatSync({
         close: true,
         error: vectorSearchResults.message,
       },
-      { model: workspace.slug, finish_reason: "abort" }
+      { model: workspace.slug, finish_reason: "abort" },
     );
   }
 
@@ -156,7 +156,7 @@ async function chatSync({
         error: null,
         textResponse,
       },
-      { model: workspace.slug, finish_reason: "no_content" }
+      { model: workspace.slug, finish_reason: "no_content" },
     );
   }
 
@@ -176,7 +176,7 @@ async function chatSync({
     {
       temperature:
         temperature ?? workspace?.openAiTemp ?? LLMConnector.defaultTemp,
-    }
+    },
   );
 
   if (!textResponse) {
@@ -189,7 +189,7 @@ async function chatSync({
         error: "No text completion could be completed with this input.",
         textResponse: null,
       },
-      { model: workspace.slug, finish_reason: "no_content", usage: metrics }
+      { model: workspace.slug, finish_reason: "no_content", usage: metrics },
     );
   }
 
@@ -215,7 +215,7 @@ async function chatSync({
       textResponse,
       sources,
     },
-    { model: workspace.slug, finish_reason: "stop", usage: metrics }
+    { model: workspace.slug, finish_reason: "stop", usage: metrics },
   );
 }
 
@@ -297,8 +297,8 @@ async function streamChat({
           error: null,
           textResponse,
         },
-        { chunked: true, model: workspace.slug, finish_reason: "abort" }
-      )
+        { chunked: true, model: workspace.slug, finish_reason: "abort" },
+      ),
     );
     return;
   }
@@ -358,8 +358,8 @@ async function streamChat({
           close: true,
           error: vectorSearchResults.message,
         },
-        { chunked: true, model: workspace.slug, finish_reason: "abort" }
-      )
+        { chunked: true, model: workspace.slug, finish_reason: "abort" },
+      ),
     );
     return;
   }
@@ -398,8 +398,8 @@ async function streamChat({
           error: null,
           textResponse,
         },
-        { chunked: true, model: workspace.slug, finish_reason: "no_content" }
-      )
+        { chunked: true, model: workspace.slug, finish_reason: "no_content" },
+      ),
     );
     return;
   }
@@ -430,8 +430,8 @@ async function streamChat({
           chunked: true,
           model: workspace.slug,
           finish_reason: "streaming_disabled",
-        }
-      )
+        },
+      ),
     );
     return;
   }
@@ -446,7 +446,7 @@ async function streamChat({
     {
       uuid,
       sources,
-    }
+    },
   );
 
   if (completeText?.length > 0) {
@@ -478,8 +478,8 @@ async function streamChat({
           model: workspace.slug,
           finish_reason: "stop",
           usage: stream.metrics,
-        }
-      )
+        },
+      ),
     );
     return;
   }
@@ -499,15 +499,15 @@ async function streamChat({
         model: workspace.slug,
         finish_reason: "stop",
         usage: stream.metrics,
-      }
-    )
+      },
+    ),
   );
   return;
 }
 
 function formatJSON(
   chat,
-  { chunked = false, model, finish_reason = null, usage = {} }
+  { chunked = false, model, finish_reason = null, usage = {} },
 ) {
   const data = {
     id: chat.uuid ?? chat.id,

@@ -115,7 +115,7 @@ async function summarizeContent({
   const contextWindow = llm.promptWindowLimit();
   const chunkTokenLimit = Math.floor(contextWindow * CHUNK_CONTEXT_RATIO);
   const priorPointsTokenLimit = Math.floor(
-    contextWindow * RUNNING_SUMMARY_RATIO
+    contextWindow * RUNNING_SUMMARY_RATIO,
   );
 
   const chunks = chunkByTokens(content, tokenManager, chunkTokenLimit);
@@ -135,7 +135,7 @@ async function summarizeContent({
         description: `There ${pluralize("is", remaining)} ${pluralize(
           "section",
           remaining,
-          true
+          true,
         )} of content left to summarize. Continue?`,
       });
       if (!approval.approved) {
@@ -145,16 +145,16 @@ async function summarizeContent({
     }
 
     introspect(
-      `Summarizing section ${i + 1} of ${chunks.length} (~${tokenManager.countFromString(chunks[i])} tokens)...`
+      `Summarizing section ${i + 1} of ${chunks.length} (~${tokenManager.countFromString(chunks[i])} tokens)...`,
     );
     const priorPoints = truncateToTokenLimit(
       keyPoints,
       tokenManager,
-      priorPointsTokenLimit
+      priorPointsTokenLimit,
     );
     const { textResponse } = await llm.getChatCompletion(
       [{ role: "user", content: summaryPrompt(chunks[i], priorPoints) }],
-      { temperature: 0 }
+      { temperature: 0 },
     );
 
     const sectionPoints = (textResponse || "").trim();

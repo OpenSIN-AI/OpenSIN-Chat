@@ -65,7 +65,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
     if (process.env.MCP_NO_COOLDOWN) return false;
 
     const foundFunc = functions.find(
-      (def) => def?.name?.toLowerCase() === functionCall.name?.toLowerCase()
+      (def) => def?.name?.toLowerCase() === functionCall.name?.toLowerCase(),
     );
     if (!foundFunc) return false;
     return foundFunc?.isMCPTool || false;
@@ -123,7 +123,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
   buildToolCallMessages(history = [], functions = []) {
     // Format history messages with attachments for multimodal support
     const formattedHistory = history.map((msg) =>
-      this.formatMessageWithAttachments(msg)
+      this.formatMessageWithAttachments(msg),
     );
 
     return [
@@ -151,7 +151,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
 
   async functionCall(messages, functions, chatCb = null) {
     const history = [...messages].filter((msg) =>
-      ["user", "assistant"].includes(msg.role)
+      ["user", "assistant"].includes(msg.role),
     );
     if (history[history.length - 1].role !== "user") return null;
     const historyMessages = this.buildToolCallMessages(history, functions);
@@ -170,7 +170,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
       this.deduplicator.isDuplicate(call.name, call.arguments);
     if (isDuplicate) {
       this.providerLog(
-        `Cannot call ${call.name} again because ${duplicateReason}.`
+        `Cannot call ${call.name} again because ${duplicateReason}.`,
       );
       return { toolCall: null, text: null };
     }
@@ -182,10 +182,10 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
     messages,
     functions,
     chatCb = null,
-    eventHandler = null
+    eventHandler = null,
   ) {
     const history = [...messages].filter((msg) =>
-      ["user", "assistant"].includes(msg.role)
+      ["user", "assistant"].includes(msg.role),
     );
     if (history[history.length - 1].role !== "user") return null;
 
@@ -234,7 +234,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
       this.deduplicator.isDuplicate(call.name, call.arguments);
     if (isDuplicate) {
       this.providerLog(
-        `Cannot call ${call.name} again because ${duplicateReason}.`
+        `Cannot call ${call.name} again because ${duplicateReason}.`,
       );
       eventHandler?.("reportStreamEvent", {
         type: "removeStatusResponse",
@@ -267,7 +267,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
     messages,
     functions = [],
     chatCallback = null,
-    eventHandler = null
+    eventHandler = null,
   ) {
     this.providerLog("Untooled.stream - will process this chat completion.");
     // eslint-disable-next-line
@@ -282,7 +282,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
           messages,
           functions,
           chatCallback,
-          eventHandler
+          eventHandler,
         );
 
         if (toolCall !== null) {
@@ -302,7 +302,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
 
         if (text) {
           this.providerLog(
-            `No tool call found in the response - will send as a full text response.`
+            `No tool call found in the response - will send as a full text response.`,
           );
           completion.content = text;
           eventHandler?.("reportStreamEvent", {
@@ -331,7 +331,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
         });
 
         this.providerLog(
-          "Will assume chat completion without tool call inputs."
+          "Will assume chat completion without tool call inputs.",
         );
         const msgUUID = v4();
         completion = { content: "" };
@@ -383,7 +383,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
         const { toolCall, text } = await this.functionCall(
           messages,
           functions,
-          chatCallback
+          chatCallback,
         );
 
         if (toolCall !== null) {
@@ -406,7 +406,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
       // If there are no functions, we want to run a normal chat completion.
       if (!completion?.content) {
         this.providerLog(
-          "Will assume chat completion without tool call inputs."
+          "Will assume chat completion without tool call inputs.",
         );
         const response = await chatCallback({
           messages: this.cleanMsgs(messages),

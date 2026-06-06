@@ -42,7 +42,7 @@ app.ws("/ws", function (ws, _response) {
           from: Agent.AI,
           to: Agent.HUMAN,
           content: error.message,
-        })
+        }),
       );
     });
   } catch {}
@@ -64,7 +64,7 @@ const Agent = {
 async function runAIbitat(socket) {
   if (!process.env.OPEN_AI_KEY)
     throw new Error(
-      "This example requires a valid OPEN_AI_KEY in the env.development file"
+      "This example requires a valid OPEN_AI_KEY in the env.development file",
     );
   console.log(chalk.blue("Booting AIbitat class & starting agent(s)"));
   const aibitat = new AIbitat({

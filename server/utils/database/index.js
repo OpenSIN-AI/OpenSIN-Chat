@@ -25,7 +25,7 @@ async function checkForMigrations(model, db) {
   const toMigrate = [];
   for (const { colName, execCmd, doif } of model.migrations()) {
     const { _exists } = await db.get(
-      checkColumnTemplate(model.tablename, colName)
+      checkColumnTemplate(model.tablename, colName),
     );
     const colExists = _exists !== 0;
     if (colExists !== doif) continue;
@@ -49,7 +49,7 @@ async function validateTablePragmas(force = false) {
   try {
     if (process.env.NODE_ENV !== "development" && force === false) {
       console.log(
-        `\x1b[34m[MIGRATIONS STUBBED]\x1b[0m Please ping /migrate once server starts to run migrations`
+        `\x1b[34m[MIGRATIONS STUBBED]\x1b[0m Please ping /migrate once server starts to run migrations`,
       );
       return;
     }
@@ -85,20 +85,20 @@ async function validateTablePragmas(force = false) {
 async function setupTelemetry() {
   if (process.env.DISABLE_TELEMETRY === "true") {
     console.log(
-      `\x1b[31m[TELEMETRY DISABLED]\x1b[0m Telemetry is marked as disabled - no events will send. Telemetry helps Family Team Projects Inc improve OpenAfD Chat.`
+      `\x1b[31m[TELEMETRY DISABLED]\x1b[0m Telemetry is marked as disabled - no events will send. Telemetry helps Family Team Projects Inc improve OpenAfD Chat.`,
     );
     return true;
   }
 
   if (Telemetry.isDev()) {
     console.log(
-      `\x1b[33m[TELEMETRY STUBBED]\x1b[0m Anonymous Telemetry stubbed in development.`
+      `\x1b[33m[TELEMETRY STUBBED]\x1b[0m Anonymous Telemetry stubbed in development.`,
     );
     return;
   }
 
   console.log(
-    `\x1b[32m[TELEMETRY ENABLED]\x1b[0m Anonymous Telemetry enabled. Telemetry helps Family Team Projects Inc improve OpenAfD Chat.`
+    `\x1b[32m[TELEMETRY ENABLED]\x1b[0m Anonymous Telemetry enabled. Telemetry helps Family Team Projects Inc improve OpenAfD Chat.`,
   );
   await Telemetry.findOrCreateId();
   await Telemetry.sendTelemetry("server_boot", {

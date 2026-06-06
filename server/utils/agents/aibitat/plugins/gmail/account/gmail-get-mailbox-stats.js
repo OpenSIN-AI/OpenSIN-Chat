@@ -31,25 +31,25 @@ module.exports.GmailGetMailboxStats = {
           handler: async function () {
             try {
               this.super.handlerProps.log(
-                `Using the gmail-get-mailbox-stats tool.`
+                `Using the gmail-get-mailbox-stats tool.`,
               );
 
               this.super.introspect(
-                `${this.caller}: Getting Gmail mailbox statistics`
+                `${this.caller}: Getting Gmail mailbox statistics`,
               );
 
               const result = await gmailLib.getMailboxStats();
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get mailbox stats - ${result.error}`
+                  `${this.caller}: Failed to get mailbox stats - ${result.error}`,
                 );
                 return `Error getting mailbox statistics: ${result.error}`;
               }
 
               const stats = result.data;
               this.super.introspect(
-                `${this.caller}: Successfully retrieved mailbox statistics`
+                `${this.caller}: Successfully retrieved mailbox statistics`,
               );
 
               return (
@@ -62,7 +62,7 @@ module.exports.GmailGetMailboxStats = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-get-mailbox-stats error: ${e.message}`
+                `gmail-get-mailbox-stats error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error getting mailbox statistics: ${e.message}`;

@@ -25,7 +25,7 @@ class LemonadeProvider extends InheritMultiple([Provider, UnTooled]) {
     const client = new OpenAI({
       baseURL: parseLemonadeServerEndpoint(
         process.env.LEMONADE_LLM_BASE_PATH,
-        "openai"
+        "openai",
       ),
       apiKey: process.env.LEMONADE_LLM_API_KEY || null,
     });
@@ -68,7 +68,7 @@ class LemonadeProvider extends InheritMultiple([Provider, UnTooled]) {
       this.supportsNativeToolCallingViaEnv("lemonade");
     if (supportsToolCallingFlag) {
       this.providerLog(
-        "Lemonade supports native tool calling is ENABLED via ENV."
+        "Lemonade supports native tool calling is ENABLED via ENV.",
       );
       this._supportsToolCalling = true;
       return this._supportsToolCalling;
@@ -120,12 +120,12 @@ class LemonadeProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "LemonadeProvider.stream (tooled) - will process this chat completion."
+      "LemonadeProvider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -135,7 +135,7 @@ class LemonadeProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -165,7 +165,7 @@ class LemonadeProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         messages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -176,7 +176,7 @@ class LemonadeProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

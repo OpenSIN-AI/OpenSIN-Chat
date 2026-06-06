@@ -58,7 +58,7 @@ async function recoverAccount(username = "", recoveryCodes = []) {
   if (!validCodes) return { success: false, error: "Invalid recovery codes." };
 
   const { passwordResetToken, error } = await PasswordResetToken.create(
-    user.id
+    user.id,
   );
   if (!!error) return { success: false, error };
   return { success: true, resetToken: passwordResetToken.token };

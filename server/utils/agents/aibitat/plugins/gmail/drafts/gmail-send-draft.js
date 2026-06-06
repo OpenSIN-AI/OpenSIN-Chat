@@ -49,28 +49,28 @@ module.exports.GmailSendDraft = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Sending Gmail draft ${draftId}`
+                `${this.caller}: Sending Gmail draft ${draftId}`,
               );
 
               const result = await gmailLib.sendDraft(draftId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to send draft - ${result.error}`
+                  `${this.caller}: Failed to send draft - ${result.error}`,
                 );
                 return `Error sending Gmail draft: ${result.error}`;
               }
 
               const { messageId, threadId } = result.data;
               this.super.introspect(
-                `${this.caller}: Successfully sent draft as message ${messageId}`
+                `${this.caller}: Successfully sent draft as message ${messageId}`,
               );
 
               return (
@@ -81,7 +81,7 @@ module.exports.GmailSendDraft = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-send-draft error: ${e.message}`
+                `gmail-send-draft error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error sending Gmail draft: ${e.message}`;

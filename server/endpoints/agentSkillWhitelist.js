@@ -24,7 +24,7 @@ function agentSkillWhitelistEndpoints(app) {
           .status(500)
           .json({ available: false, error: e.message });
       }
-    }
+    },
   );
 
   app.get(
@@ -42,7 +42,7 @@ function agentSkillWhitelistEndpoints(app) {
           .status(500)
           .json({ available: false, error: e.message });
       }
-    }
+    },
   );
 
   app.post(
@@ -68,14 +68,14 @@ function agentSkillWhitelistEndpoints(app) {
         const userId = user?.id || null;
         const { success, error } = await AgentSkillWhitelist.add(
           skillName,
-          userId
+          userId,
         );
         return response.status(success ? 200 : 400).json({ success, error });
       } catch (e) {
         console.error(e);
         return response.status(500).json({ success: false, error: e.message });
       }
-    }
+    },
   );
 }
 

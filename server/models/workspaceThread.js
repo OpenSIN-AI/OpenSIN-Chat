@@ -105,7 +105,7 @@ const WorkspaceThread = {
     clause = {},
     limit = null,
     orderBy = null,
-    include = null
+    include = null,
   ) {
     try {
       const results = await prisma.workspace_threads.findMany({

@@ -12,7 +12,7 @@ const {
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "giteeai")
-    : path.resolve(__dirname, `../../../storage/models/giteeai`)
+    : path.resolve(__dirname, `../../../storage/models/giteeai`),
 );
 
 class GiteeAILLM {
@@ -51,7 +51,7 @@ class GiteeAILLM {
     if (!fs.existsSync(this.cacheModelPath)) return {};
     return safeJsonParse(
       fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
+      {},
     );
   }
 
@@ -129,7 +129,7 @@ class GiteeAILLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (
@@ -137,7 +137,7 @@ class GiteeAILLM {
       result?.output?.choices?.length === 0
     )
       throw new Error(
-        `Invalid response body returned from GiteeAI: ${JSON.stringify(result.output)}`
+        `Invalid response body returned from GiteeAI: ${JSON.stringify(result.output)}`,
       );
 
     return {
@@ -211,7 +211,7 @@ async function giteeAiModels() {
             id: model.id,
             name: model.id,
             organization: model.owned_by,
-          })
+          }),
       );
       // Cache all response information
       if (!fs.existsSync(cacheFolder))
@@ -221,14 +221,14 @@ async function giteeAiModels() {
         JSON.stringify(validModels),
         {
           encoding: "utf-8",
-        }
+        },
       );
       fs.writeFileSync(
         path.resolve(cacheFolder, ".cached_at"),
         String(Number(new Date())),
         {
           encoding: "utf-8",
-        }
+        },
       );
 
       return validModels;

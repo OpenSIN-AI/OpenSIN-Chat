@@ -8,13 +8,13 @@ async function executeLLMInstruction(config, context) {
   const { instruction, resultVariable } = config;
   const { introspect, logger, aibitat } = context;
   logger(
-    `\x1b[43m[AgentFlowToolExecutor]\x1b[0m - executing LLM Instruction block`
+    `\x1b[43m[AgentFlowToolExecutor]\x1b[0m - executing LLM Instruction block`,
   );
   introspect(`Processing data with LLM instruction...`);
 
   try {
     logger(
-      `Sending request to LLM (${aibitat.defaultProvider.provider}::${aibitat.defaultProvider.model})`
+      `Sending request to LLM (${aibitat.defaultProvider.provider}::${aibitat.defaultProvider.model})`,
     );
     introspect(`Sending request to LLM...`);
 
@@ -29,7 +29,7 @@ async function executeLLMInstruction(config, context) {
       completion = await provider.stream(
         [{ role: "user", content: input }],
         [],
-        null
+        null,
       );
     } else {
       completion = await provider.complete([{ role: "user", content: input }]);

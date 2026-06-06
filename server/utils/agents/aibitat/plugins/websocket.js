@@ -60,10 +60,10 @@ const websocket = {
             error?.message || "An error occurred while running the agent.";
           console.error(chalk.red(`   error: ${errorMessage}`), error);
           aibitat.introspect(
-            `Error encountered while running: ${errorMessage}`
+            `Error encountered while running: ${errorMessage}`,
           );
           socket.send(
-            JSON.stringify({ type: "wssFailure", content: errorMessage })
+            JSON.stringify({ type: "wssFailure", content: errorMessage }),
           );
           aibitat.terminate();
         });
@@ -75,7 +75,7 @@ const websocket = {
               type: "statusResponse",
               content: messageText,
               animate: true,
-            })
+            }),
           );
         };
 
@@ -106,8 +106,8 @@ const websocket = {
           if (skillIsAutoApproved({ skillName })) {
             console.log(
               chalk.green(
-                `Skill ${skillName} is auto-approved by AGENT_AUTO_APPROVED_SKILLS`
-              )
+                `Skill ${skillName} is auto-approved by AGENT_AUTO_APPROVED_SKILLS`,
+              ),
             );
             return {
               approved: true,
@@ -120,15 +120,15 @@ const websocket = {
           } = require("../../../../models/agentSkillWhitelist");
           const isWhitelisted = await AgentSkillWhitelist.isWhitelisted(
             skillName,
-            userId
+            userId,
           );
           if (isWhitelisted) {
             console.log(
               chalk.green(
                 userId
                   ? `User ${userId} - `
-                  : "" + `Skill ${skillName} is whitelisted - auto-approved.`
-              )
+                  : "" + `Skill ${skillName} is whitelisted - auto-approved.`,
+              ),
             );
             return {
               approved: true,
@@ -176,15 +176,15 @@ const websocket = {
                 payload,
                 description,
                 timeoutMs: TOOL_APPROVAL_TIMEOUT_MS,
-              })
+              }),
             );
 
             timeoutId = setTimeout(() => {
               delete socket.handleToolApproval;
               console.log(
                 chalk.yellow(
-                  `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`
-                )
+                  `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
+                ),
               );
               resolve({
                 approved: false,
@@ -266,15 +266,15 @@ const websocket = {
                 questions,
                 allowSkip,
                 timeoutMs,
-              })
+              }),
             );
 
             timeoutId = setTimeout(() => {
               delete socket.handleClarificationResponse;
               console.log(
                 chalk.yellow(
-                  `Clarification request timed out after ${timeoutMs}ms`
-                )
+                  `Clarification request timed out after ${timeoutMs}ms`,
+                ),
               );
               resolve({
                 skipped: false,
@@ -304,7 +304,7 @@ const websocket = {
         aibitat.onInterrupt(async (node) => {
           const { feedback, attachments } = await socket.askForFeedback(
             socket,
-            node
+            node,
           );
           if (WEBSOCKET_BAIL_COMMANDS.includes(feedback)) {
             socket.close();
@@ -342,8 +342,8 @@ const websocket = {
               socketTimeout = setTimeout(() => {
                 console.log(
                   chalk.red(
-                    `Client took too long to respond, chat thread is dead after ${SOCKET_TIMEOUT_MS}ms`
-                  )
+                    `Client took too long to respond, chat thread is dead after ${SOCKET_TIMEOUT_MS}ms`,
+                  ),
                 );
                 resolve({ feedback: "exit", attachments: [] });
                 return;
@@ -352,7 +352,7 @@ const websocket = {
           };
 
           return socket.awaitResponse(`Provide feedback to ${chalk.yellow(
-            node.to
+            node.to,
           )} as ${chalk.yellow(node.from)}.
            Press enter to skip and use auto-reply, or type 'exit' to end the conversation: \n`);
         };

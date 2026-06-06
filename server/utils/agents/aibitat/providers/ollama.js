@@ -58,7 +58,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
 
   get queryOptions() {
     this.providerLog(
-      `${this.model} is using a max context window of ${OllamaAILLM.promptWindowLimit(this.model)}/${OllamaAILLM.maxContextWindow(this.model)} tokens.`
+      `${this.model} is using a max context window of ${OllamaAILLM.promptWindowLimit(this.model)}/${OllamaAILLM.maxContextWindow(this.model)} tokens.`,
     );
     return {
       num_ctx: OllamaAILLM.promptWindowLimit(this.model),
@@ -193,10 +193,10 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
     messages,
     functions,
     chatCb = null,
-    eventHandler = null
+    eventHandler = null,
   ) {
     const history = [...messages].filter((msg) =>
-      ["user", "assistant"].includes(msg.role)
+      ["user", "assistant"].includes(msg.role),
     );
     if (history[history.length - 1].role !== "user") return null;
 
@@ -263,7 +263,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
       this.deduplicator.isDuplicate(call.name, call.arguments);
     if (isDuplicate) {
       this.providerLog(
-        `Cannot call ${call.name} again because ${duplicateReason}.`
+        `Cannot call ${call.name} again because ${duplicateReason}.`,
       );
       eventHandler?.("reportStreamEvent", {
         type: "removeStatusResponse",
@@ -298,7 +298,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
 
     if (useNative) {
       this.providerLog(
-        "OllamaProvider.stream (tooled) - will process this chat completion."
+        "OllamaProvider.stream (tooled) - will process this chat completion.",
       );
       this.resetUsage();
       await OllamaAILLM.cacheContextWindows();
@@ -371,7 +371,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
 
     // Fallback: UnTooled prompt-based approach via the native Ollama SDK
     this.providerLog(
-      "OllamaProvider.stream - will process this chat completion."
+      "OllamaProvider.stream - will process this chat completion.",
     );
     // eslint-disable-next-line
     try {
@@ -385,7 +385,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
           messages,
           functions,
           this.#handleFunctionCallStream.bind(this),
-          eventHandler
+          eventHandler,
         );
 
         if (toolCall !== null) {
@@ -405,7 +405,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
 
         if (text) {
           this.providerLog(
-            `No tool call found in the response - will send as a full text response.`
+            `No tool call found in the response - will send as a full text response.`,
           );
           completion.content = text;
           eventHandler?.("reportStreamEvent", {
@@ -433,7 +433,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
           content: "Done thinking.",
         });
         this.providerLog(
-          "Will assume chat completion without tool call inputs."
+          "Will assume chat completion without tool call inputs.",
         );
         const msgUUID = v4();
         completion = { content: "" };
@@ -543,7 +543,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
 
     // Fallback: UnTooled prompt-based approach via the native Ollama SDK
     this.providerLog(
-      "OllamaProvider.complete - will process this chat completion."
+      "OllamaProvider.complete - will process this chat completion.",
     );
     // eslint-disable-next-line
     try {
@@ -552,7 +552,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
         const { toolCall, text } = await this.functionCall(
           messages,
           functions,
-          this.#handleFunctionCallChat.bind(this)
+          this.#handleFunctionCallChat.bind(this),
         );
 
         if (toolCall !== null) {
@@ -574,7 +574,7 @@ class OllamaProvider extends InheritMultiple([Provider, UnTooled]) {
 
       if (!completion?.content) {
         this.providerLog(
-          "Will assume chat completion without tool call inputs."
+          "Will assume chat completion without tool call inputs.",
         );
         const textResponse = await this.#handleFunctionCallChat({
           messages: this.cleanMsgs(messages),

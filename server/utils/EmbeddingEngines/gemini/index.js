@@ -26,7 +26,7 @@ class GeminiEmbedder {
       `Initialized with ${this.model} - Max Size: ${this.embeddingMaxChunkLength}` +
         (this.outputDimensions
           ? ` - Output Dimensions: ${this.outputDimensions}`
-          : " Assuming default output dimensions")
+          : " Assuming default output dimensions"),
     );
   }
 
@@ -51,7 +51,7 @@ class GeminiEmbedder {
    */
   async embedTextInput(textInput) {
     const result = await this.embedChunks(
-      Array.isArray(textInput) ? textInput : [textInput]
+      Array.isArray(textInput) ? textInput : [textInput],
     );
     return result?.[0] || [];
   }
@@ -93,12 +93,12 @@ class GeminiEmbedder {
               e.message = e?.response?.data?.error?.message || e.message;
               resolve({ data: [], error: e });
             });
-        })
+        }),
       );
     }
 
     const { data = [], error = null } = await Promise.all(
-      embeddingRequests
+      embeddingRequests,
     ).then((results) => {
       // If any errors were returned from OpenAI abort the entire sequence because the embeddings
       // will be incomplete.
@@ -109,7 +109,7 @@ class GeminiEmbedder {
       if (errors.length > 0) {
         let uniqueErrors = new Set();
         errors.map((error) =>
-          uniqueErrors.add(`[${error.type}]: ${error.message}`)
+          uniqueErrors.add(`[${error.type}]: ${error.message}`),
         );
 
         return {

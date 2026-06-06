@@ -8,7 +8,7 @@ async function handleHelp(ctx, chatId) {
   const lines = BOT_COMMANDS.map((c) => `/${c.command} - ${c.description}`);
   await ctx.bot.sendMessage(
     chatId,
-    `Available commands:\n\n${lines.join("\n")}`
+    `Available commands:\n\n${lines.join("\n")}`,
   );
 }
 

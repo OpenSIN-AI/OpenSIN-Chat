@@ -26,7 +26,7 @@ class MSSQLConnector {
       // we will force into RFC-3986 from DB
       // eg: mssql://user:password@server:port/database?{...opts}
       connectionString: null, // we will force into RFC-3986
-    }
+    },
   ) {
     this.className = "MSSQLConnector";
     this.connectionString = config.connectionString;

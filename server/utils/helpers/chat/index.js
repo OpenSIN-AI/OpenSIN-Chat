@@ -229,7 +229,7 @@ async function messageStringCompressor(llm, promptArgs = {}, rawHistory = []) {
         input: system,
         targetTokenSize: llm.limits.system,
         tiktokenInstance: tokenManager,
-      })
+      }),
     );
   });
 
@@ -339,8 +339,8 @@ function cannonball({
 
   console.log(
     `Cannonball results ${initialInputSize} -> ${tokenManager.countFromString(
-      truncatedText
-    )} tokens.`
+      truncatedText,
+    )} tokens.`,
   );
   return truncatedText;
 }
@@ -399,7 +399,7 @@ function fillSourceWindow({
   };
 
   log(
-    `Need to backfill ${nDocs - searchResults.length} chunks to fill in the source window for RAG!`
+    `Need to backfill ${nDocs - searchResults.length} chunks to fill in the source window for RAG!`,
   );
   const seenChunks = new Set(searchResults.map((source) => source.id));
 
@@ -410,7 +410,7 @@ function fillSourceWindow({
   for (const chat of history.reverse()) {
     if (sources.length >= nDocs) {
       log(
-        `Citations backfilled to ${nDocs} references from ${searchResults.length} original citations.`
+        `Citations backfilled to ${nDocs} references from ${searchResults.length} original citations.`,
       );
       break;
     }

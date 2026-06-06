@@ -63,11 +63,11 @@ class GenericOpenAiProvider extends InheritMultiple([Provider, UnTooled]) {
 
     if (this._supportsToolCalling)
       this.providerLog(
-        "Generic OpenAI supports native tool calling is ENABLED."
+        "Generic OpenAI supports native tool calling is ENABLED.",
       );
     else
       this.providerLog(
-        "Generic OpenAI supports native tool calling is DISABLED. Will use UnTooled instead."
+        "Generic OpenAI supports native tool calling is DISABLED. Will use UnTooled instead.",
       );
 
     return this._supportsToolCalling;
@@ -115,12 +115,12 @@ class GenericOpenAiProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.#handleFunctionCallStream.bind(this),
-        eventHandler
+        eventHandler,
       );
     }
 
     this.providerLog(
-      "Provider.stream (tooled) - will process this chat completion."
+      "Provider.stream (tooled) - will process this chat completion.",
     );
 
     try {
@@ -130,7 +130,7 @@ class GenericOpenAiProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         eventHandler,
-        { provider: this }
+        { provider: this },
       );
     } catch (error) {
       console.error(error.message, error);
@@ -159,7 +159,7 @@ class GenericOpenAiProvider extends InheritMultiple([Provider, UnTooled]) {
         this,
         messages,
         functions,
-        this.#handleFunctionCallChat.bind(this)
+        this.#handleFunctionCallChat.bind(this),
       );
     }
 
@@ -170,7 +170,7 @@ class GenericOpenAiProvider extends InheritMultiple([Provider, UnTooled]) {
         messages,
         functions,
         this.getCost.bind(this),
-        { provider: this }
+        { provider: this },
       );
 
       if (result.retryWithError) {

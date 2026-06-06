@@ -186,7 +186,7 @@ function apiOpenAICompatibleEndpoints(app) {
         console.error(e.message, e);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -253,7 +253,7 @@ function apiOpenAICompatibleEndpoints(app) {
         console.error(e.message, e);
         response.status(500).end();
       }
-    }
+    },
   );
 
   app.get(
@@ -329,7 +329,7 @@ function apiOpenAICompatibleEndpoints(app) {
         console.error(e.message, e);
         response.status(500).end();
       }
-    }
+    },
   );
 }
 

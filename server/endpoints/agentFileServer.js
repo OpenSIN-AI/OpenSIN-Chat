@@ -67,12 +67,12 @@ function agentFileServerEndpoints(app) {
         // Get mime type and set headers for download
         const mimeType = createFilesLib.getMimeType(`.${parsed.extension}`);
         const safeFilename = createFilesLib.sanitizeFilenameForHeader(
-          fileSource.displayFilename || filename
+          fileSource.displayFilename || filename,
         );
         response.setHeader("Content-Type", mimeType);
         response.setHeader(
           "Content-Disposition",
-          `attachment; filename="${safeFilename}"`
+          `attachment; filename="${safeFilename}"`,
         );
         response.setHeader("Content-Length", fileData.buffer.length);
         response.send(fileData.buffer);
@@ -84,7 +84,7 @@ function agentFileServerEndpoints(app) {
         console.error("[agentFileServer] Download error:", error.message);
         return response.status(500).json({ error: "Failed to download file" });
       }
-    }
+    },
   );
 }
 
@@ -139,7 +139,7 @@ async function findInWorkspaceChats(storageFilename, { user, isMultiUser }) {
   for (const chat of chats) {
     const { outputs = [] } = safeJsonParse(chat.response, { outputs: [] });
     const output = outputs.find(
-      (o) => o?.payload?.storageFilename === storageFilename
+      (o) => o?.payload?.storageFilename === storageFilename,
     );
     if (!output) continue;
     return {
@@ -163,7 +163,7 @@ async function findInScheduledJobRuns(storageFilename) {
   for (const run of runs) {
     const { outputs = [] } = safeJsonParse(run.result, { outputs: [] });
     const output = outputs.find(
-      (o) => o?.payload?.storageFilename === storageFilename
+      (o) => o?.payload?.storageFilename === storageFilename,
     );
     if (!output) continue;
     return {

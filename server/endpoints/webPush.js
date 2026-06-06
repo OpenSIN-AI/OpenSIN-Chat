@@ -12,10 +12,10 @@ function webPushEndpoints(app) {
       const subscription = reqBody(request);
       await pushNotificationService.registerSubscription(
         response.locals.user,
-        subscription
+        subscription,
       );
       response.status(201).json({});
-    }
+    },
   );
 
   app.get("/web-push/pubkey", [validatedRequest], (_request, response) => {

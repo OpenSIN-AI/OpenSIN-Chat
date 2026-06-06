@@ -62,7 +62,7 @@ Make sure the format use double quotes and property names are string literals. P
             try {
               if (this.tracker.isMarkedUnique(this.name)) {
                 this.super.handlerProps.log(
-                  `${this.name} has been called for this chat response already. It can only be called once per chat.`
+                  `${this.name} has been called for this chat response already. It can only be called once per chat.`,
                 );
                 return "The chart was generated and returned to the user. This function completed successfully. Do not call this function again.";
               }
@@ -70,7 +70,7 @@ Make sure the format use double quotes and property names are string literals. P
               const data = safeJsonParse(dataset, null);
               if (data === null) {
                 this.super.introspect(
-                  `${this.caller}: ${this.name} provided invalid JSON data - so we cant make a ${type} chart.`
+                  `${this.caller}: ${this.name} provided invalid JSON data - so we cant make a ${type} chart.`,
                 );
                 return "Invalid JSON provided. Please only provide valid RechartJS JSON to generate a chart.";
               }
@@ -98,7 +98,7 @@ Make sure the format use double quotes and property names are string literals. P
               return "The chart was generated and returned to the user. This function completed successfully. Do not make another chart.";
             } catch (error) {
               this.super.handlerProps.log(
-                `create-chart raised an error. ${error.message}`
+                `create-chart raised an error. ${error.message}`,
               );
               return `Let the user know this action was not successful. An error was raised while generating the chart. ${error.message}`;
             }

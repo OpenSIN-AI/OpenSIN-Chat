@@ -53,7 +53,7 @@ module.exports.FilesystemReadMultipleFiles = {
           handler: async function ({ paths = [] }) {
             try {
               this.super.handlerProps.log(
-                `Using the filesystem-read-multiple-files tool.`
+                `Using the filesystem-read-multiple-files tool.`,
               );
 
               if (!Array.isArray(paths) || paths.length === 0) {
@@ -61,7 +61,7 @@ module.exports.FilesystemReadMultipleFiles = {
               }
 
               this.super.introspect(
-                `${this.caller}: Reading ${paths.length} files`
+                `${this.caller}: Reading ${paths.length} files`,
               );
 
               const results = await Promise.all(
@@ -107,14 +107,14 @@ module.exports.FilesystemReadMultipleFiles = {
                       success: false,
                     };
                   }
-                })
+                }),
               );
 
               const combinedContent = results
                 .map((r) =>
                   r.success
                     ? `${r.filePath}:\n${r.content}\n`
-                    : `${r.filePath}: ${r.content}`
+                    : `${r.filePath}: ${r.content}`,
                 )
                 .join("\n---\n");
 
@@ -122,18 +122,18 @@ module.exports.FilesystemReadMultipleFiles = {
                 filesystem.truncateContentForContext(
                   combinedContent,
                   this.super,
-                  "[Content truncated - combined files exceed context limit. Consider reading fewer files at once.]"
+                  "[Content truncated - combined files exceed context limit. Consider reading fewer files at once.]",
                 );
 
               if (wasTruncated) {
                 this.super.introspect(
-                  `${this.caller}: Combined content was truncated to fit context limit`
+                  `${this.caller}: Combined content was truncated to fit context limit`,
                 );
               }
 
               const imageCount = results.filter((r) => r.isImage).length;
               const textCount = results.filter(
-                (r) => r.success && !r.isImage
+                (r) => r.success && !r.isImage,
               ).length;
               let introspectMsg = `Successfully processed ${paths.length} files`;
               if (imageCount > 0) {
@@ -144,7 +144,7 @@ module.exports.FilesystemReadMultipleFiles = {
               return finalContent;
             } catch (e) {
               this.super.handlerProps.log(
-                `filesystem-read-multiple-files error: ${e.message}`
+                `filesystem-read-multiple-files error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error reading files: ${e.message}`;

@@ -144,7 +144,7 @@ function formatMessagesForTools(messages, options = {}) {
       !("reasoning_content" in message)
     ) {
       formattedMessages.push(
-        formatMessageWithAttachments({ ...message, reasoning_content: "" })
+        formatMessageWithAttachments({ ...message, reasoning_content: "" }),
       );
     } else {
       formattedMessages.push(formatMessageWithAttachments(message));
@@ -174,7 +174,7 @@ async function tooledStream(
   messages,
   functions = [],
   eventHandler = null,
-  options = {}
+  options = {},
 ) {
   const { provider, ...formatOptions } = options;
 
@@ -303,7 +303,7 @@ async function tooledComplete(
   messages,
   functions = [],
   getCostFn = () => 0,
-  options = {}
+  options = {},
 ) {
   const { provider, ...formatOptions } = options;
 

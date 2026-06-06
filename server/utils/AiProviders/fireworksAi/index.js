@@ -12,7 +12,7 @@ const {
 const cacheFolder = path.resolve(
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "models", "fireworks")
-    : path.resolve(__dirname, `../../../storage/models/fireworks`)
+    : path.resolve(__dirname, `../../../storage/models/fireworks`),
 );
 
 class FireworksAiLLM {
@@ -68,7 +68,7 @@ class FireworksAiLLM {
       return false;
 
     this.log(
-      "Model cache is not present or stale. Fetching from FireworksAI API."
+      "Model cache is not present or stale. Fetching from FireworksAI API.",
     );
     await fireworksAiModels();
     return;
@@ -78,7 +78,7 @@ class FireworksAiLLM {
     if (!fs.existsSync(this.cacheModelPath)) return {};
     return safeJsonParse(
       fs.readFileSync(this.cacheModelPath, { encoding: "utf-8" }),
-      {}
+      {},
     );
   }
 
@@ -103,7 +103,7 @@ class FireworksAiLLM {
     const availableModels = fs.existsSync(cacheModelPath)
       ? safeJsonParse(
           fs.readFileSync(cacheModelPath, { encoding: "utf-8" }),
-          {}
+          {},
         )
       : {};
     return availableModels[modelName]?.maxLength || 4096;
@@ -138,7 +138,7 @@ class FireworksAiLLM {
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `FireworksAI chat: ${this.model} is not valid for chat completion!`
+        `FireworksAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
@@ -146,7 +146,7 @@ class FireworksAiLLM {
         model: this.model,
         messages,
         temperature,
-      })
+      }),
     );
 
     if (
@@ -173,7 +173,7 @@ class FireworksAiLLM {
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
     if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
-        `FireworksAI chat: ${this.model} is not valid for chat completion!`
+        `FireworksAI chat: ${this.model} is not valid for chat completion!`,
       );
 
     const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
@@ -249,14 +249,14 @@ async function fireworksAiModels(providedApiKey = null) {
         JSON.stringify(validModels),
         {
           encoding: "utf-8",
-        }
+        },
       );
       fs.writeFileSync(
         path.resolve(cacheFolder, ".cached_at"),
         String(Number(new Date())),
         {
           encoding: "utf-8",
-        }
+        },
       );
 
       return validModels;

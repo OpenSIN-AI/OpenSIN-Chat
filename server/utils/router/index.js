@@ -80,7 +80,7 @@ class ModelRouterService {
     if (router) {
       this.routerCache.set(cacheKey, router);
       this.log(
-        `Loaded router "${router.name}" with ${router.rules?.length ?? 0} rules`
+        `Loaded router "${router.name}" with ${router.rules?.length ?? 0} rules`,
       );
     }
     return router;
@@ -130,7 +130,7 @@ class ModelRouterService {
     if (ageMs > stickyMs) {
       this.stickyRoutes.delete(key);
       this.log(
-        `Sticky route: EXPIRED (age: ${Math.round(ageMs / 1000)}s > ${Math.round(stickyMs / 1000)}s)`
+        `Sticky route: EXPIRED (age: ${Math.round(ageMs / 1000)}s > ${Math.round(stickyMs / 1000)}s)`,
       );
       return null;
     }
@@ -138,7 +138,7 @@ class ModelRouterService {
     // Refresh TTL on access so follow-up messages keep the route "hot"
     entry.stickyAt = Date.now();
     this.log(
-      `Sticky route: HIT → ${entry.route.provider}/${entry.route.model} (ttl reset, ${Math.round(stickyMs / 1000)}s window renewed)`
+      `Sticky route: HIT → ${entry.route.provider}/${entry.route.model} (ttl reset, ${Math.round(stickyMs / 1000)}s window renewed)`,
     );
     return entry.route;
   }
@@ -152,7 +152,7 @@ class ModelRouterService {
   setStickyRoute(key, route) {
     this.stickyRoutes.set(key, { route, stickyAt: Date.now() });
     this.log(
-      `Sticky route: SET → ${route.provider}/${route.model} (rule: ${route.ruleTitle || "unknown"})`
+      `Sticky route: SET → ${route.provider}/${route.model} (rule: ${route.ruleTitle || "unknown"})`,
     );
   }
 
@@ -178,13 +178,13 @@ class ModelRouterService {
     const key = svc.routeCacheKey(
       user?.id ?? null,
       workspace.slug,
-      thread?.slug ?? null
+      thread?.slug ?? null,
     );
     svc.stickyRoutes.delete(key);
     svc.llmCache.delete(key);
     svc.lastNotifiedRoute.delete(key);
     svc.log(
-      `Reset routing state for key "${key}" (workspace: ${workspace.slug})`
+      `Reset routing state for key "${key}" (workspace: ${workspace.slug})`,
     );
   }
 
@@ -213,12 +213,12 @@ class ModelRouterService {
     if (ageMs > effectiveTtl) {
       this.llmCache.delete(key);
       this.log(
-        `LLM cache: EXPIRED (age: ${Math.round(ageMs / 1000)}s > ${Math.round(effectiveTtl / 1000)}s)`
+        `LLM cache: EXPIRED (age: ${Math.round(ageMs / 1000)}s > ${Math.round(effectiveTtl / 1000)}s)`,
       );
       return undefined;
     }
     this.log(
-      `LLM cache: HIT → ${entry.result ? `"${entry.result.title}"` : "no match"} (age: ${Math.round(ageMs / 1000)}s, ttl: ${Math.round((effectiveTtl - ageMs) / 1000)}s remaining)`
+      `LLM cache: HIT → ${entry.result ? `"${entry.result.title}"` : "no match"} (age: ${Math.round(ageMs / 1000)}s, ttl: ${Math.round((effectiveTtl - ageMs) / 1000)}s remaining)`,
     );
     return entry.result;
   }
@@ -361,7 +361,7 @@ class ModelRouterService {
     const parsedFiles = await WorkspaceParsedFiles.getContextFiles(
       workspace,
       thread || null,
-      user || null
+      user || null,
     );
 
     const contextTexts = [
@@ -373,11 +373,11 @@ class ModelRouterService {
     const systemTokens = tokenManager.countFromString(systemPrompt);
     const contextTokens = contextTexts.reduce(
       (sum, text) => sum + tokenManager.countFromString(text || ""),
-      0
+      0,
     );
     const historyTokens = chatHistory.reduce(
       (sum, msg) => sum + tokenManager.countFromString(msg.content || ""),
-      0
+      0,
     );
     const messageTokens = tokenManager.countFromString(message);
 
@@ -429,7 +429,7 @@ class ModelRouterService {
       const rule = calcRules[i];
       const matched = this.#evaluateCalculatedRule(rule, context);
       this.log(
-        `Rule "${rule.title}" (calculated, ${rule.condition_logic}): ${matched ? "MATCHED" : "no match"}`
+        `Rule "${rule.title}" (calculated, ${rule.condition_logic}): ${matched ? "MATCHED" : "no match"}`,
       );
       if (matched) {
         this.log(`→ Routing to ${rule.route_provider}/${rule.route_model}`);
@@ -455,7 +455,7 @@ class ModelRouterService {
     const cached = this.getCachedLLMResult(cacheKey, stickyMs);
     if (cached !== undefined) {
       this.log(
-        `LLM classification cache hit → ${cached ? `"${cached.title}"` : "no match"}`
+        `LLM classification cache hit → ${cached ? `"${cached.title}"` : "no match"}`,
       );
       return {
         route: cached ? this.#routeFromRule(cached) : null,
@@ -464,14 +464,14 @@ class ModelRouterService {
     }
 
     this.log(
-      `Evaluating LLM batch of ${llmRules.length} rules: [${llmRules.map((r) => `"${r.title}"`).join(", ")}]`
+      `Evaluating LLM batch of ${llmRules.length} rules: [${llmRules.map((r) => `"${r.title}"`).join(", ")}]`,
     );
     const matched = await classifyWithLLM(llmRules, context.prompt, router);
     this.setCachedLLMResult(cacheKey, matched || null);
 
     if (matched) {
       this.log(
-        `LLM classified as "${matched.title}" → Routing to ${matched.route_provider}/${matched.route_model}`
+        `LLM classified as "${matched.title}" → Routing to ${matched.route_provider}/${matched.route_model}`,
       );
       return { route: this.#routeFromRule(matched), fromCache: false };
     }
@@ -489,7 +489,7 @@ class ModelRouterService {
   logRoutingContext(router, rules, context) {
     const enabledRules = rules.filter((r) => r.enabled);
     this.log(
-      `Evaluating ${enabledRules.length} enabled rules (of ${rules.length} total) for router "${router.name}"`
+      `Evaluating ${enabledRules.length} enabled rules (of ${rules.length} total) for router "${router.name}"`,
     );
 
     // For debugging purposes, truncate the prompt to 50 characters.
@@ -501,7 +501,7 @@ class ModelRouterService {
         : String(context.prompt)
     ).replace(/[\n\r\t]+/g, " ");
     this.log(
-      `Context: prompt="${truncatedPrompt}", tokens=${context.conversationTokenCount ?? 0}, messages=${context.conversationMessageCount ?? 0}, attachments=${context.attachments?.length ?? 0}`
+      `Context: prompt="${truncatedPrompt}", tokens=${context.conversationTokenCount ?? 0}, messages=${context.conversationMessageCount ?? 0}, attachments=${context.attachments?.length ?? 0}`,
     );
   }
 
@@ -530,7 +530,7 @@ class ModelRouterService {
         c.property,
         c.comparator,
         c.value,
-        context
+        context,
       );
       const contextVal = this.#getContextValue(c.property, context);
       const displayVal =
@@ -538,7 +538,7 @@ class ModelRouterService {
           ? `"${String(contextVal).slice(0, 50)}${contextVal?.length > 50 ? "..." : ""}"`
           : contextVal;
       this.logIndent(
-        `${c.property} ${c.comparator} "${c.value}" → context=${displayVal} → ${result}`
+        `${c.property} ${c.comparator} "${c.value}" → context=${displayVal} → ${result}`,
       );
       return result;
     });
@@ -567,7 +567,7 @@ class ModelRouterService {
         return new Date().getHours();
       case "hasImageAttachment":
         return (context.attachments || []).some((a) =>
-          a.mime?.startsWith("image/")
+          a.mime?.startsWith("image/"),
         )
           ? "true"
           : "false";
@@ -584,7 +584,7 @@ class ModelRouterService {
           .map((v) => v.trim().toLowerCase())
           .filter(Boolean)
           .some((keyword) =>
-            String(contextValue).toLowerCase().includes(keyword)
+            String(contextValue).toLowerCase().includes(keyword),
           );
       case "matches":
         return this.#matchesRegex(String(contextValue), String(value));

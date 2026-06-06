@@ -58,7 +58,7 @@ module.exports.GmailGetInbox = {
             try {
               this.super.handlerProps.log(`Using the gmail-get-inbox tool.`);
               this.super.introspect(
-                `${this.caller}: Searching Gmail with query "${query}"`
+                `${this.caller}: Searching Gmail with query "${query}"`,
               );
 
               let searchQuery = `is:inbox`;
@@ -67,14 +67,14 @@ module.exports.GmailGetInbox = {
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Gmail get inbox failed - ${result.error}`
+                  `${this.caller}: Gmail get inbox failed - ${result.error}`,
                 );
                 return `Error getting inbox from Gmail: ${result.error}`;
               }
 
               const { threads, resultCount } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${resultCount} emails in inbox`
+                `${this.caller}: Found ${resultCount} emails in inbox`,
               );
 
               if (resultCount === 0) {
@@ -84,14 +84,14 @@ module.exports.GmailGetInbox = {
               const summary = threads
                 .map(
                   (t, i) =>
-                    `${i + 1}. [${t.isUnread ? "UNREAD" : "READ"}] "${t.subject}" (ID: ${t.id}, ${t.messageCount} messages, Last: ${new Date(t.lastMessageDate).toLocaleString()})`
+                    `${i + 1}. [${t.isUnread ? "UNREAD" : "READ"}] "${t.subject}" (ID: ${t.id}, ${t.messageCount} messages, Last: ${new Date(t.lastMessageDate).toLocaleString()})`,
                 )
                 .join("\n");
 
               return `Found ${resultCount} email threads:\n\n${summary}\n\nAlways include the full thread ID in the response. Use the thread ID with gmail-read-thread to read the full conversation.`;
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-get-inbox error: ${e.message}`
+                `gmail-get-inbox error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error getting inbox from Gmail: ${e.message}`;

@@ -33,7 +33,7 @@ const WorkspaceParsedFiles = {
           filename,
           workspaceId,
         },
-        userId
+        userId,
       );
 
       return { file, error: null };
@@ -64,7 +64,7 @@ const WorkspaceParsedFiles = {
     clause = {},
     limit = null,
     orderBy = null,
-    select = null
+    select = null,
   ) {
     try {
       const files = await prisma.workspace_parsed_files.findMany({
@@ -142,7 +142,7 @@ const WorkspaceParsedFiles = {
       } = await Document.addDocuments(
         workspace,
         [`custom-documents/${path.basename(location)}`],
-        parsedFile.userId
+        parsedFile.userId,
       );
 
       if (failedToEmbed.length > 0)
@@ -165,7 +165,7 @@ const WorkspaceParsedFiles = {
   getContextMetadataAndLimits: async function (
     workspace,
     thread = null,
-    user = null
+    user = null,
   ) {
     try {
       if (!workspace) throw new Error("Workspace is required");
@@ -220,7 +220,7 @@ const WorkspaceParsedFiles = {
 
         const sourceFile = path.join(
           directUploadsPath,
-          path.basename(location)
+          path.basename(location),
         );
         if (!fs.existsSync(sourceFile)) continue;
 

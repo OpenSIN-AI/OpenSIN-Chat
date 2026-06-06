@@ -9,7 +9,7 @@ const { SystemSettings } = require("../../../models/systemSettings");
 async function convertToCSV(preparedData) {
   const headers = new Set(["id", "workspace", "prompt", "response", "sent_at"]);
   preparedData.forEach((item) =>
-    Object.keys(item).forEach((key) => headers.add(key))
+    Object.keys(item).forEach((key) => headers.add(key)),
   );
 
   const rows = [Array.from(headers).join(",")];
@@ -58,7 +58,7 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
       {
         id: "asc",
       },
-      null
+      null,
     );
   } else {
     throw new Error(`Invalid chat type: ${chatType}`);
@@ -122,7 +122,7 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
       return {
         instruction: buildSystemPrompt(
           chat,
-          chat.workspace ? chat.workspace.openAiPrompt : null
+          chat.workspace ? chat.workspace.openAiPrompt : null,
         ),
         input: chat.prompt,
         output: responseJson.text,
@@ -180,7 +180,7 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
             text: responseJson.text,
           },
         ],
-      }
+      },
     );
 
     return acc;

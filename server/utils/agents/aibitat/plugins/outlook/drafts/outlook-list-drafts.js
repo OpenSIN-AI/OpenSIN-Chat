@@ -39,17 +39,17 @@ module.exports.OutlookListDrafts = {
           handler: async function ({ limit = 25 }) {
             try {
               this.super.handlerProps.log(
-                `Using the outlook-list-drafts tool.`
+                `Using the outlook-list-drafts tool.`,
               );
               this.super.introspect(
-                `${this.caller}: Listing Outlook drafts...`
+                `${this.caller}: Listing Outlook drafts...`,
               );
 
               const result = await outlookLib.listDrafts(limit);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to list drafts - ${result.error}`
+                  `${this.caller}: Failed to list drafts - ${result.error}`,
                 );
                 return `Error listing drafts: ${result.error}`;
               }
@@ -64,7 +64,7 @@ module.exports.OutlookListDrafts = {
               const summary = drafts
                 .map(
                   (d, i) =>
-                    `${i + 1}. "${d.subject || "(No Subject)"}" to ${d.to || "(No Recipients)"}\n   ID: ${d.id}\n   Last Modified: ${new Date(d.lastModified).toLocaleString()}\n   Preview: ${d.preview?.substring(0, 100) || "(No preview)"}...`
+                    `${i + 1}. "${d.subject || "(No Subject)"}" to ${d.to || "(No Recipients)"}\n   ID: ${d.id}\n   Last Modified: ${new Date(d.lastModified).toLocaleString()}\n   Preview: ${d.preview?.substring(0, 100) || "(No preview)"}...`,
                 )
                 .join("\n\n");
 

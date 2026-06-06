@@ -44,21 +44,21 @@ module.exports.GmailListDrafts = {
               this.super.handlerProps.log(`Using the gmail-list-drafts tool.`);
 
               this.super.introspect(
-                `${this.caller}: Listing Gmail drafts (limit: ${limit})`
+                `${this.caller}: Listing Gmail drafts (limit: ${limit})`,
               );
 
               const result = await gmailLib.listDrafts(limit);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to list drafts - ${result.error}`
+                  `${this.caller}: Failed to list drafts - ${result.error}`,
                 );
                 return `Error listing Gmail drafts: ${result.error}`;
               }
 
               const { totalDrafts, returned, drafts } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${totalDrafts} total drafts, returning ${returned}`
+                `${this.caller}: Found ${totalDrafts} total drafts, returning ${returned}`,
               );
 
               if (totalDrafts === 0) {
@@ -71,7 +71,7 @@ module.exports.GmailListDrafts = {
                     `${i + 1}. Draft ID: ${d.draftId}\n` +
                     `   To: ${d.to || "(no recipient)"}\n` +
                     `   Subject: ${d.subject || "(no subject)"}\n` +
-                    `   Date: ${new Date(d.date).toLocaleString()}`
+                    `   Date: ${new Date(d.date).toLocaleString()}`,
                 )
                 .join("\n\n");
 
@@ -83,7 +83,7 @@ module.exports.GmailListDrafts = {
               );
             } catch (e) {
               this.super.handlerProps.log(
-                `gmail-list-drafts error: ${e.message}`
+                `gmail-list-drafts error: ${e.message}`,
               );
               this.super.introspect(`Error: ${e.message}`);
               return `Error listing Gmail drafts: ${e.message}`;

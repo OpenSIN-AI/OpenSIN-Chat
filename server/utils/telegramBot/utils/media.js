@@ -84,14 +84,14 @@ async function documentToText(documentBuffer, originalFilename) {
   const collector = new CollectorApi();
   if (!(await collector.online())) {
     throw new Error(
-      "Document processing is unavailable. The collector service is offline."
+      "Document processing is unavailable. The collector service is offline.",
     );
   }
 
   const result = await collector.parseDocument(filename);
   if (!result?.success || !result.documents?.length) {
     throw new Error(
-      result?.reason || `Failed to parse document: ${originalFilename}`
+      result?.reason || `Failed to parse document: ${originalFilename}`,
     );
   }
 
@@ -140,14 +140,14 @@ async function sendVoiceResponse(bot, chatId, text) {
       {
         filename: `${chatId}-response.mp3`,
         contentType: "audio/mpeg",
-      }
+      },
     );
     return true;
   } catch {
     await bot
       .sendMessage(
         chatId,
-        "Voice responses require a text-to-speech provider. Set one up in Settings > Voice & Speech > Text-to-Speech Preference."
+        "Voice responses require a text-to-speech provider. Set one up in Settings > Voice & Speech > Text-to-Speech Preference.",
       )
       .catch(() => {});
     return false;

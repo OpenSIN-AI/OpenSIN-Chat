@@ -40,7 +40,7 @@ async function handleHistory(ctx, chatId, messageText = "") {
       include: true,
     },
     count,
-    { id: "desc" }
+    { id: "desc" },
   );
 
   if (!rawChats.length) {

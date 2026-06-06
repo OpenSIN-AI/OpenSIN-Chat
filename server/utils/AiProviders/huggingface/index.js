@@ -100,7 +100,7 @@ class HuggingFaceLLM {
         })
         .catch((e) => {
           throw new Error(e.message);
-        })
+        }),
     );
 
     if (

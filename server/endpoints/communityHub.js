@@ -27,7 +27,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response.status(500).json({ success: false, error: error.message });
       }
-    }
+    },
   );
 
   app.post(
@@ -43,7 +43,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response.status(500).json({ success: false, error: error.message });
       }
-    }
+    },
   );
 
   app.get(
@@ -61,7 +61,7 @@ function communityHubEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   app.post(
@@ -82,7 +82,7 @@ function communityHubEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   /**
@@ -111,7 +111,7 @@ function communityHubEndpoints(app) {
             itemId: response.locals.bundleItem.id,
             itemType: response.locals.bundleItem.itemType,
           },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
 
         response.status(200).json({ success: true, error: null });
@@ -119,7 +119,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response.status(500).json({ success: false, error: error.message });
       }
-    }
+    },
   );
 
   /**
@@ -153,7 +153,7 @@ function communityHubEndpoints(app) {
             itemId: response.locals.bundleItem.id,
             itemType: response.locals.bundleItem.itemType,
           },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
 
         response.status(200).json({ success: true, error: null });
@@ -164,7 +164,7 @@ function communityHubEndpoints(app) {
           error: error.message,
         });
       }
-    }
+    },
   );
 
   app.get(
@@ -179,7 +179,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response.status(500).json({ success: false, error: error.message });
       }
-    }
+    },
   );
 
   app.post(
@@ -196,14 +196,14 @@ function communityHubEndpoints(app) {
         const { success, error, itemId } = await CommunityHub.createStaticItem(
           communityHubItemType,
           data,
-          connectionKey
+          connectionKey,
         );
         if (!success) throw new Error(error);
 
         await EventLogs.logEvent(
           "community_hub_publish",
           { itemType: communityHubItemType },
-          response.locals?.user?.id
+          response.locals?.user?.id,
         );
         response
           .status(200)
@@ -212,7 +212,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response.status(500).json({ success: false, error: error.message });
       }
-    }
+    },
   );
 }
 

@@ -41,21 +41,21 @@ module.exports.OutlookGetInbox = {
             try {
               this.super.handlerProps.log(`Using the outlook-get-inbox tool.`);
               this.super.introspect(
-                `${this.caller}: Fetching Outlook inbox...`
+                `${this.caller}: Fetching Outlook inbox...`,
               );
 
               const result = await outlookLib.getInbox(limit);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to get inbox - ${result.error}`
+                  `${this.caller}: Failed to get inbox - ${result.error}`,
                 );
                 return `Error getting Outlook inbox: ${result.error}`;
               }
 
               const { messages, resultCount } = result.data;
               this.super.introspect(
-                `${this.caller}: Found ${resultCount} messages in inbox`
+                `${this.caller}: Found ${resultCount} messages in inbox`,
               );
 
               if (resultCount === 0) {

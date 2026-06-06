@@ -19,12 +19,12 @@ async function batchDeleteFiles(filesToDelete, batchSize = 500) {
           if (fs.lstatSync(filePath).isDirectory())
             fs.rmSync(filePath, { recursive: true });
           else fs.unlinkSync(filePath);
-        })
+        }),
       );
       deletedCount += batch.length;
 
       log(
-        `Deleted batch ${Math.floor(i / batchSize) + 1}: ${batch.length} files`
+        `Deleted batch ${Math.floor(i / batchSize) + 1}: ${batch.length} files`,
       );
     } catch {
       // If batch fails, try individual files sync

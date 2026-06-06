@@ -49,21 +49,21 @@ module.exports.OutlookSendDraft = {
                 });
                 if (!approval.approved) {
                   this.super.introspect(
-                    `${this.caller}: User rejected the ${this.name} request.`
+                    `${this.caller}: User rejected the ${this.name} request.`,
                   );
                   return approval.message;
                 }
               }
 
               this.super.introspect(
-                `${this.caller}: Sending draft ${draftId}...`
+                `${this.caller}: Sending draft ${draftId}...`,
               );
 
               const result = await outlookLib.sendDraft(draftId);
 
               if (!result.success) {
                 this.super.introspect(
-                  `${this.caller}: Failed to send draft - ${result.error}`
+                  `${this.caller}: Failed to send draft - ${result.error}`,
                 );
                 return `Error sending draft: ${result.error}`;
               }

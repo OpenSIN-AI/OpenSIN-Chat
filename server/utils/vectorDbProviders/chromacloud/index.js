@@ -39,7 +39,7 @@ class ChromaCloud extends Chroma {
     const isAlive = await client.heartbeat();
     if (!isAlive)
       throw new Error(
-        "ChromaCloud::Invalid Heartbeat received - is the instance online?"
+        "ChromaCloud::Invalid Heartbeat received - is the instance online?",
       );
     return { client };
   }
@@ -65,18 +65,18 @@ class ChromaCloud extends Chroma {
 
     if (testSubmission.embedding.length > this.limits.maxEmbeddingDim)
       console.warn(
-        `ChromaCloud::Embedding dimension too large (default max is ${this.limits.maxEmbeddingDim}). Got ${testSubmission.embedding.length}. Upsert may fail!`
+        `ChromaCloud::Embedding dimension too large (default max is ${this.limits.maxEmbeddingDim}). Got ${testSubmission.embedding.length}. Upsert may fail!`,
       );
     if (testSubmission.document.length > this.limits.maxDocumentBytes)
       console.warn(
-        `ChromaCloud::Document length too large (default max is ${this.limits.maxDocumentBytes}). Got ${testSubmission.document.length}. Upsert may fail!`
+        `ChromaCloud::Document length too large (default max is ${this.limits.maxDocumentBytes}). Got ${testSubmission.document.length}. Upsert may fail!`,
       );
     if (
       JSON.stringify(testSubmission.metadata).length >
       this.limits.maxMetadataBytes
     )
       console.warn(
-        `ChromaCloud::Metadata length too large (default max is ${this.limits.maxMetadataBytes}). Got ${JSON.stringify(testSubmission.metadata).length}. Upsert may fail!`
+        `ChromaCloud::Metadata length too large (default max is ${this.limits.maxMetadataBytes}). Got ${JSON.stringify(testSubmission.metadata).length}. Upsert may fail!`,
       );
 
     // If the submissions are not too large, just add them directly.
@@ -86,7 +86,7 @@ class ChromaCloud extends Chroma {
     }
 
     this.logger(
-      `Upsert Payload is too large (max is ${this.limits.maxRecordsPerWrite} records). Splitting into chunks of ${this.limits.maxRecordsPerWrite} records.`
+      `Upsert Payload is too large (max is ${this.limits.maxRecordsPerWrite} records). Splitting into chunks of ${this.limits.maxRecordsPerWrite} records.`,
     );
     const chunks = [];
     let chunkedSubmission = {
@@ -102,7 +102,7 @@ class ChromaCloud extends Chroma {
       chunkedSubmission.documents.push(submission.documents[i]);
       if (chunkedSubmission.ids.length === this.limits.maxRecordsPerWrite) {
         this.logger(
-          `ChromaCloud::Adding chunk payload ${chunks.length + 1} of ${Math.ceil(submission.ids.length / this.limits.maxRecordsPerWrite)}`
+          `ChromaCloud::Adding chunk payload ${chunks.length + 1} of ${Math.ceil(submission.ids.length / this.limits.maxRecordsPerWrite)}`,
         );
         chunks.push(chunkedSubmission);
         chunkedSubmission = {
@@ -142,7 +142,7 @@ class ChromaCloud extends Chroma {
       return await collection.delete({ ids: vectorIds });
 
     this.logger(
-      `Delete Payload is too large (max is ${this.limits.maxRecordsPerWrite} records). Splitting into chunks of ${this.limits.maxRecordsPerWrite} records.`
+      `Delete Payload is too large (max is ${this.limits.maxRecordsPerWrite} records). Splitting into chunks of ${this.limits.maxRecordsPerWrite} records.`,
     );
     const chunks = toChunks(vectorIds, this.limits.maxRecordsPerWrite);
     let counter = 1;

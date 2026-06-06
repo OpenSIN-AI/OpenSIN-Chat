@@ -128,7 +128,7 @@ class TelegramBotService {
     // Process only the last message from each chat that was pending
     if (lastMessages.size > 0) {
       this.#log(
-        `Processing ${lastMessages.size} pending message(s) from startup`
+        `Processing ${lastMessages.size} pending message(s) from startup`,
       );
       const ctx = this.#createContext();
       for (const [chatId, msg] of lastMessages) {
@@ -228,7 +228,7 @@ class TelegramBotService {
   #isNetworkError(error) {
     const msg = (error.message || "").toLowerCase();
     return TelegramBotService.#NETWORK_ERROR_PATTERNS.some(
-      (p) => msg.includes(p.toLowerCase()) || error.code === p
+      (p) => msg.includes(p.toLowerCase()) || error.code === p,
     );
   }
 
@@ -246,7 +246,7 @@ class TelegramBotService {
     // 401 = invalid token, cleanup and stop
     if (error.message?.includes("401")) {
       this.#log(
-        "Got 401 - bot token invalid. Stopping and deleting connector."
+        "Got 401 - bot token invalid. Stopping and deleting connector.",
       );
       return this.#selfCleanup("401 Unauthorized");
     }
@@ -262,7 +262,7 @@ class TelegramBotService {
     this.#pollingRetry.count++;
     if (this.#pollingRetry.count > maxRetries) {
       this.#log(
-        `Network error. Max retries (${maxRetries}) exceeded. Stopping.`
+        `Network error. Max retries (${maxRetries}) exceeded. Stopping.`,
       );
       this.#pollingRetry.count = 0;
       return await this.stop();
@@ -271,10 +271,10 @@ class TelegramBotService {
     const delay = Math.min(
       TelegramBotService.#BASE_RETRY_DELAY_MS *
         Math.pow(2, this.#pollingRetry.count - 1),
-      TelegramBotService.#MAX_RETRY_DELAY_MS
+      TelegramBotService.#MAX_RETRY_DELAY_MS,
     );
     this.#log(
-      `Network error. Retry ${this.#pollingRetry.count}/${maxRetries} in ${Math.round(delay / 1000)}s...`
+      `Network error. Retry ${this.#pollingRetry.count}/${maxRetries} in ${Math.round(delay / 1000)}s...`,
     );
 
     this.#pollingRetry.timer = setTimeout(async () => {
@@ -329,7 +329,7 @@ class TelegramBotService {
       });
 
       this.#log(
-        `Cleared pending updates, will process ${lastMessages.size} last message(s)`
+        `Cleared pending updates, will process ${lastMessages.size} last message(s)`,
       );
     } catch (error) {
       this.#log("Failed to clear pending updates:", error.message);
@@ -420,7 +420,7 @@ class TelegramBotService {
     if (!isMultiUserMode) return true;
 
     this.#log(
-      "Invalid state: Multi-user mode detected. Cleaning up and deleting connector."
+      "Invalid state: Multi-user mode detected. Cleaning up and deleting connector.",
     );
     await this.stop();
     await ExternalCommunicationConnector.delete("telegram");
@@ -457,7 +457,7 @@ class TelegramBotService {
       if (command.skipAutoSetup) continue;
       const handler = command.initHandler();
       this.#bot.onText(new RegExp(`\\/${command.command}`), (msg) =>
-        guard(msg, () => handler(ctx, msg.chat.id, msg.text))
+        guard(msg, () => handler(ctx, msg.chat.id, msg.text)),
       );
     }
 
@@ -465,7 +465,7 @@ class TelegramBotService {
     // Ex: /history 25 shows last 25 messages
     this.#bot.onText(/\/history(.*)/, (msg) => {
       const handler = BOT_COMMANDS.find(
-        (c) => c.command === "history"
+        (c) => c.command === "history",
       ).initHandler();
       guard(msg, () => handler(ctx, msg.chat.id, msg.text));
     });
@@ -475,7 +475,7 @@ class TelegramBotService {
       handleKeyboardQueryCallback(ctx, query, {
         pendingToolApprovals: this.#pendingToolApprovals,
         log: this.#log.bind(this),
-      })
+      }),
     );
 
     this.#bot.on("message", (msg) => {
@@ -500,7 +500,7 @@ class TelegramBotService {
         name: jobId,
         path: require("path").resolve(
           __dirname,
-          "../../jobs/handle-telegram-chat.js"
+          "../../jobs/handle-telegram-chat.js",
         ),
       });
 
@@ -560,7 +560,7 @@ class TelegramBotService {
       this.#log("Chat worker error:", error.message);
       await ctx.bot.sendMessage(
         chatId,
-        "Sorry, something went wrong. Please try again."
+        "Sorry, something went wrong. Please try again.",
       );
     }
   }
@@ -605,7 +605,7 @@ class TelegramBotService {
       msg;
 
     this.#log(
-      `Tool approval request received: ${skillName} (requestId: ${requestId})`
+      `Tool approval request received: ${skillName} (requestId: ${requestId})`,
     );
 
     try {
@@ -656,7 +656,7 @@ class TelegramBotService {
                 chat_id: chatId,
                 message_id: sent.message_id,
                 parse_mode: "HTML",
-              }
+              },
             )
             .catch(() => {});
         }
@@ -703,7 +703,7 @@ class TelegramBotService {
           if (!transcription?.trim()) {
             await ctx.bot.sendMessage(
               chatId,
-              "Could not transcribe the voice message."
+              "Could not transcribe the voice message.",
             );
             return;
           }
@@ -721,7 +721,7 @@ class TelegramBotService {
             chatId,
             isConfigError
               ? error.message
-              : "Failed to process voice message. Please try again."
+              : "Failed to process voice message. Please try again.",
           );
         }
       });
@@ -743,7 +743,7 @@ class TelegramBotService {
           this.#log("Photo handling error:", error.message);
           await ctx.bot.sendMessage(
             chatId,
-            "Failed to process the image. Please try again."
+            "Failed to process the image. Please try again.",
           );
         }
       });
@@ -758,11 +758,11 @@ class TelegramBotService {
           const filename = msg.document.file_name || "document";
           const docBuffer = await downloadTelegramFile(
             ctx.bot,
-            msg.document.file_id
+            msg.document.file_id,
           );
           const { text, filename: docName } = await documentToText(
             docBuffer,
-            filename
+            filename,
           );
 
           const userPrompt = msg.caption?.trim()
@@ -780,7 +780,7 @@ class TelegramBotService {
             chatId,
             error.message.includes("collector")
               ? error.message
-              : "Failed to process the document. Please try again."
+              : "Failed to process the document. Please try again.",
           );
         }
       });

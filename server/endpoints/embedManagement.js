@@ -28,7 +28,7 @@ function embedManagementEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -42,14 +42,14 @@ function embedManagementEndpoints(app) {
         await EventLogs.logEvent(
           "embed_created",
           { embedId: embed.id },
-          user?.id
+          user?.id,
         );
         response.status(200).json({ embed, error });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -67,7 +67,7 @@ function embedManagementEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -80,14 +80,14 @@ function embedManagementEndpoints(app) {
         await EventLogs.logEvent(
           "embed_deleted",
           { embedId },
-          response?.locals?.user?.id
+          response?.locals?.user?.id,
         );
         response.status(200).json({ success: true, error: null });
       } catch (e) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.post(
@@ -100,7 +100,7 @@ function embedManagementEndpoints(app) {
           {},
           limit,
           { id: "desc" },
-          offset * limit
+          offset * limit,
         );
         const totalChats = await EmbedChats.count();
         const hasPages = totalChats > (offset + 1) * limit;
@@ -109,7 +109,7 @@ function embedManagementEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 
   app.delete(
@@ -124,7 +124,7 @@ function embedManagementEndpoints(app) {
         console.error(e);
         response.sendStatus(500).end();
       }
-    }
+    },
   );
 }
 

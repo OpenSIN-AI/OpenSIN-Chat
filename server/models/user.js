@@ -41,7 +41,7 @@ const User = {
           throw new Error("Username must be at least 2 characters");
         if (!User.usernameRegex.test(username))
           throw new Error(
-            "Username must start with a lowercase letter and only contain lowercase letters, numbers, underscores, hyphens, and periods"
+            "Username must start with a lowercase letter and only contain lowercase letters, numbers, underscores, hyphens, and periods",
           );
         return username;
       } catch (e) {
@@ -52,7 +52,7 @@ const User = {
       const VALID_ROLES = ["default", "admin", "manager"];
       if (!VALID_ROLES.includes(role)) {
         throw new Error(
-          `Invalid role. Allowed roles are: ${VALID_ROLES.join(", ")}`
+          `Invalid role. Allowed roles are: ${VALID_ROLES.join(", ")}`,
         );
       }
       return String(role);
@@ -62,7 +62,7 @@ const User = {
       const limit = Number(dailyMessageLimit);
       if (isNaN(limit) || limit < 1) {
         throw new Error(
-          "Daily message limit must be null or a number greater than or equal to 1"
+          "Daily message limit must be null or a number greater than or equal to 1",
         );
       }
       return limit;
@@ -175,7 +175,7 @@ const User = {
         if (this.writable.includes(key)) {
           if (this.validations.hasOwnProperty(key)) {
             updates[key] = this.validations[key](
-              this.castColumnValue(key, value)
+              this.castColumnValue(key, value),
             );
           } else {
             updates[key] = this.castColumnValue(key, value);
@@ -209,7 +209,7 @@ const User = {
           username: user.username,
           changes: this.loggedChanges(updates, currentUser),
         },
-        userId
+        userId,
       );
       return { success: true, error: null };
     } catch (error) {
@@ -339,7 +339,7 @@ const User = {
 
     const complexityCheck = passwordComplexity(
       complexityOptions,
-      "password"
+      "password",
     ).validate(passwordInput);
     if (complexityCheck.hasOwnProperty("error")) {
       let myError = "";

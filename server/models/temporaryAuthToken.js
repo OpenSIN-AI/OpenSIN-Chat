@@ -52,7 +52,7 @@ const TemporaryAuthToken = {
   invalidateUserTokens: async function (userId) {
     if (!userId)
       throw new Error(
-        "User ID is required to invalidate temporary auth tokens."
+        "User ID is required to invalidate temporary auth tokens.",
       );
     await prisma.temporary_auth_tokens.deleteMany({
       where: { userId: Number(userId) },
@@ -73,7 +73,7 @@ const TemporaryAuthToken = {
     try {
       if (!publicToken)
         throw new Error(
-          "Public token is required to validate a temporary auth token."
+          "Public token is required to validate a temporary auth token.",
         );
       token = await prisma.temporary_auth_tokens.findUnique({
         where: { token: String(publicToken) },
@@ -86,7 +86,7 @@ const TemporaryAuthToken = {
       // Create a new session token for the user valid for 30 days
       const sessionToken = makeJWT(
         { id: token.user.id, username: token.user.username },
-        process.env.JWT_EXPIRY
+        process.env.JWT_EXPIRY,
       );
 
       return { sessionToken, token, error: null };

@@ -20,7 +20,7 @@ class LemonadeLLM {
     this.lemonade = new OpenAIApi({
       baseURL: parseLemonadeServerEndpoint(
         process.env.LEMONADE_LLM_BASE_PATH,
-        "openai"
+        "openai",
       ),
       apiKey: process.env.LEMONADE_LLM_API_KEY || null,
     });
@@ -54,7 +54,7 @@ class LemonadeLLM {
       user: this.promptWindowLimit() * 0.7,
     };
     this.#log(
-      `${this.model} is using a max context window of ${this.promptWindowLimit()} tokens.`
+      `${this.model} is using a max context window of ${this.promptWindowLimit()} tokens.`,
     );
   }
 
@@ -159,7 +159,7 @@ class LemonadeLLM {
         model: this.model,
         messages,
         temperature,
-      })
+      }),
     );
 
     if (
@@ -216,7 +216,7 @@ class LemonadeLLM {
       const client = new OpenAIApi({
         baseURL: parseLemonadeServerEndpoint(
           process.env.LEMONADE_LLM_BASE_PATH,
-          "openai"
+          "openai",
         ),
         apiKey: process.env.LEMONADE_LLM_API_KEY || null,
       });
@@ -245,7 +245,7 @@ class LemonadeLLM {
    */
   static async getCurrentlyLoadedModels() {
     const endpoint = new URL(
-      parseLemonadeServerEndpoint(process.env.LEMONADE_LLM_BASE_PATH, "openai")
+      parseLemonadeServerEndpoint(process.env.LEMONADE_LLM_BASE_PATH, "openai"),
     );
     endpoint.pathname += "/health";
     const loadedModels = await fetch(endpoint.toString(), {
@@ -259,7 +259,7 @@ class LemonadeLLM {
       .then((response) => {
         if (!response.ok)
           throw new Error(
-            `Failed to get currently loaded models: ${response.statusText}`
+            `Failed to get currently loaded models: ${response.statusText}`,
           );
         return response.json();
       })
@@ -285,19 +285,19 @@ class LemonadeLLM {
       const currentlyLoadedModels =
         await LemonadeLLM.getCurrentlyLoadedModels();
       const modelAlreadyLoaded = currentlyLoadedModels.find(
-        (m) => m.model_name === model
+        (m) => m.model_name === model,
       );
 
       if (modelAlreadyLoaded) {
         if (modelAlreadyLoaded.ctx_size === desiredCtxSize) {
           LemonadeLLM.slog(
-            `Model ${model} already loaded with ctx size ${desiredCtxSize}`
+            `Model ${model} already loaded with ctx size ${desiredCtxSize}`,
           );
           return true;
         }
 
         LemonadeLLM.slog(
-          `Model ${model} needs to be reloaded again with ctx size ${desiredCtxSize}`
+          `Model ${model} needs to be reloaded again with ctx size ${desiredCtxSize}`,
         );
       }
 
@@ -305,7 +305,7 @@ class LemonadeLLM {
       endpoint.pathname += "/load";
 
       LemonadeLLM.slog(
-        `Loading model ${model} with context size ${desiredCtxSize}`
+        `Loading model ${model} with context size ${desiredCtxSize}`,
       );
 
       await fetch(endpoint.toString(), {
@@ -324,7 +324,7 @@ class LemonadeLLM {
         .then((response) => {
           if (!response.ok)
             throw new Error(
-              `Failed to load model ${model}: ${response.statusText}`
+              `Failed to load model ${model}: ${response.statusText}`,
             );
           return response.json();
         })
@@ -405,7 +405,7 @@ async function getAllLemonadeModels(basePath = null, task = "chat") {
       return model.labels?.includes("transcription");
     if (task === "chat")
       return !["embeddings", "reranking"].some((label) =>
-        model.labels?.includes(label)
+        model.labels?.includes(label),
       );
     return true;
   }
@@ -415,8 +415,8 @@ async function getAllLemonadeModels(basePath = null, task = "chat") {
     const lemonadeUrl = new URL(
       parseLemonadeServerEndpoint(
         basePath ?? process.env.LEMONADE_LLM_BASE_PATH,
-        "openai"
-      )
+        "openai",
+      ),
     );
     lemonadeUrl.pathname += "/models";
     lemonadeUrl.searchParams.append("show_all", "true");

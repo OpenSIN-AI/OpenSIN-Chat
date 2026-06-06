@@ -23,7 +23,7 @@ function patchSdkTimeouts() {
     const parsed = parseInt(envDefinedTimeout, 10);
     if (!Number.isFinite(parsed) || parsed <= 0) {
       console.warn(
-        `${LOG_PREFIX} ANYTHINGLLM_FETCH_TIMEOUT="${envDefinedTimeout}" is not a valid positive integer — using default ${DEFAULT_TIMEOUT_MS}ms.`
+        `${LOG_PREFIX} ANYTHINGLLM_FETCH_TIMEOUT="${envDefinedTimeout}" is not a valid positive integer — using default ${DEFAULT_TIMEOUT_MS}ms.`,
       );
     } else {
       timeoutMs = parsed;
@@ -34,7 +34,7 @@ function patchSdkTimeouts() {
     const parsed = parseInt(envDefinedMaxRetries, 10);
     if (!Number.isFinite(parsed) || parsed < 0) {
       console.warn(
-        `${LOG_PREFIX} ANYTHINGLLM_MAX_RETRIES="${envDefinedMaxRetries}" is not a valid non-negative integer — using default ${DEFAULT_MAX_RETRIES}.`
+        `${LOG_PREFIX} ANYTHINGLLM_MAX_RETRIES="${envDefinedMaxRetries}" is not a valid non-negative integer — using default ${DEFAULT_MAX_RETRIES}.`,
       );
     } else {
       maxRetries = parsed;
@@ -45,14 +45,14 @@ function patchSdkTimeouts() {
   try {
     const { Agent, setGlobalDispatcher } = require("undici");
     setGlobalDispatcher(
-      new Agent({ headersTimeout: timeoutMs, bodyTimeout: timeoutMs })
+      new Agent({ headersTimeout: timeoutMs, bodyTimeout: timeoutMs }),
     );
     console.log(
-      `${LOG_PREFIX} undici global dispatcher — headersTimeout & bodyTimeout ${humanSecs}`
+      `${LOG_PREFIX} undici global dispatcher — headersTimeout & bodyTimeout ${humanSecs}`,
     );
   } catch {
     console.warn(
-      `${LOG_PREFIX} undici not available — transport-level timeout not patched.`
+      `${LOG_PREFIX} undici not available — transport-level timeout not patched.`,
     );
   }
 
@@ -87,7 +87,7 @@ function patchSdkTimeouts() {
       }
 
       console.log(
-        `${LOG_PREFIX} ${label} SDK — timeout ${humanSecs}, maxRetries ${maxRetries}`
+        `${LOG_PREFIX} ${label} SDK — timeout ${humanSecs}, maxRetries ${maxRetries}`,
       );
     } catch {
       // SDK not installed

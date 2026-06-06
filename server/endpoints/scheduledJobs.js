@@ -26,7 +26,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500).json({ tools: [] });
       }
-    }
+    },
   );
 
   // Get a single run detail
@@ -56,7 +56,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // Mark a run as read or continue in thread, or kill a running or queued job run
@@ -78,7 +78,7 @@ function scheduledJobEndpoints(app) {
         if (action === "continue") {
           const { workspace, thread, error } =
             await ScheduledJobRun.continueInThread(
-              Number(request.params.runId)
+              Number(request.params.runId),
             );
           if (error) return response.status(500).json({ error });
 
@@ -107,7 +107,7 @@ function scheduledJobEndpoints(app) {
       } catch {
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // List all scheduled jobs
@@ -133,7 +133,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // Create a new scheduled job
@@ -190,7 +190,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // Get a single scheduled job
@@ -212,7 +212,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // Update a scheduled job
@@ -254,7 +254,7 @@ function scheduledJobEndpoints(app) {
 
         const { job, error } = await ScheduledJob.update(
           Number(request.params.id),
-          updates
+          updates,
         );
 
         if (error) {
@@ -268,7 +268,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // Delete a scheduled job
@@ -285,7 +285,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // Toggle enable/disable
@@ -326,7 +326,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // Manual trigger — runs the job immediately
@@ -350,7 +350,7 @@ function scheduledJobEndpoints(app) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 
   // List runs for a job
@@ -362,14 +362,14 @@ function scheduledJobEndpoints(app) {
         const runs = await ScheduledJobRun.where(
           { jobId: Number(request.params.id) },
           50,
-          { startedAt: "desc" }
+          { startedAt: "desc" },
         );
         return response.status(200).json({ runs });
       } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500);
       }
-    }
+    },
   );
 }
 
