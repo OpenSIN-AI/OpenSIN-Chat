@@ -10,6 +10,7 @@ import MobileCitationModal from "./MobileCitationModal";
 import SourceItem from "./SourceItem";
 import ChatSidebar, { useSourcesSidebar, useMemoriesSidebar, useChatSidebar } from "../ChatSidebar";
 import SidebarTabs from "../ChatSidebar/SidebarTabs";
+import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
 
 // Re-export for backward compat with existing imports
 export { useSourcesSidebar } from "../ChatSidebar";
@@ -106,7 +107,7 @@ export default function SourcesSidebar({ workspace }) {
   }
 
   return (
-    <>
+    <MemoriesProvider workspace={workspace}>
       <ChatSidebar isOpen={sidebarOpen}>
         <div
           className="ml-4 w-[350px] bg-zinc-900 light:bg-white light:border-2 light:border-slate-300 md:rounded-[16px] p-4 flex flex-col gap-4 overflow-hidden mt-[72px]"
@@ -162,6 +163,6 @@ export default function SourcesSidebar({ workspace }) {
           onClose={() => setSelectedSource(null)}
         />
       )}
-    </>
+    </MemoriesProvider>
   );
 }
