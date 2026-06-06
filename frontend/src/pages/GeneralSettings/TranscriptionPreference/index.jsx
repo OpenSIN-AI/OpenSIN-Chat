@@ -24,7 +24,7 @@ const PROVIDERS = [
   {
     name: "OpenAfD Chat Built-In",
     value: "local",
-    logo: OpenAfD ChatIcon,
+    logo: OpenAfDChatIcon,
     options: (settings) => <NativeTranscriptionOptions settings={settings} />,
     description: "Run a built-in whisper model on this instance privately.",
   },

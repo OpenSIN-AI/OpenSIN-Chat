@@ -14,7 +14,7 @@ function defaultProvider(providerString) {
     description: [
       `"${providerString}" has no known data handling policy defined in OpenAfD Chat.`,
     ],
-    logo: OpenAfD ChatIcon,
+    logo: OpenAfDChatIcon,
   };
 }
 

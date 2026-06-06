@@ -58,7 +58,7 @@ const WARN_PERFORMANCE = [
 const LLM_DEFAULT = {
   name: "System Default",
   value: "none",
-  logo: OpenAfD ChatIcon,
+  logo: OpenAfDChatIcon,
   options: () => <React.Fragment />,
   description:
     "Agents will use the workspace or system LLM unless otherwise specified.",

@@ -22,7 +22,7 @@ const PROVIDERS = [
   {
     name: "System native",
     value: "native",
-    logo: OpenAfD ChatIcon,
+    logo: OpenAfDChatIcon,
     options: (settings) => <BrowserNative settings={settings} />,
     description: "Uses your browser's built in TTS service if supported.",
   },

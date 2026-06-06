@@ -187,7 +187,7 @@ export default function SettingsSidebar() {
 }
 
 function SupportEmail() {
-  const [supportEmail, setSupportEmail] = useState(paths.mailToOpenAfD Team());
+  const [supportEmail, setSupportEmail] = useState(paths.mailToSupport());
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -196,7 +196,7 @@ function SupportEmail() {
       setSupportEmail(
         supportEmail?.email
           ? `mailto:${supportEmail.email}`
-          : paths.mailToOpenAfD Team()
+          : paths.mailToSupport()
       );
     };
     fetchSupportEmail();

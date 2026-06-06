@@ -1,6 +1,5 @@
 import {
   COMPLETE_QUESTIONNAIRE,
-  ONBOARDING_SURVEY_URL,
 } from "@/utils/constants";
 import paths from "@/utils/paths";
 import { CheckCircle } from "@phosphor-icons/react";
@@ -24,7 +23,7 @@ async function sendQuestionnaire({ email, useCase, comment }) {
 
   if (!navigator.sendBeacon) {
     console.log("navigator.sendBeacon not supported, falling back to fetch");
-    return fetch(ONBOARDING_SURVEY_URL, {
+    fetch(paths.survey(), {
       method: "POST",
       body: data,
     })
@@ -37,7 +36,6 @@ async function sendQuestionnaire({ email, useCase, comment }) {
       });
   }
 
-  navigator.sendBeacon(ONBOARDING_SURVEY_URL, data);
   window.localStorage.setItem(COMPLETE_QUESTIONNAIRE, true);
   console.log(`✅ Questionnaire responses sent.`);
 }
@@ -128,8 +126,8 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
             <p className="text-white text-lg">
               {t("onboarding.survey.thankYou")}
             </p>
-            <a
-              href={paths.mailToOpenAfD Team()}
+              <a
+              href={paths.mailToSupport()}
               className="text-sky-400 underline text-xs"
             >
               team@openafd.com

@@ -46,7 +46,7 @@ const EMBEDDERS = [
   {
     name: "OpenAfD Chat Embedder",
     value: "native",
-    logo: OpenAfD ChatIcon,
+    logo: OpenAfDChatIcon,
     options: (settings) => <NativeEmbeddingOptions settings={settings} />,
     description:
       "Use the built-in embedding provider for OpenAfD Chat. Zero setup!",

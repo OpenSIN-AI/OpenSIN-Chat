@@ -92,7 +92,7 @@ import CTAButton from "@/components/lib/CTAButton";
 export const MODEL_ROUTER_PROVIDER = {
   name: "Model Router",
   value: "openafd-router",
-  logo: OpenAfD ChatIcon,
+  logo: OpenAfDChatIcon,
   options: (settings) => <ModelRouterOptions settings={settings} />,
   description:
     "Route messages to different LLM providers based on rules you define.",
@@ -642,7 +642,7 @@ export default function GeneralLLMPreference() {
                   >
                     <div className="flex gap-x-4 items-center">
                       <img
-                        src={selectedLLMObject?.logo || OpenAfD ChatIcon}
+                        src={selectedLLMObject?.logo || OpenAfDChatIcon}
                         alt={`${selectedLLMObject?.name} logo`}
                         className="w-10 h-10 rounded-md"
                       />

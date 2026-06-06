@@ -335,7 +335,7 @@ const EMBEDDING_ENGINE_PROVIDER_PRIVACY_MAP = {
     description: [
       "Your document text is embedded privately on this instance of OpenAfD Chat.",
     ],
-    logo: OpenAfD ChatIcon,
+    logo: OpenAfDChatIcon,
   },
   openai: {
     name: "OpenAI",

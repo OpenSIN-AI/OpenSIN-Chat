@@ -24,7 +24,7 @@ const DISABLED_PROVIDERS = [];
 const LLM_DEFAULT = {
   name: "System default",
   value: "default",
-  logo: OpenAfD ChatIcon,
+  logo: OpenAfDChatIcon,
   options: () => <React.Fragment />,
   description: "Use the system LLM preference for this workspace.",
   requiredConfig: [],
