@@ -6,7 +6,7 @@ für PR-Titel. Beispiele:
 - `feat(workspace): add Bundestag-Drucksachen connector`
 - `fix(telemetry): remove any remaining outbound calls`
 - `docs(readme): update brand colors to AfD-Blau`
-- `refactor(server): rename anythingllm-router → openafd-router (planned v1)`
+- `refactor(server): rename LLM-provider string to openafd-router (planned v1, current value `openafd-router` is a future migration; the legacy string lives in BRANDING.md)`
 - `chore(deps): bump vite to 8.0.16`
 - `test(workspace): add integration tests for workspace deletion protection`
 

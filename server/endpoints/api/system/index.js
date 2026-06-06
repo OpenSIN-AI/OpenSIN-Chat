@@ -170,7 +170,7 @@ function apiSystemEndpoints(app) {
             example: [
               {
                 "role": "user",
-                "content": "What is AnythinglLM?"
+                "content": "What is OpenAfD Chat?"
               },
               {
                 "role": "assistant",
