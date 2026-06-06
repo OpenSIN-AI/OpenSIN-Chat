@@ -9,6 +9,7 @@ const { ElevenLabsTTS } = require("../TextToSpeech/elevenLabs");
 const { fetchNovitaModels } = require("../AiProviders/novita");
 const { parseLMStudioBasePath } = require("../AiProviders/lmStudio");
 const { parseNvidiaNimBasePath } = require("../AiProviders/nvidiaNim");
+const { parseOpencodeZenBasePath } = require("../AiProviders/opencodeZen");
 const { fetchPPIOModels } = require("../AiProviders/ppio");
 const { GeminiLLM } = require("../AiProviders/gemini");
 const { fetchCometApiModels } = require("../AiProviders/cometapi");
@@ -51,6 +52,7 @@ const SUPPORT_CUSTOM_MODELS = [
   "lemonade",
   "minimax",
   "cerebras",
+  "opencode-zen",
   "generic-openai",
   // Embedding Engines
   "native-embedder",
@@ -150,6 +152,8 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
       return await getMinimaxModels(apiKey);
     case "cerebras":
       return await getCerebrasModels();
+    case "opencode-zen":
+      return await getOpencodeZenModels();
     case "generic-openai":
       return await getGenericOpenAiModels(basePath, apiKey);
     case "deepgram-stt":
@@ -1214,6 +1218,49 @@ async function getCerebrasModels() {
   } catch (e) {
     console.error(`Cerebras:getCerebrasModels`, e.message);
     return { models: [], error: "Could not fetch Cerebras Models" };
+  }
+}
+
+async function getOpencodeZenModels() {
+  const fallback = [
+    { id: "nemotron-3-ultra-free", name: "Nemotron 3 Ultra (Free)", organization: "NVIDIA" },
+    { id: "deepseek-v4-flash-free", name: "DeepSeek V4 Flash (Free)", organization: "DeepSeek" },
+    { id: "mimo-v2.5-free", name: "MiMo V2.5 (Free)", organization: "MiMo" },
+    { id: "big-pickle", name: "Big Pickle (Free)", organization: "Stealth" },
+    { id: "gpt-5.5", name: "GPT 5.5", organization: "OpenAI" },
+    { id: "claude-sonnet-4.6", name: "Claude Opus 4.6", organization: "Anthropic" },
+    { id: "gemini-3.5-flash", name: "Gemini 3.5 Flash", organization: "Google" },
+    { id: "qwen3.7-max", name: "Qwen 3.7 Max", organization: "Alibaba" },
+    { id: "deepseek-v4-flash", name: "DeepSeek V4 Flash", organization: "DeepSeek" },
+    { id: "kimi-k2.6", name: "Kimi K2.6", organization: "Moonshot" },
+  ];
+
+  try {
+    const { OpenAI: OpenAIApi } = require("openai");
+    const openai = new OpenAIApi({
+      baseURL: parseOpencodeZenBasePath(process.env.OPENCODE_ZEN_BASE_PATH),
+      apiKey: process.env.OPENCODE_ZEN_API_KEY || null,
+    });
+    const models = await openai.models
+      .list()
+      .then((results) => results.data)
+      .then((models) =>
+        models.map((model) => ({
+          id: model.id,
+          name: model.id,
+          organization: model.owned_by ?? "OpenCode Zen",
+        })),
+      )
+      .catch((e) => {
+        console.error(`OpencodeZen:listModels`, e.message);
+        return [];
+      });
+
+    if (models.length > 0) return { models, error: null };
+    return { models: fallback, error: null };
+  } catch (e) {
+    console.error(`OpencodeZen:getOpencodeZenModels`, e.message);
+    return { models: fallback, error: null };
   }
 }
 
