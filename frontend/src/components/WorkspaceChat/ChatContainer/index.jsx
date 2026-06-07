@@ -12,7 +12,9 @@ import { isMobile } from "react-device-detect";
 import { SidebarMobileHeader } from "../../Sidebar";
 import { useNavigate } from "react-router-dom";
 
-import handleSocketResponse, { setAgentSessionActive } from "@/utils/chat/agent";
+import handleSocketResponse, {
+  setAgentSessionActive,
+} from "@/utils/chat/agent";
 import DnDFileUploaderWrapper from "./DnDWrapper";
 import SpeechRecognition, {
   useSpeechRecognition,
