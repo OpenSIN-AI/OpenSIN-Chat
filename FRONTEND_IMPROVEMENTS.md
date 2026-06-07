@@ -68,6 +68,29 @@ Alle Änderungen wurden direkt in das `main` Branch gepusht. Hier ist eine Über
 
 ---
 
+## SOTA-Audit Quick-Wins (Issue #60)
+
+Sichere, risikoarme Verbesserungen aus dem Best-Practice-Backlog (Issue #60), direkt nach `main` gemerged:
+
+### Sicherheit (XSS-Audit)
+- ✅ **Alle 22 `dangerouslySetInnerHTML`-Stellen auditiert.** 21 liefen bereits durch `DOMPurify.sanitize`.
+- ✅ **1 ungesicherte Stelle behoben:** `ChatEmbedWidgets/.../CodeSnippetModal/index.jsx` renderte `hljs.highlight().value` ungefiltert. Jetzt durch `DOMPurify.sanitize(...)` geleitet (gleiches Muster wie `ToolCallCard`).
+
+### Accessibility (a11y)
+- ✅ **`eslint-plugin-jsx-a11y` aktiviert** (v6.10.2) in `eslint.config.js` für `frontend/src/**/*.jsx`.
+- ✅ Recommended-Regeln laufen als **`warn`** (nicht-blockierend), damit der bestehende `lint:check`-CI-Gate auf der aktuellen 241-Komponenten-Baseline nicht bricht. Neue Verstöße werden während der Entwicklung als Warnungen sichtbar.
+
+### Code-Qualität
+- ✅ **Console-Log-Audit:** Keine Debug-`console.log`/`console.debug` im Produktionscode (verbleibende Treffer sind ein i18n-Key, ein dev-gated Logger und ein Debug-Helper).
+- ✅ **Vite-Build:** Chunk-Splitting (`manualChunks`) für Vendor-Libraries war bereits implementiert – keine Änderung nötig.
+
+**Affected Files:**
+- `frontend/src/pages/GeneralSettings/ChatEmbedWidgets/EmbedConfigs/EmbedRow/CodeSnippetModal/index.jsx`
+- `eslint.config.js`
+- `server/package.json`
+
+---
+
 ## Nächste Schritte (weitere Verbesserungen)
 
 ### 🎯 Issue #22 – Unit Tests

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CheckCircle, CopySimple, X } from "@phosphor-icons/react";
 import showToast from "@/utils/toast";
 import hljs from "highlight.js";
+import DOMPurify from "@/utils/chat/purify";
 import "@/utils/chat/themes/github-dark.css";
 import "@/utils/chat/themes/github.css";
 
@@ -107,10 +108,12 @@ const ScriptTag = ({ embed }) => {
         <div
           className="flex w-full text-left flex-col gap-y-1 pr-6 pl-4 whitespace-pre-line"
           dangerouslySetInnerHTML={{
-            __html: hljs.highlight(snippet, {
-              language: "html",
-              ignoreIllegals: true,
-            }).value,
+            __html: DOMPurify.sanitize(
+              hljs.highlight(snippet, {
+                language: "html",
+                ignoreIllegals: true,
+              }).value
+            ),
           }}
         />
         {copied ? (
