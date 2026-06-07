@@ -6,6 +6,7 @@ import showToast from "@/utils/toast";
 import {
   ArrowCounterClockwise,
   DotsThree,
+  Link as LinkIcon,
   PencilSimple,
   Trash,
   X,
@@ -206,6 +207,16 @@ function OptionsMenu({
     return cleanupListeners;
   }, []);
 
+  const handleCopyLink = () => {
+    const link = `${window.location.origin}${paths.workspace.thread(workspace.slug, thread.slug)}`;
+    navigator.clipboard.writeText(link).then(() => {
+      showToast("Link in Zwischenablage kopiert!", "success", { clear: true });
+    }).catch(() => {
+      showToast("Link konnte nicht kopiert werden.", "error", { clear: true });
+    });
+    close();
+  };
+
   const renameThread = async () => {
     const name = window
       .prompt("What would you like to rename this thread to?")
@@ -260,6 +271,14 @@ function OptionsMenu({
       ref={menuRef}
       className="absolute w-fit z-[20] top-[25px] right-[10px] bg-zinc-900 light:bg-theme-bg-sidebar light:border-[1px] light:border-theme-sidebar-border rounded-lg p-1"
     >
+      <button
+        onClick={handleCopyLink}
+        type="button"
+        className="w-full rounded-md flex items-center p-2 gap-x-2 hover:bg-slate-500/20 text-slate-300 light:text-theme-text-primary"
+      >
+        <LinkIcon size={18} />
+        <p className="text-sm">Link kopieren</p>
+      </button>
       <button
         onClick={renameThread}
         type="button"
