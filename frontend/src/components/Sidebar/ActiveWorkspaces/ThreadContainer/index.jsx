@@ -14,6 +14,7 @@ import {
   useSensors,
   DragOverlay,
   closestCenter,
+  useDroppable,
 } from "@dnd-kit/core";
 export const THREAD_RENAME_EVENT = "renameThread";
 
@@ -254,21 +255,23 @@ export default function ThreadContainer({
             />
           );
         })}
-        {unfolderedThreads.map((thread, i) => (
-          <ThreadItem
-            key={thread.slug}
-            idx={i + (defaultThreadHasChats ? 1 : 0)}
-            ctrlPressed={ctrlPressed}
-            toggleMarkForDeletion={toggleForDeletion}
-            activeIdx={activeThreadIdx}
-            isActive={activeThreadIdx === i + (defaultThreadHasChats ? 1 : 0)}
-            workspace={workspace}
-            onRemove={removeThread}
-            thread={thread}
-            hasNext={i !== unfolderedThreads.length - 1 || showVirtualThread}
-            draggable
-          />
-        ))}
+        <UnfolderedDropZone isDragging={!!activeId}>
+          {unfolderedThreads.map((thread, i) => (
+            <ThreadItem
+              key={thread.slug}
+              idx={i + (defaultThreadHasChats ? 1 : 0)}
+              ctrlPressed={ctrlPressed}
+              toggleMarkForDeletion={toggleForDeletion}
+              activeIdx={activeThreadIdx}
+              isActive={activeThreadIdx === i + (defaultThreadHasChats ? 1 : 0)}
+              workspace={workspace}
+              onRemove={removeThread}
+              thread={thread}
+              hasNext={i !== unfolderedThreads.length - 1 || showVirtualThread}
+              draggable
+            />
+          ))}
+        </UnfolderedDropZone>
         {showVirtualThread && (
           <ThreadItem
             idx={activeThreadIdx}
@@ -302,8 +305,30 @@ export default function ThreadContainer({
   );
 }
 
+function UnfolderedDropZone({ children, isDragging }) {
+  const { setNodeRef, isOver } = useDroppable({ id: "unfoldered-drop" });
+  return (
+    <div
+      ref={setNodeRef}
+      className={`w-full rounded-lg transition-colors ${
+        isDragging
+          ? isOver
+            ? "bg-sky-500/10 ring-1 ring-sky-500/40"
+            : "ring-1 ring-white/10"
+          : ""
+      }`}
+    >
+      {isDragging && (
+        <p className="text-xs text-white/30 light:text-theme-text-secondary italic px-3 py-0.5">
+          Hierher ziehen (ohne Ordner)
+        </p>
+      )}
+      {children}
+    </div>
+  );
+}
+
 function NewThreadButton({ workspace }) {
-  const [loading, setLoading] = useState(false);
   const onClick = async () => {
     setLoading(true);
     const { thread, error } = await Workspace.threads.new(workspace.slug);

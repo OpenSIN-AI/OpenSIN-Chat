@@ -8,7 +8,8 @@ import {
   PencilSimple,
   Trash,
 } from "@phosphor-icons/react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ThreadItem from "../ThreadItem";
 import { useDroppable } from "@dnd-kit/core";
 
@@ -24,14 +25,19 @@ export default function ThreadFolderItem({
   onFolderDeleted,
   onFolderRenamed,
 }) {
+  const { threadSlug = null } = useParams();
+  const containsActiveThread = threads.some((t) => t.slug === threadSlug);
   const [open, setOpen] = useState(true);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(folder.name);
   const inputRef = useRef(null);
 
-  const { setNodeRef, isOver } = useDroppable({ id: `folder-${folder.id}` });
+  // When the active thread moves into this folder (via DnD), auto-expand it
+  useEffect(() => {
+    if (containsActiveThread) setOpen(true);
+  }, [containsActiveThread]);
 
-  async function saveRename() {
+  const { setNodeRef, isOver } = useDroppable({ id: `folder-${folder.id}` });
     const trimmed = name.trim();
     if (!trimmed || trimmed === folder.name) {
       setName(folder.name);
@@ -180,7 +186,7 @@ export default function ThreadFolderItem({
                 ctrlPressed={ctrlPressed}
                 toggleMarkForDeletion={toggleMarkForDeletion}
                 activeIdx={activeThreadIdx}
-                isActive={false}
+                isActive={thread.slug === threadSlug}
                 workspace={workspace}
                 onRemove={onRemoveThread}
                 thread={thread}
