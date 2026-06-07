@@ -29,6 +29,7 @@ export default function InterfaceSettings() {
           </div>
           <ThemePreference />
           <LanguagePreference />
+          <TextSizePreference />
         </div>
       </div>
     </div>

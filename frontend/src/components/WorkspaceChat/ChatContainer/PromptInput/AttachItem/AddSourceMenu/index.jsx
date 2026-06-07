@@ -264,6 +264,12 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
       return;
     }
     setSubmitting(true);
+
+    // Snapshot existing docpaths so we can detect the freshly scraped document.
+    const before = new Set(
+      flattenLocalFiles(await System.localFiles()).map((f) => f.docpath),
+    );
+
     const { response, data } = await Workspace.uploadLink(
       workspaceSlug,
       trimmed,
@@ -277,15 +283,14 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
       return;
     }
 
-    // Embed the freshly scraped document into the workspace if a location is returned
-    const location =
-      data?.document?.location ||
-      data?.documents?.[0]?.location ||
-      data?.location ||
-      null;
-    if (location) {
+    // Find and embed the newly created document(s) into the current workspace.
+    const after = flattenLocalFiles(await System.localFiles());
+    const newDocpaths = after
+      .map((f) => f.docpath)
+      .filter((docpath) => !before.has(docpath));
+    if (newDocpaths.length > 0) {
       await Workspace.modifyEmbeddings(workspaceSlug, {
-        adds: [location],
+        adds: newDocpaths,
         deletes: [],
       });
     }
