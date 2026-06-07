@@ -133,6 +133,38 @@ function utilEndpoints(app) {
       response.sendStatus(500).end();
     }
   });
+
+  // Report download for browser (public, no API key needed) — Issue #55
+  // Reports stored in STORAGE_DIR/reports/ — prevent path traversal with basename
+  app.get("/utils/reports/:fileName", async (req, response) => {
+    try {
+      const path = require("path");
+      const fs = require("fs");
+      const fileName = path.basename(req.params.fileName); // prevent ../../../etc/passwd
+      const dir = process.env.STORAGE_DIR
+        ? path.resolve(process.env.STORAGE_DIR)
+        : path.resolve("./storage");
+      const filePath = path.join(dir, "reports", fileName);
+
+      // Verify resolved path is still under reports/ (security check)
+      if (!filePath.startsWith(path.join(dir, "reports"))) {
+        return response.sendStatus(403).end();
+      }
+
+      if (!fs.existsSync(filePath)) return response.sendStatus(404).end();
+
+      const stat = fs.statSync(filePath);
+      const stream = fs.createReadStream(filePath);
+      response.setHeader("Content-Type", "application/pdf");
+      response.setHeader("Content-Length", stat.size);
+      response.setHeader("Cache-Control", "public, max-age=86400");
+      stream.pipe(response);
+      stream.on("error", () => response.sendStatus(500).end());
+    } catch (e) {
+      console.error("reports download error", e.message);
+      response.sendStatus(500).end();
+    }
+  });
 }
 
 function getGitVersion() {
