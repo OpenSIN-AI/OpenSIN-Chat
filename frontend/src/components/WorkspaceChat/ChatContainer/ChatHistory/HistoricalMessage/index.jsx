@@ -174,7 +174,28 @@ const HistoricalMessage = ({
           <TTSMessage
             slug={workspace?.slug}
             chatId={chatId}
-            message={message}
+            message={
+              // Strip thought/thinking blocks so TTS only speaks the final answer.
+              // Mirrors the logic in RenderChatContent and messageToSpeech.js.
+              (() => {
+                if (!message) return message;
+                let ttsMessage = message;
+                // Remove complete thought blocks entirely.
+                ttsMessage = ttsMessage.replace(THOUGHT_REGEX_COMPLETE, "");
+                // If an unclosed opening tag remains, strip it and everything after.
+                if (
+                  ttsMessage.match(THOUGHT_REGEX_OPEN) &&
+                  !ttsMessage.match(THOUGHT_REGEX_CLOSE)
+                ) {
+                  ttsMessage = ttsMessage.replace(THOUGHT_REGEX_OPEN, "");
+                }
+                // Strip <response>/<answer> wrapper tags but keep their content.
+                ttsMessage = ttsMessage
+                  .replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ")
+                  .trim();
+                return ttsMessage;
+              })()
+            }
           />
           <Actions
             message={message}
