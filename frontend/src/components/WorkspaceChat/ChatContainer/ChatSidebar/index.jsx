@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 const ChatSidebarContext = createContext();
 
@@ -45,6 +45,9 @@ export function ChatSidebarProvider({ children }) {
     }
   });
 
+  // Preview panel state: { content, title, type, versions }
+  const [previewData, setPreviewData] = useState(null);
+
   useEffect(() => {
     try {
       localStorage.setItem("openafd_source_filter", sourceFilter);
@@ -66,6 +69,11 @@ export function ChatSidebarProvider({ children }) {
     else openSidebar(type, data);
   }
 
+  const openPreview = useCallback((data) => {
+    setPreviewData(data);
+    setActiveSidebar("preview");
+  }, []);
+
   return (
     <ChatSidebarContext.Provider
       value={{
@@ -79,6 +87,9 @@ export function ChatSidebarProvider({ children }) {
         SOURCE_FILTERS,
         isDocumentSource,
         isMediaSource,
+        previewData,
+        setPreviewData,
+        openPreview,
       }}
     >
       {children}
@@ -107,6 +118,58 @@ export function useMemoriesSidebar() {
   return {
     sidebarOpen: activeSidebar === "memories",
     toggleSidebar: () => toggleSidebar("memories"),
+    closeSidebar,
+  };
+}
+
+export function usePreviewSidebar() {
+  const { activeSidebar, previewData, openPreview, closeSidebar, toggleSidebar } =
+    useContext(ChatSidebarContext);
+  return {
+    sidebarOpen: activeSidebar === "preview",
+    previewData,
+    openPreview,
+    closeSidebar,
+    togglePreview: () => toggleSidebar("preview"),
+  };
+}
+
+export function useConsoleSidebar() {
+  const { activeSidebar, toggleSidebar, closeSidebar } =
+    useContext(ChatSidebarContext);
+  return {
+    sidebarOpen: activeSidebar === "console",
+    toggleConsole: () => toggleSidebar("console"),
+    closeSidebar,
+  };
+}
+
+export function useFilesystemSidebar() {
+  const { activeSidebar, toggleSidebar, closeSidebar } =
+    useContext(ChatSidebarContext);
+  return {
+    sidebarOpen: activeSidebar === "filesystem",
+    toggleFilesystem: () => toggleSidebar("filesystem"),
+    closeSidebar,
+  };
+}
+
+export function useDatabaseSidebar() {
+  const { activeSidebar, toggleSidebar, closeSidebar } =
+    useContext(ChatSidebarContext);
+  return {
+    sidebarOpen: activeSidebar === "database",
+    toggleDatabase: () => toggleSidebar("database"),
+    closeSidebar,
+  };
+}
+
+export function usePoliticalSidebar() {
+  const { activeSidebar, toggleSidebar, closeSidebar } =
+    useContext(ChatSidebarContext);
+  return {
+    sidebarOpen: activeSidebar === "political",
+    togglePolitical: () => toggleSidebar("political"),
     closeSidebar,
   };
 }

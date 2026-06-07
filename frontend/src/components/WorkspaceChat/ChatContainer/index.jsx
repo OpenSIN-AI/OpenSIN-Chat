@@ -35,6 +35,12 @@ import WorkspaceModelPicker from "./WorkspaceModelPicker";
 import { ChatSidebarProvider } from "./ChatSidebar";
 import SourcesSidebar from "./SourcesSidebar";
 import MemoriesSidebar from "./MemoriesSidebar";
+import PreviewSidebar from "./PreviewSidebar";
+import ConsoleSidebar from "./ConsoleSidebar";
+import FilesystemSidebar from "./FilesystemSidebar";
+import DatabaseSidebar from "./DatabaseSidebar";
+import PoliticalSidebar from "./PoliticalSidebar";
+import RightSidebarIconBar from "./RightSidebarIconBar";
 
 export default function ChatContainer({
   workspace,
@@ -391,6 +397,12 @@ export default function ChatContainer({
           </div>
           <SourcesSidebar workspace={workspace} />
           <MemoriesSidebar workspace={workspace} />
+          <PreviewSidebar />
+          <ConsoleSidebar />
+          <FilesystemSidebar />
+          <DatabaseSidebar />
+          <PoliticalSidebar />
+          <RightSidebarIconBar />
         </div>
       </ChatSidebarProvider>
     );
@@ -435,6 +447,12 @@ export default function ChatContainer({
         </div>
         <SourcesSidebar workspace={workspace} />
         <MemoriesSidebar workspace={workspace} />
+        <PreviewSidebar />
+        <ConsoleSidebar />
+        <FilesystemSidebar />
+        <DatabaseSidebar />
+        <PoliticalSidebar />
+        <RightSidebarIconBar />
       </div>
     </ChatSidebarProvider>
   );
