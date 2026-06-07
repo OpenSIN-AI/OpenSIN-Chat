@@ -21,10 +21,10 @@
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/utilities": "^3.2.2",
+    "@hello-pangea/dnd": "^18.0.1",
     "@lobehub/icons": "^4.0.3",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@mintplex-labs/piper-tts-web": "^1.0.4",
-    "@hello-pangea/dnd": "^18.0.1",
     "@phosphor-icons/react": "^2.1.10",
     "@tremor/react": "^3.15.1",
     "cronstrue": "^2.50.0",
@@ -59,6 +59,7 @@
     "recharts": "^2.12.5",
     "recharts-to-png": "^2.3.1",
     "regenerator-runtime": "^0.14.1",
+    "swr": "^2.2.5",
     "text-case": "^1.0.9",
     "truncate": "^3.0.0",
     "uuid": "^9.0.0"
@@ -80,6 +81,7 @@
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-ft-flow": "^3.0.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",

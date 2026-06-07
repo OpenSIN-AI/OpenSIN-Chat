@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import useSWR from "swr";
+
+const fetcher = (url) =>
+  fetch(url, { headers: baseHeaders() }).then((res) => {
+    if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+    return res.json();
+  });
 
 const StorageFiles = {
   /**
@@ -23,5 +30,20 @@ const StorageFiles = {
       });
   },
 };
+
+/**
+ * Reusable SWR hook for the agent-generated filesystem listing.
+ * Replaces ad-hoc useEffect + fetch + useState in the sidebars and gives
+ * cache de-duplication, shared loading/error state, and a `refresh()` helper.
+ * @returns {{ files: any[], error: any, isLoading: boolean, refresh: () => void }}
+ */
+export function useGeneratedFiles() {
+  const { data, error, isLoading, mutate } = useSWR(
+    `${API_BASE}/utils/filesystem`,
+    fetcher,
+    { revalidateOnFocus: false, dedupingInterval: 5000 },
+  );
+  return { files: data?.files ?? [], error, isLoading, refresh: mutate };
+}
 
 export default StorageFiles;

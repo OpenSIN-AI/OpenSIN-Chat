@@ -15,6 +15,7 @@ import {
   Eye,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import DOMPurify from "@/utils/chat/purify";
 import ChatSidebar from "../ChatSidebar";
 import { usePreviewSidebar, useChatSidebar } from "../ChatSidebar";
 
@@ -214,7 +215,10 @@ function PreviewContent({ previewData, activeVersion }) {
       <div className="flex flex-col items-center justify-center h-full gap-3 text-zinc-500 light:text-slate-400">
         <Eye size={32} />
         <p className="text-sm text-center px-4">
-          {t("preview.empty", "Kein Inhalt zur Vorschau. Generiere einen Bericht oder ein Dokument, um es hier anzuzeigen.")}
+          {t(
+            "preview.empty",
+            "Kein Inhalt zur Vorschau. Generiere einen Bericht oder ein Dokument, um es hier anzuzeigen.",
+          )}
         </p>
       </div>
     );
@@ -222,7 +226,10 @@ function PreviewContent({ previewData, activeVersion }) {
 
   const version = previewData.versions?.[activeVersion] ?? previewData;
   const iframeUrl =
-    version.downloadUrl || version.url || previewData.downloadUrl || previewData.url;
+    version.downloadUrl ||
+    version.url ||
+    previewData.downloadUrl ||
+    previewData.url;
 
   // PDF / URL preview via iframe (includes downloadUrl from generate-report)
   if (iframeUrl) {
@@ -234,7 +241,9 @@ function PreviewContent({ previewData, activeVersion }) {
     return (
       <div
         className="w-full h-full overflow-auto p-4 bg-white rounded text-sm text-slate-800"
-        dangerouslySetInnerHTML={{ __html: version.html || previewData.html }}
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(version.html || previewData.html),
+        }}
       />
     );
   }
@@ -273,7 +282,10 @@ export default function PreviewSidebar() {
       >
         {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
-          <TypeIcon size={16} className="text-zinc-400 light:text-slate-500 shrink-0" />
+          <TypeIcon
+            size={16}
+            className="text-zinc-400 light:text-slate-500 shrink-0"
+          />
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900 truncate">
             {previewData?.title || t("preview.title", "Vorschau")}
           </p>
@@ -296,7 +308,10 @@ export default function PreviewSidebar() {
         </div>
         {/* Content */}
         <div className="flex-1 overflow-hidden">
-          <PreviewContent previewData={previewData} activeVersion={activeVersion} />
+          <PreviewContent
+            previewData={previewData}
+            activeVersion={activeVersion}
+          />
         </div>
       </div>
     </ChatSidebar>

@@ -8,6 +8,7 @@ import { Info, Warning } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
+import DOMPurify from "@/utils/chat/purify";
 
 const DEFAULT_BRANCHES = ["main", "master"];
 export default function GitlabOptions() {
@@ -279,7 +280,9 @@ function PATAlert({ accessToken }) {
         <p className="text-sm">
           <span
             dangerouslySetInnerHTML={{
-              __html: t("connectors.gitlab.token_information"),
+              __html: DOMPurify.sanitize(
+                t("connectors.gitlab.token_information"),
+              ),
             }}
           />
           <br />
