@@ -5,6 +5,7 @@ import AgentLLMItem from "./AgentLLMItem";
 import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 import { CaretUpDown, Gauge, MagnifyingGlass, X } from "@phosphor-icons/react";
 import AgentModelSelection from "../AgentModelSelection";
+import ModelSelector from "@/components/ModelSelector";
 import { useTranslation } from "react-i18next";
 
 const ENABLED_PROVIDERS = [
@@ -45,8 +46,8 @@ const ENABLED_PROVIDERS = [
   "lemonade",
   "minimax",
   "cerebras",
-  // TODO: More agent support.
-  // "huggingface"     // Can be done but already has issues with no-chat templated. Needs to be tested.
+  "huggingface",
+  "dpais",
 ];
 const WARN_PERFORMANCE = [
   "lmstudio",
@@ -208,10 +209,11 @@ export default function AgentLLMSelection({
       </div>
       {selectedLLM !== "none" && (
         <div className="mt-4 flex flex-col gap-y-1">
-          <AgentModelSelection
-            provider={selectedLLM}
+          <ModelSelector
+            selectedLLM={selectedLLM}
             workspace={workspace}
             setHasChanges={setHasChanges}
+            ModelSelectionComponent={AgentModelSelection}
           />
         </div>
       )}
