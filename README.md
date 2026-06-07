@@ -64,14 +64,73 @@ Siehe [`BARE_METAL.md`](./BARE_METAL.md) und [`DEPLOYMENT_GUIDE.md`](./DEPLOYMEN
 
 ## 🏗 Architektur
 
+### Production-Flow (Live unter [openafd.delqhi.com](https://openafd.delqhi.com))
+
+```mermaid
+flowchart TB
+    User(["👤 Browser<br/>https://openafd.delqhi.com"])
+
+    subgraph Cloudflare["☁️ Cloudflare Edge (DNS + Tunnel-Broker)"]
+        DNS["DNS-Records<br/>A / CNAME"]
+        Tunnel["Tunnel-Broker<br/>cf-ray, cf-cache-status"]
+    end
+
+    subgraph Mac["🍎 Mac (Produktions-Host)"]
+        Cloudflared["cloudflared<br/>(Tunnel-Client)<br/>PID 53989"]
+        Express["Express-Server<br/>server/index.js :3001<br/>x-powered-by: Express"]
+        Collector["Collector<br/>:8888<br/>(Document-Parsing, OCR)"]
+        Frontend["frontend/dist/<br/>(statische Files<br/>nach server/public/ kopiert)"]
+    end
+
+    subgraph Data["💾 Persistenz (lokal auf Mac)"]
+        SQLite[("server/storage/<br/>openafd.db<br/>(Prisma + SQLite)")]
+        Files[("server/storage/<br/>uploads/, vectors/")]
+    end
+
+    User -->|HTTPS| DNS
+    DNS --> Tunnel
+    Tunnel <-->|Outbound-Tunnel<br/>kein offener Port!| Cloudflared
+    Cloudflared -->|localhost:3001| Express
+    Express -->|"/api/*"| Express
+    Express -->|"/"| IndexPage["IndexPage.generate()<br/>(HTML serverseitig)"]
+    Express -->|"express.static()"| Frontend
+    Express -->|HTTP| Collector
+    Express <--> SQLite
+    Express <--> Files
+
+    classDef cloud fill:#fff4e1,stroke:#f48120,color:#000
+    classDef mac fill:#e3f2fd,stroke:#1976d2,color:#000
+    classDef data fill:#f3e5f5,stroke:#7b1fa2,color:#000
+    class DNS,Tunnel cloud
+    class Cloudflared,Express,Collector,Frontend,IndexPage mac
+    class SQLite,Files data
+```
+
+**Was passiert konkret:**
+
+| Schicht | Wo | Was |
+|---|---|---|
+| 1. Browser | Welt | HTTPS-Request auf `https://openafd.delqhi.com` |
+| 2. Cloudflare DNS | Cloudflare-Edge | Löst Domain zu Tunnel-Broker auf (`cf-ray`, `cf-cache-status` Header) |
+| 3. `cloudflared` | **Dein Mac** (PID 53989) | Outbound-Tunnel zurück zum Cloudflare-Broker — **kein offener Port nötig!** |
+| 4. Express | **Dein Mac** (`:3001`) | Single-Process: rendert HTML, liefert API, serviert Static |
+| 5. Frontend-Bundle | `server/public/` | Output von `cd frontend && yarn build`, vor Server-Start kopiert |
+| 6. Collector | **Dein Mac** (`:8888`) | Separater Prozess für PDF-Parsing, OCR, Document-Ingestion |
+| 7. Persistenz | `server/storage/` | SQLite + Vektor-Indizes + User-Uploads (alles lokal) |
+
+> **Kritisch:** Der Mac ist der **Produktions-Host**. Geht er aus oder schläft, ist die App offline. Cloudflare ist nur der Tunnel-Entry — keine Compute, kein Storage.
+
+### Repo-Struktur
+
 ```
 OpenAfD-Chat/
-├── frontend/      # Vite + React (UI)
-├── server/        # Node.js Express (API, Vektor-DB, Auth)
+├── frontend/      # Vite + React (UI) — yarn build → dist/ wird nach server/public/ kopiert
+├── server/        # Node.js Express (API, Vektor-DB, Auth, HTML-Rendering)
 ├── collector/     # Node.js Express (Document-Parsing, OCR)
-├── docker/        # Dockerfiles, docker-compose
-├── cloud-deployments/   # AWS, GCP, Azure, K8s, Helm
-└── docs/          # Doku
+├── docker/        # Dockerfiles, docker-compose (für Self-Hosting)
+├── cloud-deployments/   # AWS, GCP, DigitalOcean, K8s, Helm (für Cloud-Self-Hosting)
+├── docs/          # Doku
+└── .cloudflared/  # (lokal, nicht im Repo) cloudflared-Config für openafd.delqhi.com-Tunnel
 ```
 
 ## 🔒 Sicherheit & Datenschutz
