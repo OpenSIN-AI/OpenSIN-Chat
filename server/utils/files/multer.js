@@ -4,10 +4,15 @@ const path = require("path");
 const fs = require("fs");
 const { v4 } = require("uuid");
 const { normalizePath, sanitizeFileName } = require(".");
+const supabaseStorage = require("../storage/supabase");
 
 /**
  * Handle File uploads for auto-uploading.
  * Mostly used for internal GUI/API uploads.
+ *
+ * When SUPABASE_STORAGE_ENABLED=true the file is stored in-memory by multer
+ * and then pushed to Supabase Storage by the supabaseUploadMiddleware.
+ * When Supabase Storage is disabled the file is written to the local hotdir.
  */
 const _storageDir =
   process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage");
@@ -15,6 +20,8 @@ const _collectorDir =
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "../../collector")
     : path.resolve(__dirname, "../../../collector");
+
+// ----- Disk storage definitions (filesystem fallback) ----------------------
 
 const fileUploadStorage = multer.diskStorage({
   destination: function (_, __, cb) {
@@ -91,14 +98,21 @@ const pfpUploadStorage = multer.diskStorage({
   },
 });
 
+// ----- Multer handler factories --------------------------------------------
+
 /**
- * Handle Generic file upload as documents from the GUI
+ * Handle Generic file upload as documents from the GUI.
+ * Routes to Supabase Storage when enabled, otherwise writes to local hotdir.
  * @param {Request} request
  * @param {Response} response
  * @param {NextFunction} next
  */
 function handleFileUpload(request, response, next) {
-  const upload = multer({ storage: fileUploadStorage }).single("file");
+  const storage = supabaseStorage.isEnabled()
+    ? multer.memoryStorage()
+    : fileUploadStorage;
+
+  const upload = multer({ storage }).single("file");
   upload(request, response, function (err) {
     if (err) {
       response
@@ -110,19 +124,51 @@ function handleFileUpload(request, response, next) {
         .end();
       return;
     }
-    next();
+
+    if (supabaseStorage.isEnabled() && request.file?.buffer) {
+      const originalName = sanitizeFileName(
+        normalizePath(
+          Buffer.from(request.file.originalname, "latin1").toString("utf8"),
+        ),
+      );
+      supabaseStorage
+        .uploadBuffer({
+          bucket: "documents",
+          objectPath: originalName,
+          buffer: request.file.buffer,
+          contentType: request.file.mimetype,
+        })
+        .then(({ path: storagePath, url }) => {
+          request.file.supabasePath = storagePath;
+          request.file.supabaseUrl = url;
+          next();
+        })
+        .catch((uploadErr) => {
+          response
+            .status(500)
+            .json({ success: false, error: uploadErr.message })
+            .end();
+        });
+    } else {
+      next();
+    }
   });
 }
 
 /**
  * Handle API file upload as documents - this does not manipulate the filename
  * at all for encoding/charset reasons.
+ * Routes to Supabase Storage when enabled, otherwise writes to local hotdir.
  * @param {Request} request
  * @param {Response} response
  * @param {NextFunction} next
  */
 function handleAPIFileUpload(request, response, next) {
-  const upload = multer({ storage: fileAPIUploadStorage }).single("file");
+  const storage = supabaseStorage.isEnabled()
+    ? multer.memoryStorage()
+    : fileAPIUploadStorage;
+
+  const upload = multer({ storage }).single("file");
   upload(request, response, function (err) {
     if (err) {
       response
@@ -134,15 +180,47 @@ function handleAPIFileUpload(request, response, next) {
         .end();
       return;
     }
-    next();
+
+    if (supabaseStorage.isEnabled() && request.file?.buffer) {
+      const originalName = sanitizeFileName(
+        normalizePath(
+          Buffer.from(request.file.originalname, "latin1").toString("utf8"),
+        ),
+      );
+      supabaseStorage
+        .uploadBuffer({
+          bucket: "documents",
+          objectPath: originalName,
+          buffer: request.file.buffer,
+          contentType: request.file.mimetype,
+        })
+        .then(({ path: storagePath, url }) => {
+          request.file.supabasePath = storagePath;
+          request.file.supabaseUrl = url;
+          next();
+        })
+        .catch((uploadErr) => {
+          response
+            .status(500)
+            .json({ success: false, error: uploadErr.message })
+            .end();
+        });
+    } else {
+      next();
+    }
   });
 }
 
 /**
- * Handle logo asset uploads
+ * Handle logo asset uploads.
+ * Routes to Supabase Storage (assets bucket) when enabled.
  */
 function handleAssetUpload(request, response, next) {
-  const upload = multer({ storage: assetUploadStorage }).single("logo");
+  const storage = supabaseStorage.isEnabled()
+    ? multer.memoryStorage()
+    : assetUploadStorage;
+
+  const upload = multer({ storage }).single("logo");
   upload(request, response, function (err) {
     if (err) {
       response
@@ -154,15 +232,47 @@ function handleAssetUpload(request, response, next) {
         .end();
       return;
     }
-    next();
+
+    if (supabaseStorage.isEnabled() && request.file?.buffer) {
+      const originalName = sanitizeFileName(
+        normalizePath(
+          Buffer.from(request.file.originalname, "latin1").toString("utf8"),
+        ),
+      );
+      supabaseStorage
+        .uploadBuffer({
+          bucket: "assets",
+          objectPath: originalName,
+          buffer: request.file.buffer,
+          contentType: request.file.mimetype,
+        })
+        .then(({ path: storagePath, url }) => {
+          request.file.supabasePath = storagePath;
+          request.file.supabaseUrl = url;
+          next();
+        })
+        .catch((uploadErr) => {
+          response
+            .status(500)
+            .json({ success: false, error: uploadErr.message })
+            .end();
+        });
+    } else {
+      next();
+    }
   });
 }
 
 /**
- * Handle PFP file upload as logos
+ * Handle PFP file upload as logos.
+ * Routes to Supabase Storage (avatars bucket) when enabled.
  */
 function handlePfpUpload(request, response, next) {
-  const upload = multer({ storage: pfpUploadStorage }).single("file");
+  const storage = supabaseStorage.isEnabled()
+    ? multer.memoryStorage()
+    : pfpUploadStorage;
+
+  const upload = multer({ storage }).single("file");
   upload(request, response, function (err) {
     if (err) {
       response
@@ -174,7 +284,33 @@ function handlePfpUpload(request, response, next) {
         .end();
       return;
     }
-    next();
+
+    if (supabaseStorage.isEnabled() && request.file?.buffer) {
+      const randomFileName = `${v4()}${path.extname(
+        normalizePath(request.file.originalname),
+      )}`;
+      request.randomFileName = randomFileName;
+      supabaseStorage
+        .uploadBuffer({
+          bucket: "avatars",
+          objectPath: `pfp/${randomFileName}`,
+          buffer: request.file.buffer,
+          contentType: request.file.mimetype,
+        })
+        .then(({ path: storagePath, url }) => {
+          request.file.supabasePath = storagePath;
+          request.file.supabaseUrl = url;
+          next();
+        })
+        .catch((uploadErr) => {
+          response
+            .status(500)
+            .json({ success: false, error: uploadErr.message })
+            .end();
+        });
+    } else {
+      next();
+    }
   });
 }
 

@@ -2,18 +2,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// Uncomment the following lines and comment out the SQLite datasource block above to use PostgreSQL
-// Make sure to set the correct DATABASE_URL in your .env file
-// After swapping run `yarn prisma:setup` from the root directory to migrate the database
-//
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
+// PostgreSQL datasource — set DATABASE_URL in your .env file.
+// For local development with SQLite uncomment the block below and comment out the PostgreSQL block.
+// After switching run `yarn prisma:setup` from the root directory to migrate the database.
 datasource db {
-  provider = "sqlite"
-  url      = "file:../storage/openafd.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
+
+// SQLite fallback (local dev without PostgreSQL):
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:../storage/openafd.db"
+// }
 
 model api_keys {
   id            Int      @id @default(autoincrement())
@@ -139,7 +140,7 @@ model workspaces {
   agentModel                   String?
   queryRefusalResponse         String?
   vectorSearchMode             String?                        @default("default")
-  router_id                    Int? // No relation to prevent whole table migration (SQLite limitation)
+  router_id                    Int?
   workspace_users              workspace_users[]
   documents                    workspace_documents[]
   workspace_suggested_messages workspace_suggested_messages[]
@@ -186,7 +187,7 @@ model workspace_chats {
   response       String
   include        Boolean  @default(true)
   user_id        Int?
-  thread_id      Int? // No relation to prevent whole table migration
+  thread_id      Int?
   api_session_id String? // String identifier for only the dev API to partition chats in any mode.
   createdAt      DateTime @default(now())
   lastUpdatedAt  DateTime @default(now())
@@ -586,6 +587,10 @@ model memories {
   workspaceId Int?      @map("workspace_id")
   scope       String    @default("workspace")
   content     String
+  // Semantic embedding for vector similarity search via pgvector.
+  // Dimension matches the default embedding model (text-embedding-3-small = 1536).
+  // Set to null until the memory is first embedded.
+  embedding   Unsupported("vector(1536)")?
   lastUsedAt  DateTime? @map("last_used_at")
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @default(now()) @map("updated_at")

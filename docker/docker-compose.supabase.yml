@@ -1,0 +1,169 @@
+# Supabase Self-Hosted Stack for OpenAfD-Chat
+#
+# Provides: PostgreSQL 15 + pgvector, Supabase Storage, Kong API Gateway
+# Auth/Realtime/Edge-Functions are intentionally excluded — not needed.
+#
+# Usage:
+#   cp docker/.env.supabase.example docker/.env.supabase
+#   # Edit docker/.env.supabase with your secrets
+#   docker compose -f docker/docker-compose.supabase.yml --env-file docker/.env.supabase up -d
+#
+# Ports exposed on localhost:
+#   5432  — PostgreSQL (direct connection)
+#   8000  — Kong API Gateway (Supabase Storage REST endpoint)
+#   5433  — pg-meta (DB admin / Studio)
+#
+# After first start run the setup script to enable pgvector and create buckets:
+#   node scripts/supabase-setup.mjs
+
+name: openafd-supabase
+
+networks:
+  supabase-net:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  storage-data:
+
+services:
+
+  # ─── PostgreSQL 15 with pgvector extension ──────────────────────────────────
+  db:
+    container_name: openafd-supabase-db
+    image: supabase/postgres:15.6.1.148
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    command:
+      - postgres
+      - -c
+      - config_file=/etc/postgresql/postgresql.conf
+      - -c
+      - log_min_messages=fatal
+    environment:
+      POSTGRES_HOST: /var/run/postgresql
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      # Create the storage schema and anon/service_role users on first start.
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      # Init scripts run in alphabetical order on first start.
+      - ./supabase-init:/docker-entrypoint-initdb.d
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - supabase-net
+
+  # ─── Supabase Storage ───────────────────────────────────────────────────────
+  storage:
+    container_name: openafd-supabase-storage
+    image: supabase/storage-api:v1.11.13
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ANON_KEY: ${ANON_KEY}
+      SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      POSTGREST_URL: http://rest:3000
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-postgres}
+      FILE_SIZE_LIMIT: 104857600   # 100 MB
+      STORAGE_BACKEND: file
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: stub
+      REGION: local
+      GLOBAL_S3_BUCKET: stub
+      ENABLE_IMAGE_TRANSFORMATION: "true"
+      IMGPROXY_URL: http://imgproxy:8080
+    volumes:
+      - storage-data:/var/lib/storage
+    ports: []
+    networks:
+      - supabase-net
+
+  # ─── PostgREST (required by Storage API for RLS checks) ─────────────────────
+  rest:
+    container_name: openafd-supabase-rest
+    image: postgrest/postgrest:v12.2.0
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGRST_DB_URI: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-postgres}
+      PGRST_DB_SCHEMAS: public,storage
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${JWT_SECRET}
+      PGRST_DB_USE_LEGACY_GUCS: "false"
+      PGRST_APP_SETTINGS_JWT_SECRET: ${JWT_SECRET}
+      PGRST_APP_SETTINGS_JWT_EXP: ${JWT_EXPIRY:-3600}
+    networks:
+      - supabase-net
+
+  # ─── Image transformation (optional, used by Storage API) ───────────────────
+  imgproxy:
+    container_name: openafd-supabase-imgproxy
+    image: darthsim/imgproxy:v3.8.0
+    restart: unless-stopped
+    environment:
+      IMGPROXY_BIND: ":8080"
+      IMGPROXY_LOCAL_FILESYSTEM_ROOT: /
+      IMGPROXY_USE_ETAG: "true"
+      IMGPROXY_ENABLE_WEBP_DETECTION: "true"
+    volumes:
+      - storage-data:/var/lib/storage
+    networks:
+      - supabase-net
+
+  # ─── Kong API Gateway ────────────────────────────────────────────────────────
+  # Exposes Storage API at http://localhost:8000/storage/v1
+  kong:
+    container_name: openafd-supabase-kong
+    image: kong:2.8.1
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /var/lib/kong/kong.yml
+      KONG_DNS_ORDER: LAST,A,CNAME
+      KONG_PLUGINS: request-transformer,cors,key-auth,acl,basic-auth
+      KONG_NGINX_PROXY_PROXY_BUFFER_SIZE: 160k
+      KONG_NGINX_PROXY_PROXY_BUFFERS: 64 160k
+      SUPABASE_ANON_KEY: ${ANON_KEY}
+      SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
+    ports:
+      - "${KONG_HTTP_PORT:-8000}:8000/tcp"
+    volumes:
+      - ./supabase-kong.yml:/var/lib/kong/kong.yml:ro
+    networks:
+      - supabase-net
+
+  # ─── pg-meta (Postgres metadata API / DB admin) ──────────────────────────────
+  meta:
+    container_name: openafd-supabase-meta
+    image: supabase/postgres-meta:v0.84.2
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PG_META_PORT: 8080
+      PG_META_DB_HOST: db
+      PG_META_DB_PORT: 5432
+      PG_META_DB_NAME: ${POSTGRES_DB:-postgres}
+      PG_META_DB_USER: supabase_admin
+      PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${META_PORT:-5433}:8080"
+    networks:
+      - supabase-net
