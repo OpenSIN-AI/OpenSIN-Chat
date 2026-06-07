@@ -1,0 +1,193 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:40414243-4445-4647-8849-4a4b4c4d4e4f",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-06-07T14:14:26Z",
+    "tools": [
+      {
+        "name": "sin-code",
+        "version": "v1.0.6-sin-code"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-loading-skeleton@^3.5.0",
+      "name": "react-loading-skeleton",
+      "version": "^3.5.0",
+      "purl": "pkg:npm/react-loading-skeleton@^3.5.0",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react@^19.2.7",
+      "name": "react",
+      "version": "^19.2.7",
+      "purl": "pkg:npm/react@^19.2.7",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/@phosphor-icons/react@^2.1.10",
+      "name": "@phosphor-icons/react",
+      "version": "^2.1.10",
+      "purl": "pkg:npm/@phosphor-icons/react@^2.1.10",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-i18next@^17.0.8",
+      "name": "react-i18next",
+      "version": "^17.0.8",
+      "purl": "pkg:npm/react-i18next@^17.0.8",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/concurrently@^9.1.2",
+      "name": "concurrently",
+      "version": "^9.1.2",
+      "purl": "pkg:npm/concurrently@^9.1.2",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/jest@^29.7.0",
+      "name": "jest",
+      "version": "^29.7.0",
+      "purl": "pkg:npm/jest@^29.7.0",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-speech-recognition@^4.0.1",
+      "name": "react-speech-recognition",
+      "version": "^4.0.1",
+      "purl": "pkg:npm/react-speech-recognition@^4.0.1",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/@elevenlabs/elevenlabs-js@^2.51.0",
+      "name": "@elevenlabs/elevenlabs-js",
+      "version": "^2.51.0",
+      "purl": "pkg:npm/@elevenlabs/elevenlabs-js@^2.51.0",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/@vitejs/plugin-react@^6.0.2",
+      "name": "@vitejs/plugin-react",
+      "version": "^6.0.2",
+      "purl": "pkg:npm/@vitejs/plugin-react@^6.0.2",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-device-detect@^2.2.3",
+      "name": "react-device-detect",
+      "version": "^2.2.3",
+      "purl": "pkg:npm/react-device-detect@^2.2.3",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-router-dom@^7.17.0",
+      "name": "react-router-dom",
+      "version": "^7.17.0",
+      "purl": "pkg:npm/react-router-dom@^7.17.0",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/rollup-plugin-visualizer@^7.0.1",
+      "name": "rollup-plugin-visualizer",
+      "version": "^7.0.1",
+      "purl": "pkg:npm/rollup-plugin-visualizer@^7.0.1",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/uuid@^14.0.0",
+      "name": "uuid",
+      "version": "^14.0.0",
+      "purl": "pkg:npm/uuid@^14.0.0",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/@testing-library/jest-dom@^6.9.1",
+      "name": "@testing-library/jest-dom",
+      "version": "^6.9.1",
+      "purl": "pkg:npm/@testing-library/jest-dom@^6.9.1",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/@hello-pangea/dnd@^18.0.1",
+      "name": "@hello-pangea/dnd",
+      "version": "^18.0.1",
+      "purl": "pkg:npm/@hello-pangea/dnd@^18.0.1",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/@testing-library/react@^16.3.2",
+      "name": "@testing-library/react",
+      "version": "^16.3.2",
+      "purl": "pkg:npm/@testing-library/react@^16.3.2",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/react-tooltip@^6.0.7",
+      "name": "react-tooltip",
+      "version": "^6.0.7",
+      "purl": "pkg:npm/react-tooltip@^6.0.7",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/vitest@^4.1.8",
+      "name": "vitest",
+      "version": "^4.1.8",
+      "purl": "pkg:npm/vitest@^4.1.8",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/@prisma/client@^7.8.0",
+      "name": "@prisma/client",
+      "version": "^7.8.0",
+      "purl": "pkg:npm/@prisma/client@^7.8.0",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/playwright@^1.60.0",
+      "name": "playwright",
+      "version": "^1.60.0",
+      "purl": "pkg:npm/playwright@^1.60.0",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/vite@^8.0.16",
+      "name": "vite",
+      "version": "^8.0.16",
+      "purl": "pkg:npm/vite@^8.0.16",
+      "scope": "required"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/@mintplex-labs/mdpdf@^0.1.9",
+      "name": "@mintplex-labs/mdpdf",
+      "version": "^0.1.9",
+      "purl": "pkg:npm/@mintplex-labs/mdpdf@^0.1.9",
+      "scope": "required"
+    }
+  ]
+}

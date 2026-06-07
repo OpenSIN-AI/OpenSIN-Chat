@@ -1,0 +1,72 @@
+{
+  "audit_run": {
+    "skill": "SIN-Code CEO Audit v3",
+    "date": "2026-06-07",
+    "repo": "Family-Team-Projects/OpenAfD-Chat",
+    "branch": "main",
+    "commit": "ded07708",
+    "profile": "FULL",
+    "runtime_seconds": 840
+  },
+  "scores": {
+    "overall": 95.4,
+    "grade": "A",
+    "axes": {
+      "security": 95,
+      "code_quality": 96,
+      "dependencies": 95,
+      "testing": 78,
+      "documentation": 99,
+      "ci_cd": 95,
+      "compliance": 100,
+      "performance": 98
+    }
+  },
+  "findings": {
+    "critical": 0,
+    "high": 0,
+    "medium": [
+      {"id": "SIN-4.1", "title": "Queue has 0 jest tests", "effort_hours": 4, "roi": "high"},
+      {"id": "SIN-4.4", "title": "Missing edge-case tests for queue", "effort_hours": 4, "roi": "high"},
+      {"id": "SIN-5.3", "title": "Unpinned critical top-level deps", "effort_hours": 1, "roi": "high"},
+      {"id": "SIN-7.4", "title": "Queue hot path not in jest tests", "effort_hours": 0, "roi": "duplicate-of-4.1"}
+    ],
+    "low": [
+      {"id": "SIN-8.3", "title": "No SBOM in repository", "effort_hours": 0.5, "roi": "high"},
+      {"id": "SIN-8.1", "title": "3 upstream files missing SPDX header", "effort_hours": 0.1, "roi": "high"},
+      {"id": "SIN-7.3", "title": "49 orphan files (upstream)", "effort_hours": 0, "roi": "n/a"}
+    ],
+    "info": [
+      {"id": "SIN-3.1", "title": "20 functions > 100 LOC (upstream)", "effort_hours": 8, "roi": "low"},
+      {"id": "SIN-3.3", "title": "9 files > 1000 LOC (upstream)", "effort_hours": 12, "roi": "low"},
+      {"id": "SIN-2.5", "title": "JSON.parse in poll hot path (negligible)", "effort_hours": 0, "roi": "n/a"},
+      {"id": "SIN-2.6", "title": "Single-worker polling (by design)", "effort_hours": 0, "roi": "n/a"},
+      {"id": "SIN-5.2", "title": "86/104 deps unpinned at any level", "effort_hours": 0, "roi": "low"}
+    ]
+  },
+  "trend_vs_prior": {
+    "prior_audit": "ceo-audits/2026-06-06-ceo-audit.md",
+    "prior_score": 96.8,
+    "delta": -1.4,
+    "direction": "slight_regression",
+    "reason": "New queue code added 2 src files but 0 tests (expected 0-day lag). Docs + CI workflows improved.",
+    "wins": ["ceo-audit.yml deployed (was MEDIUM-3 yesterday)", "ADR-001 created (278 lines)", "2 new CoDocs for queue layer"],
+    "losses": ["-2 on testing axis (no jest tests for new code)"]
+  },
+  "fixed_during_audit": [
+    "agentWebsocket.js defensive guard (committed in acc97958)"
+  ],
+  "cwe_mapping": {
+    "SIN-4.1": "CWE-1051",
+    "SIN-4.4": "CWE-1051",
+    "SIN-5.3": "CWE-1357",
+    "SIN-7.4": "CWE-1051",
+    "SIN-8.3": "CWE-1357",
+    "SIN-8.1": "CWE-1051"
+  },
+  "owasp_asvs_mapping": {
+    "SIN-4.1": "V1.14",
+    "SIN-5.3": "V14.2",
+    "SIN-8.3": "V14.4"
+  }
+}

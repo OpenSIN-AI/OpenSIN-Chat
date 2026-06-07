@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /** @type {import('jest').Config} */
 module.exports = {
   testEnvironment: 'node',
