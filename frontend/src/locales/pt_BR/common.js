@@ -137,6 +137,15 @@ const TRANSLATIONS = {
       editWorkspace: "Editar o Espaço de Trabalho",
       uploadDocument: "Enviar um documento",
     },
+    workspaceSources: {
+      title: "Fontes do espaço de trabalho",
+      add: "Adicionar fontes",
+      empty:
+        "Ainda sem fontes.\nEnvie documentos ou adicione URLs para dar mais contexto ao chat.",
+      type_document: "Documento",
+      type_url: "URL",
+      type_db: "Banco de dados",
+    },
     greeting: "Como posso ajudá-lo hoje?",
   },
   "new-workspace": {
@@ -1136,7 +1145,7 @@ const TRANSLATIONS = {
       username_explained: "Seu nome de usuário no Confluence",
       auth_type: "Tipo de Autenticação",
       auth_type_explained:
-        "Selecione o tipo de autenticação para acessar suas páginas.",
+        "Selecione o tipo de autentica��ão para acessar suas páginas.",
       auth_type_username: "Usuário e Token",
       auth_type_personal: "Token Pessoal",
       token: "Token de Acesso",
@@ -1267,6 +1276,23 @@ const TRANSLATIONS = {
     text_size_label: "Tamanho do texto",
     select_model: "Selecione o modelo",
     sources: "Fontes",
+    attach_menu: {
+      add_files: "Adicionar arquivos",
+      current_sources: "Fontes atuais",
+      add_from_url: "Adicionar por URL",
+      loading: "Carregando...",
+      no_sources: "Nenhuma fonte disponível",
+      no_workspace:
+        "Nenhum espaço de trabalho disponível. Envie uma mensagem primeiro para criar um.",
+      add_success: "Fonte adicionada ao espaço de trabalho",
+      add_failed: "Não foi possível adicionar a fonte",
+      url_hint:
+        "Cole a URL de um site ou vídeo do YouTube para adicioná-la como fonte.",
+      url_submit: "Adicionar fonte",
+      url_submitting: "Adicionando...",
+      url_success: "URL adicionada como fonte",
+      url_failed: "Não foi possível adicionar a URL",
+    },
     document: "Documento",
     similarity_match: "jogo",
     source_count_one: "Referência a {{count}}",

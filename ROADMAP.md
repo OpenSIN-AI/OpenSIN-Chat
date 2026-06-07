@@ -112,6 +112,7 @@
 | 2.33 | MemoriesSidebar Syntax Fix (`>` → `);`) | ✅ | `620f849d` |
 | 2.34 | Piper-TTS Import Fix (`@openafd` → `@mintplex-labs`) | ✅ | `620f849d` |
 | 2.35 | Translations (de + en) | ✅ | `source_filter_*`, `workspace_sources` etc. |
+| 2.35a | Translations (es, fr, it, pt_BR, zh, zh_TW, ja, ko) | ✅ | i18n-Nachpflege: `workspaceSources.*`, `attach_menu.*` |
 | 2.36 | Frontend Build & Deploy (83 Assets) | ✅ | `8593bcf1` + `8ac62a24` |
 | 2.37 | OpenCode Zen in Provider Picker | ⚠️ | Backend ✅, Browser-Cache Blocker (User) |
 | 2.38 | Document Processor 503 | ⚠️ | Python-Service offline – erwartet, kein Bug |

@@ -133,6 +133,15 @@ const TRANSLATIONS = {
       editWorkspace: "编辑工作区",
       uploadDocument: "上传文件",
     },
+    workspaceSources: {
+      title: "工作区来源",
+      add: "添加来源",
+      empty:
+        "暂无来源。\n上传文档或添加 URL，为对话提供更多背景信息。",
+      type_document: "文档",
+      type_url: "URL",
+      type_db: "数据库",
+    },
     greeting: "今天我能帮您什么？",
   },
   "new-workspace": {
@@ -232,7 +241,7 @@ const TRANSLATIONS = {
       "desc-end": "模式时，当未找到上下文时，你可能希望返回自定义拒绝响应。",
       "tooltip-title": "我为什麽会看到这个?",
       "tooltip-description":
-        "您处于查询模式，此模式仅使用您文件中的信息。切换到聊天模式以进行更灵活的对话，或点击此处访问我们的文件以了解更多关于聊天模式的信息。",
+        "您处于查询模式，此模式仅使用您文件中的信息。��换到聊天模式以进行更灵活的对话，或点击此处访问我们的文件以了解更多关于聊天模式的信息。",
     },
     temperature: {
       title: "LLM 温度",
@@ -400,7 +409,7 @@ const TRANSLATIONS = {
       gmail: {
         title: "Gmail 连接器",
         description:
-          "让您的代理能够与Gmail互动：搜索邮件、阅读邮件线程、撰写草稿、发送邮件以及管理您的收件箱。请参考相关文档。",
+          "让您的代理能够��Gmail互动：搜索邮件、阅读邮件线程、撰写草稿、发送邮件以及管理您的收件箱。请参考相关文档。",
         multiUserWarning:
           "为了安全原因，在多用户模式下无法使用 Gmail 集成功能。请先禁用多用户模式，然后才能使用此功能。",
         configuration: "Gmail 设置",
@@ -572,7 +581,7 @@ const TRANSLATIONS = {
           },
           createDraft: {
             title: "创建草稿",
-            description: "创建一个新的电子邮件草稿，或回复一个已存在的邮件。",
+            description: "创建一个新的电子���件草稿，或回复一个已存在的邮件。",
           },
           updateDraft: {
             title: "更新草稿",
@@ -783,7 +792,7 @@ const TRANSLATIONS = {
         description: "设置所有用户在登录页面看到的名称。",
       },
       "display-language": {
-        title: "显示语言",
+        title: "���示语言",
         description: "选择显示 OpenAfD Chat 界面所用的语言（若有翻译可用）。",
       },
       logo: {
@@ -978,7 +987,7 @@ const TRANSLATIONS = {
       token_explained_end: " 来避免此问题。",
       ignores: "文件忽略列表",
       git_ignore:
-        ".gitignore 格式的列表，用于在收集过程中忽略特定文件。输入后按回车保存每一项。",
+        ".gitignore ���式的列表，用于在收集过程中忽略特定文件。输入后按回车保存每一项。",
       task_explained: "完成后，所有文件将可用于在文档选择器中嵌入至工作区。",
       branch: "您希望收集文件的分支。",
       branch_loading: "-- 正在加载可用分支 --",
@@ -1184,6 +1193,23 @@ const TRANSLATIONS = {
     text_size_label: "字体大小",
     select_model: "选择型号",
     sources: "来源",
+    attach_menu: {
+      add_files: "添加文件",
+      current_sources: "当前来源",
+      add_from_url: "从 URL 添加",
+      loading: "加载中...",
+      no_sources: "暂无可用来源",
+      no_workspace:
+        "暂无可用工作区。请先发送消息以创建工作区。",
+      add_success: "来源已添加到工作区",
+      add_failed: "无法添加来源",
+      url_hint:
+        "粘贴网站或 YouTube 视频的 URL，将其作为来源添加。",
+      url_submit: "添加来源",
+      url_submitting: "添加中...",
+      url_success: "URL 已作为来源添加",
+      url_failed: "无法添加 URL",
+    },
     document: "文件",
     similarity_match: "比赛",
     source_count_one: "{{count}} 参考",
@@ -1427,7 +1453,7 @@ const TRANSLATIONS = {
         "open-botfather": "启动 BotFather",
         "instruction-1": "1. 打开链接或扫描二维码",
         "instruction-2":
-          "2. 将 <code>/newbot</code> 发送给 <code>@BotFather</code>",
+          "2. ��� <code>/newbot</code> 发送给 <code>@BotFather</code>",
         "instruction-3": "3. 为您的机器人选择一个名称和用户名",
         "instruction-4": "4. 复制您收到的 API 令牌",
       },
@@ -1689,7 +1715,7 @@ const TRANSLATIONS = {
       "calculated-section-label": "计算规则——按照优先级顺序进行评估",
       "llm-section-label":
         "LLM 规则——如果没有任何规则计算结果与给定条件匹配，则作为批量进行评估",
-      "llm-rule-body": "匹配“{{description}}”后，然后将结果路由到“<route>”",
+      "llm-rule-body": "匹配“{{description}}���后，然后将结果路由到“<route>”",
       "calculated-no-conditions":
         "无任何条件——前往<route>，{{route}}，</route>",
       "calculated-single-condition":
