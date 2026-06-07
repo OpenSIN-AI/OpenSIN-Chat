@@ -32,9 +32,10 @@ const StorageFiles = {
 };
 
 /**
- * Reusable SWR hook that replaces ad-hoc useEffect+fetch flows in the sidebars.
- * Provides cache dedup, shared loading/error state and a `refresh()` helper.
- * @returns {{ files: any[], error: Error|undefined, isLoading: boolean, refresh: Function }}
+ * Reusable SWR hook for the agent-generated filesystem listing.
+ * Replaces ad-hoc useEffect + fetch + useState in the sidebars and gives
+ * cache de-duplication, shared loading/error state, and a `refresh()` helper.
+ * @returns {{ files: any[], error: any, isLoading: boolean, refresh: () => void }}
  */
 export function useGeneratedFiles() {
   const { data, error, isLoading, mutate } = useSWR(

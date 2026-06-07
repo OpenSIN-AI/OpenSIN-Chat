@@ -21,6 +21,7 @@ import { safeJsonParse } from "@/utils/request";
 import { useTranslation } from "react-i18next";
 import { middleTruncate } from "@/utils/directories";
 import { useEmbeddingProgress } from "@/EmbeddingProgressContext";
+import DOMPurify from "@/utils/chat/purify";
 
 function WorkspaceDirectory({
   workspace,
@@ -342,14 +343,18 @@ const PinAlert = memo(() => {
             <p>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: t("connectors.pinning.pin_explained_block1"),
+                  __html: DOMPurify.sanitize(
+                    t("connectors.pinning.pin_explained_block1"),
+                  ),
                 }}
               />
             </p>
             <p>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: t("connectors.pinning.pin_explained_block2"),
+                  __html: DOMPurify.sanitize(
+                    t("connectors.pinning.pin_explained_block2"),
+                  ),
                 }}
               />
             </p>
@@ -407,7 +412,9 @@ const DocumentWatchAlert = memo(() => {
             <p>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: t("connectors.watching.watch_explained_block1"),
+                  __html: DOMPurify.sanitize(
+                    t("connectors.watching.watch_explained_block1"),
+                  ),
                 }}
               />
             </p>

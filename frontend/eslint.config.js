@@ -48,32 +48,20 @@ export default [
       react: { version: "detect" }
     },
     rules: {
-      // React recommended rules (inline, since we're not "extending" in flat config)
       ...pluginReact.configs.flat.recommended.rules,
-
-      // If you want hooks rules, add these (recommended)
       ...pluginReactHooks.configs.recommended.rules,
-
       // Accessibility recommended rules (as warnings, see note above)
       ...a11yRecommendedAsWarnings,
-
-      // Prettier: disable conflicting stylistic rules + optionally enforce formatting
       ...configPrettier.rules,
       "prettier/prettier": "error",
 
-      // Lint-gate: surface any new unsanitized dangerouslySetInnerHTML as a warning.
-      // Tighten to "error" once the codebase is fully clean.
-      "react/no-danger": "warn",
-      // div onClick patterns — warn for now, migrate to buttons/roles incrementally.
-      "jsx-a11y/no-static-element-interactions": "warn",
-      "jsx-a11y/click-events-have-key-events": "warn",
-
-      // Your overrides
       "react/react-in-jsx-scope": "off",
       "react-hooks/exhaustive-deps": "off",
       "react/prop-types": "off",
       "react-hooks/set-state-in-effect": "off",
       "react/jsx-no-target-blank": "error",
+      // Surface new unsanitized dangerouslySetInnerHTML usages (tighten to "error" later)
+      "react/no-danger": "warn",
       "react/no-unescaped-entities": "off",
       "react/display-name": "off",
       "react-hooks/immutability": "off",
@@ -86,7 +74,6 @@ export default [
       "no-unsafe-optional-chaining": "off",
       "no-constant-binary-expression": "off",
 
-      // Unused cleanup
       "no-console": ["warn", { "allow": ["warn", "error"] }],
       "no-unused-vars": "off",
       "unused-imports/no-unused-imports": "error",
