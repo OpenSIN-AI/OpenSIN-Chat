@@ -31,6 +31,12 @@ function utilEndpoints(app) {
 
   const { lemonadeUtilsEndpoints } = require("./utils/lemonadeUtilsEndpoints");
   lemonadeUtilsEndpoints(app);
+
+  const { enhancePromptEndpoint } = require("./utils/enhancePrompt");
+  enhancePromptEndpoint(app);
+
+  const { terminalExecEndpoint } = require("./utils/terminalExec");
+  terminalExecEndpoint(app);
 }
 
 function getGitVersion() {

@@ -549,7 +549,7 @@ function EnhancePromptButton({ promptInput, setPromptInput, isStreaming }) {
     if (!text || loading || isStreaming) return;
     setLoading(true);
     try {
-      const res = await fetch("/api/enhance-prompt", {
+      const res = await fetch("/api/utils/enhance-prompt", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: text }),

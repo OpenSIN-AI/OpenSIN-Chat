@@ -111,7 +111,7 @@ function TerminalTab() {
     ]);
 
     try {
-      const res = await fetch("/api/terminal/exec", {
+      const res = await fetch("/api/utils/terminal/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ command: trimmed }),
