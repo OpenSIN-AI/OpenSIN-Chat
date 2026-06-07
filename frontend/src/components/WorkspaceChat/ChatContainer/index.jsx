@@ -34,6 +34,7 @@ import SuggestedMessages from "@/components/lib/SuggestedMessages";
 import ChatSettingsMenu from "./ChatSettingsMenu";
 import WorkspaceModelPicker from "./WorkspaceModelPicker";
 import { ChatSidebarProvider, useChatSidebar } from "./ChatSidebar";
+import { API_BASE } from "@/utils/constants";
 import SourcesSidebar from "./SourcesSidebar";
 import MemoriesSidebar from "./MemoriesSidebar";
 import PreviewSidebar from "./PreviewSidebar";
@@ -51,13 +52,27 @@ import RightSidebarIconBar from "./RightSidebarIconBar";
 function ReportPreviewListener() {
   const { openPreview } = useChatSidebar();
   useEffect(() => {
+    // The server sends absolute "/api/..." paths. When the frontend is served
+    // from a different origin than the API (VITE_API_BASE is a full URL),
+    // rewrite the "/api" prefix to the configured API base so the iframe
+    // loads from the API host instead of the frontend origin.
+    function resolveUrl(url) {
+      if (!url) return url;
+      if (API_BASE !== "/api" && url.startsWith("/api/")) {
+        return `${API_BASE}${url.slice(4)}`;
+      }
+      return url;
+    }
     function onReportPreview(e) {
       if (!e.detail) return;
       openPreview({
         title: e.detail.title || "Bericht",
         type: e.detail.type || "pdf",
-        downloadUrl: e.detail.downloadUrl || null,
-        versions: e.detail.versions || [],
+        downloadUrl: resolveUrl(e.detail.downloadUrl) || null,
+        versions: (e.detail.versions || []).map((v) => ({
+          ...v,
+          downloadUrl: resolveUrl(v.downloadUrl),
+        })),
         content: null,
       });
     }

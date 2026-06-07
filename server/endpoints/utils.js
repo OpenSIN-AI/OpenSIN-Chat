@@ -135,19 +135,25 @@ function utilEndpoints(app) {
   });
 
   // Report download for browser (public, no API key needed) — Issue #55
-  // Reports stored in STORAGE_DIR/reports/ — prevent path traversal with basename
+  // Reports are stored in STORAGE_DIR/generated-reports/ by the ReportGenerator
+  // (server/utils/reports). This mirrors that exact resolution so the
+  // PreviewSidebar iframe can load the PDF without an API key.
   app.get("/utils/reports/:fileName", async (req, response) => {
     try {
       const path = require("path");
       const fs = require("fs");
       const fileName = path.basename(req.params.fileName); // prevent ../../../etc/passwd
-      const dir = process.env.STORAGE_DIR
-        ? path.resolve(process.env.STORAGE_DIR)
-        : path.resolve("./storage");
-      const filePath = path.join(dir, "reports", fileName);
+      const reportsDir =
+        process.env.NODE_ENV === "development"
+          ? path.resolve(__dirname, "../storage/generated-reports")
+          : path.resolve(
+              process.env.STORAGE_DIR || path.resolve(__dirname, "../storage"),
+              "generated-reports",
+            );
+      const filePath = path.join(reportsDir, fileName);
 
-      // Verify resolved path is still under reports/ (security check)
-      if (!filePath.startsWith(path.join(dir, "reports"))) {
+      // Verify resolved path is still under generated-reports/ (security check)
+      if (!filePath.startsWith(reportsDir)) {
         return response.sendStatus(403).end();
       }
 

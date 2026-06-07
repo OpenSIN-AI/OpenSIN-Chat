@@ -76,7 +76,9 @@ const generateReport = {
                 fileName: result.fileName,
                 fileSizeKB: result.fileSizeKB,
                 type: "pdf",
-                downloadUrl: `/api/reports/${result.fileName}`,
+                // Public, no-API-key route so the browser iframe can load it.
+                // (the /api/reports/:fileName route requires a valid API key)
+                downloadUrl: `/api/utils/reports/${result.fileName}`,
                 versions: [
                   {
                     label:
@@ -86,7 +88,7 @@ const generateReport = {
                           ? "Ausführlicher Bericht"
                           : "Standardbericht",
                     fileName: result.fileName,
-                    downloadUrl: `/api/reports/${result.fileName}`,
+                    downloadUrl: `/api/utils/reports/${result.fileName}`,
                   },
                 ],
               });
