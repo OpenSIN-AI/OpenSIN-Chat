@@ -172,12 +172,14 @@ function PreviewContent({ previewData, activeVersion }) {
   }
 
   const version = previewData.versions?.[activeVersion] ?? previewData;
+  const iframeUrl =
+    version.downloadUrl || version.url || previewData.downloadUrl || previewData.url;
 
-  // PDF or HTML preview via iframe
-  if (version.url || previewData.url) {
+  // PDF / URL preview via iframe (includes downloadUrl from generate-report)
+  if (iframeUrl) {
     return (
       <iframe
-        src={version.url || previewData.url}
+        src={iframeUrl}
         className="w-full h-full rounded border-none bg-white"
         title={previewData.title || "Vorschau"}
         sandbox="allow-same-origin allow-scripts allow-popups"

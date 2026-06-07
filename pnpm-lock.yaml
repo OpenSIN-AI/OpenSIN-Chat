@@ -44,6 +44,9 @@ importers:
       check-disk-space:
         specifier: ^3.4.0
         version: 3.4.0
+      file-saver:
+        specifier: ^2.0.5
+        version: 2.0.5
       lodash.debounce:
         specifier: ^4.0.8
         version: 4.0.8
@@ -1034,6 +1037,9 @@ packages:
     peerDependenciesMeta:
       picomatch:
         optional: true
+
+  file-saver@2.0.5:
+    resolution: {integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -3130,6 +3136,8 @@ snapshots:
   fdir@6.5.0(picomatch@4.0.4):
     optionalDependencies:
       picomatch: 4.0.4
+
+  file-saver@2.0.5: {}
 
   fill-range@7.1.1:
     dependencies:

@@ -82,6 +82,7 @@
     "@testing-library/react": "^16.3.2",
     "@vitejs/plugin-react": "^6.0.2",
     "check-disk-space": "^3.4.0",
+    "file-saver": "^2.0.5",
     "lodash.debounce": "^4.0.8",
     "openai": "^6.42.0",
     "playwright": "^1.60.0",

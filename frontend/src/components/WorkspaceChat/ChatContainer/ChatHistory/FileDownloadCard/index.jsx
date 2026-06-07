@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { memo, useState } from "react";
 import { saveAs } from "file-saver";
-import { DownloadSimple, CircleNotch } from "@phosphor-icons/react";
+import { DownloadSimple, CircleNotch, Eye } from "@phosphor-icons/react";
 import { humanFileSize } from "@/utils/numbers";
 import StorageFiles from "@/models/files";
+import { useChatSidebar } from "../../ChatSidebar";
 
 /**
  * @param {{content: {filename: string, storageFilename?: string, fileSize?: number}}} props
