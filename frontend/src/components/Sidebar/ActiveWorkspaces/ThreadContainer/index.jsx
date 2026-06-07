@@ -2,10 +2,19 @@
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import { Plus, CircleNotch, Trash } from "@phosphor-icons/react";
+import { Plus, CircleNotch, Trash, FolderSimplePlus } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import ThreadItem from "./ThreadItem";
+import ThreadFolderItem from "./ThreadFolderItem";
 import { useParams } from "react-router-dom";
+import {
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragOverlay,
+  closestCenter,
+} from "@dnd-kit/core";
 export const THREAD_RENAME_EVENT = "renameThread";
 
 export default function ThreadContainer({
@@ -14,9 +23,15 @@ export default function ThreadContainer({
 }) {
   const { threadSlug = null } = useParams();
   const [threads, setThreads] = useState([]);
+  const [folders, setFolders] = useState([]);
   const [defaultThreadHasChats, setDefaultThreadHasChats] = useState(false);
   const [loading, setLoading] = useState(true);
   const [ctrlPressed, setCtrlPressed] = useState(false);
+  const [activeId, setActiveId] = useState(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
+  );
 
   useEffect(() => {
     const chatHandler = (event) => {
@@ -41,11 +56,11 @@ export default function ThreadContainer({
   useEffect(() => {
     async function fetchThreads() {
       if (!workspace.slug) return;
-      const { threads, defaultThreadChatCount } = await Workspace.threads.all(
-        workspace.slug,
-      );
+      const { threads, folders, defaultThreadChatCount } =
+        await Workspace.threads.all(workspace.slug);
       setLoading(false);
       setThreads(threads);
+      setFolders(folders ?? []);
       setDefaultThreadHasChats(defaultThreadChatCount > 0);
     }
     fetchThreads();
@@ -118,15 +133,71 @@ export default function ThreadContainer({
   }
 
   function getActiveThreadIdx() {
+    const unfoldered = threads.filter((t) => !t.folder_id);
     if (isVirtualThread)
-      return threads.length + (defaultThreadHasChats ? 1 : 0);
-    // On a bare workspace route with no default chats, show virtual thread as active
+      return unfoldered.length + (defaultThreadHasChats ? 1 : 0);
     if (!threadSlug && !defaultThreadHasChats)
-      return threads.length + (defaultThreadHasChats ? 1 : 0);
-    const idx = threads.findIndex((t) => t?.slug === threadSlug);
+      return unfoldered.length + (defaultThreadHasChats ? 1 : 0);
+    const idx = unfoldered.findIndex((t) => t?.slug === threadSlug);
     if (idx >= 0) return idx + (defaultThreadHasChats ? 1 : 0);
     if (!threadSlug && defaultThreadHasChats) return 0;
     return -1;
+  }
+
+  // ── Drag-and-drop ──────────────────────────────────────────────────────
+  function handleDragStart({ active }) {
+    setActiveId(active.id);
+  }
+
+  async function handleDragEnd({ active, over }) {
+    setActiveId(null);
+    if (!over) return;
+    const draggedSlug = active.id;
+    const thread = threads.find((t) => t.slug === draggedSlug);
+    if (!thread) return;
+
+    let newFolderId = null;
+    if (over.id === "unfoldered-drop") {
+      newFolderId = null;
+    } else if (String(over.id).startsWith("folder-")) {
+      newFolderId = Number(String(over.id).replace("folder-", ""));
+    } else {
+      return;
+    }
+    if (thread.folder_id === newFolderId) return;
+
+    // Optimistic update
+    setThreads((prev) =>
+      prev.map((t) =>
+        t.slug === draggedSlug ? { ...t, folder_id: newFolderId } : t,
+      ),
+    );
+    const ok = await Workspace.threads.folders.assignThread(
+      workspace.slug,
+      thread.slug,
+      newFolderId,
+    );
+    if (!ok) {
+      showToast("Thread konnte nicht verschoben werden.", "error", { clear: true });
+      setThreads((prev) =>
+        prev.map((t) =>
+          t.slug === draggedSlug ? { ...t, folder_id: thread.folder_id } : t,
+        ),
+      );
+    }
+  }
+
+  function handleFolderDeleted(folderId) {
+    setFolders((prev) => prev.filter((f) => f.id !== folderId));
+    setThreads((prev) =>
+      prev.map((t) => (t.folder_id === folderId ? { ...t, folder_id: null } : t)),
+    );
+  }
+
+  function handleFolderRenamed(folderId, newName) {
+    setFolders((prev) =>
+      prev.map((f) => (f.id === folderId ? { ...f, name: newName } : f)),
+    );
   }
 
   if (loading) {
@@ -144,49 +215,90 @@ export default function ThreadContainer({
   const showVirtualThread =
     isVirtualThread || (!threadSlug && !defaultThreadHasChats);
 
+  const unfolderedThreads = threads.filter((t) => !t.folder_id);
+  const draggedThread = activeId ? threads.find((t) => t.slug === activeId) : null;
+
   return (
-    <div className="flex flex-col" role="list" aria-label="Threads">
-      {defaultThreadHasChats && (
-        <ThreadItem
-          idx={0}
-          activeIdx={activeThreadIdx}
-          isActive={activeThreadIdx === 0}
-          workspace={workspace}
-          thread={{ slug: null, name: "default" }}
-          hasNext={threads.length > 0 || showVirtualThread}
-        />
-      )}
-      {threads.map((thread, i) => (
-        <ThreadItem
-          key={thread.slug}
-          idx={i + (defaultThreadHasChats ? 1 : 0)}
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+    >
+      <div className="flex flex-col" role="list" aria-label="Threads">
+        {defaultThreadHasChats && (
+          <ThreadItem
+            idx={0}
+            activeIdx={activeThreadIdx}
+            isActive={activeThreadIdx === 0}
+            workspace={workspace}
+            thread={{ slug: null, name: "default" }}
+            hasNext={unfolderedThreads.length > 0 || showVirtualThread || folders.length > 0}
+          />
+        )}
+        {folders.map((folder) => {
+          const folderThreads = threads.filter((t) => t.folder_id === folder.id);
+          return (
+            <ThreadFolderItem
+              key={folder.id}
+              folder={folder}
+              workspace={workspace}
+              threads={folderThreads}
+              activeThreadIdx={activeThreadIdx}
+              defaultThreadHasChats={defaultThreadHasChats}
+              ctrlPressed={ctrlPressed}
+              toggleMarkForDeletion={toggleForDeletion}
+              onRemoveThread={removeThread}
+              onFolderDeleted={handleFolderDeleted}
+              onFolderRenamed={handleFolderRenamed}
+            />
+          );
+        })}
+        {unfolderedThreads.map((thread, i) => (
+          <ThreadItem
+            key={thread.slug}
+            idx={i + (defaultThreadHasChats ? 1 : 0)}
+            ctrlPressed={ctrlPressed}
+            toggleMarkForDeletion={toggleForDeletion}
+            activeIdx={activeThreadIdx}
+            isActive={activeThreadIdx === i + (defaultThreadHasChats ? 1 : 0)}
+            workspace={workspace}
+            onRemove={removeThread}
+            thread={thread}
+            hasNext={i !== unfolderedThreads.length - 1 || showVirtualThread}
+            draggable
+          />
+        ))}
+        {showVirtualThread && (
+          <ThreadItem
+            idx={activeThreadIdx}
+            activeIdx={activeThreadIdx}
+            isActive={true}
+            workspace={workspace}
+            thread={{ slug: null, name: "*New Thread", virtual: true }}
+            hasNext={false}
+          />
+        )}
+        <DeleteAllThreadButton
           ctrlPressed={ctrlPressed}
-          toggleMarkForDeletion={toggleForDeletion}
-          activeIdx={activeThreadIdx}
-          isActive={activeThreadIdx === i + (defaultThreadHasChats ? 1 : 0)}
-          workspace={workspace}
-          onRemove={removeThread}
-          thread={thread}
-          hasNext={i !== threads.length - 1 || showVirtualThread}
+          threads={threads}
+          onDelete={handleDeleteAll}
         />
-      ))}
-      {showVirtualThread && (
-        <ThreadItem
-          idx={activeThreadIdx}
-          activeIdx={activeThreadIdx}
-          isActive={true}
+        <NewFolderButton
           workspace={workspace}
-          thread={{ slug: null, name: "*New Thread", virtual: true }}
-          hasNext={false}
+          onCreated={(f) => setFolders((prev) => [...prev, f])}
         />
-      )}
-      <DeleteAllThreadButton
-        ctrlPressed={ctrlPressed}
-        threads={threads}
-        onDelete={handleDeleteAll}
-      />
-      <NewThreadButton workspace={workspace} />
-    </div>
+        <NewThreadButton workspace={workspace} />
+      </div>
+
+      <DragOverlay>
+        {draggedThread ? (
+          <div className="bg-zinc-800 light:bg-slate-200 rounded-lg px-3 py-1.5 text-sm text-white light:text-theme-text-primary shadow-lg opacity-90 pointer-events-none">
+            {draggedThread.name}
+          </div>
+        ) : null}
+      </DragOverlay>
+    </DndContext>
   );
 }
 
@@ -226,7 +338,6 @@ function NewThreadButton({ workspace }) {
             />
           )}
         </div>
-
         {loading ? (
           <p className="text-left text-white light:text-theme-text-primary text-sm">
             Starting Thread...
@@ -236,6 +347,57 @@ function NewThreadButton({ workspace }) {
             New Thread
           </p>
         )}
+      </div>
+    </button>
+  );
+}
+
+function NewFolderButton({ workspace, onCreated }) {
+  const [loading, setLoading] = useState(false);
+  const onClick = async () => {
+    const name = window.prompt("Ordnername:")?.trim();
+    if (!name) return;
+    setLoading(true);
+    const { folder, message } = await Workspace.threads.folders.new(
+      workspace.slug,
+      name,
+    );
+    setLoading(false);
+    if (message || !folder) {
+      showToast(
+        `Ordner konnte nicht erstellt werden: ${message}`,
+        "error",
+        { clear: true },
+      );
+      return;
+    }
+    onCreated(folder);
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className="w-full relative flex h-[40px] items-center border-none hover:bg-[var(--theme-sidebar-thread-selected)] light:hover:bg-slate-300 rounded-lg"
+    >
+      <div className="flex w-full gap-x-2 items-center pl-4">
+        <div className="bg-zinc-800 light:bg-slate-50 p-2 rounded-lg h-[24px] w-[24px] flex items-center justify-center">
+          {loading ? (
+            <CircleNotch
+              weight="bold"
+              size={14}
+              className="shrink-0 animate-spin text-white light:text-theme-text-primary"
+            />
+          ) : (
+            <FolderSimplePlus
+              weight="bold"
+              size={14}
+              className="shrink-0 text-white light:text-theme-text-primary"
+            />
+          )}
+        </div>
+        <p className="text-left text-white light:text-theme-text-primary text-sm font-semibold">
+          New Folder
+        </p>
       </div>
     </button>
   );

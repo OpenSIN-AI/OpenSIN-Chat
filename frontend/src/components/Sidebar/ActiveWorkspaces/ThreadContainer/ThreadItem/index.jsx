@@ -13,6 +13,8 @@ import {
 } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useDraggable } from "@dnd-kit/core";
+import { CSS } from "@dnd-kit/utilities";
 
 const THREAD_CALLOUT_DETAIL_WIDTH = 26;
 export default function ThreadItem({
@@ -25,6 +27,8 @@ export default function ThreadItem({
   toggleMarkForDeletion,
   hasNext,
   ctrlPressed = false,
+  draggable = false,
+  folderId = null,
 }) {
   const { slug: urlSlug, threadSlug = null } = useParams();
   const workspaceSlug = workspace?.slug ?? urlSlug;
@@ -41,8 +45,27 @@ export default function ThreadItem({
     behavior: "instant",
     block: "center",
   });
+
+  // dnd-kit draggable — only enabled for real, non-virtual threads when draggable=true
+  const {
+    attributes,
+    listeners,
+    setNodeRef: setDragRef,
+    transform,
+    isDragging,
+  } = useDraggable({
+    id: thread.slug ?? "__non-draggable__",
+    disabled: !draggable || !thread.slug || !!thread.virtual,
+  });
+
+  const dragStyle = transform
+    ? { transform: CSS.Translate.toString(transform), zIndex: 50, opacity: 0.6 }
+    : undefined;
   return (
     <div
+      ref={setDragRef}
+      style={dragStyle}
+      {...(draggable && thread.slug && !thread.virtual ? { ...attributes, ...listeners } : {})}
       className="w-full relative flex h-[38px] items-center border-none rounded-lg"
       role="listitem"
     >
