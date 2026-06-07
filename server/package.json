@@ -55,7 +55,7 @@
     "chart.js": "^4.5.1",
     "chartjs-node-canvas": "^5.0.0",
     "check-disk-space": "^3.4.0",
-    "cheerio": "^1.0.0",
+    "cheerio": "^1.2.0",
     "chromadb": "^2.0.1",
     "cohere-ai": "^7.19.0",
     "cors": "^2.8.5",
