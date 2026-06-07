@@ -339,9 +339,16 @@ if (source) filters.source = source; // Hinzufügen zu existing filters
 | `BUNDESTAG_WAHLPERIODE` | `20` | Aktuelle Wahlperiode |
 | `POLITICIAN_SYNC_SITTINGS_PER_RUN` | `5` | Wie viele Plenarsitzungen pro Sync-Run |
 
-### Fehlerbehandlung
+### Fehlerbehandlung & Fallback-Strategien (Issue #52)
+
 - **Jede Phase läuft unabhängig** — ein Fehler in Phase 1 blockiert nicht Phase 2+3
-- **Retry-Logik pro Record** — 3 Versuche mit exponentiellem Backoff
+- **Cross-Source-Fallback:**
+  - Phase 1 (Bundestag): Falls API down → Fallback zu Abgeordnetenwatch-Base-Daten
+  - Phase 2 (AW): Falls API down → Fallback zu Bundestag-Stammdaten
+  - Phase 3 (Plenarprotokolle): Falls dserver-XML nicht verfügbar → **DIP-API-Fallback** (strukturierte Plenarprotokoll-Daten via REST)
+- **Retry-Queue** (`politician_sync_retry`): Fehlgeschlagene Phasen werden mit exponentiellem Backoff (1s, 2s, 4s, 8s, 16s) bis zu 5 Versuchen in eine Warteschlange eingereiht
+  - Versuch 1–4: `nextRetryAt` verdoppelt sich bei jedem Versuch
+  - Versuch 5+: `status` wechselt zu `"exhausted"`, Fehler wird in `lastError` geloggt
 - **Sync-Log** — jeder Run wird in `politician_sync_log` mit Status (started/running/completed/failed) geloggt
 - **Deduplizierung** — Reden werden via `dedupeKey` (session+sitting+speaker+text[:100]) dedupliziert
 
