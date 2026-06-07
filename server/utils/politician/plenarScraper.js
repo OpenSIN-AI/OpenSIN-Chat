@@ -18,10 +18,14 @@
  *   4. Return structured {speaker, text, date, top} objects
  */
 
-const { SystemSettings } = require("../../models/systemSettings");
-
 const DIP_BASE = "https://dserver.bundestag.de";
 const BUNDESTAG_BASE = "https://www.bundestag.de";
+// DIP (Dokumentations- und Informationssystem für Parlamentsmaterialien) REST
+// API — used as a robust fallback when the dserver protocol XML is unavailable
+// (Issue #52). A public demo API key is published by the Bundestag; callers may
+// override it via BUNDESTAG_API_KEY.
+const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
+const DIP_PUBLIC_API_KEY = "I9FKdCn.hbfefNWCY336dL6x62vfwNKpoN2RZ1gp21";
 
 /**
  * @typedef {Object} PlenarSpeech
@@ -116,16 +120,137 @@ class PlenarScraper {
 
     try {
       const res = await this.#fetch(xmlUrl, { method: "HEAD" });
-      if (res.ok) return await this.#parseXmlProtocol(xmlUrl, session, sitting);
+      if (res.ok) {
+        const speeches = await this.#parseXmlProtocol(xmlUrl, session, sitting);
+        if (speeches.length > 0) return speeches;
+      }
     } catch {
-      // XML not available, try parsing metadata
+      // XML not available on dserver, fall through to DIP API
     }
 
-    // Fallback: fetch whatever structured metadata is available
+    // Fallback: DIP API (Issue #52) — more robust than scraping dserver.
     this.log(
-      `XML protocol not available for ${session}/${sitting}, using metadata fallback`,
+      `dserver XML unavailable for ${session}/${sitting}, trying DIP API fallback`,
     );
+    try {
+      const speeches = await this.fetchProtocolViaDip(session, sitting);
+      if (speeches.length > 0) return speeches;
+    } catch (err) {
+      this.log(`DIP API fallback failed for ${session}/${sitting}: ${err.message}`);
+    }
+
     return [];
+  }
+
+  /**
+   * Resolve the DIP API key, preferring an operator-supplied env var and
+   * falling back to the published public demo key.
+   * @returns {string}
+   */
+  #dipApiKey() {
+    return process.env.BUNDESTAG_API_KEY || DIP_PUBLIC_API_KEY;
+  }
+
+  /**
+   * Fallback fetch via the DIP REST API (Issue #52).
+   *
+   * Looks up the plenarprotokoll-text resource for a given Wahlperiode +
+   * Sitzungsnummer and extracts speeches from the returned structured text.
+   * This avoids dependence on the dserver blob XML which is occasionally
+   * unavailable.
+   *
+   * @param {number} session - Wahlperiode (e.g. 20)
+   * @param {number} sitting - Sitzungsnummer
+   * @returns {Promise<PlenarSpeech[]>}
+   */
+  async fetchProtocolViaDip(session, sitting) {
+    const params = new URLSearchParams({
+      "f.wahlperiode": String(session),
+      "f.dokumentnummer": `${session}/${sitting}`,
+      format: "json",
+      apikey: this.#dipApiKey(),
+    });
+    const url = `${DIP_API_BASE}/plenarprotokoll-text?${params.toString()}`;
+    this.log(`Fetching protocol ${session}/${sitting} via DIP API`);
+
+    const res = await this.#fetch(url, {
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) throw new Error(`DIP API HTTP ${res.status}`);
+
+    const json = await res.json();
+    const documents = Array.isArray(json?.documents) ? json.documents : [];
+    if (documents.length === 0) return [];
+
+    const speeches = [];
+    for (const doc of documents) {
+      const fullText = typeof doc.text === "string" ? doc.text : "";
+      if (!fullText.trim()) continue;
+      const docUrl =
+        doc?.fundstelle?.pdf_url ||
+        doc?.fundstelle?.xml_url ||
+        `${DIP_API_BASE}/plenarprotokoll/${doc.id || ""}`;
+      const date = doc.datum || null;
+
+      for (const block of this.#splitDipTextIntoSpeeches(fullText)) {
+        speeches.push({
+          speakerName: block.speakerName,
+          speakerParty: block.speakerParty,
+          text: block.text,
+          top: `Sitzung ${sitting}`,
+          date: date || new Date().toISOString().slice(0, 10),
+          session,
+          sitting,
+          pageNumbers: null,
+          documentUrl: docUrl,
+        });
+      }
+    }
+
+    this.log(
+      `DIP API yielded ${speeches.length} speeches for ${session}/${sitting}`,
+    );
+    return speeches;
+  }
+
+  /**
+   * Split a DIP plenarprotokoll plain-text body into speaker blocks.
+   *
+   * DIP text marks speakers with a leading "Name (Fraktion):" pattern at the
+   * start of a paragraph. We use that as a delimiter. This is intentionally
+   * conservative — unrecognised blocks are skipped rather than mis-attributed.
+   *
+   * @param {string} text
+   * @returns {Array<{speakerName: string, speakerParty: string|null, text: string}>}
+   */
+  #splitDipTextIntoSpeeches(text) {
+    const blocks = [];
+    // Matches e.g. "Dr. Alice Weidel (AfD):" or "Max Mustermann (SPD):"
+    const speakerRe =
+      /(^|\n)\s*([A-ZÄÖÜ][\wÄÖÜäöüß.\- ]{2,60}?)\s*\(([^)]{2,40})\):/g;
+    const markers = [];
+    let m;
+    while ((m = speakerRe.exec(text)) !== null) {
+      markers.push({
+        index: m.index + (m[1] ? m[1].length : 0),
+        speakerName: m[2].trim(),
+        speakerParty: m[3].trim(),
+        contentStart: speakerRe.lastIndex,
+      });
+    }
+
+    for (let i = 0; i < markers.length; i++) {
+      const cur = markers[i];
+      const end = i + 1 < markers.length ? markers[i + 1].index : text.length;
+      const body = text.slice(cur.contentStart, end).trim();
+      if (body.length < 40) continue; // skip interjections / one-liners
+      blocks.push({
+        speakerName: cur.speakerName,
+        speakerParty: cur.speakerParty,
+        text: body,
+      });
+    }
+    return blocks;
   }
 
   /**

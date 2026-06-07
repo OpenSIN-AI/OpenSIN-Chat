@@ -21,6 +21,13 @@ const { PrismaClient } = require("@prisma/client");
 const { BundestagApi } = require("../utils/politician/bundestagApi");
 const { AbgeordnetenwatchApi } = require("../utils/politician/abgeordnetenwatchApi");
 const { PlenarScraper } = require("../utils/politician/plenarScraper");
+const {
+  SYNC_PHASES,
+  MAX_RETRIES,
+  shouldRetry,
+  nextRetryAt,
+  withFallback,
+} = require("../utils/politician/syncFallback");
 
 const prisma = new PrismaClient();
 const bundestag = new BundestagApi();
@@ -119,11 +126,145 @@ async function withSyncLog(source, fn) {
   }
 }
 
+// ── Retry queue (Issue #52) ───────────────────────────────────────────────────
+//
+// Failed phases are persisted in `politician_sync_retry` with an exponential
+// back-off `nextRetryAt`. Every DB access is wrapped defensively so a missing
+// table (e.g. before the migration is applied / client regenerated) degrades
+// gracefully and never aborts the main sync.
+
+/**
+ * Whether the retry-queue model is available on the Prisma client.
+ * @returns {boolean}
+ */
+function retryQueueAvailable() {
+  return !!prisma.politician_sync_retry;
+}
+
+/**
+ * Load retry entries that are currently due (pending and nextRetryAt <= now).
+ * @returns {Promise<Set<string>>} set of phase keys that are due
+ */
+async function loadDueRetryPhases() {
+  if (!retryQueueAvailable()) return new Set();
+  try {
+    const due = await prisma.politician_sync_retry.findMany({
+      where: { status: "pending", nextRetryAt: { lte: new Date() } },
+      select: { phase: true },
+    });
+    return new Set(due.map((r) => r.phase));
+  } catch (err) {
+    console.warn(`[sync-politician-data] loadDueRetryPhases failed: ${err.message}`);
+    return new Set();
+  }
+}
+
+/**
+ * Record a failed phase in the retry queue, incrementing its attempt counter
+ * and scheduling the next attempt with exponential back-off. Once MAX_RETRIES
+ * is reached the entry is marked "exhausted".
+ * @param {string} phase
+ * @param {string} errorMessage
+ */
+async function enqueueRetry(phase, errorMessage) {
+  if (!retryQueueAvailable()) return;
+  try {
+    const existing = await prisma.politician_sync_retry.findUnique({
+      where: { phase },
+    });
+    const attempts = (existing?.attempts ?? 0) + 1;
+    const willRetry = shouldRetry(attempts);
+    const data = {
+      attempts,
+      lastError: (errorMessage || "").slice(0, 500),
+      status: willRetry ? "pending" : "exhausted",
+      nextRetryAt: willRetry ? nextRetryAt(attempts) : new Date(),
+    };
+    await prisma.politician_sync_retry.upsert({
+      where: { phase },
+      update: data,
+      create: { phase, ...data },
+    });
+    console.warn(
+      `[sync-politician-data] phase '${phase}' enqueued for retry ` +
+        `(attempt ${attempts}/${MAX_RETRIES}, ${willRetry ? "will retry" : "exhausted"})`,
+    );
+  } catch (err) {
+    console.warn(`[sync-politician-data] enqueueRetry failed: ${err.message}`);
+  }
+}
+
+/**
+ * Mark a phase as successfully resolved, clearing any pending retry.
+ * @param {string} phase
+ */
+async function resolveRetry(phase) {
+  if (!retryQueueAvailable()) return;
+  try {
+    await prisma.politician_sync_retry.updateMany({
+      where: { phase, status: { not: "resolved" } },
+      data: { status: "resolved", attempts: 0, lastError: null },
+    });
+  } catch (err) {
+    console.warn(`[sync-politician-data] resolveRetry failed: ${err.message}`);
+  }
+}
+
+/**
+ * Normalize an Abgeordnetenwatch politician into the Bundestag-member upsert
+ * shape so it can be used as a cross-source fallback for Phase 1.
+ * @param {Object} pol
+ * @returns {Object}
+ */
+function normalizeAwToMember(pol) {
+  const externalId = `aw-${pol.id}`;
+  return {
+    id: externalId,
+    externalId,
+    source: "abgeordnetenwatch",
+    title: null,
+    firstName: pol.firstName || "",
+    lastName: pol.lastName || "",
+    fullName: `${pol.firstName || ""} ${pol.lastName || ""}`.trim(),
+    party: pol.party?.label || pol.party?.name || null,
+    faction: pol.party?.label || pol.party?.name || null,
+    gender: pol.sex || null,
+    birthDate: pol.birthDate || null,
+    birthPlace: null,
+    profession: null,
+    education: null,
+    photoUrl: null,
+    profileUrl: pol.abgeordnetenwatch_url || null,
+    email: null,
+    electoralDistrict: null,
+    electoralList: null,
+    state: null,
+    bio: null,
+    websiteUrl: null,
+    rawData: JSON.stringify(pol),
+  };
+}
+
 // ── Phase 1: Bundestag Members ────────────────────────────────────────────────
 
 async function syncBundestagMembers() {
   return withSyncLog("bundestag", async () => {
-    const members = await bundestag.fetchAllMembers();
+    // Cross-source fallback: if the Bundestag API is down or empty, fall back
+    // to Abgeordnetenwatch base data so member records can still be refreshed.
+    const { data, usedFallback, error } = await withFallback(
+      () => bundestag.fetchAllMembers(),
+      async () => {
+        const pols = await abgeordnetenwatch.fetchAllPoliticians();
+        return pols.map(normalizeAwToMember);
+      },
+      { label: "bundestag-members" },
+    );
+    if (error) throw error;
+    const members = data || [];
+    if (usedFallback)
+      console.warn(
+        "[sync-politician-data] Phase 1 used Abgeordnetenwatch fallback for member data",
+      );
     let processed = 0;
     let failed = 0;
 
@@ -160,7 +301,7 @@ async function syncBundestagMembers() {
             create: {
               id: member.externalId || `bundestag-${member.id}`,
               externalId: member.externalId || `bundestag-${member.id}`,
-              source: "bundestag",
+              source: member.source || "bundestag",
               title: member.title,
               firstName: member.firstName,
               lastName: member.lastName,
@@ -198,15 +339,46 @@ async function syncBundestagMembers() {
 
 async function syncAbgeordnetenwatch() {
   return withSyncLog("abgeordnetenwatch", async () => {
-    const politicians = await abgeordnetenwatch.fetchAllPoliticians();
+    // Cross-source fallback: if Abgeordnetenwatch is down or empty, derive the
+    // base records from the Bundestag member list instead.
+    const { data, usedFallback, error } = await withFallback(
+      () => abgeordnetenwatch.fetchAllPoliticians(),
+      async () => {
+        const members = await bundestag.fetchAllMembers();
+        // Shape Bundestag members like AW politicians for the upsert below.
+        return members.map((m) => ({
+          id: m.externalId || m.id,
+          firstName: m.firstName,
+          lastName: m.lastName,
+          party: { label: m.party },
+          sex: m.gender,
+          birthDate: m.birthDate,
+          __fromBundestag: true,
+        }));
+      },
+      { label: "abgeordnetenwatch-politicians" },
+    );
+    if (error) throw error;
+    const politicians = data || [];
+    if (usedFallback)
+      console.warn(
+        "[sync-politician-data] Phase 2 used Bundestag fallback for AW data",
+      );
     let processed = 0;
     let failed = 0;
 
     for (const pol of politicians) {
       try {
-        const awExtId = `aw-${pol.id}`;
+        // Fallback records originate from Bundestag and must keep their own
+        // id namespace + source so they are not mistaken for AW profiles.
+        const extId = pol.__fromBundestag
+          ? String(pol.id)
+          : `aw-${pol.id}`;
+        const recordSource = pol.__fromBundestag
+          ? "bundestag"
+          : "abgeordnetenwatch";
         const existing = await prisma.politicians.findUnique({
-          where: { externalId: awExtId },
+          where: { externalId: extId },
           select: { id: true },
         });
 
@@ -214,9 +386,9 @@ async function syncAbgeordnetenwatch() {
           await withRetry(() =>
             prisma.politicians.create({
               data: {
-                id: awExtId,
-                externalId: awExtId,
-                source: "abgeordnetenwatch",
+                id: extId,
+                externalId: extId,
+                source: recordSource,
                 firstName: pol.firstName || "",
                 lastName: pol.lastName || "",
                 fullName: `${pol.firstName || ""} ${pol.lastName || ""}`.trim(),
@@ -366,27 +538,45 @@ async function syncBundestagSpeeches() {
 
 // ── Entrypoint ────────────────────────────────────────────────────────────────
 
+/**
+ * Run a single phase, updating the retry queue based on the outcome:
+ *   - success  -> clear any pending retry for the phase
+ *   - failure  -> enqueue / increment the retry with exponential back-off
+ * A failure never propagates so the remaining phases keep running.
+ * @param {string} phase - one of SYNC_PHASES
+ * @param {() => Promise<object>} fn
+ * @returns {Promise<object>} the phase result (or a failure marker)
+ */
+async function runPhase(phase, fn) {
+  try {
+    const result = await fn();
+    await resolveRetry(phase);
+    return result;
+  } catch (err) {
+    await enqueueRetry(phase, err.message);
+    return { status: "failed", error: err.message };
+  }
+}
+
 async function main() {
   const results = {};
 
-  // Run all three phases independently — a failure in one does not block others.
-  try {
-    results.members = await syncBundestagMembers();
-  } catch (err) {
-    results.members = { status: "failed", error: err.message };
-  }
+  // Surface which phases are due for a retry (informational — phases always run
+  // on the scheduled cadence, the queue tracks back-off state and exhaustion).
+  const duePhases = await loadDueRetryPhases();
+  if (duePhases.size > 0)
+    console.warn(
+      `[sync-politician-data] retrying due phases: ${[...duePhases].join(", ")}`,
+    );
 
-  try {
-    results.abgeordnetenwatch = await syncAbgeordnetenwatch();
-  } catch (err) {
-    results.abgeordnetenwatch = { status: "failed", error: err.message };
-  }
-
-  try {
-    results.speeches = await syncBundestagSpeeches();
-  } catch (err) {
-    results.speeches = { status: "failed", error: err.message };
-  }
+  // Run all three phases independently — a failure in one does not block others
+  // and each updates the retry queue via runPhase.
+  results.members = await runPhase(SYNC_PHASES.members, syncBundestagMembers);
+  results.abgeordnetenwatch = await runPhase(
+    SYNC_PHASES.abgeordnetenwatch,
+    syncAbgeordnetenwatch,
+  );
+  results.speeches = await runPhase(SYNC_PHASES.speeches, syncBundestagSpeeches);
 
   const overallStatus = Object.values(results).some((r) => r.status === "failed")
     ? "partial"

@@ -401,11 +401,37 @@ class PoliticianDB {
       const lastSync = logs.length
         ? logs[0].completedAt || logs[0].startedAt
         : null;
-      return { lastSync, sources };
+      const retryQueue = await this.getRetryQueue();
+      return { lastSync, sources, retryQueue };
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(`[PoliticianDB] getSyncStatus error: ${err.message}`);
-      return { lastSync: null, sources: [] };
+      return { lastSync: null, sources: [], retryQueue: [] };
+    }
+  }
+
+  /**
+   * Get the current retry queue for failed sync phases (Issue #52).
+   * Returns an empty list if the queue model is unavailable.
+   * @returns {Promise<Array<{phase: string, attempts: number, status: string, nextRetryAt: Date|null, lastError: string|null}>>}
+   */
+  async getRetryQueue() {
+    if (!prisma.politician_sync_retry) return [];
+    try {
+      const entries = await prisma.politician_sync_retry.findMany({
+        orderBy: { nextRetryAt: "asc" },
+      });
+      return entries.map((e) => ({
+        phase: e.phase,
+        attempts: e.attempts,
+        status: e.status,
+        nextRetryAt: e.nextRetryAt,
+        lastError: e.lastError,
+      }));
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(`[PoliticianDB] getRetryQueue error: ${err.message}`);
+      return [];
     }
   }
 

@@ -602,6 +602,21 @@ model politician_sync_log {
   completedAt    DateTime?
 }
 
+// Retry queue for failed sync phases (Issue #52). When a phase fails it is
+// enqueued here with an exponential back-off `nextRetryAt`. The sync job drains
+// due entries at the start of each run. A unique `phase` keeps a single live
+// entry per phase (members | abgeordnetenwatch | speeches).
+model politician_sync_retry {
+  id          Int       @id @default(autoincrement())
+  phase       String    @unique // members | abgeordnetenwatch | speeches
+  attempts    Int       @default(0)
+  status      String    @default("pending") // pending | exhausted | resolved
+  lastError   String?
+  nextRetryAt DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
 model memories {
   id          Int                          @id @default(autoincrement())
   userId      Int?                         @map("user_id")
