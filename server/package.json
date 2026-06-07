@@ -109,10 +109,14 @@
     "zod": "^3.25.76"
   },
   "resolutions": {
-    "**/graphql-request/form-data": "3.0.4",
-    "form-data": "4.0.4",
+    "// jwa": "CVE-2022-23529",
     "jwa": "2.0.1",
-    "buffer-equal-constant-time": "1.0.1"
+    "// buffer-equal-constant-time": "deprecated package, pinned to latest safe version",
+    "buffer-equal-constant-time": "1.0.1",
+    "// form-data": "latest stable",
+    "form-data": "4.0.4",
+    "// graphql-request/form-data": "locked for compatibility with graphql-request",
+    "**/graphql-request/form-data": "3.0.4"
   },
   "devDependencies": {
     "@eslint/js": "9",
