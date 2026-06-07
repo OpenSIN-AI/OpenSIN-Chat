@@ -3,9 +3,20 @@ import js from "@eslint/js"
 import globals from "globals"
 import pluginReact from "eslint-plugin-react"
 import pluginReactHooks from "eslint-plugin-react-hooks"
+import pluginJsxA11y from "eslint-plugin-jsx-a11y"
 import pluginPrettier from "eslint-plugin-prettier"
 import configPrettier from "eslint-config-prettier"
 import unusedImports from "eslint-plugin-unused-imports"
+
+// Enable the full jsx-a11y recommended set but as warnings, so it surfaces
+// accessibility issues in CI without breaking the build on the existing
+// backlog. Tighten individual rules to "error" as they get fixed.
+const a11yRecommendedAsWarnings = Object.fromEntries(
+  Object.keys(pluginJsxA11y.flatConfigs.recommended.rules).map((rule) => [
+    rule,
+    "warn"
+  ])
+)
 
 export default [
   {
@@ -29,6 +40,7 @@ export default [
     plugins: {
       react: pluginReact,
       "react-hooks": pluginReactHooks,
+      "jsx-a11y": pluginJsxA11y,
       "unused-imports": unusedImports,
       prettier: pluginPrettier
     },
@@ -42,9 +54,19 @@ export default [
       // If you want hooks rules, add these (recommended)
       ...pluginReactHooks.configs.recommended.rules,
 
+      // Accessibility recommended rules (as warnings, see note above)
+      ...a11yRecommendedAsWarnings,
+
       // Prettier: disable conflicting stylistic rules + optionally enforce formatting
       ...configPrettier.rules,
       "prettier/prettier": "error",
+
+      // Lint-gate: surface any new unsanitized dangerouslySetInnerHTML as a warning.
+      // Tighten to "error" once the codebase is fully clean.
+      "react/no-danger": "warn",
+      // div onClick patterns — warn for now, migrate to buttons/roles incrementally.
+      "jsx-a11y/no-static-element-interactions": "warn",
+      "jsx-a11y/click-events-have-key-events": "warn",
 
       // Your overrides
       "react/react-in-jsx-scope": "off",

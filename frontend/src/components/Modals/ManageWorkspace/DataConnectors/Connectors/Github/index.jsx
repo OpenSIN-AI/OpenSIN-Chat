@@ -7,6 +7,7 @@ import pluralize from "pluralize";
 import { TagsInput } from "react-tag-input-component";
 import { Info, Warning } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
+import DOMPurify from "@/utils/chat/purify";
 
 const DEFAULT_BRANCHES = ["main", "master"];
 export default function GithubOptions() {
@@ -251,7 +252,9 @@ function PATAlert({ accessToken }) {
         <p className="text-sm">
           <span
             dangerouslySetInnerHTML={{
-              __html: t("connectors.github.token_information"),
+              __html: DOMPurify.sanitize(
+                t("connectors.github.token_information"),
+              ),
             }}
           />
           <br />
