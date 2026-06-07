@@ -27,6 +27,30 @@ export default function messageToSpeech(message = "") {
   let text = message;
 
   /*
+   * Remove thinking/thought blocks entirely — these are the model's internal
+   * reasoning and should never be read aloud to the user. Covers all tag
+   * variants used in the app: <thinking>, <think>, <thought>, <thought_chain>
+   * and their optional attributes, both complete and unclosed blocks.
+   */
+  const THOUGHT_KEYWORDS = ["thought_chain", "thought", "thinking", "think"];
+  for (const keyword of THOUGHT_KEYWORDS) {
+    // Complete blocks: <thinking ...>...</thinking>
+    text = text.replace(
+      new RegExp(`<${keyword}\\s*(?:[^>]*?)?>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`, "gi"),
+      " ",
+    );
+  }
+  // Strip any remaining unclosed opening thought tags and everything after them.
+  for (const keyword of THOUGHT_KEYWORDS) {
+    text = text.replace(
+      new RegExp(`<${keyword}\\s*(?:[^>]*?)?>([\\s\\S]*)$`, "gi"),
+      " ",
+    );
+  }
+  // Strip <response> / <answer> wrapper tags but keep their content.
+  text = text.replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ");
+
+  /*
    * Remove fenced code blocks entirely — reading code aloud is rarely
    * useful and produces a long stream of unintelligible characters.
    */

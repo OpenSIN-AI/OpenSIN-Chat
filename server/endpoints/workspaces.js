@@ -663,7 +663,36 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const text = safeJsonParse(wsChat.response, null)?.text;
+        const rawText = safeJsonParse(wsChat.response, null)?.text;
+        if (!rawText) return response.sendStatus(204).end();
+
+        // Strip thinking/thought blocks before handing the text to the TTS
+        // provider — the model's internal reasoning must not be read aloud.
+        const THOUGHT_KEYWORDS = [
+          "thought_chain",
+          "thought",
+          "thinking",
+          "think",
+        ];
+        let text = rawText;
+        for (const keyword of THOUGHT_KEYWORDS) {
+          text = text.replace(
+            new RegExp(
+              `<${keyword}\\s*(?:[^>]*?)?>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
+              "gi",
+            ),
+            " ",
+          );
+        }
+        for (const keyword of THOUGHT_KEYWORDS) {
+          text = text.replace(
+            new RegExp(`<${keyword}\\s*(?:[^>]*?)?>([\\s\\S]*)$`, "gi"),
+            " ",
+          );
+        }
+        // Strip <response>/<answer> wrapper tags but keep their content.
+        text = text.replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ");
+        text = text.replace(/\s+/g, " ").trim();
         if (!text) return response.sendStatus(204).end();
 
         const TTSProvider = getTTSProvider();
