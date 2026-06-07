@@ -82,6 +82,7 @@ ALLOWED_FILES=(
   #    verbatim from upstream and need to remain intact for `git am`).
   "docs/UPSTREAM-SYNC.md"
   "docs/vercel-deploy-fix.md"        # references upstream as AnythingLLM-Fork
+  "docs/architecture.md"             # SSoT production architecture — references AnythingLLM as upstream-fork context
   "scripts/upstream-sync/"
 
   # ── Server unit tests ──────────────────────────────────
