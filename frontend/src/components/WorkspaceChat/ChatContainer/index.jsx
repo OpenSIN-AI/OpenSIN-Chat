@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 import handleSocketResponse, {
   setAgentSessionActive,
+  REPORT_PREVIEW_EVENT,
 } from "@/utils/chat/agent";
 import DnDFileUploaderWrapper from "./DnDWrapper";
 import SpeechRecognition, {
@@ -32,7 +33,7 @@ import WorkspaceSources from "@/components/lib/WorkspaceSources";
 import SuggestedMessages from "@/components/lib/SuggestedMessages";
 import ChatSettingsMenu from "./ChatSettingsMenu";
 import WorkspaceModelPicker from "./WorkspaceModelPicker";
-import { ChatSidebarProvider } from "./ChatSidebar";
+import { ChatSidebarProvider, useChatSidebar } from "./ChatSidebar";
 import SourcesSidebar from "./SourcesSidebar";
 import MemoriesSidebar from "./MemoriesSidebar";
 import PreviewSidebar from "./PreviewSidebar";
@@ -41,6 +42,31 @@ import FilesystemSidebar from "./FilesystemSidebar";
 import DatabaseSidebar from "./DatabaseSidebar";
 import PoliticalSidebar from "./PoliticalSidebar";
 import RightSidebarIconBar from "./RightSidebarIconBar";
+
+/**
+ * Must live inside ChatSidebarProvider to access openPreview().
+ * Listens for the reportPreview window event dispatched by agent.js and
+ * opens the PreviewSidebar automatically.
+ */
+function ReportPreviewListener() {
+  const { openPreview } = useChatSidebar();
+  useEffect(() => {
+    function onReportPreview(e) {
+      if (!e.detail) return;
+      openPreview({
+        title: e.detail.title || "Bericht",
+        type: e.detail.type || "pdf",
+        downloadUrl: e.detail.downloadUrl || null,
+        versions: e.detail.versions || [],
+        content: null,
+      });
+    }
+    window.addEventListener(REPORT_PREVIEW_EVENT, onReportPreview);
+    return () =>
+      window.removeEventListener(REPORT_PREVIEW_EVENT, onReportPreview);
+  }, [openPreview]);
+  return null;
+}
 
 export default function ChatContainer({
   workspace,
@@ -358,6 +384,7 @@ export default function ChatContainer({
   if (isEmpty) {
     return (
       <ChatSidebarProvider>
+        <ReportPreviewListener />
         <div
           style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
           className="relative flex md:ml-[2px] md:mr-[16px] md:my-[16px] w-full h-full z-[2]"
@@ -410,6 +437,7 @@ export default function ChatContainer({
 
   return (
     <ChatSidebarProvider>
+      <ReportPreviewListener />
       <div
         style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
         className="relative flex md:ml-[2px] md:mr-[16px] md:my-[16px] w-full h-full z-[2]"

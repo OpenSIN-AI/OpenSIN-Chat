@@ -8,6 +8,7 @@ import { THREAD_RENAME_EVENT } from "@/components/Sidebar/ActiveWorkspaces/Threa
 
 export const AGENT_SESSION_START = "agentSessionStart";
 export const AGENT_SESSION_END = "agentSessionEnd";
+export const REPORT_PREVIEW_EVENT = "openafd:reportPreview";
 const handledEvents = [
   "statusResponse",
   "fileDownloadCard",
@@ -16,6 +17,7 @@ const handledEvents = [
   "rechartVisualize",
   "toolApprovalRequest",
   "clarificationRequest",
+  "reportPreview",
   // Streaming events
   "reportStreamEvent",
 ];
@@ -227,6 +229,15 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
         );
       }
     });
+  }
+
+  if (data.type === "reportPreview") {
+    // Dispatch a window event so ReportPreviewListener inside ChatContainer
+    // can call openPreview() from ChatSidebarContext.
+    window.dispatchEvent(
+      new CustomEvent(REPORT_PREVIEW_EVENT, { detail: data.content }),
+    );
+    return;
   }
 
   if (data.type === "fileDownloadCard") {

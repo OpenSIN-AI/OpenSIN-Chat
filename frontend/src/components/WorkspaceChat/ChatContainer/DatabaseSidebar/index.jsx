@@ -1,31 +1,40 @@
 // SPDX-License-Identifier: MIT
-import { X, Database, Users, Buildings, MagnifyingGlass } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import {
+  X,
+  Database,
+  Users,
+  ArrowClockwise,
+  ArrowSquareOut,
+} from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import ChatSidebar from "../ChatSidebar";
-import { useDatabaseSidebar } from "../ChatSidebar";
-
-const DATA_SOURCES = [
-  {
-    id: "bundestag",
-    icon: Buildings,
-    label: "Bundestag API",
-    description: "Aktuelle Bundestags-Daten: Abgeordnete, Ausschüsse, Abstimmungen",
-    status: "active",
-    url: "https://search.dip.bundestag.de/api/v1",
-  },
-  {
-    id: "abgeordnetenwatch",
-    icon: Users,
-    label: "Abgeordnetenwatch",
-    description: "Profile, Wahlversprechen, Nebentätigkeiten aller Politiker",
-    status: "active",
-    url: "https://www.abgeordnetenwatch.de/api/v2",
-  },
-];
+import ChatSidebar, { useDatabaseSidebar } from "../ChatSidebar";
 
 export default function DatabaseSidebar() {
   const { sidebarOpen, closeSidebar } = useDatabaseSidebar();
   const { t } = useTranslation();
+  const [politicians, setPoliticians] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function fetchPoliticians() {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/utils/bundestag/politicians?limit=8");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      setPoliticians(json?.data || []);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (sidebarOpen && politicians.length === 0) fetchPoliticians();
+  }, [sidebarOpen]);
 
   return (
     <ChatSidebar isOpen={sidebarOpen}>
@@ -33,11 +42,25 @@ export default function DatabaseSidebar() {
         className="ml-4 w-[350px] bg-zinc-900 light:bg-white light:border-2 light:border-slate-300 md:rounded-[16px] flex flex-col overflow-hidden mt-[72px]"
         style={{ maxHeight: "calc(100% - 88px)" }}
       >
+        {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <Database size={15} className="text-zinc-400 light:text-slate-500" />
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
-            {t("sidebar.database.title", "Politiker-Datenbank")}
+            {t("sidebar.database.title", "AfD-Abgeordnete")}
           </p>
+          <button
+            onClick={fetchPoliticians}
+            type="button"
+            disabled={loading}
+            className="text-zinc-500 hover:text-white transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
+            aria-label="Aktualisieren"
+          >
+            <ArrowClockwise
+              size={13}
+              weight="bold"
+              className={loading ? "animate-spin" : ""}
+            />
+          </button>
           <button
             onClick={closeSidebar}
             type="button"
@@ -46,50 +69,79 @@ export default function DatabaseSidebar() {
             <X size={14} weight="bold" />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-4 no-scroll flex flex-col gap-4">
-          <p className="text-xs text-zinc-500 light:text-slate-400">
-            {t("sidebar.database.desc", "Verbundene Datenquellen für Politikerdaten:")}
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-4 no-scroll flex flex-col gap-2">
+          <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
+            {t("sidebar.database.source", "Quelle: Abgeordnetenwatch API")}
           </p>
-          {DATA_SOURCES.map((source) => (
-            <div
-              key={source.id}
-              className="flex flex-col gap-2 p-3 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200"
-            >
-              <div className="flex items-center gap-2">
-                <source.icon size={15} className="text-zinc-300 light:text-slate-700" />
-                <span className="text-sm font-medium text-white light:text-slate-900 flex-1">
-                  {source.label}
-                </span>
-                <span
-                  className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
-                    source.status === "active"
-                      ? "bg-green-500/20 text-green-400"
-                      : "bg-zinc-700 text-zinc-400"
-                  }`}
+
+          {loading && politicians.length === 0 && (
+            <div className="flex flex-col gap-2">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 animate-pulse"
                 >
-                  {source.status === "active"
-                    ? t("sidebar.database.active", "Aktiv")
-                    : t("sidebar.database.inactive", "Inaktiv")}
-                </span>
-              </div>
-              <p className="text-xs text-zinc-400 light:text-slate-500 leading-relaxed">
-                {source.description}
-              </p>
-              <p className="text-[10px] font-mono text-zinc-600 light:text-slate-400 truncate">
-                {source.url}
-              </p>
+                  <div className="w-8 h-8 rounded-full bg-zinc-700 flex-shrink-0" />
+                  <div className="flex-1 space-y-1.5">
+                    <div className="h-3 w-28 rounded bg-zinc-700" />
+                    <div className="h-2 w-20 rounded bg-zinc-700" />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-          <div className="mt-2">
-            <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-2">
-              {t("sidebar.database.search_hint", "Suche über Agent")}
+          )}
+
+          {error && (
+            <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400">
+              {t("sidebar.database.error", "Fehler:")} {error}
+            </div>
+          )}
+
+          {!loading && !error && politicians.length === 0 && (
+            <p className="text-xs text-zinc-500 italic">
+              {t("sidebar.database.empty", "Keine Daten geladen.")}
             </p>
-            <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-800 light:bg-slate-100 border border-zinc-700 light:border-slate-200">
-              <MagnifyingGlass size={13} className="text-zinc-500" />
-              <p className="text-xs text-zinc-500 light:text-slate-400">
-                {t("sidebar.database.agent_hint", 'Nutze "@agent Suche Politiker..." im Chat')}
-              </p>
-            </div>
+          )}
+
+          {politicians.map((p) => {
+            const name = `${p.first_name || ""} ${p.last_name || ""}`.trim() || p.label || "—";
+            const constituency = p.constituency?.label || p.electoral_data?.constituency?.label || null;
+            const profileUrl = p.abgeordnetenwatch_url || null;
+            return (
+              <div
+                key={p.id}
+                className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200"
+              >
+                <div className="w-8 h-8 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
+                  <Users size={15} className="text-zinc-400 light:text-slate-500" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-white light:text-slate-900 truncate">{name}</p>
+                  {constituency && (
+                    <p className="text-[11px] text-zinc-500 light:text-slate-400 truncate">{constituency}</p>
+                  )}
+                </div>
+                {profileUrl && (
+                  <a
+                    href={profileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-600 hover:text-zinc-300 transition-colors flex-shrink-0"
+                    aria-label="Profil öffnen"
+                  >
+                    <ArrowSquareOut size={13} />
+                  </a>
+                )}
+              </div>
+            );
+          })}
+
+          <div className="mt-3 p-3 rounded-xl bg-zinc-800/50 border border-zinc-700">
+            <p className="text-[10px] text-zinc-500 leading-relaxed">
+              {t("sidebar.database.hint", 'Tipp: "@agent Suche AfD Abgeordnete..." im Chat für detaillierte Abfragen.')}
+            </p>
           </div>
         </div>
       </div>

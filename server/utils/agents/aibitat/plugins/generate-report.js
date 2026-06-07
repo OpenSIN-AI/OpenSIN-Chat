@@ -69,6 +69,28 @@ const generateReport = {
               }
 
               const result = await ReportGenerator.generate(reportData);
+
+              // Notify the frontend so PreviewSidebar opens automatically (Issue #55).
+              this.super.socket.send("reportPreview", {
+                title: reportData.title,
+                fileName: result.fileName,
+                fileSizeKB: result.fileSizeKB,
+                type: "pdf",
+                downloadUrl: `/api/reports/${result.fileName}`,
+                versions: [
+                  {
+                    label:
+                      template === "brief"
+                        ? "Kurzbericht"
+                        : template === "full"
+                          ? "Ausführlicher Bericht"
+                          : "Standardbericht",
+                    fileName: result.fileName,
+                    downloadUrl: `/api/reports/${result.fileName}`,
+                  },
+                ],
+              });
+
               return `Report generated: "${result.fileName}" (${result.fileSizeKB} KB). Download via GET /api/reports/${result.fileName}`;
             } catch (error) {
               return `Error generating report: ${error.message}`;

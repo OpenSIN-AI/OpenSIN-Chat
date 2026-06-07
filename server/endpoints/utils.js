@@ -37,6 +37,102 @@ function utilEndpoints(app) {
 
   const { terminalExecEndpoint } = require("./utils/terminalExec");
   terminalExecEndpoint(app);
+
+  // Bundestag DIP API proxy — avoids CORS for the browser (Issue #57)
+  app.get("/utils/bundestag/drucksachen", async (req, response) => {
+    try {
+      const apiKey = process.env.BUNDESTAG_API_KEY || "";
+      const params = new URLSearchParams({
+        f_fraktion: "AfD",
+        format: "json",
+        rows: req.query.rows || "10",
+        ...(apiKey ? { apikey: apiKey } : {}),
+      });
+      const res = await fetch(
+        `https://search.dip.bundestag.de/api/v1/drucksache?${params}`,
+        { headers: { Accept: "application/json" } },
+      );
+      if (!res.ok) throw new Error(`DIP ${res.status}`);
+      const json = await res.json();
+      response.status(200).json(json);
+    } catch (e) {
+      response.status(502).json({ error: e.message });
+    }
+  });
+
+  // Abgeordnetenwatch proxy — AfD politicians (Issue #57)
+  app.get("/utils/bundestag/politicians", async (req, response) => {
+    try {
+      const params = new URLSearchParams({
+        "party[label]": "AfD",
+        "legislature[label]": "Bundestag",
+        paginationlimit: req.query.limit || "10",
+      });
+      const res = await fetch(
+        `https://www.abgeordnetenwatch.de/api/v2/politicians?${params}`,
+        { headers: { Accept: "application/json" } },
+      );
+      if (!res.ok) throw new Error(`AW ${res.status}`);
+      const json = await res.json();
+      response.status(200).json(json);
+    } catch (e) {
+      response.status(502).json({ error: e.message });
+    }
+  });
+
+  // AfD RSS feed proxy (Issue #58)
+  app.get("/utils/political/rss", async (req, response) => {
+    try {
+      const feed =
+        req.query.feed || "https://www.afd.de/feed/";
+      const res = await fetch(feed, {
+        headers: { "User-Agent": "OpenAfD-Chat/1.0" },
+      });
+      if (!res.ok) throw new Error(`RSS ${res.status}`);
+      const xml = await res.text();
+      // Parse titles + links from RSS with simple regex — no xml parser needed
+      const items = [];
+      const itemRe = /<item>([\s\S]*?)<\/item>/g;
+      let m;
+      while ((m = itemRe.exec(xml)) !== null && items.length < 8) {
+        const block = m[1];
+        const title = (/<title><!\[CDATA\[(.+?)\]\]><\/title>/.exec(block) ||
+          /<title>(.+?)<\/title>/.exec(block) || [])[1] || "";
+        const link = (/<link>([^<]+)<\/link>/.exec(block) || [])[1] || "";
+        const pubDate = (/<pubDate>(.+?)<\/pubDate>/.exec(block) || [])[1] || "";
+        if (title) items.push({ title: title.trim(), link: link.trim(), pubDate: pubDate.trim() });
+      }
+      response.status(200).json({ items });
+    } catch (e) {
+      response.status(502).json({ error: e.message });
+    }
+  });
+
+  // Filesystem info for FilesystemSidebar (Issue #56)
+  app.get("/utils/filesystem", async (_, response) => {
+    try {
+      const os = require("os");
+      const path = require("path");
+      const disk = await getDiskStorage();
+      response.status(200).json({
+        platform: os.platform(),
+        nodeVersion: process.version,
+        arch: os.arch(),
+        hostname: os.hostname(),
+        uptime: Math.floor(os.uptime()),
+        totalMemMB: Math.round(os.totalmem() / 1024 / 1024),
+        freeMemMB: Math.round(os.freemem() / 1024 / 1024),
+        uploadPath: process.env.STORAGE_DIR
+          ? path.resolve(process.env.STORAGE_DIR)
+          : path.resolve("./storage"),
+        workDir: process.cwd(),
+        storage: disk,
+      });
+    } catch (e) {
+      console.error("filesystem endpoint error", e.message);
+      response.sendStatus(500).end();
+    }
+  });
 }
 
 function getGitVersion() {

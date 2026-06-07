@@ -10,9 +10,20 @@ import { useChatSidebar } from "../../ChatSidebar";
  * @param {{content: {filename: string, storageFilename?: string, fileSize?: number}}} props
  */
 function FileDownloadCard({ props }) {
-  const { filename, storageFilename, fileSize } = props.content || {};
+  const { filename, storageFilename, fileSize, downloadUrl } = props.content || {};
   const { badge, badgeBg, badgeText, fileType } = getFileDisplayInfo(filename);
   const [downloading, setDownloading] = useState(false);
+  const { openPreview } = useChatSidebar();
+
+  function handlePreview() {
+    openPreview({
+      title: filename || "Vorschau",
+      type: filename?.endsWith(".pdf") ? "pdf" : "doc",
+      downloadUrl: downloadUrl || (storageFilename ? `/api/files/${storageFilename}` : null),
+      versions: [],
+      content: null,
+    });
+  }
 
   const handleDownload = async () => {
     if (downloading) return;
@@ -51,18 +62,30 @@ function FileDownloadCard({ props }) {
               </p>
             </div>
           </div>
-          <button
-            onClick={handleDownload}
-            disabled={downloading}
-            className="flex items-center gap-x-2 px-4 py-2 rounded-lg border border-zinc-600 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-white light:text-theme-text-primary text-sm font-medium flex-shrink-0 ml-4 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {downloading ? (
-              <CircleNotch size={16} weight="bold" className="animate-spin" />
-            ) : (
-              <DownloadSimple size={16} weight="bold" />
+          <div className="flex items-center gap-x-2 flex-shrink-0 ml-4">
+            {(downloadUrl || storageFilename) && (
+              <button
+                onClick={handlePreview}
+                type="button"
+                className="flex items-center gap-x-1.5 px-3 py-2 rounded-lg border border-zinc-700 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-zinc-300 light:text-theme-text-secondary text-sm font-medium"
+              >
+                <Eye size={15} weight="regular" />
+                <span>Vorschau</span>
+              </button>
             )}
-            <span>{downloading ? "Downloading..." : "Download"}</span>
-          </button>
+            <button
+              onClick={handleDownload}
+              disabled={downloading}
+              className="flex items-center gap-x-2 px-4 py-2 rounded-lg border border-zinc-600 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-white light:text-theme-text-primary text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {downloading ? (
+                <CircleNotch size={16} weight="bold" className="animate-spin" />
+              ) : (
+                <DownloadSimple size={16} weight="bold" />
+              )}
+              <span>{downloading ? "Downloading..." : "Download"}</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
