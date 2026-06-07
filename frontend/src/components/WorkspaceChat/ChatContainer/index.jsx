@@ -7,17 +7,12 @@ import PromptInput, {
   PROMPT_INPUT_ID,
 } from "./PromptInput";
 import Workspace from "@/models/workspace";
-import handleChat, { ABORT_STREAM_EVENT } from "@/utils/chat";
+import handleChat from "@/utils/chat";
 import { isMobile } from "react-device-detect";
 import { SidebarMobileHeader } from "../../Sidebar";
 import { useNavigate } from "react-router-dom";
-import { v4 } from "uuid";
-import handleSocketResponse, {
-  websocketURI,
-  AGENT_SESSION_END,
-  AGENT_SESSION_START,
-  setAgentSessionActive,
-} from "@/utils/chat/agent";
+
+import handleSocketResponse, { setAgentSessionActive } from "@/utils/chat/agent";
 import DnDFileUploaderWrapper from "./DnDWrapper";
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -25,6 +20,7 @@ import SpeechRecognition, {
 import { ChatTooltips } from "./ChatTooltips";
 import { MetricsProvider } from "./ChatHistory/HistoricalMessage/Actions/RenderMetrics";
 import useChatContainerQuickScroll from "@/hooks/useChatContainerQuickScroll";
+import useWebSocket from "@/hooks/useWebSocket";
 import { PENDING_HOME_MESSAGE } from "@/utils/constants";
 import { clearPromptInputDraft } from "@/hooks/usePromptInputStorage";
 import { safeJsonParse } from "@/utils/request";
@@ -339,98 +335,17 @@ export default function ChatContainer({
     loadingResponse === true && fetchReply();
   }, [loadingResponse, chatHistory, workspace]);
 
-  // TODO: Simplify this WSS stuff
-  useEffect(() => {
-    let socket = null;
-
-    function handleWSS() {
-      try {
-        if (!socketId || !!websocket) return;
-        socket = new WebSocket(
-          `${websocketURI()}/api/agent-invocation/${socketId}`,
-        );
-        socket.supportsAgentStreaming = false;
-
-        window.addEventListener(ABORT_STREAM_EVENT, () => {
-          setAgentSessionActive(false);
-          window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
-          socket?.close();
-        });
-
-        socket.addEventListener("message", (event) => {
-          setLoadingResponse(true);
-          try {
-            handleSocketResponse(socket, event, setChatHistory);
-          } catch {
-            console.error("Failed to parse data");
-            setAgentSessionActive(false);
-            window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
-            socket.close();
-          }
-          setLoadingResponse(false);
-        });
-
-        socket.addEventListener("close", (_event) => {
-          setAgentSessionActive(false);
-          window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
-          // When the close was triggered by /reset, skip the "Agent session
-          // complete." status - the pending /reset flow will clear history.
-          if (pendingResetRef.current) {
-            pendingResetRef.current = false;
-          } else {
-            setChatHistory((prev) => [
-              ...prev.filter((msg) => !!msg.content),
-              {
-                uuid: v4(),
-                type: "statusResponse",
-                content: "Agent session complete.",
-                role: "assistant",
-                sources: [],
-                closed: true,
-                error: null,
-                animate: false,
-                pending: false,
-              },
-            ]);
-          }
-          setLoadingResponse(false);
-          setWebsocket(null);
-          setSocketId(null);
-        });
-        setWebsocket(socket);
-        setAgentSessionActive(true);
-        window.dispatchEvent(new CustomEvent(AGENT_SESSION_START));
-        window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
-      } catch (e) {
-        setChatHistory((prev) => [
-          ...prev.filter((msg) => !!msg.content),
-          {
-            uuid: v4(),
-            type: "abort",
-            content: e.message,
-            role: "assistant",
-            sources: [],
-            closed: true,
-            error: e.message,
-            animate: false,
-            pending: false,
-          },
-        ]);
-        setLoadingResponse(false);
-        setWebsocket(null);
-        setSocketId(null);
-      }
-    }
-    handleWSS();
-
-    return () => {
-      if (socket) {
-        setAgentSessionActive(false);
-        window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
-        socket.close();
-      }
-    };
-  }, [socketId]);
+  useWebSocket({
+    socketId,
+    websocket,
+    setWebsocket,
+    setSocketId,
+    setAgentSessionActive,
+    setLoadingResponse,
+    handleSocketResponse,
+    setChatHistory,
+    pendingResetRef,
+  });
 
   if (isEmpty) {
     return (
