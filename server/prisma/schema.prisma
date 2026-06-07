@@ -2,18 +2,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// PostgreSQL datasource — set DATABASE_URL in your .env file.
-// For local development with SQLite uncomment the block below and comment out the PostgreSQL block.
-// After switching run `yarn prisma:setup` from the root directory to migrate the database.
+// SQLite is the active datasource for OpenAfD-Chat (matches
+// `server/prisma/migrations/migration_lock.toml` and the runtime
+// `server/storage/openafd.db`). The PostgreSQL block is preserved
+// upstream-style for optional future migration.
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:../storage/openafd.db"
 }
 
-// SQLite fallback (local dev without PostgreSQL):
+// PostgreSQL datasource — set DATABASE_URL in your .env file.
 // datasource db {
-//   provider = "sqlite"
-//   url      = "file:../storage/openafd.db"
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
 // }
 
 model api_keys {
@@ -642,4 +643,23 @@ model model_router_rules {
   @@unique([router_id, title])
   @@index([router_id])
   @@index([router_id, enabled, priority])
+}
+
+// Persistente Background-Job Queue
+// Überlebt Server-Restarts, Mac-Sleep und Docker-Neustarts (Jobs liegen in SQLite).
+// Gemanaged von `server/utils/backgroundJobs/queue.js`.
+model job_queue {
+  id           Int       @id @default(autoincrement())
+  job_name     String
+  payload      String    // JSON-serialisiert; nur IDs/Slugs/Strings, keine Prisma-Objekte!
+  status       String    @default("pending") // pending | processing | completed | failed
+  attempts     Int       @default(0)
+  max_attempts Int       @default(3)
+  last_error   String?
+  locked_at    DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+
+  @@index([status, created_at])
+  @@index([status, locked_at])
 }

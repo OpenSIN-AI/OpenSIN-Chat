@@ -3,9 +3,11 @@ const { v4: uuidv4 } = require("uuid");
 const { DocumentManager } = require("../DocumentManager");
 const { WorkspaceChats } = require("../../models/workspaceChats");
 const { WorkspaceParsedFiles } = require("../../models/workspaceParsedFiles");
+const { WorkspaceThread } = require("../../models/workspaceThread");
 const { getVectorDbClass, resolveProviderConnector } = require("../helpers");
 const { writeResponseChunk } = require("../helpers/chat/responses");
 const { grepAgents } = require("./agents");
+const BackgroundQueue = require("../backgroundJobs/queue");
 const {
   grepCommand,
   VALID_COMMANDS,
@@ -324,6 +326,23 @@ async function streamChatWithWorkspace(
       threadId: thread?.id || null,
       user,
     });
+
+    // --- Persistente asynchrone Titel-Generierung (OpenAfD-Chat) ---
+    // Jobs laufen in `server/utils/backgroundJobs/queue.js` und überleben
+    // Server-Restarts, Mac-Sleep und Docker-Neustarts (SQLite-basiert).
+    // Nur serialisierbare Daten (IDs/Slugs/Strings) in das Payload — keine
+    // Prisma-Objekte, die JSON.stringify nicht überleben würden.
+    if (thread && thread.name === WorkspaceThread.defaultName) {
+      BackgroundQueue.add("GENERATE_THREAD_TITLE", {
+        threadId: thread.id,
+        workspaceSlug: workspace.slug,
+        prompt: message,
+        response: completeText,
+      }).catch((err) =>
+        console.error("[Chat] Queue enqueue failed:", err.message),
+      );
+    }
+    // --- ENDE ---
 
     writeResponseChunk(response, {
       uuid,

@@ -49,6 +49,7 @@ const {
 } = require("./endpoints/utils/googleAgentSkillEndpoints");
 const { memoryEndpoints } = require("./endpoints/memory");
 const { httpLogger } = require("./middleware/httpLogger");
+const BackgroundQueue = require("./utils/backgroundJobs/queue");
 const app = express();
 const apiRouter = express.Router();
 const FILE_LIMIT = "3GB";
@@ -198,3 +199,24 @@ app.use(function (_, response) {
 // In non-https mode we need to boot at the end since the server has not yet
 // started and is `.listen`ing.
 if (!process.env.ENABLE_HTTPS) bootHTTP(app, process.env.SERVER_PORT || 3001);
+
+// Persistente Background-Queue starten (nimmt automatisch pending Jobs
+// wieder auf, die ein Crash/Sleep überlebt haben). Muss NACH allen
+// Endpoints laufen, damit add()-Calls aus Request-Handlern bereits
+// funktionieren.
+BackgroundQueue.start();
+
+// Graceful Shutdown — sauberer Queue-Stopp, damit kein Job mitten im
+// Write abbricht (SQLite-Transaktionen würden das abfangen, aber
+// Konsistenz ist besser).
+process.on("SIGTERM", () => {
+  console.log("[Server] SIGTERM received, stopping queue...");
+  BackgroundQueue.stop();
+  process.exit(0);
+});
+
+process.on("SIGINT", () => {
+  console.log("[Server] SIGINT received, stopping queue...");
+  BackgroundQueue.stop();
+  process.exit(0);
+});
