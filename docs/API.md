@@ -65,9 +65,10 @@ GET /api/politician/search
 | `party` | string | Partei-Filter (z.B. `AfD`, `CDU`, `SPD`) |
 | `state` | string | Bundesland (z.B. `Bayern`, `Sachsen`) |
 | `faction` | string | Fraktion (z.B. `Fraktion der AfD`) |
-| `source` | string | Datenquelle: `bundestag`, `abgeordnetenwatch`, `all` (default) |
-| `limit` | number | Max. Anzahl Ergebnisse (default: 20, max: 100) |
-| `offset` | number | Pagination-Offset (default: 0) |
+| `source` | string | Datenquelle: `bundestag`, `abgeordnetenwatch` (sonst alle) |
+
+> **Hinweis:** Die Suche paginiert derzeit **nicht** (`limit`/`offset` werden
+> ignoriert) — `searchPoliticians()` wendet die Filter an und liefert alle Treffer.
 
 > **Tipp:** Mit `?source=` lassen sich Doppel-Einträge vermeiden, indem nur eine
 > offizielle Quelle angezeigt wird. Verfügbare Quellen liefert
@@ -80,11 +81,11 @@ curl "http://localhost:3001/api/politician/search?q=Weidel&party=AfD" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
-**Response:**
+**Response:** (`politicians` + `total` — kein `limit`/`offset`)
 
 ```json
 {
-  "results": [
+  "politicians": [
     {
       "id": 42,
       "externalId": "11004345",
@@ -99,9 +100,7 @@ curl "http://localhost:3001/api/politician/search?q=Weidel&party=AfD" \
       "profession": "Volkswirtin"
     }
   ],
-  "total": 1,
-  "limit": 20,
-  "offset": 0
+  "total": 1
 }
 ```
 
@@ -177,16 +176,16 @@ GET /api/politician/:id/votes
 
 | Parameter | Typ | Beschreibung |
 |-----------|-----|--------------|
-| `from` | ISO-Date | Start-Datum |
-| `to` | ISO-Date | End-Datum |
-| `topic` | string | Themen-Filter |
-| `result` | enum | `dafuer` / `dagegen` / `enthaltung` / `nichtabgegeben` |
-| `limit` | number | Default: 50, max: 200 |
+| `limit` | number | Default: 50, begrenzt auf 1–200 |
+| `offset` | number | Pagination-Offset (Default: 0) |
+
+> Liefert `404`, falls die `:id` keinem Politiker zugeordnet ist. Datums-/Themen-
+> Filter (`from`/`to`/`topic`/`result`) sind derzeit **nicht** implementiert.
 
 **Beispiel:**
 
 ```bash
-curl "http://localhost:3001/api/politician/42/votes?from=2025-01-01&topic=Migration" \
+curl "http://localhost:3001/api/politician/42/votes?limit=50&offset=0" \
   -H "Authorization: Bearer YOUR_API_KEY"
 ```
 
@@ -490,24 +489,22 @@ POST /api/research/start
 ```json
 {
   "query": "Aktuelle Positionen der CDU zur Energiepolitik",
-  "depth": "standard",
-  "sources": ["news", "web"],
-  "language": "de",
-  "maxAge": "30d",
-  "maxSources": 15,
+  "depth": "quick",
+  "sources": ["web", "politician"],
   "workspaceId": 1
 }
 ```
 
 | Parameter | Typ | Default | Beschreibung |
 |-----------|-----|---------|--------------|
-| `query` | string | — | Suchanfrage (required) |
-| `depth` | enum | `standard` | `quick` / `standard` / `deep` |
-| `sources` | array | `["web"]` | `web` / `news` / `academic` |
-| `language` | enum | `de` | `de` / `en` / `fr` / `multi` |
-| `maxAge` | string | `30d` | `24h` / `7d` / `30d` / `90d` / `1y` |
-| `maxSources` | number | 10 | Max. Anzahl Quellen (1-50) |
-| `workspaceId` | number | null | Optional: Speichere Ergebnis in Workspace |
+| `query` | string | — | Suchanfrage (required, 1–2000 Zeichen) |
+| `depth` | enum | `quick` | `quick` (1 Suche) / `deep` (3+ Suchen) |
+| `sources` | array | `["web", "politician"]` | Nicht-leeres Array aus `web` und/oder `politician` |
+| `workspaceId` | string \| number \| null | null | Optional: Workspace-Zuordnung |
+
+> **Validierung:** Ungültige Werte (leere `query`, `query` > 2000 Zeichen, unbekanntes
+> `depth`, leeres oder unbekanntes `sources`) liefern `400` mit einer
+> `error`-Beschreibung der verletzten Regeln.
 
 **Beispiel:**
 
@@ -518,8 +515,7 @@ curl -X POST "http://localhost:3001/api/research/start" \
   -d '{
     "query": "Aktuelle AfD-Umfragewerte 2026",
     "depth": "deep",
-    "sources": ["news"],
-    "maxAge": "7d"
+    "sources": ["web"]
   }'
 ```
 
@@ -618,37 +614,33 @@ GET /api/research/:id/result
 GET /api/research/list
 ```
 
-**Query-Parameter:**
-
-| Parameter | Typ | Beschreibung |
-|-----------|-----|--------------|
-| `status` | enum | Filter: `running` / `completed` / `failed` |
-| `limit` | number | Default: 20, max: 100 |
-| `offset` | number | Pagination |
+Liefert alle bekannten Jobs. Aktuell **keine** Query-Parameter (kein Status-Filter
+oder Pagination) — die vollständige Liste wird unter dem Schlüssel `jobs`
+zurückgegeben.
 
 **Beispiel:**
 
 ```bash
-curl "http://localhost:3001/api/research/list?status=completed&limit=10" \
+curl "http://localhost:3001/api/research/list" \
   -H "Authorization: Bearer YOUR_API_KEY"
-```
-
----
-
-### 3.5 Job abbrechen
-
-```http
-DELETE /api/research/:id
 ```
 
 **Response:**
 
 ```json
 {
-  "jobId": "research-abc123",
-  "status": "cancelled"
+  "jobs": [
+    { "jobId": "research-abc123", "status": "completed", "query": "..." }
+  ]
 }
 ```
+
+---
+
+### 3.5 Job abbrechen
+
+> **Status:** 📅 Geplant — `DELETE /api/research/:id` ist derzeit **nicht**
+> implementiert.
 
 ---
 
@@ -663,54 +655,46 @@ DELETE /api/research/:id
 POST /api/reports/generate
 ```
 
-**Body-Optionen:**
+**Body:**
 
-**Variante A: Aus Research-Job:**
+**Variante A: Aus einem Research-Job (Daten werden automatisch übernommen):**
 
 ```json
 {
-  "source": "research",
-  "jobId": "research-abc123",
+  "researchJobId": "research-abc123",
   "title": "Dossier: EU-Migrationspolitik 2026",
-  "branding": "afd",
-  "includeSources": true
+  "template": "standard"
 }
 ```
 
-**Variante B: Aus Workspace-Chat:**
+**Variante B: Mit explizit übergebenen Daten:**
 
 ```json
 {
-  "source": "chat",
-  "workspaceId": 1,
-  "threadId": 42,
-  "title": "Pressemitteilung Entwurf",
-  "branding": "afd"
-}
-```
-
-**Variante C: Aus Markdown-String:**
-
-```json
-{
-  "source": "markdown",
-  "content": "# Mein Report\n\nInhalt...",
-  "title": "Quick Report",
-  "branding": "afd"
+  "title": "Dossier: EU-Migrationspolitik 2026",
+  "query": "EU-Migrationspolitik 2026",
+  "summary": "## Zusammenfassung\n...",
+  "searchResults": [{ "title": "Quelle A", "link": "https://a.de", "snippet": "..." }],
+  "politicianResults": [{ "fullName": "Max Mustermann", "party": "AfD" }],
+  "extractedContent": [{ "title": "Doc A", "url": "https://a.de", "content": "..." }],
+  "template": "full"
 }
 ```
 
 | Parameter | Typ | Default | Beschreibung |
 |-----------|-----|---------|--------------|
-| `source` | enum | — | `research` / `chat` / `markdown` |
-| `jobId` | string | — | Required wenn `source=research` |
-| `workspaceId` | number | — | Required wenn `source=chat` |
-| `threadId` | number | — | Optional für Chat-Source |
-| `content` | string | — | Required wenn `source=markdown` |
-| `title` | string | — | Report-Titel (required) |
-| `branding` | enum | `afd` | `afd` / `none` / `custom` |
-| `includeSources` | bool | `true` | Quellenliste am Ende |
-| `includeCover` | bool | `true` | Cover-Page |
+| `researchJobId` | string | — | Optional: lädt `summary`/Quellen aus einem Research-Job |
+| `title` | string | `query` bzw. `"Recherche-Bericht"` | Report-Titel |
+| `query` | string | `""` | Ursprüngliche Fragestellung |
+| `summary` | string | `""` | Markdown-Zusammenfassung |
+| `searchResults` | array | `[]` | Web-Quellen |
+| `politicianResults` | array | `[]` | Politiker-Treffer |
+| `extractedContent` | array | `[]` | Extrahierte Volltexte |
+| `template` | enum | `standard` | `standard` / `brief` / `full` |
+
+> **Validierung:** `template` außerhalb der erlaubten Werte, nicht-Array-Felder
+> (`searchResults`/`politicianResults`/`extractedContent`) sowie ein komplett
+> leerer Body (kein `title`/`query`/`summary`/`researchJobId`) liefern `400`.
 
 **Beispiel:**
 
@@ -719,10 +703,9 @@ curl -X POST "http://localhost:3001/api/reports/generate" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "source": "research",
-    "jobId": "research-abc123",
+    "researchJobId": "research-abc123",
     "title": "Dossier: EU-Migrationspolitik 2026",
-    "branding": "afd"
+    "template": "standard"
   }'
 ```
 
@@ -730,11 +713,9 @@ curl -X POST "http://localhost:3001/api/reports/generate" \
 
 ```json
 {
-  "reportId": "report-xyz789",
-  "url": "/api/reports/report-xyz789",
-  "size": 245678,
-  "pages": 12,
-  "generatedAt": "2026-06-07T14:35:00Z"
+  "fileName": "Dossier_EU-Migrationspolitik_2026_a1b2c3d4.pdf",
+  "filePath": "/.../generated-reports/Dossier_EU-Migrationspolitik_2026_a1b2c3d4.pdf",
+  "fileSizeKB": "245.7"
 }
 ```
 
@@ -743,18 +724,22 @@ curl -X POST "http://localhost:3001/api/reports/generate" \
 ### 4.2 Report herunterladen
 
 ```http
-GET /api/reports/:id
+GET /api/reports/:fileName
 ```
+
+Der `fileName` ist der von `generate` zurückgegebene Dateiname. Der Server
+normalisiert ihn mit `path.basename`, sodass Path-Traversal (`../`) wirkungslos
+ist und zu `404` führt.
 
 **Beispiel:**
 
 ```bash
-curl "http://localhost:3001/api/reports/report-xyz789" \
+curl "http://localhost:3001/api/reports/Dossier_EU-Migrationspolitik_2026_a1b2c3d4.pdf" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -o report.pdf
 ```
 
-**Response:** `Content-Type: application/pdf`
+**Response:** `Content-Type: application/pdf` (oder `404`, wenn die Datei fehlt)
 
 ---
 
@@ -764,13 +749,8 @@ curl "http://localhost:3001/api/reports/report-xyz789" \
 GET /api/reports/list
 ```
 
-**Query-Parameter:**
-
-| Parameter | Typ | Beschreibung |
-|-----------|-----|--------------|
-| `source` | enum | Filter: `research` / `chat` / `markdown` |
-| `from` | ISO-Date | Start-Datum |
-| `limit` | number | Default: 20, max: 100 |
+Listet die generierten PDFs aus dem `generated-reports`-Verzeichnis. Aktuell
+**keine** Query-Parameter.
 
 **Response:**
 
@@ -778,16 +758,11 @@ GET /api/reports/list
 {
   "reports": [
     {
-      "id": "report-xyz789",
-      "title": "Dossier: EU-Migrationspolitik 2026",
-      "source": "research",
-      "size": 245678,
-      "pages": 12,
-      "generatedAt": "2026-06-07T14:35:00Z",
-      "downloadUrl": "/api/reports/report-xyz789"
+      "fileName": "Dossier_EU-Migrationspolitik_2026_a1b2c3d4.pdf",
+      "fileSizeKB": "245.7",
+      "createdAt": "2026-06-07T14:35:00.000Z"
     }
-  ],
-  "total": 5
+  ]
 }
 ```
 
@@ -795,9 +770,8 @@ GET /api/reports/list
 
 ### 4.4 Report löschen
 
-```http
-DELETE /api/reports/:id
-```
+> **Status:** 📅 Geplant — `DELETE /api/reports/:id` ist derzeit **nicht**
+> implementiert.
 
 ---
 

@@ -13,6 +13,9 @@
  */
 
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const logger = require("../../../utils/logger")();
+
+const MAX_GOAL_LENGTH = 2000;
 
 function getOrchestrator() {
   const { getOrchestrator } = require("../../../utils/orchestrator");
@@ -24,15 +27,29 @@ function apiOrchestratorEndpoints(app) {
 
   app.post("/orchestrator/start", [validApiKey], async (request, response) => {
     try {
-      const { goal, steps, options } = request.body;
-      if (!goal) return response.status(400).json({ error: "goal is required" });
+      const { goal, steps, options } = request.body || {};
+
+      const errors = [];
+      if (typeof goal !== "string" || !goal.trim())
+        errors.push("goal is required and must be a non-empty string");
+      else if (goal.length > MAX_GOAL_LENGTH)
+        errors.push(`goal must be ${MAX_GOAL_LENGTH} characters or fewer`);
+      if (steps !== undefined && !Array.isArray(steps))
+        errors.push("steps must be an array");
+      if (
+        options !== undefined &&
+        (typeof options !== "object" || options === null || Array.isArray(options))
+      )
+        errors.push("options must be an object");
+      if (errors.length)
+        return response.status(400).json({ error: errors.join("; ") });
+
       const orchestrator = getOrchestrator();
       const result = await orchestrator.startWorkflow({ goal, steps, options });
       response.status(200).json(result);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.status(500).json({ error: err.message });
+      logger.error(`[orchestrator/start] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -42,9 +59,8 @@ function apiOrchestratorEndpoints(app) {
       const workflows = orchestrator.listWorkflows();
       response.status(200).json({ workflows });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[orchestrator] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -55,9 +71,8 @@ function apiOrchestratorEndpoints(app) {
       if (!status) return response.status(404).json({ error: "Workflow not found" });
       response.status(200).json(status);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[orchestrator] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -68,9 +83,8 @@ function apiOrchestratorEndpoints(app) {
       if (!results) return response.status(404).json({ error: "Workflow not found" });
       response.status(200).json(results);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[orchestrator] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 }
