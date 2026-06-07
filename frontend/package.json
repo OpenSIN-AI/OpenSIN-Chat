@@ -59,7 +59,7 @@
     "recharts": "^2.12.5",
     "recharts-to-png": "^2.3.1",
     "regenerator-runtime": "^0.14.1",
-    "swr": "^2.2.5",
+    "swr": "^2.4.1",
     "text-case": "^1.0.9",
     "truncate": "^3.0.0",
     "uuid": "^9.0.0"

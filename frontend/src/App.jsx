@@ -2,9 +2,11 @@
 import React, { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";
+import { SWRConfig } from "swr";
 import { AuthProvider } from "@/AuthContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { swrConfig } from "@/utils/swrFetcher";
 import i18n from "./i18n";
 
 import { PfpProvider } from "./PfpContext";
@@ -28,18 +30,20 @@ export default function App() {
       <ThemeProvider>
         <PWAModeProvider>
           <Suspense fallback={<FullScreenLoader />}>
-            <AuthProvider>
-              <LogoProvider>
-                <PfpProvider>
-                  <I18nextProvider i18n={i18n}>
-                    <Outlet />
-                    <ToastContainer />
-                    <KeyboardShortcutsHelp />
-                    <ImageLightbox />
-                  </I18nextProvider>
-                </PfpProvider>
-              </LogoProvider>
-            </AuthProvider>
+            <SWRConfig value={swrConfig}>
+              <AuthProvider>
+                <LogoProvider>
+                  <PfpProvider>
+                    <I18nextProvider i18n={i18n}>
+                      <Outlet />
+                      <ToastContainer />
+                      <KeyboardShortcutsHelp />
+                      <ImageLightbox />
+                    </I18nextProvider>
+                  </PfpProvider>
+                </LogoProvider>
+              </AuthProvider>
+            </SWRConfig>
           </Suspense>
         </PWAModeProvider>
       </ThemeProvider>

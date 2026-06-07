@@ -1,29 +1,33 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState, useCallback } from "react";
+import useSWR from "swr";
 import System from "@/models/system";
 
 /**
- * A generalized hook that fetches system settings on mount.
- * Returns the settings, a loading flag, and a refresh function.
- * Reusable for any component that needs system settings without
- * duplicating System.keys() calls across the codebase.
+ * SWR cache key for the global system settings (`System.keys()`).
+ * Exported so other modules can revalidate after a settings update.
+ */
+export const SYSTEM_SETTINGS_KEY = "system/settings";
+
+/**
+ * A generalized hook that fetches system settings.
  *
- * @returns {{ settings: Object, loading: boolean, refresh: () => void }}
+ * Backed by SWR for cache de-duplication and stale-while-revalidate: multiple
+ * components calling this hook now share a single in-flight request instead of
+ * each firing their own `System.keys()` call.
+ *
+ * The public shape (`{ settings, loading, refresh }`) is preserved so existing
+ * consumers continue to work without changes.
+ *
+ * @returns {{ settings: Object, loading: boolean, refresh: () => Promise<any> }}
  */
 export default function useSystemSettings() {
-  const [settings, setSettings] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading, mutate } = useSWR(SYSTEM_SETTINGS_KEY, () =>
+    System.keys(),
+  );
 
-  const refresh = useCallback(async () => {
-    setLoading(true);
-    const _settings = await System.keys();
-    setSettings(_settings);
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    refresh();
-  }, [refresh]);
-
-  return { settings, loading, refresh };
+  return {
+    settings: data || {},
+    loading: isLoading,
+    refresh: mutate,
+  };
 }

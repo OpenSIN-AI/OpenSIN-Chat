@@ -2,27 +2,18 @@
 import Workspace from "@/models/workspace";
 import { castToType } from "@/utils/types";
 import showToast from "@/utils/toast";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import WorkspaceName from "./WorkspaceName";
 import SuggestedChatMessages from "./SuggestedChatMessages";
 import DeleteWorkspace from "./DeleteWorkspace";
 import CTAButton from "@/components/lib/CTAButton";
+import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 
 export default function GeneralInfo({ slug, deletionProtected = false }) {
-  const [workspace, setWorkspace] = useState(null);
+  const { workspace, isLoading: loading, refresh } = useWorkspaceBySlug(slug);
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [loading, setLoading] = useState(true);
   const formEl = useRef(null);
-
-  useEffect(() => {
-    async function fetchWorkspace() {
-      const workspace = await Workspace.bySlug(slug);
-      setWorkspace(workspace);
-      setLoading(false);
-    }
-    fetchWorkspace();
-  }, [slug]);
 
   const handleUpdate = async (e) => {
     setSaving(true);
@@ -36,6 +27,7 @@ export default function GeneralInfo({ slug, deletionProtected = false }) {
     );
     if (!!updatedWorkspace) {
       showToast("Workspace updated!", "success", { clear: true });
+      refresh();
     } else {
       showToast(`Error: ${message}`, "error", { clear: true });
     }

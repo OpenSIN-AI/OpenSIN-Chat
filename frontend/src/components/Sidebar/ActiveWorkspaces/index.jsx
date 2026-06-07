@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Workspace from "@/models/workspace";
@@ -10,6 +10,7 @@ import paths from "@/utils/paths";
 import { Link, useParams, useNavigate, useMatch } from "react-router-dom";
 import { GearSix, UploadSimple, DotsSixVertical } from "@phosphor-icons/react";
 import useUser from "@/hooks/useUser";
+import useWorkspaces from "@/hooks/useWorkspaces";
 import ThreadContainer from "./ThreadContainer";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import showToast from "@/utils/toast";
@@ -19,22 +20,16 @@ import { safeJsonParse } from "@/utils/request";
 export default function ActiveWorkspaces() {
   const navigate = useNavigate();
   const { slug } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [workspaces, setWorkspaces] = useState([]);
+  const {
+    workspaces,
+    isLoading: loading,
+    mutate: mutateWorkspaces,
+  } = useWorkspaces({ ordered: true });
   const [selectedWs, setSelectedWs] = useState(null);
   const { showing, showModal, hideModal } = useManageWorkspaceModal();
   const { user } = useUser();
   const isInWorkspaceSettings = !!useMatch("/workspace/:slug/settings/:tab");
   const isHomePage = !!useMatch("/");
-
-  useEffect(() => {
-    async function getWorkspaces() {
-      const workspaces = await Workspace.all();
-      setLoading(false);
-      setWorkspaces(Workspace.orderWorkspaces(workspaces));
-    }
-    getWorkspaces();
-  }, []);
 
   if (loading) {
     return (
@@ -59,13 +54,16 @@ export default function ActiveWorkspaces() {
     const reorderedWorkspaces = Array.from(workspaces);
     const [removed] = reorderedWorkspaces.splice(startIndex, 1);
     reorderedWorkspaces.splice(endIndex, 0, removed);
-    setWorkspaces(reorderedWorkspaces);
     const success = Workspace.storeWorkspaceOrder(
       reorderedWorkspaces.map((w) => w.id),
     );
-    if (!success) {
+    if (success) {
+      // Optimistically update the SWR cache with the new order without
+      // triggering a revalidation; the stored preference keeps it stable.
+      mutateWorkspaces(reorderedWorkspaces, { revalidate: false });
+    } else {
       showToast("Failed to reorder workspaces", "error");
-      Workspace.all().then((workspaces) => setWorkspaces(workspaces));
+      mutateWorkspaces();
     }
   }
 
