@@ -1,11 +1,24 @@
 // SPDX-License-Identifier: MIT
 /* eslint-env jest */
+
+// Mock the database models with explicit factory functions so all methods
+// are jest mock functions from the start. This avoids module-cache issues
+// where jest.mock() is hoisted but require() of the same module happens
+// before the mock is fully wired up.
+jest.mock("../../../models/workspaceChats", () => ({
+  WorkspaceChats: {
+    whereWithData: jest.fn().mockResolvedValue([]),
+    new: jest.fn(),
+    update: jest.fn(),
+  },
+}));
+jest.mock("../../../models/embedChats", () => ({
+  EmbedChats: {
+    whereWithEmbedAndWorkspace: jest.fn().mockResolvedValue([]),
+  },
+}));
+
 const { prepareChatsForExport } = require("../../../utils/helpers/chat/convertTo");
-
-// Mock the database models
-jest.mock("../../../models/workspaceChats");
-jest.mock("../../../models/embedChats");
-
 const { WorkspaceChats } = require("../../../models/workspaceChats");
 const { EmbedChats } = require("../../../models/embedChats");
 
@@ -23,17 +36,20 @@ const mockChat = (withImages = false) => {
       metrics: {},
     }),
     createdAt: new Date(),
-    workspace: { name: "Test Workspace", openAiPrompt: "Test OpenAI Prompt" },
+    workspaceId: 42,
+    workspace: { id: 42, name: "Test Workspace", openAiPrompt: "Test OpenAI Prompt" },
     user: { username: "testuser" },
     feedbackScore: 1,
-  }
+  };
 };
 
 describe("prepareChatsForExport", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    WorkspaceChats.whereWithData = jest.fn().mockResolvedValue([]);
-    EmbedChats.whereWithEmbedAndWorkspace = jest.fn().mockResolvedValue([]);
+    // Reset only the mock return values, not the mock functions themselves
+    WorkspaceChats.whereWithData.mockReset();
+    EmbedChats.whereWithEmbedAndWorkspace.mockReset();
+    WorkspaceChats.whereWithData.mockResolvedValue([]);
+    EmbedChats.whereWithEmbedAndWorkspace.mockResolvedValue([]);
   });
 
   test("should throw error for invalid chat type", async () => {
@@ -148,7 +164,7 @@ describe("prepareChatsForExport", () => {
     expect(result).toBeDefined();
     expect(result).toEqual(
       {
-        [chatExample.workspace.id]: {
+        [chatExample.workspaceId]: {
           messages: [
             {
               role: "system",
@@ -188,7 +204,7 @@ describe("prepareChatsForExport", () => {
     expect(result).toBeDefined();
     expect(result).toEqual(
       {
-        [chatExample.workspace.id]: {
+        [chatExample.workspaceId]: {
           messages: [
             {
               role: "system",

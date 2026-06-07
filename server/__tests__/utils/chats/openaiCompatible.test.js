@@ -1,13 +1,25 @@
 // SPDX-License-Identifier: MIT
 /* eslint-env jest, node */
-const { OpenAICompatibleChat } = require('../../../utils/chats/openaiCompatible');
-const { WorkspaceChats } = require('../../../models/workspaceChats');
-const helpers = require('../../../utils/helpers');
-const { extractTextContent, extractAttachments } = require('../../../endpoints/api/openai/helpers');
 
-// Mock dependencies
-jest.mock('../../../models/workspaceChats');
-jest.mock('../../../utils/helpers');
+// Mock dependencies (jest.mock is hoisted above all requires)
+jest.mock('../../../models/workspaceChats', () => ({
+  WorkspaceChats: {
+    new: jest.fn(),
+    update: jest.fn(),
+  },
+}));
+jest.mock('../../../utils/helpers', () => ({
+  getVectorDbClass: jest.fn(),
+  getLLMProvider: jest.fn(),
+  resolveProviderConnector: jest.fn(),
+  getLLMProviderClass: jest.fn(),
+  getBaseLLMProviderModel: jest.fn(),
+  getEmbeddingEngineSelection: jest.fn(),
+  maximumChunkLength: jest.fn().mockReturnValue(1000),
+  toChunks: jest.fn((arr, size) => arr),
+  humanFileSize: jest.fn(),
+  reportEmbeddingProgress: jest.fn(),
+}));
 jest.mock('../../../utils/DocumentManager', () => ({
   DocumentManager: class {
     constructor() {
@@ -15,6 +27,12 @@ jest.mock('../../../utils/DocumentManager', () => ({
     }
   }
 }));
+
+// Require AFTER all jest.mock() calls so we get the mocked versions
+const { OpenAICompatibleChat } = require('../../../utils/chats/openaiCompatible');
+const { WorkspaceChats } = require('../../../models/workspaceChats');
+const helpers = require('../../../utils/helpers');
+const { extractTextContent, extractAttachments } = require('../../../endpoints/api/openai/helpers');
 
 describe('OpenAICompatibleChat', () => {
   let mockWorkspace;
