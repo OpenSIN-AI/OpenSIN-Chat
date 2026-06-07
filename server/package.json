@@ -34,6 +34,7 @@
     "@langchain/cohere": "^1.0.5",
     "@langchain/community": "^1.1.29",
     "@langchain/core": "^1.1.48",
+    "@langchain/ollama": "^1.2.7",
     "@langchain/openai": "^0.3.0",
     "@langchain/textsplitters": "^0.1.0",
     "@mintplex-labs/bree": "^9.2.5",
@@ -111,7 +112,9 @@
     "jwa": "2.0.1",
     "buffer-equal-constant-time": "1.0.1",
     "form-data": "4.0.4",
-    "graphql-request": { "form-data": "3.0.4" },
+    "graphql-request": {
+      "form-data": "3.0.4"
+    },
     "lodash": "^4.18.0",
     "brace-expansion": ">=5.0.5",
     "tar-fs": "^3.0.0",

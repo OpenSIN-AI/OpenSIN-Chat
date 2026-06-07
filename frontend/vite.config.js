@@ -78,9 +78,14 @@ export default defineConfig({
         // are loaded through the module graph at runtime.
         manualChunks(id) {
           if (!id.includes("node_modules")) return;
-          if (/[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|scheduler)[\\/]/.test(id))
-            return "vendor-react";
-          if (/[\\/]node_modules[\\/]katex[\\/]/.test(id)) return "vendor-katex";
+          // KEEP react in the main entry chunk — splitting it causes a race
+          // condition where vendor-ui (TanStack Query / Floating UI) tries
+          // to call React.useLayoutEffect during its top-level evaluation
+          // before vendor-react has finished initializing. Even with
+          // modulepreload links the chunks are evaluated in parallel
+          // and the page goes black with "Cannot read properties of
+          // undefined (reading 'useLayoutEffect')".
+          if (/[\\/]node_modules[\\/](katex)[\\/]/.test(id)) return "vendor-katex";
           if (/[\\/]node_modules[\\/]highlight\.js[\\/]/.test(id)) return "vendor-highlight";
           if (/[\\/]node_modules[\\/](markdown-it|dompurify|@mintplex-labs[\\/]mdpdf|marked|remark|rehype|mdast|micromark)[\\/]/.test(id))
             return "vendor-markdown";
@@ -92,8 +97,10 @@ export default defineConfig({
             return "vendor-tts";
           if (/[\\/]node_modules[\\/](lodash|moment|date-fns|dayjs)[\\/]/.test(id))
             return "vendor-utils";
+          // vendor-ui chunks MUST come after React in the main bundle, so
+          // we keep them in the main chunk as well to avoid the race.
           if (/[\\/]node_modules[\\/](react-tooltip|@tanstack|@floating-ui)[\\/]/.test(id))
-            return "vendor-ui";
+            return undefined;
           return "vendor";
         },
       },
