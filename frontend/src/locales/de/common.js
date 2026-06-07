@@ -138,6 +138,15 @@ const TRANSLATIONS = {
       editWorkspace: "Arbeitsbereich bearbeiten",
       uploadDocument: "Ein Dokument hochladen",
     },
+    workspaceSources: {
+      title: "Quellen des Workspace",
+      add: "Quellen hinzufügen",
+      empty:
+        "Noch keine Quellen vorhanden.\nLade Dokumente hoch oder füge URLs hinzu, um dem Chat mehr Kontext zu geben.",
+      type_document: "Dokument",
+      type_url: "URL",
+      type_db: "Datenbank",
+    },
     greeting: "Wie kann ich Ihnen heute helfen?",
   },
   "new-workspace": {
@@ -1293,6 +1302,23 @@ const TRANSLATIONS = {
     text_size_label: "Schriftgröße",
     select_model: "Modell auswählen",
     sources: "Quellen",
+    attach_menu: {
+      add_files: "Dateien hinzufügen",
+      current_sources: "Aktuelle Quellen",
+      add_from_url: "Aus URL einfügen",
+      loading: "Wird geladen...",
+      no_sources: "Keine Quellen verfügbar",
+      no_workspace:
+        "Kein Workspace verfügbar. Sende zuerst eine Nachricht, um einen Workspace zu erstellen.",
+      add_success: "Quelle zum Workspace hinzugefügt",
+      add_failed: "Quelle konnte nicht hinzugefügt werden",
+      url_hint:
+        "Füge die URL einer Webseite oder eines YouTube-Videos ein, um sie als Quelle hinzuzufügen.",
+      url_submit: "Quelle hinzufügen",
+      url_submitting: "Wird hinzugefügt...",
+      url_success: "URL als Quelle hinzugefügt",
+      url_failed: "URL konnte nicht hinzugefügt werden",
+    },
     source_filter_label: "Quellen-Filter",
     source_filter_all: "Alle",
     source_filter_documents: "Dokumente",

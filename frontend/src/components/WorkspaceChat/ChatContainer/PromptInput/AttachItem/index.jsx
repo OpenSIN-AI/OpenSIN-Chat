@@ -11,6 +11,7 @@ import {
 } from "../../DnDWrapper";
 import { useTheme } from "@/hooks/useTheme";
 import ParsedFilesMenu from "./ParsedFilesMenu";
+import AddSourceMenu from "./AddSourceMenu";
 
 /**
  * This is a simple proxy component that clicks on the DnD file uploader for the user.
@@ -26,6 +27,9 @@ export default function AttachItem({
   const slug = workspaceSlug || params.slug;
   const threadSlug = workspaceThreadSlug ?? params.threadSlug ?? null;
   const tooltipRef = useRef(null);
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [showMenu, setShowMenu] = useState(false);
   const [isEmbedding, setIsEmbedding] = useState(false);
   const [files, setFiles] = useState([]);
   const [currentTokens, setCurrentTokens] = useState(0);
@@ -62,15 +66,39 @@ export default function AttachItem({
   }
 
   /**
-   * Handles the click event for the attach item button.
+   * Toggles the attach-source dropdown menu.
    * @param {MouseEvent} e - The click event.
    * @returns {void}
    */
   function handleClick(e) {
     e?.target?.blur();
-    document?.getElementById("dnd-chat-file-uploader")?.click();
+    setShowMenu((prev) => !prev);
     return;
   }
+
+  /**
+   * Triggers the hidden local file uploader (DnD input).
+   * @returns {void}
+   */
+  function triggerLocalUpload() {
+    document?.getElementById("dnd-chat-file-uploader")?.click();
+  }
+
+  useEffect(() => {
+    if (!showMenu) return;
+    function handleClickOutside(e) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(e.target)
+      ) {
+        setShowMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showMenu]);
 
   useEffect(() => {
     fetchFiles();
@@ -86,8 +114,9 @@ export default function AttachItem({
   }, [slug, threadSlug]);
 
   return (
-    <>
+    <div className="relative flex items-center">
       <button
+        ref={buttonRef}
         id="attach-item-btn"
         data-tooltip-id={
           showTooltip ? "tooltip-attach-item-btn" : "attach-item-btn"
@@ -144,6 +173,18 @@ export default function AttachItem({
           />
         </Tooltip>
       )}
-    </>
+      {showMenu && (
+        <div
+          ref={menuRef}
+          className="absolute bottom-full left-0 mb-2 bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-50 p-1"
+        >
+          <AddSourceMenu
+            workspaceSlug={slug}
+            onClose={() => setShowMenu(false)}
+            onAddLocalFiles={triggerLocalUpload}
+          />
+        </div>
+      )}
+    </div>
   );
 }

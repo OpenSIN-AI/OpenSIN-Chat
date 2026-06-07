@@ -2,10 +2,8 @@
 import { useState, useRef, useEffect } from "react";
 import { SlidersHorizontal } from "@phosphor-icons/react";
 import useLoginMode from "@/hooks/useLoginMode";
-import TextSizeRow from "./TextSize";
 import MemoriesRow from "./Memories";
 import SourcesRow from "./Sources";
-import SourceFilterRow from "./SourceFilter";
 
 export default function ChatSettingsMenu() {
   const mode = useLoginMode();
@@ -60,9 +58,7 @@ export default function ChatSettingsMenu() {
           ref={menuRef}
           className="absolute right-0 top-[42px] bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg p-3.5 w-[226px] flex flex-col gap-1.5 shadow-lg"
         >
-          <TextSizeRow />
           <SourcesRow onClose={() => setShowMenu(false)} />
-          <SourceFilterRow onClose={() => setShowMenu(false)} />
           <MemoriesRow onClose={() => setShowMenu(false)} />
         </div>
       )}
