@@ -31,6 +31,8 @@ OpenAfD Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, R
 
 ## ✨ Features
 
+### AnythingLLM-Basis (geerbt)
+
 - 📚 **Dokumente chatten** — PDF, DOCX, TXT, Markdown, Webseiten, YouTube-Transkripte
 - 🧠 **Vektor-Datenbanken** — LanceDB, Chroma, Pinecone, Qdrant, Milvus, PGVector …
 - 🤖 **LLM-Auswahl** — OpenAI, Anthropic, Mistral, DeepSeek, Ollama (lokal), LM Studio, Lemonade …
@@ -40,6 +42,172 @@ OpenAfD Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, R
 - 🌐 **Mehrsprachig** — Deutsch, Englisch, weitere Sprachen
 - 🇩🇪 **AfD-Branding** — blaues Farbschema, eigene Logo-Platzhalter, deutschsprachiger System-Prompt
 - 🚫 **Keine Telemetrie** — Null Datenverkehr zu Dritten (kein PostHog, kein CDN-Tracking)
+
+### AfD-spezifisch (neu in OpenAfD Chat)
+
+- 🏛 **Politiker-Datenbank** — Bundestag-API + Abgeordnetenwatch als strukturierte Quellen (Stammdaten, Mandate, Votes, Reden) — direkt abfragbar, kein Crawling nötig
+- 📜 **Plenarprotokoll-Suche** — semantische Volltextsuche über Bundestags-Reden mit Vektor-Index (LanceDB); Antworten mit Rede-Kontext und Quellenverweis
+- 🔍 **Deep-Research-Pipeline** — automatisierte Web-Recherche (Search → Extract → Summarize) mit Quellen-Tracking; asynchron via Job-IDs, polling-fähig
+- 📄 **AfD-PDF-Reports** — gebrandete Berichte (Cover, Header, Footer in AfD-Blau `#009ee0`) mit Inhaltsverzeichnis, Quellenliste und Politiker-Bezügen — direkt aus Research-Jobs generierbar
+- 🤖 **4 Agent-Plugins** — `@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator` — direkt im Chat-Workflow aufrufbar (Slash-Commands / Agent-Skill-Whitelist)
+
+## 🇩🇪 AfD-spezifische Features im Detail
+
+OpenAfD Chat erweitert AnythingLLM um vier politisch zugeschnittene Module. Sie sind als eigenständige Server-Utilities unter `server/utils/` implementiert und über geschützte REST-Endpunkte (`validApiKey`-Middleware) ansprechbar.
+
+### 🏛 Modul 1 — Politiker-Datenbank
+
+**Code:** [`server/utils/politician/`](./server/utils/politician/)
+
+Strukturierte Anbindung an zwei offizielle deutsche Parlamentsdaten-Quellen:
+
+| Datei | Aufgabe |
+|---|---|
+| `bundestagApi.js` | Anbindung an die offizielle Bundestag-Open-Data-API (Stammdaten, Mandate, Abstimmungen, Reden) |
+| `abgeordnetenwatchApi.js` | Anbindung an Abgeordnetenwatch (Wahlkreise, Beruf, Ausschüsse, Nebentätigkeiten) |
+| `plenarScraper.js` | Web-Scraper für ältere Plenarprotokolle, die nicht in der API enthalten sind |
+| `vectorStore.js` | LanceDB-basierter Vektor-Index für semantische Suche über Reden |
+| `embedder.js` | Embedding-Worker (chunkt und vektorisiert Plenarprotokolle) |
+| `index.js` | Public API: `PoliticianDB` Klasse mit `getPolitician`, `search`, `getVotes`, `getSpeeches`, `getMandates`, `speechSearch` |
+
+**REST-Endpoints:** `/api/politician/*`
+
+```
+GET /api/politician/search?q=…&party=…&state=…
+GET /api/politician/speech-search?q=…   ← semantische Suche über Reden
+GET /api/politician/parties
+GET /api/politician/states
+GET /api/politician/stats
+GET /api/politician/:id
+GET /api/politician/:id/votes
+GET /api/politician/:id/speeches
+GET /api/politician/:id/mandates
+```
+
+**Use-Cases:**
+
+- **Abgeordneten-Dossier** — alle Mandate, Ausschüsse, Reden und Abstimmungen eines MdB auf Knopfdruck
+- **Wahlkreis-Vergleich** — filtern nach Bundesland, Fraktion, Wahlperiode
+- **Reden-Analyse** — semantische Suche: „Wer hat im Bundestag 2024 über die Energiepolitik der Bundesregierung gesprochen?"
+- **Abstimmungs-Tracking** — wie hat ein MdB zu einem konkreten Gesetz abgestimmt?
+
+---
+
+### 🔍 Modul 2 — Deep-Research-Pipeline
+
+**Code:** [`server/utils/research/`](./server/utils/research/)
+
+Asynchrone Recherche-Pipeline mit drei klaren Stufen:
+
+| Datei | Aufgabe |
+|---|---|
+| `webSearchEngine.js` | SerpAPI / SearXNG / Bing-Such-Provider (modular) |
+| `contentExtractor.js` | Article-Extractor (Mozilla Readability) — holt Volltext aus Suchergebnissen |
+| `summarizer.js` | LLM-gestützte Zusammenfassung mit Quellen-Attribution |
+| `index.js` | Orchestrator: `ResearchPipeline` mit `start`, `getStatus`, `getResults`; Job-Verwaltung in-memory |
+
+**REST-Endpoints:** `/api/research/*`
+
+```
+POST /api/research/start      ← { query, sources, maxResults } → { jobId }
+GET  /api/research/list
+GET  /api/research/:id         ← Status (pending | running | completed | failed)
+GET  /api/research/:id/result  ← Vollständige Ergebnisse (Summary + Quellen + Extrahiertes)
+```
+
+**Use-Cases:**
+
+- **Faktencheck** — Pipeline verifiziert eine Behauptung gegen mehrere Web-Quellen
+- **Hintergrund-Recherche** — „Recherchiere alles zu Drucksache 20/12345"
+- **Politiker-Profil-Vorbereitung** — sammle aktuelle Aussagen und Positionen aus Medien
+- **Pressemitteilungs-Vorbereitung** — Belege und Quellen für ein neues Pressestatement
+
+---
+
+### 📄 Modul 3 — AfD-PDF-Reports
+
+**Code:** [`server/utils/reports/`](./server/utils/reports/)
+
+Generiert aus Research-Ergebnissen oder manuellen Daten ein druckfertiges PDF im AfD-Corporate-Design.
+
+| Datei | Aufgabe |
+|---|---|
+| `index.js` | `ReportGenerator` Klasse (PDFKit-basiert) mit Cover-Page, Inhaltsverzeichnis, mehreren Inhalts-Sektionen, Quellenliste, Header/Footer in AfD-Blau |
+
+**REST-Endpoints:** `/api/reports/*`
+
+```
+POST /api/reports/generate   ← { title, query, summary, researchJobId? } → { fileName, url }
+GET  /api/reports/list
+GET  /api/reports/:fileName  ← Download
+```
+
+**Design-Tokens:**
+
+- Primärfarbe: `#009ee0` (AfD-Blau) — Header, Footer, Akzente
+- Schrift: DejaVu Sans (vollständiger UTF-8- und Umlaut-Support)
+- Layout: A4, 25 mm Margins, automatisches Inhaltsverzeichnis
+- Output: `server/storage/generated-reports/*.pdf`
+
+**Use-Cases:**
+
+- **Pressemitteilungen** — druckfertige 1–2-Seiten-PDFs aus Research-Ergebnissen
+- **Abgeordneten-Dossier** — Bürgeranfragen mit kompaktem Profil + Quellen
+- **Faktencheck-Berichte** — neutrale Aufbereitung für Social-Media oder Veranstaltungen
+- **Interne Papiere** — Vorlagen für Fraktionssitzungen, AGs, Kreisverbände
+
+---
+
+### 🤖 Modul 4 — Agent-Plugins (4 Stück)
+
+**Code:** [`server/utils/agents/`](./server/utils/agents/) und [`server/utils/agentFlows/`](./server/utils/agentFlows/) (Flow-Ausführung), [`server/utils/orchestrator/`](./server/utils/orchestrator/) (Workflow-Engine)
+
+Die vier Plugins sind die **Schnittstelle zwischen Chat und den drei Modulen oben**. Sie werden im Agent-Framework registriert und sind in jedem Workspace-Chat als Slash-Command verfügbar.
+
+| Plugin | Zweck | Ruft auf |
+|---|---|---|
+| `@politician-search` | Findet Abgeordnete und Reden zu einer Frage | Modul 1 (Politiker-DB) |
+| `@deep-research` | Startet eine asynchrone Research-Pipeline | Modul 2 (Research) |
+| `@generate-report` | Erzeugt PDF aus Research-Job | Modul 3 (Reports) |
+| `@orchestrator` | Verkettet mehrere Agents zu einem Workflow (z. B. Search → Research → Report) | Module 1–3 + Agent-Flows |
+
+**REST-Endpoints:** `/api/orchestrator/*`
+
+```
+POST /api/orchestrator/start      ← { goal, steps: [...] } → { workflowId }
+GET  /api/orchestrator/list
+GET  /api/orchestrator/:id
+GET  /api/orchestrator/:id/result
+```
+
+**Use-Cases:**
+
+- **One-Shot-Dossier:** `@politician-search Max Mustermann` → `@generate-report` → fertiges PDF
+- **Recherche-zu-PDF:** `@deep-research Energiepolitik 2024` → warten → `@generate-report`
+- **Multi-Step-Workflow:** `@orchestrator` mit Steps `[politician-search, deep-research, generate-report]` als Ein-Klick-Pipeline
+
+---
+
+### Architektur-Übersicht
+
+```
+┌──────────────┐    ┌───────────────┐    ┌────────────────┐
+│  Chat-UI     │───▶│  Agent-Plugin │───▶│  Orchestrator  │
+│  (React)     │    │  (× 4)        │    │  (Workflow)    │
+└──────────────┘    └───────────────┘    └────────────────┘
+                            │                     │
+                            ▼                     ▼
+        ┌─────────────┬─────────────┬─────────────────┐
+        │  Politiker  │  Research   │  PDF-Report     │
+        │  -DB        │  -Pipeline  │  -Generator     │
+        │ (Modul 1)   │ (Modul 2)   │ (Modul 3)       │
+        └─────────────┴─────────────┴─────────────────┘
+              │              │              │
+              ▼              ▼              ▼
+        Bundestag-API   SerpAPI/        PDFKit
+        Abgeordneten-   Readability/    AfD-Blau
+        watch-API       LLM             #009ee0
+```
 
 ## 🚀 Schnellstart
 
@@ -126,6 +294,13 @@ flowchart TB
 OpenAfD-Chat/
 ├── frontend/      # Vite + React (UI) — yarn build → dist/ wird nach server/public/ kopiert
 ├── server/        # Node.js Express (API, Vektor-DB, Auth, HTML-Rendering)
+│   └── utils/
+│       ├── politician/   # 🆕 Modul 1 — Politiker-DB (Bundestag + Abgeordnetenwatch)
+│       ├── research/     # 🆕 Modul 2 — Deep-Research-Pipeline
+│       ├── reports/      # 🆕 Modul 3 — AfD-PDF-Reports
+│       ├── orchestrator/ # 🆕 Modul 4a — Workflow-Engine für Agent-Plugins
+│       ├── agents/       # 🆕 Modul 4b — Agent-Definitionen (@politician-search, …)
+│       └── agentFlows/   # 🆕 Modul 4c — Agent-Flow-Ausführung
 ├── collector/     # Node.js Express (Document-Parsing, OCR)
 ├── docker/        # Dockerfiles, docker-compose (für Self-Hosting)
 ├── cloud-deployments/   # AWS, GCP, DigitalOcean, K8s, Helm (für Cloud-Self-Hosting)
@@ -173,7 +348,11 @@ Ohne die hervorragende Arbeit von **Timothy Carambat** und dem gesamten Mintplex
 - Telemetrie **komplett** entfernt (statt nur abschaltbar)
 - DSGVO-affine Defaults (kein Phone-Home, kein CDN-Tracking)
 - Branding-Strategie auf einen deutschsprachigen politischen Use-Case
-- Mittelfristig: Bundestag-Drucksachen-Connector, Pressemitteilungs-Importer
+- 🆕 **Politiker-Datenbank** mit Anbindung an Bundestag-API und Abgeordnetenwatch inkl. semantischer Plenarprotokoll-Suche (Modul 1)
+- 🆕 **Deep-Research-Pipeline** für automatisierte Web-Recherche mit Quellen-Tracking (Modul 2)
+- 🆕 **AfD-PDF-Reports** — gebrandete, druckfertige Berichte aus Research-Jobs (Modul 3)
+- 🆕 **4 Agent-Plugins** (`@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`) — direkter Zugriff auf die Module aus dem Chat-Workflow (Modul 4)
+- 🆕 **REST-API** unter `/api/politician/*`, `/api/research/*`, `/api/reports/*`, `/api/orchestrator/*` — alle Module sind auch programmatisch nutzbar
 
 **Upstream synchronisieren:** Wir empfehlen, das Original-Repo als Git-Remote hinzuzufügen, um Sicherheits-Patches mitzuziehen:
 
