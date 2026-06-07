@@ -4,14 +4,13 @@ import {
   X,
   ArrowSquareOut,
   DownloadSimple,
-  BookmarkSimple,
+  Bookmark,
   CaretDown,
   FilePdf,
-  FileDoc,
-  Table,
-  ChartBar,
-  ImageSquare,
   FileText,
+  Table,
+  ChartLineUp,
+  Image,
   DotsThree,
   Eye,
 } from "@phosphor-icons/react";
@@ -22,10 +21,10 @@ import { usePreviewSidebar, useChatSidebar } from "../ChatSidebar";
 // Icon map for preview content types
 const TYPE_ICONS = {
   pdf: FilePdf,
-  doc: FileDoc,
+  doc: FileText,
   table: Table,
-  report: ChartBar,
-  image: ImageSquare,
+  report: ChartLineUp,
+  image: Image,
   social: FileText,
   default: FileText,
 };
@@ -150,7 +149,7 @@ function ThreeDotsMenu({ previewData, onAddToSources }) {
             onClick={handleAddToSources}
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors"
           >
-            <BookmarkSimple size={13} />
+            <Bookmark size={13} />
             {t("preview.menu.add_to_sources", "Zu Quellen hinzufügen")}
           </button>
         </div>

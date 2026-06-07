@@ -6,7 +6,7 @@ import {
   FolderOpen,
   Database,
   Newspaper,
-  BookBookmark,
+  BookOpen,
   Terminal,
 } from "@phosphor-icons/react";
 import { useChatSidebar } from "../ChatSidebar";
@@ -54,7 +54,7 @@ export default function RightSidebarIconBar() {
     },
     {
       id: "sources",
-      icon: BookBookmark,
+      icon: BookOpen,
       label: t("right_sidebar.icon_sources", "Quellen"),
       action: () => toggleSidebar("sources"),
     },
