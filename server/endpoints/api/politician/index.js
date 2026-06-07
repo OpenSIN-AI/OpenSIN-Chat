@@ -17,10 +17,29 @@
  */
 
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const logger = require("../../../utils/logger")();
+
+const MAX_LIMIT = 200;
+const MAX_TOP_N = 100;
 
 function getPoliticianDB() {
   const { PoliticianDB } = require("../../../utils/politician");
   return new PoliticianDB();
+}
+
+/**
+ * Parses an integer query param, falling back to a default and clamping to a
+ * [min, max] range. Guards endpoints against unbounded/negative pagination.
+ * @param {*} value raw query value
+ * @param {number} fallback default when value is absent or invalid
+ * @param {number} min lower bound
+ * @param {number} max upper bound
+ * @returns {number}
+ */
+function clampInt(value, fallback, min, max) {
+  const parsed = parseInt(value, 10);
+  if (Number.isNaN(parsed)) return fallback;
+  return Math.min(Math.max(parsed, min), max);
 }
 
 function apiPoliticianEndpoints(app) {
@@ -39,9 +58,8 @@ function apiPoliticianEndpoints(app) {
       const results = await db.searchPoliticians(q || "", filters);
       response.status(200).json({ politicians: results, total: results.length });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -53,14 +71,13 @@ function apiPoliticianEndpoints(app) {
       const db = getPoliticianDB();
       const results = await db.semanticSearchSpeeches(q, {
         party: party || null,
-        topN: parseInt(topN) || 10,
+        topN: clampInt(topN, 10, 1, MAX_TOP_N),
         source: source || null,
       });
       response.status(200).json({ results, total: results.length });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -70,9 +87,8 @@ function apiPoliticianEndpoints(app) {
       const parties = await db.getParties();
       response.status(200).json({ parties });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -82,9 +98,8 @@ function apiPoliticianEndpoints(app) {
       const states = await db.getStates();
       response.status(200).json({ states });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -98,9 +113,8 @@ function apiPoliticianEndpoints(app) {
         ...vectorStats,
       });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -110,9 +124,8 @@ function apiPoliticianEndpoints(app) {
       const sources = await db.getSources();
       response.status(200).json({ sources });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -122,9 +135,8 @@ function apiPoliticianEndpoints(app) {
       const status = await db.getSyncStatus();
       response.status(200).json(status);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -136,9 +148,8 @@ function apiPoliticianEndpoints(app) {
       if (!politician) return response.status(404).json({ error: "Politician not found" });
       response.status(200).json({ politician });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -152,14 +163,13 @@ function apiPoliticianEndpoints(app) {
       if (!politician) return response.status(404).json({ error: "Politician not found" });
 
       const votes = await db.getVotingRecord(id, {
-        limit: parseInt(limit) || 50,
-        offset: parseInt(offset) || 0,
+        limit: clampInt(limit, 50, 1, MAX_LIMIT),
+        offset: clampInt(offset, 0, 0, Number.MAX_SAFE_INTEGER),
       });
       response.status(200).json({ votes, total: votes.length });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -173,15 +183,14 @@ function apiPoliticianEndpoints(app) {
       if (!politician) return response.status(404).json({ error: "Politician not found" });
 
       const speeches = await db.getSpeeches(id, {
-        limit: parseInt(limit) || 50,
-        offset: parseInt(offset) || 0,
+        limit: clampInt(limit, 50, 1, MAX_LIMIT),
+        offset: clampInt(offset, 0, 0, Number.MAX_SAFE_INTEGER),
         source: source || null,
       });
       response.status(200).json({ speeches, total: speeches.length });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -192,9 +201,8 @@ function apiPoliticianEndpoints(app) {
       const mandates = await db.getMandates(id);
       response.status(200).json({ mandates, total: mandates.length });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 }

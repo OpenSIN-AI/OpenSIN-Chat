@@ -12,8 +12,11 @@
  */
 
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const logger = require("../../../utils/logger")();
 const path = require("path");
 const fs = require("fs");
+
+const VALID_TEMPLATES = ["standard", "brief", "full"];
 
 function getReportGenerator() {
   const { ReportGenerator } = require("../../../utils/reports");
@@ -37,7 +40,20 @@ function apiReportsEndpoints(app) {
 
   app.post("/reports/generate", [validApiKey], async (request, response) => {
     try {
-      const { title, query, summary, searchResults, politicianResults, extractedContent, template, researchJobId } = request.body;
+      const { title, query, summary, searchResults, politicianResults, extractedContent, template, researchJobId } = request.body || {};
+
+      if (template !== undefined && !VALID_TEMPLATES.includes(template))
+        return response
+          .status(400)
+          .json({ error: `template must be one of: ${VALID_TEMPLATES.join(", ")}` });
+      if (!researchJobId && !title && !query && !summary)
+        return response.status(400).json({
+          error: "at least one of title, query, summary, or researchJobId is required",
+        });
+      for (const [key, value] of Object.entries({ searchResults, politicianResults, extractedContent })) {
+        if (value !== undefined && !Array.isArray(value))
+          return response.status(400).json({ error: `${key} must be an array` });
+      }
 
       let reportData = {
         title: title || query || "Recherche-Bericht",
@@ -65,9 +81,8 @@ function apiReportsEndpoints(app) {
       const result = await ReportGen.generate(reportData);
       response.status(200).json(result);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.status(500).json({ error: err.message });
+      logger.error(`[reports/generate] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -81,9 +96,8 @@ function apiReportsEndpoints(app) {
       }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       response.status(200).json({ reports });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[reports] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
@@ -97,9 +111,8 @@ function apiReportsEndpoints(app) {
       response.setHeader("Content-Disposition", `inline; filename="${safeName}"`);
       fs.createReadStream(filePath).pipe(response);
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err.message, err);
-      response.sendStatus(500).end();
+      logger.error(`[reports] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
     }
   });
 }
