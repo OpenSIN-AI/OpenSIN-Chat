@@ -9,6 +9,7 @@ import {
   ArrowClockwise,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import { API_BASE } from "@/utils/constants";
 import ChatSidebar, { useFilesystemSidebar } from "../ChatSidebar";
 
 function formatUptime(seconds) {
@@ -31,7 +32,7 @@ export default function FilesystemSidebar() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/utils/filesystem");
+      const res = await fetch(`${API_BASE}/utils/filesystem`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setData(await res.json());
     } catch (e) {

@@ -71,7 +71,7 @@ const generateReport = {
               const result = await ReportGenerator.generate(reportData);
 
               // Notify the frontend so PreviewSidebar opens automatically (Issue #55).
-              this.super.socket.send("reportPreview", {
+              this.super.socket?.send?.("reportPreview", {
                 title: reportData.title,
                 fileName: result.fileName,
                 fileSizeKB: result.fileSizeKB,

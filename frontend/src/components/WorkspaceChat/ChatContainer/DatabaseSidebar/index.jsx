@@ -8,6 +8,7 @@ import {
   ArrowSquareOut,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import { API_BASE } from "@/utils/constants";
 import ChatSidebar, { useDatabaseSidebar } from "../ChatSidebar";
 
 export default function DatabaseSidebar() {
@@ -21,7 +22,7 @@ export default function DatabaseSidebar() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/utils/bundestag/politicians?limit=8");
+      const res = await fetch(`${API_BASE}/utils/bundestag/politicians?limit=8`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setPoliticians(json?.data || []);

@@ -8,6 +8,7 @@ import {
   ArrowSquareOut,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import { API_BASE } from "@/utils/constants";
 import ChatSidebar, { usePoliticalSidebar } from "../ChatSidebar";
 
 function Section({ title, loading, error, children }) {
@@ -47,7 +48,7 @@ export default function PoliticalSidebar() {
     // Drucksachen (Bundestag DIP)
     setLoadingDrucksachen(true);
     setErrorDrucksachen(null);
-    fetch("/api/utils/bundestag/drucksachen?rows=6")
+    fetch(`${API_BASE}/utils/bundestag/drucksachen?rows=6`)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json();
@@ -59,7 +60,7 @@ export default function PoliticalSidebar() {
     // RSS
     setLoadingRss(true);
     setErrorRss(null);
-    fetch("/api/utils/political/rss")
+    fetch(`${API_BASE}/utils/political/rss`)
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json();
