@@ -135,6 +135,15 @@ const TRANSLATIONS = {
       editWorkspace: "워크스페이스 편집",
       uploadDocument: "문서 업로드",
     },
+    workspaceSources: {
+      title: "워크스페이스 소스",
+      add: "소스 추가",
+      empty:
+        "아직 소스가 없습니다.\n문서를 업로드하거나 URL을 추가하여 채팅에 더 많은 맥락을 제공하세요.",
+      type_document: "문서",
+      type_url: "URL",
+      type_db: "데이터베이스",
+    },
     greeting: "오늘 어떻게 도와드릴까요?",
   },
   "new-workspace": {
@@ -232,7 +241,7 @@ const TRANSLATIONS = {
     refusal: {
       title: "쿼리 모드 거부 응답 메시지",
       "desc-start": "쿼리 모드에서",
-      query: "응답에 사용할 수 있는",
+      query: "응답��� 사용할 수 있는",
       "desc-end": "컨텍스트를 찾을 수 없을 때 거부 응답 내용을 작성합니다.",
       "tooltip-title": "왜 이 메시지가 표시되나요?",
       "tooltip-description":
@@ -333,7 +342,7 @@ const TRANSLATIONS = {
         readActions: "실행 내용 보기",
         writeActions: "실행 내용",
         warning:
-          "파일 시스템 접근은 위험할 수 있습니다. 왜냐하면 파일 내용을 변경하거나 삭제할 수 있기 때문입니다. 사용하기 전에 반드시 <a>문서</a>를 참조하십시오.",
+          "파일 시스템 접근은 위험할 수 있습니다. 왜냐하면 파일 내용을 변경��거나 삭제할 수 있기 때문입니다. 사용하기 전에 반드시 <a>문서</a>를 참조하십시오.",
         skills: {
           "read-text-file": {
             title: "파일 읽기",
@@ -518,7 +527,7 @@ const TRANSLATIONS = {
           },
           getMailboxStats: {
             title: "메일함 통계",
-            description: "읽지 않은 이메일 수 및 메일함 통계 확인",
+            description: "읽지 않은 ��메일 수 및 메일함 통계 확인",
           },
           getInbox: {
             title: "메일함 보기",
@@ -1238,6 +1247,23 @@ const TRANSLATIONS = {
     text_size_label: "글자 크기",
     select_model: "모델 선택",
     sources: "출처",
+    attach_menu: {
+      add_files: "파일 추가",
+      current_sources: "현재 소스",
+      add_from_url: "URL에서 추가",
+      loading: "불러오는 중...",
+      no_sources: "사용 가능한 소스가 없습니다",
+      no_workspace:
+        "사용 가능한 워크스페이스가 없습니다. 먼저 메시지를 보내 워크스페이스를 만드세요.",
+      add_success: "소스가 워크스페이스에 추가되었습니다",
+      add_failed: "소스를 추가할 수 없습니다",
+      url_hint:
+        "웹사이트 또는 YouTube 동영상의 URL을 붙여넣어 소스로 추가하세요.",
+      url_submit: "소스 추가",
+      url_submitting: "추가 중...",
+      url_success: "URL이 소스로 추가되었습니다",
+      url_failed: "URL을 추가할 수 없습니다",
+    },
     document: "문서",
     similarity_match: "경쟁",
     source_count_one: "{{count}} 참조",
@@ -1543,7 +1569,7 @@ const TRANSLATIONS = {
     enableNotifications: "채용 결과에 대한 브라우저 알림 활성화",
     description:
       "정기적으로 실행되는 AI 작업을 생성하고, 일정을 설정합니다. 각 작업은 선택적으로 도구를 사용하여 프롬프트를 실행하고, 결과를 저장하여 검토합니다.",
-    newJob: "새로운 직업",
+    newJob: "��로운 직업",
     loading: "로딩 중...",
     emptyTitle: "현재 예약된 작업은 없습니다.",
     emptySubtitle: "시작하기 위해 하나를 만들어 보세요.",
@@ -1744,7 +1770,7 @@ const TRANSLATIONS = {
         "특정 제공업체 및 모델로 메시지가 전송되는 시기와 방법을 결정하는 규칙을 정의합니다.",
       "add-rule": "규칙 추가",
       "delete-confirm": '규칙 "{{title}}" 삭제하시겠습니까?',
-      "toast-delete-failed": "규칙 삭제에 실패했습니다.",
+      "toast-delete-failed": "규�� 삭제에 실패했습니다.",
       "toast-reorder-failed": "재정렬 규칙 적용 실패",
       "no-rules": "규정이 아직 정해지지 않았습니다.",
       "empty-description":

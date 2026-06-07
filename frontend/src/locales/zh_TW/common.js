@@ -223,7 +223,7 @@ const TRANSLATIONS = {
       "desc-end": "模式下，若找不到內容，您可以設定自訂的拒絕回應。",
       "tooltip-title": "我為什麼會看到這個？",
       "tooltip-description":
-        "目前處於查詢模式，這個模式只會使用文件中的資訊。若想進行更彈性的對話，請切換到對話模式；或點選這裡前往文件，進一步了解對話模式。",
+        "目前處於查詢模式，這個模式只會使用文件中的資訊。若想進行更彈性的對話，請切換到對話模式；或點選這裡前���文件，進一步了解對話模式。",
     },
     temperature: {
       title: "LLM 溫度",
@@ -390,7 +390,7 @@ const TRANSLATIONS = {
       gmail: {
         title: "Gmail 連接器",
         description:
-          "讓您的代理能夠與 Gmail 互動：搜尋郵件、閱讀郵件討論、撰寫草稿、發送郵件，以及管理您的收件匣。請參閱相關文件。",
+          "讓您的代理能夠與 Gmail 互動：搜尋郵件、閱讀郵件討論、撰寫草稿、發送郵件，以及管理您的收件匣。請參閱��關文件。",
         multiUserWarning:
           "由於安全考量，Gmail 整合功能在多使用者模式下無法使用。請停用多使用者模式才能使用此功能。",
         configuration: "Gmail 設定",
@@ -409,7 +409,7 @@ const TRANSLATIONS = {
           },
           drafts: {
             title: "草稿郵件",
-            description: "創建、編輯和管理電子郵件草稿",
+            description: "創��、編輯和管理電子郵件草稿",
           },
           send: {
             title: "發送和回覆電子郵件",
@@ -1096,6 +1096,23 @@ const TRANSLATIONS = {
     text_size_label: "文字大小",
     select_model: "選擇模型",
     sources: "來源",
+    attach_menu: {
+      add_files: "新增檔案",
+      current_sources: "目前來源",
+      add_from_url: "從 URL 新增",
+      loading: "載入中...",
+      no_sources: "目前沒有可用來源",
+      no_workspace:
+        "目前沒有可用工作區。請先傳送訊息以建立工作區。",
+      add_success: "來源已新增至工作區",
+      add_failed: "無法新增來源",
+      url_hint:
+        "貼上網站或 YouTube 影片的 URL，將其新增為來源。",
+      url_submit: "新增來源",
+      url_submitting: "新增中...",
+      url_success: "URL 已新增為來源",
+      url_failed: "無法新增 URL",
+    },
     document: "文件",
     similarity_match: "相符度",
     source_count_one: "{{count}} 筆參考資料",
@@ -1285,6 +1302,15 @@ const TRANSLATIONS = {
       editWorkspace: "編輯工作區",
       uploadDocument: "上傳文件",
     },
+    workspaceSources: {
+      title: "工作區來源",
+      add: "新增來源",
+      empty:
+        "目前沒有來源。\n上傳文件或新增 URL，為對話提供更多背景資訊。",
+      type_document: "文件",
+      type_url: "URL",
+      type_db: "資料庫",
+    },
     greeting: "今天想做什麼？",
   },
   "keyboard-shortcuts": {
@@ -1472,7 +1498,7 @@ const TRANSLATIONS = {
   },
   scheduledJobs: {
     title: "預約排定的工作",
-    enableNotifications: "啟用瀏覽器通知，以便收到工作結果",
+    enableNotifications: "啟用瀏覽器��知，以便收到工作結果",
     description:
       "建立可重複執行的 AI 任務，並設定執行時間表。每個任務會執行一個指令，並可選地使用工具，然後將結果儲存以供後續檢閱。",
     newJob: "新的工作",
@@ -1596,7 +1622,7 @@ const TRANSLATIONS = {
       },
       metrics: {
         promptTokens: "提示詞：",
-        completionTokens: "完成標記：",
+        completionTokens: "完成標���：",
       },
       stopJob: "停止工作",
       killing: "停止...",

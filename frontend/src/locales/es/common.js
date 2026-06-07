@@ -138,6 +138,15 @@ const TRANSLATIONS = {
       editWorkspace: "Editar espacio de trabajo",
       uploadDocument: "Cargar un documento",
     },
+    workspaceSources: {
+      title: "Fuentes del espacio de trabajo",
+      add: "Añadir fuentes",
+      empty:
+        "Aún no hay fuentes.\nSube documentos o añade URLs para dar más contexto al chat.",
+      type_document: "Documento",
+      type_url: "URL",
+      type_db: "Base de datos",
+    },
     greeting: "¿Cómo puedo ayudarte hoy?",
   },
   "new-workspace": {
@@ -523,7 +532,7 @@ const TRANSLATIONS = {
           },
           markRead: {
             title: "Mark Read",
-            description: "Indicar que un hilo ha sido leído.",
+            description: "Indicar que un hilo ha sido le��do.",
           },
           markUnread: {
             title: "Marcar como no leído",
@@ -1309,6 +1318,23 @@ const TRANSLATIONS = {
     text_size_label: "Tamaño del texto",
     select_model: "Seleccionar modelo",
     sources: "Fuentes",
+    attach_menu: {
+      add_files: "Añadir archivos",
+      current_sources: "Fuentes actuales",
+      add_from_url: "Añadir desde URL",
+      loading: "Cargando...",
+      no_sources: "No hay fuentes disponibles",
+      no_workspace:
+        "No hay espacio de trabajo disponible. Envía un mensaje primero para crear uno.",
+      add_success: "Fuente añadida al espacio de trabajo",
+      add_failed: "No se pudo añadir la fuente",
+      url_hint:
+        "Pega la URL de un sitio web o video de YouTube para añadirla como fuente.",
+      url_submit: "Añadir fuente",
+      url_submitting: "Añadiendo...",
+      url_success: "URL añadida como fuente",
+      url_failed: "No se pudo añadir la URL",
+    },
     document: "Documento",
     similarity_match: "partido",
     source_count_one: "{{count}} de referencia",
