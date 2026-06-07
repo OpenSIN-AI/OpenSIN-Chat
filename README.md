@@ -73,16 +73,22 @@ Strukturierte Anbindung an zwei offizielle deutsche Parlamentsdaten-Quellen:
 **REST-Endpoints:** `/api/politician/*`
 
 ```
-GET /api/politician/search?q=…&party=…&state=…
-GET /api/politician/speech-search?q=…   ← semantische Suche über Reden
+GET /api/politician/search?q=…&party=…&state=…&source=…
+GET /api/politician/speech-search?q=…&source=…   ← semantische Suche über Reden
+GET /api/politician/sources          ← verfügbare Datenquellen + Anzahl
+GET /api/politician/sync/status      ← letzter Sync-Lauf + Status pro Quelle
 GET /api/politician/parties
 GET /api/politician/states
 GET /api/politician/stats
 GET /api/politician/:id
 GET /api/politician/:id/votes
-GET /api/politician/:id/speeches
+GET /api/politician/:id/speeches?source=…
 GET /api/politician/:id/mandates
 ```
+
+> **Datenquellen:** Spezifikationen, Rate-Limits und Schema-Mapping der externen
+> APIs sind in [`docs/DATA-SOURCES.md`](./docs/DATA-SOURCES.md) dokumentiert.
+> Vollständige API-Referenz: [`docs/API.md`](./docs/API.md).
 
 **Use-Cases:**
 

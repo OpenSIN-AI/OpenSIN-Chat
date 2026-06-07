@@ -6,12 +6,14 @@
  * Purpose: Exposes politician search, detail, votes, and speeches via REST.
  *
  * Endpoints:
- *   GET /politician/search  — search politicians
+ *   GET /politician/search  — search politicians (supports ?source=)
+ *   GET /politician/sources — list available data sources with counts
+ *   GET /politician/sync/status — last sync run + status per source
  *   GET /politician/:id      — get politician detail
  *   GET /politician/:id/votes — get voting record
- *   GET /politician/:id/speeches — get speeches
+ *   GET /politician/:id/speeches — get speeches (supports ?source=)
  *   GET /politician/:id/mandates — get mandates
- *   GET /politician/speech-search — semantic search speeches
+ *   GET /politician/speech-search — semantic search speeches (supports ?source=)
  */
 
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
@@ -26,11 +28,12 @@ function apiPoliticianEndpoints(app) {
 
   app.get("/politician/search", [validApiKey], async (request, response) => {
     try {
-      const { q, party, state, faction } = request.query;
+      const { q, party, state, faction, source } = request.query;
       const filters = {};
       if (party) filters.party = party;
       if (state) filters.state = state;
       if (faction) filters.faction = faction;
+      if (source) filters.source = source;
 
       const db = getPoliticianDB();
       const results = await db.searchPoliticians(q || "", filters);
@@ -44,13 +47,14 @@ function apiPoliticianEndpoints(app) {
 
   app.get("/politician/speech-search", [validApiKey], async (request, response) => {
     try {
-      const { q, party, topN } = request.query;
+      const { q, party, topN, source } = request.query;
       if (!q) return response.status(400).json({ error: "query parameter 'q' is required" });
 
       const db = getPoliticianDB();
       const results = await db.semanticSearchSpeeches(q, {
         party: party || null,
         topN: parseInt(topN) || 10,
+        source: source || null,
       });
       response.status(200).json({ results, total: results.length });
     } catch (err) {
@@ -100,6 +104,30 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
+  app.get("/politician/sources", [validApiKey], async (_, response) => {
+    try {
+      const db = getPoliticianDB();
+      const sources = await db.getSources();
+      response.status(200).json({ sources });
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err.message, err);
+      response.sendStatus(500).end();
+    }
+  });
+
+  app.get("/politician/sync/status", [validApiKey], async (_, response) => {
+    try {
+      const db = getPoliticianDB();
+      const status = await db.getSyncStatus();
+      response.status(200).json(status);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err.message, err);
+      response.sendStatus(500).end();
+    }
+  });
+
   app.get("/politician/:id", [validApiKey], async (request, response) => {
     try {
       const { id } = request.params;
@@ -138,7 +166,7 @@ function apiPoliticianEndpoints(app) {
   app.get("/politician/:id/speeches", [validApiKey], async (request, response) => {
     try {
       const { id } = request.params;
-      const { limit, offset } = request.query;
+      const { limit, offset, source } = request.query;
 
       const db = getPoliticianDB();
       const politician = await db.getPolitician(id);
@@ -147,6 +175,7 @@ function apiPoliticianEndpoints(app) {
       const speeches = await db.getSpeeches(id, {
         limit: parseInt(limit) || 50,
         offset: parseInt(offset) || 0,
+        source: source || null,
       });
       response.status(200).json({ speeches, total: speeches.length });
     } catch (err) {
