@@ -1427,11 +1427,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Creare un agente",
-      editWorkspace: "Modifica l'area di lavoro",
-      uploadDocument: "Caricare un documento",
-    },
     workspaceSources: {
       title: "Fonti dell'area di lavoro",
       add: "Aggiungi fonti",

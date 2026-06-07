@@ -1373,11 +1373,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "エージェントを作成する",
-      editWorkspace: "ワークスペースの編集",
-      uploadDocument: "ドキュメントをアップロードする",
-    },
     workspaceSources: {
       title: "ワークスペースのソース",
       add: "ソースを追加",

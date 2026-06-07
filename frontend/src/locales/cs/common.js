@@ -139,11 +139,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Vytvořte agenta",
-      editWorkspace: "Upravit pracovní prostor",
-      uploadDocument: "Nahrajte dokument",
-    },
     greeting: "Jak vám mohu dnes pomoci?",
   },
   "new-workspace": {

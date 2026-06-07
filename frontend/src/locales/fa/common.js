@@ -1362,11 +1362,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "ایجاد یک عامل",
-      editWorkspace: "ویرایش فضای کاری",
-      uploadDocument: "بارگذاری یک سند",
-    },
     greeting: "امروز چگونه می‌توانم به شما کمک کنم؟",
   },
   "keyboard-shortcuts": {

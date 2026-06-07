@@ -130,11 +130,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "에이전트 생성",
-      editWorkspace: "워크스페이스 편집",
-      uploadDocument: "문서 업로드",
-    },
     workspaceSources: {
       title: "워크스페이스 소스",
       add: "소스 추가",

@@ -142,11 +142,6 @@ const TRANSLATIONS = {
   },
   "main-page": {
     greeting: "Com et puc ajudar avui?",
-    quickActions: {
-      createAgent: "Crea un agent",
-      editWorkspace: "Edita l'espai de treball",
-      uploadDocument: "Puja un document",
-    },
   },
   "new-workspace": {
     title: "Nou espai de treball",

@@ -131,11 +131,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Loo agent",
-      editWorkspace: "Redige tööruum",
-      uploadDocument: "Lae fail üles",
-    },
     greeting: "Kuidas saan teid täna aidata?",
   },
   "new-workspace": {

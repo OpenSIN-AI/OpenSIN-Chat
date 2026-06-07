@@ -133,11 +133,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Creați un agent",
-      editWorkspace: "Modifică spațiul de lucru",
-      uploadDocument: "Încărcați un document",
-    },
     greeting: "Cu ce vă pot ajuta astăzi?",
   },
   "new-workspace": {

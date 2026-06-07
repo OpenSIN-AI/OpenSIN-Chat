@@ -128,11 +128,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "创建代理",
-      editWorkspace: "编辑工作区",
-      uploadDocument: "上传文件",
-    },
     workspaceSources: {
       title: "工作区来源",
       add: "添加来源",

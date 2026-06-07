@@ -132,11 +132,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Utwórz agenta",
-      editWorkspace: "Edytuj przestrzeń roboczą",
-      uploadDocument: "Załaduj dokument",
-    },
     greeting: "W czym mogę Ci dzisiaj pomóc?",
   },
   "new-workspace": {

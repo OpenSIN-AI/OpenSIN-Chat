@@ -133,11 +133,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Erstelle einen Agenten",
-      editWorkspace: "Arbeitsbereich bearbeiten",
-      uploadDocument: "Ein Dokument hochladen",
-    },
     workspaceSources: {
       title: "Quellen des Workspace",
       add: "Quellen hinzufügen",

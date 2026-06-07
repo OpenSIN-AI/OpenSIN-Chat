@@ -1374,11 +1374,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Opret en agent",
-      editWorkspace: "Rediger arbejdsområdet",
-      uploadDocument: "Upload en fil",
-    },
     greeting: "Hvordan kan jeg hjælpe dig i dag?",
   },
   "keyboard-shortcuts": {

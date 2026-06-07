@@ -1295,11 +1295,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "建立智慧代理人",
-      editWorkspace: "編輯工作區",
-      uploadDocument: "上傳文件",
-    },
     workspaceSources: {
       title: "工作區來源",
       add: "新增來源",

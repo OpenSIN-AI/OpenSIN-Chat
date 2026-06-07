@@ -3,10 +3,14 @@
 process.env.STORAGE_DIR = __dirname;
 process.env.NODE_ENV = "test";
 
-const { SystemPromptVariables } = require("../../../models/systemPromptVariables");
 const Provider = require("../../../utils/agents/aibitat/providers/ai-provider");
 
-jest.mock("../../../models/systemPromptVariables");
+const mockExpandSystemPromptVariables = jest.fn();
+jest.mock("../../../models/systemPromptVariables", () => ({
+  SystemPromptVariables: {
+    expandSystemPromptVariables: mockExpandSystemPromptVariables,
+  },
+}));
 jest.mock("../../../models/systemSettings");
 jest.mock("../../../utils/agents/imported", () => ({
   activeImportedPlugins: jest.fn().mockReturnValue([]),
@@ -47,7 +51,7 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
       user
     );
     expect(definition.role).toBe(expectedPrompt);
-    expect(SystemPromptVariables.expandSystemPromptVariables).not.toHaveBeenCalled();
+    expect(mockExpandSystemPromptVariables).not.toHaveBeenCalled();
   });
 
   it("should use workspace system prompt with variable expansion when openAiPrompt exists", async () => {
@@ -60,7 +64,7 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
     const provider = "openai";
 
     const expandedPrompt = "You are a helpful assistant for Test Workspace. The current user is John Doe.";
-    SystemPromptVariables.expandSystemPromptVariables.mockResolvedValue(expandedPrompt);
+    mockExpandSystemPromptVariables.mockResolvedValue(expandedPrompt);
 
     const definition = await WORKSPACE_AGENT.getDefinition(
       provider,
@@ -68,7 +72,7 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
       user
     );
 
-    expect(SystemPromptVariables.expandSystemPromptVariables).toHaveBeenCalledWith(
+    expect(mockExpandSystemPromptVariables).toHaveBeenCalledWith(
       workspace.openAiPrompt,
       user.id,
       workspace.id
@@ -85,7 +89,7 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
     const user = null;
     const provider = "lmstudio";
     const expandedPrompt = "You are a helpful assistant. Today is January 1, 2024.";
-    SystemPromptVariables.expandSystemPromptVariables.mockResolvedValue(expandedPrompt);
+    mockExpandSystemPromptVariables.mockResolvedValue(expandedPrompt);
 
     const definition = await WORKSPACE_AGENT.getDefinition(
       provider,
@@ -93,7 +97,7 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
       user
     );
 
-    expect(SystemPromptVariables.expandSystemPromptVariables).toHaveBeenCalledWith(
+    expect(mockExpandSystemPromptVariables).toHaveBeenCalledWith(
       workspace.openAiPrompt,
       null,
       workspace.id

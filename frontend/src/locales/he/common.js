@@ -129,11 +129,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "צור סוכן",
-      editWorkspace: "ערוך את סביבת העבודה",
-      uploadDocument: "העלה מסמך",
-    },
     greeting: "במה אוכל לעזור לך היום?",
   },
   "new-workspace": {

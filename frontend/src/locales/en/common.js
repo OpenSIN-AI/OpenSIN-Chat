@@ -141,11 +141,6 @@ const TRANSLATIONS = {
   },
   "main-page": {
     greeting: "How can I help you today?",
-    quickActions: {
-      createAgent: "Create an Agent",
-      editWorkspace: "Edit Workspace",
-      uploadDocument: "Upload a Document",
-    },
     workspaceSources: {
       title: "Workspace sources",
       add: "Add sources",

@@ -110,7 +110,9 @@
   },
   "resolutions": {
     "**/graphql-request/form-data": "3.0.4",
-    "form-data": "4.0.4"
+    "form-data": "4.0.4",
+    "jwa": "2.0.1",
+    "buffer-equal-constant-time": "1.0.1"
   },
   "devDependencies": {
     "@eslint/js": "9",

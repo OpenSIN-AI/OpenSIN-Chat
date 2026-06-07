@@ -1387,11 +1387,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Bir temsilci oluşturun",
-      editWorkspace: "Çalışma Alanını Düzenle",
-      uploadDocument: "Bir belge yükleyin",
-    },
     greeting: "Bugün size nasıl yardımcı olabilirim?",
   },
   "keyboard-shortcuts": {

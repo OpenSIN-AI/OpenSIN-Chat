@@ -1397,11 +1397,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Создать агента",
-      editWorkspace: "Редактировать рабочее пространство",
-      uploadDocument: "Загрузить документ",
-    },
     greeting: "Чем я могу вам помочь сегодня?",
   },
   "keyboard-shortcuts": {

@@ -132,11 +132,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Izveidot aģentu",
-      editWorkspace: "Rediģēt darba telpu",
-      uploadDocument: "August failu",
-    },
     greeting: "Kā es varu jums šodien palīdzēt?",
   },
   "new-workspace": {

@@ -140,11 +140,6 @@ const TRANSLATIONS = {
   },
   "main-page": {
     greeting: "Kaip galiu jums šiandien padėti?",
-    quickActions: {
-      createAgent: "Sukurti agentą",
-      editWorkspace: "Redaguoti darbo sritį",
-      uploadDocument: "Įkelti dokumentą",
-    },
   },
   "new-workspace": {
     title: "Nauja darbo sritis",

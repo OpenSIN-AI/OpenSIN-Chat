@@ -1369,11 +1369,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Tạo một đại lý",
-      editWorkspace: "Chỉnh sửa không gian làm việc",
-      uploadDocument: "Tải lên một tài liệu",
-    },
     greeting: "Hôm nay tôi có thể giúp gì cho bạn?",
   },
   "keyboard-shortcuts": {

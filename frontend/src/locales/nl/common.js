@@ -1384,11 +1384,6 @@ const TRANSLATIONS = {
     },
   },
   "main-page": {
-    quickActions: {
-      createAgent: "Maak een agent",
-      editWorkspace: "Werkruimte bewerken",
-      uploadDocument: "Upload een document",
-    },
     greeting: "Hoe kan ik u vandaag helpen?",
   },
   "keyboard-shortcuts": {
