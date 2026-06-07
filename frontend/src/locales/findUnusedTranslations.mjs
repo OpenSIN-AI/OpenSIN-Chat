@@ -11,34 +11,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { resources } from "./resources.js";
-
-/**
- * @type {string[]}
- * Keys listed here are used dynamically (e.g. t(variable)) and should never
- * be flagged as unused or deleted by findUnusedTranslations.mjs.
- * When you add a dynamic t() call, add the affected key(s) here so the
- * pruning script knows they are intentionally referenced at runtime.
- */
-const DYNAMIC_KEY_ALLOWLIST = [
-  "keyboard-shortcuts.shortcuts.settings",
-  "keyboard-shortcuts.shortcuts.home",
-  "keyboard-shortcuts.shortcuts.workspaces",
-  "keyboard-shortcuts.shortcuts.apiKeys",
-  "keyboard-shortcuts.shortcuts.llmPreferences",
-  "keyboard-shortcuts.shortcuts.chatSettings",
-  "keyboard-shortcuts.shortcuts.help",
-  "keyboard-shortcuts.shortcuts.showLLMSelector",
-  "keyboard-shortcuts.shortcuts.workspaceSettings",
-
-  // Used for chat mode descriptions
-  "chat.mode.automatic.description",
-  "chat.mode.chat.description",
-  "chat.mode.query.description",
-
-  // Used for model router rules
-  "model-router.rules.quantifier-any",
-  "model-router.rules.quantifier-all",
-];
+import { DYNAMIC_KEY_ALLOWLIST } from "./dynamicKeyAllowlist.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const FRONTEND_SRC = path.resolve(__dirname, "..");

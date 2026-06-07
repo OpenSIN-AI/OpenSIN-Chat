@@ -12,7 +12,11 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "verify:translations": "node src/locales/verifyTranslations.mjs",
+    "find:unused-translations": "node src/locales/findUnusedTranslations.mjs",
+    "clean:unused-translations": "node src/locales/findUnusedTranslations.mjs --delete",
+    "normalize:translations": "node src/locales/normalizeEn.mjs"
   },
   "dependencies": {
     "@lobehub/icons": "^4.0.3",

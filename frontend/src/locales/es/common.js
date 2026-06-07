@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 // Anything with "null" requires a translation. Contribute to translation via a PR!
 const TRANSLATIONS = {
   onboarding: {
@@ -1417,6 +1416,13 @@ const TRANSLATIONS = {
     stt_mic_denied:
       "No se pudo acceder al micrófono. Por favor, conceda los permisos y vuelva a intentarlo.",
     stt_transcription_failed: "No se pudo realizar la transcripción: {{error}}",
+    source_filter_label: null,
+    source_filter_all: null,
+    source_filter_documents: null,
+    source_filter_media: null,
+    no_sources_filter: null,
+    workspace_sources: null,
+    no_workspace_sources: null,
   },
   profile_settings: {
     edit_account: "Editar cuenta",
@@ -1576,6 +1582,7 @@ const TRANSLATIONS = {
     notAssigned:
       "Actualmente no estás asignado a ningún espacio de trabajo.\nPor favor, contacta a tu administrador para solicitar acceso a un espacio de trabajo.",
     goToWorkspace: 'Ir a "{{workspace}}"',
+    logoAlt: null,
   },
   telegram: {
     title: "Bot de Telegram",
