@@ -14,6 +14,9 @@ function getTTSProvider() {
     case "kokoro":
       const { KokoroTTS } = require("./kokoro");
       return new KokoroTTS();
+    case "nvidia-nim":
+      const { NvidiaNimTTS } = require("./nvidiaNim");
+      return new NvidiaNimTTS();
     default:
       throw new Error("ENV: No TTS_PROVIDER value found in environment!");
   }

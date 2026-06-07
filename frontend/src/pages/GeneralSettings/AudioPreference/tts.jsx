@@ -11,6 +11,7 @@ import ElevenLabsIcon from "@/media/ttsproviders/elevenlabs.png";
 import PiperTTSIcon from "@/media/ttsproviders/piper.png";
 import GenericOpenAiLogo from "@/media/ttsproviders/generic-openai.png";
 import KokoroIcon from "@/media/ttsproviders/kokoro.png";
+import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 
 import BrowserNative from "@/components/TextToSpeech/BrowserNative";
 import OpenAiTTSOptions from "@/components/TextToSpeech/OpenAiOptions";
@@ -18,6 +19,7 @@ import ElevenLabsTTSOptions from "@/components/TextToSpeech/ElevenLabsOptions";
 import PiperTTSOptions from "@/components/TextToSpeech/PiperTTSOptions";
 import OpenAiGenericTTSOptions from "@/components/TextToSpeech/OpenAiGenericOptions";
 import KokoroTTSOptions from "@/components/TextToSpeech/KokoroOptions";
+import NvidiaNimTTSOptions from "@/components/TextToSpeech/NvidiaNimOptions";
 
 const PROVIDERS = [
   {
@@ -63,6 +65,14 @@ const PROVIDERS = [
     options: (settings) => <OpenAiGenericTTSOptions settings={settings} />,
     description:
       "Connect to an OpenAI compatible TTS service running locally or remotely.",
+  },
+  {
+    name: "NVIDIA NIM",
+    value: "nvidia-nim",
+    logo: NvidiaNimLogo,
+    options: (settings) => <NvidiaNimTTSOptions settings={settings} />,
+    description:
+      "Use NVIDIA NIM's hosted text-to-speech API with high-quality voices.",
   },
 ];
 

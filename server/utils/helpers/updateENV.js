@@ -681,6 +681,24 @@ const KEY_MAPPING = {
     checks: [isNotEmpty],
   },
 
+  // NVIDIA NIM TTS
+  TTSNvidiaNimApiKey: {
+    envKey: "TTS_NVIDIA_NIM_API_KEY",
+    checks: [isNotEmpty],
+  },
+  TTSNvidiaNimEndpoint: {
+    envKey: "TTS_NVIDIA_NIM_ENDPOINT",
+    checks: [],
+  },
+  TTSNvidiaNimModel: {
+    envKey: "TTS_NVIDIA_NIM_MODEL",
+    checks: [],
+  },
+  TTSNvidiaNimVoiceModel: {
+    envKey: "TTS_NVIDIA_NIM_VOICE_MODEL",
+    checks: [],
+  },
+
   // STT Selection
   SpeechToTextProvider: {
     envKey: "STT_PROVIDER",
@@ -1038,6 +1056,7 @@ function supportedTTSProvider(input = "") {
     "piper_local",
     "generic-openai",
     "kokoro",
+    "nvidia-nim",
   ].includes(input);
   return validSelection ? null : `${input} is not a valid TTS provider.`;
 }
