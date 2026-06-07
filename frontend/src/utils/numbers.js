@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const Formatter = Intl.NumberFormat("en", { notation: "compact" });
 
 export function numberWithCommas(input) {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { memo } from "react";
 import FileDownloadCard from "../../FileDownloadCard";
 

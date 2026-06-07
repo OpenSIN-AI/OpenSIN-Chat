@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Handle tool approval callback from an inline keyboard button.
  * This handler requires access to the pending tool approvals map from TelegramBotService.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { AgentSkillWhitelist } = require("../models/agentSkillWhitelist");
 const { reqBody, userFromSession } = require("../utils/http");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { embed, embedMany } from 'ai'
 
 export const EMBEDDING_MODEL = 'openai/text-embedding-3-small'

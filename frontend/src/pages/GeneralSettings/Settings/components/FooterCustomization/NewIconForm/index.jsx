@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { ICON_COMPONENTS } from "@/components/Footer";
 import React, { useEffect, useRef, useState } from "react";
 import { Plus, X } from "@phosphor-icons/react";

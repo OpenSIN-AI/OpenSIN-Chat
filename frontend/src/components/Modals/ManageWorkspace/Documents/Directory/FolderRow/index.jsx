@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState } from "react";
 import FileRow from "../FileRow";
 import { CaretDown, Folder } from "@phosphor-icons/react";

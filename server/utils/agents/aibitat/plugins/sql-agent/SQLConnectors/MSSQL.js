@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const mssql = require("mssql");
 const { ConnectionStringParser } = require("./utils");
 

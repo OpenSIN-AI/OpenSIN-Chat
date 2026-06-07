@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const MCPHypervisor = require("./hypervisor");
 
 class MCPCompatibilityLayer extends MCPHypervisor {

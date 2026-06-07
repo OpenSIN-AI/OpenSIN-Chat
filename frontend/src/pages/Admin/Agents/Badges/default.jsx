@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export function DefaultBadge({ title: _title }) {
   return (
     <>

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import paths from "@/utils/paths";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

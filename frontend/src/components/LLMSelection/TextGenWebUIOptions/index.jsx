@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function TextGenWebUIOptions({ settings }) {
   return (
     <div className="flex gap-[36px] mt-1.5 flex-wrap">

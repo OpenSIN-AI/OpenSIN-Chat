@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { memo } from "react";
 import usePfp from "../../hooks/usePfp";
 import UserDefaultPfp from "./user.svg";

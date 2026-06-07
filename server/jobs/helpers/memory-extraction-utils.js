@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { WorkspaceChats } = require("../../models/workspaceChats.js");
 const { safeJsonParse } = require("../../utils/http/index.js");
 const { getBaseLLMProviderModel } = require("../../utils/helpers/index.js");

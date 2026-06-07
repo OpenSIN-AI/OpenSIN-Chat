@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
 const { Document } = require("../../models/documents");
 const { EventLogs } = require("../../models/eventLogs");

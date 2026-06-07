@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const prisma = require("../utils/prisma");
 const slugifyModule = require("slugify");
 const { Document } = require("./documents");

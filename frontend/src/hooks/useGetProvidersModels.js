@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import System from "@/models/system";
 import { useEffect, useState } from "react";
 

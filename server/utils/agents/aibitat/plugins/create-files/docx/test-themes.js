@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// SPDX-License-Identifier: MIT
 /**
  * Test utility to generate sample Word documents for all themes and configurations.
  * Run from the server directory: node utils/agents/aibitat/plugins/create-files/docx/test-themes.js

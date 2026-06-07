@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useRef, useState } from "react";
 import { DotsThreeOutline } from "@phosphor-icons/react";
 import showToast from "@/utils/toast";

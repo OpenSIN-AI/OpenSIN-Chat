@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { ArrowsDownUp } from "@phosphor-icons/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Workspace from "../../../../models/workspace";

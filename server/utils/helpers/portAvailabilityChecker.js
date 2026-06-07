@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Get all loopback addresses that are available for use or binding.
 function getLocalHosts() {
   const os = require("os");

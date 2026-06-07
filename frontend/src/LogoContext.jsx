@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { createContext, useEffect, useState } from "react";
 import OpenAfDLogo from "./media/logo/openafd-icon.svg";
 import DefaultLoginLogoLight from "./media/illustrations/login-logo.svg";

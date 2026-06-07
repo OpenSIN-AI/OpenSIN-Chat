@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Credit: https://github.com/sindilevich/connection-string-parser
 
 /**

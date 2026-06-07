@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import { AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 

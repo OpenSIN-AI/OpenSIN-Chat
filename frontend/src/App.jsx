@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { I18nextProvider } from "react-i18next";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { QdrantClient } = require("@qdrant/js-client-rest");
 const { TextSplitter } = require("../../TextSplitter");
 const { SystemSettings } = require("../../../models/systemSettings");

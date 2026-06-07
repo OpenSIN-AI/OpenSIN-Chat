@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import { X } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";

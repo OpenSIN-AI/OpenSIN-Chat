@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React from "react";
 import Toggle from "@/components/lib/Toggle";
 

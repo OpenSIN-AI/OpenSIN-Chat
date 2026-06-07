@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { CaretDown, CaretUp, Plus, CaretLeft } from "@phosphor-icons/react";
 import AnythingInfinityLogo from "@/media/logo/openafd-icon.svg";
 import { useState, useRef, useEffect } from "react";

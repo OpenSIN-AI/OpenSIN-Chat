@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useRef } from "react";
 import { isMac } from "@/utils/keyboardShortcuts";
 

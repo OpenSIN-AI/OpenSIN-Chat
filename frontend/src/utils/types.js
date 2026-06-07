@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export function castToType(key, value) {
   const definitions = {
     openAiTemp: {

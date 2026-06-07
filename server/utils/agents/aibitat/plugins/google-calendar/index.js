@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { GCalListCalendars } = require("./calendars/gcal-list-calendars.js");
 const { GCalGetCalendar } = require("./calendars/gcal-get-calendar.js");
 const { GCalGetEvent } = require("./events/gcal-get-event.js");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { QRCodeSVG } from "qrcode.react";
 import { TelegramLogo } from "@phosphor-icons/react";
 import Logo from "@/media/logo/openafd-icon.svg";

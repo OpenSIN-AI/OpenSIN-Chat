@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { reqBody } = require("../../utils/http");
 const {
   isSingleUserMode,

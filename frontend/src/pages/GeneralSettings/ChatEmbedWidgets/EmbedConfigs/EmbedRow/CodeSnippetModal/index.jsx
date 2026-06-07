@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useState } from "react";
 import { CheckCircle, CopySimple, X } from "@phosphor-icons/react";
 import showToast from "@/utils/toast";

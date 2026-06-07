@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Pool } from 'pg'
 import { cookies } from 'next/headers'
 

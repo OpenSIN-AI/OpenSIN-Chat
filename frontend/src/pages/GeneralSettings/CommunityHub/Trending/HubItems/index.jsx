@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import CommunityHub from "@/models/communityHub";
 import paths from "@/utils/paths";

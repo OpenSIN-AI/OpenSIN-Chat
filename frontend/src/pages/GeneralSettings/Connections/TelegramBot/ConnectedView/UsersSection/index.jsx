@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { X, Check } from "@phosphor-icons/react";
 import Telegram from "@/models/telegram";
 import showToast from "@/utils/toast";

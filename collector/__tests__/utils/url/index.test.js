@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 process.env.STORAGE_DIR = "test-storage"; // needed for tests to run
 const { validURL, validateURL, validYoutubeVideoUrl } = require("../../../utils/url");
 

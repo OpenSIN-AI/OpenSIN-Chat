@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import GitHub from "./github.svg";
 import GitLab from "./gitlab.svg";
 import YouTube from "./youtube.svg";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-env jest, node */
 process.env.STORAGE_DIR = "test-storage";
 

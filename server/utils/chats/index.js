@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4: uuidv4 } = require("uuid");
 const { WorkspaceChats } = require("../../models/workspaceChats");
 const { resetMemory } = require("./commands/reset");

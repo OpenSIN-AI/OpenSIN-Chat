@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { NavLink } from "react-router-dom";
 import { House, ArrowClockwise, Copy, Check } from "@phosphor-icons/react";
 import { useState } from "react";

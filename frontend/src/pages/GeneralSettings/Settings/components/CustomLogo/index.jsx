@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import useLogo from "@/hooks/useLogo";
 import System from "@/models/system";
 import showToast from "@/utils/toast";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function MoveToFolderIcon({
   className,
   width = 18,

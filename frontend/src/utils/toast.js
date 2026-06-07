@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { toast } from "react-toastify";
 
 // Additional Configs (opts)

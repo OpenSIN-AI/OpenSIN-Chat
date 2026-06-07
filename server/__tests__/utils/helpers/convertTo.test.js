@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-env jest */
 const { prepareChatsForExport } = require("../../../utils/helpers/chat/convertTo");
 

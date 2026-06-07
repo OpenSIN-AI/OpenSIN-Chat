@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { SimpleToggleSwitch } from "@/components/lib/Toggle";
 import { useTranslation } from "react-i18next";
 import Admin from "@/models/admin";

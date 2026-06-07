@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const AIbitat = require("../../../index.js");
 
 const SECTION_BUILDER_PROMPT = `You are a focused presentation section builder. Your ONLY task is to create detailed slides for ONE section of a PowerPoint presentation.

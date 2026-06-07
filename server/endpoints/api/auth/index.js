@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
 
 function apiAuthEndpoints(app) {

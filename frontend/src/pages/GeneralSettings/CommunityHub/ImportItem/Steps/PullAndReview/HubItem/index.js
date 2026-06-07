@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import SystemPrompt from "./SystemPrompt";
 import SlashCommand from "./SlashCommand";
 import UnknownItem from "./Unknown";

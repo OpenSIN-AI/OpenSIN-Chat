@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
 import paths from "@/utils/paths";
 import { isMobile } from "react-device-detect";

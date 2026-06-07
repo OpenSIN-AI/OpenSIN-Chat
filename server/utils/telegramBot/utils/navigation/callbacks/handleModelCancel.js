@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Handle model selection cancellation.
  * @param {object} params

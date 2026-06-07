@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const fs = require("fs/promises");
 const filesystem = require("./lib.js");
 

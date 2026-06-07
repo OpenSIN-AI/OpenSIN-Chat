@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Document } = require("../../../../models/documents");
 const { safeJsonParse } = require("../../../http");
 const { summarizeContent } = require("../utils/summarize");

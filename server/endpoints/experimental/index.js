@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { liveSyncEndpoints } = require("./liveSync");
 const { importedAgentPluginEndpoints } = require("./imported-agent-plugins");
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function SearchProviderItem({ provider, checked, onClick }) {
   const { name, value, logo, description } = provider;
   return (

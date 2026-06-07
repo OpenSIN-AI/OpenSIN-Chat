@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useRef } from "react";
 
 const RMS_THRESHOLD = 0.02; // 0..1 — RMS volume below which we treat the mic as silent.

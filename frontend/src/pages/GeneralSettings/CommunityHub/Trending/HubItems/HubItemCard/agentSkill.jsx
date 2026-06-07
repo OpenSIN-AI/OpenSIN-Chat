@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import pluralize from "pluralize";

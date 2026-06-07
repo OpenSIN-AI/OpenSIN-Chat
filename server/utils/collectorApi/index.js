@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { EncryptionManager } = require("../EncryptionManager");
 const { Agent } = require("undici");
 

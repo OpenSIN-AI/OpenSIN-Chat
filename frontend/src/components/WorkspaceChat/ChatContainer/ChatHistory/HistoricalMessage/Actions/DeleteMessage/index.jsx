@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect, useRef } from "react";
 import { Trash } from "@phosphor-icons/react";
 import Workspace from "@/models/workspace";

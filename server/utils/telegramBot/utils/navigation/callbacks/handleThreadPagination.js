@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { showThreadMenu } = require("../../commands/handlers/showThreadMenu");
 
 /**

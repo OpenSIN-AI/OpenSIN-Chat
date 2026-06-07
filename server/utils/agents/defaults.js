@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const AgentPlugins = require("./aibitat/plugins");
 const { SystemSettings } = require("../../models/systemSettings");
 const { safeJsonParse } = require("../http");

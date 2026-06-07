@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export const Colors = {
   blue: "#3b82f6",
   sky: "#0ea5e9",

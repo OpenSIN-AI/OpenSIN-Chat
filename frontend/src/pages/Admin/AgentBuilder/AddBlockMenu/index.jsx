@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useRef, useEffect } from "react";
 import { Plus, CaretDown } from "@phosphor-icons/react";
 import { BLOCK_TYPES, BLOCK_INFO } from "../BlockList";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { safeJsonParse } from "@/utils/request";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * OpenAfD Chat — Bundestag-Drucksachen Connector
  *

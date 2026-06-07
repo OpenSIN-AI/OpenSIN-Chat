@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import System from "@/models/system";
 import { Warning, Info } from "@phosphor-icons/react";

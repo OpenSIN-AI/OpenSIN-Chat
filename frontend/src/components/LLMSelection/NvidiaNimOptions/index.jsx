@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import RemoteNvidiaNimOptions from "./remote";
 import ManagedNvidiaNimOptions from "./managed";
 

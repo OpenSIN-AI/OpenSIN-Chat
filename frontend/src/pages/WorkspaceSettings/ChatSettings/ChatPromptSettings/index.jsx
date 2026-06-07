@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState, useRef, Fragment } from "react";
 import { getWorkspaceSystemPrompt } from "@/utils/chat";
 import { useTranslation } from "react-i18next";

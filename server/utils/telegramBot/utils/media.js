@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Download a file from Telegram by file ID.
  * @param {TelegramBot} bot

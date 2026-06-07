@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { parseLemonadeServerEndpoint } = require("../../AiProviders/lemonade");
 const { toChunks, reportEmbeddingProgress } = require("../../helpers");
 

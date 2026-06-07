@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Tooltip } from "react-tooltip";
 import { Brain, CheckCircle } from "@phosphor-icons/react";
 import LLMSelectorModal from "./index";

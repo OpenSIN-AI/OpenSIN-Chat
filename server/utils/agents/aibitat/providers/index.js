@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const OpenAIProvider = require("./openai.js");
 const AnthropicProvider = require("./anthropic.js");
 const LMStudioProvider = require("./lmstudio.js");

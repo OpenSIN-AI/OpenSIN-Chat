@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const pluralize = require("pluralize");
 const { getLLMProvider } = require("../../../helpers");
 const { TokenManager } = require("../../../helpers/tiktoken");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
 import { FullScreenLoader } from "@/components/Preloader";
 import paths from "@/utils/paths";

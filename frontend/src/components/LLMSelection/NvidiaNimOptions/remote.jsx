@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import System from "@/models/system";

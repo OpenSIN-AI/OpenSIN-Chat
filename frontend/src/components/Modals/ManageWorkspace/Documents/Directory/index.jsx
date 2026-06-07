@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import UploadFile from "../UploadFile";
 import PreLoader from "@/components/Preloader";
 import { memo, useEffect, useState } from "react";

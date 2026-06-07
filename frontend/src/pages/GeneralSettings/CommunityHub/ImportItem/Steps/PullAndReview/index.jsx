@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import CommunityHub from "@/models/communityHub";
 import CommunityHubImportItemSteps from "..";
 import CTAButton from "@/components/lib/CTAButton";

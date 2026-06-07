@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Helpers that convert workspace chats to some supported format
 // for external use by the user.
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { showModelMenu } = require("../../commands/handlers/showModelMenu");
 
 /**

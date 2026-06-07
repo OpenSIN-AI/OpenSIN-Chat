@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { ApiKey } = require("../../models/apiKeys");
 const { SystemSettings } = require("../../models/systemSettings");
 

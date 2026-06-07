@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { FlowExecutor } = require("../../../utils/agentFlows/executor");
 
 describe("FlowExecutor: getValueFromPath", () => {

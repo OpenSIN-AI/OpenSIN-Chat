@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import showToast from "@/utils/toast";
 import { DownloadSimple, Key } from "@phosphor-icons/react";
 import { saveAs } from "file-saver";

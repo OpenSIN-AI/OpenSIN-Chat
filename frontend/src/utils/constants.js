@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export const API_BASE = import.meta.env.VITE_API_BASE || "/api";
 
 export const AUTH_USER = "openafd_user";

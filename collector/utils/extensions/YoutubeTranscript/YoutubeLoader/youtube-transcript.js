@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { validYoutubeVideoUrl } = require("../../../url");
 
 class YoutubeTranscriptError extends Error {

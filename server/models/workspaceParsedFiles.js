@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const prisma = require("../utils/prisma");
 const { EventLogs } = require("./eventLogs");
 const { Document } = require("./documents");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import fs from 'fs';
 import {resources} from '../../frontend/src/locales/resources.js';
 import "../../server/node_modules/dotenv/lib/main.js";

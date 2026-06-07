@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const crypto = require("crypto");
 const { dumpENV } = require("../helpers/updateENV");
 

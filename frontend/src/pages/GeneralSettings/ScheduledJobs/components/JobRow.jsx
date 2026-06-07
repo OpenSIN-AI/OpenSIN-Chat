@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useNavigate } from "react-router-dom";
 import { Play, PencilSimple, X } from "@phosphor-icons/react";
 import paths from "@/utils/paths";

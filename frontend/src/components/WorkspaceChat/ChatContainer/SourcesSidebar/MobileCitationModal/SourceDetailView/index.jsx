@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Fragment } from "react";
 import { CaretLeft, Info, X } from "@phosphor-icons/react";
 import { decode as HTMLDecode } from "he";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect } from "react";
 import paths from "@/utils/paths";
 import { useNavigate } from "react-router-dom";

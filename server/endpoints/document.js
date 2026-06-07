@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Document } = require("../models/documents");
 const { normalizePath, documentsPath, isWithin } = require("../utils/files");
 const { reqBody } = require("../utils/http");

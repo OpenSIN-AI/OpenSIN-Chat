@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";

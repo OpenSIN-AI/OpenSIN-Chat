@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Document } = require("../models/documents.js");
 const { DocumentSyncQueue } = require("../models/documentSyncQueue.js");
 const { CollectorApi } = require("../utils/collectorApi");

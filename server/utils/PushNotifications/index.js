@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const webpush = require("web-push");
 const fs = require("fs");
 const path = require("path");

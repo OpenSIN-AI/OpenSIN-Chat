@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import * as TTS from "@mintplex-labs/piper-tts-web";
 
 /** @type {import("@mintplex-labs/piper-web-tts").TtsSession | null} */

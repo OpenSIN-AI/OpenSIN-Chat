@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Purpose: Shim Buffer.SlowBuffer for Node ≥18 where the deprecated SlowBuffer
 //          constructor was removed. Required by the legacy `buffer-equal-constant-time`
 //          package (transitive dep of `jsonwebtoken`) which reads

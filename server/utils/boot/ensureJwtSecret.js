@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Purpose: Ensure `JWT_SECRET` is set in the environment.
 //          If the user has not configured one in `.env` (or `.env.development`),
 //          this generates a cryptographically secure 32-byte hex string, writes

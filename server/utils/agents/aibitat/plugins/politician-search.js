@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Politician search plugin for aibitat agent framework.
  *

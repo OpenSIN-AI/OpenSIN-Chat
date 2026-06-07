@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // OpenAfD Chat — Telemetrie wurde im Sinne maximaler Souveränität und
 // Datenschutz-Garantie (DSGVO) vollständig entfernt.
 // Es werden keinerlei Daten an externe Dienste gesendet.

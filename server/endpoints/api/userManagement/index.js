@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { User } = require("../../../models/user");
 const { TemporaryAuthToken } = require("../../../models/temporaryAuthToken");
 const { multiUserMode } = require("../../../utils/http");

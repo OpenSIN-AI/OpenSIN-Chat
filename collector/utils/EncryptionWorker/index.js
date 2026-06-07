@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const crypto = require("crypto");
 
 // Differs from EncryptionManager in that is does not set or define the keys that will be used

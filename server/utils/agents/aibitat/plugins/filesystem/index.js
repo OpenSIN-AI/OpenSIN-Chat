@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { FilesystemReadTextFile } = require("./read-text-file.js");
 const { FilesystemReadMultipleFiles } = require("./read-multiple-files.js");
 const { FilesystemWriteTextFile } = require("./write-text-file.js");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-env jest */
 const createFilesLib = require("../../../../../../utils/agents/aibitat/plugins/create-files/lib.js");
 

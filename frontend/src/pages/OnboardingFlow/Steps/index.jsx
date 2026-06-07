@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useState } from "react";
 import { isMobile } from "react-device-detect";

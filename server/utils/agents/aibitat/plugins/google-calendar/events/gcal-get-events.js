@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const googleCalendarLib = require("../lib.js");
 
 module.exports.GCalGetEvents = {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import { FullScreenLoader } from "@/components/Preloader";
 import System from "@/models/system";

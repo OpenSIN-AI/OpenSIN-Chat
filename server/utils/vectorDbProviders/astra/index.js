@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { AstraDB: AstraClient } = require("@datastax/astra-db-ts");
 const { TextSplitter } = require("../../TextSplitter");
 const { SystemSettings } = require("../../../models/systemSettings");

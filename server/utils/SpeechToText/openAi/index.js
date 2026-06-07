@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 class OpenAiSTT {
   constructor() {
     if (!process.env.OPEN_AI_KEY) throw new Error("No OpenAI API key was set.");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * This is a script that syncs the static lists of models from the Gemini API
  * so that maintainers can keep the fallback lists up to date.

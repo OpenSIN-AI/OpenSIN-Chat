@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * /abort - Kill any ongoing LLM worker for this chat.
  * @param {import("../index").BotContext} ctx

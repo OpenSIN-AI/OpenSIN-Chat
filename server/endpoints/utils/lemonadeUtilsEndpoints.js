@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const {
   flexUserRoleValid,

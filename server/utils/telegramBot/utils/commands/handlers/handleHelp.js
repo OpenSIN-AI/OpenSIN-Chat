@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * /help - Show all available commands.
  * @param {import("../index").BotContext} ctx

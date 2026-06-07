@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { EventLogs } = require("../models/eventLogs");
 const { Invite } = require("../models/invite");
 const { User } = require("../models/user");

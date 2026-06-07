@@ -1,4 +1,5 @@
-const { ElevenLabsClient } = require("elevenlabs");
+// SPDX-License-Identifier: MIT
+const { ElevenLabsClient } = require("@elevenlabs/elevenlabs-js");
 
 class ElevenLabsTTS {
   constructor() {
@@ -25,23 +26,43 @@ class ElevenLabsTTS {
     return [];
   }
 
-  #stream2buffer(stream) {
-    return new Promise((resolve, reject) => {
-      const _buf = [];
-      stream.on("data", (chunk) => _buf.push(chunk));
-      stream.on("end", () => resolve(Buffer.concat(_buf)));
-      stream.on("error", (err) => reject(err));
-    });
+  /**
+   * Collects a web ReadableStream<Uint8Array> into a single Buffer.
+   * The v2+ ElevenLabs SDK returns a WHATWG ReadableStream rather than a
+   * Node.js stream, so we consume it via its async iterator / reader.
+   * @param {ReadableStream<Uint8Array>|AsyncIterable<Uint8Array>} stream
+   * @returns {Promise<Buffer>}
+   */
+  async #stream2buffer(stream) {
+    const chunks = [];
+
+    // Preferred: WHATWG ReadableStream exposes an async iterator in Node 18+.
+    if (typeof stream?.[Symbol.asyncIterator] === "function") {
+      for await (const chunk of stream) chunks.push(Buffer.from(chunk));
+      return Buffer.concat(chunks);
+    }
+
+    // Fallback: manually pull from the stream reader.
+    if (typeof stream?.getReader === "function") {
+      const reader = stream.getReader();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (value) chunks.push(Buffer.from(value));
+      }
+      return Buffer.concat(chunks);
+    }
+
+    throw new Error("Unsupported audio stream type returned by ElevenLabs.");
   }
 
   async ttsBuffer(textInput) {
     try {
-      const audio = await this.elevenLabs.generate({
-        voice: this.voiceId,
+      const audio = await this.elevenLabs.textToSpeech.convert(this.voiceId, {
         text: textInput,
-        model_id: "eleven_multilingual_v2",
+        modelId: this.modelId,
       });
-      return Buffer.from(await this.#stream2buffer(audio));
+      return await this.#stream2buffer(audio);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);

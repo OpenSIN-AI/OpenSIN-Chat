@@ -27,9 +27,10 @@ class AgentOrchestrator {
    * @param {string} params.goal - natural-language goal
    * @param {string[]} [params.steps] - explicit steps (auto-detected if omitted)
    * @param {Object} [params.options] - per-step options
+   * @param {boolean} [params.autoRun=true] - start the async runner immediately
    * @returns {Promise<{workflowId: string, steps: Array}>}
    */
-  async startWorkflow({ goal, steps: explicitSteps, options = {} }) {
+  async startWorkflow({ goal, steps: explicitSteps, options = {}, autoRun = true }) {
     if (!goal) throw new Error("Goal is required");
 
     const workflowId = uuidv4();
@@ -55,14 +56,16 @@ class AgentOrchestrator {
 
     this.activeWorkflows.set(workflowId, workflow);
 
-    this.#runWorkflow(workflowId).catch((err) => {
-      this.log(`Workflow error for ${workflowId}: ${err.message}`);
-      const w = this.activeWorkflows.get(workflowId);
-      if (w) {
-        w.status = "failed";
-        w.error = err.message;
-      }
-    });
+    if (autoRun) {
+      this.#runWorkflow(workflowId).catch((err) => {
+        this.log(`Workflow error for ${workflowId}: ${err.message}`);
+        const w = this.activeWorkflows.get(workflowId);
+        if (w) {
+          w.status = "failed";
+          w.error = err.message;
+        }
+      });
+    }
 
     return { workflowId, steps: workflow.steps.map((s) => ({ id: s.id, type: s.type, label: s.label })) };
   }
@@ -222,6 +225,15 @@ class AgentOrchestrator {
   }
 
   // ── Step Inference ────────────────────────────────
+
+  /**
+   * Public wrapper around the internal step-inference heuristic.
+   * @param {string} goal
+   * @returns {Array<{type: string, label: string}>}
+   */
+  static inferSteps(goal) {
+    return AgentOrchestrator.#inferSteps(goal);
+  }
 
   static #inferSteps(goal) {
     const steps = [];

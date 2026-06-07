@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // You can only run this example from within the websocket/ directory.
 // NODE_ENV=development node websock-branding-collab.js
 // Scraping is enabled, but search requires AGENT_GSE_* keys.

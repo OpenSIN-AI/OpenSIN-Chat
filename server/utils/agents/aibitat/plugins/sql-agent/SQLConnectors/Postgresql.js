@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const pgSql = require("pg");
 
 class PostgresSQLConnector {

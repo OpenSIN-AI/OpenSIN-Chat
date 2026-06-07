@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { SkipForward, Check, ArrowRight } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 

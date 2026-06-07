@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useMemo, useState } from "react";
 import useTimeoutProgress from "@/hooks/useTimeoutProgress";
 import Header from "./Header";

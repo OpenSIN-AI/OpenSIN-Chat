@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { PGVector: PGVectorClass } = require("../../../../utils/vectorDbProviders/pgvector");
 
 const PGVector = new PGVectorClass();

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import truncate from "truncate";
 import { X, Trash } from "@phosphor-icons/react";
 import System from "@/models/system";

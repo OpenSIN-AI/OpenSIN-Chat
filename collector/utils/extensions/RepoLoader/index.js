@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Dynamically load the correct repository loader from a specific platform
  * by default will return GitHub.

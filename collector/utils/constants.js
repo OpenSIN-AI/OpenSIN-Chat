@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const WATCH_DIRECTORY = require("path").resolve(__dirname, "../hotdir");
 
 const ACCEPTED_MIMES = {

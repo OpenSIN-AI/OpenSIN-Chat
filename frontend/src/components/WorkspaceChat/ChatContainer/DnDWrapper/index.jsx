@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect, createContext, useContext } from "react";
 import { v4 } from "uuid";
 import System from "@/models/system";

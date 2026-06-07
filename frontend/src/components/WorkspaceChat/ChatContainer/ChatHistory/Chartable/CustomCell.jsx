@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function CustomCell({ ...props }) {
   const { root, depth, x, y, width, height, index, colors, name } = props;
   return (

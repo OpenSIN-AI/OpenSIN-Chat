@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-env jest, node */
 const { OpenAICompatibleChat } = require('../../../utils/chats/openaiCompatible');
 const { WorkspaceChats } = require('../../../models/workspaceChats');

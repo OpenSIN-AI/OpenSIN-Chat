@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 
 export default function useTextSize() {

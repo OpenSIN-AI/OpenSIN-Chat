@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { User } = require("../../../models/user");
 const { ROLES } = require("../../middleware/multiUserProtected");
 

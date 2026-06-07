@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Utilities for converting markdown to DOCX format.
  * Uses marked for parsing, jsdom for HTML traversal, and docx for document generation.

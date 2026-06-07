@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4: uuidv4 } = require("uuid");
 const { DocumentManager } = require("../DocumentManager");
 const { WorkspaceChats } = require("../../models/workspaceChats");

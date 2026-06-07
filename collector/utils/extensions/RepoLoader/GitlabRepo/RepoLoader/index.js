@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const ignore = require("ignore");
 const MAX_RETRIES = 3;
 

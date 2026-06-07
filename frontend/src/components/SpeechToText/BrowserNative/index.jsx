@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function BrowserNative() {
   return (
     <div className="w-full h-10 items-center flex">

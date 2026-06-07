@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { log, conclude } = require("./helpers/index.js");
 const { SystemSettings } = require("../models/systemSettings.js");
 const { Memory } = require("../models/memory.js");

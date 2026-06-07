@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useTTSProvider } from "@/components/contexts/TTSProvider";
 import NativeTTSMessage from "./native";
 import AsyncTTSMessage from "./asyncTts";

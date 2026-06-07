@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";

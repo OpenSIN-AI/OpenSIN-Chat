@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const bcrypt = require("bcryptjs");
 const { v4, validate } = require("uuid");
 const { User } = require("../../models/user");

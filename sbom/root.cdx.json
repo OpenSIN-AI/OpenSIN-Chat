@@ -1,0 +1,163 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:b59eb03a-c9bb-4281-b26f-4b1cc093b67a",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-06-07T10:01:43.182Z",
+    "tools": [
+      {
+        "vendor": "Family-Team-Projects",
+        "name": "openafd-generate-sbom",
+        "version": "1.0.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "openafd-chat",
+      "version": "0.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "@elevenlabs/elevenlabs-js",
+      "version": "2.51.0",
+      "purl": "pkg:npm/@elevenlabs/elevenlabs-js@2.51.0",
+      "bom-ref": "pkg:npm/@elevenlabs/elevenlabs-js@2.51.0"
+    },
+    {
+      "type": "library",
+      "name": "@hello-pangea/dnd",
+      "version": "18.0.1",
+      "purl": "pkg:npm/@hello-pangea/dnd@18.0.1",
+      "bom-ref": "pkg:npm/@hello-pangea/dnd@18.0.1"
+    },
+    {
+      "type": "library",
+      "name": "@mintplex-labs/mdpdf",
+      "version": "0.1.9",
+      "purl": "pkg:npm/@mintplex-labs/mdpdf@0.1.9",
+      "bom-ref": "pkg:npm/@mintplex-labs/mdpdf@0.1.9"
+    },
+    {
+      "type": "library",
+      "name": "@phosphor-icons/react",
+      "version": "2.1.10",
+      "purl": "pkg:npm/@phosphor-icons/react@2.1.10",
+      "bom-ref": "pkg:npm/@phosphor-icons/react@2.1.10"
+    },
+    {
+      "type": "library",
+      "name": "@prisma/client",
+      "version": "7.8.0",
+      "purl": "pkg:npm/@prisma/client@7.8.0",
+      "bom-ref": "pkg:npm/@prisma/client@7.8.0"
+    },
+    {
+      "type": "library",
+      "name": "@testing-library/jest-dom",
+      "version": "6.9.1",
+      "purl": "pkg:npm/@testing-library/jest-dom@6.9.1",
+      "bom-ref": "pkg:npm/@testing-library/jest-dom@6.9.1"
+    },
+    {
+      "type": "library",
+      "name": "@testing-library/react",
+      "version": "16.3.2",
+      "purl": "pkg:npm/@testing-library/react@16.3.2",
+      "bom-ref": "pkg:npm/@testing-library/react@16.3.2"
+    },
+    {
+      "type": "library",
+      "name": "@vitejs/plugin-react",
+      "version": "6.0.2",
+      "purl": "pkg:npm/@vitejs/plugin-react@6.0.2",
+      "bom-ref": "pkg:npm/@vitejs/plugin-react@6.0.2"
+    },
+    {
+      "type": "library",
+      "name": "playwright",
+      "version": "1.60.0",
+      "purl": "pkg:npm/playwright@1.60.0",
+      "bom-ref": "pkg:npm/playwright@1.60.0"
+    },
+    {
+      "type": "library",
+      "name": "react",
+      "version": "19.2.7",
+      "purl": "pkg:npm/react@19.2.7",
+      "bom-ref": "pkg:npm/react@19.2.7"
+    },
+    {
+      "type": "library",
+      "name": "react-i18next",
+      "version": "17.0.8",
+      "purl": "pkg:npm/react-i18next@17.0.8",
+      "bom-ref": "pkg:npm/react-i18next@17.0.8"
+    },
+    {
+      "type": "library",
+      "name": "react-loading-skeleton",
+      "version": "3.5.0",
+      "purl": "pkg:npm/react-loading-skeleton@3.5.0",
+      "bom-ref": "pkg:npm/react-loading-skeleton@3.5.0"
+    },
+    {
+      "type": "library",
+      "name": "react-router-dom",
+      "version": "7.17.0",
+      "purl": "pkg:npm/react-router-dom@7.17.0",
+      "bom-ref": "pkg:npm/react-router-dom@7.17.0"
+    },
+    {
+      "type": "library",
+      "name": "rollup-plugin-visualizer",
+      "version": "7.0.1",
+      "purl": "pkg:npm/rollup-plugin-visualizer@7.0.1",
+      "bom-ref": "pkg:npm/rollup-plugin-visualizer@7.0.1"
+    },
+    {
+      "type": "library",
+      "name": "uuid",
+      "version": "14.0.0",
+      "purl": "pkg:npm/uuid@14.0.0",
+      "bom-ref": "pkg:npm/uuid@14.0.0"
+    },
+    {
+      "type": "library",
+      "name": "vite",
+      "version": "8.0.16",
+      "purl": "pkg:npm/vite@8.0.16",
+      "bom-ref": "pkg:npm/vite@8.0.16"
+    },
+    {
+      "type": "library",
+      "name": "vitest",
+      "version": "4.1.8",
+      "purl": "pkg:npm/vitest@4.1.8",
+      "bom-ref": "pkg:npm/vitest@4.1.8"
+    },
+    {
+      "type": "library",
+      "name": "concurrently",
+      "version": "9.1.2",
+      "purl": "pkg:npm/concurrently@9.1.2",
+      "bom-ref": "pkg:npm/concurrently@9.1.2"
+    },
+    {
+      "type": "library",
+      "name": "jest",
+      "version": "29.7.0",
+      "purl": "pkg:npm/jest@29.7.0",
+      "bom-ref": "pkg:npm/jest@29.7.0"
+    }
+  ]
+}

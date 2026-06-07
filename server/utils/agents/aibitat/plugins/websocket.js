@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const chalk = require("chalk");
 const { Telemetry } = require("../../../../models/telemetry");
 const { v4: uuidv4 } = require("uuid");

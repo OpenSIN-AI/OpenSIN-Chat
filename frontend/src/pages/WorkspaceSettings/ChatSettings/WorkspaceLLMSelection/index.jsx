@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
 import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
 import WorkspaceLLMItem from "./WorkspaceLLMItem";

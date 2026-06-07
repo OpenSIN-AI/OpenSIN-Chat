@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { formatDateTimeAsMoment } from "@/utils/directories";
 import { formatDuration, numberWithCommas } from "@/utils/numbers";
 import React, { useEffect, useState, useContext } from "react";

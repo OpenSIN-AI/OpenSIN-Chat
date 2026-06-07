@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const prisma = require("../utils/prisma");
 const { SystemSettings } = require("./systemSettings");
 const { ROLES } = require("../utils/middleware/multiUserProtected");

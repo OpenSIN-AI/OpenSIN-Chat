@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
 const fs = require("fs");
 const { tokenizeString } = require("../../utils/tokenizer");

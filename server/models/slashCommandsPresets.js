@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
 const prisma = require("../utils/prisma");
 const CMD_REGEX = new RegExp(/[^a-zA-Z0-9_-]/g);

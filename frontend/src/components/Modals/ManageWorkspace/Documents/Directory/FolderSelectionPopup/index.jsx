@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { middleTruncate } from "@/utils/directories";
 
 export default function FolderSelectionPopup({ folders, onSelect, onClose }) {

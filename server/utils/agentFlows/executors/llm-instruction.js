@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Execute an LLM instruction flow step
  * @param {Object} config Flow step configuration

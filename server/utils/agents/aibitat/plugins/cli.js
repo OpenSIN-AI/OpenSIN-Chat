@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Plugin CAN ONLY BE USE IN DEVELOPMENT.
 const { input } = require("@inquirer/prompts");
 const chalk = require("chalk");

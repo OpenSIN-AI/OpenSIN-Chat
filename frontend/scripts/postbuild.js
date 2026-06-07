@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { renameSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';

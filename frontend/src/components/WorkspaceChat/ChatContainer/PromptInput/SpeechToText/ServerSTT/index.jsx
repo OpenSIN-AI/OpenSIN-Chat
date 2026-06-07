@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Appearance from "@/models/appearance";

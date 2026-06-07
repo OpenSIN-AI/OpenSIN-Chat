@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import Workspace from "@/models/workspace";
 import { castToType } from "@/utils/types";
 import showToast from "@/utils/toast";

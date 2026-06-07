@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { CloudArrowUp } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";

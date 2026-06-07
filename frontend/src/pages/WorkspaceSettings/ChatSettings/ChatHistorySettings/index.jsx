@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
 export default function ChatHistorySettings({ workspace, setHasChanges }) {
   const { t } = useTranslation();

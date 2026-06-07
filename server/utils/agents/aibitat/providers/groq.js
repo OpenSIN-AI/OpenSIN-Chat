@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const OpenAI = require("openai");
 const Provider = require("./ai-provider.js");
 const InheritMultiple = require("./helpers/classes.js");

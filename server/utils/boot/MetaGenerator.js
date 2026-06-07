@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * @typedef MetaTagDefinition
  * @property {('link'|'meta')} tag - the type of meta tag element

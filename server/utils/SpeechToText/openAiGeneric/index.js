@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { convertAudioBufferToWav } = require("../helpers");
 const path = require("path");
 

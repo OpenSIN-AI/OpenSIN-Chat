@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PreLoader from "@/components/Preloader";

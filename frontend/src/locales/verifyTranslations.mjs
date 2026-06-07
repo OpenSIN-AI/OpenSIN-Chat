@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* global process */
 import { resources } from "./resources.js";
 const languageNames = new Intl.DisplayNames(Object.keys(resources), {

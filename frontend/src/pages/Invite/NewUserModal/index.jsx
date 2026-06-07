@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useState } from "react";
 import Invite from "@/models/invite";
 import paths from "@/utils/paths";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect, useRef } from "react";
 import PiperTTSClient from "@/utils/piperTTS";
 import { titleCase } from "text-case";

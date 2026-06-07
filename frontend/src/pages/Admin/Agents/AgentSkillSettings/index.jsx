@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import { SlidersHorizontal, X } from "@phosphor-icons/react";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Warning, X } from "@phosphor-icons/react";
 
 export default function ChangeWarningModal({

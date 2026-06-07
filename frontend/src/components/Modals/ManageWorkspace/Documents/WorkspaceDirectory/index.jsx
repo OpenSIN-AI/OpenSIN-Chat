@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
 import WorkspaceFileRow from "./WorkspaceFileRow";
 import { memo, useEffect, useState } from "react";

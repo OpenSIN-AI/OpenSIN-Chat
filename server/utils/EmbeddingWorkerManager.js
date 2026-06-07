@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const path = require("path");
 const { EventLogs } = require("../models/eventLogs");
 

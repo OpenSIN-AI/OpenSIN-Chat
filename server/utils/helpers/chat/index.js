@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { sourceIdentifier } = require("../../chats");
 const { safeJsonParse } = require("../../http");
 const { TokenManager } = require("../tiktoken");

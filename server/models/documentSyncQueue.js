@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { BackgroundService } = require("../utils/BackgroundWorkers");
 const prisma = require("../utils/prisma");
 const { SystemSettings } = require("./systemSettings");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-env jest */
 const { ConnectionStringParser } = require("../../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors/utils");
 

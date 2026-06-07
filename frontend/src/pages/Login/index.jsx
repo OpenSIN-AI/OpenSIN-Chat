@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React from "react";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { FullScreenLoader } from "@/components/Preloader";

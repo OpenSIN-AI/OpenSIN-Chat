@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 import { DISABLED_PROVIDERS } from "@/hooks/useGetProvidersModels";
 

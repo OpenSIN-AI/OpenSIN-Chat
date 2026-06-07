@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import moment from "moment";
 
 export function formatDate(dateString) {

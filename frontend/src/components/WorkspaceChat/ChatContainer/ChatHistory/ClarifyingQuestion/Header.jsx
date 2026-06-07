@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { CaretLeft, CaretRight, X } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { MilvusClient } = require("@zilliz/milvus2-sdk-node");
 const { Milvus } = require("../milvus");
 

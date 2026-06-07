@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useState, useEffect, useRef } from "react";
 import showToast from "@/utils/toast";
 import { CaretDown, Gear, Warning } from "@phosphor-icons/react";

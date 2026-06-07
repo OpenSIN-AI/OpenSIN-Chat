@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState, useCallback } from "react";
 import Telegram from "@/models/telegram";
 import ConnectedBotCard from "./ConnectedBotCard";

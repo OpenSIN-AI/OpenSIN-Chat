@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { createPortal } from "react-dom";
 import ModalWrapper from "@/components/ModalWrapper";
 import { X, WarningCircle } from "@phosphor-icons/react";

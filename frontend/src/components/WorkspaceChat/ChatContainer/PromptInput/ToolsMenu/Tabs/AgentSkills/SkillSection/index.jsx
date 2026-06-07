@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useRef, useEffect } from "react";
 import { CaretDown } from "@phosphor-icons/react";
 

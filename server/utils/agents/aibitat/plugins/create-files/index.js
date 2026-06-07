@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { CreatePptxPresentation } = require("./pptx/create-presentation.js");
 const { CreateTextFile } = require("./text/create-text-file.js");
 const { CreatePdfFile } = require("./pdf/create-pdf-file.js");

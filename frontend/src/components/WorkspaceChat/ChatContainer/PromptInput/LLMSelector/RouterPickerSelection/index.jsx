@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ModelRouter from "@/models/modelRouter";

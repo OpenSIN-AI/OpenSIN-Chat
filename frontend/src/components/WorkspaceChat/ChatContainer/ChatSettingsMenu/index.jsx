@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect } from "react";
 import { SlidersHorizontal } from "@phosphor-icons/react";
 import useLoginMode from "@/hooks/useLoginMode";

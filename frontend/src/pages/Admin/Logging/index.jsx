@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import Sidebar from "@/components/SettingsSidebar";
 import useQuery from "@/hooks/useQuery";
 import System from "@/models/system";

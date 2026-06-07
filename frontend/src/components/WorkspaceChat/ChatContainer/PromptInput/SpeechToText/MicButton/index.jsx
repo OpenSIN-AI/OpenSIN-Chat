@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useCallback, useEffect } from "react";
 import { Microphone, CircleNotch } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";

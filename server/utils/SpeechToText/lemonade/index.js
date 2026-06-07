@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const path = require("path");
 const { parseLemonadeServerEndpoint } = require("../../AiProviders/lemonade");
 const { convertAudioBufferToWav } = require("../helpers");

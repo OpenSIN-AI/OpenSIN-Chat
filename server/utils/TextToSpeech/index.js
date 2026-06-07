@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 function getTTSProvider() {
   const provider = process.env.TTS_PROVIDER || "openai";
   switch (provider) {

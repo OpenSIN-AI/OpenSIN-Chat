@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useRef, useState } from "react";
 import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
 import showToast from "@/utils/toast";

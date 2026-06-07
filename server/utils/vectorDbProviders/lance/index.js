@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const lancedb = require("@lancedb/lancedb");
 const { toChunks, getEmbeddingEngineSelection } = require("../../helpers");
 const { TextSplitter } = require("../../TextSplitter");

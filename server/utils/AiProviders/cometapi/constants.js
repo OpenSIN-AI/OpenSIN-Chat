@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // TODO: When CometAPI's model list is upgraded, this operation needs to be removed
 // Model filtering patterns from cometapi.md that are not supported by OpenAfD Chat
 module.exports.COMETAPI_IGNORE_PATTERNS = [

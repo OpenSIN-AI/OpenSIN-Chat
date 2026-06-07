@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { CollectorApi } = require("../../../collectorApi");
 const Provider = require("../providers/ai-provider");
 const { summarizeContent } = require("../utils/summarize");

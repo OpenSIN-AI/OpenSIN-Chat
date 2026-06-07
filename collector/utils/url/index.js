@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const RuntimeSettings = require("../runtimeSettings");
 /**  ATTN: SECURITY RESEARCHERS
  * To Security researchers about to submit an SSRF report CVE - please don't.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4: uuidv4 } = require("uuid");
 const { reqBody, multiUserMode } = require("../../utils/http");
 const { Telemetry } = require("../../models/telemetry");

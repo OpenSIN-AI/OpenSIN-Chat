@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Some models may attempt to call an expensive or annoying function many times and in that case we will want
 // to implement some stateful tracking during that agent session. GPT4 and other more powerful models are smart
 // enough to realize this, but models like 3.5 lack this. Open source models suffer greatly from this issue.

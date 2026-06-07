@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * A simple per-key async message queue that ensures sequential processing.
  * Reusable across any connector (Telegram, Discord, Slack, etc.)

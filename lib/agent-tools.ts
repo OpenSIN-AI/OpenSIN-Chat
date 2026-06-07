@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { tool } from 'ai'
 import { z } from 'zod'
 

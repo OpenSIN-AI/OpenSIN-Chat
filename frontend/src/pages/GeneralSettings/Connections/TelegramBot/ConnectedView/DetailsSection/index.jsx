@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState } from "react";
 import { CircleNotch } from "@phosphor-icons/react";
 import Telegram from "@/models/telegram";

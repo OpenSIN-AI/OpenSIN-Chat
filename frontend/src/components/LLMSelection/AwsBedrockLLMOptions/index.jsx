@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { ArrowSquareOut, Info } from "@phosphor-icons/react";
 import { AWS_REGIONS } from "./regions";
 import { useState } from "react";

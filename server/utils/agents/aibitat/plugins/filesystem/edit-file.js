@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const filesystem = require("./lib.js");
 
 module.exports.FilesystemEditFile = {

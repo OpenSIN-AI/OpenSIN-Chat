@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { escapeHTML } = require("../../format");
 const {
   isWebSource,

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 function getSTTProvider() {
   const provider = process.env.STT_PROVIDER || "native";
   switch (provider) {

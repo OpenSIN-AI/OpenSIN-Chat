@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { webBrowsing } = require("./web-browsing.js");
 const { webScraping } = require("./web-scraping.js");
 const { websocket } = require("./websocket.js");
@@ -16,6 +17,7 @@ const { politicianSearch } = require("./politician-search.js");
 const { deepResearch } = require("./deep-research.js");
 const { generateReport } = require("./generate-report.js");
 const { orchestratorAgent } = require("./orchestrator.js");
+const { browserVision } = require("./browser-vision.js");
 
 module.exports = {
   webScraping,
@@ -36,6 +38,7 @@ module.exports = {
   deepResearch,
   generateReport,
   orchestratorAgent,
+  browserVision,
 
   // Plugin name aliases so they can be pulled by slug as well.
   [webScraping.name]: webScraping,
@@ -56,4 +59,5 @@ module.exports = {
   [deepResearch.name]: deepResearch,
   [generateReport.name]: generateReport,
   [orchestratorAgent.name]: orchestratorAgent,
+  [browserVision.name]: browserVision,
 };

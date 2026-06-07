@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useMemo } from "react";
 import { titleCase } from "text-case";
 import {

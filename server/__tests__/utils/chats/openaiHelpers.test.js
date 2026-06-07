@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-env jest, node */
 const { extractTextContent, extractAttachments } = require('../../../endpoints/api/openai/helpers');
 

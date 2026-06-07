@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const AIbitat = require("../index.js");
 const {
   cli,

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function OpencodeZenOptions({ settings }) {
   return (
     <div className="flex flex-col gap-y-7">

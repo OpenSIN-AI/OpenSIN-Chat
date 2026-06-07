@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { EncryptionWorker } = require("../utils/EncryptionWorker");
 const { CommunicationKey } = require("../utils/comKey");
 

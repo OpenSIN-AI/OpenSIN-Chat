@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useCallback } from "react";
 import Admin from "@/models/admin";
 import { SUB_SKILL_REGISTRY, getPreferenceKeyForSkill } from "./skillRegistry";

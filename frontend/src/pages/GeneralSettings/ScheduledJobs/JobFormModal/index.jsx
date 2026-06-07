@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import { X, WarningCircle } from "@phosphor-icons/react";
 import ScheduledJobs from "@/models/scheduledJobs";

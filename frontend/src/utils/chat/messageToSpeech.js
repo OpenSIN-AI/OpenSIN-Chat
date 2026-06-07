@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Convert a chat message string to plain text suitable for text-to-speech.
  *

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { log, conclude } = require("./helpers/index.js");
 const { WorkspaceChats } = require("../models/workspaceChats.js");
 const { ScheduledJobRun } = require("../models/scheduledJobRun.js");

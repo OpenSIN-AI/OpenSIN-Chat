@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import Admin from "@/models/admin";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import SurveyBody from "../../ClarifyingQuestion/SurveyBody";
 
 /**

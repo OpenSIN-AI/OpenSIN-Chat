@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { APPEARANCE_SETTINGS } from "@/utils/constants";
 import { safeJsonParse } from "@/utils/request";
 

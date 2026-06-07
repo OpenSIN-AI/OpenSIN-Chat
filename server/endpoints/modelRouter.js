@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { ModelRouter } = require("../models/modelRouter");
 const { ModelRouterRule } = require("../models/modelRouterRule");
 const { Telemetry } = require("../models/telemetry");

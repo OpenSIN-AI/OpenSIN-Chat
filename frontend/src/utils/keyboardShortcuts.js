@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import paths from "./paths";
 import { useEffect } from "react";
 import { userFromStorage } from "./request";

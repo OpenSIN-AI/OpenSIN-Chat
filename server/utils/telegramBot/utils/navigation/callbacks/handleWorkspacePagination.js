@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const {
   showWorkspaceMenu,
 } = require("../../commands/handlers/showWorkspaceMenu");

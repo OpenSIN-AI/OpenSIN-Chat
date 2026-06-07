@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";

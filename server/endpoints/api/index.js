@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { useSwagger } = require("../../swagger/utils");
 const { apiAdminEndpoints } = require("./admin");
 const { apiAuthEndpoints } = require("./auth");

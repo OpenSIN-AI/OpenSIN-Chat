@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { safeJsonParse } = require("../../http");
 const path = require("path");
 const fs = require("fs");

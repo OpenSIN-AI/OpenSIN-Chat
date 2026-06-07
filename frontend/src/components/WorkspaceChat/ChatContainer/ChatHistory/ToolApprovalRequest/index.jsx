@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useState } from "react";
 import { CaretDown, Check, X, Hammer } from "@phosphor-icons/react";
 import AgentSkillWhitelist from "@/models/agentSkillWhitelist";

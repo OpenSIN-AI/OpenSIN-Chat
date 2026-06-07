@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 class DeepgramSTT {
   constructor() {
     if (!process.env.STT_DEEPGRAM_API_KEY)

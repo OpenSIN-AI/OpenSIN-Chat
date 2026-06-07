@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import showToast from "@/utils/toast";
 import MobileConnection from "@/models/mobile";
 import { useState } from "react";

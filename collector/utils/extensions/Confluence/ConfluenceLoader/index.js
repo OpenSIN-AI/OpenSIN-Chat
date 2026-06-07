@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /*
  * This is a custom implementation of the Confluence langchain loader. There was an issue where
  * code blocks were not being extracted. This is a temporary fix until this issue is resolved.*/

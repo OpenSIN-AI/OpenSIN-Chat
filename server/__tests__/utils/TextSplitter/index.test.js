@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { TextSplitter } = require("../../../utils/TextSplitter");
 const _ = require("lodash");
 

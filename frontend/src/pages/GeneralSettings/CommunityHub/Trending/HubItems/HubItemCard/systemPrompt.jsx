@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import truncate from "truncate";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";

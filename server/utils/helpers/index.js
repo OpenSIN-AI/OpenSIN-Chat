@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * File Attachment for automatic upload on the chat container page.
  * @typedef Attachment

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const createFilesLib = require("../lib.js");
 
 // All positioning assumes LAYOUT_16x9: 10 × 5.625 in.

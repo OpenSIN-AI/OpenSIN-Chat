@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function HuggingFaceOptions({ settings }) {
   return (
     <div className="w-full flex flex-col">

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 process.env.STORAGE_DIR = "test-storage";
 const fs = require("fs");
 const path = require("path");

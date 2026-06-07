@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const mysql = require("mysql2/promise");
 const { ConnectionStringParser } = require("./utils");
 

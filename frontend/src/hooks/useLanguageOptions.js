@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import i18n from "@/i18n";
 import { resources as languages } from "@/locales/resources";
 

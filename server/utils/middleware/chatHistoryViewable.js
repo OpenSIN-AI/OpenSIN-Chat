@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * A simple middleware that validates that the chat history is viewable.
  * via the `DISABLE_VIEW_CHAT_HISTORY` environment variable being set AT ALL.

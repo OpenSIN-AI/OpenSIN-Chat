@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { CaretRight } from "@phosphor-icons/react";
 import { sentenceCase } from "text-case";
 

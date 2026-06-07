@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Shim `Buffer.SlowBuffer` for Node ≥18. Required by `jsonwebtoken`
 // (transitive dep via `buffer-equal-constant-time`) which crashes on
 // require if the symbol is undefined. This helpers file is loaded by

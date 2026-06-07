@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",

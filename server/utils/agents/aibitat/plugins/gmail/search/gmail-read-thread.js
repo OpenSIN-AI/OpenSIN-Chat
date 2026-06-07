@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const gmailLib = require("../lib.js");
 const { handleAttachments } = require("../lib.js");
 

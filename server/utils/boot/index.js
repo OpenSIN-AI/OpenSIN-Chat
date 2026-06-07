@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Telemetry } = require("../../models/telemetry");
 const { BackgroundService } = require("../BackgroundWorkers");
 const { EncryptionManager } = require("../EncryptionManager");

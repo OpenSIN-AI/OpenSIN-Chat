@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useEffect, useState, useRef } from "react";
 import DBConnection from "./DBConnection";
 import { Plus, Database, CircleNotch } from "@phosphor-icons/react";

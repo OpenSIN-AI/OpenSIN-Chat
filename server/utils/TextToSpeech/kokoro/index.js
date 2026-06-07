@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 class KokoroTTS {
   constructor() {
     if (!process.env.TTS_KOKORO_ENDPOINT)

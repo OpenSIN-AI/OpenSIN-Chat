@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState } from "react";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";

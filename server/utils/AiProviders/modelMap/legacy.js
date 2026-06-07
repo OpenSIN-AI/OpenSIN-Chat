@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const LEGACY_MODEL_MAP = {
   anthropic: {
     "claude-instant-1.2": 100000,

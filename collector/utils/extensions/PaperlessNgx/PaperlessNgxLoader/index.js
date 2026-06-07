@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { htmlToText } = require("html-to-text");
 const pdf = require("pdf-parse");
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { memo, useState } from "react";
 import useCopyText from "@/hooks/useCopyText";
 import { Check, ThumbsUp, ArrowsClockwise, Copy } from "@phosphor-icons/react";

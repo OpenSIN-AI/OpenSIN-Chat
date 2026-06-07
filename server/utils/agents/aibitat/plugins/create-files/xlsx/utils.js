@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Parses CSV string into a 2D array of values.
  * Handles quoted fields, embedded commas, and newlines within quotes.

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Get Inbox & Search
 const { GmailGetInbox } = require("./search/gmail-get-inbox.js");
 const { GmailSearch } = require("./search/gmail-search.js");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { titleCase } from "text-case";
 
 export default function WorkspaceMemberRow({ user }) {

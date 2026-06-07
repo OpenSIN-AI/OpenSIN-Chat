@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import showToast from "../toast";
 
 export default class PiperTTSClient {

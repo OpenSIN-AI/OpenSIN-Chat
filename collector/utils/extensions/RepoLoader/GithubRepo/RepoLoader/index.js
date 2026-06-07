@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * @typedef {Object} RepoLoaderArgs
  * @property {string} repo - The GitHub repository URL.

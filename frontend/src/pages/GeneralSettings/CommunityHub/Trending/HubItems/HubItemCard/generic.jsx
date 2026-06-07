@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import paths from "@/utils/paths";
 import { Eye, LockSimple } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";

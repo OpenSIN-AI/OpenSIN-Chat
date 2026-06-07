@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 function parseEventData(event) {
     try {
       return event.data.json();

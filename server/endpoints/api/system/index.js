@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { EventLogs } = require("../../../models/eventLogs");
 const { SystemSettings } = require("../../../models/systemSettings");
 const { purgeDocument } = require("../../../utils/files/purgeDocument");

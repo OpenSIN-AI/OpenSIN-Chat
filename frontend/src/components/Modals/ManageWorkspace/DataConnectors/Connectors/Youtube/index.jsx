@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";

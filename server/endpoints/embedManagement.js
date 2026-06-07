@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { EmbedChats } = require("../models/embedChats");
 const { EmbedConfig } = require("../models/embedConfig");
 const { EventLogs } = require("../models/eventLogs");

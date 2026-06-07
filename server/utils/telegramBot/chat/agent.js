@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4: uuidv4 } = require("uuid");
 const { EphemeralAgentHandler } = require("../../agents/ephemeral");
 const { WorkspaceChats } = require("../../../models/workspaceChats");

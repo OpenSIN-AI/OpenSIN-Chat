@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * A service that provides an AI client to create a completion.
  */

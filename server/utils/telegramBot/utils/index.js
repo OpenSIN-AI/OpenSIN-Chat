@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { MAX_MSG_LEN } = require("../constants");
 const { markdownToTelegram } = require("../utils/format");
 const { EncryptionManager } = require("../../EncryptionManager");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 

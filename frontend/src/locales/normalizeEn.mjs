@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* global process */
 // This script is used to normalize the translations files to ensure they are all the same.
 // This will take the en file and compare it to all other files and ensure they are all the same.

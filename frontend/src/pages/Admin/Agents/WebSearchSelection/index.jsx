@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
 import Admin from "@/models/admin";
 import SerpApiIcon from "./icons/serpapi.png";

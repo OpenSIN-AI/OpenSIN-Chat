@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { SystemSettings } = require("../../../../../../models/systemSettings");
 const { safeJsonParse } = require("../../../../../http");
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { SystemSettings } = require("../models/systemSettings");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { reqBody } = require("../utils/http");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const SerpApiEngines = [
   { name: "Google Search", value: "google" },
   { name: "Google Images", value: "google_images_light" },

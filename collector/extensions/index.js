@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { setDataSigner } = require("../middleware/setDataSigner");
 const { verifyPayloadIntegrity } = require("../middleware/verifyIntegrity");
 const {

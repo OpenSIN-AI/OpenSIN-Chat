@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import GenericHubCard from "./generic";
 import SystemPromptHubCard from "./systemPrompt";
 import SlashCommandHubCard from "./slashCommand";

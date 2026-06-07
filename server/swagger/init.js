@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const swaggerAutogen = require("swagger-autogen")({ openapi: "3.0.0" });
 const fs = require("fs");
 const path = require("path");

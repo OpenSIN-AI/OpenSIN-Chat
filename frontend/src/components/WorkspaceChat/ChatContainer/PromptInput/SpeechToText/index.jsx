@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import System from "@/models/system";
 import BrowserNativeSTT from "./BrowserNative";

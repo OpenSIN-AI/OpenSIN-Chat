@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import { titleCase } from "text-case";
 import { BookOpenText, ArrowClockwise, Warning } from "@phosphor-icons/react";

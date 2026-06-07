@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-disable react-hooks/static-components */
 // https://lobehub.com/icons for all the icons
 import OpenAI from "@lobehub/icons/es/OpenAI/components/Mono";

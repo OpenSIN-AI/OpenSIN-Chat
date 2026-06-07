@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Telemetry } = require("../../models/telemetry");
 const { CollectorApi } = require("../../utils/collectorApi");
 const {

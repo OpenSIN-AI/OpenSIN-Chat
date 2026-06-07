@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const AIbitat = require("./aibitat");
 const AgentPlugins = require("./aibitat/plugins");
 const {

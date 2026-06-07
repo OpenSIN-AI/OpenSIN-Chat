@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useLanguageOptions } from "@/hooks/useLanguageOptions";
 import { useTranslation } from "react-i18next";
 

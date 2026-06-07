@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const SUPPORTED_NATIVE_EMBEDDING_MODELS = {
   "Xenova/all-MiniLM-L6-v2": {
     maxConcurrentChunks: 25,

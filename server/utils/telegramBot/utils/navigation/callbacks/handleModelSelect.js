@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Workspace } = require("../../../../../models/workspace");
 const { getCustomModels } = require("../../../../helpers/customModels");
 const { resolveWorkspaceProvider } = require("../../index");

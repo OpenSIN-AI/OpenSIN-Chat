@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
 import System from "@/models/system";
 import { useEffect, useState } from "react";

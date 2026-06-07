@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";

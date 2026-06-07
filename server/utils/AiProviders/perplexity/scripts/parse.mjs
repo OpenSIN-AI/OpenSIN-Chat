@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Perplexity does not provide a simple REST API to get models,
 // so we have a table which we copy from their documentation
 // https://docs.perplexity.ai/edit/model-cards that we can

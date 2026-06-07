@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { handleWorkspaceCreate } = require("./handleWorkspaceCreate");
 const { handleWorkspacePagination } = require("./handleWorkspacePagination");
 const { handleWorkspaceSelect } = require("./handleWorkspaceSelect");

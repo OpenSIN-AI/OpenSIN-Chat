@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Patch the shell environment path to ensure the PATH is properly set for the current platform.
  * On Docker, we are on Node v18 and cannot support fix-path v5.

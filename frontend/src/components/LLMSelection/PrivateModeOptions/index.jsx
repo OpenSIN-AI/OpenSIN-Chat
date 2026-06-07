@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import { Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";

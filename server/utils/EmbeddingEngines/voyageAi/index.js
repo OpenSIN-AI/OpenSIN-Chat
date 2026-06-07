@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 class VoyageAiEmbedder {
   constructor() {
     if (!process.env.VOYAGEAI_API_KEY)

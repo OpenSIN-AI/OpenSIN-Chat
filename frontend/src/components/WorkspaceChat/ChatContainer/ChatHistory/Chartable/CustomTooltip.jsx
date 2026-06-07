@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Tooltip as RechartsTooltip } from "recharts";
 
 // Given a hex, convert to the opposite highest-contrast color

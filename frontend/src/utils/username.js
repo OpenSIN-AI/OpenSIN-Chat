@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Unix-style username validation utilities
  *

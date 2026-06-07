@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { COMPLETE_QUESTIONNAIRE } from "@/utils/constants";
 import paths from "@/utils/paths";
 import { CheckCircle } from "@phosphor-icons/react";

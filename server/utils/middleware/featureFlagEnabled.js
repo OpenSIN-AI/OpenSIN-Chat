@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { SystemSettings } = require("../../models/systemSettings");
 
 // Explicitly check that a specific feature flag is enabled.

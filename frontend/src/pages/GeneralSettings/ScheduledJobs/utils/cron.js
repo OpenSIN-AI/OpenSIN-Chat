@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import cronstrue from "cronstrue/i18n";
 import moment from "moment";
 

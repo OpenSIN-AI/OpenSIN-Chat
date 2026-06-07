@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useRef } from "react";
 import { Trash } from "@phosphor-icons/react";
 import { stripUuidAndJsonFromString } from "@/components/Modals/ManageWorkspace/Documents/Directory/utils";

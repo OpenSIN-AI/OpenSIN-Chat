@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Extracts text content from a multimodal message
  * If the content has multiple text items, it will join them together with a newline.

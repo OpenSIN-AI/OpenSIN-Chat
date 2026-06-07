@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Info, Pencil } from "@phosphor-icons/react";
 import { useRef, useEffect } from "react";
 import Appearance from "@/models/appearance";

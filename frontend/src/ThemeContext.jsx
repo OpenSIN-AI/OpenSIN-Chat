@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { createContext, useContext } from "react";
 import { useTheme } from "./hooks/useTheme";
 

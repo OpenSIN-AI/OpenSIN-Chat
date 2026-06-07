@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Workspace } = require("../models/workspace");
 const { BrowserExtensionApiKey } = require("../models/browserExtensionApiKey");
 const { Document } = require("../models/documents");

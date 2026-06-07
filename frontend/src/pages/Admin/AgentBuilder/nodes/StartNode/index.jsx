@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React from "react";
 import { Plus, X } from "@phosphor-icons/react";
 

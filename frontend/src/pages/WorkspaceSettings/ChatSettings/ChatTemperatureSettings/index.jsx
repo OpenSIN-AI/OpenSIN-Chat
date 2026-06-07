@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
 function recommendedSettings(provider = null) {
   switch (provider) {

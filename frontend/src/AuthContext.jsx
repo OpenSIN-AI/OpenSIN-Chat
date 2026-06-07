@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useState, createContext, useEffect } from "react";
 import {
   AUTH_TIMESTAMP,

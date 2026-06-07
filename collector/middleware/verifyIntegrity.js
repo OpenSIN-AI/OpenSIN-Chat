@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { CommunicationKey } = require("../utils/comKey");
 const RuntimeSettings = require("../utils/runtimeSettings");
 const runtimeSettings = new RuntimeSettings();

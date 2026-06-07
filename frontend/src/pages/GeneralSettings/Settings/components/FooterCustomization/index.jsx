@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useState, useEffect } from "react";
 import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";

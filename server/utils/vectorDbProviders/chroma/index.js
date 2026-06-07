@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { ChromaClient } = require("chromadb");
 const { TextSplitter } = require("../../TextSplitter");
 const { SystemSettings } = require("../../../models/systemSettings");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Eagerly load the context windows for the current provider.
  * This is done to ensure that the context windows are pre-cached when the server boots.

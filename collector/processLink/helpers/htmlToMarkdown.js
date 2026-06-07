@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const TurndownService = require("turndown");
 const { parse } = require("node-html-parser");
 

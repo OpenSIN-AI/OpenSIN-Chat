@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import Toggle from "@/components/lib/Toggle";
 
 export default function WebScrapingNode({

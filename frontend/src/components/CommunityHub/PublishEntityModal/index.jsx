@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { X } from "@phosphor-icons/react";
 import { useCommunityHubAuth } from "@/hooks/useCommunityHubAuth";
 import UnauthenticatedHubModal from "@/components/CommunityHub/UnauthenticatedHubModal";

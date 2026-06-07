@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { CloudClient } = require("chromadb");
 const { Chroma } = require("../chroma");
 const { toChunks } = require("../../helpers");

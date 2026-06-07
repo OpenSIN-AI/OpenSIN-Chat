@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React from "react";
 import OnboardingSteps, { OnboardingLayout } from "./Steps";
 import { useParams } from "react-router-dom";

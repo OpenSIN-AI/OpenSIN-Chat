@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React from "react";
 import UserIcon from "../UserIcon";
 import { userFromStorage } from "@/utils/request";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import useUser from "@/hooks/useUser";
 import paths from "@/utils/paths";
 import { ArrowUUpLeft, Wrench } from "@phosphor-icons/react";

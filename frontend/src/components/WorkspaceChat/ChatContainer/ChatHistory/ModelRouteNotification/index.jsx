@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Shuffle } from "@phosphor-icons/react";
 import RouterAnimation from "@/media/animations/router-animation.webm";
 import { Trans } from "react-i18next";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * A simple middleware that blocks workspace deletion routes when the
  * `WORKSPACE_DELETION_PROTECTION` environment variable is set AT ALL.

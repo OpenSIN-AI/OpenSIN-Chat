@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { THOUGHT_REGEX_COMPLETE } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/ThoughtContainer";
 import { copyMarkdownAsRichText } from "@/utils/clipboard";
 import { useState } from "react";

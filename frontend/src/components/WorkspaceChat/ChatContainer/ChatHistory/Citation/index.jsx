@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Fragment, useState, useEffect } from "react";
 import { decode as HTMLDecode } from "he";
 import truncate from "truncate";

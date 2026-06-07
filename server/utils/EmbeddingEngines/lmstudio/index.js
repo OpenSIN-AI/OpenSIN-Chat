@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { parseLMStudioBasePath } = require("../../AiProviders/lmStudio");
 const {
   maximumChunkLength,

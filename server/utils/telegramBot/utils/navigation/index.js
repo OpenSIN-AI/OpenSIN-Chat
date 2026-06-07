@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { isVerified } = require("../verification");
 const { resolveCallbackHandler } = require("./callbacks");
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { createContext, useContext, useState, useEffect } from "react";
 import { useMemoriesSidebar } from "../ChatSidebar";
 import useUser from "@/hooks/useUser";

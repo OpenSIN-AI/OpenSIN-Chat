@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Suppress deprecated content-type warning when sending files via the Telegram bot API.
 // https://github.com/yagop/node-telegram-bot-api/blob/master/doc/usage.md#sending-files
 process.env.NTBA_FIX_350 = 1;

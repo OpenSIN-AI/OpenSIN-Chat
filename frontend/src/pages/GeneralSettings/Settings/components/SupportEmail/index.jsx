@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import useUser from "@/hooks/useUser";
 import Admin from "@/models/admin";
 import System from "@/models/system";

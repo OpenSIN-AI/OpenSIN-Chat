@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const Provider = require("./ai-provider.js");
 const InheritMultiple = require("./helpers/classes.js");
 const UnTooled = require("./helpers/untooled.js");

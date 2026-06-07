@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { CircleNotch } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
 import pluralize from "pluralize";

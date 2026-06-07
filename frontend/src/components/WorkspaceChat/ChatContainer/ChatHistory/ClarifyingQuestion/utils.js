@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Build the empty draft state for a question. Lives next to the renderers so
  * Header/InputForm/ChoiceForm and the parent stay in sync on shape.

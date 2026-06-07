@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import globals from "./server/node_modules/globals/index.js"
 import eslintRecommended from "./server/node_modules/@eslint/js/src/index.js"
 import eslintConfigPrettier from "./server/node_modules/eslint-config-prettier/index.js"

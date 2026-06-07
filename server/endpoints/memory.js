@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Memory } = require("../models/memory");
 const { SystemSettings } = require("../models/systemSettings");
 const { userFromSession, reqBody } = require("../utils/http");

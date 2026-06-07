@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import useLoginMode from "@/hooks/useLoginMode";
 import usePfp from "@/hooks/usePfp";
 import useUser from "@/hooks/useUser";

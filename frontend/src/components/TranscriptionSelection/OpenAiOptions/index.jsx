@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState } from "react";
 
 export default function OpenAiWhisperOptions({ settings }) {

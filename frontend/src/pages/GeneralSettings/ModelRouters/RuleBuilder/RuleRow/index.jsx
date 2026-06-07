@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { Trans, useTranslation } from "react-i18next";
 import { Trash, PencilSimple, DotsSixVertical } from "@phosphor-icons/react";
 import { SimpleToggleSwitch } from "@/components/lib/Toggle";

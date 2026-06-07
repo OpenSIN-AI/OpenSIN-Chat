@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const MimeLib = require("mime");
 class MimeDetector {
   nonTextTypes = ["multipart", "model", "audio", "video", "font"];

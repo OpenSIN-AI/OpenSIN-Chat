@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useRef, useEffect } from "react";
 import { SimpleToggleSwitch } from "@/components/lib/Toggle";
 

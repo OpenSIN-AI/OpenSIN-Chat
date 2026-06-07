@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { makeJWT } = require("../utils/http");
 const prisma = require("../utils/prisma");
 

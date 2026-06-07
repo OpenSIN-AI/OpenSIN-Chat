@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { CohereClientV2 } = require("cohere-ai");
 const Provider = require("./ai-provider");
 const InheritMultiple = require("./helpers/classes");

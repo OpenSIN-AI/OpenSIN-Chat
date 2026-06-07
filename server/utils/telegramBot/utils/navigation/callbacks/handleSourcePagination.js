@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { showSourcesMenu } = require("../../commands/handlers/handleProof");
 
 /**

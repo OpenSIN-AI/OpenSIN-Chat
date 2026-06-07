@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const RepoLoader = require("./RepoLoader");
 const fs = require("fs");
 const path = require("path");

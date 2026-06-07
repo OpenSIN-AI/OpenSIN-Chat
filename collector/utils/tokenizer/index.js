@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { getEncoding } = require("js-tiktoken");
 
 class TikTokenTokenizer {

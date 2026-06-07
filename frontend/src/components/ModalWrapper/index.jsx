@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { createPortal } from "react-dom";
 /**
  * @typedef {Object} ModalWrapperProps

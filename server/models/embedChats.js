@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { safeJsonParse } = require("../utils/http");
 const prisma = require("../utils/prisma");
 

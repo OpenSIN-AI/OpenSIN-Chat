@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useRef, useState, useEffect } from "react";
 import {
   CaretDown,

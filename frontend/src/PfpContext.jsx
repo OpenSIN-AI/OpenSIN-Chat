@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { createContext, useState, useEffect } from "react";
 import useUser from "./hooks/useUser";
 import System from "./models/system";

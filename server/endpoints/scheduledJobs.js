@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { ScheduledJob } = require("../models/scheduledJob");
 const { ScheduledJobRun } = require("../models/scheduledJobRun");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");

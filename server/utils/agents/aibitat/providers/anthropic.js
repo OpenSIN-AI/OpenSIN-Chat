@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const Anthropic = require("@anthropic-ai/sdk");
 const { AnthropicLLM } = require("../../../AiProviders/anthropic");
 const { RetryError } = require("../error.js");

@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-06-07T10:01:43.180Z",
+  "specs": {
+    "spdx": "SPDX-2.3",
+    "cyclonedx": "1.5"
+  },
+  "workspaces": [
+    {
+      "name": "root",
+      "source": "package.json",
+      "packageCount": 19,
+      "spdx": "sbom/root.spdx.json",
+      "cyclonedx": "sbom/root.cdx.json"
+    },
+    {
+      "name": "server",
+      "source": "yarn.lock",
+      "packageCount": 969,
+      "spdx": "sbom/server.spdx.json",
+      "cyclonedx": "sbom/server.cdx.json"
+    },
+    {
+      "name": "frontend",
+      "source": "yarn.lock",
+      "packageCount": 718,
+      "spdx": "sbom/frontend.spdx.json",
+      "cyclonedx": "sbom/frontend.cdx.json"
+    },
+    {
+      "name": "collector",
+      "source": "yarn.lock",
+      "packageCount": 567,
+      "spdx": "sbom/collector.spdx.json",
+      "cyclonedx": "sbom/collector.cdx.json"
+    }
+  ]
+}

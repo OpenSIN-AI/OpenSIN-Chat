@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import strDistance from "js-levenshtein";
 
 const LEVENSHTEIN_THRESHOLD = 3;

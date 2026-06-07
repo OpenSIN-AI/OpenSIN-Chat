@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import UserButton from "./UserButton";
 
 export default function UserMenu({ children }) {

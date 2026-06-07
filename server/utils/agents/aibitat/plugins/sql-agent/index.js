@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { SqlAgentGetTableSchema } = require("./get-table-schema");
 const { SqlAgentListDatabase } = require("./list-database");
 const { SqlAgentListTables } = require("./list-table");

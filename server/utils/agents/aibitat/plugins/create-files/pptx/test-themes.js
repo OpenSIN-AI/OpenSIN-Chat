@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Generate a preview presentation for every theme using the same rendering
  * pipeline as the production tool.  Run from repo root:

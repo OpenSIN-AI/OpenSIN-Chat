@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
 const { writeResponseChunk } = require("../../helpers/chat/responses");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");

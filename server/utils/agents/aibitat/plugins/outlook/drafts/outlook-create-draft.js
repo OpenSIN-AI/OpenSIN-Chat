@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const outlookLib = require("../lib.js");
 const { prepareAttachmentsWithValidation, handleSkillError } = outlookLib;
 

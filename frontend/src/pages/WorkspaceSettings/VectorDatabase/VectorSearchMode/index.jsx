@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState } from "react";
 
 // We dont support all vectorDBs yet for reranking due to complexities of how each provider

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
 const fs = require("fs");
 const { mboxParser } = require("mbox-parser");

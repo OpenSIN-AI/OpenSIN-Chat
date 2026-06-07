@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Curated presentation themes for pptxgenjs.
  *

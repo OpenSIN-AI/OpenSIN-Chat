@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";

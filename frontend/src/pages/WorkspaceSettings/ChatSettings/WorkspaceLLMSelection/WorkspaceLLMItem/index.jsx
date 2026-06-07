@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // This component differs from the main LLMItem in that it shows if a provider is
 // "ready for use" and if not - will then highjack the click handler to show a modal
 // of the provider options that must be saved to continue.

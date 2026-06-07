@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /** @type {import('postcss-load-config').Config} */
 const config = {
   plugins: {

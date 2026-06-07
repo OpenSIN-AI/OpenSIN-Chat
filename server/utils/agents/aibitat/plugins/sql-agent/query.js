@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 module.exports.SqlAgentQuery = {
   name: "sql-query",
   plugin: function () {

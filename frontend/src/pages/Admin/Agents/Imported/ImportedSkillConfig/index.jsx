@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { Gear, Plug } from "@phosphor-icons/react";

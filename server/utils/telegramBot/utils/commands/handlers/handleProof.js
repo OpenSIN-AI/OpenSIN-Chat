@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Workspace } = require("../../../../../models/workspace");
 const { WorkspaceThread } = require("../../../../../models/workspaceThread");
 const { WorkspaceChats } = require("../../../../../models/workspaceChats");

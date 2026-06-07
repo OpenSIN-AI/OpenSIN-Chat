@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect } from "react";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";

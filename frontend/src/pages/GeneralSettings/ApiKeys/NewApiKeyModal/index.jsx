@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
 import { X, Copy, Check } from "@phosphor-icons/react";
 import Admin from "@/models/admin";

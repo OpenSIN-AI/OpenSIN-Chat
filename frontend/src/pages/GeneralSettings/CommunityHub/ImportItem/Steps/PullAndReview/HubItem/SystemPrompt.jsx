@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import CTAButton from "@/components/lib/CTAButton";
 import CommunityHubImportItemSteps from "../..";
 import { useEffect, useState } from "react";

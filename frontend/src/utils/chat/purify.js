@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import createDOMPurify from "dompurify";
 
 const DOMPurify = createDOMPurify(window);

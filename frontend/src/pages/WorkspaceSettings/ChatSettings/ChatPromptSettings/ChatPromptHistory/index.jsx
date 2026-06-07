@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react";

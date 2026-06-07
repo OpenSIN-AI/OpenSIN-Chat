@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 process.env.STORAGE_DIR = __dirname;
 
 const path = require("path");

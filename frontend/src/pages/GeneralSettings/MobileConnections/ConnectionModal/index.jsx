@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { X } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
 import BG from "./bg.png";

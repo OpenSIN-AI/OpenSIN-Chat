@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const UnTooled = require("../../../../../../utils/agents/aibitat/providers/helpers/untooled");
 
 describe("UnTooled: validFuncCall", () => {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * All command handler functions receive a `ctx` object:
  * @typedef {object} BotContext

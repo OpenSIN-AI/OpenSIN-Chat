@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useLanguageOptions } from "@/hooks/useLanguageOptions";
 import usePfp from "@/hooks/usePfp";
 import System from "@/models/system";

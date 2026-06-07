@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { isMobile } from "react-device-detect";

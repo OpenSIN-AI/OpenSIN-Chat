@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { log, conclude } = require("./helpers/index.js");
 const { v4: uuidv4 } = require("uuid");
 const { safeJsonParse } = require("../utils/http");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { v4 } from "uuid";
 import {
   AreaChart,

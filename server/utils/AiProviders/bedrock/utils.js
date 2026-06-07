@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { BedrockRuntimeClient } = require("@aws-sdk/client-bedrock-runtime");
 const { fromStatic } = require("@aws-sdk/token-providers");
 const { ChatBedrockConverse } = require("@langchain/aws");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Set required env vars before requiring modules
 process.env.STORAGE_DIR = __dirname;
 process.env.NODE_ENV = "test";

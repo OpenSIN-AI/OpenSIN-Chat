@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import ModalWrapper from "@/components/ModalWrapper";

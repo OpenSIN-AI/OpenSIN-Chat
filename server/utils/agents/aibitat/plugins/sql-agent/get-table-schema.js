@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 module.exports.SqlAgentGetTableSchema = {
   name: "sql-get-table-schema",
   plugin: function () {

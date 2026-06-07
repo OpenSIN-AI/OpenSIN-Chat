@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const {
   BrowserExtensionApiKey,
 } = require("../../models/browserExtensionApiKey");

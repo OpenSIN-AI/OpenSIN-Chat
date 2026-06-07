@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import HubItems from "./HubItems";

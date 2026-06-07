@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import System from "@/models/system";

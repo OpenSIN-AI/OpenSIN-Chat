@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const path = require("path");
 const { SUPPORTED_FILETYPE_CONVERTERS } = require("../../../utils/constants");
 const { mimeToExtension } = require("../../../utils/downloadURIToFile");

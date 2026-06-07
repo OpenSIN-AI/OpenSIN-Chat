@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-disable unused-imports/no-unused-vars */
 
 /* Base class for all Vector Database providers.

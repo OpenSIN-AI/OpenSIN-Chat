@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { API_BASE, fullApiUrl } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
 import { fetchEventSource } from "@microsoft/fetch-event-source";

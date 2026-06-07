@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* eslint-env jest */
 const { safeJSONStringify } = require("../../../utils/helpers/chat/responses");
 

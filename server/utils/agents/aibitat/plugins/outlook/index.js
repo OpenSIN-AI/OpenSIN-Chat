@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { OutlookGetInbox } = require("./search/outlook-get-inbox.js");
 const { OutlookSearch } = require("./search/outlook-search.js");
 const { OutlookReadThread } = require("./search/outlook-read-thread.js");

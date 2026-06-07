@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";

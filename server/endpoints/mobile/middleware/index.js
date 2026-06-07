@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { MobileDevice } = require("../../../models/mobileDevice");
 const { SystemSettings } = require("../../../models/systemSettings");
 const { User } = require("../../../models/user");

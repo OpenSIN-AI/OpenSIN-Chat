@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { USER_PROMPT_INPUT_MAP } from "@/utils/constants";
 import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";

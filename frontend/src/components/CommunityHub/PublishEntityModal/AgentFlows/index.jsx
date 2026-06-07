@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import CommunityHub from "@/models/communityHub";

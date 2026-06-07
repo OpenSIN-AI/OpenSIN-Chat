@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
 import { List, Plus } from "@phosphor-icons/react";
 import NewWorkspaceModal, {

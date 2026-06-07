@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { memo, useState } from "react";
 import { saveAs } from "file-saver";
 import { DownloadSimple, CircleNotch } from "@phosphor-icons/react";

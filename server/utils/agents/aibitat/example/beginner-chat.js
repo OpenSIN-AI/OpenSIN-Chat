@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // You must execute this example from within the example folder.
 const AIbitat = require("../index.js");
 const { cli } = require("../plugins/cli.js");

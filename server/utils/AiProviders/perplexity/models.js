@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const MODELS = {
   "sonar-reasoning-pro": {
     id: "sonar-reasoning-pro",

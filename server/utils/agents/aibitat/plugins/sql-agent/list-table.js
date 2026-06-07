@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 module.exports.SqlAgentListTables = {
   name: "sql-list-tables",
   plugin: function () {

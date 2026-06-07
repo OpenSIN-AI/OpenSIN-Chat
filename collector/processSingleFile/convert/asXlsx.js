@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
 const xlsx = require("node-xlsx").default;
 const path = require("path");

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { getCreateFileSkills } from "@/pages/Admin/Agents/CreateFileSkillPanel";
 import { getFileSystemSubSkills } from "@/pages/Admin/Agents/FileSystemSkillPanel";
 import { getGmailSkills } from "@/pages/Admin/Agents/GMailSkillPanel/utils";

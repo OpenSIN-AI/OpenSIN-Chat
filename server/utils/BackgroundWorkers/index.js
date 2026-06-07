@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const path = require("path");
 const Graceful = require("@ladjs/graceful");
 const Bree = require("@mintplex-labs/bree");

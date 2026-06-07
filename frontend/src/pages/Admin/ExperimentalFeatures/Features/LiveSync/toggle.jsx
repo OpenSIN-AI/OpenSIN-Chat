@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import System from "@/models/system";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Middleware to validate that a repo provider URL is supported.
 const REPO_PLATFORMS = ["github", "gitlab"];
 

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
 
 const DEFAULT_STALE_AFTER = 604800000; // 7 days in MS

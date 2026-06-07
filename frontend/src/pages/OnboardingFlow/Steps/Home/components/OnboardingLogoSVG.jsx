@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useTheme } from "@/hooks/useTheme";
 
 export function OnboardingLogoSVG() {

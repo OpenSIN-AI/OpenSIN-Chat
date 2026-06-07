@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { reqBody, multiUserMode, userFromSession } = require("../utils/http");
 const { handleFileUpload } = require("../utils/files/multer");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");

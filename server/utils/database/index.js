@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { getGitVersion } = require("../../endpoints/utils");
 const { Telemetry } = require("../../models/telemetry");
 

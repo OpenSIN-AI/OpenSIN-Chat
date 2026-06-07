@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const prisma = require("../utils/prisma");
 const later = require("@breejs/later");
 const cronValidate = require("cron-validate").default;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { WATCH_DIRECTORY, ACCEPTED_MIMES } = require("../constants");
 const fs = require("fs");
 const path = require("path");

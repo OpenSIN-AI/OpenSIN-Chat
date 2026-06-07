@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { Pinecone } = require("@pinecone-database/pinecone");
 const { TextSplitter } = require("../../TextSplitter");
 const { SystemSettings } = require("../../../models/systemSettings");

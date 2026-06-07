@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { API_BASE } from "./constants";
 
 /**

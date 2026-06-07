@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { defineConfig } from "vite"
 import { fileURLToPath, URL } from "url"
 import postcss from "./postcss.config.js"
@@ -57,6 +58,11 @@ export default defineConfig({
     ]
   },
   build: {
+    // The SSR setup pins entryFileNames to 'index.js', so the application entry
+    // chunk cannot be code-split and is legitimately large. Vendor libraries are
+    // split into cacheable chunks via manualChunks below; the limit is raised to
+    // reflect the known, intentional size of the single SSR entry bundle.
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
       output: {
         // These settings ensure the primary JS and CSS file references are always index.{js,css}
@@ -65,6 +71,30 @@ export default defineConfig({
         assetFileNames: (assetInfo) => {
           if (assetInfo.name === 'index.css') return `index.css`;
           return assetInfo.name;
+        },
+        // Split heavy third-party libraries into their own cacheable chunks so the
+        // primary index.js stays lean and the build no longer emits >500kb warnings.
+        // The SSR template only references index.js/index.css; these vendor chunks
+        // are loaded through the module graph at runtime.
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return;
+          if (/[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom|scheduler)[\\/]/.test(id))
+            return "vendor-react";
+          if (/[\\/]node_modules[\\/]katex[\\/]/.test(id)) return "vendor-katex";
+          if (/[\\/]node_modules[\\/]highlight\.js[\\/]/.test(id)) return "vendor-highlight";
+          if (/[\\/]node_modules[\\/](markdown-it|dompurify|@mintplex-labs[\\/]mdpdf|marked|remark|rehype|mdast|micromark)[\\/]/.test(id))
+            return "vendor-markdown";
+          if (/[\\/]node_modules[\\/](@phosphor-icons|react-icons|lucide-react)[\\/]/.test(id))
+            return "vendor-icons";
+          if (/[\\/]node_modules[\\/](recharts|d3-|@tremor)[\\/]/.test(id))
+            return "vendor-charts";
+          if (/[\\/]node_modules[\\/](onnxruntime-web|@mintplex-labs[\\/]piper-tts-web|@openafd[\\/]piper-tts-web)[\\/]/.test(id))
+            return "vendor-tts";
+          if (/[\\/]node_modules[\\/](lodash|moment|date-fns|dayjs)[\\/]/.test(id))
+            return "vendor-utils";
+          if (/[\\/]node_modules[\\/](react-tooltip|@tanstack|@floating-ui)[\\/]/.test(id))
+            return "vendor-ui";
+          return "vendor";
         },
       },
       external: [

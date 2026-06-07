@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { REFETCH_LOGO_EVENT } from "@/LogoContext";
 import { useState, useEffect } from "react";
 

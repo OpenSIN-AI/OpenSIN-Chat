@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Convert standard markdown to Telegram HTML format.
  * Telegram HTML supports: <b>, <i>, <u>, <s>, <code>, <pre>, <a href="">, <tg-spoiler>

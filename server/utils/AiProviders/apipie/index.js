@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const { v4: uuidv4 } = require("uuid");
 const {

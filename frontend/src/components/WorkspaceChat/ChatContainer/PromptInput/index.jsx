@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect, useCallback } from "react";
 import debounce from "lodash.debounce";
 import { ArrowUp, At } from "@phosphor-icons/react";

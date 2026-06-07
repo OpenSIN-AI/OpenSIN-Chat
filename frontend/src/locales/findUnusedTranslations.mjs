@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /* global process */
 // This script finds translation keys defined in en/common.js that are not
 // referenced anywhere in the frontend source code. It exits with code 1

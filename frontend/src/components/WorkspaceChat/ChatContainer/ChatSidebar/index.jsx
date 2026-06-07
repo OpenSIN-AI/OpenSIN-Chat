@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { createContext, useContext, useState, useEffect } from "react";
 
 const ChatSidebarContext = createContext();

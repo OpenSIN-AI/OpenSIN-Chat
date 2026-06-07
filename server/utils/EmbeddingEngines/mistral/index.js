@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 class MistralEmbedder {
   constructor() {
     if (!process.env.MISTRAL_API_KEY)

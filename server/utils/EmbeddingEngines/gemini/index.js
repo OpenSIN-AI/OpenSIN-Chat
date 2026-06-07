@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { toChunks, reportEmbeddingProgress } = require("../../helpers");
 
 const MODEL_MAP = {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { DefaultBadge } from "../Badges/default";

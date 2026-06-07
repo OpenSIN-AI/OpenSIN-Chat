@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 class GenericOpenAiTTS {
   constructor() {
     if (!process.env.TTS_OPEN_AI_COMPATIBLE_KEY)

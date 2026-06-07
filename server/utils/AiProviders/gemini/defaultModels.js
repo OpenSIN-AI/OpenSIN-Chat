@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { MODEL_MAP } = require("../modelMap");
 
 const stableModels = [

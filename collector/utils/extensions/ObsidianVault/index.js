@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
 const { default: slugify } = require("slugify");
 const path = require("path");

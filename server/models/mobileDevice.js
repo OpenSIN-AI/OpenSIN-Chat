@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const prisma = require("../utils/prisma");
 const { v4: uuidv4 } = require("uuid");
 const ip = require("ip");

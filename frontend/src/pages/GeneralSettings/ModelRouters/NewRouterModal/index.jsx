@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { CircleNotch, X } from "@phosphor-icons/react";

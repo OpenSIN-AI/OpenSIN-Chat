@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import useGetProviderModels, {
   DISABLED_PROVIDERS,
 } from "@/hooks/useGetProvidersModels";

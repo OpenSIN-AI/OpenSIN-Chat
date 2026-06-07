@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { ABORT_STREAM_EVENT } from "@/utils/chat";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";

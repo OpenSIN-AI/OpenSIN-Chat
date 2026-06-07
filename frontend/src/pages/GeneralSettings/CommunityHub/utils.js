@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Convert a type to a readable string for the community hub.
  * @param {("agentSkills" | "agentSkill" | "systemPrompts" | "systemPrompt" | "slashCommands" | "slashCommand" | "agentFlows" | "agentFlow")} type

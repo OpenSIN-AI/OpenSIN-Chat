@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { DotsThreeVertical } from "@phosphor-icons/react";
 import { useRef, useState, useEffect } from "react";
 import PromptHistory from "@/models/promptHistory";

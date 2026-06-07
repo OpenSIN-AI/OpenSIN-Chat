@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const LOG_PREFIX = "\x1b[36m[SDK Timeout Patch]\x1b[0m";
 const DEFAULT_TIMEOUT_MS = 600_000; // 10 minutes default
 const DEFAULT_MAX_RETRIES = 0;

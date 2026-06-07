@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import LiveSyncToggle from "./Features/LiveSync/toggle";
 
 export const configurableFeatures = {

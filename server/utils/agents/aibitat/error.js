@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 class AIbitatError extends Error {}
 
 class APIError extends AIbitatError {

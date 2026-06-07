@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const createFilesLib = require("../lib.js");
 const { applyBranding } = require("./utils.js");
 

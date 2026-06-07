@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X, CaretLeft, CaretRight } from "@phosphor-icons/react";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function AstraDBOptions({ settings }) {
   return (
     <div className="w-full flex flex-col gap-y-7">

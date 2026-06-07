@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useRef } from "react";
 import Admin from "@/models/admin";
 import paths from "@/utils/paths";

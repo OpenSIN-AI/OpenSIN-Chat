@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /**
  * Execute a web scraping flow step
  * @param {Object} config Flow step configuration

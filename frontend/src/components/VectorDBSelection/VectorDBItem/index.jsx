@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function VectorDBItem({
   name,
   value,

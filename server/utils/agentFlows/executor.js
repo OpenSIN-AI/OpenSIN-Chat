@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { FLOW_TYPES } = require("./flowTypes");
 const executeApiCall = require("./executors/api-call");
 const executeLLMInstruction = require("./executors/llm-instruction");

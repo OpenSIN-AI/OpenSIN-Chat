@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import serverPackageJson from '../../server/package.json' assert { type: 'json' };
 import collectorPackageJson from '../../collector/package.json' assert { type: 'json' };
 const { dependencies: serverDependencies } = serverPackageJson;

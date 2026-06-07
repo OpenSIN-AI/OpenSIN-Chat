@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { getEncodingNameForModel, getEncoding } = require("js-tiktoken");
 
 /**

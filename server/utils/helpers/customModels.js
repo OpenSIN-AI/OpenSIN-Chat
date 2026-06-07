@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { fetchOpenRouterModels } = require("../AiProviders/openRouter");
 const {
   fetchOpenRouterEmbeddingModels,

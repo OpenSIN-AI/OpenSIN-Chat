@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { validURL } = require("../utils/url");
 const { scrapeGenericUrl } = require("./convert/generic");
 const { validateURL } = require("../utils/url");

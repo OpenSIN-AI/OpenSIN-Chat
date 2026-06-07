@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { ModelRouter } = require("../../models/modelRouter");
 const {
   classifyWithLLM,

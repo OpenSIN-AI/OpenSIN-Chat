@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { AUTH_TOKEN, AUTH_USER } from "./constants";
 
 // Sets up the base headers for all authenticated requests so that we are able to prevent

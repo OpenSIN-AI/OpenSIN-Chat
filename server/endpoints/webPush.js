@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { reqBody } = require("../utils/http");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { pushNotificationService } = require("../utils/PushNotifications");

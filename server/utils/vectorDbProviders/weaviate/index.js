@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { default: weaviate } = require("weaviate-ts-client");
 const { TextSplitter } = require("../../TextSplitter");
 const { SystemSettings } = require("../../../models/systemSettings");

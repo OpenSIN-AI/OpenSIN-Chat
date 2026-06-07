@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const pgsql = require("pg");
 const { toChunks, getEmbeddingEngineSelection } = require("../../helpers");
 const { TextSplitter } = require("../../TextSplitter");

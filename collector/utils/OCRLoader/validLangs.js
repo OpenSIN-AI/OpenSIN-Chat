@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /*
 
 To get the list of valid language codes - do the following:

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const FLOW_TYPES = {
   START: {
     type: "start",

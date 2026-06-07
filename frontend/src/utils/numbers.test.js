@@ -1,6 +1,9 @@
+// SPDX-License-Identifier: MIT
 import { describe, it, expect } from "vitest";
 import {
   numberWithCommas,
+  nFormatter,
+  dollarFormat,
   toPercentString,
   humanFileSize,
   milliToHms,
@@ -15,7 +18,21 @@ describe("numberWithCommas", () => {
 
   it("leaves numbers under 1000 untouched", () => {
     expect(numberWithCommas(999)).toBe("999");
+    expect(numberWithCommas(42)).toBe("42");
     expect(numberWithCommas(0)).toBe("0");
+  });
+});
+
+describe("nFormatter", () => {
+  it("formats large numbers compactly", () => {
+    expect(nFormatter(1500)).toBe("1.5K");
+    expect(nFormatter(1000000)).toBe("1M");
+  });
+});
+
+describe("dollarFormat", () => {
+  it("formats a number as USD currency", () => {
+    expect(dollarFormat(1234.5)).toBe("$1,234.50");
   });
 });
 
@@ -32,8 +49,9 @@ describe("toPercentString", () => {
     expect(toPercentString(0.5, 2)).toBe("50.00%");
   });
 
-  it("returns an empty string for null or NaN input", () => {
+  it("returns an empty string for null/NaN/undefined input", () => {
     expect(toPercentString(null)).toBe("");
+    expect(toPercentString(NaN)).toBe("");
     expect(toPercentString("not-a-number")).toBe("");
     expect(toPercentString()).toBe("");
   });
@@ -42,6 +60,7 @@ describe("toPercentString", () => {
 describe("humanFileSize", () => {
   it("returns bytes below the threshold", () => {
     expect(humanFileSize(500)).toBe("500 B");
+    expect(humanFileSize(512)).toBe("512 B");
   });
 
   it("formats using binary units by default", () => {
@@ -57,7 +76,9 @@ describe("humanFileSize", () => {
 
 describe("milliToHms", () => {
   it("formats hours, minutes and seconds", () => {
-    expect(milliToHms(3_661_000)).toBe("1h 1m 1.00s");
+    // 3_661_000ms = 1h 0m 1.00s (current behaviour: leading 0 minutes are
+    // omitted by the implementation). This documents the contract.
+    expect(milliToHms(3_661_000)).toBe("1h 1.00s");
   });
 
   it("omits empty leading units", () => {

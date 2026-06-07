@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 export default function hljsDefineSvelte(hljs) {
   return {
     subLanguage: "xml",

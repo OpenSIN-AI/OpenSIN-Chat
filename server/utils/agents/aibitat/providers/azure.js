@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const { OpenAI } = require("openai");
 const { AzureOpenAiLLM } = require("../../../AiProviders/azureOpenAi");
 const Provider = require("./ai-provider.js");

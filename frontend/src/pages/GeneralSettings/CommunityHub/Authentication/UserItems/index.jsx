@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import paths from "@/utils/paths";
 import HubItemCard from "../../Trending/HubItems/HubItemCard";
 import { useUserItems } from "../useUserItems";

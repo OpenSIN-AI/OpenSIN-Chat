@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useEffect, useRef, useState } from "react";
 import { DotsThreeVertical } from "@phosphor-icons/react";
 import { useMemoriesContext, LIMITS } from "../MemoriesContext";

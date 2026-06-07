@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useTheme } from "@/hooks/useTheme";
 import { useTranslation } from "react-i18next";
 

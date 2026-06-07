@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { ABORT_STREAM_EVENT } from "@/utils/chat";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";

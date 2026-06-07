@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const path = require("path");
 const { validURL } = require("../../utils/url");
 const { processSingleFile } = require("../../processSingleFile");
