@@ -6,6 +6,8 @@ import {
   CaretDown,
   Globe,
   Browser,
+  File,
+  Code,
   Brain,
   Flag,
   Info,
@@ -27,9 +29,9 @@ const BLOCK_TYPES = {
   FLOW_INFO: "flowInfo",
   START: "start",
   API_CALL: "apiCall",
-  // WEBSITE: "website", // Temporarily disabled
-  // FILE: "file", // Temporarily disabled
-  // CODE: "code", // Temporarily disabled
+  WEBSITE: "website",
+  FILE: "file",
+  CODE: "code",
   LLM_INSTRUCTION: "llmInstruction",
   WEB_SCRAPING: "webScraping",
   FINISH: "finish",
@@ -72,8 +74,7 @@ const BLOCK_INFO = {
     getSummary: (config) =>
       `${config.method || "GET"} ${config.url || "(no URL)"}`,
   },
-  // TODO: Implement website, file, and code blocks
-  /* [BLOCK_TYPES.WEBSITE]: {
+  [BLOCK_TYPES.WEBSITE]: {
     label: "Open Website",
     icon: <Browser className="w-5 h-5 text-theme-text-primary" />,
     description: "Navigate to a URL",
@@ -111,7 +112,6 @@ const BLOCK_INFO = {
     },
     getSummary: (config) => `Run ${config.language || "javascript"} code`,
   },
-  */
   [BLOCK_TYPES.LLM_INSTRUCTION]: {
     label: "LLM Instruction",
     icon: <Brain className="w-5 h-5 text-theme-text-primary" />,
