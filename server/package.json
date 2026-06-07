@@ -101,7 +101,7 @@
     "swagger-ui-express": "^5.0.0",
     "truncate": "^3.0.0",
     "url-pattern": "^1.0.3",
-    "uuid": "^9.0.0",
+    "uuid": "^11.0.0",
     "uuid-apikey": "^1.5.3",
     "weaviate-ts-client": "^1.4.0",
     "web-push": "^3.6.7",
@@ -116,7 +116,13 @@
     "// form-data": "latest stable",
     "form-data": "4.0.4",
     "// graphql-request/form-data": "locked for compatibility with graphql-request",
-    "**/graphql-request/form-data": "3.0.4"
+    "**/graphql-request/form-data": "3.0.4",
+    "// lodash": "resolves 4 high + 8 moderate vulns",
+    "**/lodash": "^4.18.0",
+    "// brace-expansion": "resolves 12 moderate vulns",
+    "**/brace-expansion": "^4.0.0",
+    "// tar-fs": "resolves 12 high vulns",
+    "**/tar-fs": "^3.0.0"
   },
   "devDependencies": {
     "@eslint/js": "9",
