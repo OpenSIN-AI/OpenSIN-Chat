@@ -1102,12 +1102,10 @@ const TRANSLATIONS = {
       add_from_url: "從 URL 新增",
       loading: "載入中...",
       no_sources: "目前沒有可用來源",
-      no_workspace:
-        "目前沒有可用工作區。請先傳送訊息以建立工作區。",
+      no_workspace: "目前沒有可用工作區。請先傳送訊息以建立工作區。",
       add_success: "來源已新增至工作區",
       add_failed: "無法新增來源",
-      url_hint:
-        "貼上網站或 YouTube 影片的 URL，將其新增為來源。",
+      url_hint: "貼上網站或 YouTube 影片的 URL，將其新增為來源。",
       url_submit: "新增來源",
       url_submitting: "新增中...",
       url_success: "URL 已新增為來源",
@@ -1305,8 +1303,7 @@ const TRANSLATIONS = {
     workspaceSources: {
       title: "工作區來源",
       add: "新增來源",
-      empty:
-        "目前沒有來源。\n上傳文件或新增 URL，為對話提供更多背景資訊。",
+      empty: "目前沒有來源。\n上傳文件或新增 URL，為對話提供更多背景資訊。",
       type_document: "文件",
       type_url: "URL",
       type_db: "資料庫",

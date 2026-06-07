@@ -35,7 +35,10 @@ function getSourceType(doc) {
     return { icon: Database, labelKey: "main-page.workspaceSources.type_db" };
   }
 
-  return { icon: FileText, labelKey: "main-page.workspaceSources.type_document" };
+  return {
+    icon: FileText,
+    labelKey: "main-page.workspaceSources.type_document",
+  };
 }
 
 function getTitle(doc) {
@@ -88,7 +91,10 @@ export default function WorkspaceSources({ documents = [], onAddSources }) {
                   className="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-theme-bg-chat-input transition-colors"
                 >
                   <div className="w-6 h-6 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
-                    <Icon size={13} className="text-white light:text-slate-800" />
+                    <Icon
+                      size={13}
+                      className="text-white light:text-slate-800"
+                    />
                   </div>
                   <div className="flex flex-col min-w-0">
                     <p className="text-sm text-white light:text-slate-900 truncate leading-tight">

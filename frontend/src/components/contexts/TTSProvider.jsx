@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { createContext, useContext, useEffect, useState } from "react";
-import System from "@/models/system";
+import { createContext, useContext, useEffect, useMemo } from "react";
+import useSystemSettings from "@/hooks/useSystemSettings";
 import Appearance from "@/models/appearance";
 
 const ASSISTANT_MESSAGE_COMPLETE_EVENT = "ASSISTANT_MESSAGE_COMPLETE_EVENT";
@@ -8,29 +8,13 @@ const TTSProviderContext = createContext();
 
 /**
  * This component is used to provide the TTS provider context to the application.
- *
- * TODO: This context provider simply wraps around the System.keys() call to get the TTS provider settings.
- * However, we use .keys() in a ton of places and it might make more sense to make a generalized hook that
- * can be used anywhere we need to get _any_ setting from the System by just grabbing keys() and reusing it
- * as a hook where needed.
- *
- * For now, since TTSButtons are rendered on every message, we can save a ton of requests by just using this
- * hook where for now so we can recycle the TTS settings in the chat container.
  */
 export function TTSProvider({ children }) {
-  const [settings, setSettings] = useState({});
-  const [provider, setProvider] = useState("native");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function getSettings() {
-      const _settings = await System.keys();
-      setProvider(_settings?.TextToSpeechProvider ?? "native");
-      setSettings(_settings);
-      setLoading(false);
-    }
-    getSettings();
-  }, []);
+  const { settings, loading } = useSystemSettings();
+  const provider = useMemo(
+    () => settings?.TextToSpeechProvider ?? "native",
+    [settings],
+  );
 
   return (
     <TTSProviderContext.Provider

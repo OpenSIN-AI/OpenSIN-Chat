@@ -76,8 +76,6 @@ function AdvancedControls({ settings }) {
 }
 
 function CometApiModelSelection({ settings }) {
-  // TODO: For now, CometAPI models list is noisy; show a flat, deduped list without grouping.
-  // Revisit after CometAPI model list API provides better categorization/metadata.
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

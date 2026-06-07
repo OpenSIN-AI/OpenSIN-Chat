@@ -136,8 +136,7 @@ const TRANSLATIONS = {
     workspaceSources: {
       title: "工作区来源",
       add: "添加来源",
-      empty:
-        "暂无来源。\n上传文档或添加 URL，为对话提供更多背景信息。",
+      empty: "暂无来源。\n上传文档或添加 URL，为对话提供更多背景信息。",
       type_document: "文档",
       type_url: "URL",
       type_db: "数据库",
@@ -1199,12 +1198,10 @@ const TRANSLATIONS = {
       add_from_url: "从 URL 添加",
       loading: "加载中...",
       no_sources: "暂无可用来源",
-      no_workspace:
-        "暂无可用工作区。请先发送消息以创建工作区。",
+      no_workspace: "暂无可用工作区。请先发送消息以创建工作区。",
       add_success: "来源已添加到工作区",
       add_failed: "无法添加来源",
-      url_hint:
-        "粘贴网站或 YouTube 视频的 URL，将其作为来源添加。",
+      url_hint: "粘贴网站或 YouTube 视频的 URL，将其作为来源添加。",
       url_submit: "添加来源",
       url_submitting: "添加中...",
       url_success: "URL 已作为来源添加",
