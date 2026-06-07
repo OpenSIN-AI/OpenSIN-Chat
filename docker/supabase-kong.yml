@@ -1,0 +1,42 @@
+_format_version: "1.1"
+
+###############################################################################
+# Supabase Kong config — minimal setup for OpenAfD-Chat
+# Exposes only: Storage API
+###############################################################################
+
+consumers:
+  - username: anon
+    keyauth_credentials:
+      - key: $(SUPABASE_ANON_KEY)
+  - username: service_role
+    keyauth_credentials:
+      - key: $(SUPABASE_SERVICE_KEY)
+
+acls:
+  - consumer: anon
+    group: anon
+  - consumer: service_role
+    group: admin
+
+services:
+  # ─── Storage API ─────────────────────────────────────────────────────────────
+  - name: storage-v1
+    _comment: "Storage: /storage/v1/* → http://storage:5000/*"
+    url: http://storage:5000/
+    routes:
+      - name: storage-v1-all
+        strip_path: true
+        paths:
+          - /storage/v1/
+    plugins:
+      - name: cors
+      - name: key-auth
+        config:
+          hide_credentials: false
+      - name: acl
+        config:
+          hide_groups_header: true
+          allow:
+            - anon
+            - admin
