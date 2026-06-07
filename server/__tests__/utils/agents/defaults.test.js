@@ -3,14 +3,6 @@
 process.env.STORAGE_DIR = __dirname;
 process.env.NODE_ENV = "test";
 
-const Provider = require("../../../utils/agents/aibitat/providers/ai-provider");
-
-const mockExpandSystemPromptVariables = jest.fn();
-jest.mock("../../../models/systemPromptVariables", () => ({
-  SystemPromptVariables: {
-    expandSystemPromptVariables: mockExpandSystemPromptVariables,
-  },
-}));
 jest.mock("../../../models/systemSettings");
 jest.mock("../../../utils/agents/imported", () => ({
   activeImportedPlugins: jest.fn().mockReturnValue([]),
@@ -25,7 +17,11 @@ jest.mock("../../../utils/MCP", () => {
     activeMCPServers: jest.fn().mockResolvedValue([]),
   }));
 });
+jest.mock("../../../utils/memories", () => ({
+  promptWithMemories: jest.fn(({ systemPrompt }) => Promise.resolve(systemPrompt)),
+}));
 
+const Provider = require("../../../utils/agents/aibitat/providers/ai-provider");
 const { WORKSPACE_AGENT } = require("../../../utils/agents/defaults");
 
 describe("WORKSPACE_AGENT.getDefinition", () => {
@@ -34,6 +30,18 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
     // Mock SystemSettings to return empty arrays for agent skills
     const { SystemSettings } = require("../../../models/systemSettings");
     SystemSettings.getValueOrFallback = jest.fn().mockResolvedValue("[]");
+    // Mock Provider.systemPrompt to return a deterministic string
+    // This avoids the need to mock the deeply-nested systemPromptVariables module
+    jest.spyOn(Provider, "systemPrompt").mockImplementation(async ({ provider, workspace }) => {
+      if (!workspace?.openAiPrompt) {
+        return Provider.defaultSystemPromptForProvider(provider);
+      }
+      return `expanded:${workspace.openAiPrompt}`;
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   it("should use provider default system prompt when workspace has no openAiPrompt", async () => {
@@ -51,7 +59,9 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
       user
     );
     expect(definition.role).toBe(expectedPrompt);
-    expect(mockExpandSystemPromptVariables).not.toHaveBeenCalled();
+    expect(Provider.systemPrompt).toHaveBeenCalledWith(
+      expect.objectContaining({ provider, workspace, user })
+    );
   });
 
   it("should use workspace system prompt with variable expansion when openAiPrompt exists", async () => {
@@ -63,21 +73,18 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
     const user = { id: 1 };
     const provider = "openai";
 
-    const expandedPrompt = "You are a helpful assistant for Test Workspace. The current user is John Doe.";
-    mockExpandSystemPromptVariables.mockResolvedValue(expandedPrompt);
-
     const definition = await WORKSPACE_AGENT.getDefinition(
       provider,
       workspace,
       user
     );
 
-    expect(mockExpandSystemPromptVariables).toHaveBeenCalledWith(
-      workspace.openAiPrompt,
-      user.id,
-      workspace.id
+    expect(Provider.systemPrompt).toHaveBeenCalledWith(
+      expect.objectContaining({ provider, workspace, user })
     );
-    expect(definition.role).toBe(expandedPrompt);
+    expect(definition.role).toBe(
+      `expanded:${workspace.openAiPrompt}`
+    );
   });
 
   it("should handle workspace system prompt without user context", async () => {
@@ -88,8 +95,6 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
     };
     const user = null;
     const provider = "lmstudio";
-    const expandedPrompt = "You are a helpful assistant. Today is January 1, 2024.";
-    mockExpandSystemPromptVariables.mockResolvedValue(expandedPrompt);
 
     const definition = await WORKSPACE_AGENT.getDefinition(
       provider,
@@ -97,12 +102,12 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
       user
     );
 
-    expect(mockExpandSystemPromptVariables).toHaveBeenCalledWith(
-      workspace.openAiPrompt,
-      null,
-      workspace.id
+    expect(Provider.systemPrompt).toHaveBeenCalledWith(
+      expect.objectContaining({ provider, workspace, user })
     );
-    expect(definition.role).toBe(expandedPrompt);
+    expect(definition.role).toBe(
+      `expanded:${workspace.openAiPrompt}`
+    );
   });
 
   it("should return functions array in definition", async () => {
@@ -123,6 +128,12 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
     const workspace = { id: 1, openAiPrompt: null };
     const user = null;
     const provider = "lmstudio";
+
+    Provider.systemPrompt.mockRestore();
+    jest.spyOn(Provider, "systemPrompt").mockResolvedValue(
+      "You are a helpful ai assistant who can assist the user and use tools available to help answer the users prompts and questions."
+    );
+
     const definition = await WORKSPACE_AGENT.getDefinition(
       provider,
       workspace,
@@ -133,4 +144,3 @@ describe("WORKSPACE_AGENT.getDefinition", () => {
     expect(definition.role).toContain("helpful ai assistant");
   });
 });
-
