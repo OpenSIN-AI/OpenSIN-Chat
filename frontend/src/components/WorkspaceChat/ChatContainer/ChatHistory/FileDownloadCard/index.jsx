@@ -1,29 +1,55 @@
 // SPDX-License-Identifier: MIT
-import { memo, useState } from "react";
+import { memo, useState, useEffect, useRef } from "react";
 import { saveAs } from "file-saver";
 import { DownloadSimple, CircleNotch, Eye } from "@phosphor-icons/react";
 import { humanFileSize } from "@/utils/numbers";
 import StorageFiles from "@/models/files";
 import { useChatSidebar } from "../../ChatSidebar";
 
+// Module-level guard so a freshly generated report only auto-opens the preview
+// once — never again on re-renders or when the chat history reloads.
+const autoPreviewedFiles = new Set();
+
 /**
  * @param {{content: {filename: string, storageFilename?: string, fileSize?: number}}} props
+ * @param {boolean} [autoPreview] - When true (live agent output), opens the
+ *   preview sidebar automatically the first time this report is rendered (#55).
  */
-function FileDownloadCard({ props }) {
+function FileDownloadCard({ props, autoPreview = false }) {
   const { filename, storageFilename, fileSize, downloadUrl } = props.content || {};
   const { badge, badgeBg, badgeText, fileType } = getFileDisplayInfo(filename);
   const [downloading, setDownloading] = useState(false);
   const { openPreview } = useChatSidebar();
 
-  function handlePreview() {
-    openPreview({
+  const previewUrl =
+    downloadUrl || (storageFilename ? `/api/files/${storageFilename}` : null);
+
+  function buildPreviewData() {
+    return {
       title: filename || "Vorschau",
       type: filename?.endsWith(".pdf") ? "pdf" : "doc",
-      downloadUrl: downloadUrl || (storageFilename ? `/api/files/${storageFilename}` : null),
+      downloadUrl: previewUrl,
       versions: [],
       content: null,
-    });
+    };
   }
+
+  function handlePreview() {
+    openPreview(buildPreviewData());
+  }
+
+  // #55: Automatically reveal the preview sidebar when an agent generates a
+  // new report. Keyed by the file identity so it fires exactly once.
+  const didAutoOpen = useRef(false);
+  useEffect(() => {
+    if (!autoPreview || didAutoOpen.current || !previewUrl) return;
+    const key = storageFilename || downloadUrl || filename;
+    if (!key || autoPreviewedFiles.has(key)) return;
+    autoPreviewedFiles.add(key);
+    didAutoOpen.current = true;
+    openPreview(buildPreviewData());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoPreview, previewUrl, storageFilename, downloadUrl, filename]);
 
   const handleDownload = async () => {
     if (downloading) return;

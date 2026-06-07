@@ -348,7 +348,16 @@ function buildMessages({
     if (props.type === "rechartVisualize" && !!props.content) {
       acc.push(<Chartable key={props.uuid} props={props} />);
     } else if (props.type === "fileDownloadCard" && !!props.content) {
-      acc.push(<FileDownloadCard key={props.uuid} props={props} />);
+      // #55: Auto-open the preview sidebar only for reports just streamed in
+      // by the agent (flagged in utils/chat/agent.js). Reloaded history never
+      // carries this flag, so it won't re-trigger.
+      acc.push(
+        <FileDownloadCard
+          key={props.uuid}
+          props={props}
+          autoPreview={!!props.justGenerated}
+        />,
+      );
     } else if (isLastBotReply && props.animate) {
       acc.push(
         <PromptReply

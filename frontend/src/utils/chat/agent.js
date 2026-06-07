@@ -254,6 +254,10 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
           error: null,
           animate: false,
           pending: false,
+          // #55: marks this card as freshly streamed so the UI can auto-open
+          // the preview sidebar. Not persisted in chat history, so reloads
+          // never re-trigger the auto-open.
+          justGenerated: true,
           metrics: data.metrics || {},
         },
       ];
