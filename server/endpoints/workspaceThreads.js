@@ -13,6 +13,7 @@ const {
 } = require("../utils/middleware/multiUserProtected");
 const { EventLogs } = require("../models/eventLogs");
 const { WorkspaceThread } = require("../models/workspaceThread");
+const { WorkspaceThreadFolder } = require("../models/workspaceThreadFolder");
 const {
   validWorkspaceSlug,
   validWorkspaceAndThreadSlug,
@@ -75,6 +76,10 @@ function workspaceThreadEndpoints(app) {
           workspace_id: workspace.id,
           user_id: user?.id || null,
         });
+        const folders = await WorkspaceThreadFolder.where({
+          workspace_id: workspace.id,
+          user_id: user?.id ?? null,
+        });
 
         const defaultThreadChatCount = await WorkspaceChats.count({
           workspaceId: workspace.id,
@@ -84,7 +89,7 @@ function workspaceThreadEndpoints(app) {
           include: true,
         });
 
-        response.status(200).json({ threads, defaultThreadChatCount });
+        response.status(200).json({ threads, folders, defaultThreadChatCount });
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
@@ -266,6 +271,88 @@ function workspaceThreadEndpoints(app) {
         response.sendStatus(200).end();
       } catch (e) {
         // eslint-disable-next-line no-console
+        console.error(e.message, e);
+        response.sendStatus(500).end();
+      }
+    },
+  );
+
+  // ── Thread Folder endpoints ──────────────────────────────────────────────
+
+  app.post(
+    "/workspace/:slug/thread-folder/new",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const user = await userFromSession(request, response);
+        const workspace = response.locals.workspace;
+        const { name } = reqBody(request);
+        const { folder, message } = await WorkspaceThreadFolder.new(
+          workspace,
+          user?.id ?? null,
+          name,
+        );
+        response.status(200).json({ folder, message });
+      } catch (e) {
+        console.error(e.message, e);
+        response.sendStatus(500).end();
+      }
+    },
+  );
+
+  app.post(
+    "/workspace/:slug/thread-folder/:folderId/update",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const { folderId } = request.params;
+        const data = reqBody(request);
+        const { folder, message } = await WorkspaceThreadFolder.update(
+          folderId,
+          data,
+        );
+        response.status(200).json({ folder, message });
+      } catch (e) {
+        console.error(e.message, e);
+        response.sendStatus(500).end();
+      }
+    },
+  );
+
+  app.delete(
+    "/workspace/:slug/thread-folder/:folderId",
+    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    async (request, response) => {
+      try {
+        const { folderId } = request.params;
+        const success = await WorkspaceThreadFolder.delete(folderId);
+        if (!success) return response.sendStatus(500).end();
+        response.sendStatus(200).end();
+      } catch (e) {
+        console.error(e.message, e);
+        response.sendStatus(500).end();
+      }
+    },
+  );
+
+  app.post(
+    "/workspace/:slug/thread/:threadSlug/assign-folder",
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.all]),
+      validWorkspaceAndThreadSlug,
+    ],
+    async (request, response) => {
+      try {
+        const thread = response.locals.thread;
+        const { folderId } = reqBody(request);
+        const success = await WorkspaceThreadFolder.assignThread(
+          thread.id,
+          folderId ?? null,
+        );
+        if (!success) return response.sendStatus(500).end();
+        response.sendStatus(200).end();
+      } catch (e) {
         console.error(e.message, e);
         response.sendStatus(500).end();
       }

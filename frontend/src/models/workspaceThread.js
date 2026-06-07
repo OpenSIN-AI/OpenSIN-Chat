@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 
 const WorkspaceThread = {
   all: async function (workspaceSlug) {
-    const { threads, defaultThreadChatCount } = await fetch(
+    const { threads, folders, defaultThreadChatCount } = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/threads`,
       {
         method: "GET",
@@ -16,10 +16,10 @@ const WorkspaceThread = {
     )
       .then((res) => res.json())
       .catch(() => {
-        return { threads: [], defaultThreadChatCount: 0 };
+        return { threads: [], folders: [], defaultThreadChatCount: 0 };
       });
 
-    return { threads, defaultThreadChatCount };
+    return { threads, folders: folders ?? [], defaultThreadChatCount };
   },
   new: async function (workspaceSlug) {
     const { thread, error } = await fetch(
@@ -208,6 +208,59 @@ const WorkspaceThread = {
         console.error(e);
         return false;
       });
+  },
+
+  folders: {
+    new: async function (workspaceSlug, name = "New Folder") {
+      return await fetch(
+        `${API_BASE}/workspace/${workspaceSlug}/thread-folder/new`,
+        {
+          method: "POST",
+          headers: baseHeaders(),
+          body: JSON.stringify({ name }),
+        },
+      )
+        .then((res) => res.json())
+        .catch((e) => ({ folder: null, message: e.message }));
+    },
+
+    update: async function (workspaceSlug, folderId, data = {}) {
+      return await fetch(
+        `${API_BASE}/workspace/${workspaceSlug}/thread-folder/${folderId}/update`,
+        {
+          method: "POST",
+          headers: baseHeaders(),
+          body: JSON.stringify(data),
+        },
+      )
+        .then((res) => res.json())
+        .catch((e) => ({ folder: null, message: e.message }));
+    },
+
+    delete: async function (workspaceSlug, folderId) {
+      return await fetch(
+        `${API_BASE}/workspace/${workspaceSlug}/thread-folder/${folderId}`,
+        {
+          method: "DELETE",
+          headers: baseHeaders(),
+        },
+      )
+        .then((res) => res.ok)
+        .catch(() => false);
+    },
+
+    assignThread: async function (workspaceSlug, threadSlug, folderId) {
+      return await fetch(
+        `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/assign-folder`,
+        {
+          method: "POST",
+          headers: baseHeaders(),
+          body: JSON.stringify({ folderId }),
+        },
+      )
+        .then((res) => res.ok)
+        .catch(() => false);
+    },
   },
 };
 
