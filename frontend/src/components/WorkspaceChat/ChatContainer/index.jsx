@@ -165,7 +165,7 @@ export default function ChatContainer({
           attachments: lastUserMessage?.attachments,
         }),
       )
-      // eslint-disable-next-line no-console
+
       .catch((e) => console.error(e));
   };
 
@@ -362,7 +362,6 @@ export default function ChatContainer({
           try {
             handleSocketResponse(socket, event, setChatHistory);
           } catch {
-            // eslint-disable-next-line no-console
             console.error("Failed to parse data");
             setAgentSessionActive(false);
             window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));

@@ -15,7 +15,6 @@ export default function ShowScrollbar() {
     try {
       Appearance.updateSettings({ showScrollbar: checked });
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Failed to update appearance settings:", error);
       setShowScrollbar(!checked);
     }

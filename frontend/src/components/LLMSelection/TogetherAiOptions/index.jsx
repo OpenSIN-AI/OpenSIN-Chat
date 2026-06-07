@@ -58,7 +58,6 @@ function TogetherAiModelSelection({ settings, apiKey }) {
           setGroupedModels(modelsByOrganization);
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Error fetching Together AI models:", error);
       }
       setLoading(false);

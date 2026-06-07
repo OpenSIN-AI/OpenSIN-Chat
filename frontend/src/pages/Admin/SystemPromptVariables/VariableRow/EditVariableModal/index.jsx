@@ -27,7 +27,6 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
       if (onRefresh) onRefresh();
       closeModal();
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Error updating variable:", error);
       setError("Failed to update variable");
     }

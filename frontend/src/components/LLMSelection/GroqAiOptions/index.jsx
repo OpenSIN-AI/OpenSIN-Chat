@@ -50,7 +50,6 @@ function GroqAIModelSelection({ apiKey, settings }) {
         const { models } = await System.customModels("groq", apiKey);
         setCustomModels(models || []);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Failed to fetch custom models:", error);
         setCustomModels([]);
       } finally {

@@ -100,7 +100,6 @@ const Workspace = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -302,7 +301,6 @@ const Workspace = {
       })
       .then((res) => res.suggestedMessages)
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return null;
       });
@@ -322,7 +320,6 @@ const Workspace = {
         return { success: true, ...res.json() };
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -342,7 +339,6 @@ const Workspace = {
         return true;
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -373,7 +369,6 @@ const Workspace = {
         return { success: true, error: null };
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -405,7 +400,6 @@ const Workspace = {
         throw new Error("Failed to remove pfp.");
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -421,7 +415,6 @@ const Workspace = {
         throw new Error("Failed to update chat.");
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -437,7 +430,6 @@ const Workspace = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -449,7 +441,6 @@ const Workspace = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -466,7 +457,6 @@ const Workspace = {
       })
       .then((data) => data.newThreadSlug)
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error("Error forking thread:", e);
         return null;
       });
@@ -547,7 +537,6 @@ const Workspace = {
       );
       return true;
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Error reordering workspaces:", error);
       return false;
     }
@@ -584,7 +573,6 @@ const Workspace = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { workspaces: [], threads: [] };
       });
@@ -607,7 +595,6 @@ const Workspace = {
     )
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { showAgentCommand: true };
       });

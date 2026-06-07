@@ -245,7 +245,6 @@ function LMStudioModelSelection({ settings, basePath = null, apiKey = null }) {
         );
         setCustomModels(models || []);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Failed to fetch custom models:", error);
         setCustomModels([]);
       }

@@ -28,7 +28,6 @@ export default function PrivateModeOptions({ settings }) {
         if (error) throw new Error(error);
         setModels(models);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Error fetching Private Mode models:", error);
         setModels([]);
       } finally {

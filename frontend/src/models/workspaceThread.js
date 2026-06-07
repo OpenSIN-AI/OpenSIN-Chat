@@ -181,7 +181,6 @@ const WorkspaceThread = {
         throw new Error("Failed to delete chats.");
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -206,7 +205,6 @@ const WorkspaceThread = {
         throw new Error("Failed to update chat.");
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });

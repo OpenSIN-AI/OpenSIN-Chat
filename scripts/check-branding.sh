@@ -81,6 +81,7 @@ ALLOWED_FILES=(
   #    reference upstream names + URLs + the raw patch files (which are
   #    verbatim from upstream and need to remain intact for `git am`).
   "docs/UPSTREAM-SYNC.md"
+  "docs/vercel-deploy-fix.md"        # references upstream as AnythingLLM-Fork
   "scripts/upstream-sync/"
 
   # ── Server unit tests ──────────────────────────────────

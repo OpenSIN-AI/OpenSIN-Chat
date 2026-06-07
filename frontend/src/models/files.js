@@ -18,7 +18,6 @@ const StorageFiles = {
         return res.blob();
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error("Download failed:", e);
         return null;
       });

@@ -56,7 +56,6 @@ export default function GithubOptions() {
       setLoading(false);
       return;
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
       showToast(e.message, "error", { clear: true });
       setLoading(false);

@@ -16,7 +16,6 @@ const LiveDocumentSync = {
       })
       .then((res) => res)
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });
@@ -31,7 +30,6 @@ const LiveDocumentSync = {
       })
       .then((res) => res?.queues || [])
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -53,7 +51,6 @@ const LiveDocumentSync = {
         return true;
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });

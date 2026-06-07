@@ -16,7 +16,6 @@ export default function SlashCommand({ item, setStep }) {
       );
       setStep(CommunityHubImportItemSteps.completed.key);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
       showToast(`Failed to import slash command. ${e.message}`, "error");
     }

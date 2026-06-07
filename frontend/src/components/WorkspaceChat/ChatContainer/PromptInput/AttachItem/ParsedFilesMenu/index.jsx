@@ -96,7 +96,6 @@ export default function ParsedFilesMenu({
       );
       tooltipRef?.current?.close();
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Failed to embed files:", error);
       showToast("Failed to embed files", "error");
     }

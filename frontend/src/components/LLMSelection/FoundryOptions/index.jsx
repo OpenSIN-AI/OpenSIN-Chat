@@ -25,7 +25,6 @@ export default function FoundryOptions({ settings }) {
         if (error) throw new Error(error);
         setModels(models);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Error fetching Foundry models:", error);
         setModels([]);
       } finally {

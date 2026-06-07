@@ -50,7 +50,6 @@ function ZAiModelSelection({ apiKey, settings }) {
         const { models } = await System.customModels("zai", apiKey);
         setCustomModels(models || []);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Failed to fetch custom models:", error);
         setCustomModels([]);
       } finally {

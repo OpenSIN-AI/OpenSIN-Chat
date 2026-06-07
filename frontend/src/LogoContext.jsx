@@ -36,7 +36,7 @@ export function LogoProvider({ children }) {
       setLogo(OpenAfDLogo);
       setLoginLogo(DefaultLoginLogo);
       setIsCustomLogo(false);
-      // eslint-disable-next-line no-console
+
       console.error("Failed to fetch logo:", err);
     }
   }

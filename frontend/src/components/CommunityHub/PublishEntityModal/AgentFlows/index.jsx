@@ -43,7 +43,6 @@ export default function AgentFlows({ entity }) {
       setItemId(itemId);
       setIsSuccess(true);
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Failed to publish agent flow:", error);
       showToast(`Failed to publish agent flow: ${error.message}`, "error", {
         clear: true,

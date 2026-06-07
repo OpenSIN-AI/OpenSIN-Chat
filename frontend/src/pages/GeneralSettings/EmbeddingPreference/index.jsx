@@ -170,7 +170,6 @@ export default function GeneralEmbeddingPreference() {
       if (newModel === null) return false;
       return settings?.EmbeddingModelPref !== newModel;
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
     }
     return false;

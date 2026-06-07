@@ -8,7 +8,6 @@ const Invite = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { invite: null, error: e.message };
       });
@@ -20,7 +19,6 @@ const Invite = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
