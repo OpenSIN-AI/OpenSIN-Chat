@@ -285,12 +285,66 @@ class MetaGenerator {
   }
 
   /**
+   * Read /index.js and extract the __vite__mapDeps chunk list so we can
+   * emit `<link rel="modulepreload">` tags in the right order. React MUST
+   * be preloaded before vendor-ui (TanStack/Floating UI) — otherwise the
+   * UI chunk tries to call `useLayoutEffect` before React initializes
+   * and the page goes black with a TypeError.
+   *
+   * @returns {Promise<{js: string[], css: string[]}>}
+   */
+  async #readVitePreloadList() {
+    try {
+      const fs = require("fs/promises");
+      const path = require("path");
+      const indexJsPath = path.resolve(__dirname, "../../public/index.js");
+      const content = await fs.readFile(indexJsPath, "utf8");
+      // Match: m.f=["assets/...js","assets/...css",...]
+      const match = content.match(/m\.f\s*=\s*\[([^\]]+)\]/);
+      if (!match) return { js: [], css: [] };
+      const raw = match[1];
+      // Extract every quoted string
+      const items = Array.from(raw.matchAll(/"([^"]+)"/g)).map((m) => m[1]);
+      const js = items.filter((p) => p.endsWith(".js")).map((p) => `/${p}`);
+      const css = items.filter((p) => p.endsWith(".css")).map((p) => `/${p}`);
+      return { js, css };
+    } catch (err) {
+      this.#log(`could not read vite preload list: ${err.message}`);
+      return { js: [], css: [] };
+    }
+  }
+
+  /**
+   * Build the `<link rel="modulepreload" …>` tag list. vendor-react is
+   * always emitted first so React is initialized before any UI chunk that
+   * depends on it (TanStack Query, Floating UI, etc.) is evaluated.
+   *
+   * @param {string[]} js
+   * @returns {string}
+   */
+  #buildPreloadTags(js) {
+    if (!js.length) return "";
+
+    const REACT_RE = /^vendor-react/;
+    const ordered = [
+      ...js.filter((p) => REACT_RE.test(p)),
+      ...js.filter((p) => !REACT_RE.test(p)),
+    ];
+
+    return ordered
+      .map((p) => `<link rel="modulepreload" crossorigin href="${p}">`)
+      .join("\n            ");
+  }
+
+  /**
    *
    * @param {import('express').Response} response
    * @param {number} code
    */
   async generate(response, code = 200) {
     if (this.#customConfig === null) await this.#fetchConfg();
+    const { js, css } = await this.#readVitePreloadList();
+    const preloadTags = this.#buildPreloadTags(js);
     response
       .status(code)
       .setHeader("Cache-Control", "no-cache, no-store, must-revalidate")
@@ -301,8 +355,10 @@ class MetaGenerator {
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             ${this.#assembleMeta()}
+            ${preloadTags}
             <script type="module" crossorigin src="/index.js"></script>
             <link rel="stylesheet" href="/index.css">
+            ${css.map((p) => `<link rel="stylesheet" href="${p}">`).join("\n            ")}
           </head>
           <body>
             <div id="root" class="h-screen"></div>
