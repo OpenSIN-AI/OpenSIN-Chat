@@ -21,7 +21,6 @@ export async function copyMarkdownAsRichText(markdownString) {
 
     await navigator.clipboard.write(data);
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Failed to copy markdown as rich text: ", error);
   }
 }

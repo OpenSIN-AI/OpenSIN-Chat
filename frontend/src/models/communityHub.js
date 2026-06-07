@@ -16,7 +16,6 @@ const CommunityHub = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return {
           error: e.message,
@@ -39,7 +38,6 @@ const CommunityHub = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return {
           success: false,
@@ -127,7 +125,6 @@ const CommunityHub = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return {
           success: false,
@@ -148,7 +145,6 @@ const CommunityHub = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return {
           success: false,

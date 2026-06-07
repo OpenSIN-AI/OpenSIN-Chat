@@ -21,7 +21,7 @@ import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";
-import QuickActions from "@/components/lib/QuickActions";
+import WorkspaceSources from "@/components/lib/WorkspaceSources";
 import SuggestedMessages from "@/components/lib/SuggestedMessages";
 import useUser from "@/hooks/useUser";
 import ChatSettingsMenu from "@/components/WorkspaceChat/ChatContainer/ChatSettingsMenu";
@@ -232,7 +232,6 @@ function HomeContent({ workspace, setWorkspace, threadSlug, setThreadSlug }) {
         navigate(paths.workspace.chat(targetWorkspace.slug));
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Error submitting message:", error);
       showToast("Failed to send message", "error");
       setLoading(false);
@@ -268,20 +267,6 @@ function HomeContent({ workspace, setWorkspace, threadSlug, setThreadSlug }) {
     );
   }
 
-  async function handleEditWorkspace() {
-    let targetWorkspace = workspace;
-
-    if (!targetWorkspace) {
-      targetWorkspace = await createDefaultWorkspace(
-        t("new-workspace.placeholder"),
-      );
-      if (!targetWorkspace) return;
-      setWorkspace(targetWorkspace);
-    }
-
-    navigate(paths.workspace.settings.generalAppearance(targetWorkspace.slug));
-  }
-
   return (
     <ChatSidebarProvider>
       <div
@@ -308,11 +293,9 @@ function HomeContent({ workspace, setWorkspace, threadSlug, setThreadSlug }) {
                   workspaceSlug={workspace?.slug}
                   threadSlug={threadSlug}
                 />
-                <QuickActions
-                  hasAvailableWorkspace={!!workspace}
-                  onCreateAgent={() => navigate(paths.settings.agentSkills())}
-                  onEditWorkspace={handleEditWorkspace}
-                  onUploadDocument={() =>
+                <WorkspaceSources
+                  documents={workspace?.documents || []}
+                  onAddSources={() =>
                     document.getElementById("dnd-chat-file-uploader")?.click()
                   }
                 />

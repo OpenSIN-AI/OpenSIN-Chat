@@ -146,6 +146,15 @@ const TRANSLATIONS = {
       editWorkspace: "Edit Workspace",
       uploadDocument: "Upload a Document",
     },
+    workspaceSources: {
+      title: "Workspace sources",
+      add: "Add sources",
+      empty:
+        "No sources yet.\nUpload documents or add URLs to give the chat more context.",
+      type_document: "Document",
+      type_url: "URL",
+      type_db: "Database",
+    },
   },
   "new-workspace": {
     title: "New Workspace",
@@ -1491,6 +1500,23 @@ const TRANSLATIONS = {
     good_response: "Good response",
     more_actions: "More actions",
     sources: "Sources",
+    attach_menu: {
+      add_files: "Add files",
+      current_sources: "Current sources",
+      add_from_url: "Add from URL",
+      loading: "Loading...",
+      no_sources: "No sources available",
+      no_workspace:
+        "No workspace available. Send a message first to create a workspace.",
+      add_success: "Source added to workspace",
+      add_failed: "Could not add source",
+      url_hint:
+        "Paste the URL of a website or YouTube video to add it as a source.",
+      url_submit: "Add source",
+      url_submitting: "Adding...",
+      url_success: "URL added as source",
+      url_failed: "Could not add URL",
+    },
     source_filter_label: "Source Filter",
     source_filter_all: "All",
     source_filter_documents: "Documents",

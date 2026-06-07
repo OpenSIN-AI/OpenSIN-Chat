@@ -18,7 +18,6 @@ export function useCommunityHubAuth() {
         const { connectionKey } = await CommunityHub.getSettings();
         setIsAuthenticated(!!connectionKey);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Error checking hub auth:", error);
         setIsAuthenticated(false);
       } finally {

@@ -17,7 +17,7 @@ export function PfpProvider({ children }) {
         setPfp(pfpUrl);
       } catch (err) {
         setPfp(null);
-        // eslint-disable-next-line no-console
+
         console.error("Failed to fetch pfp:", err);
       }
     }

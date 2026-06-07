@@ -60,7 +60,6 @@ export default function useAgentSkillsState(defaultSkills) {
       setFileSystemAgentAvailable(fsAgentAvailable);
       setIsMultiUser(!!multiUserMode);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
     } finally {
       setLoading(false);
@@ -72,7 +71,6 @@ export default function useAgentSkillsState(defaultSkills) {
       const { servers = [] } = await MCPServers.listServers();
       setMcpServers(servers);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
     } finally {
       setMcpLoading(false);

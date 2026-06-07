@@ -40,7 +40,6 @@ export default function useProviderEndpointAutoDiscovery({
     const { endpoint, models } = await Promise.any(possibleEndpoints)
       .then((resolved) => resolved)
       .catch(() => {
-        // eslint-disable-next-line no-console
         console.error("All endpoints failed to resolve.");
         return { endpoint: null, models: null };
       });

@@ -87,7 +87,6 @@ export default function ServerSTT({ sendCommand }) {
       setStream(audioStream);
       setListening(true);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error("Failed to start microphone:", e);
       showToast(t("chat_window.stt_mic_denied"), "error", { clear: true });
     }

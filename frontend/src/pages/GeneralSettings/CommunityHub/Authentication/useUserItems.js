@@ -27,7 +27,6 @@ export function useUserItems({ connectionKey }) {
           setUserItems({ createdByMe, teamItems });
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Error fetching user items:", error);
       } finally {
         setLoading(false);

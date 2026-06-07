@@ -13,7 +13,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { config: null, error: e.message };
       });
@@ -36,7 +35,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -53,7 +51,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -69,7 +66,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { active: false, bot_username: null };
       });
@@ -85,7 +81,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { users: [] };
       });
@@ -101,7 +96,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { users: [] };
       });
@@ -120,7 +114,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -139,7 +132,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -158,7 +150,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -177,7 +168,6 @@ const Telegram = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });

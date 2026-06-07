@@ -28,7 +28,6 @@ async function sendQuestionnaire({ email, useCase, comment }) {
         window.localStorage.setItem(COMPLETE_QUESTIONNAIRE, true);
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
         console.error(`sendQuestionnaire`, error.message);
       });
   }

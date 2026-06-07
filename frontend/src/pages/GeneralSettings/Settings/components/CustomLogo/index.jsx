@@ -51,7 +51,6 @@ export default function CustomLogo() {
 
     const { success, error } = await System.removeCustomLogo();
     if (!success) {
-      // eslint-disable-next-line no-console
       console.error("Failed to remove logo:", error);
       showToast(`Failed to remove logo: ${error}`, "error");
       const { logoURL } = await System.fetchLogo();

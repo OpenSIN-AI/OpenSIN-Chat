@@ -95,7 +95,6 @@ function Directory({
       await fetchKeys(true);
       setSelectedItems({});
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Failed to delete files and folders:", error);
     } finally {
       setLoading(false);

@@ -4,6 +4,7 @@ import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
 import LanguagePreference from "../components/LanguagePreference";
 import ThemePreference from "../components/ThemePreference";
+import TextSizePreference from "../components/TextSizePreference";
 
 export default function InterfaceSettings() {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ export default function InterfaceSettings() {
           </div>
           <ThemePreference />
           <LanguagePreference />
+          <TextSizePreference />
         </div>
       </div>
     </div>

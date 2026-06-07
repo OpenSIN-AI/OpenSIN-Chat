@@ -12,7 +12,6 @@ const Admin = {
       .then((res) => res.json())
       .then((res) => res?.users || [])
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -25,7 +24,6 @@ const Admin = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { user: null, error: e.message };
       });
@@ -38,7 +36,6 @@ const Admin = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -50,7 +47,6 @@ const Admin = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -65,7 +61,6 @@ const Admin = {
       .then((res) => res.json())
       .then((res) => res?.invites || [])
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -81,7 +76,6 @@ const Admin = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { invite: null, error: e.message };
       });
@@ -93,7 +87,6 @@ const Admin = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -108,7 +101,6 @@ const Admin = {
       .then((res) => res.json())
       .then((res) => res?.workspaces || [])
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -121,7 +113,6 @@ const Admin = {
       .then((res) => res.json())
       .then((res) => res?.users || [])
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return [];
       });
@@ -134,7 +125,6 @@ const Admin = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { workspace: null, error: e.message };
       });
@@ -150,7 +140,6 @@ const Admin = {
     )
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -162,7 +151,6 @@ const Admin = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -184,7 +172,6 @@ const Admin = {
     )
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return null;
       });
@@ -197,7 +184,6 @@ const Admin = {
     })
       .then((res) => res.json())
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { success: false, error: e.message };
       });
@@ -216,7 +202,6 @@ const Admin = {
         return res.json();
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { apiKeys: [], error: e.message };
       });
@@ -234,7 +219,6 @@ const Admin = {
         return res.json();
       })
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return { apiKey: null, error: e.message };
       });
@@ -246,7 +230,6 @@ const Admin = {
     })
       .then((res) => res.ok)
       .catch((e) => {
-        // eslint-disable-next-line no-console
         console.error(e);
         return false;
       });

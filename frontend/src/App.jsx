@@ -22,7 +22,6 @@ export default function App() {
   return (
     <ErrorBoundary
       FallbackComponent={ErrorBoundaryFallback}
-      // eslint-disable-next-line no-console
       onError={console.error}
       resetKeys={[location.pathname]}
     >

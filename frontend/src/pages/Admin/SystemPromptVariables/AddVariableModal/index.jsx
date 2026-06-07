@@ -26,7 +26,6 @@ export default function AddVariableModal({ closeModal, onRefresh }) {
       if (onRefresh) onRefresh();
       closeModal();
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Error creating variable:", error);
       setError("Failed to create variable");
     }

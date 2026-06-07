@@ -15,7 +15,6 @@ export default function AutoSubmit() {
     try {
       Appearance.updateSettings({ autoSubmitSttInput: checked });
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Failed to update appearance settings:", error);
       setAutoSubmitSttInput(!checked);
     }

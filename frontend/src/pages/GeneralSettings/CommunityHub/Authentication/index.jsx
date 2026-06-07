@@ -40,7 +40,6 @@ function useCommunityHubAuthentication() {
       showToast("API key saved successfully", "success");
       setOriginalConnectionKey(connectionKey);
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
       showToast("Failed to save API key", "error");
     } finally {
@@ -61,7 +60,6 @@ function useCommunityHubAuthentication() {
       setOriginalConnectionKey("");
       setConnectionKey("");
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
       showToast("Failed to disconnect from hub", "error");
     } finally {
@@ -77,7 +75,6 @@ function useCommunityHubAuthentication() {
         setOriginalConnectionKey(connectionKey || "");
         setConnectionKey(connectionKey || "");
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);

@@ -30,7 +30,7 @@ import { clearPromptInputDraft } from "@/hooks/usePromptInputStorage";
 import { safeJsonParse } from "@/utils/request";
 import { useTranslation } from "react-i18next";
 import paths from "@/utils/paths";
-import QuickActions from "@/components/lib/QuickActions";
+import WorkspaceSources from "@/components/lib/WorkspaceSources";
 import SuggestedMessages from "@/components/lib/SuggestedMessages";
 import ChatSettingsMenu from "./ChatSettingsMenu";
 import WorkspaceModelPicker from "./WorkspaceModelPicker";
@@ -165,7 +165,7 @@ export default function ChatContainer({
           attachments: lastUserMessage?.attachments,
         }),
       )
-      // eslint-disable-next-line no-console
+
       .catch((e) => console.error(e));
   };
 
@@ -362,7 +362,6 @@ export default function ChatContainer({
           try {
             handleSocketResponse(socket, event, setChatHistory);
           } catch {
-            // eslint-disable-next-line no-console
             console.error("Failed to parse data");
             setAgentSessionActive(false);
             window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
@@ -458,17 +457,9 @@ export default function ChatContainer({
                     attachments={files}
                     centered={true}
                   />
-                  <QuickActions
-                    hasAvailableWorkspace={!!workspace}
-                    onCreateAgent={() => navigate(paths.settings.agentSkills())}
-                    onEditWorkspace={() =>
-                      navigate(
-                        paths.workspace.settings.generalAppearance(
-                          workspace.slug,
-                        ),
-                      )
-                    }
-                    onUploadDocument={() =>
+                  <WorkspaceSources
+                    documents={workspace?.documents || []}
+                    onAddSources={() =>
                       document.getElementById("dnd-chat-file-uploader")?.click()
                     }
                   />

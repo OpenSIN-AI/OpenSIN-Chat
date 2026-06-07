@@ -213,7 +213,6 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }) {
         const { models } = await System.customModels("ollama", null, basePath);
         setCustomModels(models || []);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Failed to fetch custom models:", error);
         setCustomModels([]);
       }

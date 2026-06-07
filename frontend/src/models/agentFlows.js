@@ -141,7 +141,6 @@ const AgentFlows = {
         .then((res) => res.json());
       return { success: true, flow: result.flow };
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error("Failed to toggle flow:", error);
       return { success: false, error: error.message };
     }
