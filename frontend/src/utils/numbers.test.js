@@ -76,9 +76,8 @@ describe("humanFileSize", () => {
 
 describe("milliToHms", () => {
   it("formats hours, minutes and seconds", () => {
-    // 3_661_000ms = 1h 0m 1.00s (current behaviour: leading 0 minutes are
-    // omitted by the implementation). This documents the contract.
-    expect(milliToHms(3_661_000)).toBe("1h 1.00s");
+    // 3_661_000ms = 1h 1m 1.00s
+    expect(milliToHms(3_661_000)).toBe("1h 1m 1.00s");
   });
 
   it("omits empty leading units", () => {

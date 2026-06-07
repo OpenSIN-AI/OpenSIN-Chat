@@ -39,6 +39,7 @@ ALLOWED_FILES=(
   "server/utils/reports/index.js"        # require('@mintplex-labs/mdpdf') — upstream Markdown-to-PDF converter
   "frontend/src/utils/piperTTS/index.js"   # JSDoc type refs to @mintplex-labs/piper-tts-web
   "frontend/src/utils/piperTTS/worker.js"  # import '@mintplex-labs/piper-tts-web' — upstream TTS voice engine
+  "frontend/vite.config.js"               # manualChunks regex matches @mintplex-labs/{mdpdf,piper-tts-web} for vendor-splitting
 
   # ── Module docs that credit the upstream package they wrap ─
   "server/utils/reports/index.doc.md"        # documents @mintplex-labs/mdpdf dependency
@@ -81,6 +82,19 @@ ALLOWED_FILES=(
   #    verbatim from upstream and need to remain intact for `git am`).
   "docs/UPSTREAM-SYNC.md"
   "scripts/upstream-sync/"
+
+  # ── Server unit tests ──────────────────────────────────
+  #    server/__tests__/* mocks upstream npm-scope modules (e.g.
+  #    @mintplex-labs/mdpdf) via jest.mock(...) — the test must reference
+  #    the real upstream module name to mock it.
+  "server/__tests__/"
+
+  # ── Auto-generated SBOM artefacts ──────────────────────
+  #    sbom/*.json (CycloneDX 1.5 + SPDX 2.3) enumerate every direct+transitive
+  #    dependency including upstream @mintplex-labs/* packages. Package
+  #    identity is the ground truth of package.json/yarn.lock — it cannot
+  #    be rebranded without breaking the SBOM's purl/dependsOn references.
+  "sbom/"
 )
 
 # Build ripgrep exclude-from-file

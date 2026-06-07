@@ -44,4 +44,5 @@ jobs:
         run: yarn install --frozen-lockfile --network-timeout 100000
 
       - name: Run server tests
+        working-directory: server
         run: yarn test
