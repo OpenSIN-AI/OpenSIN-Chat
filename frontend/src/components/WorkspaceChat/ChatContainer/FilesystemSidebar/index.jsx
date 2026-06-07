@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   X,
   FolderOpen,
@@ -10,6 +10,7 @@ import {
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { API_BASE } from "@/utils/constants";
+import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import ChatSidebar, { useFilesystemSidebar } from "../ChatSidebar";
 
 function formatUptime(seconds) {
@@ -27,23 +28,31 @@ export default function FilesystemSidebar() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const abortRef = useRef(null);
 
   async function fetchData() {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_BASE}/utils/filesystem`);
+      const res = await fetchWithTimeout(`${API_BASE}/utils/filesystem`, {
+        signal: controller.signal,
+      });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setData(await res.json());
     } catch (e) {
+      if (e.name === "AbortError") return; // closed/unmounted — ignore
       setError(e.message);
     } finally {
-      setLoading(false);
+      if (!controller.signal.aborted) setLoading(false);
     }
   }
 
   useEffect(() => {
     if (sidebarOpen) fetchData();
+    return () => abortRef.current?.abort();
   }, [sidebarOpen]);
 
   const rows = data
@@ -102,8 +111,18 @@ export default function FilesystemSidebar() {
             </div>
           )}
           {error && (
-            <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400">
-              {t("sidebar.filesystem.error", "Fehler beim Laden:")} {error}
+            <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex flex-col gap-2">
+              <span>
+                {t("sidebar.filesystem.error", "Fehler beim Laden:")} {error}
+              </span>
+              <button
+                onClick={fetchData}
+                type="button"
+                className="self-start flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-900/40 hover:bg-red-900/70 text-red-200 border-none cursor-pointer transition-colors"
+              >
+                <ArrowClockwise size={11} weight="bold" />
+                {t("sidebar.retry", "Erneut versuchen")}
+              </button>
             </div>
           )}
           {!loading && !error && data && (

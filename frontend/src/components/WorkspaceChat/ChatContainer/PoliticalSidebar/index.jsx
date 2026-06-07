@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   X,
   Newspaper,
@@ -9,9 +9,10 @@ import {
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { API_BASE } from "@/utils/constants";
+import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import ChatSidebar, { usePoliticalSidebar } from "../ChatSidebar";
 
-function Section({ title, loading, error, children }) {
+function Section({ title, loading, error, onRetry, retryLabel, children }) {
   return (
     <div className="flex flex-col gap-2">
       <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400">
@@ -25,8 +26,18 @@ function Section({ title, loading, error, children }) {
         </div>
       )}
       {error && (
-        <div className="p-2 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400">
-          {error}
+        <div className="p-2 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex flex-col gap-2">
+          <span>{error}</span>
+          {onRetry && (
+            <button
+              onClick={onRetry}
+              type="button"
+              className="self-start flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-900/40 hover:bg-red-900/70 text-red-200 border-none cursor-pointer transition-colors"
+            >
+              <ArrowClockwise size={11} weight="bold" />
+              {retryLabel}
+            </button>
+          )}
         </div>
       )}
       {!loading && !error && children}
@@ -43,37 +54,63 @@ export default function PoliticalSidebar() {
   const [loadingRss, setLoadingRss] = useState(false);
   const [errorDrucksachen, setErrorDrucksachen] = useState(null);
   const [errorRss, setErrorRss] = useState(null);
+  const abortRef = useRef(null);
 
-  async function fetchAll() {
-    // Drucksachen (Bundestag DIP)
+  function ensureController() {
+    if (!abortRef.current || abortRef.current.signal.aborted)
+      abortRef.current = new AbortController();
+    return abortRef.current;
+  }
+
+  async function fetchDrucksachen() {
+    const { signal } = ensureController();
     setLoadingDrucksachen(true);
     setErrorDrucksachen(null);
-    fetch(`${API_BASE}/utils/bundestag/drucksachen?rows=6`)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((json) => setDrucksachen(json?.documents || []))
-      .catch((e) => setErrorDrucksachen(e.message))
-      .finally(() => setLoadingDrucksachen(false));
+    try {
+      const r = await fetchWithTimeout(
+        `${API_BASE}/utils/bundestag/drucksachen?rows=6`,
+        { signal },
+      );
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const json = await r.json();
+      setDrucksachen(json?.documents || []);
+    } catch (e) {
+      if (e.name === "AbortError") return;
+      setErrorDrucksachen(e.message);
+    } finally {
+      if (!signal.aborted) setLoadingDrucksachen(false);
+    }
+  }
 
-    // RSS
+  async function fetchRss() {
+    const { signal } = ensureController();
     setLoadingRss(true);
     setErrorRss(null);
-    fetch(`${API_BASE}/utils/political/rss`)
-      .then((r) => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then((json) => setRssItems(json?.items || []))
-      .catch((e) => setErrorRss(e.message))
-      .finally(() => setLoadingRss(false));
+    try {
+      const r = await fetchWithTimeout(`${API_BASE}/utils/political/rss`, {
+        signal,
+      });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const json = await r.json();
+      setRssItems(json?.items || []);
+    } catch (e) {
+      if (e.name === "AbortError") return;
+      setErrorRss(e.message);
+    } finally {
+      if (!signal.aborted) setLoadingRss(false);
+    }
+  }
+
+  function fetchAll() {
+    fetchDrucksachen();
+    fetchRss();
   }
 
   useEffect(() => {
     if (sidebarOpen && drucksachen.length === 0 && rssItems.length === 0) {
       fetchAll();
     }
+    return () => abortRef.current?.abort();
   }, [sidebarOpen]);
 
   return (
@@ -117,6 +154,8 @@ export default function PoliticalSidebar() {
             title={t("sidebar.political.drucksachen", "Bundestag-Drucksachen (AfD)")}
             loading={loadingDrucksachen}
             error={errorDrucksachen}
+            onRetry={fetchDrucksachen}
+            retryLabel={t("sidebar.retry", "Erneut versuchen")}
           >
             {drucksachen.length === 0 ? (
               <p className="text-xs text-zinc-500 italic">
@@ -150,6 +189,8 @@ export default function PoliticalSidebar() {
             title={t("sidebar.political.news", "AfD Pressemitteilungen")}
             loading={loadingRss}
             error={errorRss}
+            onRetry={fetchRss}
+            retryLabel={t("sidebar.retry", "Erneut versuchen")}
           >
             {rssItems.length === 0 ? (
               <p className="text-xs text-zinc-500 italic">

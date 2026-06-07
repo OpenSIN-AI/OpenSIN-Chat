@@ -158,6 +158,55 @@ function ThreeDotsMenu({ previewData, onAddToSources }) {
   );
 }
 
+function IframePreview({ url, title }) {
+  const { t } = useTranslation();
+  const [loaded, setLoaded] = useState(false);
+
+  // If the iframe never reports load (e.g. blocked/blank), reveal a fallback
+  // link after a short grace period so the user is never stuck on a spinner.
+  const [graceElapsed, setGraceElapsed] = useState(false);
+  useEffect(() => {
+    setLoaded(false);
+    setGraceElapsed(false);
+    const timer = setTimeout(() => setGraceElapsed(true), 6000);
+    return () => clearTimeout(timer);
+  }, [url]);
+
+  return (
+    <div className="relative w-full h-full">
+      <iframe
+        src={url}
+        onLoad={() => setLoaded(true)}
+        className="w-full h-full rounded border-none bg-white"
+        title={title || "Vorschau"}
+        sandbox="allow-same-origin allow-scripts allow-popups"
+      />
+      {!loaded && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-900 light:bg-white pointer-events-none">
+          <FilePdf
+            size={28}
+            className="text-zinc-500 light:text-slate-400 animate-pulse"
+          />
+          <p className="text-xs text-zinc-500 light:text-slate-400">
+            {t("preview.loading", "Vorschau wird geladen…")}
+          </p>
+          {graceElapsed && (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pointer-events-auto flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"
+            >
+              <ArrowSquareOut size={12} />
+              {t("preview.open_externally", "In neuem Tab öffnen")}
+            </a>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PreviewContent({ previewData, activeVersion }) {
   const { t } = useTranslation();
   if (!previewData) {
@@ -177,14 +226,7 @@ function PreviewContent({ previewData, activeVersion }) {
 
   // PDF / URL preview via iframe (includes downloadUrl from generate-report)
   if (iframeUrl) {
-    return (
-      <iframe
-        src={iframeUrl}
-        className="w-full h-full rounded border-none bg-white"
-        title={previewData.title || "Vorschau"}
-        sandbox="allow-same-origin allow-scripts allow-popups"
-      />
-    );
+    return <IframePreview url={iframeUrl} title={previewData.title} />;
   }
 
   // HTML content inline

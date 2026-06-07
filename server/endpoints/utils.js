@@ -1,6 +1,29 @@
 // SPDX-License-Identifier: MIT
 const { SystemSettings } = require("../models/systemSettings");
 
+/**
+ * fetch() wrapper that aborts after `timeoutMs` so a hung upstream API
+ * (Bundestag DIP, Abgeordnetenwatch, AfD RSS) can never block the request
+ * indefinitely and leave the browser sidebar spinning forever.
+ * @param {string} url
+ * @param {RequestInit} options
+ * @param {number} timeoutMs
+ * @returns {Promise<Response>}
+ */
+async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } catch (e) {
+    if (e.name === "AbortError")
+      throw new Error(`Zeitüberschreitung nach ${timeoutMs}ms`);
+    throw e;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 function utilEndpoints(app) {
   if (!app) return;
 
@@ -48,7 +71,7 @@ function utilEndpoints(app) {
         rows: req.query.rows || "10",
         ...(apiKey ? { apikey: apiKey } : {}),
       });
-      const res = await fetch(
+      const res = await fetchWithTimeout(
         `https://search.dip.bundestag.de/api/v1/drucksache?${params}`,
         { headers: { Accept: "application/json" } },
       );
@@ -68,7 +91,7 @@ function utilEndpoints(app) {
         "legislature[label]": "Bundestag",
         paginationlimit: req.query.limit || "10",
       });
-      const res = await fetch(
+      const res = await fetchWithTimeout(
         `https://www.abgeordnetenwatch.de/api/v2/politicians?${params}`,
         { headers: { Accept: "application/json" } },
       );
@@ -85,7 +108,7 @@ function utilEndpoints(app) {
     try {
       const feed =
         req.query.feed || "https://www.afd.de/feed/";
-      const res = await fetch(feed, {
+      const res = await fetchWithTimeout(feed, {
         headers: { "User-Agent": "OpenAfD-Chat/1.0" },
       });
       if (!res.ok) throw new Error(`RSS ${res.status}`);
