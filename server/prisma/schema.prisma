@@ -84,6 +84,7 @@ model users {
   slash_command_presets        slash_command_presets[]
   browser_extension_api_keys   browser_extension_api_keys[]
   temporary_auth_tokens        temporary_auth_tokens[]
+  password_reset_tokens        password_reset_tokens[]
   system_prompt_variables      system_prompt_variables[]
   prompt_history               prompt_history[]
   desktop_mobile_devices       desktop_mobile_devices[]
@@ -174,14 +175,14 @@ model workspace_threads {
 }
 
 model workspace_thread_folders {
-  id            Int                @id @default(autoincrement())
+  id            Int                 @id @default(autoincrement())
   name          String
   workspace_id  Int
   user_id       Int?
-  createdAt     DateTime           @default(now())
-  lastUpdatedAt DateTime           @default(now())
-  workspace     workspaces         @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
-  user          users?             @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  createdAt     DateTime            @default(now())
+  lastUpdatedAt DateTime            @default(now())
+  workspace     workspaces          @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
+  user          users?              @relation(fields: [user_id], references: [id], onDelete: Cascade)
   threads       workspace_threads[]
 
   @@index([workspace_id])
@@ -201,16 +202,16 @@ model workspace_suggested_messages {
 }
 
 model workspace_chats {
-  id             Int      @id @default(autoincrement())
-  workspaceId    Int
-  prompt         String
-  response       String
-  include        Boolean  @default(true)
-  user_id        Int?
-  thread_id      Int?
-  api_session_id String? // String identifier for only the dev API to partition chats in any mode.
-  createdAt      DateTime @default(now())
-  lastUpdatedAt  DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  workspaceId     Int
+  prompt          String
+  response        String
+  include         Boolean  @default(true)
+  user_id         Int?
+  thread_id       Int?
+  api_session_id  String? // String identifier for only the dev API to partition chats in any mode.
+  createdAt       DateTime @default(now())
+  lastUpdatedAt   DateTime @default(now())
   feedbackScore   Boolean?
   memoryProcessed Boolean? @map("memory_processed")
   users           users?   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -450,45 +451,45 @@ model scheduled_job_runs {
 }
 
 model politicians {
-  id              String    @id // UUID
-  externalId      String?   @unique // Bundestag-ID or Abgeordnetenwatch-ID
-  source          String    @default("bundestag") // bundestag | abgeordnetenwatch
-  title           String?   // Dr., Prof. Dr., etc.
-  firstName       String
-  lastName        String
-  fullName        String
-  party           String?   // current party
-  faction         String?   // current faction
-  gender          String?
-  birthDate       DateTime?
-  birthPlace      String?
-  deathDate       DateTime?
-  profession      String?
-  education       String?
-  religion        String?
-  familyStatus    String?
-  photoUrl        String?
-  websiteUrl      String?
-  email           String?
-  twitterHandle   String?
-  facebookUrl     String?
-  linkedinUrl     String?
-  instagramUrl    String?
-  youtubeUrl      String?
-  tiktokUrl       String?
-  bio             String?   // full biography text
-  profileUrl      String?   // link to Bundestag profile
+  id                String    @id // UUID
+  externalId        String?   @unique // Bundestag-ID or Abgeordnetenwatch-ID
+  source            String    @default("bundestag") // bundestag | abgeordnetenwatch
+  title             String? // Dr., Prof. Dr., etc.
+  firstName         String
+  lastName          String
+  fullName          String
+  party             String? // current party
+  faction           String? // current faction
+  gender            String?
+  birthDate         DateTime?
+  birthPlace        String?
+  deathDate         DateTime?
+  profession        String?
+  education         String?
+  religion          String?
+  familyStatus      String?
+  photoUrl          String?
+  websiteUrl        String?
+  email             String?
+  twitterHandle     String?
+  facebookUrl       String?
+  linkedinUrl       String?
+  instagramUrl      String?
+  youtubeUrl        String?
+  tiktokUrl         String?
+  bio               String? // full biography text
+  profileUrl        String? // link to Bundestag profile
   electoralDistrict String? // Wahlkreis
-  electoralList  String?   // Landesliste
-  state           String?   // Bundesland
-  rawData         String?   // JSON blob of raw API response
-  lastSyncedAt    DateTime  @default(now())
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  electoralList     String? // Landesliste
+  state             String? // Bundesland
+  rawData           String? // JSON blob of raw API response
+  lastSyncedAt      DateTime  @default(now())
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
-  mandates          politician_mandates[]
-  votes            politician_votes[]
-  speeches         politician_speeches[]
+  mandates             politician_mandates[]
+  votes                politician_votes[]
+  speeches             politician_speeches[]
   committeeMemberships politician_committee_memberships[]
 
   @@index([source])
@@ -498,43 +499,43 @@ model politicians {
 }
 
 model politician_mandates {
-  id            String    @id @default(uuid())
-  politicianId  String
-  type          String    @default("bundestag") // bundestag | landtag | europaparlament | minister
-  position      String?   // Abgeordneter, Minister, Staatssekretaer, etc.
-  party         String?
-  faction       String?
+  id                String    @id @default(uuid())
+  politicianId      String
+  type              String    @default("bundestag") // bundestag | landtag | europaparlament | minister
+  position          String? // Abgeordneter, Minister, Staatssekretaer, etc.
+  party             String?
+  faction           String?
   electoralDistrict String? // Wahlkreis
-  state         String?
-  startDate     DateTime?
-  endDate       DateTime?
-  info          String?   // committee membership summary
-  rawData       String?   // JSON blob
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  state             String?
+  startDate         DateTime?
+  endDate           DateTime?
+  info              String? // committee membership summary
+  rawData           String? // JSON blob
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
-  politician    politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+  politician politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
 
   @@index([politicianId])
   @@index([type])
 }
 
 model politician_votes {
-  id            String    @id @default(uuid())
-  politicianId  String
-  session       Int?       // Wahlperiode
-  sitting       Int?       // Sitzungsnummer
-  voteId        String?    // external vote ID
-  voteTitle     String?    // Beschlusstext Kurzfassung
-  voteDescription String?  // full description
-  voteResult    String?    // Ja / Nein / Enthaltung / Nicht abgestimmt
-  voteDate      DateTime?
-  documentUrl   String?    // Link to Drucksache
+  id                 String    @id @default(uuid())
+  politicianId       String
+  session            Int? // Wahlperiode
+  sitting            Int? // Sitzungsnummer
+  voteId             String? // external vote ID
+  voteTitle          String? // Beschlusstext Kurzfassung
+  voteDescription    String? // full description
+  voteResult         String? // Ja / Nein / Enthaltung / Nicht abgestimmt
+  voteDate           DateTime?
+  documentUrl        String? // Link to Drucksache
   plenaryProtocolUrl String? // Link to Plenarprotokoll
-  rawData       String?    // JSON blob
-  createdAt     DateTime   @default(now())
+  rawData            String? // JSON blob
+  createdAt          DateTime  @default(now())
 
-  politician    politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+  politician politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
 
   @@index([politicianId])
   @@index([session])
@@ -542,20 +543,20 @@ model politician_votes {
 }
 
 model politician_speeches {
-  id            String    @id @default(uuid())
-  politicianId  String
-  session       Int?       // Wahlperiode
-  sitting       Int?       // Sitzungsnummer
-  speechTitle   String?    // TOP description
-  speechText    String     // full speech text
-  speechDate    DateTime?
-  documentUrl   String?    // Link to Plenarprotokoll
-  pageNumbers   String?    // e.g. "1234-1236"
-  rawData       String?    // JSON blob
-  vectorized    Boolean    @default(false)
-  createdAt     DateTime   @default(now())
+  id           String    @id @default(uuid())
+  politicianId String
+  session      Int? // Wahlperiode
+  sitting      Int? // Sitzungsnummer
+  speechTitle  String? // TOP description
+  speechText   String // full speech text
+  speechDate   DateTime?
+  documentUrl  String? // Link to Plenarprotokoll
+  pageNumbers  String? // e.g. "1234-1236"
+  rawData      String? // JSON blob
+  vectorized   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
 
-  politician    politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+  politician politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
 
   @@index([politicianId])
   @@index([speechDate])
@@ -563,57 +564,57 @@ model politician_speeches {
 }
 
 model politician_committees {
-  id            String    @id @default(uuid())
-  name          String    @unique
-  fullName      String?
-  type          String?    // Ausschuss | Unterausschuss | Enquete | etc.
-  description   String?
-  createdAt     DateTime   @default(now())
+  id          String   @id @default(uuid())
+  name        String   @unique
+  fullName    String?
+  type        String? // Ausschuss | Unterausschuss | Enquete | etc.
+  description String?
+  createdAt   DateTime @default(now())
 
-  members       politician_committee_memberships[]
+  members politician_committee_memberships[]
 }
 
 model politician_committee_memberships {
-  id            String    @id @default(uuid())
-  politicianId  String
-  committeeId   String
-  role          String?    // Mitglied | Vorsitzender | Stellv. Vorsitzender | etc.
-  startDate     DateTime?
-  endDate       DateTime?
-  createdAt     DateTime   @default(now())
+  id           String    @id @default(uuid())
+  politicianId String
+  committeeId  String
+  role         String? // Mitglied | Vorsitzender | Stellv. Vorsitzender | etc.
+  startDate    DateTime?
+  endDate      DateTime?
+  createdAt    DateTime  @default(now())
 
-  politician    politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
-  committee     politician_committees @relation(fields: [committeeId], references: [id], onDelete: Cascade)
+  politician politicians           @relation(fields: [politicianId], references: [id], onDelete: Cascade)
+  committee  politician_committees @relation(fields: [committeeId], references: [id], onDelete: Cascade)
 
   @@unique([politicianId, committeeId])
 }
 
 model politician_sync_log {
-  id            Int       @id @default(autoincrement())
-  source        String    // bundestag | abgeordnetenwatch | plenarprotokolle
-  status        String    @default("started") // started | running | completed | failed
-  itemsTotal    Int       @default(0)
-  itemsProcessed Int      @default(0)
-  itemsFailed   Int       @default(0)
-  error         String?
-  details       String?   // JSON metadata
-  startedAt     DateTime  @default(now())
-  completedAt   DateTime?
+  id             Int       @id @default(autoincrement())
+  source         String // bundestag | abgeordnetenwatch | plenarprotokolle
+  status         String    @default("started") // started | running | completed | failed
+  itemsTotal     Int       @default(0)
+  itemsProcessed Int       @default(0)
+  itemsFailed    Int       @default(0)
+  error          String?
+  details        String? // JSON metadata
+  startedAt      DateTime  @default(now())
+  completedAt    DateTime?
 }
 
 model memories {
-  id          Int       @id @default(autoincrement())
-  userId      Int?      @map("user_id")
-  workspaceId Int?      @map("workspace_id")
-  scope       String    @default("workspace")
+  id          Int                          @id @default(autoincrement())
+  userId      Int?                         @map("user_id")
+  workspaceId Int?                         @map("workspace_id")
+  scope       String                       @default("workspace")
   content     String
   // Semantic embedding for vector similarity search via pgvector.
   // Dimension matches the default embedding model (text-embedding-3-small = 1536).
   // Set to null until the memory is first embedded.
   embedding   Unsupported("vector(1536)")?
-  lastUsedAt  DateTime? @map("last_used_at")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @default(now()) @map("updated_at")
+  lastUsedAt  DateTime?                    @map("last_used_at")
+  createdAt   DateTime                     @default(now()) @map("created_at")
+  updatedAt   DateTime                     @default(now()) @map("updated_at")
 
   user      users?      @relation(fields: [userId], references: [id], onDelete: Cascade)
   workspace workspaces? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
@@ -636,28 +637,28 @@ model model_routers {
 }
 
 model model_router_rules {
-  id               Int           @id @default(autoincrement())
-  router_id        Int
-  enabled          Boolean       @default(true)
-  priority         Int
-  type             String        @default("calculated")
-  title            String
-  description      String?
+  id              Int           @id @default(autoincrement())
+  router_id       Int
+  enabled         Boolean       @default(true)
+  priority        Int
+  type            String        @default("calculated")
+  title           String
+  description     String?
   // For `calculated` rules: the boolean operator joining `conditions` — "AND"
   // (all must match) or "OR" (any must match). Null for `llm` rules.
-  condition_logic  String?
+  condition_logic String?
   // For `calculated` rules: JSON-stringified array of condition objects, each
   // shaped as { property: string, comparator: string, value: string } where
   // `property` ∈ VALID_PROPERTIES and `comparator` ∈ VALID_COMPARATORS (see
   // server/models/modelRouterRule.js). `value` is always stored as a string;
   // numeric comparators parse it at evaluation time. Null for `llm` rules.
-  conditions       String?
-  route_provider   String
-  route_model      String
-  created_by       Int?
-  createdAt        DateTime      @default(now())
-  lastUpdatedAt    DateTime      @default(now())
-  router           model_routers @relation(fields: [router_id], references: [id], onDelete: Cascade)
+  conditions      String?
+  route_provider  String
+  route_model     String
+  created_by      Int?
+  createdAt       DateTime      @default(now())
+  lastUpdatedAt   DateTime      @default(now())
+  router          model_routers @relation(fields: [router_id], references: [id], onDelete: Cascade)
 
   @@unique([router_id, title])
   @@index([router_id])
@@ -670,7 +671,7 @@ model model_router_rules {
 model job_queue {
   id           Int       @id @default(autoincrement())
   job_name     String
-  payload      String    // JSON-serialisiert; nur IDs/Slugs/Strings, keine Prisma-Objekte!
+  payload      String // JSON-serialisiert; nur IDs/Slugs/Strings, keine Prisma-Objekte!
   status       String    @default("pending") // pending | processing | completed | failed
   attempts     Int       @default(0)
   max_attempts Int       @default(3)

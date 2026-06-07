@@ -38,6 +38,8 @@ export default function ThreadFolderItem({
   }, [containsActiveThread]);
 
   const { setNodeRef, isOver } = useDroppable({ id: `folder-${folder.id}` });
+
+  async function saveRename() {
     const trimmed = name.trim();
     if (!trimmed || trimmed === folder.name) {
       setName(folder.name);
