@@ -49,6 +49,7 @@ curl "http://localhost:3001/api/politician/search?q=Weidel" \
 > **Code:** `server/endpoints/api/politician/index.js`
 > **Middleware:** `validApiKey`
 > **Scope:** `politician:read` (alle Endpoints)
+> **Datenquellen:** [docs/DATA-SOURCES.md](./DATA-SOURCES.md) — externe API-Specs, Rate-Limits, Schema-Mapping
 
 ### 2.1 Suche nach Abgeordneten
 
@@ -64,8 +65,13 @@ GET /api/politician/search
 | `party` | string | Partei-Filter (z.B. `AfD`, `CDU`, `SPD`) |
 | `state` | string | Bundesland (z.B. `Bayern`, `Sachsen`) |
 | `faction` | string | Fraktion (z.B. `Fraktion der AfD`) |
+| `source` | string | Datenquelle: `bundestag`, `abgeordnetenwatch`, `all` (default) |
 | `limit` | number | Max. Anzahl Ergebnisse (default: 20, max: 100) |
 | `offset` | number | Pagination-Offset (default: 0) |
+
+> **Tipp:** Mit `?source=` lassen sich Doppel-Einträge vermeiden, indem nur eine
+> offizielle Quelle angezeigt wird. Verfügbare Quellen liefert
+> `GET /api/politician/sources`. Siehe auch [docs/DATA-SOURCES.md](./DATA-SOURCES.md).
 
 **Beispiel:**
 
@@ -293,6 +299,7 @@ GET /api/politician/speech-search
 | `q` | string | Suchanfrage (Vektor-Embedding) |
 | `limit` | number | Default: 10, max: 50 |
 | `threshold` | float | Min. Similarity-Score (0-1, default: 0.7) |
+| `source` | string | `plenarprotokolle`, `bundestag`, `abgeordnetenwatch`, `all` (default) |
 
 **Beispiel:**
 
@@ -386,6 +393,84 @@ curl -X POST "http://localhost:3001/api/politician/sync" \
   "estimatedDuration": "45-60 min"
 }
 ```
+
+---
+
+### 2.9 Datenquellen auflisten
+
+```http
+GET /api/politician/sources
+```
+
+Aggregiert die verfügbaren Datenquellen direkt aus der Datenbank, inklusive der
+Anzahl zugeordneter Politiker-Datensätze pro Quelle.
+
+**Beispiel:**
+
+```bash
+curl "http://localhost:3001/api/politician/sources" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+**Response:**
+
+```json
+{
+  "sources": [
+    { "source": "bundestag", "count": 736 },
+    { "source": "abgeordnetenwatch", "count": 412 }
+  ]
+}
+```
+
+---
+
+### 2.10 Sync-Status
+
+```http
+GET /api/politician/sync/status
+```
+
+Liefert den letzten Sync-Lauf sowie Status, letzten Erfolg und Zähler pro Quelle
+(aus `politician_sync_log`).
+
+**Beispiel:**
+
+```bash
+curl "http://localhost:3001/api/politician/sync/status" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+**Response:**
+
+```json
+{
+  "lastSync": "2026-06-07T14:00:00Z",
+  "sources": [
+    {
+      "source": "bundestag",
+      "status": "completed",
+      "lastAttempt": "2026-06-07T14:00:00Z",
+      "lastSuccess": "2026-06-07T14:00:00Z",
+      "itemsProcessed": 736,
+      "itemsFailed": 0,
+      "error": null
+    },
+    {
+      "source": "abgeordnetenwatch",
+      "status": "failed",
+      "lastAttempt": "2026-06-07T14:00:00Z",
+      "lastSuccess": "2026-06-06T08:00:00Z",
+      "itemsProcessed": 0,
+      "itemsFailed": 0,
+      "error": "HTTP 503"
+    }
+  ]
+}
+```
+
+> Datenquellen-Details, Rate-Limits und Schema-Mapping: siehe
+> [docs/DATA-SOURCES.md](./DATA-SOURCES.md).
 
 ---
 

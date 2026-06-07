@@ -72,6 +72,7 @@ class PoliticianDB {
    * @param {string} [filters.party]
    * @param {string} [filters.state]
    * @param {string} [filters.faction]
+   * @param {string} [filters.source] - bundestag | abgeordnetenwatch | all
    * @returns {Promise<PoliticianProfile[]>}
    */
   async searchPoliticians(query = "", filters = {}) {
@@ -88,6 +89,8 @@ class PoliticianDB {
     if (filters.party) where.party = filters.party;
     if (filters.state) where.state = filters.state;
     if (filters.faction) where.faction = filters.faction;
+    if (filters.source && filters.source !== "all")
+      where.source = filters.source;
 
     try {
       const results = await prisma.politicians.findMany({
@@ -123,6 +126,7 @@ class PoliticianDB {
    * @param {Object} [filters]
    * @param {string} [filters.party]
    * @param {number} [filters.topN=10]
+   * @param {string} [filters.source] - bundestag | abgeordnetenwatch | plenarprotokolle | all
    * @returns {Promise<Array<{text: string, metadata: Object, score: number}>>}
    */
   async semanticSearchSpeeches(query, filters = {}) {
@@ -133,7 +137,29 @@ class PoliticianDB {
       party: filters.party || null,
     });
     if (error) return [];
-    return results;
+
+    // Speeches are sourced from Plenarprotokolle, so plenarprotokolle/all are
+    // pass-through. For bundestag/abgeordnetenwatch we constrain to speeches
+    // whose owning politician originates from that source.
+    const src = filters.source;
+    if (!src || src === "all" || src === "plenarprotokolle") return results;
+
+    try {
+      const ids = [
+        ...new Set(results.map((r) => r.metadata?.politicianId).filter(Boolean)),
+      ];
+      if (!ids.length) return [];
+      const allowed = await prisma.politicians.findMany({
+        where: { id: { in: ids }, source: src },
+        select: { id: true },
+      });
+      const allowedSet = new Set(allowed.map((p) => p.id));
+      return results.filter((r) => allowedSet.has(r.metadata?.politicianId));
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(`[PoliticianDB] semanticSearchSpeeches source filter error: ${err.message}`);
+      return results;
+    }
   }
 
   // ── Politician Detail ──────────────────────────────────────
@@ -198,12 +224,21 @@ class PoliticianDB {
    * @param {Object} [options]
    * @param {number} [options.limit=50]
    * @param {number} [options.offset=0]
+   * @param {string} [options.source] - bundestag | abgeordnetenwatch | plenarprotokolle | all
    * @returns {Promise<SpeechRecord[]>}
    */
   async getSpeeches(politicianId, options = {}) {
     try {
+      // Speeches always originate from Plenarprotokolle. When a non-speech
+      // source is requested we constrain by the owning politician's source
+      // so cross-source filtering stays consistent across endpoints.
+      const where = { politicianId };
+      const src = options.source;
+      if (src && src !== "all" && src !== "plenarprotokolle") {
+        where.politician = { is: { source: src } };
+      }
       return await prisma.politician_speeches.findMany({
-        where: { politicianId },
+        where,
         orderBy: { speechDate: "desc" },
         take: options.limit || 50,
         skip: options.offset || 0,
@@ -302,6 +337,75 @@ class PoliticianDB {
       return result.map((r) => r.state).filter(Boolean);
     } catch {
       return [];
+    }
+  }
+
+  /**
+   * Get the list of available data sources aggregated from the database,
+   * each with the number of politician records attributed to it.
+   * @returns {Promise<Array<{source: string, count: number}>>}
+   */
+  async getSources() {
+    try {
+      const grouped = await prisma.politicians.groupBy({
+        by: ["source"],
+        _count: { _all: true },
+        orderBy: { _count: { id: "desc" } },
+      });
+      return grouped
+        .filter((g) => g.source)
+        .map((g) => ({ source: g.source, count: g._count._all }));
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(`[PoliticianDB] getSources error: ${err.message}`);
+      return [];
+    }
+  }
+
+  /**
+   * Get the last sync run per source from politician_sync_log, including the
+   * most recent successful run, the last attempt, status, and counts.
+   * @returns {Promise<{lastSync: string|null, sources: Array<Object>}>}
+   */
+  async getSyncStatus() {
+    try {
+      const logs = await prisma.politician_sync_log.findMany({
+        orderBy: { startedAt: "desc" },
+        take: 200,
+      });
+
+      const bySource = new Map();
+      for (const log of logs) {
+        const key = log.source || "unknown";
+        if (!bySource.has(key)) {
+          bySource.set(key, {
+            source: key,
+            status: log.status,
+            lastAttempt: log.startedAt,
+            lastSuccess: null,
+            itemsProcessed: log.itemsProcessed,
+            itemsFailed: log.itemsFailed,
+            error: log.error || null,
+          });
+        }
+        const entry = bySource.get(key);
+        if (
+          !entry.lastSuccess &&
+          (log.status === "completed" || log.status === "ok")
+        ) {
+          entry.lastSuccess = log.completedAt || log.startedAt;
+        }
+      }
+
+      const sources = Array.from(bySource.values());
+      const lastSync = logs.length
+        ? logs[0].completedAt || logs[0].startedAt
+        : null;
+      return { lastSync, sources };
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(`[PoliticianDB] getSyncStatus error: ${err.message}`);
+      return { lastSync: null, sources: [] };
     }
   }
 
