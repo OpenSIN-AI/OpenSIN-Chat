@@ -7,6 +7,7 @@ import pluginJsxA11y from "eslint-plugin-jsx-a11y"
 import pluginPrettier from "eslint-plugin-prettier"
 import configPrettier from "eslint-config-prettier"
 import unusedImports from "eslint-plugin-unused-imports"
+import tseslint from "typescript-eslint"
 
 // Enable the full jsx-a11y recommended set but as warnings, so it surfaces
 // accessibility issues in CI without breaking the build on the existing
@@ -26,9 +27,12 @@ export default [
   // Base JS recommended rules
   js.configs.recommended,
 
-  // Your React/JSX files
+  // TypeScript ESLint recommended rules
+  ...tseslint.configs.recommended,
+
+  // Your React/JSX files (both .js/.jsx and .ts/.tsx)
   {
-    files: ["src/**/*.{js,jsx,mjs,cjs}"],
+    files: ["src/**/*.{js,jsx,mjs,cjs,ts,tsx}"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
@@ -76,6 +80,7 @@ export default [
 
       "no-console": ["warn", { "allow": ["warn", "error"] }],
       "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": "off",
       "unused-imports/no-unused-imports": "error",
       "unused-imports/no-unused-vars": [
         "warn",
@@ -85,7 +90,10 @@ export default [
           args: "after-used",
           argsIgnorePattern: "^_"
         }
-      ]
+      ],
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/explicit-function-return-types": "off",
+      "@typescript-eslint/no-require-imports": "off"
     }
   }
 ]
