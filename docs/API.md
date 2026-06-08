@@ -3,7 +3,9 @@
 > **Zielgruppe:** Entwickler, die OpenAfD Chat programmatisch nutzen wollen
 > **Basis-URL:** `http://localhost:3001` (lokal) oder `https://openafd.delqhi.com` (Live)
 > **Authentifizierung:** Bearer-Token (API-Key) im `Authorization`-Header
-> **Stand:** 2026-06-07
+> **Stand:** 2026-06-08
+
+> ⚠️ **Wahlperiode 21 (Stand 2026-06-08):** Die Politiker-API zielt auf den **21. Bundestag (2021-2025)**, neu gewählt am 23.02.2025. Konfigurierte Wahlperiode via `BUNDESTAG_WAHLPERIODE=21` und `AW_PARLIAMENT_PERIOD=132`. Erste Sync nach Issue #84. Datenquellen-Specs: [docs/DATA-SOURCES.md](./DATA-SOURCES.md). Operational Runbook: [docs/SYNC-RUNBOOK.md](./SYNC-RUNBOOK.md).
 
 ---
 
@@ -470,6 +472,48 @@ curl "http://localhost:3001/api/politician/sync/status" \
 
 > Datenquellen-Details, Rate-Limits und Schema-Mapping: siehe
 > [docs/DATA-SOURCES.md](./DATA-SOURCES.md).
+
+---
+
+### 2.11 Statistiken (Politician-DB)
+
+```http
+GET /api/politician/stats
+```
+
+Aggregierte Counts: total, by source, by party, total speeches.
+
+**Beispiel:**
+
+```bash
+curl "http://localhost:3001/api/politician/stats" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+**Response:**
+
+```json
+{
+  "total": 1342,
+  "bySource": {
+    "bundestag": 730,
+    "abgeordnetenwatch": 612
+  },
+  "byParty": {
+    "AfD": 152,
+    "CDU/CSU": 256,
+    "SPD": 207,
+    "Grüne": 118,
+    "FDP": 91,
+    "Linke": 39
+  },
+  "speeches": 124
+}
+```
+
+> Hinweis: Auf einer frisch initialisierten Datenbank sind alle Counts `0`.
+> Sync ausführen: `docker exec openafd node /app/server/jobs/sync-politician-data.js`
+> (siehe [docs/SYNC-RUNBOOK.md](./SYNC-RUNBOOK.md)).
 
 ---
 
