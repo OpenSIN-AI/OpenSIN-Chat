@@ -1,17 +1,32 @@
 // SPDX-License-Identifier: MIT
 /**
- * Bundestag API client — fetches politician data from the official "Offene Daten"
- * Abgeordnetendatenbank.
+ * Bundestag API client — fetches politician data for the current electoral term.
  *
  * Docs: bundestagApi.doc.md
- * Purpose: Client for the Bundestag Open Data API with caching, retry, and rate-limiting.
+ * Purpose: Client for Bundestag Open Data with caching, retry, and rate-limiting.
+ *
+ * 21. Wahlperiode migration (#84):
+ *   - The legacy `Abgeordnete20_WP.formular` endpoint is dead (HTTP 404), and the
+ *     `Abgeordnete21_WP.formular` variant is not published either.
+ *   - This client now: (1) attempts the term-specific `.formular` endpoint for
+ *     the configured Wahlperiode, (2) falls back to the official DIP API
+ *     (`search.dip.bundestag.de`) when a `BUNDESTAG_DIP_API_KEY` is configured,
+ *     and (3) degrades gracefully to an empty list.
+ *   - When this client yields nothing, the sync job's cross-source fallback
+ *     (Abgeordnetenwatch, parliament_period=132) supplies the 21. WP members,
+ *     keyed by their official `ext_id_bundestagsverwaltung`.
  */
-
-const { SystemSettings } = require("../../models/systemSettings");
 
 const BUNDESTAG_BASE_URL = "https://www.bundestag.de";
 const BUNDESTAG_API_BASE = `${BUNDESTAG_BASE_URL}/SiteGlobals/Functions/Abgeordnetensuche`;
+const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+
+/** Current Bundestag electoral term (Wahlperiode). Default: 21. WP. */
+const DEFAULT_WAHLPERIODE = parseInt(
+  process.env.BUNDESTAG_WAHLPERIODE || "21",
+  10,
+);
 
 /**
  * @typedef {Object} BundestagPolitician
@@ -39,8 +54,15 @@ const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
  */
 
 class BundestagApi {
-  constructor() {
+  /**
+   * @param {Object} [opts]
+   * @param {number} [opts.wahlperiode] - override the electoral term
+   * @param {string} [opts.dipApiKey] - DIP API key (defaults to env)
+   */
+  constructor(opts = {}) {
     this.baseUrl = BUNDESTAG_API_BASE;
+    this.wahlperiode = opts.wahlperiode || DEFAULT_WAHLPERIODE;
+    this.dipApiKey = opts.dipApiKey || process.env.BUNDESTAG_DIP_API_KEY || null;
     this.maxRetries = 3;
     this.retryDelayMs = 1000;
     this.rateLimitDelayMs = 500;
@@ -56,9 +78,10 @@ class BundestagApi {
   /**
    * Rate-limited fetch with retry logic.
    * @param {string} url
+   * @param {Object} [headers]
    * @returns {Promise<Response>}
    */
-  async #fetch(url) {
+  async #fetch(url, headers = { Accept: "application/json" }) {
     const now = Date.now();
     const elapsed = now - this.lastRequestTime;
     if (elapsed < this.rateLimitDelayMs)
@@ -69,9 +92,7 @@ class BundestagApi {
 
     for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
       try {
-        return await fetch(url, {
-          headers: { Accept: "application/json" },
-        });
+        return await fetch(url, { headers });
       } catch (err) {
         lastError = err;
         if (attempt < this.maxRetries)
@@ -86,13 +107,14 @@ class BundestagApi {
   /**
    * Fetch with in-memory cache.
    * @param {string} url
+   * @param {Object} [headers]
    * @returns {Promise<any>}
    */
-  async #fetchCached(url) {
+  async #fetchCached(url, headers) {
     const cached = this.cache.get(url);
     if (cached && Date.now() - cached.ts < CACHE_TTL_MS) return cached.data;
 
-    const res = await this.#fetch(url);
+    const res = await this.#fetch(url, headers);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
       return null;
@@ -103,26 +125,87 @@ class BundestagApi {
   }
 
   /**
-   * Fetch all Bundestag members (current electoral term).
+   * Fetch all Bundestag members for the configured electoral term.
+   *
+   * Strategy (first non-empty wins):
+   *   1. `Abgeordnete{WP}_WP.formular` — official term endpoint.
+   *   2. DIP API person collection — when `BUNDESTAG_DIP_API_KEY` is set.
+   *   3. `[]` — caller (sync job) falls back to Abgeordnetenwatch.
+   *
    * @returns {Promise<BundestagPolitician[]>}
    */
   async fetchAllMembers() {
-    const url = `${this.baseUrl}/Abgeordnete20_WP.formular`;
-    this.log("Fetching all Bundestag members from API...");
+    const fromFormular = await this.#fetchFromFormular();
+    if (fromFormular.length > 0) return fromFormular;
+
+    const fromDip = await this.#fetchFromDip();
+    if (fromDip.length > 0) return fromDip;
+
+    this.log(
+      `No members from Bundestag endpoints for WP ${this.wahlperiode}; ` +
+        "caller should fall back to Abgeordnetenwatch.",
+    );
+    return [];
+  }
+
+  /**
+   * Attempt the term-specific `.formular` endpoint.
+   * @returns {Promise<BundestagPolitician[]>}
+   */
+  async #fetchFromFormular() {
+    const url = `${this.baseUrl}/Abgeordnete${this.wahlperiode}_WP.formular`;
+    this.log(`Fetching members from formular endpoint (WP ${this.wahlperiode})...`);
     try {
       const data = await this.#fetchCached(url);
       if (!data || !Array.isArray(data)) return [];
-      return data
-        .filter(Boolean)
-        .map((raw) => this.#normalizeMember(raw));
+      return data.filter(Boolean).map((raw) => this.#normalizeMember(raw));
     } catch (err) {
-      this.log(`Error fetching members: ${err.message}`);
+      this.log(`Formular endpoint error: ${err.message}`);
       return [];
     }
   }
 
   /**
-   * Normalize raw Bundestag API response to internal format.
+   * Attempt the official DIP API (requires BUNDESTAG_DIP_API_KEY).
+   * @returns {Promise<BundestagPolitician[]>}
+   */
+  async #fetchFromDip() {
+    if (!this.dipApiKey) {
+      this.log("DIP API key not configured — skipping DIP fallback.");
+      return [];
+    }
+    this.log(`Fetching members from DIP API (WP ${this.wahlperiode})...`);
+    const members = [];
+    let cursor = null;
+    let safety = 0;
+
+    try {
+      do {
+        if (safety++ > 200) break;
+        const params = new URLSearchParams({
+          "f.wahlperiode": String(this.wahlperiode),
+          apikey: this.dipApiKey,
+        });
+        if (cursor) params.set("cursor", cursor);
+        const data = await this.#fetchCached(`${DIP_API_BASE}/person?${params.toString()}`);
+        if (!data) break;
+
+        const docs = Array.isArray(data.documents) ? data.documents : [];
+        for (const doc of docs) members.push(this.#normalizeDipPerson(doc));
+
+        // DIP cursor pagination ends when the cursor stops changing.
+        if (!data.cursor || data.cursor === cursor) break;
+        cursor = data.cursor;
+      } while (cursor);
+    } catch (err) {
+      this.log(`DIP API error: ${err.message}`);
+      return members;
+    }
+    return members;
+  }
+
+  /**
+   * Normalize a raw `.formular` API response to the internal format.
    * @param {Object} raw
    * @returns {BundestagPolitician}
    */
@@ -166,6 +249,45 @@ class BundestagApi {
   }
 
   /**
+   * Normalize a DIP API `person` document to the internal format. DIP person
+   * records are sparse (name, title, term) — richer profile data comes from
+   * Abgeordnetenwatch.
+   * @param {Object} doc
+   * @returns {BundestagPolitician}
+   */
+  #normalizeDipPerson(doc) {
+    const first = doc.vorname || "";
+    const last = doc.nachname || "";
+    const id = doc.id ? String(doc.id) : null;
+    return {
+      id,
+      source: "bundestag",
+      externalId: id,
+      title: doc.titel || doc.akademischertitel || null,
+      firstName: first,
+      lastName: last,
+      fullName: `${first} ${last}`.trim() || doc.titel || "",
+      party: doc.fraktion || null,
+      faction: doc.fraktion || null,
+      gender: null,
+      birthDate: null,
+      birthPlace: null,
+      profession: doc.beruf || null,
+      education: null,
+      photoUrl: null,
+      profileUrl: null,
+      email: null,
+      electoralDistrict: doc.wahlkreis || null,
+      electoralList: null,
+      state: doc.bundesland || null,
+      bio: null,
+      websiteUrl: null,
+      socialMedia: {},
+      rawData: JSON.stringify(doc),
+    };
+  }
+
+  /**
    * Parse German salutation to gender.
    * @param {string} anrede
    * @returns {string|null}
@@ -184,7 +306,7 @@ class BundestagApi {
   async fetchFullBio(profileUrl) {
     if (!profileUrl) return null;
     try {
-      const res = await this.#fetch(profileUrl);
+      const res = await this.#fetch(profileUrl, { Accept: "text/html" });
       if (!res.ok) return null;
       return await res.text();
     } catch (err) {

@@ -8,6 +8,56 @@ describe("BundestagApi", () => {
     api = new BundestagApi();
   });
 
+  describe("configuration (21. WP)", () => {
+    it("defaults the Wahlperiode to 21", () => {
+      expect(api.wahlperiode).toBe(21);
+    });
+
+    it("requests the term-specific formular endpoint for WP 21", async () => {
+      const spy = jest
+        .spyOn(global, "fetch")
+        .mockResolvedValue({ ok: true, json: async () => [] });
+      await api.fetchAllMembers();
+      expect(spy.mock.calls[0][0]).toContain("Abgeordnete21_WP.formular");
+      expect(spy.mock.calls[0][0]).not.toContain("Abgeordnete20_WP");
+      spy.mockRestore();
+    });
+  });
+
+  describe("DIP API fallback", () => {
+    it("falls back to the DIP API when formular is empty and a key is set", async () => {
+      const dipApi = new BundestagApi({ dipApiKey: "test-key" });
+      jest.spyOn(global, "fetch").mockImplementation(async (url) => {
+        if (url.includes(".formular"))
+          return { ok: true, json: async () => [] };
+        // DIP person endpoint
+        return {
+          ok: true,
+          json: async () => ({
+            documents: [
+              { id: "11004183", vorname: "Alice", nachname: "Weidel", fraktion: "AfD" },
+            ],
+            cursor: null,
+          }),
+        };
+      });
+
+      const members = await dipApi.fetchAllMembers();
+      expect(members).toHaveLength(1);
+      expect(members[0].lastName).toBe("Weidel");
+      expect(members[0].externalId).toBe("11004183");
+      expect(members[0].source).toBe("bundestag");
+      global.fetch.mockRestore();
+    });
+
+    it("returns an empty array when no Bundestag source yields data", async () => {
+      jest.spyOn(global, "fetch").mockResolvedValue({ ok: true, json: async () => [] });
+      const members = await api.fetchAllMembers(); // no DIP key configured
+      expect(members).toEqual([]);
+      global.fetch.mockRestore();
+    });
+  });
+
   describe("#normalizeMember (via fetchAllMembers)", () => {
     function normalize(raw) {
       // The normalizer is private; exercise it through a stubbed fetch.
