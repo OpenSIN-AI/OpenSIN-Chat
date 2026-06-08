@@ -36,11 +36,21 @@ const plenar = new PlenarScraper();
 
 // ── Configuration ─────────────────────────────────────────────────────────────
 
-/** Current Bundestag electoral term (Wahlperiode). */
+/** Current Bundestag electoral term (Wahlperiode). 21. WP since 2021 (#84). */
 const CURRENT_WAHLPERIODE = parseInt(
-  process.env.BUNDESTAG_WAHLPERIODE || "20",
+  process.env.BUNDESTAG_WAHLPERIODE || "21",
   10
 );
+
+/**
+ * When enabled, the Abgeordnetenwatch client enriches each politician with the
+ * verified 21. WP entity fields (`year_of_birth`, `gender`, `party`,
+ * `ext_id_bundestagsverwaltung`). This costs one extra request per politician
+ * (~733), so it is opt-in to keep the scheduled run within the Bree timeout.
+ * @type {boolean}
+ */
+const AW_ENRICH_POLITICIANS =
+  String(process.env.AW_ENRICH_POLITICIANS || "false").toLowerCase() === "true";
 
 /**
  * Number of recent sittings to sync per run. Keeping this small prevents the
@@ -211,32 +221,48 @@ async function resolveRetry(phase) {
 }
 
 /**
- * Normalize an Abgeordnetenwatch politician into the Bundestag-member upsert
- * shape so it can be used as a cross-source fallback for Phase 1.
+ * Read a party/faction label from either the new flat AW shape (`party` is a
+ * string) or the legacy nested shape (`party.label` / `party.name`).
+ * @param {Object} pol
+ * @returns {string|null}
+ */
+function awParty(pol) {
+  if (typeof pol.party === "string") return pol.party || null;
+  return pol.party?.label || pol.party?.name || null;
+}
+
+/**
+ * Normalize an Abgeordnetenwatch politician (21. WP candidacies-mandates shape)
+ * into the Bundestag-member upsert shape so it can be used as a cross-source
+ * fallback for Phase 1. Carries the verified new fields (`first_name`,
+ * `last_name`, `year_of_birth`, `ext_id_bundestagsverwaltung`).
  * @param {Object} pol
  * @returns {Object}
  */
 function normalizeAwToMember(pol) {
-  const externalId = `aw-${pol.id}`;
+  const externalId = pol.externalId || `aw-${pol.id}`;
+  const firstName = pol.first_name || pol.firstName || "";
+  const lastName = pol.last_name || pol.lastName || "";
+  const party = awParty(pol);
   return {
     id: externalId,
     externalId,
     source: "abgeordnetenwatch",
     title: null,
-    firstName: pol.firstName || "",
-    lastName: pol.lastName || "",
-    fullName: `${pol.firstName || ""} ${pol.lastName || ""}`.trim(),
-    party: pol.party?.label || pol.party?.name || null,
-    faction: pol.party?.label || pol.party?.name || null,
-    gender: pol.sex || null,
+    firstName,
+    lastName,
+    fullName: pol.fullName || `${firstName} ${lastName}`.trim(),
+    party,
+    faction: pol.faction || party,
+    gender: pol.gender || pol.sex || null,
     birthDate: pol.birthDate || null,
     birthPlace: null,
     profession: null,
     education: null,
     photoUrl: null,
-    profileUrl: pol.abgeordnetenwatch_url || null,
+    profileUrl: pol.politicianApiUrl || pol.abgeordnetenwatch_url || null,
     email: null,
-    electoralDistrict: null,
+    electoralDistrict: pol.constituency || null,
     electoralList: null,
     state: null,
     bio: null,
@@ -254,7 +280,9 @@ async function syncBundestagMembers() {
     const { data, usedFallback, error } = await withFallback(
       () => bundestag.fetchAllMembers(),
       async () => {
-        const pols = await abgeordnetenwatch.fetchAllPoliticians();
+        const pols = await abgeordnetenwatch.fetchAllPoliticians({
+          enrich: AW_ENRICH_POLITICIANS,
+        });
         return pols.map(normalizeAwToMember);
       },
       { label: "bundestag-members" },
@@ -342,16 +370,17 @@ async function syncAbgeordnetenwatch() {
     // Cross-source fallback: if Abgeordnetenwatch is down or empty, derive the
     // base records from the Bundestag member list instead.
     const { data, usedFallback, error } = await withFallback(
-      () => abgeordnetenwatch.fetchAllPoliticians(),
+      () => abgeordnetenwatch.fetchAllPoliticians({ enrich: AW_ENRICH_POLITICIANS }),
       async () => {
         const members = await bundestag.fetchAllMembers();
         // Shape Bundestag members like AW politicians for the upsert below.
         return members.map((m) => ({
           id: m.externalId || m.id,
+          externalId: m.externalId || m.id,
           firstName: m.firstName,
           lastName: m.lastName,
-          party: { label: m.party },
-          sex: m.gender,
+          party: m.party,
+          gender: m.gender,
           birthDate: m.birthDate,
           __fromBundestag: true,
         }));
@@ -373,10 +402,18 @@ async function syncAbgeordnetenwatch() {
         // id namespace + source so they are not mistaken for AW profiles.
         const extId = pol.__fromBundestag
           ? String(pol.id)
-          : `aw-${pol.id}`;
+          : pol.externalId || `aw-${pol.id}`;
         const recordSource = pol.__fromBundestag
           ? "bundestag"
           : "abgeordnetenwatch";
+        const firstName = pol.first_name || pol.firstName || "";
+        const lastName = pol.last_name || pol.lastName || "";
+        // year_of_birth (21. WP) → birthDate; fall back to a raw birthDate.
+        const birthDate = pol.birthDate
+          ? new Date(pol.birthDate)
+          : pol.year_of_birth
+            ? new Date(`${pol.year_of_birth}-01-01`)
+            : null;
         const existing = await prisma.politicians.findUnique({
           where: { externalId: extId },
           select: { id: true },
@@ -389,12 +426,13 @@ async function syncAbgeordnetenwatch() {
                 id: extId,
                 externalId: extId,
                 source: recordSource,
-                firstName: pol.firstName || "",
-                lastName: pol.lastName || "",
-                fullName: `${pol.firstName || ""} ${pol.lastName || ""}`.trim(),
-                party: pol.party?.label || pol.party?.name || null,
-                gender: pol.sex || null,
-                birthDate: pol.birthDate ? new Date(pol.birthDate) : null,
+                firstName,
+                lastName,
+                fullName: `${firstName} ${lastName}`.trim(),
+                party: awParty(pol),
+                gender: pol.gender || pol.sex || null,
+                birthDate,
+                electoralDistrict: pol.constituency || null,
                 rawData: JSON.stringify(pol),
               },
             })
