@@ -93,7 +93,17 @@ export default [
       ],
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/explicit-function-return-types": "off",
-      "@typescript-eslint/no-require-imports": "off"
+      "@typescript-eslint/no-require-imports": "off",
+
+      // Prevent new inline styles after #65 migration
+      // Exceptions (Type D runtime values) documented in docs/INLINE-STYLES-AUDIT.md
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
+          message: "Inline styles are prohibited. Use Tailwind utilities instead. See docs/INLINE-STYLES-AUDIT.md for runtime exceptions (Type D)."
+        }
+      ]
     }
   }
 ]
