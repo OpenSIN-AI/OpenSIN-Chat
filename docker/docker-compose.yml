@@ -25,6 +25,11 @@ services:
       - "3001:3001"
     env_file:
       - .env
+    environment:
+      # Explicitly set STORAGE_DIR so the container always knows where to
+      # persist data, even if it is missing from .env. Must match the mounted
+      # volume target (../server/storage -> /app/server/storage).
+      - STORAGE_DIR=/app/server/storage
     networks:
       - openafd-chat
     extra_hosts:
