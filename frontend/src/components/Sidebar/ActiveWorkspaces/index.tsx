@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Workspace from "@/models/workspace";
@@ -8,7 +8,7 @@ import ManageWorkspace, {
 } from "../../Modals/ManageWorkspace";
 import paths from "@/utils/paths";
 import { Link, useParams, useNavigate, useMatch } from "react-router-dom";
-import { GearSix, UploadSimple, DotsSixVertical } from "@phosphor-icons/react";
+import { GearSix, UploadSimple, DotsSixVertical, Plus, ChatCircleText, FolderSimplePlus } from "@phosphor-icons/react";
 import useUser from "@/hooks/useUser";
 import useWorkspaces from "@/hooks/useWorkspaces";
 import ThreadContainer from "./ThreadContainer";
@@ -16,6 +16,97 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import showToast from "@/utils/toast";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { safeJsonParse } from "@/utils/request";
+import { invalidateThreads } from "@/hooks/useThreads";
+
+/** Small + dropdown for Workspace rows: creates a new Chat or a new Folder */
+function WorkspaceQuickAdd({ workspace, isActive }: any) {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  const handleNewChat = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setOpen(false);
+    const { thread, error } = await Workspace.threads.new(workspace.slug);
+    if (error) {
+      showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", { clear: true });
+      return;
+    }
+    invalidateThreads(workspace.slug);
+    navigate(paths.workspace.thread(workspace.slug, thread.slug));
+  };
+
+  const handleNewFolder = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setOpen(false);
+    const name = window.prompt("Ordnername:")?.trim();
+    if (!name) return;
+    const { folder, message } = await Workspace.threads.folders.new(workspace.slug, name);
+    if (message || !folder) {
+      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", { clear: true });
+      return;
+    }
+    invalidateThreads(workspace.slug);
+  };
+
+  return (
+    <div ref={ref} className="relative flex items-center">
+      <button
+        type="button"
+        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen((p) => !p); }}
+        data-tooltip-id="workspace-quick-add"
+        data-tooltip-content="Neuen Chat oder Ordner erstellen"
+        className={`group/plus border-none rounded-md flex items-center justify-center p-[2px] transition-colors ${
+          isActive
+            ? "hover:bg-zinc-500 light:hover:bg-sky-800/30"
+            : "hover:bg-zinc-500 light:hover:bg-slate-400"
+        }`}
+        aria-label="Neuen Chat oder Ordner erstellen"
+      >
+        <Plus
+          className={`h-[20px] w-[20px] ${
+            isActive
+              ? "text-zinc-400 hover:text-white light:text-blue-700 light:group-hover/plus:text-blue-900"
+              : "text-zinc-400 hover:text-white light:text-slate-600 light:group-hover/plus:text-slate-950"
+          }`}
+        />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full mt-1 z-50 w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden">
+          <button
+            type="button"
+            onClick={handleNewChat}
+            className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+          >
+            <ChatCircleText size={15} />
+            Neuer Chat
+          </button>
+          <div className="h-px bg-white/10 light:bg-slate-200" />
+          <button
+            type="button"
+            onClick={handleNewFolder}
+            className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+          >
+            <FolderSimplePlus size={15} />
+            Neuer Ordner
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function ActiveWorkspaces() {
   const navigate = useNavigate();
@@ -158,6 +249,7 @@ export default function ActiveWorkspaces() {
                               <div
                                 className={`flex items-center gap-x-[2px] transition-opacity duration-200 ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                               >
+                                <WorkspaceQuickAdd workspace={workspace} isActive={isActive} />
                                 <button
                                   type="button"
                                   onClick={(e) => {

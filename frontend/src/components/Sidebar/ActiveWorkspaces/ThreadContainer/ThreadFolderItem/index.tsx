@@ -5,14 +5,95 @@ import { invalidateThreads } from "@/hooks/useThreads";
 import {
   CaretDown,
   CaretRight,
+  ChatCircleText,
   FolderSimple,
+  FolderSimplePlus,
   PencilSimple,
+  Plus,
   Trash,
 } from "@phosphor-icons/react";
 import { useState, useRef, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ThreadItem from "../ThreadItem";
 import { useDroppable } from "@dnd-kit/core";
+import paths from "@/utils/paths";
+
+/** Small + dropdown for Folder rows: creates a new Chat inside the folder or a new sub-folder */
+function FolderQuickAdd({ workspace, folder, onFolderCreated }: any) {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  const handleNewChat = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpen(false);
+    const { thread, error } = await Workspace.threads.new(workspace.slug);
+    if (error) {
+      showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", { clear: true });
+      return;
+    }
+    invalidateThreads(workspace.slug);
+    navigate(paths.workspace.thread(workspace.slug, thread.slug));
+  };
+
+  const handleNewFolder = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpen(false);
+    const name = window.prompt("Ordnername:")?.trim();
+    if (!name) return;
+    const { folder: newFolder, message } = await Workspace.threads.folders.new(workspace.slug, name);
+    if (message || !newFolder) {
+      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", { clear: true });
+      return;
+    }
+    onFolderCreated?.(newFolder);
+    invalidateThreads(workspace.slug);
+  };
+
+  return (
+    <div ref={ref} className="relative flex items-center">
+      <button
+        type="button"
+        onClick={(e) => { e.stopPropagation(); setOpen((p) => !p); }}
+        className="p-1 rounded hover:bg-white/10 light:hover:bg-slate-300"
+        title="Neuen Chat oder Ordner erstellen"
+      >
+        <Plus size={12} className="text-white/60 light:text-theme-text-secondary" />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full mt-1 z-50 w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden">
+          <button
+            type="button"
+            onClick={handleNewChat}
+            className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+          >
+            <ChatCircleText size={14} />
+            Neuer Chat
+          </button>
+          <div className="h-px bg-white/10 light:bg-slate-200" />
+          <button
+            type="button"
+            onClick={handleNewFolder}
+            className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
+          >
+            <FolderSimplePlus size={14} />
+            Neuer Ordner
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function ThreadFolderItem({
   folder, workspace, threads = [], activeThreadIdx, defaultThreadHasChats, ctrlPressed = false, toggleMarkForDeletion, onRemoveThread, onFolderDeleted, onFolderRenamed, }: any) {
@@ -134,6 +215,7 @@ export default function ThreadFolderItem({
         {/* Action buttons - only show on hover */}
         {!editing && (
           <div className="flex items-center gap-x-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <FolderQuickAdd workspace={workspace} folder={folder} onFolderCreated={onFolderDeleted ? undefined : undefined} />
             <button
               type="button"
               onClick={(e) => {
