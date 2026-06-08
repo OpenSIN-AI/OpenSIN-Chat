@@ -17,6 +17,11 @@ import SearchBox from "./SearchBox";
 import { Tooltip } from "react-tooltip";
 import { createPortal } from "react-dom";
 
+const SIDEBAR_MIN_WIDTH = 220;
+const SIDEBAR_MAX_WIDTH = 480;
+const SIDEBAR_DEFAULT_WIDTH = 292;
+const SIDEBAR_WIDTH_STORAGE_KEY = "openafd-sidebar-width";
+
 export default function Sidebar() {
   const { user } = useUser();
   const { logo } = useLogo();
@@ -28,12 +33,77 @@ export default function Sidebar() {
     hideModal: hideNewWsModal,
   } = useNewWorkspaceModal();
 
+  // Sidebar width state with localStorage persistence
+  const [sidebarWidth, setSidebarWidth] = useState(() => {
+    if (typeof window === "undefined") return SIDEBAR_DEFAULT_WIDTH;
+    const stored = window.localStorage.getItem(SIDEBAR_WIDTH_STORAGE_KEY);
+    if (stored) {
+      const n = Number(stored);
+      if (
+        !isNaN(n) &&
+        n >= SIDEBAR_MIN_WIDTH &&
+        n <= SIDEBAR_MAX_WIDTH
+      )
+        return n;
+    }
+    return SIDEBAR_DEFAULT_WIDTH;
+  });
+  const isResizingRef = useRef(false);
+  const resizeStartXRef = useRef(0);
+  const resizeStartWidthRef = useRef(0);
+
+  // Persist width changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        SIDEBAR_WIDTH_STORAGE_KEY,
+        String(sidebarWidth)
+      );
+    }
+  }, [sidebarWidth]);
+
+  function handleResizeStart(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    isResizingRef.current = true;
+    resizeStartXRef.current = e.clientX;
+    resizeStartWidthRef.current = sidebarWidth;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  }
+
+  // Mount global mouse listeners ONCE on mount, not on every sidebarWidth change
+  useEffect(() => {
+    function handleMouseMove(e: MouseEvent) {
+      if (!isResizingRef.current) return;
+      const delta = e.clientX - resizeStartXRef.current;
+      const newWidth = Math.min(
+        SIDEBAR_MAX_WIDTH,
+        Math.max(SIDEBAR_MIN_WIDTH, resizeStartWidthRef.current + delta)
+      );
+      setSidebarWidth(newWidth);
+    }
+    function handleMouseUp() {
+      if (!isResizingRef.current) return;
+      isResizingRef.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    }
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
   return (
     <>
       <nav
         aria-label="Hauptnavigation"
+        style={{ width: showSidebar ? sidebarWidth : 0 }}
         className={`relative transition-all duration-500 ${
-          showSidebar ? "w-[292px] pl-0" : "w-0 pl-4"
+          showSidebar ? "pl-0" : "pl-4"
         }`}
       >
         {canToggleSidebar && (
@@ -44,7 +114,10 @@ export default function Sidebar() {
         )}
         <div className="overflow-hidden h-full">
           <div className="flex shrink-0 w-full justify-start my-[18px] px-[24px]">
-            <div className="flex w-[250px] min-w-[250px] items-center">
+            <div
+              className="flex items-center"
+              style={{ width: sidebarWidth - 48 }}
+            >
               <Link
                 to={paths.home()}
                 aria-label="Home"
@@ -60,11 +133,15 @@ export default function Sidebar() {
           </div>
           <div
             ref={sidebarRef}
-            className="relative m-[16px] rounded-[16px] bg-theme-bg-sidebar light:bg-slate-200 border-[2px] border-theme-sidebar-border light:border-none min-w-[250px] p-[10px] h-[calc(100%-76px)]"
+            style={{ width: sidebarWidth - 32 }}
+            className="relative m-[16px] rounded-[16px] bg-theme-bg-sidebar light:bg-slate-200 border-[2px] border-theme-sidebar-border light:border-none p-[10px] h-[calc(100%-76px)]"
           >
             <div className="flex flex-col h-full overflow-hidden">
-              <div className="flex-grow flex flex-col min-w-[235px] min-h-0">
-                <div className="relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[10px] overflow-y-scroll no-scroll">
+              <div className="flex-grow flex flex-col min-h-0">
+                <div
+                  className="relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[10px] overflow-y-scroll no-scroll"
+                  style={{ minWidth: sidebarWidth - 64 }}
+                >
                   <div className="flex flex-col gap-y-[14px]">
                     <SearchBox user={user} showNewWsModal={showNewWsModal} />
                     <ActiveWorkspaces />
@@ -77,6 +154,20 @@ export default function Sidebar() {
             </div>
           </div>
         </div>
+        {/* Resize Handle */}
+        {showSidebar && (
+          <div
+            onMouseDown={handleResizeStart}
+            role="separator"
+            aria-orientation="vertical"
+            aria-label="Seitenleiste skalieren"
+            title="Ziehen um die Breite der Seitenleiste zu ändern"
+            className="absolute top-0 right-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors"
+            style={{ marginRight: "-3px" }}
+          >
+            <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />
+          </div>
+        )}
         {showingNewWsModal && <NewWorkspaceModal hideModal={hideNewWsModal} />}
       </nav>
       <WorkspaceAndThreadTooltips />

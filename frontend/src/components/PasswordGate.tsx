@@ -2,9 +2,18 @@
 // Docs: PasswordGate.doc.md
 import React, { useState } from "react";
 
+const UNLOCKED_KEY = "openafd-demo-unlocked";
+
 export default function PasswordGate({ children }: { children: React.ReactNode }) {
   const [password, setPassword] = useState("");
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(() => {
+    if (typeof window === "undefined") return false;
+    try {
+      return window.localStorage.getItem(UNLOCKED_KEY) === "1";
+    } catch {
+      return false;
+    }
+  });
   const [error, setError] = useState(false);
 
   if (unlocked) return <>{children}</>;
@@ -14,6 +23,11 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
     // Auth-Logik unverändert (nur Demozweck)
     if (password === "Simone123") {
       setUnlocked(true);
+      try {
+        window.localStorage.setItem(UNLOCKED_KEY, "1");
+      } catch {
+        // ignore
+      }
     } else {
       setError(true);
     }
