@@ -1108,6 +1108,7 @@ function supportedLLM(input = "") {
     "deepseek",
     "apipie",
     "xai",
+    "opencode-zen",
     "nvidia-nim",
     "ppio",
     "dpais",
