@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../../paths");
 const fs = require("fs");
 const path = require("path");
 const { default: slugify } = require("slugify");
@@ -89,7 +90,7 @@ async function loadConfluence(
           __dirname,
           `../../../../server/storage/documents/${outFolder}`
         )
-      : path.resolve(process.env.STORAGE_DIR, `documents/${outFolder}`);
+      : getStoragePath("documents", outFolder);
 
   if (!fs.existsSync(outFolderPath))
     fs.mkdirSync(outFolderPath, { recursive: true });

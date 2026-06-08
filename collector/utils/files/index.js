@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
 const { MimeDetector } = require("./mime");
@@ -10,7 +11,7 @@ const { MimeDetector } = require("./mime");
 const documentsFolder =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, `../../../server/storage/documents`)
-    : path.resolve(process.env.STORAGE_DIR, `documents`);
+    : getStoragePath("documents");
 
 /**
  * The folder where direct uploads are stored to be stored when
@@ -20,7 +21,7 @@ const documentsFolder =
 const directUploadsFolder =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, `../../../server/storage/direct-uploads`)
-    : path.resolve(process.env.STORAGE_DIR, `direct-uploads`);
+    : getStoragePath("direct-uploads");
 
 /**
  * Checks if a file is text by checking the mime type and then falling back to buffer inspection.

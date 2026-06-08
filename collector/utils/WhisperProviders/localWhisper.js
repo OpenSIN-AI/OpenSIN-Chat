@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
 const { v4 } = require("uuid");
@@ -12,11 +13,7 @@ class LocalWhisper {
   constructor({ options }) {
     this.model = options?.WhisperModelPref ?? defaultWhisper;
     this.fileSize = fileSize[this.model];
-    this.cacheDir = path.resolve(
-      process.env.STORAGE_DIR
-        ? path.resolve(process.env.STORAGE_DIR, `models`)
-        : path.resolve(__dirname, `../../../server/storage/models`)
-    );
+    this.cacheDir = getStoragePath("models");
 
     this.modelPath = path.resolve(this.cacheDir, ...this.model.split("/"));
     // Make directory when it does not exist in existing installations

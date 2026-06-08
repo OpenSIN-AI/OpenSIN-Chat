@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../../paths");
 const { safeJsonParse } = require("../../http");
 const path = require("path");
 const fs = require("fs");
@@ -73,8 +74,7 @@ class MCPHypervisor {
             `../../../storage/plugins/openafd_mcp_servers.json`,
           )
         : path.resolve(
-            process.env.STORAGE_DIR ??
-              path.resolve(__dirname, `../../../storage`),
+            getStoragePath(),
             `plugins/openafd_mcp_servers.json`,
           );
 

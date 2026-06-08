@@ -1,15 +1,14 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../../paths");
 const fs = require("fs");
 const path = require("path");
 const { safeJsonParse } = require("../http");
 const { isWithin, normalizePath } = require("../files");
 const { CollectorApi } = require("../collectorApi");
-const _storageDir =
-  process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage");
 const pluginsPath =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, "../../storage/plugins/agent-skills")
-    : path.resolve(_storageDir, "plugins", "agent-skills");
+    : getStoragePath("plugins", "agent-skills");
 const sharedWebScraper = new CollectorApi();
 
 class ImportedPlugin {

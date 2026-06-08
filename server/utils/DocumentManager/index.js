@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../../paths");
 const fs = require("fs");
 const path = require("path");
 
-const _storageDir =
-  process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage");
 const documentsPath =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, `../../storage/documents`)
-    : path.resolve(_storageDir, `documents`);
+    : getStoragePath("documents");
 
 class DocumentManager {
   constructor({ workspace = null, maxTokens = null }) {

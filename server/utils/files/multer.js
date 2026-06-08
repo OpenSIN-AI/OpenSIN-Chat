@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 const multer = require("multer");
 const path = require("path");
+const { getStoragePath } = require("../paths");
 const fs = require("fs");
 const { v4 } = require("uuid");
 const { normalizePath, sanitizeFileName } = require(".");
@@ -14,8 +15,6 @@ const supabaseStorage = require("../storage/supabase");
  * and then pushed to Supabase Storage by the supabaseUploadMiddleware.
  * When Supabase Storage is disabled the file is written to the local hotdir.
  */
-const _storageDir =
-  process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage");
 const _collectorDir =
   process.env.STORAGE_DIR
     ? path.resolve(process.env.STORAGE_DIR, "../../collector")
@@ -65,7 +64,7 @@ const assetUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../storage/assets`)
-        : path.resolve(_storageDir, "assets");
+        : getStoragePath("assets");
     fs.mkdirSync(uploadOutput, { recursive: true });
     return cb(null, uploadOutput);
   },
@@ -85,7 +84,7 @@ const pfpUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../storage/assets/pfp`)
-        : path.resolve(_storageDir, "assets/pfp");
+        : getStoragePath("assets", "pfp");
     fs.mkdirSync(uploadOutput, { recursive: true });
     return cb(null, uploadOutput);
   },
@@ -321,7 +320,7 @@ function handlePfpUpload(request, response, next) {
 function handleAudioUpload(request, response, next) {
   const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 25 * 1024 * 1024 }, // 25MB matches OpenAI Whisper limit
+    limits: { fileSize: 25 * 1024 * 1024 },
     fileFilter: (_req, file, cb) => {
       if (!file.mimetype?.startsWith("audio/"))
         return cb(new Error("Only audio uploads are allowed."));

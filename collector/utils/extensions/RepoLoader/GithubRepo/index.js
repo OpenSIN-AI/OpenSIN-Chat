@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../../../paths");
 const RepoLoader = require("./RepoLoader");
 const fs = require("fs");
 const path = require("path");
@@ -47,7 +48,7 @@ async function loadGithubRepo(args, response) {
           __dirname,
           `../../../../../server/storage/documents/${outFolder}`
         )
-      : path.resolve(process.env.STORAGE_DIR, `documents/${outFolder}`);
+      : getStoragePath("documents", outFolder);
 
   if (!fs.existsSync(outFolderPath))
     fs.mkdirSync(outFolderPath, { recursive: true });

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 const path = require("path");
+const { getStoragePath } = require("../../paths");
 const fs = require("fs");
 const LEGACY_MODEL_MAP = require("./legacy");
 
@@ -7,10 +8,6 @@ class ContextWindowFinder {
   static instance = null;
   static modelMap = LEGACY_MODEL_MAP;
 
-  /**
-   * Mapping for OpenAfD Chat provider <> LiteLLM provider
-   * @type {Record<string, string>}
-   */
   static trackedProviders = {
     anthropic: "anthropic",
     openai: "openai",
@@ -20,20 +17,16 @@ class ContextWindowFinder {
     xai: "xai",
     deepseek: "deepseek",
     moonshot: "moonshot",
-    zai: "vercel_ai_gateway", // Vercel has correct context windows for Z.AI models
+    zai: "vercel_ai_gateway",
     sambanova: "sambanova",
     minimax: "minimax",
     cerebras: "cerebras",
   };
-  static expiryMs = 1000 * 60 * 60 * 24 * 3; // 3 days
+  static expiryMs = 1000 * 60 * 60 * 24 * 3;
   static remoteUrl =
     "https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json";
 
-  cacheLocation = path.resolve(
-    process.env.STORAGE_DIR
-      ? path.resolve(process.env.STORAGE_DIR, "models", "context-windows")
-      : path.resolve(__dirname, `../../../storage/models/context-windows`),
-  );
+  cacheLocation = getStoragePath("models", "context-windows");
   cacheFilePath = path.resolve(this.cacheLocation, "context-windows.json");
   cacheFileExpiryPath = path.resolve(this.cacheLocation, ".cached_at");
   seenStaleCacheWarning = false;
@@ -44,7 +37,6 @@ class ContextWindowFinder {
     if (!fs.existsSync(this.cacheLocation))
       fs.mkdirSync(this.cacheLocation, { recursive: true });
 
-    // If the cache is stale or not found at all, pull the model map from remote
     if (this.isCacheStale || !fs.existsSync(this.cacheFilePath)) {
       this.#pullRemoteModelMap().catch((err) =>
         this.log("Background model map pull failed:", err),
@@ -57,23 +49,12 @@ class ContextWindowFinder {
     console.log(`\x1b[33m[ContextWindowFinder]\x1b[0m ${text}`, ...args);
   }
 
-  /**
-   * Checks if the cache is stale by checking if the cache file exists and if the cache file is older than the expiry time.
-   * @returns {boolean}
-   */
   get isCacheStale() {
     if (!fs.existsSync(this.cacheFileExpiryPath)) return true;
     const cachedAt = fs.readFileSync(this.cacheFileExpiryPath, "utf8");
     return Date.now() - cachedAt > ContextWindowFinder.expiryMs;
   }
 
-  /**
-   * Gets the cached model map.
-   *
-   * Always returns the available model map - even if it is expired since re-pulling
-   * the model map only occurs on container start/system start.
-   * @returns {Record<string, Record<string, number>> | null} - The cached model map
-   */
   get cachedModelMap() {
     if (!fs.existsSync(this.cacheFilePath)) {
       this.log(`\x1b[33m
@@ -98,10 +79,6 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
     );
   }
 
-  /**
-   * Pulls the remote model map from the remote URL, formats it and caches it.
-   * @returns {Record<string, Record<string, number>>} - The formatted model map
-   */
   async #pullRemoteModelMap() {
     try {
       this.log("Pulling remote model map...");
@@ -132,7 +109,6 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
 
   #validateModelMap(modelMap = {}) {
     for (const [provider, models] of Object.entries(modelMap)) {
-      // If the models is null/falsey or has no keys, throw an error
       if (typeof models !== "object")
         throw new Error(
           `Invalid model map for ${provider} - models is not an object`,
@@ -140,7 +116,6 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
       if (!models || Object.keys(models).length === 0)
         throw new Error(`Invalid model map for ${provider} - no models found!`);
 
-      // Validate that the context window is a number
       for (const [model, contextWindow] of Object.entries(models)) {
         if (isNaN(contextWindow) || contextWindow <= 0) {
           this.log(
@@ -154,12 +129,6 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
     return modelMap;
   }
 
-  /**
-   * Formats the remote model map to a format that is compatible with how we store the model map
-   * for all providers who use it.
-   * @param {Record<string, any>} modelMap - The remote model map
-   * @returns {Record<string, Record<string, number>>} - The formatted model map
-   */
   #formatModelMap(modelMap = {}) {
     const formattedModelMap = {};
 
@@ -174,8 +143,6 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
         const contextWindow = Number(config.max_input_tokens);
         if (isNaN(contextWindow)) continue;
 
-        // Some models have a provider/model-tag format, so we need to get the last part since we dont do paths
-        // for names with the exception of some router-providers like OpenRouter or Together.
         const modelName = key.split("/").pop();
         formattedModelMap[provider][modelName] = contextWindow;
       }
@@ -183,17 +150,6 @@ You can fix this by restarting OpenAfD Chat so the model map is re-pulled.
     return formattedModelMap;
   }
 
-  /**
-   * Gets the context window for a given provider and model.
-   *
-   * If the provider is not found, null is returned.
-   * If the model is not found, the provider's entire model map is returned.
-   *
-   * if both provider and model are provided, the context window for the given model is returned.
-   * @param {string|null} provider - The provider to get the context window for
-   * @param {string|null} model - The model to get the context window for
-   * @returns {number|null} - The context window for the given provider and model
-   */
   get(provider = null, model = null) {
     if (!provider || !this.cachedModelMap || !this.cachedModelMap[provider])
       return null;

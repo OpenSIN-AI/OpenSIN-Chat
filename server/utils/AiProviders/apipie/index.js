@@ -13,11 +13,7 @@ const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
 
-const cacheFolder = path.resolve(
-  process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "apipie")
-    : path.resolve(__dirname, `../../../storage/models/apipie`),
-);
+const cacheFolder = getStoragePath("models", "apipie");
 
 class ApiPieLLM {
   constructor(embedder = null, modelPreference = null) {

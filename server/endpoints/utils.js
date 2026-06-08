@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../utils/paths");
 const { SystemSettings } = require("../models/systemSettings");
 
 /**
@@ -145,9 +146,7 @@ function utilEndpoints(app) {
         uptime: Math.floor(os.uptime()),
         totalMemMB: Math.round(os.totalmem() / 1024 / 1024),
         freeMemMB: Math.round(os.freemem() / 1024 / 1024),
-        uploadPath: process.env.STORAGE_DIR
-          ? path.resolve(process.env.STORAGE_DIR)
-          : path.resolve("./storage"),
+        uploadPath: getStoragePath(),
         workDir: process.cwd(),
         storage: disk,
       });
@@ -169,10 +168,7 @@ function utilEndpoints(app) {
       const reportsDir =
         process.env.NODE_ENV === "development"
           ? path.resolve(__dirname, "../storage/generated-reports")
-          : path.resolve(
-              process.env.STORAGE_DIR || path.resolve(__dirname, "../storage"),
-              "generated-reports",
-            );
+          : getStoragePath("generated-reports");
       const filePath = path.join(reportsDir, fileName);
 
       // Verify resolved path is still under generated-reports/ (security check)

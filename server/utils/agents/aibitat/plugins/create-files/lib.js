@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 const path = require("path");
+const { getStoragePath } = require("../../../../paths");
 const fs = require("fs/promises");
 const fsSync = require("fs");
 const { v4: uuidv4 } = require("uuid");
@@ -18,9 +19,7 @@ class CreateFilesManager {
    * @returns {string} The output directory path (storage/generated-files)
    */
   #getOutputDirectory() {
-    const storageRoot =
-      process.env.STORAGE_DIR ||
-      path.resolve(__dirname, "../../../../../storage");
+    const storageRoot = getStoragePath();
     return path.join(storageRoot, "generated-files");
   }
 

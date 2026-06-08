@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../../paths");
 const fs = require("fs");
 const path = require("path");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
@@ -15,11 +16,7 @@ const { safeJsonParse } = require("../../http");
 
 class DockerModelRunnerLLM {
   static cacheTime = 1000 * 60 * 60 * 24; // 24 hours
-  static cacheFolder = path.resolve(
-    process.env.STORAGE_DIR
-      ? path.resolve(process.env.STORAGE_DIR, "models", "docker-model-runner")
-      : path.resolve(__dirname, `../../../storage/models/docker-model-runner`),
-  );
+  static cacheFolder = getStoragePath("models", "docker-model-runner");
 
   constructor(embedder = null, modelPreference = null) {
     if (!process.env.DOCKER_MODEL_RUNNER_BASE_PATH)

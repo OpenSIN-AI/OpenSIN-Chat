@@ -4,17 +4,16 @@
 // require if the symbol is undefined. This helpers file is loaded by
 // every Bree-spawned worker job, so installing the shim here covers all
 // of them with a single point of change.
+const { getStoragePath } = require("../../utils/paths");
 require("../../utils/boot/patchSlowBuffer")();
 
 const path = require("node:path");
 const fs = require("node:fs");
 const { parentPort } = require("node:worker_threads");
-const _storageDir =
-  process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage");
 const documentsPath =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, `../../storage/documents`)
-    : path.resolve(_storageDir, `documents`);
+    : getStoragePath("documents");
 
 function log(stringContent = "") {
   if (parentPort)

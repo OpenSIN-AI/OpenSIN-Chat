@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../paths");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -23,11 +24,7 @@ class OCRLoader {
    */
   constructor({ targetLanguages = "eng" } = {}) {
     this.language = this.parseLanguages(targetLanguages);
-    this.cacheDir = path.resolve(
-      process.env.STORAGE_DIR
-        ? path.resolve(process.env.STORAGE_DIR, `models`, `tesseract`)
-        : path.resolve(__dirname, `../../../server/storage/models/tesseract`)
-    );
+    this.cacheDir = getStoragePath("models", "tesseract");
 
     // Ensure the cache directory exists or else Tesseract will persist the cache in the default location.
     if (!fs.existsSync(this.cacheDir))

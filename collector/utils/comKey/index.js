@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../paths");
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
@@ -6,8 +7,7 @@ const keyPath =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, `../../../server/storage/comkey`)
     : path.resolve(
-        process.env.STORAGE_DIR ??
-          path.resolve(__dirname, `../../../server/storage`),
+        getStoragePath(),
         `comkey`
       );
 

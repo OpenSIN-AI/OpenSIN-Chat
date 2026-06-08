@@ -12,11 +12,7 @@ const {
 const { MODEL_MAP } = require("../modelMap");
 const { defaultGeminiModels, v1BetaModels } = require("./defaultModels");
 const { safeJsonParse } = require("../../http");
-const cacheFolder = path.resolve(
-  process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "gemini")
-    : path.resolve(__dirname, `../../../storage/models/gemini`),
-);
+const cacheFolder = getStoragePath("models", "gemini");
 
 const NO_SYSTEM_PROMPT_MODELS = [
   "gemma-3-1b-it",

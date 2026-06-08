@@ -41,7 +41,7 @@ export default function CerebrasLLMOptions({ settings }: any) {
  * @returns {JSX.Element} The Cerebras model selection component
  */
 function CerebrasModelSelection({ apiKey: _apiKey, settings }: any) {
-  const { customModels, isLoading } = useProviderModels("cerebras", apiKey: _apiKey);
+  const { customModels, isLoading } = useProviderModels("cerebras", _apiKey);
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">

@@ -11,6 +11,7 @@
  *   GET  /reports/list     — list generated reports
  */
 
+const { getStoragePath } = require("../../../utils/paths");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
 const logger = require("../../../utils/logger")();
 const path = require("path");
@@ -28,12 +29,10 @@ function getResearchPipeline() {
   return getResearchPipeline();
 }
 
-const _storageDir =
-  process.env.STORAGE_DIR || path.resolve(__dirname, "../../../storage");
 const STORAGE_DIR =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, "../../../storage/generated-reports")
-    : path.resolve(_storageDir, "generated-reports");
+    : getStoragePath("generated-reports");
 
 function apiReportsEndpoints(app) {
   if (!app) return;

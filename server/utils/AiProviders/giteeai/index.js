@@ -10,11 +10,7 @@ const {
 const {
   handleDefaultStreamResponseV2,
 } = require("../../helpers/chat/responses");
-const cacheFolder = path.resolve(
-  process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "giteeai")
-    : path.resolve(__dirname, `../../../storage/models/giteeai`),
-);
+const cacheFolder = getStoragePath("models", "giteeai");
 
 class GiteeAILLM {
   constructor(embedder = null, modelPreference = null) {

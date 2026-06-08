@@ -12,11 +12,7 @@ const { safeJsonParse } = require("../../http");
 const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
-const cacheFolder = path.resolve(
-  process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "novita")
-    : path.resolve(__dirname, `../../../storage/models/novita`),
-);
+const cacheFolder = getStoragePath("models", "novita");
 
 class NovitaLLM {
   defaultTimeout = 3_000;

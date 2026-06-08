@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 const fs = require("fs");
 const path = require("path");
+const { getStoragePath } = require("../../paths");
 const { safeJsonParse } = require("../../http");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
@@ -10,11 +11,7 @@ const {
   handleDefaultStreamResponseV2,
 } = require("../../helpers/chat/responses");
 
-const cacheFolder = path.resolve(
-  process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "fireworks")
-    : path.resolve(__dirname, `../../../storage/models/fireworks`),
-);
+const cacheFolder = getStoragePath("models", "fireworks");
 
 class FireworksAiLLM {
   constructor(embedder = null, modelPreference = null) {

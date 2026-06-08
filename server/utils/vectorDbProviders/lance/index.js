@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../../paths");
 const lancedb = require("@lancedb/lancedb");
 const { toChunks, getEmbeddingEngineSelection } = require("../../helpers");
 const { TextSplitter } = require("../../TextSplitter");
@@ -21,9 +22,7 @@ class LanceDb extends VectorDatabase {
   }
 
   get uri() {
-    const basePath = !!process.env.STORAGE_DIR
-      ? process.env.STORAGE_DIR
-      : path.resolve(__dirname, "../../../storage");
+    const basePath = getStoragePath();
     return path.resolve(basePath, "lancedb");
   }
 

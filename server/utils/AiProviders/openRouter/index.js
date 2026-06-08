@@ -9,14 +9,11 @@ const {
 const fs = require("fs");
 const path = require("path");
 const { safeJsonParse } = require("../../http");
+const { getStoragePath } = require("../../paths");
 const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
-const cacheFolder = path.resolve(
-  process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "openrouter")
-    : path.resolve(__dirname, `../../../storage/models/openrouter`),
-);
+const cacheFolder = getStoragePath("models", "openrouter");
 
 class OpenRouterLLM {
   /**

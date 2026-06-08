@@ -7,18 +7,17 @@
  * reports with cover page, table of contents, and structured sections.
  */
 
+const { getStoragePath } = require("../paths");
 const { markdownToPdf } = require("@mintplex-labs/mdpdf");
 const { PDFDocument, rgb, StandardFonts } = require("pdf-lib");
 const path = require("path");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 
-const _storageDir =
-  process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage");
 const STORAGE_DIR =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, "../../storage/generated-reports")
-    : path.resolve(_storageDir, "generated-reports");
+    : getStoragePath("generated-reports");
 
 const AFD_BLUE = rgb(0 / 255, 158 / 255, 224 / 255);
 const AFD_DARK = rgb(0 / 255, 102 / 255, 165 / 255);

@@ -8,16 +8,13 @@ const {
 } = require("../../helpers/chat/responses");
 const fs = require("fs");
 const path = require("path");
+const { getStoragePath } = require("../../paths");
 const { safeJsonParse } = require("../../http");
 const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
 const { COMETAPI_IGNORE_PATTERNS } = require("./constants");
-const cacheFolder = path.resolve(
-  process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "models", "cometapi")
-    : path.resolve(__dirname, `../../../storage/models/cometapi`),
-);
+const cacheFolder = getStoragePath("models", "cometapi");
 
 class CometApiLLM {
   defaultTimeout = 3_000;
@@ -61,12 +58,6 @@ class CometApiLLM {
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
-  /**
-   * CometAPI has various models that never return `finish_reasons` and thus leave the stream open
-   * which causes issues in subsequent messages. This timeout value forces us to close the stream after
-   * x milliseconds. This is a configurable value via the COMETAPI_LLM_TIMEOUT_MS value
-   * @returns {number} The timeout value in milliseconds (default: 3_000)
-   */
   #parseTimeout() {
     this.log(
       `CometAPI timeout is set to ${process.env.COMETAPI_LLM_TIMEOUT_MS ?? this.defaultTimeout}ms`,
@@ -78,22 +69,14 @@ class CometApiLLM {
     return setValue;
   }
 
-  // This checks if the .cached_at file has a timestamp that is more than 1Week (in millis)
-  // from the current date. If it is, then we will refetch the API so that all the models are up
-  // to date.
   #cacheIsStale() {
-    const MAX_STALE = 6.048e8; // 1 Week in MS
+    const MAX_STALE = 6.048e8;
     if (!fs.existsSync(this.cacheAtPath)) return true;
     const now = Number(new Date());
     const timestampMs = Number(fs.readFileSync(this.cacheAtPath));
     return now - timestampMs > MAX_STALE;
   }
 
-  // The CometAPI model API has a lot of models, so we cache this locally in the directory
-  // as if the cache directory JSON file is stale or does not exist we will fetch from API and store it.
-  // This might slow down the first request, but we need the proper token context window
-  // for each model and this is a constructor property - so we can really only get it if this cache exists.
-  // We used to have this as a chore, but given there is an API to get the info - this makes little sense.
   async #syncModels() {
     if (fs.existsSync(this.cacheModelPath) && !this.#cacheIsStale())
       return false;
@@ -151,11 +134,6 @@ class CometApiLLM {
     return availableModels.hasOwnProperty(model);
   }
 
-  /**
-   * Generates appropriate content array for a message + attachments.
-   * @param {{userPrompt:string, attachments: import("../../helpers").Attachment[]}}
-   * @returns {string|object[]}
-   */
   #generateContent({ userPrompt, attachments = [] }) {
     if (!attachments.length) {
       return userPrompt;
@@ -255,25 +233,14 @@ class CometApiLLM {
     return measuredStreamRequest;
   }
 
-  /**
-   * Handles the default stream response for a chat.
-   * @param {import("express").Response} response
-   * @param {import('../../helpers/chat/LLMPerformanceMonitor').MonitoredStream} stream
-   * @param {Object} responseProps
-   * @returns {Promise<string>}
-   */
   handleStream(response, stream, responseProps) {
     const timeoutThresholdMs = this.timeout;
     const { uuid = uuidv4(), sources = [] } = responseProps;
 
     return new Promise(async (resolve) => {
       let fullText = "";
-      let lastChunkTime = null; // null when first token is still not received.
+      let lastChunkTime = null;
 
-      // Establish listener to early-abort a streaming response
-      // in case things go sideways or the user does not like the response.
-      // We preserve the generated text but continue as if chat was completed
-      // to preserve previously generated content.
       const handleAbort = () => {
         stream?.endMeasurement({
           completion_tokens: LLMPerformanceMonitor.countTokens(fullText),
@@ -282,13 +249,6 @@ class CometApiLLM {
       };
       response.on("close", handleAbort);
 
-      // NOTICE: Not all CometAPI models will return a stop reason
-      // which keeps the connection open and so the model never finalizes the stream
-      // like the traditional OpenAI response schema does. So in the case the response stream
-      // never reaches a formal close state we maintain an interval timer that if we go >=timeoutThresholdMs with
-      // no new chunks then we kill the stream and assume it to be complete. CometAPI is quite fast
-      // so this threshold should permit most responses, but we can adjust `timeoutThresholdMs` if
-      // we find it is too aggressive.
       const timeoutCheck = setInterval(() => {
         if (lastChunkTime === null) return;
 
@@ -367,7 +327,6 @@ class CometApiLLM {
     });
   }
 
-  // Simple wrapper for dynamic embedder & normalize interface for all LLM implementations
   async embedTextInput(textInput) {
     return await this.embedder.embedTextInput(textInput);
   }
@@ -382,10 +341,6 @@ class CometApiLLM {
   }
 }
 
-/**
- * Fetches available models from CometAPI and filters out non-chat models
- * Based on cometapi.md specifications
- */
 async function fetchCometApiModels() {
   return await fetch(`https://api.cometapi.com/v1/models`, {
     method: "GET",
@@ -398,7 +353,6 @@ async function fetchCometApiModels() {
     .then(({ data = [] }) => {
       const models = {};
 
-      // Filter out non-chat models using patterns from cometapi.md
       const chatModels = data.filter((model) => {
         const modelId = model.id.toLowerCase();
         return !COMETAPI_IGNORE_PATTERNS.some((pattern) =>
@@ -409,14 +363,13 @@ async function fetchCometApiModels() {
       chatModels.forEach((model) => {
         models[model.id] = {
           id: model.id,
-          name: model.id, // CometAPI has limited model info according to cometapi.md
+          name: model.id,
           organization:
             model.id.split("/")[0] || model.id.split("-")[0] || "CometAPI",
-          maxLength: model.context_length || 4096, // Conservative default
+          maxLength: model.context_length || 4096,
         };
       });
 
-      // Cache all response information
       if (!fs.existsSync(cacheFolder))
         fs.mkdirSync(cacheFolder, { recursive: true });
       fs.writeFileSync(

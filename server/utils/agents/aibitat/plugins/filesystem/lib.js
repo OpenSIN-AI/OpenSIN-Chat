@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 const fs = require("fs/promises");
 const path = require("path");
+const { getStoragePath } = require("../../../../paths");
 const os = require("os");
 const { randomBytes } = require("crypto");
 const { createTwoFilesPatch } = require("diff");
@@ -51,9 +52,7 @@ class FilesystemManager {
    * @returns {string} The default filesystem root path
    */
   #getDefaultFilesystemRoot() {
-    const storageRoot =
-      process.env.STORAGE_DIR ||
-      path.resolve(__dirname, "../../../../../storage");
+    const storageRoot = getStoragePath();
     return path.join(storageRoot, "openafd-fs");
   }
 

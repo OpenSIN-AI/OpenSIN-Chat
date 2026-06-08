@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
@@ -16,9 +17,7 @@ const { safeJsonParse } = require("../http");
  */
 
 class AgentFlows {
-  static flowsDir = process.env.STORAGE_DIR
-    ? path.join(process.env.STORAGE_DIR, "plugins", "agent-flows")
-    : path.join(process.cwd(), "storage", "plugins", "agent-flows");
+  static flowsDir = getStoragePath("plugins", "agent-flows");
 
   constructor() {}
 

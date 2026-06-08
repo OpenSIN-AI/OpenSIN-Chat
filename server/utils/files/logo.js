@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { getStoragePath } = require("../paths");
 const path = require("path");
 const fs = require("fs");
 const { getType } = require("mime");
@@ -58,9 +59,7 @@ function getLegacyDefaultFilename(darkMode = true) {
 
 async function determineLogoFilepath(defaultFilename = LOGO_FILENAME) {
   const currentLogoFilename = await SystemSettings.currentLogoFilename();
-  const basePath = process.env.STORAGE_DIR
-    ? path.join(process.env.STORAGE_DIR, "assets")
-    : path.join(__dirname, "../../storage/assets");
+  const basePath = getStoragePath("assets");
   const defaultFilepath = path.join(basePath, defaultFilename);
 
   if (currentLogoFilename && validFilename(currentLogoFilename)) {
@@ -110,9 +109,7 @@ function fetchLogo(logoPath) {
 async function renameLogoFile(originalFilename = null) {
   const extname = path.extname(originalFilename) || ".png";
   const newFilename = `${v4()}${extname}`;
-  const assetsDirectory = process.env.STORAGE_DIR
-    ? path.join(process.env.STORAGE_DIR, "assets")
-    : path.join(__dirname, `../../storage/assets`);
+  const assetsDirectory = getStoragePath("assets");
   const originalFilepath = path.join(
     assetsDirectory,
     normalizePath(originalFilename),
@@ -121,9 +118,7 @@ async function renameLogoFile(originalFilename = null) {
     throw new Error("Invalid file path.");
 
   // The output always uses a random filename.
-  const outputFilepath = process.env.STORAGE_DIR
-    ? path.join(process.env.STORAGE_DIR, "assets", normalizePath(newFilename))
-    : path.join(__dirname, `../../storage/assets`, normalizePath(newFilename));
+  const outputFilepath = getStoragePath("assets", normalizePath(newFilename));
 
   fs.renameSync(originalFilepath, outputFilepath);
   return newFilename;
@@ -131,9 +126,7 @@ async function renameLogoFile(originalFilename = null) {
 
 async function removeCustomLogo(logoFilename = LOGO_FILENAME) {
   if (!logoFilename || !validFilename(logoFilename)) return false;
-  const assetsDirectory = process.env.STORAGE_DIR
-    ? path.join(process.env.STORAGE_DIR, "assets")
-    : path.join(__dirname, `../../storage/assets`);
+  const assetsDirectory = getStoragePath("assets");
 
   const logoPath = path.join(assetsDirectory, normalizePath(logoFilename));
   if (!isWithin(path.resolve(assetsDirectory), path.resolve(logoPath)))
