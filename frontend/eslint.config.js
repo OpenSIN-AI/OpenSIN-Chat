@@ -91,6 +91,19 @@ export default [
           argsIgnorePattern: "^_"
         }
       ],
+      // Block new `style={{...}}` inline styles — migrate to Tailwind utilities.
+      // Runtime-computed values (progress %, mouse position, chart sizes) must
+      // use CSS variables or a documented exception in docs/INLINE-STYLES-AUDIT.md
+      // before being allowed back. See Issue #65.
+      "no-restricted-syntax": [
+        "warn",
+        {
+          selector:
+            "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
+          message:
+            "Inline `style={{...}}` is discouraged — use Tailwind utility classes or CSS variables. See docs/INLINE-STYLES-AUDIT.md and Issue #65."
+        }
+      ],
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/explicit-function-return-types": "off",
       "@typescript-eslint/no-require-imports": "off",
