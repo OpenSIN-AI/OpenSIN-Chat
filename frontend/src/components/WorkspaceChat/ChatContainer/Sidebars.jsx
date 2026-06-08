@@ -14,7 +14,7 @@ import RightSidebarIconBar from "./RightSidebarIconBar";
  */
 export default function Sidebars({ workspace }) {
   return (
-    <>
+    <div className="relative flex-shrink-0 h-full w-[44px]">
       <SourcesSidebar workspace={workspace} />
       <MemoriesSidebar workspace={workspace} />
       <PreviewSidebar />
@@ -23,6 +23,6 @@ export default function Sidebars({ workspace }) {
       <DatabaseSidebar />
       <PoliticalSidebar />
       <RightSidebarIconBar />
-    </>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import { Plus } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import { useRef, useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useParams } from "react-router-dom";
 import Workspace from "@/models/workspace";
 import {
@@ -31,6 +32,7 @@ export default function AttachItem({
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
+  const [menuPos, setMenuPos] = useState<{ top: number; left: number } | null>(null);
   const [isEmbedding, setIsEmbedding] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -67,6 +69,10 @@ export default function AttachItem({
    */
   function handleClick(e) {
     e?.target?.blur();
+    if (!showMenu && buttonRef.current) {
+      const rect = (buttonRef.current as HTMLElement).getBoundingClientRect();
+      setMenuPos({ top: rect.top, left: rect.left });
+    }
     setShowMenu((prev) => !prev);
     return;
   }
@@ -78,22 +84,6 @@ export default function AttachItem({
   function triggerLocalUpload() {
     document?.getElementById("dnd-chat-file-uploader")?.click();
   }
-
-  useEffect(() => {
-    if (!showMenu) return;
-    function handleClickOutside(e) {
-      if (
-        menuRef.current &&
-        !menuRef.current.contains(e.target) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(e.target)
-      ) {
-        setShowMenu(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showMenu]);
 
   useEffect(() => {
     window.addEventListener(ATTACHMENTS_PROCESSED_EVENT, refresh);
@@ -166,17 +156,32 @@ export default function AttachItem({
           />
         </Tooltip>
       )}
-      {showMenu && (
-        <div
-          ref={menuRef}
-          className="absolute bottom-full left-0 mb-2 bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-50 p-1"
-        >
-          <AddSourceMenu
-            workspaceSlug={slug}
-            onClose={() => setShowMenu(false)}
-            onAddLocalFiles={triggerLocalUpload}
+      {showMenu && menuPos !== null && createPortal(
+        <>
+          {/* Backdrop to close menu on outside click */}
+          <div
+            className="fixed inset-0 z-[999]"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => setShowMenu(false)}
           />
-        </div>
+          <div
+            ref={menuRef}
+            style={{
+              position: "fixed",
+              bottom: `calc(100vh - ${menuPos.top}px + 8px)`,
+              left: menuPos.left,
+            }}
+            className="bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-[1000] p-1"
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <AddSourceMenu
+              workspaceSlug={slug}
+              onClose={() => setShowMenu(false)}
+              onAddLocalFiles={triggerLocalUpload}
+            />
+          </div>
+        </>,
+        document.body
       )}
     </div>
   );

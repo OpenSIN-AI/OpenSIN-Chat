@@ -176,7 +176,8 @@ export function usePoliticalSidebar() {
 
 /**
  * Reusable animation wrapper for right-side chat panels.
- * Handles the slide-in/out transition only; each panel provides its own layout.
+ * Renders as an absolutely-positioned panel to the left of the icon bar
+ * so it never shifts the flex layout.
  * @param {Object} props
  * @param {boolean} props.isOpen
  * @param {React.ReactNode} props.children
@@ -184,8 +185,8 @@ export function usePoliticalSidebar() {
 export default function ChatSidebar({ isOpen, children }: any) {
   return (
     <div
-      className={`h-full overflow-hidden transition-all duration-500 flex-shrink-0 ${
-        isOpen ? "w-[366px]" : "w-0"
+      className={`absolute top-0 right-full h-full overflow-hidden transition-[width] duration-500 pointer-events-none ${
+        isOpen ? "w-[366px] pointer-events-auto" : "w-0"
       }`}
     >
       {children}
