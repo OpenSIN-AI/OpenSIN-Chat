@@ -42,6 +42,18 @@ function isMediaSource(chunkSource: any) {
 export function ChatSidebarProvider({ children }: any) {
   const [activeSidebar, setActiveSidebar] = useState(null);
   const [sidebarData, setSidebarData] = useState(null);
+
+  // Right sidebar (icon bar) open/close — like the left sidebar toggle
+  const [rightSidebarOpen, setRightSidebarOpen] = useState(() => {
+    if (typeof window === "undefined") return true;
+    try {
+      const stored = localStorage.getItem("openafd_right_sidebar_open");
+      return stored !== null ? stored === "true" : true;
+    } catch {
+      return true;
+    }
+  });
+
   const [sourceFilter, setSourceFilter] = useState(() => {
     try {
       return (
@@ -61,6 +73,12 @@ export function ChatSidebarProvider({ children }: any) {
     } catch {}
   }, [sourceFilter]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem("openafd_right_sidebar_open", String(rightSidebarOpen));
+    } catch {}
+  }, [rightSidebarOpen]);
+
   function openSidebar(type: any, data: any = null) {
     setActiveSidebar(type);
     setSidebarData(data);
@@ -76,6 +94,13 @@ export function ChatSidebarProvider({ children }: any) {
     else openSidebar(type, data);
   }
 
+  function toggleRightSidebar() {
+    if (rightSidebarOpen) {
+      closeSidebar();
+    }
+    setRightSidebarOpen((prev: boolean) => !prev);
+  }
+
   const openPreview = useCallback((data) => {
     setPreviewData(data);
     setActiveSidebar("preview");
@@ -89,6 +114,8 @@ export function ChatSidebarProvider({ children }: any) {
         openSidebar,
         closeSidebar,
         toggleSidebar,
+        rightSidebarOpen,
+        toggleRightSidebar,
         sourceFilter,
         setSourceFilter,
         SOURCE_FILTERS,

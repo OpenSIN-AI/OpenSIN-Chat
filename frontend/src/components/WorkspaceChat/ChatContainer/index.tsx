@@ -9,6 +9,7 @@ import ChatHeader from "./ChatHeader";
 import EmptyState from "./EmptyState";
 import MessageList from "./MessageList";
 import Sidebars from "./Sidebars";
+import { RightSidebarToggleButton } from "./RightSidebarIconBar";
 import useChatStream from "./useChatStream";
 
 export default function ChatContainer({
@@ -67,6 +68,7 @@ export default function ChatContainer({
           <ChatTooltips />
         </div>
         <Sidebars workspace={workspace} />
+        <RightSidebarToggleButton />
       </div>
     </ChatSidebarProvider>
   );

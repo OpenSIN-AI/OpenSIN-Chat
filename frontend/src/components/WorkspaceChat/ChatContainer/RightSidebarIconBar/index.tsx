@@ -14,21 +14,63 @@ import { useChatSidebar } from "../ChatSidebar";
 import { useTranslation } from "react-i18next";
 
 /**
+ * Always-visible toggle button for the right sidebar.
+ * To be rendered INSIDE ChatContainer's flex layout, as the rightmost
+ * element, so it stays at the edge regardless of sidebar collapse state.
+ */
+export function RightSidebarToggleButton() {
+  const { t } = useTranslation();
+  const { rightSidebarOpen, toggleRightSidebar } = useChatSidebar();
+
+  return (
+    <button
+      type="button"
+      onClick={toggleRightSidebar}
+      data-tooltip-id="rsib-toggle"
+      data-tooltip-content={
+        rightSidebarOpen
+          ? t("right_sidebar.icon_collapse", "Einklappen")
+          : t("right_sidebar.icon_expand", "Rechte Seitenleiste")
+      }
+      aria-label={
+        rightSidebarOpen
+          ? t("right_sidebar.icon_collapse", "Einklappen")
+          : t("right_sidebar.icon_expand", "Rechte Seitenleiste")
+      }
+      className={`hidden md:flex items-center justify-center w-8 h-8 rounded-lg border-none bg-transparent cursor-pointer transition-all z-10 ${
+        rightSidebarOpen
+          ? "text-zinc-500 light:text-slate-400 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-zinc-200 light:hover:text-slate-700"
+          : "text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-white light:hover:text-slate-900 bg-zinc-900/80 light:bg-white/80 backdrop-blur-sm"
+      }`}
+      style={{
+        position: "absolute",
+        top: "18px",
+        right: rightSidebarOpen ? "52px" : "4px",
+      }}
+    >
+      <SidebarSimple
+        size={18}
+        className={`transition-transform duration-300 ${!rightSidebarOpen ? "rotate-180" : ""}`}
+      />
+      <Tooltip
+        id="rsib-toggle"
+        place="left"
+        delayShow={300}
+        className="tooltip !text-xs z-99"
+      />
+    </button>
+  );
+}
+
+/**
  * The v0-style icon bar displayed to the right of the main chat area.
  * It controls which panel is shown in the right sidebar.
  */
 export default function RightSidebarIconBar() {
   const { t } = useTranslation();
-  const { activeSidebar, toggleSidebar, closeSidebar } = useChatSidebar();
+  const { activeSidebar, toggleSidebar } = useChatSidebar();
 
   const icons = [
-    {
-      id: "collapse",
-      icon: SidebarSimple,
-      label: t("right_sidebar.icon_collapse", "Einklappen"),
-      action: () => closeSidebar(),
-      isClose: true,
-    },
     {
       id: "preview",
       icon: Eye,
@@ -74,9 +116,9 @@ export default function RightSidebarIconBar() {
   ];
 
   return (
-    <div className="flex flex-col items-center gap-1 py-3 px-1 bg-zinc-900 light:bg-white border-l border-zinc-800 light:border-slate-200 h-full flex-shrink-0 w-[44px]">
-      {(icons as any).map(({ id, icon: Icon, label, action, isClose }: any) => {
-        const isActive = !isClose && activeSidebar === id;
+    <div className="flex flex-col items-center gap-1 py-3 pt-12 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px]">
+      {(icons as any).map(({ id, icon: Icon, label, action }: any) => {
+        const isActive = activeSidebar === id;
         return (
           <div key={id} className="flex flex-col items-center">
             <button
@@ -88,8 +130,6 @@ export default function RightSidebarIconBar() {
               className={`flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all ${
                 isActive
                   ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
-                  : isClose
-                  ? "text-zinc-500 light:text-slate-400 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-zinc-200 light:hover:text-slate-700"
                   : "text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-white light:hover:text-slate-900"
               }`}
             >
@@ -101,10 +141,6 @@ export default function RightSidebarIconBar() {
               delayShow={300}
               className="tooltip !text-xs z-99"
             />
-            {/* Subtle divider below "collapse" icon — zero extra margin so spacing stays even */}
-            {isClose && (
-              <div className="w-6 h-px bg-zinc-700/50 light:bg-slate-300/60" />
-            )}
           </div>
         );
       })}
