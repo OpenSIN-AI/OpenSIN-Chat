@@ -43,13 +43,17 @@ export default function Sidebar() {
           />
         )}
         <div className="overflow-hidden h-full">
-          <div className="flex shrink-0 w-full justify-center my-[18px]">
-            <div className="flex w-[250px] min-w-[250px]">
-              <Link to={paths.home()} aria-label="Home">
+          <div className="flex shrink-0 w-full justify-start my-[18px] px-[24px]">
+            <div className="flex w-[250px] min-w-[250px] items-center">
+              <Link
+                to={paths.home()}
+                aria-label="Home"
+                className="flex items-center"
+              >
                 <img
                   src={logo}
                   alt="Logo"
-                  className={`rounded max-h-[24px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
+                  className={`rounded-lg h-9 w-auto max-h-[36px] max-w-[180px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
                 />
               </Link>
             </div>

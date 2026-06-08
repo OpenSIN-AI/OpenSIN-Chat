@@ -66,7 +66,7 @@ export default function WorkspaceSources({ documents = [], onAddSources }: any) 
 
   return (
     <div className="w-full mt-8">
-      <div className="rounded-2xl border border-dashed border-theme-sidebar-border light:border-slate-300 p-5">
+      <div className="rounded-2xl border border-theme-sidebar-border light:border-slate-300 bg-theme-bg-chat-input/40 light:bg-slate-50 p-5">
         <div className="flex items-center justify-between gap-2 mb-3">
           <p className="text-sm font-semibold text-white light:text-slate-900">
             {t("main-page.workspaceSources.title")}
