@@ -98,12 +98,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
                   id="lmstudio-base-url"
                   place="top"
                   delayShow={300}
-                  className="tooltip !text-xs !opacity-100"
-                  style={{
-                    maxWidth: "250px",
-                    whiteSpace: "normal",
-                    wordWrap: "break-word",
-                  }}
+                  className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                 />
               </div>
               {loading ? (
@@ -150,12 +145,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
               />
               <Tooltip
                 id="lmstudio-max-tokens"
-                className="tooltip !text-xs !opacity-100"
-                style={{
-                  maxWidth: "250px",
-                  whiteSpace: "normal",
-                  wordWrap: "break-word",
-                }}
+                className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
               />
             </div>
             <input
@@ -190,12 +180,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
                 delayShow={300}
                 delayHide={400}
                 clickable={true}
-                className="tooltip !text-xs !opacity-100"
-                style={{
-                  maxWidth: "250px",
-                  whiteSpace: "normal",
-                  wordWrap: "break-word",
-                }}
+                className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
               >
                 <p className="text-xs leading-[18px] font-base">
                   Enter a <code>Bearer</code> Auth Token for interacting with
@@ -273,12 +258,7 @@ function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: an
                 delayShow={300}
                 delayHide={400}
                 clickable={true}
-                className="tooltip !text-xs !opacity-100 z-99"
-                style={{
-                  maxWidth: "250px",
-                  whiteSpace: "normal",
-                  wordWrap: "break-word",
-                }}
+                className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
               >
                 <p className="text-xs leading-[18px] font-base">
                   Could not reach LM Studio. Verify the URL is correct and the

@@ -71,12 +71,7 @@ export default function LemonadeOptions({ settings }: any) {
               delayShow={300}
               delayHide={800}
               clickable={true}
-              className="tooltip !text-xs !opacity-100 z-99"
-              style={{
-                maxWidth: "250px",
-                whiteSpace: "normal",
-                wordWrap: "break-word",
-              }}
+              className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
             >
               Enter the URL where the Lemonade is running.
               <br />
@@ -127,12 +122,7 @@ export default function LemonadeOptions({ settings }: any) {
               delayShow={300}
               delayHide={800}
               clickable={true}
-              className="tooltip !text-xs !opacity-100 z-99"
-              style={{
-                maxWidth: "350px",
-                whiteSpace: "normal",
-                wordWrap: "break-word",
-              }}
+              className="tooltip !text-xs !opacity-100 z-99 !max-w-[350px] !whitespace-normal !break-words"
             >
               The maximum number of tokens that can be used for a model context
               window. This must be set to a value that is supported by the
@@ -171,12 +161,7 @@ export default function LemonadeOptions({ settings }: any) {
               delayShow={300}
               delayHide={800}
               clickable={true}
-              className="tooltip !text-xs !opacity-100 z-99"
-              style={{
-                maxWidth: "350px",
-                whiteSpace: "normal",
-                wordWrap: "break-word",
-              }}
+              className="tooltip !text-xs !opacity-100 z-99 !max-w-[350px] !whitespace-normal !break-words"
             >
               The API key for your Lemonade server
             </Tooltip>

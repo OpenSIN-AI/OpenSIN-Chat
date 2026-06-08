@@ -73,12 +73,7 @@ export default function GeminiOptions({ settings }: any) {
             id="embedding-output-dimensions-tooltip"
             place="top"
             delayShow={300}
-            className="tooltip !text-xs !opacity-100"
-            style={{
-              maxWidth: "250px",
-              whiteSpace: "normal",
-              wordWrap: "break-word",
-            }}
+            className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
           >
             The number of dimensions the resulting output embeddings should have
             if it supports multiple dimensions output.

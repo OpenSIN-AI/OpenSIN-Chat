@@ -90,12 +90,7 @@ export default function AzureAiOptions({ settings }: any) {
               id="azure-openai-model-type"
               place="top"
               delayShow={300}
-              className="tooltip !text-xs !opacity-100"
-              style={{
-                maxWidth: "250px",
-                whiteSpace: "normal",
-                wordWrap: "break-word",
-              }}
+              className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
             />
             <div
               type="button"

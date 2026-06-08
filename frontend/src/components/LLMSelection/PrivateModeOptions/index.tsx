@@ -55,12 +55,7 @@ export default function PrivateModeOptions({ settings }: any) {
               place="top"
               delayShow={300}
               clickable={true}
-              className="tooltip !text-xs !opacity-100"
-              style={{
-                maxWidth: "250px",
-                whiteSpace: "normal",
-                wordWrap: "break-word",
-              }}
+              className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
             >
               Enter the URL where Privatemode Proxy is running.
               <br />

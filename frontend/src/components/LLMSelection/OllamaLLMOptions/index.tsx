@@ -71,12 +71,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                     id="ollama-base-url"
                     place="top"
                     delayShow={300}
-                    className="tooltip !text-xs !opacity-100"
-                    style={{
-                      maxWidth: "250px",
-                      whiteSpace: "normal",
-                      wordWrap: "break-word",
-                    }}
+                    className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                   />
                 </div>
                 {loading ? (
@@ -127,12 +122,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                   delayShow={300}
                   delayHide={400}
                   clickable={true}
-                  className="tooltip !text-xs !opacity-100"
-                  style={{
-                    maxWidth: "250px",
-                    whiteSpace: "normal",
-                    wordWrap: "break-word",
-                  }}
+                  className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                 >
                   <p className="text-xs leading-[18px] font-base">
                     Choose how long Ollama should keep your model in memory
@@ -178,12 +168,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                   delayShow={300}
                   delayHide={400}
                   clickable={true}
-                  className="tooltip !text-xs !opacity-100"
-                  style={{
-                    maxWidth: "250px",
-                    whiteSpace: "normal",
-                    wordWrap: "break-word",
-                  }}
+                  className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                 >
                   <p className="text-xs leading-[18px] font-base">
                     Specify the maximum number of tokens that can be used for
@@ -238,12 +223,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                   delayShow={300}
                   delayHide={400}
                   clickable={true}
-                  className="tooltip !text-xs !opacity-100"
-                  style={{
-                    maxWidth: "250px",
-                    whiteSpace: "normal",
-                    wordWrap: "break-word",
-                  }}
+                  className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                 >
                   <p className="text-xs leading-[18px] font-base">
                     Enter a <code>Bearer</code> Auth Token for interacting with

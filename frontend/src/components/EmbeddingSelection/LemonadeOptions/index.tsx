@@ -124,12 +124,7 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
                   id="lemonade-base-url"
                   place="top"
                   delayShow={300}
-                  className="tooltip !text-xs !opacity-100"
-                  style={{
-                    maxWidth: "250px",
-                    whiteSpace: "normal",
-                    wordWrap: "break-word",
-                  }}
+                  className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                 />
               </div>
               {loading ? (

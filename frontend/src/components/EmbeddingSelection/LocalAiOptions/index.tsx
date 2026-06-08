@@ -46,12 +46,7 @@ export default function LocalAiOptions({ settings }: any) {
                 id="localai-api-key-tooltip"
                 place="top"
                 delayShow={300}
-                className="tooltip !text-xs !opacity-100"
-                style={{
-                  maxWidth: "250px",
-                  whiteSpace: "normal",
-                  wordWrap: "break-word",
-                }}
+                className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
               >
                 The API key for the LocalAI server (if applicable).
               </Tooltip>
@@ -88,12 +83,7 @@ export default function LocalAiOptions({ settings }: any) {
               id="max-embedding-chunk-length-tooltip"
               place="top"
               delayShow={300}
-              className="tooltip !text-xs !opacity-100"
-              style={{
-                maxWidth: "250px",
-                whiteSpace: "normal",
-                wordWrap: "break-word",
-              }}
+              className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
             >
               Maximum length of text chunks, in characters, for embedding.
             </Tooltip>
@@ -127,12 +117,7 @@ export default function LocalAiOptions({ settings }: any) {
               id="embedding-output-dimensions-tooltip"
               place="top"
               delayShow={300}
-              className="tooltip !text-xs !opacity-100"
-              style={{
-                maxWidth: "250px",
-                whiteSpace: "normal",
-                wordWrap: "break-word",
-              }}
+              className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
             >
               The number of dimensions the resulting output embeddings should
               have if it supports multiple dimensions output.
