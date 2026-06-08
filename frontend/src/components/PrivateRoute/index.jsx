@@ -7,6 +7,7 @@ import paths from "@/utils/paths";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 import { userFromStorage } from "@/utils/request";
 import System from "@/models/system";
+import useSystemSettings from "@/hooks/useSystemSettings";
 import UserMenu from "../UserMenu";
 import { KeyboardShortcutWrapper } from "@/utils/keyboardShortcuts";
 
@@ -17,11 +18,12 @@ function useIsAuthenticated() {
   const [shouldRedirectToOnboarding, setShouldRedirectToOnboarding] =
     useState(false);
   const [multiUserMode, setMultiUserMode] = useState(false);
+  const { settings, loading: settingsLoading } = useSystemSettings();
 
   useEffect(() => {
     const validateSession = async () => {
       const onboardingComplete = await System.isOnboardingComplete();
-      const { MultiUserMode, RequiresAuth } = await System.keys();
+      const { MultiUserMode, RequiresAuth } = settings || {};
       setMultiUserMode(MultiUserMode);
 
       // Check for the onboarding redirect condition
@@ -69,8 +71,8 @@ function useIsAuthenticated() {
 
       setIsAuthed(true);
     };
-    validateSession();
-  }, []);
+    if (!settingsLoading) validateSession();
+  }, [settings, settingsLoading]);
 
   return { isAuthd, shouldRedirectToOnboarding, multiUserMode };
 }

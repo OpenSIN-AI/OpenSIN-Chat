@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, memo } from "react";
 import { X } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
-import Workspace from "../../../models/workspace";
-import System from "../../../models/system";
 import { isMobileOnly } from "react-device-detect";
 import useUser from "../../../hooks/useUser";
+import useSystemSettings from "../../../hooks/useSystemSettings";
+import useWorkspace from "../../../hooks/useWorkspace";
 import DocumentSettings from "./Documents";
 import DataConnectors from "./DataConnectors";
 import ModalWrapper from "@/components/ModalWrapper";
@@ -17,25 +17,9 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
   const { t } = useTranslation();
   const { slug } = useParams();
   const { user } = useUser();
-  const [workspace, setWorkspace] = useState(null);
-  const [settings, setSettings] = useState({});
+  const { settings } = useSystemSettings();
+  const { workspace } = useWorkspace(providedSlug ?? slug);
   const [selectedTab, setSelectedTab] = useState("documents");
-
-  useEffect(() => {
-    async function getSettings() {
-      const _settings = await System.keys();
-      setSettings(_settings ?? {});
-    }
-    getSettings();
-  }, []);
-
-  useEffect(() => {
-    async function fetchWorkspace() {
-      const workspace = await Workspace.bySlug(providedSlug ?? slug);
-      setWorkspace(workspace);
-    }
-    fetchWorkspace();
-  }, [providedSlug, slug]);
 
   if (!workspace) return null;
 

@@ -11,6 +11,8 @@ import showToast from "@/utils/toast";
 import FolderSelectionPopup from "./FolderSelectionPopup";
 import MoveToFolderIcon from "./MoveToFolderIcon";
 import { useModal } from "@/hooks/useModal";
+import useDocuments from "@/hooks/useDocuments";
+import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 import NewFolderModal from "./NewFolderModal";
 import debounce from "lodash.debounce";
 import { filterFileSearchResults } from "./utils";
@@ -32,6 +34,8 @@ function Directory({
   setLoadingMessage,
   loadingMessage,
 }) {
+  const { mutate: mutateDocuments } = useDocuments();
+  const { mutate: mutateWorkspace } = useWorkspaceBySlug(workspace.slug);
   const { t } = useTranslation();
   const [amountSelected, setAmountSelected] = useState(0);
   const [showFolderSelection, setShowFolderSelection] = useState(false);
@@ -92,7 +96,7 @@ function Directory({
         await System.deleteFolder(folderName);
       }
 
-      await fetchKeys(true);
+      await Promise.all([mutateDocuments(), mutateWorkspace()]);
       setSelectedItems({});
     } catch (error) {
       console.error("Failed to delete files and folders:", error);
@@ -173,7 +177,7 @@ function Directory({
         "success",
       );
     }
-    await fetchKeys(true);
+    await Promise.all([mutateDocuments(), mutateWorkspace()]);
     setSelectedItems({});
     setLoading(false);
   };

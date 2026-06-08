@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useRef, useState } from "react";
 import {
   X,
   Database,
@@ -8,44 +7,13 @@ import {
   ArrowSquareOut,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import { API_BASE } from "@/utils/constants";
-import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
+import { usePoliticians } from "@/hooks/usePoliticians";
 import ChatSidebar, { useDatabaseSidebar } from "../ChatSidebar";
 
 export default function DatabaseSidebar() {
   const { sidebarOpen, closeSidebar } = useDatabaseSidebar();
   const { t } = useTranslation();
-  const [politicians, setPoliticians] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const abortRef = useRef(null);
-
-  async function fetchPoliticians() {
-    abortRef.current?.abort();
-    const controller = new AbortController();
-    abortRef.current = controller;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetchWithTimeout(
-        `${API_BASE}/utils/bundestag/politicians?limit=8`,
-        { signal: controller.signal },
-      );
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      setPoliticians(json?.data || []);
-    } catch (e) {
-      if (e.name === "AbortError") return; // closed/unmounted — ignore
-      setError(e.message);
-    } finally {
-      if (!controller.signal.aborted) setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    if (sidebarOpen && politicians.length === 0) fetchPoliticians();
-    return () => abortRef.current?.abort();
-  }, [sidebarOpen]);
+  const { politicians, loading, error, refresh } = usePoliticians();
 
   return (
     <ChatSidebar isOpen={sidebarOpen}>
@@ -60,7 +28,7 @@ export default function DatabaseSidebar() {
             {t("sidebar.database.title", "AfD-Abgeordnete")}
           </p>
           <button
-            onClick={fetchPoliticians}
+            onClick={refresh}
             type="button"
             disabled={loading}
             className="text-zinc-500 hover:text-white transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
@@ -110,7 +78,7 @@ export default function DatabaseSidebar() {
                 {t("sidebar.database.error", "Fehler:")} {error}
               </span>
               <button
-                onClick={fetchPoliticians}
+                onClick={refresh}
                 type="button"
                 className="self-start flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-900/40 hover:bg-red-900/70 text-red-200 border-none cursor-pointer transition-colors"
               >

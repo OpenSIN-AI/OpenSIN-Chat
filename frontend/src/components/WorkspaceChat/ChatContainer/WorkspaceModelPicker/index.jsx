@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 import useUser from "@/hooks/useUser";
+import useWorkspace from "@/hooks/useWorkspace";
+import useSystemSettings from "@/hooks/useSystemSettings";
 import { useModal } from "@/hooks/useModal";
 import LLMSelectorModal from "../PromptInput/LLMSelector/index";
 import SetupProvider from "../PromptInput/LLMSelector/SetupProvider";
@@ -11,8 +13,6 @@ import {
   SAVE_LLM_SELECTOR_EVENT,
   PROVIDER_SETUP_EVENT,
 } from "../PromptInput/LLMSelector/action";
-import Workspace from "@/models/workspace";
-import System from "@/models/system";
 import ModelRouterAPI from "@/models/modelRouter";
 import { SIDEBAR_TOGGLE_EVENT } from "@/components/Sidebar/SidebarToggle";
 
@@ -32,20 +32,13 @@ async function resolveModelName(workspace, systemSettings, t) {
   return router.name;
 }
 
-async function fetchModelName(slug, setModelName, t) {
-  if (!slug) return;
-  const [workspace, systemSettings] = await Promise.all([
-    Workspace.bySlug(slug),
-    System.keys(),
-  ]);
-  setModelName(await resolveModelName(workspace, systemSettings, t));
-}
-
 export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   const { t } = useTranslation();
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const { user } = useUser();
+  const { workspace } = useWorkspace(slug);
+  const { settings: systemSettings } = useSystemSettings();
   const [showSelector, setShowSelector] = useState(false);
   const [modelName, setModelName] = useState("");
   const {
@@ -67,19 +60,23 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
 
   // Fetch current model name for display
   useEffect(() => {
-    fetchModelName(slug, setModelName, t);
-  }, [slug]);
+    if (workspace && systemSettings) {
+      resolveModelName(workspace, systemSettings, t).then(setModelName);
+    }
+  }, [workspace, systemSettings, t]);
 
   // Close selector and refresh model name when model is saved
   useEffect(() => {
     function handleSave() {
       setShowSelector(false);
-      fetchModelName(slug, setModelName, t);
+      if (workspace && systemSettings) {
+        resolveModelName(workspace, systemSettings, t).then(setModelName);
+      }
     }
     window.addEventListener(SAVE_LLM_SELECTOR_EVENT, handleSave);
     return () =>
       window.removeEventListener(SAVE_LLM_SELECTOR_EVENT, handleSave);
-  }, [slug]);
+  }, [slug, workspace, systemSettings]);
 
   // Handle provider setup request
   useEffect(() => {

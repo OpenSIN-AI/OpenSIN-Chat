@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useRef, useState } from "react";
 import {
   X,
   Newspaper,
@@ -8,8 +7,7 @@ import {
   ArrowSquareOut,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import { API_BASE } from "@/utils/constants";
-import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
+import { usePoliticalData } from "@/hooks/usePoliticalData";
 import ChatSidebar, { usePoliticalSidebar } from "../ChatSidebar";
 
 function Section({ title, loading, error, onRetry, retryLabel, children }) {
@@ -48,70 +46,17 @@ function Section({ title, loading, error, onRetry, retryLabel, children }) {
 export default function PoliticalSidebar() {
   const { sidebarOpen, closeSidebar } = usePoliticalSidebar();
   const { t } = useTranslation();
-  const [drucksachen, setDrucksachen] = useState([]);
-  const [rssItems, setRssItems] = useState([]);
-  const [loadingDrucksachen, setLoadingDrucksachen] = useState(false);
-  const [loadingRss, setLoadingRss] = useState(false);
-  const [errorDrucksachen, setErrorDrucksachen] = useState(null);
-  const [errorRss, setErrorRss] = useState(null);
-  const abortRef = useRef(null);
-
-  function ensureController() {
-    if (!abortRef.current || abortRef.current.signal.aborted)
-      abortRef.current = new AbortController();
-    return abortRef.current;
-  }
-
-  async function fetchDrucksachen() {
-    const { signal } = ensureController();
-    setLoadingDrucksachen(true);
-    setErrorDrucksachen(null);
-    try {
-      const r = await fetchWithTimeout(
-        `${API_BASE}/utils/bundestag/drucksachen?rows=6`,
-        { signal },
-      );
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const json = await r.json();
-      setDrucksachen(json?.documents || []);
-    } catch (e) {
-      if (e.name === "AbortError") return;
-      setErrorDrucksachen(e.message);
-    } finally {
-      if (!signal.aborted) setLoadingDrucksachen(false);
-    }
-  }
-
-  async function fetchRss() {
-    const { signal } = ensureController();
-    setLoadingRss(true);
-    setErrorRss(null);
-    try {
-      const r = await fetchWithTimeout(`${API_BASE}/utils/political/rss`, {
-        signal,
-      });
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      const json = await r.json();
-      setRssItems(json?.items || []);
-    } catch (e) {
-      if (e.name === "AbortError") return;
-      setErrorRss(e.message);
-    } finally {
-      if (!signal.aborted) setLoadingRss(false);
-    }
-  }
-
-  function fetchAll() {
-    fetchDrucksachen();
-    fetchRss();
-  }
-
-  useEffect(() => {
-    if (sidebarOpen && drucksachen.length === 0 && rssItems.length === 0) {
-      fetchAll();
-    }
-    return () => abortRef.current?.abort();
-  }, [sidebarOpen]);
+  const {
+    drucksachen,
+    rssItems,
+    loadingDrucksachen,
+    loadingRss,
+    errorDrucksachen,
+    errorRss,
+    refreshDrucksachen,
+    refreshRss,
+    refreshAll,
+  } = usePoliticalData();
 
   return (
     <ChatSidebar isOpen={sidebarOpen}>
@@ -126,7 +71,7 @@ export default function PoliticalSidebar() {
             {t("sidebar.political.title", "Politisches")}
           </p>
           <button
-            onClick={fetchAll}
+            onClick={refreshAll}
             type="button"
             disabled={loadingDrucksachen || loadingRss}
             className="text-zinc-500 hover:text-white transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
@@ -154,7 +99,7 @@ export default function PoliticalSidebar() {
             title={t("sidebar.political.drucksachen", "Bundestag-Drucksachen (AfD)")}
             loading={loadingDrucksachen}
             error={errorDrucksachen}
-            onRetry={fetchDrucksachen}
+            onRetry={refreshDrucksachen}
             retryLabel={t("sidebar.retry", "Erneut versuchen")}
           >
             {drucksachen.length === 0 ? (
@@ -189,7 +134,7 @@ export default function PoliticalSidebar() {
             title={t("sidebar.political.news", "AfD Pressemitteilungen")}
             loading={loadingRss}
             error={errorRss}
-            onRetry={fetchRss}
+            onRetry={refreshRss}
             retryLabel={t("sidebar.retry", "Erneut versuchen")}
           >
             {rssItems.length === 0 ? (

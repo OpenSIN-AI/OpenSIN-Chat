@@ -1,38 +1,27 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { EnvelopeSimple } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
 import InviteRow from "./InviteRow";
 import NewInviteModal from "./NewInviteModal";
+import useInvites, { INVITES_KEY } from "@/hooks/useInvites";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
+import { mutate } from "swr";
 
 export default function AdminInvites() {
   const { isOpen, openModal, closeModal } = useModal();
-  const [loading, setLoading] = useState(true);
-  const [invites, setInvites] = useState([]);
-
-  const fetchInvites = async () => {
-    const _invites = await Admin.invites();
-    setInvites(_invites);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchInvites();
-  }, []);
+  const { invites, isLoading } = useInvites();
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
-      >
+      }>
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">
@@ -55,7 +44,7 @@ export default function AdminInvites() {
             </CTAButton>
           </div>
           <div className="overflow-x-auto mt-6">
-            {loading ? (
+            {isLoading ? (
               <Skeleton.default
                 height="80vh"
                 width="100%"
@@ -104,7 +93,7 @@ export default function AdminInvites() {
           </div>
         </div>
         <ModalWrapper isOpen={isOpen}>
-          <NewInviteModal closeModal={closeModal} onSuccess={fetchInvites} />
+          <NewInviteModal closeModal={closeModal} onSuccess={() => mutate(INVITES_KEY)} />
         </ModalWrapper>
       </div>
     </div>

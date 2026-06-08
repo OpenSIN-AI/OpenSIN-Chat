@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import System from "../../../models/system";
 import { AUTH_TOKEN, AUTH_USER } from "../../../utils/constants";
 import paths from "../../../utils/paths";
@@ -9,6 +9,7 @@ import { useModal } from "@/hooks/useModal";
 import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
+import useCustomAppName from "@/hooks/useCustomAppName";
 
 const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
   const [username, setUsername] = useState("");
@@ -181,7 +182,8 @@ export default function MultiUserAuth() {
   const [token, setToken] = useState(null);
   const [showRecoveryForm, setShowRecoveryForm] = useState(false);
   const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
-  const [customAppName, setCustomAppName] = useState(null);
+
+  const { appName, isLoading: appNameLoading } = useCustomAppName();
 
   const {
     isOpen: isRecoveryCodeModalOpen,
@@ -264,15 +266,6 @@ export default function MultiUserAuth() {
     }
   }, [downloadComplete, user, token]);
 
-  useEffect(() => {
-    const fetchCustomAppName = async () => {
-      const { appName } = await System.fetchCustomAppName();
-      setCustomAppName(appName || "");
-      setLoading(false);
-    };
-    fetchCustomAppName();
-  }, []);
-
   if (showRecoveryForm) {
     return (
       <RecoveryForm
@@ -298,7 +291,7 @@ export default function MultiUserAuth() {
               </h3>
             </div>
             <p className="text-zinc-400 light:text-zinc-600 text-sm text-center">
-              {t("login.sign-in", { appName: customAppName || "OpenAfD Chat" })}
+              {t("login.sign-in", { appName: appName || "OpenAfD Chat" })}
             </p>
           </div>
         </div>
@@ -333,7 +326,7 @@ export default function MultiUserAuth() {
         </div>
         <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
           <button
-            disabled={loading}
+            disabled={loading || appNameLoading}
             type="submit"
             className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full"
           >

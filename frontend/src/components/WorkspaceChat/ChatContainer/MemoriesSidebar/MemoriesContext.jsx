@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useMemoriesSidebar } from "../ChatSidebar";
 import useUser from "@/hooks/useUser";
-import System from "@/models/system";
+import useSystemSettings from "@/hooks/useSystemSettings";
 import Memory from "@/models/memory";
 
 export const LIMITS = {
@@ -29,18 +29,15 @@ export function MemoriesProvider({ workspace, children }) {
   const [activeTab, setActiveTab] = useState("workspace");
   const [modalState, setModalState] = useState({ open: false, mode: "create" });
   const [editingMemory, setEditingMemory] = useState(null);
+  const { settings, loading: settingsLoading } = useSystemSettings();
   const [enabled, setEnabled] = useState(false);
   const [autoExtraction, setAutoExtraction] = useState(true);
-  const [loadingEnabled, setLoadingEnabled] = useState(true);
 
   useEffect(() => {
-    if (!sidebarOpen) return;
-    System.keys().then((settings) => {
-      setEnabled(!!settings?.MemoryEnabled);
-      setAutoExtraction(settings?.MemoryAutoExtraction !== false);
-      setLoadingEnabled(false);
-    });
-  }, [sidebarOpen]);
+    if (settingsLoading) return;
+    setEnabled(!!settings?.MemoryEnabled);
+    setAutoExtraction(settings?.MemoryAutoExtraction !== false);
+  }, [settings, settingsLoading]);
 
   async function fetchMemories() {
     if (!workspace?.slug) return;

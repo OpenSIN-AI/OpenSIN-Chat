@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useMemo } from "react";
+import useSystemSettings from "@/hooks/useSystemSettings";
 import { PROVIDER_PRIVACY_MAP } from "./constants";
 import { ArrowSquareOut } from "@phosphor-icons/react";
 import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
@@ -20,35 +20,26 @@ function defaultProvider(providerString) {
 }
 
 export default function ProviderPrivacy() {
-  const [loading, setLoading] = useState(true);
-  const [providers, setProviders] = useState({
-    llmProvider: null,
-    embeddingEngine: null,
-    vectorDb: null,
-  });
+  const { settings, loading } = useSystemSettings();
 
-  useEffect(() => {
-    async function fetchProviders() {
-      const _settings = await System.keys();
-      const providerDefinition =
-        PROVIDER_PRIVACY_MAP.llm[_settings?.LLMProvider] ||
-        defaultProvider(_settings?.LLMProvider);
-      const embeddingEngineDefinition =
-        PROVIDER_PRIVACY_MAP.embeddingEngine[_settings?.EmbeddingEngine] ||
-        defaultProvider(_settings?.EmbeddingEngine);
-      const vectorDbDefinition =
-        PROVIDER_PRIVACY_MAP.vectorDb[_settings?.VectorDB] ||
-        defaultProvider(_settings?.VectorDB);
+  const providers = useMemo(() => {
+    if (!settings) return { llmProvider: null, embeddingEngine: null, vectorDb: null };
+    const providerDefinition =
+      PROVIDER_PRIVACY_MAP.llm[settings?.LLMProvider] ||
+      defaultProvider(settings?.LLMProvider);
+    const embeddingEngineDefinition =
+      PROVIDER_PRIVACY_MAP.embeddingEngine[settings?.EmbeddingEngine] ||
+      defaultProvider(settings?.EmbeddingEngine);
+    const vectorDbDefinition =
+      PROVIDER_PRIVACY_MAP.vectorDb[settings?.VectorDB] ||
+      defaultProvider(settings?.VectorDB);
 
-      setProviders({
-        llmProvider: providerDefinition,
-        embeddingEngine: embeddingEngineDefinition,
-        vectorDb: vectorDbDefinition,
-      });
-      setLoading(false);
-    }
-    fetchProviders();
-  }, []);
+    return {
+      llmProvider: providerDefinition,
+      embeddingEngine: embeddingEngineDefinition,
+      vectorDb: vectorDbDefinition,
+    };
+  }, [settings]);
 
   if (loading) return null;
   return (

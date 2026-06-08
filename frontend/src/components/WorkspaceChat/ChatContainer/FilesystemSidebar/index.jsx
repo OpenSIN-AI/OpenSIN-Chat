@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useRef, useState } from "react";
 import {
   X,
   FolderOpen,
@@ -9,8 +8,7 @@ import {
   ArrowClockwise,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import { API_BASE } from "@/utils/constants";
-import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
+import { useFilesystem } from "@/hooks/useFilesystem";
 import ChatSidebar, { useFilesystemSidebar } from "../ChatSidebar";
 
 function formatUptime(seconds) {
@@ -25,35 +23,7 @@ function formatUptime(seconds) {
 export default function FilesystemSidebar() {
   const { sidebarOpen, closeSidebar } = useFilesystemSidebar();
   const { t } = useTranslation();
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const abortRef = useRef(null);
-
-  async function fetchData() {
-    abortRef.current?.abort();
-    const controller = new AbortController();
-    abortRef.current = controller;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetchWithTimeout(`${API_BASE}/utils/filesystem`, {
-        signal: controller.signal,
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      setData(await res.json());
-    } catch (e) {
-      if (e.name === "AbortError") return; // closed/unmounted — ignore
-      setError(e.message);
-    } finally {
-      if (!controller.signal.aborted) setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    if (sidebarOpen) fetchData();
-    return () => abortRef.current?.abort();
-  }, [sidebarOpen]);
+  const { data, loading, error, refresh } = useFilesystem();
 
   const rows = data
     ? [
@@ -79,7 +49,7 @@ export default function FilesystemSidebar() {
             {t("sidebar.filesystem.title", "Verzeichnis")}
           </p>
           <button
-            onClick={fetchData}
+            onClick={refresh}
             type="button"
             disabled={loading}
             className="text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
@@ -116,7 +86,7 @@ export default function FilesystemSidebar() {
                 {t("sidebar.filesystem.error", "Fehler beim Laden:")} {error}
               </span>
               <button
-                onClick={fetchData}
+                onClick={refresh}
                 type="button"
                 className="self-start flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-900/40 hover:bg-red-900/70 text-red-200 border-none cursor-pointer transition-colors"
               >

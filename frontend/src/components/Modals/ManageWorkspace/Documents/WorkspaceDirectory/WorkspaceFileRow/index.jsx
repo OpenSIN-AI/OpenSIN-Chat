@@ -16,7 +16,7 @@ export default function WorkspaceFileRow({
   workspace,
   setLoading,
   setLoadingMessage,
-  fetchKeys,
+  refresh,
   hasChanges,
   movedItems,
   selected,
@@ -34,7 +34,7 @@ export default function WorkspaceFileRow({
         adds: [],
         deletes: [`${folderName}/${item.name}`],
       });
-      await fetchKeys(true);
+      await refresh();
     } catch (error) {
       console.error("Failed to remove document:", error);
     }

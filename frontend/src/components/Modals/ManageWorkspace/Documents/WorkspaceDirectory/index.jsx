@@ -4,6 +4,8 @@ import WorkspaceFileRow from "./WorkspaceFileRow";
 import Workspace from "@/models/workspace";
 import { useEmbeddingProgress } from "@/EmbeddingProgressContext";
 import { useTranslation } from "react-i18next";
+import useDocuments from "@/hooks/useDocuments";
+import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 import { LoadingState, EmbeddingProgressState } from "./DirectoryStates";
 import {
   toggleSelection,
@@ -21,11 +23,15 @@ function WorkspaceDirectory({
   loadingMessage,
   setLoadingMessage,
   setLoading,
-  fetchKeys,
   hasChanges,
   saveChanges,
   movedItems,
 }) {
+  const { mutate: mutateDocuments } = useDocuments();
+  const { mutate: mutateWorkspace } = useWorkspaceBySlug(workspace.slug);
+  const refresh = async () => {
+    await Promise.all([mutateDocuments(), mutateWorkspace()]);
+  };
   const { t } = useTranslation();
   const { embeddingProgressMap, removeQueuedFile } = useEmbeddingProgress();
   const embeddingProgress = embeddingProgressMap[workspace.slug] || null;
@@ -70,7 +76,7 @@ function WorkspaceDirectory({
         adds: [],
         deletes: itemsToRemove,
       });
-      await fetchKeys(true);
+      await refresh();
       setSelectedItems({});
     } catch (error) {
       console.error("Failed to remove documents:", error);
@@ -139,7 +145,7 @@ function WorkspaceDirectory({
                       workspace={workspace}
                       setLoading={setLoading}
                       setLoadingMessage={setLoadingMessage}
-                      fetchKeys={fetchKeys}
+                      refresh={refresh}
                       hasChanges={hasChanges}
                       movedItems={movedItems}
                       selected={selectedItems[item.id]}

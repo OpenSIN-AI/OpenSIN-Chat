@@ -5,6 +5,7 @@ import System from "@/models/system";
 import { useDropzone } from "react-dropzone";
 import DndIcon from "./dnd-icon.png";
 import Workspace from "@/models/workspace";
+import useDocument from "@/hooks/useDocument";
 import showToast from "@/utils/toast";
 import FileUploadWarningModal from "./FileUploadWarningModal";
 import pluralize from "pluralize";
@@ -55,6 +56,8 @@ export function DnDFileUploaderProvider({
   const [pendingFiles, setPendingFiles] = useState([]);
   const [tokenCount, setTokenCount] = useState(0);
   const [maxTokens, setMaxTokens] = useState(Number.POSITIVE_INFINITY);
+
+  const { mutate: mutateParsedFiles } = useDocument(workspace?.slug, threadSlug);
 
   useEffect(() => {
     System.checkDocumentProcessorOnline().then((status) => setReady(status));
@@ -216,7 +219,7 @@ export function DnDFileUploaderProvider({
     const promises = [];
 
     const { currentContextTokenCount, contextWindow } =
-      await Workspace.getParsedFiles(workspace.slug, threadSlug);
+      await mutateParsedFiles();
     const workspaceContextWindow = contextWindow
       ? Math.floor(contextWindow * Workspace.maxContextWindowLimit)
       : Number.POSITIVE_INFINITY;

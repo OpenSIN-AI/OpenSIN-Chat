@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import showToast from "@/utils/toast";
@@ -10,6 +10,7 @@ import PreLoader from "@/components/Preloader";
 import CTAButton from "@/components/lib/CTAButton";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
+import useSystemAuth from "@/hooks/useSystemAuth";
 import {
   USERNAME_MIN_LENGTH,
   USERNAME_MAX_LENGTH,
@@ -40,9 +41,8 @@ function MultiUserMode() {
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [useMultiUserMode, setUseMultiUserMode] = useState(false);
-  const [multiUserModeEnabled, setMultiUserModeEnabled] = useState(false);
-  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const { multiUserMode, isLoading } = useSystemAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,17 +74,7 @@ function MultiUserMode() {
     }
   };
 
-  useEffect(() => {
-    async function fetchIsMultiUserMode() {
-      setLoading(true);
-      const multiUserModeEnabled = await System.isMultiUserMode();
-      setMultiUserModeEnabled(multiUserModeEnabled);
-      setLoading(false);
-    }
-    fetchIsMultiUserMode();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="h-1/2 transition-all duration-500 relative md:ml-[2px] md:mr-[8px] md:my-[16px] md:rounded-[26px] p-[18px] h-full overflow-y-scroll">
         <div className="w-full h-full flex justify-center items-center">
@@ -126,7 +116,7 @@ function MultiUserMode() {
             <div className="flex items-start justify-between px-6 py-4"></div>
             <div className="space-y-6 flex h-full w-full">
               <div className="w-full flex flex-col gap-y-4">
-                {multiUserModeEnabled ? (
+                {multiUserMode ? (
                   <p className="text-white text-sm font-semibold">
                     {t("security.multiuser.enable.is-enable")}
                   </p>
@@ -158,8 +148,8 @@ function MultiUserMode() {
                         pattern={USERNAME_PATTERN}
                         required={true}
                         autoComplete="off"
-                        disabled={multiUserModeEnabled}
-                        defaultValue={multiUserModeEnabled ? "********" : ""}
+                        disabled={multiUserMode}
+                        defaultValue={multiUserMode ? "********" : ""}
                       />
                       <p className="text-white text-opacity-60 text-xs mt-2">
                         {t("common.username_requirements")}
@@ -180,7 +170,7 @@ function MultiUserMode() {
                         minLength={8}
                         required={true}
                         autoComplete="off"
-                        defaultValue={multiUserModeEnabled ? "********" : ""}
+                        defaultValue={multiUserMode ? "********" : ""}
                       />
                     </div>
                   </div>
@@ -203,14 +193,13 @@ export const PW_REGEX = new RegExp(/^[a-zA-Z0-9_\-!@$%^&*();]+$/);
 function PasswordProtection() {
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
-  const [multiUserModeEnabled, setMultiUserModeEnabled] = useState(false);
   const [usePassword, setUsePassword] = useState(false);
-  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+  const { settings, multiUserMode, isLoading } = useSystemAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (multiUserModeEnabled) return false;
+    if (multiUserMode) return false;
     const form = new FormData(e.target);
 
     if (!PW_REGEX.test(form.get("password"))) {
@@ -246,19 +235,14 @@ function PasswordProtection() {
     }
   };
 
+  // Derive usePassword from settings when data loads
   useEffect(() => {
-    async function fetchIsMultiUserMode() {
-      setLoading(true);
-      const multiUserModeEnabled = await System.isMultiUserMode();
-      const settings = await System.keys();
-      setMultiUserModeEnabled(multiUserModeEnabled);
-      setUsePassword(settings?.RequiresAuth);
-      setLoading(false);
+    if (!isLoading && settings?.RequiresAuth !== undefined) {
+      setUsePassword(settings.RequiresAuth);
     }
-    fetchIsMultiUserMode();
-  }, []);
+  }, [isLoading, settings]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="h-1/2 transition-all duration-500 relative md:ml-[2px] md:mr-[8px] md:my-[16px] md:rounded-[26px] p-[18px] h-full overflow-y-scroll">
         <div className="w-full h-full flex justify-center items-center">
@@ -268,7 +252,7 @@ function PasswordProtection() {
     );
   }
 
-  if (multiUserModeEnabled) return null;
+  if (multiUserMode) return null;
   return (
     <form
       onSubmit={handleSubmit}

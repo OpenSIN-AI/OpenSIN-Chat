@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { UserPlus } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
 import UserRow from "./UserRow";
 import useUser from "@/hooks/useUser";
+import useUsers, { USERS_KEY } from "@/hooks/useUsers";
 import NewUserModal from "./NewUserModal";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
 import Toggle from "@/components/lib/Toggle";
+import { mutate } from "swr";
 
 export default function AdminUsers() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -22,7 +22,7 @@ export default function AdminUsers() {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
-      >
+      }>
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">
@@ -49,7 +49,7 @@ export default function AdminUsers() {
           </div>
         </div>
         <ModalWrapper isOpen={isOpen}>
-          <NewUserModal closeModal={closeModal} />
+          <NewUserModal closeModal={closeModal} onSuccess={() => mutate(USERS_KEY)} />
         </ModalWrapper>
       </div>
     </div>
@@ -58,19 +58,9 @@ export default function AdminUsers() {
 
 function UsersContainer() {
   const { user: currUser } = useUser();
-  const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
+  const { users, isLoading } = useUsers();
 
-  useEffect(() => {
-    async function fetchUsers() {
-      const _users = await Admin.users();
-      setUsers(_users);
-      setLoading(false);
-    }
-    fetchUsers();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Skeleton.default
         height="80vh"

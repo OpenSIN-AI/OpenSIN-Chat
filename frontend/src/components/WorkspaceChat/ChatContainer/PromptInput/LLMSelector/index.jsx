@@ -15,8 +15,8 @@ import {
 import LLMSelectorSidePanel from "./LLMSelector";
 import { NoSetupWarning } from "./SetupProvider";
 import showToast from "@/utils/toast";
-import Workspace from "@/models/workspace";
-import System from "@/models/system";
+import useWorkspace from "@/hooks/useWorkspace";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function LLMSelectorModal({
   workspaceSlug = null,
@@ -25,7 +25,8 @@ export default function LLMSelectorModal({
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
+  const { workspace, loading: workspaceLoading } = useWorkspace(slug);
+  const { settings: systemSettings, loading: settingsLoading } = useSystemSettings();
   const [settings, setSettings] = useState(null);
   const [selectedLLMProvider, setSelectedLLMProvider] = useState(null);
   const [selectedLLMModel, setSelectedLLMModel] = useState("");
@@ -37,33 +38,30 @@ export default function LLMSelectorModal({
   const [saving, setSaving] = useState(false);
   const [missingCredentials, setMissingCredentials] = useState(false);
 
+  const loading = workspaceLoading || settingsLoading;
+
   useEffect(() => {
-    if (!slug) return;
-    setLoading(true);
-    Promise.all([Workspace.bySlug(slug), System.keys()])
-      .then(([workspace, systemSettings]) => {
-        const savedProvider =
-          workspace.chatProvider ?? systemSettings.LLMProvider;
-        const savedModel = workspace.chatModel ?? systemSettings.LLMModel;
-        const providerToSelect = initialProvider ?? savedProvider;
+    if (!workspace || !systemSettings) return;
+    const savedProvider =
+      workspace.chatProvider ?? systemSettings.LLMProvider;
+    const savedModel = workspace.chatModel ?? systemSettings.LLMModel;
+    const providerToSelect = initialProvider ?? savedProvider;
 
-        setSettings(systemSettings);
-        setSelectedLLMProvider(providerToSelect);
-        autoScrollToSelectedLLMProvider(providerToSelect);
-        setSelectedLLMModel(savedModel);
-        setSelectedRouterId(
-          workspace.router_id || systemSettings?.ModelRouterId || null,
-        );
+    setSettings(systemSettings);
+    setSelectedLLMProvider(providerToSelect);
+    autoScrollToSelectedLLMProvider(providerToSelect);
+    setSelectedLLMModel(savedModel);
+    setSelectedRouterId(
+      workspace.router_id || systemSettings?.ModelRouterId || null,
+    );
 
-        if (initialProvider && initialProvider !== savedProvider) {
-          setHasChanges(true);
-          setMissingCredentials(
-            hasMissingCredentials(systemSettings, initialProvider),
-          );
-        }
-      })
-      .finally(() => setLoading(false));
-  }, [slug]);
+    if (initialProvider && initialProvider !== savedProvider) {
+      setHasChanges(true);
+      setMissingCredentials(
+        hasMissingCredentials(systemSettings, initialProvider),
+      );
+    }
+  }, [workspace, systemSettings]);
 
   function handleSearch(e) {
     const searchTerm = e.target.value.toLowerCase();

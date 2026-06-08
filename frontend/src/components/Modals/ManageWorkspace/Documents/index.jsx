@@ -1,51 +1,40 @@
 // SPDX-License-Identifier: MIT
 import { ArrowsDownUp } from "@phosphor-icons/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Workspace from "../../../../models/workspace";
-import System from "../../../../models/system";
 import showToast from "../../../../utils/toast";
 import Directory from "./Directory";
 import WorkspaceDirectory from "./WorkspaceDirectory";
 import { useWorkspaceEmbeddingProgress } from "@/EmbeddingProgressContext";
+import useDocuments from "@/hooks/useDocuments";
+import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 
 export default function DocumentSettings({ workspace }) {
   const [highlightWorkspace, setHighlightWorkspace] = useState(false);
-  const [availableDocs, setAvailableDocs] = useState([]);
+  const [availableDocs, setAvailableDocs] = useState({ items: [] });
   const [loading, setLoading] = useState(true);
-  const [workspaceDocs, setWorkspaceDocs] = useState([]);
+  const [workspaceDocs, setWorkspaceDocs] = useState({ items: [] });
   const [selectedItems, setSelectedItems] = useState({});
   const [hasChanges, setHasChanges] = useState(false);
   const [movedItems, setMovedItems] = useState([]);
   const [loadingMessage, setLoadingMessage] = useState("");
-  const availableDocsRef = useRef([]);
+  const prevDocsRef = useRef(null);
+  const [autoSelectNew, setAutoSelectNew] = useState(false);
 
+  const {
+    documents: localFiles,
+    isLoading: docsLoading,
+    mutate: mutateDocuments,
+  } = useDocuments();
+  const {
+    workspace: currentWorkspace,
+    isLoading: wsLoading,
+    mutate: mutateWorkspace,
+  } = useWorkspaceBySlug(workspace.slug);
+
+  // Sync SWR data into local state with filtering
   useEffect(() => {
-    availableDocsRef.current = availableDocs;
-  }, [availableDocs]);
-
-  const fetchKeysRef = useRef(null);
-  const { embeddingProgress, startEmbedding } = useWorkspaceEmbeddingProgress(
-    workspace.slug,
-    {
-      onProgressCleared: () => fetchKeysRef.current?.(true),
-    },
-  );
-
-  async function fetchKeys(refetchWorkspace = false, options = {}) {
-    const { autoSelectNew = false } = options;
-    const previousIds = new Set();
-    if (autoSelectNew && availableDocsRef.current?.items) {
-      for (const folder of availableDocsRef.current.items) {
-        for (const file of folder.items ?? []) {
-          if (file?.id) previousIds.add(file.id);
-        }
-      }
-    }
-    setLoading(true);
-    const localFiles = await System.localFiles();
-    const currentWorkspace = refetchWorkspace
-      ? await Workspace.bySlug(workspace.slug)
-      : workspace;
+    if (!localFiles || !currentWorkspace) return;
 
     const documentsInWorkspace =
       currentWorkspace.documents.map((doc) => doc.docpath) || [];
@@ -90,31 +79,59 @@ export default function DocumentSettings({ workspace }) {
 
     setAvailableDocs(filteredAvailableDocs);
     setWorkspaceDocs(filteredWorkspaceDocs);
+    setLoading(false);
+  }, [localFiles, currentWorkspace]);
 
-    if (autoSelectNew) {
-      const newSelected = {};
-      for (const folder of filteredAvailableDocs.items ?? []) {
-        for (const file of folder.items ?? []) {
-          if (file?.id && !previousIds.has(file.id)) {
-            newSelected[file.id] = true;
-          }
-        }
-      }
-      if (Object.keys(newSelected).length > 0) {
-        setSelectedItems((prev) => ({ ...prev, ...newSelected }));
+  // autoSelectNew logic: when new files appear after an upload, auto-select them
+  useEffect(() => {
+    if (!autoSelectNew || !localFiles || !prevDocsRef.current) {
+      prevDocsRef.current = localFiles;
+      return;
+    }
+
+    const previousIds = new Set();
+    for (const folder of prevDocsRef.current.items || []) {
+      for (const file of folder.items || []) {
+        if (file?.id) previousIds.add(file.id);
       }
     }
 
-    setLoading(false);
-  }
+    const newSelected = {};
+    for (const folder of localFiles.items || []) {
+      for (const file of folder.items || []) {
+        if (file?.id && !previousIds.has(file.id)) {
+          newSelected[file.id] = true;
+        }
+      }
+    }
+    if (Object.keys(newSelected).length > 0) {
+      setSelectedItems((prev) => ({ ...prev, ...newSelected }));
+    }
 
-  useEffect(() => {
-    fetchKeysRef.current = fetchKeys;
-  });
+    setAutoSelectNew(false);
+    prevDocsRef.current = localFiles;
+  }, [localFiles, autoSelectNew]);
 
-  useEffect(() => {
-    fetchKeys(true);
-  }, []);
+  const { embeddingProgress, startEmbedding } = useWorkspaceEmbeddingProgress(
+    workspace.slug,
+    {
+      onProgressCleared: () => {
+        mutateDocuments();
+        mutateWorkspace();
+      },
+    },
+  );
+
+  const fetchKeys = useCallback(
+    async (refetchWorkspace = false, options = {}) => {
+      const { autoSelectNew: shouldAutoSelect = false } = options;
+      if (shouldAutoSelect) setAutoSelectNew(true);
+      const promises = [mutateDocuments()];
+      if (refetchWorkspace) promises.push(mutateWorkspace());
+      await Promise.all(promises);
+    },
+    [mutateDocuments, mutateWorkspace],
+  );
 
   const updateWorkspace = async (e) => {
     e.preventDefault();
@@ -227,7 +244,7 @@ export default function DocumentSettings({ workspace }) {
       <Directory
         files={visibleAvailableDocs}
         setFiles={setAvailableDocs}
-        loading={loading}
+        loading={loading || docsLoading || wsLoading}
         loadingMessage={loadingMessage}
         setLoading={setLoading}
         workspace={workspace}
@@ -247,11 +264,10 @@ export default function DocumentSettings({ workspace }) {
         workspace={workspace}
         files={workspaceDocs}
         highlightWorkspace={highlightWorkspace}
-        loading={loading}
+        loading={loading || docsLoading || wsLoading}
         loadingMessage={loadingMessage}
         setLoadingMessage={setLoadingMessage}
         setLoading={setLoading}
-        fetchKeys={fetchKeys}
         hasChanges={hasChanges}
         saveChanges={updateWorkspace}
         movedItems={movedItems}

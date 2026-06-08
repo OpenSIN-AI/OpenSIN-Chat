@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useUser from "@/hooks/useUser";
-import System from "@/models/system";
+import useSystemSettings from "@/hooks/useSystemSettings";
 import { useMemoriesSidebar, useSourcesSidebar } from "../../ChatSidebar";
 
 export default function MemoriesRow({ onClose }) {
@@ -10,15 +10,10 @@ export default function MemoriesRow({ onClose }) {
   const { user } = useUser();
   const { toggleSidebar } = useMemoriesSidebar();
   const { closeSidebar } = useSourcesSidebar();
-  const [memoryEnabled, setMemoryEnabled] = useState(null);
+  const { settings, loading } = useSystemSettings();
 
   const isAdmin = !user || user?.role === "admin";
-
-  useEffect(() => {
-    System.keys().then((settings) => {
-      setMemoryEnabled(!!settings?.MemoryEnabled);
-    });
-  }, []);
+  const memoryEnabled = useMemo(() => !!settings?.MemoryEnabled, [settings]);
 
   function handleClick() {
     closeSidebar();
@@ -26,7 +21,7 @@ export default function MemoriesRow({ onClose }) {
     onClose();
   }
 
-  if (memoryEnabled === null) return null;
+  if (loading) return null;
   if (!isAdmin && !memoryEnabled) return null;
 
   return (
