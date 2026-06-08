@@ -19,7 +19,8 @@ describe("BundestagApi", () => {
         .mockResolvedValue({ ok: true, json: async () => [] });
       await api.fetchAllMembers();
       expect(spy.mock.calls[0][0]).toContain("Abgeordnete21_WP.formular");
-      expect(spy.mock.calls[0][0]).not.toContain("Abgeordnete20_WP");
+      // Regression: must target the 21. WP endpoint, never the dead 20. WP one.
+      expect(spy.mock.calls[0][0]).not.toContain("Abgeordnete20");
       spy.mockRestore();
     });
   });

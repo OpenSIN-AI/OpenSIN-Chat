@@ -33,7 +33,7 @@ mandates, and politician profiles for the **21. Wahlperiode** (Bundestag
 
 ## Caveats
 
-- `parliament=111` (20. WP) is dead — the client uses
+- The 20. WP parliament filter (parliament ID 111) is dead — the client uses
   `parliament_period=${AW_PARLIAMENT_PERIOD}` (default `132`).
 - Pagination is **range-based** via `meta.result` (`range_start` / `range_end` /
   `total`), not a `meta.next` link.

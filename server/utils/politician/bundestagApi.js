@@ -6,7 +6,7 @@
  * Purpose: Client for Bundestag Open Data with caching, retry, and rate-limiting.
  *
  * 21. Wahlperiode migration (#84):
- *   - The legacy `Abgeordnete20_WP.formular` endpoint is dead (HTTP 404), and the
+ *   - The legacy 20. WP `.formular` endpoint is dead (HTTP 404), and the
  *     `Abgeordnete21_WP.formular` variant is not published either.
  *   - This client now: (1) attempts the term-specific `.formular` endpoint for
  *     the configured Wahlperiode, (2) falls back to the official DIP API

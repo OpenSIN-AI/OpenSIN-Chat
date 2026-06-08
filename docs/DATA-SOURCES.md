@@ -30,16 +30,25 @@ https://www.bundestag.de/SiteGlobals/Functions/Abgeordnetensuche
 
 ### Endpoints
 
-#### 1.1 Alle Abgeordneten (aktueller Wahlperiode)
+#### 1.1 Alle Abgeordneten (aktuelle Wahlperiode)
 ```
 GET /Abgeordnete{WAHLPERIODE}_WP.formular
 ```
 
-Beispiel (20. Wahlperiode):
+Die Wahlperiode ist über die Env-Var `BUNDESTAG_WAHLPERIODE` konfigurierbar
+(Default: `21`). Beispiel (21. Wahlperiode):
 ```bash
-curl "https://www.bundestag.de/SiteGlobals/Functions/Abgeordnetensuche/Abgeordnete20_WP.formular" \
+curl "https://www.bundestag.de/SiteGlobals/Functions/Abgeordnetensuche/Abgeordnete21_WP.formular" \
   -H "Accept: application/json"
 ```
+
+> **#84 (21. WP):** Der term-spezifische `.formular`-Endpoint wird derzeit nicht
+> mehr öffentlich ausgeliefert (HTTP 404). Der Client versucht ihn weiterhin
+> zuerst, fällt dann auf die offizielle **DIP-API**
+> (`https://search.dip.bundestag.de/api/v1`, benötigt `BUNDESTAG_DIP_API_KEY`)
+> zurück und degradiert sonst auf eine leere Liste. Liefert diese Quelle nichts,
+> übernimmt der Sync-Job die 21.-WP-Mitglieder aus Abgeordnetenwatch
+> (`parliament_period=132`), verknüpft über `ext_id_bundestagsverwaltung`.
 
 **Antwort:** JSON-Array mit MdB-Profilen:
 ```json
@@ -124,49 +133,59 @@ https://www.abgeordnetenwatch.de/api/v2
 
 ### Endpoints
 
-#### 2.1 Alle Parlamentarier (Bundestag, 20. WP)
+#### 2.1 Alle Mandate (Bundestag, 21. WP)
 ```
-GET /parliament-period/?parliament=111
+GET /candidacies-mandates?parliament_period={AW_PARLIAMENT_PERIOD}
 ```
+
+`AW_PARLIAMENT_PERIOD` ist konfigurierbar (Default: `132` = Bundestag 21. WP,
+733 Mandate). Die Periode-IDs sind **nicht fortlaufend** (111 = 20. WP,
+132 = 21. WP; dazwischen liegen Landtags-Perioden).
+
+> **#84 (21. WP):** Der frühere `/parliament-period/`-Filter über die
+> `parliament`-ID ist tot (Anti-Bot / 404). Quelle der Wahrheit ist jetzt die
+> `candidacies-mandates`-Collection, gefiltert über `parliament_period`.
 
 Beispiel:
 ```bash
-curl "https://www.abgeordnetenwatch.de/api/v2/parliament-period/?parliament=111" \
+curl "https://www.abgeordnetenwatch.de/api/v2/candidacies-mandates?parliament_period=132&range_end=100" \
   -H "Accept: application/json"
 ```
 
-**Antwort:** Paginiertes JSON (API-Standard: `meta.pagination.next` für nächste Seite):
+**Antwort:** Paginiertes JSON. Die Pagination ist **range-basiert** über
+`meta.result` (`range_start` / `range_end` / `total`), **nicht** über einen
+`meta.pagination.next`-Link. 733 Mandate ≈ 8 Seiten à 100.
 ```json
 {
   "data": [
     {
       "id": 12345,
-      "firstName": "Alice",
-      "lastName": "Weidel",
-      "sex": "female",
-      "birthDate": "1979-02-06",
-      "party": { "id": 42, "label": "AfD", "name": "Alternative für Deutschland" },
-      "constituencyName": "Bodenseekreis",
-      "votes": [...],
-      "mandates": [...]
+      "politician": {
+        "id": 79137,
+        "first_name": "Alice",
+        "last_name": "Weidel",
+        "sex": "female",
+        "year_of_birth": 1979,
+        "ext_id_bundestagsverwaltung": "11004809",
+        "party": { "id": 42, "label": "AfD" }
+      },
+      "electoral_data": { "constituency": { "name": "Bodenseekreis" } }
     }
   ],
   "meta": {
-    "pagination": {
-      "next": "https://www.abgeordnetenwatch.de/api/v2/parliament-period/?parliament=111&page=2"
-    }
+    "result": { "count": 100, "total": 733, "range_start": 0, "range_end": 100 }
   }
 }
 ```
 
 #### 2.2 Politiker-Suche
 ```
-GET /politicians/?search={NAME}&parliament=111
+GET /politicians/?politician[entity.label][cn]={NAME}
 ```
 
 #### 2.3 Abstimmungen (Votes)
 ```
-GET /politicians/{ID}/votes/?parliament=111
+GET /politicians/{ID}/votes/?parliament_period={AW_PARLIAMENT_PERIOD}
 ```
 
 #### 2.4 Ausschüsse

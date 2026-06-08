@@ -8,7 +8,7 @@
  * API Docs: https://www.abgeordnetenwatch.de/api/v2
  *
  * 21. Wahlperiode migration (#84):
- *   - The legacy `/parliament-period/?parliament=111` filter (20. WP) is dead.
+ *   - The legacy `/parliament-period/` filter for the 20. WP (parliament ID 111) is dead.
  *   - The current source of truth is the `candidacies-mandates` collection
  *     filtered by `parliament_period` (132 = Bundestag 2021–2025, 733 Mandate).
  *   - Pagination is range-based via `meta.result` (range_start / range_end /
