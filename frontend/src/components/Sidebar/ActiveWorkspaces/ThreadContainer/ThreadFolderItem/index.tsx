@@ -19,23 +19,22 @@ import { useDroppable } from "@dnd-kit/core";
 import paths from "@/utils/paths";
 
 /** Small + dropdown for Folder rows: creates a new Chat inside the folder or a new sub-folder */
-function FolderQuickAdd({ workspace, folder, onFolderCreated }: any) {
+function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!open) return;
+    if (!isOpen) return;
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, [open]);
+  }, [isOpen]);
 
   const handleNewChat = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    setOpen(false);
+    setIsOpen(false);
     const { thread, error } = await Workspace.threads.new(workspace.slug);
     if (error) {
       showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", { clear: true });
@@ -47,7 +46,7 @@ function FolderQuickAdd({ workspace, folder, onFolderCreated }: any) {
 
   const handleNewFolder = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    setOpen(false);
+    setIsOpen(false);
     const name = window.prompt("Ordnername:")?.trim();
     if (!name) return;
     const { folder: newFolder, message } = await Workspace.threads.folders.new(workspace.slug, name);
@@ -55,7 +54,6 @@ function FolderQuickAdd({ workspace, folder, onFolderCreated }: any) {
       showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", { clear: true });
       return;
     }
-    onFolderCreated?.(newFolder);
     invalidateThreads(workspace.slug);
   };
 
@@ -63,14 +61,14 @@ function FolderQuickAdd({ workspace, folder, onFolderCreated }: any) {
     <div ref={ref} className="relative flex items-center">
       <button
         type="button"
-        onClick={(e) => { e.stopPropagation(); setOpen((p) => !p); }}
+        onClick={(e) => { e.stopPropagation(); setIsOpen((p: boolean) => !p); }}
         className="p-1 rounded hover:bg-white/10 light:hover:bg-slate-300"
         title="Neuen Chat oder Ordner erstellen"
       >
         <Plus size={12} className="text-white/60 light:text-theme-text-secondary" />
       </button>
 
-      {open && (
+      {isOpen && (
         <div className="absolute right-0 top-full mt-1 z-50 w-44 rounded-lg border border-white/10 light:border-slate-200 bg-zinc-800 light:bg-white shadow-xl overflow-hidden">
           <button
             type="button"
@@ -102,6 +100,7 @@ export default function ThreadFolderItem({
   const [open, setOpen] = useState(true as any);
   const [editing, setEditing] = useState(false as any);
   const [name, setName] = useState(folder.name as any);
+  const [quickAddOpen, setQuickAddOpen] = useState(false);
   const inputRef = useRef(null);
 
   // When the active thread moves into this folder (via DnD), auto-expand it
@@ -212,10 +211,10 @@ export default function ThreadFolderItem({
           )}
         </button>
 
-        {/* Action buttons - only show on hover */}
+        {/* Action buttons - only show on hover (or when quickAdd dropdown is open) */}
         {!editing && (
-          <div className="flex items-center gap-x-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-            <FolderQuickAdd workspace={workspace} folder={folder} onFolderCreated={onFolderDeleted ? undefined : undefined} />
+          <div className={`flex items-center gap-x-0.5 transition-opacity ${quickAddOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
+            <FolderQuickAdd workspace={workspace} folder={folder} isOpen={quickAddOpen} setIsOpen={setQuickAddOpen} />
             <button
               type="button"
               onClick={(e) => {
