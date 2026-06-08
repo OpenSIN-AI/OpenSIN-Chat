@@ -44,30 +44,46 @@ describe("ChatSidebarProvider", () => {
   });
 
   it("exposes preview data via usePreviewSidebar", () => {
-    const { result: ctx } = renderHook(() => useChatSidebar(), { wrapper });
-    act(() =>
-      ctx.current.openPreview({ content: "<p>x</p>", title: "Doc" }),
+    const { result } = renderHook(
+      () => {
+        const ctx = useChatSidebar();
+        const preview = usePreviewSidebar();
+        return { ctx, preview };
+      },
+      { wrapper },
     );
-    const { result: preview } = renderHook(() => usePreviewSidebar(), {
-      wrapper,
-    });
-    expect(preview.current.previewData.title).toBe("Doc");
-    expect(preview.current.sidebarOpen).toBe(true);
+    act(() =>
+      result.current.ctx.openPreview({ content: "<p>x</p>", title: "Doc" }),
+    );
+    expect(result.current.preview.previewData.title).toBe("Doc");
+    expect(result.current.preview.sidebarOpen).toBe(true);
   });
 });
 
 describe("specialized sidebar hooks", () => {
   it("useDatabaseSidebar exposes only database state", () => {
-    const { result: ctx } = renderHook(() => useChatSidebar(), { wrapper });
-    act(() => ctx.current.openSidebar("database"));
-    const { result: db } = renderHook(() => useDatabaseSidebar(), { wrapper });
-    expect(db.current.sidebarOpen).toBe(true);
+    const { result } = renderHook(
+      () => {
+        const ctx = useChatSidebar();
+        const db = useDatabaseSidebar();
+        return { ctx, db };
+      },
+      { wrapper },
+    );
+    act(() => result.current.ctx.openSidebar("database"));
+    expect(result.current.db.sidebarOpen).toBe(true);
   });
 
   it("usePoliticalSidebar.isOpen reflects political state", () => {
-    const { result: ctx } = renderHook(() => useChatSidebar(), { wrapper });
-    act(() => ctx.current.openSidebar("political"));
-    const { result: pol } = renderHook(() => usePoliticalSidebar(), { wrapper });
-    expect(pol.current.sidebarOpen).toBe(true);
+    const { result } = renderHook(
+      () => {
+        const ctx = useChatSidebar();
+        const pol = usePoliticalSidebar();
+        return { ctx, pol };
+      },
+      { wrapper },
+    );
+    act(() => result.current.ctx.openSidebar("political"));
+    expect(result.current.pol.sidebarOpen).toBe(true);
   });
 });

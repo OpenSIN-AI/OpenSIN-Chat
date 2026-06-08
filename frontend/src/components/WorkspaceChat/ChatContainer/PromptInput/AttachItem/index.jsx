@@ -12,6 +12,7 @@ import {
 import { useTheme } from "@/hooks/useTheme";
 import ParsedFilesMenu from "./ParsedFilesMenu";
 import AddSourceMenu from "./AddSourceMenu";
+import useDocument from "@/hooks/useDocument";
 
 /**
  * This is a simple proxy component that clicks on the DnD file uploader for the user.
@@ -31,27 +32,21 @@ export default function AttachItem({
   const buttonRef = useRef(null);
   const [showMenu, setShowMenu] = useState(false);
   const [isEmbedding, setIsEmbedding] = useState(false);
-  const [files, setFiles] = useState([]);
-  const [currentTokens, setCurrentTokens] = useState(0);
-  const [contextWindow, setContextWindow] = useState(Infinity);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchFiles = () => {
-    if (!slug) return;
-    if (isEmbedding) return;
-    setIsLoading(true);
-    Workspace.getParsedFiles(slug, threadSlug)
-      .then(({ files, contextWindow, currentContextTokenCount }) => {
-        setFiles(files);
-        setShowTooltip(files.length > 0);
-        setContextWindow(contextWindow);
-        setCurrentTokens(currentContextTokenCount);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
+  const {
+    document: parsedFiles,
+    isLoading,
+    refresh,
+  } = useDocument(slug, threadSlug);
+
+  const files = parsedFiles?.files || [];
+  const currentTokens = parsedFiles?.currentContextTokenCount || 0;
+  const contextWindow = parsedFiles?.contextWindow || Infinity;
+
+  useEffect(() => {
+    setShowTooltip(files.length > 0);
+  }, [files]);
 
   /**
    * Handles the removal of an attachment from the parsed files
@@ -62,7 +57,7 @@ export default function AttachItem({
   async function handleRemoveAttachment(e) {
     const { document } = e.detail;
     await Workspace.deleteParsedFiles(slug, [document.id]);
-    fetchFiles();
+    refresh();
   }
 
   /**
@@ -101,17 +96,16 @@ export default function AttachItem({
   }, [showMenu]);
 
   useEffect(() => {
-    fetchFiles();
-    window.addEventListener(ATTACHMENTS_PROCESSED_EVENT, fetchFiles);
+    window.addEventListener(ATTACHMENTS_PROCESSED_EVENT, refresh);
     window.addEventListener(REMOVE_ATTACHMENT_EVENT, handleRemoveAttachment);
     return () => {
-      window.removeEventListener(ATTACHMENTS_PROCESSED_EVENT, fetchFiles);
+      window.removeEventListener(ATTACHMENTS_PROCESSED_EVENT, refresh);
       window.removeEventListener(
         REMOVE_ATTACHMENT_EVENT,
         handleRemoveAttachment,
       );
     };
-  }, [slug, threadSlug]);
+  }, [slug, threadSlug, refresh]);
 
   return (
     <div className="relative flex items-center">
@@ -127,7 +121,7 @@ export default function AttachItem({
         aria-label={t("chat_window.attach_file")}
         type="button"
         onClick={handleClick}
-        onPointerEnter={fetchFiles}
+        onPointerEnter={refresh}
         className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200"
       >
         <div className="relative">
@@ -164,12 +158,11 @@ export default function AttachItem({
             tooltipRef={tooltipRef}
             isLoading={isLoading}
             files={files}
-            setFiles={setFiles}
             currentTokens={currentTokens}
-            setCurrentTokens={setCurrentTokens}
             contextWindow={contextWindow}
             workspaceSlug={slug}
             threadSlug={threadSlug}
+            refresh={refresh}
           />
         </Tooltip>
       )}

@@ -12,13 +12,12 @@ export default function ParsedFilesMenu({
   onEmbeddingChange,
   tooltipRef,
   files,
-  setFiles,
   currentTokens,
-  setCurrentTokens,
   contextWindow,
   isLoading,
   workspaceSlug,
   threadSlug = null,
+  refresh,
 }) {
   const { user } = useUser();
   const canEmbed = !user || user.role !== "default";
@@ -39,25 +38,13 @@ export default function ParsedFilesMenu({
     const success = await Workspace.deleteParsedFiles(workspaceSlug, [file.id]);
     if (!success) return;
 
-    // Update the local files list and current tokens
-    setFiles((prev) => prev.filter((f) => f.id !== file.id));
-
     // Dispatch an event to the DnDFileUploaderWrapper to update the files list in attachment manager if it exists
     window.dispatchEvent(
       new CustomEvent(PARSED_FILE_ATTACHMENT_REMOVED_EVENT, {
         detail: { document: file },
       }),
     );
-    const { currentContextTokenCount } = await Workspace.getParsedFiles(
-      workspaceSlug,
-      threadSlug,
-    );
-    const newContextWindowLimitExceeded =
-      contextWindow &&
-      currentContextTokenCount >=
-        contextWindow * Workspace.maxContextWindowLimit;
-    setCurrentTokens(currentContextTokenCount);
-    setContextWindowLimitExceeded(newContextWindowLimitExceeded);
+    await refresh();
   }
 
   /**
@@ -80,16 +67,7 @@ export default function ParsedFilesMenu({
           }),
         ),
       );
-      setFiles([]);
-      const { currentContextTokenCount } = await Workspace.getParsedFiles(
-        workspaceSlug,
-        threadSlug,
-      );
-      setCurrentTokens(currentContextTokenCount);
-      setContextWindowLimitExceeded(
-        currentContextTokenCount >=
-          contextWindow * Workspace.maxContextWindowLimit,
-      );
+      await refresh();
       showToast(
         `${files.length} ${pluralize("file", files.length)} embedded successfully`,
         "success",

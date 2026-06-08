@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FilePlus,
   Files,
@@ -11,8 +11,8 @@ import {
   X,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import System from "@/models/system";
 import Workspace from "@/models/workspace";
+import useDocuments from "@/hooks/useDocuments";
 import showToast from "@/utils/toast";
 import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";
 
@@ -160,22 +160,9 @@ function BackHeader({ label, onBack }) {
 }
 
 function SourcesView({ t, workspaceSlug, onBack, onClose }) {
-  const [loading, setLoading] = useState(true);
-  const [files, setFiles] = useState([]);
+  const { documents: localFiles, isLoading: loading } = useDocuments();
+  const files = useMemo(() => flattenLocalFiles(localFiles), [localFiles]);
   const [addingId, setAddingId] = useState(null);
-
-  useEffect(() => {
-    let active = true;
-    System.localFiles()
-      .then((localFiles) => {
-        if (!active) return;
-        setFiles(flattenLocalFiles(localFiles));
-      })
-      .finally(() => active && setLoading(false));
-    return () => {
-      active = false;
-    };
-  }, []);
 
   async function handleAdd(file) {
     if (!workspaceSlug) {
