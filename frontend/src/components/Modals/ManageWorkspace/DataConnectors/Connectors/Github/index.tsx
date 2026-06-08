@@ -85,7 +85,7 @@ export default function GithubOptions() {
                   placeholder="https://github.com/Family-Team-Projects/openafd-chat"
                   required={true}
                   autoComplete="off"
-                  onChange={(e) => setRepo(e.target.value)}
+                  onChange={(e) => setRepo((e.target as HTMLInputElement).value)}
                   onBlur={() => setSettings({ ...settings, repo })}
                   spellCheck={false}
                 />
@@ -115,7 +115,7 @@ export default function GithubOptions() {
                   required={false}
                   autoComplete="off"
                   spellCheck={false}
-                  onChange={(e) => setAccessToken(e.target.value)}
+                  onChange={(e) => setAccessToken((e.target as HTMLInputElement).value)}
                   onBlur={() => setSettings({ ...settings, accessToken })}
                 />
               </div>

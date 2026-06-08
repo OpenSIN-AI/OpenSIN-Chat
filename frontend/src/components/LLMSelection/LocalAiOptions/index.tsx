@@ -60,7 +60,7 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
                 className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 placeholder="4096"
                 min={1}
-                onScroll={(e) => e.target.blur()}
+                onScroll={(e) => (e.target as HTMLElement).blur()}
                 defaultValue={settings?.LocalAiTokenLimit}
                 required={true}
                 autoComplete="off"
@@ -83,7 +83,7 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
             defaultValue={settings?.LocalAiApiKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setApiKeyValue(e.target.value)}
+            onChange={(e) => setApiKeyValue((e.target as HTMLInputElement).value)}
             onBlur={() => setApiKey(apiKeyValue)}
           />
         </div>

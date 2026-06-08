@@ -81,7 +81,7 @@ export default function ConfluenceOptions() {
                   autoComplete="off"
                   spellCheck={false}
                   defaultValue="true"
-                  onChange={(e) => setIsCloud(e.target.value === "true")}
+                  onChange={(e) => setIsCloud((e.target as HTMLInputElement).value === "true")}
                 >
                   <option value="true">Atlassian Cloud</option>
                   <option value="false">Self-hosted</option>
@@ -141,7 +141,7 @@ export default function ConfluenceOptions() {
                   name="accessType"
                   className="border-none bg-theme-settings-input-bg w-fit mt-2 px-4 border-gray-500 text-white text-sm rounded-lg block py-2"
                   defaultValue={accessType}
-                  onChange={(e) => setAccessType(e.target.value)}
+                  onChange={(e) => setAccessType((e.target as HTMLInputElement).value)}
                 >
                   {[
                     {

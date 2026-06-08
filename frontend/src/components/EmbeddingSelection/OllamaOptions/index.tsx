@@ -31,11 +31,11 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
   );
 
   const handleMaxChunkLengthChange: any = (e) => {
-    setMaxChunkLength(Number(e.target.value));
+    setMaxChunkLength(Number((e.target as HTMLInputElement).value));
   };
 
   const handleBatchSizeChange: any = (e) => {
-    setBatchSize(Number(e.target.value));
+    setBatchSize(Number((e.target as HTMLInputElement).value));
   };
 
   return (
@@ -70,7 +70,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
             min={1}
             value={maxChunkLength}
             onChange={handleMaxChunkLengthChange}
-            onScroll={(e) => e.target.blur()}
+            onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
           />
@@ -157,7 +157,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               min={1}
               value={batchSize}
               onChange={handleBatchSizeChange}
-              onScroll={(e) => e.target.blur()}
+              onScroll={(e) => (e.target as HTMLElement).blur()}
               required={true}
               autoComplete="off"
             />

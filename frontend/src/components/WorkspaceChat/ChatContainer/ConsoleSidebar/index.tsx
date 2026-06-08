@@ -203,7 +203,7 @@ function TerminalTab() {
           ref={inputRef}
           type="text"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e) => setInput((e.target as HTMLInputElement).value)}
           onKeyDown={handleKeyDown}
           className="flex-1 bg-transparent border-none outline-none font-mono text-[11px] text-zinc-200 light:text-slate-800 placeholder:text-zinc-600 caret-white"
           placeholder={t("console.terminal_placeholder", "Befehl eingeben...")}

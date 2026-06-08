@@ -18,7 +18,7 @@ export default function NativeTranscriptionOptions({ settings }: any) {
           <select
             name="WhisperModelPref"
             defaultValue={model}
-            onChange={(e) => setModel(e.target.value)}
+            onChange={(e) => setModel((e.target as HTMLInputElement).value)}
             className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
           >
             {["Xenova/whisper-small", "Xenova/whisper-large"].map(

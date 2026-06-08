@@ -167,7 +167,7 @@ function Directory({
   };
 
   const handleSearch = debounce((e) => {
-    const searchValue = e.target.value;
+    const searchValue = (e.target as HTMLInputElement).value;
     setSearchTerm(searchValue);
   }, 500);
 

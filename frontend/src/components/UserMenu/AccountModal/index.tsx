@@ -246,7 +246,7 @@ function LanguagePreference() {
         name="userLang"
         className="border-none bg-theme-settings-input-bg w-fit mt-2 px-4 focus:outline-primary-button active:outline-primary-button outline-none text-white text-sm rounded-lg block py-2"
         defaultValue={currentLanguage || "en"}
-        onChange={(e) => changeLanguage(e.target.value)}
+        onChange={(e) => changeLanguage((e.target as HTMLInputElement).value)}
       >
         {supportedLanguages.map((lang) => {
           return (
@@ -274,7 +274,7 @@ function ThemePreference() {
       <select
         name="theme"
         value={theme}
-        onChange={(e) => setTheme(e.target.value)}
+        onChange={(e) => setTheme((e.target as HTMLInputElement).value)}
         className="border-none bg-theme-settings-input-bg w-fit px-4 focus:outline-primary-button active:outline-primary-button outline-none text-white text-sm rounded-lg block py-2"
       >
         {Object.entries(availableThemes).map(([key, value]) => (

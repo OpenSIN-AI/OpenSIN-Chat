@@ -318,7 +318,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }: any) {
             ref={inputRef}
             type="url"
             value={link}
-            onChange={(e) => setLink(e.target.value)}
+            onChange={(e) => setLink((e.target as HTMLInputElement).value)}
             placeholder="https://..."
             disabled={submitting}
             className="flex-1 bg-transparent border-none outline-none text-sm text-white light:text-slate-800 py-2 placeholder:text-zinc-500 light:placeholder:text-slate-400"

@@ -97,7 +97,7 @@ function PiperTTSModelSelection({ settings }: any) {
           <select
             name="TTSPiperTTSVoiceModel"
             required={true}
-            onChange={(e) => setSelectedVoice(e.target.value)}
+            onChange={(e) => setSelectedVoice((e.target as HTMLInputElement).value)}
             value={selectedVoice}
             className="border-none flex-shrink-0 bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
           >

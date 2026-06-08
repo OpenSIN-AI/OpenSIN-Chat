@@ -301,7 +301,7 @@ export default function PromptInput({
   function handleChange(e: any) {
     debouncedSaveState(-1);
     adjustTextArea(e);
-    const value = e.target.value;
+    const value = (e.target as HTMLInputElement).value;
     setPromptInput(value);
 
     // Auto-dismiss the tools menu when the "/" that opened it is modified

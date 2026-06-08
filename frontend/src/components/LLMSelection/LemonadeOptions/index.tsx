@@ -154,8 +154,8 @@ export default function LemonadeOptions({ settings }: any) {
             placeholder="8192"
             min={1}
             value={maxTokens}
-            onChange={(e) => setMaxTokens(Number(e.target.value))}
-            onScroll={(e) => e.target.blur()}
+            onChange={(e) => setMaxTokens(Number((e.target as HTMLInputElement).value))}
+            onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
           />

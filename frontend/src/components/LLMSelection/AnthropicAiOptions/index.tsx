@@ -26,7 +26,7 @@ export default function AnthropicAiOptions({ settings }: any) {
             required={true}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
             onBlur={() => setAnthropicApiKey(inputValue)}
           />
         </div>

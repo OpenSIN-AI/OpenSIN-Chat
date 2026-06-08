@@ -83,7 +83,7 @@ function OtherInput({ value, onChange }: any) {
       autoFocus
       type="text"
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange((e.target as HTMLInputElement).value)}
       placeholder={t(
         "chat_window.agent_invocation.clarifying_other_placeholder",
       )}

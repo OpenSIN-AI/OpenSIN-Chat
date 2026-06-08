@@ -177,7 +177,7 @@ function ToolApprovalResponseOption({
         <input
           type="checkbox"
           checked={alwaysAllow}
-          onChange={(e) => setAlwaysAllow(e.target.checked)}
+          onChange={(e) => setAlwaysAllow((e.target as HTMLInputElement).checked)}
           className="w-3.5 h-3.5 rounded border-white/20 bg-transparent cursor-pointer"
         />
         <span>

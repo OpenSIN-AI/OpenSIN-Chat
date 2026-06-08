@@ -214,9 +214,9 @@ export default function OllamaLLMOptions({ settings }: any) {
                 min={1}
                 value={maxTokens}
                 onChange={(e) =>
-                  setMaxTokens(e.target.value ? Number(e.target.value) : "")
+                  setMaxTokens((e.target as HTMLInputElement).value ? Number((e.target as HTMLInputElement).value) : "")
                 }
-                onScroll={(e) => e.target.blur()}
+                onScroll={(e) => (e.target as HTMLElement).blur()}
                 required={false}
                 autoComplete="off"
               />

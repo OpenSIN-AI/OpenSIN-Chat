@@ -34,7 +34,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
   );
 
   const handleMaxTokensChange: any = (e) => {
-    setMaxTokens(e.target.value ? Number(e.target.value) : "");
+    setMaxTokens((e.target as HTMLInputElement).value ? Number((e.target as HTMLInputElement).value) : "");
   };
 
   return (
@@ -166,7 +166,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
               min={1}
               value={maxTokens}
               onChange={handleMaxTokensChange}
-              onScroll={(e) => e.target.blur()}
+              onScroll={(e) => (e.target as HTMLElement).blur()}
               required={false}
               autoComplete="off"
             />

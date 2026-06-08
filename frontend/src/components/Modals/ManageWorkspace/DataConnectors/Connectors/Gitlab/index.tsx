@@ -87,7 +87,7 @@ export default function GitlabOptions() {
                   placeholder="https://gitlab.com/gitlab-org/gitlab"
                   required={true}
                   autoComplete="off"
-                  onChange={(e) => setRepo(e.target.value)}
+                  onChange={(e) => setRepo((e.target as HTMLInputElement).value)}
                   onBlur={() => setSettings({ ...settings, repo })}
                   spellCheck={false}
                 />
@@ -117,7 +117,7 @@ export default function GitlabOptions() {
                   required={false}
                   autoComplete="off"
                   spellCheck={false}
-                  onChange={(e) => setAccessToken(e.target.value)}
+                  onChange={(e) => setAccessToken((e.target as HTMLInputElement).value)}
                   onBlur={() => setSettings({ ...settings, accessToken })}
                 />
               </div>

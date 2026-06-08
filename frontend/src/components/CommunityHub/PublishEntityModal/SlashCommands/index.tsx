@@ -167,7 +167,7 @@ export default function SlashCommands({ entity }: any) {
               <input
                 type="text"
                 value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
+                onChange={(e) => setTagInput((e.target as HTMLInputElement).value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t(
                   "community_hub.publish.slash_command.tags_placeholder",
@@ -195,7 +195,7 @@ export default function SlashCommands({ entity }: any) {
                   value="public"
                   className="peer/public hidden"
                   defaultChecked
-                  onChange={(e) => setVisibility(e.target.value)}
+                  onChange={(e) => setVisibility((e.target as HTMLInputElement).value)}
                 />
                 <input
                   type="radio"
@@ -203,7 +203,7 @@ export default function SlashCommands({ entity }: any) {
                   name="visibility"
                   value="private"
                   className="peer/private hidden"
-                  onChange={(e) => setVisibility(e.target.value)}
+                  onChange={(e) => setVisibility((e.target as HTMLInputElement).value)}
                 />
                 <label
                   htmlFor="public"

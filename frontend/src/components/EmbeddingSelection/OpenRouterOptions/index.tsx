@@ -83,7 +83,7 @@ function OpenRouterEmbeddingModelSelection({ settings }: any) {
         name="EmbeddingModelPref"
         required={true}
         value={selectedModel}
-        onChange={(e) => setSelectedModel(e.target.value)}
+        onChange={(e) => setSelectedModel((e.target as HTMLInputElement).value)}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {models.map((model) => (

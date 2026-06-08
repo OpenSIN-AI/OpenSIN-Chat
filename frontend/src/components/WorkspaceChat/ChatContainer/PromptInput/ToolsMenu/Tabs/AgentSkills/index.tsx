@@ -280,12 +280,12 @@ function SearchInput({ value, onChange, placeholder }: any) {
         type="text"
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => onChange((e.target as HTMLInputElement).value)}
         onMouseDown={(e) => e.stopPropagation()}
         onKeyDown={(e) => {
           if (e.key === "Escape") {
             onChange("");
-            e.target.blur();
+            (e.target as HTMLElement).blur();
           }
           if (e.key === "Enter") e.preventDefault();
         }}

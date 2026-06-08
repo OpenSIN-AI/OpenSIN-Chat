@@ -60,7 +60,7 @@ function AdvancedControls({ settings }: any) {
             placeholder="Timeout value between token responses to auto-timeout the stream"
             defaultValue={settings?.OpenRouterTimeout ?? 3_000}
             autoComplete="off"
-            onScroll={(e) => e.target.blur()}
+            onScroll={(e) => (e.target as HTMLElement).blur()}
             min={500}
             step={1}
           />

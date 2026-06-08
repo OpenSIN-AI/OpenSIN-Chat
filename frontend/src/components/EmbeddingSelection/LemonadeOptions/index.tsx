@@ -26,7 +26,7 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
   );
 
   const handleMaxChunkLengthChange: any = (e) => {
-    setMaxChunkLength(Number(e.target.value));
+    setMaxChunkLength(Number((e.target as HTMLInputElement).value));
   };
 
   return (
@@ -58,7 +58,7 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
             min={1}
             value={maxChunkLength}
             onChange={handleMaxChunkLengthChange}
-            onScroll={(e) => e.target.blur()}
+            onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
           />

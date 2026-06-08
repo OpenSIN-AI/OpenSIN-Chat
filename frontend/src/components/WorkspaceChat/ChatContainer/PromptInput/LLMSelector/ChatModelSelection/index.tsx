@@ -30,7 +30,7 @@ export default function ChatModelSelection({
       value={selectedLLMModel}
       onChange={(e) => {
         setHasChanges(true);
-        setSelectedLLMModel(e.target.value);
+        setSelectedLLMModel((e.target as HTMLInputElement).value);
       }}
       className="bg-zinc-900 light:bg-white text-white light:text-slate-900 text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-pointer"
     >

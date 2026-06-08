@@ -169,7 +169,7 @@ export default function AgentFlows({ entity }: any) {
               <input
                 type="text"
                 value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
+                onChange={(e) => setTagInput((e.target as HTMLInputElement).value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t(
                   "community_hub.publish.agent_flow.tags_placeholder",

@@ -23,7 +23,7 @@ export default function DeepSeekOptions({ settings }: any) {
           required={true}
           autoComplete="off"
           spellCheck={false}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
           onBlur={() => setDeepSeekApiKey(inputValue)}
         />
       </div>

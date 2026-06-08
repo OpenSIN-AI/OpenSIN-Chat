@@ -58,7 +58,7 @@ const RecoveryForm: any = ({ onSubmit, setShowRecoveryForm }: any) => {
               type="text"
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername((e.target as HTMLInputElement).value)}
               required
               autoComplete="off"
             />
@@ -75,7 +75,7 @@ const RecoveryForm: any = ({ onSubmit, setShowRecoveryForm }: any) => {
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 value={code}
                 onChange={(e) =>
-                  handleRecoveryCodeChange(index, e.target.value)
+                  handleRecoveryCodeChange(index, (e.target as HTMLInputElement).value)
                 }
                 required
                 autoComplete="off"
@@ -140,7 +140,7 @@ const ResetPasswordForm = ({ onSubmit }: any) => {
               name="newPassword"
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={(e) => setNewPassword((e.target as HTMLInputElement).value)}
               required
             />
           </div>
@@ -153,7 +153,7 @@ const ResetPasswordForm = ({ onSubmit }: any) => {
               name="confirmPassword"
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword((e.target as HTMLInputElement).value)}
               required
             />
           </div>

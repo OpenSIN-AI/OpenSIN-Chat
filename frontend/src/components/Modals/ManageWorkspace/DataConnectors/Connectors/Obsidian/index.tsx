@@ -116,7 +116,7 @@ export default function ObsidianOptions() {
                   <input
                     type="text"
                     value={vaultPath}
-                    onChange={(e) => setVaultPath(e.target.value)}
+                    onChange={(e) => setVaultPath((e.target as HTMLInputElement).value)}
                     placeholder="/path/to/your/vault"
                     className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     required={true}

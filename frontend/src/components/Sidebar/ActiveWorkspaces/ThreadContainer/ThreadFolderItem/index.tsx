@@ -105,7 +105,7 @@ export default function ThreadFolderItem({
             <input
               ref={inputRef}
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setName((e.target as HTMLInputElement).value)}
               onBlur={saveRename}
               onKeyDown={(e) => {
                 if (e.key === "Enter") saveRename();

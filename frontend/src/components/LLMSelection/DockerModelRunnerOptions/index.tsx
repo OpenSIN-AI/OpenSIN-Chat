@@ -164,8 +164,8 @@ export default function DockerModelRunnerOptions({ settings }: any) {
             placeholder="4096"
             min={1}
             value={maxTokens}
-            onChange={(e) => setMaxTokens(Number(e.target.value))}
-            onScroll={(e) => e.target.blur()}
+            onChange={(e) => setMaxTokens(Number((e.target as HTMLInputElement).value))}
+            onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
           />

@@ -28,11 +28,11 @@ export default function KoboldCPPOptions({ settings }: any) {
   );
 
   const handleTokenLimitChange: any = (e) => {
-    setTokenLimit(Number(e.target.value));
+    setTokenLimit(Number((e.target as HTMLInputElement).value));
   };
 
   const handleMaxTokensChange: any = (e) => {
-    setMaxTokens(Number(e.target.value));
+    setMaxTokens(Number((e.target as HTMLInputElement).value));
   };
 
   return (
@@ -54,7 +54,7 @@ export default function KoboldCPPOptions({ settings }: any) {
             min={1}
             value={tokenLimit}
             onChange={handleTokenLimitChange}
-            onScroll={(e) => e.target.blur()}
+            onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
           />
@@ -74,7 +74,7 @@ export default function KoboldCPPOptions({ settings }: any) {
             min={1}
             value={maxTokens}
             onChange={handleMaxTokensChange}
-            onScroll={(e) => e.target.blur()}
+            onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
           />

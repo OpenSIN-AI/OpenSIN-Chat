@@ -64,7 +64,7 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
                   required={true}
                   autoComplete="off"
                   value={folderName}
-                  onChange={(e) => setFolderName(e.target.value)}
+                  onChange={(e) => setFolderName((e.target as HTMLInputElement).value)}
                 />
               </div>
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}

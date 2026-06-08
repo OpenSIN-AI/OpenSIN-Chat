@@ -46,7 +46,7 @@ export default function Toggle({
   className, enabled, onChange, disabled = false, size = "sm", name, label, description, variant = "default", hint, value, labelClassName, descriptionClassName, gapClassName, }: any) {
   const inputProps =
     enabled !== undefined
-      ? { checked: enabled, onChange: (e) => onChange?.(e.target.checked) }
+      ? { checked: enabled, onChange: (e) => onChange?.((e.target as HTMLInputElement).checked) }
       : { defaultChecked: false };
 
   const labelStyles = LABEL_STYLES[size] || LABEL_STYLES.sm;
