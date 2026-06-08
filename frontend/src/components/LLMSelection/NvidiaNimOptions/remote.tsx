@@ -68,9 +68,14 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
   );
 }
 function NvidiaNimModelSelection({ settings, basePath }: any) {
-  const { customModels, isLoading } = useProviderModels("nvidia-nim", basePath);
+  const { customModels, defaultModels, isLoading } = useProviderModels(
+    "nvidia-nim",
+    basePath
+  );
+  // Combine API-fetched models with default fallback models
+  const allModels = customModels.length > 0 ? customModels : defaultModels;
   // Show dropdown as soon as we have either loaded models OR fall back to defaults
-  if (isLoading) {
+  if (isLoading && allModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
@@ -99,15 +104,21 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {(customModels as any).map((model) => (
-          <option
-            key={model.id}
-            value={model.id}
-            selected={settings?.NvidiaNimLLMModelPref === model.id}
-          >
-            {model.name}
-          </option>
-        ))}
+        {(allModels as any).map((model) => {
+          const id = typeof model === "string" ? model : model.id;
+          const name = typeof model === "string" ? model : model.name || model.id;
+          return (
+            <option
+              key={id}
+              value={id}
+              selected={
+                settings?.NvidiaNimLLMModelPref === id || !settings?.NvidiaNimLLMModelPref
+              }
+            >
+              {name}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
