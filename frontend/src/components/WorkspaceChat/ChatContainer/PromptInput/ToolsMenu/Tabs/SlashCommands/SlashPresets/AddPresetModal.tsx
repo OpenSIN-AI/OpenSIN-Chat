@@ -21,7 +21,7 @@ export default function AddPresetModal({ isOpen: any, onClose: any, onSave }: an
     if (saved) setCommand("");
   };
 
-  const handleCommandChange = (e: any=>  {
+  const handleCommandChange: any = (e) => {
     const value = e.target.value.replace(CMD_REGEX, "");
     setCommand(value);
   };

@@ -8,7 +8,7 @@ const AgentSkillWhitelist = {
    * @param {string} skillName - The skill name to whitelist
    * @returns {Promise<{success: boolean, error?: string}>}
    */
-  addToWhitelist: async function (skillName: any): any {
+  addToWhitelist: async function (skillName: any) {
     return fetch(`${API_BASE}/agent-skills/whitelist/add`, {
       method: "POST",
       headers: baseHeaders(),

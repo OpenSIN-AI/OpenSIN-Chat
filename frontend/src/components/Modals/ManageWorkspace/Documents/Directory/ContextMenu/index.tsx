@@ -3,10 +3,10 @@ import { useRef, useEffect } from "react";
 
 export default function ContextMenu({
   contextMenu: any, closeContextMenu: any, files: any, selectedItems: any, setSelectedItems: any, }: any): JSX.Element {
-  const contextMenuRef = useRef(null);
+  const contextMenuRef: any = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event: any=>  {
+    const handleClickOutside = (event) => {
       if (
         contextMenuRef.current &&
         !contextMenuRef.current.contains(event.target)

@@ -91,7 +91,7 @@ function findIconByModelName(modelName: any): JSX.Element {
  * @returns {React.ReactNode}
  */
 export default function MonoProviderIcon({
-  provider: any, match = "exact": any, size = 24: any, className = "": any, fallbackIconKey = null: any, }: any): JSX.Element {
+  provider: any, match: any = "exact", size: any = 24, className: any = "", fallbackIconKey: any = null, }: any): JSX.Element {
   let Icon = null;
 
   if (match === "exact") Icon = providerIcons[provider?.toLowerCase()];

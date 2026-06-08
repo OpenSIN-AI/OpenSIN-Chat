@@ -38,7 +38,7 @@ function getAutoShowMetrics() {
  * @param {metrics: {duration:number, outputTps: number, model?: string, timestamp?: number}} metrics
  * @returns {string}
  */
-function buildMetricsString(metrics = {}: any): JSX.Element {
+function buildMetricsString(metrics = {}): JSX.Element {
   return [
     metrics?.model ? metrics.model : "",
     `${formatDuration(metrics.duration)} (${formatTps(metrics.outputTps)} tok/s)`,

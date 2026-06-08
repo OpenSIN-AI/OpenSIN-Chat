@@ -94,7 +94,7 @@ export default function GenericOpenAiOptions({ settings }: any): JSX.Element {
 }
 
 function GenericOpenAiModelSelection({
-  settings: any, basePath = null: any, apiKey = null: any, genericOpenAiModelPref: any, setGenericOpenAiModelPref: any, }: any): JSX.Element {
+  settings: any, basePath: any = null, apiKey: any = null, genericOpenAiModelPref: any, setGenericOpenAiModelPref: any, }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -18,7 +18,7 @@ import AddSourceMenu from "./AddSourceMenu";
  * @returns
  */
 export default function AttachItem({
-  workspaceSlug = null: any, workspaceThreadSlug = null: any, }: any): JSX.Element {
+  workspaceSlug: any = null, workspaceThreadSlug: any = null, }: any): JSX.Element {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const params = useParams();

@@ -16,9 +16,9 @@ import { Link, useParams } from "react-router-dom";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 
-const THREAD_CALLOUT_DETAIL_WIDTH = 26;
+const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 export default function ThreadItem({
-  idx: any, activeIdx: any, isActive: any, workspace: any, thread: any, onRemove: any, toggleMarkForDeletion: any, hasNext: any, ctrlPressed = false: any, draggable = false: any, folderId = null: any, }: any): JSX.Element {
+  idx, activeIdx: any, isActive: any, workspace: any, thread: any, onRemove: any, toggleMarkForDeletion: any, hasNext: any, ctrlPressed: any = false, draggable: any = false, folderId: any = null, }: any): JSX.Element {
   const { slug: urlSlug, threadSlug = null } = useParams();
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
@@ -179,10 +179,10 @@ export default function ThreadItem({
 
 function OptionsMenu({
   containerRef: any, workspace: any, thread: any, onRemove: any, close: any, currentThreadSlug: any, }: any): JSX.Element {
-  const menuRef = useRef(null);
+  const menuRef: any = useRef(null);
 
   // Ref menu options
-  const outsideClick = (e: any=>  {
+  const outsideClick = (e) => {
     if (!menuRef.current) return false;
     if (
       !menuRef.current?.contains(e.target) &&
@@ -192,7 +192,7 @@ function OptionsMenu({
     return false;
   };
 
-  const isEsc = (e: any=>  {
+  const isEsc: any = (e) => {
     if (e.key === "Escape" || e.key === "Esc") close();
   };
 

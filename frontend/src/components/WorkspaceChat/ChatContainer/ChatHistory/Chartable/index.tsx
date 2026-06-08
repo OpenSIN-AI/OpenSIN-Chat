@@ -38,7 +38,7 @@ import { saveAs } from "file-saver";
 import { useGenerateImage } from "recharts-to-png";
 import { CircleNotch, DownloadSimple } from "@phosphor-icons/react";
 
-const dataFormatter = (number: any=>  {
+const dataFormatter: any = (number) => {
   return Intl.NumberFormat("us").format(number).toString();
 };
 
@@ -423,7 +423,7 @@ export function Chartable({ props }: any): JSX.Element {
   );
 }
 
-const customTooltip = (props: any=>  {
+const customTooltip: any = (props) => {
   const { payload, active } = props;
   if (!active || !payload) return null;
   const categoryPayload = payload?.[0];

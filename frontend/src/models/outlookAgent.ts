@@ -13,7 +13,7 @@ const OutlookAgent = {
    * @returns {Promise<{success: boolean, url?: string, error?: string}>}
    */
   saveCredentialsAndGetAuthUrl: async ({
-    clientId: any, tenantId: any, clientSecret: any, authType: any, }: any): Promise<any> => {
+    clientId: any, tenantId: any, clientSecret: any, authType: any, }: any) => {
     return await fetch(`${API_BASE}/admin/agent-skills/outlook/auth-url`, {
       method: "POST",
       headers: baseHeaders(),
@@ -30,7 +30,7 @@ const OutlookAgent = {
    * Get the current authentication status for Outlook.
    * @returns {Promise<{success: boolean, isConfigured?: boolean, hasCredentials?: boolean, isAuthenticated?: boolean, tokenExpiry?: number, config?: {clientId: string, tenantId: string, clientSecret: string}, error?: string}>}
    */
-  getStatus: async (): Promise<any> => {
+  getStatus: async () => {
     return await fetch(`${API_BASE}/admin/agent-skills/outlook/status`, {
       method: "GET",
       headers: baseHeaders(),
@@ -46,7 +46,7 @@ const OutlookAgent = {
    * Revoke the Outlook authentication tokens.
    * @returns {Promise<{success: boolean, error?: string}>}
    */
-  revokeAccess: async (): Promise<any> => {
+  revokeAccess: async () => {
     return await fetch(`${API_BASE}/admin/agent-skills/outlook/revoke`, {
       method: "POST",
       headers: baseHeaders(),

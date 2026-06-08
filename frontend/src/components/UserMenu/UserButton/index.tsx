@@ -27,7 +27,7 @@ export default function UserButton() {
   const [showAccountSettings, setShowAccountSettings] = useState(false);
   const [supportEmail, setSupportEmail] = useState("");
 
-  const handleClose = (event: any=>  {
+  const handleClose: any = (event) => {
     if (
       menuRef.current &&
       !menuRef.current.contains(event.target) &&

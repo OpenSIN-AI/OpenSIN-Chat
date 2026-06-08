@@ -51,7 +51,7 @@ const HistoricalMessage = ({
     chatId,
     role,
   });
-  const adjustTextArea = (event: any=>  {
+  const adjustTextArea: any = (event) => {
     const element = event.target;
     element.style.height = "auto";
     element.style.height = element.scrollHeight + "px";

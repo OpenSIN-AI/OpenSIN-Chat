@@ -10,7 +10,7 @@ import Workspace from "@/models/workspace";
  * @param {string} slug
  * @returns {[string, string] | null}
  */
-export const workspaceKey = (slug: any): any => (slug ? ["workspace", slug] : null);
+export const workspaceKey: any = (slug) => (slug ? ["workspace", slug] : null);
 
 /**
  * Fetches a single workspace by slug with caching, de-duplication and

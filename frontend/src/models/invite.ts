@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 
-const Invite = {
-  checkInvite: async (inviteCode: any): Promise<any> => {
+const Invite: any = {
+  checkInvite: async (inviteCode) => {
     return await fetch(`${API_BASE}/invite/${inviteCode}`, {
       method: "GET",
     })
@@ -12,7 +12,7 @@ const Invite = {
         return { invite: null, error: e.message };
       });
   },
-  acceptInvite: async (inviteCode: any, newUserInfo = {}: any): Promise<any> => {
+  acceptInvite: async (inviteCode: any, newUserInfo = {}) => {
     return await fetch(`${API_BASE}/invite/${inviteCode}`, {
       method: "POST",
       body: JSON.stringify(newUserInfo),

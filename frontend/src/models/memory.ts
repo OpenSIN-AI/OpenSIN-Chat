@@ -20,7 +20,7 @@ const Memory = {
    * @param {string} slug
    * @returns {Promise<{global: Memory[], workspace: Memory[]}>}
    */
-  forWorkspace: async function (slug: any): any {
+  forWorkspace: async function (slug: any) {
     return await fetch(`${API_BASE}/workspaces/${slug}/memories`, {
       method: "GET",
       headers: baseHeaders(),
@@ -36,7 +36,7 @@ const Memory = {
    * @param {{content: string, scope?: "workspace"|"global"}} body
    * @returns {Promise<{memory: Memory|null, error?: string}>}
    */
-  create: async function (slug: any, { content: any, scope = "workspace" }: any): any {
+  create: async function (slug: any, { content: any, scope = "workspace" }: any) {
     return await fetch(`${API_BASE}/workspaces/${slug}/memories`, {
       method: "POST",
       headers: baseHeaders(),
@@ -52,7 +52,7 @@ const Memory = {
    * @param {{content: string}} body
    * @returns {Promise<{memory: Memory|null, error?: string}>}
    */
-  update: async function (memoryId: any, { content }: any): any {
+  update: async function (memoryId: any, { content }: any) {
     return await fetch(`${API_BASE}/memories/${memoryId}`, {
       method: "PUT",
       headers: baseHeaders(),
@@ -67,7 +67,7 @@ const Memory = {
    * @param {number} memoryId
    * @returns {Promise<{success: boolean, error?: string}>}
    */
-  delete: async function (memoryId: any): any {
+  delete: async function (memoryId: any) {
     return await fetch(`${API_BASE}/memories/${memoryId}`, {
       method: "DELETE",
       headers: baseHeaders(),
@@ -81,7 +81,7 @@ const Memory = {
    * @param {number} memoryId
    * @returns {Promise<{memory: Memory|null, error?: string}>}
    */
-  promoteToGlobal: async function (memoryId: any): any {
+  promoteToGlobal: async function (memoryId: any) {
     return await fetch(`${API_BASE}/memories/${memoryId}/promote`, {
       method: "POST",
       headers: baseHeaders(),
@@ -96,7 +96,7 @@ const Memory = {
    * @param {string} slug
    * @returns {Promise<{memory: Memory|null, error?: string}>}
    */
-  demoteToWorkspace: async function (memoryId: any, slug: any): any {
+  demoteToWorkspace: async function (memoryId: any, slug: any) {
     return await fetch(`${API_BASE}/memories/${memoryId}/demote/${slug}`, {
       method: "POST",
       headers: baseHeaders(),

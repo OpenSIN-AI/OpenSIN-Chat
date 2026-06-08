@@ -59,7 +59,7 @@ function AnswersList({ questions: any, answers }: any): JSX.Element {
  * @param {{ timedOut?: boolean, skipped?: boolean, answers?: Array<{ skipped: boolean, answer: any }> }} props.result
  *   The survey's resolution payload — same shape returned by the websocket.
  */
-export default function SurveyBody({ questions = []: any, result = {} }: any): JSX.Element {
+export default function SurveyBody({ questions: any = [], result = {} }: any): JSX.Element {
   const { t } = useTranslation();
 
   if (result.timedOut) {

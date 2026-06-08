@@ -38,7 +38,7 @@ const SystemPromptVariable = {
    * @param {SystemPromptVariable} variable - The system prompt variable to create
    * @returns {Promise<{success: boolean, error: string}>} - A promise that resolves to an object containing a success flag and an error message
    */
-  create: async function (variable = {}: any): any {
+  create: async function (variable = {}) {
     try {
       return await fetch(`${API_BASE}/system/prompt-variables`, {
         method: "POST",
@@ -62,7 +62,7 @@ const SystemPromptVariable = {
    * @param {SystemPromptVariable} variable - The system prompt variable to update
    * @returns {Promise<{success: boolean, error: string}>} - A promise that resolves to an object containing a success flag and an error message
    */
-  update: async function (id: any, variable = {}: any): any {
+  update: async function (id: any, variable = {}) {
     try {
       return await fetch(`${API_BASE}/system/prompt-variables/${id}`, {
         method: "PUT",
@@ -85,7 +85,7 @@ const SystemPromptVariable = {
    * @param {string} id - The ID of the system prompt variable to delete
    * @returns {Promise<{success: boolean, error: string}>} - A promise that resolves to an object containing a success flag and an error message
    */
-  delete: async function (id = null: any): any {
+  delete: async function (id: any = null) {
     try {
       if (id === null) return { success: false, error: "ID is required" };
       return await fetch(`${API_BASE}/system/prompt-variables/${id}`, {

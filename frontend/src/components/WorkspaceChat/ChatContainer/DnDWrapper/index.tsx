@@ -42,7 +42,7 @@ export const PARSED_FILE_ATTACHMENT_REMOVED_EVENT =
  */
 
 export function DnDFileUploaderProvider({
-  workspace: any, threadSlug = null: any, children: any, }: any): JSX.Element {
+  workspace: any, threadSlug: any = null, children: any, }: any): JSX.Element {
   const [files, setFiles] = useState([]);
   const [ready, setReady] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -208,7 +208,7 @@ export function DnDFileUploaderProvider({
    * Embeds attachments that are eligible for embedding - basically files that are not images.
    * @param {Attachment[]} newAttachments
    */
-  async function embedEligibleAttachments(newAttachments = []: any): JSX.Element {
+  async function embedEligibleAttachments(newAttachments: any = []): JSX.Element {
     window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSING_EVENT));
     const promises = [];
 

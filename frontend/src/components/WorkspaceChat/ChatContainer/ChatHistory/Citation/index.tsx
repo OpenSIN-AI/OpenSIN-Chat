@@ -58,7 +58,7 @@ export function getCustomImage(type: any): JSX.Element {
  * @param {string} [props.customImage] - Optional custom image to display
  */
 export function SourceTypeCircle({
-  type = "file": any, size = 22: any, iconSize = 12: any, url = null: any, customImage = null: any, }: any): JSX.Element {
+  type: any = "file", size: any = 22, iconSize: any = 12, url: any = null, customImage: any = null, }: any): JSX.Element {
   const Icon = CIRCLE_ICONS[type] || CIRCLE_ICONS.file;
   const [imgError, setImgError] = useState(false);
 
@@ -304,7 +304,7 @@ const supportedSources = [
  * @param {{title: string, chunks: {text: string, chunkSource: string}[]}} options
  * @returns {{isUrl: boolean, text: string, href: string, icon: string}}
  */
-export function parseChunkSource({ title = "": any, chunks = [] }: any): JSX.Element {
+export function parseChunkSource({ title: any = "", chunks = [] }: any): JSX.Element {
   const nullResponse = {
     isUrl: false,
     text: null,

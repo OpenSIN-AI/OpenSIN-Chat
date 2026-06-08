@@ -7,13 +7,13 @@ import { humanFileSize, milliToHms } from "../../../../../../utils/numbers";
 import PreLoader from "../../../../../Preloader";
 
 function FileUploadProgressComponent({
-  slug: any, uuid: any, file: any, setFiles: any, rejected = false: any, reason = null: any, onUploadSuccess: any, onUploadError: any, setLoading: any, setLoadingMessage: any, }: any): JSX.Element {
+  slug: any, uuid: any, file: any, setFiles: any, rejected: any = false, reason: any = null, onUploadSuccess: any, onUploadError: any, setLoading: any, setLoadingMessage: any, }: any): JSX.Element {
   const [timerMs, setTimerMs] = useState(10);
   const [status, setStatus] = useState("pending");
   const [error, setError] = useState("");
   const [isFadingOut, setIsFadingOut] = useState(false);
 
-  const fadeOut = (cb: any=>  {
+  const fadeOut: any = (cb) => {
     setIsFadingOut(true);
     cb?.();
   };

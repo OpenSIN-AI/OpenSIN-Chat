@@ -181,7 +181,7 @@ export default function DockerModelRunnerOptions({ settings }: any): JSX.Element
 }
 
 function DockerModelRunnerModelSelection({
-  selectedModelId: any, setSelectedModelId: any, basePath = null: any, }: any): JSX.Element {
+  selectedModelId: any, setSelectedModelId: any, basePath: any = null, }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [filteredModels, setFilteredModels] = useState([]);
   const [loading, setLoading] = useState(true);

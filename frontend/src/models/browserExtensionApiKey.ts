@@ -3,7 +3,7 @@ import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
 const BrowserExtensionApiKey = {
-  getAll: async (): Promise<any> => {
+  getAll: async () => {
     return await fetch(`${API_BASE}/browser-extension/api-keys`, {
       method: "GET",
       headers: baseHeaders(),
@@ -15,7 +15,7 @@ const BrowserExtensionApiKey = {
       });
   },
 
-  generateKey: async (): Promise<any> => {
+  generateKey: async () => {
     return await fetch(`${API_BASE}/browser-extension/api-keys/new`, {
       method: "POST",
       headers: baseHeaders(),
@@ -27,7 +27,7 @@ const BrowserExtensionApiKey = {
       });
   },
 
-  revoke: async (id: any): Promise<any> => {
+  revoke: async (id: any) => {
     return await fetch(`${API_BASE}/browser-extension/api-keys/${id}`, {
       method: "DELETE",
       headers: baseHeaders(),

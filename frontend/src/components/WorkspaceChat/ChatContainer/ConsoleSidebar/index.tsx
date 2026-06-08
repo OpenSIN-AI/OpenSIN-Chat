@@ -8,9 +8,9 @@ import { useConsoleSidebar } from "../ChatSidebar";
 const TABS = ["logs", "terminal"];
 
 // Listen for log events dispatched globally
-const LOG_EVENT = "openafd:log";
+const LOG_EVENT: any = "openafd:log";
 
-export function dispatchLog(level: any, message: any): JSX.Element {
+export function dispatchLog(level, message: any): JSX.Element {
   window.dispatchEvent(
     new CustomEvent(LOG_EVENT, {
       detail: { level, message, timestamp: new Date().toISOString() },
@@ -29,10 +29,10 @@ const LEVEL_COLORS = {
 function LogsTab() {
   const { t } = useTranslation();
   const [logs, setLogs] = useState([]);
-  const bottomRef = useRef(null);
+  const bottomRef: any = useRef(null);
 
   useEffect(() => {
-    function handler(e: any): JSX.Element {
+    function handler(e): JSX.Element {
       setLogs((prev) => [...prev.slice(-499), e.detail]);
     }
     window.addEventListener(LOG_EVENT, handler);

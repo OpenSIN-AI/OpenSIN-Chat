@@ -30,7 +30,7 @@ function FreeFormLLMInput({ workspace: any, setHasChanges }: any): JSX.Element {
 }
 
 export default function ModelSelector({
-  selectedLLM: any, workspace: any, setHasChanges: any, ModelSelectionComponent = ChatModelSelection: any, }: any): JSX.Element {
+  selectedLLM: any, workspace: any, setHasChanges: any, ModelSelectionComponent: any = ChatModelSelection, }: any): JSX.Element {
   if (selectedLLM === "openafd-router") {
     return (
       <RouterSelection workspace={workspace} setHasChanges={setHasChanges} />

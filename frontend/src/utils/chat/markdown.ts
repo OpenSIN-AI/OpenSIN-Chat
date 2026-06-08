@@ -15,7 +15,7 @@ hljs.registerLanguage("svelte", hljsDefineSvelte);
 const markdown = markdownIt({
   html: Appearance.get("renderHTML") ?? false,
   typographer: true,
-  highlight: function (code: any, lang: any): any {
+  highlight: function (code: any, lang: any) {
     const uuid = v4();
     const theme =
       window.localStorage.getItem("theme") === "light"
@@ -68,7 +68,7 @@ markdown.renderer.rules.link_open = (tokens, idx) => {
 };
 
 // Custom renderer for responsive images rendered in markdown
-markdown.renderer.rules.image = function (tokens: any, idx: any): any {
+markdown.renderer.rules.image = function (tokens, idx: any) {
   const token = tokens[idx];
   const srcIndex = token.attrIndex("src");
   const src = token.attrs[srcIndex][1];

@@ -78,7 +78,7 @@ export default {
       generalAppearance: (slug) => {
         return `/workspace/${slug}/settings/general-appearance`;
       },
-      chatSettings: function (slug: any, options = {}: any): any {
+      chatSettings: function (slug: any, options = {}) {
         return applyOptions(
           `/workspace/${slug}/settings/chat-settings`,
           options,
@@ -207,10 +207,10 @@ export default {
     website: () => {
       return "https://openafd.delqhi.com/hub";
     },
-    viewMoreOfType: function (type: any): any {
+    viewMoreOfType: function (type: any) {
       return `${this.website()}/list/${type}`;
     },
-    viewItem: function (type: any, id: any): any {
+    viewItem: function (type: any, id: any) {
       return `${this.website()}/i/${type}/${id}`;
     },
     trending: () => {
@@ -222,7 +222,7 @@ export default {
     importItem: (importItemId) => {
       return `/settings/community-hub/import-item${importItemId ? `?id=${importItemId}` : ""}`;
     },
-    profile: function (username: any): any {
+    profile: function (username: any) {
       if (username) return `${this.website()}/u/${username}`;
       return `${this.website()}/me`;
     },

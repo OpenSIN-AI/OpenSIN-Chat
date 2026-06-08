@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import useTimeoutProgress from "@/hooks/useTimeoutProgress";
 
 export default function ToolApprovalRequest({
-  requestId: any, skillName: any, payload = {}: any, description = null: any, timeoutMs = null: any, websocket: any, onResponse: any, }: any): JSX.Element {
+  requestId: any, skillName: any, payload = {}, description: any = null, timeoutMs: any = null, websocket: any, onResponse: any, }: any): JSX.Element {
   const [isExpanded, setIsExpanded] = useState(false);
   const [responded, setResponded] = useState(false);
   const [approved, setApproved] = useState(null);
@@ -129,10 +129,10 @@ function ToolApprovalHeader({
 }
 
 function ToolApprovalPayload({ payload: any, isExpanded }: any): JSX.Element {
-  const hasPayload = payload && Object.keys(payload).length > 0;
+  const hasPayload: any = payload && Object.keys(payload).length > 0;
   if (!hasPayload || !isExpanded) return null;
 
-  function formatPayload(data: any): JSX.Element {
+  function formatPayload(data): JSX.Element {
     if (typeof data === "string") return data;
     try {
       return JSON.stringify(data, null, 2);

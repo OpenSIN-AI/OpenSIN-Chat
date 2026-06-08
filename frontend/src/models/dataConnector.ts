@@ -3,9 +3,9 @@ import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import showToast from "@/utils/toast";
 
-const DataConnector = {
+const DataConnector: any = {
   github: {
-    branches: async ({ repo: any, accessToken }: any): Promise<any> => {
+    branches: async ({ repo, accessToken }: any) => {
       return await fetch(`${API_BASE}/ext/github/branches`, {
         method: "POST",
         headers: baseHeaders(),
@@ -26,7 +26,7 @@ const DataConnector = {
           return { branches: [], error: e.message };
         });
     },
-    collect: async function ({ repo: any, accessToken: any, branch: any, ignorePaths = [] }: any): any {
+    collect: async function ({ repo: any, accessToken: any, branch: any, ignorePaths = [] }: any) {
       return await fetch(`${API_BASE}/ext/github/repo`, {
         method: "POST",
         headers: baseHeaders(),
@@ -44,7 +44,7 @@ const DataConnector = {
     },
   },
   gitlab: {
-    branches: async ({ repo: any, accessToken }: any): Promise<any> => {
+    branches: async ({ repo: any, accessToken }: any) => {
       return await fetch(`${API_BASE}/ext/gitlab/branches`, {
         method: "POST",
         headers: baseHeaders(),
@@ -66,7 +66,7 @@ const DataConnector = {
         });
     },
     collect: async function ({
-      repo: any, accessToken: any, branch: any, ignorePaths = []: any, fetchIssues = false: any, fetchWikis = false: any, }: any): any {
+      repo: any, accessToken: any, branch: any, ignorePaths: any = [], fetchIssues: any = false, fetchWikis: any = false, }: any) {
       return await fetch(`${API_BASE}/ext/gitlab/repo`, {
         method: "POST",
         headers: baseHeaders(),
@@ -91,7 +91,7 @@ const DataConnector = {
     },
   },
   youtube: {
-    transcribe: async ({ url }: any): Promise<any> => {
+    transcribe: async ({ url }: any) => {
       return await fetch(`${API_BASE}/ext/youtube/transcript`, {
         method: "POST",
         headers: baseHeaders(),
@@ -109,7 +109,7 @@ const DataConnector = {
     },
   },
   websiteDepth: {
-    scrape: async ({ url: any, depth: any, maxLinks }: any): Promise<any> => {
+    scrape: async ({ url: any, depth: any, maxLinks }: any) => {
       return await fetch(`${API_BASE}/ext/website-depth`, {
         method: "POST",
         headers: baseHeaders(),
@@ -129,7 +129,7 @@ const DataConnector = {
 
   confluence: {
     collect: async function ({
-      baseUrl: any, spaceKey: any, username: any, accessToken: any, cloud: any, personalAccessToken: any, bypassSSL: any, }: any): any {
+      baseUrl: any, spaceKey: any, username: any, accessToken: any, cloud: any, personalAccessToken: any, bypassSSL: any, }: any) {
       return await fetch(`${API_BASE}/ext/confluence`, {
         method: "POST",
         headers: baseHeaders(),
@@ -156,7 +156,7 @@ const DataConnector = {
   },
 
   drupalwiki: {
-    collect: async function ({ baseUrl: any, spaceIds: any, accessToken }: any): any {
+    collect: async function ({ baseUrl: any, spaceIds: any, accessToken }: any) {
       return await fetch(`${API_BASE}/ext/drupalwiki`, {
         method: "POST",
         headers: baseHeaders(),
@@ -178,7 +178,7 @@ const DataConnector = {
     },
   },
   obsidian: {
-    collect: async function ({ files }: any): any {
+    collect: async function ({ files }: any) {
       return await fetch(`${API_BASE}/ext/obsidian/vault`, {
         method: "POST",
         headers: baseHeaders(),
@@ -199,7 +199,7 @@ const DataConnector = {
   },
 
   paperlessNgx: {
-    collect: async function ({ baseUrl: any, apiToken }: any): any {
+    collect: async function ({ baseUrl: any, apiToken }: any) {
       return await fetch(`${API_BASE}/ext/paperless-ngx`, {
         method: "POST",
         headers: baseHeaders(),

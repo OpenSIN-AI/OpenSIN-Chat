@@ -21,12 +21,12 @@ export default function TextSizeMenu() {
   const [selectedSize, setSelectedSize] = useState(
     window.localStorage.getItem("openafd_text_size") || "normal",
   );
-  const menuRef = useRef(null);
+  const menuRef: any = useRef(null);
   const buttonRef = useRef(null);
 
   useEffect(() => {
     if (!showMenu) return;
-    function handleClickOutside(e: any): JSX.Element {
+    function handleClickOutside(e): JSX.Element {
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&

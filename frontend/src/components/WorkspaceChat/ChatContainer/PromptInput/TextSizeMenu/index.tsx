@@ -59,7 +59,7 @@ function TextSizeMenu({ tooltipRef }: any): JSX.Element {
     window.localStorage.getItem("openafd_text_size") || "normal",
   );
 
-  const handleTextSizeChange = (size: any=>  {
+  const handleTextSizeChange: any = (size) => {
     setSelectedSize(size);
     window.localStorage.setItem("openafd_text_size", size);
     window.dispatchEvent(new CustomEvent("textSizeChange", { detail: size }));

@@ -41,8 +41,8 @@ export function useTheme() {
   // Listen for OS level theme changes
   useEffect(() => {
     if (!window.matchMedia) return;
-    const mql = window.matchMedia("(prefers-color-scheme: light)");
-    const handler = (e: any): any => setSystemTheme(e.matches ? "light" : "dark");
+    const mql: any = window.matchMedia("(prefers-color-scheme: light)");
+    const handler = (e) => setSystemTheme(e.matches ? "light" : "dark");
     mql.addEventListener("change", handler);
     return () => mql.removeEventListener("change", handler);
   }, []);

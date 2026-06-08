@@ -105,7 +105,7 @@ function CompletedSurvey({ questions: any, drafts: any, submittedResult }: any):
  * Persisted/historical chats use the same SurveyBody via HistoricalClarifyingQuestions.
  */
 export default function ClarifyingQuestionCard({
-  requestId: any, questions = []: any, allowSkip = true: any, timeoutMs = null: any, websocket: any, }: any): JSX.Element {
+  requestId: any, questions: any = [], allowSkip: any = true, timeoutMs: any = null, websocket: any, }: any): JSX.Element {
   const [index, setIndex] = useState(0);
   const [responded, setResponded] = useState(false);
   const [submittedResult, setSubmittedResult] = useState(null);

@@ -18,7 +18,7 @@ const PromptHistory = {
    * @param {number} workspaceId - The ID of the workspace
    * @returns {Promise<PromptHistory[]>} - An array of prompt history entries
    */
-  forWorkspace: async function (workspaceId: any): any {
+  forWorkspace: async function (workspaceId: any) {
     try {
       return await fetch(
         `${API_BASE}/workspace/${workspaceId}/prompt-history`,
@@ -44,7 +44,7 @@ const PromptHistory = {
    * @param {number} workspaceId - The ID of the workspace
    * @returns {Promise<{success: boolean, error: string}>} - A promise that resolves to an object containing a success flag and an error message
    */
-  clearAll: async function (workspaceId: any): any {
+  clearAll: async function (workspaceId: any) {
     try {
       return await fetch(
         `${API_BASE}/workspace/${workspaceId}/prompt-history`,
@@ -64,7 +64,7 @@ const PromptHistory = {
     }
   },
 
-  delete: async function (id: any): any {
+  delete: async function (id: any) {
     try {
       return await fetch(`${API_BASE}/workspace/prompt-history/${id}`, {
         method: "DELETE",

@@ -8,12 +8,12 @@ import SourcesRow from "./Sources";
 export default function ChatSettingsMenu() {
   const mode = useLoginMode();
   const [showMenu, setShowMenu] = useState(false);
-  const menuRef = useRef(null);
+  const menuRef: any = useRef(null);
   const buttonRef = useRef(null);
 
   useEffect(() => {
     if (!showMenu) return;
-    function handleClickOutside(e: any): JSX.Element {
+    function handleClickOutside(e): JSX.Element {
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&

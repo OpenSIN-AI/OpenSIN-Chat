@@ -15,7 +15,7 @@ export default function EditPresetModal({
     }
   }, [preset, isOpen]);
 
-  const handleSubmit = (e: any=>  {
+  const handleSubmit: any = (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const sanitizedCommand = command.replace(CMD_REGEX, "");
@@ -27,7 +27,7 @@ export default function EditPresetModal({
     });
   };
 
-  const handleCommandChange = (e: any=>  {
+  const handleCommandChange: any = (e) => {
     const value = e.target.value.replace(CMD_REGEX, "");
     setCommand(value);
   };

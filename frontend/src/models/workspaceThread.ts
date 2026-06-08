@@ -5,8 +5,8 @@ import { baseHeaders, safeJsonParse } from "@/utils/request";
 import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { v4 } from "uuid";
 
-const WorkspaceThread = {
-  all: async function (workspaceSlug: any): any {
+const WorkspaceThread: any = {
+  all: async function (workspaceSlug) {
     const { threads, folders, defaultThreadChatCount } = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/threads`,
       {
@@ -21,7 +21,7 @@ const WorkspaceThread = {
 
     return { threads, folders: folders ?? [], defaultThreadChatCount };
   },
-  new: async function (workspaceSlug: any): any {
+  new: async function (workspaceSlug: any) {
     const { thread, error } = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/new`,
       {
@@ -36,7 +36,7 @@ const WorkspaceThread = {
 
     return { thread, error };
   },
-  update: async function (workspaceSlug: any, threadSlug: any, data = {}: any): any {
+  update: async function (workspaceSlug: any, threadSlug: any, data = {}) {
     const { thread, message } = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/update`,
       {
@@ -52,7 +52,7 @@ const WorkspaceThread = {
 
     return { thread, message };
   },
-  delete: async function (workspaceSlug: any, threadSlug: any): any {
+  delete: async function (workspaceSlug: any, threadSlug: any) {
     return await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}`,
       {
@@ -63,7 +63,7 @@ const WorkspaceThread = {
       .then((res) => res.ok)
       .catch(() => false);
   },
-  deleteBulk: async function (workspaceSlug: any, threadSlugs = []: any): any {
+  deleteBulk: async function (workspaceSlug: any, threadSlugs: any = []) {
     return await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread-bulk-delete`,
       {
@@ -75,7 +75,7 @@ const WorkspaceThread = {
       .then((res) => res.ok)
       .catch(() => false);
   },
-  chatHistory: async function (workspaceSlug: any, threadSlug: any): any {
+  chatHistory: async function (workspaceSlug: any, threadSlug: any) {
     const history = await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/chats`,
       {
@@ -88,8 +88,8 @@ const WorkspaceThread = {
       .catch(() => []);
     return history;
   },
-  streamChat: async function ({ workspaceSlug: any, threadSlug }: any, message: any, handleChat: any, attachments = []: any, 
-  ): any {
+  streamChat: async function ({ workspaceSlug: any, threadSlug }: any, message: any, handleChat: any, attachments: any = [], 
+  ) {
     const ctrl = new AbortController();
 
     // Listen for the ABORT_STREAM_EVENT key to be emitted by the client
@@ -159,8 +159,8 @@ const WorkspaceThread = {
       },
     );
   },
-  _deleteEditedChats: async function (workspaceSlug = "": any, threadSlug = "": any, startingId: any, 
-  ): any {
+  _deleteEditedChats: async function (workspaceSlug: any = "", threadSlug: any = "", startingId: any, 
+  ) {
     return await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/delete-edited-chats`,
       {
@@ -178,8 +178,8 @@ const WorkspaceThread = {
         return false;
       });
   },
-  _updateChat: async function (workspaceSlug = "": any, threadSlug = "": any, chatId: any, newText: any, role = "assistant": any, 
-  ): any {
+  _updateChat: async function (workspaceSlug: any = "", threadSlug: any = "", chatId: any, newText: any, role: any = "assistant", 
+  ) {
     return await fetch(
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/update-chat`,
       {
@@ -199,7 +199,7 @@ const WorkspaceThread = {
   },
 
   folders: {
-    new: async function (workspaceSlug: any, name = "New Folder": any): any {
+    new: async function (workspaceSlug: any, name: any = "New Folder") {
       return await fetch(
         `${API_BASE}/workspace/${workspaceSlug}/thread-folder/new`,
         {
@@ -212,7 +212,7 @@ const WorkspaceThread = {
         .catch((e) => ({ folder: null, message: e.message }));
     },
 
-    update: async function (workspaceSlug: any, folderId: any, data = {}: any): any {
+    update: async function (workspaceSlug: any, folderId: any, data = {}) {
       return await fetch(
         `${API_BASE}/workspace/${workspaceSlug}/thread-folder/${folderId}/update`,
         {
@@ -225,7 +225,7 @@ const WorkspaceThread = {
         .catch((e) => ({ folder: null, message: e.message }));
     },
 
-    delete: async function (workspaceSlug: any, folderId: any): any {
+    delete: async function (workspaceSlug: any, folderId: any) {
       return await fetch(
         `${API_BASE}/workspace/${workspaceSlug}/thread-folder/${folderId}`,
         {
@@ -237,7 +237,7 @@ const WorkspaceThread = {
         .catch(() => false);
     },
 
-    assignThread: async function (workspaceSlug: any, threadSlug: any, folderId: any): any {
+    assignThread: async function (workspaceSlug: any, threadSlug: any, folderId: any) {
       return await fetch(
         `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/assign-folder`,
         {

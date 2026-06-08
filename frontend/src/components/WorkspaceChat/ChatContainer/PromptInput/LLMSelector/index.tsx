@@ -19,7 +19,7 @@ import Workspace from "@/models/workspace";
 import System from "@/models/system";
 
 export default function LLMSelectorModal({
-  workspaceSlug = null: any, initialProvider = null: any, }: any): JSX.Element {
+  workspaceSlug: any = null, initialProvider: any = null, }: any): JSX.Element {
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const { t } = useTranslation();

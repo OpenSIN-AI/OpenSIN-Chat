@@ -12,8 +12,8 @@ import useUser from "@/hooks/useUser";
 import AgentSkillsTab from "./Tabs/AgentSkills";
 import SlashCommandsTab from "./Tabs/SlashCommands";
 
-export const TOOLS_MENU_KEYBOARD_EVENT = "tools-menu-keyboard";
-function getTabs(t: any, user: any): JSX.Element {
+export const TOOLS_MENU_KEYBOARD_EVENT: any = "tools-menu-keyboard";
+function getTabs(t, user: any): JSX.Element {
   const tabs = [
     {
       key: "slash-commands",
@@ -45,7 +45,7 @@ function getTabs(t: any, user: any): JSX.Element {
  * @param {boolean} [props.centered] - when true, popup opens below the input
  */
 export default function ToolsMenu({
-  workspace: any, showing: any, setShowing: any, sendCommand: any, promptRef: any, centered = false: any, highlightedIndexRef: any, }: any): JSX.Element {
+  workspace: any, showing: any, setShowing: any, sendCommand: any, promptRef: any, centered: any = false, highlightedIndexRef: any, }: any): JSX.Element {
   const { t } = useTranslation();
   const { user } = useUser();
   const TABS = useMemo(() => getTabs(t, user), [t, user]);

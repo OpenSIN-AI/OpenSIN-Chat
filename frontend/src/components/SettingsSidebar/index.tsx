@@ -467,7 +467,7 @@ function HoldToReveal({ children: any, holdForMs = 3_000 }: any): JSX.Element {
   );
 
   useEffect(() => {
-    const onPress = (e: any=>  {
+    const onPress: any = (e) => {
       if (!["Control", "Meta"].includes(e.key) || timeout !== null) return;
       timeout = setTimeout(() => {
         setShowing(true);
@@ -482,7 +482,7 @@ function HoldToReveal({ children: any, holdForMs = 3_000 }: any): JSX.Element {
         clearTimeout(timeout);
       }, holdForMs);
     };
-    const onRelease = (e: any=>  {
+    const onRelease: any = (e) => {
       if (!["Control", "Meta"].includes(e.key)) return;
       if (showing) {
         window.removeEventListener("keypress", onPress);

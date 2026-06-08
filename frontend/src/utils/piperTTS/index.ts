@@ -35,8 +35,8 @@ export default class PiperTTSClient {
     });
     tmpWorker.postMessage({ type: "voices" });
     return new Promise((resolve, reject) => {
-      let timeout = null;
-      const handleMessage = (event: any): any => {
+      let timeout: any = null;
+      const handleMessage = (event) => {
         if (event.data.type !== "voices") {
           return;
         }
@@ -59,8 +59,8 @@ export default class PiperTTSClient {
     });
     tmpWorker.postMessage({ type: "flush" });
     return new Promise((resolve, reject) => {
-      let timeout = null;
-      const handleMessage = (event: any): any => {
+      let timeout: any = null;
+      const handleMessage = (event) => {
         if (event.data.type !== "flush") {
           return;
         }
@@ -83,8 +83,8 @@ export default class PiperTTSClient {
    */
   async waitForBlobResponse() {
     return new Promise((resolve) => {
-      let timeout = null;
-      const handleMessage = (event: any): any => {
+      let timeout: any = null;
+      const handleMessage = (event) => {
         if (event.data.type === "error") {
           this.worker.removeEventListener("message", handleMessage);
           timeout && clearTimeout(timeout);

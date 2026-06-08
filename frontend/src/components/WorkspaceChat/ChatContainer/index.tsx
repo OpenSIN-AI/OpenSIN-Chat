@@ -84,7 +84,7 @@ function ReportPreviewListener() {
 }
 
 export default function ChatContainer({
-  workspace: any, threadSlug = null: any, knownHistory = []: any, }: any): JSX.Element {
+  workspace: any, threadSlug: any = null, knownHistory: any = [], }: any): JSX.Element {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [loadingResponse, setLoadingResponse] = useState(false);
@@ -129,7 +129,7 @@ export default function ChatContainer({
    * @param {string} messageContent - The message content to set
    * @param {'replace' | 'append'} writeMode - Replace current text or append to existing text (default: replace)
    */
-  function setMessageEmit(messageContent = "": any, writeMode = "replace": any): JSX.Element {
+  function setMessageEmit(messageContent: any = "", writeMode: any = "replace"): JSX.Element {
     window.dispatchEvent(
       new CustomEvent(PROMPT_INPUT_EVENT, {
         detail: { messageContent, writeMode },
@@ -193,7 +193,7 @@ export default function ChatContainer({
     resetTranscript();
   }
 
-  const regenerateAssistantMessage = (chatId: any=>  {
+  const regenerateAssistantMessage: any = (chatId) => {
     const filteredHistory = chatHistory.slice(0, -1);
     const lastUserMessage = filteredHistory.findLast(
       (msg) => msg.role === "user",

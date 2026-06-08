@@ -66,7 +66,7 @@ export function useAgentForm() {
 
   // Prevent page unload with unsaved changes
   useEffect(() => {
-    const handleBeforeUnload = (event: any): any => {
+    const handleBeforeUnload: any = (event) => {
       if (hasChanges) {
         event.preventDefault();
         event.returnValue = "";
@@ -76,7 +76,7 @@ export function useAgentForm() {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [hasChanges]);
 
-  const toggleDefaultSkill = (skillName: any): any => {
+  const toggleDefaultSkill: any = (skillName) => {
     setDisabledAgentSkills((prev) => {
       const updatedSkills = prev.includes(skillName)
         ? prev.filter((name) => name !== skillName)
@@ -86,7 +86,7 @@ export function useAgentForm() {
     });
   };
 
-  const toggleAgentSkill = (skillName: any): any => {
+  const toggleAgentSkill: any = (skillName) => {
     setAgentSkills((prev) => {
       const updatedSkills = prev.includes(skillName)
         ? prev.filter((name) => name !== skillName)
@@ -96,7 +96,7 @@ export function useAgentForm() {
     });
   };
 
-  const toggleFlow = (flowId: any): any => {
+  const toggleFlow: any = (flowId) => {
     setActiveFlowIds((prev) => {
       const updated = prev.includes(flowId)
         ? prev.filter((id) => id !== flowId)
@@ -105,7 +105,7 @@ export function useAgentForm() {
     });
   };
 
-  const toggleMCP = (serverName: any): any => {
+  const toggleMCP: any = (serverName) => {
     setMcpServers((prev) => {
       return prev.map((server) => {
         if (server.name !== serverName) return server;

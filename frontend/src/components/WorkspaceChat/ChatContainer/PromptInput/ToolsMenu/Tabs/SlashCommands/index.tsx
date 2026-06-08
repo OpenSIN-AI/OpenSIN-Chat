@@ -13,7 +13,7 @@ import useToolsMenuItems from "../../useToolsMenuItems";
 import SlashCommandRow from "./SlashCommandRow";
 
 export default function SlashCommandsTab({
-  sendCommand: any, setShowing: any, promptRef: any, highlightedIndex = -1: any, registerItemCount: any, }: any): JSX.Element {
+  sendCommand: any, setShowing: any, promptRef: any, highlightedIndex: any = -1, registerItemCount: any, }: any): JSX.Element {
   const { t } = useTranslation();
   const {
     isOpen: isAddModalOpen,
@@ -117,7 +117,7 @@ export default function SlashCommandsTab({
     return true;
   };
 
-  const handleEditPreset = (preset: any=>  {
+  const handleEditPreset: any = (preset) => {
     setSelectedPreset(preset);
     openEditModal();
   };
@@ -143,7 +143,7 @@ export default function SlashCommandsTab({
     setSelectedPreset(null);
   };
 
-  const handlePublishPreset = (preset: any=>  {
+  const handlePublishPreset: any = (preset) => {
     setPresetToPublish({
       name: preset.command.slice(1),
       description: preset.description,

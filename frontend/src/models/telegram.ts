@@ -24,7 +24,7 @@ const Telegram = {
    * @param {string} workspaceSlug - The default workspace slug.
    * @returns {Promise<{success: boolean, bot_username: string|null, error: string|null}>}
    */
-  connect: async function (botToken: any, workspaceSlug: any): any {
+  connect: async function (botToken: any, workspaceSlug: any) {
     return await fetch(`${API_BASE}/telegram/connect`, {
       method: "POST",
       headers: baseHeaders(),
@@ -106,7 +106,7 @@ const Telegram = {
    * @param {string} chatId
    * @returns {Promise<{success: boolean, error: string|null}>}
    */
-  approveUser: async function (chatId: any): any {
+  approveUser: async function (chatId: any) {
     return await fetch(`${API_BASE}/telegram/approve-user`, {
       method: "POST",
       headers: baseHeaders(),
@@ -124,7 +124,7 @@ const Telegram = {
    * @param {string} chatId
    * @returns {Promise<{success: boolean, error: string|null}>}
    */
-  denyUser: async function (chatId: any): any {
+  denyUser: async function (chatId: any) {
     return await fetch(`${API_BASE}/telegram/deny-user`, {
       method: "POST",
       headers: baseHeaders(),
@@ -142,7 +142,7 @@ const Telegram = {
    * @param {object} updates - Config fields to update (e.g. voice_response_mode).
    * @returns {Promise<{success: boolean, error: string|null}>}
    */
-  updateConfig: async function (updates: any): any {
+  updateConfig: async function (updates: any) {
     return await fetch(`${API_BASE}/telegram/update-config`, {
       method: "POST",
       headers: baseHeaders(),
@@ -160,7 +160,7 @@ const Telegram = {
    * @param {string} chatId
    * @returns {Promise<{success: boolean, error: string|null}>}
    */
-  revokeUser: async function (chatId: any): any {
+  revokeUser: async function (chatId: any) {
     return await fetch(`${API_BASE}/telegram/revoke-user`, {
       method: "POST",
       headers: baseHeaders(),

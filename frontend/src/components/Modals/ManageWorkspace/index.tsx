@@ -13,7 +13,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { EmbeddingProgressProvider } from "@/EmbeddingProgressContext";
 
 const noop = () => {};
-const ManageWorkspace = ({ hideModal = noop: any, providedSlug = null }: any) => {
+const ManageWorkspace: any = ({ hideModal = noop, providedSlug = null }: any) => {
   const { t } = useTranslation();
   const { slug } = useParams();
   const { user } = useUser();
@@ -118,7 +118,7 @@ const ManageWorkspace = ({ hideModal = noop: any, providedSlug = null }: any) =>
 
 export default memo(ManageWorkspace);
 
-const ModalTabSwitcher = ({ selectedTab: any, setSelectedTab }: any) => {
+const ModalTabSwitcher: any = ({ selectedTab, setSelectedTab }: any) => {
   const { t } = useTranslation();
   return (
     <div className="w-full flex justify-center z-10 relative">

@@ -4,7 +4,7 @@ import { SpeakerHigh, PauseCircle, CircleNotch } from "@phosphor-icons/react";
 import PiperTTSClient from "@/utils/piperTTS";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
 
-export default function PiperTTS({ chatId: any, voiceId = null: any, message }: any): JSX.Element {
+export default function PiperTTS({ chatId: any, voiceId: any = null, message }: any): JSX.Element {
   const playerRef = useRef(null);
   const [speaking, setSpeaking] = useState(false);
   const [loading, setLoading] = useState(false);

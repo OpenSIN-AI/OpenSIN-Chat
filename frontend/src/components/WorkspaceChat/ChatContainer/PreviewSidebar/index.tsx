@@ -32,11 +32,11 @@ const TYPE_ICONS = {
 
 function VersionDropdown({ versions: any, activeVersion: any, onSelect }: any): JSX.Element {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const ref: any = useRef(null);
 
   useEffect(() => {
     if (!open) return;
-    function handleClick(e: any): JSX.Element {
+    function handleClick(e): JSX.Element {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     }
     document.addEventListener("mousedown", handleClick);
@@ -85,11 +85,11 @@ function VersionDropdown({ versions: any, activeVersion: any, onSelect }: any): 
 function ThreeDotsMenu({ previewData: any, onAddToSources }: any): JSX.Element {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const ref: any = useRef(null);
 
   useEffect(() => {
     if (!open) return;
-    function handleClick(e: any): JSX.Element {
+    function handleClick(e): JSX.Element {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     }
     document.addEventListener("mousedown", handleClick);

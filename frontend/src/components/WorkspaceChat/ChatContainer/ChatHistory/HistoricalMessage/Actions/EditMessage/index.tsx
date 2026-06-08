@@ -14,7 +14,7 @@ export function useEditMessage({ chatId: any, role }: any): JSX.Element {
   return { isEditing };
 }
 
-export function EditMessageAction({ chatId = null: any, role: any, isEditing }: any): JSX.Element {
+export function EditMessageAction({ chatId: any = null, role: any, isEditing }: any): JSX.Element {
   const { t } = useTranslation();
   function handleEditClick() {
     window.dispatchEvent(
@@ -47,10 +47,10 @@ export function EditMessageAction({ chatId = null: any, role: any, isEditing }: 
 }
 
 export function EditMessageForm({
-  role: any, chatId: any, message: any, attachments = []: any, adjustTextArea: any, saveChanges: any, }: any): JSX.Element {
-  const formRef = useRef(null);
+  role: any, chatId: any, message: any, attachments: any = [], adjustTextArea: any, saveChanges: any, }: any): JSX.Element {
+  const formRef: any = useRef(null);
 
-  function handleSubmit(e: any): JSX.Element {
+  function handleSubmit(e): JSX.Element {
     e.preventDefault();
     const editedMessage = formRef.current.value;
     saveChanges({ editedMessage, chatId, role, attachments });

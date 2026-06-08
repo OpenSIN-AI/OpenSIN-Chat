@@ -74,7 +74,7 @@ export default function LiteLLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function LiteLLMModelSelection({ settings: any, basePath = null: any, apiKey = null }: any): JSX.Element {
+function LiteLLMModelSelection({ settings: any, basePath: any = null, apiKey = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

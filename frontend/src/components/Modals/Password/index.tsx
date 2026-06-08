@@ -25,7 +25,7 @@ export default function PasswordModal({ mode = "single" }: any): JSX.Element {
   );
 }
 
-export function usePasswordModal(notry = false: any): JSX.Element {
+export function usePasswordModal(notry: any = false): JSX.Element {
   const [auth, setAuth] = useState({
     loading: true,
     requiresAuth: false,

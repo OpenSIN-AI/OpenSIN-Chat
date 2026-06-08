@@ -20,7 +20,7 @@ export default function PiperTTSOptions({ settings }: any): JSX.Element {
   );
 }
 
-function voicesByLanguage(voices = []: any): JSX.Element {
+function voicesByLanguage(voices: any = []): JSX.Element {
   const voicesByLanguage = voices.reduce((acc, voice) => {
     const langName = voice?.language?.name_english ?? "Unlisted";
     acc[langName] = acc[langName] || [];

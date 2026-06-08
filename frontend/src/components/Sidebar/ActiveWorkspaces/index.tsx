@@ -67,13 +67,13 @@ export default function ActiveWorkspaces() {
     }
   }
 
-  const onDragEnd = (result: any=>  {
+  const onDragEnd: any = (result) => {
     if (!result.destination) return;
     reorderWorkspaces(result.source.index, result.destination.index);
   };
 
   // When on the home page, resolve which workspace should be virtually active
-  const virtualActiveSlug = ((: any=>  {
+  const virtualActiveSlug: any = (() => {
     if (!isHomePage || workspaces.length === 0) return null;
     const lastVisited = safeJsonParse(
       localStorage.getItem(LAST_VISITED_WORKSPACE),

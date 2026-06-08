@@ -31,7 +31,7 @@ export default function DocumentSettings({ workspace }: any): JSX.Element {
     },
   );
 
-  async function fetchKeys(refetchWorkspace = false: any, options = {}: any): JSX.Element {
+  async function fetchKeys(refetchWorkspace: any = false, options = {}): JSX.Element {
     const { autoSelectNew = false } = options;
     const previousIds = new Set();
     if (autoSelectNew && availableDocsRef.current?.items) {

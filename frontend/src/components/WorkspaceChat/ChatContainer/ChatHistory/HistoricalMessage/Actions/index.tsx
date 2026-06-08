@@ -8,8 +8,8 @@ import RenderMetrics from "./RenderMetrics";
 import ActionMenu from "./ActionMenu";
 import { useTranslation } from "react-i18next";
 
-const Actions = ({
-  message: any, feedbackScore: any, chatId: any, slug: any, isLastMessage: any, regenerateMessage: any, forkThread: any, isEditing: any, role: any, metrics = {}: any, }: any) => {
+const Actions: any = ({
+  message, feedbackScore: any, chatId: any, slug: any, isLastMessage: any, regenerateMessage: any, forkThread: any, isEditing: any, role: any, metrics = {}, }: any) => {
   const { t } = useTranslation();
   const [selectedFeedback, setSelectedFeedback] = useState(feedbackScore);
   const handleFeedback = async (newFeedback) => {

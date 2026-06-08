@@ -24,7 +24,7 @@ function ActionMenu({ chatId: any, forkThread: any, isEditing: any, role }: any)
 
   useEffect(() => {
     if (!open) return;
-    const handleClickOutside = (event: any=>  {
+    const handleClickOutside: any = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setOpen(false);
       }

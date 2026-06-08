@@ -11,7 +11,7 @@ const ScheduledJobs = {
       .catch(() => ({ jobs: [] }));
   },
 
-  create: async function (data: any): any {
+  create: async function (data: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/new`, {
       method: "POST",
       headers: baseHeaders(),
@@ -21,7 +21,7 @@ const ScheduledJobs = {
       .catch(() => ({ job: null, error: "Failed to create scheduled job" }));
   },
 
-  get: async function (id: any): any {
+  get: async function (id: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/${id}`, {
       headers: baseHeaders(),
     })
@@ -29,7 +29,7 @@ const ScheduledJobs = {
       .catch(() => ({ job: null }));
   },
 
-  update: async function (id: any, data: any): any {
+  update: async function (id: any, data: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/${id}`, {
       method: "PUT",
       headers: baseHeaders(),
@@ -42,7 +42,7 @@ const ScheduledJobs = {
       }));
   },
 
-  delete: async function (id: any): any {
+  delete: async function (id: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/${id}`, {
       method: "DELETE",
       headers: baseHeaders(),
@@ -51,7 +51,7 @@ const ScheduledJobs = {
       .catch(() => ({ success: false }));
   },
 
-  toggle: async function (id: any): any {
+  toggle: async function (id: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/${id}/toggle`, {
       method: "POST",
       headers: baseHeaders(),
@@ -60,7 +60,7 @@ const ScheduledJobs = {
       .catch(() => ({ job: null }));
   },
 
-  trigger: async function (id: any): any {
+  trigger: async function (id: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/${id}/trigger`, {
       method: "POST",
       headers: baseHeaders(),
@@ -69,7 +69,7 @@ const ScheduledJobs = {
       .catch((e) => ({ success: false, error: e.message }));
   },
 
-  runs: async function (id: any): any {
+  runs: async function (id: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/${id}/runs`, {
       headers: baseHeaders(),
     })
@@ -77,7 +77,7 @@ const ScheduledJobs = {
       .catch(() => ({ runs: [] }));
   },
 
-  getRun: async function (runId: any): any {
+  getRun: async function (runId: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/runs/${runId}`, {
       headers: baseHeaders(),
     })
@@ -85,7 +85,7 @@ const ScheduledJobs = {
       .catch(() => ({ run: null, job: null }));
   },
 
-  markRunRead: async function (runId: any): any {
+  markRunRead: async function (runId: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/runs/${runId}/read`, {
       method: "POST",
       headers: baseHeaders(),
@@ -94,7 +94,7 @@ const ScheduledJobs = {
       .catch(() => ({ success: false }));
   },
 
-  continueInThread: async function (runId: any): any {
+  continueInThread: async function (runId: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/runs/${runId}/continue`, {
       method: "POST",
       headers: baseHeaders(),
@@ -115,7 +115,7 @@ const ScheduledJobs = {
       .catch(() => ({ tools: [] }));
   },
 
-  killRun: async function (runId: any): any {
+  killRun: async function (runId: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/runs/${runId}/kill`, {
       method: "POST",
       headers: baseHeaders(),

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 // Additional Configs (opts)
 // You can also pass valid ReactToast params to override the defaults.
 // clear: false, // Will dismiss all visible toasts before rendering next toast
-const showToast = (message: any, type = "default": any, opts = {}: any): any => {
+const showToast: any = (message, type: any = "default", opts = {}) => {
   const theme = localStorage?.getItem("theme") || "default";
   const options = {
     position: "bottom-center",

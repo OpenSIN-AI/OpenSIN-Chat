@@ -8,7 +8,7 @@ const GoogleAgentSkills = {
      * Get the current configuration status for Gmail.
      * @returns {Promise<{success: boolean, isConfigured?: boolean, config?: {deploymentId: string, apiKey: string}, error?: string}>}
      */
-    getStatus: async (): Promise<any> => {
+    getStatus: async () => {
       return await fetch(`${API_BASE}/admin/agent-skills/gmail/status`, {
         method: "GET",
         headers: baseHeaders(),
@@ -26,7 +26,7 @@ const GoogleAgentSkills = {
      * Get the current configuration status for Google Calendar.
      * @returns {Promise<{success: boolean, isConfigured?: boolean, config?: {deploymentId: string, apiKey: string}, error?: string}>}
      */
-    getStatus: async (): Promise<any> => {
+    getStatus: async () => {
       return await fetch(
         `${API_BASE}/admin/agent-skills/google-calendar/status`,
         {

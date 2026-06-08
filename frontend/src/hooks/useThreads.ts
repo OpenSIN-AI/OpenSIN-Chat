@@ -9,7 +9,7 @@ import Workspace from "@/models/workspace";
  * @param {string} workspaceSlug
  * @returns {[string, string] | null}
  */
-export const threadsKey = (workspaceSlug: any): any =>
+export const threadsKey: any = (workspaceSlug) =>
   workspaceSlug ? ["threads", workspaceSlug] : null;
 
 /**

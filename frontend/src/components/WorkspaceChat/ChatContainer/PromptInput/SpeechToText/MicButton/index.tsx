@@ -17,7 +17,7 @@ import { PROMPT_INPUT_EVENT } from "../../../PromptInput";
  * @returns {React.ReactElement} The MicButton component
  */
 export default function MicButton({
-  listening: any, processing = false: any, onStart: any, onStop: any, }: any): JSX.Element {
+  listening: any, processing: any = false, onStart: any, onStop: any, }: any): JSX.Element {
   const { t } = useTranslation();
 
   const toggle = useCallback(() => {
@@ -27,7 +27,7 @@ export default function MicButton({
   }, [listening, processing, onStart, onStop]);
 
   useEffect(() => {
-    const onKey = (event: any=>  {
+    const onKey: any = (event) => {
       // CTRL + m on Mac and Windows to toggle STT listening
       if (event.ctrlKey && event.keyCode === 77) toggle();
     };
@@ -36,7 +36,7 @@ export default function MicButton({
   }, [toggle]);
 
   useEffect(() => {
-    const onPromptUpdate = (e: any=>  {
+    const onPromptUpdate: any = (e) => {
       if (!e?.detail && listening) onStop();
     };
     window.addEventListener(PROMPT_INPUT_EVENT, onPromptUpdate);

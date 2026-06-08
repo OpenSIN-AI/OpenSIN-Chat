@@ -14,8 +14,8 @@ const DEFAULT_SEARCH_RESULTS = {
   threads: [],
 };
 
-const SEARCH_RESULT_SELECTED = "search-result-selected";
-export default function SearchBox({ user: any, showNewWsModal }: any): JSX.Element {
+const SEARCH_RESULT_SELECTED: any = "search-result-selected";
+export default function SearchBox({ user, showNewWsModal }: any): JSX.Element {
   const { t } = useTranslation();
   const searchRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");

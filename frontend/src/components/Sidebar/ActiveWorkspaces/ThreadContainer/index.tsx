@@ -16,10 +16,10 @@ import {
   closestCenter,
   useDroppable,
 } from "@dnd-kit/core";
-export const THREAD_RENAME_EVENT = "renameThread";
+export const THREAD_RENAME_EVENT: any = "renameThread";
 
 export default function ThreadContainer({
-  workspace: any, isVirtualThread = false: any, }: any): JSX.Element {
+  workspace, isVirtualThread: any = false, }: any): JSX.Element {
   const { threadSlug = null } = useParams();
   const [threads, setThreads] = useState([]);
   const [folders, setFolders] = useState([]);
@@ -33,7 +33,7 @@ export default function ThreadContainer({
   );
 
   useEffect(() => {
-    const chatHandler = (event: any=>  {
+    const chatHandler: any = (event) => {
       const { threadSlug, newName } = event.detail;
       setThreads((prevThreads) =>
         prevThreads.map((thread) => {
@@ -67,13 +67,13 @@ export default function ThreadContainer({
 
   // Enable toggling of bulk-deletion by holding meta-key (ctrl on win and cmd/fn on others)
   useEffect(() => {
-    const handleKeyDown = (event: any=>  {
+    const handleKeyDown: any = (event) => {
       if (["Control", "Meta"].includes(event.key)) {
         setCtrlPressed(true);
       }
     };
 
-    const handleKeyUp = (event: any=>  {
+    const handleKeyUp: any = (event) => {
       if (["Control", "Meta"].includes(event.key)) {
         setCtrlPressed(false);
         // when toggling, unset bulk progress so
@@ -96,7 +96,7 @@ export default function ThreadContainer({
     };
   }, []);
 
-  const toggleForDeletion = (id: any=>  {
+  const toggleForDeletion: any = (id) => {
     setThreads((prev) =>
       prev.map((t) => {
         if (t.id !== id) return t;

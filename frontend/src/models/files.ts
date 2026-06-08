@@ -15,7 +15,7 @@ const StorageFiles = {
    * @param {string} filename - The filename to download
    * @returns {Promise<Blob|null>}
    */
-  download: async function (storageFilename: any): any {
+  download: async function (storageFilename: any) {
     return await fetch(
       `${API_BASE}/agent-skills/generated-files/${encodeURIComponent(storageFilename)}`,
       { headers: baseHeaders() },

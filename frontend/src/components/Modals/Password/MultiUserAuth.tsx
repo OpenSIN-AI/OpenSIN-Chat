@@ -10,19 +10,19 @@ import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
-const RecoveryForm = ({ onSubmit: any, setShowRecoveryForm }: any) => {
+const RecoveryForm: any = ({ onSubmit, setShowRecoveryForm }: any) => {
   const [username, setUsername] = useState("");
   const [recoveryCodeInputs, setRecoveryCodeInputs] = useState(
     Array(2).fill(""),
   );
 
-  const handleRecoveryCodeChange = (index: any, value: any=>  {
+  const handleRecoveryCodeChange: any = (index, value: any) => {
     const updatedCodes = [...recoveryCodeInputs];
     updatedCodes[index] = value;
     setRecoveryCodeInputs(updatedCodes);
   };
 
-  const handleSubmit = (e: any=>  {
+  const handleSubmit: any = (e) => {
     e.preventDefault();
     const recoveryCodes = recoveryCodeInputs.filter(
       (code) => code.trim() !== "",
@@ -107,7 +107,7 @@ const ResetPasswordForm = ({ onSubmit }: any) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: any=>  {
+  const handleSubmit: any = (e) => {
     e.preventDefault();
     onSubmit(newPassword, confirmPassword);
   };

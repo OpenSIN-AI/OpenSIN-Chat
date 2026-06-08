@@ -82,7 +82,7 @@ const THOUGHT_PREVIEW_LENGTH = isMobile ? 25 : 50;
  * @param {string} content - The content to check.
  * @returns {boolean} - Whether the content has readable content.
  */
-function contentIsNotEmpty(content = "": any): JSX.Element {
+function contentIsNotEmpty(content: any = ""): JSX.Element {
   return (
     content
       ?.trim()

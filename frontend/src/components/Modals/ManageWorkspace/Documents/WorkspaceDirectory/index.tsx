@@ -40,7 +40,7 @@ function WorkspaceDirectory({
     );
   }
 
-  const handleToggleSelection = (item: any=>  {
+  const handleToggleSelection: any = (item) => {
     setSelectedItems(toggleSelection(item, selectedItems));
   };
 
@@ -69,7 +69,7 @@ function WorkspaceDirectory({
     setLoading(false);
   };
 
-  const handleSaveChanges = (e: any=>  {
+  const handleSaveChanges: any = (e) => {
     setSelectedItems({});
     saveChanges(e);
   };

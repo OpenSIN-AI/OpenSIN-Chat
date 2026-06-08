@@ -43,7 +43,7 @@ const LABEL_STYLES = {
  * @param {string} [props.gapClassName] - Additional CSS classes for gap
  */
 export default function Toggle({
-  className: any, enabled: any, onChange: any, disabled = false: any, size = "sm": any, name: any, label: any, description: any, variant = "default": any, hint: any, value: any, labelClassName: any, descriptionClassName: any, gapClassName: any, }: any): JSX.Element {
+  className: any, enabled: any, onChange: any, disabled: any = false, size: any = "sm", name: any, label: any, description: any, variant: any = "default", hint: any, value: any, labelClassName: any, descriptionClassName: any, gapClassName: any, }: any): JSX.Element {
   const inputProps =
     enabled !== undefined
       ? { checked: enabled, onChange: (e) => onChange?.(e.target.checked) }
@@ -133,7 +133,7 @@ function ToggleSwitch({ name: any, disabled: any, size: any, inputProps: any, va
 }
 
 function TextContent({
-  label: any, description: any, labelStyles = {}: any, hint: any, labelClassName: any, descriptionClassName: any, gapClassName: any, }: any): JSX.Element {
+  label: any, description: any, labelStyles = {}, hint: any, labelClassName: any, descriptionClassName: any, gapClassName: any, }: any): JSX.Element {
   if (!label && !description) return null;
   return (
     <div className={`flex flex-col ${gapClassName ?? labelStyles.gap}`}>
@@ -166,7 +166,7 @@ function TextContent({
  * Simple toggle switch that doesn't use label/input to avoid focus-scroll issues
  */
 export function SimpleToggleSwitch({
-  className: any, enabled: any, onChange: any, disabled = false: any, size = "sm": any, }: any): JSX.Element {
+  className: any, enabled: any, onChange: any, disabled: any = false, size: any = "sm", }: any): JSX.Element {
   return (
     <div
       role="switch"

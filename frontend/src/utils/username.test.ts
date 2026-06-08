@@ -10,7 +10,7 @@ import {
 // Mirrors the documented validation contract: 2-32 chars, must start with a
 // lowercase letter, may contain [a-z0-9._@-]. These tests lock that behaviour
 // so an accidental regex change in the auth flow is caught early.
-const isValid = (name: any): any =>
+const isValid: any = (name) =>
   USERNAME_REGEX.test(name) &&
   name.length >= USERNAME_MIN_LENGTH &&
   name.length <= USERNAME_MAX_LENGTH;

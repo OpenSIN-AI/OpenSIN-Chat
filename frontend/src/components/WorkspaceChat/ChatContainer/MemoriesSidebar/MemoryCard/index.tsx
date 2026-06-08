@@ -15,12 +15,12 @@ export default function MemoryCard({ memory }: any): JSX.Element {
   } = useMemoriesContext();
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+  const menuRef: any = useRef(null);
   const buttonRef = useRef(null);
 
   useEffect(() => {
     if (!menuOpen) return;
-    function handleClickOutside(e: any): JSX.Element {
+    function handleClickOutside(e): JSX.Element {
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&

@@ -30,11 +30,11 @@ export default function OllamaEmbeddingOptions({ settings }: any): JSX.Element {
     settings?.OllamaEmbeddingBatchSize || 1,
   );
 
-  const handleMaxChunkLengthChange = (e: any=>  {
+  const handleMaxChunkLengthChange: any = (e) => {
     setMaxChunkLength(Number(e.target.value));
   };
 
-  const handleBatchSizeChange = (e: any=>  {
+  const handleBatchSizeChange: any = (e) => {
     setBatchSize(Number(e.target.value));
   };
 

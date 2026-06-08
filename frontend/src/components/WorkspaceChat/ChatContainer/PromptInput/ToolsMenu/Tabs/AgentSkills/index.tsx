@@ -16,10 +16,10 @@ import SkillSection from "./SkillSection";
 import { Wrench, MagnifyingGlass, CircleNotch } from "@phosphor-icons/react";
 import { useIsAgentSessionActive } from "@/utils/chat/agent";
 
-const MIN_ITEMS_TO_SHOW_SEARCH = 10;
+const MIN_ITEMS_TO_SHOW_SEARCH: any = 10;
 
 export default function AgentSkillsTab({
-  highlightedIndex = -1: any, registerItemCount: any, workspace: any, }: any): JSX.Element {
+  highlightedIndex = -1, registerItemCount: any, workspace: any, }: any): JSX.Element {
   const { t } = useTranslation();
   const { showAgentCommand = true } = workspace ?? {};
   const agentSessionActive = useIsAgentSessionActive();

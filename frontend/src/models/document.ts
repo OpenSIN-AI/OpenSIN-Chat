@@ -2,8 +2,8 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const Document = {
-  createFolder: async (name: any): Promise<any> => {
+const Document: any = {
+  createFolder: async (name) => {
     return await fetch(`${API_BASE}/document/create-folder`, {
       method: "POST",
       headers: baseHeaders(),
@@ -15,7 +15,7 @@ const Document = {
         return { success: false, error: e.message };
       });
   },
-  moveToFolder: async (files: any, folderName: any): Promise<any> => {
+  moveToFolder: async (files: any, folderName: any) => {
     const data = {
       files: files.map((file) => ({
         from: file.folderName ? `${file.folderName}/${file.name}` : file.name,

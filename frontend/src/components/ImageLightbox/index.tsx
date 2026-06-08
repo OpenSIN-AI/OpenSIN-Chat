@@ -10,7 +10,7 @@ const OPEN_EVENT = "open-image-lightbox";
  * @param {{contentString: string, name: string}[]} images
  * @param {number} initialIndex
  */
-export function openImageLightbox(images: any, initialIndex = 0: any): JSX.Element {
+export function openImageLightbox(images: any, initialIndex: any = 0): JSX.Element {
   window.dispatchEvent(
     new CustomEvent(OPEN_EVENT, { detail: { images, initialIndex } }),
   );

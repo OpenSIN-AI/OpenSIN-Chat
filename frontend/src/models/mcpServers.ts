@@ -7,7 +7,7 @@ const MCPServers = {
    * Forces a reload of the MCP Hypervisor and its servers
    * @returns {Promise<{success: boolean, error: string | null, servers: Array<{name: string, running: boolean, tools: Array<{name: string, description: string, inputSchema: Object}>, error: string | null, process: {pid: number, cmd: string} | null}>}>}
    */
-  forceReload: async (): Promise<any> => {
+  forceReload: async () => {
     return await fetch(`${API_BASE}/mcp-servers/force-reload`, {
       method: "GET",
       headers: baseHeaders(),
@@ -24,7 +24,7 @@ const MCPServers = {
    * List all available MCP servers in the system
    * @returns {Promise<{success: boolean, error: string | null, servers: Array<{name: string, running: boolean, tools: Array<{name: string, description: string, inputSchema: Object}>, error: string | null, process: {pid: number, cmd: string} | null}>}>}
    */
-  listServers: async (): Promise<any> => {
+  listServers: async () => {
     return await fetch(`${API_BASE}/mcp-servers/list`, {
       method: "GET",
       headers: baseHeaders(),
@@ -42,7 +42,7 @@ const MCPServers = {
    * @param {string} name - The name of the MCP server to toggle
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  toggleServer: async (name: any): Promise<any> => {
+  toggleServer: async (name: any) => {
     return await fetch(`${API_BASE}/mcp-servers/toggle`, {
       method: "POST",
       headers: baseHeaders(),
@@ -60,7 +60,7 @@ const MCPServers = {
    * @param {string} name - The name of the MCP server to delete
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  deleteServer: async (name: any): Promise<any> => {
+  deleteServer: async (name: any) => {
     return await fetch(`${API_BASE}/mcp-servers/delete`, {
       method: "POST",
       headers: baseHeaders(),
@@ -80,7 +80,7 @@ const MCPServers = {
    * @param {boolean} enabled - Whether the tool should be enabled (true) or suppressed (false)
    * @returns {Promise<{success: boolean, error: string | null, suppressedTools: string[]}>}
    */
-  toggleTool: async (serverName: any, toolName: any, enabled: any): Promise<any> => {
+  toggleTool: async (serverName: any, toolName: any, enabled: any) => {
     return await fetch(`${API_BASE}/mcp-servers/toggle-tool`, {
       method: "POST",
       headers: baseHeaders(),

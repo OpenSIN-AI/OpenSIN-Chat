@@ -296,7 +296,7 @@ function AutoSubmitPreference() {
     setAutoSubmitSttInput(settings.autoSubmitSttInput ?? true);
   }, []);
 
-  const handleChange = (checked: any=>  {
+  const handleChange: any = (checked) => {
     setAutoSubmitSttInput(checked);
     Appearance.updateSettings({ autoSubmitSttInput: checked });
   };
@@ -341,7 +341,7 @@ function AutoSpeakPreference() {
     );
   }, []);
 
-  const handleChange = (checked: any=>  {
+  const handleChange: any = (checked) => {
     setAutoPlayAssistantTtsResponse(checked);
     Appearance.updateSettings({ autoPlayAssistantTtsResponse: checked });
   };

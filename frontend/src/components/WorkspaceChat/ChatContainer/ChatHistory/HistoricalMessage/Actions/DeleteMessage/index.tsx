@@ -7,7 +7,7 @@ import {
   DELETE_EVENT,
 } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/MessageActionsContext";
 
-export function useWatchDeleteMessage({ chatId = null: any, role = "user" }: any): JSX.Element {
+export function useWatchDeleteMessage({ chatId: any = null, role = "user" }: any): JSX.Element {
   const context = useMessageActionsContext();
   const [completeDelete, setCompleteDelete] = useState(false);
   const deleteCalled = useRef(false);

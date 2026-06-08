@@ -14,7 +14,7 @@ import ModelTableLoadingSkeleton from "@/components/lib/ModelTable/loading";
 import showToast from "@/utils/toast";
 import LemonadeUtils from "@/models/utils/lemonadeUtils";
 
-export function cleanBasePath(basePath = "": any): JSX.Element {
+export function cleanBasePath(basePath: any = ""): JSX.Element {
   try {
     const url = new URL(basePath);
     return url.origin;
@@ -208,7 +208,7 @@ export default function LemonadeOptions({ settings }: any): JSX.Element {
 }
 
 function LemonadeModelSelection({
-  selectedModelId: any, setSelectedModelId: any, basePath = null: any, }: any): JSX.Element {
+  selectedModelId: any, setSelectedModelId: any, basePath: any = null, }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [filteredModels, setFilteredModels] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -10,7 +10,7 @@ const AgentFlows = {
    * @param {string} [uuid] - Optional UUID for updating existing flow
    * @returns {Promise<{success: boolean, error: string | null, flow: {name: string, config: object, uuid: string} | null}>}
    */
-  saveFlow: async (name: any, config: any, uuid = null: any): Promise<any> => {
+  saveFlow: async (name: any, config: any, uuid: any = null) => {
     return await fetch(`${API_BASE}/agent-flows/save`, {
       method: "POST",
       headers: {
@@ -35,7 +35,7 @@ const AgentFlows = {
    * List all available flows in the system
    * @returns {Promise<{success: boolean, error: string | null, flows: Array<{name: string, uuid: string, description: string, steps: Array}>}>}
    */
-  listFlows: async (): Promise<any> => {
+  listFlows: async () => {
     return await fetch(`${API_BASE}/agent-flows/list`, {
       method: "GET",
       headers: baseHeaders(),
@@ -53,7 +53,7 @@ const AgentFlows = {
    * @param {string} uuid - The UUID of the flow to retrieve
    * @returns {Promise<{success: boolean, error: string | null, flow: {name: string, config: object, uuid: string} | null}>}
    */
-  getFlow: async (uuid: any): Promise<any> => {
+  getFlow: async (uuid: any) => {
     return await fetch(`${API_BASE}/agent-flows/${uuid}`, {
       method: "GET",
       headers: baseHeaders(),
@@ -76,7 +76,7 @@ const AgentFlows = {
    * @param {object} variables - Optional variables to pass to the flow
    * @returns {Promise<{success: boolean, error: string | null, results: object | null}>}
    */
-  // runFlow: async (uuid: any, variables = {}: any): Promise<any> => {
+  // runFlow: async (uuid: any, variables = {}: any) => {
   //   return await fetch(`${API_BASE}/agent-flows/${uuid}/run`, {
   //     method: "POST",
   //     headers: {
@@ -102,7 +102,7 @@ const AgentFlows = {
    * @param {string} uuid - The UUID of the flow to delete
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  deleteFlow: async (uuid: any): Promise<any> => {
+  deleteFlow: async (uuid: any) => {
     return await fetch(`${API_BASE}/agent-flows/${uuid}`, {
       method: "DELETE",
       headers: baseHeaders(),
@@ -124,7 +124,7 @@ const AgentFlows = {
    * @param {boolean} active - The new active status
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  toggleFlow: async (uuid: any, active: any): Promise<any> => {
+  toggleFlow: async (uuid: any, active: any) => {
     try {
       const result = await fetch(`${API_BASE}/agent-flows/${uuid}/toggle`, {
         method: "POST",

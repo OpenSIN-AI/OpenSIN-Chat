@@ -33,7 +33,7 @@ export default function LMStudioOptions({ settings: any, showAlert = false }: an
     settings?.LMStudioTokenLimit || "",
   );
 
-  const handleMaxTokensChange = (e: any=>  {
+  const handleMaxTokensChange: any = (e) => {
     setMaxTokens(e.target.value ? Number(e.target.value) : "");
   };
 
@@ -225,7 +225,7 @@ export default function LMStudioOptions({ settings: any, showAlert = false }: an
   );
 }
 
-function LMStudioModelSelection({ settings: any, basePath = null: any, apiKey = null }: any): JSX.Element {
+function LMStudioModelSelection({ settings: any, basePath: any = null, apiKey = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

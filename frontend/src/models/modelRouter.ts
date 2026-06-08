@@ -3,7 +3,7 @@ import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
 const ModelRouter = {
-  getAll: async (): Promise<any> => {
+  getAll: async () => {
     return await fetch(`${API_BASE}/model-routers`, {
       method: "GET",
       headers: baseHeaders(),
@@ -16,7 +16,7 @@ const ModelRouter = {
       });
   },
 
-  get: async (id: any): Promise<any> => {
+  get: async (id: any) => {
     return await fetch(`${API_BASE}/model-routers/${id}`, {
       method: "GET",
       headers: baseHeaders(),
@@ -28,7 +28,7 @@ const ModelRouter = {
       });
   },
 
-  create: async (data: any): Promise<any> => {
+  create: async (data: any) => {
     return await fetch(`${API_BASE}/model-routers/new`, {
       method: "POST",
       headers: baseHeaders(),
@@ -41,7 +41,7 @@ const ModelRouter = {
       });
   },
 
-  update: async (id: any, data: any): Promise<any> => {
+  update: async (id: any, data: any) => {
     return await fetch(`${API_BASE}/model-routers/${id}`, {
       method: "PUT",
       headers: baseHeaders(),
@@ -54,7 +54,7 @@ const ModelRouter = {
       });
   },
 
-  delete: async (id: any): Promise<any> => {
+  delete: async (id: any) => {
     return await fetch(`${API_BASE}/model-routers/${id}`, {
       method: "DELETE",
       headers: baseHeaders(),
@@ -66,7 +66,7 @@ const ModelRouter = {
       });
   },
 
-  createRule: async (routerId: any, data: any): Promise<any> => {
+  createRule: async (routerId: any, data: any) => {
     return await fetch(`${API_BASE}/model-routers/${routerId}/rules/new`, {
       method: "POST",
       headers: baseHeaders(),
@@ -79,7 +79,7 @@ const ModelRouter = {
       });
   },
 
-  updateRule: async (routerId: any, ruleId: any, data: any): Promise<any> => {
+  updateRule: async (routerId: any, ruleId: any, data: any) => {
     return await fetch(
       `${API_BASE}/model-routers/${routerId}/rules/${ruleId}`,
       {
@@ -95,7 +95,7 @@ const ModelRouter = {
       });
   },
 
-  deleteRule: async (routerId: any, ruleId: any): Promise<any> => {
+  deleteRule: async (routerId: any, ruleId: any) => {
     return await fetch(
       `${API_BASE}/model-routers/${routerId}/rules/${ruleId}`,
       {
@@ -110,7 +110,7 @@ const ModelRouter = {
       });
   },
 
-  reorderRules: async (routerId: any, ruleUpdates: any): Promise<any> => {
+  reorderRules: async (routerId: any, ruleUpdates: any) => {
     return await fetch(`${API_BASE}/model-routers/${routerId}/rules/reorder`, {
       method: "PUT",
       headers: baseHeaders(),

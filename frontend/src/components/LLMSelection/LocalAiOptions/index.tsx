@@ -145,7 +145,7 @@ export default function LocalAiOptions({ settings: any, showAlert = false }: any
   );
 }
 
-function LocalAIModelSelection({ settings: any, basePath = null: any, apiKey = null }: any): JSX.Element {
+function LocalAIModelSelection({ settings: any, basePath: any = null, apiKey = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

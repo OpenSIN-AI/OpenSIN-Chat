@@ -52,7 +52,7 @@ export default function AgentFlows({ entity }: any): JSX.Element {
     }
   };
 
-  const handleKeyDown = (e: any=>  {
+  const handleKeyDown: any = (e) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       const value = tagInput.trim();
@@ -64,7 +64,7 @@ export default function AgentFlows({ entity }: any): JSX.Element {
     }
   };
 
-  const removeTag = (tagToRemove: any=>  {
+  const removeTag: any = (tagToRemove) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
   };
 

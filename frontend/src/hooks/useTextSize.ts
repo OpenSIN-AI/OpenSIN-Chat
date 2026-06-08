@@ -5,7 +5,7 @@ export default function useTextSize() {
   const [textSize, setTextSize] = useState("normal");
   const [textSizeClass, setTextSizeClass] = useState("text-[14px]");
 
-  const getTextSizeClass = (size: any): any => {
+  const getTextSizeClass: any = (size) => {
     switch (size) {
       case "small":
         return "text-[12px]";
@@ -23,7 +23,7 @@ export default function useTextSize() {
       setTextSizeClass(getTextSizeClass(storedTextSize));
     }
 
-    const handleTextSizeChange = (event: any): any => {
+    const handleTextSizeChange: any = (event) => {
       const size = event.detail;
       setTextSize(size);
       setTextSizeClass(getTextSizeClass(size));

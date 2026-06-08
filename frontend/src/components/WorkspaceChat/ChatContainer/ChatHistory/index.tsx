@@ -55,7 +55,7 @@ export default forwardRef(function (
     }
   }, [history, isAtBottom, isStreaming, isUserScrolling]);
 
-  const handleScroll = (e: any=>  {
+  const handleScroll: any = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.target;
     const isBottom = scrollHeight - scrollTop - clientHeight < 2;
 
@@ -79,7 +79,7 @@ export default forwardRef(function (
     }
   }, []);
 
-  const scrollToBottom = (smooth = false: any=>  {
+  const scrollToBottom: any = (smooth = false) => {
     if (chatHistoryRef.current) {
       chatHistoryRef.current.scrollTo({
         top: chatHistoryRef.current.scrollHeight,
@@ -253,7 +253,7 @@ export default forwardRef(function (
   );
 });
 
-const getLastMessageInfo = (history: any=>  {
+const getLastMessageInfo: any = (history) => {
   const lastMessage = history?.[history.length - 1] || {};
   return {
     isAnimating: lastMessage?.animate,

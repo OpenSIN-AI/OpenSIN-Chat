@@ -2,7 +2,7 @@
 import { middleTruncate } from "@/utils/directories";
 
 export default function FolderSelectionPopup({ folders: any, onSelect: any, onClose }: any): JSX.Element {
-  const handleFolderSelect = (folder: any=>  {
+  const handleFolderSelect: any = (folder) => {
     onSelect(folder);
     onClose();
   };

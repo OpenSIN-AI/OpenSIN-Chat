@@ -103,9 +103,9 @@ function OtherInput({ value: any, onChange }: any): JSX.Element {
  */
 export default function ChoiceForm({
   question: any, draft: any, onChange: any, onAutoAdvance: any, allowSkip: any, onSkip: any, }: any): JSX.Element {
-  const showOther = question.allowOther !== false;
+  const showOther: any = question.allowOther !== false;
 
-  function isChecked(opt: any): JSX.Element {
+  function isChecked(opt): JSX.Element {
     if (question.multiSelect)
       return Array.isArray(draft.selected) && draft.selected.includes(opt);
     return draft.selected === opt;

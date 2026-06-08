@@ -7,14 +7,14 @@ import { isMac } from "@/utils/keyboardShortcuts";
  * @returns {Object} - An object containing the chat history ref and the scroll to top and bottom functions.
  */
 export default function useChatContainerQuickScroll() {
-  const chatHistoryRef = useRef(null);
+  const chatHistoryRef: any = useRef(null);
 
-  const scrollToTop = (event: any): any => {
+  const scrollToTop = (event) => {
     event.preventDefault();
     chatHistoryRef.current.scrollToTop();
   };
 
-  const scrollToBottom = (event: any): any => {
+  const scrollToBottom: any = (event) => {
     event.preventDefault();
     chatHistoryRef.current.scrollToBottom();
   };

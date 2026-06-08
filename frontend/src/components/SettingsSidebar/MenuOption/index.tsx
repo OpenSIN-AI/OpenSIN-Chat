@@ -7,7 +7,7 @@ import { isPathMatch } from "@/utils/paths";
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 
 export default function MenuOption({
-  btnText: any, icon: any, href: any, childOptions = []: any, flex = false: any, user = null: any, roles = []: any, hidden = false: any, isChild = false: any, }: any): JSX.Element {
+  btnText: any, icon: any, href: any, childOptions: any = [], flex: any = false, user: any = null, roles: any = [], hidden: any = false, isChild: any = false, }: any): JSX.Element {
   const storageKey = generateStorageKey({ key: btnText });
   const location = useLocation();
   const hasChildren = childOptions.length > 0;
@@ -51,7 +51,7 @@ export default function MenuOption({
     if (flex && !!user && !roles.includes(user?.role)) return null;
   }
 
-  const handleClick = (e: any=>  {
+  const handleClick: any = (e) => {
     if (hasChildren) {
       e.preventDefault();
       const newExpandedState = !isExpanded;
@@ -125,7 +125,7 @@ export default function MenuOption({
 }
 
 function useIsExpanded({
-  storageKey = "": any, hasVisibleChildren = false: any, childOptions = []: any, location = null: any, }: any): JSX.Element {
+  storageKey: any = "", hasVisibleChildren: any = false, childOptions: any = [], location: any = null, }: any): JSX.Element {
   const [isExpanded, setIsExpanded] = useState(() => {
     if (hasVisibleChildren) {
       const storedValue = localStorage.getItem(storageKey);
@@ -161,11 +161,11 @@ function useIsExpanded({
  * @param {array} childOptions - The child options.
  * @returns {boolean} - True if the child options are visible, false otherwise.
  */
-function hasVisibleOptions(user = null: any, childOptions = []: any): JSX.Element {
+function hasVisibleOptions(user: any = null, childOptions: any = []): JSX.Element {
   if (!Array.isArray(childOptions) || childOptions?.length === 0) return false;
 
   function isVisible({
-    roles = []: any, user = null: any, flex = false: any, hidden = false: any, }: any): JSX.Element {
+    roles = [], user: any = null, flex: any = false, hidden: any = false, }: any): JSX.Element {
     if (hidden) return false;
     if (!flex && !roles.includes(user?.role)) return false;
     if (flex && !!user && !roles.includes(user?.role)) return false;

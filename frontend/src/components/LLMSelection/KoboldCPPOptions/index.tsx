@@ -27,11 +27,11 @@ export default function KoboldCPPOptions({ settings }: any): JSX.Element {
     settings?.KoboldCPPMaxTokens || 2048,
   );
 
-  const handleTokenLimitChange = (e: any=>  {
+  const handleTokenLimitChange: any = (e) => {
     setTokenLimit(Number(e.target.value));
   };
 
-  const handleMaxTokensChange = (e: any=>  {
+  const handleMaxTokensChange: any = (e) => {
     setMaxTokens(Number(e.target.value));
   };
 

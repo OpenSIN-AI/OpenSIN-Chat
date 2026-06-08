@@ -5,10 +5,10 @@ import { CaretDown, Folder } from "@phosphor-icons/react";
 import { middleTruncate } from "@/utils/directories";
 
 export default function FolderRow({
-  item: any, totalItems = 0: any, selected: any, onRowClick: any, toggleSelection: any, isSelected: any, autoExpanded = false: any, }: any): JSX.Element {
+  item: any, totalItems: any = 0, selected: any, onRowClick: any, toggleSelection: any, isSelected: any, autoExpanded: any = false, }: any): JSX.Element {
   const [expanded, setExpanded] = useState(autoExpanded);
 
-  const handleExpandClick = (event: any=>  {
+  const handleExpandClick: any = (event) => {
     event.stopPropagation();
     setExpanded(!expanded);
   };

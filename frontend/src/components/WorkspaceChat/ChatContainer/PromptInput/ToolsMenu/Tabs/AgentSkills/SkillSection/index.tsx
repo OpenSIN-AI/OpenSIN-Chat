@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import { CaretDown } from "@phosphor-icons/react";
 
 export default function SkillSection({
-  name: any, expanded: any, onToggle: any, enabledCount: any, totalCount: any, isMcp = false: any, indented = false: any, highlighted = false: any, children: any, }: any): JSX.Element {
+  name: any, expanded: any, onToggle: any, enabledCount: any, totalCount: any, isMcp: any = false, indented: any = false, highlighted: any = false, children: any, }: any): JSX.Element {
   const ref = useRef(null);
   useEffect(() => {
     if (highlighted) ref.current?.scrollIntoView({ block: "nearest" });

@@ -2,7 +2,7 @@
 import { Warning, X } from "@phosphor-icons/react";
 
 export default function ChangeWarningModal({
-  warningText = "": any, onClose: any, onConfirm: any, }: any): JSX.Element {
+  warningText: any = "", onClose: any, onConfirm: any, }: any): JSX.Element {
   return (
     <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden z-9999">
       <div className="relative px-6 py-5 border-b rounded-t border-theme-modal-border">

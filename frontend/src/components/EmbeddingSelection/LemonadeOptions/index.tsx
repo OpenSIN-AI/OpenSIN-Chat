@@ -25,7 +25,7 @@ export default function LemonadeEmbeddingOptions({ settings }: any): JSX.Element
     settings?.EmbeddingModelMaxChunkLength || 8192,
   );
 
-  const handleMaxChunkLengthChange = (e: any=>  {
+  const handleMaxChunkLengthChange: any = (e) => {
     setMaxChunkLength(Number(e.target.value));
   };
 

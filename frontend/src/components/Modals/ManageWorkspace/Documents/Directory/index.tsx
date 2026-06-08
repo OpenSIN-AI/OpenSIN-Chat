@@ -90,7 +90,7 @@ function Directory({
     }
   };
 
-  const toggleSelection = (item: any=>  {
+  const toggleSelection: any = (item) => {
     setSelectedItems((prevSelectedItems) => {
       const newSelectedItems = { ...prevSelectedItems };
       if (item.type === "folder") {
@@ -116,7 +116,7 @@ function Directory({
   };
 
   // check if item is selected based on selectedItems state
-  const isSelected = (id: any, item: any=>  {
+  const isSelected: any = (id, item: any) => {
     if (item && item.type === "folder") {
       if (!selectedItems[item.name]) {
         return false;
@@ -173,7 +173,7 @@ function Directory({
 
   const filteredFiles = filterFileSearchResults(files, searchTerm);
 
-  const handleContextMenu = (event: any=>  {
+  const handleContextMenu: any = (event) => {
     event.preventDefault();
     setContextMenu({ visible: true, x: event.clientX, y: event.clientY });
   };

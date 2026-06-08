@@ -7,7 +7,7 @@ export function useLanguageOptions() {
   const languageNames = new Intl.DisplayNames(supportedLanguages, {
     type: "language",
   });
-  const changeLanguage = (newLang = "en": any): any => {
+  const changeLanguage: any = (newLang = "en") => {
     if (!Object.keys(languages).includes(newLang)) return false;
     i18n.changeLanguage(newLang);
   };

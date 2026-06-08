@@ -18,9 +18,9 @@ const DOCUMENT_SOURCE_PREFIXES = [
   "gitlab://",
 ];
 
-const MEDIA_SOURCE_PREFIXES = ["youtube://"];
+const MEDIA_SOURCE_PREFIXES: any = ["youtube://"];
 
-function isDocumentSource(chunkSource: any): JSX.Element {
+function isDocumentSource(chunkSource): JSX.Element {
   return DOCUMENT_SOURCE_PREFIXES.some((prefix) =>
     chunkSource?.startsWith(prefix),
   );
@@ -54,7 +54,7 @@ export function ChatSidebarProvider({ children }: any): JSX.Element {
     } catch {}
   }, [sourceFilter]);
 
-  function openSidebar(type: any, data = null: any): JSX.Element {
+  function openSidebar(type: any, data: any = null): JSX.Element {
     setActiveSidebar(type);
     setSidebarData(data);
   }
@@ -64,7 +64,7 @@ export function ChatSidebarProvider({ children }: any): JSX.Element {
     setSidebarData(null);
   }
 
-  function toggleSidebar(type: any, data = null: any): JSX.Element {
+  function toggleSidebar(type: any, data: any = null): JSX.Element {
     if (activeSidebar === type) closeSidebar();
     else openSidebar(type, data);
   }

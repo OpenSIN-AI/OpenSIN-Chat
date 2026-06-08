@@ -8,7 +8,7 @@ const CommunityHub = {
    * @param {string} importId - The import ID of the item.
    * @returns {Promise<{error: string | null, item: object | null}>}
    */
-  getItemFromImportId: async (importId: any): Promise<any> => {
+  getItemFromImportId: async (importId: any) => {
     return await fetch(`${API_BASE}/community-hub/item`, {
       method: "POST",
       headers: baseHeaders(),
@@ -30,7 +30,7 @@ const CommunityHub = {
    * @param {object} options - Additional options for applying the item for whatever the item type requires.
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  applyItem: async (importId: any, options = {}: any): Promise<any> => {
+  applyItem: async (importId: any, options = {}) => {
     return await fetch(`${API_BASE}/community-hub/apply`, {
       method: "POST",
       headers: baseHeaders(),
@@ -51,7 +51,7 @@ const CommunityHub = {
    * @param {string} importId - The import ID of the item.
    * @returns {Promise<{error: string | null, item: object | null}>}
    */
-  importBundleItem: async (importId: any): Promise<any> => {
+  importBundleItem: async (importId: any) => {
     return await fetch(`${API_BASE}/community-hub/import`, {
       method: "POST",
       headers: baseHeaders(),
@@ -75,7 +75,7 @@ const CommunityHub = {
    * @param {Object} data - The data to update.
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  updateSettings: async (data: any): Promise<any> => {
+  updateSettings: async (data: any) => {
     return await fetch(`${API_BASE}/community-hub/settings`, {
       method: "POST",
       headers: baseHeaders(),
@@ -97,7 +97,7 @@ const CommunityHub = {
    * Get the hub settings (API key, etc.)
    * @returns {Promise<{connectionKey: string | null, error: string | null}>}
    */
-  getSettings: async (): Promise<any> => {
+  getSettings: async () => {
     return await fetch(`${API_BASE}/community-hub/settings`, {
       method: "GET",
       headers: baseHeaders(),
@@ -118,7 +118,7 @@ const CommunityHub = {
    * Fetch the explore items from the community hub that are publicly available.
    * @returns {Promise<{agentSkills: {items: [], hasMore: boolean, totalCount: number}, systemPrompts: {items: [], hasMore: boolean, totalCount: number}, slashCommands: {items: [], hasMore: boolean, totalCount: number}}>}
    */
-  fetchExploreItems: async (): Promise<any> => {
+  fetchExploreItems: async () => {
     return await fetch(`${API_BASE}/community-hub/explore`, {
       method: "GET",
       headers: baseHeaders(),
@@ -138,7 +138,7 @@ const CommunityHub = {
    * Fetch the user items from the community hub.
    * @returns {Promise<{success: boolean, error: string | null, createdByMe: object, teamItems: object[]}>}
    */
-  fetchUserItems: async (): Promise<any> => {
+  fetchUserItems: async () => {
     return await fetch(`${API_BASE}/community-hub/items`, {
       method: "GET",
       headers: baseHeaders(),
@@ -165,7 +165,7 @@ const CommunityHub = {
    * @param {string} data.visibility - Either 'public' or 'private'
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  createSystemPrompt: async (data: any): Promise<any> => {
+  createSystemPrompt: async (data: any) => {
     return await fetch(`${API_BASE}/community-hub/system-prompt/create`, {
       method: "POST",
       headers: baseHeaders(),
@@ -188,7 +188,7 @@ const CommunityHub = {
    * @param {Object} data - The agent flow data
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  createAgentFlow: async (data: any): Promise<any> => {
+  createAgentFlow: async (data: any) => {
     return await fetch(`${API_BASE}/community-hub/agent-flow/create`, {
       method: "POST",
       headers: baseHeaders(),
@@ -212,7 +212,7 @@ const CommunityHub = {
    * @param {string} data.visibility - Either 'public' or 'private'
    * @returns {Promise<{success: boolean, error: string | null}>}
    */
-  createSlashCommand: async (data: any): Promise<any> => {
+  createSlashCommand: async (data: any) => {
     return await fetch(`${API_BASE}/community-hub/slash-command/create`, {
       method: "POST",
       headers: baseHeaders(),

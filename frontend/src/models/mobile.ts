@@ -42,7 +42,7 @@ const MobileConnection = {
    * @param {string} deviceId - The database ID of the device to delete.
    * @returns {Promise<{message: string}>} The deleted device.
    */
-  deleteDevice: async function (id: any): any {
+  deleteDevice: async function (id: any) {
     return await fetch(`${API_BASE}/mobile/${id}`, {
       method: "DELETE",
       headers: baseHeaders(),
@@ -57,7 +57,7 @@ const MobileConnection = {
    * @param {Object} updates - The updates to apply to the device.
    * @returns {Promise<{updates: MobileDevice}>} The updated device.
    */
-  updateDevice: async function (id: any, updates = {}: any): any {
+  updateDevice: async function (id: any, updates = {}) {
     return await fetch(`${API_BASE}/mobile/update/${id}`, {
       method: "POST",
       body: JSON.stringify(updates),

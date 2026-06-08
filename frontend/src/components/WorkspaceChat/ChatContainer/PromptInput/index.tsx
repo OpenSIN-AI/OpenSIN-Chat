@@ -35,7 +35,7 @@ const MAX_EDIT_STACK_SIZE = 100;
  * @param {string} [props.threadSlug] - thread slug for home page context
  */
 export default function PromptInput({
-  workspace = {}: any, submit: any, isStreaming: any, sendCommand: any, attachments = []: any, centered = false: any, workspaceSlug = null: any, threadSlug = null: any, }: any): JSX.Element {
+  workspace = {}, submit: any, isStreaming: any, sendCommand: any, attachments: any = [], centered: any = false, workspaceSlug: any = null, threadSlug: any = null, }: any): JSX.Element {
   const { t } = useTranslation();
   const { showAgentCommand = true } = workspace ?? {};
   const { isDisabled } = useIsDisabled();
@@ -413,7 +413,7 @@ export default function PromptInput({
 }
 
 function AgentSessionButton({
-  sendCommand: any, promptInput: any, textareaRef: any, visible = true: any, }: any): JSX.Element {
+  sendCommand: any, promptInput: any, textareaRef: any, visible: any = true, }: any): JSX.Element {
   const { t } = useTranslation();
   if (!visible) return null;
 

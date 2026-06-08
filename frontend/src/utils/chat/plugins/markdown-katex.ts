@@ -232,7 +232,7 @@ export default function math_plugin(md, options) {
   // Default options
   options = options || {};
 
-  var katexInline = function (latex: any): any {
+  var katexInline: any = function (latex) {
     options.displayMode = false;
     try {
       latex = latex
@@ -248,11 +248,11 @@ export default function math_plugin(md, options) {
     }
   };
 
-  var inlineRenderer = function (tokens: any, idx: any): any {
+  var inlineRenderer: any = function (tokens, idx: any) {
     return katexInline(tokens[idx].content);
   };
 
-  var katexBlock = function (latex: any): any {
+  var katexBlock: any = function (latex) {
     options.displayMode = true;
     try {
       // Remove surrounding delimiters if present
@@ -266,7 +266,7 @@ export default function math_plugin(md, options) {
     }
   };
 
-  var blockRenderer = function (tokens: any, idx: any): any {
+  var blockRenderer: any = function (tokens, idx: any) {
     return katexBlock(tokens[idx].content) + "\n";
   };
 
