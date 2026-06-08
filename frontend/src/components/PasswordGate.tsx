@@ -20,23 +20,14 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0b0d12] px-4 font-sans">
-      {/* Hintergrund-Akzente */}
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#0b0d12] via-[#0b0d12] to-[#0f1419] px-4 font-sans">
+      {/* Hintergrund-Akzente (weicher, ohne Pixel-Raster) */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
           backgroundImage:
-            "radial-gradient(60rem 40rem at 50% -10%, rgba(37,99,235,0.18), transparent 60%), radial-gradient(40rem 30rem at 100% 110%, rgba(37,99,235,0.08), transparent 60%)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-          backgroundSize: "48px 48px",
+            "radial-gradient(60rem 40rem at 50% -10%, rgba(37,99,235,0.22), transparent 60%), radial-gradient(40rem 30rem at 100% 110%, rgba(37,99,235,0.10), transparent 60%)",
         }}
       />
 
