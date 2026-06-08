@@ -9,7 +9,7 @@ const {
 const fs = require("fs");
 const path = require("path");
 const { safeJsonParse } = require("../../http");
-const { getStoragePath } = require("../../paths");
+const { getStoragePath } = require("../paths");
 const {
   LLMPerformanceMonitor,
 } = require("../../helpers/chat/LLMPerformanceMonitor");
