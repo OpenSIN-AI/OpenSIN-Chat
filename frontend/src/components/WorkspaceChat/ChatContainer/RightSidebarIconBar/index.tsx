@@ -37,16 +37,11 @@ export function RightSidebarToggleButton() {
           ? t("right_sidebar.icon_collapse", "Einklappen")
           : t("right_sidebar.icon_expand", "Rechte Seitenleiste")
       }
-      className={`hidden md:flex items-center justify-center w-8 h-8 rounded-lg border-none bg-transparent cursor-pointer transition-all z-10 ${
+      className={`hidden md:flex items-center justify-center w-8 h-8 rounded-lg border-none bg-transparent cursor-pointer transition-all ${
         rightSidebarOpen
           ? "text-zinc-500 light:text-slate-400 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-zinc-200 light:hover:text-slate-700"
-          : "text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-white light:hover:text-slate-900 bg-zinc-900/80 light:bg-white/80 backdrop-blur-sm"
+          : "text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-white light:hover:text-slate-900"
       }`}
-      style={{
-        position: "absolute",
-        top: "18px",
-        right: "4px",
-      }}
     >
       <SidebarSimple
         size={18}
@@ -116,7 +111,11 @@ export default function RightSidebarIconBar() {
   ];
 
   return (
-    <div className="flex flex-col items-center gap-1 py-3 pt-12 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px]">
+    <div className="flex flex-col items-center gap-1 py-2 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px]">
+      {/* Toggle-Button ganz oben — in-flow, kein absolute */}
+      <RightSidebarToggleButton />
+      {/* Trennlinie */}
+      <div className="w-6 h-px bg-zinc-700 light:bg-slate-200 my-1 flex-shrink-0" />
       {(icons as any).map(({ id, icon: Icon, label, action }: any) => {
         const isActive = activeSidebar === id;
         return (
