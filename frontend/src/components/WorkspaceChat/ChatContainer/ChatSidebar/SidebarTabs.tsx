@@ -10,8 +10,6 @@ export default function SidebarTabs() {
     activeSidebar,
     sidebarData,
     openSidebar,
-    closeSidebar,
-    toggleSidebar,
   } = useChatSidebar();
   const {
     activeTab: memoriesActiveTab,
@@ -27,10 +25,7 @@ export default function SidebarTabs() {
         {/* Quellen Tab */}
         <button
           type="button"
-          onClick={() => {
-            closeSidebar();
-            openSidebar("sources", sidebarData);
-          }}
+          onClick={() => openSidebar("sources", sidebarData)}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors ${
             activeSidebar === "sources"
               ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
@@ -49,10 +44,7 @@ export default function SidebarTabs() {
         >
           <button
             type="button"
-            onClick={() => {
-              closeSidebar();
-              toggleSidebar("memories");
-            }}
+            onClick={() => setMemoriesActiveTab("workspace")}
             disabled={!isMemoriesActive}
             className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors ${
               isMemoriesActive && memoriesActiveTab === "workspace"
