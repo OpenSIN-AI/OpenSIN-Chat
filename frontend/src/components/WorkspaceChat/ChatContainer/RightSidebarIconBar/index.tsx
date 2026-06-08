@@ -71,7 +71,7 @@ export default function RightSidebarIconBar() {
       {(icons as any).map(({ id, icon: Icon, label, action, isClose }: any) => {
         const isActive = !isClose && activeSidebar === id;
         return (
-          <div key={id}>
+          <div key={id} className="flex flex-col items-center">
             <button
               type="button"
               onClick={action}
@@ -94,9 +94,9 @@ export default function RightSidebarIconBar() {
               delayShow={300}
               className="tooltip !text-xs z-99"
             />
-            {/* Divider below "collapse" icon */}
+            {/* Subtle divider below "collapse" icon — zero extra margin so spacing stays even */}
             {isClose && (
-              <div className="w-6 h-px bg-zinc-700 light:bg-slate-200 mx-auto mt-1" />
+              <div className="w-6 h-px bg-zinc-700/50 light:bg-slate-300/60" />
             )}
           </div>
         );
