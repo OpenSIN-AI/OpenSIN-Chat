@@ -32,11 +32,9 @@ export default function Sidebar() {
     <>
       <nav
         aria-label="Hauptnavigation"
-        style={{
-          width: showSidebar ? "292px" : "0px",
-          paddingLeft: showSidebar ? "0px" : "16px",
-        }}
-        className="relative transition-all duration-500"
+        className={`relative transition-all duration-500 ${
+          showSidebar ? "w-[292px] pl-0" : "w-0 pl-4"
+        }`}
       >
         {canToggleSidebar && (
           <ToggleSidebarButton
@@ -133,10 +131,9 @@ export function SidebarMobileHeader() {
         <div className="w-12"></div>
       </header>
       <div
-        style={{
-          transform: showSidebar ? `translateX(0vw)` : `translateX(-100vw)`,
-        }}
-        className={`z-99 fixed top-0 left-0 transition-all duration-500 w-[100vw] h-[100vh]`}
+        className={`z-99 fixed top-0 left-0 transition-all duration-500 w-[100vw] h-[100vh] ${
+          showSidebar ? "translate-x-0" : "-translate-x-[100vw]"
+        }`}
       >
         <div
           className={`${

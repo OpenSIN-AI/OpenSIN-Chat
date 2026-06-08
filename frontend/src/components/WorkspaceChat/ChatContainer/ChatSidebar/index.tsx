@@ -184,8 +184,9 @@ export function usePoliticalSidebar() {
 export default function ChatSidebar({ isOpen, children }: any) {
   return (
     <div
-      className="h-full overflow-hidden transition-all duration-500 flex-shrink-0"
-      style={{ width: isOpen ? "366px" : "0px" }}
+      className={`h-full overflow-hidden transition-all duration-500 flex-shrink-0 ${
+        isOpen ? "w-[366px]" : "w-0"
+      }`}
     >
       {children}
     </div>
