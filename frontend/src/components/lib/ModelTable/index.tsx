@@ -46,7 +46,7 @@ export default function ModelTable({
   },
 }) {
   const [showAll, setShowAll] = useState(
-    models.some((model as any) => model.downloaded),
+    (models as any).some((model: any) => model.downloaded),
   );
   const totalModels = models.length;
 

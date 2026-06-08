@@ -188,7 +188,7 @@ export default function SettingsSidebar() {
 }
 
 function SupportEmail() {
-  const [supportEmail, setSupportEmail] = useState(paths.mailToSupport( as any));
+  const [supportEmail, setSupportEmail] = useState(paths.mailToSupport());
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -463,7 +463,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
   const [showing, setShowing] = useState(
     window.localStorage.getItem(
       "openafd_experimental_feature_preview_unlocked",
-     as any),
+    ),
   );
 
   useEffect(() => {
