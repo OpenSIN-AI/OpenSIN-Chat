@@ -50,13 +50,8 @@ export default function ContextMenu({
   return (
     <div
       ref={contextMenuRef}
-      style={{
-        position: "fixed",
-        top: `${contextMenu.y}px`,
-        left: `${contextMenu.x}px`,
-        zIndex: 1000,
-      }}
-      className="bg-theme-bg-secondary border border-theme-modal-border rounded-md shadow-lg"
+      style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
+      className="fixed z-[1000] bg-theme-bg-secondary border border-theme-modal-border rounded-md shadow-lg"
     >
       <button
         onClick={toggleSelectAll}
