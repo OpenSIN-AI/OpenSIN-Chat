@@ -333,7 +333,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="min-w-[280px]">
+    <form onSubmit={handleSubmit} noValidate className="min-w-[280px]">
       <BackHeader
         label={t("chat_window.attach_menu.add_from_url")}
         onBack={onBack}
