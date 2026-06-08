@@ -61,8 +61,7 @@ export default function ThreadItem({
     >
       {/* Curved line Element and leader if required */}
       <div
-        style={{ width: THREAD_CALLOUT_DETAIL_WIDTH / 2 }}
-        className={`${
+        className={`w-[13px] ${
           isActive
             ? "border-l-2 border-b-2 border-white light:border-blue-800 z-[2]"
             : "border-l border-b border-zinc-500 light:border-slate-400 z-[1]"
@@ -71,8 +70,7 @@ export default function ThreadItem({
       {/* Downstroke border for next item */}
       {hasNext && (
         <div
-          style={{ width: THREAD_CALLOUT_DETAIL_WIDTH / 2 }}
-          className={`${
+          className={`w-[13px] ${
             idx <= activeIdx && !isActive
               ? "border-l-2 border-white light:border-blue-800 z-[2]"
               : "border-l border-zinc-500 light:border-slate-400 z-[1]"
@@ -81,10 +79,7 @@ export default function ThreadItem({
       )}
 
       {/* Curved line inline placeholder for spacing - not visible */}
-      <div
-        style={{ width: THREAD_CALLOUT_DETAIL_WIDTH + 8 }}
-        className="h-full"
-      />
+      <div className="w-[34px] h-full" />
       <div
         className={`flex w-full items-center justify-between pr-2 group/thread relative ${isActive ? "bg-[var(--theme-sidebar-thread-selected)] light:bg-blue-200" : "hover:bg-theme-sidebar-subitem-hover light:hover:bg-slate-300"} rounded-[4px]`}
       >
