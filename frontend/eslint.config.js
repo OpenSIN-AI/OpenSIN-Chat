@@ -74,6 +74,11 @@ export default [
       "no-prototype-builtins": "off",
       "no-empty": "off",
       "no-useless-escape": "off",
+      // Catches references to undeclared identifiers (e.g. calling a model
+      // without importing it). This is the primary static defense for the
+      // issue #101 class of bugs: a handler that calls System.foo()
+      // without `import System from "@/models/system"` will fail at lint
+      // time. Do not disable without adding an equivalent guard.
       "no-undef": "error",
       "no-unsafe-optional-chaining": "off",
       "no-constant-binary-expression": "off",
