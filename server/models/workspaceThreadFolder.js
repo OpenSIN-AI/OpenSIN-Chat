@@ -6,8 +6,14 @@ const WorkspaceThreadFolder = {
   where: async function ({ workspace_id, user_id = null }) {
     const filters = { workspace_id };
     if (user_id !== undefined) filters.user_id = user_id;
+
+    // ==========================================
+    // <-- ÄNDERUNG: Sortierung der Ordner
+    // ==========================================
+    // Vorher: orderBy: { createdAt: "asc" }
+    // Nachher: orderBy: { createdAt: "desc" } -> Neue Ordner docken oben an
     return await prisma.workspace_thread_folders
-      .findMany({ where: filters, orderBy: { createdAt: "asc" } })
+      .findMany({ where: filters, orderBy: { createdAt: "desc" } })
       .catch(() => []);
   },
 

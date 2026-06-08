@@ -72,10 +72,21 @@ function workspaceThreadEndpoints(app) {
       try {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
-        const threads = await WorkspaceThread.where({
-          workspace_id: workspace.id,
-          user_id: user?.id || null,
-        });
+
+        // ==========================================
+        // <-- ÄNDERUNG: Sortierung der Threads
+        // ==========================================
+        // Wir übergeben als 3. Parameter das "orderBy" Objekt.
+        // "desc" (descending) sorgt dafür, dass neue Threads oben andocken.
+        const threads = await WorkspaceThread.where(
+          {
+            workspace_id: workspace.id,
+            user_id: user?.id || null,
+          },
+          null, // limit
+          { createdAt: "desc" } // <-- ÄNDERUNG: Neueste Threads zuerst!
+        );
+
         const folders = await WorkspaceThreadFolder.where({
           workspace_id: workspace.id,
           user_id: user?.id ?? null,
@@ -159,7 +170,7 @@ function workspaceThreadEndpoints(app) {
             workspaceId: workspace.id,
             user_id: user?.id || null,
             thread_id: thread.id,
-            api_session_id: null, // Do not include API session chats.
+            api_session_id: null,
             include: true,
           },
           null,

@@ -12,7 +12,7 @@ const WorkspaceThread = {
    * The default Slugify module requires some additional mapping to prevent downstream issues
    * if the user is able to define a slug externally. We have to block non-escapable URL chars
    * so that is the slug is rendered it doesn't break the URL or UI when visited.
-   * @param  {...any} args - slugify args for npm package.
+   * @param {...any} args - slugify args for npm package.
    * @returns {string}
    */
   slugify: function (...args) {
@@ -106,10 +106,13 @@ const WorkspaceThread = {
     }
   },
 
+  // ==========================================
+  // <-- ÄNDERUNG: Globale Default-Sortierung
+  // ==========================================
   where: async function (
     clause = {},
     limit = null,
-    orderBy = null,
+    orderBy = { createdAt: "desc" }, // <-- ÄNDERUNG: War vorher 'null'
     include = null,
   ) {
     try {
