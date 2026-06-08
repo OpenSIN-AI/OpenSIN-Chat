@@ -6,13 +6,15 @@ import WorkspaceModelPicker from "./WorkspaceModelPicker";
 
 /**
  * Top bar of the chat container: mobile header, settings menu, and model picker.
- * Accepts: workspaceSlug
+ * Accepts: workspaceSlug, isEmpty
+ * The dropdown menu is only shown on the first page (before chat starts).
+ * Once the chat has started, all icons are in the right sidebar.
  */
-export default function ChatHeader({ workspaceSlug }) {
+export default function ChatHeader({ workspaceSlug, isEmpty }) {
   return (
     <>
       {isMobile && <SidebarMobileHeader />}
-      <ChatSettingsMenu />
+      {isEmpty && <ChatSettingsMenu />}
       <WorkspaceModelPicker workspaceSlug={workspaceSlug} />
     </>
   );

@@ -8,6 +8,7 @@ import {
   Newspaper,
   BookOpen,
   Terminal,
+  Brain,
 } from "@phosphor-icons/react";
 import { useChatSidebar } from "../ChatSidebar";
 import { useTranslation } from "react-i18next";
@@ -57,6 +58,12 @@ export default function RightSidebarIconBar() {
       icon: BookOpen,
       label: t("right_sidebar.icon_sources", "Quellen"),
       action: () => toggleSidebar("sources"),
+    },
+    {
+      id: "memories",
+      icon: Brain,
+      label: t("right_sidebar.icon_memories", "Memories"),
+      action: () => toggleSidebar("memories"),
     },
     {
       id: "console",
