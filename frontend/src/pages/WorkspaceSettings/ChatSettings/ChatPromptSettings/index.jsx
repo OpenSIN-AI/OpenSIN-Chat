@@ -196,23 +196,13 @@ export default function ChatPromptSettings({
                   setPrompt(e.target.value);
                   setHasChanges(true);
                 }}
-                style={{
-                  resize: "vertical",
-                  overflowY: "scroll",
-                  minHeight: "150px",
-                }}
                 defaultValue={prompt}
-                className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2"
+                className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2 resize-y overflow-y-scroll min-h-[150px]"
               />
             ) : (
               <div
                 onClick={() => setIsEditing(true)}
-                style={{
-                  resize: "vertical",
-                  overflowY: "scroll",
-                  minHeight: "150px",
-                }}
-                className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2"
+                className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2 resize-y overflow-y-scroll min-h-[150px]"
               >
                 <Highlighter
                   className="whitespace-pre-wrap"

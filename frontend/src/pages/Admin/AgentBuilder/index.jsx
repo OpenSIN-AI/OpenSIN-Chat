@@ -328,15 +328,11 @@ export default function AgentBuilder() {
 
   return (
     <div
-      style={{
-        backgroundImage:
-          theme === "light"
-            ? "radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 0)"
-            : "radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 0)",
-        backgroundSize: "15px 15px",
-        backgroundPosition: "-7.5px -7.5px",
-      }}
-      className="relative w-screen h-screen flex flex-col bg-theme-bg-primary overflow-clip"
+      className={`relative w-screen h-screen flex flex-col bg-theme-bg-primary overflow-clip bg-[length:15px_15px] bg-[position:-7.5px_-7.5px] ${
+        theme === "light"
+          ? "bg-[radial-gradient(rgba(0,_0,_0,_0.1)_1px,_transparent_0)]"
+          : "bg-[radial-gradient(rgba(255,_255,_255,_0.1)_1px,_transparent_0)]"
+      }`}
     >
       <PublishEntityModal
         show={showPublishModal}

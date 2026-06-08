@@ -14,15 +14,10 @@ import GetOnGooglePlay from "./gplay-badge.svg";
 export default function MobileConnectModal({ isOpen, onClose }) {
   return (
     <ModalWrapper isOpen={isOpen}>
+      {/* backgroundImage keeps a style attr: bundler-hashed asset URL only known at build time */}
       <div
-        className="relative w-full rounded-lg shadow"
-        style={{
-          minHeight: "60vh",
-          maxWidth: "70vw",
-          backgroundImage: `url(${BG})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+        className="relative w-full rounded-lg shadow min-h-[60vh] max-w-[70vw] bg-cover bg-center"
+        style={{ backgroundImage: `url(${BG})` }}
       >
         <button
           onClick={onClose}

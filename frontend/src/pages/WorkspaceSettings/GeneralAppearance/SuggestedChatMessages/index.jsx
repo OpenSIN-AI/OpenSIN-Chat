@@ -133,11 +133,7 @@ export default function SuggestedChatMessages({ slug }) {
         {suggestedMessages.map((suggestion, index) => (
           <div key={index} className="relative w-full">
             <button
-              className="transition-all duration-300 absolute z-10 text-neutral-700 bg-white rounded-full hover:bg-zinc-600 hover:border-zinc-600 hover:text-white border-transparent border shadow-lg ml-2"
-              style={{
-                top: -8,
-                left: 265,
-              }}
+              className="transition-all duration-300 absolute z-10 text-neutral-700 bg-white rounded-full hover:bg-zinc-600 hover:border-zinc-600 hover:text-white border-transparent border shadow-lg ml-2 -top-2 left-[265px]"
               onClick={() => handleRemoveMessage(index)}
             >
               <X className="m-[1px]" size={20} />

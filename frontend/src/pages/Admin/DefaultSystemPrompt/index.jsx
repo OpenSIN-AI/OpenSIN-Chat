@@ -216,12 +216,7 @@ export default function DefaultSystemPrompt() {
                           : "You are an AI assistant that can answer questions and help with tasks."
                       }
                       rows={5}
-                      style={{
-                        resize: "vertical",
-                        overflowY: "scroll",
-                        minHeight: "150px",
-                      }}
-                      className="w-full border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5"
+                      className="w-full border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 resize-y overflow-y-scroll min-h-[150px]"
                     />
                   ) : (
                     <div
@@ -231,12 +226,7 @@ export default function DefaultSystemPrompt() {
                           isEditing: true,
                         }))
                       }
-                      style={{
-                        resize: "vertical",
-                        overflowY: "scroll",
-                        minHeight: "150px",
-                      }}
-                      className="w-full border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 cursor-text"
+                      className="w-full border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 cursor-text resize-y overflow-y-scroll min-h-[150px]"
                     >
                       <Highlighter
                         className="whitespace-pre-wrap"

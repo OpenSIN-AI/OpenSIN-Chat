@@ -13,21 +13,9 @@ export default function OnboardingHome() {
   return (
     <div className="relative w-screen h-screen flex flex-col overflow-hidden bg-zinc-950 light:bg-slate-50">
       {/* Dark mode background gradient */}
-      <div
-        className="absolute inset-0 light:hidden"
-        style={{
-          background:
-            "radial-gradient(ellipse 160% 100% at 50% 0%, rgba(130, 152, 178, 0.45) 0%, rgba(60, 87, 105, 0.25) 45%, transparent 90%)",
-        }}
-      />
+      <div className="absolute inset-0 light:hidden bg-[radial-gradient(ellipse_160%_100%_at_50%_0%,_rgba(130,_152,_178,_0.45)_0%,_rgba(60,_87,_105,_0.25)_45%,_transparent_90%)]" />
       {/* Light mode background gradient */}
-      <div
-        className="absolute inset-0 hidden light:block"
-        style={{
-          background:
-            "radial-gradient(ellipse 160% 100% at 50% 0%, rgba(176, 200, 224, 0.7) 0%, rgba(195, 213, 230, 0.45) 50%, transparent 90%)",
-        }}
-      />
+      <div className="absolute inset-0 hidden light:block bg-[radial-gradient(ellipse_160%_100%_at_50%_0%,_rgba(176,_200,_224,_0.7)_0%,_rgba(195,_213,_230,_0.45)_50%,_transparent_90%)]" />
 
       <div className="relative z-10 flex justify-center pt-[58px]">
         <p className="text-white/80 light:text-slate-600 text-3xl font-semibold">
