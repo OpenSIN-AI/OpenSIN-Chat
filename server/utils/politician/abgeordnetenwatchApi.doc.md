@@ -2,22 +2,45 @@
 
 ## What
 
-Client for the Abgeordnetenwatch.de API v2. Fetches voting records, mandates, and politician profiles.
+Client for the Abgeordnetenwatch.de API v2 (v2.9.0). Fetches voting records,
+mandates, and politician profiles for the **21. Wahlperiode** (Bundestag
+2021–2025, `parliament_period=132`, ~733 Mandate).
 
 ## API
 
-- `fetchAllPoliticians()` — all Bundestag 20. WP politicians
+- `fetchAllPoliticians({ enrich })` — all current-period politicians, resolved
+  from the `candidacies-mandates` collection (one record per politician). Pass
+  `enrich: true` to also fetch each politician entity for `year_of_birth`,
+  `gender`, `party`, and `ext_id_bundestagsverwaltung` (one extra request each).
+- `fetchPoliticianDetails(id)` — normalized politician entity with the verified
+  new fields.
 - `searchPoliticians(query)` — name search
 - `getPolitician(id)` — single politician by AW ID
 - `getVotingRecord(politicianId)` — paginated votes
 - `getCommittees(politicianId)` — committee memberships
 - `getMandates(politicianId)` — mandate history
-- `fetchAllVotes()` — all votes (paginated)
+- `fetchAllVotes()` — all votes for the parliament period (paginated)
 - `getVoteDetail(voteId)` — single vote with full details
+
+## Verified fields (21. WP, #84)
+
+| AW field | Notes |
+|----------|-------|
+| `first_name` | replaces parsing from a combined name |
+| `last_name` | |
+| `year_of_birth` | **replaces `birthDate`** (only year is exposed) |
+| `ext_id_bundestagsverwaltung` | official mdbID, cross-source join key |
 
 ## Caveats
 
-- Parliament ID 111 = Bundestag 20. WP; will change for 21. WP
-- Pagination uses `meta.next` link from API response
+- `parliament=111` (20. WP) is dead — the client uses
+  `parliament_period=${AW_PARLIAMENT_PERIOD}` (default `132`).
+- Pagination is **range-based** via `meta.result` (`range_start` / `range_end` /
+  `total`), not a `meta.next` link.
+- `year_of_birth` is mapped to the existing `birthDate` column as `YYYY-01-01`.
 - Cache TTL: 6 hours
 - Rate limit: 500ms between requests
+
+## Config
+
+- `AW_PARLIAMENT_PERIOD` (default `132`) — current Bundestag parliament period.

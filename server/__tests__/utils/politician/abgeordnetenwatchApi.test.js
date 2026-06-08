@@ -1,7 +1,39 @@
 // SPDX-License-Identifier: MIT
 const { AbgeordnetenwatchApi } = require("../../../utils/politician/abgeordnetenwatchApi");
 
-describe("AbgeordnetenwatchApi", () => {
+/**
+ * Build a candidacy_mandate record as returned by
+ * /candidacies-mandates?parliament_period=132 (21. WP).
+ */
+function mandate({ polId, label, mdbId = null, fraction = "AfD", start = "2021-10-26" }) {
+  return {
+    id: 1000 + polId,
+    entity_type: "candidacy_mandate",
+    type: "mandate",
+    id_external_administration: mdbId,
+    politician: {
+      id: polId,
+      label,
+      api_url: `https://www.abgeordnetenwatch.de/api/v2/politicians/${polId}`,
+    },
+    start_date: start,
+    end_date: null,
+    electoral_data: { constituency: { label: "Bodenseekreis" } },
+    fraction_membership: [
+      { fraction: { label: `${fraction} (Bundestag 2021 - 2025)` }, valid_from: start },
+    ],
+  };
+}
+
+/** Wrap data rows in the AW range-pagination envelope (meta.result). */
+function page(data, total) {
+  return {
+    meta: { result: { count: data.length, total, range_start: 0, range_end: 100 } },
+    data,
+  };
+}
+
+describe("AbgeordnetenwatchApi (21. WP / parliament_period=132)", () => {
   let api;
   beforeEach(() => {
     api = new AbgeordnetenwatchApi();
@@ -10,11 +42,27 @@ describe("AbgeordnetenwatchApi", () => {
     if (global.fetch && global.fetch.mockRestore) global.fetch.mockRestore();
   });
 
-  describe("pagination (#fetchAllPages via fetchAllPoliticians)", () => {
-    it("concatenates results across paginated responses", async () => {
+  describe("configuration", () => {
+    it("defaults parliament_period to 132 (21. WP)", () => {
+      expect(api.parliamentPeriod).toBe(132);
+    });
+
+    it("targets the candidacies-mandates endpoint with parliament_period", async () => {
+      const spy = jest
+        .spyOn(global, "fetch")
+        .mockResolvedValue({ ok: true, json: async () => page([], 0) });
+      await api.fetchAllPoliticians();
+      const calledUrl = spy.mock.calls[0][0];
+      expect(calledUrl).toContain("/candidacies-mandates");
+      expect(calledUrl).toContain("parliament_period=132");
+    });
+  });
+
+  describe("range-based pagination (#fetchAllRanged)", () => {
+    it("concatenates mandates across paginated responses", async () => {
       const responses = [
-        { data: [{ id: 1 }, { id: 2 }], meta: { next: "https://aw/next-1" } },
-        { data: [{ id: 3 }], meta: { next: null } },
+        page([mandate({ polId: 1, label: "Alice Weidel" }), mandate({ polId: 2, label: "Max Mustermann" })], 3),
+        page([mandate({ polId: 3, label: "Tino Chrupalla" })], 3),
       ];
       let call = 0;
       jest.spyOn(global, "fetch").mockImplementation(async () => ({
@@ -23,7 +71,7 @@ describe("AbgeordnetenwatchApi", () => {
       }));
 
       const all = await api.fetchAllPoliticians();
-      expect(all.map((x) => x.id)).toEqual([1, 2, 3]);
+      expect(all.map((p) => p.id).sort()).toEqual([1, 2, 3]);
     });
 
     it("stops when a page returns non-ok", async () => {
@@ -35,10 +83,81 @@ describe("AbgeordnetenwatchApi", () => {
     it("handles a missing data key gracefully", async () => {
       jest.spyOn(global, "fetch").mockResolvedValue({
         ok: true,
-        json: async () => ({ meta: { next: null } }),
+        json: async () => ({ meta: { result: { total: 0 } } }),
       });
       const all = await api.fetchAllPoliticians();
       expect(all).toEqual([]);
+    });
+  });
+
+  describe("field mapping & de-duplication", () => {
+    it("maps verified new fields and parses names from the label", async () => {
+      jest.spyOn(global, "fetch").mockResolvedValue({
+        ok: true,
+        json: async () =>
+          page([mandate({ polId: 7, label: "Alice Weidel", mdbId: "11004183", fraction: "AfD" })], 1),
+      });
+
+      const [p] = await api.fetchAllPoliticians();
+      expect(p.first_name).toBe("Alice");
+      expect(p.last_name).toBe("Weidel");
+      expect(p.firstName).toBe("Alice"); // legacy alias
+      expect(p.lastName).toBe("Weidel");
+      expect(p.externalId).toBe("aw-7");
+      expect(p.source).toBe("abgeordnetenwatch");
+      expect(p.party).toBe("AfD");
+      expect(p.faction).toBe("AfD");
+      expect(p.ext_id_bundestagsverwaltung).toBe("11004183");
+      expect(p.constituency).toBe("Bodenseekreis");
+      expect(p.year_of_birth).toBeNull(); // only populated when enriched
+      expect(typeof p.rawData).toBe("string");
+    });
+
+    it("de-duplicates multiple mandates of the same politician (keeps latest)", async () => {
+      jest.spyOn(global, "fetch").mockResolvedValue({
+        ok: true,
+        json: async () =>
+          page(
+            [
+              mandate({ polId: 5, label: "Erwin Rueddel", start: "2021-10-26" }),
+              mandate({ polId: 5, label: "Erwin Rueddel", start: "2025-02-07" }),
+            ],
+            2,
+          ),
+      });
+
+      const all = await api.fetchAllPoliticians();
+      expect(all).toHaveLength(1);
+      expect(all[0].mandateStart).toBe("2025-02-07");
+    });
+  });
+
+  describe("enrichment (fetchPoliticianDetails)", () => {
+    it("populates year_of_birth, gender and party from the politician entity", async () => {
+      const mandatesPage = page([mandate({ polId: 9, label: "Ursula Groden-Kranich" })], 1);
+      const entity = {
+        data: {
+          id: 9,
+          first_name: "Ursula",
+          last_name: "Groden-Kranich",
+          year_of_birth: 1965,
+          sex: "f",
+          party: { label: "CDU" },
+          ext_id_bundestagsverwaltung: "11004280",
+        },
+      };
+      let call = 0;
+      jest.spyOn(global, "fetch").mockImplementation(async () => ({
+        ok: true,
+        json: async () => (call++ === 0 ? mandatesPage : entity),
+      }));
+
+      const [p] = await api.fetchAllPoliticians({ enrich: true });
+      expect(p.year_of_birth).toBe(1965);
+      expect(p.birthDate).toBe("1965-01-01");
+      expect(p.gender).toBe("female");
+      expect(p.party).toBe("CDU");
+      expect(p.ext_id_bundestagsverwaltung).toBe("11004280");
     });
   });
 
@@ -46,7 +165,7 @@ describe("AbgeordnetenwatchApi", () => {
     it("URL-encodes the query and returns the data array", async () => {
       const spy = jest.spyOn(global, "fetch").mockResolvedValue({
         ok: true,
-        json: async () => ({ data: [{ id: 9, lastName: "Müller" }], meta: { next: null } }),
+        json: async () => ({ data: [{ id: 9, last_name: "Müller" }] }),
       });
 
       const res = await api.searchPoliticians("Max Müller");
