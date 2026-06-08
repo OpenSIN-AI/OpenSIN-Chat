@@ -19,7 +19,10 @@ export default function DataHandling({ setHeader, setForwardBtn, setBackBtn }) {
   }, []);
 
   function handleForward() {
-    navigate(paths.onboarding.survey());
+    // Skip survey - mark onboarding complete and go home
+    System.markOnboardingComplete().finally(() => {
+      navigate(paths.home());
+    });
   }
 
   function handleBack() {

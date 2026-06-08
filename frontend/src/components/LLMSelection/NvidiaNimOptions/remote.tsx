@@ -69,7 +69,8 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
 }
 function NvidiaNimModelSelection({ settings, basePath }: any) {
   const { customModels, isLoading } = useProviderModels("nvidia-nim", basePath);
-  if (isLoading || customModels.length === 0) {
+  // Show dropdown as soon as we have either loaded models OR fall back to defaults
+  if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
