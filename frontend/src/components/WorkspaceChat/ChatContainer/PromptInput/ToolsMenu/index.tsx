@@ -13,7 +13,7 @@ import AgentSkillsTab from "./Tabs/AgentSkills";
 import SlashCommandsTab from "./Tabs/SlashCommands";
 
 export const TOOLS_MENU_KEYBOARD_EVENT: any = "tools-menu-keyboard";
-function getTabs(t, user: any): JSX.Element {
+function getTabs(t, user: any) {
   const tabs = [
     {
       key: "slash-commands",
@@ -45,7 +45,7 @@ function getTabs(t, user: any): JSX.Element {
  * @param {boolean} [props.centered] - when true, popup opens below the input
  */
 export default function ToolsMenu({
-  workspace, showing, setShowing, sendCommand, promptRef, centered = false, highlightedIndexRef, }: any): JSX.Element {
+  workspace, showing, setShowing, sendCommand, promptRef, centered = false, highlightedIndexRef, }: any) {
   const { t } = useTranslation();
   const { user } = useUser();
   const TABS = useMemo(() => getTabs(t, user), [t, user]);
@@ -95,7 +95,7 @@ export default function ToolsMenu({
   useEffect(() => {
     if (!showing) return;
 
-    function handleKeyboard(e: any): JSX.Element {
+    function handleKeyboard(e: any) {
       const { key } = e.detail;
 
       if (key === "ArrowLeft" || key === "ArrowRight") {
@@ -178,7 +178,7 @@ export default function ToolsMenu({
   );
 }
 
-function TabButton({ active, onClick, children }: any): JSX.Element {
+function TabButton({ active, onClick, children }: any) {
   return (
     <button
       type="button"

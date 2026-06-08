@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import ModelRouter from "@/models/modelRouter";
 
 export default function RouterPickerSelection({
-  selectedRouterId, setSelectedRouterId, setHasChanges, }: any): JSX.Element {
+  selectedRouterId, setSelectedRouterId, setHasChanges, }: any) {
   const { t } = useTranslation();
   const [routers, setRouters] = useState([]);
   const [loading, setLoading] = useState(true);

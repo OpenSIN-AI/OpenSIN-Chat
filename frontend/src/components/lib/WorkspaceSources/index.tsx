@@ -6,7 +6,7 @@ import { Globe, FileText, Database, Plus } from "@phosphor-icons/react";
  * Determine the display type (icon + label) for a workspace document.
  * Mirrors the heuristic used in the SourcesSidebar.
  */
-function getSourceType(doc: any): JSX.Element {
+function getSourceType(doc: any) {
   let metadata = {};
   try {
     metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
@@ -41,7 +41,7 @@ function getSourceType(doc: any): JSX.Element {
   };
 }
 
-function getTitle(doc: any): JSX.Element {
+function getTitle(doc: any) {
   let metadata = {};
   try {
     metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
@@ -60,7 +60,7 @@ function getTitle(doc: any): JSX.Element {
  * @param {Array} props.documents - Documents embedded in the active workspace
  * @param {Function} props.onAddSources - Handler to add new sources (opens uploader)
  */
-export default function WorkspaceSources({ documents = [], onAddSources }: any): JSX.Element {
+export default function WorkspaceSources({ documents = [], onAddSources }: any) {
   const { t } = useTranslation();
   const hasSources = documents.length > 0;
 

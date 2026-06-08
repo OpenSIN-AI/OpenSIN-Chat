@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import System from "@/models/system";
 
-export default function DeepgramSpeechToTextOptions({ settings }: any): JSX.Element {
+export default function DeepgramSpeechToTextOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.STTDeepgramApiKey);
   const [deepgramApiKey, setDeepgramApiKey] = useState(
     settings?.STTDeepgramApiKey,
@@ -32,7 +32,7 @@ export default function DeepgramSpeechToTextOptions({ settings }: any): JSX.Elem
   );
 }
 
-function DeepgramSttModelSelection({ apiKey, settings }: any): JSX.Element {
+function DeepgramSttModelSelection({ apiKey, settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

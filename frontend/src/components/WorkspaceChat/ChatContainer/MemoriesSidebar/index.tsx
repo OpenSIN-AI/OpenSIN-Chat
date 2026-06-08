@@ -10,7 +10,7 @@ import SidebarTabs from "../ChatSidebar/SidebarTabs";
 
 export { useMemoriesSidebar } from "../ChatSidebar";
 
-export default function MemoriesSidebar({ workspace }: any): JSX.Element {
+export default function MemoriesSidebar({ workspace }: any) {
   return (
     <MemoriesProvider workspace={workspace}>
       <MemoriesSidebarContent />
@@ -36,7 +36,7 @@ function MemoriesSidebarContent() {
   );
 }
 
-function SidebarPanel({ children }: any): JSX.Element {
+function SidebarPanel({ children }: any) {
   return (
     <div
       className="w-[366px] flex-shrink-0 flex flex-col gap-5 mt-[72px] px-5 overflow-y-auto no-scroll"

@@ -11,7 +11,7 @@ import Workspace from "../../../../../models/workspace";
 import debounce from "lodash.debounce";
 
 export default function UploadFile({
-  workspace, fetchKeys, setLoading, setLoadingMessage, }: any): JSX.Element {
+  workspace, fetchKeys, setLoading, setLoadingMessage, }: any) {
   const { t } = useTranslation();
   const [ready, setReady] = useState(false);
   const [files, setFiles] = useState([]);

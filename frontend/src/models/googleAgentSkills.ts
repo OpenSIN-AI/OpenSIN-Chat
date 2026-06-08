@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const GoogleAgentSkills = {
+const GoogleAgentSkills: any = {
   gmail: {
     /**
      * Get the current configuration status for Gmail.

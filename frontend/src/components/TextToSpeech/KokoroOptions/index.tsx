@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import System from "@/models/system";
 
-export default function KokoroTTSOptions({ settings }: any): JSX.Element {
+export default function KokoroTTSOptions({ settings }: any) {
   const [endpoint, setEndpoint] = useState(
     settings?.TTSKokoroEndpoint || "http://localhost:8880/v1",
   );
@@ -76,7 +76,7 @@ export default function KokoroTTSOptions({ settings }: any): JSX.Element {
   );
 }
 
-function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any): JSX.Element {
+function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
   const [voices, setVoices] = useState([]);
   const [loading, setLoading] = useState(true);
 

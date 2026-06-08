@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-export default function VoyageAiOptions({ settings }: any): JSX.Element {
+export default function VoyageAiOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-4">
       <div className="w-full flex items-center gap-[36px] mt-1.5">

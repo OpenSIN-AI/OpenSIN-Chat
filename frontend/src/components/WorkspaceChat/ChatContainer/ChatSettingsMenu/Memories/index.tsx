@@ -5,7 +5,7 @@ import useUser from "@/hooks/useUser";
 import System from "@/models/system";
 import { useMemoriesSidebar, useSourcesSidebar } from "../../ChatSidebar";
 
-export default function MemoriesRow({ onClose }: any): JSX.Element {
+export default function MemoriesRow({ onClose }: any) {
   const { t } = useTranslation();
   const { user } = useUser();
   const { toggleSidebar } = useMemoriesSidebar();

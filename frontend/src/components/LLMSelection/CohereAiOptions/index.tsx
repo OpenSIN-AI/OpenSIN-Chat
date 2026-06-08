@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function CohereAiOptions({ settings }: any): JSX.Element {
+export default function CohereAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.CohereApiKey);
   const [cohereApiKey, setCohereApiKey] = useState(settings?.CohereApiKey);
 
@@ -34,7 +34,7 @@ export default function CohereAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function CohereModelSelection({ apiKey, settings }: any): JSX.Element {
+function CohereModelSelection({ apiKey, settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

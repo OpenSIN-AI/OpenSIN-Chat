@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-function toProperCase(string: any): JSX.Element {
+function toProperCase(string: any) {
   return string.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
 
-export default function OpenAiTextToSpeechOptions({ settings }: any): JSX.Element {
+export default function OpenAiTextToSpeechOptions({ settings }: any) {
   const apiKey = settings?.TTSOpenAIKey;
 
   return (

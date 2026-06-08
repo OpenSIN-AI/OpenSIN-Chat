@@ -17,7 +17,7 @@ import { PROMPT_INPUT_EVENT } from "../../../PromptInput";
  * @returns {React.ReactElement} The MicButton component
  */
 export default function MicButton({
-  listening, processing = false, onStart, onStop, }: any): JSX.Element {
+  listening, processing = false, onStart, onStop, }: any) {
   const { t } = useTranslation();
 
   const toggle = useCallback(() => {

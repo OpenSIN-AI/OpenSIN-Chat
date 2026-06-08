@@ -2,7 +2,7 @@
 import System from "@/models/system";
 import { useState, useEffect } from "react";
 
-export default function SambaNovaOptions({ settings }: any): JSX.Element {
+export default function SambaNovaOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.SambaNovaLLMApiKey);
   const [apiKey, setApiKey] = useState(settings?.SambaNovaLLMApiKey);
 
@@ -32,7 +32,7 @@ export default function SambaNovaOptions({ settings }: any): JSX.Element {
   );
 }
 
-function SambaNovaModelSelection({ settings, apiKey }: any): JSX.Element {
+function SambaNovaModelSelection({ settings, apiKey }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

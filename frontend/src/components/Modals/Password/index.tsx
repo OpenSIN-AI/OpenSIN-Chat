@@ -10,7 +10,7 @@ import {
 } from "../../../utils/constants";
 import useLogo from "../../../hooks/useLogo";
 
-export default function PasswordModal({ mode = "single" }: any): JSX.Element {
+export default function PasswordModal({ mode = "single" }: any) {
   const { loginLogo, isCustomLogo } = useLogo();
   return (
     <div className="fixed inset-0 bg-zinc-950 light:bg-slate-50 flex flex-col items-center justify-center overflow-hidden">
@@ -25,7 +25,7 @@ export default function PasswordModal({ mode = "single" }: any): JSX.Element {
   );
 }
 
-export function usePasswordModal(notry: any = false): JSX.Element {
+export function usePasswordModal(notry: any = false) {
   const [auth, setAuth] = useState({
     loading: true,
     requiresAuth: false,

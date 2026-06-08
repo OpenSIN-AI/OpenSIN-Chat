@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const Embed = {
+const Embed: any = {
   embeds: async () => {
     return await fetch(`${API_BASE}/embeds`, {
       method: "GET",

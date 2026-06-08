@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { omitChunkHeader } from "../../../ChatHistory/Citation";
 import { toPercentString } from "@/utils/numbers";
 
-export default function SourceDetailView({ source, onBack, onClose }: any): JSX.Element {
+export default function SourceDetailView({ source, onBack, onClose }: any) {
   const { t } = useTranslation();
   return (
     <>

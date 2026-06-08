@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function CerebrasLLMOptions({ settings }: any): JSX.Element {
+export default function CerebrasLLMOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.CerebrasApiKey);
   const [apiKey, setApiKey] = useState(settings?.CerebrasApiKey);
 

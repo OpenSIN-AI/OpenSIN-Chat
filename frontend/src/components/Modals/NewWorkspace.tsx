@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import ModalWrapper from "@/components/ModalWrapper";
 
 const noop = () => false;
-export default function NewWorkspaceModal({ hideModal = noop }: any): JSX.Element {
+export default function NewWorkspaceModal({ hideModal = noop }: any) {
   const formEl = useRef(null);
   const [error, setError] = useState(null);
   const { t } = useTranslation();

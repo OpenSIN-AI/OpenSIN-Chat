@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function XAILLMOptions({ settings }: any): JSX.Element {
+export default function XAILLMOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.XAIApiKey);
   const [apiKey, setApiKey] = useState(settings?.XAIApiKey);
 
@@ -33,7 +33,7 @@ export default function XAILLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function XAIModelSelection({ apiKey, settings }: any): JSX.Element {
+function XAIModelSelection({ apiKey, settings }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

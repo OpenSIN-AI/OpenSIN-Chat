@@ -9,7 +9,7 @@ const DEFAULT_MODELS = [
   },
 ];
 
-export default function GeminiOptions({ settings }: any): JSX.Element {
+export default function GeminiOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-6">
       <div className="w-full flex flex-col gap-y-4">

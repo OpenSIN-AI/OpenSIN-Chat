@@ -11,7 +11,7 @@ import { baseHeaders } from "@/utils/request";
  * @property {string} createdAt - The date and time the device was created.
  */
 
-const MobileConnection = {
+const MobileConnection: any = {
   /**
    * Get the connection info for the mobile app.
    * @returns {Promise<{connectionUrl: string|null}>} The connection info.

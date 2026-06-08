@@ -65,7 +65,7 @@ const Actions: any = ({
 };
 
 function FeedbackButton({
-  isSelected, handleFeedback, tooltipContent, IconComponent, }: any): JSX.Element {
+  isSelected, handleFeedback, tooltipContent, IconComponent, }: any) {
   return (
     <div className="mt-3 relative">
       <button
@@ -85,7 +85,7 @@ function FeedbackButton({
   );
 }
 
-function CopyMessage({ message }: any): JSX.Element {
+function CopyMessage({ message }: any) {
   const { copied, copyText } = useCopyText();
   const { t } = useTranslation();
 
@@ -110,7 +110,7 @@ function CopyMessage({ message }: any): JSX.Element {
   );
 }
 
-function RegenerateMessage({ regenerateMessage, chatId }: any): JSX.Element {
+function RegenerateMessage({ regenerateMessage, chatId }: any) {
   const { t } = useTranslation();
   if (!chatId) return null;
   return (

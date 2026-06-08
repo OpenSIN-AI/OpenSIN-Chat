@@ -8,7 +8,7 @@ import Footer from "./Footer";
 import SurveyBody from "./SurveyBody";
 import { answerForDraft, emptyDraftFor } from "./utils";
 
-function TimeoutProgressBar({ percent }: any): JSX.Element {
+function TimeoutProgressBar({ percent }: any) {
   return (
     <div className="absolute bottom-0 left-0 right-0 h-1 bg-zinc-700 light:bg-slate-300">
       <div
@@ -19,7 +19,7 @@ function TimeoutProgressBar({ percent }: any): JSX.Element {
   );
 }
 
-function CardWrapper({ children }: any): JSX.Element {
+function CardWrapper({ children }: any) {
   return (
     <div className="flex justify-center w-full my-1 pr-4">
       <div className="w-full flex flex-col">
@@ -34,7 +34,7 @@ function CardWrapper({ children }: any): JSX.Element {
   );
 }
 
-function ActiveInputForm({ question, draft, updateDraft, onSubmit }: any): JSX.Element {
+function ActiveInputForm({ question, draft, updateDraft, onSubmit }: any) {
   if (question?.kind !== "input") return null;
   return (
     <InputForm
@@ -47,7 +47,7 @@ function ActiveInputForm({ question, draft, updateDraft, onSubmit }: any): JSX.E
 }
 
 function ActiveChoiceForm({
-  question, draft, updateDraft, onAutoAdvance, allowSkip, onSkip, }: any): JSX.Element {
+  question, draft, updateDraft, onAutoAdvance, allowSkip, onSkip, }: any) {
   if (question?.kind !== "choice") return null;
   return (
     <ChoiceForm
@@ -66,7 +66,7 @@ function ActiveChoiceForm({
 }
 
 function ActiveFooter({
-  question, draft, isSingle, isLast, allowSkip, answeredCount, total, onSkipThis, onNext, onSubmitAll, }: any): JSX.Element {
+  question, draft, isSingle, isLast, allowSkip, answeredCount, total, onSkipThis, onNext, onSubmitAll, }: any) {
   const isChoice = question?.kind === "choice";
   const isInput = question?.kind === "input";
   const showFooter =
@@ -88,7 +88,7 @@ function ActiveFooter({
   );
 }
 
-function CompletedSurvey({ questions, drafts, submittedResult }: any): JSX.Element {
+function CompletedSurvey({ questions, drafts, submittedResult }: any) {
   const result =
     submittedResult?.timedOut || submittedResult?.skipped
       ? submittedResult
@@ -105,7 +105,7 @@ function CompletedSurvey({ questions, drafts, submittedResult }: any): JSX.Eleme
  * Persisted/historical chats use the same SurveyBody via HistoricalClarifyingQuestions.
  */
 export default function ClarifyingQuestionCard({
-  requestId, questions = [], allowSkip = true, timeoutMs = null, websocket, }: any): JSX.Element {
+  requestId, questions = [], allowSkip = true, timeoutMs = null, websocket, }: any) {
   const [index, setIndex] = useState(0);
   const [responded, setResponded] = useState(false);
   const [submittedResult, setSubmittedResult] = useState(null);
@@ -139,13 +139,13 @@ export default function ClarifyingQuestionCard({
 
   if (!total) return null;
 
-  function updateDraft(patch: any): JSX.Element {
+  function updateDraft(patch: any) {
     setDrafts((prev) =>
       prev.map((d, i) => (i === index ? { ...d, ...patch } : d)),
     );
   }
 
-  function send(payload: any): JSX.Element {
+  function send(payload: any) {
     if (responded) return;
     setResponded(true);
     setSubmittedResult(payload);
@@ -172,7 +172,7 @@ export default function ClarifyingQuestionCard({
     setIndex(index + 1);
   }
 
-  function handleAutoAdvance(pendingPatch: any): JSX.Element {
+  function handleAutoAdvance(pendingPatch: any) {
     if (isLast) return handleSubmitAll(pendingPatch);
     setIndex(index + 1);
   }
@@ -182,7 +182,7 @@ export default function ClarifyingQuestionCard({
     setIndex(index - 1);
   }
 
-  function handleSubmitAll(pendingPatch: any): JSX.Element {
+  function handleSubmitAll(pendingPatch: any) {
     const resolved = pendingPatch
       ? drafts.map((d, i) => (i === index ? { ...d, ...pendingPatch } : d))
       : drafts;

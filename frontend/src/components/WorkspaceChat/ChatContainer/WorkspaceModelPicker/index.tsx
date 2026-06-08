@@ -41,7 +41,7 @@ async function fetchModelName(slug: any, setModelName: any, t: any) {
   setModelName(await resolveModelName(workspace, systemSettings, t));
 }
 
-export default function WorkspaceModelPicker({ workspaceSlug = null }: any): JSX.Element {
+export default function WorkspaceModelPicker({ workspaceSlug = null }: any) {
   const { t } = useTranslation();
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
@@ -83,7 +83,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }: any): JSX
 
   // Handle provider setup request
   useEffect(() => {
-    function handleProviderSetup(e: any): JSX.Element {
+    function handleProviderSetup(e: any) {
       const { provider, settings } = e.detail;
       setConfig({ settings, provider });
       setTimeout(() => openSetupProviderModal(), 300);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-export default function TextGenWebUIOptions({ settings }: any): JSX.Element {
+export default function TextGenWebUIOptions({ settings }: any) {
   return (
     <div className="flex gap-[36px] mt-1.5 flex-wrap">
       <div className="flex flex-col w-60">

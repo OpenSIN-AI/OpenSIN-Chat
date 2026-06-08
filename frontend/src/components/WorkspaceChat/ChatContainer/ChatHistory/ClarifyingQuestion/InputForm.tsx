@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 const SHARED_CLASS: any = "w-full border border-solid border-zinc-700 light:border-slate-500 bg-zinc-800 light:bg-white text-white light:text-slate-900 placeholder:text-zinc-500 light:placeholder:text-slate-500 text-sm leading-5 rounded-lg focus:outline-white light:focus:outline-slate-400 outline-none px-[14px] py-[10px]";
 
-function TextareaInput({ value, placeholder, onChange }: any): JSX.Element {
+function TextareaInput({ value, placeholder, onChange }: any) {
   return (
     <textarea
       autoFocus
@@ -13,8 +13,8 @@ function TextareaInput({ value, placeholder, onChange }: any): JSX.Element {
   );
 }
 
-function TextInput({ type, value, placeholder, onChange, onSubmit }: any): JSX.Element {
-  function handleKeyDown(e: any): JSX.Element {
+function TextInput({ type, value, placeholder, onChange, onSubmit }: any) {
+  function handleKeyDown(e: any) {
     if (e.key === "Enter") {
       e.preventDefault();
       onSubmit?.();
@@ -39,7 +39,7 @@ function TextInput({ type, value, placeholder, onChange, onSubmit }: any): JSX.E
  * normalizeQuestion has already constrained `inputType` to a known value
  * before sending, so we just trust it here and fall back to "text" if missing.
  */
-export default function InputForm({ question, draft, onChange, onSubmit }: any): JSX.Element {
+export default function InputForm({ question, draft, onChange, onSubmit }: any) {
   const inputType = question.inputType || "text";
   const value = draft.value || "";
   const placeholder = question.placeholder || "";

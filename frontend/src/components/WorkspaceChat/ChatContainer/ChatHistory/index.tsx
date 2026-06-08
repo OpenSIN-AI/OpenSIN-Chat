@@ -104,7 +104,7 @@ export default forwardRef(function (
     role,
     attachments = [],
     saveOnly = false,
-  }) => {
+  }: any) => {
     if (!editedMessage) return; // Don't save empty edits.
 
     // "Save" on a user message: update the prompt text without regenerating
@@ -277,7 +277,7 @@ const getLastMessageInfo: any = (history) => {
  * @returns {Array} The compiled history of messages.
  */
 function buildMessages({
-  history, workspace, regenerateAssistantMessage, saveEditedMessage, forkThread, websocket, }: any): JSX.Element {
+  history, workspace, regenerateAssistantMessage, saveEditedMessage, forkThread, websocket, }: any) {
   return history.reduce((acc, props, index) => {
     const isLastBotReply =
       index === history.length - 1 && props.role === "assistant";

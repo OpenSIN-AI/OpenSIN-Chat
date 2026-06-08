@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
  * This is the default component and way to connect to NVIDIA NIM
  * as the "managed" provider can only work in the Desktop context.
  */
-export default function RemoteNvidiaNimOptions({ settings }: any): JSX.Element {
+export default function RemoteNvidiaNimOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -69,7 +69,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any): JSX.Element {
     </div>
   );
 }
-function NvidiaNimModelSelection({ settings, basePath }: any): JSX.Element {
+function NvidiaNimModelSelection({ settings, basePath }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

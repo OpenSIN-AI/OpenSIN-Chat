@@ -3,7 +3,7 @@ import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 
-export default function CometApiLLMOptions({ settings }: any): JSX.Element {
+export default function CometApiLLMOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-start gap-[36px] mt-1.5">
@@ -31,7 +31,7 @@ export default function CometApiLLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function AdvancedControls({ settings }: any): JSX.Element {
+function AdvancedControls({ settings }: any) {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
 
   return (
@@ -75,7 +75,7 @@ function AdvancedControls({ settings }: any): JSX.Element {
   );
 }
 
-function CometApiModelSelection({ settings }: any): JSX.Element {
+function CometApiModelSelection({ settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

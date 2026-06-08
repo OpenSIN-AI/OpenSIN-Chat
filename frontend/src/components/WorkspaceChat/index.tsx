@@ -14,7 +14,7 @@ import {
 } from "../contexts/TTSProvider";
 import { PENDING_HOME_MESSAGE } from "@/utils/constants";
 
-export default function WorkspaceChat({ loading, workspace }: any): JSX.Element {
+export default function WorkspaceChat({ loading, workspace }: any) {
   useWatchForAutoPlayAssistantTTSResponse();
   const { threadSlug = null } = useParams();
   // Stores { key, workspace, history } currently rendered. Lags the props so
@@ -113,7 +113,7 @@ export default function WorkspaceChat({ loading, workspace }: any): JSX.Element 
 // Enables us to safely markdown and sanitize all responses without risk of injection
 // but still be able to attach a handler to copy code snippets on all elements
 // that are code snippets.
-function copyCodeSnippet(uuid: any): JSX.Element {
+function copyCodeSnippet(uuid: any) {
   const target = document.querySelector(`[data-code="${uuid}"]`);
   if (!target) return false;
   const markdown =

@@ -2,7 +2,7 @@
 import { Warning } from "@phosphor-icons/react";
 
 export default function ContextualSaveBar({
-  showing = false, onSave, onCancel, }: any): JSX.Element {
+  showing = false, onSave, onCancel, }: any) {
   if (!showing) return null;
 
   return (

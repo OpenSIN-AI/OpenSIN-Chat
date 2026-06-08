@@ -7,7 +7,7 @@ import { Tooltip } from "react-tooltip";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { cleanBasePath } from "@/components/LLMSelection/LemonadeOptions";
 
-export default function LemonadeSpeechToTextOptions({ settings }: any): JSX.Element {
+export default function LemonadeSpeechToTextOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -128,7 +128,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any): JSX.Elem
   );
 }
 
-function LemonadeSTTModelSelection({ settings, basePath = null }: any): JSX.Element {
+function LemonadeSTTModelSelection({ settings, basePath = null }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

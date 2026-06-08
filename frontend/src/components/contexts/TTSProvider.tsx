@@ -9,7 +9,7 @@ const TTSProviderContext = createContext<any>(undefined);
 /**
  * This component is used to provide the TTS provider context to the application.
  */
-export function TTSProvider({ children }: any): JSX.Element {
+export function TTSProvider({ children }: any) {
   const { settings, loading } = useSystemSettings();
   const provider = useMemo(
     () => settings?.TextToSpeechProvider ?? "native",
@@ -50,7 +50,7 @@ export function useTTSProvider() {
  *
  * @param {string} chatId - The chatId of the message that has been fully generated.
  */
-export function emitAssistantMessageCompleteEvent(chatId: any): JSX.Element {
+export function emitAssistantMessageCompleteEvent(chatId: any) {
   window.dispatchEvent(
     new CustomEvent(ASSISTANT_MESSAGE_COMPLETE_EVENT, { detail: { chatId } }),
   );
@@ -69,7 +69,7 @@ export function useWatchForAutoPlayAssistantTTSResponse() {
     "autoPlayAssistantTtsResponse",
   );
 
-  function handleAutoPlayTTSEvent(event: any): JSX.Element {
+  function handleAutoPlayTTSEvent(event: any) {
     let autoPlayAttempts = 0;
     const { chatId } = event.detail;
 

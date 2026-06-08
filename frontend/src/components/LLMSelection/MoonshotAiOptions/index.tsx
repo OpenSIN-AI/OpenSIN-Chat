@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function MoonshotAiOptions({ settings }: any): JSX.Element {
+export default function MoonshotAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.MoonshotAiApiKey);
   const [moonshotAiKey, setMoonshotAiKey] = useState(
     settings?.MoonshotAiApiKey,
@@ -34,7 +34,7 @@ export default function MoonshotAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function MoonshotAiModelSelection({ apiKey, settings }: any): JSX.Element {
+function MoonshotAiModelSelection({ apiKey, settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

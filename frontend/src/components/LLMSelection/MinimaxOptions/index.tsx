@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function MinimaxOptions({ settings }: any): JSX.Element {
+export default function MinimaxOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.MinimaxApiKey);
   const [apiKey, setApiKey] = useState(settings?.MinimaxApiKey);
 
@@ -31,7 +31,7 @@ export default function MinimaxOptions({ settings }: any): JSX.Element {
   );
 }
 
-function MinimaxModelSelection({ apiKey, settings }: any): JSX.Element {
+function MinimaxModelSelection({ apiKey, settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

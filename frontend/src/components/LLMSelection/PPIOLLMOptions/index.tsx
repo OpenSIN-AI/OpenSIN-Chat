@@ -2,7 +2,7 @@
 import System from "@/models/system";
 import { useState, useEffect } from "react";
 
-export default function PPIOLLMOptions({ settings }: any): JSX.Element {
+export default function PPIOLLMOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-start gap-[36px] mt-1.5">
@@ -29,7 +29,7 @@ export default function PPIOLLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function PPIOModelSelection({ settings }: any): JSX.Element {
+function PPIOModelSelection({ settings }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

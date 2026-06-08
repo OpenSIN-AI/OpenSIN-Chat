@@ -13,7 +13,7 @@ import { API_BASE } from "@/utils/constants";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import ChatSidebar, { useFilesystemSidebar } from "../ChatSidebar";
 
-function formatUptime(seconds: any): JSX.Element {
+function formatUptime(seconds: any) {
   const d = Math.floor(seconds / 86400);
   const h = Math.floor((seconds % 86400) / 3600);
   const m = Math.floor((seconds % 3600) / 60);
@@ -127,7 +127,7 @@ export default function FilesystemSidebar() {
           )}
           {!loading && !error && data && (
             <div className="flex flex-col gap-3">
-              {rows.map(({ icon: Icon, label, value }) => (
+              {rows.map(({ icon: Icon, label, value }: any) => (
                 <div key={label} className="flex items-start gap-3">
                   <div className="w-7 h-7 rounded-lg bg-zinc-800 light:bg-slate-100 flex items-center justify-center flex-shrink-0">
                     <Icon size={14} className="text-zinc-400 light:text-slate-500" />

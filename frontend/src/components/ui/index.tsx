@@ -128,7 +128,7 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   footer,
   size = "md",
-}) => {
+}: any) => {
   if (!isOpen) return null;
 
   const sizeClasses = {

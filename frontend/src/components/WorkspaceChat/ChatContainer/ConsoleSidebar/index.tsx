@@ -10,7 +10,7 @@ const TABS = ["logs", "terminal"];
 // Listen for log events dispatched globally
 const LOG_EVENT: any = "openafd:log";
 
-export function dispatchLog(level, message: any): JSX.Element {
+export function dispatchLog(level, message: any) {
   window.dispatchEvent(
     new CustomEvent(LOG_EVENT, {
       detail: { level, message, timestamp: new Date().toISOString() },
@@ -32,7 +32,7 @@ function LogsTab() {
   const bottomRef: any = useRef(null);
 
   useEffect(() => {
-    function handler(e): JSX.Element {
+    function handler(e) {
       setLogs((prev) => [...prev.slice(-499), e.detail]);
     }
     window.addEventListener(LOG_EVENT, handler);
@@ -140,7 +140,7 @@ function TerminalTab() {
     }
   }
 
-  function handleKeyDown(e: any): JSX.Element {
+  function handleKeyDown(e: any) {
     if (e.key === "Enter") {
       e.preventDefault();
       runCommand(input);

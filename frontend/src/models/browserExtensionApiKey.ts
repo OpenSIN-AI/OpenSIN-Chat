@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const BrowserExtensionApiKey = {
+const BrowserExtensionApiKey: any = {
   getAll: async () => {
     return await fetch(`${API_BASE}/browser-extension/api-keys`, {
       method: "GET",

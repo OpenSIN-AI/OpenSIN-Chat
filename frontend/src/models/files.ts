@@ -9,7 +9,7 @@ const fetcher = (url) =>
     return res.json();
   });
 
-const StorageFiles = {
+const StorageFiles: any = {
   /**
    * Download a file from the server
    * @param {string} filename - The filename to download

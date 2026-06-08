@@ -14,7 +14,7 @@ import ModelTableLoadingSkeleton from "@/components/lib/ModelTable/loading";
 import showToast from "@/utils/toast";
 import LemonadeUtils from "@/models/utils/lemonadeUtils";
 
-export function cleanBasePath(basePath: any = ""): JSX.Element {
+export function cleanBasePath(basePath: any = "") {
   try {
     const url = new URL(basePath);
     return url.origin;
@@ -23,7 +23,7 @@ export function cleanBasePath(basePath: any = ""): JSX.Element {
   }
 }
 
-export default function LemonadeOptions({ settings }: any): JSX.Element {
+export default function LemonadeOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -208,7 +208,7 @@ export default function LemonadeOptions({ settings }: any): JSX.Element {
 }
 
 function LemonadeModelSelection({
-  selectedModelId, setSelectedModelId, basePath = null, }: any): JSX.Element {
+  selectedModelId, setSelectedModelId, basePath = null, }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [filteredModels, setFilteredModels] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -336,7 +336,7 @@ function LemonadeModelSelection({
     }
   }
 
-  function groupModelsByAlias(models: any): JSX.Element {
+  function groupModelsByAlias(models: any) {
     const mapping = new Map();
     mapping.set("installed", new Map());
     mapping.set("not installed", new Map());
@@ -392,7 +392,7 @@ function LemonadeModelSelection({
     );
   }
 
-  function handleSetActiveModel(modelId: any): JSX.Element {
+  function handleSetActiveModel(modelId: any) {
     if (modelId === selectedModelId) return;
     setSelectedModelId(modelId);
     window.dispatchEvent(new Event(LLM_PREFERENCE_CHANGED_EVENT));

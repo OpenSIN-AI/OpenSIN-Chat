@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 export default function VectorDBItem({
-  name, value, image, description, checked, onClick, }: any): JSX.Element {
+  name, value, image, description, checked, onClick, }: any) {
   return (
     <div
       onClick={() => onClick(value)}

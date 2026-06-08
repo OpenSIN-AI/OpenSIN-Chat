@@ -3,7 +3,7 @@ import { Info } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { Tooltip } from "react-tooltip";
 
-export default function AzureAiOptions({ settings }: any): JSX.Element {
+export default function AzureAiOptions({ settings }: any) {
   const { t } = useTranslation();
 
   return (

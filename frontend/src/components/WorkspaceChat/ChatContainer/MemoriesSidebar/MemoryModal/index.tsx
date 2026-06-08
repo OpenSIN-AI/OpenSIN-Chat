@@ -13,7 +13,7 @@ import ModalWrapper from "@/components/ModalWrapper";
  * @param {"create"|"edit"} [props.mode]
  */
 export default function MemoryModal({
-  isOpen, onClose, onSubmit, initialContent = "", mode = "create", }: any): JSX.Element {
+  isOpen, onClose, onSubmit, initialContent = "", mode = "create", }: any) {
   const { t } = useTranslation();
   const [content, setContent] = useState(initialContent);
   const isCreate = mode === "create";

@@ -2,7 +2,7 @@
 import System from "@/models/system";
 import { useState, useEffect } from "react";
 
-export default function FireworksAiOptions({ settings }: any): JSX.Element {
+export default function FireworksAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.FireworksAiLLMApiKey);
   const [fireworksAiApiKey, setFireworksAiApiKey] = useState(
     settings?.FireworksAiLLMApiKey,
@@ -36,7 +36,7 @@ export default function FireworksAiOptions({ settings }: any): JSX.Element {
     </div>
   );
 }
-function FireworksAiModelSelection({ apiKey, settings }: any): JSX.Element {
+function FireworksAiModelSelection({ apiKey, settings }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const CommunityHub = {
+const CommunityHub: any = {
   /**
    * Get an item from the community hub by its import ID.
    * @param {string} importId - The import ID of the item.

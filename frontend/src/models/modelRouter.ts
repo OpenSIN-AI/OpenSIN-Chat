@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const ModelRouter = {
+const ModelRouter: any = {
   getAll: async () => {
     return await fetch(`${API_BASE}/model-routers`, {
       method: "GET",

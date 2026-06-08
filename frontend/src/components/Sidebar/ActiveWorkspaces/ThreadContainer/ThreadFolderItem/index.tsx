@@ -14,7 +14,7 @@ import ThreadItem from "../ThreadItem";
 import { useDroppable } from "@dnd-kit/core";
 
 export default function ThreadFolderItem({
-  folder, workspace, threads = [], activeThreadIdx, defaultThreadHasChats, ctrlPressed = false, toggleMarkForDeletion, onRemoveThread, onFolderDeleted, onFolderRenamed, }: any): JSX.Element {
+  folder, workspace, threads = [], activeThreadIdx, defaultThreadHasChats, ctrlPressed = false, toggleMarkForDeletion, onRemoveThread, onFolderDeleted, onFolderRenamed, }: any) {
   const { threadSlug = null } = useParams();
   const containsActiveThread = threads.some((t) => t.slug === threadSlug);
   const [open, setOpen] = useState(true);

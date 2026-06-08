@@ -5,7 +5,7 @@ import paths from "@/utils/paths";
 import { Link } from "react-router-dom";
 import ModalWrapper from "@/components/ModalWrapper";
 
-export default function UnauthenticatedHubModal({ show, onClose }: any): JSX.Element {
+export default function UnauthenticatedHubModal({ show, onClose }: any) {
   const { t } = useTranslation();
   if (!show) return null;
 

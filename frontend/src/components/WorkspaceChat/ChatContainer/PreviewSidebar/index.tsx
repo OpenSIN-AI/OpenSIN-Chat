@@ -30,13 +30,13 @@ const TYPE_ICONS = {
   default: FileText,
 };
 
-function VersionDropdown({ versions, activeVersion, onSelect }: any): JSX.Element {
+function VersionDropdown({ versions, activeVersion, onSelect }: any) {
   const [open, setOpen] = useState(false);
   const ref: any = useRef(null);
 
   useEffect(() => {
     if (!open) return;
-    function handleClick(e): JSX.Element {
+    function handleClick(e) {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     }
     document.addEventListener("mousedown", handleClick);
@@ -82,14 +82,14 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any): JSX.Elemen
   );
 }
 
-function ThreeDotsMenu({ previewData, onAddToSources }: any): JSX.Element {
+function ThreeDotsMenu({ previewData, onAddToSources }: any) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref: any = useRef(null);
 
   useEffect(() => {
     if (!open) return;
-    function handleClick(e): JSX.Element {
+    function handleClick(e) {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     }
     document.addEventListener("mousedown", handleClick);
@@ -159,7 +159,7 @@ function ThreeDotsMenu({ previewData, onAddToSources }: any): JSX.Element {
   );
 }
 
-function IframePreview({ url, title }: any): JSX.Element {
+function IframePreview({ url, title }: any) {
   const { t } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
@@ -208,7 +208,7 @@ function IframePreview({ url, title }: any): JSX.Element {
   );
 }
 
-function PreviewContent({ previewData, activeVersion }: any): JSX.Element {
+function PreviewContent({ previewData, activeVersion }: any) {
   const { t } = useTranslation();
   if (!previewData) {
     return (

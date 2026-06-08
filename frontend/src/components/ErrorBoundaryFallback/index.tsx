@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { House, ArrowClockwise, Copy, Check } from "@phosphor-icons/react";
 import { useState } from "react";
 
-export default function ErrorBoundaryFallback({ error, resetErrorBoundary }: any): JSX.Element {
+export default function ErrorBoundaryFallback({ error, resetErrorBoundary }: any) {
   const [copied, setCopied] = useState(false);
 
   const copyErrorDetails = async () => {

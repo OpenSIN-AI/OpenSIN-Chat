@@ -8,13 +8,13 @@ import {
   EDIT_EVENT,
 } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/MessageActionsContext";
 
-export function useEditMessage({ chatId, role }: any): JSX.Element {
+export function useEditMessage({ chatId, role }: any) {
   const context = useMessageActionsContext();
   const isEditing = context?.isEditing(chatId, role) ?? false;
   return { isEditing };
 }
 
-export function EditMessageAction({ chatId = null, role, isEditing }: any): JSX.Element {
+export function EditMessageAction({ chatId = null, role, isEditing }: any) {
   const { t } = useTranslation();
   function handleEditClick() {
     window.dispatchEvent(
@@ -47,10 +47,10 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any): JSX.
 }
 
 export function EditMessageForm({
-  role, chatId, message, attachments = [], adjustTextArea, saveChanges, }: any): JSX.Element {
+  role, chatId, message, attachments = [], adjustTextArea, saveChanges, }: any) {
   const formRef: any = useRef(null);
 
-  function handleSubmit(e): JSX.Element {
+  function handleSubmit(e) {
     e.preventDefault();
     const editedMessage = formRef.current.value;
     saveChanges({ editedMessage, chatId, role, attachments });
@@ -127,7 +127,7 @@ export function EditMessageForm({
   );
 }
 
-function EditActionBar({ onCancel, onSave, isUserMessage = false }: any): JSX.Element {
+function EditActionBar({ onCancel, onSave, isUserMessage = false }: any) {
   const { t } = useTranslation();
   return (
     <div className="mt-2 flex flex-col md:flex-row md:items-center justify-between gap-2 bg-zinc-800 light:bg-slate-200 rounded-lg p-2">

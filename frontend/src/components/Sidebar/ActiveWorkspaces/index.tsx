@@ -50,7 +50,7 @@ export default function ActiveWorkspaces() {
    * @param {number} startIndex - the index of the workspace to move
    * @param {number} endIndex - the index to move the workspace to
    */
-  function reorderWorkspaces(startIndex: any, endIndex: any): JSX.Element {
+  function reorderWorkspaces(startIndex: any, endIndex: any) {
     const reorderedWorkspaces = Array.from(workspaces);
     const [removed] = reorderedWorkspaces.splice(startIndex, 1);
     reorderedWorkspaces.splice(endIndex, 0, removed);

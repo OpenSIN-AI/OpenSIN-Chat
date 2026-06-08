@@ -111,7 +111,7 @@ export default function Footer() {
               );
             })
           : DEFAULT_FOOTER_ITEMS.map(
-              ({ key, Icon, url, ariaLabel, tooltip }) => (
+              ({ key, Icon, url, ariaLabel, tooltip }: any) => (
                 <Link
                   key={key}
                   to={url}

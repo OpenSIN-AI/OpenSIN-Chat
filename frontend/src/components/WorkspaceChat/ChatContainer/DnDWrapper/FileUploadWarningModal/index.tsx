@@ -9,7 +9,7 @@ import Paths from "@/utils/paths";
 import Workspace from "@/models/workspace";
 
 export default function FileUploadWarningModal({
-  show, onClose, onContinue, onEmbed, tokenCount, maxTokens, fileCount = 1, isEmbedding = false, embedProgress = 0, }: any): JSX.Element {
+  show, onClose, onContinue, onEmbed, tokenCount, maxTokens, fileCount = 1, isEmbedding = false, embedProgress = 0, }: any) {
   const { user } = useUser();
   const canEmbed = !user || user.role !== "default";
   if (!show) return null;

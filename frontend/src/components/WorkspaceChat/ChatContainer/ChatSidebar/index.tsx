@@ -20,19 +20,19 @@ const DOCUMENT_SOURCE_PREFIXES = [
 
 const MEDIA_SOURCE_PREFIXES: any = ["youtube://"];
 
-function isDocumentSource(chunkSource): JSX.Element {
+function isDocumentSource(chunkSource) {
   return DOCUMENT_SOURCE_PREFIXES.some((prefix) =>
     chunkSource?.startsWith(prefix),
   );
 }
 
-function isMediaSource(chunkSource: any): JSX.Element {
+function isMediaSource(chunkSource: any) {
   return MEDIA_SOURCE_PREFIXES.some((prefix) =>
     chunkSource?.startsWith(prefix),
   );
 }
 
-export function ChatSidebarProvider({ children }: any): JSX.Element {
+export function ChatSidebarProvider({ children }: any) {
   const [activeSidebar, setActiveSidebar] = useState(null);
   const [sidebarData, setSidebarData] = useState(null);
   const [sourceFilter, setSourceFilter] = useState(() => {
@@ -54,7 +54,7 @@ export function ChatSidebarProvider({ children }: any): JSX.Element {
     } catch {}
   }, [sourceFilter]);
 
-  function openSidebar(type: any, data: any = null): JSX.Element {
+  function openSidebar(type: any, data: any = null) {
     setActiveSidebar(type);
     setSidebarData(data);
   }
@@ -64,7 +64,7 @@ export function ChatSidebarProvider({ children }: any): JSX.Element {
     setSidebarData(null);
   }
 
-  function toggleSidebar(type: any, data: any = null): JSX.Element {
+  function toggleSidebar(type: any, data: any = null) {
     if (activeSidebar === type) closeSidebar();
     else openSidebar(type, data);
   }
@@ -181,7 +181,7 @@ export function usePoliticalSidebar() {
  * @param {boolean} props.isOpen
  * @param {React.ReactNode} props.children
  */
-export default function ChatSidebar({ isOpen, children }: any): JSX.Element {
+export default function ChatSidebar({ isOpen, children }: any) {
   return (
     <div
       className="h-full overflow-hidden transition-all duration-500 flex-shrink-0"

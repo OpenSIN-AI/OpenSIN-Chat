@@ -195,7 +195,7 @@ export function SidebarMobileHeader() {
   );
 }
 
-function NewWorkspaceButton({ user, showNewWsModal }: any): JSX.Element {
+function NewWorkspaceButton({ user, showNewWsModal }: any) {
   const { t } = useTranslation();
   if (!!user && user?.role === "default") return null;
 

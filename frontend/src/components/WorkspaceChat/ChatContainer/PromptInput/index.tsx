@@ -35,7 +35,7 @@ const MAX_EDIT_STACK_SIZE = 100;
  * @param {string} [props.threadSlug] - thread slug for home page context
  */
 export default function PromptInput({
-  workspace = {}, submit, isStreaming, sendCommand, attachments = [], centered = false, workspaceSlug = null, threadSlug = null, }: any): JSX.Element {
+  workspace = {}, submit, isStreaming, sendCommand, attachments = [], centered = false, workspaceSlug = null, threadSlug = null, }: any) {
   const { t } = useTranslation();
   const { showAgentCommand = true } = workspace ?? {};
   const { isDisabled } = useIsDisabled();
@@ -76,7 +76,7 @@ export default function PromptInput({
    * change on the input.
    * @param {{detail: {messageContent: string, writeMode: 'replace' | 'append'}}} e
    */
-  function handlePromptUpdate(e: any): JSX.Element {
+  function handlePromptUpdate(e: any) {
     const { messageContent, writeMode = "replace" } = e?.detail ?? {};
     if (writeMode === "append") setPromptInput((prev) => prev + messageContent);
     else if (writeMode === "prepend")
@@ -118,7 +118,7 @@ export default function PromptInput({
     [],
   );
 
-  function handleSubmit(e: any): JSX.Element {
+  function handleSubmit(e: any) {
     // Ignore submits from portaled modals (slash command preset forms)
     if (e.target !== e.currentTarget) return;
     setFocused(false);
@@ -136,7 +136,7 @@ export default function PromptInput({
    * via keyboard shortcuts
    * @param {KeyboardEvent} event
    */
-  function captureEnterOrUndo(event: any): JSX.Element {
+  function captureEnterOrUndo(event: any) {
     // Forward keyboard events to the ToolsMenu when open
     if (showTools) {
       if (
@@ -242,13 +242,13 @@ export default function PromptInput({
     }
   }
 
-  function adjustTextArea(event: any): JSX.Element {
+  function adjustTextArea(event: any) {
     const element = event.target;
     element.style.height = "auto";
     element.style.height = `${element.scrollHeight}px`;
   }
 
-  function handlePasteEvent(e: any): JSX.Element {
+  function handlePasteEvent(e: any) {
     e.preventDefault();
     if (e.clipboardData.items.length === 0) return false;
 
@@ -298,7 +298,7 @@ export default function PromptInput({
     return;
   }
 
-  function handleChange(e: any): JSX.Element {
+  function handleChange(e: any) {
     debouncedSaveState(-1);
     adjustTextArea(e);
     const value = e.target.value;
@@ -413,7 +413,7 @@ export default function PromptInput({
 }
 
 function AgentSessionButton({
-  sendCommand, promptInput, textareaRef, visible = true, }: any): JSX.Element {
+  sendCommand, promptInput, textareaRef, visible = true, }: any) {
   const { t } = useTranslation();
   if (!visible) return null;
 
@@ -452,7 +452,7 @@ function AgentSessionButton({
 }
 
 function ToolsButton({
-  showTools, setShowTools, textareaRef, autoOpenedToolsRef, }: any): JSX.Element {
+  showTools, setShowTools, textareaRef, autoOpenedToolsRef, }: any) {
   const { t } = useTranslation();
 
   return (
@@ -483,7 +483,7 @@ function ToolsButton({
   );
 }
 
-function SendPromptButton({ formRef, promptInput, isDisabled }: any): JSX.Element {
+function SendPromptButton({ formRef, promptInput, isDisabled }: any) {
   const { t } = useTranslation();
 
   return (
@@ -524,7 +524,7 @@ function SendPromptButton({ formRef, promptInput, isDisabled }: any): JSX.Elemen
 /**
  * Enhance Prompt Button — improves the current prompt via the server API.
  */
-function EnhancePromptButton({ promptInput, setPromptInput, isStreaming }: any): JSX.Element {
+function EnhancePromptButton({ promptInput, setPromptInput, isStreaming }: any) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 

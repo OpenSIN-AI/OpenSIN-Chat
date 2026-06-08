@@ -42,7 +42,7 @@ export const PARSED_FILE_ATTACHMENT_REMOVED_EVENT =
  */
 
 export function DnDFileUploaderProvider({
-  workspace, threadSlug = null, children, }: any): JSX.Element {
+  workspace, threadSlug = null, children, }: any) {
   const [files, setFiles] = useState([]);
   const [ready, setReady] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -231,7 +231,7 @@ export function DnDFileUploaderProvider({
       formData.append("threadSlug", threadSlug || null);
       promises.push(
         Workspace.parseFile(workspace.slug, formData).then(
-          async ({ response, data }) => {
+          async ({ response, data }: any) => {
             if (!response.ok) {
               const updates = {
                 status: "failed",
@@ -416,7 +416,7 @@ export function DnDFileUploaderProvider({
   );
 }
 
-export default function DnDFileUploaderWrapper({ children }: any): JSX.Element {
+export default function DnDFileUploaderWrapper({ children }: any) {
   const { onDrop, ready, dragging, setDragging } =
     useContext(DndUploaderContext);
   const { getRootProps, getInputProps } = useDropzone({

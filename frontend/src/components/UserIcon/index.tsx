@@ -4,7 +4,7 @@ import usePfp from "../../hooks/usePfp";
 import UserDefaultPfp from "./user.svg";
 import WorkspaceDefaultPfp from "./workspace.svg";
 
-const UserIcon = memo(({ role }) => {
+const UserIcon = memo(({ role }: any) => {
   const { pfp } = usePfp();
 
   return (
@@ -21,7 +21,7 @@ const UserIcon = memo(({ role }) => {
   );
 });
 
-function RenderUserPfp({ pfp }: any): JSX.Element {
+function RenderUserPfp({ pfp }: any) {
   if (!pfp)
     return (
       <img

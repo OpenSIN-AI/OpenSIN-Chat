@@ -7,7 +7,7 @@ import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDis
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 
-export default function OllamaLLMOptions({ settings }: any): JSX.Element {
+export default function OllamaLLMOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -278,7 +278,7 @@ export default function OllamaLLMOptions({ settings }: any): JSX.Element {
 }
 
 function OllamaLLMModelSelection({
-  settings, basePath = null, authToken = null, }: any): JSX.Element {
+  settings, basePath = null, authToken = null, }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

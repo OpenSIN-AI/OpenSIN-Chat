@@ -10,7 +10,7 @@ const OPEN_EVENT = "open-image-lightbox";
  * @param {{contentString: string, name: string}[]} images
  * @param {number} initialIndex
  */
-export function openImageLightbox(images: any, initialIndex: any = 0): JSX.Element {
+export function openImageLightbox(images: any, initialIndex: any = 0) {
   window.dispatchEvent(
     new CustomEvent(OPEN_EVENT, { detail: { images, initialIndex } }),
   );
@@ -21,7 +21,7 @@ export default function ImageLightbox() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    function handleOpen(e: any): JSX.Element {
+    function handleOpen(e: any) {
       setImages(e.detail.images);
       setCurrentIndex(e.detail.initialIndex);
     }
@@ -43,7 +43,7 @@ export default function ImageLightbox() {
 
   useEffect(() => {
     if (!images) return;
-    function handleKeyDown(e: any): JSX.Element {
+    function handleKeyDown(e: any) {
       if (e.key === "Escape") close();
       else if (e.key === "ArrowLeft") handlePrevious();
       else if (e.key === "ArrowRight") handleNext();

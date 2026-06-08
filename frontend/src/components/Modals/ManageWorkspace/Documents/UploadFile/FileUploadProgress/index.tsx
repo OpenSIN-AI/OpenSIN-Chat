@@ -7,7 +7,7 @@ import { humanFileSize, milliToHms } from "../../../../../../utils/numbers";
 import PreLoader from "../../../../../Preloader";
 
 function FileUploadProgressComponent({
-  slug, uuid, file, setFiles, rejected = false, reason = null, onUploadSuccess, onUploadError, setLoading, setLoadingMessage, }: any): JSX.Element {
+  slug, uuid, file, setFiles, rejected = false, reason = null, onUploadSuccess, onUploadError, setLoading, setLoadingMessage, }: any) {
   const [timerMs, setTimerMs] = useState(10);
   const [status, setStatus] = useState("pending");
   const [error, setError] = useState("");

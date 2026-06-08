@@ -42,7 +42,7 @@ const dataFormatter: any = (number) => {
   return Intl.NumberFormat("us").format(number).toString();
 };
 
-export function Chartable({ props }: any): JSX.Element {
+export function Chartable({ props }: any) {
   const [getDivJpeg, { ref }] = useGenerateImage({
     quality: 1,
     type: "image/jpeg",
@@ -449,7 +449,7 @@ const customTooltip: any = (props) => {
   );
 };
 
-function DownloadGraph({ onClick }: any): JSX.Element {
+function DownloadGraph({ onClick }: any) {
   const [loading, setLoading] = useState(false);
   const handleClick = async () => {
     setLoading(true);

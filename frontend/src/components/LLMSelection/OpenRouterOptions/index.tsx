@@ -3,7 +3,7 @@ import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 
-export default function OpenRouterOptions({ settings }: any): JSX.Element {
+export default function OpenRouterOptions({ settings }: any) {
   return (
     <div className="flex flex-col gap-y-4 mt-1.5">
       <div className="flex gap-[36px]">
@@ -31,7 +31,7 @@ export default function OpenRouterOptions({ settings }: any): JSX.Element {
   );
 }
 
-function AdvancedControls({ settings }: any): JSX.Element {
+function AdvancedControls({ settings }: any) {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
 
   return (
@@ -70,7 +70,7 @@ function AdvancedControls({ settings }: any): JSX.Element {
   );
 }
 
-function OpenRouterModelSelection({ settings }: any): JSX.Element {
+function OpenRouterModelSelection({ settings }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

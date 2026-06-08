@@ -11,7 +11,7 @@ import { baseHeaders } from "@/utils/request";
  * @property {string} type - The type of the system prompt variable
  */
 
-const SystemPromptVariable = {
+const SystemPromptVariable: any = {
   /**
    * Get all system prompt variables
    * @returns {Promise<{variables: SystemPromptVariable[]}>} - An array of system prompt variables

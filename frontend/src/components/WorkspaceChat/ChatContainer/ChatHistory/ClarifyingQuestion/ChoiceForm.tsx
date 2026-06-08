@@ -2,7 +2,7 @@
 import { PencilSimple } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
-function OptionButton({ label, description, index, selected, onClick }: any): JSX.Element {
+function OptionButton({ label, description, index, selected, onClick }: any) {
   return (
     <button
       type="button"
@@ -31,7 +31,7 @@ function OptionButton({ label, description, index, selected, onClick }: any): JS
   );
 }
 
-function OtherRow({ selected, onToggle, allowSkip, onSkip }: any): JSX.Element {
+function OtherRow({ selected, onToggle, allowSkip, onSkip }: any) {
   const { t } = useTranslation();
   return (
     <div className="flex items-center w-full">
@@ -63,7 +63,7 @@ function OtherRow({ selected, onToggle, allowSkip, onSkip }: any): JSX.Element {
   );
 }
 
-function SkipButton({ onClick }: any): JSX.Element {
+function SkipButton({ onClick }: any) {
   const { t } = useTranslation();
   return (
     <button
@@ -76,7 +76,7 @@ function SkipButton({ onClick }: any): JSX.Element {
   );
 }
 
-function OtherInput({ value, onChange }: any): JSX.Element {
+function OtherInput({ value, onChange }: any) {
   const { t } = useTranslation();
   return (
     <input
@@ -102,16 +102,16 @@ function OtherInput({ value, onChange }: any): JSX.Element {
  * the Other row instead of in the Footer.
  */
 export default function ChoiceForm({
-  question, draft, onChange, onAutoAdvance, allowSkip, onSkip, }: any): JSX.Element {
+  question, draft, onChange, onAutoAdvance, allowSkip, onSkip, }: any) {
   const showOther: any = question.allowOther !== false;
 
-  function isChecked(opt): JSX.Element {
+  function isChecked(opt) {
     if (question.multiSelect)
       return Array.isArray(draft.selected) && draft.selected.includes(opt);
     return draft.selected === opt;
   }
 
-  function handleSelect(opt: any): JSX.Element {
+  function handleSelect(opt: any) {
     if (question.multiSelect) {
       const list = Array.isArray(draft.selected) ? draft.selected : [];
       const next = list.includes(opt)

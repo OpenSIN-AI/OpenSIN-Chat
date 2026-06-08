@@ -19,7 +19,7 @@ import Workspace from "@/models/workspace";
 import System from "@/models/system";
 
 export default function LLMSelectorModal({
-  workspaceSlug = null, initialProvider = null, }: any): JSX.Element {
+  workspaceSlug = null, initialProvider = null, }: any) {
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const { t } = useTranslation();
@@ -63,7 +63,7 @@ export default function LLMSelectorModal({
       .finally(() => setLoading(false));
   }, [slug]);
 
-  function handleSearch(e: any): JSX.Element {
+  function handleSearch(e: any) {
     const searchTerm = e.target.value.toLowerCase();
     const filteredProviders = WORKSPACE_LLM_PROVIDERS.filter((provider) =>
       provider.name.toLowerCase().includes(searchTerm),
@@ -71,7 +71,7 @@ export default function LLMSelectorModal({
     setAvailableProviders(filteredProviders);
   }
 
-  function handleProviderSelection(provider: any): JSX.Element {
+  function handleProviderSelection(provider: any) {
     setSelectedLLMProvider(provider);
     setAvailableProviders(WORKSPACE_LLM_PROVIDERS);
     autoScrollToSelectedLLMProvider(provider, 50);

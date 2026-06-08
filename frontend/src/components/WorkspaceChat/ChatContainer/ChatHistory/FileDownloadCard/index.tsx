@@ -15,7 +15,7 @@ const autoPreviewedFiles = new Set();
  * @param {boolean} [autoPreview] - When true (live agent output), opens the
  *   preview sidebar automatically the first time this report is rendered (#55).
  */
-function FileDownloadCard({ props, autoPreview = false }: any): JSX.Element {
+function FileDownloadCard({ props, autoPreview = false }: any) {
   const { filename, storageFilename, fileSize, downloadUrl } = props.content || {};
   const { badge, badgeBg, badgeText, fileType } = getFileDisplayInfo(filename);
   const [downloading, setDownloading] = useState(false);
@@ -123,7 +123,7 @@ function FileDownloadCard({ props, autoPreview = false }: any): JSX.Element {
  * @param {string} filename
  * @returns {{badge: string, badgeBg: string, badgeText: string, fileType: string}}
  */
-function getFileDisplayInfo(filename: any): JSX.Element {
+function getFileDisplayInfo(filename: any) {
   const extension = filename?.split(".")?.pop()?.toLowerCase() ?? "txt";
   switch (extension) {
     case "pptx":

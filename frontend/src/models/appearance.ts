@@ -11,7 +11,7 @@ import { safeJsonParse } from "@/utils/request";
  * } AvailableSettings - The supported settings for the appearance model.
  */
 
-const Appearance = {
+const Appearance: any = {
   defaultSettings: {
     showScrollbar: false,
     autoSubmitSttInput: true,

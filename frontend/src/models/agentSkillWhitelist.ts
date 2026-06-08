@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const AgentSkillWhitelist = {
+const AgentSkillWhitelist: any = {
   /**
    * Add a skill to the whitelist
    * @param {string} skillName - The skill name to whitelist

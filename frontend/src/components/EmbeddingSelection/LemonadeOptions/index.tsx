@@ -7,7 +7,7 @@ import { Tooltip } from "react-tooltip";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { cleanBasePath } from "@/components/LLMSelection/LemonadeOptions";
 
-export default function LemonadeEmbeddingOptions({ settings }: any): JSX.Element {
+export default function LemonadeEmbeddingOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -169,7 +169,7 @@ export default function LemonadeEmbeddingOptions({ settings }: any): JSX.Element
   );
 }
 
-function LemonadeModelSelection({ settings, basePath = null }: any): JSX.Element {
+function LemonadeModelSelection({ settings, basePath = null }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

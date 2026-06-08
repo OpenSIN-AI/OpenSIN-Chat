@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import { SimpleToggleSwitch } from "@/components/lib/Toggle";
 
 export default function SkillRow({
-  name, enabled, onToggle, highlighted = false, disabled = false, }: any): JSX.Element {
+  name, enabled, onToggle, highlighted = false, disabled = false, }: any) {
   const ref = useRef(null);
   useEffect(() => {
     if (highlighted) ref.current?.scrollIntoView({ block: "nearest" });

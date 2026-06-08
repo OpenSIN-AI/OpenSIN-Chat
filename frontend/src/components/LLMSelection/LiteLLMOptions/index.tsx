@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import System from "@/models/system";
 
-export default function LiteLLMOptions({ settings }: any): JSX.Element {
+export default function LiteLLMOptions({ settings }: any) {
   const [basePathValue, setBasePathValue] = useState(settings?.LiteLLMBasePath);
   const [basePath, setBasePath] = useState(settings?.LiteLLMBasePath);
   const [apiKeyValue, setApiKeyValue] = useState(settings?.LiteLLMAPIKey);
@@ -74,7 +74,7 @@ export default function LiteLLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function LiteLLMModelSelection({ settings, basePath = null, apiKey = null }: any): JSX.Element {
+function LiteLLMModelSelection({ settings, basePath = null, apiKey = null }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -3,7 +3,7 @@ import { ArrowSquareOut, Info } from "@phosphor-icons/react";
 import { AWS_REGIONS } from "./regions";
 import { useState } from "react";
 
-export default function AwsBedrockLLMOptions({ settings }: any): JSX.Element {
+export default function AwsBedrockLLMOptions({ settings }: any) {
   const [connectionMethod, setConnectionMethod] = useState(
     settings?.AwsBedrockLLMConnectionMethod ?? "iam",
   );

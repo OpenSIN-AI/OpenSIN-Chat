@@ -14,7 +14,7 @@ import ModelTableLoadingSkeleton from "@/components/lib/ModelTable/loading";
 import DMRUtils from "@/models/utils/dmrUtils";
 import showToast from "@/utils/toast";
 
-export default function DockerModelRunnerOptions({ settings }: any): JSX.Element {
+export default function DockerModelRunnerOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -181,7 +181,7 @@ export default function DockerModelRunnerOptions({ settings }: any): JSX.Element
 }
 
 function DockerModelRunnerModelSelection({
-  selectedModelId, setSelectedModelId, basePath = null, }: any): JSX.Element {
+  selectedModelId, setSelectedModelId, basePath = null, }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [filteredModels, setFilteredModels] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -277,7 +277,7 @@ function DockerModelRunnerModelSelection({
     }
   }
 
-  function groupModelsByAlias(models: any): JSX.Element {
+  function groupModelsByAlias(models: any) {
     const mapping = new Map();
     mapping.set("installed", new Map());
     mapping.set("not installed", new Map());
@@ -333,7 +333,7 @@ function DockerModelRunnerModelSelection({
     );
   }
 
-  function handleSetActiveModel(modelId: any): JSX.Element {
+  function handleSetActiveModel(modelId: any) {
     if (modelId === selectedModelId) return;
     setSelectedModelId(modelId);
     window.dispatchEvent(new Event(LLM_PREFERENCE_CHANGED_EVENT));

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 export default function CTAButton({
-  children, disabled = false, onClick, className = "", }: any): JSX.Element {
+  children, disabled = false, onClick, className = "", }: any) {
   return (
     <button
       disabled={disabled}

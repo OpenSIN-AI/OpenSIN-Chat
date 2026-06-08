@@ -48,7 +48,7 @@ export async function subscribeToPushNotifications(askToEnable = true) {
 
     const publicKey = await fetch(PUSH_PUBKEY_URL, { headers: baseHeaders() })
       .then((res) => res.json())
-      .then(({ publicKey }) => {
+      .then(({ publicKey }: any) => {
         if (!publicKey) throw new Error("No public key found or generated");
         return publicKey;
       })

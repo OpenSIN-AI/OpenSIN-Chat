@@ -2,7 +2,7 @@
 import { memo } from "react";
 import FileDownloadCard from "../../FileDownloadCard";
 
-function HistoricalOutputs({ outputs = [] }: any): JSX.Element {
+function HistoricalOutputs({ outputs = [] }: any) {
   if (!outputs || outputs.length === 0) return null;
 
   return (

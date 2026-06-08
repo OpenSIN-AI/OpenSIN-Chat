@@ -13,7 +13,7 @@ export const TOGGLE_LLM_SELECTOR_EVENT = "toggle_llm_selector";
 export const SAVE_LLM_SELECTOR_EVENT = "save_llm_selector";
 export const PROVIDER_SETUP_EVENT = "provider_setup_requested";
 
-export default function LLMSelectorAction({ workspaceSlug = null }: any): JSX.Element {
+export default function LLMSelectorAction({ workspaceSlug = null }: any) {
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const tooltipRef = useRef(null);
@@ -69,7 +69,7 @@ export default function LLMSelectorAction({ workspaceSlug = null }: any): JSX.El
   }, [saved]);
 
   useEffect(() => {
-    function handleProviderSetupEvent(e: any): JSX.Element {
+    function handleProviderSetupEvent(e: any) {
       const { provider, settings } = e.detail;
       setConfig({
         settings,

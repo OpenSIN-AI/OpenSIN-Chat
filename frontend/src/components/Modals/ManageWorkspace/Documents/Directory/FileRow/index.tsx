@@ -7,7 +7,7 @@ import {
 } from "@/utils/directories";
 import { File } from "@phosphor-icons/react";
 
-export default function FileRow({ item, selected, toggleSelection }: any): JSX.Element {
+export default function FileRow({ item, selected, toggleSelection }: any) {
   return (
     <tr
       onClick={() => toggleSelection(item)}

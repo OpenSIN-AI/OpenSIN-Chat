@@ -163,7 +163,7 @@ export function useManageWorkspaceModal() {
   }
 
   useEffect(() => {
-    function onEscape(event: any): JSX.Element {
+    function onEscape(event: any) {
       if (!showing || event.key !== "Escape") return;
       setShowing(false);
     }

@@ -36,7 +36,7 @@ export function useSidebarToggle() {
   }, [window.location.pathname]);
 
   useEffect(() => {
-    function toggleSidebar(e: any): JSX.Element {
+    function toggleSidebar(e: any) {
       if (!canToggleSidebar) return;
       if (
         (e.ctrlKey || e.metaKey) &&
@@ -74,7 +74,7 @@ export function useSidebarToggle() {
   return { showSidebar, setShowSidebar, canToggleSidebar };
 }
 
-export function ToggleSidebarButton({ showSidebar, setShowSidebar }: any): JSX.Element {
+export function ToggleSidebarButton({ showSidebar, setShowSidebar }: any) {
   const isMac = navigator.userAgent.includes("Mac");
   const shortcut = isMac ? "⌘ + Shift + S" : "Ctrl + Shift + S";
 

@@ -4,11 +4,11 @@ import NativeTTSMessage from "./native";
 import AsyncTTSMessage from "./asyncTts";
 import PiperTTSMessage from "./piperTTS";
 
-function WrapTTS({ children }: any): JSX.Element {
+function WrapTTS({ children }: any) {
   return <div className="mx-2">{children}</div>;
 }
 
-export default function TTSMessage({ slug, chatId, message }: any): JSX.Element {
+export default function TTSMessage({ slug, chatId, message }: any) {
   const { settings, provider, loading } = useTTSProvider();
   if (!chatId || loading) return null;
 

@@ -2,7 +2,7 @@
 import System from "@/models/system";
 import { useEffect, useState } from "react";
 
-export default function GeminiLLMOptions({ settings }: any): JSX.Element {
+export default function GeminiLLMOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.GeminiLLMApiKey);
   const [geminiApiKey, setGeminiApiKey] = useState(settings?.GeminiLLMApiKey);
 
@@ -62,7 +62,7 @@ export default function GeminiLLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function GeminiModelSelection({ apiKey, settings }: any): JSX.Element {
+function GeminiModelSelection({ apiKey, settings }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

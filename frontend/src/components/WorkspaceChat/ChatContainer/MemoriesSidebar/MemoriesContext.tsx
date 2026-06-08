@@ -20,7 +20,7 @@ export function useMemoriesContext() {
   return ctx;
 }
 
-export function MemoriesProvider({ workspace, children }: any): JSX.Element {
+export function MemoriesProvider({ workspace, children }: any) {
   const { sidebarOpen, closeSidebar } = useMemoriesSidebar();
   const { user } = useUser();
   const canToggle = !user || user?.role === "admin";
@@ -86,7 +86,7 @@ export function MemoriesProvider({ workspace, children }: any): JSX.Element {
     setModalState({ open: true, mode: "create" });
   }
 
-  function openEditModal(memory: any): JSX.Element {
+  function openEditModal(memory: any) {
     setEditingMemory(memory);
     setModalState({ open: true, mode: "edit" });
   }

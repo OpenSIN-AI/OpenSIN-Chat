@@ -16,7 +16,7 @@ export interface SystemPreferencesResponse {
   settings: SystemPreference;
 }
 
-const Admin = {
+const Admin: any = {
   /**
    * Get system preferences by field names
    */

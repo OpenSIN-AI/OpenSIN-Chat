@@ -21,7 +21,7 @@ import ThinkingStatic from "@/media/animations/thinking-static.png";
  */
 const ThoughtExpansionContext = createContext<any>(null);
 
-export function ThoughtExpansionProvider({ children }: any): JSX.Element {
+export function ThoughtExpansionProvider({ children }: any) {
   const [expansionStates, setExpansionStates] = useState({});
 
   const getExpanded = useCallback(
@@ -47,7 +47,7 @@ export function ThoughtExpansionProvider({ children }: any): JSX.Element {
   );
 }
 
-export function useThoughtExpansion(messageId: any): JSX.Element {
+export function useThoughtExpansion(messageId: any) {
   const context = useContext(ThoughtExpansionContext);
   if (!context) {
     // Fallback when used outside provider - use local state only
@@ -82,7 +82,7 @@ const THOUGHT_PREVIEW_LENGTH = isMobile ? 25 : 50;
  * @param {string} content - The content to check.
  * @returns {boolean} - Whether the content has readable content.
  */
-function contentIsNotEmpty(content: any = ""): JSX.Element {
+function contentIsNotEmpty(content: any = "") {
   return (
     content
       ?.trim()

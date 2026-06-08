@@ -20,7 +20,7 @@ interface SetupComplete {
   results: SystemKeys;
 }
 
-const System = {
+const System: any = {
   /**
    * Check if backend is reachable
    */

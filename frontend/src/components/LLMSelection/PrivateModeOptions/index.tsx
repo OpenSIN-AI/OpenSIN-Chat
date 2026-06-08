@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 import System from "@/models/system";
 import { Link } from "react-router-dom";
 
-export default function PrivateModeOptions({ settings }: any): JSX.Element {
+export default function PrivateModeOptions({ settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(!!settings?.PrivateModeBasePath);
   const [basePath, setBasePath] = useState(settings?.PrivateModeBasePath);

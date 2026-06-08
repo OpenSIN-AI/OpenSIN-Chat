@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-export default function WeaviateDBOptions({ settings }: any): JSX.Element {
+export default function WeaviateDBOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5">

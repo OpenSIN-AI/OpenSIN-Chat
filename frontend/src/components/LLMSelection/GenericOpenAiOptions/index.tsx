@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function GenericOpenAiOptions({ settings }: any): JSX.Element {
+export default function GenericOpenAiOptions({ settings }: any) {
   const [genericOpenAiBasePath, setGenericOpenAiBasePath] = useState(
     settings?.GenericOpenAiBasePath,
   );
@@ -94,7 +94,7 @@ export default function GenericOpenAiOptions({ settings }: any): JSX.Element {
 }
 
 function GenericOpenAiModelSelection({
-  settings, basePath = null, apiKey = null, genericOpenAiModelPref, setGenericOpenAiModelPref, }: any): JSX.Element {
+  settings, basePath = null, apiKey = null, genericOpenAiModelPref, setGenericOpenAiModelPref, }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

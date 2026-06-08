@@ -20,7 +20,7 @@ import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";
  * Flattens the nested local-files directory tree into a single list of files
  * with their workspace docpath so they can be added to the current workspace.
  */
-function flattenLocalFiles(localFiles: any): JSX.Element {
+function flattenLocalFiles(localFiles: any) {
   if (!localFiles?.items) return [];
   const out = [];
   for (const folder of localFiles.items) {
@@ -51,7 +51,7 @@ function flattenLocalFiles(localFiles: any): JSX.Element {
  * @param {Function} props.onAddLocalFiles - trigger the local file uploader
  */
 export default function AddSourceMenu({
-  workspaceSlug, onClose, onAddLocalFiles, }: any): JSX.Element {
+  workspaceSlug, onClose, onAddLocalFiles, }: any) {
   const { t } = useTranslation();
   const [view, setView] = useState("root"); // "root" | "sources" | "url"
 
@@ -113,7 +113,7 @@ function MenuRow({ icon: Icon, label, onClick, hasSubmenu = false }) {
   );
 }
 
-function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }: any): JSX.Element {
+function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }: any) {
   return (
     <>
       <MenuRow
@@ -137,7 +137,7 @@ function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }: any): JSX.El
   );
 }
 
-function BackHeader({ label, onBack }: any): JSX.Element {
+function BackHeader({ label, onBack }: any) {
   return (
     <button
       type="button"
@@ -156,7 +156,7 @@ function BackHeader({ label, onBack }: any): JSX.Element {
   );
 }
 
-function SourcesView({ t, workspaceSlug, onBack, onClose }: any): JSX.Element {
+function SourcesView({ t, workspaceSlug, onBack, onClose }: any) {
   const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState([]);
   const [addingId, setAddingId] = useState(null);
@@ -243,7 +243,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }: any): JSX.Element {
   );
 }
 
-function UrlView({ t, workspaceSlug, onBack, onClose }: any): JSX.Element {
+function UrlView({ t, workspaceSlug, onBack, onClose }: any) {
   const inputRef = useRef(null);
   const [link, setLink] = useState("");
   const [submitting, setSubmitting] = useState(false);

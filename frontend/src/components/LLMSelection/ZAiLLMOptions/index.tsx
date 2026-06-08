@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function ZAiLLMOptions({ settings }: any): JSX.Element {
+export default function ZAiLLMOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.ZAiApiKey);
   const [apiKey, setApiKey] = useState(settings?.ZAiApiKey);
 
@@ -33,7 +33,7 @@ export default function ZAiLLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function ZAiModelSelection({ apiKey, settings }: any): JSX.Element {
+function ZAiModelSelection({ apiKey, settings }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

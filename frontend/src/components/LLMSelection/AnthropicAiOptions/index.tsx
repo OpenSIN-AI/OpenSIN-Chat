@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 
-export default function AnthropicAiOptions({ settings }: any): JSX.Element {
+export default function AnthropicAiOptions({ settings }: any) {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
   const [inputValue, setInputValue] = useState(settings?.AnthropicApiKey);
   const [anthropicApiKey, setAnthropicApiKey] = useState(
@@ -91,7 +91,7 @@ export default function AnthropicAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function AnthropicModelSelection({ apiKey, settings }: any): JSX.Element {
+function AnthropicModelSelection({ apiKey, settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -45,7 +45,7 @@ const CIRCLE_IMAGES = {
  * @param {string} type
  * @returns {string|null}
  */
-export function getCustomImage(type: any): JSX.Element {
+export function getCustomImage(type: any) {
   return CIRCLE_IMAGES[type] ?? null;
 }
 
@@ -58,7 +58,7 @@ export function getCustomImage(type: any): JSX.Element {
  * @param {string} [props.customImage] - Optional custom image to display
  */
 export function SourceTypeCircle({
-  type = "file", size = 22, iconSize = 12, url = null, customImage = null, }: any): JSX.Element {
+  type = "file", size = 22, iconSize = 12, url = null, customImage = null, }: any) {
   const Icon = CIRCLE_ICONS[type] || CIRCLE_ICONS.file;
   const [imgError, setImgError] = useState(false);
 
@@ -103,7 +103,7 @@ export function SourceTypeCircle({
   );
 }
 
-export function combineLikeSources(sources: any): JSX.Element {
+export function combineLikeSources(sources: any) {
   const combined = {};
   sources.forEach((source) => {
     const { id, title, text, chunkSource = "", score = null } = source;
@@ -121,7 +121,7 @@ export function combineLikeSources(sources: any): JSX.Element {
   return Object.values(combined);
 }
 
-export default function Citations({ sources = [] }: any): JSX.Element {
+export default function Citations({ sources = [] }: any) {
   const {
     sidebarOpen,
     openSidebar,
@@ -185,12 +185,12 @@ export default function Citations({ sources = [] }: any): JSX.Element {
   );
 }
 
-export function omitChunkHeader(text: any): JSX.Element {
+export function omitChunkHeader(text: any) {
   if (!text.includes("<document_metadata>")) return text;
   return text.split("</document_metadata>")[1].trim();
 }
 
-export function CitationDetailModal({ source, onClose }: any): JSX.Element {
+export function CitationDetailModal({ source, onClose }: any) {
   const { references, title, chunks } = source;
   const { isUrl, text: webpageUrl, href: linkTo } = parseChunkSource(source);
   const { t } = useTranslation();
@@ -304,7 +304,7 @@ const supportedSources = [
  * @param {{title: string, chunks: {text: string, chunkSource: string}[]}} options
  * @returns {{isUrl: boolean, text: string, href: string, icon: string}}
  */
-export function parseChunkSource({ title = "", chunks = [] }: any): JSX.Element {
+export function parseChunkSource({ title = "", chunks = [] }: any) {
   const nullResponse = {
     isUrl: false,
     text: null,

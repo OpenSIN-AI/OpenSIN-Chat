@@ -15,7 +15,7 @@ const DEFAULT_SEARCH_RESULTS = {
 };
 
 const SEARCH_RESULT_SELECTED: any = "search-result-selected";
-export default function SearchBox({ user, showNewWsModal }: any): JSX.Element {
+export default function SearchBox({ user, showNewWsModal }: any) {
   const { t } = useTranslation();
   const searchRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -84,7 +84,7 @@ export default function SearchBox({ user, showNewWsModal }: any): JSX.Element {
   );
 }
 
-function SearchResultWrapper({ children }: any): JSX.Element {
+function SearchResultWrapper({ children }: any) {
   return (
     <div className="absolute right-0 top-[6.2%] w-full flex flex-col gap-y-[24px] h-auto bg-theme-modal-border light:bg-theme-bg-primary light:border-2 light:border-theme-modal-border rounded-lg p-[16px] z-10 max-h-[calc(100%-24px)] overflow-y-scroll no-scroll">
       {children}
@@ -92,7 +92,7 @@ function SearchResultWrapper({ children }: any): JSX.Element {
   );
 }
 
-function SearchResults({ searchResults, searchTerm, loading }: any): JSX.Element {
+function SearchResults({ searchResults, searchTerm, loading }: any) {
   if (!searchTerm || searchTerm.length < 3) return null;
   if (loading)
     return (
@@ -148,7 +148,7 @@ function SearchResults({ searchResults, searchTerm, loading }: any): JSX.Element
   );
 }
 
-function SearchResultCategory({ items, name }: any): JSX.Element {
+function SearchResultCategory({ items, name }: any) {
   if (!items?.length) return null;
   return (
     <div className="flex flex-col gap-y-[8px]">
@@ -169,7 +169,7 @@ function SearchResultCategory({ items, name }: any): JSX.Element {
   );
 }
 
-function SearchResultItem({ to, name, hint }: any): JSX.Element {
+function SearchResultItem({ to, name, hint }: any) {
   return (
     <Link
       to={to}
@@ -188,7 +188,7 @@ function SearchResultItem({ to, name, hint }: any): JSX.Element {
   );
 }
 
-function ShortWidthNewWorkspaceButton({ user, showNewWsModal }: any): JSX.Element {
+function ShortWidthNewWorkspaceButton({ user, showNewWsModal }: any) {
   const { t } = useTranslation();
   if (!!user && user?.role === "default") return null;
 

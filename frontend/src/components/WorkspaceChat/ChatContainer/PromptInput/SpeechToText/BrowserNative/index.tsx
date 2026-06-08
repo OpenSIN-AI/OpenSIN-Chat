@@ -16,7 +16,7 @@ const SILENCE_INTERVAL = 3_200; // wait in seconds of silence before closing.
  * @param {(textToAppend: string, autoSubmit: boolean) => void} props.sendCommand - The function to send the command
  * @returns {React.ReactElement} The SpeechToText component
  */
-export default function BrowserNativeSTT({ sendCommand }: any): JSX.Element {
+export default function BrowserNativeSTT({ sendCommand }: any) {
   const previousTranscriptRef = useRef("");
   const {
     transcript,

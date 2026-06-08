@@ -19,7 +19,7 @@ import {
   USERNAME_PATTERN,
 } from "@/utils/username";
 
-export default function AccountModal({ user, hideModal }: any): JSX.Element {
+export default function AccountModal({ user, hideModal }: any) {
   const { pfp, setPfp } = usePfp();
   const { t } = useTranslation();
 

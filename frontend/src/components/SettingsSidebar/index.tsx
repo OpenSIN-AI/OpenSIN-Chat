@@ -213,9 +213,9 @@ function SupportEmail() {
   );
 }
 
-const SidebarOptions = ({ user = null, t }) => (
+const SidebarOptions = ({ user = null, t }: any) => (
   <CanViewChatHistoryProvider>
-    {({ viewable: canViewChatHistory }) => (
+    {({ viewable: canViewChatHistory }: any) => (
       <>
         <Option
           btnText={t("settings.ai-providers")}
@@ -458,7 +458,7 @@ const SidebarOptions = ({ user = null, t }) => (
   </CanViewChatHistoryProvider>
 );
 
-function HoldToReveal({ children, holdForMs = 3_000 }: any): JSX.Element {
+function HoldToReveal({ children, holdForMs = 3_000 }: any) {
   let timeout = null;
   const [showing, setShowing] = useState(
     window.localStorage.getItem(

@@ -11,7 +11,7 @@ import showToast from "@/utils/toast";
 import System from "@/models/system";
 
 export default function WorkspaceFileRow({
-  item, folderName, workspace, setLoading, setLoadingMessage, fetchKeys, hasChanges, movedItems, selected, toggleSelection, disableSelection, setSelectedItems, }: any): JSX.Element {
+  item, folderName, workspace, setLoading, setLoadingMessage, fetchKeys, hasChanges, movedItems, selected, toggleSelection, disableSelection, setSelectedItems, }: any) {
   const onRemoveClick = async (e) => {
     e.stopPropagation();
     setLoading(true);
@@ -31,13 +31,13 @@ export default function WorkspaceFileRow({
     setLoading(false);
   };
 
-  function toggleRowSelection(e: any): JSX.Element {
+  function toggleRowSelection(e: any) {
     if (disableSelection) return;
     e.stopPropagation();
     toggleSelection();
   }
 
-  function handleRowSelection(e: any): JSX.Element {
+  function handleRowSelection(e: any) {
     e.stopPropagation();
     toggleSelection();
   }
@@ -109,7 +109,7 @@ export default function WorkspaceFileRow({
   );
 }
 
-const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
+const PinItemToWorkspace = memo(({ workspace, docPath, item }: any) => {
   const [pinned, setPinned] = useState(
     item?.pinnedWorkspaces?.includes(workspace.id) || false,
   );
@@ -175,7 +175,7 @@ const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
   );
 });
 
-const WatchForChanges = memo(({ workspace, docPath, item }) => {
+const WatchForChanges = memo(({ workspace, docPath, item }: any) => {
   const [watched, setWatched] = useState(item?.watched || false);
   const watchEvent = new CustomEvent("watch_document_for_changes");
 
@@ -245,7 +245,7 @@ const WatchForChanges = memo(({ workspace, docPath, item }) => {
   );
 });
 
-const RemoveItemFromWorkspace = ({ item: _item, onClick }) => {
+const RemoveItemFromWorkspace = ({ item: _item, onClick }: any) => {
   return (
     <div>
       <ArrowUUpLeft

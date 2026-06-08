@@ -18,10 +18,10 @@ import { openImageLightbox } from "@/components/ImageLightbox";
  * @param {{attachments: import("../../DnDWrapper").Attachment[]}}
  * @returns
  */
-export default function AttachmentManager({ attachments }: any): JSX.Element {
+export default function AttachmentManager({ attachments }: any) {
   if (attachments.length === 0) return null;
 
-  function handleImageClick(attachment: any): JSX.Element {
+  function handleImageClick(attachment: any) {
     const imageAttachments = attachments
       .filter((a) => a.type === "attachment" && a.contentString)
       .map((a) => ({ contentString: a.contentString, name: a.file.name }));
@@ -47,7 +47,7 @@ export default function AttachmentManager({ attachments }: any): JSX.Element {
 /**
  * @param {{attachment: import("../../DnDWrapper").Attachment}}
  */
-function AttachmentItem({ attachment, onImageClick }: any): JSX.Element {
+function AttachmentItem({ attachment, onImageClick }: any) {
   const { uid, file, status, error, document, type, contentString } =
     attachment;
   const { iconBgColor, Icon } = displayFromFile(file);
@@ -218,7 +218,7 @@ function AttachmentItem({ attachment, onImageClick }: any): JSX.Element {
  * @param {File} file
  * @returns {{iconBgColor:string, Icon: React.Component}}
  */
-function displayFromFile(file: any): JSX.Element {
+function displayFromFile(file: any) {
   const extension = file?.name?.split(".")?.pop()?.toLowerCase() ?? "txt";
   switch (extension) {
     case "pdf":

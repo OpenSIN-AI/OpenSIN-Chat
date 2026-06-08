@@ -10,7 +10,7 @@ import { Trans } from "react-i18next";
  * @param {Object} props.routedTo - { model, ruleTitle, routerName }
  * @param {boolean} [props.isStreaming] - whether the response is still streaming
  */
-export default function ModelRouteNotification({ routedTo, isStreaming }: any): JSX.Element {
+export default function ModelRouteNotification({ routedTo, isStreaming }: any) {
   if (!routedTo) return null;
 
   return (
@@ -47,7 +47,7 @@ export default function ModelRouteNotification({ routedTo, isStreaming }: any): 
   );
 }
 
-function RouterIcon({ isStreaming }: any): JSX.Element {
+function RouterIcon({ isStreaming }: any) {
   if (!isStreaming)
     return (
       <Shuffle className="w-4 h-4 text-zinc-50 light:text-slate-950 flex-shrink-0" />

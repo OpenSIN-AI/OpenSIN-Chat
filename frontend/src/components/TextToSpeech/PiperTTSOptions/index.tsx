@@ -6,7 +6,7 @@ import { humanFileSize } from "@/utils/numbers";
 import showToast from "@/utils/toast";
 import { CircleNotch, PauseCircle, PlayCircle } from "@phosphor-icons/react";
 
-export default function PiperTTSOptions({ settings }: any): JSX.Element {
+export default function PiperTTSOptions({ settings }: any) {
   return (
     <>
       <p className="text-sm font-base text-white text-opacity-60 mb-4">
@@ -20,7 +20,7 @@ export default function PiperTTSOptions({ settings }: any): JSX.Element {
   );
 }
 
-function voicesByLanguage(voices: any = []): JSX.Element {
+function voicesByLanguage(voices: any = []) {
   const voicesByLanguage = voices.reduce((acc, voice) => {
     const langName = voice?.language?.name_english ?? "Unlisted";
     acc[langName] = acc[langName] || [];
@@ -30,14 +30,14 @@ function voicesByLanguage(voices: any = []): JSX.Element {
   return Object.entries(voicesByLanguage);
 }
 
-function voiceDisplayName(voice: any): JSX.Element {
+function voiceDisplayName(voice: any) {
   const { is_stored, name, quality, files } = voice;
   const onnxFileKey = Object.keys(files).find((key) => key.endsWith(".onnx"));
   const fileSize = files?.[onnxFileKey]?.size_bytes || 0;
   return `${is_stored ? "✔ " : ""}${titleCase(name)}-${quality === "low" ? "Low" : "HQ"} (${humanFileSize(fileSize)})`;
 }
 
-function PiperTTSModelSelection({ settings }: any): JSX.Element {
+function PiperTTSModelSelection({ settings }: any) {
   const [loading, setLoading] = useState(true);
   const [voices, setVoices] = useState([]);
   const [selectedVoice, setSelectedVoice] = useState(
@@ -133,7 +133,7 @@ function PiperTTSModelSelection({ settings }: any): JSX.Element {
   );
 }
 
-function DemoVoiceSample({ voiceId }: any): JSX.Element {
+function DemoVoiceSample({ voiceId }: any) {
   const playerRef = useRef(null);
   const [speaking, setSpeaking] = useState(false);
   const [loading, setLoading] = useState(false);

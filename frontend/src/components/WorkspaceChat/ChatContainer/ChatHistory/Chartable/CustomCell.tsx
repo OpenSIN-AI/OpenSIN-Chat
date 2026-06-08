@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-export default function CustomCell({ ...props }: any): JSX.Element {
+export default function CustomCell({ ...props }: any) {
   const { root, depth, x, y, width, height, index, colors, name } = props;
   return (
     <g>

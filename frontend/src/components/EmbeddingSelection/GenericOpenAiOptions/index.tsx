@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
-export default function GenericOpenAiEmbeddingOptions({ settings }: any): JSX.Element {
+export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
   return (
     <div className="w-full flex flex-col gap-y-7">

@@ -4,7 +4,7 @@ import useGetProviderModels, {
 } from "@/hooks/useGetProvidersModels";
 
 export default function ChatModelSelection({
-  provider, setHasChanges, selectedLLMModel, setSelectedLLMModel, }: any): JSX.Element {
+  provider, setHasChanges, selectedLLMModel, setSelectedLLMModel, }: any) {
   const { defaultModels, customModels, loading } =
     useGetProviderModels(provider);
   if (DISABLED_PROVIDERS.includes(provider)) return null;

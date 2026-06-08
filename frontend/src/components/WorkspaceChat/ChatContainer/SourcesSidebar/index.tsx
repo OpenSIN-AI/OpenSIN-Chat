@@ -16,7 +16,7 @@ import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
 // Re-export for backward compat with existing imports
 export { useSourcesSidebar } from "../ChatSidebar";
 
-function getWorkspaceSourceType(doc: any): JSX.Element {
+function getWorkspaceSourceType(doc: any) {
   const metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
   const docpath = doc.docpath || "";
   const filename = doc.filename || "";
@@ -46,7 +46,7 @@ function getWorkspaceSourceType(doc: any): JSX.Element {
   return { type: "document", icon: FileText, label: "Dokument" };
 }
 
-function WorkspaceSourceItem({ doc, onClick }: any): JSX.Element {
+function WorkspaceSourceItem({ doc, onClick }: any) {
   const { type: _type, icon: Icon, label } = getWorkspaceSourceType(doc);
   const metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
 
@@ -72,7 +72,7 @@ function WorkspaceSourceItem({ doc, onClick }: any): JSX.Element {
   );
 }
 
-export default function SourcesSidebar({ workspace }: any): JSX.Element {
+export default function SourcesSidebar({ workspace }: any) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
   const [selectedSource, setSelectedSource] = useState(null);

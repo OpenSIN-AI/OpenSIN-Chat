@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const AgentFlows = {
+const AgentFlows: any = {
   /**
    * Save a flow configuration
    * @param {string} name - Display name of the flow

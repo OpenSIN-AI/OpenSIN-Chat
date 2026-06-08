@@ -7,7 +7,7 @@ import paths from "@/utils/paths";
 import { X } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 
-export default function SlashCommands({ entity }: any): JSX.Element {
+export default function SlashCommands({ entity }: any) {
   const { t } = useTranslation();
   const formRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

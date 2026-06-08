@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-export default function GenericOpenAiSpeechToTextOptions({ settings }: any): JSX.Element {
+export default function GenericOpenAiSpeechToTextOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="flex gap-x-4">

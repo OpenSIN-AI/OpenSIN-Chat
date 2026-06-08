@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const OutlookAgent = {
+const OutlookAgent: any = {
   /**
    * Save Outlook credentials and get the OAuth authorization URL.
    * @param {Object} credentials - The credentials to save

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Gauge } from "@phosphor-icons/react";
 
-export default function NativeTranscriptionOptions({ settings }: any): JSX.Element {
+export default function NativeTranscriptionOptions({ settings }: any) {
   const { t } = useTranslation();
   const [model, setModel] = useState(settings?.WhisperModelPref);
 
@@ -37,7 +37,7 @@ export default function NativeTranscriptionOptions({ settings }: any): JSX.Eleme
   );
 }
 
-function LocalWarning({ model }: any): JSX.Element {
+function LocalWarning({ model }: any) {
   switch (model) {
     case "Xenova/whisper-small":
       return <WhisperSmall />;

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function OpenRouterOptions({ settings }: any): JSX.Element {
+export default function OpenRouterOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-4">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
@@ -27,7 +27,7 @@ export default function OpenRouterOptions({ settings }: any): JSX.Element {
   );
 }
 
-function OpenRouterEmbeddingModelSelection({ settings }: any): JSX.Element {
+function OpenRouterEmbeddingModelSelection({ settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedModel, setSelectedModel] = useState(

@@ -12,7 +12,7 @@ import ServerSTT from "./ServerSTT";
  * @param {(textToAppend: string, autoSubmit: boolean) => void} props.sendCommand - The function to send the command
  * @returns {React.ReactElement|null} The SpeechToText component
  */
-export default function SpeechToText({ sendCommand }: any): JSX.Element {
+export default function SpeechToText({ sendCommand }: any) {
   const [provider, setProvider] = useState(null);
 
   useEffect(() => {

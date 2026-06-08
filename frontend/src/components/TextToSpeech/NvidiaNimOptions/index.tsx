@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
 
-export default function NvidiaNimTTSOptions({ settings }: any): JSX.Element {
+export default function NvidiaNimTTSOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="flex gap-x-4">

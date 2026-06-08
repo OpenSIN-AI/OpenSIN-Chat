@@ -7,7 +7,7 @@ import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 
 export default function SetupProvider({
-  isOpen, closeModal, postSubmit, settings, llmProvider, }: any): JSX.Element {
+  isOpen, closeModal, postSubmit, settings, llmProvider, }: any) {
   if (!isOpen) return null;
 
   async function handleUpdate(e: any) {
@@ -84,7 +84,7 @@ export default function SetupProvider({
   );
 }
 
-export function NoSetupWarning({ showing, onSetupClick }: any): JSX.Element {
+export function NoSetupWarning({ showing, onSetupClick }: any) {
   const { t } = useTranslation();
   if (!showing) return null;
 

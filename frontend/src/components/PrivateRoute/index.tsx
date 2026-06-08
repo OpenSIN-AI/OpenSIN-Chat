@@ -77,7 +77,7 @@ function useIsAuthenticated() {
 
 // Allows only admin to access the route and if in single user mode,
 // allows all users to access the route
-export function AdminRoute({ Component, hideUserMenu = false }: any): JSX.Element {
+export function AdminRoute({ Component, hideUserMenu = false }: any) {
   const { isAuthd, shouldRedirectToOnboarding, multiUserMode } =
     useIsAuthenticated();
   if (isAuthd === null) return <FullScreenLoader />;
@@ -106,7 +106,7 @@ export function AdminRoute({ Component, hideUserMenu = false }: any): JSX.Elemen
 
 // Allows manager and admin to access the route and if in single user mode,
 // allows all users to access the route
-export function ManagerRoute({ Component }: any): JSX.Element {
+export function ManagerRoute({ Component }: any) {
   const { isAuthd, shouldRedirectToOnboarding, multiUserMode } =
     useIsAuthenticated();
   if (isAuthd === null) return <FullScreenLoader />;
@@ -128,7 +128,7 @@ export function ManagerRoute({ Component }: any): JSX.Element {
 }
 
 // Allows access only in single user mode — redirects to home in multi-user mode
-export function SingleUserRoute({ Component }: any): JSX.Element {
+export function SingleUserRoute({ Component }: any) {
   const { isAuthd, shouldRedirectToOnboarding, multiUserMode } =
     useIsAuthenticated();
   if (isAuthd === null) return <FullScreenLoader />;
@@ -146,7 +146,7 @@ export function SingleUserRoute({ Component }: any): JSX.Element {
   );
 }
 
-export default function PrivateRoute({ Component }: any): JSX.Element {
+export default function PrivateRoute({ Component }: any) {
   const { isAuthd, shouldRedirectToOnboarding } = useIsAuthenticated();
   if (isAuthd === null) return <FullScreenLoader />;
 

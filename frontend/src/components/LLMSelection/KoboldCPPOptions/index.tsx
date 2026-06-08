@@ -6,7 +6,7 @@ import { KOBOLDCPP_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 
-export default function KoboldCPPOptions({ settings }: any): JSX.Element {
+export default function KoboldCPPOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -144,7 +144,7 @@ export default function KoboldCPPOptions({ settings }: any): JSX.Element {
   );
 }
 
-function KoboldCPPModelSelection({ settings, basePath = null }: any): JSX.Element {
+function KoboldCPPModelSelection({ settings, basePath = null }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

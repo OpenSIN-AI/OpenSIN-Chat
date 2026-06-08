@@ -6,7 +6,7 @@ import PreLoader from "@/components/Preloader";
 import { DPAIS_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 
-export default function DellProAIStudioOptions({ settings }: any): JSX.Element {
+export default function DellProAIStudioOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -105,7 +105,7 @@ export default function DellProAIStudioOptions({ settings }: any): JSX.Element {
   );
 }
 
-function DellProAiStudioModelSelection({ settings, basePath = null }: any): JSX.Element {
+function DellProAiStudioModelSelection({ settings, basePath = null }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

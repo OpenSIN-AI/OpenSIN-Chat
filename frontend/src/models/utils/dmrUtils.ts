@@ -15,7 +15,7 @@ interface ProgressData {
   message?: string;
 }
 
-const DMRUtils = {
+const DMRUtils: any = {
   /**
    * Download a DMR model.
    * @param modelId - The ID of the model to download.

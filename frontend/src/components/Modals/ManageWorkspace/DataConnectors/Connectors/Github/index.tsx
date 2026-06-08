@@ -171,7 +171,7 @@ export default function GithubOptions() {
   );
 }
 
-function GitHubBranchSelection({ repo, accessToken }: any): JSX.Element {
+function GitHubBranchSelection({ repo, accessToken }: any) {
   const { t } = useTranslation();
   const [allBranches, setAllBranches] = useState(DEFAULT_BRANCHES);
   const [loading, setLoading] = useState(true);
@@ -242,7 +242,7 @@ function GitHubBranchSelection({ repo, accessToken }: any): JSX.Element {
   );
 }
 
-function PATAlert({ accessToken }: any): JSX.Element {
+function PATAlert({ accessToken }: any) {
   const { t } = useTranslation();
   if (!!accessToken) return null;
   return (
@@ -275,7 +275,7 @@ function PATAlert({ accessToken }: any): JSX.Element {
   );
 }
 
-function PATTooltip({ accessToken }: any): JSX.Element {
+function PATTooltip({ accessToken }: any) {
   const { t } = useTranslation();
   if (!!accessToken) return null;
   return (

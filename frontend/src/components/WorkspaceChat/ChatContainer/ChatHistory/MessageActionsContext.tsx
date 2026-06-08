@@ -17,12 +17,12 @@ const MessageActionsContext = createContext<any>(null);
  * Instead of each message registering its own window listener (O(n) listeners),
  * this provider registers just 2 listeners total and dispatches to messages via context.
  */
-export function MessageActionsProvider({ children }: any): JSX.Element {
+export function MessageActionsProvider({ children }: any) {
   const [editingMessage, setEditingMessage] = useState(null);
   const [deletedMessages, setDeletedMessages] = useState(new Set());
 
   useEffect(() => {
-    function handleEditEvent(e: any): JSX.Element {
+    function handleEditEvent(e: any) {
       const { chatId, role } = e.detail;
       if (!chatId || !role) return;
 
@@ -34,7 +34,7 @@ export function MessageActionsProvider({ children }: any): JSX.Element {
       });
     }
 
-    function handleDeleteEvent(e: any): JSX.Element {
+    function handleDeleteEvent(e: any) {
       const { chatId } = e.detail;
       if (!chatId) return;
 

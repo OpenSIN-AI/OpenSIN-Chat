@@ -12,7 +12,7 @@ import {
 import { Tooltip } from "react-tooltip";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 
-export default function LMStudioEmbeddingOptions({ settings }: any): JSX.Element {
+export default function LMStudioEmbeddingOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -200,7 +200,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any): JSX.Element
   );
 }
 
-function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any): JSX.Element {
+function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -56,14 +56,14 @@ function ReportPreviewListener() {
     // from a different origin than the API (VITE_API_BASE is a full URL),
     // rewrite the "/api" prefix to the configured API base so the iframe
     // loads from the API host instead of the frontend origin.
-    function resolveUrl(url: any): JSX.Element {
+    function resolveUrl(url: any) {
       if (!url) return url;
       if (API_BASE !== "/api" && url.startsWith("/api/")) {
         return `${API_BASE}${url.slice(4)}`;
       }
       return url;
     }
-    function onReportPreview(e: any): JSX.Element {
+    function onReportPreview(e: any) {
       if (!e.detail) return;
       openPreview({
         title: e.detail.title || "Bericht",
@@ -84,7 +84,7 @@ function ReportPreviewListener() {
 }
 
 export default function ChatContainer({
-  workspace, threadSlug = null, knownHistory = [], }: any): JSX.Element {
+  workspace, threadSlug = null, knownHistory = [], }: any) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [loadingResponse, setLoadingResponse] = useState(false);
@@ -129,7 +129,7 @@ export default function ChatContainer({
    * @param {string} messageContent - The message content to set
    * @param {'replace' | 'append'} writeMode - Replace current text or append to existing text (default: replace)
    */
-  function setMessageEmit(messageContent: any = "", writeMode: any = "replace"): JSX.Element {
+  function setMessageEmit(messageContent: any = "", writeMode: any = "replace") {
     window.dispatchEvent(
       new CustomEvent(PROMPT_INPUT_EVENT, {
         detail: { messageContent, writeMode },

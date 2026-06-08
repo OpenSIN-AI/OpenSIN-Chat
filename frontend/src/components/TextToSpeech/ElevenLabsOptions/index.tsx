@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function ElevenLabsOptions({ settings }: any): JSX.Element {
+export default function ElevenLabsOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.TTSElevenLabsKey);
   const [elevenLabsKey, setElevenLabsKey] = useState(
     settings?.TTSElevenLabsKey,
@@ -34,7 +34,7 @@ export default function ElevenLabsOptions({ settings }: any): JSX.Element {
   );
 }
 
-function ElevenLabsModelSelection({ apiKey, settings }: any): JSX.Element {
+function ElevenLabsModelSelection({ apiKey, settings }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

@@ -12,7 +12,7 @@ import { baseHeaders } from "@/utils/request";
  * @property {Object|null} user - The user who modified the prompt
  */
 
-const PromptHistory = {
+const PromptHistory: any = {
   /**
    * Get all prompt history for a workspace
    * @param {number} workspaceId - The ID of the workspace

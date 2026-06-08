@@ -8,7 +8,7 @@ import Directory from "./Directory";
 import WorkspaceDirectory from "./WorkspaceDirectory";
 import { useWorkspaceEmbeddingProgress } from "@/EmbeddingProgressContext";
 
-export default function DocumentSettings({ workspace }: any): JSX.Element {
+export default function DocumentSettings({ workspace }: any) {
   const [highlightWorkspace, setHighlightWorkspace] = useState(false);
   const [availableDocs, setAvailableDocs] = useState([]);
   const [loading, setLoading] = useState(true);

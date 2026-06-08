@@ -19,7 +19,7 @@ import { Tooltip } from "react-tooltip";
 import { safeJsonParse } from "@/utils/request";
 
 function Directory({
-  files, setFiles, loading, setLoading, workspace, fetchKeys, selectedItems, setSelectedItems, setHighlightWorkspace, moveToWorkspace, setLoadingMessage, loadingMessage, }: any): JSX.Element {
+  files, setFiles, loading, setLoading, workspace, fetchKeys, selectedItems, setSelectedItems, setHighlightWorkspace, moveToWorkspace, setLoadingMessage, loadingMessage, }: any) {
   const { t } = useTranslation();
   const [amountSelected, setAmountSelected] = useState(0);
   const [showFolderSelection, setShowFolderSelection] = useState(false);
@@ -352,7 +352,7 @@ function DirectoryTooltips() {
       place="bottom"
       delayShow={800}
       className="tooltip invert light:invert-0 z-99 max-w-[300px]"
-      render={({ content }) => {
+      render={({ content }: any) => {
         const data = safeJsonParse(content, null);
         if (!data) return null;
         return (

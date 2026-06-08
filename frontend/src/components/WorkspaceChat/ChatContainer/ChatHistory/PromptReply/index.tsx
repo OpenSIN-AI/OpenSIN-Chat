@@ -53,7 +53,7 @@ const PromptReply: any = ({ uuid, reply, pending, error, sources = [] }: any) =>
   );
 };
 
-function RenderAssistantChatContent({ message, messageId }: any): JSX.Element {
+function RenderAssistantChatContent({ message, messageId }: any) {
   const contentRef = useRef("");
   const thoughtChainRef = useRef(null);
 

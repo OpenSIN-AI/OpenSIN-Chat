@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-export default function PreLoader({ size = "16" }: any): JSX.Element {
+export default function PreLoader({ size = "16" }: any) {
   return (
     <div
       className={`h-${size} w-${size} animate-spin rounded-full border-4 border-solid border-primary border-t-transparent`}

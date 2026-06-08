@@ -6,7 +6,7 @@ import {
 } from "../../ChatHistory/Citation";
 import { useTranslation } from "react-i18next";
 
-export default function SourceItem({ source, onClick }: any): JSX.Element {
+export default function SourceItem({ source, onClick }: any) {
   const { t } = useTranslation();
   const info = parseChunkSource(source);
   const customImage = getCustomImage(info?.icon);

@@ -19,7 +19,7 @@ import { useIsAgentSessionActive } from "@/utils/chat/agent";
 const MIN_ITEMS_TO_SHOW_SEARCH: any = 10;
 
 export default function AgentSkillsTab({
-  highlightedIndex = -1, registerItemCount, workspace, }: any): JSX.Element {
+  highlightedIndex = -1, registerItemCount, workspace, }: any) {
   const { t } = useTranslation();
   const { showAgentCommand = true } = workspace ?? {};
   const agentSessionActive = useIsAgentSessionActive();
@@ -79,22 +79,22 @@ export default function AgentSkillsTab({
   });
 
   // Section expansion helpers
-  function isSectionExpanded(sectionId: any): JSX.Element {
+  function isSectionExpanded(sectionId: any) {
     return !!(searchQuery.trim() || expandedSections[sectionId]);
   }
 
-  function toggleSection(sectionId: any): JSX.Element {
+  function toggleSection(sectionId: any) {
     setExpandedSections((prev) => ({
       ...prev,
       [sectionId]: !prev[sectionId],
     }));
   }
 
-  function isSubSectionExpanded(subSectionId: any): JSX.Element {
+  function isSubSectionExpanded(subSectionId: any) {
     return !!(searchQuery.trim() || expandedSubSections[subSectionId]);
   }
 
-  function toggleSubSection(subSectionId: any): JSX.Element {
+  function toggleSubSection(subSectionId: any) {
     setExpandedSubSections((prev) => ({
       ...prev,
       [subSectionId]: !prev[subSectionId],
@@ -268,7 +268,7 @@ export default function AgentSkillsTab({
   );
 }
 
-function SearchInput({ value, onChange, placeholder }: any): JSX.Element {
+function SearchInput({ value, onChange, placeholder }: any) {
   return (
     <div className="relative shrink-0">
       <MagnifyingGlass

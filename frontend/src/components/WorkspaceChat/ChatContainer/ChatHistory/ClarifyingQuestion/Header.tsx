@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const NAV_BUTTON_CLASS =
   "border-none p-0 flex items-center justify-center text-white/70 light:text-slate-700 hover:text-white light:hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed";
 
-function QuestionText({ children }: any): JSX.Element {
+function QuestionText({ children }: any) {
   return (
     <p className="flex-1 min-w-0 text-white light:text-slate-900 text-sm font-medium leading-5 break-words">
       {children}
@@ -13,7 +13,7 @@ function QuestionText({ children }: any): JSX.Element {
   );
 }
 
-function PaginationControls({ index, total, onPrev, onNext, isFirst, isLast }: any): JSX.Element {
+function PaginationControls({ index, total, onPrev, onNext, isFirst, isLast }: any) {
   const { t } = useTranslation();
   return (
     <div className="flex items-center gap-2 shrink-0">
@@ -45,7 +45,7 @@ function PaginationControls({ index, total, onPrev, onNext, isFirst, isLast }: a
   );
 }
 
-function CloseButton({ disabled, onClick }: any): JSX.Element {
+function CloseButton({ disabled, onClick }: any) {
   const { t } = useTranslation();
   return (
     <button
@@ -66,7 +66,7 @@ function CloseButton({ disabled, onClick }: any): JSX.Element {
  * surveys and after the user has responded.
  */
 export default function Header({
-  question, index, total, isSingle, responded, onPrev, onNext, onClose, isFirst, isLast, }: any): JSX.Element {
+  question, index, total, isSingle, responded, onPrev, onNext, onClose, isFirst, isLast, }: any) {
   const showPagination = !isSingle && !responded;
 
   return (

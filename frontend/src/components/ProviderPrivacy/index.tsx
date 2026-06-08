@@ -7,7 +7,7 @@ import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
 import { Link } from "react-router-dom";
 import { titleCase, sentenceCase } from "text-case";
 
-function defaultProvider(providerString: any): JSX.Element {
+function defaultProvider(providerString: any) {
   return {
     name: providerString
       ? titleCase(sentenceCase(String(providerString)))
@@ -72,7 +72,7 @@ export default function ProviderPrivacy() {
   );
 }
 
-function ProviderPrivacyItem({ title, provider, altText }: any): JSX.Element {
+function ProviderPrivacyItem({ title, provider, altText }: any) {
   return (
     <div className="flex flex-col items-start gap-y-3 pb-4 border-b border-theme-sidebar-border">
       <div className="text-theme-text-primary text-base font-bold">{title}</div>

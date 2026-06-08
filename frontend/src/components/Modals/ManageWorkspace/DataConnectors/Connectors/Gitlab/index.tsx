@@ -197,7 +197,7 @@ export default function GitlabOptions() {
   );
 }
 
-function GitLabBranchSelection({ repo, accessToken }: any): JSX.Element {
+function GitLabBranchSelection({ repo, accessToken }: any) {
   const { t } = useTranslation();
   const [allBranches, setAllBranches] = useState(DEFAULT_BRANCHES);
   const [loading, setLoading] = useState(true);
@@ -270,7 +270,7 @@ function GitLabBranchSelection({ repo, accessToken }: any): JSX.Element {
   );
 }
 
-function PATAlert({ accessToken }: any): JSX.Element {
+function PATAlert({ accessToken }: any) {
   const { t } = useTranslation();
   if (!!accessToken) return null;
   return (
@@ -302,7 +302,7 @@ function PATAlert({ accessToken }: any): JSX.Element {
   );
 }
 
-function PATTooltip({ accessToken }: any): JSX.Element {
+function PATTooltip({ accessToken }: any) {
   const { t } = useTranslation();
   if (!!accessToken) return null;
   return (

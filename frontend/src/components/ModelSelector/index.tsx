@@ -9,7 +9,7 @@ import RouterSelection from "@/pages/WorkspaceSettings/ChatSettings/WorkspaceLLM
 const FREE_FORM_LLM_SELECTION = ["bedrock", "azure"];
 const NO_MODEL_SELECTION = ["default", "huggingface", "openafd-router"];
 
-function FreeFormLLMInput({ workspace, setHasChanges }: any): JSX.Element {
+function FreeFormLLMInput({ workspace, setHasChanges }: any) {
   const { t } = useTranslation();
   return (
     <div className="mt-4 flex flex-col gap-y-1">
@@ -30,7 +30,7 @@ function FreeFormLLMInput({ workspace, setHasChanges }: any): JSX.Element {
 }
 
 export default function ModelSelector({
-  selectedLLM, workspace, setHasChanges, ModelSelectionComponent = ChatModelSelection, }: any): JSX.Element {
+  selectedLLM, workspace, setHasChanges, ModelSelectionComponent = ChatModelSelection, }: any) {
   if (selectedLLM === "openafd-router") {
     return (
       <RouterSelection workspace={workspace} setHasChanges={setHasChanges} />

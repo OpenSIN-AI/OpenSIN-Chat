@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function DeepSeekOptions({ settings }: any): JSX.Element {
+export default function DeepSeekOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.DeepSeekApiKey);
   const [deepSeekApiKey, setDeepSeekApiKey] = useState(
     settings?.DeepSeekApiKey,
@@ -34,7 +34,7 @@ export default function DeepSeekOptions({ settings }: any): JSX.Element {
   );
 }
 
-function DeepSeekModelSelection({ apiKey, settings }: any): JSX.Element {
+function DeepSeekModelSelection({ apiKey, settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -40,7 +40,7 @@ const HistoricalMessage = ({
   metrics = {},
   outputs = [],
   clarifyingQuestions = [],
-}) => {
+}: any) => {
   // Freeze uuid on first render. User messages arrive without a uuid and this value
   // is used as the wrapper div's `key` — a default param fallback would regenerate
   // on every render and remount the subtree, wiping TruncatableContent state.
@@ -241,7 +241,7 @@ export default memo(
  * Currently only renders image attachments as clickable thumbnails that open in the lightbox.
  * Other attachment types may be supported here in the future.
  */
-function ChatAttachments({ attachments = [] }: any): JSX.Element {
+function ChatAttachments({ attachments = [] }: any) {
   if (!attachments.length) return null;
   return (
     <div className="flex flex-wrap gap-4 mt-4">
@@ -263,7 +263,7 @@ function ChatAttachments({ attachments = [] }: any): JSX.Element {
   );
 }
 
-function TruncatableContent({ children }: any): JSX.Element {
+function TruncatableContent({ children }: any) {
   const contentRef = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -320,7 +320,7 @@ function TruncatableContent({ children }: any): JSX.Element {
 }
 
 const RenderChatContent = memo(
-  ({ role, message, messageId }) => {
+  ({ role, message, messageId }: any) => {
     // If the message is not from the assistant, we can render it directly
     // as normal since the user cannot think (lol)
     if (role !== "assistant")

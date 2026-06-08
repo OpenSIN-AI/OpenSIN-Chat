@@ -15,7 +15,7 @@ interface ProgressData {
   message?: string;
 }
 
-const LemonadeUtils = {
+const LemonadeUtils: any = {
   /**
    * Download a Lemonade model.
    * @param modelId - The ID of the model to download.

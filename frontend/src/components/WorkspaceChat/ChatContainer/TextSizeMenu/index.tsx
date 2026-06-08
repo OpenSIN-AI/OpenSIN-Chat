@@ -5,7 +5,7 @@ import useLoginMode from "@/hooks/useLoginMode";
 import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 
-function getTextSizes(t: any): JSX.Element {
+function getTextSizes(t: any) {
   return [
     { key: "small", label: t("chat_window.small"), textClass: "text-xs" },
     { key: "normal", label: t("chat_window.normal"), textClass: "text-sm" },
@@ -26,7 +26,7 @@ export default function TextSizeMenu() {
 
   useEffect(() => {
     if (!showMenu) return;
-    function handleClickOutside(e): JSX.Element {
+    function handleClickOutside(e) {
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&
@@ -40,7 +40,7 @@ export default function TextSizeMenu() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showMenu]);
 
-  function handleTextSizeChange(size: any): JSX.Element {
+  function handleTextSizeChange(size: any) {
     setSelectedSize(size);
     window.localStorage.setItem("openafd_text_size", size);
     window.dispatchEvent(new CustomEvent("textSizeChange", { detail: size }));
@@ -82,7 +82,7 @@ export default function TextSizeMenu() {
           <p className="text-[10px] font-medium text-zinc-400 light:text-slate-500 px-2 mb-0.5">
             {t("chat_window.text_size_label")}
           </p>
-          {TEXT_SIZES.map(({ key, label, textClass }) => (
+          {TEXT_SIZES.map(({ key, label, textClass }: any) => (
             <div
               key={key}
               onClick={() => handleTextSizeChange(key)}

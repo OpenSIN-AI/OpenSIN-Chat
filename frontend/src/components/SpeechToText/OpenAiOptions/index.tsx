@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import System from "@/models/system";
 
-export default function OpenAiSpeechToTextOptions({ settings }: any): JSX.Element {
+export default function OpenAiSpeechToTextOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.OpenAiKey);
   const [openAIKey, setOpenAIKey] = useState(settings?.OpenAiKey);
 
@@ -30,7 +30,7 @@ export default function OpenAiSpeechToTextOptions({ settings }: any): JSX.Elemen
   );
 }
 
-function OpenAiSttModelSelection({ apiKey, settings }: any): JSX.Element {
+function OpenAiSttModelSelection({ apiKey, settings }: any) {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

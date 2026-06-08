@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-export default function OpencodeZenOptions({ settings }: any): JSX.Element {
+export default function OpencodeZenOptions({ settings }: any) {
   return (
     <div className="flex flex-col gap-y-7">
       <div className="flex gap-[36px] mt-1.5 flex-wrap">

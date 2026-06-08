@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function GroqAiOptions({ settings }: any): JSX.Element {
+export default function GroqAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.GroqApiKey);
   const [apiKey, setApiKey] = useState(settings?.GroqApiKey);
 
@@ -33,7 +33,7 @@ export default function GroqAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function GroqAIModelSelection({ apiKey, settings }: any): JSX.Element {
+function GroqAIModelSelection({ apiKey, settings }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

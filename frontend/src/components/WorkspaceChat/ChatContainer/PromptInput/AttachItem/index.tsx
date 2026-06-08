@@ -18,7 +18,7 @@ import AddSourceMenu from "./AddSourceMenu";
  * @returns
  */
 export default function AttachItem({
-  workspaceSlug = null, workspaceThreadSlug = null, }: any): JSX.Element {
+  workspaceSlug = null, workspaceThreadSlug = null, }: any) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const params = useParams();
@@ -40,7 +40,7 @@ export default function AttachItem({
     if (isEmbedding) return;
     setIsLoading(true);
     Workspace.getParsedFiles(slug, threadSlug)
-      .then(({ files, contextWindow, currentContextTokenCount }) => {
+      .then(({ files, contextWindow, currentContextTokenCount }: any) => {
         setFiles(files);
         setShowTooltip(files.length > 0);
         setContextWindow(contextWindow);
@@ -68,7 +68,7 @@ export default function AttachItem({
    * @param {MouseEvent} e - The click event.
    * @returns {void}
    */
-  function handleClick(e: any): JSX.Element {
+  function handleClick(e: any) {
     e?.target?.blur();
     setShowMenu((prev) => !prev);
     return;
@@ -84,7 +84,7 @@ export default function AttachItem({
 
   useEffect(() => {
     if (!showMenu) return;
-    function handleClickOutside(e: any): JSX.Element {
+    function handleClickOutside(e: any) {
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&

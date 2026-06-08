@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const Telegram = {
+const Telegram: any = {
   /**
    * Get the current Telegram bot configuration.
    * @returns {Promise<{config: object|null, error: string|null}>}

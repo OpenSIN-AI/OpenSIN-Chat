@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 import { useSourcesSidebar } from "../../ChatSidebar";
 
-export default function SourcesRow({ onClose }: any): JSX.Element {
+export default function SourcesRow({ onClose }: any) {
   const { t } = useTranslation();
   const { sidebarOpen, closeSidebar, openSidebar } = useSourcesSidebar();
 

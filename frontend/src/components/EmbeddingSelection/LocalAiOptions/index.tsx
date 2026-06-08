@@ -7,7 +7,7 @@ import { LOCALAI_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { Tooltip } from "react-tooltip";
 
-export default function LocalAiOptions({ settings }: any): JSX.Element {
+export default function LocalAiOptions({ settings }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -211,7 +211,7 @@ export default function LocalAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function LocalAIModelSelection({ settings, apiKey = null, basePath = null }: any): JSX.Element {
+function LocalAIModelSelection({ settings, apiKey = null, basePath = null }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

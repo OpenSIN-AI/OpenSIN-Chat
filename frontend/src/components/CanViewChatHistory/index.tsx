@@ -9,7 +9,7 @@ import paths from "@/utils/paths";
  * If the user cannot view chat history, they are redirected to the home page.
  * @param {React.ReactNode} children
  */
-export function CanViewChatHistory({ children }: any): JSX.Element {
+export function CanViewChatHistory({ children }: any) {
   const { loading, viewable } = useCanViewChatHistory();
   if (loading) return <FullScreenLoader />;
   if (!viewable) {
@@ -24,7 +24,7 @@ export function CanViewChatHistory({ children }: any): JSX.Element {
  * Provides the `viewable` state to the children.
  * @returns {React.ReactNode}
  */
-export function CanViewChatHistoryProvider({ children }: any): JSX.Element {
+export function CanViewChatHistoryProvider({ children }: any) {
   const { loading, viewable } = useCanViewChatHistory();
   if (loading) return null;
   return <>{children({ viewable })}</>;

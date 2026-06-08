@@ -7,7 +7,7 @@ import { isPathMatch } from "@/utils/paths";
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 
 export default function MenuOption({
-  btnText, icon, href, childOptions = [], flex = false, user = null, roles = [], hidden = false, isChild = false, }: any): JSX.Element {
+  btnText, icon, href, childOptions = [], flex = false, user = null, roles = [], hidden = false, isChild = false, }: any) {
   const storageKey = generateStorageKey({ key: btnText });
   const location = useLocation();
   const hasChildren = childOptions.length > 0;
@@ -125,7 +125,7 @@ export default function MenuOption({
 }
 
 function useIsExpanded({
-  storageKey = "", hasVisibleChildren = false, childOptions = [], location = null, }: any): JSX.Element {
+  storageKey = "", hasVisibleChildren = false, childOptions = [], location = null, }: any) {
   const [isExpanded, setIsExpanded] = useState(() => {
     if (hasVisibleChildren) {
       const storedValue = localStorage.getItem(storageKey);
@@ -161,11 +161,11 @@ function useIsExpanded({
  * @param {array} childOptions - The child options.
  * @returns {boolean} - True if the child options are visible, false otherwise.
  */
-function hasVisibleOptions(user: any = null, childOptions: any = []): JSX.Element {
+function hasVisibleOptions(user: any = null, childOptions: any = []) {
   if (!Array.isArray(childOptions) || childOptions?.length === 0) return false;
 
   function isVisible({
-    roles = [], user = null, flex = false, hidden = false, }: any): JSX.Element {
+    roles = [], user = null, flex = false, hidden = false, }: any) {
     if (hidden) return false;
     if (!flex && !roles.includes(user?.role)) return false;
     if (flex && !!user && !roles.includes(user?.role)) return false;
@@ -177,7 +177,7 @@ function hasVisibleOptions(user: any = null, childOptions: any = []): JSX.Elemen
   );
 }
 
-function generateStorageKey({ key = "" }: any): JSX.Element {
+function generateStorageKey({ key = "" }: any) {
   const _key = key.replace(/\s+/g, "_").toLowerCase();
   return `anything_llm_menu_${_key}_expanded`;
 }

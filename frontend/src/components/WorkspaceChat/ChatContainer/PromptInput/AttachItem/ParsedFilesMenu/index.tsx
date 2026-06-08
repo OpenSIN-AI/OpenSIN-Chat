@@ -9,7 +9,7 @@ import { PARSED_FILE_ATTACHMENT_REMOVED_EVENT } from "../../../DnDWrapper";
 import useUser from "@/hooks/useUser";
 
 export default function ParsedFilesMenu({
-  onEmbeddingChange, tooltipRef, files, setFiles, currentTokens, setCurrentTokens, contextWindow, isLoading, workspaceSlug, threadSlug = null, }: any): JSX.Element {
+  onEmbeddingChange, tooltipRef, files, setFiles, currentTokens, setCurrentTokens, contextWindow, isLoading, workspaceSlug, threadSlug = null, }: any) {
   const { user } = useUser();
   const canEmbed = !user || user.role !== "default";
   const initialContextWindowLimitExceeded =

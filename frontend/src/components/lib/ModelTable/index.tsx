@@ -105,7 +105,7 @@ export default function ModelTable({
   );
 }
 
-function DeviceTypeTagWrapper({ text, bgClass, textClass }: any): JSX.Element {
+function DeviceTypeTagWrapper({ text, bgClass, textClass }: any) {
   return (
     <div
       className={
@@ -122,7 +122,7 @@ function DeviceTypeTagWrapper({ text, bgClass, textClass }: any): JSX.Element {
  * @param {{deviceType: ModelDefinition["deviceType"]}} deviceType
  * @returns {React.ReactNode}
  */
-function DeviceTypeTag({ deviceType }: any): JSX.Element {
+function DeviceTypeTag({ deviceType }: any) {
   switch (deviceType?.toLowerCase()) {
     case "cpu":
       return (
@@ -331,7 +331,7 @@ function ModelRow({
   );
 }
 
-function RenderStatus({ model, isActiveModel }: any): JSX.Element {
+function RenderStatus({ model, isActiveModel }: any) {
   if (isActiveModel) {
     return (
       <div className="flex items-center justify-center gap-x-[10px] whitespace-nowrap">

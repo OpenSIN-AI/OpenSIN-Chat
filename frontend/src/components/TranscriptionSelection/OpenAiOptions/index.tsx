@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 
-export default function OpenAiWhisperOptions({ settings }: any): JSX.Element {
+export default function OpenAiWhisperOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.OpenAiKey);
   const [_openAIKey, setOpenAIKey] = useState(settings?.OpenAiKey);
 

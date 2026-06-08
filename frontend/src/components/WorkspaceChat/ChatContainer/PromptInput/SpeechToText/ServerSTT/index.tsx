@@ -22,7 +22,7 @@ const MIME_CANDIDATES = [
  * @param {(textToAppend: string, autoSubmit: boolean) => void} props.sendCommand - The function to send the command
  * @returns {React.ReactElement} The ServerSTT component
  */
-export default function ServerSTT({ sendCommand }: any): JSX.Element {
+export default function ServerSTT({ sendCommand }: any) {
   const { t } = useTranslation();
   const [listening, setListening] = useState(false);
   const [processing, setProcessing] = useState(false);

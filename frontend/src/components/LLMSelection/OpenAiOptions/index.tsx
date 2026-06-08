@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function OpenAiOptions({ settings }: any): JSX.Element {
+export default function OpenAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.OpenAiKey);
   const [openAIKey, setOpenAIKey] = useState(settings?.OpenAiKey);
 
@@ -32,7 +32,7 @@ export default function OpenAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function OpenAIModelSelection({ apiKey, settings }: any): JSX.Element {
+function OpenAIModelSelection({ apiKey, settings }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

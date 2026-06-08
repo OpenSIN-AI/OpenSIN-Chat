@@ -13,7 +13,7 @@ export default function ChatSettingsMenu() {
 
   useEffect(() => {
     if (!showMenu) return;
-    function handleClickOutside(e): JSX.Element {
+    function handleClickOutside(e) {
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&

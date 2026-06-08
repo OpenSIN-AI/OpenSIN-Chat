@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import useTimeoutProgress from "@/hooks/useTimeoutProgress";
 
 export default function ToolApprovalRequest({
-  requestId, skillName, payload = {}, description = null, timeoutMs = null, websocket, onResponse, }: any): JSX.Element {
+  requestId, skillName, payload = {}, description = null, timeoutMs = null, websocket, onResponse, }: any) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [responded, setResponded] = useState(false);
   const [approved, setApproved] = useState(null);
@@ -100,7 +100,7 @@ export default function ToolApprovalRequest({
 }
 
 function ToolApprovalHeader({
-  skillName, hasPayload, isExpanded, setIsExpanded, }: any): JSX.Element {
+  skillName, hasPayload, isExpanded, setIsExpanded, }: any) {
   const { t } = useTranslation();
   return (
     <div className="flex w-full items-center justify-between">
@@ -128,11 +128,11 @@ function ToolApprovalHeader({
   );
 }
 
-function ToolApprovalPayload({ payload, isExpanded }: any): JSX.Element {
+function ToolApprovalPayload({ payload, isExpanded }: any) {
   const hasPayload: any = payload && Object.keys(payload).length > 0;
   if (!hasPayload || !isExpanded) return null;
 
-  function formatPayload(data): JSX.Element {
+  function formatPayload(data) {
     if (typeof data === "string") return data;
     try {
       return JSON.stringify(data, null, 2);
@@ -151,7 +151,7 @@ function ToolApprovalPayload({ payload, isExpanded }: any): JSX.Element {
 }
 
 function ToolApprovalResponseOption({
-  approved, skillName, alwaysAllow, setAlwaysAllow, onApprove, onReject, }: any): JSX.Element {
+  approved, skillName, alwaysAllow, setAlwaysAllow, onApprove, onReject, }: any) {
   const { t } = useTranslation();
   if (approved !== null) return null;
 
@@ -188,7 +188,7 @@ function ToolApprovalResponseOption({
   );
 }
 
-function ToolApprovalResponseMessage({ approved }: any): JSX.Element {
+function ToolApprovalResponseMessage({ approved }: any) {
   const { t } = useTranslation();
 
   if (approved === null) return null;

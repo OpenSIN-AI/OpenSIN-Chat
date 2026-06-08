@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 export default function MoveToFolderIcon({
-  className, width = 18, height = 18, }: any): JSX.Element {
+  className, width = 18, height = 18, }: any) {
   return (
     <svg
       width={width}

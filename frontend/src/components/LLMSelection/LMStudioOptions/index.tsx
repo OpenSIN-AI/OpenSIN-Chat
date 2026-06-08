@@ -13,7 +13,7 @@ import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { Tooltip } from "react-tooltip";
 
-export default function LMStudioOptions({ settings, showAlert = false }: any): JSX.Element {
+export default function LMStudioOptions({ settings, showAlert = false }: any) {
   const {
     autoDetecting: loading,
     basePath,
@@ -225,7 +225,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any): J
   );
 }
 
-function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any): JSX.Element {
+function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

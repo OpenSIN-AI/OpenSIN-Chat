@@ -2,7 +2,7 @@
 import System from "@/models/system";
 import { useState, useEffect } from "react";
 
-export default function PerplexityOptions({ settings }: any): JSX.Element {
+export default function PerplexityOptions({ settings }: any) {
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
@@ -27,7 +27,7 @@ export default function PerplexityOptions({ settings }: any): JSX.Element {
   );
 }
 
-function PerplexityModelSelection({ settings }: any): JSX.Element {
+function PerplexityModelSelection({ settings }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

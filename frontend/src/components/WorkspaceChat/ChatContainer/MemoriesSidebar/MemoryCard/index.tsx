@@ -4,7 +4,7 @@ import { DotsThreeVertical } from "@phosphor-icons/react";
 import { useMemoriesContext, LIMITS } from "../MemoriesContext";
 import CardMenu from "./CardMenu";
 
-export default function MemoryCard({ memory }: any): JSX.Element {
+export default function MemoryCard({ memory }: any) {
   const {
     activeTab,
     memories,
@@ -20,7 +20,7 @@ export default function MemoryCard({ memory }: any): JSX.Element {
 
   useEffect(() => {
     if (!menuOpen) return;
-    function handleClickOutside(e): JSX.Element {
+    function handleClickOutside(e) {
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&

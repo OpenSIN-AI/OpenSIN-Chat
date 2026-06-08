@@ -2,7 +2,7 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-const ScheduledJobs = {
+const ScheduledJobs: any = {
   list: async function () {
     return await fetch(`${API_BASE}/scheduled-jobs`, {
       headers: baseHeaders(),

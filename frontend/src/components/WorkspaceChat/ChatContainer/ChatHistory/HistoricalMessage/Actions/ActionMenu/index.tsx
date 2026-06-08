@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Trash, DotsThreeVertical, TreeView } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
-function ActionMenu({ chatId, forkThread, isEditing, role }: any): JSX.Element {
+function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);

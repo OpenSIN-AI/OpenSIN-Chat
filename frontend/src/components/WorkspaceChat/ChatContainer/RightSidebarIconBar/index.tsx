@@ -68,7 +68,7 @@ export default function RightSidebarIconBar() {
 
   return (
     <div className="flex flex-col items-center gap-1 py-3 px-1 bg-zinc-900 light:bg-white border-l border-zinc-800 light:border-slate-200 h-full flex-shrink-0 w-[44px]">
-      {icons.map(({ id, icon: Icon, label, action, isClose }) => {
+      {icons.map(({ id, icon: Icon, label, action, isClose }: any) => {
         const isActive = !isClose && activeSidebar === id;
         return (
           <div key={id}>

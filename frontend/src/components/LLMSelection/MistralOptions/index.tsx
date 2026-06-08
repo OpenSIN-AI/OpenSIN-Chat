@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function MistralOptions({ settings }: any): JSX.Element {
+export default function MistralOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.MistralApiKey);
   const [mistralKey, setMistralKey] = useState(settings?.MistralApiKey);
 
@@ -32,7 +32,7 @@ export default function MistralOptions({ settings }: any): JSX.Element {
   );
 }
 
-function MistralModelSelection({ apiKey, settings }: any): JSX.Element {
+function MistralModelSelection({ apiKey, settings }: any) {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

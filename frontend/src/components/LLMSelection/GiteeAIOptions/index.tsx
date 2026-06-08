@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import System from "@/models/system";
 
-export default function GiteeAIOptions({ settings }: any): JSX.Element {
+export default function GiteeAIOptions({ settings }: any) {
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
@@ -45,7 +45,7 @@ export default function GiteeAIOptions({ settings }: any): JSX.Element {
   );
 }
 
-function GiteeAIModelSelection({ settings }: any): JSX.Element {
+function GiteeAIModelSelection({ settings }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

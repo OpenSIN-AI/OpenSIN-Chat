@@ -8,7 +8,7 @@ import { X, CaretRight } from "@phosphor-icons/react";
 import { BLOCK_INFO } from "@/pages/Admin/AgentBuilder/BlockList";
 import { Link } from "react-router-dom";
 
-export default function AgentFlows({ entity }: any): JSX.Element {
+export default function AgentFlows({ entity }: any) {
   const { t } = useTranslation();
   const formRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

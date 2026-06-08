@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import System from "@/models/system";
 
-export default function NativeEmbeddingOptions({ settings }: any): JSX.Element {
+export default function NativeEmbeddingOptions({ settings }: any) {
   const [loading, setLoading] = useState(true);
   const [availableModels, setAvailableModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState(
@@ -13,7 +13,7 @@ export default function NativeEmbeddingOptions({ settings }: any): JSX.Element {
 
   useEffect(() => {
     System.customModels("native-embedder")
-      .then(({ models }) => {
+      .then(({ models }: any) => {
         if (models?.length > 0) {
           setAvailableModels(models);
           const _selectedModel =

@@ -2,7 +2,7 @@
 import System from "@/models/system";
 import { useState, useEffect } from "react";
 
-export default function TogetherAiOptions({ settings }: any): JSX.Element {
+export default function TogetherAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.TogetherAiApiKey);
   const [apiKey, setApiKey] = useState(settings?.TogetherAiApiKey);
 
@@ -32,7 +32,7 @@ export default function TogetherAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function TogetherAiModelSelection({ settings, apiKey }: any): JSX.Element {
+function TogetherAiModelSelection({ settings, apiKey }: any) {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

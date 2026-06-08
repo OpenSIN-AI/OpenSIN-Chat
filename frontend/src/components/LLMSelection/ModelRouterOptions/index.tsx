@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import ModelRouter from "@/models/modelRouter";
 
-export default function ModelRouterOptions({ settings }: any): JSX.Element {
+export default function ModelRouterOptions({ settings }: any) {
   const { t } = useTranslation();
   const [routers, setRouters] = useState([]);
   const [loading, setLoading] = useState(true);

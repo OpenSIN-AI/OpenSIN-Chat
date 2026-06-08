@@ -4,7 +4,7 @@ import { Tooltip as RechartsTooltip } from "recharts";
 // Given a hex, convert to the opposite highest-contrast color
 // and if `bw` is enabled, force it to be black/white to normalize
 // interface.
-function invertColor(hex: any, bw: any): JSX.Element {
+function invertColor(hex: any, bw: any) {
   if (hex.indexOf("#") === 0) {
     hex = hex.slice(1);
   }
@@ -31,13 +31,13 @@ function invertColor(hex: any, bw: any): JSX.Element {
   return "#" + padZero(r) + padZero(g) + padZero(b);
 }
 
-function padZero(str: any, len: any): JSX.Element {
+function padZero(str: any, len: any) {
   len = len || 2;
   var zeros = new Array(len).join("0");
   return (zeros + str).slice(-len);
 }
 
-export default function Tooltip({ legendColor, ...props }: any): JSX.Element {
+export default function Tooltip({ legendColor, ...props }: any) {
   return (
     <RechartsTooltip
       wrapperStyle={{ outline: "none" }}
@@ -45,7 +45,7 @@ export default function Tooltip({ legendColor, ...props }: any): JSX.Element {
       cursor={{ fill: "#d1d5db", opacity: "0.15" }}
       position={{ y: 0 }}
       {...props}
-      content={({ active, payload, label }) => {
+      content={({ active, payload, label }: any) => {
         return active && payload ? (
           <div className="bg-theme-bg-primary text-sm rounded-md border shadow-lg">
             <div className="border-b py-2 px-4">

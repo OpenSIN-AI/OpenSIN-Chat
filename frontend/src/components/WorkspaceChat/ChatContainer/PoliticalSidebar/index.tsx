@@ -12,7 +12,7 @@ import { API_BASE } from "@/utils/constants";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import ChatSidebar, { usePoliticalSidebar } from "../ChatSidebar";
 
-function Section({ title, loading, error, onRetry, retryLabel, children }: any): JSX.Element {
+function Section({ title, loading, error, onRetry, retryLabel, children }: any) {
   return (
     <div className="flex flex-col gap-2">
       <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400">

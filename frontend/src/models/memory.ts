@@ -14,7 +14,7 @@ import { baseHeaders } from "@/utils/request";
  * @property {string} updatedAt
  */
 
-const Memory = {
+const Memory: any = {
   /**
    * Fetch all memories (global + workspace) for a workspace.
    * @param {string} slug

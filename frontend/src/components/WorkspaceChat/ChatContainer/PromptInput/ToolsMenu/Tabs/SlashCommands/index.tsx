@@ -13,7 +13,7 @@ import useToolsMenuItems from "../../useToolsMenuItems";
 import SlashCommandRow from "./SlashCommandRow";
 
 export default function SlashCommandsTab({
-  sendCommand, setShowing, promptRef, highlightedIndex = -1, registerItemCount, }: any): JSX.Element {
+  sendCommand, setShowing, promptRef, highlightedIndex = -1, registerItemCount, }: any) {
   const { t } = useTranslation();
   const {
     isOpen: isAddModalOpen,

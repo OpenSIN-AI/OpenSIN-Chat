@@ -5,7 +5,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { CMD_REGEX } from "./constants";
 import { useTranslation } from "react-i18next";
 
-export default function AddPresetModal({ isOpen, onClose, onSave }: any): JSX.Element {
+export default function AddPresetModal({ isOpen, onClose, onSave }: any) {
   const [command, setCommand] = useState("");
   const { t } = useTranslation();
 
