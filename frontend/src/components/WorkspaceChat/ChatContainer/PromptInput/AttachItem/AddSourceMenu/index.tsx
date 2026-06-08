@@ -237,20 +237,58 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
   const inputRef = useRef(null);
   const [link, setLink] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
+  function isValidUrl(value) {
+    // Auto-add protocol if missing
+    let candidate = value;
+    if (!/^https?:\/\//i.test(candidate)) {
+      candidate = "https://" + candidate;
+    }
+    try {
+      const url = new URL(candidate);
+      // Reject anything that isn't http(s)
+      if (!/^https?:$/.test(url.protocol)) return null;
+      return url.toString();
+    } catch {
+      return null;
+    }
+  }
 
   async function handleSubmit(e) {
     e.preventDefault();
     const trimmed = link.trim();
     if (!trimmed || submitting) return;
     if (!workspaceSlug) {
-      showToast(t("chat_window.attach_menu.no_workspace"), "error");
+      const msg = t("chat_window.attach_menu.no_workspace");
+      setError(msg);
+      showToast(msg, "error");
       return;
     }
+
+    // ==========================================
+    // <-- VERBESSERUNG: Client-seitige URL-Validierung
+    // ==========================================
+    if (!trimmed.includes(".") && !trimmed.includes("localhost")) {
+      const msg = "Bitte gib eine vollständige Web-Adresse ein (z.B. example.com).";
+      setError(msg);
+      showToast(msg, "error");
+      return;
+    }
+    const normalizedUrl = isValidUrl(trimmed);
+    if (!normalizedUrl) {
+      const msg = "Ungültige URL. Bitte prüfe das Format (z.B. https://example.com).";
+      setError(msg);
+      showToast(msg, "error");
+      return;
+    }
+
     setSubmitting(true);
+    setError("");
 
     // Snapshot existing docpaths so we can detect the freshly scraped document.
     const before = new Set(
@@ -259,14 +297,19 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
 
     const { response, data } = await Workspace.uploadLink(
       workspaceSlug,
-      trimmed,
+      normalizedUrl,
     );
     if (!response.ok) {
       setSubmitting(false);
-      showToast(
-        data?.error || t("chat_window.attach_menu.url_failed"),
-        "error",
-      );
+      // ==========================================
+      // <-- VERBESSERUNG: Besseres Error-Handling
+      // ==========================================
+      const errMsg =
+        data?.error ||
+        data?.message ||
+        `Server-Fehler beim Laden der URL (${response.status} ${response.statusText})`;
+      setError(errMsg);
+      showToast(errMsg, "error", { clear: true });
       return;
     }
 
@@ -299,7 +342,13 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
         <p className="text-xs text-zinc-400 light:text-slate-500 leading-snug">
           {t("chat_window.attach_menu.url_hint")}
         </p>
-        <div className="flex items-center gap-1.5 bg-zinc-900 light:bg-white border border-zinc-700 light:border-slate-300 rounded-md px-2">
+        <div
+          className={`flex items-center gap-1.5 bg-zinc-900 light:bg-white border rounded-md px-2 transition-colors ${
+            error
+              ? "border-red-500 light:border-red-500"
+              : "border-zinc-700 light:border-slate-300"
+          }`}
+        >
           <Globe
             size={15}
             className="text-zinc-400 light:text-slate-500 flex-shrink-0"
@@ -308,21 +357,37 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
             ref={inputRef}
             type="url"
             value={link}
-            onChange={(e) => setLink(e.target.value)}
+            onChange={(e) => {
+              setLink(e.target.value);
+              if (error) setError("");
+            }}
             placeholder="https://..."
             disabled={submitting}
+            aria-invalid={!!error}
             className="flex-1 bg-transparent border-none outline-none text-sm text-white light:text-slate-800 py-2 placeholder:text-zinc-500 light:placeholder:text-slate-400"
           />
           {link && !submitting && (
             <button
               type="button"
-              onClick={() => setLink("")}
+              onClick={() => {
+                setLink("");
+                setError("");
+              }}
               className="border-none bg-transparent cursor-pointer text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-800 flex-shrink-0"
+              aria-label="Clear URL"
             >
               <X size={14} />
             </button>
           )}
         </div>
+        {error && (
+          <p
+            className="text-xs text-red-400 light:text-red-600 leading-snug"
+            role="alert"
+          >
+            {error}
+          </p>
+        )}
         <button
           type="submit"
           disabled={!link.trim() || submitting}
