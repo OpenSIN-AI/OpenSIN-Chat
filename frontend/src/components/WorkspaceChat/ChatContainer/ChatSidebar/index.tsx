@@ -140,7 +140,7 @@ export function useSourcesSidebar() {
     useContext(ChatSidebarContext);
   return {
     sidebarOpen: activeSidebar === "sources",
-    sources: activeSidebar === "sources" ? sidebarData : [],
+    sources: activeSidebar === "sources" ? (sidebarData || []) : [],
     openSidebar: (sources) => openSidebar("sources", sources),
     closeSidebar,
   };
