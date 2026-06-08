@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "@/components/Sidebar";
-import Workspace from "@/models/workspace";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { isMobile } from "react-device-detect";
 import { FullScreenLoader } from "@/components/Preloader";
@@ -24,7 +23,8 @@ import Members from "./Members";
 import WorkspaceAgentConfiguration from "./AgentConfig";
 import useUser from "@/hooks/useUser";
 import { useTranslation } from "react-i18next";
-import System from "@/models/system";
+import useWorkspaceChats from "@/hooks/useWorkspaceChats";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 const TABS = {
   "general-appearance": GeneralAppearance,
@@ -49,31 +49,31 @@ function ShowWorkspaceChat() {
   const { t } = useTranslation();
   const { slug, tab } = useParams();
   const { user } = useUser();
+  const { workspace: rawWorkspace, suggestedMessages, isLoading: workspaceLoading } = useWorkspaceChats(slug);
+  const { settings: systemSettings, loading: settingsLoading } = useSystemSettings();
   const [workspace, setWorkspace] = useState(null);
   const [deletionProtected, setDeletionProtected] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function getWorkspace() {
-      if (!slug) return;
-      const _workspace = await Workspace.bySlug(slug);
-      if (!_workspace) {
-        setLoading(false);
-        return;
-      }
-
-      const _settings = await System.keys();
-      const suggestedMessages = await Workspace.getSuggestedMessages(slug);
-      setWorkspace({
-        ..._workspace,
-        vectorDB: _settings?.VectorDB,
-        suggestedMessages,
-      });
-      setDeletionProtected(_settings?.WorkspaceDeletionProtection === true);
+    if (workspaceLoading || settingsLoading) return;
+    if (!slug) {
       setLoading(false);
+      return;
     }
-    getWorkspace();
-  }, [slug, tab]);
+    if (!rawWorkspace) {
+      setLoading(false);
+      return;
+    }
+
+    setWorkspace({
+      ...rawWorkspace,
+      vectorDB: systemSettings?.VectorDB,
+      suggestedMessages,
+    });
+    setDeletionProtected(systemSettings?.WorkspaceDeletionProtection === true);
+    setLoading(false);
+  }, [slug, tab, workspaceLoading, settingsLoading, rawWorkspace, suggestedMessages, systemSettings]);
 
   if (loading) return <FullScreenLoader />;
 
@@ -83,6 +83,7 @@ function ShowWorkspaceChat() {
       {!isMobile && <Sidebar />}
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll`
+      }
       >
         <div className="flex gap-x-10 pt-6 pb-4 ml-16 mr-8 border-b-2 border-white light:border-theme-chat-input-border border-opacity-10">
           <Link

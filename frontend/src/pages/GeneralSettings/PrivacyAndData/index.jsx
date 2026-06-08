@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import showToast from "@/utils/toast";
@@ -8,26 +8,18 @@ import PreLoader from "@/components/Preloader";
 import { useTranslation } from "react-i18next";
 import ProviderPrivacy from "@/components/ProviderPrivacy";
 import Toggle from "@/components/lib/Toggle";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function PrivacyAndDataHandling() {
-  const [settings, setSettings] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { settings, loading } = useSystemSettings();
   const { t } = useTranslation();
-  useEffect(() => {
-    async function fetchSettings() {
-      setLoading(true);
-      const settings = await System.keys();
-      setSettings(settings);
-      setLoading(false);
-    }
-    fetchSettings();
-  }, []);
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] light:border light:border-theme-sidebar-border bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+      }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">

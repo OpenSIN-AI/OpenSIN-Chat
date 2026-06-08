@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { default as WorkspaceChatContainer } from "@/components/WorkspaceChat";
 import Sidebar from "@/components/Sidebar";
 import { useParams } from "react-router-dom";
-import Workspace from "@/models/workspace";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { isMobile } from "react-device-detect";
 import { FullScreenLoader } from "@/components/Preloader";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
+import useWorkspaceChats from "@/hooks/useWorkspaceChats";
 
 export default function WorkspaceChat() {
   const { loading, requiresAuth, mode } = usePasswordModal();
@@ -27,6 +27,7 @@ export default function WorkspaceChat() {
 
 function ShowWorkspaceChat() {
   const { slug } = useParams();
+  const { workspace: rawWorkspace, suggestedMessages, showAgentCommand, isLoading } = useWorkspaceChats(slug);
   const [workspace, setWorkspace] = useState(null);
   // Tracks which workspace `workspace` belongs to. While a new workspace's
   // data is in flight, we keep the previous workspace's chat mounted
@@ -34,35 +35,28 @@ function ShowWorkspaceChat() {
   const [loadedSlug, setLoadedSlug] = useState(null);
 
   useEffect(() => {
-    async function getWorkspace() {
-      if (!slug) return;
-      const _workspace = await Workspace.bySlug(slug);
-      if (!_workspace) {
-        setWorkspace(null);
-        setLoadedSlug(slug);
-        return;
-      }
-
-      const [suggestedMessages, { showAgentCommand }] = await Promise.all([
-        Workspace.getSuggestedMessages(slug),
-        Workspace.agentCommandAvailable(slug),
-      ]);
-      setWorkspace({
-        ..._workspace,
-        suggestedMessages,
-        showAgentCommand,
-      });
+    if (isLoading) return;
+    if (!slug) return;
+    if (!rawWorkspace) {
+      setWorkspace(null);
       setLoadedSlug(slug);
-      localStorage.setItem(
-        LAST_VISITED_WORKSPACE,
-        JSON.stringify({
-          slug: _workspace.slug,
-          name: _workspace.name,
-        }),
-      );
+      return;
     }
-    getWorkspace();
-  }, [slug]);
+
+    setWorkspace({
+      ...rawWorkspace,
+      suggestedMessages,
+      showAgentCommand,
+    });
+    setLoadedSlug(slug);
+    localStorage.setItem(
+      LAST_VISITED_WORKSPACE,
+      JSON.stringify({
+        slug: rawWorkspace.slug,
+        name: rawWorkspace.name,
+      }),
+    );
+  }, [slug, isLoading, rawWorkspace, suggestedMessages, showAgentCommand]);
 
   return (
     <WorkspaceChatContainer

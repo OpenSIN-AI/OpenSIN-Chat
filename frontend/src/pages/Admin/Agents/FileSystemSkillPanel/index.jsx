@@ -17,7 +17,7 @@ import {
   CircleNotch,
   Copy,
 } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
+import useFileSystemAgent from "@/hooks/useFileSystemAgent";
 import paths from "@/utils/paths";
 
 export const getFileSystemSubSkills = (t) => {
@@ -122,26 +122,26 @@ export default function FileSystemSkillPanel({
   const prevHasChanges = useRef(hasChanges);
   const FILESYSTEM_SUB_SKILLS = getFileSystemSubSkills(t);
 
+  const {
+    disabledSkills: swrDisabledSubSkills,
+    isLoading: swrLoading,
+    refresh,
+  } = useFileSystemAgent();
+
+  // Sync SWR data into local state when it loads
   useEffect(() => {
-    setLoading(true);
-    Admin.systemPreferencesByFields(["disabled_filesystem_skills"])
-      .then((res) =>
-        setDisabledSubSkills(res?.settings?.disabled_filesystem_skills ?? []),
-      )
-      .catch(() => setDisabledSubSkills([]))
-      .finally(() => setLoading(false));
-  }, []);
+    if (!swrLoading) {
+      setDisabledSubSkills(swrDisabledSubSkills);
+      setLoading(false);
+    }
+  }, [swrLoading, swrDisabledSubSkills]);
 
   useEffect(() => {
     if (prevHasChanges.current === true && hasChanges === false) {
-      Admin.systemPreferencesByFields(["disabled_filesystem_skills"])
-        .then((res) =>
-          setDisabledSubSkills(res?.settings?.disabled_filesystem_skills ?? []),
-        )
-        .catch(() => {});
+      refresh();
     }
     prevHasChanges.current = hasChanges;
-  }, [hasChanges]);
+  }, [hasChanges, refresh]);
 
   function toggleSubSkill(subSkillName) {
     setHasChanges(true);

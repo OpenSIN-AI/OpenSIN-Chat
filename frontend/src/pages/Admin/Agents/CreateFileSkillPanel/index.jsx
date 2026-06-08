@@ -10,7 +10,7 @@ import {
   FileText,
   CircleNotch,
 } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
+import useCreateFileAgent from "@/hooks/useCreateFileAgent";
 
 export const getCreateFileSkills = (t) => [
   {
@@ -64,26 +64,26 @@ export default function CreateFileSkillPanel({
   const prevHasChanges = useRef(hasChanges);
   const skills = getCreateFileSkills(t);
 
+  const {
+    disabledSkills: swrDisabledSkills,
+    isLoading: swrLoading,
+    refresh,
+  } = useCreateFileAgent();
+
+  // Sync SWR data into local state when it loads
   useEffect(() => {
-    setLoading(true);
-    Admin.systemPreferencesByFields(["disabled_create_files_skills"])
-      .then((res) =>
-        setDisabledSkills(res?.settings?.disabled_create_files_skills ?? []),
-      )
-      .catch(() => setDisabledSkills([]))
-      .finally(() => setLoading(false));
-  }, []);
+    if (!swrLoading) {
+      setDisabledSkills(swrDisabledSkills);
+      setLoading(false);
+    }
+  }, [swrLoading, swrDisabledSkills]);
 
   useEffect(() => {
     if (prevHasChanges.current === true && hasChanges === false) {
-      Admin.systemPreferencesByFields(["disabled_create_files_skills"])
-        .then((res) =>
-          setDisabledSkills(res?.settings?.disabled_create_files_skills ?? []),
-        )
-        .catch(() => {});
+      refresh();
     }
     prevHasChanges.current = hasChanges;
-  }, [hasChanges]);
+  }, [hasChanges, refresh]);
 
   function toggleFileSkill(skillName) {
     setHasChanges(true);

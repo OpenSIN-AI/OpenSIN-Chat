@@ -18,9 +18,8 @@ import {
   Info,
 } from "@phosphor-icons/react";
 import GMailIcon from "./gmail.png";
-import Admin from "@/models/admin";
-import System from "@/models/system";
 import GoogleAgentSkills from "@/models/googleAgentSkills";
+import { useGmailAgent } from "@/hooks/useGoogleAgent";
 import { getGmailSkills, filterSkillCategories } from "./utils";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
@@ -45,50 +44,36 @@ export default function GMailSkillPanel({
   const prevHasChanges = useRef(hasChanges);
   const skillCategories = getGmailSkills(t);
 
-  useEffect(() => {
-    setLoading(true);
-    Promise.all([
-      Admin.systemPreferencesByFields(["disabled_gmail_skills"]),
-      System.keys(),
-      GoogleAgentSkills.gmail.getStatus(),
-    ])
-      .then(([prefsRes, settingsRes, statusRes]) => {
-        setDisabledSkills(prefsRes?.settings?.disabled_gmail_skills ?? []);
-        setIsMultiUserMode(settingsRes?.MultiUserMode ?? false);
+  const {
+    disabledSkills: swrDisabledSkills,
+    isMultiUserMode: swrIsMultiUserMode,
+    config: swrConfig,
+    isLoading: swrLoading,
+    refresh,
+  } = useGmailAgent();
 
-        if (statusRes?.success && statusRes.config) {
-          const loadedDeploymentId = statusRes.config.deploymentId || "";
-          const loadedApiKey = statusRes.config.apiKey || "";
-          setDeploymentId(loadedDeploymentId);
-          setApiKey(loadedApiKey);
-          setConfigDefaultExpanded(!(loadedDeploymentId && loadedApiKey));
-        }
-      })
-      .catch(() => {
-        setDisabledSkills([]);
-        setDeploymentId("");
-        setApiKey("");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  // Sync SWR data into local state when it loads
+  useEffect(() => {
+    if (!swrLoading) {
+      setDisabledSkills(swrDisabledSkills);
+      setIsMultiUserMode(swrIsMultiUserMode);
+      if (swrConfig) {
+        const loadedDeploymentId = swrConfig.deploymentId || "";
+        const loadedApiKey = swrConfig.apiKey || "";
+        setDeploymentId(loadedDeploymentId);
+        setApiKey(loadedApiKey);
+        setConfigDefaultExpanded(!(loadedDeploymentId && loadedApiKey));
+      }
+      setLoading(false);
+    }
+  }, [swrLoading, swrDisabledSkills, swrIsMultiUserMode, swrConfig]);
 
   useEffect(() => {
     if (prevHasChanges.current === true && hasChanges === false) {
-      Promise.all([
-        Admin.systemPreferencesByFields(["disabled_gmail_skills"]),
-        GoogleAgentSkills.gmail.getStatus(),
-      ])
-        .then(([prefsRes, statusRes]) => {
-          setDisabledSkills(prefsRes?.settings?.disabled_gmail_skills ?? []);
-          if (statusRes?.success && statusRes.config) {
-            setDeploymentId(statusRes.config.deploymentId || "");
-            setApiKey(statusRes.config.apiKey || "");
-          }
-        })
-        .catch(() => {});
+      refresh();
     }
     prevHasChanges.current = hasChanges;
-  }, [hasChanges]);
+  }, [hasChanges, refresh]);
 
   function toggleGmailSkill(skillName) {
     setHasChanges(true);

@@ -12,6 +12,7 @@ import PreLoader from "@/components/Preloader";
 import ChangeWarningModal from "@/components/ChangeWarning";
 import ModalWrapper from "@/components/ModalWrapper";
 import VectorDBItem from "@/components/VectorDBSelection/VectorDBItem";
+import useVectorDBs from "@/hooks/useVectorDBs";
 
 import LanceDbLogo from "@/media/vectordbs/lancedb.png";
 import ChromaLogo from "@/media/vectordbs/chroma.png";
@@ -115,9 +116,7 @@ const VECTOR_DBS = [
 export default function GeneralVectorDatabase() {
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
-  const [hasEmbeddings, setHasEmbeddings] = useState(false);
   const [settings, setSettings] = useState({});
-  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredVDBs, setFilteredVDBs] = useState([]);
   const [selectedVDB, setSelectedVDB] = useState(null);
@@ -125,6 +124,15 @@ export default function GeneralVectorDatabase() {
   const searchInputRef = useRef(null);
   const { isOpen, openModal, closeModal } = useModal();
   const { t } = useTranslation();
+  const { settings: systemSettings, vectorDB, hasEmbeddings, isLoading, mutate } = useVectorDBs();
+
+  // Sync local settings state from SWR when it loads
+  useEffect(() => {
+    if (!isLoading) {
+      setSettings(systemSettings);
+      setSelectedVDB(vectorDB);
+    }
+  }, [isLoading, systemSettings, vectorDB]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -150,6 +158,7 @@ export default function GeneralVectorDatabase() {
     } else {
       showToast("Vector database preferences saved successfully.", "success");
       setHasChanges(false);
+      mutate(); // revalidate SWR cache after mutation
     }
     setSaving(false);
     closeModal();
@@ -172,17 +181,6 @@ export default function GeneralVectorDatabase() {
   };
 
   useEffect(() => {
-    async function fetchKeys() {
-      const _settings = await System.keys();
-      setSettings(_settings);
-      setSelectedVDB(_settings?.VectorDB || "lancedb");
-      setHasEmbeddings(_settings?.HasExistingEmbeddings || false);
-      setLoading(false);
-    }
-    fetchKeys();
-  }, []);
-
-  useEffect(() => {
     const filtered = VECTOR_DBS.filter((vdb) =>
       vdb.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
@@ -195,9 +193,10 @@ export default function GeneralVectorDatabase() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
-      {loading ? (
+      {isLoading ? (
         <div
           className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
         >
           <div className="w-full h-full flex justify-center items-center">
             <PreLoader />
@@ -206,6 +205,7 @@ export default function GeneralVectorDatabase() {
       ) : (
         <div
           className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
         >
           <form
             id="vectordb-form"

@@ -17,9 +17,8 @@ import {
   CheckCircle,
   Info,
 } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
-import System from "@/models/system";
 import GoogleAgentSkills from "@/models/googleAgentSkills";
+import { useGoogleCalendarAgent } from "@/hooks/useGoogleAgent";
 import { getGoogleCalendarSkills, filterSkillCategories } from "./utils";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
@@ -45,54 +44,36 @@ export default function GoogleCalendarSkillPanel({
   const prevHasChanges = useRef(hasChanges);
   const skillCategories = getGoogleCalendarSkills(t);
 
-  useEffect(() => {
-    setLoading(true);
-    Promise.all([
-      Admin.systemPreferencesByFields(["disabled_google_calendar_skills"]),
-      System.keys(),
-      GoogleAgentSkills.calendar.getStatus(),
-    ])
-      .then(([prefsRes, settingsRes, statusRes]) => {
-        setDisabledSkills(
-          prefsRes?.settings?.disabled_google_calendar_skills ?? [],
-        );
-        setIsMultiUserMode(settingsRes?.MultiUserMode ?? false);
+  const {
+    disabledSkills: swrDisabledSkills,
+    isMultiUserMode: swrIsMultiUserMode,
+    config: swrConfig,
+    isLoading: swrLoading,
+    refresh,
+  } = useGoogleCalendarAgent();
 
-        if (statusRes?.success && statusRes.config) {
-          const loadedDeploymentId = statusRes.config.deploymentId || "";
-          const loadedApiKey = statusRes.config.apiKey || "";
-          setDeploymentId(loadedDeploymentId);
-          setApiKey(loadedApiKey);
-          setConfigDefaultExpanded(!(loadedDeploymentId && loadedApiKey));
-        }
-      })
-      .catch(() => {
-        setDisabledSkills([]);
-        setDeploymentId("");
-        setApiKey("");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+  // Sync SWR data into local state when it loads
+  useEffect(() => {
+    if (!swrLoading) {
+      setDisabledSkills(swrDisabledSkills);
+      setIsMultiUserMode(swrIsMultiUserMode);
+      if (swrConfig) {
+        const loadedDeploymentId = swrConfig.deploymentId || "";
+        const loadedApiKey = swrConfig.apiKey || "";
+        setDeploymentId(loadedDeploymentId);
+        setApiKey(loadedApiKey);
+        setConfigDefaultExpanded(!(loadedDeploymentId && loadedApiKey));
+      }
+      setLoading(false);
+    }
+  }, [swrLoading, swrDisabledSkills, swrIsMultiUserMode, swrConfig]);
 
   useEffect(() => {
     if (prevHasChanges.current === true && hasChanges === false) {
-      Promise.all([
-        Admin.systemPreferencesByFields(["disabled_google_calendar_skills"]),
-        GoogleAgentSkills.calendar.getStatus(),
-      ])
-        .then(([prefsRes, statusRes]) => {
-          setDisabledSkills(
-            prefsRes?.settings?.disabled_google_calendar_skills ?? [],
-          );
-          if (statusRes?.success && statusRes.config) {
-            setDeploymentId(statusRes.config.deploymentId || "");
-            setApiKey(statusRes.config.apiKey || "");
-          }
-        })
-        .catch(() => {});
+      refresh();
     }
     prevHasChanges.current = hasChanges;
-  }, [hasChanges]);
+  }, [hasChanges, refresh]);
 
   function toggleGoogleCalendarSkill(skillName) {
     setHasChanges(true);

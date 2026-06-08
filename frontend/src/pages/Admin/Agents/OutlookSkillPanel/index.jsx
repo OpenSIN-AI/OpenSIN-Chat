@@ -19,9 +19,8 @@ import {
   ArrowSquareOut,
   XCircle,
 } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
-import System from "@/models/system";
 import OutlookAgent from "@/models/outlookAgent";
+import useOutlookAgent from "@/hooks/useOutlookAgent";
 import { getOutlookSkills, filterSkillCategories } from "./utils";
 import OutlookIcon from "./outlook.png";
 import { Tooltip } from "react-tooltip";
@@ -72,40 +71,41 @@ export default function OutlookSkillPanel({
     }
   };
 
+  const {
+    disabledSkills: swrDisabledSkills,
+    isMultiUserMode: swrIsMultiUserMode,
+    isAuthenticated: swrIsAuthenticated,
+    config: swrConfig,
+    isLoading: swrLoading,
+    refresh,
+  } = useOutlookAgent();
+
+  // Sync SWR data into local state when it loads
   useEffect(() => {
-    setLoading(true);
-    Promise.all([
-      Admin.systemPreferencesByFields(["disabled_outlook_skills"]),
-      System.keys(),
-      OutlookAgent.getStatus(),
-    ])
-      .then(([prefsRes, settingsRes, statusRes]) => {
-        setDisabledSkills(prefsRes?.settings?.disabled_outlook_skills ?? []);
-        setIsMultiUserMode(settingsRes?.MultiUserMode ?? false);
+    if (!swrLoading) {
+      setDisabledSkills(swrDisabledSkills);
+      setIsMultiUserMode(swrIsMultiUserMode);
+      setIsAuthenticated(swrIsAuthenticated);
+      if (swrConfig) {
+        setClientId(swrConfig.clientId || "");
+        setTenantId(swrConfig.tenantId || "");
+        setClientSecret(swrConfig.clientSecret || "");
+        setAuthType(swrConfig.authType || "common");
+        setConfigDefaultExpanded(
+          !(swrConfig.clientId && swrConfig.clientSecret),
+        );
+      }
+      setLoading(false);
+    }
+  }, [
+    swrLoading,
+    swrDisabledSkills,
+    swrIsMultiUserMode,
+    swrIsAuthenticated,
+    swrConfig,
+  ]);
 
-        // Load config from status endpoint
-        if (statusRes?.success) {
-          setIsAuthenticated(statusRes.isAuthenticated);
-          if (statusRes.config) {
-            setClientId(statusRes.config.clientId || "");
-            setTenantId(statusRes.config.tenantId || "");
-            setClientSecret(statusRes.config.clientSecret || "");
-            setAuthType(statusRes.config.authType || "common");
-            setConfigDefaultExpanded(
-              !(statusRes.config.clientId && statusRes.config.clientSecret),
-            );
-          }
-        }
-      })
-      .catch(() => {
-        setDisabledSkills([]);
-        setClientId("");
-        setTenantId("");
-        setClientSecret("");
-        setAuthType("common");
-      })
-      .finally(() => setLoading(false));
-
+  useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const outlookAuth = urlParams.get("outlook_auth");
     if (outlookAuth === "success") {
@@ -113,7 +113,6 @@ export default function OutlookSkillPanel({
       window.history.replaceState({}, document.title, window.location.pathname);
     } else if (outlookAuth === "error") {
       const message = urlParams.get("message");
-
       console.error("Outlook auth error:", message);
       window.history.replaceState({}, document.title, window.location.pathname);
     }
@@ -121,26 +120,11 @@ export default function OutlookSkillPanel({
 
   useEffect(() => {
     if (prevHasChanges.current === true && hasChanges === false) {
-      Promise.all([
-        Admin.systemPreferencesByFields(["disabled_outlook_skills"]),
-        OutlookAgent.getStatus(),
-      ])
-        .then(([prefsRes, statusRes]) => {
-          setDisabledSkills(prefsRes?.settings?.disabled_outlook_skills ?? []);
-          if (statusRes?.success) {
-            setIsAuthenticated(statusRes.isAuthenticated);
-            if (statusRes.config) {
-              setClientId(statusRes.config.clientId || "");
-              setTenantId(statusRes.config.tenantId || "");
-              setClientSecret(statusRes.config.clientSecret || "");
-              setAuthType(statusRes.config.authType || "common");
-            }
-          }
-        })
-        .catch(() => {});
+      refresh();
     }
     prevHasChanges.current = hasChanges;
-  }, [hasChanges]);
+  }, [hasChanges, refresh]);
+
 
   function toggleOutlookSkill(skillName) {
     setHasChanges(true);

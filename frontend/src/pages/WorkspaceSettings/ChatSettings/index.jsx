@@ -3,7 +3,7 @@ import System from "@/models/system";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ChatHistorySettings from "./ChatHistorySettings";
 import ChatPromptSettings from "./ChatPromptSettings";
 import ChatTemperatureSettings from "./ChatTemperatureSettings";
@@ -11,20 +11,14 @@ import ChatModeSelection from "./ChatModeSelection";
 import WorkspaceLLMSelection from "./WorkspaceLLMSelection";
 import ChatQueryRefusalResponse from "./ChatQueryRefusalResponse";
 import CTAButton from "@/components/lib/CTAButton";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function ChatSettings({ workspace }) {
-  const [settings, setSettings] = useState({});
+  const { settings, loading: settingsLoading } = useSystemSettings();
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
 
   const formEl = useRef(null);
-  useEffect(() => {
-    async function fetchSettings() {
-      const _settings = await System.keys();
-      setSettings(_settings ?? {});
-    }
-    fetchSettings();
-  }, []);
 
   const handleUpdate = async (e) => {
     e.preventDefault();

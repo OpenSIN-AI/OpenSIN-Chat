@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { isMobile } from "react-device-detect";
 import Sidebar from "@/components/SettingsSidebar";
 import System from "@/models/system";
@@ -13,6 +13,7 @@ import LLMItem from "@/components/LLMSelection/LLMItem";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
 import CTAButton from "@/components/lib/CTAButton";
 import { useTranslation } from "react-i18next";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 const PROVIDERS = [
   {
@@ -42,6 +43,16 @@ export default function TranscriptionModelPreference() {
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef(null);
   const { t } = useTranslation();
+  const { settings: systemSettings, loading: settingsLoading, mutate } = useSystemSettings();
+
+  // Sync local state from SWR when loaded
+  useEffect(() => {
+    if (!settingsLoading) {
+      setSettings(systemSettings);
+      setSelectedProvider(systemSettings?.WhisperProvider || "local");
+      setLoading(false);
+    }
+  }, [settingsLoading, systemSettings]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +71,7 @@ export default function TranscriptionModelPreference() {
     }
     setSaving(false);
     setHasChanges(!!error);
+    if (!error) mutate(); // revalidate SWR cache after mutation
   };
 
   const updateProviderChoice = (selection) => {
@@ -79,16 +91,6 @@ export default function TranscriptionModelPreference() {
   };
 
   useEffect(() => {
-    async function fetchKeys() {
-      const _settings = await System.keys();
-      setSettings(_settings);
-      setSelectedProvider(_settings?.WhisperProvider || "local");
-      setLoading(false);
-    }
-    fetchKeys();
-  }, []);
-
-  useEffect(() => {
     const filtered = PROVIDERS.filter((provider) =>
       provider.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
@@ -105,6 +107,7 @@ export default function TranscriptionModelPreference() {
       {loading ? (
         <div
           className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
         >
           <div className="w-full h-full flex justify-center items-center">
             <PreLoader />
@@ -113,6 +116,7 @@ export default function TranscriptionModelPreference() {
       ) : (
         <div
           className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
         >
           <form onSubmit={handleSubmit} className="flex w-full">
             <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] py-16 md:py-6">
