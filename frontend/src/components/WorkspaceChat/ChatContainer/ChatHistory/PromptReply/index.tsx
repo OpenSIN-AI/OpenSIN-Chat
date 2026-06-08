@@ -10,6 +10,7 @@ import {
   THOUGHT_REGEX_COMPLETE,
   THOUGHT_REGEX_OPEN,
   ThoughtChainComponent,
+  ThoughtBrainButton,
 } from "../ThoughtContainer";
 
 const PromptReply: any = ({ uuid, reply, pending, error, sources = [] }: any) => {
@@ -78,30 +79,47 @@ function RenderAssistantChatContent({ message, messageId }: any) {
 
   const thinking =
     message.match(THOUGHT_REGEX_OPEN) && !message.match(THOUGHT_REGEX_CLOSE);
+
+  // Determine thought chain content for the brain button
+  const thoughtChainContent = thinking
+    ? message
+    : message.match(THOUGHT_REGEX_COMPLETE)?.[0] ?? null;
+
   if (thinking)
     return (
-      <ThoughtChainComponent
-        ref={thoughtChainRef}
-        content=""
-        messageId={messageId}
-      />
+      <div className="flex flex-col gap-y-1">
+        <ThoughtChainComponent
+          ref={thoughtChainRef}
+          content=""
+          messageId={messageId}
+        />
+        <div className="flex items-start gap-x-1.5">
+          <ThoughtBrainButton messageId={messageId} content={message} />
+          <div className="mt-3 ml-1 dot-falling light:invert" />
+        </div>
+      </div>
     );
 
   return (
     <div className="flex flex-col gap-y-1">
-      {message.match(THOUGHT_REGEX_COMPLETE) && (
+      {thoughtChainContent && (
         <ThoughtChainComponent
           ref={thoughtChainRef}
           content=""
           messageId={messageId}
         />
       )}
-      <span
-        className="break-words"
-        dangerouslySetInnerHTML={{
-          __html: DOMPurify.sanitize(renderMarkdown(contentRef.current)),
-        }}
-      />
+      <div className="flex items-start gap-x-1.5">
+        {thoughtChainContent && (
+          <ThoughtBrainButton messageId={messageId} content={thoughtChainContent} />
+        )}
+        <span
+          className="flex-1 min-w-0 break-words"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(renderMarkdown(contentRef.current)),
+          }}
+        />
+      </div>
     </div>
   );
 }

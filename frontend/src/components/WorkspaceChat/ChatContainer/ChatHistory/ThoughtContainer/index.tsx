@@ -9,7 +9,6 @@ import {
   useCallback,
 } from "react";
 import renderMarkdown from "@/utils/chat/markdown";
-import { CaretDown } from "@phosphor-icons/react";
 import DOMPurify from "dompurify";
 import { isMobile } from "react-device-detect";
 import ThinkingAnimation from "@/media/animations/thinking-animation.webm";
@@ -50,7 +49,6 @@ export function ThoughtExpansionProvider({ children }: any) {
 export function useThoughtExpansion(messageId: any) {
   const context = useContext(ThoughtExpansionContext);
   if (!context) {
-    // Fallback when used outside provider - use local state only
     return { expanded: false, setExpanded: () => {} };
   }
   return {
@@ -62,9 +60,7 @@ export function useThoughtExpansion(messageId: any) {
 const THOUGHT_KEYWORDS = ["thought", "thinking", "think", "thought_chain"];
 const CLOSING_TAGS = [...THOUGHT_KEYWORDS, "response", "answer"];
 export const THOUGHT_REGEX_OPEN = new RegExp(
-  (THOUGHT_KEYWORDS as any).map((keyword) => `<${keyword}\\s*(?:[^>]*?)?\\s*>`).join(
-    "|",
-  ),
+  (THOUGHT_KEYWORDS as any).map((keyword) => `<${keyword}\\s*(?:[^>]*?)?\\s*>`).join("|"),
 );
 export const THOUGHT_REGEX_CLOSE = new RegExp(
   (CLOSING_TAGS as any).map((keyword) => `</${keyword}\\s*(?:[^>]*?)?>`).join("|"),
@@ -75,13 +71,7 @@ export const THOUGHT_REGEX_COMPLETE = new RegExp(
       `<${keyword}\\s*(?:[^>]*?)?\\s*>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
   ).join("|"),
 );
-const THOUGHT_PREVIEW_LENGTH = isMobile ? 25 : 50;
 
-/**
- * Checks if the content has readable content.
- * @param {string} content - The content to check.
- * @returns {boolean} - Whether the content has readable content.
- */
 function contentIsNotEmpty(content: any = "") {
   return (
     content
@@ -93,10 +83,56 @@ function contentIsNotEmpty(content: any = "") {
 }
 
 /**
- * Component to render a thought chain.
- * @param {string} content - The content of the thought chain.
- * @param {string} messageId - The unique ID for this message (used to persist expansion state).
- * @returns {JSX.Element}
+ * Small brain icon button that sits to the LEFT of the AI message.
+ * Clicking it toggles the thought chain panel.
+ */
+export function ThoughtBrainButton({ messageId, content }: any) {
+  const { expanded, setExpanded } = useThoughtExpansion(messageId);
+
+  const isThinking =
+    content?.match(THOUGHT_REGEX_OPEN) && !content?.match(THOUGHT_REGEX_CLOSE);
+  const isComplete =
+    content?.match(THOUGHT_REGEX_COMPLETE) || content?.match(THOUGHT_REGEX_CLOSE);
+  const hasContent = contentIsNotEmpty(content);
+
+  if (!hasContent) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={() => setExpanded(!expanded)}
+      title={expanded ? "Gedanken ausblenden" : "Gedanken anzeigen"}
+      aria-label={expanded ? "Gedanken ausblenden" : "Gedanken anzeigen"}
+      className={`flex-shrink-0 mt-[3px] p-1 rounded-md border-none cursor-pointer transition-colors ${
+        expanded
+          ? "bg-zinc-700 light:bg-slate-200"
+          : "bg-transparent hover:bg-zinc-800 light:hover:bg-slate-100"
+      }`}
+    >
+      {isThinking ? (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-[16px] h-[16px] scale-[115%] light:invert light:opacity-50"
+        >
+          <source src={ThinkingAnimation} type="video/webm" />
+        </video>
+      ) : (
+        <img
+          src={ThinkingStatic}
+          alt="Gedankenkette"
+          className="w-[16px] h-[16px] light:invert light:opacity-50"
+        />
+      )}
+    </button>
+  );
+}
+
+/**
+ * Renders the expanded thought chain content.
+ * Only visible when the expansion state is true (toggled via ThoughtBrainButton).
  */
 export const ThoughtChainComponent = forwardRef(
   ({ content: initialContent, messageId }, ref) => {
@@ -108,11 +144,8 @@ export const ThoughtChainComponent = forwardRef(
       useThoughtExpansion(messageId);
     const [localExpanded, setLocalExpanded] = useState(false as any);
 
-    // Use persisted state if messageId is provided, otherwise use local state
     const isExpanded = messageId ? persistedExpanded : localExpanded;
-    const setIsExpanded = messageId ? setPersistedExpanded : setLocalExpanded;
 
-    // Sync content state with prop changes (for streaming through HistoricalMessage)
     useEffect(() => {
       if (initialContent !== content) {
         setContent(initialContent);
@@ -127,89 +160,23 @@ export const ThoughtChainComponent = forwardRef(
       },
     }));
 
-    const isThinking =
-      content.match(THOUGHT_REGEX_OPEN) && !content.match(THOUGHT_REGEX_CLOSE);
-    const isComplete =
-      content.match(THOUGHT_REGEX_COMPLETE) ||
-      content.match(THOUGHT_REGEX_CLOSE);
+    if (!content || !content.length || !hasReadableContent) return null;
+    // Hidden by default — only show when expanded via the brain button
+    if (!isExpanded) return null;
+
     const tagStrippedContent = content
       .replace(THOUGHT_REGEX_OPEN, "")
       .replace(THOUGHT_REGEX_CLOSE, "");
-    const canExpand = tagStrippedContent.length > THOUGHT_PREVIEW_LENGTH;
-    if (!content || !content.length || !hasReadableContent) return null;
-
-    function handleExpandClick() {
-      if (!canExpand) return;
-      setIsExpanded(!isExpanded);
-    }
 
     return (
-      <div className="flex justify-center w-full">
-        <div className="w-full flex flex-col">
-          <div className="w-full">
-            <div
-              className="relative bg-zinc-800 light:bg-slate-100 p-4 rounded-2xl transition-all duration-100 ease-in-out"
-            >
-              <div className="absolute top-4 left-4 w-[18px] h-[18px]">
-                {isThinking || isComplete ? (
-                  <>
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className={`w-[18px] h-[18px] scale-[115%] transition-opacity duration-200 light:invert light:opacity-50 ${isThinking ? "opacity-100" : "opacity-0 hidden"}`}
-                      data-tooltip-id="cot-thinking"
-                      data-tooltip-content="Model is thinking..."
-                      aria-label="Model is thinking..."
-                    >
-                      <source src={ThinkingAnimation} type="video/webm" />
-                    </video>
-                    <img
-                      src={ThinkingStatic}
-                      alt="Thinking complete"
-                      className={`w-[18px] h-[18px] transition-opacity duration-200 light:invert light:opacity-50 ${!isThinking && isComplete ? "opacity-100" : "opacity-0 hidden"}`}
-                      data-tooltip-id="cot-thinking"
-                      data-tooltip-content="Model has finished thinking"
-                      aria-label="Model has finished thinking"
-                    />
-                  </>
-                ) : null}
-              </div>
-              {canExpand && (
-                <button
-                  onClick={handleExpandClick}
-                  className="absolute top-4 right-4 border-none text-zinc-200 light:text-slate-800 transition-colors"
-                  data-tooltip-id="expand-cot"
-                  data-tooltip-content={
-                    isExpanded ? "Hide thought chain" : "Show thought chain"
-                  }
-                  aria-label={
-                    isExpanded ? "Hide thought chain" : "Show thought chain"
-                  }
-                >
-                  <CaretDown
-                    className={`w-4 h-4 transform transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
-                  />
-                </button>
-              )}
-              <div
-                className={`ml-[28px] mr-[26px] transition-[max-height] duration-300 ease-in-out origin-top ${isExpanded ? "" : "overflow-hidden max-h-[18px]"}`}
-              >
-                <div className="text-zinc-200 light:text-slate-800 font-mono text-sm leading-[18px] [&_p]:m-0">
-                  <span
-                    className={`block w-full ${!isExpanded ? "truncate" : ""}`}
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(
-                        isExpanded
-                          ? renderMarkdown(tagStrippedContent)
-                          : tagStrippedContent,
-                      ),
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+      <div className="w-full mb-2">
+        <div className="bg-zinc-800 light:bg-slate-100 rounded-xl p-4 overflow-y-auto max-h-[400px]">
+          <div className="text-zinc-300 light:text-slate-700 font-mono text-sm leading-relaxed [&_p]:m-0">
+            <span
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(renderMarkdown(tagStrippedContent)),
+              }}
+            />
           </div>
         </div>
       </div>
