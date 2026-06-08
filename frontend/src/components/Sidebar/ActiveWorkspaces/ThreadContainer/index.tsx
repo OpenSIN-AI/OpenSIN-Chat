@@ -431,11 +431,11 @@ function NewThreadButton({ workspace, mutate }) {
         </div>
         {loading ? (
           <p className="text-left text-white light:text-theme-text-primary text-sm">
-            Starting Thread...
+            Starte Chat...
           </p>
         ) : (
           <p className="text-left text-white light:text-theme-text-primary text-sm font-semibold">
-            New Thread
+            Neuer Chat
           </p>
         )}
       </div>

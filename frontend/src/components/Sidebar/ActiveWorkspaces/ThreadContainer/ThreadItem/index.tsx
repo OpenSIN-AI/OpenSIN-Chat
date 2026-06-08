@@ -9,11 +9,12 @@ import {
   DotsThree,
   Link as LinkIcon,
   PencilSimple,
+  Plus,
   Trash,
   X,
 } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -176,6 +177,7 @@ export default function ThreadItem({
 function OptionsMenu({
   containerRef, workspace, thread, onRemove, close, currentThreadSlug, }: any) {
   const menuRef: any = useRef(null);
+  const navigate = useNavigate();
 
   // Ref menu options
   const outsideClick = (e) => {
@@ -208,6 +210,17 @@ function OptionsMenu({
     setListeners();
     return cleanupListeners;
   }, []);
+
+  const handleNewChat = async () => {
+    close();
+    const { thread: newThread, message } = await Workspace.threads.new(workspace.slug);
+    if (message || !newThread) {
+      showToast(`Chat konnte nicht erstellt werden: ${message}`, "error", { clear: true });
+      return;
+    }
+    invalidateThreads(workspace.slug);
+    navigate(paths.workspace.thread(workspace.slug, newThread.slug));
+  };
 
   const handleCopyLink = () => {
     const link = `${window.location.origin}${paths.workspace.thread(workspace.slug, thread.slug)}`;
@@ -274,6 +287,15 @@ function OptionsMenu({
       ref={menuRef}
       className="absolute w-fit z-[20] top-[25px] right-[10px] bg-zinc-900 light:bg-theme-bg-sidebar light:border-[1px] light:border-theme-sidebar-border rounded-lg p-1"
     >
+      <button
+        onClick={handleNewChat}
+        type="button"
+        className="w-full rounded-md flex items-center p-2 gap-x-2 hover:bg-slate-500/20 text-slate-300 light:text-theme-text-primary"
+      >
+        <Plus size={18} />
+        <p className="text-sm">Neuer Chat</p>
+      </button>
+      <div className="w-full h-px bg-zinc-700 light:bg-slate-200 my-0.5" />
       <button
         onClick={handleCopyLink}
         type="button"
