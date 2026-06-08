@@ -41,17 +41,20 @@ full-text search over speeches and protocols.
 - Postgres `tsvector` index over speech + protocol text.
 - Expose `?q=` search on `/api/politician/*` with ranked results.
 
-### B4 — Source freshness (21. WP)
-- Parameterize parliament/Wahlperiode ID; default to 21. WP.
-- Adopt new Abgeordnetenwatch v2 fields; map to existing schema.
+### B4 — Source freshness (21. WP) ✓ DONE (#84)
+- Parameterize parliament/Wahlperiode ID; default to 21. WP. ✓
+- Adopt new Abgeordnetenwatch v2 fields; map to existing schema. ✓
+- `AW_PARLIAMENT_PERIOD=132`, endpoint `/candidacies-mandates`, fields `first_name`/`last_name`/`year_of_birth`. ✓
+- Bundestag API: `BUNDESTAG_WAHLPERIODE=21`, DIP-API fallback. ✓
+- `DATA-SOURCES.md` aktualisiert. ✓
 
 ## Acceptance Criteria
 
-- [ ] Sync job runs end-to-end and populates the DB (counts logged)
-- [ ] `semanticSearchSpeeches()` returns ranked results from pgvector
-- [ ] Full-text `?q=` search returns ranked hits
-- [ ] Endpoints target the 21. Wahlperiode by default
-- [ ] DatabaseSidebar / PoliticalSidebar show live data in prod
+- [ ] Sync job runs end-to-end and populates the DB (counts logged) — needs live DB
+- [ ] `semanticSearchSpeeches()` returns ranked results from pgvector — needs live DB
+- [ ] Full-text `?q=` search returns ranked hits — needs live DB
+- [x] Endpoints target the 21. Wahlperiode by default (B4 done — `AW_PARLIAMENT_PERIOD=132`, `BUNDESTAG_WAHLPERIODE=21`)
+- [ ] DatabaseSidebar / PoliticalSidebar show live data in prod — needs live DB
 
 ## Related Issues
 
