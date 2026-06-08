@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
-import { X, Globe, FileText, Database } from "@phosphor-icons/react";
+import { X, Globe, FileText, Database, ChatCircleText } from "@phosphor-icons/react";
+import { Link, useParams } from "react-router-dom";
 import {
   combineLikeSources,
   CitationDetailModal,
@@ -12,6 +13,8 @@ import SourceItem from "./SourceItem";
 import ChatSidebar, { useSourcesSidebar, useChatSidebar } from "../ChatSidebar";
 import SidebarTabs from "../ChatSidebar/SidebarTabs";
 import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
+import useThreads from "@/hooks/useThreads";
+import paths from "@/utils/paths";
 
 // Re-export for backward compat with existing imports
 export { useSourcesSidebar } from "../ChatSidebar";
@@ -72,10 +75,80 @@ function WorkspaceSourceItem({ doc, onClick }: any) {
   );
 }
 
+function WorkspaceChatsTab({ workspace, onClose }: any) {
+  const { t } = useTranslation();
+  const { threads, isLoading } = useThreads(workspace?.slug);
+  const { threadSlug: activeThreadSlug } = useParams() as any;
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col gap-2 overflow-y-auto no-scroll">
+        {[...Array(4)].map((_, i) => (
+          <div
+            key={i}
+            className="h-12 rounded-lg bg-zinc-800 light:bg-slate-100 animate-pulse"
+          />
+        ))}
+      </div>
+    );
+  }
+
+  const allThreads = [
+    // Default thread (no slug)
+    { id: "__default__", slug: null, name: workspace?.name || "Default", virtual: true },
+    ...threads.filter((t: any) => !t.virtual && !t.deleted),
+  ];
+
+  if (allThreads.length === 0) {
+    return (
+      <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-6">
+        {t("chat_window.no_chats", "Noch keine Chats vorhanden.")}
+      </p>
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-1 overflow-y-auto no-scroll">
+      {allThreads.map((thread: any) => {
+        const href = thread.slug
+          ? paths.workspace.thread(workspace.slug, thread.slug)
+          : paths.workspace.chat(workspace.slug);
+        const isActive = thread.slug
+          ? activeThreadSlug === thread.slug
+          : !activeThreadSlug;
+
+        return (
+          <Link
+            key={thread.id}
+            to={href}
+            onClick={onClose}
+            className={`flex flex-col gap-0.5 px-3 py-2 rounded-lg transition-colors no-underline group ${
+              isActive
+                ? "bg-zinc-700 light:bg-slate-200"
+                : "hover:bg-zinc-800 light:hover:bg-slate-100"
+            }`}
+          >
+            <span
+              className={`text-sm font-medium truncate ${
+                isActive
+                  ? "text-white light:text-slate-900"
+                  : "text-zinc-200 light:text-slate-700"
+              }`}
+            >
+              {thread.name}
+            </span>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function SourcesSidebar({ workspace }: any) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
   const [selectedSource, setSelectedSource] = useState(null);
+  const [activeTab, setActiveTab] = useState<"sources" | "chats">("sources");
   const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
 
   const combined = combineLikeSources(sources);
@@ -127,7 +200,9 @@ export default function SourcesSidebar({ workspace }: any) {
           <div className="flex flex-col shrink-0 gap-2">
             <div className="flex items-start justify-between">
               <p className="font-medium text-base leading-6 text-white light:text-slate-900">
-                {isWorkspaceMode
+                {activeTab === "chats"
+                  ? t("chat_window.workspace_chats", "Chats")
+                  : isWorkspaceMode
                   ? t("chat_window.workspace_sources")
                   : t("chat_window.sources")}
               </p>
@@ -139,35 +214,70 @@ export default function SourcesSidebar({ workspace }: any) {
                 <X size={16} weight="bold" />
               </button>
             </div>
-            <SidebarTabs />
+
+            {/* Chats / Quellen Toggle */}
+            <div className="flex items-center gap-1 shrink-0">
+              <button
+                type="button"
+                onClick={() => setActiveTab("chats")}
+                className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
+                  activeTab === "chats"
+                    ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                    : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
+                }`}
+              >
+                <ChatCircleText size={12} weight="bold" />
+                <span>{t("chat_window.chats_tab", "Chats")}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab("sources")}
+                className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
+                  activeTab === "sources"
+                    ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                    : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
+                }`}
+              >
+                <FileText size={12} weight="bold" />
+                <span>{t("chat_window.sources", "Quellen")}</span>
+              </button>
+            </div>
+
+            {activeTab === "sources" && <SidebarTabs />}
           </div>
-          <div className="flex flex-col gap-3 overflow-y-auto no-scroll">
-            {displaySources.length === 0 ? (
-              <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-4">
-                {isWorkspaceMode
-                  ? t("chat_window.no_workspace_sources")
-                  : t("chat_window.no_sources_filter", {
-                      filter: t(`chat_window.source_filter_${sourceFilter}`),
-                    })}
-              </p>
-            ) : (
-              (displaySources as any).map((source, idx) =>
-                isWorkspaceMode ? (
-                  <WorkspaceSourceItem
-                    key={source.docId || idx}
-                    doc={source}
-                    onClick={() => {}}
-                  />
-                ) : (
-                  <SourceItem
-                    key={source.title || idx}
-                    source={source}
-                    onClick={() => setSelectedSource(source)}
-                  />
-                ),
-              )
-            )}
-          </div>
+
+          {/* Tab-Inhalt */}
+          {activeTab === "chats" ? (
+            <WorkspaceChatsTab workspace={workspace} onClose={closeSidebar} />
+          ) : (
+            <div className="flex flex-col gap-3 overflow-y-auto no-scroll">
+              {displaySources.length === 0 ? (
+                <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-4">
+                  {isWorkspaceMode
+                    ? t("chat_window.no_workspace_sources")
+                    : t("chat_window.no_sources_filter", {
+                        filter: t(`chat_window.source_filter_${sourceFilter}`),
+                      })}
+                </p>
+              ) : (
+                (displaySources as any).map((source, idx) =>
+                  isWorkspaceMode ? (
+                    <WorkspaceSourceItem
+                      key={source.docId || idx}
+                      doc={source}
+                      onClick={() => {}}
+                    />
+                  ) : (
+                    <SourceItem
+                      key={source.title || idx}
+                      source={source}
+                      onClick={() => setSelectedSource(source)}
+                    />
+                  ),
+                )
+              )}
+            </div>
+          )}
         </div>
       </ChatSidebar>
       {selectedSource && !isWorkspaceMode && (
