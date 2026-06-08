@@ -202,27 +202,30 @@ GET /politicians/{ID}/mandates/
 
 | AW Feld | Internes Feld | Typ | Bemerkung |
 |---------|---------------|-----|-----------|
-| `id` | `externalId` (präfixiert: `aw-{id}`) | String | |
-| `firstName` | `firstName` | String | |
-| `lastName` | `lastName` | String | |
-| `sex` | `gender` | Enum | "male" / "female" |
-| `birthDate` | `birthDate` | Date | ISO-8601 |
-| `party.label` / `party.name` | `party` | String | Parteikürzel oder Name |
-| `constituencyName` | `electoralDistrict` | String | |
-| `votes` | `votes` | Array | Abstimmungsdaten (separater Endpoint) |
-| `mandates` | `mandates` | Array | Mandatsdaten (separater Endpoint) |
+| `politician.id` | `externalId` (präfixiert: `aw-{id}`) | String | |
+| `politician.first_name` | `firstName` | String | **#84:** neue 21.-WP-Felder (snake_case) |
+| `politician.last_name` | `lastName` | String | **#84** |
+| `politician.sex` | `gender` | Enum | "male" / "female" |
+| `politician.year_of_birth` | `birthDate` | Int → Date | **#84:** Jahr → `{year}-01-01` |
+| `politician.party.label` | `party` | String | Parteikürzel; akzeptiert auch flachen String |
+| `politician.ext_id_bundestagsverwaltung` | `extIdBundestag` | String | **#84:** verknüpft AW ↔ Bundestag/DIP |
+| `electoral_data.constituency.name` | `electoralDistrict` | String | |
+| (separater Endpoint) | `votes` | Array | `/politicians/{id}/votes/?parliament_period=132` |
+| (separater Endpoint) | `mandates` | Array | `/candidacies-mandates` |
 
 ### Rate-Limits & Einschränkungen
 - **Kein API-Key erforderlich** (für lesenden Zugriff)
 - **Rate-Limit:** Nicht offiziell dokumentiert, im Client 500ms zwischen Requests
 - **Cache-TTL:** 6 Stunden (im Client)
-- **Pagination:** Ergebnisse sind paginiert (via `meta.pagination.next`)
+- **Pagination:** Range-basiert über `meta.result` (`range_start` / `range_end` /
+  `total`) — **kein** `meta.pagination.next`-Link (**#84**)
 - **Einschränkung:** Nicht alle Bundestagsabgeordnete sind in AW indexiert (besonders Wechsel innerhalb der Wahlperiode)
 
 ### Filter-Möglichkeiten (externe API)
-- `?search={NAME}` — Volltextsuche nach Name
-- `?parliament=111` — Filter nach Parlament (111 = Bundestag 20. WP)
-- `?range_end=100` — Limitierung der Ergebnisse
+- `?politician[entity.label][cn]={NAME}` — Suche nach Name
+- `?parliament_period=132` — Filter nach Wahlperiode (132 = Bundestag 21. WP,
+  733 Mandate) (**#84**)
+- `?range_start=0&range_end=100` — Range-Limitierung der Ergebnisse
 - **Keine Filter nach Partei, Bundesland, etc.** — client-seitig nötig
 
 ### Offizielle Doku
