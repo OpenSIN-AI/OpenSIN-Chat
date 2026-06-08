@@ -15,7 +15,7 @@ import {
 import LLMSelectorSidePanel from "./LLMSelector";
 import { NoSetupWarning } from "./SetupProvider";
 import showToast from "@/utils/toast";
-import useWorkspace from "@/hooks/useWorkspace";
+import useWorkspace from "@/hooks/useWorkspaceBySlug";
 import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function LLMSelectorModal({

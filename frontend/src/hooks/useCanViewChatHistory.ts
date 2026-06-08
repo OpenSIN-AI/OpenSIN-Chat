@@ -4,7 +4,7 @@ import System from "@/models/system";
 
 export const CAN_VIEW_CHAT_HISTORY_KEY = "system/can-view-chat-history";
 
-export default function useCanViewChatHistory() {
+export function useCanViewChatHistory() {
   const { data, error, isLoading, mutate } = useSWR(
     CAN_VIEW_CHAT_HISTORY_KEY,
     () => System.fetchCanViewChatHistory(),
@@ -22,3 +22,5 @@ export default function useCanViewChatHistory() {
     mutate,
   };
 }
+
+export default useCanViewChatHistory;

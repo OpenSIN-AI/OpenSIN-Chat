@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { isMobileOnly } from "react-device-detect";
 import useUser from "../../../hooks/useUser";
 import useSystemSettings from "../../../hooks/useSystemSettings";
-import useWorkspace from "../../../hooks/useWorkspace";
+import useWorkspace from "../../../hooks/useWorkspaceBySlug";
 import DocumentSettings from "./Documents";
 import DataConnectors from "./DataConnectors";
 import ModalWrapper from "@/components/ModalWrapper";

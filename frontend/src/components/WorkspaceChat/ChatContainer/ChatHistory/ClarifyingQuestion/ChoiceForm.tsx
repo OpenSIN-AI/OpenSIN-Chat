@@ -135,7 +135,7 @@ export default function ChoiceForm({
 
   return (
     <div className="flex flex-col w-full">
-      {question.(options as any).map((opt, idx) => (
+      {(question.options as any).map((opt, idx) => (
         <OptionButton
           key={`${opt}-${idx}`}
           label={opt}

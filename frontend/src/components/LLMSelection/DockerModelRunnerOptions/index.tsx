@@ -275,7 +275,7 @@ function DockerModelRunnerModelSelection({
     window.dispatchEvent(new Event(LLM_PREFERENCE_CHANGED_EVENT));
   }
 
-  const customModels = groupModelsByAlias(filteredModels);
+  const groupedCustomModels = groupModelsByAlias(filteredModels);
   return (
     <ModelTableLayout
       fetchModels={fetchModels}
@@ -301,7 +301,7 @@ function DockerModelRunnerModelSelection({
           <p className="text-theme-text-secondary text-sm">No models found!</p>
         </div>
       ) : (
-        Object.entries(customModels).map(([alias, models]) => (
+        Object.entries(groupedCustomModels).map(([alias, models]) => (
           <ModelTable
             key={alias}
             alias={alias}

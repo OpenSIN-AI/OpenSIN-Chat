@@ -18,35 +18,38 @@ import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
 import ImageLightbox from "@/components/ImageLightbox";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryFallback from "./components/ErrorBoundaryFallback";
+import PasswordGate from "./components/PasswordGate";
 
 export default function App() {
   const location = useLocation();
   return (
-    <ErrorBoundary
-      FallbackComponent={ErrorBoundaryFallback}
-      onError={console.error}
-      resetKeys={[location.pathname]}
-    >
-      <ThemeProvider>
-        <PWAModeProvider>
-          <Suspense fallback={<FullScreenLoader />}>
-            <SWRConfig value={swrConfig}>
-              <AuthProvider>
-                <LogoProvider>
-                  <PfpProvider>
-                    <I18nextProvider i18n={i18n}>
-                      <Outlet />
-                      <ToastContainer />
-                      <KeyboardShortcutsHelp />
-                      <ImageLightbox />
-                    </I18nextProvider>
-                  </PfpProvider>
-                </LogoProvider>
-              </AuthProvider>
-            </SWRConfig>
-          </Suspense>
-        </PWAModeProvider>
-      </ThemeProvider>
-    </ErrorBoundary>
+    <PasswordGate>
+      <ErrorBoundary
+        FallbackComponent={ErrorBoundaryFallback}
+        onError={console.error}
+        resetKeys={[location.pathname]}
+      >
+        <ThemeProvider>
+          <PWAModeProvider>
+            <Suspense fallback={<FullScreenLoader />}>
+              <SWRConfig value={swrConfig}>
+                <AuthProvider>
+                  <LogoProvider>
+                    <PfpProvider>
+                      <I18nextProvider i18n={i18n}>
+                        <Outlet />
+                        <ToastContainer />
+                        <KeyboardShortcutsHelp />
+                        <ImageLightbox />
+                      </I18nextProvider>
+                    </PfpProvider>
+                  </LogoProvider>
+                </AuthProvider>
+              </SWRConfig>
+            </Suspense>
+          </PWAModeProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
+    </PasswordGate>
   );
 }

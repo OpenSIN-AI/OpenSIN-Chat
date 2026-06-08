@@ -198,7 +198,7 @@ export default function AgentFlows({ entity }: any) {
           </div>
           <div className="flex flex-col gap-y-0.5">
             {entity.steps && entity.steps.length > 0 ? (
-              entity.(steps as any).map((step, idx) => {
+              (entity.steps as any).map((step, idx) => {
                 const info = BLOCK_INFO[step.type];
                 const isExpanded = expandedStep === idx;
                 const summary = info?.getSummary

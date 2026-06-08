@@ -107,7 +107,7 @@ export default function AgentSkillsTab({
     const q = searchQuery.toLowerCase();
     return sections
       .map((section) => {
-        const items = section.(items as any).filter((item) => {
+        const items = (section.items as any).filter((item) => {
           const nameMatches = item.name.toLowerCase().includes(q);
           const subSkillMatches =
             item.subSkills?.some((sub) => sub.name.toLowerCase().includes(q)) ??
@@ -200,7 +200,7 @@ export default function AgentSkillsTab({
           isMcp={section.isMcp}
           highlighted={highlightedIndex === flatIndexMap[section.id]}
         >
-          {section.(items as any).map((item) => (
+          {(section.items as any).map((item) => (
             <div key={item.id}>
               <SkillRow
                 name={item.name}
@@ -214,14 +214,14 @@ export default function AgentSkillsTab({
                   name={t("chat_window.sub_skills")}
                   expanded={isSubSectionExpanded(item.id)}
                   onToggle={() => toggleSubSection(item.id)}
-                  enabledCount={item.(subSkills as any).filter((s) => s.enabled).length}
+                  enabledCount={(item.subSkills as any).filter((s) => s.enabled).length}
                   totalCount={item.subSkills.length}
                   highlighted={
                     highlightedIndex === flatIndexMap[`subsection-${item.id}`]
                   }
                   indented
                 >
-                  {item.(subSkills as any).map((subItem) => (
+                  {(item.subSkills as any).map((subItem) => (
                     <SkillRow
                       key={subItem.id}
                       name={subItem.name}

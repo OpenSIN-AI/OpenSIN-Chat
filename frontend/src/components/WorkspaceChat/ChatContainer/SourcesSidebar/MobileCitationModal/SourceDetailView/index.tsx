@@ -31,7 +31,7 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
         </button>
       </div>
       <div className="flex flex-col overflow-y-auto no-scroll">
-        {source.(chunks as any).map(({ text, score }, idx) => (
+        {(source.chunks as any).map(({ text, score }, idx) => (
           <Fragment key={idx}>
             <div className="flex flex-col gap-y-1 py-4">
               <p className="text-sm leading-[20px] text-white light:text-slate-900">

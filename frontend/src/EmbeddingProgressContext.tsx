@@ -70,7 +70,7 @@ export function EmbeddingProgressProvider({ children }: any) {
   useEffect(() => {
     return () => {
       Object.values(abortControllersRef.current).forEach((ctrl) =>
-        ctrl??.abort(),
+        ctrl?.abort(),
       );
     };
   }, []);
@@ -200,7 +200,7 @@ export function EmbeddingProgressProvider({ children }: any) {
 
   const startEmbedding = useCallback(
     (slug, filenames) => {
-      abortControllersRef.current[slug]??.abort();
+      abortControllersRef.current[slug]?.abort();
       delete abortControllersRef.current[slug];
 
       if (cleanupTimeoutsRef.current[slug]) {

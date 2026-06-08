@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 import useUser from "@/hooks/useUser";
-import useWorkspace from "@/hooks/useWorkspace";
+import useWorkspace from "@/hooks/useWorkspaceBySlug";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import useModelRouter from "@/hooks/useModelRouter";
 import { useModal } from "@/hooks/useModal";
