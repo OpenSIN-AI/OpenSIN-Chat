@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function NovitaLLMOptions({ settings }: any) {
   return (
@@ -76,27 +76,8 @@ function AdvancedControls({ settings }: any) {
 }
 
 function NovitaModelSelection({ settings }: any) {
-  const [groupedModels, setGroupedModels] = useState({} as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models } = await System.customModels("novita");
-      if (models?.length > 0) {
-        const modelsByOrganization = models.reduce((acc, model) => {
-          acc[model.organization] = acc[model.organization] || [];
-          acc[model.organization].push(model);
-          return acc;
-        }, {});
-        setGroupedModels(modelsByOrganization);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, []);
-
-  if (loading || Object.keys(groupedModels).length === 0) {
+  const { customModels, isLoading } = useProviderModels("novita");
+  if (isLoading || Object.keys(customModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-theme-text-primary text-sm font-semibold block mb-3">
@@ -125,11 +106,11 @@ function NovitaModelSelection({ settings }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg text-theme-text-primary border-theme-border text-sm rounded-lg block w-full p-2.5"
       >
-        {Object.keys(groupedModels)
+        {Object.keys(customModels)
           .sort()
           .map((organization) => (
             <optgroup key={organization} label={organization}>
-              {groupedModels[organization].map((model) => (
+              {customModels[organization].map((model) => (
                 <option
                   key={model.id}
                   value={model.id}

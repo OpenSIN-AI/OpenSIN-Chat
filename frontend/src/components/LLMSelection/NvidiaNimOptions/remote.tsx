@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
-import System from "@/models/system";
 import { NVIDIA_NIM_COMMON_URLS } from "@/utils/constants";
-import { useState, useEffect } from "react";
-
+import useProviderModels from "@/hooks/useProviderModels";
 /**
  * This component is used to select a remote NVIDIA NIM model endpoint
  * This is the default component and way to connect to NVIDIA NIM
@@ -70,24 +68,8 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
   );
 }
 function NvidiaNimModelSelection({ settings, basePath }: any) {
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models } = await System.customModels(
-        "nvidia-nim",
-        null,
-        basePath,
-      );
-      setModels(models);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath]);
-
-  if (loading || models.length === 0) {
+  const { customModels, isLoading } = useProviderModels("nvidia-nim", basePath);
+  if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
@@ -116,7 +98,7 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {(models as any).map((model) => (
+        {(customModels as any).map((model) => (
           <option
             key={model.id}
             value={model.id}

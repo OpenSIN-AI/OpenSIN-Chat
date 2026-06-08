@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
@@ -10,12 +10,12 @@ import { useModal } from "@/hooks/useModal";
 import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
 import NewRouterModal from "./NewRouterModal";
+import useModelRouters from "@/hooks/useModelRouters";
 
 export default function ModelRouters() {
   const { t } = useTranslation();
   const { isOpen, openModal, closeModal } = useModal();
-  const [loading, setLoading] = useState(true);
-  const [routers, setRouters] = useState([]);
+  const { routers, isLoading, refresh } = useModelRouters();
   const [editingRouter, setEditingRouter] = useState(null);
 
   const openCreateModal = () => {
@@ -33,23 +33,14 @@ export default function ModelRouters() {
     setEditingRouter(null);
   };
 
-  const fetchRouters = async () => {
-    const results = await ModelRouter.getAll();
-    setRouters(results);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchRouters();
-  }, []);
-
   const removeRouter = (id) => {
-    setRouters((prev) => prev.filter((r) => r.id !== id));
+    // Optimistic remove — refresh will reconcile
+    refresh((prev) => prev?.filter((r) => r.id !== id) ?? [], false);
   };
 
-  const isEmpty = !loading && routers.length === 0;
+  const isEmpty = !isLoading && routers.length === 0;
 
-  if (loading)
+  if (isLoading)
     return (
       <Layout t={t}>
         <LoadingState />
@@ -63,7 +54,7 @@ export default function ModelRouters() {
         <NewRouterModal
           isOpen={isOpen}
           closeModal={handleModalClose}
-          onSuccess={fetchRouters}
+          onSuccess={refresh}
           router={editingRouter}
         />
       </Layout>
@@ -79,7 +70,7 @@ export default function ModelRouters() {
       <NewRouterModal
         isOpen={isOpen}
         closeModal={handleModalClose}
-        onSuccess={fetchRouters}
+        onSuccess={refresh}
         router={editingRouter}
       />
     </Layout>
@@ -92,6 +83,7 @@ function Layout({ t, showAction, onAction, children }) {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-2xl bg-zinc-900 light:bg-white light:border light:border-slate-300 w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-0 py-16">
           <div className="flex items-end justify-between pr-8 py-6 border-b border-white/20 light:border-slate-300">

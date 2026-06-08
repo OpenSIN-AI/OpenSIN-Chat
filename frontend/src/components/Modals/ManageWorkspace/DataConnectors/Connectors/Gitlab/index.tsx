@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import pluralize from "pluralize";
@@ -9,6 +9,7 @@ import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
 import DOMPurify from "@/utils/chat/purify";
+import useConnectorBranches from "@/hooks/useConnectorBranches";
 
 const DEFAULT_BRANCHES = ["main", "master"];
 export default function GitlabOptions() {
@@ -199,27 +200,13 @@ export default function GitlabOptions() {
 
 function GitLabBranchSelection({ repo, accessToken }: any) {
   const { t } = useTranslation();
-  const [allBranches, setAllBranches] = useState(DEFAULT_BRANCHES);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function fetchAllBranches() {
-      if (!repo) {
-        setAllBranches(DEFAULT_BRANCHES);
-        setLoading(false);
-        return;
-      }
-
-      setLoading(true);
-      const { branches } = await System.dataConnectors.gitlab.branches({
-        repo,
-        accessToken,
-      });
-      setAllBranches(branches.length > 0 ? branches : DEFAULT_BRANCHES);
-      setLoading(false);
-    }
-    fetchAllBranches();
-  }, [repo, accessToken]);
+  const { branches: allBranches, isLoading: loading } = useConnectorBranches(
+    "gitlab",
+    repo,
+    accessToken,
+  );
+  const displayBranches =
+    allBranches.length > 0 ? allBranches : DEFAULT_BRANCHES;
 
   if (loading) {
     return (
@@ -258,7 +245,7 @@ function GitLabBranchSelection({ repo, accessToken }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
       >
-        {(allBranches as any).map((branch) => {
+        {(displayBranches as any).map((branch) => {
           return (
             <option key={branch} value={branch}>
               {branch}

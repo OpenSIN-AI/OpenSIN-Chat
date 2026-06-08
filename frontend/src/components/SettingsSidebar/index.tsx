@@ -21,10 +21,10 @@ import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
-import System from "@/models/system";
 import Option from "./MenuOption";
 import { CanViewChatHistoryProvider } from "../CanViewChatHistory";
 import useAppVersion from "@/hooks/useAppVersion";
+import useSupportEmail from "@/hooks/useSupportEmail";
 
 export default function SettingsSidebar() {
   const { t } = useTranslation();
@@ -84,7 +84,6 @@ export default function SettingsSidebar() {
             className="h-[100vh] fixed top-0 left-0 rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
           >
             <div className="w-full h-full flex flex-col overflow-x-hidden items-between">
-              {/* Header Information */}
               <div className="flex w-full items-center justify-between gap-x-4">
                 <div className="flex shrink-1 w-fit items-center justify-start">
                   <img
@@ -103,7 +102,6 @@ export default function SettingsSidebar() {
                 </div>
               </div>
 
-              {/* Primary Body */}
               <div className="h-full flex flex-col w-full justify-between pt-4 overflow-y-scroll no-scroll">
                 <div className="h-auto md:sidebar-items">
                   <div className="flex flex-col gap-y-4 pb-[60px] overflow-y-scroll no-scroll">
@@ -184,24 +182,13 @@ export default function SettingsSidebar() {
 }
 
 function SupportEmail() {
-  const [supportEmail, setSupportEmail] = useState(paths.mailToSupport());
+  const { email } = useSupportEmail();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    const fetchSupportEmail = async () => {
-      const supportEmail = await System.fetchSupportEmail();
-      setSupportEmail(
-        supportEmail?.email
-          ? `mailto:${supportEmail.email}`
-          : paths.mailToSupport(),
-      );
-    };
-    fetchSupportEmail();
-  }, []);
+  const supportLink = email ? `mailto:${email}` : paths.mailToSupport();
 
   return (
     <Link
-      to={supportEmail}
+      to={supportLink}
       className="text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary text-xs leading-[18px] mx-3 mt-1"
     >
       {t("settings.contact")}
@@ -467,7 +454,6 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
       if (!["Control", "Meta"].includes(e.key) || timeout !== null) return;
       timeout = setTimeout(() => {
         setShowing(true);
-        // Setting toastId prevents hook spam from holding control too many times or the event not detaching
         showToast("Experimental feature previews unlocked!");
         window.localStorage.setItem(
           "openafd_experimental_feature_preview_unlocked",
@@ -505,7 +491,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
 
 function AppVersion() {
   const { version, isLoading } = useAppVersion();
-  if (isLoading) return null;
+  if (isLoading || !version) return null;
   return (
     <Link
       to={`https://github.com/Family-Team-Projects/openafd-chat/releases/tag/v${version}`}

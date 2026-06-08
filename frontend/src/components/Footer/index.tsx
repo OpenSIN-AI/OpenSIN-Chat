@@ -12,11 +12,12 @@ import {
   Info,
   LinkSimple,
 } from "@phosphor-icons/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SettingsButton from "../SettingsButton";
 import { isMobile } from "react-device-detect";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
+import useFooterIcons from "@/hooks/useFooterIcons";
 
 export const MAX_ICONS = 3;
 export const ICON_COMPONENTS = {
@@ -31,8 +32,6 @@ export const ICON_COMPONENTS = {
   Info: Info,
 };
 
-// Standard-Icons des Footers. Zentral definiert, damit Links, Tooltips und
-// Accessibility-Labels nur an einer Stelle gepflegt werden müssen.
 const DEFAULT_FOOTER_ITEMS = [
   {
     key: "github",
@@ -61,23 +60,9 @@ const ICON_LINK_CLASSES =
   "transition-all duration-300 flex items-center justify-center p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70";
 
 export default function Footer() {
-  const [footerData, setFooterData] = useState<any>(false);
+  const { footerData, isLoading } = useFooterIcons();
 
-  useEffect(() => {
-    async function fetchFooterData() {
-      try {
-        const { footerData } = await System.fetchCustomFooterIcons();
-        setFooterData(Array.isArray(footerData) ? footerData : []);
-      } catch (error) {
-        console.error("Footer-Icons konnten nicht geladen werden:", error);
-        setFooterData([]);
-      }
-    }
-    fetchFooterData();
-  }, []);
-
-  // Warten auf eine erste Antwort (nicht `false`), um ein Aufpoppen zu vermeiden.
-  if (footerData === false) return null;
+  if (isLoading) return null;
 
   const hasCustomIcons = Array.isArray(footerData) && footerData.length > 0;
 

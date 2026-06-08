@@ -1,36 +1,29 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import showToast from "@/utils/toast";
-import { safeJsonParse } from "@/utils/request";
 import NewIconForm from "./NewIconForm";
 import Admin from "@/models/admin";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
+import useFooterSettings from "@/hooks/useFooterSettings";
 
 export default function FooterCustomization() {
+  const { footerIcons: initialIcons, isLoading } = useFooterSettings();
   const [footerIcons, setFooterIcons] = useState(Array(3).fill(null));
   const { t } = useTranslation();
 
-  useEffect(() => {
-    async function fetchFooterIcons() {
-      const { settings } = await Admin.systemPreferencesByFields([
-        "footer_data",
-      ]);
-
-      const footerData = settings?.footer_data;
-      if (footerData) {
-        const parsedIcons = safeJsonParse(footerData, []);
-        setFooterIcons((prevIcons) => {
-          const updatedIcons = [...prevIcons];
-          parsedIcons.forEach((icon, index) => {
-            updatedIcons[index] = icon;
-          });
-          return updatedIcons;
-        });
-      }
+  // Sync SWR data into local state once loaded
+  const [synced, setSynced] = useState(false);
+  if (!isLoading && !synced) {
+    const updatedIcons = Array(3).fill(null);
+    if (Array.isArray(initialIcons)) {
+      initialIcons.forEach((icon, index) => {
+        if (index < 3) updatedIcons[index] = icon;
+      });
     }
-    fetchFooterIcons();
-  }, []);
+    setFooterIcons(updatedIcons);
+    setSynced(true);
+  }
 
   const updateFooterIcons = async (updatedIcons) => {
     const { success, error } = await Admin.updateSystemPreferences({

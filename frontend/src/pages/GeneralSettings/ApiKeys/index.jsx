@@ -1,41 +1,25 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PlusCircle } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
 import ApiKeyRow from "./ApiKeyRow";
 import NewApiKeyModal from "./NewApiKeyModal";
 import paths from "@/utils/paths";
-import { userFromStorage } from "@/utils/request";
-import System from "@/models/system";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import CTAButton from "@/components/lib/CTAButton";
 import { useTranslation } from "react-i18next";
+import useApiKeys from "@/hooks/useApiKeys";
 
 export default function AdminApiKeys() {
   const { isOpen, openModal, closeModal } = useModal();
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(true);
-  const [apiKeys, setApiKeys] = useState([]);
-
-  const fetchExistingKeys = async () => {
-    const user = userFromStorage();
-    const Model = !!user ? Admin : System;
-    const { apiKeys: foundKeys } = await Model.getApiKeys();
-    setApiKeys(foundKeys);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchExistingKeys();
-  }, []);
+  const { apiKeys, isLoading, refresh } = useApiKeys();
 
   const removeApiKey = (id) => {
-    setApiKeys((prevKeys) => prevKeys.filter((apiKey) => apiKey.id !== id));
+    refresh();
   };
 
   return (
@@ -43,6 +27,7 @@ export default function AdminApiKeys() {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+      }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
@@ -73,7 +58,7 @@ export default function AdminApiKeys() {
             </CTAButton>
           </div>
           <div className="overflow-x-auto mt-6">
-            {loading ? (
+            {isLoading ? (
               <Skeleton.default
                 height="80vh"
                 width="100%"
@@ -128,7 +113,7 @@ export default function AdminApiKeys() {
         <ModalWrapper isOpen={isOpen}>
           <NewApiKeyModal
             closeModal={closeModal}
-            onSuccess={fetchExistingKeys}
+            onSuccess={refresh}
           />
         </ModalWrapper>
       </div>

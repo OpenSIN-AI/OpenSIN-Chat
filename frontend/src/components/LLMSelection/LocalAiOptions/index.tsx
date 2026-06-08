@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Info, CaretDown, CaretUp } from "@phosphor-icons/react";
 import paths from "@/utils/paths";
-import System from "@/models/system";
 import PreLoader from "@/components/Preloader";
 import { LOCALAI_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LocalAiOptions({ settings, showAlert = false }: any) {
   const {
@@ -146,29 +146,8 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
 }
 
 function LocalAIModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath || !basePath.includes("/v1")) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      const { models } = await System.customModels(
-        "localai",
-        typeof apiKey === "boolean" ? null : apiKey,
-        basePath,
-      );
-      setCustomModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath, apiKey]);
-
-  if (loading || customModels.length == 0) {
+  const { customModels, isLoading } = useProviderModels("localai", apiKey, basePath);
+  if (isLoading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">

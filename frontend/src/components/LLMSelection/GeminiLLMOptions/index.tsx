@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import System from "@/models/system";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function GeminiLLMOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.GeminiLLMApiKey);
@@ -63,29 +63,8 @@ export default function GeminiLLMOptions({ settings }: any) {
 }
 
 function GeminiModelSelection({ apiKey, settings }: any) {
-  const [groupedModels, setGroupedModels] = useState({} as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models } = await System.customModels("gemini", apiKey);
-
-      if (models?.length > 0) {
-        const modelsByOrganization = models.reduce((acc, model) => {
-          acc[model.experimental ? "Experimental" : "Stable"] =
-            acc[model.experimental ? "Experimental" : "Stable"] || [];
-          acc[model.experimental ? "Experimental" : "Stable"].push(model);
-          return acc;
-        }, {});
-        setGroupedModels(modelsByOrganization);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [apiKey]);
-
-  if (loading) {
+  const { customModels, isLoading } = useProviderModels("gemini", apiKey);
+  if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">

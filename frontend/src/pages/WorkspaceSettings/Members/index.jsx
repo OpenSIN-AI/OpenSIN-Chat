@@ -1,38 +1,23 @@
 // SPDX-License-Identifier: MIT
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
-import Admin from "@/models/admin";
-import { useEffect, useState } from "react";
 import * as Skeleton from "react-loading-skeleton";
 import AddMemberModal from "./AddMemberModal";
 import WorkspaceMemberRow from "./WorkspaceMemberRow";
 import CTAButton from "@/components/lib/CTAButton";
+import useWorkspaceMembers from "@/hooks/useWorkspaceMembers";
 
 export default function Members({ workspace }) {
-  const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
-  const [workspaceUsers, setWorkspaceUsers] = useState([]);
-  const [adminWorkspace, setAdminWorkspace] = useState(null);
+  const {
+    users,
+    workspaceUsers,
+    adminWorkspace,
+    isLoading,
+  } = useWorkspaceMembers(workspace.id);
 
   const { isOpen, openModal, closeModal } = useModal();
-  useEffect(() => {
-    async function fetchData() {
-      const _users = await Admin.users();
-      const workspaceUsers = await Admin.workspaceUsers(workspace.id);
-      const adminWorkspaces = await Admin.workspaces();
-      setAdminWorkspace(
-        adminWorkspaces.find(
-          (adminWorkspace) => adminWorkspace.id === workspace.id,
-        ),
-      );
-      setWorkspaceUsers(workspaceUsers);
-      setUsers(_users);
-      setLoading(false);
-    }
-    fetchData();
-  }, [workspace]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <Skeleton.default
         height="80vh"

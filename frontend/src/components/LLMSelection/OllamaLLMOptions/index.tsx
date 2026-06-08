@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
-import System from "@/models/system";
+import React, { useState } from "react";
 import { OLLAMA_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp, Info, CircleNotch } from "@phosphor-icons/react";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function OllamaLLMOptions({ settings }: any) {
   const {
@@ -259,34 +259,8 @@ export default function OllamaLLMOptions({ settings }: any) {
 
 function OllamaLLMModelSelection({
   settings, basePath = null, authToken = null, }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { models } = await System.customModels(
-          "ollama",
-          authToken,
-          basePath,
-        );
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch custom models:", error);
-        setCustomModels([]);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath, authToken]);
-
-  if (loading || customModels.length === 0) {
+  const { customModels, isLoading } = useProviderModels("ollama", authToken, basePath);
+  if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
@@ -299,7 +273,7 @@ function OllamaLLMModelSelection({
         >
           <option disabled={true} selected={true}>
             {!!basePath
-              ? "--loading available models--"
+              ? "-- loading available models --"
               : "Enter Ollama URL first"}
           </option>
         </select>

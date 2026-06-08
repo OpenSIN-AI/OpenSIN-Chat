@@ -1,31 +1,20 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
+import useSWR from "swr";
 import CommunityHub from "@/models/communityHub";
+import { COMMUNITY_HUB_SETTINGS_KEY } from "./useCommunityHubSettings";
 
-/**
- * Hook to check if the user is authenticated with the community hub by checking
- * the user defined connection key in the settings.
- * @returns {{isAuthenticated: boolean, loading: boolean}} An object containing the authentication status and loading state.
- */
-export function useCommunityHubAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false as any);
-  const [loading, setLoading] = useState(true as any);
+export const COMMUNITY_HUB_AUTH_KEY = COMMUNITY_HUB_SETTINGS_KEY;
 
-  useEffect(() => {
-    async function checkCommunityHubAuth() {
-      setLoading(true);
-      try {
-        const { connectionKey } = await CommunityHub.getSettings();
-        setIsAuthenticated(!!connectionKey);
-      } catch (error) {
-        console.error("Error checking hub auth:", error);
-        setIsAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    }
-    checkCommunityHubAuth();
-  }, []);
+export default function useCommunityHubAuth() {
+  const { data, isLoading, error } = useSWR(
+    COMMUNITY_HUB_AUTH_KEY,
+    () => CommunityHub.getSettings(),
+    { revalidateOnFocus: false }
+  );
 
-  return { isAuthenticated, loading };
+  const connectionKey = data?.connectionKey ?? null;
+  return {
+    isAuthenticated: !!connectionKey,
+    loading: isLoading,
+  };
 }

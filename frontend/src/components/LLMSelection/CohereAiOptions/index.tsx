@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function CohereAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.CohereApiKey);
@@ -35,29 +35,8 @@ export default function CohereAiOptions({ settings }: any) {
 }
 
 function CohereModelSelection({ apiKey, settings }: any) {
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!apiKey) {
-        setModels([]);
-        setLoading(true);
-        return;
-      }
-
-      setLoading(true);
-      const { models } = await System.customModels(
-        "cohere",
-        typeof apiKey === "boolean" ? null : apiKey,
-      );
-      setModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [apiKey]);
-
-  if (loading) {
+  const { customModels, isLoading } = useProviderModels("cohere", apiKey);
+  if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
@@ -86,7 +65,7 @@ function CohereModelSelection({ apiKey, settings }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {(models as any).map((model) => (
+        {(customModels as any).map((model) => (
           <option
             key={model.id}
             value={model.id}

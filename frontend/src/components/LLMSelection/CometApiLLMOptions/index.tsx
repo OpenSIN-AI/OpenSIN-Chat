@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function CometApiLLMOptions({ settings }: any) {
   return (
@@ -76,37 +76,8 @@ function AdvancedControls({ settings }: any) {
 }
 
 function CometApiModelSelection({ settings }: any) {
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models: fetched = [] } = await System.customModels("cometapi");
-      if (fetched?.length > 0) {
-        // De-duplicate by id (case-insensitive) and sort by name for readability
-        const seen = new Set();
-        const unique = [];
-        for (const m of fetched) {
-          const key = String(m.id || m.name || "").toLowerCase();
-          if (!seen.has(key)) {
-            seen.add(key);
-            unique.push(m);
-          }
-        }
-        unique.sort((a, b) =>
-          String(a.name || a.id).localeCompare(String(b.name || b.id)),
-        );
-        setModels(unique);
-      } else {
-        setModels([]);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, []);
-
-  if (loading || models.length === 0) {
+  const { customModels, isLoading } = useProviderModels("cometapi");
+  if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-theme-text-primary text-sm font-semibold block mb-3">
@@ -131,7 +102,7 @@ function CometApiModelSelection({ settings }: any) {
       <input
         type="text"
         name="CometApiLLMModelPref"
-        list="cometapi-models-list"
+        list="cometapi-customModels-list"
         required
         className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg block w-full p-2.5"
         placeholder="Type or select a model"
@@ -139,8 +110,8 @@ function CometApiModelSelection({ settings }: any) {
         autoComplete="off"
         spellCheck={false}
       />
-      <datalist id="cometapi-models-list">
-        {(models as any).map((model) => (
+      <datalist id="cometapi-customModels-list">
+        {(customModels as any).map((model) => (
           <option key={model.id} value={model.id}>
             {model.name}
           </option>

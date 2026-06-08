@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import ScheduledJobs from "@/models/scheduledJobs";
 import { subscribeToPushNotifications } from "@/hooks/useWebPushNotifications";
 import useWebPushNotifications from "@/hooks/useWebPushNotifications";
-import usePolling from "@/hooks/usePolling";
 import JobFormModal from "./JobFormModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
@@ -14,39 +13,26 @@ import showToast from "@/utils/toast";
 import JobRow from "./components/JobRow";
 import { Bell } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
+import useScheduledJobs from "@/hooks/useScheduledJobs";
 
 export default function ScheduledJobsPage() {
   const { t } = useTranslation();
   useWebPushNotifications(false);
   const { isOpen, openModal, closeModal } = useModal();
-  const [loading, setLoading] = useState(true);
-  const [jobs, setJobs] = useState([]);
+  const { jobs, isLoading, mutate: refresh } = useScheduledJobs();
   const [editingJob, setEditingJob] = useState(null);
-
-  const fetchJobs = async () => {
-    const { jobs: foundJobs } = await ScheduledJobs.list();
-    setJobs(foundJobs || []);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchJobs();
-  }, []);
-
-  // Poll every 5s while tab is visible so status badges and run timestamps stay in sync.
-  usePolling(fetchJobs, 5000);
 
   const handleDelete = async (id) => {
     if (!window.confirm(t("scheduledJobs.confirmDelete"))) return;
     await ScheduledJobs.delete(id);
     showToast(t("scheduledJobs.toast.deleted"), "success", { clear: true });
-    fetchJobs();
+    refresh();
   };
 
   const handleToggle = async (id) => {
     const result = await ScheduledJobs.toggle(id);
     if (result?.error) showToast(result.error, "error", { clear: true });
-    fetchJobs();
+    refresh();
   };
 
   const handleTrigger = async (id) => {
@@ -67,7 +53,7 @@ export default function ScheduledJobsPage() {
     } else {
       showToast(t("scheduledJobs.toast.triggered"), "success", { clear: true });
     }
-    fetchJobs();
+    refresh();
   };
 
   const handleEdit = (job) => {
@@ -80,7 +66,7 @@ export default function ScheduledJobsPage() {
     openModal();
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <BaseLayout showNewJobButton={false} handleCreate={handleCreate}>
         <div className="w-full flex items-center justify-center text-zinc-400 light:text-slate-600 text-sm pt-8">
@@ -148,7 +134,7 @@ export default function ScheduledJobsPage() {
           onClose={closeModal}
           onSaved={() => {
             closeModal();
-            fetchJobs();
+            refresh();
           }}
         />
       </ModalWrapper>
@@ -168,6 +154,7 @@ function BaseLayout({
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex items-end justify-between gap-x-4 pb-6 border-white/10 light:border-slate-300 border-b-2">

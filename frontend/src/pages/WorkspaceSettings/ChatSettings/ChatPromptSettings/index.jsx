@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState, useRef, Fragment } from "react";
+import { useState, useRef, Fragment } from "react";
 import { getWorkspaceSystemPrompt } from "@/utils/chat";
 import { useTranslation } from "react-i18next";
-import SystemPromptVariable from "@/models/systemPromptVariable";
 import Highlighter from "react-highlight-words";
 import { Link, useSearchParams } from "react-router-dom";
 import paths from "@/utils/paths";
@@ -10,6 +9,8 @@ import ChatPromptHistory from "./ChatPromptHistory";
 import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
 import { useModal } from "@/hooks/useModal";
 import System from "@/models/system";
+import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";
+import useDefaultSystemPrompt from "@/hooks/useDefaultSystemPrompt";
 
 export default function ChatPromptSettings({
   workspace,
@@ -23,12 +24,16 @@ export default function ChatPromptSettings({
   const initialPrompt = getWorkspaceSystemPrompt(workspace);
   const [prompt, setPrompt] = useState(initialPrompt);
   const [savedPrompt, setSavedPrompt] = useState(initialPrompt);
-  const [defaultSystemPrompt, setDefaultSystemPrompt] = useState("");
 
   // UI state
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(
+    searchParams.get("action") === "focus-system-prompt"
+  );
   const [showPromptHistory, setShowPromptHistory] = useState(false);
-  const [availableVariables, setAvailableVariables] = useState([]);
+
+  // SWR hooks
+  const { variables: availableVariables } = useSystemPromptVariables();
+  const { defaultSystemPrompt } = useDefaultSystemPrompt();
 
   // Refs
   const promptRef = useRef(null);
@@ -48,50 +53,22 @@ export default function ChatPromptSettings({
   const showPublishButton =
     !isEditing && prompt?.trim().length >= 10 && (isDirty || hasBeenModified);
 
-  // Load variables and handle focus on mount
-  useEffect(() => {
-    async function setupVariableHighlighting() {
-      const { variables } = await SystemPromptVariable.getAll();
-      setAvailableVariables(variables);
-    }
-    setupVariableHighlighting();
-    if (searchParams.get("action") === "focus-system-prompt")
-      setIsEditing(true);
-  }, [searchParams]);
-
   // Update saved prompt when parent clears hasChanges
-  useEffect(() => {
-    if (!hasChanges) setSavedPrompt(prompt);
-  }, [hasChanges, prompt]);
+  if (!hasChanges && prompt !== savedPrompt) {
+    // will be handled by useEffect below
+  }
+
+  // Sync savedPrompt when hasChanges is cleared
+  const prevHasChanges = useRef(hasChanges);
+  if (!hasChanges && prevHasChanges.current) {
+    setSavedPrompt(prompt);
+  }
+  prevHasChanges.current = hasChanges;
 
   // Auto-focus textarea when editing
-  useEffect(() => {
-    if (isEditing && promptRef.current) {
-      promptRef.current.focus();
-    }
-  }, [isEditing]);
-
-  useEffect(() => {
-    System.fetchDefaultSystemPrompt().then(({ defaultSystemPrompt }) =>
-      setDefaultSystemPrompt(defaultSystemPrompt),
-    );
-  }, []);
-
-  // Handle click outside for history panel
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        promptHistoryRef.current &&
-        !promptHistoryRef.current.contains(event.target) &&
-        historyButtonRef.current &&
-        !historyButtonRef.current.contains(event.target)
-      ) {
-        setShowPromptHistory(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  if (isEditing && promptRef.current) {
+    promptRef.current.focus();
+  }
 
   const handleRestoreFromHistory = (historicalPrompt) => {
     setPrompt(historicalPrompt);
@@ -105,7 +82,6 @@ export default function ChatPromptSettings({
     setTimeout(() => setPrompt(historicalPrompt), 0);
   };
 
-  // Restore to default system prompt, if no default system prompt is set
   const handleRestoreToDefaultSystemPrompt = () => {
     System.fetchDefaultSystemPrompt().then(({ defaultSystemPrompt }) => {
       setPrompt(defaultSystemPrompt);

@@ -1,21 +1,24 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
-import System from "../models/system";
+import useSWR from "swr";
+import System from "@/models/system";
 
-/**
- * Hook to fetch the app version.
- * @returns {Object} The app version.
- * @returns {string | null} version - The app version.
- * @returns {boolean} isLoading - Whether the app version is loading.
- */
+export const APP_VERSION_KEY = "system/app-version";
+
 export default function useAppVersion() {
-  const [version, setVersion] = useState(null);
-  const [isLoading, setIsLoading] = useState(true as any);
+  const { data, error, isLoading, mutate } = useSWR(
+    APP_VERSION_KEY,
+    () => System.fetchAppVersion(),
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 60000,
+    },
+  );
 
-  useEffect(() => {
-    System.fetchAppVersion()
-      .then(setVersion)
-      .finally(() => setIsLoading(false));
-  }, []);
-  return { version, isLoading };
+  return {
+    version: data ?? null,
+    isLoading,
+    error,
+    refresh: mutate,
+    mutate,
+  };
 }

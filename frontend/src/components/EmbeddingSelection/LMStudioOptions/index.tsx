@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
-import System from "@/models/system";
+import React, { useState } from "react";
 import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
 import {
   CaretDown,
@@ -11,6 +10,7 @@ import {
 } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LMStudioEmbeddingOptions({ settings }: any) {
   const {
@@ -191,32 +191,11 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
 }
 
 function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { models } = await System.customModels(
-          "lmstudio",
-          apiKey,
-          basePath,
-        );
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch custom models:", error);
-        setCustomModels([]);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath, apiKey]);
+  const { customModels, isLoading: loading } = useProviderModels(
+    basePath ? "lmstudio" : null,
+    apiKey,
+    basePath,
+  );
 
   if (loading || customModels.length == 0) {
     return (

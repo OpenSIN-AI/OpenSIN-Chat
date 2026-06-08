@@ -1,24 +1,13 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ModelRouter from "@/models/modelRouter";
+import useModelRouters from "@/hooks/useModelRouters";
 
 export default function RouterPickerSelection({
   selectedRouterId, setSelectedRouterId, setHasChanges, }: any) {
   const { t } = useTranslation();
-  const [routers, setRouters] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
+  const { routers, isLoading } = useModelRouters();
 
-  useEffect(() => {
-    async function fetchRouters() {
-      const results = await ModelRouter.getAll();
-      setRouters(results);
-      setLoading(false);
-    }
-    fetchRouters();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <select
         disabled

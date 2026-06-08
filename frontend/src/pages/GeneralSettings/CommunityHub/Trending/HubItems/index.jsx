@@ -1,42 +1,14 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import CommunityHub from "@/models/communityHub";
 import paths from "@/utils/paths";
 import HubItemCard from "./HubItemCard";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { readableType, typeToPath } from "../../utils";
-
-const DEFAULT_EXPLORE_ITEMS = {
-  agentSkills: { items: [], hasMore: false, totalCount: 0 },
-  systemPrompts: { items: [], hasMore: false, totalCount: 0 },
-  slashCommands: { items: [], hasMore: false, totalCount: 0 },
-};
-
-function useCommunityHubExploreItems() {
-  const [loading, setLoading] = useState(true);
-  const [exploreItems, setExploreItems] = useState(DEFAULT_EXPLORE_ITEMS);
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const { success, result } = await CommunityHub.fetchExploreItems();
-        if (success) setExploreItems(result || DEFAULT_EXPLORE_ITEMS);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  return { loading, exploreItems };
-}
+import useCommunityHubTrending from "@/hooks/useCommunityHubTrending";
 
 export default function HubItems() {
-  const { loading, exploreItems } = useCommunityHubExploreItems();
+  const { exploreItems, isLoading } = useCommunityHubTrending();
   return (
     <div className="w-full flex flex-col gap-y-1 pb-6 pt-6">
       <div className="flex flex-col gap-y-2 mb-4">
@@ -47,7 +19,7 @@ export default function HubItems() {
           Explore the latest additions to the OpenAfD Chat Community Hub
         </p>
       </div>
-      <HubCategory loading={loading} exploreItems={exploreItems} />
+      <HubCategory loading={isLoading} exploreItems={exploreItems} />
     </div>
   );
 }

@@ -1,7 +1,5 @@
-// SPDX-License-Identifier: MIT
-import System from "@/models/system";
-import { useState, useEffect } from "react";
 
+import useProviderModels from "@/hooks/useProviderModels";// SPDX-License-Identifier: MIT
 export default function PerplexityOptions({ settings }: any) {
   return (
     <div className="flex gap-[36px] mt-1.5">
@@ -28,20 +26,8 @@ export default function PerplexityOptions({ settings }: any) {
 }
 
 function PerplexityModelSelection({ settings }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models } = await System.customModels("perplexity");
-      setCustomModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, []);
-
-  if (loading || customModels.length == 0) {
+  const { customModels, isLoading } = useProviderModels("perplexity");
+  if (isLoading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">

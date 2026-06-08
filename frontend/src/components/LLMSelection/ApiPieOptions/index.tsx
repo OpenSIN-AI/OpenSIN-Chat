@@ -1,7 +1,5 @@
-// SPDX-License-Identifier: MIT
-import System from "@/models/system";
-import { useState, useEffect } from "react";
 
+import useProviderModels from "@/hooks/useProviderModels";// SPDX-License-Identifier: MIT
 export default function ApiPieLLMOptions({ settings }: any) {
   return (
     <div className="flex flex-col gap-y-4 mt-1.5">
@@ -30,29 +28,8 @@ export default function ApiPieLLMOptions({ settings }: any) {
 }
 
 function APIPieModelSelection({ settings }: any) {
-  const [groupedModels, setGroupedModels] = useState({} as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models } = await System.customModels("apipie");
-      if (models?.length > 0) {
-        const modelsByOrganization = models.reduce((acc, model) => {
-          acc[model.organization] = acc[model.organization] || [];
-          acc[model.organization].push(model);
-          return acc;
-        }, {});
-
-        setGroupedModels(modelsByOrganization);
-      }
-
-      setLoading(false);
-    }
-    findCustomModels();
-  }, []);
-
-  if (loading || Object.keys(groupedModels).length === 0) {
+  const { customModels, isLoading } = useProviderModels("apipie");
+  if (isLoading || Object.keys(groupedModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">

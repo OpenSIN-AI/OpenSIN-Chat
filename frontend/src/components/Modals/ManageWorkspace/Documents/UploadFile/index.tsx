@@ -1,21 +1,21 @@
 // SPDX-License-Identifier: MIT
 import { CloudArrowUp } from "@phosphor-icons/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import showToast from "../../../../../utils/toast";
-import System from "../../../../../models/system";
 import { useDropzone } from "react-dropzone";
 import { v4 } from "uuid";
 import FileUploadProgress from "./FileUploadProgress";
 import Workspace from "../../../../../models/workspace";
 import debounce from "lodash.debounce";
+import useDocumentProcessorOnline from "@/hooks/useDocumentProcessorOnline";
 
 export default function UploadFile({
   workspace, fetchKeys, setLoading, setLoadingMessage, }: any) {
   const { t } = useTranslation();
-  const [ready, setReady] = useState(false as any);
   const [files, setFiles] = useState([] as any);
   const [fetchingUrl, setFetchingUrl] = useState(false as any);
+  const { isOnline: ready } = useDocumentProcessorOnline();
 
   const handleSendLink = async (e) => {
     e.preventDefault();
@@ -63,14 +63,6 @@ export default function UploadFile({
     });
     setFiles([...newAccepted, ...newRejected]);
   };
-
-  useEffect(() => {
-    async function checkProcessorOnline() {
-      const online = await System.checkDocumentProcessorOnline();
-      setReady(online);
-    }
-    checkProcessorOnline();
-  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,

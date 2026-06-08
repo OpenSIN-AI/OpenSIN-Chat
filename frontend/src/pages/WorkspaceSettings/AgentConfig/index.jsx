@@ -1,32 +1,23 @@
 // SPDX-License-Identifier: MIT
-import System from "@/models/system";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import AgentLLMSelection from "./AgentLLMSelection";
 import Admin from "@/models/admin";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import paths from "@/utils/paths";
 import useUser from "@/hooks/useUser";
+import useSystemSettings from "@/hooks/useSystemSettings";
+import System from "@/models/system";
 
 export default function WorkspaceAgentConfiguration({ workspace }) {
   const { user } = useUser();
-  const [settings, setSettings] = useState({});
+  const { settings, loading } = useSystemSettings();
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [loading, setLoading] = useState(true);
   const formEl = useRef(null);
-
-  useEffect(() => {
-    async function fetchSettings() {
-      const _settings = await System.keys();
-      setSettings(_settings ?? {});
-      setLoading(false);
-    }
-    fetchSettings();
-  }, []);
 
   const handleUpdate = async (e) => {
     setSaving(true);

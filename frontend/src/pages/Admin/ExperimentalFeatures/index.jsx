@@ -1,42 +1,22 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
-import Admin from "@/models/admin";
 import { FullScreenLoader } from "@/components/Preloader";
 import { CaretRight, Flask } from "@phosphor-icons/react";
 import { configurableFeatures } from "./features";
 import ModalWrapper from "@/components/ModalWrapper";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
+import useExperimentalFeatures from "@/hooks/useExperimentalFeatures";
 
 export default function ExperimentalFeatures() {
-  const [featureFlags, setFeatureFlags] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { featureFlags, isLoading, refresh } = useExperimentalFeatures();
   const [selectedFeature, setSelectedFeature] = useState(
     "experimental_live_file_sync",
   );
 
-  useEffect(() => {
-    async function fetchSettings() {
-      setLoading(true);
-      const { settings } = await Admin.systemPreferencesByFields([
-        "feature_flags",
-      ]);
-      setFeatureFlags(settings?.feature_flags ?? {});
-      setLoading(false);
-    }
-    fetchSettings();
-  }, []);
-
-  const refresh = async () => {
-    const { settings } = await Admin.systemPreferencesByFields([
-      "feature_flags",
-    ]);
-    setFeatureFlags(settings?.feature_flags ?? {});
-  };
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] w-full h-full flex justify-center items-center`
@@ -49,13 +29,11 @@ export default function ExperimentalFeatures() {
   return (
     <FeatureLayout>
       <div className="flex-1 flex gap-x-6 p-4 mt-10">
-        {/* Feature settings nav */}
         <div className="flex flex-col gap-y-[18px]">
           <div className="text-white flex items-center gap-x-2">
             <Flask size={24} />
             <p className="text-lg font-medium">Experimental Features</p>
           </div>
-          {/* Feature list */}
           <div className="bg-theme-bg-secondary text-white rounded-xl min-w-[360px] w-fit">
             {Object.values(configurableFeatures).map((feature, index) => {
               const isFirst = index === 0;
@@ -80,7 +58,6 @@ export default function ExperimentalFeatures() {
           </div>
         </div>
 
-        {/* Selected feature setting panel */}
         <FeatureVerification>
           <div className="flex-[2] flex flex-col gap-y-[18px] mt-10">
             <div className="bg-theme-bg-secondary text-white rounded-xl flex-1 p-4">
@@ -113,6 +90,7 @@ function FeatureLayout({ children }) {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] w-full h-full flex`
+      }
       >
         {children}
       </div>
@@ -282,7 +260,7 @@ function FeatureVerification({ children }) {
                 </a>
                 <button
                   type="submit"
-                  className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm border border-theme-modal-border"
+                  className="transition-all duration-300 bg-white text-black hover:opacity-60 px:4 py-2 rounded-lg text-sm border border-theme-modal-border"
                 >
                   I understand
                 </button>

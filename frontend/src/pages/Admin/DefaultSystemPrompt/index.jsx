@@ -1,59 +1,36 @@
 // SPDX-License-Identifier: MIT
 import SettingsSidebar from "@/components/SettingsSidebar";
-import { useEffect, useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { isMobile } from "react-device-detect";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Highlighter from "react-highlight-words";
-import SystemPromptVariable from "@/models/systemPromptVariable";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import useDefaultSystemPrompt from "@/hooks/useDefaultSystemPrompt";
+import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";
 
 export default function DefaultSystemPrompt() {
+  const { prompt, isLoading: promptLoading } = useDefaultSystemPrompt();
+  const { variables: availableVariables } = useSystemPromptVariables();
   const [systemPromptForm, setSystemPromptForm] = useState({
     value: "",
     default: "",
     isDirty: false,
     isSubmitting: false,
-    isLoading: true,
     isEditing: false,
   });
-  const [saneDefaultSystemPrompt, setSaneDefaultSystemPrompt] = useState("");
-  const [availableVariables, setAvailableVariables] = useState([]);
-  useEffect(() => {
-    async function setupVariableHighlighting() {
-      const { variables } = await SystemPromptVariable.getAll();
-      setAvailableVariables(variables);
-    }
-    setupVariableHighlighting();
-  }, []);
 
   useEffect(() => {
-    async function fetchDefaultSystemPrompt() {
-      setSystemPromptForm((prev) => ({
-        ...prev,
-        isLoading: true,
-      }));
-      const { defaultSystemPrompt, saneDefaultSystemPrompt } =
-        await System.fetchDefaultSystemPrompt();
-      setSaneDefaultSystemPrompt(saneDefaultSystemPrompt);
-      if (!defaultSystemPrompt)
-        return setSystemPromptForm((prev) => ({
-          ...prev,
-          isLoading: false,
-        }));
-
-      setSystemPromptForm((prev) => ({
-        ...prev,
-        default: defaultSystemPrompt,
-        value: defaultSystemPrompt,
-        isLoading: false,
-      }));
-    }
-    fetchDefaultSystemPrompt();
-  }, []);
+    if (promptLoading) return;
+    setSystemPromptForm((prev) => ({
+      ...prev,
+      default: prompt.defaultSystemPrompt || "",
+      value: prompt.defaultSystemPrompt || prev.value,
+    }));
+  }, [promptLoading, prompt.defaultSystemPrompt]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -78,14 +55,13 @@ export default function DefaultSystemPrompt() {
       .then(({ success, message }) => {
         if (!success) throw new Error(message);
 
-        // If the user has set the default system prompt to the sane default, reset the value to the sane default.
         if (
           !newSystemPrompt ||
-          newSystemPrompt.trim() === saneDefaultSystemPrompt
+          newSystemPrompt.trim() === prompt.saneDefaultSystemPrompt
         ) {
           return setSystemPromptForm((prev) => ({
             ...prev,
-            value: saneDefaultSystemPrompt,
+            value: prompt.saneDefaultSystemPrompt,
           }));
         }
 
@@ -128,7 +104,7 @@ export default function DefaultSystemPrompt() {
             </p>
           </div>
           <div>
-            {systemPromptForm.isLoading ? (
+            {promptLoading ? (
               <div className="mt-8 flex flex-col gap-y-4">
                 <Skeleton.default
                   height={20}
@@ -161,7 +137,7 @@ export default function DefaultSystemPrompt() {
                   </label>
                   <div className="space-y-1">
                     <p className="text-white text-opacity-60 text-xs font-medium">
-                      A system prompt provides instructions that shape the AI’s
+                      A system prompt provides instructions that shape the AI's
                       responses and behavior. This prompt will be automatically
                       applied to all newly created workspaces. To change the
                       system prompt of a{" "}
@@ -210,11 +186,7 @@ export default function DefaultSystemPrompt() {
                           isEditing: false,
                         }))
                       }
-                      placeholder={
-                        systemPromptForm.isLoading
-                          ? "Loading..."
-                          : "You are an AI assistant that can answer questions and help with tasks."
-                      }
+                      placeholder="You are an AI assistant that can answer questions and help with tasks."
                       rows={5}
                       style={{
                         resize: "vertical",

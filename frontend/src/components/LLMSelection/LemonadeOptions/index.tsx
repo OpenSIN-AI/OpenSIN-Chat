@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState } from "react";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { CircleNotch, Info } from "@phosphor-icons/react";
 import strDistance from "js-levenshtein";
@@ -13,6 +12,7 @@ import ModelTableLayout from "@/components/lib/ModelTable/layout";
 import ModelTableLoadingSkeleton from "@/components/lib/ModelTable/loading";
 import showToast from "@/utils/toast";
 import LemonadeUtils from "@/models/utils/lemonadeUtils";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export function cleanBasePath(basePath: any = "") {
   try {
@@ -194,57 +194,7 @@ export default function LemonadeOptions({ settings }: any) {
 
 function LemonadeModelSelection({
   selectedModelId, setSelectedModelId, basePath = null, }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [filteredModels, setFilteredModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  async function fetchModels() {
-    if (!basePath) {
-      setCustomModels([]);
-      setFilteredModels([]);
-      setLoading(false);
-      setSearchQuery("");
-      return;
-    }
-    setLoading(true);
-    const { models } = await System.customModels("lemonade", null, basePath);
-    setCustomModels(models || []);
-    setFilteredModels(models || []);
-    setSearchQuery("");
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    fetchModels();
-  }, [basePath]);
-
-  useEffect(() => {
-    if (!searchQuery || !customModels.length) {
-      setFilteredModels(customModels || []);
-      return;
-    }
-
-    const normalizedSearchQuery = searchQuery.toLowerCase().trim();
-    const filteredModels = new Map();
-
-    customModels.forEach((model) => {
-      const modelNameNormalized = model.name.toLowerCase();
-      const modelOrganizationNormalized = model.organization.toLowerCase();
-
-      if (modelNameNormalized.startsWith(normalizedSearchQuery))
-        filteredModels.set(model.id, model);
-      if (modelOrganizationNormalized.startsWith(normalizedSearchQuery))
-        filteredModels.set(model.id, model);
-      if (strDistance(modelNameNormalized, normalizedSearchQuery) <= 2)
-        filteredModels.set(model.id, model);
-      if (strDistance(modelOrganizationNormalized, normalizedSearchQuery) <= 2)
-        filteredModels.set(model.id, model);
-    });
-
-    setFilteredModels(Array.from(filteredModels.values()));
-  }, [searchQuery]);
-
+  const { customModels, isLoading } = useProviderModels("lemonade", null, basePath);
   async function uninstallModel(modelId: any) {
     try {
       if (
@@ -296,7 +246,7 @@ function LemonadeModelSelection({
       );
       if (!success)
         throw new Error(
-          error || "An error occurred while downloading the model",
+          error || "An error occurred while downisLoading the model",
         );
       progressCallback(100);
       handleSetActiveModel(modelId);
@@ -310,9 +260,9 @@ function LemonadeModelSelection({
         setSearchQuery("");
       }
     } catch (e) {
-      console.error("Error downloading model:", e);
+      console.error("Error downisLoading model:", e);
       showToast(
-        e.message || "An error occurred while downloading the model",
+        e.message || "An error occurred while downisLoading the model",
         "error",
         { clear: true },
       );
@@ -321,21 +271,21 @@ function LemonadeModelSelection({
     }
   }
 
-  function groupModelsByAlias(models: any) {
+  function groupModelsByAlias(customModels: any) {
     const mapping = new Map();
     mapping.set("installed", new Map());
     mapping.set("not installed", new Map());
 
-    const groupedModels = models.reduce((acc, model) => {
+    const groupedModels = customModels.reduce((acc, model) => {
       acc[model.organization] = acc[model.organization] || [];
       acc[model.organization].push(model);
       return acc;
     }, {});
 
-    Object.entries(groupedModels).forEach(([organization, models]) => {
-      const hasInstalled = (models as any).some((model) => model.downloaded);
+    Object.entries(groupedModels).forEach(([organization, customModels]) => {
+      const hasInstalled = (customModels as any).some((model) => model.downloaded);
       if (hasInstalled) {
-        const installedModels = (models as any).filter((model) => model.downloaded);
+        const installedModels = (customModels as any).filter((model) => model.downloaded);
         mapping
           .get("installed")
           .set("Downloaded Models", [
@@ -343,7 +293,7 @@ function LemonadeModelSelection({
             ...installedModels,
           ]);
       }
-      const tags = (models as any).map((model) => ({
+      const tags = (customModels as any).map((model) => ({
         ...model,
         name: model.name.split(":")[1],
       }));
@@ -355,17 +305,17 @@ function LemonadeModelSelection({
     mapping
       .get("installed")
       .entries()
-      .forEach(([organization, models]) =>
-        installedMap.set(organization, models),
+      .forEach(([organization, customModels]) =>
+        installedMap.set(organization, customModels),
       );
     mapping
       .get("not installed")
       .entries()
-      .forEach(([organization, models]) =>
-        orderedMap.set(organization, models),
+      .forEach(([organization, customModels]) =>
+        orderedMap.set(organization, customModels),
       );
 
-    // Sort the models by organization/creator name alphabetically but keep the installed models at the top
+    // Sort the customModels by organization/creator name alphabetically but keep the installed customModels at the top
     return Object.fromEntries(
       Array.from(installedMap.entries())
         .sort((a, b) => a[0].localeCompare(b[0]))
@@ -389,7 +339,7 @@ function LemonadeModelSelection({
       fetchModels={fetchModels}
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
-      loading={loading}
+      isLoading={isLoading}
     >
       <Tooltip
         id="install-model-tooltip"
@@ -402,18 +352,18 @@ function LemonadeModelSelection({
         id="LemonadeLLMModelPref"
         value={selectedModelId}
       />
-      {loading ? (
+      {isLoading ? (
         <ModelTableLoadingSkeleton />
       ) : filteredModels.length === 0 ? (
         <div className="flex flex-col w-full gap-y-2 mt-4">
-          <p className="text-theme-text-secondary text-sm">No models found!</p>
+          <p className="text-theme-text-secondary text-sm">No customModels found!</p>
         </div>
       ) : (
-        Object.entries(groupedModels).map(([alias, models]) => (
+        Object.entries(groupedModels).map(([alias, customModels]) => (
           <ModelTable
             key={alias}
             alias={alias}
-            models={models}
+            customModels={customModels}
             setActiveModel={handleSetActiveModel}
             downloadModel={downloadModel}
             selectedModelId={selectedModelId}

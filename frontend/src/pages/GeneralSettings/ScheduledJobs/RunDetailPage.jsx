@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
@@ -13,7 +13,6 @@ import {
   Stop,
 } from "@phosphor-icons/react";
 import ScheduledJobs from "@/models/scheduledJobs";
-import usePolling from "@/hooks/usePolling";
 import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
 import renderMarkdown from "@/utils/chat/markdown";
@@ -28,36 +27,20 @@ import {
   THOUGHT_REGEX_OPEN,
   THOUGHT_REGEX_CLOSE,
 } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/ThoughtContainer";
+import useRunDetail from "@/hooks/useRunDetail";
 
 export default function RunDetailPage() {
   const { t } = useTranslation();
   const { id, runId } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [run, setRun] = useState(null);
-  const [job, setJob] = useState(null);
+  const { run, job, isLoading, mutate: refresh } = useRunDetail(runId);
   const [continuing, setContinuing] = useState(false);
   const [killing, setKilling] = useState(false);
 
-  useEffect(() => {
-    fetchRun();
-  }, [runId]);
-
-  const fetchRun = async () => {
-    const data = await ScheduledJobs.getRun(runId);
-    setRun(data.run);
-    setJob(data.job);
-    setLoading(false);
-
-    if (data.run && !data.run.readAt) {
-      ScheduledJobs.markRunRead(runId);
-    }
-  };
-
-  const isNonTerminal = run?.status === "running" || run?.status === "queued";
-  // Poll every 3s while a run is in progress so the trace/status updates live.
-  // Stops automatically once the run reaches a terminal state.
-  usePolling(fetchRun, 3000, isNonTerminal);
+  // Mark run as read on first load
+  if (run && !run.readAt) {
+    ScheduledJobs.markRunRead(runId);
+  }
 
   const handleContinueInThread = async () => {
     setContinuing(true);
@@ -84,10 +67,10 @@ export default function RunDetailPage() {
     }
 
     showToast(t("scheduledJobs.toast.killed"), "success");
-    fetchRun();
+    refresh();
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <RunDetailLayout>
         <p className="text-zinc-400 light:text-slate-600 text-sm">
@@ -141,6 +124,7 @@ function RunDetailLayout({ children }) {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           {children}
@@ -328,7 +312,6 @@ function ToolCallsSection({ t, result }) {
 }
 
 function GeneratedFilesSection({ t, result }) {
-  // outputs contains {type, payload} objects from agent plugins
   const outputs = result.outputs || [];
   if (outputs.length === 0) return null;
 
@@ -393,8 +376,6 @@ function FinalResponseSection({ t, result }) {
 function MetricsSection({ t, metrics }) {
   if (!metrics || Object.keys(metrics).length === 0) return null;
 
-  // Todo: there is a bug where if you create a job that has no tools, we wont get any metrics
-  // To avoid confusion, we should not show the metrics section if there are no metrics.
   if (!metrics.prompt_tokens || !metrics.completion_tokens) return null;
 
   function renderModel(metrics) {

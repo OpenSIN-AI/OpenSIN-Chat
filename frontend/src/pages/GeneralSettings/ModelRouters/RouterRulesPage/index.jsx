@@ -1,38 +1,26 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import { ArrowLeft, CircleNotch } from "@phosphor-icons/react";
-import ModelRouter from "@/models/modelRouter";
 import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
 import RuleBuilder from "../RuleBuilder";
+import useModelRouter from "@/hooks/useModelRouter";
 
 export default function RouterRulesPage() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [router, setRouter] = useState(null);
+  const { router, isLoading, error, refresh } = useModelRouter(id);
 
-  const fetchRouter = async () => {
-    const { router: found, error } = await ModelRouter.get(id);
-    if (!found) {
-      showToast(error || "Router not found", "error");
-      navigate(paths.settings.modelRouters());
-      return;
-    }
-    setRouter(found);
-    setLoading(false);
-  };
+  if (error || (!isLoading && !router)) {
+    showToast(error || "Router not found", "error");
+    navigate(paths.settings.modelRouters());
+  }
 
-  useEffect(() => {
-    fetchRouter();
-  }, [id]);
-
-  if (loading)
+  if (isLoading)
     return (
       <Layout t={t}>
         <div className="flex items-center justify-center py-20">
@@ -47,7 +35,7 @@ export default function RouterRulesPage() {
         routerId={router.id}
         routerName={router.name}
         rules={router.rules || []}
-        onRulesChanged={fetchRouter}
+        onRulesChanged={refresh}
       />
     </Layout>
   );
@@ -61,6 +49,7 @@ function Layout({ t, children }) {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-2xl bg-zinc-900 light:bg-white light:border light:border-slate-300 w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <button

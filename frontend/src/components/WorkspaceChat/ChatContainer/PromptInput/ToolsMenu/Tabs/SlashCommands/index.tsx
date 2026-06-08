@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Plus } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import System from "@/models/system";
 import { useModal } from "@/hooks/useModal";
+import useSlashCommandPresets from "@/hooks/useSlashCommandPresets";
 import AddPresetModal from "./SlashPresets/AddPresetModal";
 import EditPresetModal from "./SlashPresets/EditPresetModal";
 import PublishEntityModal from "@/components/CommunityHub/PublishEntityModal";
@@ -11,6 +11,7 @@ import showToast from "@/utils/toast";
 import { PROMPT_INPUT_EVENT } from "@/components/WorkspaceChat/ChatContainer/PromptInput";
 import useToolsMenuItems from "../../useToolsMenuItems";
 import SlashCommandRow from "./SlashCommandRow";
+import System from "@/models/system";
 
 export default function SlashCommandsTab({
   sendCommand, setShowing, promptRef, highlightedIndex = -1, registerItemCount, }: any) {
@@ -30,22 +31,10 @@ export default function SlashCommandsTab({
     openModal: openPublishModal,
     closeModal: closePublishModal,
   } = useModal();
-  const [presets, setPresets] = useState([] as any);
+  const { presets, refresh: refreshPresets } = useSlashCommandPresets();
   const [selectedPreset, setSelectedPreset] = useState(null);
   const [presetToPublish, setPresetToPublish] = useState(null);
 
-  useEffect(() => {
-    fetchPresets();
-  }, []);
-
-  const fetchPresets = async () => {
-    const presets = await System.getSlashCommandPresets();
-    setPresets(presets);
-  };
-
-  // Build the list of selectable items for keyboard navigation and rendering.
-  // /reset is a static English string since the backend matches it exactly.
-  // During an agent session it ends the session AND clears the chat.
   const items = useMemo(
     () => [
       {
@@ -67,14 +56,12 @@ export default function SlashCommandsTab({
     (command, autoSubmit = false) => {
       setShowing(false);
 
-      // Auto-submit commands (/reset) fire immediately
       if (autoSubmit) {
         sendCommand({ text: command, autoSubmit: true });
         promptRef?.current?.focus();
         return;
       }
 
-      // Insert the command at the cursor, replacing a trailing "/" if present
       const textarea = promptRef?.current;
       if (!textarea) return;
       const cursor = textarea.selectionStart;
@@ -112,7 +99,7 @@ export default function SlashCommandsTab({
       showToast(error, "error");
       return false;
     }
-    fetchPresets();
+    refreshPresets();
     closeAddModal();
     return true;
   };
@@ -131,14 +118,14 @@ export default function SlashCommandsTab({
       showToast(error, "error");
       return;
     }
-    fetchPresets();
+    refreshPresets();
     closeEditModal();
     setSelectedPreset(null);
   };
 
   const handleDeletePreset = async (presetId) => {
     await System.deleteSlashCommandPreset(presetId);
-    fetchPresets();
+    refreshPresets();
     closeEditModal();
     setSelectedPreset(null);
   };
@@ -175,7 +162,6 @@ export default function SlashCommandsTab({
         />
       ))}
 
-      {/* Add new */}
       <div
         onClick={openAddModal}
         className="flex items-center gap-1.5 px-2 py-1 rounded cursor-pointer hover:bg-zinc-700/50 light:hover:bg-slate-100"
@@ -190,7 +176,6 @@ export default function SlashCommandsTab({
         </span>
       </div>
 
-      {/* Modals */}
       <AddPresetModal
         isOpen={isAddModalOpen}
         onClose={closeAddModal}

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
@@ -8,6 +8,7 @@ import { TagsInput } from "react-tag-input-component";
 import { Info, Warning } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import DOMPurify from "@/utils/chat/purify";
+import useConnectorBranches from "@/hooks/useConnectorBranches";
 
 const DEFAULT_BRANCHES = ["main", "master"];
 export default function GithubOptions() {
@@ -173,27 +174,13 @@ export default function GithubOptions() {
 
 function GitHubBranchSelection({ repo, accessToken }: any) {
   const { t } = useTranslation();
-  const [allBranches, setAllBranches] = useState(DEFAULT_BRANCHES);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function fetchAllBranches() {
-      if (!repo) {
-        setAllBranches(DEFAULT_BRANCHES);
-        setLoading(false);
-        return;
-      }
-
-      setLoading(true);
-      const { branches } = await System.dataConnectors.github.branches({
-        repo,
-        accessToken,
-      });
-      setAllBranches(branches.length > 0 ? branches : DEFAULT_BRANCHES);
-      setLoading(false);
-    }
-    fetchAllBranches();
-  }, [repo, accessToken]);
+  const { branches: allBranches, isLoading: loading } = useConnectorBranches(
+    "github",
+    repo,
+    accessToken,
+  );
+  const displayBranches =
+    allBranches.length > 0 ? allBranches : DEFAULT_BRANCHES;
 
   if (loading) {
     return (
@@ -230,7 +217,7 @@ function GitHubBranchSelection({ repo, accessToken }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
       >
-        {(allBranches as any).map((branch) => {
+        {(displayBranches as any).map((branch) => {
           return (
             <option key={branch} value={branch}>
               {branch}

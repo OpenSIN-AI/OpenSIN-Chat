@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import PiperTTSClient from "@/utils/piperTTS";
 import { titleCase } from "text-case";
 import { humanFileSize } from "@/utils/numbers";
 import showToast from "@/utils/toast";
 import { CircleNotch, PauseCircle, PlayCircle } from "@phosphor-icons/react";
+import usePiperVoices from "@/hooks/usePiperVoices";
 
 export default function PiperTTSOptions({ settings }: any) {
   return (
@@ -38,8 +39,7 @@ function voiceDisplayName(voice: any) {
 }
 
 function PiperTTSModelSelection({ settings }: any) {
-  const [loading, setLoading] = useState(true as any);
-  const [voices, setVoices] = useState([] as any);
+  const { voices, isLoading: loading } = usePiperVoices();
   const [selectedVoice, setSelectedVoice] = useState(
     settings?.TTSPiperTTSVoiceModel,
   );
@@ -54,18 +54,6 @@ function PiperTTSModelSelection({ settings }: any) {
 
       .catch((e) => console.error(e));
   }
-
-  useEffect(() => {
-    PiperTTSClient.voices()
-      .then((voices) => {
-        if (voices?.length !== 0) return setVoices(voices);
-        throw new Error("Could not fetch voices from web worker.");
-      })
-      .catch((e) => {
-        console.error(e);
-      })
-      .finally(() => setLoading(false));
-  }, []);
 
   if (loading) {
     return (
