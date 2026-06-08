@@ -110,6 +110,7 @@
     "react-tooltip": "^6.0.7",
     "rollup-plugin-visualizer": "^7.0.1",
     "swr": "^2.4.1",
+    "text-case": "^1.2.11",
     "truncate": "^3.0.0",
     "typescript-eslint": "^8.60.1",
     "uuid": "^14.0.0",
