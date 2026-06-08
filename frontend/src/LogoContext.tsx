@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { createContext, useEffect, useState } from "react";
-import OpenAfDLogo from "./media/logo/openafd-icon.svg";
-import DefaultLoginLogo from "./media/illustrations/login-logo.svg";
+import OpenAfDLogo from "./media/logo/openafd-logo.png";
+import DefaultLoginLogo from "./media/logo/openafd-logo.png";
 import System from "./models/system";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";

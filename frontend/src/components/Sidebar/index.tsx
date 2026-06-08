@@ -118,17 +118,22 @@ export default function Sidebar() {
               className="flex items-center"
               style={{ width: sidebarWidth - 48 }}
             >
-              <Link
-                to={paths.home()}
-                aria-label="Home"
-                className="flex items-center"
-              >
-                <img
-                  src={logo}
-                  alt="Logo"
-                  className={`rounded-lg h-9 w-auto max-h-[36px] max-w-[180px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
-                />
-              </Link>
+                <Link
+                  to={paths.home()}
+                  aria-label="Home"
+                  className="flex items-center gap-x-2.5"
+                >
+                  <img
+                    src={logo}
+                    alt="Logo"
+                    className={`h-9 w-9 max-h-[36px] max-w-[36px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
+                  />
+                  <span
+                    className={`text-white font-bold text-lg whitespace-nowrap transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
+                  >
+                    OpenAfD
+                  </span>
+                </Link>
             </div>
           </div>
           <div
@@ -216,12 +221,13 @@ export function SidebarMobileHeader() {
         >
           <List className="h-6 w-6" />
         </button>
-        <div className="flex items-center justify-center flex-grow">
+        <div className="flex items-center justify-center flex-grow gap-x-2">
           <img
             src={logo}
             alt="Logo"
-            className="block mx-auto h-6 w-auto max-h-10 object-contain"
+            className="h-6 w-6 max-h-6 max-w-6 object-contain"
           />
+          <span className="text-white font-bold text-base">OpenAfD</span>
         </div>
         <div className="w-12"></div>
       </header>
@@ -248,12 +254,13 @@ export function SidebarMobileHeader() {
           <div className="w-full h-full flex flex-col overflow-x-hidden items-between">
             {/* Header Information */}
             <div className="flex w-full items-center justify-between gap-x-4">
-              <div className="flex shrink-1 w-fit items-center justify-start">
+              <div className="flex shrink-1 w-fit items-center justify-start gap-x-2">
                 <img
                   src={logo}
                   alt="Logo"
-                  className="rounded w-full max-h-[40px] object-contain"
+                  className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                 />
+                <span className="text-white font-bold text-base">OpenAfD</span>
               </div>
               {(!user || user?.role !== "default") && (
                 <div className="flex gap-x-2 items-center text-slate-500 shink-0">
