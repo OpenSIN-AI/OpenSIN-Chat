@@ -7,8 +7,13 @@ import System from "@/models/system";
 import showToast from "@/utils/toast";
 import {
   AVAILABLE_LLM_PROVIDERS,
+  ALL_LLM_PROVIDERS,
   LLM_PREFERENCE_CHANGED_EVENT,
-} from "./llmProviders";
+} from "./llmProviders.jsx";
+
+// Re-export so other modules can keep importing from the
+// page-level entrypoint that the rest of the codebase uses.
+export { AVAILABLE_LLM_PROVIDERS, ALL_LLM_PROVIDERS, LLM_PREFERENCE_CHANGED_EVENT };
 import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
 import PreLoader from "@/components/Preloader";
 import LLMItem from "@/components/LLMSelection/LLMItem";
