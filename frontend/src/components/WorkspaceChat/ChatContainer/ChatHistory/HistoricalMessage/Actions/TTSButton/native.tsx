@@ -35,7 +35,7 @@ export default function NativeTTSMessage({ chatId, message }: any) {
 
   if (!supported) return null;
   return (
-    <div className="mt-3 relative">
+    <div className="relative flex items-center justify-center h-7 w-7">
       <button
         onClick={speakMessage}
         data-auto-play-chat-id={chatId}
@@ -47,9 +47,9 @@ export default function NativeTTSMessage({ chatId, message }: any) {
         aria-label={speaking ? "Pause speech" : "Speak message"}
       >
         {speaking ? (
-          <PauseCircle size={18} className="mb-1" />
+          <PauseCircle size={20} />
         ) : (
-          <SpeakerHigh size={18} className="mb-1" />
+          <SpeakerHigh size={20} />
         )}
       </button>
     </div>

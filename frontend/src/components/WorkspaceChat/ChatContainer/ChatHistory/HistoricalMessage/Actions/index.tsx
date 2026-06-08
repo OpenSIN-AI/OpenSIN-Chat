@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
 
 const Actions: any = ({
-  message, feedbackScore, chatId, slug, isLastMessage, regenerateMessage, forkThread, isEditing, role, metrics = {}, }: any) => {
+  message, feedbackScore, chatId, slug, isLastMessage, regenerateMessage, forkThread, isEditing, role, metrics = {}, ttsButton = null, }: any) => {
   const { t } = useTranslation();
   const { threadSlug = null } = useParams();
   const [selectedFeedback, setSelectedFeedback] = useState(feedbackScore);
@@ -32,6 +32,7 @@ const Actions: any = ({
           <div
             className={`flex justify-start items-center gap-x-[8px] ${role === "user" ? "flex-row-reverse" : ""}`}
           >
+            {ttsButton}
             <CopyMessage message={message} />
             <EditMessageAction
               chatId={chatId}
@@ -71,7 +72,7 @@ const Actions: any = ({
 function FeedbackButton({
   isSelected, handleFeedback, tooltipContent, IconComponent, }: any) {
   return (
-    <div className="mt-3 relative">
+    <div className="relative flex items-center justify-center h-7 w-7">
       <button
         onClick={handleFeedback}
         data-tooltip-id="feedback-button"
@@ -81,7 +82,6 @@ function FeedbackButton({
       >
         <IconComponent
           size={20}
-          className="mb-1"
           weight={isSelected ? "fill" : "regular"}
         />
       </button>
@@ -94,23 +94,21 @@ function CopyMessage({ message }: any) {
   const { t } = useTranslation();
 
   return (
-    <>
-      <div className="mt-3 relative">
-        <button
-          onClick={() => copyText(message)}
-          data-tooltip-id="copy-assistant-text"
-          data-tooltip-content={t("chat_window.copy")}
-          className="text-zinc-300 light:text-slate-500"
-          aria-label={t("chat_window.copy")}
-        >
-          {copied ? (
-            <Check size={20} className="mb-1" />
-          ) : (
-            <Copy size={20} className="mb-1" />
-          )}
-        </button>
-      </div>
-    </>
+    <div className="relative flex items-center justify-center h-7 w-7">
+      <button
+        onClick={() => copyText(message)}
+        data-tooltip-id="copy-assistant-text"
+        data-tooltip-content={t("chat_window.copy")}
+        className="text-zinc-300 light:text-slate-500"
+        aria-label={t("chat_window.copy")}
+      >
+        {copied ? (
+          <Check size={20} />
+        ) : (
+          <Copy size={20} />
+        )}
+      </button>
+    </div>
   );
 }
 
@@ -118,7 +116,7 @@ function RegenerateMessage({ regenerateMessage, chatId }: any) {
   const { t } = useTranslation();
   if (!chatId) return null;
   return (
-    <div className="mt-3 relative">
+    <div className="relative flex items-center justify-center h-7 w-7">
       <button
         onClick={() => regenerateMessage(chatId)}
         data-tooltip-id="regenerate-assistant-text"
@@ -126,7 +124,7 @@ function RegenerateMessage({ regenerateMessage, chatId }: any) {
         className="border-none text-zinc-300 light:text-slate-500"
         aria-label={t("chat_window.regenerate")}
       >
-        <ArrowsClockwise size={20} className="mb-1" weight="fill" />
+        <ArrowsClockwise size={20} weight="fill" />
       </button>
     </div>
   );
