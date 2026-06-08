@@ -8,7 +8,7 @@ const {
 } = require("../../helpers/chat/responses");
 const fs = require("fs");
 const path = require("path");
-const { getStoragePath } = require("../paths");
+const { getStoragePath } = require("../../paths");
 const { safeJsonParse } = require("../../http");
 const {
   LLMPerformanceMonitor,

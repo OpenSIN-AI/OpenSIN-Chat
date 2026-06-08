@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { getStoragePath } = require("../paths");
+const { getStoragePath } = require("../../paths");
 const path = require("path");
 const fs = require("fs");
 const { toChunks, reportEmbeddingProgress } = require("../../helpers");

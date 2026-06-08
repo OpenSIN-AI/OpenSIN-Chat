@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 const path = require("path");
-const { getStoragePath } = require("../paths");
+const { getStoragePath } = require("../../paths");
 const fs = require("fs");
 const LEGACY_MODEL_MAP = require("./legacy");
 

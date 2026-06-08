@@ -1,4 +1,4 @@
-const { getStoragePath } = require("../paths");
+const { getStoragePath } = require("../../paths");
 // SPDX-License-Identifier: MIT
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {

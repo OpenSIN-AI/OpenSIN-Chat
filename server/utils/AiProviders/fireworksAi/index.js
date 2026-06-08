@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 const fs = require("fs");
 const path = require("path");
-const { getStoragePath } = require("../paths");
+const { getStoragePath } = require("../../paths");
 const { safeJsonParse } = require("../../http");
 const { NativeEmbedder } = require("../../EmbeddingEngines/native");
 const {
