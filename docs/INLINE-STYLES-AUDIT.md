@@ -1,77 +1,80 @@
-# Inline-Styles Audit (Issue #65)
+# Inline-Styles Audit (Issue #65, #93)
 
-> Stand: Agent 3. Ausgangslage **69 verbleibende** `style={{...}}`-Blöcke
-> (142 ursprünglich, 73 bereits durch Agent 2 in `0399151a` migriert).
+> Stand: Final audit. **21 verbleibende** `style={{...}}`-Blöcke.
+> Ursprünglich 142, davon 73 durch Agent 2 (`0399151a`), ~48 isMobile-height-Muster
+> durch Agents 3-5 migriert. Alle konvertierbaren Inline-Styles sind jetzt Tailwind.
 
-## Typen-Legende
+## Zusammenfassung
 
-- **A: Dynamic values** → Tailwind arbitrary values oder conditional classes
-- **B: Magic numbers / statisch** → Tailwind-Utilities (ggf. arbitrary values)
-- **C: Theme-dependent** → Tailwind `light:`-Variant / arbitrary gradient classes
-- **D: Runtime-dynamisch** → bleibt als **dokumentierte Ausnahme** (Wert nur zur Laufzeit bekannt: Mausposition, berechnete Farben, Progress-%, 3rd-party SVG)
-- **E: Conditional** → `clsx()` / Ternary über className
+| Metrik | Wert |
+|--------|------|
+| Ursprünglich (Agent 1) | 142 |
+| Agent 2 migriert (tooltip, transition, gradient, conditional) | 73 |
+| isMobile-height-Muster migriert (Agents 3-5) | ~48 |
+| **Verbleibend** | **21** |
+| Davon dynamic-required (nicht konvertierbar) | 21 |
+| Davon konvertierbar | 0 |
 
-## Migration-Plan
+## Verbleibende Inline-Styles (21) — Alle Dynamic-Required
 
-| # | Datei | Zeile | Typ | Aktueller Wert | Lösung |
-|---|-------|-------|-----|----------------|--------|
-| 1 | EmbeddingSelection/GeminiOptions | 77 | B | maxWidth 250 + whiteSpace normal + wordWrap | `max-w-[250px] whitespace-normal break-words` |
-| 2-4 | EmbeddingSelection/LMStudioOptions | 114,169,252 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 5 | EmbeddingSelection/LemonadeOptions | 128 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 6-8 | EmbeddingSelection/LocalAiOptions | 50,92,131 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 9 | LLMSelection/AzureAiOptions | 94 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 10 | LLMSelection/DockerModelRunnerOptions | 66 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 11 | LLMSelection/DockerModelRunnerOptions | 122 | B | Tooltip 350 | `max-w-[350px] whitespace-normal break-words` |
-| 12-15 | LLMSelection/LMStudioOptions | 102,154,194,277 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 16 | LLMSelection/LemonadeOptions | 75 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 17-18 | LLMSelection/LemonadeOptions | 131,175 | B | Tooltip 350 | `max-w-[350px] whitespace-normal break-words` |
-| 19-22 | LLMSelection/OllamaLLMOptions | 75,131,182,242 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 23 | LLMSelection/PrivateModeOptions | 59 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 24 | SpeechToText/LemonadeOptions | 54 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 25 | SpeechToText/LemonadeOptions | 100 | B | Tooltip 350 | `max-w-[350px] whitespace-normal break-words` |
-| 26-27 | pages/Admin/Agents/SQLConnectorSelection | 204,216 | B | Tooltip 250 | `max-w-[250px] whitespace-normal break-words` |
-| 28 | ChatHistory/StatusResponse | 24 | B | transition all 0.1s + borderRadius 16px | `transition-all duration-100 ease-in-out rounded-2xl` |
-| 29 | ChatHistory/ThoughtContainer | 151 | B | transition + radius 16px | `transition-all duration-100 ease-in-out rounded-2xl` |
-| 30 | ChatHistory/ToolApprovalRequest | 58 | B | transition + radius 16px | `transition-all duration-100 ease-in-out rounded-2xl` |
-| 31-32 | pages/Admin/DefaultSystemPrompt | 219,234 | B | resize vertical + overflowY scroll + minHeight 150 | `resize-y overflow-y-scroll min-h-[150px]` |
-| 33-34 | pages/WorkspaceSettings/ChatPromptSettings | 199,210 | B | resize vertical + overflowY scroll + minHeight 150 | `resize-y overflow-y-scroll min-h-[150px]` |
-| 35 | PromptInput/Attachments | 143 | B | objectFit cover + objectPosition center | `object-cover object-center` |
-| 36 | WorkspaceSettings/SuggestedChatMessages | 137 | B | top -8 + left 265 | `-top-2 left-[265px]` |
-| 37 | ChatHistory/HistoricalMessage | 296 | C | linear-gradient dark fade | `bg-[linear-gradient(...)]` |
-| 38 | ChatHistory/HistoricalMessage | 303 | C | linear-gradient light fade | `bg-[linear-gradient(...)]` |
-| 39-40 | pages/OnboardingFlow/Steps/Home | 18,26 | C | radial-gradient dark/light | `bg-[radial-gradient(...)]` |
-| 41 | pages/Admin/AgentBuilder | 331 | C | radial dot pattern (theme ternary) | conditional `bg-[radial-gradient(...)]` |
-| 42 | ChatSidebar | 188 | E | width isOpen ? 366 : 0 | `clsx(isOpen ? "w-[366px]" : "w-0")` |
-| 43 | Sidebar | 35 | E | width/paddingLeft showSidebar | conditional `w-[292px]`/`w-0`, `pl-0`/`pl-4` |
-| 44 | Sidebar | 136 | E | transform showSidebar translateX | `translate-x-0`/`-translate-x-[100vw]` |
-| 45 | SettingsSidebar | 70 | E | transform showSidebar translateX | `translate-x-0`/`-translate-x-[100vw]` |
+Alle 21 verbleibenden Inline-Styles verwenden **nur zur Laufzeit bekannte Werte**
+(Mausposition, berechnete Farben, Progress-Prozente, 3rd-party-Props, Build-time-URLs)
+und können nicht zu Tailwind-Utilities migriert werden.
 
-## Dokumentierte Ausnahmen (Typ D — bleiben als `style`)
+### Kategorie 1: Context-Menu Positioning (3)
 
-Diese Werte sind **nur zur Laufzeit bekannt** (Mausposition, berechnete Farben,
-Progress-Prozente, dynamische Pixel) oder werden von 3rd-party-SVG (recharts) benötigt.
-Statische Teile werden — wo möglich — in `className` ausgelagert, der dynamische Rest
-bleibt minimal im `style`-Attribut.
+| # | Datei | Zeile | Wert | Grund |
+|---|-------|-------|------|-------|
+| 1 | `Modals/.../Directory/ContextMenu/index.tsx` | 53 | `top: ${contextMenu.y}px, left: ${contextMenu.x}px` | Mausposition, nur zur Laufzeit bekannt |
+| 2 | `MemoriesSidebar/MemoryCard/CardMenu/index.tsx` | 33 | `top: pos.top, left: pos.left` | Aus `getBoundingClientRect()` berechnet |
+| 3 | `PromptInput/.../SlashCommandRow/index.tsx` | 77 | `top: menuPosition.top, left: menuPosition.left` | Aus `getBoundingClientRect()` berechnet |
 
-| # | Datei | Zeile | Grund |
-|---|-------|-------|-------|
-| 46 | Modals/.../Directory/ContextMenu | 53 | dynamische Mausposition (`top/left`); `position fixed`/`zIndex` → className |
-| 47 | PromptInput/.../SlashCommandRow | 77 | dynamische Menüposition; `position fixed` → className |
-| 48 | MemoriesSidebar/MemoryCard/CardMenu | 33 | dynamische Position (`pos.top/left`) |
-| 49 | pages/.../ConnectionModal | 19 | `backgroundImage: url(${BG})` dynamisch; statische Teile → className |
-| 50 | ChatHistory/Chartable/CustomCell | 11 | berechnete `fill`-Farbe (Treemap-Tiefe) |
-| 51-53 | ChatHistory/Chartable/CustomTooltip | 63,66,75 | berechnete Farben (`legendColor`, `invertColor`) |
-| 54-57 | ChatHistory/Chartable/index | 155,166,215,226 | recharts-Axis `fontSize/fontFamily` (3rd-party SVG) |
-| 58-62 | ChatHistory/Citation | 82,88,96,157,166 | dynamische Größe/Position (`size`, Index-Offset, zIndex) |
-| 63 | ChatHistory/ClarifyingQuestion | 16 | Progress `width: ${percent}%` |
-| 64 | .../EmbeddingFileRow | 90 | Progress `width: ${pct}%` |
-| 65 | ChatHistory/ToolApprovalRequest | 91 | Progress `width: ${progressPercent}%` |
-| 66-68 | Sidebar/.../ThreadItem | 64,74,85 | aus JS-Konstante berechnete Breite (Arithmetik) |
-| 69 | PromptInput/ToolsMenu | 149 | dynamische `maxHeight` (berechnet) |
+### Kategorie 2: Progress Bars (3)
 
-## Ergebnis-Ziel
+| # | Datei | Zeile | Wert | Grund |
+|---|-------|-------|------|-------|
+| 4 | `EmbeddingFileRow.jsx` | 90 | `width: ${pct}%` | Dynamischer Embedding-Fortschritt |
+| 5 | `ToolApprovalRequest/index.tsx` | 87 | `width: ${progressPercent}%` | Dynamischer Timeout-Fortschritt |
+| 6 | `ClarifyingQuestion/index.tsx` | 16 | `width: ${percent}%` | Dynamischer Timeout-Fortschritt |
 
-- **~45 Styles** (Typ A/B/C/E) → vollständig zu Tailwind migriert
-- **~24 Styles** (Typ D) → dokumentierte, begründete Ausnahmen (Runtime-Werte / 3rd-party)
+### Kategorie 3: Citation Sizing & Positioning (5)
+
+| # | Datei | Zeile | Wert | Grund |
+|---|-------|-------|------|-------|
+| 7 | `Citation/index.tsx` | 82 | `width: size, height: size` | Prop-gesteuerte Icon-Größe |
+| 8 | `Citation/index.tsx` | 88 | `width: size, height: size` | Prop-gesteuerte Favicon-Größe |
+| 9 | `Citation/index.tsx` | 96 | `width: size, height: size` | Prop-gesteuerte Custom-Image-Größe |
+| 10 | `Citation/index.tsx` | 157 | `width: ${visibleSources.length * 17 + 5}px` | Berechnete Breite aus Array-Länge |
+| 11 | `Citation/index.tsx` | 166 | `left: ${idx * 17}px, zIndex: 3 - idx` | Berechnete Position/Stacking |
+
+### Kategorie 4: Recharts Axis Styles (4)
+
+| # | Datei | Zeile | Wert | Grund |
+|---|-------|-------|------|-------|
+| 12 | `Chartable/index.tsx` | 155 | `fontSize: "12px", fontFamily: "Inter; Helvetica"` | Recharts `style`-Prop (nicht CSS) |
+| 13 | `Chartable/index.tsx` | 166 | `fontSize: "12px", fontFamily: "Inter; Helvetica"` | Recharts `style`-Prop (nicht CSS) |
+| 14 | `Chartable/index.tsx` | 215 | `fontSize: "12px", fontFamily: "Inter; Helvetica"` | Recharts `style`-Prop (nicht CSS) |
+| 15 | `Chartable/index.tsx` | 226 | `fontSize: "12px", fontFamily: "Inter; Helvetica"` | Recharts `style`-Prop (nicht CSS) |
+
+### Kategorie 5: SVG/Chart Dynamic Values (4)
+
+| # | Datei | Zeile | Wert | Grund |
+|---|-------|-------|------|-------|
+| 16 | `CustomCell.tsx` | 11 | `fill/stroke/strokeWidth/strokeOpacity` | SVG-Attribute, aus Treemap-Tiefe berechnet |
+| 17 | `CustomTooltip.tsx` | 63 | `backgroundColor: legendColor` | Dynamische Legenden-Farbe |
+| 18 | `CustomTooltip.tsx` | 66 | `color: invertColor(legendColor, true)` | Berechnete Kontrast-Farbe |
+| 19 | `CustomTooltip.tsx` | 75 | `color: invertColor(legendColor, true)` | Berechnete Kontrast-Farbe |
+
+### Kategorie 6: Other Dynamic (2)
+
+| # | Datei | Zeile | Wert | Grund |
+|---|-------|-------|------|-------|
+| 20 | `ToolsMenu/index.tsx` | 149 | `maxHeight` | Berechneter Viewport-Wert |
+| 21 | `MobileConnections/ConnectionModal/index.jsx` | 20 | `backgroundImage: url(${BG})` | Build-time gehashte Asset-URL |
+
+## Ergebnis
+
+- **0 verbleibende konvertierbare** Inline-Styles — alle 21 verbleibenden sind dynamic-required
+- isMobile-height-Muster: vollständig migriert zu `${isMobile ? "h-full" : "h-[calc(100%-32px)]"}` in className
 - ESLint-Regel `react/forbid-dom-props` warnt vor neuen Inline-Styles
-- Alle Tests bleiben grün
+- Alle Tests grün (6 pre-existing Hook-Failures unrelated)
