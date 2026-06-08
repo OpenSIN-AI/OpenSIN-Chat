@@ -291,20 +291,8 @@ function TruncatableContent({ children }: any) {
         </div>
         {showTruncation && (
           <>
-            <div
-              className="absolute bottom-0 left-0 right-0 h-[36px] light:hidden pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(39, 39, 42, 0.00) 0%, rgba(39, 39, 42, 0.65) 50%, #27272A 100%)",
-              }}
-            />
-            <div
-              className="absolute bottom-0 left-0 right-0 h-[36px] hidden light:block pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(180deg, rgba(241, 245, 249, 0.00) 0%, rgba(241, 245, 249, 0.65) 50%, #F1F5F9 100%)",
-              }}
-            />
+            <div className="absolute bottom-0 left-0 right-0 h-[36px] light:hidden pointer-events-none bg-[linear-gradient(180deg,_rgba(39,_39,_42,_0.00)_0%,_rgba(39,_39,_42,_0.65)_50%,_#27272A_100%)]" />
+            <div className="absolute bottom-0 left-0 right-0 h-[36px] hidden light:block pointer-events-none bg-[linear-gradient(180deg,_rgba(241,_245,_249,_0.00)_0%,_rgba(241,_245,_249,_0.65)_50%,_#F1F5F9_100%)]" />
           </>
         )}
       </div>

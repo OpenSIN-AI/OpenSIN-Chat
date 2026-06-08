@@ -21,11 +21,7 @@ export default function StatusResponse({ messages = [], isThinking = false }: an
         <div className="w-full">
           <div
             onClick={handleExpandClick}
-            style={{
-              transition: "all 0.1s ease-in-out",
-              borderRadius: "16px",
-            }}
-            className="relative bg-zinc-800 light:bg-slate-100 p-4"
+            className="relative bg-zinc-800 light:bg-slate-100 p-4 rounded-2xl transition-all duration-100 ease-in-out"
           >
             <div className="absolute top-4 left-4 w-[18px] h-[18px]">
               {isThinking ? (

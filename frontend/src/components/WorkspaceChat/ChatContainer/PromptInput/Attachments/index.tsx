@@ -140,8 +140,7 @@ function AttachmentItem({ attachment, onImageClick }: any) {
             <img
               alt={`Preview of ${file.name}`}
               src={contentString}
-              style={{ objectFit: "cover", objectPosition: "center" }}
-              className={`${iconBgColor} w-[40px] h-[40px] rounded-lg flex items-center justify-center`}
+              className={`${iconBgColor} w-[40px] h-[40px] rounded-lg flex items-center justify-center object-cover object-center`}
             />
           </button>
         </div>
