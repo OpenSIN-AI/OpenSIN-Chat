@@ -450,7 +450,7 @@ const customTooltip: any = (props) => {
 };
 
 function DownloadGraph({ onClick }: any) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const handleClick = async () => {
     setLoading(true);
     await onClick?.();

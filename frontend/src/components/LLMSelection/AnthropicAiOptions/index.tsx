@@ -4,7 +4,7 @@ import System from "@/models/system";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 
 export default function AnthropicAiOptions({ settings }: any) {
-  const [showAdvancedControls, setShowAdvancedControls] = useState(false);
+  const [showAdvancedControls, setShowAdvancedControls] = useState(false as any);
   const [inputValue, setInputValue] = useState(settings?.AnthropicApiKey);
   const [anthropicApiKey, setAnthropicApiKey] = useState(
     settings?.AnthropicApiKey,
@@ -92,8 +92,8 @@ export default function AnthropicAiOptions({ settings }: any) {
 }
 
 function AnthropicModelSelection({ apiKey, settings }: any) {
-  const [models, setModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [models, setModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

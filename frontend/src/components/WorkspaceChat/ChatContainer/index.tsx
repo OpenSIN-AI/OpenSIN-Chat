@@ -87,7 +87,7 @@ export default function ChatContainer({
   workspace, threadSlug = null, knownHistory = [], }: any) {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [loadingResponse, setLoadingResponse] = useState(false);
+  const [loadingResponse, setLoadingResponse] = useState(false as any);
   const [chatHistory, setChatHistory] = useState(knownHistory);
   const [socketId, setSocketId] = useState(null);
   const [websocket, setWebsocket] = useState(null);

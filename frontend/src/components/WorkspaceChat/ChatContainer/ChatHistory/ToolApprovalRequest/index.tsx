@@ -7,10 +7,10 @@ import useTimeoutProgress from "@/hooks/useTimeoutProgress";
 
 export default function ToolApprovalRequest({
   requestId, skillName, payload = {}, description = null, timeoutMs = null, websocket, onResponse, }: any) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [responded, setResponded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false as any);
+  const [responded, setResponded] = useState(false as any);
   const [approved, setApproved] = useState(null);
-  const [alwaysAllow, setAlwaysAllow] = useState(false);
+  const [alwaysAllow, setAlwaysAllow] = useState(false as any);
   const hasPayload = payload && Object.keys(payload).length > 0;
 
   const progressPercent = useTimeoutProgress(timeoutMs, {

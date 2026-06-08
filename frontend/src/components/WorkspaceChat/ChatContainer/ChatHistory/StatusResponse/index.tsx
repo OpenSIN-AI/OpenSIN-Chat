@@ -6,7 +6,7 @@ import AgentAnimation from "@/media/animations/agent-animation.webm";
 import AgentStatic from "@/media/animations/agent-static.png";
 
 export default function StatusResponse({ messages = [], isThinking = false }: any) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false as any);
   const currentThought = messages[messages.length - 1];
   const previousThoughts = messages.slice(0, -1);
 

@@ -38,8 +38,8 @@ function voiceDisplayName(voice: any) {
 }
 
 function PiperTTSModelSelection({ settings }: any) {
-  const [loading, setLoading] = useState(true);
-  const [voices, setVoices] = useState([]);
+  const [loading, setLoading] = useState(true as any);
+  const [voices, setVoices] = useState([] as any);
   const [selectedVoice, setSelectedVoice] = useState(
     settings?.TTSPiperTTSVoiceModel,
   );
@@ -135,8 +135,8 @@ function PiperTTSModelSelection({ settings }: any) {
 
 function DemoVoiceSample({ voiceId }: any) {
   const playerRef = useRef(null);
-  const [speaking, setSpeaking] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [speaking, setSpeaking] = useState(false as any);
+  const [loading, setLoading] = useState(false as any);
   const [audioSrc, setAudioSrc] = useState(null);
 
   async function speakMessage(e: any) {

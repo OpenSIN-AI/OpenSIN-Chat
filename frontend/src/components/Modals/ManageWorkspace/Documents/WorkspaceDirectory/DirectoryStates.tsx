@@ -3,7 +3,7 @@ import PreLoader from "@/components/Preloader";
 import { X } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
-export function LoadingState({ workspace, loadingMessage }: any) {
+export function LoadingState({ workspace, loadingMessage }: any as any) {
   return (
     <div className="px-8">
       <div className="flex items-center justify-start w-[560px]">
@@ -22,7 +22,7 @@ export function LoadingState({ workspace, loadingMessage }: any) {
 }
 
 export function EmbeddingProgressState({
-  workspace, embeddingProgress, hasChanges, movedItems, handleSaveChanges, removeQueuedFile, }: any) {
+  workspace, embeddingProgress, hasChanges, movedItems, handleSaveChanges, removeQueuedFile, }: any as any) {
   return (
     <div className="px-8">
       <div className="flex items-center justify-start w-[560px]">

@@ -22,7 +22,7 @@ import ThinkingStatic from "@/media/animations/thinking-static.png";
 const ThoughtExpansionContext = createContext<any>(null);
 
 export function ThoughtExpansionProvider({ children }: any) {
-  const [expansionStates, setExpansionStates] = useState({});
+  const [expansionStates, setExpansionStates] = useState({} as any);
 
   const getExpanded = useCallback(
     (messageId) => {
@@ -106,7 +106,7 @@ export const ThoughtChainComponent = forwardRef(
     );
     const { expanded: persistedExpanded, setExpanded: setPersistedExpanded } =
       useThoughtExpansion(messageId);
-    const [localExpanded, setLocalExpanded] = useState(false);
+    const [localExpanded, setLocalExpanded] = useState(false as any);
 
     // Use persisted state if messageId is provided, otherwise use local state
     const isExpanded = messageId ? persistedExpanded : localExpanded;

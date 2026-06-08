@@ -21,7 +21,7 @@ export function useWorkspace(slug: string | null): {
   error: Error | null;
 } {
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true as any);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export function useWorkspaces(): {
   refetch: () => Promise<void>;
 } {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true as any);
   const [error, setError] = useState<Error | null>(null);
 
   const fetchWorkspaces = useCallback(async () => {
@@ -90,7 +90,7 @@ export function useThreads(workspaceSlug: string | null): {
   error: Error | null;
 } {
   const [threads, setThreads] = useState<Thread[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true as any);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -129,7 +129,7 @@ export function useChatHistory(
   error: Error | null;
 } {
   const [messages, setMessages] = useState<import("@/types/workspace").Message[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true as any);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
@@ -164,9 +164,9 @@ export function useSystemConfig(): {
   isHealthy: boolean;
   loading: boolean;
 } {
-  const [isOnboarded, setIsOnboarded] = useState(false);
-  const [isHealthy, setIsHealthy] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isOnboarded, setIsOnboarded] = useState(false as any);
+  const [isHealthy, setIsHealthy] = useState(false as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     (async () => {
@@ -196,7 +196,7 @@ export function useSendMessage(): {
   loading: boolean;
   error: Error | null;
 } {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const [error, setError] = useState<Error | null>(null);
 
   const send = useCallback(

@@ -22,7 +22,7 @@ export default function ThreadItem({
   const { slug: urlSlug, threadSlug = null } = useParams();
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
-  const [showOptions, setShowOptions] = useState(false);
+  const [showOptions, setShowOptions] = useState(false as any);
   const linkTo = thread.virtual
     ? "/"
     : !thread.slug

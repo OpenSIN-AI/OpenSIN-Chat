@@ -23,8 +23,8 @@ export default function UserButton() {
   const { user } = useUser();
   const menuRef = useRef();
   const buttonRef = useRef();
-  const [showMenu, setShowMenu] = useState(false);
-  const [showAccountSettings, setShowAccountSettings] = useState(false);
+  const [showMenu, setShowMenu] = useState(false as any);
+  const [showAccountSettings, setShowAccountSettings] = useState(false as any);
   const [supportEmail, setSupportEmail] = useState("");
 
   const handleClose: any = (event) => {

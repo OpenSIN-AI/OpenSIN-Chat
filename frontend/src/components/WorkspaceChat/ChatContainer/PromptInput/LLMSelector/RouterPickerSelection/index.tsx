@@ -6,8 +6,8 @@ import ModelRouter from "@/models/modelRouter";
 export default function RouterPickerSelection({
   selectedRouterId, setSelectedRouterId, setHasChanges, }: any) {
   const { t } = useTranslation();
-  const [routers, setRouters] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [routers, setRouters] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function fetchRouters() {

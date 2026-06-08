@@ -8,8 +8,8 @@ import CommunityHub from "@/models/communityHub";
  * @returns {{isAuthenticated: boolean, loading: boolean}} An object containing the authentication status and loading state.
  */
 export function useCommunityHubAuth() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function checkCommunityHubAuth() {

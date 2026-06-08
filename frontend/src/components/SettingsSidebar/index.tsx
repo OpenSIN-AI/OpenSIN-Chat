@@ -31,8 +31,8 @@ export default function SettingsSidebar() {
   const { logo } = useLogo();
   const { user } = useUser();
   const sidebarRef = useRef(null);
-  const [showSidebar, setShowSidebar] = useState(false);
-  const [showBgOverlay, setShowBgOverlay] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false as any);
+  const [showBgOverlay, setShowBgOverlay] = useState(false as any);
 
   useEffect(() => {
     function handleBg() {
@@ -188,7 +188,7 @@ export default function SettingsSidebar() {
 }
 
 function SupportEmail() {
-  const [supportEmail, setSupportEmail] = useState(paths.mailToSupport());
+  const [supportEmail, setSupportEmail] = useState(paths.mailToSupport( as any));
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -463,7 +463,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
   const [showing, setShowing] = useState(
     window.localStorage.getItem(
       "openafd_experimental_feature_preview_unlocked",
-    ),
+     as any),
   );
 
   useEffect(() => {

@@ -33,8 +33,8 @@ export default function SambaNovaOptions({ settings }: any) {
 }
 
 function SambaNovaModelSelection({ settings, apiKey }: any) {
-  const [groupedModels, setGroupedModels] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [groupedModels, setGroupedModels] = useState({} as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

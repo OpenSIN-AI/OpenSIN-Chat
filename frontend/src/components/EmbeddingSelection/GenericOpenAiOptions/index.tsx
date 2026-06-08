@@ -4,7 +4,7 @@ import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
 export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
-  const [showAdvancedControls, setShowAdvancedControls] = useState(false);
+  const [showAdvancedControls, setShowAdvancedControls] = useState(false as any);
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5 flex-wrap">

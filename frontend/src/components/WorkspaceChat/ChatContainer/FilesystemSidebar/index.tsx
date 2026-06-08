@@ -26,7 +26,7 @@ export default function FilesystemSidebar() {
   const { sidebarOpen, closeSidebar } = useFilesystemSidebar();
   const { t } = useTranslation();
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const [error, setError] = useState(null);
   const abortRef = useRef(null);
 

@@ -32,8 +32,8 @@ export default function MinimaxOptions({ settings }: any) {
 }
 
 function MinimaxModelSelection({ apiKey, settings }: any) {
-  const [models, setModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [models, setModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

@@ -30,7 +30,7 @@ export function usePasswordModal(notry: any = false) {
     loading: true,
     requiresAuth: false,
     mode: "single",
-  });
+  } as any);
 
   useEffect(() => {
     async function checkAuthReq() {

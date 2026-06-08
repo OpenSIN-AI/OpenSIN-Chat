@@ -46,15 +46,15 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }: any) {
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const { user } = useUser();
-  const [showSelector, setShowSelector] = useState(false);
+  const [showSelector, setShowSelector] = useState(false as any);
   const [modelName, setModelName] = useState("");
   const {
     isOpen: isSetupProviderOpen,
     openModal: openSetupProviderModal,
     closeModal: closeSetupProviderModal,
   } = useModal();
-  const [config, setConfig] = useState({ settings: {}, provider: null });
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [config, setConfig] = useState({ settings: {}, provider: null } as any);
+  const [refreshKey, setRefreshKey] = useState(0 as any);
   const [sidebarOpen, setSidebarOpen] = useState(
     () => window.localStorage.getItem("openafd_sidebar_toggle") !== "closed",
   );

@@ -48,10 +48,10 @@ function Section({ title, loading, error, onRetry, retryLabel, children }: any) 
 export default function PoliticalSidebar() {
   const { sidebarOpen, closeSidebar } = usePoliticalSidebar();
   const { t } = useTranslation();
-  const [drucksachen, setDrucksachen] = useState([]);
-  const [rssItems, setRssItems] = useState([]);
-  const [loadingDrucksachen, setLoadingDrucksachen] = useState(false);
-  const [loadingRss, setLoadingRss] = useState(false);
+  const [drucksachen, setDrucksachen] = useState([] as any);
+  const [rssItems, setRssItems] = useState([] as any);
+  const [loadingDrucksachen, setLoadingDrucksachen] = useState(false as any);
+  const [loadingRss, setLoadingRss] = useState(false as any);
   const [errorDrucksachen, setErrorDrucksachen] = useState(null);
   const [errorRss, setErrorRss] = useState(null);
   const abortRef = useRef(null);

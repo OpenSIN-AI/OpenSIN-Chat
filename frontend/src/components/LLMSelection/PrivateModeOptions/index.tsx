@@ -6,7 +6,7 @@ import System from "@/models/system";
 import { Link } from "react-router-dom";
 
 export default function PrivateModeOptions({ settings }: any) {
-  const [models, setModels] = useState([]);
+  const [models, setModels] = useState([] as any);
   const [loading, setLoading] = useState(!!settings?.PrivateModeBasePath);
   const [basePath, setBasePath] = useState(settings?.PrivateModeBasePath);
   const [model, setModel] = useState(settings?.PrivateModeModelPref || "");

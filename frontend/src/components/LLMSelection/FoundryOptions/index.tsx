@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import System from "@/models/system";
 
 export default function FoundryOptions({ settings }: any) {
-  const [models, setModels] = useState([]);
+  const [models, setModels] = useState([] as any);
   const [loading, setLoading] = useState(!!settings?.FoundryBasePath);
   const [basePath, setBasePath] = useState(settings?.FoundryBasePath);
   const [model, setModel] = useState(settings?.FoundryModelPref || "");

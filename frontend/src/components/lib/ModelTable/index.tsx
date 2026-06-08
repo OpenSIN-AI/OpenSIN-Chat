@@ -46,7 +46,7 @@ export default function ModelTable({
   },
 }) {
   const [showAll, setShowAll] = useState(
-    models.some((model) => model.downloaded),
+    models.some((model as any) => model.downloaded),
   );
   const totalModels = models.length;
 
@@ -182,9 +182,9 @@ function ModelRow({
   },
 }) {
   const modelRowRef = useRef(null);
-  const [showOptions, setShowOptions] = useState(false);
-  const [processing, setProcessing] = useState(false);
-  const [downloadPercentage, setDownloadPercentage] = useState(0);
+  const [showOptions, setShowOptions] = useState(false as any);
+  const [processing, setProcessing] = useState(false as any);
+  const [downloadPercentage, setDownloadPercentage] = useState(0 as any);
   const fileSize =
     typeof model.size === "number"
       ? humanFileSize(model.size * 1e6, true, 2)

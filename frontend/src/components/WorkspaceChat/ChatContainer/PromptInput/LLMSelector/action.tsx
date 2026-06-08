@@ -19,7 +19,7 @@ export default function LLMSelectorAction({ workspaceSlug = null }: any) {
   const tooltipRef = useRef(null);
   const { theme } = useTheme();
   const { user } = useUser();
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(false as any);
   const {
     isOpen: isSetupProviderOpen,
     openModal: openSetupProviderModal,
@@ -28,7 +28,7 @@ export default function LLMSelectorAction({ workspaceSlug = null }: any) {
   const [config, setConfig] = useState({
     settings: {},
     provider: null,
-  });
+  } as any);
 
   function toggleLLMSelectorTooltip() {
     if (!tooltipRef.current) return;

@@ -209,9 +209,9 @@ export default function LemonadeOptions({ settings }: any) {
 
 function LemonadeModelSelection({
   selectedModelId, setSelectedModelId, basePath = null, }: any) {
-  const [customModels, setCustomModels] = useState([]);
-  const [filteredModels, setFilteredModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [customModels, setCustomModels] = useState([] as any);
+  const [filteredModels, setFilteredModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
   const [searchQuery, setSearchQuery] = useState("");
 
   async function fetchModels() {

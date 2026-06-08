@@ -51,7 +51,7 @@ export default function ToolsMenu({
   const TABS = useMemo(() => getTabs(t, user), [t, user]);
   const [activeTab, setActiveTab] = useState(TABS[0].key);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const [maxHeight, setMaxHeight] = useState(360);
+  const [maxHeight, setMaxHeight] = useState(360 as any);
   const itemCountRef = useRef(0);
   const popoverRef = useRef(null);
 

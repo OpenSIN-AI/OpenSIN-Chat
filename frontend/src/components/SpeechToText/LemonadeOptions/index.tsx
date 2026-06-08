@@ -129,8 +129,8 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
 }
 
 function LemonadeSTTModelSelection({ settings, basePath = null }: any) {
-  const [customModels, setCustomModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [customModels, setCustomModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

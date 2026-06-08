@@ -8,14 +8,14 @@ export default function useProviderEndpointAutoDiscovery({
   initialAuthToken = null,
   ENDPOINTS = [],
 }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const [basePath, setBasePath] = useState(initialBasePath);
   const [basePathValue, setBasePathValue] = useState(initialBasePath);
 
   const [authToken, setAuthToken] = useState(initialAuthToken);
   const [authTokenValue, setAuthTokenValue] = useState(initialAuthToken);
-  const [autoDetectAttempted, setAutoDetectAttempted] = useState(false);
-  const [showAdvancedControls, setShowAdvancedControls] = useState(true);
+  const [autoDetectAttempted, setAutoDetectAttempted] = useState(false as any);
+  const [showAdvancedControls, setShowAdvancedControls] = useState(true as any);
 
   async function autoDetect() {
     setLoading(true);

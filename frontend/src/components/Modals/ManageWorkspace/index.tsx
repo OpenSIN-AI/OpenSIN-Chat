@@ -18,7 +18,7 @@ const ManageWorkspace: any = ({ hideModal = noop, providedSlug = null }: any) =>
   const { slug } = useParams();
   const { user } = useUser();
   const [workspace, setWorkspace] = useState(null);
-  const [settings, setSettings] = useState({});
+  const [settings, setSettings] = useState({} as any);
   const [selectedTab, setSelectedTab] = useState("documents");
 
   useEffect(() => {
@@ -150,7 +150,7 @@ const ModalTabSwitcher: any = ({ selectedTab, setSelectedTab }: any) => {
 
 export function useManageWorkspaceModal() {
   const { user } = useUser();
-  const [showing, setShowing] = useState(false);
+  const [showing, setShowing] = useState(false as any);
 
   function showModal() {
     if (user?.role !== "default") {

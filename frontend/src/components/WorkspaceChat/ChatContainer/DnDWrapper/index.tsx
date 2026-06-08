@@ -43,15 +43,15 @@ export const PARSED_FILE_ATTACHMENT_REMOVED_EVENT =
 
 export function DnDFileUploaderProvider({
   workspace, threadSlug = null, children, }: any) {
-  const [files, setFiles] = useState([]);
-  const [ready, setReady] = useState(false);
-  const [dragging, setDragging] = useState(false);
-  const [showWarningModal, setShowWarningModal] = useState(false);
-  const [isEmbedding, setIsEmbedding] = useState(false);
-  const [embedProgress, setEmbedProgress] = useState(0);
-  const [pendingFiles, setPendingFiles] = useState([]);
-  const [tokenCount, setTokenCount] = useState(0);
-  const [maxTokens, setMaxTokens] = useState(Number.POSITIVE_INFINITY);
+  const [files, setFiles] = useState([] as any);
+  const [ready, setReady] = useState(false as any);
+  const [dragging, setDragging] = useState(false as any);
+  const [showWarningModal, setShowWarningModal] = useState(false as any);
+  const [isEmbedding, setIsEmbedding] = useState(false as any);
+  const [embedProgress, setEmbedProgress] = useState(0 as any);
+  const [pendingFiles, setPendingFiles] = useState([] as any);
+  const [tokenCount, setTokenCount] = useState(0 as any);
+  const [maxTokens, setMaxTokens] = useState(Number.POSITIVE_INFINITY as any);
 
   useEffect(() => {
     System.checkDocumentProcessorOnline().then((status) => setReady(status));

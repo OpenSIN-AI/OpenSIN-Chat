@@ -33,8 +33,8 @@ export default function DeepgramSpeechToTextOptions({ settings }: any) {
 }
 
 function DeepgramSttModelSelection({ apiKey, settings }: any) {
-  const [models, setModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [models, setModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findModels() {

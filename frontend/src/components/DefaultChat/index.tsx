@@ -19,7 +19,7 @@ export default function DefaultChatContainer() {
   const [{ workspaces, loading }, setWorkspaces] = useState({
     workspaces: [],
     loading: true,
-  });
+  } as any);
 
   useEffect(() => {
     async function fetchWorkspaces() {

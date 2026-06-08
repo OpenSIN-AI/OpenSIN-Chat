@@ -198,8 +198,8 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
 }
 
 function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
-  const [customModels, setCustomModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [customModels, setCustomModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

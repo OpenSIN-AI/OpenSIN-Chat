@@ -7,7 +7,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 
 export default function RecoveryCodeModal({
   recoveryCodes, onDownloadComplete, onClose, }: any) {
-  const [downloadClicked, setDownloadClicked] = useState(false);
+  const [downloadClicked, setDownloadClicked] = useState(false as any);
 
   const downloadRecoveryCodes = () => {
     const blob = new Blob([recoveryCodes.join("\n")], { type: "text/plain" });

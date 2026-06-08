@@ -9,13 +9,13 @@ import WorkspaceDirectory from "./WorkspaceDirectory";
 import { useWorkspaceEmbeddingProgress } from "@/EmbeddingProgressContext";
 
 export default function DocumentSettings({ workspace }: any) {
-  const [highlightWorkspace, setHighlightWorkspace] = useState(false);
-  const [availableDocs, setAvailableDocs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [workspaceDocs, setWorkspaceDocs] = useState([]);
-  const [selectedItems, setSelectedItems] = useState({});
-  const [hasChanges, setHasChanges] = useState(false);
-  const [movedItems, setMovedItems] = useState([]);
+  const [highlightWorkspace, setHighlightWorkspace] = useState(false as any);
+  const [availableDocs, setAvailableDocs] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
+  const [workspaceDocs, setWorkspaceDocs] = useState([] as any);
+  const [selectedItems, setSelectedItems] = useState({} as any);
+  const [hasChanges, setHasChanges] = useState(false as any);
+  const [movedItems, setMovedItems] = useState([] as any);
   const [loadingMessage, setLoadingMessage] = useState("");
   const availableDocsRef = useRef([]);
 

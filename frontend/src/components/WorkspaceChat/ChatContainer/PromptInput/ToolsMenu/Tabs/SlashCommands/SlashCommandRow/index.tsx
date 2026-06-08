@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 export default function SlashCommandRow({
   command, description, onClick, onEdit, onPublish, showMenu = false, highlighted = false, }: any) {
   const { t } = useTranslation();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [menuOpen, setMenuOpen] = useState(false as any);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 } as any);
   const menuRef: any = useRef(null);
   const menuBtnRef = useRef(null);
 

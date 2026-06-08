@@ -106,8 +106,8 @@ function CompletedSurvey({ questions, drafts, submittedResult }: any) {
  */
 export default function ClarifyingQuestionCard({
   requestId, questions = [], allowSkip = true, timeoutMs = null, websocket, }: any) {
-  const [index, setIndex] = useState(0);
-  const [responded, setResponded] = useState(false);
+  const [index, setIndex] = useState(0 as any);
+  const [responded, setResponded] = useState(false as any);
   const [submittedResult, setSubmittedResult] = useState(null);
   const [drafts, setDrafts] = useState(() =>
     questions.map((q) => emptyDraftFor(q)),

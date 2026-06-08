@@ -27,13 +27,13 @@ export default function AttachItem({
   const tooltipRef = useRef(null);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
-  const [showMenu, setShowMenu] = useState(false);
-  const [isEmbedding, setIsEmbedding] = useState(false);
-  const [files, setFiles] = useState([]);
-  const [currentTokens, setCurrentTokens] = useState(0);
+  const [showMenu, setShowMenu] = useState(false as any);
+  const [isEmbedding, setIsEmbedding] = useState(false as any);
+  const [files, setFiles] = useState([] as any);
+  const [currentTokens, setCurrentTokens] = useState(0 as any);
   const [contextWindow, setContextWindow] = useState(Infinity);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(false as any);
+  const [isLoading, setIsLoading] = useState(true as any);
 
   const fetchFiles = () => {
     if (!slug) return;

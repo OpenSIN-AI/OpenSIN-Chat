@@ -9,7 +9,7 @@ import {
 
 export function useWatchDeleteMessage({ chatId = null, role = "user" }: any) {
   const context = useMessageActionsContext();
-  const [completeDelete, setCompleteDelete] = useState(false);
+  const [completeDelete, setCompleteDelete] = useState(false as any);
   const deleteCalled = useRef(false);
   const isDeleted = context?.isDeleted(chatId) ?? false;
 

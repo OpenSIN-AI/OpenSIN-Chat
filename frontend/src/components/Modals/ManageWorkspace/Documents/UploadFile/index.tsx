@@ -13,9 +13,9 @@ import debounce from "lodash.debounce";
 export default function UploadFile({
   workspace, fetchKeys, setLoading, setLoadingMessage, }: any) {
   const { t } = useTranslation();
-  const [ready, setReady] = useState(false);
-  const [files, setFiles] = useState([]);
-  const [fetchingUrl, setFetchingUrl] = useState(false);
+  const [ready, setReady] = useState(false as any);
+  const [files, setFiles] = useState([] as any);
+  const [fetchingUrl, setFetchingUrl] = useState(false as any);
 
   const handleSendLink = async (e) => {
     e.preventDefault();

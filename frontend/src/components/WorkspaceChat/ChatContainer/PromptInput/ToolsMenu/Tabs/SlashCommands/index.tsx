@@ -30,7 +30,7 @@ export default function SlashCommandsTab({
     openModal: openPublishModal,
     closeModal: closePublishModal,
   } = useModal();
-  const [presets, setPresets] = useState([]);
+  const [presets, setPresets] = useState([] as any);
   const [selectedPreset, setSelectedPreset] = useState(null);
   const [presetToPublish, setPresetToPublish] = useState(null);
 

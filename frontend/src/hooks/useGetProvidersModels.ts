@@ -64,9 +64,9 @@ const groupedProviders = [
   "sambanova",
 ];
 export default function useGetProviderModels(provider = null) {
-  const [defaultModels, setDefaultModels] = useState([]);
-  const [customModels, setCustomModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [defaultModels, setDefaultModels] = useState([] as any);
+  const [customModels, setCustomModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function fetchProviderModels() {

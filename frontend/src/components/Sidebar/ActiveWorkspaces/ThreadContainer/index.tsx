@@ -21,11 +21,11 @@ export const THREAD_RENAME_EVENT: any = "renameThread";
 export default function ThreadContainer({
   workspace, isVirtualThread = false, }: any) {
   const { threadSlug = null } = useParams();
-  const [threads, setThreads] = useState([]);
-  const [folders, setFolders] = useState([]);
-  const [defaultThreadHasChats, setDefaultThreadHasChats] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [ctrlPressed, setCtrlPressed] = useState(false);
+  const [threads, setThreads] = useState([] as any);
+  const [folders, setFolders] = useState([] as any);
+  const [defaultThreadHasChats, setDefaultThreadHasChats] = useState(false as any);
+  const [loading, setLoading] = useState(true as any);
+  const [ctrlPressed, setCtrlPressed] = useState(false as any);
   const [activeId, setActiveId] = useState(null);
 
   const sensors = useSensors(
@@ -376,7 +376,7 @@ function NewThreadButton({ workspace }: any) {
 }
 
 function NewFolderButton({ workspace, onCreated }: any) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const onClick = async () => {
     const name = window.prompt("Ordnername:")?.trim();
     if (!name) return;

@@ -23,7 +23,7 @@ export default function LLMSelectorModal({
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const [settings, setSettings] = useState(null);
   const [selectedLLMProvider, setSelectedLLMProvider] = useState(null);
   const [selectedLLMModel, setSelectedLLMModel] = useState("");
@@ -31,9 +31,9 @@ export default function LLMSelectorModal({
   const [availableProviders, setAvailableProviders] = useState(
     WORKSPACE_LLM_PROVIDERS,
   );
-  const [hasChanges, setHasChanges] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [missingCredentials, setMissingCredentials] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false as any);
+  const [saving, setSaving] = useState(false as any);
+  const [missingCredentials, setMissingCredentials] = useState(false as any);
 
   useEffect(() => {
     if (!slug) return;

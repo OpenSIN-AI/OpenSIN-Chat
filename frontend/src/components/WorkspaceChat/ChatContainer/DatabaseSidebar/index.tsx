@@ -15,8 +15,8 @@ import ChatSidebar, { useDatabaseSidebar } from "../ChatSidebar";
 export default function DatabaseSidebar() {
   const { sidebarOpen, closeSidebar } = useDatabaseSidebar();
   const { t } = useTranslation();
-  const [politicians, setPoliticians] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [politicians, setPoliticians] = useState([] as any);
+  const [loading, setLoading] = useState(false as any);
   const [error, setError] = useState(null);
   const abortRef = useRef(null);
 

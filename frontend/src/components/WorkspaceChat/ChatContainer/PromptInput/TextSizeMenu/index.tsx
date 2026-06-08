@@ -56,7 +56,7 @@ export default function TextSizeButton() {
 function TextSizeMenu({ tooltipRef }: any) {
   const { t } = useTranslation();
   const [selectedSize, setSelectedSize] = useState(
-    window.localStorage.getItem("openafd_text_size") || "normal",
+    window.localStorage.getItem("openafd_text_size" as any) || "normal",
   );
 
   const handleTextSizeChange: any = (size) => {

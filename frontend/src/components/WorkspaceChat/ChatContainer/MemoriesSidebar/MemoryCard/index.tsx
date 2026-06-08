@@ -14,7 +14,7 @@ export default function MemoryCard({ memory }: any) {
     handleDemote,
   } = useMemoriesContext();
 
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false as any);
   const menuRef: any = useRef(null);
   const buttonRef = useRef(null);
 

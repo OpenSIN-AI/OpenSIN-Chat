@@ -70,8 +70,8 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
   );
 }
 function NvidiaNimModelSelection({ settings, basePath }: any) {
-  const [models, setModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [models, setModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

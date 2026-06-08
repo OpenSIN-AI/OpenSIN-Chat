@@ -7,7 +7,7 @@ import { CMD_REGEX } from "./constants";
 export default function EditPresetModal({
   isOpen, onClose, onSave, onDelete, preset, }: any) {
   const [command, setCommand] = useState("");
-  const [deleting, setDeleting] = useState(false);
+  const [deleting, setDeleting] = useState(false as any);
 
   useEffect(() => {
     if (preset && isOpen) {

@@ -63,7 +63,7 @@ export function useWorkspaceEmbeddingProgress(
 
 const CLEANUP_DELAY_MS = 1_500;
 export function EmbeddingProgressProvider({ children }: any) {
-  const [embeddingProgressMap, setEmbeddingProgressMap] = useState({});
+  const [embeddingProgressMap, setEmbeddingProgressMap] = useState({} as any);
   const abortControllersRef = useRef({});
   const cleanupTimeoutsRef = useRef({});
 

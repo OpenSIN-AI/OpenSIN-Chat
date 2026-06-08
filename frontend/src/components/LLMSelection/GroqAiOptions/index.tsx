@@ -34,8 +34,8 @@ export default function GroqAiOptions({ settings }: any) {
 }
 
 function GroqAIModelSelection({ apiKey, settings }: any) {
-  const [customModels, setCustomModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [customModels, setCustomModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

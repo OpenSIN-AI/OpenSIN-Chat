@@ -25,13 +25,13 @@ export function MemoriesProvider({ workspace, children }: any) {
   const { user } = useUser();
   const canToggle = !user || user?.role === "admin";
 
-  const [memories, setMemories] = useState({ global: [], workspace: [] });
+  const [memories, setMemories] = useState({ global: [], workspace: [] } as any);
   const [activeTab, setActiveTab] = useState("workspace");
-  const [modalState, setModalState] = useState({ open: false, mode: "create" });
+  const [modalState, setModalState] = useState({ open: false, mode: "create" } as any);
   const [editingMemory, setEditingMemory] = useState(null);
-  const [enabled, setEnabled] = useState(false);
-  const [autoExtraction, setAutoExtraction] = useState(true);
-  const [loadingEnabled, setLoadingEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(false as any);
+  const [autoExtraction, setAutoExtraction] = useState(true as any);
+  const [loadingEnabled, setLoadingEnabled] = useState(true as any);
 
   useEffect(() => {
     if (!sidebarOpen) return;
@@ -83,16 +83,16 @@ export function MemoriesProvider({ workspace, children }: any) {
 
   function openCreateModal() {
     setEditingMemory(null);
-    setModalState({ open: true, mode: "create" });
+    setModalState({ open: true, mode: "create" } as any);
   }
 
   function openEditModal(memory: any) {
     setEditingMemory(memory);
-    setModalState({ open: true, mode: "edit" });
+    setModalState({ open: true, mode: "edit" } as any);
   }
 
   function closeModal() {
-    setModalState({ open: false, mode: "create" });
+    setModalState({ open: false, mode: "create" } as any);
     setEditingMemory(null);
   }
 

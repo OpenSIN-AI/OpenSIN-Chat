@@ -10,7 +10,7 @@ import System from "../models/system";
  */
 export default function useAppVersion() {
   const [version, setVersion] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true as any);
 
   useEffect(() => {
     System.fetchAppVersion()

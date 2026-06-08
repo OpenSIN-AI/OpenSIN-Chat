@@ -10,11 +10,11 @@ import { Link } from "react-router-dom";
 export default function SystemPrompts({ entity }: any) {
   const { t } = useTranslation();
   const formRef = useRef(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [tags, setTags] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false as any);
+  const [tags, setTags] = useState([] as any);
   const [tagInput, setTagInput] = useState("");
   const [visibility, setVisibility] = useState("public");
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false as any);
   const [itemId, setItemId] = useState(null);
 
   const handleSubmit = async (e) => {

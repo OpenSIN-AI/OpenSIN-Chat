@@ -4,8 +4,8 @@ import { SpeakerHigh, PauseCircle } from "@phosphor-icons/react";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
 
 export default function NativeTTSMessage({ chatId, message }: any) {
-  const [speaking, setSpeaking] = useState(false);
-  const [supported, setSupported] = useState(false);
+  const [speaking, setSpeaking] = useState(false as any);
+  const [supported, setSupported] = useState(false as any);
   useEffect(() => {
     setSupported("speechSynthesis" in window);
   }, []);

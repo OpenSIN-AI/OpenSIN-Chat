@@ -35,8 +35,8 @@ export default function ElevenLabsOptions({ settings }: any) {
 }
 
 function ElevenLabsModelSelection({ apiKey, settings }: any) {
-  const [groupedModels, setGroupedModels] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [groupedModels, setGroupedModels] = useState({} as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

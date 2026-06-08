@@ -107,6 +107,6 @@ export function AvailableAgents({
 }
 
 export function useAvailableAgents() {
-  const [showAgents, setShowAgents] = useState(false);
+  const [showAgents, setShowAgents] = useState(false as any);
   return { showAgents, setShowAgents };
 }

@@ -28,7 +28,7 @@ const LEVEL_COLORS = {
 
 function LogsTab() {
   const { t } = useTranslation();
-  const [logs, setLogs] = useState([]);
+  const [logs, setLogs] = useState([] as any);
   const bottomRef: any = useRef(null);
 
   useEffect(() => {
@@ -88,9 +88,9 @@ function LogsTab() {
 
 function TerminalTab() {
   const { t } = useTranslation();
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([] as any);
   const [input, setInput] = useState("");
-  const [cmdHistory, setCmdHistory] = useState([]);
+  const [cmdHistory, setCmdHistory] = useState([] as any);
   const [historyIdx, setHistoryIdx] = useState(-1);
   const bottomRef = useRef(null);
   const inputRef = useRef(null);

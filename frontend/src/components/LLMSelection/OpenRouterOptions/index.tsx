@@ -32,7 +32,7 @@ export default function OpenRouterOptions({ settings }: any) {
 }
 
 function AdvancedControls({ settings }: any) {
-  const [showAdvancedControls, setShowAdvancedControls] = useState(false);
+  const [showAdvancedControls, setShowAdvancedControls] = useState(false as any);
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -71,8 +71,8 @@ function AdvancedControls({ settings }: any) {
 }
 
 function OpenRouterModelSelection({ settings }: any) {
-  const [groupedModels, setGroupedModels] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [groupedModels, setGroupedModels] = useState({} as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

@@ -41,12 +41,12 @@ export default function PromptInput({
   const { isDisabled } = useIsDisabled();
   const agentSessionActive = useIsAgentSessionActive();
   const [promptInput, setPromptInput] = useState("");
-  const [showTools, setShowTools] = useState(false);
+  const [showTools, setShowTools] = useState(false as any);
   const autoOpenedToolsRef = useRef(false);
   const toolsHighlightRef = useRef(-1);
   const formRef = useRef(null);
   const textareaRef = useRef(null);
-  const [_, setFocused] = useState(false);
+  const [_, setFocused] = useState(false as any);
   const undoStack = useRef([]);
   const redoStack = useRef([]);
   const { textSizeClass } = useTextSize();
@@ -526,7 +526,7 @@ function SendPromptButton({ formRef, promptInput, isDisabled }: any) {
  */
 function EnhancePromptButton({ promptInput, setPromptInput, isStreaming }: any) {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
 
   async function handleEnhance() {
     const text = promptInput.trim();
@@ -591,7 +591,7 @@ function EnhancePromptButton({ promptInput, setPromptInput, isStreaming }: any) 
  * for whatever reason that may we may want to prevent the user from sending a message.
  */
 function useIsDisabled() {
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false as any);
 
   /**
    * Handle attachments processing and processed events

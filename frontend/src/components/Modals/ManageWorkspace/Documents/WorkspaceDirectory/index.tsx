@@ -18,7 +18,7 @@ function WorkspaceDirectory({
   const { t } = useTranslation();
   const { embeddingProgressMap, removeQueuedFile } = useEmbeddingProgress();
   const embeddingProgress = embeddingProgressMap[workspace.slug] || null;
-  const [selectedItems, setSelectedItems] = useState({});
+  const [selectedItems, setSelectedItems] = useState({} as any);
 
   if (loading) {
     return <LoadingState workspace={workspace} loadingMessage={loadingMessage} />;

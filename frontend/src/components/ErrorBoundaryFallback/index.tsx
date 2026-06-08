@@ -4,7 +4,7 @@ import { House, ArrowClockwise, Copy, Check } from "@phosphor-icons/react";
 import { useState } from "react";
 
 export default function ErrorBoundaryFallback({ error, resetErrorBoundary }: any) {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false as any);
 
   const copyErrorDetails = async () => {
     const details = {

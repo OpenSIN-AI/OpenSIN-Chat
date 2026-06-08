@@ -7,9 +7,9 @@ import showToast from "@/utils/toast";
 
 export default function ObsidianOptions() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const [vaultPath, setVaultPath] = useState("");
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [selectedFiles, setSelectedFiles] = useState([] as any);
 
   const handleFolderPick = async (e) => {
     const files = Array.from(e.target.files);

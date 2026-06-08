@@ -279,8 +279,8 @@ export default function OllamaLLMOptions({ settings }: any) {
 
 function OllamaLLMModelSelection({
   settings, basePath = null, authToken = null, }: any) {
-  const [customModels, setCustomModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [customModels, setCustomModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

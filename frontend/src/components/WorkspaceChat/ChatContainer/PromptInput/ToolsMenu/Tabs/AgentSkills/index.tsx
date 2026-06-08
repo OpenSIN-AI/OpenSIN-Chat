@@ -52,8 +52,8 @@ export default function AgentSkillsTab({
   });
 
   // UI state
-  const [expandedSections, setExpandedSections] = useState({});
-  const [expandedSubSections, setExpandedSubSections] = useState({});
+  const [expandedSections, setExpandedSections] = useState({} as any);
+  const [expandedSubSections, setExpandedSubSections] = useState({} as any);
   const [searchQuery, setSearchQuery] = useState("");
 
   const showAgentCmdActivationAlert = showAgentCommand && !agentSessionActive;

@@ -15,17 +15,17 @@ const IGNORE_CHANGE_SETTINGS = [
 ];
 
 export function useAgentForm() {
-  const [hasChanges, setHasChanges] = useState(false);
-  const [settings, setSettings] = useState({});
-  const [agentSkills, setAgentSkills] = useState([]);
-  const [disabledAgentSkills, setDisabledAgentSkills] = useState([]);
-  const [importedSkills, setImportedSkills] = useState([]);
-  const [agentFlows, setAgentFlows] = useState([]);
-  const [activeFlowIds, setActiveFlowIds] = useState([]);
-  const [mcpServers, setMcpServers] = useState([]);
-  const [fileSystemAgentAvailable, setFileSystemAgentAvailable] = useState(false);
-  const [createFilesAgentAvailable, setCreateFilesAgentAvailable] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [hasChanges, setHasChanges] = useState(false as any);
+  const [settings, setSettings] = useState({} as any);
+  const [agentSkills, setAgentSkills] = useState([] as any);
+  const [disabledAgentSkills, setDisabledAgentSkills] = useState([] as any);
+  const [importedSkills, setImportedSkills] = useState([] as any);
+  const [agentFlows, setAgentFlows] = useState([] as any);
+  const [activeFlowIds, setActiveFlowIds] = useState([] as any);
+  const [mcpServers, setMcpServers] = useState([] as any);
+  const [fileSystemAgentAvailable, setFileSystemAgentAvailable] = useState(false as any);
+  const [createFilesAgentAvailable, setCreateFilesAgentAvailable] = useState(false as any);
+  const [loading, setLoading] = useState(true as any);
   const formEl = useRef(null);
 
   // Load initial settings

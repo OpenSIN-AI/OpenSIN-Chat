@@ -77,8 +77,8 @@ export default function KokoroTTSOptions({ settings }: any) {
 }
 
 function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
-  const [voices, setVoices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [voices, setVoices] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findVoices() {

@@ -35,8 +35,8 @@ export function CanViewChatHistoryProvider({ children }: any) {
  * @returns {Promise<{viewable: boolean, error: string | null}>}
  */
 export function useCanViewChatHistory() {
-  const [loading, setLoading] = useState(true);
-  const [viewable, setViewable] = useState(false);
+  const [loading, setLoading] = useState(true as any);
+  const [viewable, setViewable] = useState(false as any);
 
   useEffect(() => {
     async function fetchViewable() {

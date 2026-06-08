@@ -288,7 +288,7 @@ function ThemePreference() {
 }
 
 function AutoSubmitPreference() {
-  const [autoSubmitSttInput, setAutoSubmitSttInput] = useState(true);
+  const [autoSubmitSttInput, setAutoSubmitSttInput] = useState(true as any);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -331,7 +331,7 @@ function AutoSubmitPreference() {
 
 function AutoSpeakPreference() {
   const [autoPlayAssistantTtsResponse, setAutoPlayAssistantTtsResponse] =
-    useState(false);
+    useState(false as any);
   const { t } = useTranslation();
 
   useEffect(() => {

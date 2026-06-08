@@ -15,7 +15,7 @@ export function AuthProvider(props) {
   const localUser = localStorage.getItem(AUTH_USER);
   const localAuthToken = localStorage.getItem(AUTH_TOKEN);
   const [store, setStore] = useState({
-    user: localUser ? safeJsonParse(localUser, null) : null,
+    user: localUser ? safeJsonParse(localUser, null as any) : null,
     authToken: localAuthToken ? localAuthToken : null,
   });
 
@@ -28,7 +28,7 @@ export function AuthProvider(props) {
    * codebase, dead code.
    */
   const [actions] = useState({
-    updateUser: (user, authToken = "") => {
+    updateUser: (user, authToken = "" as any) => {
       localStorage.setItem(AUTH_USER, JSON.stringify(user));
       localStorage.setItem(AUTH_TOKEN, authToken);
       setStore({ user, authToken });

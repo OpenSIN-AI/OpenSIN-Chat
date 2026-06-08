@@ -18,7 +18,7 @@ export function openImageLightbox(images: any, initialIndex: any = 0) {
 
 export default function ImageLightbox() {
   const [images, setImages] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0 as any);
 
   useEffect(() => {
     function handleOpen(e: any) {

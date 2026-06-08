@@ -226,8 +226,8 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
 }
 
 function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const [customModels, setCustomModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [customModels, setCustomModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

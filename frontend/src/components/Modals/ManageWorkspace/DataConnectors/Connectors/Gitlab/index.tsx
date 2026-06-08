@@ -13,14 +13,14 @@ import DOMPurify from "@/utils/chat/purify";
 const DEFAULT_BRANCHES = ["main", "master"];
 export default function GitlabOptions() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const [repo, setRepo] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-  const [ignores, setIgnores] = useState([]);
+  const [ignores, setIgnores] = useState([] as any);
   const [settings, setSettings] = useState({
     repo: null,
     accessToken: null,
-  });
+  } as any);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -200,7 +200,7 @@ export default function GitlabOptions() {
 function GitLabBranchSelection({ repo, accessToken }: any) {
   const { t } = useTranslation();
   const [allBranches, setAllBranches] = useState(DEFAULT_BRANCHES);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function fetchAllBranches() {

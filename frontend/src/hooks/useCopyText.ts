@@ -4,7 +4,7 @@ import { copyMarkdownAsRichText } from "@/utils/clipboard";
 import { useState } from "react";
 
 export default function useCopyText(delay = 2500) {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false as any);
   const copyText = async (content) => {
     if (!content) return;
 

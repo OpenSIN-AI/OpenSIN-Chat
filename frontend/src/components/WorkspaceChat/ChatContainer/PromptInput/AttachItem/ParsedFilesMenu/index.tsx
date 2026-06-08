@@ -15,8 +15,8 @@ export default function ParsedFilesMenu({
   const initialContextWindowLimitExceeded =
     contextWindow &&
     currentTokens >= contextWindow * Workspace.maxContextWindowLimit;
-  const [isEmbedding, setIsEmbedding] = useState(false);
-  const [embedProgress, setEmbedProgress] = useState(1);
+  const [isEmbedding, setIsEmbedding] = useState(false as any);
+  const [embedProgress, setEmbedProgress] = useState(1 as any);
   const [contextWindowLimitExceeded, setContextWindowLimitExceeded] = useState(
     initialContextWindowLimitExceeded,
   );

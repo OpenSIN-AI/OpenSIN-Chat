@@ -21,7 +21,7 @@ function previousSidebarState() {
 
 export function useSidebarToggle() {
   const [showSidebar, setShowSidebar] = useState(previousSidebarState());
-  const [canToggleSidebar, setCanToggleSidebar] = useState(true);
+  const [canToggleSidebar, setCanToggleSidebar] = useState(true as any);
 
   useEffect(() => {
     function checkPath() {

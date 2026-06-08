@@ -31,7 +31,7 @@ const TYPE_ICONS = {
 };
 
 function VersionDropdown({ versions, activeVersion, onSelect }: any) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false as any);
   const ref: any = useRef(null);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
 
 function ThreeDotsMenu({ previewData, onAddToSources }: any) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false as any);
   const ref: any = useRef(null);
 
   useEffect(() => {
@@ -161,11 +161,11 @@ function ThreeDotsMenu({ previewData, onAddToSources }: any) {
 
 function IframePreview({ url, title }: any) {
   const { t } = useTranslation();
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(false as any);
 
   // If the iframe never reports load (e.g. blocked/blank), reveal a fallback
   // link after a short grace period so the user is never stuck on a spinner.
-  const [graceElapsed, setGraceElapsed] = useState(false);
+  const [graceElapsed, setGraceElapsed] = useState(false as any);
   useEffect(() => {
     setLoaded(false);
     setGraceElapsed(false);
@@ -264,7 +264,7 @@ export default function PreviewSidebar() {
   const { sidebarOpen, previewData, closeSidebar } = usePreviewSidebar();
   const { openSidebar } = useChatSidebar();
   const { t } = useTranslation();
-  const [activeVersion, setActiveVersion] = useState(0);
+  const [activeVersion, setActiveVersion] = useState(0 as any);
 
   const TypeIcon = TYPE_ICONS[previewData?.type] ?? TYPE_ICONS.default;
 

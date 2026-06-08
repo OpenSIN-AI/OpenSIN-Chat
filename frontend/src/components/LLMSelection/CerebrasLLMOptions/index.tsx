@@ -41,8 +41,8 @@ export default function CerebrasLLMOptions({ settings }: any) {
  * @returns {JSX.Element} The Cerebras model selection component
  */
 function CerebrasModelSelection({ apiKey: _apiKey, settings }) {
-  const [customModels, setCustomModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [customModels, setCustomModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

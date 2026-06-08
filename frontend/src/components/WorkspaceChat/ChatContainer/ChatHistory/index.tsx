@@ -43,8 +43,8 @@ export default forwardRef(function (
   const chatHistoryRef = useRef(null);
   const { threadSlug = null } = useParams();
   const { showing, hideModal } = useManageWorkspaceModal();
-  const [isAtBottom, setIsAtBottom] = useState(true);
-  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [isAtBottom, setIsAtBottom] = useState(true as any);
+  const [isUserScrolling, setIsUserScrolling] = useState(false as any);
   const isStreaming = history[history.length - 1]?.animate;
   const { showScrollbar } = Appearance.getSettings();
   const { textSizeClass } = useTextSize();

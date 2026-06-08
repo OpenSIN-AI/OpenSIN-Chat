@@ -6,8 +6,8 @@ import messageToSpeech from "@/utils/chat/messageToSpeech";
 
 export default function PiperTTS({ chatId, voiceId = null, message }: any) {
   const playerRef = useRef(null);
-  const [speaking, setSpeaking] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [speaking, setSpeaking] = useState(false as any);
+  const [loading, setLoading] = useState(false as any);
   const [audioSrc, setAudioSrc] = useState(null);
 
   async function speakMessage(e: any) {

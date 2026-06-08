@@ -9,9 +9,9 @@ import Toggle from "@/components/lib/Toggle";
 
 export default function ConfluenceOptions() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
   const [accessType, setAccessType] = useState("username");
-  const [isCloud, setIsCloud] = useState(true);
+  const [isCloud, setIsCloud] = useState(true as any);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

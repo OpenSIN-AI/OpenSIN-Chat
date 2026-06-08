@@ -7,8 +7,8 @@ import { useTranslation } from "react-i18next";
 
 export default function AsyncTTSMessage({ slug, chatId }: any) {
   const playerRef = useRef(null);
-  const [speaking, setSpeaking] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [speaking, setSpeaking] = useState(false as any);
+  const [loading, setLoading] = useState(false as any);
   const [audioSrc, setAudioSrc] = useState(null);
   const { t } = useTranslation();
 

@@ -8,10 +8,10 @@ import PreLoader from "../../../../../Preloader";
 
 function FileUploadProgressComponent({
   slug, uuid, file, setFiles, rejected = false, reason = null, onUploadSuccess, onUploadError, setLoading, setLoadingMessage, }: any) {
-  const [timerMs, setTimerMs] = useState(10);
+  const [timerMs, setTimerMs] = useState(10 as any);
   const [status, setStatus] = useState("pending");
   const [error, setError] = useState("");
-  const [isFadingOut, setIsFadingOut] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false as any);
 
   const fadeOut: any = (cb) => {
     setIsFadingOut(true);

@@ -9,7 +9,7 @@ import {
 } from "@/utils/keyboardShortcuts";
 
 export default function KeyboardShortcutsHelp() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false as any);
   const { t } = useTranslation();
 
   useEffect(() => {

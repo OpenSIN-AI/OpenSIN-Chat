@@ -33,8 +33,8 @@ export default function TogetherAiOptions({ settings }: any) {
 }
 
 function TogetherAiModelSelection({ settings, apiKey }: any) {
-  const [groupedModels, setGroupedModels] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [groupedModels, setGroupedModels] = useState({} as any);
+  const [loading, setLoading] = useState(true as any);
 
   useEffect(() => {
     async function findCustomModels() {

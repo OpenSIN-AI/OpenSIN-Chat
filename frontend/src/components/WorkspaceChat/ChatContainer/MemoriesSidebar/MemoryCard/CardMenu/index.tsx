@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 export default function CardMenu({
   menuRef, buttonRef, isWorkspace, canMove, onEdit, onMove, onDelete, }: any) {
   const { t } = useTranslation();
-  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const [pos, setPos] = useState({ top: 0, left: 0 } as any);
 
   useEffect(() => {
     if (!buttonRef.current) return;

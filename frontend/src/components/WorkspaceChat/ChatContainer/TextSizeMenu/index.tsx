@@ -17,9 +17,9 @@ export default function TextSizeMenu() {
   const { t } = useTranslation();
   const TEXT_SIZES = useMemo(() => getTextSizes(t), [t]);
   const mode = useLoginMode();
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false as any);
   const [selectedSize, setSelectedSize] = useState(
-    window.localStorage.getItem("openafd_text_size") || "normal",
+    window.localStorage.getItem("openafd_text_size" as any) || "normal",
   );
   const menuRef: any = useRef(null);
   const buttonRef = useRef(null);

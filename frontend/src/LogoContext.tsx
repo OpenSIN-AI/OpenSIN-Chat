@@ -15,7 +15,7 @@ export const LogoContext = createContext<any>(undefined);
 export function LogoProvider({ children }) {
   const [logo, setLogo] = useState("");
   const [loginLogo, setLoginLogo] = useState("");
-  const [isCustomLogo, setIsCustomLogo] = useState(false);
+  const [isCustomLogo, setIsCustomLogo] = useState(false as any);
 
   async function fetchInstanceLogo() {
     const DefaultLoginLogo = isLightMode()

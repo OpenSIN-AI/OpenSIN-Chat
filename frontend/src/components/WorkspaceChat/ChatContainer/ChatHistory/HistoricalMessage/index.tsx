@@ -265,8 +265,8 @@ function ChatAttachments({ attachments = [] }: any) {
 
 function TruncatableContent({ children }: any) {
   const contentRef = useRef(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isOverflowing, setIsOverflowing] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false as any);
+  const [isOverflowing, setIsOverflowing] = useState(false as any);
   const { t } = useTranslation();
 
   // useLayoutEffect (not useEffect) so collapse applies before paint — avoids a

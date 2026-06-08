@@ -157,8 +157,8 @@ function BackHeader({ label, onBack }: any) {
 }
 
 function SourcesView({ t, workspaceSlug, onBack, onClose }: any) {
-  const [loading, setLoading] = useState(true);
-  const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(true as any);
+  const [files, setFiles] = useState([] as any);
   const [addingId, setAddingId] = useState(null);
 
   useEffect(() => {
@@ -246,7 +246,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }: any) {
 function UrlView({ t, workspaceSlug, onBack, onClose }: any) {
   const inputRef = useRef(null);
   const [link, setLink] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting, setSubmitting] = useState(false as any);
 
   useEffect(() => {
     inputRef.current?.focus();

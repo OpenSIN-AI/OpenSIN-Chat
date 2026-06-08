@@ -28,8 +28,8 @@ export default function OpenRouterOptions({ settings }: any) {
 }
 
 function OpenRouterEmbeddingModelSelection({ settings }: any) {
-  const [models, setModels] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [models, setModels] = useState([] as any);
+  const [loading, setLoading] = useState(true as any);
   const [selectedModel, setSelectedModel] = useState(
     settings?.EmbeddingModelPref || "",
   );

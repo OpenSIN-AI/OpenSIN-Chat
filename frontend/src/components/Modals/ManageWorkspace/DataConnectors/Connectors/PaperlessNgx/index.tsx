@@ -5,7 +5,7 @@ import showToast from "@/utils/toast";
 import { Info } from "@phosphor-icons/react";
 
 export default function PaperlessNgxOptions() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false as any);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

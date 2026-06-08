@@ -20,7 +20,7 @@ export default function useTimeoutProgress(
   timeoutMs,
   { active = true, onTimeout, intervalMs = 100 } = {},
 ) {
-  const [progressPercent, setProgressPercent] = useState(100);
+  const [progressPercent, setProgressPercent] = useState(100 as any);
   const startTimeRef = useRef(null);
   const onTimeoutRef = useRef(onTimeout);
 

@@ -20,12 +20,12 @@ function defaultProvider(providerString: any) {
 }
 
 export default function ProviderPrivacy() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true as any);
   const [providers, setProviders] = useState({
     llmProvider: null,
     embeddingEngine: null,
     vectorDb: null,
-  });
+  } as any);
 
   useEffect(() => {
     async function fetchProviders() {

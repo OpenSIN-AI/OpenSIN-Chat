@@ -18,7 +18,7 @@ const autoPreviewedFiles = new Set();
 function FileDownloadCard({ props, autoPreview = false }: any) {
   const { filename, storageFilename, fileSize, downloadUrl } = props.content || {};
   const { badge, badgeBg, badgeText, fileType } = getFileDisplayInfo(filename);
-  const [downloading, setDownloading] = useState(false);
+  const [downloading, setDownloading] = useState(false as any);
   const { openPreview } = useChatSidebar();
 
   const previewUrl =

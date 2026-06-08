@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import System from "@/models/system";
 
 export default function NativeEmbeddingOptions({ settings }: any) {
-  const [loading, setLoading] = useState(true);
-  const [availableModels, setAvailableModels] = useState([]);
+  const [loading, setLoading] = useState(true as any);
+  const [availableModels, setAvailableModels] = useState([] as any);
   const [selectedModel, setSelectedModel] = useState(
     settings?.EmbeddingModelPref,
   );

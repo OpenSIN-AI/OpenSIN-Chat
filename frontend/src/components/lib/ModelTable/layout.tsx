@@ -13,7 +13,7 @@ export default function ModelTableLayout({
   setSearchQuery = () => {},
   loading = false,
 }) {
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false as any);
   async function refreshModels() {
     setIsRefreshing(true);
     try {

@@ -15,8 +15,8 @@ import { KeyboardShortcutWrapper } from "@/utils/keyboardShortcuts";
 function useIsAuthenticated() {
   const [isAuthd, setIsAuthed] = useState(null);
   const [shouldRedirectToOnboarding, setShouldRedirectToOnboarding] =
-    useState(false);
-  const [multiUserMode, setMultiUserMode] = useState(false);
+    useState(false as any);
+  const [multiUserMode, setMultiUserMode] = useState(false as any);
 
   useEffect(() => {
     const validateSession = async () => {

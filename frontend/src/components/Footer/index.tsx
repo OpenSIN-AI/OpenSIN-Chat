@@ -61,7 +61,7 @@ const ICON_LINK_CLASSES =
   "transition-all duration-300 flex items-center justify-center p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70";
 
 export default function Footer() {
-  const [footerData, setFooterData] = useState(false);
+  const [footerData, setFooterData] = useState<any>(false);
 
   useEffect(() => {
     async function fetchFooterData() {

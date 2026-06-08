@@ -7,7 +7,7 @@ import SourcesRow from "./Sources";
 
 export default function ChatSettingsMenu() {
   const mode = useLoginMode();
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false as any);
   const menuRef: any = useRef(null);
   const buttonRef = useRef(null);
 
