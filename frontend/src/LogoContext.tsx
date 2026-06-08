@@ -32,12 +32,10 @@ export function LogoProvider({ children }) {
         setLoginLogo(DefaultLoginLogo);
         setIsCustomLogo(false);
       }
-    } catch (err) {
+    } catch {
       setLogo(OpenAfDLogo);
       setLoginLogo(DefaultLoginLogo);
       setIsCustomLogo(false);
-
-      console.error("Failed to fetch logo:", err);
     }
   }
 

@@ -130,15 +130,13 @@ if (process.env.NODE_ENV !== "development") {
         // HTML always fresh, JS entry points short cache, hashed chunks immutable
         if (path.endsWith(".html") || path.endsWith("_index.html")) {
           res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        } else if (
-          path.includes("/assets/index-") ||
-          path.endsWith("/index.js") ||
-          path.endsWith("/index.css")
-        ) {
-          // Entry chunks — revalidate frequently (also the unhashed copies
-          // at /index.js and /index.css so the browser never caches a stale
-          // entry-point that references dead hashed chunks after a rebuild).
-          res.setHeader("Cache-Control", "public, max-age=60, must-revalidate");
+        } else if (path.includes("vendor-") || path.includes("/assets/index-")) {
+          // Vendor + entry chunks — always fresh so the browser never
+          // caches stale chunks after a rebuild.
+          res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        } else if (path.endsWith("/index.js") || path.endsWith("/index.css")) {
+          // Entry chunks — always fresh
+          res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         } else if (path.includes("/assets/")) {
           // Hashed chunks — immutable since hash changes on content change
           res.setHeader("Cache-Control", "public, max-age=31536000, immutable");

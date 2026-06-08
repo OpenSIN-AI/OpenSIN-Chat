@@ -440,12 +440,9 @@ const System = {
           const logoURL = URL.createObjectURL(blob);
           return { isCustomLogo, logoURL };
         }
-        throw new Error("Failed to fetch logo!");
-      })
-      .catch((e) => {
-        console.error(e);
         return { isCustomLogo: false, logoURL: null };
-      });
+      })
+      .catch(() => ({ isCustomLogo: false, logoURL: null }));
   },
   fetchPfp: async function (id) {
     return await fetch(`${API_BASE}/system/pfp/${id}`, {

@@ -3,7 +3,6 @@ import System from "@/models/system";
 import paths from "@/utils/paths";
 import {
   BookOpen,
-  DiscordLogo,
   GithubLogo,
   Briefcase,
   Envelope,
@@ -22,7 +21,6 @@ import useFooterIcons from "@/hooks/useFooterIcons";
 export const MAX_ICONS = 3;
 export const ICON_COMPONENTS = {
   BookOpen: BookOpen,
-  DiscordLogo: DiscordLogo,
   GithubLogo: GithubLogo,
   Envelope: Envelope,
   LinkSimple: LinkSimple,
@@ -46,13 +44,6 @@ const DEFAULT_FOOTER_ITEMS = [
     url: paths.docs(),
     ariaLabel: "Dokumentation öffnen",
     tooltip: "OpenAfD Chat Hilfe-Dokumentation öffnen",
-  },
-  {
-    key: "discord",
-    Icon: DiscordLogo,
-    url: paths.discord(),
-    ariaLabel: "Dem Discord-Server beitreten",
-    tooltip: "Dem OpenAfD Chat Discord beitreten",
   },
 ];
 

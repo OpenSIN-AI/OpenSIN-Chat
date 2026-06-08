@@ -732,6 +732,13 @@ const Workspace = {
    */
   isAgentCommandAvailable: async function (workspace) {
     if (workspace.chatMode !== "automatic") return true;
+    // No LLM provider configured - assume agent command IS available
+    // (better UX: show the @agent command than crash with 500)
+    const provider =
+      workspace?.agentProvider ??
+      workspace?.chatProvider ??
+      process.env.LLM_PROVIDER;
+    if (!provider) return true;
     const nativeToolCalling = await this.supportsNativeToolCalling(workspace);
     return nativeToolCalling === false;
   },
