@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useState, useRef } from "react";
+import useAgentSQLConnections from "@/hooks/useAgentSQLConnections";
 import DBConnection from "./DBConnection";
 import { Plus, Database, CircleNotch } from "@phosphor-icons/react";
 import NewSQLConnection from "./SQLConnectionModal";
 import { useModal } from "@/hooks/useModal";
 import SQLAgentImage from "@/media/agents/sql-agent.png";
-import Admin from "@/models/admin";
 import Toggle from "@/components/lib/Toggle";
 import { Tooltip } from "react-tooltip";
 
@@ -23,27 +23,27 @@ export default function AgentSQLConnectorSelection({
   const [loading, setLoading] = useState(true);
   const prevHasChanges = useRef(hasChanges);
 
-  // Load connections on mount
-  useEffect(() => {
-    setLoading(true);
-    Admin.systemPreferencesByFields(["agent_sql_connections"])
-      .then((res) => setConnections(res?.settings?.agent_sql_connections ?? []))
-      .catch(() => setConnections([]))
-      .finally(() => setLoading(false));
-  }, []);
+  const {
+    connections: swrConnections,
+    isLoading: swrLoading,
+    refresh,
+  } = useAgentSQLConnections();
 
-  // Refresh connections from backend when save completes (hasChanges: true -> false)
-  // This ensures we get clean data without stale action properties
+  // Sync SWR data into local state when it loads
+  useEffect(() => {
+    if (!swrLoading) {
+      setConnections(swrConnections);
+      setLoading(false);
+    }
+  }, [swrLoading, swrConnections]);
+
+  // Refresh from backend when save completes (hasChanges: true -> false)
   useEffect(() => {
     if (prevHasChanges.current === true && hasChanges === false) {
-      Admin.systemPreferencesByFields(["agent_sql_connections"])
-        .then((res) =>
-          setConnections(res?.settings?.agent_sql_connections ?? []),
-        )
-        .catch(() => {});
+      refresh();
     }
     prevHasChanges.current = hasChanges;
-  }, [hasChanges]);
+  }, [hasChanges, refresh]);
 
   /**
    * Marks a connection for removal by adding action: "remove".

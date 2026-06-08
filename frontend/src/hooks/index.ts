@@ -9,6 +9,10 @@ import type { Workspace, Thread, ChatHistory } from "@/types/workspace";
 import type { Agent, Skill } from "@/types/agent";
 import Workspace from "@/models/workspace";
 import System from "@/models/system";
+import useChatHistorySWR, {
+  chatHistoryKey,
+  invalidateChatHistory,
+} from "./useChatHistory";
 
 /**
  * Hook for fetching workspace data
@@ -118,43 +122,26 @@ export function useThreads(workspaceSlug: string | null): {
 }
 
 /**
- * Hook for fetching chat history
+ * Hook for fetching chat history.
+ * Replaced with SWR-backed implementation for caching and de-duplication.
+ * Supports both workspace and thread chat history.
  */
 export function useChatHistory(
   workspaceSlug: string | null,
-  threadSlug: string | null
+  threadSlug: string | null,
 ): {
   messages: import("@/types/workspace").Message[];
   loading: boolean;
   error: Error | null;
 } {
-  const [messages, setMessages] = useState<import("@/types/workspace").Message[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    if (!workspaceSlug || !threadSlug) {
-      setMessages([]);
-      setLoading(false);
-      return;
-    }
-
-    (async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await Workspace.threads.chatHistory(workspaceSlug, threadSlug);
-        setMessages(data);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error(String(err)));
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [workspaceSlug, threadSlug]);
-
-  return { messages, loading, error };
+  const { history, isLoading, error } = useChatHistorySWR(
+    workspaceSlug,
+    threadSlug,
+  );
+  return { messages: history, loading: isLoading, error: error || null };
 }
+
+export { chatHistoryKey, invalidateChatHistory };
 
 /**
  * Hook for system configuration
@@ -191,7 +178,7 @@ export function useSendMessage(): {
   send: (
     workspaceSlug: string,
     threadSlug: string,
-    message: string
+    message: string,
   ) => Promise<string>;
   loading: boolean;
   error: Error | null;
@@ -200,11 +187,19 @@ export function useSendMessage(): {
   const [error, setError] = useState<Error | null>(null);
 
   const send = useCallback(
-    async (workspaceSlug: string, threadSlug: string, message: string): Promise<string> => {
+    async (
+      workspaceSlug: string,
+      threadSlug: string,
+      message: string,
+    ): Promise<string> => {
       try {
         setLoading(true);
         setError(null);
-        const response = await Workspace.sendMessage(workspaceSlug, threadSlug, message);
+        const response = await Workspace.sendMessage(
+          workspaceSlug,
+          threadSlug,
+          message,
+        );
         return response;
       } catch (err) {
         const error = err instanceof Error ? err : new Error(String(err));
@@ -214,7 +209,7 @@ export function useSendMessage(): {
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   return { send, loading, error };

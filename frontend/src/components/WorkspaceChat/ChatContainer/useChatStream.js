@@ -16,12 +16,18 @@ import { safeJsonParse } from "@/utils/request";
 import useWebSocket from "@/hooks/useWebSocket";
 import paths from "@/utils/paths";
 import SpeechRecognition from "react-speech-recognition";
+import { invalidateChatHistory } from "@/hooks/useChatHistory";
+import { invalidateThreads } from "@/hooks/useThreads";
 
 /**
  * Encapsulates all WebSocket, chat streaming, and message-sending logic
  * for the ChatContainer.
  */
-export default function useChatStream({ workspace, threadSlug = null, knownHistory = [] }) {
+export default function useChatStream({
+  workspace,
+  threadSlug = null,
+  knownHistory = [],
+}) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [loadingResponse, setLoadingResponse] = useState(false);
@@ -32,6 +38,7 @@ export default function useChatStream({ workspace, threadSlug = null, knownHisto
   const pendingMessageChecked = useRef(false);
   const pendingResetRef = useRef(false);
   const activeThreadSlug = threadSlug;
+  const prevLoadingResponse = useRef(loadingResponse);
 
   const isEmpty =
     chatHistory.length === 0 && !sessionStorage.getItem(PENDING_HOME_MESSAGE);
@@ -39,6 +46,27 @@ export default function useChatStream({ workspace, threadSlug = null, knownHisto
   const { listening, resetTranscript } = useSpeechRecognition({
     clearTranscriptOnListen: true,
   });
+
+  /**
+   * Sync server-fetched history into local state when not streaming.
+   * This keeps local state in sync with SWR revalidations after mutations.
+   */
+  useEffect(() => {
+    if (!loadingResponse) {
+      setChatHistory(knownHistory);
+    }
+  }, [knownHistory, loadingResponse]);
+
+  /**
+   * Invalidate the SWR chat history cache after streaming completes.
+   * This ensures subsequent navigations or revalidations fetch fresh data.
+   */
+  useEffect(() => {
+    if (prevLoadingResponse.current === true && loadingResponse === false) {
+      invalidateChatHistory(workspace?.slug, activeThreadSlug);
+    }
+    prevLoadingResponse.current = loadingResponse;
+  }, [loadingResponse, workspace?.slug, activeThreadSlug]);
 
   /**
    * Keep chat history bottom-padding in sync with the prompt input's
@@ -97,6 +125,7 @@ export default function useChatStream({ workspace, threadSlug = null, knownHisto
           }),
         );
         navigate(paths.workspace.thread(workspace.slug, thread.slug));
+        invalidateThreads(workspace.slug);
         return;
       }
     }
@@ -184,6 +213,7 @@ export default function useChatStream({ workspace, threadSlug = null, knownHisto
           JSON.stringify({ message: text, attachments }),
         );
         navigate(paths.workspace.thread(workspace.slug, thread.slug));
+        invalidateThreads(workspace.slug);
         return;
       }
     }

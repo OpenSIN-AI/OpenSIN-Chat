@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
+import { invalidateThreads } from "@/hooks/useThreads";
 import {
   CaretDown,
   CaretRight,
@@ -58,6 +59,7 @@ export default function ThreadFolderItem({
       setName(folder.name);
     } else {
       onFolderRenamed(folder.id, updated.name);
+      invalidateThreads(workspace.slug);
     }
     setEditing(false);
   }
@@ -80,6 +82,7 @@ export default function ThreadFolderItem({
       return;
     }
     onFolderDeleted(folder.id);
+    invalidateThreads(workspace.slug);
   }
 
   return (

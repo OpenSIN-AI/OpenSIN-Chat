@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
 import { useParams } from "react-router-dom";
+import useThreads, { invalidateThreads } from "@/hooks/useThreads";
 import {
   DndContext,
   PointerSensor,
@@ -23,10 +24,13 @@ export default function ThreadContainer({
   isVirtualThread = false,
 }) {
   const { threadSlug = null } = useParams();
-  const [threads, setThreads] = useState([]);
-  const [folders, setFolders] = useState([]);
-  const [defaultThreadHasChats, setDefaultThreadHasChats] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const {
+    threads,
+    folders,
+    defaultThreadHasChats,
+    isLoading: loading,
+    mutate,
+  } = useThreads(workspace.slug);
   const [ctrlPressed, setCtrlPressed] = useState(false);
   const [activeId, setActiveId] = useState(null);
 
@@ -37,13 +41,20 @@ export default function ThreadContainer({
   useEffect(() => {
     const chatHandler = (event) => {
       const { threadSlug, newName } = event.detail;
-      setThreads((prevThreads) =>
-        prevThreads.map((thread) => {
-          if (thread.slug === threadSlug) {
-            return { ...thread, name: newName };
-          }
-          return thread;
-        }),
+      mutate(
+        (current) => {
+          const currentThreads = current?.threads || [];
+          return {
+            ...current,
+            threads: currentThreads.map((thread) => {
+              if (thread.slug === threadSlug) {
+                return { ...thread, name: newName };
+              }
+              return thread;
+            }),
+          };
+        },
+        { revalidate: false },
       );
     };
 
@@ -52,20 +63,7 @@ export default function ThreadContainer({
     return () => {
       window.removeEventListener(THREAD_RENAME_EVENT, chatHandler);
     };
-  }, []);
-
-  useEffect(() => {
-    async function fetchThreads() {
-      if (!workspace.slug) return;
-      const { threads, folders, defaultThreadChatCount } =
-        await Workspace.threads.all(workspace.slug);
-      setLoading(false);
-      setThreads(threads);
-      setFolders(folders ?? []);
-      setDefaultThreadHasChats(defaultThreadChatCount > 0);
-    }
-    fetchThreads();
-  }, [workspace.slug, threadSlug]);
+  }, [mutate]);
 
   // Enable toggling of bulk-deletion by holding meta-key (ctrl on win and cmd/fn on others)
   useEffect(() => {
@@ -81,10 +79,17 @@ export default function ThreadContainer({
         // when toggling, unset bulk progress so
         // previously marked threads that were never deleted
         // come back to life.
-        setThreads((prev) =>
-          prev.map((t) => {
-            return { ...t, deleted: false };
-          }),
+        mutate(
+          (current) => {
+            const currentThreads = current?.threads || [];
+            return {
+              ...current,
+              threads: currentThreads.map((t) => {
+                return { ...t, deleted: false };
+              }),
+            };
+          },
+          { revalidate: false },
         );
       }
     };
@@ -96,21 +101,28 @@ export default function ThreadContainer({
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, []);
+  }, [mutate]);
 
   const toggleForDeletion = (id) => {
-    setThreads((prev) =>
-      prev.map((t) => {
-        if (t.id !== id) return t;
-        return { ...t, deleted: !t.deleted };
-      }),
+    mutate(
+      (current) => {
+        const currentThreads = current?.threads || [];
+        return {
+          ...current,
+          threads: currentThreads.map((t) => {
+            if (t.id !== id) return t;
+            return { ...t, deleted: !t.deleted };
+          }),
+        };
+      },
+      { revalidate: false },
     );
   };
 
   const handleDeleteAll = async () => {
     const slugs = threads.filter((t) => t.deleted === true).map((t) => t.slug);
     await Workspace.threads.deleteBulk(workspace.slug, slugs);
-    setThreads((prev) => prev.filter((t) => !t.deleted));
+    mutate();
 
     // Only redirect if current thread is being deleted
     if (slugs.includes(threadSlug)) {
@@ -119,17 +131,24 @@ export default function ThreadContainer({
   };
 
   function removeThread(threadId) {
-    setThreads((prev) =>
-      prev.map((_t) => {
-        if (_t.id !== threadId) return _t;
-        return { ..._t, deleted: true };
-      }),
+    mutate(
+      (current) => {
+        const currentThreads = current?.threads || [];
+        return {
+          ...current,
+          threads: currentThreads.map((_t) => {
+            if (_t.id !== threadId) return _t;
+            return { ..._t, deleted: true };
+          }),
+        };
+      },
+      { revalidate: false },
     );
 
     // Show thread was deleted, but then remove from threads entirely so it will
     // not appear in bulk-selection.
     setTimeout(() => {
-      setThreads((prev) => prev.filter((t) => !t.deleted));
+      mutate();
     }, 500);
   }
 
@@ -168,10 +187,17 @@ export default function ThreadContainer({
     if (thread.folder_id === newFolderId) return;
 
     // Optimistic update
-    setThreads((prev) =>
-      prev.map((t) =>
-        t.slug === draggedSlug ? { ...t, folder_id: newFolderId } : t,
-      ),
+    mutate(
+      (current) => {
+        const currentThreads = current?.threads || [];
+        return {
+          ...current,
+          threads: currentThreads.map((t) =>
+            t.slug === draggedSlug ? { ...t, folder_id: newFolderId } : t,
+          ),
+        };
+      },
+      { revalidate: false },
     );
     const ok = await Workspace.threads.folders.assignThread(
       workspace.slug,
@@ -180,24 +206,53 @@ export default function ThreadContainer({
     );
     if (!ok) {
       showToast("Thread konnte nicht verschoben werden.", "error", { clear: true });
-      setThreads((prev) =>
-        prev.map((t) =>
-          t.slug === draggedSlug ? { ...t, folder_id: thread.folder_id } : t,
-        ),
+      mutate(
+        (current) => {
+          const currentThreads = current?.threads || [];
+          return {
+            ...current,
+            threads: currentThreads.map((t) =>
+              t.slug === draggedSlug ? { ...t, folder_id: thread.folder_id } : t,
+            ),
+          };
+        },
+        { revalidate: false },
       );
+    } else {
+      mutate();
     }
   }
 
   function handleFolderDeleted(folderId) {
-    setFolders((prev) => prev.filter((f) => f.id !== folderId));
-    setThreads((prev) =>
-      prev.map((t) => (t.folder_id === folderId ? { ...t, folder_id: null } : t)),
+    mutate(
+      (current) => {
+        const currentThreads = current?.threads || [];
+        const currentFolders = current?.folders || [];
+        return {
+          ...current,
+          threads: currentThreads.map((t) =>
+            t.folder_id === folderId ? { ...t, folder_id: null } : t,
+          ),
+          folders: currentFolders.filter((f) => f.id !== folderId),
+        };
+      },
+      { revalidate: false },
     );
+    mutate();
   }
 
   function handleFolderRenamed(folderId, newName) {
-    setFolders((prev) =>
-      prev.map((f) => (f.id === folderId ? { ...f, name: newName } : f)),
+    mutate(
+      (current) => {
+        const currentFolders = current?.folders || [];
+        return {
+          ...current,
+          folders: currentFolders.map((f) =>
+            f.id === folderId ? { ...f, name: newName } : f,
+          ),
+        };
+      },
+      { revalidate: false },
     );
   }
 
@@ -289,9 +344,18 @@ export default function ThreadContainer({
         />
         <NewFolderButton
           workspace={workspace}
-          onCreated={(f) => setFolders((prev) => [...prev, f])}
+          onCreated={(f) => {
+            mutate(
+              (current) => {
+                const currentFolders = current?.folders || [];
+                return { ...current, folders: [...currentFolders, f] };
+              },
+              { revalidate: false },
+            );
+            mutate();
+          }}
         />
-        <NewThreadButton workspace={workspace} />
+        <NewThreadButton workspace={workspace} mutate={mutate} />
       </div>
 
       <DragOverlay>
@@ -328,7 +392,8 @@ function UnfolderedDropZone({ children, isDragging }) {
   );
 }
 
-function NewThreadButton({ workspace }) {
+function NewThreadButton({ workspace, mutate }) {
+  const [loading, setLoading] = useState(false);
   const onClick = async () => {
     setLoading(true);
     const { thread, error } = await Workspace.threads.new(workspace.slug);
@@ -337,6 +402,7 @@ function NewThreadButton({ workspace }) {
       setLoading(false);
       return;
     }
+    mutate();
     window.location.replace(
       paths.workspace.thread(workspace.slug, thread.slug),
     );

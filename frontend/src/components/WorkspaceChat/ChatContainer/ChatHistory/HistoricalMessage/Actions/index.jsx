@@ -7,6 +7,8 @@ import { EditMessageAction } from "./EditMessage";
 import RenderMetrics from "./RenderMetrics";
 import ActionMenu from "./ActionMenu";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import { invalidateChatHistory } from "@/hooks/useChatHistory";
 
 const Actions = ({
   message,
@@ -21,12 +23,14 @@ const Actions = ({
   metrics = {},
 }) => {
   const { t } = useTranslation();
+  const { threadSlug = null } = useParams();
   const [selectedFeedback, setSelectedFeedback] = useState(feedbackScore);
   const handleFeedback = async (newFeedback) => {
     const updatedFeedback =
       selectedFeedback === newFeedback ? null : newFeedback;
     await Workspace.updateChatFeedback(chatId, slug, updatedFeedback);
     setSelectedFeedback(updatedFeedback);
+    invalidateChatHistory(slug, threadSlug);
   };
 
   return (

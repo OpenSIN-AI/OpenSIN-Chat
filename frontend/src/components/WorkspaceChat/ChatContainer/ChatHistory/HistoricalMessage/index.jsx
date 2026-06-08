@@ -50,6 +50,7 @@ const HistoricalMessage = ({
   const { isDeleted, completeDelete, onEndAnimation } = useWatchDeleteMessage({
     chatId,
     role,
+    workspaceSlug: workspace?.slug,
   });
   const adjustTextArea = (event) => {
     const element = event.target;

@@ -27,6 +27,7 @@ import useTextSize from "@/hooks/useTextSize";
 import useChatHistoryScrollHandle from "@/hooks/useChatHistoryScrollHandle";
 import { ThoughtExpansionProvider } from "./ThoughtContainer";
 import { MessageActionsProvider } from "./MessageActionsContext";
+import { invalidateChatHistory } from "@/hooks/useChatHistory";
 
 export default forwardRef(function (
   {
@@ -121,6 +122,7 @@ export default forwardRef(function (
         editedMessage,
         "user",
       );
+      invalidateChatHistory(workspace.slug, threadSlug);
       return;
     }
 
@@ -144,6 +146,7 @@ export default forwardRef(function (
         history: updatedHistory,
         attachments,
       });
+      // Streaming completion in useChatStream will invalidate the cache.
       return;
     }
 
@@ -162,6 +165,7 @@ export default forwardRef(function (
         chatId,
         editedMessage,
       );
+      invalidateChatHistory(workspace.slug, threadSlug);
       return;
     }
   };
@@ -172,6 +176,7 @@ export default forwardRef(function (
       threadSlug,
       chatId,
     );
+    invalidateChatHistory(workspace.slug, threadSlug);
     window.location.href = paths.workspace.thread(
       workspace.slug,
       newThreadSlug,

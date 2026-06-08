@@ -21,6 +21,7 @@ import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";
+import { invalidateThreads } from "@/hooks/useThreads";
 import WorkspaceSources from "@/components/lib/WorkspaceSources";
 import SuggestedMessages from "@/components/lib/SuggestedMessages";
 import useUser from "@/hooks/useUser";
@@ -109,7 +110,10 @@ export default function Home() {
         setWorkspace(ws);
       }
       const { thread } = await Workspace.threads.new(ws.slug);
-      if (thread) setThreadSlug(thread.slug);
+      if (thread) {
+        setThreadSlug(thread.slug);
+        invalidateThreads(ws.slug);
+      }
     }
 
     window.addEventListener(PASTE_ATTACHMENT_EVENT, handlePaste);
@@ -124,14 +128,20 @@ export default function Home() {
     if (!ws) return;
     setWorkspace(ws);
     const { thread } = await Workspace.threads.new(ws.slug);
-    if (thread) setThreadSlug(thread.slug);
+    if (thread) {
+      setThreadSlug(thread.slug);
+      invalidateThreads(ws.slug);
+    }
   }
 
   async function handleDropWithWorkspace(acceptedFiles) {
     setDragging(false);
     pendingFilesRef.current = acceptedFiles;
     const { thread } = await Workspace.threads.new(workspace.slug);
-    if (thread) setThreadSlug(thread.slug);
+    if (thread) {
+      setThreadSlug(thread.slug);
+      invalidateThreads(workspace.slug);
+    }
   }
 
   if (workspaceLoading) {
@@ -217,7 +227,10 @@ function HomeContent({ workspace, setWorkspace, threadSlug, setThreadSlug }) {
       if (!targetThread) {
         const { thread } = await Workspace.threads.new(targetWorkspace.slug);
         targetThread = thread?.slug;
-        if (thread) setThreadSlug(thread.slug);
+        if (thread) {
+          setThreadSlug(thread.slug);
+          invalidateThreads(targetWorkspace.slug);
+        }
       }
 
       sessionStorage.setItem(

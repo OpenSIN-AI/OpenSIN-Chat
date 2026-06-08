@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import useSWR from "swr";
+import useSWR, { mutate as globalMutate } from "swr";
 import Workspace from "@/models/workspace";
 
 /**
@@ -13,11 +13,25 @@ export const threadsKey = (workspaceSlug) =>
   workspaceSlug ? ["threads", workspaceSlug] : null;
 
 /**
+ * Invalidates the threads cache for a given workspace.
+ * Useful after mutations (create/delete/rename/drag-drop).
+ *
+ * @param {string} workspaceSlug
+ * @returns {Promise<any>}
+ */
+export function invalidateThreads(workspaceSlug) {
+  return globalMutate(threadsKey(workspaceSlug));
+}
+
+/**
  * Fetches the threads for a workspace with caching and revalidation.
  *
  * @param {string} workspaceSlug
  * @returns {{
  *   threads: Array<object>,
+ *   folders: Array<object>,
+ *   defaultThreadHasChats: boolean,
+ *   defaultThreadChatCount: number,
  *   isLoading: boolean,
  *   error: Error | undefined,
  *   refresh: () => Promise<any>,
@@ -30,8 +44,16 @@ export default function useThreads(workspaceSlug) {
     () => Workspace.threads.all(workspaceSlug),
   );
 
+  const threads = data?.threads || data || [];
+  const folders = data?.folders || [];
+  const defaultThreadChatCount = data?.defaultThreadChatCount || 0;
+  const defaultThreadHasChats = defaultThreadChatCount > 0;
+
   return {
-    threads: data?.threads || data || [],
+    threads,
+    folders,
+    defaultThreadHasChats,
+    defaultThreadChatCount,
     isLoading,
     error,
     refresh: mutate,

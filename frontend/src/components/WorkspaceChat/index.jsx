@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
-import Workspace from "@/models/workspace";
 import LoadingChat from "./LoadingChat";
 import ChatContainer from "./ChatContainer";
 import paths from "@/utils/paths";
@@ -13,36 +12,35 @@ import {
   useWatchForAutoPlayAssistantTTSResponse,
 } from "../contexts/TTSProvider";
 import { PENDING_HOME_MESSAGE } from "@/utils/constants";
+import useChatHistory from "@/hooks/useChatHistory";
 
 export default function WorkspaceChat({ loading, workspace }) {
   useWatchForAutoPlayAssistantTTSResponse();
   const { threadSlug = null } = useParams();
+  const { history, isLoading: historyLoading } = useChatHistory(
+    workspace?.slug,
+    threadSlug,
+  );
+
   // Stores { key, workspace, history } currently rendered. Lags the props so
   // the previous chat stays mounted until the next one's history is ready,
   // avoiding a skeleton/loader flash on workspace/thread switches.
   const [loaded, setLoaded] = useState(null);
 
   useEffect(() => {
-    async function getHistory() {
-      if (loading) return;
-      if (!workspace?.slug) {
-        setLoaded({ key: "none", workspace: null, history: [] });
-        return false;
-      }
-
-      const chatHistory = threadSlug
-        ? await Workspace.threads.chatHistory(workspace.slug, threadSlug)
-        : await Workspace.chatHistory(workspace.slug);
-
-      setLoaded({
-        key: `${workspace.slug}:${threadSlug ?? "default"}`,
-        workspace,
-        threadSlug,
-        history: chatHistory,
-      });
+    if (loading || historyLoading) return;
+    if (!workspace?.slug) {
+      setLoaded({ key: "none", workspace: null, history: [] });
+      return false;
     }
-    getHistory();
-  }, [workspace, loading, threadSlug]);
+
+    setLoaded({
+      key: `${workspace.slug}:${threadSlug ?? "default"}`,
+      workspace,
+      threadSlug,
+      history,
+    });
+  }, [workspace, loading, threadSlug, history, historyLoading]);
 
   const hasPendingMessage = !!sessionStorage.getItem(PENDING_HOME_MESSAGE);
   if (loaded === null) {

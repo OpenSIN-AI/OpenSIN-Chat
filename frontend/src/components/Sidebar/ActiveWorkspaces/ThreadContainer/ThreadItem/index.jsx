@@ -3,6 +3,7 @@ import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
+import { invalidateThreads } from "@/hooks/useThreads";
 import {
   ArrowCounterClockwise,
   DotsThree,
@@ -262,7 +263,7 @@ function OptionsMenu({
       return;
     }
 
-    thread.name = name;
+    invalidateThreads(workspace.slug);
     close();
   };
 
@@ -280,6 +281,7 @@ function OptionsMenu({
     }
     if (success) {
       showToast("Thread deleted successfully!", "success", { clear: true });
+      invalidateThreads(workspace.slug);
       onRemove(thread.id);
       // Redirect if deleting the active thread
       if (currentThreadSlug === thread.slug) {
