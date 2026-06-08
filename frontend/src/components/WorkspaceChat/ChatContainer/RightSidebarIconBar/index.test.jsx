@@ -8,13 +8,14 @@ vi.mock("react-i18next", () => ({
 }));
 
 const mockToggleSidebar = vi.fn();
-const mockCloseSidebar = vi.fn();
+const mockToggleRightSidebar = vi.fn();
 
 vi.mock("../ChatSidebar", () => ({
   useChatSidebar: () => ({
     activeSidebar: null,
+    rightSidebarOpen: false,
     toggleSidebar: mockToggleSidebar,
-    closeSidebar: mockCloseSidebar,
+    toggleRightSidebar: mockToggleRightSidebar,
   }),
 }));
 
@@ -23,17 +24,19 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all 7 icon buttons (collapse + 6 panels)", () => {
+  it("renders all 8 icon buttons (toggle + 7 panel icons)", () => {
     const { container } = render(<RightSidebarIconBar />);
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(7);
+    expect(buttons.length).toBe(8);
   });
 
-  it("calls closeSidebar when the collapse icon is clicked", () => {
+  it("calls toggleRightSidebar when the toggle button is clicked", () => {
     const { container } = render(<RightSidebarIconBar />);
-    const collapseButton = container.querySelector('button[aria-label="Einklappen"]');
-    fireEvent.click(collapseButton);
-    expect(mockCloseSidebar).toHaveBeenCalledTimes(1);
+    const toggleButton = container.querySelector(
+      'button[aria-label="Rechte Seitenleiste"]',
+    );
+    fireEvent.click(toggleButton);
+    expect(mockToggleRightSidebar).toHaveBeenCalledTimes(1);
   });
 
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {
