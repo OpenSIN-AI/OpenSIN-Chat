@@ -1,12 +1,24 @@
 // SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect } from "react";
-import { SlidersHorizontal } from "@phosphor-icons/react";
+import {
+  SlidersHorizontal,
+  Eye,
+  FolderOpen,
+  Database,
+  Newspaper,
+  BookOpen,
+  Terminal,
+} from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 import useLoginMode from "@/hooks/useLoginMode";
+import { useChatSidebar } from "../ChatSidebar";
 import MemoriesRow from "./Memories";
 import SourcesRow from "./Sources";
 
 export default function ChatSettingsMenu() {
   const mode = useLoginMode();
+  const { t } = useTranslation();
+  const { activeSidebar, toggleSidebar } = useChatSidebar();
   const [showMenu, setShowMenu] = useState(false as any);
   const menuRef: any = useRef(null);
   const buttonRef = useRef(null);
@@ -28,6 +40,34 @@ export default function ChatSettingsMenu() {
   }, [showMenu]);
 
   const hasUserIcon = mode !== null;
+
+  const sidebarShortcuts = [
+    {
+      id: "preview",
+      icon: Eye,
+      label: t("right_sidebar.icon_preview", "Vorschau"),
+    },
+    {
+      id: "filesystem",
+      icon: FolderOpen,
+      label: t("right_sidebar.icon_filesystem", "Verzeichnis"),
+    },
+    {
+      id: "database",
+      icon: Database,
+      label: t("right_sidebar.icon_database", "Politiker-Datenbank"),
+    },
+    {
+      id: "political",
+      icon: Newspaper,
+      label: t("right_sidebar.icon_political", "Politisches"),
+    },
+    {
+      id: "console",
+      icon: Terminal,
+      label: t("right_sidebar.icon_console", "Konsole & Terminal"),
+    },
+  ];
 
   return (
     <div
@@ -58,6 +98,30 @@ export default function ChatSettingsMenu() {
           ref={menuRef}
           className="absolute right-0 top-[42px] bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg p-3.5 w-[226px] flex flex-col gap-1.5 shadow-lg"
         >
+          <div className="flex flex-col gap-0.5">
+            {sidebarShortcuts.map(({ id, icon: Icon, label }) => {
+              const isActive = activeSidebar === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => {
+                    toggleSidebar(id);
+                    setShowMenu(false);
+                  }}
+                  className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-left transition-colors ${
+                    isActive
+                      ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                      : "text-zinc-300 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-200 hover:text-white light:hover:text-slate-900"
+                  }`}
+                >
+                  <Icon size={16} weight={isActive ? "fill" : "regular"} />
+                  <span className="text-sm font-normal">{label}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="h-px bg-zinc-700 light:bg-slate-300 my-1" />
           <SourcesRow onClose={() => setShowMenu(false)} />
           <MemoriesRow onClose={() => setShowMenu(false)} />
         </div>
