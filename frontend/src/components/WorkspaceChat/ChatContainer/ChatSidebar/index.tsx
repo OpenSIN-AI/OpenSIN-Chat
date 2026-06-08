@@ -1,5 +1,12 @@
 // SPDX-License-Identifier: MIT
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from "react";
 
 const ChatSidebarContext = createContext<any>(undefined);
 
@@ -177,18 +184,92 @@ export function usePoliticalSidebar() {
 /**
  * Reusable animation wrapper for right-side chat panels.
  * Renders as an absolutely-positioned panel to the left of the icon bar
- * so it never shifts the flex layout.
+ * so it never shifts the flex layout. Drag the left edge to resize.
  * @param {Object} props
  * @param {boolean} props.isOpen
  * @param {React.ReactNode} props.children
  */
 export default function ChatSidebar({ isOpen, children }: any) {
+  const [width, setWidth] = useState(() => {
+    if (typeof window === "undefined") return 366;
+    try {
+      const stored = window.localStorage.getItem(
+        "openafd-right-sidebar-width"
+      );
+      if (stored) {
+        const n = Number(stored);
+        if (!isNaN(n) && n >= 240 && n <= 800) return n;
+      }
+    } catch {}
+    return 366;
+  });
+  const isResizingRef = useRef(false);
+  const resizeStartXRef = useRef(0);
+  const resizeStartWidthRef = useRef(0);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem("openafd-right-sidebar-width", String(width));
+      } catch {}
+    }
+  }, [width]);
+
+  useEffect(() => {
+    function handleMouseMove(e: MouseEvent) {
+      if (!isResizingRef.current) return;
+      // Resize from left edge of right sidebar → drag left = wider, drag right = narrower
+      const delta = resizeStartXRef.current - e.clientX;
+      const newWidth = Math.min(
+        800,
+        Math.max(240, resizeStartWidthRef.current + delta)
+      );
+      setWidth(newWidth);
+    }
+    function handleMouseUp() {
+      if (!isResizingRef.current) return;
+      isResizingRef.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+    }
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
+  function handleResizeStart(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    isResizingRef.current = true;
+    resizeStartXRef.current = e.clientX;
+    resizeStartWidthRef.current = width;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  }
+
   return (
     <div
+      style={{ width: isOpen ? width : 0 }}
       className={`absolute top-0 right-full h-full overflow-hidden transition-[width] duration-500 pointer-events-none ${
-        isOpen ? "w-[366px] pointer-events-auto" : "w-0"
+        isOpen ? "pointer-events-auto" : ""
       }`}
     >
+      {isOpen && (
+        <div
+          onMouseDown={handleResizeStart}
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Rechte Seitenleiste skalieren"
+          title="Ziehen um die Breite zu ändern"
+          className="absolute top-0 left-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors"
+          style={{ marginLeft: "-3px" }}
+        >
+          <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />
+        </div>
+      )}
       {children}
     </div>
   );
