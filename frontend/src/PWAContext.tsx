@@ -7,6 +7,13 @@ import React, {
   useState,
 } from "react";
 
+// Type augmentation for iOS standalone property
+declare global {
+  interface Navigator {
+    standalone?: boolean;
+  }
+}
+
 /**
  * Detects if the application is running as a standalone PWA
  * @returns {boolean} True if running as standalone PWA

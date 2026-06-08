@@ -26,8 +26,8 @@ export function useEmbeddingProgress() {
  * @param {Function} [options.onProgressCleared] - Called when progress transitions from active to cleared
  */
 export function useWorkspaceEmbeddingProgress(
-  slug,
-  { onProgressCleared } = {},
+  slug: any,
+  { onProgressCleared }: any = {},
 ) {
   const { embeddingProgressMap, startEmbedding, connectSSE, removeQueuedFile } =
     useEmbeddingProgress();
@@ -62,7 +62,7 @@ export function useWorkspaceEmbeddingProgress(
 }
 
 const CLEANUP_DELAY_MS = 1_500;
-export function EmbeddingProgressProvider({ children }) {
+export function EmbeddingProgressProvider({ children }: any) {
   const [embeddingProgressMap, setEmbeddingProgressMap] = useState({});
   const abortControllersRef = useRef({});
   const cleanupTimeoutsRef = useRef({});

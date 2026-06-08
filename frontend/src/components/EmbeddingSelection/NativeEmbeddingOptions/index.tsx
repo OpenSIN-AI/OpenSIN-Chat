@@ -9,7 +9,7 @@ export default function NativeEmbeddingOptions({ settings }: any) {
   const [selectedModel, setSelectedModel] = useState(
     settings?.EmbeddingModelPref,
   );
-  const [selectedModelInfo, setSelectedModelInfo] = useState();
+  const [selectedModelInfo, setSelectedModelInfo] = useState<any>(undefined);
 
   useEffect(() => {
     System.customModels("native-embedder")
