@@ -85,7 +85,7 @@ export default function GithubOptions() {
                   placeholder="https://github.com/Family-Team-Projects/openafd-chat"
                   required={true}
                   autoComplete="off"
-                  onChange={(e) => setRepo((e.target as HTMLInputElement).value)}
+                  onChange={(e) => setRepo(((e.target as unknown) as any)?.value)}
                   onBlur={() => setSettings({ ...settings, repo })}
                   spellCheck={false}
                 />
@@ -115,7 +115,7 @@ export default function GithubOptions() {
                   required={false}
                   autoComplete="off"
                   spellCheck={false}
-                  onChange={(e) => setAccessToken((e.target as HTMLInputElement).value)}
+                  onChange={(e) => setAccessToken(((e.target as unknown) as any)?.value)}
                   onBlur={() => setSettings({ ...settings, accessToken })}
                 />
               </div>
@@ -230,7 +230,7 @@ function GitHubBranchSelection({ repo, accessToken }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
       >
-        {allBranches.map((branch) => {
+        {(allBranches as any).map((branch) => {
           return (
             <option key={branch} value={branch}>
               {branch}

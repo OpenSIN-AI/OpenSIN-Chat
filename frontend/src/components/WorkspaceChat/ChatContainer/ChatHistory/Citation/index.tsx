@@ -156,7 +156,7 @@ export default function Citations({ sources = [] }: any) {
         className="relative h-[22px]"
         style={{ width: `${visibleSources.length * 17 + 5}px` }}
       >
-        {visibleSources.map((source, idx) => {
+        {(visibleSources as any).map((source, idx) => {
           const info = parseChunkSource(source);
           const customImage = CIRCLE_IMAGES[info.icon];
           return (
@@ -242,7 +242,7 @@ export function CitationDetailModal({ source, onClose }: any) {
           style={{ maxHeight: "calc(100vh - 200px)" }}
         >
           <div className="py-7 px-9 space-y-2 flex-col">
-            {chunks.map(({ text, score }, idx) => (
+            {(chunks as any).map(({ text, score }, idx) => (
               <Fragment key={idx}>
                 <div className="pt-6 text-white light:text-slate-900">
                   <div className="flex flex-col w-full justify-start pb-6 gap-y-1">
@@ -314,7 +314,7 @@ export function parseChunkSource({ title = "", chunks = [] }: any) {
 
   if (
     !chunks.length ||
-    !supportedSources.some((source) =>
+    !(supportedSources as any).some((source) =>
       chunks[0].chunkSource?.startsWith(source),
     )
   )

@@ -154,7 +154,7 @@ export default function LemonadeOptions({ settings }: any) {
             placeholder="8192"
             min={1}
             value={maxTokens}
-            onChange={(e) => setMaxTokens(Number((e.target as HTMLInputElement).value))}
+            onChange={(e) => setMaxTokens(Number(((e.target as unknown) as any)?.value))}
             onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
@@ -278,7 +278,7 @@ function LemonadeModelSelection({
           error || "An error occurred while uninstalling the model",
         );
 
-      const updatedModels = customModels.map((model) =>
+      const updatedModels = (customModels as any).map((model) =>
         model.id === modelId ? { ...model, downloaded: false } : model,
       );
       setCustomModels(updatedModels);
@@ -348,9 +348,9 @@ function LemonadeModelSelection({
     }, {});
 
     Object.entries(groupedModels).forEach(([organization, models]) => {
-      const hasInstalled = models.some((model) => model.downloaded);
+      const hasInstalled = (models as any).some((model) => model.downloaded);
       if (hasInstalled) {
-        const installedModels = models.filter((model) => model.downloaded);
+        const installedModels = (models as any).filter((model) => model.downloaded);
         mapping
           .get("installed")
           .set("Downloaded Models", [
@@ -358,7 +358,7 @@ function LemonadeModelSelection({
             ...installedModels,
           ]);
       }
-      const tags = models.map((model) => ({
+      const tags = (models as any).map((model) => ({
         ...model,
         name: model.name.split(":")[1],
       }));

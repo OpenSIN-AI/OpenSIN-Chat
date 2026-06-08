@@ -52,7 +52,7 @@ export default function Tooltip({ legendColor, ...props }: any) {
               <p className="text-theme-bg-primary font-medium">{label}</p>
             </div>
             <div className="space-y-1 py-2 px-4">
-              {payload.map(({ value, name }, idx) => (
+              {(payload as any).map(({ value, name }, idx) => (
                 <div
                   key={`id-${idx}`}
                   className="flex items-center justify-between space-x-8"

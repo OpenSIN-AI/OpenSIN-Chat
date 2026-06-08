@@ -87,7 +87,7 @@ export default function ModelTable({
       </button>
       <div hidden={!showAll} className="mt-[16px]">
         <div className="w-full flex flex-col gap-y-[8px]">
-          {models.map((model) => (
+          {(models as any).map((model) => (
             <ModelRow
               key={model.id}
               alias={alias}

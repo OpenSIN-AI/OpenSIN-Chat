@@ -16,7 +16,7 @@ export default function ObsidianOptions() {
     if (files.length === 0) return;
 
     // Filter for .md files only
-    const markdownFiles = files.filter((file) => file.name.endsWith(".md"));
+    const markdownFiles = (files as any).filter((file) => file.name.endsWith(".md"));
     setSelectedFiles(markdownFiles);
 
     // Set the folder path from the first file
@@ -39,7 +39,7 @@ export default function ObsidianOptions() {
 
       // Read all files and prepare them for submission
       const fileContents = await Promise.all(
-        selectedFiles.map(async (file) => {
+        (selectedFiles as any).map(async (file) => {
           const content = await file.text();
           return {
             name: file.name,
@@ -116,7 +116,7 @@ export default function ObsidianOptions() {
                   <input
                     type="text"
                     value={vaultPath}
-                    onChange={(e) => setVaultPath((e.target as HTMLInputElement).value)}
+                    onChange={(e) => setVaultPath(((e.target as unknown) as any)?.value)}
                     placeholder="/path/to/your/vault"
                     className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     required={true}
@@ -142,7 +142,7 @@ export default function ObsidianOptions() {
                       })}
                     </p>
 
-                    {selectedFiles.map((file, i) => (
+                    {(selectedFiles as any).map((file, i) => (
                       <p key={i} className="text-xs text-white mt-2">
                         {file.webkitRelativePath}
                       </p>

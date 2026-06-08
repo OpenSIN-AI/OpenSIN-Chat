@@ -21,7 +21,7 @@ export default function MenuOption({
 
   const isActive = hasChildren
     ? (!isExpanded &&
-        childOptions.some((child) =>
+        (childOptions as any).some((child) =>
           isPathMatch(child.href, location.pathname),
         )) ||
       location.pathname === href
@@ -110,7 +110,7 @@ export default function MenuOption({
       </div>
       {isExpanded && hasChildren && (
         <div className="mt-1 rounded-r-lg w-full">
-          {childOptions.map((childOption, index) => (
+          {(childOptions as any).map((childOption, index) => (
             <MenuOption
               key={index}
               {...childOption} // flex and roles go here.
@@ -132,14 +132,14 @@ function useIsExpanded({
       if (storedValue !== null) {
         return safeJsonParse(storedValue, false);
       }
-      return childOptions.some((child) => isPathMatch(child.href, location));
+      return (childOptions as any).some((child) => isPathMatch(child.href, location));
     }
     return false;
   });
 
   useEffect(() => {
     if (hasVisibleChildren) {
-      const shouldExpand = childOptions.some((child) =>
+      const shouldExpand = (childOptions as any).some((child) =>
         isPathMatch(child.href, location),
       );
       if (shouldExpand && !isExpanded) {
@@ -172,7 +172,7 @@ function hasVisibleOptions(user: any = null, childOptions: any = []) {
     return true;
   }
 
-  return childOptions.some((opt) =>
+  return (childOptions as any).some((opt) =>
     isVisible({ roles: opt.roles, user, flex: opt.flex, hidden: opt.hidden }),
   );
 }

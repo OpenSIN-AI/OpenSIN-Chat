@@ -110,7 +110,7 @@ export default function PoliticalSidebar() {
     if (sidebarOpen && drucksachen.length === 0 && rssItems.length === 0) {
       fetchAll();
     }
-    return () => abortRef.current?.abort();
+    return () => abortRef.current??.abort();
   }, [sidebarOpen]);
 
   return (
@@ -162,7 +162,7 @@ export default function PoliticalSidebar() {
                 {t("sidebar.political.empty", "Keine Drucksachen gefunden.")}
               </p>
             ) : (
-              drucksachen.map((d) => (
+              (drucksachen as any).map((d) => (
                 <a
                   key={d.id || d.drucksache_url}
                   href={d.drucksache_url || "#"}
@@ -197,7 +197,7 @@ export default function PoliticalSidebar() {
                 {t("sidebar.political.rss_empty", "Keine Pressemitteilungen gefunden.")}
               </p>
             ) : (
-              rssItems.map((item, i) => (
+              (rssItems as any).map((item, i) => (
                 <a
                   key={i}
                   href={item.link || "#"}

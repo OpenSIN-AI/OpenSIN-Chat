@@ -59,7 +59,7 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
       </button>
       {open && (
         <div className="absolute left-0 top-[28px] z-50 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-200 rounded-lg shadow-xl py-1 min-w-[160px]">
-          {versions.map((v, idx) => (
+          {(versions as any).map((v, idx) => (
             <button
               key={idx}
               type="button"

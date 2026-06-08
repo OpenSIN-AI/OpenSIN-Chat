@@ -60,7 +60,7 @@ export default function SlashCommands({ entity }: any) {
   };
 
   const removeTag: any = (tagToRemove) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
+    setTags((tags as any).filter((tag) => tag !== tagToRemove));
   };
 
   if (isSuccess) {
@@ -149,7 +149,7 @@ export default function SlashCommands({ entity }: any) {
               {t("community_hub.publish.slash_command.tags_description")}
             </div>
             <div className="flex flex-wrap gap-2 p-2 bg-theme-bg-secondary rounded-lg min-h-[42px]">
-              {tags.map((tag, index) => (
+              {(tags as any).map((tag, index) => (
                 <span
                   key={index}
                   className="flex items-center gap-1 px-2 py-1 text-sm text-theme-text-primary bg-white/10 light:bg-black/10 rounded-md"
@@ -167,7 +167,7 @@ export default function SlashCommands({ entity }: any) {
               <input
                 type="text"
                 value={tagInput}
-                onChange={(e) => setTagInput((e.target as HTMLInputElement).value)}
+                onChange={(e) => setTagInput(((e.target as unknown) as any)?.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t(
                   "community_hub.publish.slash_command.tags_placeholder",
@@ -195,7 +195,7 @@ export default function SlashCommands({ entity }: any) {
                   value="public"
                   className="peer/public hidden"
                   defaultChecked
-                  onChange={(e) => setVisibility((e.target as HTMLInputElement).value)}
+                  onChange={(e) => setVisibility(((e.target as unknown) as any)?.value)}
                 />
                 <input
                   type="radio"
@@ -203,7 +203,7 @@ export default function SlashCommands({ entity }: any) {
                   name="visibility"
                   value="private"
                   className="peer/private hidden"
-                  onChange={(e) => setVisibility((e.target as HTMLInputElement).value)}
+                  onChange={(e) => setVisibility(((e.target as unknown) as any)?.value)}
                 />
                 <label
                   htmlFor="public"

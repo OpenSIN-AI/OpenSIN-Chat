@@ -55,7 +55,7 @@ export function useAgentForm() {
       setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
       setDisabledAgentSkills(_preferences.settings?.disabled_agent_skills ?? []);
       setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
-      setActiveFlowIds(flows.filter((f) => f.active).map((f) => f.uuid));
+      setActiveFlowIds((flows as any).filter((f) => f.active).map((f) => f.uuid));
       setAgentFlows(flows);
       setFileSystemAgentAvailable(fsAgentAvailable);
       setCreateFilesAgentAvailable(createFilesAvailable);
@@ -79,7 +79,7 @@ export function useAgentForm() {
   const toggleDefaultSkill: any = (skillName) => {
     setDisabledAgentSkills((prev) => {
       const updatedSkills = prev.includes(skillName)
-        ? prev.filter((name) => name !== skillName)
+        ? (prev as any).filter((name) => name !== skillName)
         : [...prev, skillName];
       setHasChanges(true);
       return updatedSkills;
@@ -89,7 +89,7 @@ export function useAgentForm() {
   const toggleAgentSkill: any = (skillName) => {
     setAgentSkills((prev) => {
       const updatedSkills = prev.includes(skillName)
-        ? prev.filter((name) => name !== skillName)
+        ? (prev as any).filter((name) => name !== skillName)
         : [...prev, skillName];
       setHasChanges(true);
       return updatedSkills;
@@ -99,7 +99,7 @@ export function useAgentForm() {
   const toggleFlow: any = (flowId) => {
     setActiveFlowIds((prev) => {
       const updated = prev.includes(flowId)
-        ? prev.filter((id) => id !== flowId)
+        ? (prev as any).filter((id) => id !== flowId)
         : [...prev, flowId];
       return updated;
     });
@@ -107,7 +107,7 @@ export function useAgentForm() {
 
   const toggleMCP: any = (serverName) => {
     setMcpServers((prev) => {
-      return prev.map((server) => {
+      return (prev as any).map((server) => {
         if (server.name !== serverName) return server;
         return { ...server, running: !server.running };
       });

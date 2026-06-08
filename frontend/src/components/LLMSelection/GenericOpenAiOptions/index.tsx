@@ -26,7 +26,7 @@ export default function GenericOpenAiOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="eg: https://proxy.openai.com"
             defaultValue={settings?.GenericOpenAiBasePath}
-            onChange={(e) => setGenericOpenAiBasePath((e.target as HTMLInputElement).value)}
+            onChange={(e) => setGenericOpenAiBasePath(((e.target as unknown) as any)?.value)}
             required={true}
             autoComplete="off"
             spellCheck={false}
@@ -42,7 +42,7 @@ export default function GenericOpenAiOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="Generic service API Key"
             defaultValue={settings?.GenericOpenAiKey ? "*".repeat(20) : ""}
-            onChange={(e) => setGenericOpenAiApiKey((e.target as HTMLInputElement).value)}
+            onChange={(e) => setGenericOpenAiApiKey(((e.target as unknown) as any)?.value)}
             required={false}
             autoComplete="off"
             spellCheck={false}
@@ -156,7 +156,7 @@ function GenericOpenAiModelSelection({
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
           placeholder="Model id used for chat requests"
           defaultValue={genericOpenAiModelPref}
-          onChange={(e) => setGenericOpenAiModelPref((e.target as HTMLInputElement).value)}
+          onChange={(e) => setGenericOpenAiModelPref(((e.target as unknown) as any)?.value)}
           onBlur={() => setGenericOpenAiModelPref(genericOpenAiModelPref)}
           required={true}
           autoComplete="off"
@@ -178,7 +178,7 @@ function GenericOpenAiModelSelection({
       >
         {customModels.length > 0 && (
           <optgroup label="Your loaded models">
-            {customModels.map((model) => {
+            {(customModels as any).map((model) => {
               return (
                 <option
                   key={model.id}

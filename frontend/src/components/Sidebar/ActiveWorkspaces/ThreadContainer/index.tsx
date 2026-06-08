@@ -36,7 +36,7 @@ export default function ThreadContainer({
     const chatHandler: any = (event) => {
       const { threadSlug, newName } = event.detail;
       setThreads((prevThreads) =>
-        prevThreads.map((thread) => {
+        (prevThreads as any).map((thread) => {
           if (thread.slug === threadSlug) {
             return { ...thread, name: newName };
           }
@@ -80,7 +80,7 @@ export default function ThreadContainer({
         // previously marked threads that were never deleted
         // come back to life.
         setThreads((prev) =>
-          prev.map((t) => {
+          (prev as any).map((t) => {
             return { ...t, deleted: false };
           }),
         );
@@ -98,7 +98,7 @@ export default function ThreadContainer({
 
   const toggleForDeletion: any = (id) => {
     setThreads((prev) =>
-      prev.map((t) => {
+      (prev as any).map((t) => {
         if (t.id !== id) return t;
         return { ...t, deleted: !t.deleted };
       }),
@@ -106,9 +106,9 @@ export default function ThreadContainer({
   };
 
   const handleDeleteAll = async () => {
-    const slugs = threads.filter((t) => t.deleted === true).map((t) => t.slug);
+    const slugs = (threads as any).filter((t) => t.deleted === true).map((t) => t.slug);
     await Workspace.threads.deleteBulk(workspace.slug, slugs);
-    setThreads((prev) => prev.filter((t) => !t.deleted));
+    setThreads((prev) => (prev as any).filter((t) => !t.deleted));
 
     // Only redirect if current thread is being deleted
     if (slugs.includes(threadSlug)) {
@@ -118,7 +118,7 @@ export default function ThreadContainer({
 
   function removeThread(threadId: any) {
     setThreads((prev) =>
-      prev.map((_t) => {
+      (prev as any).map((_t) => {
         if (_t.id !== threadId) return _t;
         return { ..._t, deleted: true };
       }),
@@ -127,12 +127,12 @@ export default function ThreadContainer({
     // Show thread was deleted, but then remove from threads entirely so it will
     // not appear in bulk-selection.
     setTimeout(() => {
-      setThreads((prev) => prev.filter((t) => !t.deleted));
+      setThreads((prev) => (prev as any).filter((t) => !t.deleted));
     }, 500);
   }
 
   function getActiveThreadIdx() {
-    const unfoldered = threads.filter((t) => !t.folder_id);
+    const unfoldered = (threads as any).filter((t) => !t.folder_id);
     if (isVirtualThread)
       return unfoldered.length + (defaultThreadHasChats ? 1 : 0);
     if (!threadSlug && !defaultThreadHasChats)
@@ -167,7 +167,7 @@ export default function ThreadContainer({
 
     // Optimistic update
     setThreads((prev) =>
-      prev.map((t) =>
+      (prev as any).map((t) =>
         t.slug === draggedSlug ? { ...t, folder_id: newFolderId } : t,
       ),
     );
@@ -179,7 +179,7 @@ export default function ThreadContainer({
     if (!ok) {
       showToast("Thread konnte nicht verschoben werden.", "error", { clear: true });
       setThreads((prev) =>
-        prev.map((t) =>
+        (prev as any).map((t) =>
           t.slug === draggedSlug ? { ...t, folder_id: thread.folder_id } : t,
         ),
       );
@@ -187,15 +187,15 @@ export default function ThreadContainer({
   }
 
   function handleFolderDeleted(folderId: any) {
-    setFolders((prev) => prev.filter((f) => f.id !== folderId));
+    setFolders((prev) => (prev as any).filter((f) => f.id !== folderId));
     setThreads((prev) =>
-      prev.map((t) => (t.folder_id === folderId ? { ...t, folder_id: null } : t)),
+      (prev as any).map((t) => (t.folder_id === folderId ? { ...t, folder_id: null } : t)),
     );
   }
 
   function handleFolderRenamed(folderId: any, newName: any) {
     setFolders((prev) =>
-      prev.map((f) => (f.id === folderId ? { ...f, name: newName } : f)),
+      (prev as any).map((f) => (f.id === folderId ? { ...f, name: newName } : f)),
     );
   }
 
@@ -214,7 +214,7 @@ export default function ThreadContainer({
   const showVirtualThread =
     isVirtualThread || (!threadSlug && !defaultThreadHasChats);
 
-  const unfolderedThreads = threads.filter((t) => !t.folder_id);
+  const unfolderedThreads = (threads as any).filter((t) => !t.folder_id);
   const draggedThread = activeId ? threads.find((t) => t.slug === activeId) : null;
 
   return (
@@ -235,8 +235,8 @@ export default function ThreadContainer({
             hasNext={unfolderedThreads.length > 0 || showVirtualThread || folders.length > 0}
           />
         )}
-        {folders.map((folder) => {
-          const folderThreads = threads.filter((t) => t.folder_id === folder.id);
+        {(folders as any).map((folder) => {
+          const folderThreads = (threads as any).filter((t) => t.folder_id === folder.id);
           return (
             <ThreadFolderItem
               key={folder.id}
@@ -254,7 +254,7 @@ export default function ThreadContainer({
           );
         })}
         <UnfolderedDropZone isDragging={!!activeId}>
-          {unfolderedThreads.map((thread, i) => (
+          {(unfolderedThreads as any).map((thread, i) => (
             <ThreadItem
               key={thread.slug}
               idx={i + (defaultThreadHasChats ? 1 : 0)}
@@ -427,7 +427,7 @@ function NewFolderButton({ workspace, onCreated }: any) {
 }
 
 function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }: any) {
-  if (!ctrlPressed || threads.filter((t) => t.deleted).length === 0)
+  if (!ctrlPressed || (threads as any).filter((t) => t.deleted).length === 0)
     return null;
   return (
     <button

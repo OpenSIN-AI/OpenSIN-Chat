@@ -62,7 +62,7 @@ export default function ModelRouterOptions({ settings }: any) {
             <option value="">
               {t("model-router.router-selection.select-router")}
             </option>
-            {routers.map((router) => (
+            {(routers as any).map((router) => (
               <option key={router.id} value={router.id}>
                 {router.name}
               </option>

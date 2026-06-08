@@ -49,7 +49,7 @@ export default function AwsBedrockLLMOptions({ settings }: any) {
           name="AwsBedrockLLMConnectionMethod"
           value={connectionMethod}
           required={true}
-          onChange={(e) => setConnectionMethod((e.target as HTMLInputElement).value)}
+          onChange={(e) => setConnectionMethod(((e.target as unknown) as any)?.value)}
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit p-2.5"
         >
           <option value="iam">IAM (Explicit Credentials)</option>
@@ -146,7 +146,7 @@ export default function AwsBedrockLLMOptions({ settings }: any) {
             required={true}
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
           >
-            {AWS_REGIONS.map((region) => {
+            {(AWS_REGIONS as any).map((region) => {
               return (
                 <option key={region.code} value={region.code}>
                   {region.name} ({region.code})

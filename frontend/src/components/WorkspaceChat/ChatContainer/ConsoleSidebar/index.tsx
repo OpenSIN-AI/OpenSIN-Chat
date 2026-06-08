@@ -64,7 +64,7 @@ function LogsTab() {
             {t("console.no_logs", "Keine Logs vorhanden.")}
           </p>
         ) : (
-          logs.map((log, idx) => (
+          (logs as any).map((log, idx) => (
             <div key={idx} className="flex gap-2 mb-0.5">
               <span className="text-zinc-600 light:text-slate-400 shrink-0">
                 {new Date(log.timestamp).toLocaleTimeString("de-DE", {
@@ -180,7 +180,7 @@ function TerminalTab() {
         <p className="text-zinc-600 light:text-slate-400 mb-2">
           {t("console.terminal_hint", "OpenAfD Terminal — Befehle werden auf dem Host-System ausgeführt.")}
         </p>
-        {history.map((entry, idx) => (
+        {(history as any).map((entry, idx) => (
           <div
             key={idx}
             className={
@@ -203,7 +203,7 @@ function TerminalTab() {
           ref={inputRef}
           type="text"
           value={input}
-          onChange={(e) => setInput((e.target as HTMLInputElement).value)}
+          onChange={(e) => setInput(((e.target as unknown) as any)?.value)}
           onKeyDown={handleKeyDown}
           className="flex-1 bg-transparent border-none outline-none font-mono text-[11px] text-zinc-200 light:text-slate-800 placeholder:text-zinc-600 caret-white"
           placeholder={t("console.terminal_placeholder", "Befehl eingeben...")}
@@ -242,7 +242,7 @@ export default function ConsoleSidebar() {
         </div>
         {/* Tab switcher */}
         <div className="flex items-center gap-1 px-4 pt-2 pb-0 shrink-0">
-          {TABS.map((tab) => (
+          {(TABS as any).map((tab) => (
             <button
               key={tab}
               type="button"

@@ -50,7 +50,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
   if (!data.hasOwnProperty("type") && !socket.supportsAgentStreaming) {
     return setChatHistory((prev) => {
       return [
-        ...prev.filter((msg) => !!msg.content),
+        ...(prev as any).filter((msg) => !!msg.content),
         {
           uuid: v4(),
           content: data.content,
@@ -86,12 +86,12 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
 
     return setChatHistory((prev) => {
       if (data.content.type === "removeStatusResponse")
-        return [...prev.filter((msg) => msg.uuid !== data.content.uuid)];
+        return [...(prev as any).filter((msg) => msg.uuid !== data.content.uuid)];
 
       if (data.content.type === "modelRouteNotification") {
         if (!data.content.routedTo) return prev;
         return [
-          ...prev.filter(
+          ...(prev as any).filter(
             (msg) => !(msg.role === "assistant" && msg.pending && !msg.content),
           ),
           {
@@ -109,7 +109,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
       if (!knownMessage) {
         if (data.content.type === "fullTextResponse") {
           return [
-            ...prev.filter((msg) => !!msg.content),
+            ...(prev as any).filter((msg) => !!msg.content),
             {
               uuid: data.content.uuid,
               type: "textResponse",
@@ -134,7 +134,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
           // Some providers like LMStudio will do this and it depends on the chat template as well.
           if (data.content.content.trim() === "") return prev;
           return [
-            ...prev.filter((msg) => !!msg.content),
+            ...(prev as any).filter((msg) => !!msg.content),
             {
               uuid: data.content.uuid,
               type: "textResponse",
@@ -151,7 +151,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
         }
 
         return [
-          ...prev.filter((msg) => !!msg.content),
+          ...(prev as any).filter((msg) => !!msg.content),
           {
             uuid: data.content.uuid,
             type: "statusResponse",
@@ -174,21 +174,21 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
           if (!knownMessage)
             return [...prev, { uuid, type: "toolCallInvocation", content }]; // If the message is not known, add it to the end of the list
           return [
-            ...prev.filter((msg) => msg.uuid !== uuid),
+            ...(prev as any).filter((msg) => msg.uuid !== uuid),
             { ...knownMessage, content },
           ]; // If the message is known, replace it with the new content
         }
 
         if (type === "usageMetrics") {
           if (!data.content.metrics) return prev;
-          return prev.map((msg) =>
+          return (prev as any).map((msg) =>
             msg.uuid === uuid ? { ...msg, metrics: data.content.metrics } : msg,
           );
         }
 
         if (type === "citations") {
           if (!data.content.citations) return prev;
-          return prev.map((msg) =>
+          return (prev as any).map((msg) =>
             msg.uuid === uuid
               ? {
                   ...msg,
@@ -200,7 +200,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
 
         if (type === "chatId") {
           if (!data.content.chatId) return prev;
-          return prev.map((msg) =>
+          return (prev as any).map((msg) =>
             msg.uuid === uuid ? { ...msg, chatId: data.content.chatId } : msg,
           );
         }
@@ -222,7 +222,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
         }
 
         // Generic text response - will be put in the agent thought bubble
-        return prev.map((msg) =>
+        return (prev as any).map((msg) =>
           msg.uuid === data.content.uuid
             ? { ...msg, content: msg.content + data.content.content }
             : msg,
@@ -243,7 +243,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
   if (data.type === "fileDownloadCard") {
     return setChatHistory((prev) => {
       return [
-        ...prev.filter((msg) => !!msg.content),
+        ...(prev as any).filter((msg) => !!msg.content),
         {
           type: "fileDownloadCard",
           uuid: v4(),
@@ -267,7 +267,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
   if (data.type === "rechartVisualize") {
     return setChatHistory((prev) => {
       return [
-        ...prev.filter((msg) => !!msg.content),
+        ...(prev as any).filter((msg) => !!msg.content),
         {
           type: "rechartVisualize",
           uuid: v4(),
@@ -287,7 +287,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
   if (data.type === "wssFailure") {
     return setChatHistory((prev) => {
       return [
-        ...prev.filter((msg) => !!msg.content),
+        ...(prev as any).filter((msg) => !!msg.content),
         {
           uuid: v4(),
           content: data.content,
@@ -306,7 +306,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
   if (data.type === "toolApprovalRequest") {
     return setChatHistory((prev) => {
       return [
-        ...prev.filter((msg) => !!msg.content),
+        ...(prev as any).filter((msg) => !!msg.content),
         {
           uuid: v4(),
           type: "toolApprovalRequest",
@@ -331,7 +331,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
   if (data.type === "clarificationRequest") {
     return setChatHistory((prev) => {
       return [
-        ...prev.filter((msg) => !!msg.content),
+        ...(prev as any).filter((msg) => !!msg.content),
         {
           uuid: v4(),
           type: "clarifyingQuestion",
@@ -356,7 +356,7 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
 
   return setChatHistory((prev) => {
     return [
-      ...prev.filter((msg) => !!msg.content),
+      ...(prev as any).filter((msg) => !!msg.content),
       {
         uuid: v4(),
         type: data.type,

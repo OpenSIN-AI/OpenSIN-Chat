@@ -82,7 +82,7 @@ export default function TextSizeMenu() {
           <p className="text-[10px] font-medium text-zinc-400 light:text-slate-500 px-2 mb-0.5">
             {t("chat_window.text_size_label")}
           </p>
-          {TEXT_SIZES.map(({ key, label, textClass }: any) => (
+          {(TEXT_SIZES as any).map(({ key, label, textClass }: any) => (
             <div
               key={key}
               onClick={() => handleTextSizeChange(key)}

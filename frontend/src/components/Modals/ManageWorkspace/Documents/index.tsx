@@ -48,16 +48,16 @@ export default function DocumentSettings({ workspace }: any) {
       : workspace;
 
     const documentsInWorkspace =
-      currentWorkspace.documents.map((doc) => doc.docpath) || [];
+      currentWorkspace.(documents as any).map((doc) => doc.docpath) || [];
 
     // Documents that are not in the workspace
     const filteredAvailableDocs = {
       ...localFiles,
-      items: localFiles.items.map((folder) => {
+      items: localFiles.(items as any).map((folder) => {
         if (folder.items && folder.type === "folder") {
           return {
             ...folder,
-            items: folder.items.filter(
+            items: folder.(items as any).filter(
               (file) =>
                 file.type === "file" &&
                 !documentsInWorkspace.includes(`${folder.name}/${file.name}`),
@@ -72,11 +72,11 @@ export default function DocumentSettings({ workspace }: any) {
     // Documents that are already in the workspace
     const filteredWorkspaceDocs = {
       ...localFiles,
-      items: localFiles.items.map((folder) => {
+      items: localFiles.(items as any).map((folder) => {
         if (folder.items && folder.type === "folder") {
           return {
             ...folder,
-            items: folder.items.filter(
+            items: folder.(items as any).filter(
               (file) =>
                 file.type === "file" &&
                 documentsInWorkspace.includes(`${folder.name}/${file.name}`),
@@ -121,7 +121,7 @@ export default function DocumentSettings({ workspace }: any) {
     setLoading(true);
     setLoadingMessage("This may take a while for large documents");
 
-    const filenames = movedItems.map(
+    const filenames = (movedItems as any).map(
       (item) => `${item.folderName}/${item.name}`,
     );
     const changesToSend = { adds: filenames };
@@ -175,9 +175,9 @@ export default function DocumentSettings({ workspace }: any) {
       let foundItem = null;
       let foundFolderIndex = null;
 
-      newAvailableDocs.items = newAvailableDocs.items.map(
+      newAvailableDocs.items = newAvailableDocs.(items as any).map(
         (folder, folderIndex) => {
-          const remainingItems = folder.items.filter((file) => {
+          const remainingItems = folder.(items as any).filter((file) => {
             const match = file.id === itemId;
             if (match) {
               foundItem = { ...file };
@@ -212,7 +212,7 @@ export default function DocumentSettings({ workspace }: any) {
         if (folder.items && folder.type === "folder") {
           return {
             ...folder,
-            items: folder.items.filter(
+            items: folder.(items as any).filter(
               (file) => !embeddingFilenames.has(`${folder.name}/${file.name}`),
             ),
           };

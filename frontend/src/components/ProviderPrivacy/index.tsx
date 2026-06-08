@@ -105,7 +105,7 @@ function ProviderPrivacyItem({ title, provider, altText }: any) {
           ) : (
             provider.description && (
               <ul className="flex flex-col list-none gap-1">
-                {provider.description.map((desc, idx) => (
+                {provider.(description as any).map((desc, idx) => (
                   <li key={idx} className="text-theme-text-secondary text-sm">
                     {desc}
                   </li>

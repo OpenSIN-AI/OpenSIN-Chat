@@ -81,7 +81,7 @@ export default function SourcesSidebar({ workspace }: any) {
   const combined = combineLikeSources(sources);
 
   // Filter chat sources based on active filter
-  const filteredChatSources = combined.filter((source) => {
+  const filteredChatSources = (combined as any).filter((source) => {
     const chunkSource = source.chunks?.[0]?.chunkSource;
     if (sourceFilter === "documents") return isDocumentSource(chunkSource);
     if (sourceFilter === "media") return isMediaSource(chunkSource);
@@ -90,7 +90,7 @@ export default function SourcesSidebar({ workspace }: any) {
 
   // Convert workspace documents to display format
   const workspaceDocs = workspace?.documents || [];
-  const filteredWorkspaceDocs = workspaceDocs.filter((doc) => {
+  const filteredWorkspaceDocs = (workspaceDocs as any).filter((doc) => {
     const typeInfo = getWorkspaceSourceType(doc);
     if (sourceFilter === "documents") return typeInfo.type === "document";
     if (sourceFilter === "media") return typeInfo.type === "url"; // URLs are "media" in this context
@@ -152,7 +152,7 @@ export default function SourcesSidebar({ workspace }: any) {
                     })}
               </p>
             ) : (
-              displaySources.map((source, idx) =>
+              (displaySources as any).map((source, idx) =>
                 isWorkspaceMode ? (
                   <WorkspaceSourceItem
                     key={source.docId || idx}

@@ -65,7 +65,7 @@ export default function LocalAiOptions({ settings }: any) {
             defaultValue={settings?.LocalAiApiKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setApiKeyValue((e.target as HTMLInputElement).value)}
+            onChange={(e) => setApiKeyValue(((e.target as unknown) as any)?.value)}
             onBlur={() => setApiKey(apiKeyValue)}
           />
         </div>
@@ -267,7 +267,7 @@ function LocalAIModelSelection({ settings, apiKey = null, basePath = null }: any
       >
         {customModels.length > 0 && (
           <optgroup label="Your loaded models">
-            {customModels.map((model) => {
+            {(customModels as any).map((model) => {
               return (
                 <option
                   key={model.id}

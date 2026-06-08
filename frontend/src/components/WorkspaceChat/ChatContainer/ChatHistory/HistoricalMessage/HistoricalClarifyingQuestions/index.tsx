@@ -12,7 +12,7 @@ export default function HistoricalClarifyingQuestions({ surveys = [] }: any) {
 
   return (
     <div className="flex flex-col gap-y-2 mb-3">
-      {surveys.map((survey, i) => (
+      {(surveys as any).map((survey, i) => (
         <SurveyCard key={i} survey={survey} />
       ))}
     </div>

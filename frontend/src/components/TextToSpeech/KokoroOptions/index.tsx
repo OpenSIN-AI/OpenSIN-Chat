@@ -38,7 +38,7 @@ export default function KokoroTTSOptions({ settings }: any) {
             required={true}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setInputEndpoint((e.target as HTMLInputElement).value)}
+            onChange={(e) => setInputEndpoint(((e.target as unknown) as any)?.value)}
             onBlur={() => setEndpoint(inputEndpoint)}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
@@ -57,7 +57,7 @@ export default function KokoroTTSOptions({ settings }: any) {
             defaultValue={settings?.TTSKokoroKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setInputApiKey((e.target as HTMLInputElement).value)}
+            onChange={(e) => setInputApiKey(((e.target as unknown) as any)?.value)}
             onBlur={() => setApiKey(inputApiKey)}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
@@ -158,7 +158,7 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
         defaultValue={settings?.TTSKokoroVoiceModel ?? "af_bella"}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {voices.map((voice) => (
+        {(voices as any).map((voice) => (
           <option key={voice.id} value={voice.id}>
             {voice.name}
           </option>

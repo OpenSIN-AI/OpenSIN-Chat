@@ -34,7 +34,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
   );
 
   const handleMaxTokensChange: any = (e) => {
-    setMaxTokens((e.target as HTMLInputElement).value ? Number((e.target as HTMLInputElement).value) : "");
+    setMaxTokens(((e.target as unknown) as any)?.value ? Number(((e.target as unknown) as any)?.value) : "");
   };
 
   return (
@@ -317,7 +317,7 @@ function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: an
       >
         {customModels.length > 0 && (
           <optgroup label="Your loaded models">
-            {customModels.map((model) => {
+            {(customModels as any).map((model) => {
               return (
                 <option
                   key={model.id}

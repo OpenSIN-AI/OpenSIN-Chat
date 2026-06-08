@@ -83,7 +83,7 @@ export default function PrivateModeOptions({ settings }: any) {
             required={true}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setBasePath((e.target as HTMLInputElement).value)}
+            onChange={(e) => setBasePath(((e.target as unknown) as any)?.value)}
           />
         </div>
         <div className="flex flex-col w-60">
@@ -103,14 +103,14 @@ export default function PrivateModeOptions({ settings }: any) {
             <select
               name="PrivateModeModelPref"
               value={model}
-              onChange={(e) => setModel((e.target as HTMLInputElement).value)}
+              onChange={(e) => setModel(((e.target as unknown) as any)?.value)}
               required={true}
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             >
               {models.length > 0 ? (
                 <>
                   <option value="">-- Select a model --</option>
-                  {models.map((model) => (
+                  {(models as any).map((model) => (
                     <option key={model.id} value={model.id}>
                       {model.name}
                     </option>

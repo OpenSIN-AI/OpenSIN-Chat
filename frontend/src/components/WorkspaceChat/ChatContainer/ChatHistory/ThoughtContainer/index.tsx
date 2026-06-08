@@ -62,15 +62,15 @@ export function useThoughtExpansion(messageId: any) {
 const THOUGHT_KEYWORDS = ["thought", "thinking", "think", "thought_chain"];
 const CLOSING_TAGS = [...THOUGHT_KEYWORDS, "response", "answer"];
 export const THOUGHT_REGEX_OPEN = new RegExp(
-  THOUGHT_KEYWORDS.map((keyword) => `<${keyword}\\s*(?:[^>]*?)?\\s*>`).join(
+  (THOUGHT_KEYWORDS as any).map((keyword) => `<${keyword}\\s*(?:[^>]*?)?\\s*>`).join(
     "|",
   ),
 );
 export const THOUGHT_REGEX_CLOSE = new RegExp(
-  CLOSING_TAGS.map((keyword) => `</${keyword}\\s*(?:[^>]*?)?>`).join("|"),
+  (CLOSING_TAGS as any).map((keyword) => `</${keyword}\\s*(?:[^>]*?)?>`).join("|"),
 );
 export const THOUGHT_REGEX_COMPLETE = new RegExp(
-  THOUGHT_KEYWORDS.map(
+  (THOUGHT_KEYWORDS as any).map(
     (keyword) =>
       `<${keyword}\\s*(?:[^>]*?)?\\s*>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
   ).join("|"),

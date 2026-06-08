@@ -39,7 +39,7 @@ export default function DefaultChatContainer() {
           null,
         );
         if (lastVisitedWorkspace == null) throw new Error("Non-parseable!");
-        const isValid = availableWorkspaces.some(
+        const isValid = (availableWorkspaces as any).some(
           (ws) => ws.slug === lastVisitedWorkspace?.slug,
         );
         if (!isValid) throw new Error("Invalid value!");

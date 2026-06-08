@@ -246,9 +246,9 @@ function LanguagePreference() {
         name="userLang"
         className="border-none bg-theme-settings-input-bg w-fit mt-2 px-4 focus:outline-primary-button active:outline-primary-button outline-none text-white text-sm rounded-lg block py-2"
         defaultValue={currentLanguage || "en"}
-        onChange={(e) => changeLanguage((e.target as HTMLInputElement).value)}
+        onChange={(e) => changeLanguage(((e.target as unknown) as any)?.value)}
       >
-        {supportedLanguages.map((lang) => {
+        {(supportedLanguages as any).map((lang) => {
           return (
             <option key={lang} value={lang}>
               {getLanguageName(lang)}
@@ -274,7 +274,7 @@ function ThemePreference() {
       <select
         name="theme"
         value={theme}
-        onChange={(e) => setTheme((e.target as HTMLInputElement).value)}
+        onChange={(e) => setTheme(((e.target as unknown) as any)?.value)}
         className="border-none bg-theme-settings-input-bg w-fit px-4 focus:outline-primary-button active:outline-primary-button outline-none text-white text-sm rounded-lg block py-2"
       >
         {Object.entries(availableThemes).map(([key, value]) => (

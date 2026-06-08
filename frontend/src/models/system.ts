@@ -9,7 +9,7 @@ import { baseHeaders, safeJsonParse } from "@/utils/request";
 import type { ApiResponse } from "@/types/api";
 
 interface SystemKeys {
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
 interface OnboardingStatus {

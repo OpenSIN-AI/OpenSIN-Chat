@@ -164,7 +164,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
             placeholder="4096"
             min={1}
             value={maxTokens}
-            onChange={(e) => setMaxTokens(Number((e.target as HTMLInputElement).value))}
+            onChange={(e) => setMaxTokens(Number(((e.target as unknown) as any)?.value))}
             onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
@@ -289,9 +289,9 @@ function DockerModelRunnerModelSelection({
     }, {});
 
     Object.entries(groupedModels).forEach(([organization, models]) => {
-      const hasInstalled = models.some((model) => model.downloaded);
+      const hasInstalled = (models as any).some((model) => model.downloaded);
       if (hasInstalled) {
-        const installedModels = models.filter((model) => model.downloaded);
+        const installedModels = (models as any).filter((model) => model.downloaded);
         mapping
           .get("installed")
           .set("Downloaded Models", [
@@ -299,7 +299,7 @@ function DockerModelRunnerModelSelection({
             ...installedModels,
           ]);
       }
-      const tags = models.map((model) => ({
+      const tags = (models as any).map((model) => ({
         ...model,
         name: model.name.split(":")[1],
       }));

@@ -33,7 +33,7 @@ export default function AttachmentManager({ attachments }: any) {
 
   return (
     <div className="flex flex-wrap gap-2 mt-2 mb-4">
-      {attachments.map((attachment) => (
+      {(attachments as any).map((attachment) => (
         <AttachmentItem
           key={attachment.uid}
           attachment={attachment}

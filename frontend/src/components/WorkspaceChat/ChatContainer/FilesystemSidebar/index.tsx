@@ -31,7 +31,7 @@ export default function FilesystemSidebar() {
   const abortRef = useRef(null);
 
   async function fetchData() {
-    abortRef.current?.abort();
+    abortRef.current??.abort();
     const controller = new AbortController();
     abortRef.current = controller;
     setLoading(true);
@@ -52,7 +52,7 @@ export default function FilesystemSidebar() {
 
   useEffect(() => {
     if (sidebarOpen) fetchData();
-    return () => abortRef.current?.abort();
+    return () => abortRef.current??.abort();
   }, [sidebarOpen]);
 
   const rows = data
@@ -127,7 +127,7 @@ export default function FilesystemSidebar() {
           )}
           {!loading && !error && data && (
             <div className="flex flex-col gap-3">
-              {rows.map(({ icon: Icon, label, value }: any) => (
+              {(rows as any).map(({ icon: Icon, label, value }: any) => (
                 <div key={label} className="flex items-start gap-3">
                   <div className="w-7 h-7 rounded-lg bg-zinc-800 light:bg-slate-100 flex items-center justify-center flex-shrink-0">
                     <Icon size={14} className="text-zinc-400 light:text-slate-500" />

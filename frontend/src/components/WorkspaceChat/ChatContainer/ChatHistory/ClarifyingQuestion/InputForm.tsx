@@ -7,7 +7,7 @@ function TextareaInput({ value, placeholder, onChange }: any) {
       autoFocus
       value={value}
       placeholder={placeholder}
-      onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+      onChange={(e) => onChange(((e.target as unknown) as any)?.value)}
       className={`${SHARED_CLASS} min-h-[128px] resize-y`}
     />
   );
@@ -27,7 +27,7 @@ function TextInput({ type, value, placeholder, onChange, onSubmit }: any) {
       type={type}
       value={value}
       placeholder={placeholder}
-      onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+      onChange={(e) => onChange(((e.target as unknown) as any)?.value)}
       onKeyDown={handleKeyDown}
       className={SHARED_CLASS}
     />

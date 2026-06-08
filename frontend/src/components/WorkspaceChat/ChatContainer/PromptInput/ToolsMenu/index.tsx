@@ -152,7 +152,7 @@ export default function ToolsMenu({
         }`}
       >
         <div className="flex shrink-0 gap-2.5 items-center">
-          {TABS.map((tab) => (
+          {(TABS as any).map((tab) => (
             <TabButton
               key={tab.key}
               active={activeTab === tab.key}

@@ -160,7 +160,7 @@ function DellProAiStudioModelSelection({ settings, basePath = null }: any) {
       >
         {customModels.length > 0 && (
           <optgroup label="Your loaded models">
-            {customModels.map((model) => {
+            {(customModels as any).map((model) => {
               return (
                 <option
                   key={model.id}

@@ -21,7 +21,7 @@ export default function MistralOptions({ settings }: any) {
           required={true}
           autoComplete="off"
           spellCheck={false}
-          onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+          onChange={(e) => setInputValue(((e.target as unknown) as any)?.value)}
           onBlur={() => setMistralKey(inputValue)}
         />
       </div>
@@ -87,7 +87,7 @@ function MistralModelSelection({ apiKey, settings }: any) {
       >
         {customModels.length > 0 && (
           <optgroup label="Available Mistral Models">
-            {customModels.map((model) => {
+            {(customModels as any).map((model) => {
               return (
                 <option
                   key={model.id}

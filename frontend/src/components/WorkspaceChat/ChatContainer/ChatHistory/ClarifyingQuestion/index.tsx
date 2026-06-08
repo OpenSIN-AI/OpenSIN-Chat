@@ -92,7 +92,7 @@ function CompletedSurvey({ questions, drafts, submittedResult }: any) {
   const result =
     submittedResult?.timedOut || submittedResult?.skipped
       ? submittedResult
-      : { answers: questions.map((q, i) => answerForDraft(q, drafts[i])) };
+      : { answers: (questions as any).map((q, i) => answerForDraft(q, drafts[i])) };
 
   return <SurveyBody questions={questions} result={result} />;
 }
@@ -110,7 +110,7 @@ export default function ClarifyingQuestionCard({
   const [responded, setResponded] = useState(false as any);
   const [submittedResult, setSubmittedResult] = useState(null);
   const [drafts, setDrafts] = useState(() =>
-    questions.map((q) => emptyDraftFor(q)),
+    (questions as any).map((q) => emptyDraftFor(q)),
   );
 
   const progressPercent = useTimeoutProgress(timeoutMs, {
@@ -141,7 +141,7 @@ export default function ClarifyingQuestionCard({
 
   function updateDraft(patch: any) {
     setDrafts((prev) =>
-      prev.map((d, i) => (i === index ? { ...d, ...patch } : d)),
+      (prev as any).map((d, i) => (i === index ? { ...d, ...patch } : d)),
     );
   }
 
@@ -184,9 +184,9 @@ export default function ClarifyingQuestionCard({
 
   function handleSubmitAll(pendingPatch: any) {
     const resolved = pendingPatch
-      ? drafts.map((d, i) => (i === index ? { ...d, ...pendingPatch } : d))
+      ? (drafts as any).map((d, i) => (i === index ? { ...d, ...pendingPatch } : d))
       : drafts;
-    const answers = questions.map((q, i) => answerForDraft(q, resolved[i]));
+    const answers = (questions as any).map((q, i) => answerForDraft(q, resolved[i]));
     send({ skipped: false, answers });
   }
 

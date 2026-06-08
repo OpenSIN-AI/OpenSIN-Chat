@@ -97,14 +97,14 @@ function PiperTTSModelSelection({ settings }: any) {
           <select
             name="TTSPiperTTSVoiceModel"
             required={true}
-            onChange={(e) => setSelectedVoice((e.target as HTMLInputElement).value)}
+            onChange={(e) => setSelectedVoice(((e.target as unknown) as any)?.value)}
             value={selectedVoice}
             className="border-none flex-shrink-0 bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
           >
             {voicesByLanguage(voices).map(([lang, voices]) => {
               return (
                 <optgroup key={lang} label={lang}>
-                  {voices.map((voice) => (
+                  {(voices as any).map((voice) => (
                     <option key={voice.key} value={voice.key}>
                       {voiceDisplayName(voice)}
                     </option>

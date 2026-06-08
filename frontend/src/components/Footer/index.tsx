@@ -88,7 +88,7 @@ export default function Footer() {
         className="flex flex-wrap items-center justify-center gap-3"
       >
         {hasCustomIcons
-          ? footerData.map((item, index) => {
+          ? (footerData as any).map((item, index) => {
               const IconComponent =
                 ICON_COMPONENTS?.[item.icon] ?? ICON_COMPONENTS.Info;
               return (
@@ -110,7 +110,7 @@ export default function Footer() {
                 </a>
               );
             })
-          : DEFAULT_FOOTER_ITEMS.map(
+          : (DEFAULT_FOOTER_ITEMS as any).map(
               ({ key, Icon, url, ariaLabel, tooltip }: any) => (
                 <Link
                   key={key}

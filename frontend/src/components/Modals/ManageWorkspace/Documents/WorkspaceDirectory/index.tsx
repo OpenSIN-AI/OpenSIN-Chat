@@ -92,7 +92,7 @@ function WorkspaceDirectory({
         <div className="relative w-full h-full bg-theme-settings-input-bg rounded-2xl overflow-hidden border border-theme-modal-border">
           <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10">
             <div className="col-span-10 flex items-center gap-x-[4px]">
-              {!hasChanges && files.items.some((folder) => folder.items.length > 0) ? (
+              {!hasChanges && files.(items as any).some((folder) => folder.items.length > 0) ? (
                 <div
                   className="shrink-0 w-3 h-3 rounded border-[1px] border-solid border-white text-theme-text-primary flex justify-center items-center cursor-pointer"
                   role="checkbox"
@@ -116,11 +116,11 @@ function WorkspaceDirectory({
             )}
           </div>
           <div className="overflow-y-auto h-[calc(100%-40px)]">
-            {files.items.some((folder) => folder.items.length > 0) ||
+            {files.(items as any).some((folder) => folder.items.length > 0) ||
             movedItems.length > 0 ? (
-              files.items.map((folder) => (
+              files.(items as any).map((folder) => (
                 <div key={folder.name}>
-                  {folder.items.map((item) => (
+                  {folder.(items as any).map((item) => (
                     <WorkspaceFileRow
                       key={item.id}
                       item={item}

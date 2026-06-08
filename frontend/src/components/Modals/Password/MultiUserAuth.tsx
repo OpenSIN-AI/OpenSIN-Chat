@@ -24,7 +24,7 @@ const RecoveryForm: any = ({ onSubmit, setShowRecoveryForm }: any) => {
 
   const handleSubmit: any = (e) => {
     e.preventDefault();
-    const recoveryCodes = recoveryCodeInputs.filter(
+    const recoveryCodes = (recoveryCodeInputs as any).filter(
       (code) => code.trim() !== "",
     );
     onSubmit(username, recoveryCodes);
@@ -58,7 +58,7 @@ const RecoveryForm: any = ({ onSubmit, setShowRecoveryForm }: any) => {
               type="text"
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={username}
-              onChange={(e) => setUsername((e.target as HTMLInputElement).value)}
+              onChange={(e) => setUsername(((e.target as unknown) as any)?.value)}
               required
               autoComplete="off"
             />
@@ -67,7 +67,7 @@ const RecoveryForm: any = ({ onSubmit, setShowRecoveryForm }: any) => {
             <label className="text-zinc-300 light:text-slate-800 text-sm">
               {t("login.password-reset.recovery-codes")}
             </label>
-            {recoveryCodeInputs.map((code, index) => (
+            {(recoveryCodeInputs as any).map((code, index) => (
               <input
                 key={index}
                 type="text"
@@ -75,7 +75,7 @@ const RecoveryForm: any = ({ onSubmit, setShowRecoveryForm }: any) => {
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 value={code}
                 onChange={(e) =>
-                  handleRecoveryCodeChange(index, (e.target as HTMLInputElement).value)
+                  handleRecoveryCodeChange(index, ((e.target as unknown) as any)?.value)
                 }
                 required
                 autoComplete="off"
@@ -140,7 +140,7 @@ const ResetPasswordForm = ({ onSubmit }: any) => {
               name="newPassword"
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={newPassword}
-              onChange={(e) => setNewPassword((e.target as HTMLInputElement).value)}
+              onChange={(e) => setNewPassword(((e.target as unknown) as any)?.value)}
               required
             />
           </div>
@@ -153,7 +153,7 @@ const ResetPasswordForm = ({ onSubmit }: any) => {
               name="confirmPassword"
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword((e.target as HTMLInputElement).value)}
+              onChange={(e) => setConfirmPassword(((e.target as unknown) as any)?.value)}
               required
             />
           </div>

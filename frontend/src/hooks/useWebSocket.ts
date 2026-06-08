@@ -74,7 +74,7 @@ export default function useWebSocket({
             pendingResetRef.current = false;
           } else {
             setChatHistory((prev) => [
-              ...prev.filter((msg) => !!msg.content),
+              ...(prev as any).filter((msg) => !!msg.content),
               {
                 uuid: v4(),
                 type: "statusResponse",
@@ -98,7 +98,7 @@ export default function useWebSocket({
         window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
       } catch (e) {
         setChatHistory((prev) => [
-          ...prev.filter((msg) => !!msg.content),
+          ...(prev as any).filter((msg) => !!msg.content),
           {
             uuid: v4(),
             type: "abort",

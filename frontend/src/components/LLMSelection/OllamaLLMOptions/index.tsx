@@ -214,7 +214,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                 min={1}
                 value={maxTokens}
                 onChange={(e) =>
-                  setMaxTokens((e.target as HTMLInputElement).value ? Number((e.target as HTMLInputElement).value) : "")
+                  setMaxTokens(((e.target as unknown) as any)?.value ? Number(((e.target as unknown) as any)?.value) : "")
                 }
                 onScroll={(e) => (e.target as HTMLElement).blur()}
                 required={false}
@@ -343,7 +343,7 @@ function OllamaLLMModelSelection({
       >
         {customModels.length > 0 && (
           <optgroup label="Your loaded models">
-            {customModels.map((model) => {
+            {(customModels as any).map((model) => {
               return (
                 <option
                   key={model.id}

@@ -21,7 +21,7 @@ function FileUploadProgressComponent({
   const beginFadeOut = () => {
     setIsFadingOut(false);
     setFiles((prev) => {
-      return prev.filter((item) => item.uid !== uuid);
+      return (prev as any).filter((item) => item.uid !== uuid);
     });
   };
 

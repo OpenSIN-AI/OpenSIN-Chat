@@ -72,7 +72,7 @@ function PerplexityModelSelection({ settings }: any) {
       >
         {customModels.length > 0 && (
           <optgroup label="Available Perplexity Models">
-            {customModels.map((model) => {
+            {(customModels as any).map((model) => {
               return (
                 <option
                   key={model.id}

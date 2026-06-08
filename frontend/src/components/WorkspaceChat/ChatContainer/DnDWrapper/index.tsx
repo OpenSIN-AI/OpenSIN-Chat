@@ -88,7 +88,7 @@ export function DnDFileUploaderProvider({
   async function handleRemoveParsedFile(event: any) {
     const { document } = event.detail;
     setFiles((prev) =>
-      prev.filter((prevFile) => prevFile.document.id !== document.id),
+      (prev as any).filter((prevFile) => prevFile.document.id !== document.id),
     );
   }
 
@@ -99,7 +99,7 @@ export function DnDFileUploaderProvider({
   async function handleRemove(event: any) {
     /** @type {{uid: Attachment['uid'], document: Attachment['document']}} */
     const { uid, document } = event.detail;
-    setFiles((prev) => prev.filter((prevFile) => prevFile.uid !== uid));
+    setFiles((prev) => (prev as any).filter((prevFile) => prevFile.uid !== uid));
     if (!document?.location) return;
     await Workspace.deleteAndUnembedFile(workspace.slug, document.location);
   }
@@ -238,7 +238,7 @@ export function DnDFileUploaderProvider({
                 error: data?.error ?? null,
               };
               setFiles((prev) =>
-                prev.map(
+                (prev as any).map(
                   (
                     /** @type {Attachment} */
                     prevFile,
@@ -279,7 +279,7 @@ export function DnDFileUploaderProvider({
             };
 
             setFiles((prev) =>
-              prev.map(
+              (prev as any).map(
                 (
                   /** @type {Attachment} */
                   prevFile,
@@ -307,14 +307,14 @@ export function DnDFileUploaderProvider({
     // Delete all files from this batch
     await Workspace.deleteParsedFiles(
       workspace.slug,
-      pendingFiles.map((file) => file.parsedFileId),
+      (pendingFiles as any).map((file) => file.parsedFileId),
     );
 
     // Remove all files from this batch from the UI
     setFiles((prev) =>
-      prev.filter(
+      (prev as any).filter(
         (prevFile) =>
-          !pendingFiles.some((file) => file.attachment.uid === prevFile.uid),
+          !(pendingFiles as any).some((file) => file.attachment.uid === prevFile.uid),
       ),
     );
     setShowWarningModal(false);
@@ -325,12 +325,12 @@ export function DnDFileUploaderProvider({
 
   const handleContinueAnyway = async () => {
     if (!pendingFiles.length) return;
-    const results = pendingFiles.map((file) => ({
+    const results = (pendingFiles as any).map((file) => ({
       success: true,
       document: { id: file.parsedFileId },
     }));
 
-    const fileUpdates = pendingFiles.map((file, i) => ({
+    const fileUpdates = (pendingFiles as any).map((file, i) => ({
       uid: file.attachment.uid,
       updates: {
         status: results[i].success ? "success" : "failed",
@@ -340,7 +340,7 @@ export function DnDFileUploaderProvider({
     }));
 
     setFiles((prev) =>
-      prev.map((prevFile) => {
+      (prev as any).map((prevFile) => {
         const update = fileUpdates.find((f) => f.uid === prevFile.uid);
         return update ? { ...prevFile, ...update.updates } : prevFile;
       }),
@@ -358,7 +358,7 @@ export function DnDFileUploaderProvider({
     // Embed all pending files
     let completed = 0;
     const results = await Promise.all(
-      pendingFiles.map((file) =>
+      (pendingFiles as any).map((file) =>
         Workspace.embedParsedFile(workspace.slug, file.parsedFileId).then(
           (result) => {
             completed++;
@@ -370,7 +370,7 @@ export function DnDFileUploaderProvider({
     );
 
     // Update status for all files
-    const fileUpdates = pendingFiles.map((file, i) => ({
+    const fileUpdates = (pendingFiles as any).map((file, i) => ({
       uid: file.attachment.uid,
       updates: {
         status: results[i].response.ok ? "embedded" : "failed",
@@ -380,7 +380,7 @@ export function DnDFileUploaderProvider({
     }));
 
     setFiles((prev) =>
-      prev.map((prevFile) => {
+      (prev as any).map((prevFile) => {
         const update = fileUpdates.find((f) => f.uid === prevFile.uid);
         return update ? { ...prevFile, ...update.updates } : prevFile;
       }),

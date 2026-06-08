@@ -65,7 +65,7 @@ export default function AgentFlows({ entity }: any) {
   };
 
   const removeTag: any = (tagToRemove) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove));
+    setTags((tags as any).filter((tag) => tag !== tagToRemove));
   };
 
   if (isSuccess) {
@@ -151,7 +151,7 @@ export default function AgentFlows({ entity }: any) {
               {t("community_hub.publish.agent_flow.tags_description")}
             </div>
             <div className="flex flex-wrap gap-2 p-2 bg-theme-bg-secondary rounded-lg min-h-[42px]">
-              {tags.map((tag, index) => (
+              {(tags as any).map((tag, index) => (
                 <span
                   key={index}
                   className="flex items-center gap-1 px-2 py-1 text-sm text-theme-text-primary bg-white/10 light:bg-black/10 rounded-md"
@@ -169,7 +169,7 @@ export default function AgentFlows({ entity }: any) {
               <input
                 type="text"
                 value={tagInput}
-                onChange={(e) => setTagInput((e.target as HTMLInputElement).value)}
+                onChange={(e) => setTagInput(((e.target as unknown) as any)?.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t(
                   "community_hub.publish.agent_flow.tags_placeholder",
@@ -198,7 +198,7 @@ export default function AgentFlows({ entity }: any) {
           </div>
           <div className="flex flex-col gap-y-0.5">
             {entity.steps && entity.steps.length > 0 ? (
-              entity.steps.map((step, idx) => {
+              entity.(steps as any).map((step, idx) => {
                 const info = BLOCK_INFO[step.type];
                 const isExpanded = expandedStep === idx;
                 const summary = info?.getSummary

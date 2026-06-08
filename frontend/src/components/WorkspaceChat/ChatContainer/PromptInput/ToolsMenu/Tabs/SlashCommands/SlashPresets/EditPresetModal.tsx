@@ -28,7 +28,7 @@ export default function EditPresetModal({
   };
 
   const handleCommandChange: any = (e) => {
-    const value = (e.target as HTMLInputElement).value.replace(CMD_REGEX, "");
+    const value = ((e.target as unknown) as any)?.value.replace(CMD_REGEX, "");
     setCommand(value);
   };
 

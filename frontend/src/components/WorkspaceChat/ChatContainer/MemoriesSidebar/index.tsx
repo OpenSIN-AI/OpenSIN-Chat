@@ -57,7 +57,7 @@ function MemoryList() {
 
   return (
     <div className="flex flex-col gap-1.5 pb-4">
-      {activeMemories.map((memory) => (
+      {(activeMemories as any).map((memory) => (
         <MemoryCard key={memory.id} memory={memory} />
       ))}
     </div>

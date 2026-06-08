@@ -15,13 +15,13 @@
 export async function fetchWithTimeout(url, options = {}) {
   const { timeoutMs = 8000, signal: externalSignal, ...rest } = options;
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  const timer = setTimeout(() => controller?.abort(), timeoutMs);
 
   // Forward an external abort (unmount/close) to our internal controller.
   if (externalSignal) {
-    if (externalSignal.aborted) controller.abort();
+    if (externalSignal.aborted) controller?.abort();
     else
-      externalSignal.addEventListener("abort", () => controller.abort(), {
+      externalSignal.addEventListener("abort", () => controller?.abort(), {
         once: true,
       });
   }

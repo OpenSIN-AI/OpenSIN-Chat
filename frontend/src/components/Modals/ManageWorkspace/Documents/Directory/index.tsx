@@ -167,7 +167,7 @@ function Directory({
   };
 
   const handleSearch = debounce((e) => {
-    const searchValue = (e.target as HTMLInputElement).value;
+    const searchValue = ((e.target as unknown) as any)?.value;
     setSearchTerm(searchValue);
   }, 500);
 
@@ -244,7 +244,7 @@ function Directory({
                   </p>
                 </div>
               ) : filteredFiles.length > 0 ? (
-                filteredFiles.map(
+                (filteredFiles as any).map(
                   (item, index) =>
                     item.type === "folder" && (
                       <FolderRow
@@ -293,7 +293,7 @@ function Directory({
                       </button>
                       {showFolderSelection && (
                         <FolderSelectionPopup
-                          folders={files.items.filter(
+                          folders={files.(items as any).filter(
                             (item) => item.type === "folder",
                           )}
                           onSelect={moveToFolder}

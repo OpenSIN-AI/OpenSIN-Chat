@@ -24,7 +24,7 @@ export default function ContextMenu({
   const isAllSelected = () => {
     const allItems = files.items.flatMap((folder) => [
       folder.name,
-      ...folder.items.map((file) => file.id),
+      ...folder.(items as any).map((file) => file.id),
     ]);
     return allItems.every((item) => selectedItems[item]);
   };

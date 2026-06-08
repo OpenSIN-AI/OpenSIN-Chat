@@ -43,7 +43,7 @@ function OpenRouterEmbeddingModelSelection({ settings }: any) {
 
       if (
         settings?.EmbeddingModelPref &&
-        fetchedModels.some((m) => m.id === settings.EmbeddingModelPref)
+        (fetchedModels as any).some((m) => m.id === settings.EmbeddingModelPref)
       ) {
         setSelectedModel(settings.EmbeddingModelPref);
       } else if (fetchedModels.length > 0) {
@@ -83,10 +83,10 @@ function OpenRouterEmbeddingModelSelection({ settings }: any) {
         name="EmbeddingModelPref"
         required={true}
         value={selectedModel}
-        onChange={(e) => setSelectedModel((e.target as HTMLInputElement).value)}
+        onChange={(e) => setSelectedModel(((e.target as unknown) as any)?.value)}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {models.map((model) => (
+        {(models as any).map((model) => (
           <option key={model.id} value={model.id}>
             {model.name}
           </option>

@@ -79,7 +79,7 @@ export default function StatusResponse({ messages = [], isThinking = false }: an
                   </span>
                 ) : (
                   <>
-                    {previousThoughts.map((thought, index) => (
+                    {(previousThoughts as any).map((thought, index) => (
                       <div
                         key={`cot-${thought.uuid || index}`}
                         className="mb-2"

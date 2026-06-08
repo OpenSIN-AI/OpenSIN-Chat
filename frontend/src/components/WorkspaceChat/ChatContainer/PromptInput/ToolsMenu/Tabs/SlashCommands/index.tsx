@@ -53,7 +53,7 @@ export default function SlashCommandsTab({
         description: t("chat_window.preset_reset_description"),
         autoSubmit: true,
       },
-      ...presets.map((preset) => ({
+      ...(presets as any).map((preset) => ({
         command: preset.command,
         description: preset.description,
         autoSubmit: false,
@@ -155,7 +155,7 @@ export default function SlashCommandsTab({
 
   return (
     <>
-      {items.map((item, index) => (
+      {(items as any).map((item, index) => (
         <SlashCommandRow
           key={item.preset?.id ?? item.command}
           command={item.command}

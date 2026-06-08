@@ -91,12 +91,12 @@ export default function DataConnectors() {
             className="border-none z-20 pl-10 h-[38px] rounded-full w-full px-4 py-1 text-sm border-2 border-slate-300/40 outline-none focus:outline-primary-button active:outline-primary-button outline-none placeholder:text-theme-settings-input-placeholder text-white bg-theme-settings-input-bg"
             autoComplete="off"
             value={searchQuery}
-            onChange={(e) => setSearchQuery((e.target as HTMLInputElement).value)}
+            onChange={(e) => setSearchQuery(((e.target as unknown) as any)?.value)}
           />
         </div>
         <div className="mt-2 flex flex-col gap-y-2">
           {filteredConnectors.length > 0 ? (
-            filteredConnectors.map((slug, index) => (
+            (filteredConnectors as any).map((slug, index) => (
               <ConnectorOption
                 key={index}
                 slug={slug}

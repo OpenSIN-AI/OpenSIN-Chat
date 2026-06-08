@@ -245,7 +245,7 @@ function ChatAttachments({ attachments = [] }: any) {
   if (!attachments.length) return null;
   return (
     <div className="flex flex-wrap gap-4 mt-4">
-      {attachments.map((item, index) => (
+      {(attachments as any).map((item, index) => (
         <button
           type="button"
           key={item.name}

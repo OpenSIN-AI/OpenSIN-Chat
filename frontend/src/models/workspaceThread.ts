@@ -97,7 +97,7 @@ const WorkspaceThread: any = {
     // event to be handled which resets the UI for us to be able to send another message.
     // The backend response abort handling is done in each LLM's handleStreamResponse.
     window.addEventListener(ABORT_STREAM_EVENT, () => {
-      ctrl.abort();
+      ctrl?.abort();
       handleChat({ id: v4(), type: "stopGeneration" });
     });
 
@@ -125,7 +125,7 @@ const WorkspaceThread: any = {
               close: true,
               error: `An error occurred while streaming response. Code ${response.status}`,
             });
-            ctrl.abort();
+            ctrl?.abort();
             throw new Error("Invalid Status code response.");
           } else {
             handleChat({
@@ -136,7 +136,7 @@ const WorkspaceThread: any = {
               close: true,
               error: `An error occurred while streaming response. Unknown Error.`,
             });
-            ctrl.abort();
+            ctrl?.abort();
             throw new Error("Unknown error");
           }
         },
@@ -153,7 +153,7 @@ const WorkspaceThread: any = {
             close: true,
             error: `An error occurred while streaming response. ${err.message}`,
           });
-          ctrl.abort();
+          ctrl?.abort();
           throw new Error();
         },
       },

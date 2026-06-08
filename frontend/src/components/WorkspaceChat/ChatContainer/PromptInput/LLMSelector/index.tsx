@@ -64,8 +64,8 @@ export default function LLMSelectorModal({
   }, [slug]);
 
   function handleSearch(e: any) {
-    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
-    const filteredProviders = WORKSPACE_LLM_PROVIDERS.filter((provider) =>
+    const searchTerm = ((e.target as unknown) as any)?.value.toLowerCase();
+    const filteredProviders = (WORKSPACE_LLM_PROVIDERS as any).filter((provider) =>
       provider.name.toLowerCase().includes(searchTerm),
     );
     setAvailableProviders(filteredProviders);

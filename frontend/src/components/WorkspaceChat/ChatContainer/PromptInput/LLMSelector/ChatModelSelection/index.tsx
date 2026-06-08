@@ -30,13 +30,13 @@ export default function ChatModelSelection({
       value={selectedLLMModel}
       onChange={(e) => {
         setHasChanges(true);
-        setSelectedLLMModel((e.target as HTMLInputElement).value);
+        setSelectedLLMModel(((e.target as unknown) as any)?.value);
       }}
       className="bg-zinc-900 light:bg-white text-white light:text-slate-900 text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-pointer"
     >
       {defaultModels.length > 0 && (
         <optgroup label="General models">
-          {defaultModels.map((model) => {
+          {(defaultModels as any).map((model) => {
             return (
               <option
                 key={model}
@@ -51,7 +51,7 @@ export default function ChatModelSelection({
       )}
       {Array.isArray(customModels) && customModels.length > 0 && (
         <optgroup label="Discovered models">
-          {customModels.map((model) => {
+          {(customModels as any).map((model) => {
             return (
               <option
                 key={model.id}
@@ -69,7 +69,7 @@ export default function ChatModelSelection({
         <>
           {Object.entries(customModels).map(([organization, models]) => (
             <optgroup key={organization} label={organization}>
-              {models.map((model) => (
+              {(models as any).map((model) => (
                 <option
                   key={model.id}
                   value={model.id}

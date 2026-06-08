@@ -28,11 +28,11 @@ export default function KoboldCPPOptions({ settings }: any) {
   );
 
   const handleTokenLimitChange: any = (e) => {
-    setTokenLimit(Number((e.target as HTMLInputElement).value));
+    setTokenLimit(Number(((e.target as unknown) as any)?.value));
   };
 
   const handleMaxTokensChange: any = (e) => {
-    setMaxTokens(Number((e.target as HTMLInputElement).value));
+    setMaxTokens(Number(((e.target as unknown) as any)?.value));
   };
 
   return (
@@ -207,7 +207,7 @@ function KoboldCPPModelSelection({ settings, basePath = null }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {customModels.map((model) => (
+        {(customModels as any).map((model) => (
           <option
             key={model.id}
             value={model.id}

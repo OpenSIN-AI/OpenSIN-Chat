@@ -7,7 +7,7 @@ function HistoricalOutputs({ outputs = [] }: any) {
 
   return (
     <div className="flex flex-col gap-2 mt-4">
-      {outputs.map((output, index) => (
+      {(outputs as any).map((output, index) => (
         <FileDownloadCard
           key={`${output.type}-${index}`}
           props={{ content: output.payload }}

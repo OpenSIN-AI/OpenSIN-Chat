@@ -140,7 +140,7 @@ function CometApiModelSelection({ settings }: any) {
         spellCheck={false}
       />
       <datalist id="cometapi-models-list">
-        {models.map((model) => (
+        {(models as any).map((model) => (
           <option key={model.id} value={model.id}>
             {model.name}
           </option>

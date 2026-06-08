@@ -107,7 +107,7 @@ export default function AgentSkillsTab({
     const q = searchQuery.toLowerCase();
     return sections
       .map((section) => {
-        const items = section.items.filter((item) => {
+        const items = section.(items as any).filter((item) => {
           const nameMatches = item.name.toLowerCase().includes(q);
           const subSkillMatches =
             item.subSkills?.some((sub) => sub.name.toLowerCase().includes(q)) ??
@@ -117,7 +117,7 @@ export default function AgentSkillsTab({
         return {
           ...section,
           items,
-          enabledCount: items.filter((i) => i.enabled).length,
+          enabledCount: (items as any).filter((i) => i.enabled).length,
         };
       })
       .filter((section) => section.items.length > 0);
@@ -189,7 +189,7 @@ export default function AgentSkillsTab({
           placeholder={t("common.search")}
         />
       )}
-      {filteredSections.map((section) => (
+      {(filteredSections as any).map((section) => (
         <SkillSection
           key={section.id}
           name={section.name}
@@ -200,7 +200,7 @@ export default function AgentSkillsTab({
           isMcp={section.isMcp}
           highlighted={highlightedIndex === flatIndexMap[section.id]}
         >
-          {section.items.map((item) => (
+          {section.(items as any).map((item) => (
             <div key={item.id}>
               <SkillRow
                 name={item.name}
@@ -214,14 +214,14 @@ export default function AgentSkillsTab({
                   name={t("chat_window.sub_skills")}
                   expanded={isSubSectionExpanded(item.id)}
                   onToggle={() => toggleSubSection(item.id)}
-                  enabledCount={item.subSkills.filter((s) => s.enabled).length}
+                  enabledCount={item.(subSkills as any).filter((s) => s.enabled).length}
                   totalCount={item.subSkills.length}
                   highlighted={
                     highlightedIndex === flatIndexMap[`subsection-${item.id}`]
                   }
                   indented
                 >
-                  {item.subSkills.map((subItem) => (
+                  {item.(subSkills as any).map((subItem) => (
                     <SkillRow
                       key={subItem.id}
                       name={subItem.name}
@@ -280,7 +280,7 @@ function SearchInput({ value, onChange, placeholder }: any) {
         type="text"
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+        onChange={(e) => onChange(((e.target as unknown) as any)?.value)}
         onMouseDown={(e) => e.stopPropagation()}
         onKeyDown={(e) => {
           if (e.key === "Escape") {

@@ -222,7 +222,7 @@ export default forwardRef(function (
           onScroll={handleScroll}
         >
           <div className="w-full max-w-[750px]">
-            {compiledHistory.map((item, index) =>
+            {(compiledHistory as any).map((item, index) =>
               Array.isArray(item) ? renderStatusResponse(item, index) : item,
             )}
           </div>

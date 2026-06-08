@@ -23,7 +23,7 @@ export default function MoonshotAiOptions({ settings }: any) {
           required={true}
           autoComplete="off"
           spellCheck={false}
-          onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+          onChange={(e) => setInputValue(((e.target as unknown) as any)?.value)}
           onBlur={() => setMoonshotAiKey(inputValue)}
         />
       </div>
@@ -103,7 +103,7 @@ function MoonshotAiModelSelection({ apiKey, settings }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {models.map((model) => (
+        {(models as any).map((model) => (
           <option
             key={model.id}
             value={model.id}

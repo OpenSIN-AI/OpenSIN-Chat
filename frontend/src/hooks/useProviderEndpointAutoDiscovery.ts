@@ -62,7 +62,7 @@ export default function useProviderEndpointAutoDiscovery({
   }
 
   function handleBasePathChange(e) {
-    const value = (e.target as HTMLInputElement).value;
+    const value = ((e.target as unknown) as any)?.value;
     setBasePathValue(value);
   }
 
@@ -71,7 +71,7 @@ export default function useProviderEndpointAutoDiscovery({
   }
 
   function handleAuthTokenChange(e) {
-    const value = (e.target as HTMLInputElement).value;
+    const value = ((e.target as unknown) as any)?.value;
     setAuthTokenValue(value);
   }
 

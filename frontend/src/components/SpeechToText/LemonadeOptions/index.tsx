@@ -192,7 +192,7 @@ function LemonadeSTTModelSelection({ settings, basePath = null }: any) {
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         <optgroup label="Your loaded models">
-          {customModels.map((model) => (
+          {(customModels as any).map((model) => (
             <option
               key={model.id}
               value={model.id}

@@ -25,7 +25,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
 
   async function handleSearchDebounced(e: any) {
     try {
-      const searchValue = (e.target as HTMLInputElement).value;
+      const searchValue = ((e.target as unknown) as any)?.value;
       setSearchTerm(searchValue);
       setLoading(true);
       const searchResults =
@@ -156,7 +156,7 @@ function SearchResultCategory({ items, name }: any) {
         {name}
       </p>
       <div className="flex flex-col gap-y-[6px]">
-        {items.map((item) => (
+        {(items as any).map((item) => (
           <SearchResultItem
             key={item.id}
             to={item.to}

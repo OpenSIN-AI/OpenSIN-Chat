@@ -70,7 +70,7 @@ export function EmbeddingProgressProvider({ children }: any) {
   useEffect(() => {
     return () => {
       Object.values(abortControllersRef.current).forEach((ctrl) =>
-        ctrl?.abort(),
+        ctrl??.abort(),
       );
     };
   }, []);
@@ -156,7 +156,7 @@ export function EmbeddingProgressProvider({ children }: any) {
               return { ...prev, [slug]: slugMap };
             });
           }
-          ctrl.abort();
+          ctrl?.abort();
           delete abortControllersRef.current[slug];
           cleanupTimeoutsRef.current[slug] = setTimeout(() => {
             setEmbeddingProgressMap((prev) => {
@@ -200,7 +200,7 @@ export function EmbeddingProgressProvider({ children }: any) {
 
   const startEmbedding = useCallback(
     (slug, filenames) => {
-      abortControllersRef.current[slug]?.abort();
+      abortControllersRef.current[slug]??.abort();
       delete abortControllersRef.current[slug];
 
       if (cleanupTimeoutsRef.current[slug]) {
@@ -209,7 +209,7 @@ export function EmbeddingProgressProvider({ children }: any) {
       }
 
       const newEntries = Object.fromEntries(
-        filenames.map((name) => [name, { status: "pending" }]),
+        (filenames as any).map((name) => [name, { status: "pending" }]),
       );
       setEmbeddingProgressMap((prev) => ({
         ...prev,

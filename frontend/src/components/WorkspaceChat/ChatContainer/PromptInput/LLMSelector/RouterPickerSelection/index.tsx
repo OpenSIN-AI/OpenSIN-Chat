@@ -41,7 +41,7 @@ export default function RouterPickerSelection({
     <select
       value={selectedRouterId || ""}
       onChange={(e) => {
-        setSelectedRouterId(Number((e.target as HTMLInputElement).value));
+        setSelectedRouterId(Number(((e.target as unknown) as any)?.value));
         setHasChanges(true);
       }}
       className="bg-zinc-900 light:bg-white text-white light:text-slate-900 text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-pointer"
@@ -49,7 +49,7 @@ export default function RouterPickerSelection({
       <option value="">
         {t("model-router.router-selection.select-router")}
       </option>
-      {routers.map((router) => (
+      {(routers as any).map((router) => (
         <option key={router.id} value={router.id}>
           {router.name}
           {router.ruleCount != null

@@ -55,7 +55,7 @@ export default function ActiveWorkspaces() {
     const [removed] = reorderedWorkspaces.splice(startIndex, 1);
     reorderedWorkspaces.splice(endIndex, 0, removed);
     const success = Workspace.storeWorkspaceOrder(
-      reorderedWorkspaces.map((w) => w.id),
+      (reorderedWorkspaces as any).map((w) => w.id),
     );
     if (success) {
       // Optimistically update the SWR cache with the new order without
@@ -80,7 +80,7 @@ export default function ActiveWorkspaces() {
     );
     if (
       lastVisited?.slug &&
-      workspaces.some((ws) => ws.slug === lastVisited.slug)
+      (workspaces as any).some((ws) => ws.slug === lastVisited.slug)
     )
       return lastVisited.slug;
     return workspaces[0]?.slug ?? null;
@@ -97,7 +97,7 @@ export default function ActiveWorkspaces() {
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
-            {workspaces.map((workspace, index) => {
+            {(workspaces as any).map((workspace, index) => {
               const isVirtuallyActive = workspace.slug === virtualActiveSlug;
               const isActive = workspace.slug === slug || isVirtuallyActive;
               return (

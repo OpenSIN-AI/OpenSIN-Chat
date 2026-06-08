@@ -21,13 +21,13 @@ const DOCUMENT_SOURCE_PREFIXES = [
 const MEDIA_SOURCE_PREFIXES: any = ["youtube://"];
 
 function isDocumentSource(chunkSource) {
-  return DOCUMENT_SOURCE_PREFIXES.some((prefix) =>
+  return (DOCUMENT_SOURCE_PREFIXES as any).some((prefix) =>
     chunkSource?.startsWith(prefix),
   );
 }
 
 function isMediaSource(chunkSource: any) {
-  return MEDIA_SOURCE_PREFIXES.some((prefix) =>
+  return (MEDIA_SOURCE_PREFIXES as any).some((prefix) =>
     chunkSource?.startsWith(prefix),
   );
 }

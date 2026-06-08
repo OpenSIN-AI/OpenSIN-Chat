@@ -30,7 +30,7 @@ export default function ParsedFilesMenu({
     if (!success) return;
 
     // Update the local files list and current tokens
-    setFiles((prev) => prev.filter((f) => f.id !== file.id));
+    setFiles((prev) => (prev as any).filter((f) => f.id !== file.id));
 
     // Dispatch an event to the DnDFileUploaderWrapper to update the files list in attachment manager if it exists
     window.dispatchEvent(
@@ -63,7 +63,7 @@ export default function ParsedFilesMenu({
     try {
       let completed = 0;
       await Promise.all(
-        files.map((file) =>
+        (files as any).map((file) =>
           Workspace.embedParsedFile(workspaceSlug, file.id).then(() => {
             completed++;
             setEmbedProgress(completed + 1);
@@ -152,7 +152,7 @@ export default function ParsedFilesMenu({
       )}
       <div className="flex flex-col gap-1 max-h-[300px] overflow-y-auto">
         {files.length > 0 &&
-          files.map((file, i) => (
+          (files as any).map((file, i) => (
             <div
               key={i}
               className={

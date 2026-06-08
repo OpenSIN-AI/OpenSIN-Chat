@@ -47,13 +47,13 @@ export default function UploadFile({
   const handleUploadError = () => debouncedFetchKeysRef.current(fetchKeys, {});
 
   const onDrop = async (acceptedFiles, rejections) => {
-    const newAccepted = acceptedFiles.map((file) => {
+    const newAccepted = (acceptedFiles as any).map((file) => {
       return {
         uid: v4(),
         file,
       };
     });
-    const newRejected = rejections.map((file) => {
+    const newRejected = (rejections as any).map((file) => {
       return {
         uid: v4(),
         file: file.file,
@@ -110,7 +110,7 @@ export default function UploadFile({
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-2 overflow-auto max-h-[180px] p-1 overflow-y-scroll no-scroll">
-            {files.map((file) => (
+            {(files as any).map((file) => (
               <FileUploadProgress
                 key={file.uid}
                 file={file.file}

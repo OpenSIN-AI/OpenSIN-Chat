@@ -17,7 +17,7 @@ const Document: any = {
   },
   moveToFolder: async (files: any, folderName: any) => {
     const data = {
-      files: files.map((file) => ({
+      files: (files as any).map((file) => ({
         from: file.folderName ? `${file.folderName}/${file.name}` : file.name,
         to: `${folderName}/${file.name}`,
       })),

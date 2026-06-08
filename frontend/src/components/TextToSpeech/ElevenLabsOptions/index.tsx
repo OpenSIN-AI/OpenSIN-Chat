@@ -23,7 +23,7 @@ export default function ElevenLabsOptions({ settings }: any) {
           required={true}
           autoComplete="off"
           spellCheck={false}
-          onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
+          onChange={(e) => setInputValue(((e.target as unknown) as any)?.value)}
           onBlur={() => setElevenLabsKey(inputValue)}
         />
       </div>

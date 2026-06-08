@@ -21,7 +21,7 @@ export default function DatabaseSidebar() {
   const abortRef = useRef(null);
 
   async function fetchPoliticians() {
-    abortRef.current?.abort();
+    abortRef.current??.abort();
     const controller = new AbortController();
     abortRef.current = controller;
     setLoading(true);
@@ -44,7 +44,7 @@ export default function DatabaseSidebar() {
 
   useEffect(() => {
     if (sidebarOpen && politicians.length === 0) fetchPoliticians();
-    return () => abortRef.current?.abort();
+    return () => abortRef.current??.abort();
   }, [sidebarOpen]);
 
   return (
@@ -126,7 +126,7 @@ export default function DatabaseSidebar() {
             </p>
           )}
 
-          {politicians.map((p) => {
+          {(politicians as any).map((p) => {
             const name = `${p.first_name || ""} ${p.last_name || ""}`.trim() || p.label || "—";
             const constituency = p.constituency?.label || p.electoral_data?.constituency?.label || null;
             const profileUrl = p.abgeordnetenwatch_url || null;

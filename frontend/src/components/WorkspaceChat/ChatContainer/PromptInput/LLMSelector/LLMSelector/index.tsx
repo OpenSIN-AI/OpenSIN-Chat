@@ -23,7 +23,7 @@ export default function LLMSelectorSidePanel({
         />
       </div>
       <div className="flex flex-col gap-0 overflow-y-auto min-h-0 flex-1">
-        {availableProviders.map((llm) => (
+        {(availableProviders as any).map((llm) => (
           <button
             key={llm.value}
             type="button"

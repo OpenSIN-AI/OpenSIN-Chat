@@ -83,7 +83,7 @@ function OtherInput({ value, onChange }: any) {
       autoFocus
       type="text"
       value={value}
-      onChange={(e) => onChange((e.target as HTMLInputElement).value)}
+      onChange={(e) => onChange(((e.target as unknown) as any)?.value)}
       placeholder={t(
         "chat_window.agent_invocation.clarifying_other_placeholder",
       )}
@@ -115,7 +115,7 @@ export default function ChoiceForm({
     if (question.multiSelect) {
       const list = Array.isArray(draft.selected) ? draft.selected : [];
       const next = list.includes(opt)
-        ? list.filter((o) => o !== opt)
+        ? (list as any).filter((o) => o !== opt)
         : [...list, opt];
       onChange({ selected: next, otherSelected: false });
       return;
@@ -135,7 +135,7 @@ export default function ChoiceForm({
 
   return (
     <div className="flex flex-col w-full">
-      {question.options.map((opt, idx) => (
+      {question.(options as any).map((opt, idx) => (
         <OptionButton
           key={`${opt}-${idx}`}
           label={opt}

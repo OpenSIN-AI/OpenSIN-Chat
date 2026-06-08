@@ -83,7 +83,7 @@ export default function WorkspaceSources({ documents = [], onAddSources }: any) 
 
         {hasSources ? (
           <div className="flex flex-col gap-1.5 max-h-[220px] overflow-y-auto no-scroll">
-            {documents.map((doc, idx) => {
+            {(documents as any).map((doc, idx) => {
               const { icon: Icon, labelKey } = getSourceType(doc);
               return (
                 <div

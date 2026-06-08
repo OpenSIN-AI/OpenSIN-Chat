@@ -58,7 +58,7 @@ export default function RecoveryCodeModal({
               onClick={handleCopyToClipboard}
             >
               <ul className="space-y-2 md:p-6 p-4">
-                {recoveryCodes.map((code, index) => (
+                {(recoveryCodes as any).map((code, index) => (
                   <li key={index} className="md:text-sm text-xs">
                     {code}
                   </li>

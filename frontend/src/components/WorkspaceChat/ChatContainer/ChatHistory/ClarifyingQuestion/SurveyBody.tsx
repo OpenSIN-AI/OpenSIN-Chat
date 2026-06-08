@@ -35,7 +35,7 @@ function AnswersList({ questions, answers }: any) {
 
   return (
     <div className="flex flex-col gap-y-1.5 text-xs text-white/70 light:text-slate-700">
-      {questions.map((q, i) => (
+      {(questions as any).map((q, i) => (
         <AnswerRow
           key={i}
           question={q}
