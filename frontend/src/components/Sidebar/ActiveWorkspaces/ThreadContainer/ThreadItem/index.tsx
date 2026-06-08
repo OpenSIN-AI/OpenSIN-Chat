@@ -18,7 +18,7 @@ import { CSS } from "@dnd-kit/utilities";
 
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 export default function ThreadItem({
-  idx, activeIdx: any, isActive: any, workspace: any, thread: any, onRemove: any, toggleMarkForDeletion: any, hasNext: any, ctrlPressed: any = false, draggable: any = false, folderId: any = null, }: any): JSX.Element {
+  idx, activeIdx, isActive, workspace, thread, onRemove, toggleMarkForDeletion, hasNext, ctrlPressed = false, draggable = false, folderId = null, }: any): JSX.Element {
   const { slug: urlSlug, threadSlug = null } = useParams();
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
@@ -178,7 +178,7 @@ export default function ThreadItem({
 }
 
 function OptionsMenu({
-  containerRef: any, workspace: any, thread: any, onRemove: any, close: any, currentThreadSlug: any, }: any): JSX.Element {
+  containerRef, workspace, thread, onRemove, close, currentThreadSlug, }: any): JSX.Element {
   const menuRef: any = useRef(null);
 
   // Ref menu options

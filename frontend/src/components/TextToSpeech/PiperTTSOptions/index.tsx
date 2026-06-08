@@ -139,7 +139,7 @@ function DemoVoiceSample({ voiceId }: any): JSX.Element {
   const [loading, setLoading] = useState(false);
   const [audioSrc, setAudioSrc] = useState(null);
 
-  async function speakMessage(e: any): JSX.Element {
+  async function speakMessage(e: any) {
     e.preventDefault();
     if (speaking) {
       playerRef?.current?.pause();

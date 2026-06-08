@@ -10,7 +10,7 @@ export const LIMITS = {
   global: 5,
 };
 
-const MemoriesContext = createContext(null);
+const MemoriesContext = createContext<any>(null);
 
 export function useMemoriesContext() {
   const ctx = useContext(MemoriesContext);
@@ -20,7 +20,7 @@ export function useMemoriesContext() {
   return ctx;
 }
 
-export function MemoriesProvider({ workspace: any, children }: any): JSX.Element {
+export function MemoriesProvider({ workspace, children }: any): JSX.Element {
   const { sidebarOpen, closeSidebar } = useMemoriesSidebar();
   const { user } = useUser();
   const canToggle = !user || user?.role === "admin";
@@ -52,7 +52,7 @@ export function MemoriesProvider({ workspace: any, children }: any): JSX.Element
     if (sidebarOpen && enabled) fetchMemories();
   }, [sidebarOpen, workspace?.slug, enabled]);
 
-  async function handleCreate(content: any): JSX.Element {
+  async function handleCreate(content: any) {
     const { memory } = await Memory.create(workspace.slug, {
       content,
       scope: activeTab,
@@ -60,22 +60,22 @@ export function MemoriesProvider({ workspace: any, children }: any): JSX.Element
     if (memory) fetchMemories();
   }
 
-  async function handleDelete(memoryId: any): JSX.Element {
+  async function handleDelete(memoryId: any) {
     await Memory.delete(memoryId);
     fetchMemories();
   }
 
-  async function handleUpdate(memoryId: any, content: any): JSX.Element {
+  async function handleUpdate(memoryId: any, content: any) {
     const { memory } = await Memory.update(memoryId, { content });
     if (memory) fetchMemories();
   }
 
-  async function handlePromote(memoryId: any): JSX.Element {
+  async function handlePromote(memoryId: any) {
     const { memory } = await Memory.promoteToGlobal(memoryId);
     if (memory) fetchMemories();
   }
 
-  async function handleDemote(memoryId: any): JSX.Element {
+  async function handleDemote(memoryId: any) {
     if (!workspace?.slug) return;
     const { memory } = await Memory.demoteToWorkspace(memoryId, workspace.slug);
     if (memory) fetchMemories();

@@ -10,7 +10,7 @@ import {
 const EDIT_EVENT = "toggle-message-edit";
 const DELETE_EVENT = "delete-message";
 
-const MessageActionsContext = createContext(null);
+const MessageActionsContext = createContext<any>(null);
 
 /**
  * Provider that centralizes edit/delete event listeners for all messages.

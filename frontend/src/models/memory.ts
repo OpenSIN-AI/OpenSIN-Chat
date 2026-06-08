@@ -36,7 +36,7 @@ const Memory = {
    * @param {{content: string, scope?: "workspace"|"global"}} body
    * @returns {Promise<{memory: Memory|null, error?: string}>}
    */
-  create: async function (slug: any, { content: any, scope = "workspace" }: any) {
+  create: async function (slug: any, { content, scope = "workspace" }: any) {
     return await fetch(`${API_BASE}/workspaces/${slug}/memories`, {
       method: "POST",
       headers: baseHeaders(),

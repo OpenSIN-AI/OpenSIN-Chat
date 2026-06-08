@@ -208,7 +208,7 @@ export default function LemonadeOptions({ settings }: any): JSX.Element {
 }
 
 function LemonadeModelSelection({
-  selectedModelId: any, setSelectedModelId: any, basePath: any = null, }: any): JSX.Element {
+  selectedModelId, setSelectedModelId, basePath = null, }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [filteredModels, setFilteredModels] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -260,7 +260,7 @@ function LemonadeModelSelection({
     setFilteredModels(Array.from(filteredModels.values()));
   }, [searchQuery]);
 
-  async function uninstallModel(modelId: any): JSX.Element {
+  async function uninstallModel(modelId: any) {
     try {
       if (
         !window.confirm(
@@ -296,7 +296,7 @@ function LemonadeModelSelection({
     }
   }
 
-  async function downloadModel(modelId: any, fileSize: any, progressCallback: any): JSX.Element {
+  async function downloadModel(modelId: any, fileSize: any, progressCallback: any) {
     try {
       if (
         !window.confirm(

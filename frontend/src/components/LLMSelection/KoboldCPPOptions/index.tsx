@@ -144,7 +144,7 @@ export default function KoboldCPPOptions({ settings }: any): JSX.Element {
   );
 }
 
-function KoboldCPPModelSelection({ settings: any, basePath = null }: any): JSX.Element {
+function KoboldCPPModelSelection({ settings, basePath = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

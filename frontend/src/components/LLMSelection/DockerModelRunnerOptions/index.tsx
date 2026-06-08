@@ -181,7 +181,7 @@ export default function DockerModelRunnerOptions({ settings }: any): JSX.Element
 }
 
 function DockerModelRunnerModelSelection({
-  selectedModelId: any, setSelectedModelId: any, basePath: any = null, }: any): JSX.Element {
+  selectedModelId, setSelectedModelId, basePath = null, }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [filteredModels, setFilteredModels] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -237,7 +237,7 @@ function DockerModelRunnerModelSelection({
     setFilteredModels(Array.from(filteredModels.values()));
   }, [searchQuery]);
 
-  async function downloadModel(modelId: any, fileSize: any, progressCallback: any): JSX.Element {
+  async function downloadModel(modelId: any, fileSize: any, progressCallback: any) {
     try {
       if (
         !window.confirm(

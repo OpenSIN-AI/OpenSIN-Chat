@@ -9,7 +9,7 @@ import { PARSED_FILE_ATTACHMENT_REMOVED_EVENT } from "../../../DnDWrapper";
 import useUser from "@/hooks/useUser";
 
 export default function ParsedFilesMenu({
-  onEmbeddingChange: any, tooltipRef: any, files: any, setFiles: any, currentTokens: any, setCurrentTokens: any, contextWindow: any, isLoading: any, workspaceSlug: any, threadSlug: any = null, }: any): JSX.Element {
+  onEmbeddingChange, tooltipRef, files, setFiles, currentTokens, setCurrentTokens, contextWindow, isLoading, workspaceSlug, threadSlug = null, }: any): JSX.Element {
   const { user } = useUser();
   const canEmbed = !user || user.role !== "default";
   const initialContextWindowLimitExceeded =
@@ -21,7 +21,7 @@ export default function ParsedFilesMenu({
     initialContextWindowLimitExceeded,
   );
 
-  async function handleRemove(e: any, file: any): JSX.Element {
+  async function handleRemove(e: any, file: any) {
     e.preventDefault();
     e.stopPropagation();
     if (!file?.id) return;

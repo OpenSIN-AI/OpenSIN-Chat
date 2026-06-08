@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import useTimeoutProgress from "@/hooks/useTimeoutProgress";
 
 export default function ToolApprovalRequest({
-  requestId: any, skillName: any, payload = {}, description: any = null, timeoutMs: any = null, websocket: any, onResponse: any, }: any): JSX.Element {
+  requestId, skillName, payload = {}, description = null, timeoutMs = null, websocket, onResponse, }: any): JSX.Element {
   const [isExpanded, setIsExpanded] = useState(false);
   const [responded, setResponded] = useState(false);
   const [approved, setApproved] = useState(null);
@@ -26,7 +26,7 @@ export default function ToolApprovalRequest({
     onResponse?.(false);
   }
 
-  async function handleResponse(isApproved: any): JSX.Element {
+  async function handleResponse(isApproved: any) {
     if (responded) return;
 
     setResponded(true);
@@ -100,7 +100,7 @@ export default function ToolApprovalRequest({
 }
 
 function ToolApprovalHeader({
-  skillName: any, hasPayload: any, isExpanded: any, setIsExpanded: any, }: any): JSX.Element {
+  skillName, hasPayload, isExpanded, setIsExpanded, }: any): JSX.Element {
   const { t } = useTranslation();
   return (
     <div className="flex w-full items-center justify-between">
@@ -128,7 +128,7 @@ function ToolApprovalHeader({
   );
 }
 
-function ToolApprovalPayload({ payload: any, isExpanded }: any): JSX.Element {
+function ToolApprovalPayload({ payload, isExpanded }: any): JSX.Element {
   const hasPayload: any = payload && Object.keys(payload).length > 0;
   if (!hasPayload || !isExpanded) return null;
 
@@ -151,7 +151,7 @@ function ToolApprovalPayload({ payload: any, isExpanded }: any): JSX.Element {
 }
 
 function ToolApprovalResponseOption({
-  approved: any, skillName: any, alwaysAllow: any, setAlwaysAllow: any, onApprove: any, onReject: any, }: any): JSX.Element {
+  approved, skillName, alwaysAllow, setAlwaysAllow, onApprove, onReject, }: any): JSX.Element {
   const { t } = useTranslation();
   if (approved !== null) return null;
 

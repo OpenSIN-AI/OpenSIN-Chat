@@ -458,7 +458,7 @@ const SidebarOptions = ({ user = null, t }) => (
   </CanViewChatHistoryProvider>
 );
 
-function HoldToReveal({ children: any, holdForMs = 3_000 }: any): JSX.Element {
+function HoldToReveal({ children, holdForMs = 3_000 }: any): JSX.Element {
   let timeout = null;
   const [showing, setShowing] = useState(
     window.localStorage.getItem(

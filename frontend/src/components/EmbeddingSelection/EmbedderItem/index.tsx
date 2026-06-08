@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 export default function EmbedderItem({
-  name: any, value: any, image: any, description: any, checked: any, onClick: any, }: any): JSX.Element {
+  name, value, image, description, checked, onClick, }: any): JSX.Element {
   return (
     <div
       onClick={() => onClick(value)}

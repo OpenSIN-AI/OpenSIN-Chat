@@ -30,7 +30,7 @@ export default function OpenAiSpeechToTextOptions({ settings }: any): JSX.Elemen
   );
 }
 
-function OpenAiSttModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function OpenAiSttModelSelection({ apiKey, settings }: any): JSX.Element {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

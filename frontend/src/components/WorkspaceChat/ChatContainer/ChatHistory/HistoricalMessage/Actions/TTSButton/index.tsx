@@ -8,7 +8,7 @@ function WrapTTS({ children }: any): JSX.Element {
   return <div className="mx-2">{children}</div>;
 }
 
-export default function TTSMessage({ slug: any, chatId: any, message }: any): JSX.Element {
+export default function TTSMessage({ slug, chatId, message }: any): JSX.Element {
   const { settings, provider, loading } = useTTSProvider();
   if (!chatId || loading) return null;
 

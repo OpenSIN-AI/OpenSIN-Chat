@@ -103,7 +103,7 @@ export default function ServerSTT({ sendCommand }: any): JSX.Element {
 }
 
 async function uploadAndDispatch(blob: any, mimeType: any, sendCommand: any, setProcessing: any, t: any, 
-): JSX.Element {
+) {
   setProcessing(true);
   const extension = mimeType.includes("ogg") ? "ogg" : "webm";
   const { text, error } = await System.transcribeAudio(

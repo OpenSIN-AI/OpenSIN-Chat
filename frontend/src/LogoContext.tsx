@@ -10,7 +10,7 @@ export const REFETCH_LOGO_EVENT = "refetch-logo";
 function isLightMode() {
   return document.documentElement.getAttribute("data-theme") === "light";
 }
-export const LogoContext = createContext();
+export const LogoContext = createContext<any>(undefined);
 
 export function LogoProvider({ children }) {
   const [logo, setLogo] = useState("");

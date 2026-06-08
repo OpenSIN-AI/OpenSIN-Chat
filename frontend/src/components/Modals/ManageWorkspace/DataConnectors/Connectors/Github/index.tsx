@@ -171,7 +171,7 @@ export default function GithubOptions() {
   );
 }
 
-function GitHubBranchSelection({ repo: any, accessToken }: any): JSX.Element {
+function GitHubBranchSelection({ repo, accessToken }: any): JSX.Element {
   const { t } = useTranslation();
   const [allBranches, setAllBranches] = useState(DEFAULT_BRANCHES);
   const [loading, setLoading] = useState(true);

@@ -278,7 +278,7 @@ export default function OllamaLLMOptions({ settings }: any): JSX.Element {
 }
 
 function OllamaLLMModelSelection({
-  settings: any, basePath: any = null, authToken: any = null, }: any): JSX.Element {
+  settings, basePath = null, authToken = null, }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

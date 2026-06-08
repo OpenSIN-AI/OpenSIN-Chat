@@ -72,7 +72,7 @@ export default function ProviderPrivacy() {
   );
 }
 
-function ProviderPrivacyItem({ title: any, provider: any, altText }: any): JSX.Element {
+function ProviderPrivacyItem({ title, provider, altText }: any): JSX.Element {
   return (
     <div className="flex flex-col items-start gap-y-3 pb-4 border-b border-theme-sidebar-border">
       <div className="text-theme-text-primary text-base font-bold">{title}</div>

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 export default function LLMProviderOption({
-  name: any, link: any, description: any, value: any, image: any, checked: any = false, onClick: any, }: any): JSX.Element {
+  name, link, description, value, image, checked = false, onClick, }: any): JSX.Element {
   return (
     <div onClick={() => onClick(value)}>
       <input

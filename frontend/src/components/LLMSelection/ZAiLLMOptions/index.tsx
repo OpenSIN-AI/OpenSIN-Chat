@@ -33,7 +33,7 @@ export default function ZAiLLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function ZAiModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function ZAiModelSelection({ apiKey, settings }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

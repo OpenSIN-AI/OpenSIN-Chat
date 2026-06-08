@@ -5,7 +5,7 @@ import { userFromStorage } from "@/utils/request";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
 
-export default function ChatBubble({ message: any, type }: any): JSX.Element {
+export default function ChatBubble({ message, type }: any): JSX.Element {
   const isUser = type === "user";
 
   return (

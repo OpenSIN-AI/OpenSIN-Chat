@@ -8,7 +8,7 @@ function StatusMessage({ message }: any): JSX.Element {
   );
 }
 
-function AnswerRow({ question: any, answer: any, index: any, showNumber: any, skippedLabel }: any): JSX.Element {
+function AnswerRow({ question, answer, index, showNumber, skippedLabel }: any): JSX.Element {
   return (
     <div className="flex gap-2">
       {showNumber && (
@@ -28,7 +28,7 @@ function AnswerRow({ question: any, answer: any, index: any, showNumber: any, sk
   );
 }
 
-function AnswersList({ questions: any, answers }: any): JSX.Element {
+function AnswersList({ questions, answers }: any): JSX.Element {
   const { t } = useTranslation();
   const showNumbers = questions.length > 1;
   const skippedLabel = t("chat_window.agent_invocation.answer_skipped");
@@ -59,7 +59,7 @@ function AnswersList({ questions: any, answers }: any): JSX.Element {
  * @param {{ timedOut?: boolean, skipped?: boolean, answers?: Array<{ skipped: boolean, answer: any }> }} props.result
  *   The survey's resolution payload — same shape returned by the websocket.
  */
-export default function SurveyBody({ questions: any = [], result = {} }: any): JSX.Element {
+export default function SurveyBody({ questions = [], result = {} }: any): JSX.Element {
   const { t } = useTranslation();
 
   if (result.timedOut) {

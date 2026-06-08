@@ -32,7 +32,7 @@ export default function SambaNovaOptions({ settings }: any): JSX.Element {
   );
 }
 
-function SambaNovaModelSelection({ settings: any, apiKey }: any): JSX.Element {
+function SambaNovaModelSelection({ settings, apiKey }: any): JSX.Element {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

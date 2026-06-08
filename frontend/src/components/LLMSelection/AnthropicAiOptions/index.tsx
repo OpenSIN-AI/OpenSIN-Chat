@@ -91,7 +91,7 @@ export default function AnthropicAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function AnthropicModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function AnthropicModelSelection({ apiKey, settings }: any): JSX.Element {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

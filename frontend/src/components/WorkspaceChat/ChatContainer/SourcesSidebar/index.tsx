@@ -46,7 +46,7 @@ function getWorkspaceSourceType(doc: any): JSX.Element {
   return { type: "document", icon: FileText, label: "Dokument" };
 }
 
-function WorkspaceSourceItem({ doc: any, onClick }: any): JSX.Element {
+function WorkspaceSourceItem({ doc, onClick }: any): JSX.Element {
   const { type: _type, icon: Icon, label } = getWorkspaceSourceType(doc);
   const metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
 

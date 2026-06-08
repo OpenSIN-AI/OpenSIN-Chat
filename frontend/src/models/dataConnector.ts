@@ -26,7 +26,7 @@ const DataConnector: any = {
           return { branches: [], error: e.message };
         });
     },
-    collect: async function ({ repo: any, accessToken: any, branch: any, ignorePaths = [] }: any) {
+    collect: async function ({ repo, accessToken, branch, ignorePaths = [] }: any) {
       return await fetch(`${API_BASE}/ext/github/repo`, {
         method: "POST",
         headers: baseHeaders(),
@@ -44,7 +44,7 @@ const DataConnector: any = {
     },
   },
   gitlab: {
-    branches: async ({ repo: any, accessToken }: any) => {
+    branches: async ({ repo, accessToken }: any) => {
       return await fetch(`${API_BASE}/ext/gitlab/branches`, {
         method: "POST",
         headers: baseHeaders(),
@@ -66,7 +66,7 @@ const DataConnector: any = {
         });
     },
     collect: async function ({
-      repo: any, accessToken: any, branch: any, ignorePaths: any = [], fetchIssues: any = false, fetchWikis: any = false, }: any) {
+      repo, accessToken, branch, ignorePaths = [], fetchIssues = false, fetchWikis = false, }: any) {
       return await fetch(`${API_BASE}/ext/gitlab/repo`, {
         method: "POST",
         headers: baseHeaders(),
@@ -109,7 +109,7 @@ const DataConnector: any = {
     },
   },
   websiteDepth: {
-    scrape: async ({ url: any, depth: any, maxLinks }: any) => {
+    scrape: async ({ url, depth, maxLinks }: any) => {
       return await fetch(`${API_BASE}/ext/website-depth`, {
         method: "POST",
         headers: baseHeaders(),
@@ -129,7 +129,7 @@ const DataConnector: any = {
 
   confluence: {
     collect: async function ({
-      baseUrl: any, spaceKey: any, username: any, accessToken: any, cloud: any, personalAccessToken: any, bypassSSL: any, }: any) {
+      baseUrl, spaceKey, username, accessToken, cloud, personalAccessToken, bypassSSL, }: any) {
       return await fetch(`${API_BASE}/ext/confluence`, {
         method: "POST",
         headers: baseHeaders(),
@@ -156,7 +156,7 @@ const DataConnector: any = {
   },
 
   drupalwiki: {
-    collect: async function ({ baseUrl: any, spaceIds: any, accessToken }: any) {
+    collect: async function ({ baseUrl, spaceIds, accessToken }: any) {
       return await fetch(`${API_BASE}/ext/drupalwiki`, {
         method: "POST",
         headers: baseHeaders(),
@@ -199,7 +199,7 @@ const DataConnector: any = {
   },
 
   paperlessNgx: {
-    collect: async function ({ baseUrl: any, apiToken }: any) {
+    collect: async function ({ baseUrl, apiToken }: any) {
       return await fetch(`${API_BASE}/ext/paperless-ngx`, {
         method: "POST",
         headers: baseHeaders(),

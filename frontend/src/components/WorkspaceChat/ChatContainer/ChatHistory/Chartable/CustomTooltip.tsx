@@ -37,7 +37,7 @@ function padZero(str: any, len: any): JSX.Element {
   return (zeros + str).slice(-len);
 }
 
-export default function Tooltip({ legendColor: any, ...props }: any): JSX.Element {
+export default function Tooltip({ legendColor, ...props }: any): JSX.Element {
   return (
     <RechartsTooltip
       wrapperStyle={{ outline: "none" }}

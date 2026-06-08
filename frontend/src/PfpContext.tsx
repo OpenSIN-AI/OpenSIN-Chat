@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from "react";
 import useUser from "./hooks/useUser";
 import System from "./models/system";
 
-export const PfpContext = createContext();
+export const PfpContext = createContext<any>(undefined);
 
 export function PfpProvider({ children }) {
   const [pfp, setPfp] = useState(null);

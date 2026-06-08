@@ -58,7 +58,7 @@ export function getCustomImage(type: any): JSX.Element {
  * @param {string} [props.customImage] - Optional custom image to display
  */
 export function SourceTypeCircle({
-  type: any = "file", size: any = 22, iconSize: any = 12, url: any = null, customImage: any = null, }: any): JSX.Element {
+  type = "file", size = 22, iconSize = 12, url = null, customImage = null, }: any): JSX.Element {
   const Icon = CIRCLE_ICONS[type] || CIRCLE_ICONS.file;
   const [imgError, setImgError] = useState(false);
 
@@ -190,7 +190,7 @@ export function omitChunkHeader(text: any): JSX.Element {
   return text.split("</document_metadata>")[1].trim();
 }
 
-export function CitationDetailModal({ source: any, onClose }: any): JSX.Element {
+export function CitationDetailModal({ source, onClose }: any): JSX.Element {
   const { references, title, chunks } = source;
   const { isUrl, text: webpageUrl, href: linkTo } = parseChunkSource(source);
   const { t } = useTranslation();
@@ -304,7 +304,7 @@ const supportedSources = [
  * @param {{title: string, chunks: {text: string, chunkSource: string}[]}} options
  * @returns {{isUrl: boolean, text: string, href: string, icon: string}}
  */
-export function parseChunkSource({ title: any = "", chunks = [] }: any): JSX.Element {
+export function parseChunkSource({ title = "", chunks = [] }: any): JSX.Element {
   const nullResponse = {
     isUrl: false,
     text: null,

@@ -18,7 +18,7 @@ import AddSourceMenu from "./AddSourceMenu";
  * @returns
  */
 export default function AttachItem({
-  workspaceSlug: any = null, workspaceThreadSlug: any = null, }: any): JSX.Element {
+  workspaceSlug = null, workspaceThreadSlug = null, }: any): JSX.Element {
   const { t } = useTranslation();
   const { theme } = useTheme();
   const params = useParams();
@@ -57,7 +57,7 @@ export default function AttachItem({
    * This function handles when the user clicks the X on an Attachment via the AttachmentManager
    * so we need to sync the state in the ParsedFilesMenu picker here.
    */
-  async function handleRemoveAttachment(e: any): JSX.Element {
+  async function handleRemoveAttachment(e: any) {
     const { document } = e.detail;
     await Workspace.deleteParsedFiles(slug, [document.id]);
     fetchFiles();

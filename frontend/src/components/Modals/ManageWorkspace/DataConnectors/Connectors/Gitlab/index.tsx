@@ -197,7 +197,7 @@ export default function GitlabOptions() {
   );
 }
 
-function GitLabBranchSelection({ repo: any, accessToken }: any): JSX.Element {
+function GitLabBranchSelection({ repo, accessToken }: any): JSX.Element {
   const { t } = useTranslation();
   const [allBranches, setAllBranches] = useState(DEFAULT_BRANCHES);
   const [loading, setLoading] = useState(true);

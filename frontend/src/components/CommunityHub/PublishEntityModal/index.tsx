@@ -8,7 +8,7 @@ import AgentFlows from "./AgentFlows";
 import SlashCommands from "./SlashCommands";
 
 export default function PublishEntityModal({
-  show: any, onClose: any, entityType: any, entity: any, }: any): JSX.Element {
+  show, onClose, entityType, entity, }: any): JSX.Element {
   const { isAuthenticated, loading } = useCommunityHubAuth();
   if (!show || loading) return null;
   if (!isAuthenticated)

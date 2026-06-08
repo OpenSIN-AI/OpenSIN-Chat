@@ -3,7 +3,7 @@ import { MagnifyingGlass } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
 export default function LLMSelectorSidePanel({
-  availableProviders: any, selectedLLMProvider: any, onSearchChange: any, onProviderClick: any, }: any): JSX.Element {
+  availableProviders, selectedLLMProvider, onSearchChange, onProviderClick, }: any): JSX.Element {
   const { t } = useTranslation();
 
   return (

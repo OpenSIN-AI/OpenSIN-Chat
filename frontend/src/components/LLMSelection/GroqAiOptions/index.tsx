@@ -33,7 +33,7 @@ export default function GroqAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function GroqAIModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function GroqAIModelSelection({ apiKey, settings }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

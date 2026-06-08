@@ -34,7 +34,7 @@ export default function DeepSeekOptions({ settings }: any): JSX.Element {
   );
 }
 
-function DeepSeekModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function DeepSeekModelSelection({ apiKey, settings }: any): JSX.Element {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

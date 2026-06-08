@@ -34,7 +34,7 @@ export default function CohereAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function CohereModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function CohereModelSelection({ apiKey, settings }: any): JSX.Element {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

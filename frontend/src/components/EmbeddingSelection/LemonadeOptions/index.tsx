@@ -169,7 +169,7 @@ export default function LemonadeEmbeddingOptions({ settings }: any): JSX.Element
   );
 }
 
-function LemonadeModelSelection({ settings: any, basePath = null }: any): JSX.Element {
+function LemonadeModelSelection({ settings, basePath = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

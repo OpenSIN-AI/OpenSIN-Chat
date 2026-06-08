@@ -47,7 +47,7 @@ export default function AttachmentManager({ attachments }: any): JSX.Element {
 /**
  * @param {{attachment: import("../../DnDWrapper").Attachment}}
  */
-function AttachmentItem({ attachment: any, onImageClick }: any): JSX.Element {
+function AttachmentItem({ attachment, onImageClick }: any): JSX.Element {
   const { uid, file, status, error, document, type, contentString } =
     attachment;
   const { iconBgColor, Icon } = displayFromFile(file);

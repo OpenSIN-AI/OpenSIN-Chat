@@ -5,7 +5,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { CMD_REGEX } from "./constants";
 
 export default function EditPresetModal({
-  isOpen: any, onClose: any, onSave: any, onDelete: any, preset: any, }: any): JSX.Element {
+  isOpen, onClose, onSave, onDelete, preset, }: any): JSX.Element {
   const [command, setCommand] = useState("");
   const [deleting, setDeleting] = useState(false);
 

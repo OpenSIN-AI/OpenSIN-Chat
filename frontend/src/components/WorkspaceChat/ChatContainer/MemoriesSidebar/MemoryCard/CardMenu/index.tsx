@@ -16,7 +16,7 @@ import { useTranslation } from "react-i18next";
  * @param {function} props.onDelete
  */
 export default function CardMenu({
-  menuRef: any, buttonRef: any, isWorkspace: any, canMove: any, onEdit: any, onMove: any, onDelete: any, }: any): JSX.Element {
+  menuRef, buttonRef, isWorkspace, canMove, onEdit, onMove, onDelete, }: any): JSX.Element {
   const { t } = useTranslation();
   const [pos, setPos] = useState({ top: 0, left: 0 });
 
@@ -52,7 +52,7 @@ export default function CardMenu({
   );
 }
 
-function MenuItem({ label: any, onClick }: any): JSX.Element {
+function MenuItem({ label, onClick }: any): JSX.Element {
   return (
     <button
       type="button"

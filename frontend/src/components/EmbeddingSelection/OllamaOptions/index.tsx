@@ -197,7 +197,7 @@ export default function OllamaEmbeddingOptions({ settings }: any): JSX.Element {
   );
 }
 
-function OllamaEmbeddingModelSelection({ settings: any, basePath = null }: any): JSX.Element {
+function OllamaEmbeddingModelSelection({ settings, basePath = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

@@ -11,7 +11,7 @@ import showToast from "@/utils/toast";
 import System from "@/models/system";
 
 export default function WorkspaceFileRow({
-  item: any, folderName: any, workspace: any, setLoading: any, setLoadingMessage: any, fetchKeys: any, hasChanges: any, movedItems: any, selected: any, toggleSelection: any, disableSelection: any, setSelectedItems: any, }: any): JSX.Element {
+  item, folderName, workspace, setLoading, setLoadingMessage, fetchKeys, hasChanges, movedItems, selected, toggleSelection, disableSelection, setSelectedItems, }: any): JSX.Element {
   const onRemoveClick = async (e) => {
     e.stopPropagation();
     setLoading(true);

@@ -5,7 +5,7 @@ import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 
-export default function AsyncTTSMessage({ slug: any, chatId }: any): JSX.Element {
+export default function AsyncTTSMessage({ slug, chatId }: any): JSX.Element {
   const playerRef = useRef(null);
   const [speaking, setSpeaking] = useState(false);
   const [loading, setLoading] = useState(false);

@@ -105,7 +105,7 @@ export default function ModelTable({
   );
 }
 
-function DeviceTypeTagWrapper({ text: any, bgClass: any, textClass }: any): JSX.Element {
+function DeviceTypeTagWrapper({ text, bgClass, textClass }: any): JSX.Element {
   return (
     <div
       className={
@@ -331,7 +331,7 @@ function ModelRow({
   );
 }
 
-function RenderStatus({ model: any, isActiveModel }: any): JSX.Element {
+function RenderStatus({ model, isActiveModel }: any): JSX.Element {
   if (isActiveModel) {
     return (
       <div className="flex items-center justify-center gap-x-[10px] whitespace-nowrap">

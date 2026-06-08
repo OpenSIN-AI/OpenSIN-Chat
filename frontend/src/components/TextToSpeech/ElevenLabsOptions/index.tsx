@@ -34,7 +34,7 @@ export default function ElevenLabsOptions({ settings }: any): JSX.Element {
   );
 }
 
-function ElevenLabsModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function ElevenLabsModelSelection({ apiKey, settings }: any): JSX.Element {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

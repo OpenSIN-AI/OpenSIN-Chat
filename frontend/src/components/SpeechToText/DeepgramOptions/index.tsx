@@ -32,7 +32,7 @@ export default function DeepgramSpeechToTextOptions({ settings }: any): JSX.Elem
   );
 }
 
-function DeepgramSttModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function DeepgramSttModelSelection({ apiKey, settings }: any): JSX.Element {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

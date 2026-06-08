@@ -34,7 +34,7 @@ function CardWrapper({ children }: any): JSX.Element {
   );
 }
 
-function ActiveInputForm({ question: any, draft: any, updateDraft: any, onSubmit }: any): JSX.Element {
+function ActiveInputForm({ question, draft, updateDraft, onSubmit }: any): JSX.Element {
   if (question?.kind !== "input") return null;
   return (
     <InputForm
@@ -47,7 +47,7 @@ function ActiveInputForm({ question: any, draft: any, updateDraft: any, onSubmit
 }
 
 function ActiveChoiceForm({
-  question: any, draft: any, updateDraft: any, onAutoAdvance: any, allowSkip: any, onSkip: any, }: any): JSX.Element {
+  question, draft, updateDraft, onAutoAdvance, allowSkip, onSkip, }: any): JSX.Element {
   if (question?.kind !== "choice") return null;
   return (
     <ChoiceForm
@@ -66,7 +66,7 @@ function ActiveChoiceForm({
 }
 
 function ActiveFooter({
-  question: any, draft: any, isSingle: any, isLast: any, allowSkip: any, answeredCount: any, total: any, onSkipThis: any, onNext: any, onSubmitAll: any, }: any): JSX.Element {
+  question, draft, isSingle, isLast, allowSkip, answeredCount, total, onSkipThis, onNext, onSubmitAll, }: any): JSX.Element {
   const isChoice = question?.kind === "choice";
   const isInput = question?.kind === "input";
   const showFooter =
@@ -88,7 +88,7 @@ function ActiveFooter({
   );
 }
 
-function CompletedSurvey({ questions: any, drafts: any, submittedResult }: any): JSX.Element {
+function CompletedSurvey({ questions, drafts, submittedResult }: any): JSX.Element {
   const result =
     submittedResult?.timedOut || submittedResult?.skipped
       ? submittedResult
@@ -105,7 +105,7 @@ function CompletedSurvey({ questions: any, drafts: any, submittedResult }: any):
  * Persisted/historical chats use the same SurveyBody via HistoricalClarifyingQuestions.
  */
 export default function ClarifyingQuestionCard({
-  requestId: any, questions: any = [], allowSkip: any = true, timeoutMs: any = null, websocket: any, }: any): JSX.Element {
+  requestId, questions = [], allowSkip = true, timeoutMs = null, websocket, }: any): JSX.Element {
   const [index, setIndex] = useState(0);
   const [responded, setResponded] = useState(false);
   const [submittedResult, setSubmittedResult] = useState(null);

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 export default function ConnectorOption({
-  slug: any, selectedConnector: any, setSelectedConnector: any, image: any, name: any, description: any, }: any): JSX.Element {
+  slug, selectedConnector, setSelectedConnector, image, name, description, }: any): JSX.Element {
   return (
     <button
       onClick={() => setSelectedConnector(slug)}

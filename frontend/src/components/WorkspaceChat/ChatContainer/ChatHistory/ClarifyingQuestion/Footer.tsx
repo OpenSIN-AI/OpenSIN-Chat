@@ -2,7 +2,7 @@
 import { SkipForward, Check, ArrowRight } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
-function ProgressIndicator({ answeredCount: any, total }: any): JSX.Element {
+function ProgressIndicator({ answeredCount, total }: any): JSX.Element {
   const { t } = useTranslation();
   return (
     <div className="text-xs text-zinc-400 light:text-slate-500">
@@ -14,7 +14,7 @@ function ProgressIndicator({ answeredCount: any, total }: any): JSX.Element {
   );
 }
 
-function SkipButton({ isSingle: any, onClick }: any): JSX.Element {
+function SkipButton({ isSingle, onClick }: any): JSX.Element {
   const { t } = useTranslation();
   return (
     <button
@@ -30,7 +30,7 @@ function SkipButton({ isSingle: any, onClick }: any): JSX.Element {
   );
 }
 
-function SubmitButton({ isSingle: any, onClick }: any): JSX.Element {
+function SubmitButton({ isSingle, onClick }: any): JSX.Element {
   const { t } = useTranslation();
   return (
     <button
@@ -67,7 +67,7 @@ function NextButton({ onClick }: any): JSX.Element {
  * there is no inline anchor so Skip rides along here when `allowSkip` is set.
  */
 export default function Footer({
-  isSingle: any, isLast: any, allowSkip: any, answeredCount: any, total: any, onSkipThis: any, onNext: any, onSubmitAll: any, }: any): JSX.Element {
+  isSingle, isLast, allowSkip, answeredCount, total, onSkipThis, onNext, onSubmitAll, }: any): JSX.Element {
   return (
     <div className="flex items-center justify-between gap-2 mt-1">
       {!isSingle && (

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
-const ChatSidebarContext = createContext();
+const ChatSidebarContext = createContext<any>(undefined);
 
 const SOURCE_FILTERS = {
   all: "all",
@@ -181,7 +181,7 @@ export function usePoliticalSidebar() {
  * @param {boolean} props.isOpen
  * @param {React.ReactNode} props.children
  */
-export default function ChatSidebar({ isOpen: any, children }: any): JSX.Element {
+export default function ChatSidebar({ isOpen, children }: any): JSX.Element {
   return (
     <div
       className="h-full overflow-hidden transition-all duration-500 flex-shrink-0"

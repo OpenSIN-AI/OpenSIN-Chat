@@ -19,7 +19,7 @@ import { Tooltip } from "react-tooltip";
 import { safeJsonParse } from "@/utils/request";
 
 function Directory({
-  files: any, setFiles: any, loading: any, setLoading: any, workspace: any, fetchKeys: any, selectedItems: any, setSelectedItems: any, setHighlightWorkspace: any, moveToWorkspace: any, setLoadingMessage: any, loadingMessage: any, }: any): JSX.Element {
+  files, setFiles, loading, setLoading, workspace, fetchKeys, selectedItems, setSelectedItems, setHighlightWorkspace, moveToWorkspace, setLoadingMessage, loadingMessage, }: any): JSX.Element {
   const { t } = useTranslation();
   const [amountSelected, setAmountSelected] = useState(0);
   const [showFolderSelection, setShowFolderSelection] = useState(false);

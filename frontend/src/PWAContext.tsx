@@ -30,7 +30,7 @@ function isStandalonePWA() {
   );
 }
 
-const PWAModeContext = createContext({ isPWA: false });
+const PWAModeContext = createContext<any>({ isPWA: false });
 export function PWAModeProvider({ children }) {
   const [isPWA, setIsPWA] = useState(() => isStandalonePWA());
 

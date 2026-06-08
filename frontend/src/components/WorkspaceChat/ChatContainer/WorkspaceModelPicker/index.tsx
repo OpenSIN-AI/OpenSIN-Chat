@@ -16,7 +16,7 @@ import System from "@/models/system";
 import ModelRouterAPI from "@/models/modelRouter";
 import { SIDEBAR_TOGGLE_EVENT } from "@/components/Sidebar/SidebarToggle";
 
-async function resolveModelName(workspace: any, systemSettings: any, t: any): JSX.Element {
+async function resolveModelName(workspace: any, systemSettings: any, t: any) {
   const effectiveProvider =
     workspace.chatProvider ?? systemSettings?.LLMProvider;
 
@@ -32,7 +32,7 @@ async function resolveModelName(workspace: any, systemSettings: any, t: any): JS
   return router.name;
 }
 
-async function fetchModelName(slug: any, setModelName: any, t: any): JSX.Element {
+async function fetchModelName(slug: any, setModelName: any, t: any) {
   if (!slug) return;
   const [workspace, systemSettings] = await Promise.all([
     Workspace.bySlug(slug),

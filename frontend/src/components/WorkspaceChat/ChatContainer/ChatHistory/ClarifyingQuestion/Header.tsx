@@ -13,7 +13,7 @@ function QuestionText({ children }: any): JSX.Element {
   );
 }
 
-function PaginationControls({ index: any, total: any, onPrev: any, onNext: any, isFirst: any, isLast }: any): JSX.Element {
+function PaginationControls({ index, total, onPrev, onNext, isFirst, isLast }: any): JSX.Element {
   const { t } = useTranslation();
   return (
     <div className="flex items-center gap-2 shrink-0">
@@ -45,7 +45,7 @@ function PaginationControls({ index: any, total: any, onPrev: any, onNext: any, 
   );
 }
 
-function CloseButton({ disabled: any, onClick }: any): JSX.Element {
+function CloseButton({ disabled, onClick }: any): JSX.Element {
   const { t } = useTranslation();
   return (
     <button
@@ -66,7 +66,7 @@ function CloseButton({ disabled: any, onClick }: any): JSX.Element {
  * surveys and after the user has responded.
  */
 export default function Header({
-  question: any, index: any, total: any, isSingle: any, responded: any, onPrev: any, onNext: any, onClose: any, isFirst: any, isLast: any, }: any): JSX.Element {
+  question, index, total, isSingle, responded, onPrev, onNext, onClose, isFirst, isLast, }: any): JSX.Element {
   const showPagination = !isSingle && !responded;
 
   return (

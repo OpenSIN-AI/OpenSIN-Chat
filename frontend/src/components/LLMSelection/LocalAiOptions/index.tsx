@@ -7,7 +7,7 @@ import PreLoader from "@/components/Preloader";
 import { LOCALAI_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 
-export default function LocalAiOptions({ settings: any, showAlert = false }: any): JSX.Element {
+export default function LocalAiOptions({ settings, showAlert = false }: any): JSX.Element {
   const {
     autoDetecting: loading,
     basePath,
@@ -145,7 +145,7 @@ export default function LocalAiOptions({ settings: any, showAlert = false }: any
   );
 }
 
-function LocalAIModelSelection({ settings: any, basePath: any = null, apiKey = null }: any): JSX.Element {
+function LocalAIModelSelection({ settings, basePath = null, apiKey = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

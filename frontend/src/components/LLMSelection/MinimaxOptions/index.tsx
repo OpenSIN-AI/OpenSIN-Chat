@@ -31,7 +31,7 @@ export default function MinimaxOptions({ settings }: any): JSX.Element {
   );
 }
 
-function MinimaxModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function MinimaxModelSelection({ apiKey, settings }: any): JSX.Element {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

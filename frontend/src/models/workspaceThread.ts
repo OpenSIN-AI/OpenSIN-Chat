@@ -88,7 +88,7 @@ const WorkspaceThread: any = {
       .catch(() => []);
     return history;
   },
-  streamChat: async function ({ workspaceSlug: any, threadSlug }: any, message: any, handleChat: any, attachments: any = [], 
+  streamChat: async function ({ workspaceSlug, threadSlug }: any, message: any, handleChat: any, attachments: any = [], 
   ) {
     const ctrl = new AbortController();
 

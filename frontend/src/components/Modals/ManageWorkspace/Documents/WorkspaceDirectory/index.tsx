@@ -14,7 +14,7 @@ import {
 } from "./directionaryUtils";
 
 function WorkspaceDirectory({
-  workspace: any, files: any, highlightWorkspace: any, loading: any, loadingMessage: any, setLoadingMessage: any, setLoading: any, fetchKeys: any, hasChanges: any, saveChanges: any, movedItems: any, }: any): JSX.Element {
+  workspace, files, highlightWorkspace, loading, loadingMessage, setLoadingMessage, setLoading, fetchKeys, hasChanges, saveChanges, movedItems, }: any): JSX.Element {
   const { t } = useTranslation();
   const { embeddingProgressMap, removeQueuedFile } = useEmbeddingProgress();
   const embeddingProgress = embeddingProgressMap[workspace.slug] || null;

@@ -7,7 +7,7 @@ import { isPathMatch } from "@/utils/paths";
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 
 export default function MenuOption({
-  btnText: any, icon: any, href: any, childOptions: any = [], flex: any = false, user: any = null, roles: any = [], hidden: any = false, isChild: any = false, }: any): JSX.Element {
+  btnText, icon, href, childOptions = [], flex = false, user = null, roles = [], hidden = false, isChild = false, }: any): JSX.Element {
   const storageKey = generateStorageKey({ key: btnText });
   const location = useLocation();
   const hasChildren = childOptions.length > 0;
@@ -125,7 +125,7 @@ export default function MenuOption({
 }
 
 function useIsExpanded({
-  storageKey: any = "", hasVisibleChildren: any = false, childOptions: any = [], location: any = null, }: any): JSX.Element {
+  storageKey = "", hasVisibleChildren = false, childOptions = [], location = null, }: any): JSX.Element {
   const [isExpanded, setIsExpanded] = useState(() => {
     if (hasVisibleChildren) {
       const storedValue = localStorage.getItem(storageKey);
@@ -165,7 +165,7 @@ function hasVisibleOptions(user: any = null, childOptions: any = []): JSX.Elemen
   if (!Array.isArray(childOptions) || childOptions?.length === 0) return false;
 
   function isVisible({
-    roles = [], user: any = null, flex: any = false, hidden: any = false, }: any): JSX.Element {
+    roles = [], user = null, flex = false, hidden = false, }: any): JSX.Element {
     if (hidden) return false;
     if (!flex && !roles.includes(user?.role)) return false;
     if (flex && !!user && !roles.includes(user?.role)) return false;

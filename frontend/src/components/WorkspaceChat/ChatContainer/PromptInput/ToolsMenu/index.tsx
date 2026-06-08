@@ -45,7 +45,7 @@ function getTabs(t, user: any): JSX.Element {
  * @param {boolean} [props.centered] - when true, popup opens below the input
  */
 export default function ToolsMenu({
-  workspace: any, showing: any, setShowing: any, sendCommand: any, promptRef: any, centered: any = false, highlightedIndexRef: any, }: any): JSX.Element {
+  workspace, showing, setShowing, sendCommand, promptRef, centered = false, highlightedIndexRef, }: any): JSX.Element {
   const { t } = useTranslation();
   const { user } = useUser();
   const TABS = useMemo(() => getTabs(t, user), [t, user]);
@@ -178,7 +178,7 @@ export default function ToolsMenu({
   );
 }
 
-function TabButton({ active: any, onClick: any, children }: any): JSX.Element {
+function TabButton({ active, onClick, children }: any): JSX.Element {
   return (
     <button
       type="button"

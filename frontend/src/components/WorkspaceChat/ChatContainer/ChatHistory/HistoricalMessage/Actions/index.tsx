@@ -9,7 +9,7 @@ import ActionMenu from "./ActionMenu";
 import { useTranslation } from "react-i18next";
 
 const Actions: any = ({
-  message, feedbackScore: any, chatId: any, slug: any, isLastMessage: any, regenerateMessage: any, forkThread: any, isEditing: any, role: any, metrics = {}, }: any) => {
+  message, feedbackScore, chatId, slug, isLastMessage, regenerateMessage, forkThread, isEditing, role, metrics = {}, }: any) => {
   const { t } = useTranslation();
   const [selectedFeedback, setSelectedFeedback] = useState(feedbackScore);
   const handleFeedback = async (newFeedback) => {
@@ -65,7 +65,7 @@ const Actions: any = ({
 };
 
 function FeedbackButton({
-  isSelected: any, handleFeedback: any, tooltipContent: any, IconComponent: any, }: any): JSX.Element {
+  isSelected, handleFeedback, tooltipContent, IconComponent, }: any): JSX.Element {
   return (
     <div className="mt-3 relative">
       <button
@@ -110,7 +110,7 @@ function CopyMessage({ message }: any): JSX.Element {
   );
 }
 
-function RegenerateMessage({ regenerateMessage: any, chatId }: any): JSX.Element {
+function RegenerateMessage({ regenerateMessage, chatId }: any): JSX.Element {
   const { t } = useTranslation();
   if (!chatId) return null;
   return (

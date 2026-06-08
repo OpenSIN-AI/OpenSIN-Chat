@@ -12,7 +12,7 @@ import {
   ThoughtChainComponent,
 } from "../ThoughtContainer";
 
-const PromptReply: any = ({ uuid, reply: any, pending: any, error: any, sources = [] }: any) => {
+const PromptReply: any = ({ uuid, reply, pending, error, sources = [] }: any) => {
   if (!reply && sources.length === 0 && !pending && !error) return null;
 
   if (pending) {
@@ -53,7 +53,7 @@ const PromptReply: any = ({ uuid, reply: any, pending: any, error: any, sources 
   );
 };
 
-function RenderAssistantChatContent({ message: any, messageId }: any): JSX.Element {
+function RenderAssistantChatContent({ message, messageId }: any): JSX.Element {
   const contentRef = useRef("");
   const thoughtChainRef = useRef(null);
 

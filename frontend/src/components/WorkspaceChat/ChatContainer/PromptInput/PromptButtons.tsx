@@ -2,7 +2,7 @@
 import { ArrowUp, Sparkle } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
-export function SendPromptButton({ formRef: any, promptInput: any, isDisabled }: any): JSX.Element {
+export function SendPromptButton({ formRef, promptInput, isDisabled }: any): JSX.Element {
   return (
     <button
       ref={formRef}
@@ -17,7 +17,7 @@ export function SendPromptButton({ formRef: any, promptInput: any, isDisabled }:
   );
 }
 
-export function EnhancePromptButton({ promptInput: any, setPromptInput: any, isStreaming }: any): JSX.Element {
+export function EnhancePromptButton({ promptInput, setPromptInput, isStreaming }: any): JSX.Element {
   const { t } = useTranslation();
   const [enhancing, setEnhancing] = useEnhancing(false);
   

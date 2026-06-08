@@ -76,7 +76,7 @@ export default function KokoroTTSOptions({ settings }: any): JSX.Element {
   );
 }
 
-function KokoroVoiceSelection({ settings: any, endpoint: any, apiKey = null }: any): JSX.Element {
+function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any): JSX.Element {
   const [voices, setVoices] = useState([]);
   const [loading, setLoading] = useState(true);
 

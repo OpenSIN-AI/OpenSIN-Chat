@@ -30,7 +30,7 @@ const TYPE_ICONS = {
   default: FileText,
 };
 
-function VersionDropdown({ versions: any, activeVersion: any, onSelect }: any): JSX.Element {
+function VersionDropdown({ versions, activeVersion, onSelect }: any): JSX.Element {
   const [open, setOpen] = useState(false);
   const ref: any = useRef(null);
 
@@ -82,7 +82,7 @@ function VersionDropdown({ versions: any, activeVersion: any, onSelect }: any): 
   );
 }
 
-function ThreeDotsMenu({ previewData: any, onAddToSources }: any): JSX.Element {
+function ThreeDotsMenu({ previewData, onAddToSources }: any): JSX.Element {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref: any = useRef(null);
@@ -159,7 +159,7 @@ function ThreeDotsMenu({ previewData: any, onAddToSources }: any): JSX.Element {
   );
 }
 
-function IframePreview({ url: any, title }: any): JSX.Element {
+function IframePreview({ url, title }: any): JSX.Element {
   const { t } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
@@ -208,7 +208,7 @@ function IframePreview({ url: any, title }: any): JSX.Element {
   );
 }
 
-function PreviewContent({ previewData: any, activeVersion }: any): JSX.Element {
+function PreviewContent({ previewData, activeVersion }: any): JSX.Element {
   const { t } = useTranslation();
   if (!previewData) {
     return (

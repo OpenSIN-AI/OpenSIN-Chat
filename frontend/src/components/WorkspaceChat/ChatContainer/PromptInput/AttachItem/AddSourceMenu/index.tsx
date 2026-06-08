@@ -51,7 +51,7 @@ function flattenLocalFiles(localFiles: any): JSX.Element {
  * @param {Function} props.onAddLocalFiles - trigger the local file uploader
  */
 export default function AddSourceMenu({
-  workspaceSlug: any, onClose: any, onAddLocalFiles: any, }: any): JSX.Element {
+  workspaceSlug, onClose, onAddLocalFiles, }: any): JSX.Element {
   const { t } = useTranslation();
   const [view, setView] = useState("root"); // "root" | "sources" | "url"
 
@@ -113,7 +113,7 @@ function MenuRow({ icon: Icon, label, onClick, hasSubmenu = false }) {
   );
 }
 
-function RootView({ t: any, onAddLocalFiles: any, onOpenSources: any, onOpenUrl }: any): JSX.Element {
+function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }: any): JSX.Element {
   return (
     <>
       <MenuRow
@@ -137,7 +137,7 @@ function RootView({ t: any, onAddLocalFiles: any, onOpenSources: any, onOpenUrl 
   );
 }
 
-function BackHeader({ label: any, onBack }: any): JSX.Element {
+function BackHeader({ label, onBack }: any): JSX.Element {
   return (
     <button
       type="button"
@@ -156,7 +156,7 @@ function BackHeader({ label: any, onBack }: any): JSX.Element {
   );
 }
 
-function SourcesView({ t: any, workspaceSlug: any, onBack: any, onClose }: any): JSX.Element {
+function SourcesView({ t, workspaceSlug, onBack, onClose }: any): JSX.Element {
   const [loading, setLoading] = useState(true);
   const [files, setFiles] = useState([]);
   const [addingId, setAddingId] = useState(null);
@@ -174,7 +174,7 @@ function SourcesView({ t: any, workspaceSlug: any, onBack: any, onClose }: any):
     };
   }, []);
 
-  async function handleAdd(file: any): JSX.Element {
+  async function handleAdd(file: any) {
     if (!workspaceSlug) {
       showToast(t("chat_window.attach_menu.no_workspace"), "error");
       return;
@@ -243,7 +243,7 @@ function SourcesView({ t: any, workspaceSlug: any, onBack: any, onClose }: any):
   );
 }
 
-function UrlView({ t: any, workspaceSlug: any, onBack: any, onClose }: any): JSX.Element {
+function UrlView({ t, workspaceSlug, onBack, onClose }: any): JSX.Element {
   const inputRef = useRef(null);
   const [link, setLink] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -252,7 +252,7 @@ function UrlView({ t: any, workspaceSlug: any, onBack: any, onClose }: any): JSX
     inputRef.current?.focus();
   }, []);
 
-  async function handleSubmit(e: any): JSX.Element {
+  async function handleSubmit(e: any) {
     e.preventDefault();
     const trimmed = link.trim();
     if (!trimmed || submitting) return;

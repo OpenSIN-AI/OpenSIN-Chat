@@ -33,7 +33,7 @@ export default function XAILLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function XAIModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function XAIModelSelection({ apiKey, settings }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

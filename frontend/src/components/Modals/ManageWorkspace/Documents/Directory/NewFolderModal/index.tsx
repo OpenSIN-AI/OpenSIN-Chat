@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { X } from "@phosphor-icons/react";
 import Document from "@/models/document";
 
-export default function NewFolderModal({ closeModal: any, files: any, setFiles }: any): JSX.Element {
+export default function NewFolderModal({ closeModal, files, setFiles }: any): JSX.Element {
   const [error, setError] = useState(null);
   const [folderName, setFolderName] = useState("");
 

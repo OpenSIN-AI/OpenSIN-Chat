@@ -14,7 +14,7 @@ import {
 } from "../contexts/TTSProvider";
 import { PENDING_HOME_MESSAGE } from "@/utils/constants";
 
-export default function WorkspaceChat({ loading: any, workspace }: any): JSX.Element {
+export default function WorkspaceChat({ loading, workspace }: any): JSX.Element {
   useWatchForAutoPlayAssistantTTSResponse();
   const { threadSlug = null } = useParams();
   // Stores { key, workspace, history } currently rendered. Lags the props so

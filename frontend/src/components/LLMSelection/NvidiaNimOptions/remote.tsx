@@ -69,7 +69,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any): JSX.Element {
     </div>
   );
 }
-function NvidiaNimModelSelection({ settings: any, basePath }: any): JSX.Element {
+function NvidiaNimModelSelection({ settings, basePath }: any): JSX.Element {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

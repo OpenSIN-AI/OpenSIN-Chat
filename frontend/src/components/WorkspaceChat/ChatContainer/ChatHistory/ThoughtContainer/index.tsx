@@ -19,7 +19,7 @@ import ThinkingStatic from "@/media/animations/thinking-static.png";
  * Context to persist thought expansion state across component transitions
  * (e.g., from PromptReply to HistoricalMessage)
  */
-const ThoughtExpansionContext = createContext(null);
+const ThoughtExpansionContext = createContext<any>(null);
 
 export function ThoughtExpansionProvider({ children }: any): JSX.Element {
   const [expansionStates, setExpansionStates] = useState({});

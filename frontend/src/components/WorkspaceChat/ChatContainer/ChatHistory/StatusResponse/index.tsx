@@ -5,7 +5,7 @@ import { CaretDown } from "@phosphor-icons/react";
 import AgentAnimation from "@/media/animations/agent-animation.webm";
 import AgentStatic from "@/media/animations/agent-static.png";
 
-export default function StatusResponse({ messages: any = [], isThinking = false }: any): JSX.Element {
+export default function StatusResponse({ messages = [], isThinking = false }: any): JSX.Element {
   const [isExpanded, setIsExpanded] = useState(false);
   const currentThought = messages[messages.length - 1];
   const previousThoughts = messages.slice(0, -1);

@@ -3,7 +3,7 @@ import { formatDateTimeAsMoment } from "@/utils/directories";
 import { formatDuration, numberWithCommas } from "@/utils/numbers";
 import React, { useEffect, useState, useContext } from "react";
 import { isMobile } from "react-device-detect";
-const MetricsContext = React.createContext();
+const MetricsContext = React.createContext<any>(undefined);
 const SHOW_METRICS_KEY = "openafd_show_chat_metrics";
 const SHOW_METRICS_EVENT = "openafd_show_metrics_change";
 

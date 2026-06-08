@@ -9,7 +9,7 @@ import showToast from "@/utils/toast";
 import FileUploadWarningModal from "./FileUploadWarningModal";
 import pluralize from "pluralize";
 
-export const DndUploaderContext = createContext();
+export const DndUploaderContext = createContext<any>(undefined);
 export const REMOVE_ATTACHMENT_EVENT = "ATTACHMENT_REMOVE";
 export const CLEAR_ATTACHMENTS_EVENT = "ATTACHMENT_CLEAR";
 export const PASTE_ATTACHMENT_EVENT = "ATTACHMENT_PASTED";
@@ -42,7 +42,7 @@ export const PARSED_FILE_ATTACHMENT_REMOVED_EVENT =
  */
 
 export function DnDFileUploaderProvider({
-  workspace: any, threadSlug: any = null, children: any, }: any): JSX.Element {
+  workspace, threadSlug = null, children, }: any): JSX.Element {
   const [files, setFiles] = useState([]);
   const [ready, setReady] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -85,7 +85,7 @@ export function DnDFileUploaderProvider({
    * Only uses the document id to remove the file from the queue
    * @param {CustomEvent<{document: ParsedFile}>} event
    */
-  async function handleRemoveParsedFile(event: any): JSX.Element {
+  async function handleRemoveParsedFile(event: any) {
     const { document } = event.detail;
     setFiles((prev) =>
       prev.filter((prevFile) => prevFile.document.id !== document.id),
@@ -96,7 +96,7 @@ export function DnDFileUploaderProvider({
    * Remove file from uploader queue.
    * @param {CustomEvent<{uid: string}>} event
    */
-  async function handleRemove(event: any): JSX.Element {
+  async function handleRemove(event: any) {
     /** @type {{uid: Attachment['uid'], document: Attachment['document']}} */
     const { uid, document } = event.detail;
     setFiles((prev) => prev.filter((prevFile) => prevFile.uid !== uid));
@@ -139,7 +139,7 @@ export function DnDFileUploaderProvider({
    * Handle pasted attachments.
    * @param {CustomEvent<{files: File[]}>} event
    */
-  async function handlePastedAttachment(event: any): JSX.Element {
+  async function handlePastedAttachment(event: any) {
     const { files = [] } = event.detail;
     if (!files.length) return;
     const newAccepted = [];
@@ -173,7 +173,7 @@ export function DnDFileUploaderProvider({
    * @param {Attachment[]} acceptedFiles
    * @param {any[]} _rejections
    */
-  async function onDrop(acceptedFiles: any, _rejections: any): JSX.Element {
+  async function onDrop(acceptedFiles: any, _rejections: any) {
     setDragging(false);
 
     /** @type {Attachment[]} */
@@ -208,7 +208,7 @@ export function DnDFileUploaderProvider({
    * Embeds attachments that are eligible for embedding - basically files that are not images.
    * @param {Attachment[]} newAttachments
    */
-  async function embedEligibleAttachments(newAttachments: any = []): JSX.Element {
+  async function embedEligibleAttachments(newAttachments: any = []) {
     window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSING_EVENT));
     const promises = [];
 
@@ -464,7 +464,7 @@ export default function DnDFileUploaderWrapper({ children }: any): JSX.Element {
  * @param {File} file
  * @returns {Promise<string>}
  */
-async function toBase64(file: any): JSX.Element {
+async function toBase64(file: any) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {

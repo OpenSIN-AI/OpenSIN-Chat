@@ -99,7 +99,7 @@ function TerminalTab() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [history]);
 
-  async function runCommand(cmd: any): JSX.Element {
+  async function runCommand(cmd: any) {
     const trimmed = cmd.trim();
     if (!trimmed) return;
 

@@ -74,7 +74,7 @@ export function useSidebarToggle() {
   return { showSidebar, setShowSidebar, canToggleSidebar };
 }
 
-export function ToggleSidebarButton({ showSidebar: any, setShowSidebar }: any): JSX.Element {
+export function ToggleSidebarButton({ showSidebar, setShowSidebar }: any): JSX.Element {
   const isMac = navigator.userAgent.includes("Mac");
   const shortcut = isMac ? "⌘ + Shift + S" : "Ctrl + Shift + S";
 

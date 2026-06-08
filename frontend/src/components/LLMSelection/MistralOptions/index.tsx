@@ -32,7 +32,7 @@ export default function MistralOptions({ settings }: any): JSX.Element {
   );
 }
 
-function MistralModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function MistralModelSelection({ apiKey, settings }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

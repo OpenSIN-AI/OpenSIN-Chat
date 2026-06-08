@@ -84,7 +84,7 @@ function ReportPreviewListener() {
 }
 
 export default function ChatContainer({
-  workspace: any, threadSlug: any = null, knownHistory: any = [], }: any): JSX.Element {
+  workspace, threadSlug = null, knownHistory = [], }: any): JSX.Element {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [loadingResponse, setLoadingResponse] = useState(false);

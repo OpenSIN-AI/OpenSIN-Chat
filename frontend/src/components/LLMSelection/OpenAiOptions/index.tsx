@@ -32,7 +32,7 @@ export default function OpenAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function OpenAIModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function OpenAIModelSelection({ apiKey, settings }: any): JSX.Element {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

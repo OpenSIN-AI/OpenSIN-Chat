@@ -6,7 +6,7 @@ import { useState } from "react";
 import ModalWrapper from "@/components/ModalWrapper";
 
 export default function RecoveryCodeModal({
-  recoveryCodes: any, onDownloadComplete: any, onClose: any, }: any): JSX.Element {
+  recoveryCodes, onDownloadComplete, onClose, }: any): JSX.Element {
   const [downloadClicked, setDownloadClicked] = useState(false);
 
   const downloadRecoveryCodes = () => {

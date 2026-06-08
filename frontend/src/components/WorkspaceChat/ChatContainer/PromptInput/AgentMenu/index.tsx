@@ -6,7 +6,7 @@ import { useIsAgentSessionActive } from "@/utils/chat/agent";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 
-export default function AvailableAgentsButton({ showing: any, setShowAgents }: any): JSX.Element {
+export default function AvailableAgentsButton({ showing, setShowAgents }: any): JSX.Element {
   const { t } = useTranslation();
   const agentSessionActive = useIsAgentSessionActive();
   if (agentSessionActive) return null;
@@ -36,7 +36,7 @@ export default function AvailableAgentsButton({ showing: any, setShowAgents }: a
 }
 
 export function AvailableAgents({
-  showing: any, setShowing: any, sendCommand: any, promptRef: any, centered: any = false, }: any): JSX.Element {
+  showing, setShowing, sendCommand, promptRef, centered = false, }: any): JSX.Element {
   const formRef = useRef(null);
   const agentSessionActive = useIsAgentSessionActive();
   const [searchParams] = useSearchParams();

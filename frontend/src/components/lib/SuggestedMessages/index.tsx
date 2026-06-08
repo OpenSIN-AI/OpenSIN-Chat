@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 export default function SuggestedMessages({
-  suggestedMessages: any = [], sendCommand: any, }: any): JSX.Element {
+  suggestedMessages = [], sendCommand, }: any): JSX.Element {
   if (!suggestedMessages?.length) return null;
 
   return (

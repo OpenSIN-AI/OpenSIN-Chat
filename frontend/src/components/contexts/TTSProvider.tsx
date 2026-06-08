@@ -4,7 +4,7 @@ import useSystemSettings from "@/hooks/useSystemSettings";
 import Appearance from "@/models/appearance";
 
 const ASSISTANT_MESSAGE_COMPLETE_EVENT = "ASSISTANT_MESSAGE_COMPLETE_EVENT";
-const TTSProviderContext = createContext();
+const TTSProviderContext = createContext<any>(undefined);
 
 /**
  * This component is used to provide the TTS provider context to the application.

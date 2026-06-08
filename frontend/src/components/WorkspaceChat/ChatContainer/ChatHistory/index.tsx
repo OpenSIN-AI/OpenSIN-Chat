@@ -277,7 +277,7 @@ const getLastMessageInfo: any = (history) => {
  * @returns {Array} The compiled history of messages.
  */
 function buildMessages({
-  history: any, workspace: any, regenerateAssistantMessage: any, saveEditedMessage: any, forkThread: any, websocket: any, }: any): JSX.Element {
+  history, workspace, regenerateAssistantMessage, saveEditedMessage, forkThread, websocket, }: any): JSX.Element {
   return history.reduce((acc, props, index) => {
     const isLastBotReply =
       index === history.length - 1 && props.role === "assistant";

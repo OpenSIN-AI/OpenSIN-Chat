@@ -23,7 +23,7 @@ export default function SearchBox({ user, showNewWsModal }: any): JSX.Element {
   const [searchResults, setSearchResults] = useState(DEFAULT_SEARCH_RESULTS);
   const handleSearch = debounce(handleSearchDebounced, 500);
 
-  async function handleSearchDebounced(e: any): JSX.Element {
+  async function handleSearchDebounced(e: any) {
     try {
       const searchValue = e.target.value;
       setSearchTerm(searchValue);
@@ -92,7 +92,7 @@ function SearchResultWrapper({ children }: any): JSX.Element {
   );
 }
 
-function SearchResults({ searchResults: any, searchTerm: any, loading }: any): JSX.Element {
+function SearchResults({ searchResults, searchTerm, loading }: any): JSX.Element {
   if (!searchTerm || searchTerm.length < 3) return null;
   if (loading)
     return (
@@ -148,7 +148,7 @@ function SearchResults({ searchResults: any, searchTerm: any, loading }: any): J
   );
 }
 
-function SearchResultCategory({ items: any, name }: any): JSX.Element {
+function SearchResultCategory({ items, name }: any): JSX.Element {
   if (!items?.length) return null;
   return (
     <div className="flex flex-col gap-y-[8px]">
@@ -169,7 +169,7 @@ function SearchResultCategory({ items: any, name }: any): JSX.Element {
   );
 }
 
-function SearchResultItem({ to: any, name: any, hint }: any): JSX.Element {
+function SearchResultItem({ to, name, hint }: any): JSX.Element {
   return (
     <Link
       to={to}
@@ -188,7 +188,7 @@ function SearchResultItem({ to: any, name: any, hint }: any): JSX.Element {
   );
 }
 
-function ShortWidthNewWorkspaceButton({ user: any, showNewWsModal }: any): JSX.Element {
+function ShortWidthNewWorkspaceButton({ user, showNewWsModal }: any): JSX.Element {
   const { t } = useTranslation();
   if (!!user && user?.role === "default") return null;
 

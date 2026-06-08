@@ -10,7 +10,7 @@ import { Trans } from "react-i18next";
  * @param {Object} props.routedTo - { model, ruleTitle, routerName }
  * @param {boolean} [props.isStreaming] - whether the response is still streaming
  */
-export default function ModelRouteNotification({ routedTo: any, isStreaming }: any): JSX.Element {
+export default function ModelRouteNotification({ routedTo, isStreaming }: any): JSX.Element {
   if (!routedTo) return null;
 
   return (

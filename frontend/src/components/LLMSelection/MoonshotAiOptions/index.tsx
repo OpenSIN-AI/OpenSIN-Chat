@@ -34,7 +34,7 @@ export default function MoonshotAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function MoonshotAiModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function MoonshotAiModelSelection({ apiKey, settings }: any): JSX.Element {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

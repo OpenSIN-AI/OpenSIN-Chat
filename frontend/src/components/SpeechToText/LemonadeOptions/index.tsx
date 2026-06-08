@@ -128,7 +128,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any): JSX.Elem
   );
 }
 
-function LemonadeSTTModelSelection({ settings: any, basePath = null }: any): JSX.Element {
+function LemonadeSTTModelSelection({ settings, basePath = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 

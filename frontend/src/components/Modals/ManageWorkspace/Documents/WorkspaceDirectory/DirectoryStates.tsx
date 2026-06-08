@@ -3,7 +3,7 @@ import PreLoader from "@/components/Preloader";
 import { X } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
-export function LoadingState({ workspace: any, loadingMessage }: any): JSX.Element {
+export function LoadingState({ workspace, loadingMessage }: any): JSX.Element {
   return (
     <div className="px-8">
       <div className="flex items-center justify-start w-[560px]">
@@ -22,7 +22,7 @@ export function LoadingState({ workspace: any, loadingMessage }: any): JSX.Eleme
 }
 
 export function EmbeddingProgressState({
-  workspace: any, embeddingProgress: any, hasChanges: any, movedItems: any, handleSaveChanges: any, removeQueuedFile: any, }: any): JSX.Element {
+  workspace, embeddingProgress, hasChanges, movedItems, handleSaveChanges, removeQueuedFile, }: any): JSX.Element {
   return (
     <div className="px-8">
       <div className="flex items-center justify-start w-[560px]">
@@ -70,7 +70,7 @@ export function EmbeddingProgressState({
   );
 }
 
-function EmbeddingFileRow({ filename: any, status: any, onRemove }: any): JSX.Element {
+function EmbeddingFileRow({ filename, status, onRemove }: any): JSX.Element {
   return (
     <div className="px-3.5 py-2 text-xs text-white/80 grid grid-cols-12 border-b border-white/10 hover:bg-white/5">
       <div className="col-span-8 flex items-center gap-x-2">

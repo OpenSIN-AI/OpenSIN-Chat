@@ -32,7 +32,7 @@ export default function TogetherAiOptions({ settings }: any): JSX.Element {
   );
 }
 
-function TogetherAiModelSelection({ settings: any, apiKey }: any): JSX.Element {
+function TogetherAiModelSelection({ settings, apiKey }: any): JSX.Element {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

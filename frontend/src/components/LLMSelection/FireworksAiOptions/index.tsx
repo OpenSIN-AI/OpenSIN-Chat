@@ -36,7 +36,7 @@ export default function FireworksAiOptions({ settings }: any): JSX.Element {
     </div>
   );
 }
-function FireworksAiModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function FireworksAiModelSelection({ apiKey, settings }: any): JSX.Element {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

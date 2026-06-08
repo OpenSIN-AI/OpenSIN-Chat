@@ -19,7 +19,7 @@ import {
 export const THREAD_RENAME_EVENT: any = "renameThread";
 
 export default function ThreadContainer({
-  workspace, isVirtualThread: any = false, }: any): JSX.Element {
+  workspace, isVirtualThread = false, }: any): JSX.Element {
   const { threadSlug = null } = useParams();
   const [threads, setThreads] = useState([]);
   const [folders, setFolders] = useState([]);
@@ -148,7 +148,7 @@ export default function ThreadContainer({
     setActiveId(active.id);
   }
 
-  async function handleDragEnd({ active: any, over }: any): JSX.Element {
+  async function handleDragEnd({ active, over }: any) {
     setActiveId(null);
     if (!over) return;
     const draggedSlug = active.id;
@@ -303,7 +303,7 @@ export default function ThreadContainer({
   );
 }
 
-function UnfolderedDropZone({ children: any, isDragging }: any): JSX.Element {
+function UnfolderedDropZone({ children, isDragging }: any): JSX.Element {
   const { setNodeRef, isOver } = useDroppable({ id: "unfoldered-drop" });
   return (
     <div
@@ -375,7 +375,7 @@ function NewThreadButton({ workspace }: any): JSX.Element {
   );
 }
 
-function NewFolderButton({ workspace: any, onCreated }: any): JSX.Element {
+function NewFolderButton({ workspace, onCreated }: any): JSX.Element {
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
     const name = window.prompt("Ordnername:")?.trim();
@@ -426,7 +426,7 @@ function NewFolderButton({ workspace: any, onCreated }: any): JSX.Element {
   );
 }
 
-function DeleteAllThreadButton({ ctrlPressed: any, threads: any, onDelete }: any): JSX.Element {
+function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }: any): JSX.Element {
   if (!ctrlPressed || threads.filter((t) => t.deleted).length === 0)
     return null;
   return (

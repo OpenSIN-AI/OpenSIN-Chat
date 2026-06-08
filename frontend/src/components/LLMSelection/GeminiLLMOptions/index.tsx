@@ -62,7 +62,7 @@ export default function GeminiLLMOptions({ settings }: any): JSX.Element {
   );
 }
 
-function GeminiModelSelection({ apiKey: any, settings }: any): JSX.Element {
+function GeminiModelSelection({ apiKey, settings }: any): JSX.Element {
   const [groupedModels, setGroupedModels] = useState({});
   const [loading, setLoading] = useState(true);
 

@@ -2,7 +2,7 @@
 import { PencilSimple } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
-function OptionButton({ label: any, description: any, index: any, selected: any, onClick }: any): JSX.Element {
+function OptionButton({ label, description, index, selected, onClick }: any): JSX.Element {
   return (
     <button
       type="button"
@@ -31,7 +31,7 @@ function OptionButton({ label: any, description: any, index: any, selected: any,
   );
 }
 
-function OtherRow({ selected: any, onToggle: any, allowSkip: any, onSkip }: any): JSX.Element {
+function OtherRow({ selected, onToggle, allowSkip, onSkip }: any): JSX.Element {
   const { t } = useTranslation();
   return (
     <div className="flex items-center w-full">
@@ -76,7 +76,7 @@ function SkipButton({ onClick }: any): JSX.Element {
   );
 }
 
-function OtherInput({ value: any, onChange }: any): JSX.Element {
+function OtherInput({ value, onChange }: any): JSX.Element {
   const { t } = useTranslation();
   return (
     <input
@@ -102,7 +102,7 @@ function OtherInput({ value: any, onChange }: any): JSX.Element {
  * the Other row instead of in the Footer.
  */
 export default function ChoiceForm({
-  question: any, draft: any, onChange: any, onAutoAdvance: any, allowSkip: any, onSkip: any, }: any): JSX.Element {
+  question, draft, onChange, onAutoAdvance, allowSkip, onSkip, }: any): JSX.Element {
   const showOther: any = question.allowOther !== false;
 
   function isChecked(opt): JSX.Element {

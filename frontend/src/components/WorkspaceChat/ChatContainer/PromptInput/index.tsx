@@ -35,7 +35,7 @@ const MAX_EDIT_STACK_SIZE = 100;
  * @param {string} [props.threadSlug] - thread slug for home page context
  */
 export default function PromptInput({
-  workspace = {}, submit: any, isStreaming: any, sendCommand: any, attachments: any = [], centered: any = false, workspaceSlug: any = null, threadSlug: any = null, }: any): JSX.Element {
+  workspace = {}, submit, isStreaming, sendCommand, attachments = [], centered = false, workspaceSlug = null, threadSlug = null, }: any): JSX.Element {
   const { t } = useTranslation();
   const { showAgentCommand = true } = workspace ?? {};
   const { isDisabled } = useIsDisabled();
@@ -413,7 +413,7 @@ export default function PromptInput({
 }
 
 function AgentSessionButton({
-  sendCommand: any, promptInput: any, textareaRef: any, visible: any = true, }: any): JSX.Element {
+  sendCommand, promptInput, textareaRef, visible = true, }: any): JSX.Element {
   const { t } = useTranslation();
   if (!visible) return null;
 
@@ -452,7 +452,7 @@ function AgentSessionButton({
 }
 
 function ToolsButton({
-  showTools: any, setShowTools: any, textareaRef: any, autoOpenedToolsRef: any, }: any): JSX.Element {
+  showTools, setShowTools, textareaRef, autoOpenedToolsRef, }: any): JSX.Element {
   const { t } = useTranslation();
 
   return (
@@ -483,7 +483,7 @@ function ToolsButton({
   );
 }
 
-function SendPromptButton({ formRef: any, promptInput: any, isDisabled }: any): JSX.Element {
+function SendPromptButton({ formRef, promptInput, isDisabled }: any): JSX.Element {
   const { t } = useTranslation();
 
   return (
@@ -524,7 +524,7 @@ function SendPromptButton({ formRef: any, promptInput: any, isDisabled }: any): 
 /**
  * Enhance Prompt Button — improves the current prompt via the server API.
  */
-function EnhancePromptButton({ promptInput: any, setPromptInput: any, isStreaming }: any): JSX.Element {
+function EnhancePromptButton({ promptInput, setPromptInput, isStreaming }: any): JSX.Element {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 

@@ -12,7 +12,7 @@ import { API_BASE } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
 import Workspace from "@/models/workspace";
 
-const EmbeddingProgressContext = createContext();
+const EmbeddingProgressContext = createContext<any>(undefined);
 
 export function useEmbeddingProgress() {
   return useContext(EmbeddingProgressContext);

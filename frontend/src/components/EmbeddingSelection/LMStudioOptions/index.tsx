@@ -200,7 +200,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any): JSX.Element
   );
 }
 
-function LMStudioModelSelection({ settings: any, basePath: any = null, apiKey = null }: any): JSX.Element {
+function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any): JSX.Element {
   const [customModels, setCustomModels] = useState([]);
   const [loading, setLoading] = useState(true);
 
