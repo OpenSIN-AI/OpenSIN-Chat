@@ -48,7 +48,10 @@ RUN (getent passwd "$ARG_UID" && userdel -f "$(getent passwd "$ARG_UID" | cut -d
 # Copy docker helper scripts
 COPY ./docker/docker-entrypoint.sh /usr/local/bin/
 COPY ./docker/docker-healthcheck.sh /usr/local/bin/
-COPY --chown=openafd:openafd ./docker/.env.example /app/server/.env
+# NOTE: We intentionally do NOT bake docker/.env into the image.
+# docker-compose mounts the real docker/.env over /app/server/.env at runtime
+# (see volumes in docker-compose.yml). Baking .env.example here would only ship
+# a misleading default with commented-out keys.
 
 # Ensure the scripts are executable
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
@@ -117,7 +120,10 @@ RUN (getent passwd "$ARG_UID" && userdel -f "$(getent passwd "$ARG_UID" | cut -d
 # Copy docker helper scripts
 COPY ./docker/docker-entrypoint.sh /usr/local/bin/
 COPY ./docker/docker-healthcheck.sh /usr/local/bin/
-COPY --chown=openafd:openafd ./docker/.env.example /app/server/.env
+# NOTE: We intentionally do NOT bake docker/.env into the image.
+# docker-compose mounts the real docker/.env over /app/server/.env at runtime
+# (see volumes in docker-compose.yml). Baking .env.example here would only ship
+# a misleading default with commented-out keys.
 
 # Ensure the scripts are executable
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
