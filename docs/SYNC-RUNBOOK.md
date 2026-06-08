@@ -26,7 +26,7 @@ The politician DB is populated by a **Bree background job** that runs every 6 ho
 ```bash
 docker ps
 # Status: healthy (or check manually)
-curl http://localhost:3001/ping
+curl http://localhost:3001/api/ping
 # {"online":true}
 ```
 

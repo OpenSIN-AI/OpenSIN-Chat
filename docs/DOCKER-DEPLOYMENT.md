@@ -17,7 +17,7 @@ This guide covers:
 4. **Build from source:** Custom image with current `main` branch
 5. **Health checks:** Verifying the container is fully running (server + collector)
 6. **Politician DB sync:** Pre-flight for the 21. Wahlperiode
-7. **Common pitfalls:** STORAGE_DIR, /api/ping vs /ping, .env file vs directory
+7. **Common pitfalls:** STORAGE_DIR, /api/ping endpoint path, .env file vs directory
 8. **Troubleshooting:** Logs, port conflicts, permission issues
 9. **Rollback strategy:** How to revert to a previous image
 
@@ -82,7 +82,7 @@ docker run -d --name openafd \
 # 5. Verify
 sleep 30
 docker ps  # Status: healthy
-curl http://localhost:3001/ping  # {"online":true}
+curl http://localhost:3001/api/ping  # {"online":true}
 ```
 
 ### Windows (PowerShell)
@@ -260,12 +260,15 @@ docker ps
 
 ### Healthcheck endpoint
 ```bash
-# Code registers: app.get("/ping", ...) — under root, NOT /api/
-curl http://localhost:3001/ping
+# system.js registers app.get("/ping", ...) on the apiRouter, and
+# server/index.js mounts apiRouter under /api → real path is /api/ping
+curl http://localhost:3001/api/ping
 # Returns: {"online":true} (HTTP 200)
 ```
 
-⚠️ **Common mistake:** Documentation and the original healthcheck script both reference `/api/ping` — but the actual endpoint is `/ping`. See `docs/architecture.md` for the fix.
+✅ **Note:** The endpoint is `/api/ping`. `docker/docker-healthcheck.sh` already
+checks `/api/ping`, which matches the code. Earlier drafts of this doc claimed
+the endpoint was `/ping` at root — that was incorrect.
 
 ### Manual checks
 ```bash
@@ -378,11 +381,11 @@ TypeError [ERR_INVALID_ARG_TYPE]: The "paths[0]" argument must be of type string
 **Cause:** `STORAGE_DIR` not passed via `-e` or `env_file`.
 **Fix:** Add to docker-compose.yml `environment:` section or `docker run -e`.
 
-### Pitfall 3: Healthcheck URL is `/api/ping` but endpoint is `/ping`
+### Pitfall 3: Using the wrong health endpoint path
 
-**Symptom:** `docker ps` shows `unhealthy` despite server running.
-**Cause:** `docker/docker-healthcheck.sh` checks `/api/ping` but `app.get("/ping", ...)` is registered under root.
-**Fix:** Healthcheck script uses `http://localhost:3001/ping` (not `/api/ping`).
+**Symptom:** A manual `curl http://localhost:3001/ping` returns 404 and you think the server is broken.
+**Cause:** `app.get("/ping", ...)` is registered on the `apiRouter`, which `server/index.js` mounts under `/api`. The real path is therefore `/api/ping`, not `/ping`.
+**Fix:** Use `curl http://localhost:3001/api/ping`. `docker/docker-healthcheck.sh` already uses the correct `/api/ping` path.
 
 ### Pitfall 4: `SIG_KEY='passphrase'` in .env.example is too short
 
@@ -427,7 +430,7 @@ docker logs openafd 2>&1 | tail -50
 ### Healthcheck fails but server runs
 ```bash
 # Manually test endpoint
-docker exec openafd curl http://localhost:3001/ping
+docker exec openafd curl http://localhost:3001/api/ping
 # Should return: {"online":true}
 
 # If works manually but healthcheck fails:
@@ -533,7 +536,7 @@ For production deployments via GitHub Actions, see:
 | Run container | `docker run -d --name openafd -p 3001:3001 --cap-add SYS_ADMIN -e STORAGE_DIR=/app/server/storage -v $STORAGE_LOCATION:/app/server/storage openafd/openafd:latest` |
 | View logs | `docker logs -f openafd` |
 | Restart | `docker restart openafd` |
-| Health check | `curl http://localhost:3001/ping` |
+| Health check | `curl http://localhost:3001/api/ping` |
 | Trigger sync | `docker exec openafd node /app/server/jobs/sync-politician-data.js` |
 | Backup DB | `cp $STORAGE_LOCATION/openafd.db backup.db` |
 | Restore DB | `cp backup.db $STORAGE_LOCATION/openafd.db && docker restart openafd` |
