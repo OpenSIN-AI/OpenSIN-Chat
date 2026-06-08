@@ -29,7 +29,7 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
-    public details?: unknown
+    public details?: any
   ) {
     super(message);
     this.name = "ApiError";

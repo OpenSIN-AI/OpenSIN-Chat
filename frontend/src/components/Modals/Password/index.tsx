@@ -1,0 +1,124 @@
+// SPDX-License-Identifier: MIT
+import React, { useState, useEffect } from "react";
+import System from "../../../models/system";
+import SingleUserAuth from "./SingleUserAuth";
+import MultiUserAuth from "./MultiUserAuth";
+import {
+  AUTH_TOKEN,
+  AUTH_USER,
+  AUTH_TIMESTAMP,
+} from "../../../utils/constants";
+import useLogo from "../../../hooks/useLogo";
+import useSystemSettings from "../../../hooks/useSystemSettings";
+
+export default function PasswordModal({ mode = "single" }: any) {
+  const { loginLogo, isCustomLogo } = useLogo();
+  return (
+    <div className="fixed inset-0 bg-zinc-950 light:bg-slate-50 flex flex-col items-center justify-center overflow-hidden">
+      <img
+        src={loginLogo}
+        alt="Logo"
+        className={`max-h-[80px] object-contain ${isCustomLogo ? "rounded-lg" : ""}`}
+      />
+      {mode === "single" ? <SingleUserAuth /> : <MultiUserAuth />}
+    </div>
+  );
+}
+
+export function usePasswordModal(notry: any = false) {
+  const [auth, setAuth] = useState({
+    loading: true,
+    requiresAuth: false,
+    mode: "single",
+  } as any);
+
+  const { settings, loading: settingsLoading } = useSystemSettings();
+
+  useEffect(() => {
+    if (settingsLoading) return;
+    if (!window) return;
+
+    // If the last validity check is still valid
+    // we can skip the loading.
+    if (!System.needsAuthCheck() && notry === false) {
+      setAuth({
+        loading: false,
+        requiresAuth: false,
+        mode: "multi",
+      });
+      return;
+    }
+
+    if (settings?.MultiUserMode) {
+      const currentToken = window.localStorage.getItem(AUTH_TOKEN);
+      if (!!currentToken) {
+        System.checkAuth(currentToken).then((valid) => {
+          if (!valid) {
+            setAuth({
+              loading: false,
+              requiresAuth: true,
+              mode: "multi",
+            });
+            window.localStorage.removeItem(AUTH_USER);
+            window.localStorage.removeItem(AUTH_TOKEN);
+            window.localStorage.removeItem(AUTH_TIMESTAMP);
+          } else {
+            setAuth({
+              loading: false,
+              requiresAuth: false,
+              mode: "multi",
+            });
+          }
+        });
+      } else {
+        setAuth({
+          loading: false,
+          requiresAuth: true,
+          mode: "multi",
+        });
+      }
+    } else {
+      // Running token check in single user Auth mode.
+      // If Single user Auth is disabled - skip check
+      const requiresAuth = settings?.RequiresAuth || false;
+      if (!requiresAuth) {
+        setAuth({
+          loading: false,
+          requiresAuth: false,
+          mode: "single",
+        });
+        return;
+      }
+
+      const currentToken = window.localStorage.getItem(AUTH_TOKEN);
+      if (!!currentToken) {
+        System.checkAuth(currentToken).then((valid) => {
+          if (!valid) {
+            setAuth({
+              loading: false,
+              requiresAuth: true,
+              mode: "single",
+            });
+            window.localStorage.removeItem(AUTH_TOKEN);
+            window.localStorage.removeItem(AUTH_USER);
+            window.localStorage.removeItem(AUTH_TIMESTAMP);
+          } else {
+            setAuth({
+              loading: false,
+              requiresAuth: false,
+              mode: "single",
+            });
+          }
+        });
+      } else {
+        setAuth({
+          loading: false,
+          requiresAuth: true,
+          mode: "single",
+        });
+      }
+    }
+  }, [settings, settingsLoading, notry]);
+
+  return auth;
+}

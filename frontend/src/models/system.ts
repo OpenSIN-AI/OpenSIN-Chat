@@ -9,7 +9,7 @@ import { baseHeaders, safeJsonParse } from "@/utils/request";
 import type { ApiResponse } from "@/types/api";
 
 interface SystemKeys {
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
 interface OnboardingStatus {
@@ -20,7 +20,7 @@ interface SetupComplete {
   results: SystemKeys;
 }
 
-const System = {
+const System: any = {
   /**
    * Check if backend is reachable
    */

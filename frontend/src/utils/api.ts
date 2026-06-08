@@ -29,7 +29,7 @@ export async function apiGet<T>(url: string): Promise<T> {
  */
 export async function apiPost<T>(
   url: string,
-  data?: unknown
+  data?: any
 ): Promise<T> {
   const res = await fetch(url, {
     credentials: "include",
@@ -51,7 +51,7 @@ export async function apiPost<T>(
  */
 export async function apiPut<T>(
   url: string,
-  data?: unknown
+  data?: any
 ): Promise<T> {
   const res = await fetch(url, {
     credentials: "include",

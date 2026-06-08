@@ -13,7 +13,7 @@ interface WorkspaceResponse extends ApiResponse<Workspace> {}
 interface ThreadResponse extends ApiResponse<Thread> {}
 interface ChatHistoryResponse extends ApiResponse<ChatHistory> {}
 
-const Workspace = {
+const Workspace: any = {
   /**
    * Get all workspaces for current user
    */

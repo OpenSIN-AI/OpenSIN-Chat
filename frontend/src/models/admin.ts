@@ -9,14 +9,14 @@ import { baseHeaders } from "@/utils/request";
 import type { ApiResponse } from "@/types/api";
 
 export interface SystemPreference {
-  [key: string]: unknown;
+  [key: string]: any;
 }
 
 export interface SystemPreferencesResponse {
   settings: SystemPreference;
 }
 
-const Admin = {
+const Admin: any = {
   /**
    * Get system preferences by field names
    */
