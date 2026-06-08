@@ -14,7 +14,7 @@ import RightSidebarIconBar from "./RightSidebarIconBar";
  */
 export default function Sidebars({ workspace }) {
   return (
-    <div className="relative flex-shrink-0 h-full w-[44px]">
+    <div className="relative flex-shrink-0 h-full w-[48px] bg-theme-bg-primary border-l border-theme-sidebar-border">
       <SourcesSidebar workspace={workspace} />
       <MemoriesSidebar workspace={workspace} />
       <PreviewSidebar />
