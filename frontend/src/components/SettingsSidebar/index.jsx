@@ -61,8 +61,7 @@ export default function SettingsSidebar() {
             <img
               src={logo}
               alt="Logo"
-              className="block mx-auto h-6 w-auto"
-              style={{ maxHeight: "40px", objectFit: "contain" }}
+              className="block mx-auto h-6 w-auto max-h-10 object-contain"
             />
           </div>
           <div className="w-12"></div>
@@ -92,8 +91,7 @@ export default function SettingsSidebar() {
                   <img
                     src={logo}
                     alt="Logo"
-                    className="rounded w-full max-h-[40px]"
-                    style={{ objectFit: "contain" }}
+                    className="rounded w-full max-h-[40px] object-contain"
                   />
                 </div>
                 <div className="flex gap-x-2 items-center text-slate-500 shrink-0">
@@ -146,8 +144,7 @@ export default function SettingsSidebar() {
           <img
             src={logo}
             alt="Logo"
-            className="rounded max-h-[24px]"
-            style={{ objectFit: "contain" }}
+            className="rounded max-h-[24px] object-contain"
           />
         </Link>
         <div

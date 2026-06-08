@@ -122,8 +122,8 @@ export default function SourcesSidebar({ workspace }) {
     <MemoriesProvider workspace={workspace}>
       <ChatSidebar isOpen={sidebarOpen}>
         <div
-          className="ml-4 w-[350px] bg-zinc-900 light:bg-white light:border-2 light:border-slate-300 md:rounded-[16px] p-4 flex flex-col gap-4 overflow-hidden mt-[72px]"
-          style={{ maxHeight: "calc(100% - 88px)" }}
+          className="ml-4 w-[350px] bg-zinc-900 light:bg-white light:border-2 light:border-slate-300 md:rounded-[16px] p-4 flex flex-col gap-4 overflow-hidden mt-[72px] max-h-[calc(100%-88px)]"
+          
         >
           <div className="flex flex-col shrink-0 gap-2">
             <div className="flex items-start justify-between">

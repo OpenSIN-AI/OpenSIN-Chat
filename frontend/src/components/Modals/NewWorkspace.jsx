@@ -41,10 +41,7 @@ export default function NewWorkspaceModal({ hideModal = noop }) {
             <X size={24} weight="bold" className="text-white" />
           </button>
         </div>
-        <div
-          className="h-full w-full overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
-        >
+        <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <form ref={formEl} onSubmit={handleCreate}>
             <div className="py-7 px-9 space-y-2 flex-col">
               <div className="w-full flex flex-col gap-y-4">

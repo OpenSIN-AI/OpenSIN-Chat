@@ -108,8 +108,7 @@ const Layout = ({ children }) => {
   const { showScrollbar } = Appearance.getSettings();
   return (
     <div
-      style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-      className={`relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary light:border-[1px] light:border-theme-sidebar-border w-full h-full overflow-y-scroll ${showScrollbar ? "show-scrollbar" : "no-scroll"}`}
+      className={`relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary light:border-[1px] light:border-theme-sidebar-border w-full ${isMobile ? "h-full" : "h-[calc(100%-32px)]"} overflow-y-scroll ${showScrollbar ? "show-scrollbar" : "no-scroll"}`}
     >
       {children}
     </div>

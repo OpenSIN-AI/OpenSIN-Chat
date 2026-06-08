@@ -24,8 +24,8 @@ function CardWrapper({ children }) {
     <div className="flex justify-center w-full my-1 pr-4">
       <div className="w-full flex flex-col">
         <div
-          style={{ borderRadius: "20px" }}
-          className="relative border border-solid border-zinc-700 light:border-zinc-300 bg-transparent p-[18px] flex flex-col gap-[18px] overflow-hidden"
+          
+          className="rounded-[20px] relative border border-solid border-zinc-700 light:border-zinc-300 bg-transparent p-[18px] flex flex-col gap-[18px] overflow-hidden"
         >
           {children}
         </div>

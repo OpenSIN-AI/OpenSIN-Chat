@@ -127,8 +127,7 @@ export function SidebarMobileHeader() {
           <img
             src={logo}
             alt="Logo"
-            className="block mx-auto h-6 w-auto"
-            style={{ maxHeight: "40px", objectFit: "contain" }}
+            className="block mx-auto h-6 w-auto max-h-10 object-contain"
           />
         </div>
         <div className="w-12"></div>
@@ -161,8 +160,7 @@ export function SidebarMobileHeader() {
                 <img
                   src={logo}
                   alt="Logo"
-                  className="rounded w-full max-h-[40px]"
-                  style={{ objectFit: "contain" }}
+                  className="rounded w-full max-h-[40px] object-contain"
                 />
               </div>
               {(!user || user?.role !== "default") && (

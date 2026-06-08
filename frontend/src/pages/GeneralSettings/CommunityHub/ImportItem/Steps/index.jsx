@@ -66,8 +66,7 @@ export function CommunityHubImportItemLayout({ setStep, children }) {
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
       <div
-        style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] w-full h-full overflow-y-scroll p-4 md:p-0"
+        className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] w-full h-full overflow-y-scroll p-4 md:p-0`
       >
         {children(settings, setSettings, setStep)}
       </div>

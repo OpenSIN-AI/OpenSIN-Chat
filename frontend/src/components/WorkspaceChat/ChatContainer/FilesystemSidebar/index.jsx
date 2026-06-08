@@ -70,8 +70,8 @@ export default function FilesystemSidebar() {
   return (
     <ChatSidebar isOpen={sidebarOpen}>
       <div
-        className="ml-4 w-[350px] bg-zinc-900 light:bg-white light:border-2 light:border-slate-300 md:rounded-[16px] flex flex-col overflow-hidden mt-[72px]"
-        style={{ maxHeight: "calc(100% - 88px)" }}
+        className="ml-4 w-[350px] bg-zinc-900 light:bg-white light:border-2 light:border-slate-300 md:rounded-[16px] flex flex-col overflow-hidden mt-[72px] max-h-[calc(100%-88px)]"
+        
       >
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <FolderOpen size={15} className="text-zinc-400 light:text-slate-500" />

@@ -64,8 +64,8 @@ export default function EditPresetModal({
           </button>
         </div>
         <div
-          className="h-full w-full overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
+          className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]"
+          
         >
           <form onSubmit={handleSubmit}>
             <div className="py-7 px-9 space-y-2 flex-col">

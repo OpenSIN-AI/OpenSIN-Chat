@@ -242,10 +242,7 @@ export function CitationDetailModal({ source, onClose }) {
             />
           </button>
         </div>
-        <div
-          className="h-full w-full overflow-y-auto"
-          style={{ maxHeight: "calc(100vh - 200px)" }}
-        >
+        <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <div className="py-7 px-9 space-y-2 flex-col">
             {chunks.map(({ text, score }, idx) => (
               <Fragment key={idx}>
