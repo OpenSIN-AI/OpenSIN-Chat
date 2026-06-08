@@ -6,6 +6,7 @@ import { isMobile } from "react-device-detect";
 import useUser from "@/hooks/useUser";
 import useWorkspace from "@/hooks/useWorkspace";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import useModelRouter from "@/hooks/useModelRouter";
 import { useModal } from "@/hooks/useModal";
 import LLMSelectorModal from "../PromptInput/LLMSelector/index";
 import SetupProvider from "../PromptInput/LLMSelector/SetupProvider";
@@ -13,24 +14,7 @@ import {
   SAVE_LLM_SELECTOR_EVENT,
   PROVIDER_SETUP_EVENT,
 } from "../PromptInput/LLMSelector/action";
-import ModelRouterAPI from "@/models/modelRouter";
 import { SIDEBAR_TOGGLE_EVENT } from "@/components/Sidebar/SidebarToggle";
-
-async function resolveModelName(workspace, systemSettings, t) {
-  const effectiveProvider =
-    workspace.chatProvider ?? systemSettings?.LLMProvider;
-
-  if (effectiveProvider !== "openafd-router")
-    return workspace.chatModel ?? systemSettings?.LLMModel ?? "";
-
-  const routerId = workspace.router_id || systemSettings?.ModelRouterId;
-  if (!routerId) return t("model-router.metrics.model-router-default");
-
-  const { router } = await ModelRouterAPI.get(routerId);
-  if (!router?.name) return t("model-router.metrics.model-router-default");
-
-  return router.name;
-}
 
 export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   const { t } = useTranslation();
@@ -52,33 +36,40 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
     () => window.localStorage.getItem("openafd_sidebar_toggle") !== "closed",
   );
 
+  const effectiveProvider =
+    workspace?.chatProvider ?? systemSettings?.LLMProvider;
+  const routerId =
+    workspace?.router_id || systemSettings?.ModelRouterId;
+  const { router } = useModelRouter(
+    effectiveProvider === "openafd-router" ? routerId : null,
+  );
+
   useEffect(() => {
     const handleToggle = (e) => setSidebarOpen(e.detail.open);
     window.addEventListener(SIDEBAR_TOGGLE_EVENT, handleToggle);
     return () => window.removeEventListener(SIDEBAR_TOGGLE_EVENT, handleToggle);
   }, []);
 
-  // Fetch current model name for display
   useEffect(() => {
-    if (workspace && systemSettings) {
-      resolveModelName(workspace, systemSettings, t).then(setModelName);
+    if (!workspace || !systemSettings) return;
+    if (effectiveProvider !== "openafd-router") {
+      setModelName(workspace.chatModel ?? systemSettings.LLMModel ?? "");
+    } else if (router) {
+      setModelName(router.name);
+    } else if (!routerId) {
+      setModelName(t("model-router.metrics.model-router-default"));
     }
-  }, [workspace, systemSettings, t]);
+  }, [workspace, systemSettings, router, effectiveProvider, t]);
 
-  // Close selector and refresh model name when model is saved
   useEffect(() => {
     function handleSave() {
       setShowSelector(false);
-      if (workspace && systemSettings) {
-        resolveModelName(workspace, systemSettings, t).then(setModelName);
-      }
     }
     window.addEventListener(SAVE_LLM_SELECTOR_EVENT, handleSave);
     return () =>
       window.removeEventListener(SAVE_LLM_SELECTOR_EVENT, handleSave);
   }, [slug, workspace, systemSettings]);
 
-  // Handle provider setup request
   useEffect(() => {
     function handleProviderSetup(e) {
       const { provider, settings } = e.detail;
@@ -90,7 +81,6 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
       window.removeEventListener(PROVIDER_SETUP_EVENT, handleProviderSetup);
   }, []);
 
-  // This feature is disabled for multi-user instances where the user is not an admin
   if (!!user && user.role !== "admin") return null;
   if (!slug || isMobile) return null;
 

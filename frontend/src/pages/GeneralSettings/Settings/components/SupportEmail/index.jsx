@@ -3,26 +3,25 @@ import useUser from "@/hooks/useUser";
 import Admin from "@/models/admin";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import useSupportEmail from "@/hooks/useSupportEmail";
 
 export default function SupportEmail() {
   const { user } = useUser();
-  const [loading, setLoading] = useState(true);
+  const { email: fetchedEmail, isLoading } = useSupportEmail();
   const [hasChanges, setHasChanges] = useState(false);
   const [supportEmail, setSupportEmail] = useState("");
   const [originalEmail, setOriginalEmail] = useState("");
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const fetchSupportEmail = async () => {
-      const supportEmail = await System.fetchSupportEmail();
-      setSupportEmail(supportEmail.email || "");
-      setOriginalEmail(supportEmail.email || "");
-      setLoading(false);
-    };
-    fetchSupportEmail();
-  }, []);
+  // Sync SWR data into local state
+  const [synced, setSynced] = useState(false);
+  if (!isLoading && !synced) {
+    setSupportEmail(fetchedEmail);
+    setOriginalEmail(fetchedEmail);
+    setSynced(true);
+  }
 
   const updateSupportEmail = async (e, newValue = null) => {
     e.preventDefault();
@@ -53,7 +52,7 @@ export default function SupportEmail() {
     setHasChanges(true);
   };
 
-  if (loading || !user?.role) return null;
+  if (isLoading || !user?.role) return null;
   return (
     <form
       className="flex flex-col gap-y-0.5 mt-4"

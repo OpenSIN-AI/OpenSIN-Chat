@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LiteLLMOptions({ settings }: any) {
   const [basePathValue, setBasePathValue] = useState(settings?.LiteLLMBasePath);
@@ -75,29 +75,8 @@ export default function LiteLLMOptions({ settings }: any) {
 }
 
 function LiteLLMModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      const { models } = await System.customModels(
-        "litellm",
-        typeof apiKey === "boolean" ? null : apiKey,
-        basePath,
-      );
-      setCustomModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath, apiKey]);
-
-  if (loading || customModels.length == 0) {
+  const { customModels, isLoading } = useProviderModels("litellm", apiKey, basePath);
+  if (isLoading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">

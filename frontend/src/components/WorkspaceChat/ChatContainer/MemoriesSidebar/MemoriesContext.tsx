@@ -3,6 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { useMemoriesSidebar } from "../ChatSidebar";
 import useUser from "@/hooks/useUser";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import useMemories from "@/hooks/useMemories";
 import Memory from "@/models/memory";
 
 export const LIMITS = {
@@ -25,7 +26,6 @@ export function MemoriesProvider({ workspace, children }) {
   const { user } = useUser();
   const canToggle = !user || user?.role === "admin";
 
-  const [memories, setMemories] = useState({ global: [], workspace: [] });
   const [activeTab, setActiveTab] = useState("workspace");
   const [modalState, setModalState] = useState({ open: false, mode: "create" });
   const [editingMemory, setEditingMemory] = useState(null);
@@ -33,49 +33,43 @@ export function MemoriesProvider({ workspace, children }) {
   const [enabled, setEnabled] = useState(false);
   const [autoExtraction, setAutoExtraction] = useState(true);
 
+  const { memories, isLoading: memoriesLoading, refresh: refreshMemories } = useMemories(
+    sidebarOpen && enabled ? workspace?.slug : null,
+  );
+
   useEffect(() => {
     if (settingsLoading) return;
     setEnabled(!!settings?.MemoryEnabled);
     setAutoExtraction(settings?.MemoryAutoExtraction !== false);
   }, [settings, settingsLoading]);
 
-  async function fetchMemories() {
-    if (!workspace?.slug) return;
-    const data = await Memory.forWorkspace(workspace.slug);
-    setMemories(data);
-  }
-
-  useEffect(() => {
-    if (sidebarOpen && enabled) fetchMemories();
-  }, [sidebarOpen, workspace?.slug, enabled]);
-
   async function handleCreate(content) {
     const { memory } = await Memory.create(workspace.slug, {
       content,
       scope: activeTab,
     });
-    if (memory) fetchMemories();
+    if (memory) refreshMemories();
   }
 
   async function handleDelete(memoryId) {
     await Memory.delete(memoryId);
-    fetchMemories();
+    refreshMemories();
   }
 
   async function handleUpdate(memoryId, content) {
     const { memory } = await Memory.update(memoryId, { content });
-    if (memory) fetchMemories();
+    if (memory) refreshMemories();
   }
 
   async function handlePromote(memoryId) {
     const { memory } = await Memory.promoteToGlobal(memoryId);
-    if (memory) fetchMemories();
+    if (memory) refreshMemories();
   }
 
   async function handleDemote(memoryId) {
     if (!workspace?.slug) return;
     const { memory } = await Memory.demoteToWorkspace(memoryId, workspace.slug);
-    if (memory) fetchMemories();
+    if (memory) refreshMemories();
   }
 
   function openCreateModal() {
@@ -109,7 +103,7 @@ export function MemoriesProvider({ workspace, children }) {
     setEnabled,
     autoExtraction,
     setAutoExtraction,
-    loadingEnabled,
+    loadingEnabled: settingsLoading,
     modalState,
     editingMemory,
     openCreateModal,

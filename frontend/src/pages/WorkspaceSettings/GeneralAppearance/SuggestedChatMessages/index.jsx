@@ -2,26 +2,26 @@
 import PreLoader from "@/components/Preloader";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Plus, X } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import useSuggestedMessages from "@/hooks/useSuggestedMessages";
 
 export default function SuggestedChatMessages({ slug }) {
+  const { suggestedMessages: initialMessages, isLoading } =
+    useSuggestedMessages(slug);
   const [suggestedMessages, setSuggestedMessages] = useState([]);
   const [editingIndex, setEditingIndex] = useState(-1);
   const [newMessage, setNewMessage] = useState({ heading: "", message: "" });
   const [hasChanges, setHasChanges] = useState(false);
-  const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
-  useEffect(() => {
-    async function fetchWorkspace() {
-      if (!slug) return;
-      const suggestedMessages = await Workspace.getSuggestedMessages(slug);
-      setSuggestedMessages(suggestedMessages);
-      setLoading(false);
-    }
-    fetchWorkspace();
-  }, [slug]);
+
+  // Sync SWR data into local state once loaded
+  const [synced, setSynced] = useState(false);
+  if (!isLoading && !synced) {
+    setSuggestedMessages(initialMessages || []);
+    setSynced(true);
+  }
 
   const handleSaveSuggestedMessages = async () => {
     const validMessages = suggestedMessages.filter(
@@ -66,8 +66,6 @@ export default function SuggestedChatMessages({ slug }) {
     e.preventDefault();
     setEditingIndex(index);
     const suggestion = suggestedMessages[index];
-    // Legacy messages may have a separate heading field. Merge it into the message
-    // on edit so the user can manage everything in a single input going forward.
     if (suggestion.heading) {
       const merged = {
         heading: "",
@@ -104,7 +102,7 @@ export default function SuggestedChatMessages({ slug }) {
     setHasChanges(true);
   };
 
-  if (loading)
+  if (isLoading)
     return (
       <div className="flex flex-col">
         <label className="block input-label">

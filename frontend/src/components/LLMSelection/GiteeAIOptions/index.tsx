@@ -1,7 +1,5 @@
-// SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
 
+import useProviderModels from "@/hooks/useProviderModels";// SPDX-License-Identifier: MIT
 export default function GiteeAIOptions({ settings }: any) {
   return (
     <div className="flex gap-[36px] mt-1.5">
@@ -46,28 +44,8 @@ export default function GiteeAIOptions({ settings }: any) {
 }
 
 function GiteeAIModelSelection({ settings }: any) {
-  const [groupedModels, setGroupedModels] = useState({} as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models = [] } = await System.customModels("giteeai");
-      if (models?.length > 0) {
-        const modelsByOrganization = models.reduce((acc, model) => {
-          acc[model.organization] = acc[model.organization] || [];
-          acc[model.organization].push(model);
-          return acc;
-        }, {});
-        setGroupedModels(modelsByOrganization);
-      }
-
-      setLoading(false);
-    }
-    findCustomModels();
-  }, []);
-
-  if (loading) {
+  const { customModels, isLoading } = useProviderModels("giteeai");
+  if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">

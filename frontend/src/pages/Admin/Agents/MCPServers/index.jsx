@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { titleCase } from "text-case";
 import { BookOpenText, ArrowClockwise, Warning } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
@@ -7,6 +7,8 @@ import MCPLogo from "@/media/agents/mcp-logo.svg";
 import MCPServers from "@/models/mcpServers";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
+import useMCPServers, { MCP_SERVERS_KEY } from "@/hooks/useMCPServers";
+import { mutate } from "swr";
 
 export function MCPServerHeader({
   setMcpServers,
@@ -14,36 +16,34 @@ export function MCPServerHeader({
   children,
 }) {
   const { t } = useTranslation();
-  const [loadingMcpServers, setLoadingMcpServers] = useState(false);
-  useEffect(() => {
-    async function fetchMCPServers() {
-      setLoadingMcpServers(true);
-      const { servers = [] } = await MCPServers.listServers();
-      setMcpServers(servers);
-      setLoadingMcpServers(false);
-    }
-    fetchMCPServers();
-  }, []);
+  const { servers, isLoading, refresh } = useMCPServers();
+  const [initialLoaded, setInitialLoaded] = useState(false);
+  const [reloading, setReloading] = useState(false);
 
-  // Refresh the list of MCP servers
+  if (!initialLoaded && !isLoading) {
+    setMcpServers(servers);
+    setInitialLoaded(true);
+  }
+
   const refreshMCPServers = () => {
     if (
       window.confirm(
         "Are you sure you want to refresh the list of MCP servers? This will restart all MCP servers and reload their tools.",
       )
     ) {
-      setLoadingMcpServers(true);
+      setReloading(true);
       MCPServers.forceReload()
         .then(({ servers = [] }) => {
           setSelectedMcpServer(null);
           setMcpServers(servers);
+          mutate(MCP_SERVERS_KEY);
         })
         .catch((err) => {
           console.error(err);
           showToast(`Failed to refresh MCP servers.`, "error", { clear: true });
         })
         .finally(() => {
-          setLoadingMcpServers(false);
+          setReloading(false);
         });
     }
   };
@@ -67,22 +67,22 @@ export function MCPServerHeader({
           <button
             type="button"
             onClick={refreshMCPServers}
-            disabled={loadingMcpServers}
+            disabled={isLoading || reloading}
             className="border-none text-theme-text-secondary hover:text-cta-button flex items-center gap-x-1"
           >
             <ArrowClockwise
               size={16}
-              className={loadingMcpServers ? "animate-spin" : ""}
+              className={isLoading || reloading ? "animate-spin" : ""}
             />
             <p className="text-sm">
-              {loadingMcpServers
+              {isLoading || reloading
                 ? `${t("common.loading")}...`
                 : t("common.refresh")}
             </p>
           </button>
         </div>
       </div>
-      {children({ loadingMcpServers })}
+      {children({ loadingMcpServers: isLoading || reloading })}
     </>
   );
 }

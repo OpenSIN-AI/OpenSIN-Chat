@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -8,25 +7,15 @@ import EmbedRow from "./EmbedRow";
 import NewEmbedModal from "./NewEmbedModal";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
-import Embed from "@/models/embed";
 import CTAButton from "@/components/lib/CTAButton";
+import useEmbedConfigs from "@/hooks/useEmbedConfigs";
 
 export default function EmbedConfigsView() {
   const { isOpen, openModal, closeModal } = useModal();
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(true);
-  const [embeds, setEmbeds] = useState([]);
+  const { embeds, isLoading } = useEmbedConfigs();
 
-  useEffect(() => {
-    async function fetchUsers() {
-      const _embeds = await Embed.embeds();
-      setEmbeds(_embeds);
-      setLoading(false);
-    }
-    fetchUsers();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Skeleton.default
         height="80vh"

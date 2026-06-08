@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CircleNotch, X } from "@phosphor-icons/react";
 import ModelRouter from "@/models/modelRouter";
-import System from "@/models/system";
 import ModalWrapper from "@/components/ModalWrapper";
 import LLMProviderModelPicker from "../LLMProviderModelPicker";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function NewRouterModal({
   isOpen,
@@ -16,14 +16,10 @@ export default function NewRouterModal({
   const { t } = useTranslation();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [systemSettings, setSystemSettings] = useState(null);
   const isEdit = !!router;
 
-  useEffect(() => {
-    if (isOpen && !isEdit) {
-      System.keys().then((settings) => setSystemSettings(settings));
-    }
-  }, [isOpen, isEdit]);
+  const shouldFetchSettings = isOpen && !isEdit;
+  const { settings: systemSettings } = useSystemSettings();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

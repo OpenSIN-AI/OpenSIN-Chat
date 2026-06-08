@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function XAILLMOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.XAIApiKey);
@@ -34,32 +34,8 @@ export default function XAILLMOptions({ settings }: any) {
 }
 
 function XAIModelSelection({ apiKey, settings }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!apiKey) {
-        setCustomModels([]);
-        setLoading(true);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        const { models } = await System.customModels("xai", apiKey);
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch custom models:", error);
-        setCustomModels([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    findCustomModels();
-  }, [apiKey]);
-
-  if (loading) {
+  const { customModels, isLoading } = useProviderModels("xai", apiKey);
+  if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-theme-text-primary text-sm font-semibold block mb-3">
@@ -71,7 +47,7 @@ function XAIModelSelection({ apiKey, settings }: any) {
           className="border-none bg-theme-settings-input-bg text-theme-text-primary border-theme-border text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            --loading available models--
+            -- loading available models --
           </option>
         </select>
         <p className="text-xs leading-[18px] font-base text-theme-text-primary opacity-60 mt-2">

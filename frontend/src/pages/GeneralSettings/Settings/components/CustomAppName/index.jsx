@@ -2,33 +2,34 @@
 import Admin from "@/models/admin";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import useCustomAppName from "@/hooks/useCustomAppName";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function CustomAppName() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(true);
+  const { appName: fetchedAppName, isLoading: appNameLoading } =
+    useCustomAppName();
+  const { settings, loading: settingsLoading } = useSystemSettings();
   const [hasChanges, setHasChanges] = useState(false);
   const [customAppName, setCustomAppName] = useState("");
   const [originalAppName, setOriginalAppName] = useState("");
   const [canCustomize, setCanCustomize] = useState(false);
 
-  useEffect(() => {
-    const fetchInitialParams = async () => {
-      const settings = await System.keys();
-      if (!settings?.MultiUserMode && !settings?.RequiresAuth) {
-        setCanCustomize(false);
-        return false;
-      }
-
-      const { appName } = await System.fetchCustomAppName();
-      setCustomAppName(appName || "");
-      setOriginalAppName(appName || "");
+  // Sync SWR data into local state
+  const [synced, setSynced] = useState(false);
+  if (!settingsLoading && !appNameLoading && !synced) {
+    if (!settings?.MultiUserMode && !settings?.RequiresAuth) {
+      setCanCustomize(false);
+      setSynced(true);
+    } else {
+      setCustomAppName(fetchedAppName);
+      setOriginalAppName(fetchedAppName);
       setCanCustomize(true);
-      setLoading(false);
-    };
-    fetchInitialParams();
-  }, []);
+      setSynced(true);
+    }
+  }
 
   const updateCustomAppName = async (e, newValue = null) => {
     e.preventDefault();
@@ -57,7 +58,7 @@ export default function CustomAppName() {
     setHasChanges(true);
   };
 
-  if (!canCustomize || loading) return null;
+  if (!canCustomize || settingsLoading || appNameLoading) return null;
 
   return (
     <form

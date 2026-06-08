@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import System from "@/models/system";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function TogetherAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.TogetherAiApiKey);
@@ -33,39 +33,8 @@ export default function TogetherAiOptions({ settings }: any) {
 }
 
 function TogetherAiModelSelection({ settings, apiKey }: any) {
-  const [groupedModels, setGroupedModels] = useState({} as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      try {
-        const key = apiKey === "*".repeat(20) ? null : apiKey;
-        const { models } = await System.customModels("togetherai", key);
-        if (models?.length > 0) {
-          const modelsByOrganization = models.reduce((acc, model) => {
-            if (model.type !== "chat") return acc; // Only show chat models in dropdown
-            const org = model.organization || "Unknown";
-            acc[org] = acc[org] || [];
-            acc[org].push({
-              id: model.id,
-              name: model.name || model.id,
-              organization: org,
-              maxLength: model.maxLength,
-            });
-            return acc;
-          }, {});
-          setGroupedModels(modelsByOrganization);
-        }
-      } catch (error) {
-        console.error("Error fetching Together AI models:", error);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [apiKey]);
-
-  if (loading || Object.keys(groupedModels).length === 0) {
+  const { customModels, isLoading } = useProviderModels("togetherai", apiKey);
+  if (isLoading || Object.keys(customModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
@@ -94,11 +63,11 @@ function TogetherAiModelSelection({ settings, apiKey }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {Object.keys(groupedModels)
+        {Object.keys(customModels)
           .sort()
           .map((organization) => (
             <optgroup key={organization} label={organization}>
-              {groupedModels[organization].map((model) => (
+              {customModels[organization].map((model) => (
                 <option
                   key={model.id}
                   value={model.id}

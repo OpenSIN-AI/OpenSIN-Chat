@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import System from "@/models/system";
 import DocumentSyncQueueRow from "./DocumentSyncQueueRow";
+import useLiveSync from "@/hooks/useLiveSync";
 
 export default function LiveDocumentSyncManager() {
   return (
@@ -13,6 +12,7 @@ export default function LiveDocumentSyncManager() {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+      }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
@@ -37,19 +37,9 @@ export default function LiveDocumentSyncManager() {
 }
 
 function WatchedDocumentsContainer() {
-  const [loading, setLoading] = useState(true);
-  const [queues, setQueues] = useState([]);
+  const { queues, isLoading } = useLiveSync();
 
-  useEffect(() => {
-    async function fetchData() {
-      const _queues = await System.experimentalFeatures.liveSync.queues();
-      setQueues(_queues);
-      setLoading(false);
-    }
-    fetchData();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Skeleton.default
         height="80vh"

@@ -1,41 +1,28 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import { ArrowLeft } from "@phosphor-icons/react";
 import ScheduledJobs from "@/models/scheduledJobs";
-import usePolling from "@/hooks/usePolling";
 import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
 import RunRow from "./components/RunRow";
 import { humanizeCron } from "./utils/cron";
+import useRunHistory from "@/hooks/useRunHistory";
+import useScheduledJob from "@/hooks/useScheduledJob";
 
 export default function RunHistoryPage() {
   const { t } = useTranslation();
   const { id } = useParams();
-  const [job, setJob] = useState(null);
-  const [runs, setRuns] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { runs, isLoading, mutate: refreshRuns } = useRunHistory(id);
+  const { job } = useScheduledJob(id);
   const [triggering, setTriggering] = useState(false);
   const hasInFlightRun = runs.some(
     (r) => r.status === "queued" || r.status === "running",
   );
-
-  const fetchRuns = async () => {
-    const { runs: foundRuns } = await ScheduledJobs.runs(id);
-    setRuns(foundRuns || []);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    ScheduledJobs.get(id).then(({ job }) => setJob(job));
-    fetchRuns();
-  }, [id]);
-
-  // Poll every 5s while visible so new runs appear and running statuses update.
-  usePolling(fetchRuns, 5000);
 
   const handleRunNow = async () => {
     setTriggering(true);
@@ -57,10 +44,10 @@ export default function RunHistoryPage() {
     } else {
       showToast(t("scheduledJobs.toast.triggered"), "success");
     }
-    fetchRuns();
+    refreshRuns();
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <RunHistoryLayout job={job}>
         <div className="flex flex-col items-center justify-center gap-8 py-24 text-center">
@@ -117,7 +104,7 @@ export default function RunHistoryPage() {
                 key={run.id}
                 run={run}
                 jobId={job?.id}
-                onKilled={fetchRuns}
+                onKilled={refreshRuns}
               />
             ))}
           </div>
@@ -136,6 +123,7 @@ function RunHistoryLayout({ job, children }) {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-2 pb-6 border-white/10 light:border-slate-300 border-b-2">

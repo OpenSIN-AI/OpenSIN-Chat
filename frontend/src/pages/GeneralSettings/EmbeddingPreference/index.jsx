@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import System from "@/models/system";
@@ -42,6 +42,7 @@ import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
 import { useTranslation } from "react-i18next";
+import useEmbeddingPreference from "@/hooks/useEmbeddingPreference";
 
 const EMBEDDERS = [
   {
@@ -150,12 +151,11 @@ const EMBEDDERS = [
 ];
 
 export default function GeneralEmbeddingPreference() {
+  const { settings, isLoading } = useEmbeddingPreference();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [hasEmbeddings, setHasEmbeddings] = useState(false);
   const [hasCachedEmbeddings, setHasCachedEmbeddings] = useState(false);
-  const [settings, setSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredEmbedders, setFilteredEmbedders] = useState([]);
   const [selectedEmbedder, setSelectedEmbedder] = useState(null);
@@ -163,6 +163,13 @@ export default function GeneralEmbeddingPreference() {
   const searchInputRef = useRef(null);
   const { isOpen, openModal, closeModal } = useModal();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (isLoading || !settings) return;
+    setSelectedEmbedder(settings?.EmbeddingEngine || "native");
+    setHasEmbeddings(settings?.HasExistingEmbeddings || false);
+    setHasCachedEmbeddings(settings?.HasCachedEmbeddings || false);
+  }, [isLoading, settings]);
 
   function embedderModelChanged(formEl) {
     try {
@@ -226,18 +233,6 @@ export default function GeneralEmbeddingPreference() {
   };
 
   useEffect(() => {
-    async function fetchKeys() {
-      const _settings = await System.keys();
-      setSettings(_settings);
-      setSelectedEmbedder(_settings?.EmbeddingEngine || "native");
-      setHasEmbeddings(_settings?.HasExistingEmbeddings || false);
-      setHasCachedEmbeddings(_settings?.HasCachedEmbeddings || false);
-      setLoading(false);
-    }
-    fetchKeys();
-  }, []);
-
-  useEffect(() => {
     const filtered = EMBEDDERS.filter((embedder) =>
       embedder.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
@@ -251,9 +246,10 @@ export default function GeneralEmbeddingPreference() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
-      {loading ? (
+      {isLoading ? (
         <div
           className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+          }
         >
           <div className="w-full h-full flex justify-center items-center">
             <PreLoader />
@@ -262,6 +258,7 @@ export default function GeneralEmbeddingPreference() {
       ) : (
         <div
           className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+          }
         >
           <form
             id="embedding-form"
@@ -352,16 +349,16 @@ export default function GeneralEmbeddingPreference() {
                   >
                     <div className="flex gap-x-4 items-center">
                       <img
-                        src={selectedEmbedderObject.logo}
-                        alt={`${selectedEmbedderObject.name} logo`}
+                        src={selectedEmbedderObject?.logo}
+                        alt={`${selectedEmbedderObject?.name} logo`}
                         className="w-10 h-10 rounded-md"
                       />
                       <div className="flex flex-col text-left">
                         <div className="text-sm font-semibold text-white">
-                          {selectedEmbedderObject.name}
+                          {selectedEmbedderObject?.name}
                         </div>
                         <div className="mt-1 text-xs text-description">
-                          {selectedEmbedderObject.description}
+                          {selectedEmbedderObject?.description}
                         </div>
                       </div>
                     </div>

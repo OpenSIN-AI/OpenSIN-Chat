@@ -2,25 +2,27 @@
 import useLogo from "@/hooks/useLogo";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Plus } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import useIsDefaultLogo from "@/hooks/useIsDefaultLogo";
 
 export default function CustomLogo() {
   const { t } = useTranslation();
   const { logo: _initLogo, setLogo: _setLogo } = useLogo();
+  const { isDefaultLogo: _isDefaultLogo, refresh: refreshIsDefaultLogo } =
+    useIsDefaultLogo();
   const [logo, setLogo] = useState("");
   const [isDefaultLogo, setIsDefaultLogo] = useState(true);
   const fileInputRef = useRef(null);
 
-  useEffect(() => {
-    async function logoInit() {
-      setLogo(_initLogo || "");
-      const _isDefaultLogo = await System.isDefaultLogo();
-      setIsDefaultLogo(_isDefaultLogo);
-    }
-    logoInit();
-  }, [_initLogo]);
+  // Sync from SWR hooks
+  const [synced, setSynced] = useState(false);
+  if (!synced && _initLogo !== undefined) {
+    setLogo(_initLogo || "");
+    setIsDefaultLogo(_isDefaultLogo);
+    setSynced(true);
+  }
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function MistralOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.MistralApiKey);
@@ -33,28 +33,8 @@ export default function MistralOptions({ settings }: any) {
 }
 
 function MistralModelSelection({ apiKey, settings }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!apiKey) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      const { models } = await System.customModels(
-        "mistral",
-        typeof apiKey === "boolean" ? null : apiKey,
-      );
-      setCustomModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [apiKey]);
-
-  if (loading || customModels.length == 0) {
+  const { customModels, isLoading } = useProviderModels("mistral", apiKey);
+  if (isLoading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">

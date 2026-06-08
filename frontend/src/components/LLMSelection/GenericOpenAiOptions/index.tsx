@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function GenericOpenAiOptions({ settings }: any) {
   const [genericOpenAiBasePath, setGenericOpenAiBasePath] = useState(
@@ -95,34 +95,8 @@ export default function GenericOpenAiOptions({ settings }: any) {
 
 function GenericOpenAiModelSelection({
   settings, basePath = null, apiKey = null, genericOpenAiModelPref, setGenericOpenAiModelPref, }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { models } = await System.customModels(
-          "generic-openai",
-          apiKey,
-          basePath,
-        );
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch custom models:", error);
-        setCustomModels([]);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath, apiKey]);
-
-  if (loading) {
+  const { customModels, isLoading } = useProviderModels("generic-openai", apiKey, basePath);
+  if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <div className="flex items-center mb-2 gap-x-1">
@@ -136,14 +110,14 @@ function GenericOpenAiModelSelection({
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            --loading available models--
+            -- loading available models --
           </option>
         </select>
       </div>
     );
   }
 
-  // If no models are found, just show a free-form input field for the model name
+  // If no customModels are found, just show a free-form input field for the model name
   if (customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">

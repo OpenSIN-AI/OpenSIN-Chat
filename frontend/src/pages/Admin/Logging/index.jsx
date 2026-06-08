@@ -2,31 +2,23 @@
 import Sidebar from "@/components/SettingsSidebar";
 import useQuery from "@/hooks/useQuery";
 import System from "@/models/system";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import LogRow from "./LogRow";
 import showToast from "@/utils/toast";
 import CTAButton from "@/components/lib/CTAButton";
 import { useTranslation } from "react-i18next";
+import useEventLogs from "@/hooks/useEventLogs";
 
 export default function AdminLogs() {
   const query = useQuery();
-  const [loading, setLoading] = useState(true);
-  const [logs, setLogs] = useState([]);
   const [offset, setOffset] = useState(Number(query.get("offset") || 0));
-  const [canNext, setCanNext] = useState(false);
+  const { result, isLoading } = useEventLogs(offset);
   const { t } = useTranslation();
 
-  useEffect(() => {
-    async function fetchLogs() {
-      const { logs: _logs, hasPages = false } = await System.eventLogs(offset);
-      setLogs(_logs);
-      setCanNext(hasPages);
-      setLoading(false);
-    }
-    fetchLogs();
-  }, [offset]);
+  const logs = result?.logs ?? [];
+  const canNext = result?.hasPages ?? false;
 
   const handleResetLogs = async () => {
     if (
@@ -38,8 +30,6 @@ export default function AdminLogs() {
     const { success, error } = await System.clearEventLogs();
     if (success) {
       showToast("Event logs cleared successfully.", "success");
-      setLogs([]);
-      setCanNext(false);
       setOffset(0);
     } else {
       showToast(`Failed to clear logs: ${error}`, "error");
@@ -59,6 +49,7 @@ export default function AdminLogs() {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+      }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
@@ -81,7 +72,7 @@ export default function AdminLogs() {
           </div>
           <div className="overflow-x-auto mt-6">
             <LogsContainer
-              loading={loading}
+              loading={isLoading}
               logs={logs}
               offset={offset}
               canNext={canNext}

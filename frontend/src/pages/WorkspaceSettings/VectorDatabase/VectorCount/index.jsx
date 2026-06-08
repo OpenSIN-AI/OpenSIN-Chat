@@ -1,22 +1,16 @@
 // SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
-import System from "@/models/system";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import useVectorCount from "@/hooks/useVectorCount";
 
 export default function VectorCount({ reload, workspace }) {
-  const [totalVectors, setTotalVectors] = useState(null);
   const { t } = useTranslation();
+  const { vectorCount, isLoading, mutate } = useVectorCount(workspace?.slug);
 
-  useEffect(() => {
-    async function fetchVectorCount() {
-      const totalVectors = await System.totalIndexes(workspace.slug);
-      setTotalVectors(totalVectors);
-    }
-    fetchVectorCount();
-  }, [workspace?.slug, reload]);
+  // Re-fetch when reload prop changes
+  if (reload) mutate();
 
-  if (totalVectors === null)
+  if (isLoading || vectorCount === null)
     return (
       <div>
         <h3 className="input-label">{t("general.vector.title")}</h3>
@@ -32,7 +26,7 @@ export default function VectorCount({ reload, workspace }) {
     <div>
       <h3 className="input-label">{t("general.vector.title")}</h3>
       <p className="text-white text-opacity-60 text-sm font-medium">
-        {totalVectors}
+        {vectorCount}
       </p>
     </div>
   );

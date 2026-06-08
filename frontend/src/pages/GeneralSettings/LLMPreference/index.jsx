@@ -19,18 +19,22 @@ import PreLoader from "@/components/Preloader";
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
 import CTAButton from "@/components/lib/CTAButton";
+import useLLMProviders from "@/hooks/useLLMProviders";
 
 export default function GeneralLLMPreference() {
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
-  const [settings, setSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredLLMs, setFilteredLLMs] = useState([]);
   const [selectedLLM, setSelectedLLM] = useState(null);
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef(null);
   const { t } = useTranslation();
+  const { keys: settings, isLoading: loading } = useLLMProviders();
+
+  useEffect(() => {
+    if (settings?.LLMProvider) setSelectedLLM(settings.LLMProvider);
+  }, [settings]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,16 +70,6 @@ export default function GeneralLLMPreference() {
       setSearchMenuOpen(!searchMenuOpen);
     }
   };
-
-  useEffect(() => {
-    async function fetchKeys() {
-      const _settings = await System.keys();
-      setSettings(_settings);
-      setSelectedLLM(_settings?.LLMProvider);
-      setLoading(false);
-    }
-    fetchKeys();
-  }, []);
 
   useEffect(() => {
     function updateHasChanges() {
@@ -133,6 +127,7 @@ function LoadingState() {
   return (
     <div
       className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+      }
     >
       <div className="w-full h-full flex justify-center items-center">
         <PreLoader />
@@ -161,6 +156,7 @@ function ContentArea({
   return (
     <div
       className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+      }
     >
       <form onSubmit={handleSubmit} className="flex w-full">
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
@@ -353,4 +349,3 @@ function OptionsSection({ selectedLLM, settings }) {
     </div>
   );
 }
-

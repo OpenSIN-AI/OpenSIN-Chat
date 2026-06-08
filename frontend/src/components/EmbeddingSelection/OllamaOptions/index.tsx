@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
-import System from "@/models/system";
+import React, { useState } from "react";
 import PreLoader from "@/components/Preloader";
 import { OLLAMA_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function OllamaEmbeddingOptions({ settings }: any) {
   const {
@@ -198,28 +198,11 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
 }
 
 function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { models } = await System.customModels("ollama", null, basePath);
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch custom models:", error);
-        setCustomModels([]);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath]);
+  const { customModels, isLoading: loading } = useProviderModels(
+    basePath ? "ollama" : null,
+    null,
+    basePath,
+  );
 
   if (loading || customModels.length == 0) {
     return (

@@ -1,17 +1,15 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { BookOpen } from "@phosphor-icons/react";
-import Admin from "@/models/admin";
-import System from "@/models/system";
 import WorkspaceRow from "./WorkspaceRow";
 import NewWorkspaceModal from "./NewWorkspaceModal";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
+import useAdminWorkspaces from "@/hooks/useAdminWorkspaces";
 
 export default function AdminWorkspaces() {
   const { isOpen, openModal, closeModal } = useModal();
@@ -21,6 +19,7 @@ export default function AdminWorkspaces() {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+      }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
@@ -55,27 +54,9 @@ export default function AdminWorkspaces() {
 }
 
 function WorkspacesContainer() {
-  const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
-  const [workspaces, setWorkspaces] = useState([]);
-  const [deletionProtected, setDeletionProtected] = useState(false);
+  const { users, workspaces, deletionProtected, isLoading } = useAdminWorkspaces();
 
-  useEffect(() => {
-    async function fetchData() {
-      const [_users, _workspaces, _settings] = await Promise.all([
-        Admin.users(),
-        Admin.workspaces(),
-        System.keys(),
-      ]);
-      setUsers(_users);
-      setWorkspaces(_workspaces);
-      setDeletionProtected(_settings?.WorkspaceDeletionProtection === true);
-      setLoading(false);
-    }
-    fetchData();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Skeleton.default
         height="80vh"

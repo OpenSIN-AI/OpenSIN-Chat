@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
-import System from "@/models/system";
 import PreLoader from "@/components/Preloader";
 import { DPAIS_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function DellProAIStudioOptions({ settings }: any) {
   const {
@@ -106,30 +106,8 @@ export default function DellProAIStudioOptions({ settings }: any) {
 }
 
 function DellProAiStudioModelSelection({ settings, basePath = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      const { models } = await System.customModels(
-        "dpais",
-        null,
-        basePath,
-        2_000,
-      );
-      setCustomModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath]);
-
-  if (loading || customModels.length == 0) {
+  const { customModels, isLoading } = useProviderModels("dpais", basePath);
+  if (isLoading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">

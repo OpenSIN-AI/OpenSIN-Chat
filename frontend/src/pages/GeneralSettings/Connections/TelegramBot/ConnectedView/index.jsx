@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState, useCallback } from "react";
-import Telegram from "@/models/telegram";
+import { useState } from "react";
 import ConnectedBotCard from "./ConnectedBotCard";
 import DetailsSection from "./DetailsSection";
 import UsersSection from "./UsersSection";
 import DisconnectedView from "./DisconnectedView";
+import useTelegramUsers from "@/hooks/useTelegramUsers";
 
 export default function ConnectedView({
   config,
@@ -13,23 +13,7 @@ export default function ConnectedView({
 }) {
   const connected = config.connected;
   const [newToken, setNewToken] = useState("");
-  const [pendingUsers, setPendingUsers] = useState([]);
-  const [approvedUsers, setApprovedUsers] = useState([]);
-
-  const fetchUsers = useCallback(async () => {
-    const [pending, approved] = await Promise.all([
-      Telegram.getPendingUsers(),
-      Telegram.getApprovedUsers(),
-    ]);
-    setPendingUsers(pending?.users || []);
-    setApprovedUsers(approved?.users || []);
-  }, []);
-
-  useEffect(() => {
-    fetchUsers();
-    const interval = setInterval(fetchUsers, 5_000);
-    return () => clearInterval(interval);
-  }, [fetchUsers]);
+  const { pendingUsers, approvedUsers, refresh: fetchUsers } = useTelegramUsers();
 
   if (!connected) {
     return (

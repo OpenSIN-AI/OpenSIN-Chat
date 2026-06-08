@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import PreLoader from "@/components/Preloader";
@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import ChangeWarningModal from "@/components/ChangeWarning";
+import useEmbeddingTextSplitterPreference from "@/hooks/useEmbeddingTextSplitterPreference";
 
 function isNullOrNaN(value) {
   if (value === null) return true;
@@ -18,8 +19,7 @@ function isNullOrNaN(value) {
 }
 
 export default function EmbeddingTextSplitterPreference() {
-  const [settings, setSettings] = useState({});
-  const [loading, setLoading] = useState(true);
+  const { settings, isLoading } = useEmbeddingTextSplitterPreference();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const { isOpen, openModal, closeModal } = useModal();
@@ -71,27 +71,13 @@ export default function EmbeddingTextSplitterPreference() {
     }
   };
 
-  useEffect(() => {
-    async function fetchSettings() {
-      const _settings = (
-        await Admin.systemPreferencesByFields([
-          "text_splitter_chunk_size",
-          "text_splitter_chunk_overlap",
-          "max_embed_chunk_size",
-        ])
-      )?.settings;
-      setSettings(_settings ?? {});
-      setLoading(false);
-    }
-    fetchSettings();
-  }, []);
-
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
-      {loading ? (
+      {isLoading ? (
         <div
           className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+          }
         >
           <div className="w-full h-full flex justify-center items-center">
             <PreLoader />
@@ -100,6 +86,7 @@ export default function EmbeddingTextSplitterPreference() {
       ) : (
         <div
           className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+          }
         >
           <form
             onSubmit={handleSubmit}

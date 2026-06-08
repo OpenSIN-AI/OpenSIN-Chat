@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function MoonshotAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.MoonshotAiApiKey);
@@ -35,26 +35,7 @@ export default function MoonshotAiOptions({ settings }: any) {
 }
 
 function MoonshotAiModelSelection({ apiKey, settings }: any) {
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models: availableModels } = await System.customModels(
-        "moonshotai",
-        typeof apiKey === "boolean" ? null : apiKey,
-      );
-
-      if (availableModels?.length > 0) {
-        setModels(availableModels);
-      }
-
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [apiKey]);
-
+  const { customModels, isLoading } = useProviderModels("moonshotai", apiKey);
   if (!apiKey) {
     return (
       <div className="flex flex-col w-60">
@@ -74,7 +55,7 @@ function MoonshotAiModelSelection({ apiKey, settings }: any) {
     );
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
@@ -103,7 +84,7 @@ function MoonshotAiModelSelection({ apiKey, settings }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {(models as any).map((model) => (
+        {(customModels as any).map((model) => (
           <option
             key={model.id}
             value={model.id}

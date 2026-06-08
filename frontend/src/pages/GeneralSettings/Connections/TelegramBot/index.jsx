@@ -4,36 +4,30 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import { CircleNotch } from "@phosphor-icons/react";
-import Telegram from "@/models/telegram";
 import ConnectedView from "./ConnectedView";
 import SetupView from "./SetupView";
 import { useTranslation } from "react-i18next";
 import System from "@/models/system";
 import paths from "@/utils/paths";
+import useTelegramBot from "@/hooks/useTelegramBot";
 
 export default function TelegramBotSettings() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [config, setConfig] = useState(null);
+  const { t } = useTranslation();
+  const { config, isLoading } = useTelegramBot();
+  const [localConfig, setLocalConfig] = useState(null);
+  const currentConfig = localConfig ?? config;
 
   useEffect(() => {
-    async function fetchData() {
-      const [isMultiUserMode, configRes] = await Promise.all([
-        System.isMultiUserMode(),
-        Telegram.getConfig(),
-      ]);
-
+    System.isMultiUserMode().then((isMultiUserMode) => {
       if (isMultiUserMode) navigate(paths.home());
-      setConfig(configRes?.config || null);
-      setLoading(false);
-    }
-    fetchData();
-  }, []);
+    });
+  }, [navigate]);
 
-  const handleConnected = (newConfig) => setConfig(newConfig);
-  const handleDisconnected = () => setConfig(null);
+  const handleConnected = (newConfig) => setLocalConfig(newConfig);
+  const handleDisconnected = () => setLocalConfig(null);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <ConnectionsLayout>
         <div className="flex items-center justify-center h-full">
@@ -43,7 +37,7 @@ export default function TelegramBotSettings() {
     );
   }
 
-  const hasConfig = config?.active && config?.bot_username;
+  const hasConfig = currentConfig?.active && currentConfig?.bot_username;
   if (!hasConfig) {
     return (
       <ConnectionsLayout fullPage={true}>
@@ -55,7 +49,7 @@ export default function TelegramBotSettings() {
   return (
     <ConnectionsLayout fullPage={true}>
       <ConnectedView
-        config={config}
+        config={currentConfig}
         onDisconnected={handleDisconnected}
         onReconnected={handleConnected}
       />
@@ -70,6 +64,7 @@ function ConnectionsLayout({ children, fullPage = false }) {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-2xl bg-zinc-900 light:bg-white light:border light:border-slate-300 w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
       >
         {fullPage ? (
           <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">

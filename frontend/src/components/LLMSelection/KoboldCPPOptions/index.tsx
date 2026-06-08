@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
-import System from "@/models/system";
+import { useState } from "react";
 import PreLoader from "@/components/Preloader";
 import { KOBOLDCPP_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function KoboldCPPOptions({ settings }: any) {
   const {
@@ -145,34 +145,8 @@ export default function KoboldCPPOptions({ settings }: any) {
 }
 
 function KoboldCPPModelSelection({ settings, basePath = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath || !basePath.includes("/v1")) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { models } = await System.customModels(
-          "koboldcpp",
-          null,
-          basePath,
-        );
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch custom models:", error);
-        setCustomModels([]);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath]);
-
-  if (loading || customModels.length === 0) {
+  const { customModels, isLoading } = useProviderModels("koboldcpp", null, basePath);
+  if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
@@ -185,7 +159,7 @@ function KoboldCPPModelSelection({ settings, basePath = null }: any) {
         >
           <option disabled={true} selected={true}>
             {basePath?.includes("/v1")
-              ? "--loading available models--"
+              ? "-- loading available models --"
               : "Enter KoboldCPP URL first"}
           </option>
         </select>

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function OpenRouterOptions({ settings }: any) {
   return (
@@ -28,32 +28,12 @@ export default function OpenRouterOptions({ settings }: any) {
 }
 
 function OpenRouterEmbeddingModelSelection({ settings }: any) {
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
+  const { customModels: models, isLoading: loading } = useProviderModels(
+    "openrouter-embedder",
+  );
   const [selectedModel, setSelectedModel] = useState(
     settings?.EmbeddingModelPref || "",
   );
-
-  useEffect(() => {
-    async function fetchModels() {
-      setLoading(true);
-      const response = await System.customModels("openrouter-embedder");
-      const fetchedModels = response?.models || [];
-      setModels(fetchedModels);
-
-      if (
-        settings?.EmbeddingModelPref &&
-        (fetchedModels as any).some((m) => m.id === settings.EmbeddingModelPref)
-      ) {
-        setSelectedModel(settings.EmbeddingModelPref);
-      } else if (fetchedModels.length > 0) {
-        setSelectedModel(fetchedModels[0].id);
-      }
-
-      setLoading(false);
-    }
-    fetchModels();
-  }, [settings?.EmbeddingModelPref]);
 
   if (loading) {
     return (

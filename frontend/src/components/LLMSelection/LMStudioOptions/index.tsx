@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Info,
   CaretDown,
@@ -8,10 +8,10 @@ import {
   Warning,
 } from "@phosphor-icons/react";
 import paths from "@/utils/paths";
-import System from "@/models/system";
 import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { Tooltip } from "react-tooltip";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LMStudioOptions({ settings, showAlert = false }: any) {
   const {
@@ -211,41 +211,15 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
 }
 
 function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { models } = await System.customModels(
-          "lmstudio",
-          apiKey,
-          basePath,
-        );
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch custom models:", error);
-        setCustomModels([]);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath, apiKey]);
-
-  if (loading || customModels.length === 0) {
+  const { customModels, isLoading } = useProviderModels("lmstudio", apiKey, basePath);
+  if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <div className="flex items-center mb-2 gap-x-1">
           <label className="text-white text-sm font-semibold">
             Selected Model
           </label>
-          {!loading && !!basePath && (
+          {!isLoading && !!basePath && (
             <>
               <Warning
                 size={18}
@@ -274,10 +248,10 @@ function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: an
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            {loading
-              ? "--loading available models--"
+            {isLoading
+              ? "-- loading available models --"
               : !!basePath
-                ? "No models found"
+                ? "No customModels found"
                 : "Enter LM Studio URL first"}
           </option>
         </select>

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import System from "@/models/system";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function FireworksAiOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.FireworksAiLLMApiKey);
@@ -37,30 +37,8 @@ export default function FireworksAiOptions({ settings }: any) {
   );
 }
 function FireworksAiModelSelection({ apiKey, settings }: any) {
-  const [groupedModels, setGroupedModels] = useState({} as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models } = await System.customModels("fireworksai", apiKey);
-
-      if (models?.length > 0) {
-        const modelsByOrganization = models.reduce((acc, model) => {
-          acc[model.organization] = acc[model.organization] || [];
-          acc[model.organization].push(model);
-          return acc;
-        }, {});
-
-        setGroupedModels(modelsByOrganization);
-      }
-
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [apiKey]);
-
-  if (loading || Object.keys(groupedModels).length === 0) {
+  const { customModels, isLoading } = useProviderModels("fireworksai", apiKey);
+  if (isLoading || Object.keys(customModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
@@ -89,11 +67,11 @@ function FireworksAiModelSelection({ apiKey, settings }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {Object.keys(groupedModels)
+        {Object.keys(customModels)
           .sort()
           .map((organization) => (
             <optgroup key={organization} label={organization}>
-              {groupedModels[organization].map((model) => (
+              {customModels[organization].map((model) => (
                 <option
                   key={model.id}
                   value={model.id}

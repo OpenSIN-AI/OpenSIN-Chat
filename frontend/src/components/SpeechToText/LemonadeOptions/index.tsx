@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import System from "@/models/system";
 import { LEMONADE_COMMON_URLS } from "@/utils/constants";
 import { CircleNotch, Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { cleanBasePath } from "@/components/LLMSelection/LemonadeOptions";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LemonadeSpeechToTextOptions({ settings }: any) {
   const {
@@ -119,32 +119,11 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
 }
 
 function LemonadeSTTModelSelection({ settings, basePath = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { models } = await System.customModels(
-          "lemonade-stt",
-          null,
-          basePath,
-        );
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch Lemonade STT models:", error);
-        setCustomModels([]);
-      }
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath]);
+  const { customModels, isLoading: loading } = useProviderModels(
+    basePath ? "lemonade-stt" : null,
+    null,
+    basePath,
+  );
 
   if (loading || customModels.length === 0) {
     return (

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -10,36 +10,23 @@ import MobileConnection from "@/models/mobile";
 import ConnectionModal from "./ConnectionModal";
 import DeviceRow from "./DeviceRow";
 import { isMobile } from "react-device-detect";
+import useMobileConnections from "@/hooks/useMobileConnections";
 
 export default function MobileDevices() {
   const { isOpen, openModal, closeModal } = useModal();
-  const [loading, setLoading] = useState(true);
-  const [devices, setDevices] = useState([]);
+  const { devices, isLoading, mutate } = useMobileConnections();
+  const [showedEmpty, setShowedEmpty] = useState(false);
 
-  const fetchDevices = async () => {
-    const foundDevices = await MobileConnection.getDevices();
-    setDevices(foundDevices);
-    if (foundDevices.length !== 0 && !isOpen) closeModal();
-    return foundDevices;
-  };
-
-  useEffect(() => {
-    fetchDevices()
-      .then((devices) => {
-        if (devices.length === 0) openModal();
-        return devices;
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-
-    const interval = setInterval(fetchDevices, 5_000);
-    return () => clearInterval(interval);
-  }, []);
+  // Show the QR modal on first load if no devices
+  if (!isLoading && devices.length === 0 && !showedEmpty) {
+    setShowedEmpty(true);
+    openModal();
+  }
 
   const removeDevice = (id) => {
-    setDevices((prevDevices) =>
-      prevDevices.filter((device) => device.id !== id),
+    mutate(
+      (prev) => (prev || []).filter((device) => device.id !== id),
+      false,
     );
   };
 
@@ -48,6 +35,7 @@ export default function MobileDevices() {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
@@ -70,7 +58,7 @@ export default function MobileDevices() {
             </CTAButton>
           </div>
           <div className="overflow-x-auto mt-6">
-            {loading ? (
+            {isLoading ? (
               <Skeleton.default
                 height="80vh"
                 width="100%"

@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PlusCircle } from "@phosphor-icons/react";
-import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
 import BrowserExtensionApiKeyRow from "./BrowserExtensionApiKeyRow";
 import CTAButton from "@/components/lib/CTAButton";
 import NewBrowserExtensionApiKeyModal from "./NewBrowserExtensionApiKeyModal";
@@ -13,31 +11,14 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import { fullApiUrl } from "@/utils/constants";
 import { Tooltip } from "react-tooltip";
+import useBrowserExtensionApiKey from "@/hooks/useBrowserExtensionApiKey";
 
 export default function BrowserExtensionApiKeys() {
-  const [loading, setLoading] = useState(true);
-  const [apiKeys, setApiKeys] = useState([]);
-  const [error, setError] = useState(null);
+  const { apiKeys, isMultiUser, isLoading, error, refresh } = useBrowserExtensionApiKey();
   const { isOpen, openModal, closeModal } = useModal();
-  const [isMultiUser, setIsMultiUser] = useState(false);
-
-  useEffect(() => {
-    fetchExistingKeys();
-  }, []);
-
-  const fetchExistingKeys = async () => {
-    const result = await BrowserExtensionApiKey.getAll();
-    if (result.success) {
-      setApiKeys(result.apiKeys);
-      setIsMultiUser(result.apiKeys.some((key) => key.user !== null));
-    } else {
-      setError(result.error || "Failed to fetch API keys");
-    }
-    setLoading(false);
-  };
 
   const removeApiKey = (id) => {
-    setApiKeys((prevKeys) => prevKeys.filter((apiKey) => apiKey.id !== id));
+    refresh();
   };
 
   return (
@@ -45,6 +26,7 @@ export default function BrowserExtensionApiKeys() {
       <Sidebar />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+      }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
@@ -68,7 +50,7 @@ export default function BrowserExtensionApiKeys() {
             </CTAButton>
           </div>
           <div className="overflow-x-auto mt-6">
-            {loading ? (
+            {isLoading ? (
               <Skeleton.default
                 height="80vh"
                 width="100%"
@@ -130,7 +112,7 @@ export default function BrowserExtensionApiKeys() {
       <ModalWrapper isOpen={isOpen}>
         <NewBrowserExtensionApiKeyModal
           closeModal={closeModal}
-          onSuccess={fetchExistingKeys}
+          onSuccess={refresh}
           isMultiUser={isMultiUser}
         />
       </ModalWrapper>

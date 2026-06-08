@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { MagnifyingGlass } from "@phosphor-icons/react";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
@@ -62,22 +62,22 @@ import LiteLLMOptions from "@/components/LLMSelection/LiteLLMOptions";
 import AWSBedrockLLMOptions from "@/components/LLMSelection/AwsBedrockLLMOptions";
 import DeepSeekOptions from "@/components/LLMSelection/DeepSeekOptions";
 import ApiPieLLMOptions from "@/components/LLMSelection/ApiPieOptions";
-import NovitaLLMOptions from "@/components/LLMSelection/NovitaLLMOptions";
-import XAILLMOptions from "@/components/LLMSelection/XAiLLMOptions";
-import ZAiLLMOptions from "@/components/LLMSelection/ZAiLLMOptions";
+import NovitaLLMOptions from "@/components/LLMSelection/NovitaOptions";
+import XAILLMOptions from "@/components/LLMSelection/XAiOptions";
+import ZAiLLMOptions from "@/components/LLMSelection/ZAiOptions";
 import NvidiaNimOptions from "@/components/LLMSelection/NvidiaNimOptions";
 import OpencodeZenOptions from "@/components/LLMSelection/OpencodeZenOptions";
 import PPIOLLMOptions from "@/components/LLMSelection/PPIOLLMOptions";
 import DellProAiStudioOptions from "@/components/LLMSelection/DPAISOptions";
 import MoonshotAiOptions from "@/components/LLMSelection/MoonshotAiOptions";
-import CometApiLLMOptions from "@/components/LLMSelection/CometApiLLMOptions";
+import CometApiLLMOptions from "@/components/LLMSelection/CometApiOptions";
 import GiteeAiOptions from "@/components/LLMSelection/GiteeAIOptions";
 import DockerModelRunnerOptions from "@/components/LLMSelection/DockerModelRunnerOptions";
 import PrivateModeOptions from "@/components/LLMSelection/PrivateModeOptions";
 import SambaNovaOptions from "@/components/LLMSelection/SambaNovaOptions";
 import LemonadeOptions from "@/components/LLMSelection/LemonadeOptions";
 import MinimaxOptions from "@/components/LLMSelection/MinimaxOptions";
-import CerebrasLLMOptions from "@/components/LLMSelection/CerebrasLLMOptions";
+import CerebrasLLMOptions from "@/components/LLMSelection/CerebrasOptions";
 
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import System from "@/models/system";
@@ -85,6 +85,7 @@ import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 const LLMS = [
   {
@@ -376,7 +377,7 @@ export default function LLMPreference({
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredLLMs, setFilteredLLMs] = useState([]);
   const [selectedLLM, setSelectedLLM] = useState(null);
-  const [settings, setSettings] = useState(null);
+  const { settings } = useSystemSettings();
   const formRef = useRef(null);
   const hiddenSubmitButtonRef = useRef(null);
   const isHosted = window.location.hostname.includes("useanything.com");
@@ -385,14 +386,12 @@ export default function LLMPreference({
   const TITLE = t("onboarding.llm.title");
   const DESCRIPTION = t("onboarding.llm.description");
 
+  // Set selectedLLM once settings load
   useEffect(() => {
-    async function fetchKeys() {
-      const _settings = await System.keys();
-      setSettings(_settings);
-      setSelectedLLM(_settings?.LLMProvider || "openai");
+    if (settings && selectedLLM === null) {
+      setSelectedLLM(settings?.LLMProvider || "openai");
     }
-    fetchKeys();
-  }, []);
+  }, [settings]);
 
   async function handleForward() {
     try {

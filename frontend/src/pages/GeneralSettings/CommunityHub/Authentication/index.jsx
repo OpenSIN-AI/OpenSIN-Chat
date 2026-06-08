@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import CommunityHub from "@/models/communityHub";
 import ContextualSaveBar from "@/components/ContextualSaveBar";
 import showToast from "@/utils/toast";
@@ -9,12 +9,24 @@ import { FullScreenLoader } from "@/components/Preloader";
 import paths from "@/utils/paths";
 import { Info } from "@phosphor-icons/react";
 import UserItems from "./UserItems";
+import useCommunityHubSettings, {
+  COMMUNITY_HUB_SETTINGS_KEY,
+} from "@/hooks/useCommunityHubSettings";
 
-function useCommunityHubAuthentication() {
+export default function CommunityHubAuthentication() {
+  const { settings, isLoading, mutate } = useCommunityHubSettings();
+  const connectionKeyFromSettings = settings?.connectionKey || "";
   const [originalConnectionKey, setOriginalConnectionKey] = useState("");
   const [hasChanges, setHasChanges] = useState(false);
   const [connectionKey, setConnectionKey] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!isLoading && connectionKeyFromSettings !== undefined) {
+      setOriginalConnectionKey(connectionKeyFromSettings);
+      setConnectionKey(connectionKeyFromSettings);
+    }
+  }, [isLoading, connectionKeyFromSettings]);
 
   async function resetChanges() {
     setConnectionKey(originalConnectionKey);
@@ -39,6 +51,7 @@ function useCommunityHubAuthentication() {
       setHasChanges(false);
       showToast("API key saved successfully", "success");
       setOriginalConnectionKey(connectionKey);
+      mutate();
     } catch (error) {
       console.error(error);
       showToast("Failed to save API key", "error");
@@ -59,6 +72,7 @@ function useCommunityHubAuthentication() {
       showToast("Disconnected from OpenAfD Chat Community Hub", "success");
       setOriginalConnectionKey("");
       setConnectionKey("");
+      mutate();
     } catch (error) {
       console.error(error);
       showToast("Failed to disconnect from hub", "error");
@@ -67,46 +81,7 @@ function useCommunityHubAuthentication() {
     }
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const { connectionKey } = await CommunityHub.getSettings();
-        setOriginalConnectionKey(connectionKey || "");
-        setConnectionKey(connectionKey || "");
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  return {
-    connectionKey,
-    originalConnectionKey,
-    loading,
-    onConnectionKeyChange,
-    updateConnectionKey,
-    hasChanges,
-    resetChanges,
-    disconnectHub,
-  };
-}
-
-export default function CommunityHubAuthentication() {
-  const {
-    connectionKey,
-    originalConnectionKey,
-    loading,
-    onConnectionKeyChange,
-    updateConnectionKey,
-    hasChanges,
-    resetChanges,
-    disconnectHub,
-  } = useCommunityHubAuthentication();
-  if (loading) return <FullScreenLoader />;
+  if (isLoading) return <FullScreenLoader />;
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
@@ -117,6 +92,7 @@ export default function CommunityHubAuthentication() {
       />
       <div
         className={`${isMobile ? "h-full" : "h-[calc(100%-32px)]"} relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full h-full overflow-y-scroll p-4 md:p-0`
+        }
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[86px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">

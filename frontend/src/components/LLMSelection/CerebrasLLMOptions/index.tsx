@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function CerebrasLLMOptions({ settings }: any) {
   const [inputValue, setInputValue] = useState(settings?.CerebrasApiKey);
@@ -40,27 +40,9 @@ export default function CerebrasLLMOptions({ settings }: any) {
  * @param {Object} props.settings - The system settings
  * @returns {JSX.Element} The Cerebras model selection component
  */
-function CerebrasModelSelection({ apiKey: _apiKey, settings }) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      try {
-        setLoading(true);
-        const { models } = await System.customModels("cerebras");
-        setCustomModels(models || []);
-      } catch (error) {
-        console.error("Failed to fetch custom models:", error);
-        setCustomModels([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    findCustomModels();
-  }, []);
-
-  if (loading) {
+function CerebrasModelSelection({ apiKey: _apiKey, settings }: any) {
+  const { customModels, isLoading } = useProviderModels("cerebras", apiKey: _apiKey);
+  if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
@@ -72,7 +54,7 @@ function CerebrasModelSelection({ apiKey: _apiKey, settings }) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            --loading available models--
+            -- loading available models --
           </option>
         </select>
       </div>
