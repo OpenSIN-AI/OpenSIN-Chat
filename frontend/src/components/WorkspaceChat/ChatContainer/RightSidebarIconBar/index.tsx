@@ -45,7 +45,7 @@ export function RightSidebarToggleButton() {
       style={{
         position: "absolute",
         top: "18px",
-        right: rightSidebarOpen ? "52px" : "4px",
+        right: "4px",
       }}
     >
       <SidebarSimple

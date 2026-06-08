@@ -223,8 +223,7 @@ export default function ConsoleSidebar() {
   return (
     <ChatSidebar isOpen={sidebarOpen}>
       <div
-        className="ml-4 w-[350px] bg-zinc-900 light:bg-white light:border-2 light:border-slate-300 md:rounded-[16px] flex flex-col overflow-hidden mt-[72px] max-h-[calc(100%-88px)]"
-        
+        className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden"
       >
         {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-3.5 pb-0 shrink-0">

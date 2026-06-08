@@ -277,26 +277,21 @@ export default function ChatSidebar({ isOpen, children }: any) {
     document.body.style.userSelect = "none";
   }
 
+  if (!isOpen) return null;
+
   return (
-    <div
-      style={{ width: isOpen ? width : 0 }}
-      className={`absolute top-0 right-full h-full overflow-hidden transition-[width] duration-500 pointer-events-none ${
-        isOpen ? "pointer-events-auto" : ""
-      }`}
-    >
-      {isOpen && (
-        <div
-          onMouseDown={handleResizeStart}
-          role="separator"
-          aria-orientation="vertical"
-          aria-label="Rechte Seitenleiste skalieren"
-          title="Ziehen um die Breite zu ändern"
-          className="absolute top-0 left-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors"
-          style={{ marginLeft: "-3px" }}
-        >
-          <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />
-        </div>
-      )}
+    <div className="relative h-full w-full overflow-hidden flex flex-col">
+      {/* Resize handle on the LEFT edge so user can drag to widen the panel */}
+      <div
+        onMouseDown={handleResizeStart}
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Rechte Seitenleiste skalieren"
+        title="Ziehen um die Breite zu ändern"
+        className="absolute top-0 left-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors"
+      >
+        <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />
+      </div>
       {children}
     </div>
   );

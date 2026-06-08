@@ -38,7 +38,7 @@ function MemoriesSidebarContent() {
 
 function SidebarPanel({ children }: any) {
   return (
-    <div className="w-full flex-shrink-0 flex flex-col gap-5 mt-[72px] px-5 overflow-y-auto no-scroll max-h-[calc(100%-88px)]">
+    <div className="w-full flex-shrink-0 flex flex-col gap-5 px-5 py-4 overflow-y-auto no-scroll h-full">
       {children}
     </div>
   );
