@@ -5,12 +5,12 @@ export default {
   content: {
     relative: true,
     files: [
-      "./src/components/**/*.{js,jsx}",
-      "./src/hooks/**/*.js",
-      "./src/models/**/*.js",
-      "./src/pages/**/*.{js,jsx}",
-      "./src/utils/**/*.js",
-      "./src/*.jsx",
+      "./src/components/**/*.{js,jsx,ts,tsx}",
+      "./src/hooks/**/*.{js,jsx,ts,tsx}",
+      "./src/models/**/*.{js,jsx,ts,tsx}",
+      "./src/pages/**/*.{js,jsx,ts,tsx}",
+      "./src/utils/**/*.{js,jsx,ts,tsx}",
+      "./src/*.{jsx,tsx}",
       "./index.html",
       "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}"
     ]

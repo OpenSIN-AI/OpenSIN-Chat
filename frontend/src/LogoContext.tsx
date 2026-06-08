@@ -1,15 +1,11 @@
 // SPDX-License-Identifier: MIT
 import { createContext, useEffect, useState } from "react";
 import OpenAfDLogo from "./media/logo/openafd-icon.svg";
-import DefaultLoginLogoLight from "./media/illustrations/login-logo.svg";
-import DefaultLoginLogoDark from "./media/illustrations/login-logo-light.svg";
+import DefaultLoginLogo from "./media/illustrations/login-logo.svg";
 import System from "./models/system";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";
 
-function isLightMode() {
-  return document.documentElement.getAttribute("data-theme") === "light";
-}
 export const LogoContext = createContext<any>(undefined);
 
 export function LogoProvider({ children }) {
@@ -18,9 +14,6 @@ export function LogoProvider({ children }) {
   const [isCustomLogo, setIsCustomLogo] = useState(false as any);
 
   async function fetchInstanceLogo() {
-    const DefaultLoginLogo = isLightMode()
-      ? DefaultLoginLogoDark
-      : DefaultLoginLogoLight;
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
       if (logoURL) {
