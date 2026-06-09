@@ -35,11 +35,7 @@ import { useMemoriesContext, LIMITS } from "../MemoriesSidebar/MemoriesContext";
  */
 export default function SidebarTabs() {
   const { t } = useTranslation();
-  const {
-    activeSidebar,
-    sidebarData,
-    openSidebar,
-  } = useChatSidebar();
+  const { activeSidebar, sidebarData, openSidebar } = useChatSidebar();
   const {
     activeTab: memoriesActiveTab,
     setActiveTab: setMemoriesActiveTab,
@@ -85,8 +81,8 @@ export default function SidebarTabs() {
             isMemoriesActive && memoriesActiveTab === "workspace"
               ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
               : isMemoriesActive
-              ? "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
-              : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
+                ? "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
+                : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
           }`}
         >
           <FolderOpen size={12} weight="bold" />
