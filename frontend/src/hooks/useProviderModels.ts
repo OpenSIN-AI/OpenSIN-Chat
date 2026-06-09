@@ -98,10 +98,13 @@ export default function useProviderModels(
 ): ProviderModelsResult {
   const { data, error, isLoading, mutate } = useSWR(
     provider ? [PROVIDER_MODELS_KEY, provider, apiKey, basePath] : null,
-    () => System.customModels(provider, apiKey, basePath),
+    // 20s client-side timeout so the model dropdown never hangs indefinitely
+    // on "waiting for models" if the backend is slow to respond.
+    () => System.customModels(provider, apiKey, basePath, 20000),
     {
       revalidateOnFocus: false,
       dedupingInterval: 5000,
+      shouldRetryOnError: false,
     },
   );
 

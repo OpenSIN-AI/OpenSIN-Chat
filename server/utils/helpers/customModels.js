@@ -1269,11 +1269,20 @@ async function getOpencodeZenModels() {
     { id: "kimi-k2.6", name: "Kimi K2.6", organization: "Moonshot" },
   ];
 
+  // Without a configured base path the OpenAI client would fall back to the
+  // default OpenAI endpoint and hang/fail with the wrong credentials, leaving
+  // the model dropdown stuck on "waiting for models". Return the static list.
+  if (!process.env.OPENCODE_ZEN_BASE_PATH)
+    return { models: fallback, error: null };
+
   try {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: parseOpencodeZenBasePath(process.env.OPENCODE_ZEN_BASE_PATH),
       apiKey: process.env.OPENCODE_ZEN_API_KEY || null,
+      // Fail fast so the UI never hangs waiting on a slow/unreachable endpoint.
+      timeout: 15 * 1000,
+      maxRetries: 1,
     });
     const models = await openai.models
       .list()
