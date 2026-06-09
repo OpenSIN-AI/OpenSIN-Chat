@@ -369,6 +369,40 @@ git fetch upstream
 
 Eine vollständige Liste aller Drittanbieter-Komponenten findest du in [`THIRD-PARTY.md`](./THIRD-PARTY.md).
 
+## Deployment
+
+Die Live-Site läuft als Docker-Container auf einem lokalen Mac, erreichbar über
+Cloudflare Tunnel (`openafd.delqhi.com` → Cloudflare → cloudflared → localhost:3001).
+
+### Auto-Deploy
+
+Seit v0.3.0 gibt es ein Auto-Deploy-Skript, das `origin/main` pollt und bei
+Änderung automatisch neu baut. Einrichtung in [`docs/AUTO-DEPLOY.md`](./docs/AUTO-DEPLOY.md).
+
+### Schnelles Frontend-Update (ohne Image-Rebuild)
+
+```bash
+cd frontend && npx vite build
+docker cp frontend/dist/. openafd:/app/server/public/
+```
+
+Nur nötig bei Dockerfile- oder Dependency-Änderungen:
+```bash
+cd docker && docker compose build --no-cache && docker compose down && docker compose up -d
+```
+
+### Wichtige Regeln
+
+- **Immer `--no-cache`** beim Docker-Build, sonst bleibt altes Frontend-Bundle im Image.
+- **Vor jedem Deploy:** `lsof -i :3001 -P -n` prüfen — kein rogue `node`-Prozess darf Port 3001 blockieren.
+- **Nach Merge-Konflikten:** `rg '<<<<<' frontend/src/` laufen lassen, sonst bricht der Build.
+
+### Known Issues / Security
+
+- Das Demo-Passwort (`Simone123`) ist hartcodiert im Frontend-Bundle — nur für Demozwecke.
+- API-Keys (NVIDIA, JWT_SECRET, SIG_KEY/SIG_SALT, OPENCODE_ZEN) liegen in `.env` —
+  diese Datei ist in `.gitignore`, aber die Keys sollten regelmäßig rotiert werden.
+
 ---
 
 <div align="center">

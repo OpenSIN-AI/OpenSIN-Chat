@@ -107,8 +107,11 @@ Das Skript funktioniert ohne Anpassung, lässt sich aber über Env-Vars steuern:
 
 ## Troubleshooting
 
-- **Online immer noch alt nach Deploy?** Im Browser Hard-Reload (`Cmd+Shift+R`).
-  Das alte JS-Bundle hängt sonst im Browser-Cache.
+- **Online immer noch alt nach Deploy?** Zuerst prüfen ob ein **rogue Node-Prozess**
+  Port 3001 blockiert: `lsof -i :3001 -P -n`. Wenn dort `node *:3001 (LISTEN)` steht
+  (nicht Docker/OrbStack), wurde ein manuelles `node index.js` aus `/server/`
+  gestartet. Töten mit `kill <PID>`, dann Docker und Cloudflared neustarten.
+  Danach Browser Hard-Reload (`Cmd+Shift+R`).
 - **`docker: command not found` im cron-Log?** `PATH` im launchd-plist bzw. cron
   ergänzen (Docker Desktop liegt oft unter `/usr/local/bin`).
 - **Build dauert lange / blockiert?** Der `flock`-Lock verhindert überlappende
