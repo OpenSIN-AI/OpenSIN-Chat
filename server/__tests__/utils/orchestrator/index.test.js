@@ -136,7 +136,7 @@ describe("AgentOrchestrator", () => {
     });
 
     test("infers URL extraction for deep detail keywords", () => {
-      const steps = AgentOrchestrator.inferSteps("Recherchiere und extrahiere Details aus Textquellen");
+      const steps = AgentOrchestrator.inferSteps("Extrahiere Details aus Quellen und führe Recherche durch");
       expect(steps.some((s) => s.type === "extract_urls")).toBe(true);
     });
 
