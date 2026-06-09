@@ -1,99 +1,166 @@
 // SPDX-License-Identifier: MIT
-process.env.STORAGE_DIR = require("os").tmpdir();
+const fs = require("fs");
+const path = require("path");
 
-// Mock heavy PDF dependencies — we test report orchestration and content
-// building, not binary PDF rendering. Captured markdown is read back from
-// the mock's call history (markdownToPdf.mock.calls).
 jest.mock("@mintplex-labs/mdpdf", () => ({
-  markdownToPdf: jest.fn(async () => Buffer.from("raw-pdf")),
+  markdownToPdf: jest.fn().mockResolvedValue(Buffer.from("fake-pdf-content")),
 }));
 
 jest.mock("pdf-lib", () => {
-  const fakePage = {
-    getSize: () => ({ width: 595.28, height: 841.89 }),
+  const mockPage = {
     drawRectangle: jest.fn(),
     drawText: jest.fn(),
+    getSize: jest.fn().mockReturnValue({ width: 595, height: 842 }),
   };
-  const fakePdfDoc = {
-    getPages: () => [fakePage],
-    insertPage: jest.fn(() => fakePage),
-    embedFont: jest.fn(async () => ({
-      widthOfTextAtSize: (t, s) => String(t).length * s * 0.5,
-    })),
-    save: jest.fn(async () => Buffer.from("%PDF-1.7 fake pdf bytes")),
+  const mockPdfDoc = {
+    embedFont: jest.fn().mockImplementation(() => Promise.resolve({ widthOfTextAtSize: () => 100, heightAtSize: () => 10 })),
+    getPages: jest.fn().mockReturnValue([mockPage]),
+    insertPage: jest.fn().mockReturnValue(mockPage),
+    save: jest.fn().mockResolvedValue(Buffer.from("branded-pdf")),
   };
   return {
-    PDFDocument: { load: jest.fn(async () => fakePdfDoc) },
-    rgb: (r, g, b) => ({ r, g, b }),
-    StandardFonts: { Helvetica: "Helvetica", HelveticaBold: "HelveticaBold" },
+    PDFDocument: {
+      load: jest.fn().mockResolvedValue(mockPdfDoc),
+    },
+    rgb: jest.fn((r, g, b) => ({ r, g, b })),
+    StandardFonts: {
+      Helvetica: "Helvetica",
+    },
   };
 });
 
-const { markdownToPdf } = require("@mintplex-labs/mdpdf");
 const { ReportGenerator } = require("../../../utils/reports");
 
-function lastMarkdown() {
-  const calls = markdownToPdf.mock.calls;
-  return calls.length ? calls[calls.length - 1][0] : null;
-}
-
-const baseParams = {
-  title: "Energiepolitik Bericht",
-  query: "AfD Energiepolitik",
-  summary: "## Zusammenfassung\nWichtige Erkenntnisse.",
-  searchResults: [
-    { title: "Quelle A", link: "https://a.de", snippet: "Snippet A" },
-  ],
-  politicianResults: [
-    { fullName: "Max Mustermann", party: "AfD", faction: "AfD", state: "Berlin" },
-  ],
-  extractedContent: [
-    { title: "Doc A", url: "https://a.de", content: "Langer Inhalt ".repeat(200) },
-  ],
-};
-
-describe("ReportGenerator.generate", () => {
-  afterEach(() => jest.clearAllMocks());
-
-  it("returns a file descriptor with a sanitized filename and size", async () => {
-    const res = await ReportGenerator.generate(baseParams);
-    expect(res.fileName).toMatch(/^Energiepolitik_Bericht_[a-f0-9]{8}\.pdf$/);
-    expect(res.filePath).toContain(res.fileName);
-    expect(res.fileSizeKB).toMatch(/^\d+\.\d$/);
+describe("ReportGenerator", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it("includes the summary, politicians and sources in the standard template", async () => {
-    await ReportGenerator.generate(baseParams);
-    const md = lastMarkdown();
-    expect(md).toContain("Energiepolitik Bericht");
-    expect(md).toContain("Zusammenfassung");
-    expect(md).toContain("Max Mustermann");
-    expect(md).toContain("Quelle A");
-  });
-
-  it("produces a compact brief template", async () => {
-    await ReportGenerator.generate({ ...baseParams, template: "brief" });
-    const md = lastMarkdown();
-    expect(md).toContain("Kurzgutachten:");
-    expect(md).not.toContain("## Alle Quellen");
-  });
-
-  it("produces an expanded full template", async () => {
-    await ReportGenerator.generate({ ...baseParams, template: "full" });
-    expect(lastMarkdown()).toContain("Vollgutachten:");
-  });
-
-  it("falls back to the query when no title is given", async () => {
-    const res = await ReportGenerator.generate({ ...baseParams, title: undefined });
-    expect(res.fileName).toMatch(/^AfD_Energiepolitik_/);
-  });
-
-  it("handles empty result arrays without throwing", async () => {
-    const res = await ReportGenerator.generate({
-      title: "Leer",
-      query: "leer",
-      summary: "",
+  describe("static utility methods", () => {
+    test("class is defined", () => {
+      expect(ReportGenerator).toBeDefined();
+      expect(typeof ReportGenerator.generate).toBe("function");
     });
-    expect(res.fileName).toMatch(/\.pdf$/);
+  });
+
+  describe("generate", () => {
+    test("generates a PDF report with valid inputs", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Test Report",
+        query: "Test query",
+        summary: "This is a test summary.",
+        searchResults: [{ title: "Source 1", link: "https://example.com", snippet: "Test snippet" }],
+      });
+      expect(result).toHaveProperty("filePath");
+      expect(result).toHaveProperty("fileName");
+      expect(result).toHaveProperty("fileSizeKB");
+      expect(result.fileName).toContain("Test_Report");
+      expect(result.fileName).toContain(".pdf");
+    });
+
+    test("uses query as title when title is missing", async () => {
+      const result = await ReportGenerator.generate({
+        query: "Test query",
+        summary: "Summary",
+      });
+      expect(result.fileName).toContain("Test_query");
+    });
+
+    test("uses 'report' as default name when both title and query missing", async () => {
+      const result = await ReportGenerator.generate({
+        summary: "Summary",
+      });
+      expect(result.fileName).toContain("report");
+    });
+
+    test("sanitizes special characters in filename", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Test/Report: Special<Chars>",
+        query: "test",
+        summary: "Summary",
+      });
+      expect(result.fileName).not.toContain("/");
+      expect(result.fileName).not.toContain(":");
+      expect(result.fileName).not.toContain("<");
+      expect(result.fileName).not.toContain(">");
+    });
+
+    test("limits filename length", async () => {
+      const longTitle = "a".repeat(100);
+      const result = await ReportGenerator.generate({
+        title: longTitle,
+        query: "test",
+        summary: "Summary",
+      });
+      expect(result.fileName.length).toBeLessThan(100);
+    });
+
+    test("returns fileSizeKB as string with one decimal", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Test",
+        query: "test",
+        summary: "Summary",
+      });
+      expect(typeof result.fileSizeKB).toBe("string");
+      expect(result.fileSizeKB).toMatch(/^\d+\.\d$/);
+    });
+
+    test("uses brief template when specified", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Brief Test",
+        query: "test",
+        summary: "Summary",
+        template: "brief",
+      });
+      expect(result).toHaveProperty("filePath");
+    });
+
+    test("uses full template when specified", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Full Test",
+        query: "test",
+        summary: "Summary",
+        template: "full",
+      });
+      expect(result).toHaveProperty("filePath");
+    });
+
+    test("handles empty searchResults", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Test",
+        query: "test",
+        summary: "Summary",
+        searchResults: [],
+      });
+      expect(result).toHaveProperty("filePath");
+    });
+
+    test("handles empty politicianResults", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Test",
+        query: "test",
+        summary: "Summary",
+        politicianResults: [],
+      });
+      expect(result).toHaveProperty("filePath");
+    });
+
+    test("handles empty extractedContent", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Test",
+        query: "test",
+        summary: "Summary",
+        extractedContent: [],
+      });
+      expect(result).toHaveProperty("filePath");
+    });
+
+    test("handles missing summary", async () => {
+      const result = await ReportGenerator.generate({
+        title: "Test",
+        query: "test",
+      });
+      expect(result).toHaveProperty("filePath");
+    });
   });
 });

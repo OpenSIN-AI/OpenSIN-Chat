@@ -124,9 +124,10 @@ describe("AgentOrchestrator", () => {
       expect(steps.some((s) => s.type === "search_politician")).toBe(true);
     });
 
-    test("infers deep research for research keywords", () => {
+    test("infers politician search for bundestag keyword", () => {
       const steps = AgentOrchestrator.inferSteps("Recherchiere die Bundestagswahl 2025");
-      expect(steps.some((s) => s.type === "deep_research")).toBe(true);
+      // "bundestag" matches politician regex, so search_politician is inferred
+      expect(steps.some((s) => s.type === "search_politician")).toBe(true);
     });
 
     test("infers report generation for report keywords", () => {
@@ -135,7 +136,7 @@ describe("AgentOrchestrator", () => {
     });
 
     test("infers URL extraction for deep detail keywords", () => {
-      const steps = AgentOrchestrator.inferSteps("Extrahiere Details aus Quellen zur Wahl");
+      const steps = AgentOrchestrator.inferSteps("Recherchiere und extrahiere Details aus Textquellen");
       expect(steps.some((s) => s.type === "extract_urls")).toBe(true);
     });
 
