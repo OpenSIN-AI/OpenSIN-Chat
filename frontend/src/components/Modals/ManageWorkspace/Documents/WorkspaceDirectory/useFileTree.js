@@ -38,13 +38,17 @@ export function useFileTree({ workspace, files, setLoading, setLoadingMessage, f
     setLoading(true);
     setLoadingMessage("Removing selected files from workspace");
 
-    const itemsToRemove = Object.keys(selectedItems).map((itemId) => {
-      const folder = files.items.find((f) =>
-        f.items.some((i) => i.id === itemId),
-      );
-      const item = folder.items.find((i) => i.id === itemId);
-      return `${folder.name}/${item.name}`;
-    });
+    const itemsToRemove = Object.keys(selectedItems)
+      .map((itemId) => {
+        const folder = files.items.find((f) =>
+          f.items.some((i) => i.id === itemId),
+        );
+        if (!folder) return null;
+        const item = folder.items.find((i) => i.id === itemId);
+        if (!item) return null;
+        return `${folder.name}/${item.name}`;
+      })
+      .filter(Boolean);
 
     try {
       await Workspace.modifyEmbeddings(workspace.slug, {

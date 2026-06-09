@@ -79,7 +79,7 @@ export function EmbeddingProgressProvider({ children }: any) {
     (slug, filename, status) =>
       setEmbeddingProgressMap((prev) => ({
         ...prev,
-        [slug]: { ...prev[slug], [filename]: status },
+        [slug]: { ...(prev[slug] ?? {}), [filename]: status },
       })),
     [],
   );
@@ -95,7 +95,7 @@ export function EmbeddingProgressProvider({ children }: any) {
           );
           setEmbeddingProgressMap((prev) => ({
             ...prev,
-            [slug]: { ...initial, ...prev[slug] },
+            [slug]: { ...initial, ...(prev[slug] ?? {}) },
           }));
           break;
         }
@@ -129,7 +129,7 @@ export function EmbeddingProgressProvider({ children }: any) {
 
         case "file_removed":
           setEmbeddingProgressMap((prev) => {
-            const slugMap = { ...prev[slug] };
+            const slugMap = { ...(prev[slug] ?? {}) };
             delete slugMap[data.filename];
             if (Object.keys(slugMap).length === 0) {
               const { [slug]: _, ...rest } = prev;
@@ -144,7 +144,7 @@ export function EmbeddingProgressProvider({ children }: any) {
           // because something went wrong and we don't know the status of the files
           if (data.error) {
             setEmbeddingProgressMap((prev) => {
-              const slugMap = { ...prev[slug] };
+              const slugMap = { ...(prev[slug] ?? {}) };
               for (const [filename, info] of Object.entries(slugMap)) {
                 if (info.status === "pending" || info.status === "embedding") {
                   slugMap[filename] = {
@@ -193,7 +193,9 @@ export function EmbeddingProgressProvider({ children }: any) {
           delete abortControllersRef.current[slug];
           throw new Error("SSE connection error");
         },
-      }).catch(() => {});
+      }).catch((err) => {
+        console.warn("EmbeddingProgress SSE connection failed", err);
+      });
     },
     [handleMessage],
   );

@@ -130,7 +130,7 @@ export default function ToolsMenu({
 
   if (!showing) return null;
 
-  const { component: ActiveTab } = TABS.find((tab) => tab.key === activeTab);
+  const { component: ActiveTab } = TABS.find((tab) => tab.key === activeTab) ?? {};
 
   return (
     <>
