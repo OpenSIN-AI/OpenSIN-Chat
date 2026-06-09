@@ -45,9 +45,8 @@ class VoyageAiEmbedder {
       Array.isArray(textInput) ? textInput : [textInput],
     );
 
-    // If given an array return the native Array[Array] format since that should be the outcome.
-    // But if given a single string, we need to flatten it so that we have a 1D array.
-    return (Array.isArray(textInput) ? result : result.flat()) || [];
+    if (!result) return [];
+    return Array.isArray(textInput) ? result : result.flat();
   }
 
   async embedChunks(textChunks = []) {

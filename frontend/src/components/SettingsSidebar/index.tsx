@@ -462,7 +462,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
           "openafd_experimental_feature_preview_unlocked",
           "enabled",
         );
-        window.removeEventListener("keypress", onPress);
+        window.removeEventListener("keydown", onPress);
         window.removeEventListener("keyup", onRelease);
         clearTimeout(timeout);
       }, holdForMs);
@@ -470,7 +470,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
     const onRelease: any = (e) => {
       if (!["Control", "Meta"].includes(e.key)) return;
       if (showing) {
-        window.removeEventListener("keypress", onPress);
+        window.removeEventListener("keydown", onPress);
         window.removeEventListener("keyup", onRelease);
         clearTimeout(timeout);
         return;

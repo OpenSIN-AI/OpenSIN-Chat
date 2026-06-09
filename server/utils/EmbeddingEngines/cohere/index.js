@@ -21,14 +21,12 @@ class CohereEmbedder {
   }
 
   async embedTextInput(textInput) {
-    this.inputType = "search_query";
-    const result = await this.embedChunks([textInput]);
+    const result = await this.embedChunks([textInput], "search_query");
     return result?.[0] || [];
   }
 
-  async embedChunks(textChunks = []) {
+  async embedChunks(textChunks = [], inputType = "search_document") {
     const embeddingRequests = [];
-    this.inputType = "search_document";
     let chunksProcessed = 0;
 
     for (const chunk of toChunks(textChunks, this.maxConcurrentChunks)) {
@@ -38,7 +36,7 @@ class CohereEmbedder {
             .embed({
               texts: chunk,
               model: this.model,
-              inputType: this.inputType,
+              inputType: inputType,
             })
             .then((res) => {
               chunksProcessed += chunk.length;

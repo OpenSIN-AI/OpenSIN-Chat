@@ -18,7 +18,7 @@ export function RenderFileRows({ files, movedItems, children, workspace }) {
     .flatMap((folder) => folder.items)
     .sort(sortMovedItemsAndFiles)
     .map((item) => {
-      const folder = files.items.find((f) => f.items.includes(item));
+      const folder = files.items.find((f) => f.items.includes(item)) ?? {};
       return children({ item, folder });
     });
 }

@@ -13,7 +13,7 @@ export const PinAlert = memo(() => {
   function dismissAlert() {
     setShowAlert(false);
     window.localStorage.setItem(SEEN_DOC_PIN_ALERT, "1");
-    window.removeEventListener(handlePinEvent);
+    window.removeEventListener("pinned_document", handlePinEvent);
   }
 
   function handlePinEvent() {
@@ -24,6 +24,7 @@ export const PinAlert = memo(() => {
   useEffect(() => {
     if (!window || !!window?.localStorage?.getItem(SEEN_DOC_PIN_ALERT)) return;
     window?.addEventListener("pinned_document", handlePinEvent);
+    return () => window.removeEventListener("pinned_document", handlePinEvent);
   }, []);
 
   return (
@@ -82,7 +83,7 @@ export const DocumentWatchAlert = memo(() => {
   function dismissAlert() {
     setShowAlert(false);
     window.localStorage.setItem(SEEN_WATCH_ALERT, "1");
-    window.removeEventListener(handlePinEvent);
+    window.removeEventListener("watch_document_for_changes", handlePinEvent);
   }
 
   function handlePinEvent() {
@@ -93,6 +94,7 @@ export const DocumentWatchAlert = memo(() => {
   useEffect(() => {
     if (!window || !!window?.localStorage?.getItem(SEEN_WATCH_ALERT)) return;
     window?.addEventListener("watch_document_for_changes", handlePinEvent);
+    return () => window.removeEventListener("watch_document_for_changes", handlePinEvent);
   }, []);
 
   return (

@@ -95,7 +95,8 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
           endpoint,
         );
         setVoices(models || []);
-      } catch {
+      } catch (error) {
+        console.error("Failed to fetch Kokoro voices:", error);
         setVoices([]);
       } finally {
         setLoading(false);

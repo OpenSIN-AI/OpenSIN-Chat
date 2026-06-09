@@ -14,9 +14,15 @@ class UnTooled {
     const modifiedMessages = [];
     messages.forEach((msg) => {
       if (msg.role === "function") {
-        const prevMsg = modifiedMessages[modifiedMessages.length - 1].content;
-        modifiedMessages[modifiedMessages.length - 1].content =
+        const prevMsg = modifiedMessages.length > 0
+          ? modifiedMessages[modifiedMessages.length - 1].content
+          : "";
+        if (modifiedMessages.length > 0) {
+          modifiedMessages[modifiedMessages.length - 1].content =
           `${prevMsg}\n${msg.content}`;
+        } else {
+          modifiedMessages.push({ content: msg.content, role: "assistant" });
+        }
         return;
       }
       // Format messages with attachments for multimodal support
@@ -154,7 +160,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
     const history = [...messages].filter((msg) =>
       ["user", "assistant"].includes(msg.role),
     );
-    if (history[history.length - 1].role !== "user") return null;
+    if (!history.length || history[history.length - 1].role !== "user") return null;
     const historyMessages = this.buildToolCallMessages(history, functions);
     const response = await chatCb({ messages: historyMessages });
 
@@ -188,7 +194,7 @@ ${JSON.stringify(def.parameters.properties, null, 4)}\n`;
     const history = [...messages].filter((msg) =>
       ["user", "assistant"].includes(msg.role),
     );
-    if (history[history.length - 1].role !== "user") return null;
+    if (!history.length || history[history.length - 1].role !== "user") return null;
 
     const msgUUID = v4();
     let textResponse = "";

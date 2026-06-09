@@ -156,19 +156,26 @@ function DemoVoiceSample({ voiceId }: any) {
   }
 
   useEffect(() => {
-    function setupPlayer() {
-      if (!playerRef?.current) return;
-      playerRef.current.addEventListener("play", () => {
-        setSpeaking(true);
-      });
+    const player = playerRef?.current;
+    if (!player) return;
 
-      playerRef.current.addEventListener("pause", () => {
-        playerRef.current.currentTime = 0;
-        setSpeaking(false);
-        setAudioSrc(null);
-      });
+    function handlePlay() {
+      setSpeaking(true);
     }
-    setupPlayer();
+
+    function handlePause() {
+      player.currentTime = 0;
+      setSpeaking(false);
+      setAudioSrc(null);
+    }
+
+    player.addEventListener("play", handlePlay);
+    player.addEventListener("pause", handlePause);
+
+    return () => {
+      player.removeEventListener("play", handlePlay);
+      player.removeEventListener("pause", handlePause);
+    };
   }, []);
 
   return (

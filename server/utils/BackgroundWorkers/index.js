@@ -127,8 +127,8 @@ class BackgroundService {
       logger: this.#makeBreeLogger(),
       root: this.#root,
       jobs: jobsToRun,
-      errorHandler: this.onError,
-      workerMessageHandler: this.onWorkerMessageHandler,
+      errorHandler: this.onError.bind(this),
+      workerMessageHandler: this.onWorkerMessageHandler.bind(this),
       runJobsAs: "process",
     });
     this.graceful = new Graceful({ brees: [this.bree], logger: this.logger });
@@ -245,7 +245,7 @@ class BackgroundService {
     try {
       if (this.bree) await this.bree.remove(jobId);
     } catch {
-      /* Job may already be removed */
+      this.#log(`removeJob: ${jobId} could not be removed — already gone`);
     }
   }
 
@@ -321,7 +321,7 @@ class BackgroundService {
         try {
           worker.kill("SIGTERM");
         } catch {
-          /* worker may have already exited */
+          this.#log(`worker ${worker.pid} already exited during removeScheduledJob`);
         }
       }
       this.#scheduledJobWorkers.delete(jobId);
@@ -362,7 +362,7 @@ class BackgroundService {
         worker.kill("SIGTERM");
         killed = true;
       } catch {
-        /* worker may have already exited */
+        this.#log(`worker ${worker.pid} already exited during killRun`);
       }
     }
     return killed;
@@ -431,7 +431,9 @@ class BackgroundService {
         workers.delete(worker);
         if (workers.size === 0) this.#scheduledJobWorkers.delete(jobId);
       }
-      await this.removeJob(workerId).catch(() => {});
+      await this.removeJob(workerId).catch((e) => {
+        this.#log(`removeJob cleanup failed: ${e.message}`);
+      });
     }
   }
 }

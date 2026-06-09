@@ -63,9 +63,10 @@ export default function LLMSelectorAction({ workspaceSlug = null }: any) {
 
   useEffect(() => {
     if (!saved) return;
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setSaved(false);
     }, 1500);
+    return () => clearTimeout(timer);
   }, [saved]);
 
   useEffect(() => {

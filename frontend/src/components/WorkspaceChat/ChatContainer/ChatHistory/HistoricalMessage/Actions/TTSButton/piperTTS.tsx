@@ -37,18 +37,25 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
   }
 
   useEffect(() => {
-    function setupPlayer() {
-      if (!playerRef?.current) return;
-      playerRef.current.addEventListener("play", () => {
-        setSpeaking(true);
-      });
+    const player = playerRef?.current;
+    if (!player) return;
 
-      playerRef.current.addEventListener("pause", () => {
-        playerRef.current.currentTime = 0;
-        setSpeaking(false);
-      });
+    function handlePlay() {
+      setSpeaking(true);
     }
-    setupPlayer();
+
+    function handlePause() {
+      player.currentTime = 0;
+      setSpeaking(false);
+    }
+
+    player.addEventListener("play", handlePlay);
+    player.addEventListener("pause", handlePause);
+
+    return () => {
+      player.removeEventListener("play", handlePlay);
+      player.removeEventListener("pause", handlePause);
+    };
   }, []);
 
   // Release the generated audio blob URL when it is replaced or the component

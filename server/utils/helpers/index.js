@@ -586,7 +586,9 @@ async function getProviderModelPreference(provider = null) {
       if (val?.trim()) return val;
     }
     return env ?? null;
-  } catch {
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(`getProviderModelPreference error for ${provider}:`, e.message);
     return env ?? null;
   }
 }
@@ -638,7 +640,10 @@ function reportEmbeddingProgress(chunksProcessed, totalChunks) {
   if (typeof process.send === "function") {
     try {
       process.send(event);
-    } catch {}
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error("reportEmbeddingProgress: process.send failed", e.message);
+    }
     return;
   }
 

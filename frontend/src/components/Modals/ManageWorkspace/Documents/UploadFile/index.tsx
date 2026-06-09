@@ -58,7 +58,7 @@ export default function UploadFile({
         uid: v4(),
         file: file.file,
         rejected: true,
-        reason: file.errors[0].code,
+        reason: file.errors?.[0]?.code ?? "unknown",
       };
     });
     setFiles([...newAccepted, ...newRejected]);

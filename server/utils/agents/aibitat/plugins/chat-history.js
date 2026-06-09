@@ -92,7 +92,9 @@ const chatHistory = {
               response: last.content,
               attachments,
             });
-          } catch {}
+          } catch (error) {
+            console.error("chat-history: Error saving message:", error);
+          }
         });
       },
       _store: async function (

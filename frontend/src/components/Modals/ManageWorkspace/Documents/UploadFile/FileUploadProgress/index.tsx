@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 import truncate from "truncate";
 import { CheckCircle, XCircle } from "@phosphor-icons/react";
 import Workspace from "../../../../../../models/workspace";
@@ -25,7 +25,9 @@ function FileUploadProgressComponent({
     });
   };
 
+  const mountedRef = useRef(true);
   useEffect(() => {
+    mountedRef.current = true;
     async function uploadFile() {
       setLoading(true);
       setLoadingMessage("Uploading file...");
@@ -33,11 +35,13 @@ function FileUploadProgressComponent({
       const formData = new FormData();
       formData.append("file", file, file.name);
       const timer = setInterval(() => {
+        if (!mountedRef.current) { clearInterval(timer); return; }
         setTimerMs(Number(new Date()) - start);
       }, 100);
 
       // Chunk streaming not working in production so we just sit and wait
       const { response, data } = await Workspace.uploadFile(slug, formData);
+      if (!mountedRef.current) return;
       if (!response.ok) {
         setStatus("failed");
         clearInterval(timer);
@@ -52,11 +56,13 @@ function FileUploadProgressComponent({
       }
 
       // Begin fadeout timer to clear uploader queue.
-      setTimeout(() => {
+      const fadeTimer = setTimeout(() => {
+        if (!mountedRef.current) return;
         fadeOut(() => setTimeout(() => beginFadeOut(), 300));
       }, 5000);
     }
-    !!file && !rejected && uploadFile();
+    if (!!file && !rejected) uploadFile();
+    return () => { mountedRef.current = false; };
   }, []);
 
   if (rejected) {

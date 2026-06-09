@@ -333,7 +333,10 @@ function hasVectorCachedFiles() {
       fs.readdirSync(vectorCachePath)?.filter((name) => name.endsWith(".json"))
         .length !== 0
     );
-  } catch {}
+  } catch {
+    // eslint-disable-next-line no-console
+    console.error("Error reading vector cache directory");
+  }
   return false;
 }
 
@@ -467,10 +470,16 @@ async function fileToPickerData({
           fileContent += chunk;
         })
         .on("end", () => {
-          metadata = JSON.parse(fileContent);
-          // Remove the pageContent field from the metadata - it is large and not needed for the picker
-          delete metadata.pageContent;
-          resolve(metadata);
+          try {
+            metadata = JSON.parse(fileContent);
+            // Remove the pageContent field from the metadata - it is large and not needed for the picker
+            delete metadata.pageContent;
+            resolve(metadata);
+          } catch (parseErr) {
+            // eslint-disable-next-line no-console
+            console.error("Error parsing JSON from stream", parseErr);
+            reject(new Error("Failed to parse streamed file content as JSON"));
+          }
         })
         .on("error", (err) => {
           // eslint-disable-next-line no-console

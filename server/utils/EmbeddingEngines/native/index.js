@@ -240,6 +240,8 @@ class NativeEmbedder {
   // While this does take a while, it is zero set up and is 100% free and on-instance.
   // It still may crash depending on other elements at play - so no promises it works under all conditions.
   async embedChunks(textChunks = []) {
+    if (textChunks.length === 0) return [];
+
     const tmpFilePath = this.#tempfilePath();
     const chunks = toChunks(textChunks, this.maxConcurrentChunks);
     const chunkLen = chunks.length;

@@ -20,6 +20,8 @@ class MistralEmbedder {
   }
 
   async embedChunks(textChunks = []) {
+    if (textChunks.length === 0) return [];
+
     try {
       const response = await this.openai.embeddings.create({
         model: this.model,
