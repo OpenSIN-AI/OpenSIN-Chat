@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "yarn"
           cache-dependency-path: server/yarn.lock
 
@@ -25,7 +25,7 @@ jobs:
 
       - name: Run server unit tests
         working-directory: server
-        run: npx jest --ci
+        run: npx jest --ci --maxWorkers=1
 
       - name: Dependency audit (moderate+)
         working-directory: server

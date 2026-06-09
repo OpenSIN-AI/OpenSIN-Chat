@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "yarn"
           cache-dependency-path: frontend/yarn.lock
 
@@ -35,7 +35,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "yarn"
           cache-dependency-path: server/yarn.lock
 
@@ -45,4 +45,4 @@ jobs:
 
       - name: Run server tests
         working-directory: server
-        run: yarn test
+        run: yarn test --maxWorkers=1
