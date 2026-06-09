@@ -9,11 +9,14 @@ import {
   HouseLine,
   Info,
   LinkSimple,
+  Moon,
+  Sun,
 } from "@phosphor-icons/react";
 import { isMobile } from "react-device-detect";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 import useFooterIcons from "@/hooks/useFooterIcons";
+import { useTheme } from "@/hooks/useTheme";
 import SettingsButton from "../SettingsButton";
 
 export const MAX_ICONS = 3;
@@ -78,6 +81,38 @@ type CustomFooterItem = {
   url: string;
 };
 
+function ThemeToggleButton() {
+  const { isLight, setTheme } = useTheme();
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(isLight ? "dark" : "light")}
+      className={ICON_LINK_CLASSES}
+      aria-label={
+        isLight ? "Zum dunklen Modus wechseln" : "Zum hellen Modus wechseln"
+      }
+      data-tooltip-id="footer-item"
+      data-tooltip-content={
+        isLight ? "Dunklen Modus aktivieren" : "Hellen Modus aktivieren"
+      }
+    >
+      {isLight ? (
+        <Moon
+          weight="fill"
+          className="h-5 w-5 text-white light:text-slate-800"
+          aria-hidden="true"
+        />
+      ) : (
+        <Sun
+          weight="fill"
+          className="h-5 w-5 text-white light:text-slate-800"
+          aria-hidden="true"
+        />
+      )}
+    </button>
+  );
+}
+
 export default function Footer() {
   const { footerData, isLoading } = useFooterIcons();
 
@@ -136,6 +171,7 @@ export default function Footer() {
                 </Link>
               ),
             )}
+        <ThemeToggleButton />
         {!isMobile && <SettingsButton />}
       </nav>
       <Tooltip
