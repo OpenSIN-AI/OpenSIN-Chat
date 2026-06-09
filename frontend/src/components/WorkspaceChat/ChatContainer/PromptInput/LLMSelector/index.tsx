@@ -17,6 +17,7 @@ import { NoSetupWarning } from "./SetupProvider";
 import showToast from "@/utils/toast";
 import useWorkspace from "@/hooks/useWorkspaceBySlug";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import Workspace from "@/models/workspace";
 
 export default function LLMSelectorModal({
   workspaceSlug = null,
