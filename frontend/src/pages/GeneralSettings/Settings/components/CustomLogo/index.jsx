@@ -34,6 +34,7 @@ export default function CustomLogo() {
     const formData = new FormData();
     formData.append("logo", file);
     const { success, error } = await System.uploadLogo(formData);
+    URL.revokeObjectURL(objectURL);
     if (!success) {
       showToast(`Failed to upload logo: ${error}`, "error");
       setLogo(_initLogo);
@@ -42,6 +43,7 @@ export default function CustomLogo() {
 
     const { logoURL } = await System.fetchLogo();
     _setLogo(logoURL);
+    refreshIsDefaultLogo();
 
     showToast("Image uploaded successfully.", "success");
     setIsDefaultLogo(false);
@@ -63,6 +65,7 @@ export default function CustomLogo() {
 
     const { logoURL } = await System.fetchLogo();
     _setLogo(logoURL);
+    refreshIsDefaultLogo();
 
     showToast("Image successfully removed.", "success");
   };
