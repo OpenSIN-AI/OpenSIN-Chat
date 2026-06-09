@@ -10,22 +10,17 @@ jest.mock("../../utils/logger", () => () => ({
   warn: jest.fn(),
 }));
 
-const { WorkspaceThread } = require("../../models/workspaceThread");
-const { WorkspaceThreadFolder } = require("../../models/workspaceThreadFolder");
-const { WorkspaceChats } = require("../../models/workspaceChats");
-const { Telemetry } = require("../../models/telemetry");
-const { EventLogs } = require("../../models/eventLogs");
-const { reqBody, userFromSession, multiUserMode, safeJsonParse } = require("../../utils/http");
-const { convertToChatHistory } = require("../../utils/helpers/chat/responses");
-const { createMockApp } = require("../helpers/mockExpressApp");
-const { workspaceThreadEndpoints } = require("../../endpoints/workspaceThreads");
-
 jest.mock("../../models/workspaceThread");
 jest.mock("../../models/workspaceThreadFolder");
 jest.mock("../../models/workspaceChats");
 jest.mock("../../models/telemetry");
 jest.mock("../../models/eventLogs");
-jest.mock("../../utils/http");
+jest.mock("../../utils/http", () => ({
+  reqBody: jest.fn((req) => req.body),
+  userFromSession: jest.fn(),
+  multiUserMode: jest.fn(),
+  safeJsonParse: jest.fn(),
+}));
 jest.mock("../../utils/helpers/chat/responses");
 jest.mock("../../utils/middleware/validatedRequest", () => ({
   validatedRequest: (_req, _res, next) => next(),
@@ -38,6 +33,16 @@ jest.mock("../../utils/middleware/validWorkspace", () => ({
   validWorkspaceSlug: (_req, _res, next) => next(),
   validWorkspaceAndThreadSlug: (_req, _res, next) => next(),
 }));
+
+const { WorkspaceThread } = require("../../models/workspaceThread");
+const { WorkspaceThreadFolder } = require("../../models/workspaceThreadFolder");
+const { WorkspaceChats } = require("../../models/workspaceChats");
+const { Telemetry } = require("../../models/telemetry");
+const { EventLogs } = require("../../models/eventLogs");
+const { reqBody, userFromSession, multiUserMode, safeJsonParse } = require("../../utils/http");
+const { convertToChatHistory } = require("../../utils/helpers/chat/responses");
+const { createMockApp } = require("../helpers/mockExpressApp");
+const { workspaceThreadEndpoints } = require("../../endpoints/workspaceThreads");
 
 const WS_LOCALS = { workspace: { id: 1, name: "ws", slug: "ws" } };
 const THREAD_LOCALS = { workspace: { id: 1, name: "ws", slug: "ws" }, thread: { id: 10, slug: "t1", name: "Thread 1" } };

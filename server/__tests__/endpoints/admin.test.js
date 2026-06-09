@@ -10,6 +10,39 @@ jest.mock("../../utils/logger", () => () => ({
   warn: jest.fn(),
 }));
 
+jest.mock("../../models/user");
+jest.mock("../../models/apiKeys");
+jest.mock("../../models/invite");
+jest.mock("../../models/workspace");
+jest.mock("../../models/systemSettings");
+jest.mock("../../models/eventLogs");
+jest.mock("../../models/documents");
+jest.mock("../../models/vectors");
+jest.mock("../../models/browserExtensionApiKey");
+jest.mock("../../models/workspaceChats");
+jest.mock("../../utils/helpers/admin");
+jest.mock("../../utils/http", () => ({
+  reqBody: jest.fn((req) => req.body),
+  userFromSession: jest.fn(),
+  safeJsonParse: jest.fn(),
+}));
+jest.mock("../../utils/helpers");
+jest.mock("../../utils/agents/imported");
+jest.mock("../../utils/middleware/multiUserProtected", () => ({
+  ROLES: { admin: "admin", manager: "manager", user: "user", all: "all" },
+  strictMultiUserRoleValid: () => (_req, _res, next) => next(),
+  flexUserRoleValid: () => (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/validatedRequest", () => ({
+  validatedRequest: (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/simpleSSOEnabled", () => ({
+  simpleSSOLoginDisabledMiddleware: (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/workspaceDeletionProtection", () => ({
+  workspaceDeletionProtection: (_req, _res, next) => next(),
+}));
+
 const { User } = require("../../models/user");
 const { ApiKey } = require("../../models/apiKeys");
 const { Invite } = require("../../models/invite");
@@ -28,35 +61,6 @@ const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const ImportedPlugin = require("../../utils/agents/imported");
 const { createMockApp } = require("../helpers/mockExpressApp");
 const { adminEndpoints } = require("../../endpoints/admin");
-
-jest.mock("../../models/user");
-jest.mock("../../models/apiKeys");
-jest.mock("../../models/invite");
-jest.mock("../../models/workspace");
-jest.mock("../../models/systemSettings");
-jest.mock("../../models/eventLogs");
-jest.mock("../../models/documents");
-jest.mock("../../models/vectors");
-jest.mock("../../models/browserExtensionApiKey");
-jest.mock("../../models/workspaceChats");
-jest.mock("../../utils/helpers/admin");
-jest.mock("../../utils/http");
-jest.mock("../../utils/helpers");
-jest.mock("../../utils/agents/imported");
-jest.mock("../../utils/middleware/multiUserProtected", () => ({
-  ROLES: { admin: "admin", manager: "manager", user: "user", all: "all" },
-  strictMultiUserRoleValid: () => (_req, _res, next) => next(),
-  flexUserRoleValid: () => (_req, _res, next) => next(),
-}));
-jest.mock("../../utils/middleware/validatedRequest", () => ({
-  validatedRequest: (_req, _res, next) => next(),
-}));
-jest.mock("../../utils/middleware/simpleSSOEnabled", () => ({
-  simpleSSOLoginDisabledMiddleware: (_req, _res, next) => next(),
-}));
-jest.mock("../../utils/middleware/workspaceDeletionProtection", () => ({
-  workspaceDeletionProtection: (_req, _res, next) => next(),
-}));
 
 function buildApp() {
   const harness = createMockApp();

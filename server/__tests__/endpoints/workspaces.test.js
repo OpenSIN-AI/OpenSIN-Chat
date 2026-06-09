@@ -10,22 +10,6 @@ jest.mock("../../utils/logger", () => () => ({
   warn: jest.fn(),
 }));
 
-const { Workspace } = require("../../models/workspace");
-const { Document } = require("../../models/documents");
-const { DocumentVectors } = require("../../models/vectors");
-const { WorkspaceChats } = require("../../models/workspaceChats");
-const { Telemetry } = require("../../models/telemetry");
-const { EventLogs } = require("../../models/eventLogs");
-const { WorkspaceSuggestedMessages } = require("../../models/workspacesSuggestedMessages");
-const { WorkspaceThread } = require("../../models/workspaceThread");
-const { getVectorDbClass } = require("../../utils/helpers");
-const { reqBody, userFromSession, multiUserMode, safeJsonParse } = require("../../utils/http");
-const { convertToChatHistory } = require("../../utils/helpers/chat/responses");
-const { searchWorkspaceAndThreads } = require("../../utils/helpers/search");
-const { purgeDocument } = require("../../utils/files/purgeDocument");
-const { createMockApp } = require("../helpers/mockExpressApp");
-const { workspaceEndpoints } = require("../../endpoints/workspaces");
-
 jest.mock("../../models/workspace");
 jest.mock("../../models/documents");
 jest.mock("../../models/vectors");
@@ -35,7 +19,12 @@ jest.mock("../../models/eventLogs");
 jest.mock("../../models/workspacesSuggestedMessages");
 jest.mock("../../models/workspaceThread");
 jest.mock("../../utils/helpers");
-jest.mock("../../utils/http");
+jest.mock("../../utils/http", () => ({
+  reqBody: jest.fn((req) => req.body),
+  userFromSession: jest.fn(),
+  multiUserMode: jest.fn(),
+  safeJsonParse: jest.fn(),
+}));
 jest.mock("../../utils/helpers/chat/responses");
 jest.mock("../../utils/helpers/search");
 jest.mock("../../utils/files/purgeDocument");
@@ -72,6 +61,22 @@ jest.mock("../../utils/middleware/workspaceDeletionProtection", () => ({
 jest.mock("../../endpoints/workspacesParsedFiles", () => ({
   workspaceParsedFilesEndpoints: () => {},
 }));
+
+const { Workspace } = require("../../models/workspace");
+const { Document } = require("../../models/documents");
+const { DocumentVectors } = require("../../models/vectors");
+const { WorkspaceChats } = require("../../models/workspaceChats");
+const { Telemetry } = require("../../models/telemetry");
+const { EventLogs } = require("../../models/eventLogs");
+const { WorkspaceSuggestedMessages } = require("../../models/workspacesSuggestedMessages");
+const { WorkspaceThread } = require("../../models/workspaceThread");
+const { getVectorDbClass } = require("../../utils/helpers");
+const { reqBody, userFromSession, multiUserMode, safeJsonParse } = require("../../utils/http");
+const { convertToChatHistory } = require("../../utils/helpers/chat/responses");
+const { searchWorkspaceAndThreads } = require("../../utils/helpers/search");
+const { purgeDocument } = require("../../utils/files/purgeDocument");
+const { createMockApp } = require("../helpers/mockExpressApp");
+const { workspaceEndpoints } = require("../../endpoints/workspaces");
 
 const WS_LOCALS = { workspace: { id: 1, name: "ws", slug: "ws" } };
 

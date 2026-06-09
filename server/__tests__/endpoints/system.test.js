@@ -63,31 +63,25 @@ jest.mock("../../utils/files/multer", () => ({
   handlePfpUpload: (_req, _res, next) => next(),
   handleAudioUpload: (_req, _res, next) => next(),
 }));
-const updateENVModule = require("../../utils/helpers/updateENV");
 jest.mock("../../utils/helpers/updateENV", () => ({
   updateENV: jest.fn(),
   dumpENV: jest.fn(),
 }));
-const getCustomModelsModule = require("../../utils/helpers/customModels");
 jest.mock("../../utils/helpers/customModels", () => ({
   getCustomModels: jest.fn(),
 }));
-const exportChatsModule = require("../../utils/helpers/chat/convertTo");
 jest.mock("../../utils/helpers/chat/convertTo", () => ({
   exportChatsAsType: jest.fn(),
 }));
-const filesModule = require("../../utils/files");
 jest.mock("../../utils/files", () => ({
   viewLocalFiles: jest.fn(),
   normalizePath: jest.fn((p) => p),
   isWithin: jest.fn(() => true),
 }));
-const purgeDocModule = require("../../utils/files/purgeDocument");
 jest.mock("../../utils/files/purgeDocument", () => ({
   purgeDocument: jest.fn(),
   purgeFolder: jest.fn(),
 }));
-const logoModule = require("../../utils/files/logo");
 jest.mock("../../utils/files/logo", () => ({
   getDefaultFilename: jest.fn(() => "logo.png"),
   determineLogoFilepath: jest.fn(),
@@ -102,7 +96,6 @@ jest.mock("../../utils/files/pfp", () => ({
   fetchPfp: jest.fn(),
   determinePfpFilepath: jest.fn(),
 }));
-const passwordRecoveryModule = require("../../utils/PasswordRecovery");
 jest.mock("../../utils/PasswordRecovery", () => ({
   recoverAccount: jest.fn(),
   resetPassword: jest.fn(),
@@ -111,7 +104,6 @@ jest.mock("../../utils/PasswordRecovery", () => ({
 jest.mock("../../utils/chats", () => ({
   VALID_COMMANDS: { "/reset": jest.fn() },
 }));
-const sqlConnectorsModule = require("../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors");
 jest.mock("../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors", () => ({
   validateConnection: jest.fn(),
 }));
@@ -155,6 +147,14 @@ jest.mock("../../models/memory", () => ({ Memory: { migrateToMultiUser: jest.fn(
 jest.mock("../../models/agentSkillWhitelist", () => ({ AgentSkillWhitelist: { clearSingleUserWhitelist: jest.fn() } }));
 jest.mock("../../models/temporaryAuthToken", () => ({ TemporaryAuthToken: { validate: jest.fn() } }));
 
+const updateENVModule = require("../../utils/helpers/updateENV");
+const getCustomModelsModule = require("../../utils/helpers/customModels");
+const exportChatsModule = require("../../utils/helpers/chat/convertTo");
+const filesModule = require("../../utils/files");
+const purgeDocModule = require("../../utils/files/purgeDocument");
+const logoModule = require("../../utils/files/logo");
+const passwordRecoveryModule = require("../../utils/PasswordRecovery");
+const sqlConnectorsModule = require("../../utils/agents/aibitat/plugins/sql-agent/SQLConnectors");
 const { createMockApp } = require("../helpers/mockExpressApp");
 const { systemEndpoints } = require("../../endpoints/system");
 const { SystemSettings } = require("../../models/systemSettings");

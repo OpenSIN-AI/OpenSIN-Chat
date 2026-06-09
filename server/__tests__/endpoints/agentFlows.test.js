@@ -9,14 +9,20 @@ jest.mock("../../utils/logger", () => () => ({
   info: jest.fn(),
   warn: jest.fn(),
 }));
-
-const { AgentFlows } = require("../../utils/agentFlows");
-const { Telemetry } = require("../../models/telemetry");
-const { createMockApp } = require("../helpers/mockExpressApp");
-const { agentFlowEndpoints } = require("../../endpoints/agentFlows");
-
-jest.mock("../../utils/agentFlows");
-jest.mock("../../models/telemetry");
+jest.mock("../../utils/agentFlows", () => ({
+  AgentFlows: {
+    saveFlow: jest.fn(),
+    loadFlow: jest.fn(),
+    listFlows: jest.fn(),
+    deleteFlow: jest.fn(),
+    runFlow: jest.fn(),
+    stopFlow: jest.fn(),
+    getFlowLogs: jest.fn(),
+  },
+}));
+jest.mock("../../models/telemetry", () => ({
+  Telemetry: { sendTelemetry: jest.fn() },
+}));
 jest.mock("../../utils/middleware/multiUserProtected", () => ({
   ROLES: { admin: "admin", manager: "manager", user: "user", all: "all" },
   flexUserRoleValid: () => (_req, _res, next) => next(),
@@ -24,6 +30,11 @@ jest.mock("../../utils/middleware/multiUserProtected", () => ({
 jest.mock("../../utils/middleware/validatedRequest", () => ({
   validatedRequest: (_req, _res, next) => next(),
 }));
+
+const { AgentFlows } = require("../../utils/agentFlows");
+const { Telemetry } = require("../../models/telemetry");
+const { createMockApp } = require("../helpers/mockExpressApp");
+const { agentFlowEndpoints } = require("../../endpoints/agentFlows");
 
 function buildApp() {
   const harness = createMockApp();

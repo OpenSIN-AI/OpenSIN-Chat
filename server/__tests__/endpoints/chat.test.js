@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 
-
 jest.mock("../../utils/middleware/validApiKey", () => ({
   validApiKey: (_req, _res, next) => next(),
 }));
@@ -8,6 +7,28 @@ jest.mock("../../utils/logger", () => () => ({
   error: jest.fn(),
   info: jest.fn(),
   warn: jest.fn(),
+}));
+jest.mock("../../utils/chats/stream");
+jest.mock("../../models/telemetry");
+jest.mock("../../models/eventLogs");
+jest.mock("../../models/workspaceThread");
+jest.mock("../../models/user");
+jest.mock("../../utils/helpers/chat/responses");
+jest.mock("../../utils/http", () => ({
+  reqBody: jest.fn((req) => req.body),
+  userFromSession: jest.fn(),
+  multiUserMode: jest.fn(),
+}));
+jest.mock("../../utils/middleware/validatedRequest", () => ({
+  validatedRequest: (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/multiUserProtected", () => ({
+  ROLES: { admin: "admin", manager: "manager", user: "user", all: "all" },
+  flexUserRoleValid: () => (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/validWorkspace", () => ({
+  validWorkspaceSlug: (_req, _res, next) => next(),
+  validWorkspaceAndThreadSlug: (_req, _res, next) => next(),
 }));
 
 const { streamChatWithWorkspace } = require("../../utils/chats/stream");
@@ -22,25 +43,6 @@ const { ROLES, flexUserRoleValid } = require("../../utils/middleware/multiUserPr
 const { validWorkspaceSlug, validWorkspaceAndThreadSlug } = require("../../utils/middleware/validWorkspace");
 const { createMockApp } = require("../helpers/mockExpressApp");
 const { chatEndpoints } = require("../../endpoints/chat");
-
-jest.mock("../../utils/chats/stream");
-jest.mock("../../models/telemetry");
-jest.mock("../../models/eventLogs");
-jest.mock("../../models/workspaceThread");
-jest.mock("../../models/user");
-jest.mock("../../utils/helpers/chat/responses");
-jest.mock("../../utils/http");
-jest.mock("../../utils/middleware/validatedRequest", () => ({
-  validatedRequest: (_req, _res, next) => next(),
-}));
-jest.mock("../../utils/middleware/multiUserProtected", () => ({
-  ROLES: { admin: "admin", manager: "manager", user: "user", all: "all" },
-  flexUserRoleValid: () => (_req, _res, next) => next(),
-}));
-jest.mock("../../utils/middleware/validWorkspace", () => ({
-  validWorkspaceSlug: (_req, _res, next) => next(),
-  validWorkspaceAndThreadSlug: (_req, _res, next) => next(),
-}));
 
 const WS_LOCALS = { workspace: { id: 1, name: "ws", slug: "ws", chatMode: "chat" } };
 const THREAD_LOCALS = { workspace: { id: 1, name: "ws", slug: "ws", chatMode: "chat" }, thread: { id: 10, slug: "t1", name: "Thread 1" } };

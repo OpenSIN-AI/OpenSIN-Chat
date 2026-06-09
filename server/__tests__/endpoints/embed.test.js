@@ -9,6 +9,20 @@ jest.mock("../../utils/logger", () => () => ({
   info: jest.fn(),
   warn: jest.fn(),
 }));
+jest.mock("../../utils/chats/embed");
+jest.mock("../../models/embedChats");
+jest.mock("../../models/telemetry");
+jest.mock("../../utils/helpers/chat/responses");
+jest.mock("../../utils/http", () => ({
+  reqBody: jest.fn((req) => req.body),
+  multiUserMode: jest.fn(() => false),
+}));
+jest.mock("../../utils/chats/embed", () => ({ streamChatWithForEmbed: jest.fn() }));
+jest.mock("../../utils/middleware/embedMiddleware", () => ({
+  validEmbedConfig: (_req, _res, next) => next(),
+  canRespond: (_req, _res, next) => next(),
+  setConnectionMeta: (_req, _res, next) => next(),
+}));
 
 const { streamChatWithForEmbed } = require("../../utils/chats/embed");
 const { EmbedChats } = require("../../models/embedChats");
@@ -17,17 +31,6 @@ const { writeResponseChunk, convertToChatHistory } = require("../../utils/helper
 const { reqBody, multiUserMode } = require("../../utils/http");
 const { createMockApp } = require("../helpers/mockExpressApp");
 const { embeddedEndpoints } = require("../../endpoints/embed");
-
-jest.mock("../../utils/chats/embed");
-jest.mock("../../models/embedChats");
-jest.mock("../../models/telemetry");
-jest.mock("../../utils/helpers/chat/responses");
-jest.mock("../../utils/http");
-jest.mock("../../utils/middleware/embedMiddleware", () => ({
-  validEmbedConfig: (_req, _res, next) => next(),
-  canRespond: (_req, _res, next) => next(),
-  setConnectionMeta: (_req, _res, next) => next(),
-}));
 
 const EMBED_LOCALS = { embedConfig: { id: 1, workspace_id: 5 } };
 
@@ -41,8 +44,6 @@ describe("embeddedEndpoints", () => {
   let app;
   beforeEach(() => {
     app = buildApp();
-    reqBody.mockImplementation((req) => req.body);
-    multiUserMode.mockReturnValue(false);
     streamChatWithForEmbed.mockResolvedValue();
     Telemetry.sendTelemetry.mockResolvedValue();
     writeResponseChunk.mockReturnValue();
