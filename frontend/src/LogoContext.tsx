@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { createContext, useEffect, useState } from "react";
 import OpenAfDLogo from "./media/logo/openafd-logo.png";
+import OpenAfDLogoDark from "./media/logo/openafd-logo-dark.png";
 import DefaultLoginLogo from "./media/logo/openafd-logo.png";
 import System from "./models/system";
 
@@ -14,20 +15,25 @@ export function LogoProvider({ children }) {
   const [isCustomLogo, setIsCustomLogo] = useState(false as any);
 
   async function fetchInstanceLogo() {
+    const isDarkMode =
+      (localStorage.getItem("theme") || "default") === "default";
+    const fallbackLogo = isDarkMode ? OpenAfDLogoDark : OpenAfDLogo;
+    const defaultLoginLogo = isDarkMode ? OpenAfDLogoDark : DefaultLoginLogo;
+
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
       if (logoURL) {
         setLogo(logoURL);
-        setLoginLogo(isCustomLogo ? logoURL : DefaultLoginLogo);
+        setLoginLogo(isCustomLogo ? logoURL : defaultLoginLogo);
         setIsCustomLogo(isCustomLogo);
       } else {
-        setLogo(OpenAfDLogo);
-        setLoginLogo(DefaultLoginLogo);
+        setLogo(fallbackLogo);
+        setLoginLogo(defaultLoginLogo);
         setIsCustomLogo(false);
       }
     } catch {
-      setLogo(OpenAfDLogo);
-      setLoginLogo(DefaultLoginLogo);
+      setLogo(fallbackLogo);
+      setLoginLogo(defaultLoginLogo);
       setIsCustomLogo(false);
     }
   }

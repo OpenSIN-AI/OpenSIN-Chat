@@ -83,14 +83,19 @@ jest.mock("../../utils/files/purgeDocument", () => ({
   purgeFolder: jest.fn(),
 }));
 jest.mock("../../utils/files/logo", () => ({
-  getDefaultFilename: jest.fn(() => "logo.png"),
+  getDefaultFilename: jest.fn((darkMode = true) =>
+    darkMode ? "openafd-logo-dark.png" : "openafd-logo.png",
+  ),
   determineLogoFilepath: jest.fn(),
   fetchLogo: jest.fn(),
   validFilename: jest.fn(() => true),
   renameLogoFile: jest.fn(),
   removeCustomLogo: jest.fn(),
-  LOGO_FILENAME: "anything-llm.png",
-  isDefaultFilename: jest.fn(() => false),
+  LOGO_FILENAME: "openafd-logo.png",
+  LOGO_FILENAME_DARK: "openafd-logo-dark.png",
+  isDefaultFilename: jest.fn((filename) =>
+    ["openafd-logo.png", "openafd-logo-dark.png", "anythingllm-logo.png", "anythingllm-logo-dark.png"].includes(filename),
+  ),
 }));
 jest.mock("../../utils/files/pfp", () => ({
   fetchPfp: jest.fn(),

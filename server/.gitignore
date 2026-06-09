@@ -5,6 +5,8 @@ server/.env
 storage/assets/*
 !storage/assets/anything-llm.png
 !storage/assets/anything-llm-invert.png
+!storage/assets/openafd-logo.png
+!storage/assets/openafd-logo-dark.png
 storage/documents/*
 storage/comkey/*
 storage/tmp/*

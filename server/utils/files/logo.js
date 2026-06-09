@@ -38,13 +38,14 @@ function validFilename(newFilename = "") {
 }
 
 /**
- * Shows the logo for the current theme. In dark mode, it shows the light logo
- * and vice versa.
- * @param {boolean} darkMode - Whether the logo should be for dark mode.
+ * Returns the default logo filename for the given theme.
+ * - darkMode=true  → openafd-logo-dark.png  (white logo, for dark backgrounds)
+ * - darkMode=false → openafd-logo.png        (dark logo, for light backgrounds)
+ * @param {boolean} darkMode - Whether the UI is currently in dark mode.
  * @returns {string} The filename of the logo.
  */
 function getDefaultFilename(darkMode = true) {
-  return darkMode ? LOGO_FILENAME : LOGO_FILENAME_DARK;
+  return darkMode ? LOGO_FILENAME_DARK : LOGO_FILENAME;
 }
 
 /**
@@ -54,7 +55,7 @@ function getDefaultFilename(darkMode = true) {
  * to OpenAfD-Chat without copying/replacing the asset files).
  */
 function getLegacyDefaultFilename(darkMode = true) {
-  return darkMode ? "anythingllm-logo.png" : "anythingllm-logo-dark.png";
+  return darkMode ? "anythingllm-logo-dark.png" : "anythingllm-logo.png";
 }
 
 async function determineLogoFilepath(defaultFilename = LOGO_FILENAME) {

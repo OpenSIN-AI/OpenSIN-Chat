@@ -32,6 +32,7 @@ const {
   renameLogoFile,
   removeCustomLogo,
   LOGO_FILENAME,
+  LOGO_FILENAME_DARK,
   isDefaultFilename,
 } = require("../utils/files/logo");
 const { Telemetry } = require("../models/telemetry");
@@ -988,7 +989,7 @@ function systemEndpoints(app) {
     try {
       const currentLogoFilename = await SystemSettings.currentLogoFilename();
       const isDefaultLogo =
-        !currentLogoFilename || currentLogoFilename === LOGO_FILENAME;
+        !currentLogoFilename || isDefaultFilename(currentLogoFilename);
       response.status(200).json({ isDefaultLogo });
     } catch (error) {
       // eslint-disable-next-line no-console
