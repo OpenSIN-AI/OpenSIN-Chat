@@ -179,5 +179,5 @@ function hasVisibleOptions(user: any = null, childOptions: any = []) {
 
 function generateStorageKey({ key = "" }: any) {
   const _key = key.replace(/\s+/g, "_").toLowerCase();
-  return `anything_llm_menu_${_key}_expanded`;
+  return `openafd_menu_${_key}_expanded`;
 }

@@ -270,26 +270,29 @@ describe("CreateFilesManager.registerOutput — additional cases", () => {
 });
 
 describe("CreateFilesManager.getLogo", () => {
-  // The shipped assets are named anything-llm.png and anything-llm-invert.png.
-  // getLogo() tries to read openafd-logo.png / openafd-logo-dark.png and falls
-  // back to null on any error — so for the shipped asset set the function
-  // returns null today. We document that behavior here.
-  test("returns null when the openafd-logo file is not present (current default)", () => {
+  // Both openafd-logo.png and openafd-logo-dark.png are now shipped inside
+  // create-files/assets/. getLogo() should return a Buffer for the buffer
+  // format and a data-URI string for the dataUri format.
+  test("returns a Buffer for the light logo (forDarkBackground: false)", () => {
     const result = createFilesLib.getLogo({ forDarkBackground: false });
-    expect(result).toBeNull();
+    expect(result).not.toBeNull();
+    expect(Buffer.isBuffer(result)).toBe(true);
   });
 
-  test("returns null for the dark-background logo when the openafd-logo-dark file is not present", () => {
+  test("returns a Buffer for the dark logo (forDarkBackground: true)", () => {
     const result = createFilesLib.getLogo({ forDarkBackground: true });
-    expect(result).toBeNull();
+    expect(result).not.toBeNull();
+    expect(Buffer.isBuffer(result)).toBe(true);
   });
 
-  test("returns null for the dataUri format when the file is not present", () => {
+  test("returns a data: URI string for the dataUri format", () => {
     const result = createFilesLib.getLogo({
       forDarkBackground: false,
       format: "dataUri",
     });
-    expect(result).toBeNull();
+    expect(result).not.toBeNull();
+    expect(typeof result).toBe("string");
+    expect(result.startsWith("data:image/png;base64,")).toBe(true);
   });
 });
 
