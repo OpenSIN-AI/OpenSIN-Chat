@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Workspace-scoped chat container with a stable `loaded` state that
+// keeps the previous chat mounted while the next chat's history is being
+// fetched. See index.doc.md for the `useEffect` return-value bug history.
+// Docs: index.doc.md
 import React, { useEffect, useState } from "react";
 import LoadingChat from "./LoadingChat";
 import ChatContainer from "./ChatContainer";

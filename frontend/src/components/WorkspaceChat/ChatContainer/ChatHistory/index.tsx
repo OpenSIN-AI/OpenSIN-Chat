@@ -131,10 +131,9 @@ export default forwardRef(function (
     if (role === "user") {
       // remove all messages after the edited message
       // technically there are two chatIds per-message pair, this will split the first.
-      const updatedHistory = history.slice(
-        0,
-        history.findIndex((msg) => msg.chatId === chatId) + 1,
-      );
+      const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
+      if (targetIdx < 0) return;
+      const updatedHistory = history.slice(0, targetIdx + 1);
 
       // update last message in history to edited message
       updatedHistory[updatedHistory.length - 1].content = editedMessage;

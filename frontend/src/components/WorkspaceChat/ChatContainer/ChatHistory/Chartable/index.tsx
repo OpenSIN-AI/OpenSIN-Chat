@@ -69,7 +69,7 @@ export function Chartable({ props }: any) {
     typeof content.dataset === "string"
       ? safeJsonParse(content.dataset, [])
       : content.dataset;
-  const value = data.length > 0 ? Object.keys(data[0])[1] : "value";
+  const value = data?.length > 0 ? Object.keys(data[0])[1] : "value";
   const title = content?.title;
 
   const renderChart = () => {

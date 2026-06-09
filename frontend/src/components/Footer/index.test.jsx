@@ -7,6 +7,10 @@ vi.mock("@/hooks/useFooterIcons", () => ({
   default: vi.fn(),
 }));
 
+vi.mock("@/hooks/useTheme", () => ({
+  useTheme: () => ({ isLight: true, setTheme: vi.fn() }),
+}));
+
 vi.mock("react-router-dom", () => ({
   Link: ({ to, children, ...props }) => (
     <a href={to} {...props}>
@@ -32,6 +36,8 @@ vi.mock("@phosphor-icons/react", () => ({
   Globe: () => <svg data-testid="icon-globe" />,
   Briefcase: () => <svg data-testid="icon-briefcase" />,
   Info: () => <svg data-testid="icon-info" />,
+  Sun: () => <svg data-testid="icon-sun" />,
+  Moon: () => <svg data-testid="icon-moon" />,
 }));
 
 import useFooterIcons from "@/hooks/useFooterIcons";
@@ -102,5 +108,13 @@ describe("Footer", () => {
     const docsLink = screen.getByLabelText("Dokumentation öffnen");
     expect(githubLink).toBeInTheDocument();
     expect(docsLink).toBeInTheDocument();
+  });
+
+  it("renders theme toggle button with Moon icon when in light mode", () => {
+    useFooterIcons.mockReturnValue({ footerData: [], isLoading: false });
+    render(<Footer />);
+    const themeButton = screen.getByLabelText(/dunklen Modus wechseln/i);
+    expect(themeButton).toBeInTheDocument();
+    expect(themeButton).toHaveAttribute("type", "button");
   });
 });
