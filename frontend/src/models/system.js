@@ -424,10 +424,19 @@ const System = {
   },
   fetchLogo: async function () {
     const url = new URL(`${fullApiUrl()}/system/logo`);
-    url.searchParams.append(
-      "theme",
-      localStorage.getItem("theme") || "default",
-    );
+    // Resolve the stored theme preference (system/light/dark/legacy "default")
+    // into a concrete dark-mode boolean so the server returns the correct
+    // light/dark logo variant.
+    const stored = localStorage.getItem("theme");
+    let theme = stored === "default" ? "dark" : stored || "system";
+    if (theme === "system") {
+      theme =
+        typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-color-scheme: light)").matches
+          ? "light"
+          : "dark";
+    }
+    url.searchParams.append("darkMode", theme !== "light" ? "true" : "false");
 
     return await fetch(url, {
       method: "GET",

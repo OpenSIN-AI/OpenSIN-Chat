@@ -704,8 +704,17 @@ function systemEndpoints(app) {
 
   app.get("/system/logo", async function (request, response) {
     try {
-      const darkMode =
-        !request?.query?.theme || request?.query?.theme === "default";
+      // Prefer the explicit darkMode boolean sent by the frontend (which has
+      // already resolved system/light/dark/legacy themes). Fall back to the
+      // legacy `theme` query param for backwards compatibility: anything other
+      // than "light" is treated as dark mode.
+      let darkMode;
+      if (typeof request?.query?.darkMode !== "undefined") {
+        darkMode = request.query.darkMode === "true";
+      } else {
+        const theme = request?.query?.theme;
+        darkMode = !theme || theme !== "light";
+      }
       const defaultFilename = getDefaultFilename(darkMode);
       const logoPath = await determineLogoFilepath(defaultFilename);
       const { found, buffer, size, mime } = fetchLogo(logoPath);
