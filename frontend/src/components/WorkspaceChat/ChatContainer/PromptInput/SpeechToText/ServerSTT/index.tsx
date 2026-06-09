@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Appearance from "@/models/appearance";
 import System from "@/models/system";
@@ -91,6 +91,18 @@ export default function ServerSTT({ sendCommand }: any) {
       showToast(t("chat_window.stt_mic_denied"), "error", { clear: true });
     }
   }, [sendCommand, t]);
+
+  // Tear down the recorder and microphone stream if the component unmounts
+  // mid-recording (e.g. navigating away), otherwise the MediaRecorder keeps
+  // running and the mic tracks stay open, leaving the browser mic indicator on.
+  useEffect(() => {
+    return () => {
+      const recorder = recorderRef.current;
+      if (recorder && recorder.state !== "inactive") recorder.stop();
+      recorder?.stream?.getTracks?.().forEach((track) => track.stop());
+      recorderRef.current = null;
+    };
+  }, []);
 
   return (
     <MicButton
