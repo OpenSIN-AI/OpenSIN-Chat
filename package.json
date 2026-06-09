@@ -97,6 +97,7 @@
     "highlight.js": "^11.11.1",
     "lodash.debounce": "^4.0.8",
     "markdown-it": "^14.2.0",
+    "mime": "^4.1.0",
     "openai": "^6.42.0",
     "playwright": "^1.60.0",
     "pluralize": "^8.0.0",

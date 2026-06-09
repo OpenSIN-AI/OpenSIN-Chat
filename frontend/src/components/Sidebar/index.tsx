@@ -183,8 +183,8 @@ export default function Sidebar() {
 export function SidebarMobileHeader() {
   const { logo } = useLogo();
   const sidebarRef = useRef(null);
-  const [showSidebar, setShowSidebar] = useState(false as any);
-  const [showBgOverlay, setShowBgOverlay] = useState(false as any);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [showBgOverlay, setShowBgOverlay] = useState(false);
   const {
     showing: showingNewWsModal,
     showModal: showNewWsModal,

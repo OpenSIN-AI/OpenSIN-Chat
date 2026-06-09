@@ -12,13 +12,13 @@
  * Builds a chainable mock response object capturing status/json/headers.
  * @returns {object} mock response
  */
-function createMockRes() {
+function createMockRes(locals = {}) {
   const res = {
     statusCode: 200,
     body: undefined,
     headers: {},
     ended: false,
-    locals: {},
+    locals: { ...locals },
   };
   res.status = (code) => {
     res.statusCode = code;
@@ -34,19 +34,25 @@ function createMockRes() {
     res.ended = true;
     return res;
   };
-  // Intentionally returns a value WITHOUT an .end() method so that the old
-  // buggy `response.sendStatus(500).end()` pattern would throw here — guarding
-  // against a regression of that bug.
   res.sendStatus = (code) => {
     res.statusCode = code;
     res.ended = true;
-    return code;
+    return res;
   };
   res.setHeader = (key, value) => {
     res.headers[key] = value;
     return res;
   };
-  res.end = () => {
+  res.flushHeaders = () => {
+    return res;
+  };
+  res.writeHead = (code, headers) => {
+    res.statusCode = code;
+    if (headers) Object.assign(res.headers, headers);
+    return res;
+  };
+  res.end = (data) => {
+    if (data !== undefined) res.body = data;
     res.ended = true;
     return res;
   };
@@ -54,14 +60,30 @@ function createMockRes() {
 }
 
 /**
+ * Converts an Express-style path pattern (e.g. "/admin/user/:id") to a regex
+ * and extracts param names.
+ * @param {string} pattern
+ * @returns {{regex: RegExp, paramNames: string[]}}
+ */
+function pathToRegex(pattern) {
+  const paramNames = [];
+  const regexStr = pattern.replace(/:([^/]+)/g, (_, name) => {
+    paramNames.push(name);
+    return "([^/]+)";
+  });
+  return { regex: new RegExp(`^${regexStr}$`), paramNames };
+}
+
+/**
  * Creates a mock app that records registered routes and can invoke them.
  * @returns {{app: object, call: Function, routes: object}}
  */
 function createMockApp() {
-  const routes = {};
-  const register = (method) => (path, ...rest) => {
+  const routes = [];
+  const register = (method) => (pattern, ...rest) => {
     const handler = rest[rest.length - 1];
-    routes[`${method} ${path}`] = handler;
+    const { regex, paramNames } = pathToRegex(pattern);
+    routes.push({ method: method.toLowerCase(), pattern, regex, paramNames, handler });
   };
   const app = {
     get: register("get"),
@@ -74,22 +96,39 @@ function createMockApp() {
   /**
    * Invokes a previously registered route handler.
    * @param {string} method http method
-   * @param {string} path the literal registered path (e.g. "/research/:id")
-   * @param {{body?: object, params?: object, query?: object, headers?: object}} [req]
+   * @param {string} path the actual path (e.g. "/admin/user/2")
+   * @param {{body?: object, params?: object, query?: object, headers?: object, locals?: object}} [req]
    * @returns {Promise<object>} the mock response
    */
   async function call(method, path, req = {}) {
-    const key = `${method.toLowerCase()} ${path}`;
-    const handler = routes[key];
-    if (!handler) throw new Error(`No route registered for ${key}`);
+    const methodLc = method.toLowerCase();
+    let matched = null;
+    let extractedParams = {};
+    for (const route of routes) {
+      if (route.method !== methodLc) continue;
+      const m = route.regex.exec(path);
+      if (m) {
+        matched = route;
+        route.paramNames.forEach((name, i) => {
+          extractedParams[name] = m[i + 1];
+        });
+        break;
+      }
+    }
+    if (!matched) throw new Error(`No route registered for ${methodLc} ${path}`);
+
     const request = {
       body: req.body || {},
-      params: req.params || {},
+      params: { ...extractedParams, ...req.params },
       query: req.query || {},
       header: (name) => (req.headers || {})[name] || "Bearer test-key",
+      file: req.file,
+      ip: req.ip || "127.0.0.1",
+      on: jest.fn(),
+      randomFileName: req.randomFileName,
     };
-    const response = createMockRes();
-    await handler(request, response);
+    const response = createMockRes(req.locals || {});
+    await matched.handler(request, response);
     return response;
   }
 

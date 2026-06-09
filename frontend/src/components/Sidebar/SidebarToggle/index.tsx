@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { SidebarSimple } from "@phosphor-icons/react";
 import paths from "@/utils/paths";
+import { useLocation } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 const SIDEBAR_TOGGLE_STORAGE_KEY = "openafd_sidebar_toggle";
 export const SIDEBAR_TOGGLE_EVENT = "sidebar-toggle";
@@ -21,11 +22,12 @@ function previousSidebarState() {
 
 export function useSidebarToggle() {
   const [showSidebar, setShowSidebar] = useState(previousSidebarState());
-  const [canToggleSidebar, setCanToggleSidebar] = useState(true as any);
+  const [canToggleSidebar, setCanToggleSidebar] = useState(true);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     function checkPath() {
-      const currentPath = window.location.pathname;
+      const currentPath = pathname;
       const isVisible =
         currentPath === paths.home() ||
         /^\/workspace\/[^\/]+$/.test(currentPath) ||
@@ -33,7 +35,7 @@ export function useSidebarToggle() {
       setCanToggleSidebar(isVisible);
     }
     checkPath();
-  }, [window.location.pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     function toggleSidebar(e: any) {

@@ -97,9 +97,9 @@ export default function ThreadFolderItem({
   folder, workspace, threads = [], activeThreadIdx, defaultThreadHasChats, ctrlPressed = false, toggleMarkForDeletion, onRemoveThread, onFolderDeleted, onFolderRenamed, }: any) {
   const { threadSlug = null } = useParams();
   const containsActiveThread = (threads as any).some((t) => t.slug === threadSlug);
-  const [open, setOpen] = useState(true as any);
-  const [editing, setEditing] = useState(false as any);
-  const [name, setName] = useState(folder.name as any);
+  const [open, setOpen] = useState(true);
+  const [editing, setEditing] = useState(false);
+  const [name, setName] = useState<string>(folder.name);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const inputRef = useRef(null);
 

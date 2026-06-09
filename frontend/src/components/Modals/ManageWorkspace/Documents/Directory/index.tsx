@@ -215,18 +215,21 @@ function Directory({
               <input
                 type="search"
                 placeholder={t("connectors.directory.search-document")}
-                onChange={handleSearch}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="border-none search-input bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg pl-9 pr-2.5 py-2 w-[250px] h-[32px] light:border-theme-modal-border light:border"
               />
               <MagnifyingGlass
                 size={14}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white"
                 weight="bold"
+                aria-hidden="true"
               />
             </div>
             <button
+              type="button"
               className="border-none flex items-center gap-x-2 cursor-pointer px-[14px] py-[7px] -mr-[14px] rounded-lg hover:bg-theme-sidebar-subitem-hover z-20 relative"
               onClick={openFolderModal}
+              aria-label="Create new folder"
             >
               <Plus
                 size={18}
@@ -318,10 +321,12 @@ function Directory({
                       )}
                     </div>
                     <button
+                      type="button"
                       onClick={deleteFiles}
+                      aria-label="Delete selected files and folders"
                       className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[32px] w-[32px] rounded-lg text-dark-text hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white flex justify-center items-center"
                     >
-                      <Trash size={18} weight="bold" />
+                      <Trash size={18} weight="bold" aria-hidden="true" />
                     </button>
                   </div>
                 </div>

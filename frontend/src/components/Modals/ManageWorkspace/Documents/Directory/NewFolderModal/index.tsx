@@ -39,11 +39,12 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
             </h3>
           </div>
           <button
-            onClick={closeModal}
             type="button"
+            onClick={closeModal}
+            aria-label="Close new folder dialog"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={24} weight="bold" className="text-white" />
+            <X size={24} weight="bold" className="text-white" aria-hidden="true" />
           </button>
         </div>
         <div className="p-6">
@@ -64,15 +65,16 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
                   required={true}
                   autoComplete="off"
                   value={folderName}
-                  onChange={(e) => setFolderName(((e.target as unknown) as any)?.value)}
+                  onChange={(e) => setFolderName(e.target.value)}
                 />
               </div>
               {error && <p className="text-red-400 text-sm">Error: {error}</p>}
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
               <button
-                onClick={closeModal}
                 type="button"
+                onClick={closeModal}
+                aria-label="Cancel creating folder"
                 className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
               >
                 Cancel

@@ -7,9 +7,9 @@ import showToast from "@/utils/toast";
 
 export default function ObsidianOptions() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false as any);
+  const [loading, setLoading] = useState<boolean>(false);
   const [vaultPath, setVaultPath] = useState("");
-  const [selectedFiles, setSelectedFiles] = useState([] as any);
+  const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
 
   const handleFolderPick = async (e) => {
     const files = Array.from(e.target.files);
@@ -96,7 +96,7 @@ export default function ObsidianOptions() {
             <div className="w-full flex flex-col gap-4">
               <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-white mb-4 bg-blue-800/30 w-fit rounded-lg px-4 py-2">
                 <div className="gap-x-2 flex items-center">
-                  <Info className="shrink-0" size={25} />
+                  <Info className="shrink-0" size={25} aria-hidden="true" />
                   <p className="text-sm">
                     {t("connectors.obsidian.vault_warning")}
                   </p>
@@ -116,7 +116,7 @@ export default function ObsidianOptions() {
                   <input
                     type="text"
                     value={vaultPath}
-                    onChange={(e) => setVaultPath(((e.target as unknown) as any)?.value)}
+                    onChange={(e) => setVaultPath(e.target.value)}
                     placeholder="/path/to/your/vault"
                     className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                     required={true}

@@ -26,7 +26,7 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
   );
 
   const handleMaxChunkLengthChange: any = (e) => {
-    setMaxChunkLength(Number(((e.target as unknown) as any)?.value));
+    setMaxChunkLength(Number((e.target as unknown as any)?.value));
   };
 
   return (
@@ -91,6 +91,12 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
       </div>
       <div className="flex justify-start mt-4">
         <button
+          type="button"
+          aria-label={
+            showAdvancedControls
+              ? "Hide manual endpoint input"
+              : "Show manual endpoint input"
+          }
           onClick={(e) => {
             e.preventDefault();
             setShowAdvancedControls(!showAdvancedControls);
@@ -136,6 +142,8 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
                 <>
                   {!basePathValue.value && (
                     <button
+                      type="button"
+                      aria-label="Auto-detect Lemonade base URL"
                       onClick={handleAutoDetectClick}
                       className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >

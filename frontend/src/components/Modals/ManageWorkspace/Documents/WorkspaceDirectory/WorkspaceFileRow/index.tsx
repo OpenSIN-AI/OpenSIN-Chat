@@ -181,6 +181,7 @@ const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
           size={16}
           weight="regular"
           className="outline-none text-base font-bold flex-shrink-0"
+          aria-hidden="true"
         />
       )}
     </div>
@@ -247,11 +248,13 @@ const WatchForChanges = memo(({ workspace, docPath, item }) => {
         size={16}
         weight="regular"
         className="outline-none text-base font-bold flex-shrink-0 group-hover:hidden group-data-[active=true]:hidden"
+        aria-hidden="true"
       />
       <Eye
         size={16}
         weight="fill"
         className="outline-none text-base font-bold flex-shrink-0 hidden group-hover:block group-data-[active=true]:block"
+        aria-hidden="true"
       />
     </div>
   );
@@ -261,6 +264,7 @@ const RemoveItemFromWorkspace = ({ item: _item, onClick }) => {
   return (
     <div>
       <ArrowUUpLeft
+        aria-hidden="true"
         data-tooltip-id="remove-document"
         data-tooltip-content="Remove document from workspace"
         onClick={onClick}

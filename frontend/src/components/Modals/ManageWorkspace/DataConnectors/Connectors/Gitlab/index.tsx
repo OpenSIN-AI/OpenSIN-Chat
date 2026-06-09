@@ -14,10 +14,10 @@ import useConnectorBranches from "@/hooks/useConnectorBranches";
 const DEFAULT_BRANCHES = ["main", "master"];
 export default function GitlabOptions() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false as any);
+  const [loading, setLoading] = useState<boolean>(false);
   const [repo, setRepo] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-  const [ignores, setIgnores] = useState([] as any);
+  const [ignores, setIgnores] = useState<string[]>([]);
   const [settings, setSettings] = useState({
     repo: null,
     accessToken: null,
@@ -88,7 +88,7 @@ export default function GitlabOptions() {
                   placeholder="https://gitlab.com/gitlab-org/gitlab"
                   required={true}
                   autoComplete="off"
-                  onChange={(e) => setRepo(((e.target as unknown) as any)?.value)}
+                  onChange={(e) => setRepo(e.target.value)}
                   onBlur={() => setSettings({ ...settings, repo })}
                   spellCheck={false}
                 />
@@ -118,7 +118,7 @@ export default function GitlabOptions() {
                   required={false}
                   autoComplete="off"
                   spellCheck={false}
-                  onChange={(e) => setAccessToken(((e.target as unknown) as any)?.value)}
+                  onChange={(e) => setAccessToken(e.target.value)}
                   onBlur={() => setSettings({ ...settings, accessToken })}
                 />
               </div>
@@ -263,7 +263,7 @@ function PATAlert({ accessToken }: any) {
   return (
     <div className="flex flex-col md:flex-row md:items-center gap-x-2 text-white mb-4 bg-blue-800/30 w-fit rounded-lg px-4 py-2">
       <div className="gap-x-2 flex items-center">
-        <Info className="shrink-0" size={25} />
+        <Info className="shrink-0" size={25} aria-hidden="true" />
         <p className="text-sm">
           <span
             dangerouslySetInnerHTML={{

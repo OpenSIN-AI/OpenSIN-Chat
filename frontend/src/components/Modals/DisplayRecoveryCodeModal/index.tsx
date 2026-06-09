@@ -5,9 +5,18 @@ import { saveAs } from "file-saver";
 import { useState } from "react";
 import ModalWrapper from "@/components/ModalWrapper";
 
+type RecoveryCodeModalProps = {
+  recoveryCodes: string[];
+  onDownloadComplete: () => void;
+  onClose: () => void;
+};
+
 export default function RecoveryCodeModal({
-  recoveryCodes, onDownloadComplete, onClose, }: any) {
-  const [downloadClicked, setDownloadClicked] = useState(false as any);
+  recoveryCodes,
+  onDownloadComplete,
+  onClose,
+}: RecoveryCodeModalProps) {
+  const [downloadClicked, setDownloadClicked] = useState<boolean>(false);
 
   const downloadRecoveryCodes = () => {
     const blob = new Blob([recoveryCodes.join("\n")], { type: "text/plain" });
@@ -35,7 +44,12 @@ export default function RecoveryCodeModal({
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
-            <Key size={24} className="text-white" weight="bold" />
+            <Key
+              size={24}
+              className="text-white"
+              weight="bold"
+              aria-hidden="true"
+            />
             <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
               Recovery Codes
             </h3>
@@ -50,12 +64,21 @@ export default function RecoveryCodeModal({
               <b className="mt-4">These recovery codes are only shown once!</b>
             </p>
             <div
+              role="button"
+              tabIndex={0}
               className="border-none bg-theme-settings-input-bg text-white hover:text-primary-button
                    flex items-center justify-center rounded-md mt-6 cursor-pointer"
               onClick={handleCopyToClipboard}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleCopyToClipboard();
+                }
+              }}
+              aria-label="Copy recovery codes to clipboard"
             >
               <ul className="space-y-2 md:p-6 p-4">
-                {(recoveryCodes as any).map((code, index) => (
+                {recoveryCodes.map((code, index) => (
                   <li key={index} className="md:text-sm text-xs">
                     {code}
                   </li>
@@ -68,12 +91,19 @@ export default function RecoveryCodeModal({
               type="button"
               className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm flex items-center gap-x-2"
               onClick={downloadClicked ? handleClose : downloadRecoveryCodes}
+              aria-label={
+                downloadClicked ? "Close recovery codes" : "Download recovery codes"
+              }
             >
               {downloadClicked ? (
                 "Close"
               ) : (
                 <>
-                  <DownloadSimple weight="bold" size={18} />
+                  <DownloadSimple
+                    weight="bold"
+                    size={18}
+                    aria-hidden="true"
+                  />
                   <p>Download</p>
                 </>
               )}

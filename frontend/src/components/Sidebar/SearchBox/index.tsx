@@ -19,7 +19,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
   const { t } = useTranslation();
   const searchRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false as any);
+  const [loading, setLoading] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState(DEFAULT_SEARCH_RESULTS);
   const handleSearch = debounce(handleSearchDebounced, 500);
 

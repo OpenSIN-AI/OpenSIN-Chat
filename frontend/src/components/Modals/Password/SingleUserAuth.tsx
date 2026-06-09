@@ -11,10 +11,10 @@ import useCustomAppName from "@/hooks/useCustomAppName";
 
 export default function SingleUserAuth() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false as any);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState(null);
-  const [recoveryCodes, setRecoveryCodes] = useState([] as any);
-  const [downloadComplete, setDownloadComplete] = useState(false as any);
+  const [recoveryCodes, setRecoveryCodes] = useState<string[]>([]);
+  const [downloadComplete, setDownloadComplete] = useState<boolean>(false);
   const [token, setToken] = useState(null);
 
   const { appName, isLoading: appNameLoading } = useCustomAppName();

@@ -13,7 +13,7 @@ import { Warning } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
 export default function DrupalWikiOptions() {
-  const [loading, setLoading] = useState(false as any);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

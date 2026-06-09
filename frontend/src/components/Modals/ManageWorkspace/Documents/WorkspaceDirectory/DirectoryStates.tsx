@@ -59,7 +59,9 @@ export function EmbeddingProgressState({
             {movedItems.length} additional file(s) ready to embed
           </p>
           <button
+            type="button"
             onClick={handleSaveChanges}
+            aria-label="Add to embedding queue"
             className="border border-slate-200 px-5 py-1.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
           >
             Add to queue
@@ -79,8 +81,13 @@ function EmbeddingFileRow({ filename, status, onRemove }: any) {
       <div className="col-span-4 flex items-center justify-end gap-x-2">
         <span className="text-theme-text-secondary">{status.status}</span>
         {onRemove && (
-          <button onClick={onRemove} className="hover:text-red-400">
-            <X size={16} />
+          <button
+            type="button"
+            onClick={onRemove}
+            aria-label="Remove from embedding queue"
+            className="hover:text-red-400"
+          >
+            <X size={16} aria-hidden="true" />
           </button>
         )}
       </div>

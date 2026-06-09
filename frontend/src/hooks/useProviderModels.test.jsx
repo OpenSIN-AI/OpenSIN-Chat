@@ -4,13 +4,11 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { SWRConfig } from "swr";
 
 vi.mock("@/models/system", () => ({
-  default: {
-    customModels: vi.fn(),
-  },
+  default: { customModels: vi.fn() },
 }));
 
 import System from "@/models/system";
-import useProviderModels, { PROVIDER_MODELS_KEY } from "./useProviderModels";
+import useProviderModels from "./useProviderModels";
 
 function wrapper({ children }) {
   return (
@@ -21,31 +19,31 @@ function wrapper({ children }) {
 }
 
 describe("useProviderModels", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+  beforeEach(() => vi.clearAllMocks());
 
-  it("returns empty customModels when provider is null", () => {
+  it("does not fetch when provider is null", () => {
     const { result } = renderHook(() => useProviderModels(null), { wrapper });
-    expect(result.current.customModels).toEqual([]);
+    expect(result.current.isLoading).toBe(false);
+    expect(System.customModels).not.toHaveBeenCalled();
   });
 
-  it("returns customModels when provider is provided", async () => {
+  it("fetches models for a provider", async () => {
     System.customModels.mockResolvedValue({
-      models: [{ id: "model-1", organization: "test" }],
-      error: null,
+      models: [{ id: "gpt-4", name: "GPT-4", organization: "OpenAI" }],
     });
-
-    const { result } = renderHook(
-      () => useProviderModels("ollama", null, "http://localhost:11434"),
-      { wrapper },
-    );
-
+    const { result } = renderHook(() => useProviderModels("openai", "key123"), { wrapper });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(result.current.customModels).toEqual([{ id: "model-1", organization: "test" }]);
+    expect(result.current.customModels).toEqual({
+      OpenAI: [{ id: "gpt-4", name: "GPT-4", organization: "OpenAI" }],
+    });
   });
 
-  it("exports PROVIDER_MODELS_KEY", () => {
-    expect(PROVIDER_MODELS_KEY).toBe("system/custom-models");
+  it("returns flat array for non-grouped provider", async () => {
+    System.customModels.mockResolvedValue({
+      models: [{ id: "llama3", name: "Llama 3" }],
+    });
+    const { result } = renderHook(() => useProviderModels("ollama", null, "http://localhost:11434"), { wrapper });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(Array.isArray(result.current.customModels)).toBe(true);
   });
 });

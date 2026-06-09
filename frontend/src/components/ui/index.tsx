@@ -30,6 +30,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       children,
       className,
+      type = "button",
       ...props
     },
     ref
@@ -50,6 +51,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
+        type={type}
         disabled={disabled || loading}
         className={`
           rounded transition-colors
@@ -82,12 +84,13 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
  * Example Input Component
  */
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, helperText, className, ...props }, ref) => {
+  ({ label, error, helperText, className, type = "text", ...props }, ref) => {
     return (
       <div className="flex flex-col gap-1">
         {label && <label className="text-sm font-medium">{label}</label>}
         <input
           ref={ref}
+          type={type}
           className={`
             border rounded px-3 py-2
             ${error ? "border-red-500" : "border-gray-300"}
@@ -128,7 +131,7 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   footer,
   size = "md",
-}: any) => {
+}) => {
   if (!isOpen) return null;
 
   const sizeClasses = {
@@ -138,7 +141,12 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={title || "Dialog"}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+    >
       <div className={`bg-white rounded-lg shadow-lg ${sizeClasses[size]}`}>
         {title && (
           <div className="border-b px-6 py-4">
@@ -148,7 +156,9 @@ export const Modal: React.FC<ModalProps> = ({
         <div className="px-6 py-4">{children}</div>
         {footer && <div className="border-t px-6 py-4">{footer}</div>}
         <button
+          type="button"
           onClick={onClose}
+          aria-label="Close dialog"
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
         >
           ✕
@@ -221,8 +231,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           {...props}
         >
           {placeholder && <option value="">{placeholder}</option>}
-          {(options as any).map((opt) => (
-            <option key={opt.value} value={opt.value}>
+          {options.map((opt) => (
+            <option key={String(opt.value)} value={String(opt.value)}>
               {opt.label}
             </option>
           ))}

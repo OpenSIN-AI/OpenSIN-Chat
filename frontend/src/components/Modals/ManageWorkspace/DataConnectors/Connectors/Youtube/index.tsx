@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 export default function YoutubeOptions() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false as any);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

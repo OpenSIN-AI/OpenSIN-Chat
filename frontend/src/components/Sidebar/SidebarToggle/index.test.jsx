@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook, act, render, screen, fireEvent } from "@testing-library/react";
+import { renderHook, act, render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+
+function withRouter(initialPath = "/") {
+  return function Wrapper({ children }) {
+    return <MemoryRouter initialEntries={[initialPath]}>{children}</MemoryRouter>;
+  };
+}
 import { useSidebarToggle, ToggleSidebarButton, SIDEBAR_TOGGLE_EVENT } from "./index";
 
 describe("useSidebarToggle", () => {
@@ -10,42 +17,80 @@ describe("useSidebarToggle", () => {
   });
 
   it("returns showSidebar as true by default", () => {
-    const { result } = renderHook(() => useSidebarToggle());
+    const { result } = renderHook(() => useSidebarToggle(), { wrapper: withRouter(window.location.pathname) });
     expect(result.current.showSidebar).toBe(true);
   });
 
   it("returns showSidebar as false when localStorage has 'closed'", () => {
     localStorage.getItem.mockReturnValueOnce("closed");
-    const { result } = renderHook(() => useSidebarToggle());
+    const { result } = renderHook(() => useSidebarToggle(), { wrapper: withRouter(window.location.pathname) });
     expect(result.current.showSidebar).toBe(false);
   });
 
   it("returns canToggleSidebar as true for home path", () => {
     window.history.pushState({}, "", "/");
-    const { result } = renderHook(() => useSidebarToggle());
+    const { result } = renderHook(() => useSidebarToggle(), { wrapper: withRouter(window.location.pathname) });
     expect(result.current.canToggleSidebar).toBe(true);
   });
 
   it("returns canToggleSidebar as true for workspace path", () => {
     window.history.pushState({}, "", "/workspace/my-workspace");
-    const { result } = renderHook(() => useSidebarToggle());
+    const { result } = renderHook(() => useSidebarToggle(), { wrapper: withRouter(window.location.pathname) });
     expect(result.current.canToggleSidebar).toBe(true);
   });
 
   it("returns canToggleSidebar as true for workspace thread path", () => {
     window.history.pushState({}, "", "/workspace/my-workspace/t/thread-123");
-    const { result } = renderHook(() => useSidebarToggle());
+    const { result } = renderHook(() => useSidebarToggle(), { wrapper: withRouter(window.location.pathname) });
     expect(result.current.canToggleSidebar).toBe(true);
   });
 
   it("returns canToggleSidebar as false for other paths", () => {
     window.history.pushState({}, "", "/settings");
-    const { result } = renderHook(() => useSidebarToggle());
+    const { result } = renderHook(() => useSidebarToggle(), { wrapper: withRouter(window.location.pathname) });
     expect(result.current.canToggleSidebar).toBe(false);
   });
 
+  it("reacts to react-router location changes via useLocation", async () => {
+    function Probe() {
+      const { canToggleSidebar } = useSidebarToggle();
+      return (
+        <div
+          data-testid="can-toggle"
+          data-value={String(canToggleSidebar)}
+        />
+      );
+    }
+    function At({ path }) {
+      return (
+        <MemoryRouter initialEntries={[path]}>
+          <Probe />
+        </MemoryRouter>
+      );
+    }
+    const { rerender } = render(<At path="/" />);
+    await waitFor(() =>
+      expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true")
+    );
+
+    rerender(<At path="/workspace/demo-ws" />);
+    await waitFor(() =>
+      expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true")
+    );
+
+    rerender(<At path="/workspace/demo-ws/t/thread-42" />);
+    await waitFor(() =>
+      expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true")
+    );
+
+    rerender(<At path="/settings" />);
+    await waitFor(() =>
+      expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("false")
+    );
+  });
+
   it("setShowSidebar updates state", () => {
-    const { result } = renderHook(() => useSidebarToggle());
+    const { result } = renderHook(() => useSidebarToggle(), { wrapper: withRouter(window.location.pathname) });
     act(() => {
       result.current.setShowSidebar(false);
     });
@@ -55,7 +100,7 @@ describe("useSidebarToggle", () => {
   it("dispatches sidebar-toggle event on state change", () => {
     const handler = vi.fn();
     window.addEventListener(SIDEBAR_TOGGLE_EVENT, handler);
-    const { result } = renderHook(() => useSidebarToggle());
+    const { result } = renderHook(() => useSidebarToggle(), { wrapper: withRouter(window.location.pathname) });
     act(() => {
       result.current.setShowSidebar(false);
     });

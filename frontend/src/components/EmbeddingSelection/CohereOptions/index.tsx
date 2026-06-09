@@ -33,8 +33,8 @@ export default function CohereEmbeddingOptions({ settings }: any) {
 }
 
 function CohereModelSelection({ apiKey, settings }: any) {
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
+  const [models, setModels] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function findCustomModels() {

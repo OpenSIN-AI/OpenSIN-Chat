@@ -554,6 +554,43 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
   }
 }
 
+/**
+ * Single source of truth for provider model preference (issue #100).
+ *
+ * Order of precedence:
+ *   1. The value persisted in system_settings for the provider (DB wins).
+ *   2. The ENV variable baked into the container at deploy time.
+ *   3. null when neither is set - callers must decide on a default.
+ *
+ * Until this helper existed the ENV was read directly, which made @agent
+ * invocations crash: the container had NVIDIA_NIM_LLM_MODEL_PREF hard-coded
+ * to a model that could not serve tool-calling, and any DB override was
+ * ignored. See https://github.com/Family-Team-Projects/OpenAfD-Chat/issues/100
+ *
+ * Wrapped in try/catch so boot-time callers (where the SystemSettings model
+ * is not yet importable) still get the ENV fallback instead of throwing.
+ *
+ * @param {string|null} provider
+ * @returns {Promise<string|null>}
+ */
+async function getProviderModelPreference(provider = null) {
+  if (!provider) return null;
+  const env = getBaseLLMProviderModel({ provider });
+  try {
+    const { SystemSettings } = require("../../models/systemSettings");
+    const { validLabelsForProvider } = require("./keyModelMap");
+    const candidates = validLabelsForProvider(provider);
+    for (const label of candidates) {
+      const rows = await SystemSettings.get({ label });
+      const val = rows?.[0]?.value;
+      if (val) return val;
+    }
+    return env;
+  } catch {
+    return env;
+  }
+}
+
 // Some models have lower restrictions on chars that can be encoded in a single pass
 // and by default we assume it can handle 1,000 chars, but some models use work with smaller
 // chars so here we can override that value when embedding information.
@@ -718,6 +755,7 @@ module.exports = {
   getVectorDbClass,
   getLLMProviderClass,
   getBaseLLMProviderModel,
+  getProviderModelPreference,
   getLLMProvider,
   resolveProviderConnector,
   toChunks,

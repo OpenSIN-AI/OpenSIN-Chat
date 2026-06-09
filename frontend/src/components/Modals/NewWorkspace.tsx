@@ -34,11 +34,12 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
             </h3>
           </div>
           <button
-            onClick={hideModal}
             type="button"
+            onClick={hideModal}
+            aria-label="Close new workspace dialog"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={24} weight="bold" className="text-white" />
+            <X size={24} weight="bold" className="text-white" aria-hidden="true" />
           </button>
         </div>
         <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
@@ -84,7 +85,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
 }
 
 export function useNewWorkspaceModal() {
-  const [showing, setShowing] = useState(false as any);
+  const [showing, setShowing] = useState<boolean>(false);
   const showModal = () => {
     setShowing(true);
   };

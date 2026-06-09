@@ -2,9 +2,13 @@
 import { NavLink } from "react-router-dom";
 import { House, ArrowClockwise, Copy, Check } from "@phosphor-icons/react";
 import { useState } from "react";
+import type { FallbackProps } from "react-error-boundary";
 
-export default function ErrorBoundaryFallback({ error, resetErrorBoundary }: any) {
-  const [copied, setCopied] = useState(false as any);
+export default function ErrorBoundaryFallback({
+  error,
+  resetErrorBoundary,
+}: FallbackProps) {
+  const [copied, setCopied] = useState<boolean>(false);
 
   const copyErrorDetails = async () => {
     const details = {
@@ -40,7 +44,10 @@ ${details.stack}
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-theme-bg-primary text-theme-text-primary gap-4 p-4 md:p-8 w-full">
+    <div
+      role="alert"
+      className="flex flex-col items-center justify-center min-h-screen bg-theme-bg-primary text-theme-text-primary gap-4 p-4 md:p-8 w-full"
+    >
       <h1 className="text-xl md:text-2xl font-bold text-center">
         An error occurred.
       </h1>
@@ -51,18 +58,25 @@ ${details.stack}
         <div className="w-full max-w-4xl">
           <div className="flex justify-end mb-2">
             <button
+              type="button"
               onClick={copyErrorDetails}
               className="flex items-center gap-2 px-3 py-1.5 bg-theme-bg-secondary text-theme-text-primary rounded hover:bg-theme-sidebar-item-hover transition-all duration-200 text-xs font-medium"
-              title="Copy error details"
+              aria-label={
+                copied ? "Error details copied" : "Copy error details"
+              }
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5" weight="bold" />
+                  <Check
+                    className="w-3.5 h-3.5"
+                    weight="bold"
+                    aria-hidden="true"
+                  />
                   Copied!
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5" />
+                  <Copy className="w-3.5 h-3.5" aria-hidden="true" />
                   Copy Details
                 </>
               )}
@@ -75,17 +89,18 @@ ${details.stack}
       )}
       <div className="flex flex-col md:flex-row gap-3 md:gap-4 mt-4 w-full md:w-auto">
         <button
+          type="button"
           onClick={resetErrorBoundary}
           className="flex items-center justify-center gap-2 px-4 py-2 bg-theme-bg-secondary text-theme-text-primary rounded-lg hover:bg-theme-sidebar-item-hover transition-all duration-300 w-full md:w-auto"
         >
-          <ArrowClockwise className="w-4 h-4" />
+          <ArrowClockwise className="w-4 h-4" aria-hidden="true" />
           Reset
         </button>
         <NavLink
           to="/"
           className="flex items-center justify-center gap-2 px-4 py-2 bg-theme-bg-secondary text-theme-text-primary rounded-lg hover:bg-theme-sidebar-item-hover transition-all duration-300 w-full md:w-auto"
         >
-          <House className="w-4 h-4" />
+          <House className="w-4 h-4" aria-hidden="true" />
           Home
         </NavLink>
       </div>

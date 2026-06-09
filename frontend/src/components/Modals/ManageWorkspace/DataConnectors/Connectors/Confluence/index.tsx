@@ -9,9 +9,9 @@ import Toggle from "@/components/lib/Toggle";
 
 export default function ConfluenceOptions() {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false as any);
+  const [loading, setLoading] = useState<boolean>(false);
   const [accessType, setAccessType] = useState("username");
-  const [isCloud, setIsCloud] = useState(true as any);
+  const [isCloud, setIsCloud] = useState<boolean>(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,7 +81,7 @@ export default function ConfluenceOptions() {
                   autoComplete="off"
                   spellCheck={false}
                   defaultValue="true"
-                  onChange={(e) => setIsCloud(((e.target as unknown) as any)?.value === "true")}
+                  onChange={(e) => setIsCloud(e.target.value === "true")}
                 >
                   <option value="true">Atlassian Cloud</option>
                   <option value="false">Self-hosted</option>
@@ -141,7 +141,7 @@ export default function ConfluenceOptions() {
                   name="accessType"
                   className="border-none bg-theme-settings-input-bg w-fit mt-2 px-4 border-gray-500 text-white text-sm rounded-lg block py-2"
                   defaultValue={accessType}
-                  onChange={(e) => setAccessType(((e.target as unknown) as any)?.value)}
+                  onChange={(e) => setAccessType(e.target.value)}
                 >
                   {[
                     {

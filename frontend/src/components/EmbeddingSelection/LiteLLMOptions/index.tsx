@@ -90,8 +90,8 @@ export default function LiteLLMOptions({ settings }: any) {
 }
 
 function LiteLLMModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
+  const [customModels, setCustomModels] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function findCustomModels() {

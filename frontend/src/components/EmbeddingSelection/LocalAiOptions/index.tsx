@@ -60,7 +60,9 @@ export default function LocalAiOptions({ settings }: any) {
             defaultValue={settings?.LocalAiApiKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setApiKeyValue(((e.target as unknown) as any)?.value)}
+            onChange={(e) =>
+              setApiKeyValue((e.target as unknown as any)?.value)
+            }
             onBlur={() => setApiKey(apiKeyValue)}
           />
         </div>
@@ -141,6 +143,12 @@ export default function LocalAiOptions({ settings }: any) {
       </div>
       <div className="flex justify-start mt-4">
         <button
+          type="button"
+          aria-label={
+            showAdvancedControls
+              ? "Hide advanced settings"
+              : "Show advanced settings"
+          }
           onClick={(e) => {
             e.preventDefault();
             setShowAdvancedControls(!showAdvancedControls);
@@ -168,6 +176,8 @@ export default function LocalAiOptions({ settings }: any) {
                 <>
                   {!basePathValue.value && (
                     <button
+                      type="button"
+                      aria-label="Auto-detect LocalAI base URL"
                       onClick={handleAutoDetectClick}
                       className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
@@ -196,9 +206,13 @@ export default function LocalAiOptions({ settings }: any) {
   );
 }
 
-function LocalAIModelSelection({ settings, apiKey = null, basePath = null }: any) {
-  const [customModels, setCustomModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
+function LocalAIModelSelection({
+  settings,
+  apiKey = null,
+  basePath = null,
+}: any) {
+  const [customModels, setCustomModels] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function findCustomModels() {

@@ -2,8 +2,7 @@
 import useUser from "@/hooks/useUser";
 import paths from "@/utils/paths";
 import { ArrowUUpLeft, Wrench } from "@phosphor-icons/react";
-import { Link } from "react-router-dom";
-import { useMatch } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 
 export default function SettingsButton() {
   const isInSettings = !!useMatch("/settings/*");
@@ -17,13 +16,14 @@ export default function SettingsButton() {
         <Link
           to={paths.home()}
           className="transition-all duration-300 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover"
-          aria-label="Home"
+          aria-label="Back to workspaces"
           data-tooltip-id="footer-item"
           data-tooltip-content="Back to workspaces"
         >
           <ArrowUUpLeft
             className="h-5 w-5 text-white light:text-slate-800"
             weight="fill"
+            aria-hidden="true"
           />
         </Link>
       </div>
@@ -34,13 +34,14 @@ export default function SettingsButton() {
       <Link
         to={paths.settings.interface()}
         className="transition-all duration-300 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover"
-        aria-label="Settings"
+        aria-label="Open settings"
         data-tooltip-id="footer-item"
         data-tooltip-content="Open settings"
       >
         <Wrench
           className="h-5 w-5 text-white light:text-slate-800"
           weight="fill"
+          aria-hidden="true"
         />
       </Link>
     </div>

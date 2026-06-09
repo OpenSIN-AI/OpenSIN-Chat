@@ -4,16 +4,23 @@ import usePfp from "../../hooks/usePfp";
 import UserDefaultPfp from "./user.svg";
 import WorkspaceDefaultPfp from "./workspace.svg";
 
-const UserIcon = memo(({ role }: any) => {
+type UserIconProps = {
+  role: "user" | string;
+};
+
+const UserIcon = memo(({ role }: UserIconProps) => {
   const { pfp } = usePfp();
 
   return (
-    <div className="relative w-[35px] h-[35px] rounded-full flex-shrink-0 overflow-hidden">
+    <div
+      className="relative w-[35px] h-[35px] rounded-full flex-shrink-0 overflow-hidden"
+      data-testid="user-icon"
+    >
       {role === "user" && <RenderUserPfp pfp={pfp} />}
       {role !== "user" && (
         <img
           src={WorkspaceDefaultPfp}
-          alt="system profile picture"
+          alt="System profile picture"
           className="flex items-center justify-center rounded-full border-solid border border-white/40 light:border-theme-sidebar-border light:bg-theme-bg-chat-input"
         />
       )}
@@ -21,7 +28,13 @@ const UserIcon = memo(({ role }: any) => {
   );
 });
 
-function RenderUserPfp({ pfp }: any) {
+UserIcon.displayName = "UserIcon";
+
+type RenderUserPfpProps = {
+  pfp: string | null | undefined;
+};
+
+function RenderUserPfp({ pfp }: RenderUserPfpProps) {
   if (!pfp)
     return (
       <img
