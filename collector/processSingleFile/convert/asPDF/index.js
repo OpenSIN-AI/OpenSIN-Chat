@@ -37,9 +37,19 @@ async function asPdf({
     console.log(
       `[asPDF] No text content found for ${filename}. Will attempt OCR parse.`
     );
-    docs = await new OCRLoader({
-      targetLanguages: options?.ocr?.langList,
-    }).ocrPDF(fullFilePath);
+    try {
+      docs = await new OCRLoader({
+        targetLanguages: options?.ocr?.langList,
+      }).ocrPDF(fullFilePath);
+    } catch (e) {
+      console.error(`[asPDF] OCR also failed for ${filename}: ${e.message}`);
+      if (!options.absolutePath) trashFile(fullFilePath);
+      return {
+        success: false,
+        reason: `No text content found in ${filename} and OCR failed: ${e.message}`,
+        documents: [],
+      };
+    }
   }
 
   for (const doc of docs) {
