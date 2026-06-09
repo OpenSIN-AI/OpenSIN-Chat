@@ -20,3 +20,4 @@ node_modules
 sin_goal_mode.db
 .sin_evidence/
 *.pack
+docker/.env
