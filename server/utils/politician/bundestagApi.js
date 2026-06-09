@@ -266,7 +266,7 @@ class BundestagApi {
       title: doc.titel || doc.akademischertitel || null,
       firstName: first,
       lastName: last,
-      fullName: `${first} ${last}`.trim() || doc.titel || "",
+      fullName: `${first} ${last}`.trim() || "",
       party: doc.fraktion || null,
       faction: doc.fraktion || null,
       gender: null,

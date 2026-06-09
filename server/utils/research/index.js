@@ -121,7 +121,8 @@ class ResearchPipeline {
       // Step 1: Search
       job.status = "searching";
       job.progress = 10;
-      job.steps.push({ name: "search", status: "running", startedAt: new Date() });
+      const searchStep = { name: "search", status: "running", startedAt: new Date() };
+      job.steps.push(searchStep);
 
       const searchQueries = this.#expandQuery(job.query, job.depth);
       const allSearchResults = [];
@@ -138,13 +139,14 @@ class ResearchPipeline {
       }
 
       job.results.searchResults = allSearchResults;
-      job.steps[0].status = "completed";
-      job.steps[0].completedAt = new Date();
+      searchStep.status = "completed";
+      searchStep.completedAt = new Date();
       job.progress = 40;
 
       // Step 2: Extract content from top URLs
       job.status = "extracting";
-      job.steps.push({ name: "extract", status: "running", startedAt: new Date() });
+      const extractStep = { name: "extract", status: "running", startedAt: new Date() };
+      job.steps.push(extractStep);
 
       const topUrls = allSearchResults
         .filter((r) => r.link)
@@ -165,19 +167,20 @@ class ResearchPipeline {
         }
       }
 
-      job.steps[1].status = "completed";
-      job.steps[1].completedAt = new Date();
+      extractStep.status = "completed";
+      extractStep.completedAt = new Date();
       job.progress = 70;
 
       // Step 3: Summarize with LLM
       job.status = "summarizing";
-      job.steps.push({ name: "summarize", status: "running", startedAt: new Date() });
+      const summarizeStep = { name: "summarize", status: "running", startedAt: new Date() };
+      job.steps.push(summarizeStep);
 
       const summary = await this.#summarize(job);
       job.results.summary = summary;
 
-      job.steps[2].status = "completed";
-      job.steps[2].completedAt = new Date();
+      summarizeStep.status = "completed";
+      summarizeStep.completedAt = new Date();
       job.progress = 100;
       job.status = "completed";
 

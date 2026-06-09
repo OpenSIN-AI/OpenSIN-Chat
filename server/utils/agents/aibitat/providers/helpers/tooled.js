@@ -183,7 +183,9 @@ async function tooledStream(
   if (provider?.resetUsage) {
     try {
       provider.resetUsage();
-    } catch {}
+    } catch (e) {
+      console.error("[Tooled] Failed to reset usage:", e.message);
+    }
   }
 
   const msgUUID = v4();
@@ -264,7 +266,9 @@ async function tooledStream(
   if (provider?.recordUsage && usage) {
     try {
       provider.recordUsage(usage, time_info);
-    } catch {}
+    } catch (e) {
+      console.error("[Tooled] Failed to record usage:", e.message);
+    }
   }
 
   const toolCallIndices = Object.keys(toolCallsByIndex).map(Number);
@@ -312,7 +316,9 @@ async function tooledComplete(
   if (provider?.resetUsage) {
     try {
       provider.resetUsage();
-    } catch {}
+    } catch (e) {
+      console.error("[Tooled] Failed to reset usage:", e.message);
+    }
   }
 
   const formattedMessages = formatMessagesForTools(messages, formatOptions);
@@ -336,7 +342,9 @@ async function tooledComplete(
   if (provider?.recordUsage && usage) {
     try {
       provider.recordUsage(usage);
-    } catch {}
+    } catch (e) {
+      console.error("[Tooled] Failed to record usage:", e.message);
+    }
   }
 
   if (completion.tool_calls && completion.tool_calls.length > 0) {

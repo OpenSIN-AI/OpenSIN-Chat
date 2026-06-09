@@ -57,12 +57,23 @@ class PoliticianVectorStore {
         return { success: false, chunksIndexed: 0, error: "Embedding failed" };
       }
 
+      // Guard: vectors must align with chunks — clamp to the shorter length
+      const numVectors = Math.min(vectors.length, chunks.length);
+      if (numVectors === 0) {
+        return { success: false, chunksIndexed: 0, error: "Vectors/chunks length mismatch" };
+      }
+
       connection = await this.vectorDb.connect();
-      const submissions = chunks.map((chunk, i) => ({
-        id: uuidv4(),
-        vector: vectors[i],
-        metadata: { text: chunk.text, ...chunk.metadata },
-      }));
+      const submissions = [];
+      for (let i = 0; i < numVectors; i++) {
+        const vec = vectors[i];
+        if (!vec) continue;
+        submissions.push({
+          id: uuidv4(),
+          vector: vec,
+          metadata: { text: chunks[i].text, ...chunks[i].metadata },
+        });
+      }
 
       await this.vectorDb.updateOrCreateCollection({
         connection,
@@ -107,9 +118,9 @@ class PoliticianVectorStore {
 
       // Apply optional filters post-search (PGVector namespace-level search only)
       let results = (result.sourceDocuments || []).map((doc, i) => ({
-        text: result.contextTexts[i],
+        text: (result.contextTexts || [])[i],
         metadata: doc,
-        score: result.scores[i],
+        score: (result.scores || [])[i] ?? 0,
       }));
 
       if (politicianId) {

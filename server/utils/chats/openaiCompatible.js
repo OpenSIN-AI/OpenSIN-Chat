@@ -254,20 +254,6 @@ async function streamChat({
   // that on writes to the main response, transforms the chunk to OpenAI format.
   // The chunk is coming in the format from `writeResponseChunk` but in the OpenAfD Chat
   // response chunk schema, so we here we mutate each chunk.
-  const responseInterceptor = new PassThrough({});
-  responseInterceptor.on("data", (chunk) => {
-    try {
-      const originalData = JSON.parse(chunk.toString().split("data: ")[1]);
-      const modified = formatJSON(originalData, {
-        chunked: true,
-        model: workspace.slug,
-      }); // rewrite to OpenAI format
-      response.write(`data: ${JSON.stringify(modified)}\n\n`);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-    }
-  });
 
   // User is trying to query-mode chat a workspace that has no data in it - so
   // we should exit early as no information can be found under these conditions.
@@ -438,6 +424,22 @@ async function streamChat({
     return;
   }
 
+  responseInterceptor = new PassThrough({});
+  responseInterceptor.on("data", (chunk) => {
+    try {
+      const originalData = JSON.parse(chunk.toString().split("data: ")[1]);
+      const modified = formatJSON(originalData, {
+        chunked: true,
+        model: workspace.slug,
+      });
+      response.write(`data: ${JSON.stringify(modified)}
+
+`);
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
   const stream = await LLMConnector.streamGetChatCompletion(messages, {
     temperature:
       temperature ?? workspace?.openAiTemp ?? LLMConnector.defaultTemp,
@@ -450,6 +452,9 @@ async function streamChat({
       sources,
     },
   );
+  responseInterceptor.removeAllListeners("data");
+  responseInterceptor.destroy();
+  responseInterceptor = null;
 
   if (completeText?.length > 0) {
     const { chat } = await WorkspaceChats.new({

@@ -32,7 +32,7 @@ class WebSearchEngine {
   static async #serpApi(query, apiKey) {
     if (!apiKey) return [];
     try {
-      const url = `https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${apiKey}&hl=de&gl=de&num=10`;
+      const url = `https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${encodeURIComponent(apiKey)}&hl=de&gl=de&num=10`;
       const res = await fetch(url);
       if (!res.ok) return [];
       const data = await res.json();
@@ -41,7 +41,8 @@ class WebSearchEngine {
         link: r.link || "",
         snippet: r.snippet || "",
       }));
-    } catch {
+    } catch (err) {
+      console.error(`[WebSearchEngine] SerpAPI error: ${err.message}`);
       return [];
     }
   }
@@ -66,7 +67,8 @@ class WebSearchEngine {
         }
       });
       return results.slice(0, 10);
-    } catch {
+    } catch (err) {
+      console.error(`[WebSearchEngine] DuckDuckGo error: ${err.message}`);
       return [];
     }
   }

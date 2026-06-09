@@ -7,8 +7,6 @@
  * Uses fetch + basic HTML-to-text conversion.
  */
 
-const { DocumentManager } = require("../DocumentManager");
-
 class ContentExtractor {
   /**
    * Extract content from a URL.

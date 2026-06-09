@@ -172,6 +172,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
         close: true,
         error: e.message,
       });
+      response.removeListener("close", handleAbort);
       stream?.endMeasurement(usage);
       resolve(fullText); // Return what we currently have - if anything.
     }

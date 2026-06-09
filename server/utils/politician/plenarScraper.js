@@ -124,8 +124,8 @@ class PlenarScraper {
         const speeches = await this.#parseXmlProtocol(xmlUrl, session, sitting);
         if (speeches.length > 0) return speeches;
       }
-    } catch {
-      // XML not available on dserver, fall through to DIP API
+    } catch (err) {
+      this.log(`XML protocol fetch failed (${err.message}), falling back to DIP API`);
     }
 
     // Fallback: DIP API (Issue #52) — more robust than scraping dserver.
