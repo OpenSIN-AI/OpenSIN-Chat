@@ -483,7 +483,7 @@ const Workspace = {
           userId: user.id,
           username: user.username,
           role: user.role,
-          lastUpdatedAt: workspaceUser.lastUpdatedAt,
+          lastUpdatedAt: workspaceUser?.lastUpdatedAt ?? null,
         };
       });
 

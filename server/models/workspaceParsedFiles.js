@@ -151,11 +151,11 @@ const WorkspaceParsedFiles = {
       );
 
       if (failedToEmbed.length > 0)
-        throw new Error(errors[0] || "Failed to embed document");
+        throw new Error(errors?.[0] ?? "Failed to embed document");
 
       const document = await Document.get({
         workspaceId: workspace.id,
-        docpath: embedded[0],
+        docpath: embedded?.[0],
       });
       return { success: true, error: null, document };
     } catch (error) {

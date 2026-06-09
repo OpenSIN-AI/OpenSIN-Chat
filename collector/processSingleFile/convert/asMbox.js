@@ -83,6 +83,14 @@ async function asMbox({
   console.log(
     `[SUCCESS]: ${filename} messages converted & ready for embedding.\n`
   );
+  if (documents.length === 0) {
+    return {
+      success: false,
+      reason: `No mail items with text content found in ${filename}.`,
+      documents: [],
+    };
+  }
+
   return { success: true, reason: null, documents };
 }
 

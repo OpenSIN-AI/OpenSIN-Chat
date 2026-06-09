@@ -65,15 +65,14 @@ const MIN_CHATS_TO_PROCESS = 5;
  * @param {object[]} groupChats - chats for this group, sorted asc.
  */
 async function processGroup(groupChats) {
-  const { user_id: userId, workspaceId } = groupChats[0];
-  const tag = `user ${userId}, workspace ${workspaceId}`;
-
   if (groupChats.length < MIN_CHATS_TO_PROCESS) {
     log(
-      `${tag} has only ${groupChats.length} chat(s). Need at least ${MIN_CHATS_TO_PROCESS}. Skipping.`,
+      `Skipping group with only ${groupChats.length} chat(s). Need at least ${MIN_CHATS_TO_PROCESS}.`,
     );
     return;
   }
+  const { user_id: userId, workspaceId } = groupChats[0];
+  const tag = `user ${userId}, workspace ${workspaceId}`;
 
   if (isGroupActive(groupChats)) {
     log(`${tag} is still active. Skipping.`);

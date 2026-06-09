@@ -175,6 +175,15 @@ async function processAsFile({ uri, saveAsDocument = true }) {
   // If we intend to return only the text content, return the content from the file
   // and then delete the file - otherwise it will be saved as a document
   if (!saveAsDocument) {
+    if (!processSingleFileResult?.documents?.length) {
+      return returnResult({
+        success: false,
+        reason: 'No documents returned from file processing',
+        documents: [],
+        content: null,
+        saveAsDocument,
+      });
+    }
     return returnResult({
       success: true,
       content: processSingleFileResult.documents[0].pageContent,

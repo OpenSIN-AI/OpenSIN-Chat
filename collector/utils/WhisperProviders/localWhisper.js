@@ -104,6 +104,7 @@ class LocalWhisper {
               (SCALING_FACTOR * (audioData[0][i] + audioData[1][i])) / 2;
           }
         }
+        if (audioData.length === 0) return null;
         audioData = audioData[0];
       }
 
