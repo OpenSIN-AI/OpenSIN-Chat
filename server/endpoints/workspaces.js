@@ -124,6 +124,17 @@ function workspaceEndpoints(app) {
     ],
     async function (request, response) {
       try {
+        const { slug = null } = request.params;
+        const user = await userFromSession(request, response);
+        const currWorkspace = multiUserMode(response)
+          ? await Workspace.getWithUser(user, { slug })
+          : await Workspace.get({ slug });
+
+        if (!currWorkspace) {
+          response.sendStatus(400).end();
+          return;
+        }
+
         const Collector = new CollectorApi();
         const { originalname } = request.file;
         const processingOnline = await Collector.online();
@@ -139,9 +150,9 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const { success, reason } =
+        const { success, reason, documents } =
           await Collector.processDocument(originalname);
-        if (!success) {
+        if (!success || documents?.length === 0) {
           response.status(500).json({ success: false, error: reason }).end();
           return;
         }
@@ -157,7 +168,20 @@ function workspaceEndpoints(app) {
           },
           response.locals?.user?.id,
         );
-        response.status(200).json({ success: true, error: null });
+
+        const document = documents[0];
+        const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
+          currWorkspace,
+          [document.location],
+          response.locals?.user?.id,
+        );
+
+        if (failedToEmbed.length > 0) {
+          response.status(500).json({ success: false, error: errors?.[0] }).end();
+          return;
+        }
+
+        response.status(200).json({ success: true, error: null, document });
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
@@ -171,6 +195,17 @@ function workspaceEndpoints(app) {
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
+        const { slug = null } = request.params;
+        const user = await userFromSession(request, response);
+        const currWorkspace = multiUserMode(response)
+          ? await Workspace.getWithUser(user, { slug })
+          : await Workspace.get({ slug });
+
+        if (!currWorkspace) {
+          response.sendStatus(400).end();
+          return;
+        }
+
         const Collector = new CollectorApi();
         const { link = "" } = reqBody(request);
         const processingOnline = await Collector.online();
@@ -186,8 +221,8 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const { success, reason } = await Collector.processLink(link);
-        if (!success) {
+        const { success, reason, documents } = await Collector.processLink(link);
+        if (!success || documents?.length === 0) {
           response.status(500).json({ success: false, error: reason }).end();
           return;
         }
@@ -201,7 +236,20 @@ function workspaceEndpoints(app) {
           { link },
           response.locals?.user?.id,
         );
-        response.status(200).json({ success: true, error: null });
+
+        const document = documents[0];
+        const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
+          currWorkspace,
+          [document.location],
+          response.locals?.user?.id,
+        );
+
+        if (failedToEmbed.length > 0) {
+          response.status(500).json({ success: false, error: errors?.[0] }).end();
+          return;
+        }
+
+        response.status(200).json({ success: true, error: null, document });
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
