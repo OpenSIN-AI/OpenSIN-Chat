@@ -146,6 +146,12 @@ const BLOCK_INFO = {
   },
 };
 
+const UNKNOWN_BLOCK = {
+  icon: <span className="w-4 h-4" />,
+  label: "Unknown Block",
+  getSummary: () => "Unknown block type",
+};
+
 export default function BlockList({
   blocks,
   updateBlockConfig,
@@ -223,7 +229,9 @@ export default function BlockList({
 
   return (
     <div className="space-y-1">
-      {blocks.map((block, index) => (
+      {blocks.map((block, index) => {
+            const info = BLOCK_INFO[block.type] || UNKNOWN_BLOCK;
+            return (
         <div key={block.id} className="flex flex-col">
           <div
             className={`bg-theme-action-menu-bg border border-white/10 rounded-lg overflow-hidden transition-all duration-300 ${
@@ -236,17 +244,17 @@ export default function BlockList({
             >
               <div className="flex items-center gap-3">
                 <div className="w-7 h-7 rounded-lg bg-white/10 light:bg-white flex items-center justify-center">
-                  {React.cloneElement(BLOCK_INFO[block.type].icon, {
+                  {React.cloneElement(info.icon, {
                     className: "w-4 h-4 text-white",
                   })}
                 </div>
                 <div className="flex-1 text-left min-w-0 max-w-[115px]">
                   <span className="text-sm font-medium text-white block">
-                    {BLOCK_INFO[block.type].label}
+                    {info.label}
                   </span>
                   {!block.isExpanded && (
                     <p className="text-xs text-white/60 truncate">
-                      {BLOCK_INFO[block.type].getSummary(block.config)}
+                      {info.getSummary(block.config)}
                     </p>
                   )}
                 </div>
@@ -330,7 +338,8 @@ export default function BlockList({
             </div>
           )}
         </div>
-      ))}
+      );
+      })}
       <Tooltip
         id="block-action"
         place="bottom"

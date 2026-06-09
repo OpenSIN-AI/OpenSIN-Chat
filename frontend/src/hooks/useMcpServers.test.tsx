@@ -4,13 +4,11 @@ import { renderHook, waitFor } from "@testing-library/react";
 import { SWRConfig } from "swr";
 
 vi.mock("@/models/mcpServers", () => ({
-  default: {
-    listServers: vi.fn(),
-  },
+  default: { listServers: vi.fn() },
 }));
 
 import MCPServers from "@/models/mcpServers";
-import useMcpServers, { mcpServersKey } from "./useMcpServers";
+import useMCPServers, { MCP_SERVERS_KEY } from "./useMCPServers";
 
 function wrapper({ children }) {
   return (
@@ -20,43 +18,39 @@ function wrapper({ children }) {
   );
 }
 
-describe("useMcpServers", () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+describe("useMCPServers", () => {
+  beforeEach(() => vi.clearAllMocks());
 
-  it("returns an empty list while loading", () => {
-    MCPServers.listServers.mockReturnValue(new Promise(() => {}));
-    const { result } = renderHook(() => useMcpServers(), { wrapper });
-    expect(result.current.servers).toEqual([]);
-    expect(result.current.isLoading).toBe(true);
-  });
-
-  it("returns the server list on success", async () => {
-    const fakeServers = [
-      { id: 1, name: "github", url: "https://api.github.com" },
-      { id: 2, name: "slack", url: "https://slack.com/api" },
-    ];
-    MCPServers.listServers.mockResolvedValue({ success: true, servers: fakeServers });
-
-    const { result } = renderHook(() => useMcpServers(), { wrapper });
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
+  it("fetches MCP servers", async () => {
+    MCPServers.listServers.mockResolvedValue({
+      servers: [
+        { name: "server1", running: true, tools: [] },
+        { name: "server2", running: false, tools: [] },
+      ],
     });
-    expect(result.current.servers).toEqual(fakeServers);
+    const { result } = renderHook(() => useMCPServers(), { wrapper });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.servers).toHaveLength(2);
+    expect(result.current.servers[0].name).toBe("server1");
+    expect(MCPServers.listServers).toHaveBeenCalledTimes(1);
   });
 
-  it("handles a failed list response gracefully (empty list)", async () => {
-    MCPServers.listServers.mockResolvedValue({ success: false, servers: [] });
-
-    const { result } = renderHook(() => useMcpServers(), { wrapper });
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-    });
+  it("returns empty array when listServers returns null", async () => {
+    MCPServers.listServers.mockResolvedValue({ servers: null });
+    const { result } = renderHook(() => useMCPServers(), { wrapper });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.servers).toEqual([]);
   });
 
-  it("exposes a stable cache key", () => {
-    expect(mcpServersKey).toBe("mcp-servers");
+  it("returns empty array on error", async () => {
+    MCPServers.listServers.mockRejectedValue(new Error("Network error"));
+    const { result } = renderHook(() => useMCPServers(), { wrapper });
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+    expect(result.current.servers).toEqual([]);
+    expect(result.current.error).toBeTruthy();
+  });
+
+  it("uses stable cache key", () => {
+    expect(MCP_SERVERS_KEY).toBe("mcp-servers/list");
   });
 });

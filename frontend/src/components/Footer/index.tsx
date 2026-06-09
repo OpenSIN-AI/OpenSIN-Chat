@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import System from "@/models/system";
 import paths from "@/utils/paths";
 import {
   BookOpen,
@@ -11,36 +10,60 @@ import {
   Info,
   LinkSimple,
 } from "@phosphor-icons/react";
-import React from "react";
-import SettingsButton from "../SettingsButton";
 import { isMobile } from "react-device-detect";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 import useFooterIcons from "@/hooks/useFooterIcons";
+import SettingsButton from "../SettingsButton";
 
 export const MAX_ICONS = 3;
-export const ICON_COMPONENTS = {
-  BookOpen: BookOpen,
-  GithubLogo: GithubLogo,
-  Envelope: Envelope,
-  LinkSimple: LinkSimple,
-  HouseLine: HouseLine,
-  Globe: Globe,
-  Briefcase: Briefcase,
-  Info: Info,
+type FooterIconName =
+  | "BookOpen"
+  | "GithubLogo"
+  | "Envelope"
+  | "LinkSimple"
+  | "HouseLine"
+  | "Globe"
+  | "Briefcase"
+  | "Info";
+
+type IconComponent = React.ComponentType<{
+  weight?: string;
+  className?: string;
+  color?: string;
+  "aria-hidden"?: boolean | "true" | "false";
+}>;
+
+export const ICON_COMPONENTS: Record<FooterIconName, IconComponent> = {
+  BookOpen: BookOpen as IconComponent,
+  GithubLogo: GithubLogo as IconComponent,
+  Envelope: Envelope as IconComponent,
+  LinkSimple: LinkSimple as IconComponent,
+  HouseLine: HouseLine as IconComponent,
+  Globe: Globe as IconComponent,
+  Briefcase: Briefcase as IconComponent,
+  Info: Info as IconComponent,
 };
 
-const DEFAULT_FOOTER_ITEMS = [
+type FooterItem = {
+  key: string;
+  Icon: IconComponent;
+  url: string;
+  ariaLabel: string;
+  tooltip: string;
+};
+
+const DEFAULT_FOOTER_ITEMS: FooterItem[] = [
   {
     key: "github",
-    Icon: GithubLogo,
+    Icon: GithubLogo as IconComponent,
     url: paths.github(),
     ariaLabel: "OpenAfD Chat auf GitHub ansehen",
     tooltip: "Quellcode auf GitHub ansehen",
   },
   {
     key: "docs",
-    Icon: BookOpen,
+    Icon: BookOpen as IconComponent,
     url: paths.docs(),
     ariaLabel: "Dokumentation öffnen",
     tooltip: "OpenAfD Chat Hilfe-Dokumentation öffnen",
@@ -49,6 +72,11 @@ const DEFAULT_FOOTER_ITEMS = [
 
 const ICON_LINK_CLASSES =
   "transition-all duration-300 flex items-center justify-center p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70";
+
+type CustomFooterItem = {
+  icon: string;
+  url: string;
+};
 
 export default function Footer() {
   const { footerData, isLoading } = useFooterIcons();
@@ -64,9 +92,10 @@ export default function Footer() {
         className="flex flex-wrap items-center justify-center gap-3"
       >
         {hasCustomIcons
-          ? (footerData as any).map((item, index) => {
+          ? (footerData as CustomFooterItem[]).map((item, index) => {
               const IconComponent =
-                ICON_COMPONENTS?.[item.icon] ?? ICON_COMPONENTS.Info;
+                ICON_COMPONENTS[item.icon as FooterIconName] ??
+                ICON_COMPONENTS.Info;
               return (
                 <a
                   key={index}
@@ -82,12 +111,13 @@ export default function Footer() {
                     weight="fill"
                     className="h-5 w-5"
                     color="var(--theme-sidebar-footer-icon-fill)"
+                    aria-hidden="true"
                   />
                 </a>
               );
             })
-          : (DEFAULT_FOOTER_ITEMS as any).map(
-              ({ key, Icon, url, ariaLabel, tooltip }: any) => (
+          : DEFAULT_FOOTER_ITEMS.map(
+              ({ key, Icon, url, ariaLabel, tooltip }) => (
                 <Link
                   key={key}
                   to={url}
@@ -101,6 +131,7 @@ export default function Footer() {
                   <Icon
                     weight="fill"
                     className="h-5 w-5 text-white light:text-slate-800"
+                    aria-hidden="true"
                   />
                 </Link>
               ),

@@ -317,7 +317,7 @@ const System = {
 
     if (!footerData || !!error) return { footerData: [], error: null };
 
-    const newData = safeJsonParse(footerData, []);
+    const newData = footerData ?? [];
     window.localStorage.setItem(
       this.cacheKeys.footerIcons,
       JSON.stringify({ data: newData, lastFetched: Date.now() }),
