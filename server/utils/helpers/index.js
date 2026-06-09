@@ -469,130 +469,6 @@ function getLLMProviderClass({ provider = null } = {}) {
  * @param {{provider: string | null} | null} params - Initialize params for LLMs provider
  * @returns {string | null}
  */
-/**
- * Single source of truth for provider model preference (issue #100).
- *
- * Order of precedence:
- *   1. The value persisted in system_settings for the provider (DB wins).
- *   2. The ENV variable baked into the container at deploy time.
- *   3. null when neither is set - callers must decide on a default.
- *
- * Until this helper existed the ENV was read directly, which made @agent
- * invocations crash: the container had NVIDIA_NIM_LLM_MODEL_PREF hard-coded
- * to a model that could not serve tool-calling, and any DB override was
- * ignored. See https://github.com/Family-Team-Projects/OpenAfD-Chat/issues/100
- *
- * Wrapped in try/catch so boot-time callers (where the SystemSettings model
- * is not yet reachable) still get the ENV fallback.
- *
- * @param {string|null} provider
- * @returns {Promise<string|null>}
- */
-async function getProviderModelPreference(provider = null) {
-  if (!provider) return null;
-
-  // Provider -> [system_settings.label, ENV key] - mirrors the ENV-only switch
-  // statements in getBaseLLMProviderModel() and providerDefault() in agents/index.js.
-  const MODEL_PREF_MAP = {
-    openai: ['OpenAiModelPref', 'OPEN_MODEL_PREF'],
-    azure: ['AzureOpenAiModelPref', 'AZURE_OPENAI_MODEL_PREF'],
-    anthropic: ['AnthropicModelPref', 'ANTHROPIC_MODEL_PREF'],
-    gemini: ['GeminiLLMModelPref', 'GEMINI_LLM_MODEL_PREF'],
-    lmstudio: ['LMStudioModelPref', 'LMSTUDIO_MODEL_PREF'],
-    localai: ['LocalAiModelPref', 'LOCAL_AI_MODEL_PREF'],
-    ollama: ['OllamaLLMModelPref', 'OLLAMA_MODEL_PREF'],
-    togetherai: ['TogetherAiModelPref', 'TOGETHER_AI_MODEL_PREF'],
-    fireworksai: ['FireworksAiLLMModelPref', 'FIREWORKS_AI_LLM_MODEL_PREF'],
-    perplexity: ['PerplexityModelPref', 'PERPLEXITY_MODEL_PREF'],
-    openrouter: ['OpenRouterModelPref', 'OPENROUTER_MODEL_PREF'],
-    mistral: ['MistralModelPref', 'MISTRAL_MODEL_PREF'],
-    groq: ['GroqModelPref', 'GROQ_MODEL_PREF'],
-    koboldcpp: ['KoboldCPPModelPref', 'KOBOLD_CPP_MODEL_PREF'],
-    cohere: ['CohereModelPref', 'COHERE_MODEL_PREF'],
-    litellm: ['LiteLLMModelPref', 'LITE_LLM_MODEL_PREF'],
-    'generic-openai': ['GenericOpenAiModelPref', 'GENERIC_OPEN_AI_MODEL_PREF'],
-    bedrock: ['AwsBedrockLLMModel', 'AWS_BEDROCK_LLM_MODEL_PREFERENCE'],
-    deepseek: ['DeepSeekModelPref', 'DEEPSEEK_MODEL_PREF'],
-    apipie: ['ApipieLLMModelPref', 'APIPIE_LLM_MODEL_PREF'],
-    xai: ['XAIModelPref', 'XAI_LLM_MODEL_PREF'],
-    'nvidia-nim': ['NvidiaNimLLMModelPref', 'NVIDIA_NIM_LLM_MODEL_PREF'],
-    'opencode-zen': ['OpencodeZenModelPref', 'OPENCODE_ZEN_MODEL_PREF'],
-    ppio: ['PPIOModelPref', 'PPIO_MODEL_PREF'],
-    moonshotai: ['MoonshotAiModelPref', 'MOONSHOT_AI_MODEL_PREF'],
-    cometapi: ['CometApiLLMModelPref', 'COMETAPI_LLM_MODEL_PREF'],
-    foundry: ['FoundryModelPref', 'FOUNDRY_MODEL_PREF'],
-    zai: ['ZAiModelPref', 'ZAI_MODEL_PREF'],
-    giteeai: ['GiteeAIModelPref', 'GITEE_AI_MODEL_PREF'],
-    'docker-model-runner': ['DockerModelRunnerModelPref', 'DOCKER_MODEL_RUNNER_LLM_MODEL_PREF'],
-    privatemode: ['PrivateModeModelPref', 'PRIVATEMODE_LLM_MODEL_PREF'],
-    sambanova: ['SambaNovaLLMModelPref', 'SAMBANOVA_LLM_MODEL_PREF'],
-    lemonade: ['LemonadeLLMModelPref', 'LEMONADE_LLM_MODEL_PREF'],
-    novita: ['NovitaLLMModelPref', 'NOVITA_LLM_MODEL_PREF'],
-  };
-
-  // Snake-case DB aliases (legacy/issue #100). Looked up after the canonical
-  // KEY_MAPPING label fails. Keep this in sync with updateENV.js KEY_MAPPING
-  // keys (camelCase -> snake_case).
-  const MODEL_PREF_SNAKE_ALIASES = {
-    openai: 'open_ai_model_pref',
-    azure: 'azure_openai_model_pref',
-    anthropic: 'anthropic_model_pref',
-    gemini: 'gemini_llm_model_pref',
-    lmstudio: 'lmstudio_model_pref',
-    localai: 'local_ai_model_pref',
-    ollama: 'ollama_model_pref',
-    togetherai: 'together_ai_model_pref',
-    fireworksai: 'fireworks_ai_llm_model_pref',
-    perplexity: 'perplexity_model_pref',
-    openrouter: 'openrouter_model_pref',
-    mistral: 'mistral_model_pref',
-    groq: 'groq_model_pref',
-    koboldcpp: 'kobold_cpp_model_pref',
-    cohere: 'cohere_model_pref',
-    litellm: 'lite_llm_model_pref',
-    'generic-openai': 'generic_open_ai_model_pref',
-    bedrock: 'aws_bedrock_llm_model_preference',
-    deepseek: 'deepseek_model_pref',
-    apipie: 'apipie_llm_model_pref',
-    xai: 'xai_llm_model_pref',
-    'nvidia-nim': 'nvidia_nim_model_pref',
-    'opencode-zen': 'opencode_zen_model_pref',
-    ppio: 'ppio_model_pref',
-    moonshotai: 'moonshot_ai_model_pref',
-    cometapi: 'cometapi_llm_model_pref',
-    foundry: 'foundry_model_pref',
-    zai: 'zai_model_pref',
-    giteeai: 'gitee_ai_model_pref',
-    'docker-model-runner': 'docker_model_runner_llm_model_pref',
-    privatemode: 'privatemode_llm_model_pref',
-    sambanova: 'sambanova_llm_model_pref',
-    lemonade: 'lemonade_llm_model_pref',
-    novita: 'novita_llm_model_pref',
-  };
-
-
-  const entry = MODEL_PREF_MAP[provider];
-  if (!entry) return null;
-  const [dbLabel, envKey] = entry;
-
-  // DB first - load lazily so this module can be required during boot
-  // before the Prisma client is fully wired up.
-  try {
-    const { SystemSettings } = require('../../models/systemSettings');
-    const labelsToTry = [dbLabel, MODEL_PREF_SNAKE_ALIASES[provider]].filter(Boolean);
-    for (const label of labelsToTry) {
-      const dbSetting = await SystemSettings.get({ label });
-      if (dbSetting && typeof dbSetting.value === 'string' && dbSetting.value.trim())
-        return dbSetting.value.trim();
-    }
-  } catch {
-    // SystemSettings not reachable (boot) - fall through to ENV.
-  }
-
-  // ENV fallback - deploy-time default.
-  return process.env[envKey] ?? null;
-}
-
 function getBaseLLMProviderModel({ provider = null } = {}) {
   switch (provider) {
     case "openai":
@@ -842,7 +718,6 @@ module.exports = {
   getVectorDbClass,
   getLLMProviderClass,
   getBaseLLMProviderModel,
-  getProviderModelPreference,
   getLLMProvider,
   resolveProviderConnector,
   toChunks,

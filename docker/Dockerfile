@@ -156,12 +156,6 @@ WORKDIR /app
 # Also pull and build collector deps (chromium issues prevent bad bindings)
 FROM build AS backend-build
 COPY --chown=openafd:openafd ./server /app/server/
-
-# Verify critical server files made it into the image (issue #102).
-# If paths.js is missing we fail the build loudly so a broken image
-# can never ship. The runtime guard in docker-entrypoint.sh is a
-# defense-in-depth backup for already-built images.
-RUN test -f /app/server/utils/paths.js || (echo "BUILD ERROR: /app/server/utils/paths.js missing from server COPY" && exit 1)
 WORKDIR /app/server
 RUN yarn install --production --network-timeout 100000 && yarn cache clean
 WORKDIR /app

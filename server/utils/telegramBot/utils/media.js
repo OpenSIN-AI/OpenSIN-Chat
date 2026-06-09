@@ -156,7 +156,6 @@ async function sendVoiceResponse(bot, chatId, text) {
 }
 
 module.exports = {
-  getExtensionFromMime,
   downloadTelegramFile,
   transcribeAudio,
   documentToText,

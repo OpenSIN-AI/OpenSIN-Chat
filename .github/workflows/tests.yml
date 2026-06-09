@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: "22"
+          node-version: "20"
           cache: "yarn"
           cache-dependency-path: frontend/yarn.lock
 
@@ -35,7 +35,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: "22"
+          node-version: "20"
           cache: "yarn"
           cache-dependency-path: server/yarn.lock
 
