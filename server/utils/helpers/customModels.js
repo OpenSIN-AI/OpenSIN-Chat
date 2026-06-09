@@ -826,7 +826,7 @@ async function getNvidiaNimModels(basePath = null) {
       baseURL: parseNvidiaNimBasePath(
         basePath ?? process.env.NVIDIA_NIM_LLM_BASE_PATH,
       ),
-      apiKey: null,
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || "nvidia-nim",
     });
     const modelResponse = await openai.models
       .list()
