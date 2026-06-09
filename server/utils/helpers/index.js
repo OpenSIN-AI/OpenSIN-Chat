@@ -582,12 +582,12 @@ async function getProviderModelPreference(provider = null) {
     const candidates = validLabelsForProvider(provider);
     for (const label of candidates) {
       const rows = await SystemSettings.get({ label });
-      const val = rows?.[0]?.value;
-      if (val) return val;
+      const val = rows?.value;
+      if (val?.trim()) return val;
     }
-    return env;
+    return env ?? null;
   } catch {
-    return env;
+    return env ?? null;
   }
 }
 

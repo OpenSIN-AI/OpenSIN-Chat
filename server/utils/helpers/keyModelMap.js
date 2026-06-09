@@ -14,10 +14,10 @@
  */
 
 const KEY_MAPPING = {
-  openai: ["open_ai_model_pref", "OPEN_MODEL_PREF"],
+  openai: ["OpenAiModelPref", "open_ai_model_pref", "OPEN_MODEL_PREF"],
   "opencode-zen": ["opencode_zen_model_pref", "OPENCODE_ZEN_MODEL_PREF"],
   "nvidia-nim": [
-    "agent_model",
+    "NvidiaNimLLMModelPref",
     "nvidia_nim_model_pref",
     "NVIDIA_NIM_LLM_MODEL_PREF",
   ],

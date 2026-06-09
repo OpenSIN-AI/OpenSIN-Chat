@@ -25,18 +25,18 @@ export default function Sidebars({ workspace }) {
       aria-label="Rechte Seitenleiste"
     >
       {/* Panel area — only when sidebar open AND a panel is active */}
-      {rightSidebarOpen && (
+      {rightSidebarOpen && activeSidebar && (
         <div
-          style={{ width: activeSidebar ? PANEL_W : 0 }}
-          className="h-full overflow-hidden transition-all duration-500 flex-shrink-0 relative bg-zinc-900 light:bg-white"
+          style={{ width: PANEL_W }}
+          className="h-full overflow-hidden flex-shrink-0 relative bg-zinc-900 light:bg-white"
         >
-          <SourcesSidebar workspace={workspace} />
-          <MemoriesSidebar workspace={workspace} />
-          <PreviewSidebar />
-          <ConsoleSidebar />
-          <FilesystemSidebar />
-          <DatabaseSidebar />
-          <PoliticalSidebar />
+          {activeSidebar === "sources" && <SourcesSidebar workspace={workspace} />}
+          {activeSidebar === "memories" && <MemoriesSidebar workspace={workspace} />}
+          {activeSidebar === "preview" && <PreviewSidebar />}
+          {activeSidebar === "console" && <ConsoleSidebar />}
+          {activeSidebar === "filesystem" && <FilesystemSidebar />}
+          {activeSidebar === "database" && <DatabaseSidebar />}
+          {activeSidebar === "political" && <PoliticalSidebar />}
         </div>
       )}
 

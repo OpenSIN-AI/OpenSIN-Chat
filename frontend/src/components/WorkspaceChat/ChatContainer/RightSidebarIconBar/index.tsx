@@ -26,6 +26,8 @@ export function RightSidebarToggleButton() {
     <button
       type="button"
       onClick={toggleRightSidebar}
+      aria-expanded={rightSidebarOpen}
+      aria-controls="right-sidebar-panel"
       data-tooltip-id="rsib-toggle"
       data-tooltip-content={
         rightSidebarOpen

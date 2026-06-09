@@ -95,9 +95,6 @@ export function ChatSidebarProvider({ children }: any) {
   }
 
   function toggleRightSidebar() {
-    if (rightSidebarOpen) {
-      closeSidebar();
-    }
     setRightSidebarOpen((prev: boolean) => !prev);
   }
 
@@ -132,12 +129,15 @@ export function ChatSidebarProvider({ children }: any) {
 }
 
 export function useChatSidebar() {
-  return useContext(ChatSidebarContext);
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx) throw new Error("useChatSidebar must be used within ChatSidebarProvider");
+  return ctx;
 }
 
 export function useSourcesSidebar() {
-  const { activeSidebar, sidebarData, openSidebar, closeSidebar } =
-    useContext(ChatSidebarContext);
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx) throw new Error("useSourcesSidebar must be used within ChatSidebarProvider");
+  const { activeSidebar, sidebarData, openSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "sources",
     sources: activeSidebar === "sources" ? (sidebarData || []) : [],
@@ -147,8 +147,9 @@ export function useSourcesSidebar() {
 }
 
 export function useMemoriesSidebar() {
-  const { activeSidebar, toggleSidebar, closeSidebar } =
-    useContext(ChatSidebarContext);
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx) throw new Error("useMemoriesSidebar must be used within ChatSidebarProvider");
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "memories",
     toggleSidebar: () => toggleSidebar("memories"),
@@ -157,8 +158,9 @@ export function useMemoriesSidebar() {
 }
 
 export function usePreviewSidebar() {
-  const { activeSidebar, previewData, openPreview, closeSidebar, toggleSidebar } =
-    useContext(ChatSidebarContext);
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx) throw new Error("usePreviewSidebar must be used within ChatSidebarProvider");
+  const { activeSidebar, previewData, openPreview, closeSidebar, toggleSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "preview",
     previewData,
@@ -169,8 +171,9 @@ export function usePreviewSidebar() {
 }
 
 export function useConsoleSidebar() {
-  const { activeSidebar, toggleSidebar, closeSidebar } =
-    useContext(ChatSidebarContext);
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx) throw new Error("useConsoleSidebar must be used within ChatSidebarProvider");
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "console",
     toggleConsole: () => toggleSidebar("console"),
@@ -179,8 +182,9 @@ export function useConsoleSidebar() {
 }
 
 export function useFilesystemSidebar() {
-  const { activeSidebar, toggleSidebar, closeSidebar } =
-    useContext(ChatSidebarContext);
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx) throw new Error("useFilesystemSidebar must be used within ChatSidebarProvider");
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "filesystem",
     toggleFilesystem: () => toggleSidebar("filesystem"),
@@ -189,8 +193,9 @@ export function useFilesystemSidebar() {
 }
 
 export function useDatabaseSidebar() {
-  const { activeSidebar, toggleSidebar, closeSidebar } =
-    useContext(ChatSidebarContext);
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx) throw new Error("useDatabaseSidebar must be used within ChatSidebarProvider");
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "database",
     toggleDatabase: () => toggleSidebar("database"),
@@ -199,8 +204,9 @@ export function useDatabaseSidebar() {
 }
 
 export function usePoliticalSidebar() {
-  const { activeSidebar, toggleSidebar, closeSidebar } =
-    useContext(ChatSidebarContext);
+  const ctx = useContext(ChatSidebarContext);
+  if (!ctx) throw new Error("usePoliticalSidebar must be used within ChatSidebarProvider");
+  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "political",
     togglePolitical: () => toggleSidebar("political"),

@@ -9,12 +9,15 @@ vi.mock("react-i18next", () => ({
 
 const mockToggleSidebar = vi.fn();
 const mockCloseSidebar = vi.fn();
+const mockToggleRightSidebar = vi.fn();
 
 vi.mock("../ChatSidebar", () => ({
   useChatSidebar: () => ({
     activeSidebar: null,
     toggleSidebar: mockToggleSidebar,
     closeSidebar: mockCloseSidebar,
+    rightSidebarOpen: true,
+    toggleRightSidebar: mockToggleRightSidebar,
   }),
 }));
 
@@ -23,17 +26,17 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all 7 icon buttons (collapse + 6 panels)", () => {
+  it("renders all 8 icon buttons (collapse + 7 panels)", () => {
     const { container } = render(<RightSidebarIconBar />);
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(7);
+    expect(buttons.length).toBe(8);
   });
 
-  it("calls closeSidebar when the collapse icon is clicked", () => {
+  it("calls toggleRightSidebar when the collapse icon is clicked", () => {
     const { container } = render(<RightSidebarIconBar />);
     const collapseButton = container.querySelector('button[aria-label="Einklappen"]');
     fireEvent.click(collapseButton);
-    expect(mockCloseSidebar).toHaveBeenCalledTimes(1);
+    expect(mockToggleRightSidebar).toHaveBeenCalledTimes(1);
   });
 
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {
@@ -58,5 +61,17 @@ describe("RightSidebarIconBar", () => {
     buttons.forEach((btn) => {
       expect(btn.getAttribute("aria-label")).toBeTruthy();
     });
+  });
+
+  it("has aria-expanded on the toggle button reflecting sidebar state", () => {
+    const { container } = render(<RightSidebarIconBar />);
+    const toggleButton = container.querySelector('button[aria-label="Einklappen"]');
+    expect(toggleButton).toHaveAttribute("aria-expanded", "true");
+  });
+
+  it("has aria-controls pointing to the sidebar panel", () => {
+    const { container } = render(<RightSidebarIconBar />);
+    const toggleButton = container.querySelector("button[aria-expanded]");
+    expect(toggleButton).toHaveAttribute("aria-controls", "right-sidebar-panel");
   });
 });

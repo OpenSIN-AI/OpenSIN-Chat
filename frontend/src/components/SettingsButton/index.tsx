@@ -16,7 +16,7 @@ export default function SettingsButton() {
         <Link
           to={paths.home()}
           className="transition-all duration-300 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover"
-          aria-label="Back to workspaces"
+          aria-label="Home"
           data-tooltip-id="footer-item"
           data-tooltip-content="Back to workspaces"
         >
@@ -34,7 +34,7 @@ export default function SettingsButton() {
       <Link
         to={paths.settings.interface()}
         className="transition-all duration-300 p-2 rounded-full bg-theme-sidebar-footer-icon hover:bg-theme-sidebar-footer-icon-hover"
-        aria-label="Open settings"
+        aria-label="Settings"
         data-tooltip-id="footer-item"
         data-tooltip-content="Open settings"
       >

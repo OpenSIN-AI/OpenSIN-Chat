@@ -6,6 +6,7 @@ import WorkspaceDefaultPfp from "./workspace.svg";
 
 type UserIconProps = {
   role: "user" | string;
+  user?: { uid?: string } | null;
 };
 
 const UserIcon = memo(({ role }: UserIconProps) => {

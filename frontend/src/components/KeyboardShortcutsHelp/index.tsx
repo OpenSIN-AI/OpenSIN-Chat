@@ -39,7 +39,7 @@ export default function KeyboardShortcutsHelp() {
             type="button"
             onClick={() => setIsOpen(false)}
             className="text-white hover:text-gray-300"
-            aria-label="Close keyboard shortcuts help"
+            aria-label="Close"
           >
             <X size={24} />
           </button>
