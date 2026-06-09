@@ -16,6 +16,7 @@ import MemoriesRow from "./Memories";
 import SourcesRow from "./Sources";
 
 export default function ChatSettingsMenu() {
+  return null;
   const mode = useLoginMode();
   const { t } = useTranslation();
   const { activeSidebar, toggleSidebar } = useChatSidebar();

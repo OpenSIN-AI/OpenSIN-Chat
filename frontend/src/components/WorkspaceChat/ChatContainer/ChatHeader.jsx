@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { isMobile } from "react-device-detect";
 import { SidebarMobileHeader } from "../../Sidebar";
-import ChatSettingsMenu from "./ChatSettingsMenu";
 import WorkspaceModelPicker from "./WorkspaceModelPicker";
 
 /**
@@ -14,7 +13,6 @@ export default function ChatHeader({ workspaceSlug, isEmpty }) {
   return (
     <>
       {isMobile && <SidebarMobileHeader />}
-      {isEmpty && <ChatSettingsMenu />}
       <WorkspaceModelPicker workspaceSlug={workspaceSlug} />
     </>
   );
