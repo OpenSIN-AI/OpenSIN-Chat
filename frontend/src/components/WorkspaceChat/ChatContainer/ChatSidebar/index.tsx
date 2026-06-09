@@ -8,6 +8,16 @@ import {
   useRef,
 } from "react";
 
+type LogLevel = "info" | "warn" | "error" | "success" | "debug";
+
+type LogEntry = {
+  level: LogLevel;
+  message: string;
+  timestamp: string;
+};
+
+export const LOG_EVENT = "openafd:log";
+
 const ChatSidebarContext = createContext<any>(undefined);
 
 const SOURCE_FILTERS = {
@@ -67,6 +77,20 @@ export function ChatSidebarProvider({ children }: any) {
   // Preview panel state: { content, title, type, versions }
   const [previewData, setPreviewData] = useState(null);
 
+  // Persistent console logs — survive sidebar panel swaps
+  const [consoleLogs, setConsoleLogs] = useState<LogEntry[]>([]);
+  const clearConsoleLogs = useCallback(() => setConsoleLogs([]), []);
+
+  useEffect(() => {
+    function handler(e: Event) {
+      const detail = (e as CustomEvent<LogEntry>).detail;
+      setConsoleLogs((prev) => [...prev.slice(-499), detail]);
+    }
+    window.addEventListener(LOG_EVENT, handler as EventListener);
+    return () =>
+      window.removeEventListener(LOG_EVENT, handler as EventListener);
+  }, []);
+
   useEffect(() => {
     try {
       localStorage.setItem("openafd_source_filter", sourceFilter);
@@ -121,6 +145,8 @@ export function ChatSidebarProvider({ children }: any) {
         previewData,
         setPreviewData,
         openPreview,
+        consoleLogs,
+        clearConsoleLogs,
       }}
     >
       {children}
@@ -173,11 +199,13 @@ export function usePreviewSidebar() {
 export function useConsoleSidebar() {
   const ctx = useContext(ChatSidebarContext);
   if (!ctx) throw new Error("useConsoleSidebar must be used within ChatSidebarProvider");
-  const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
+  const { activeSidebar, toggleSidebar, closeSidebar, consoleLogs, clearConsoleLogs } = ctx;
   return {
     sidebarOpen: activeSidebar === "console",
     toggleConsole: () => toggleSidebar("console"),
     closeSidebar,
+    consoleLogs,
+    clearConsoleLogs,
   };
 }
 

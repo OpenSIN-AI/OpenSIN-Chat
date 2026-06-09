@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { describe, it, expect } from "vitest";
-import { renderHook, act } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import { renderHook, act, waitFor } from "@testing-library/react";
 import {
   ChatSidebarProvider,
   useChatSidebar,
@@ -8,6 +8,7 @@ import {
   usePreviewSidebar,
   usePoliticalSidebar,
 } from "./index";
+import { dispatchLog } from "../ConsoleSidebar";
 
 function wrapper({ children }) {
   return <ChatSidebarProvider>{children}</ChatSidebarProvider>;
@@ -57,6 +58,19 @@ describe("ChatSidebarProvider", () => {
     );
     expect(result.current.preview.previewData.title).toBe("Doc");
     expect(result.current.preview.sidebarOpen).toBe(true);
+  });
+
+  it("accumulates console logs from dispatchLog", async () => {
+    const { result } = renderHook(() => useChatSidebar(), { wrapper });
+    expect(result.current.consoleLogs).toEqual([]);
+    act(() => {
+      dispatchLog("info", "test message");
+    });
+    await waitFor(() => {
+      expect(result.current.consoleLogs).toHaveLength(1);
+    });
+    expect(result.current.consoleLogs[0].message).toBe("test message");
+    expect(result.current.consoleLogs[0].level).toBe("info");
   });
 });
 

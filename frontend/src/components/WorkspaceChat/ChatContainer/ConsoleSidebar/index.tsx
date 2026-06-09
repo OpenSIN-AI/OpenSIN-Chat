@@ -7,15 +7,12 @@ import ChatSidebar, { useConsoleSidebar } from "../ChatSidebar";
 const TABS = ["logs", "terminal"] as const;
 type TabName = (typeof TABS)[number];
 
-// Listen for log events dispatched globally
-const LOG_EVENT: string = "openafd:log";
-
 export function dispatchLog(
   level: "info" | "warn" | "error" | "success" | "debug",
   message: string,
 ) {
   window.dispatchEvent(
-    new CustomEvent(LOG_EVENT, {
+    new CustomEvent("openafd:log", {
       detail: { level, message, timestamp: new Date().toISOString() },
     }),
   );
@@ -39,22 +36,12 @@ const LEVEL_COLORS: Record<LogLevel, string> = {
 
 function LogsTab() {
   const { t } = useTranslation();
-  const [logs, setLogs] = useState<LogEntry[]>([]);
+  const { consoleLogs, clearConsoleLogs } = useConsoleSidebar();
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    function handler(e: Event) {
-      const detail = (e as CustomEvent<LogEntry>).detail;
-      setLogs((prev) => [...prev.slice(-499), detail]);
-    }
-    window.addEventListener(LOG_EVENT, handler as EventListener);
-    return () =>
-      window.removeEventListener(LOG_EVENT, handler as EventListener);
-  }, []);
-
-  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [logs]);
+  }, [consoleLogs]);
 
   return (
     <div className="flex flex-col h-full">
@@ -64,7 +51,7 @@ function LogsTab() {
         </span>
         <button
           type="button"
-          onClick={() => setLogs([])}
+          onClick={() => clearConsoleLogs()}
           className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
           aria-label={t("console.clear", "Leeren")}
         >
@@ -73,12 +60,12 @@ function LogsTab() {
         </button>
       </div>
       <div className="flex-1 overflow-y-auto font-mono text-[11px] leading-relaxed p-3 no-scroll">
-        {logs.length === 0 ? (
+        {consoleLogs.length === 0 ? (
           <p className="text-zinc-600 light:text-slate-400 text-center mt-8">
             {t("console.no_logs", "Keine Logs vorhanden.")}
           </p>
         ) : (
-          logs.map((log, idx) => (
+          consoleLogs.map((log, idx) => (
             <div key={idx} className="flex gap-2 mb-0.5">
               <span className="text-zinc-600 light:text-slate-400 shrink-0">
                 {new Date(log.timestamp).toLocaleTimeString("de-DE", {
@@ -174,7 +161,7 @@ function TerminalTab() {
       setInput(cmdHistory[idx] ?? "");
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
-      const idx = Math.max(historyIdx - 1, -1);
+      const idx = Math.max(historyIdx + 1, -1);  // FIXED: +1 not -1
       setHistoryIdx(idx);
       setInput(idx === -1 ? "" : cmdHistory[idx] ?? "");
     }

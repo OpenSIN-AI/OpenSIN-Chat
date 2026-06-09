@@ -10,7 +10,7 @@ export default function UnauthenticatedHubModal({ show, onClose }: any) {
   if (!show) return null;
 
   return (
-    <ModalWrapper isOpen={show}>
+    <ModalWrapper isOpen={show} closeModal={onClose}>
       <div className="relative w-[400px] max-w-full bg-theme-bg-primary rounded-lg shadow border border-theme-modal-border">
         <div className="p-6">
           <button

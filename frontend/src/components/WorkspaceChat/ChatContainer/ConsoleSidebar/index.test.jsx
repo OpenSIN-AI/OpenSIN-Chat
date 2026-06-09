@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import ConsoleSidebar, { dispatchLog } from "./index";
 
 // jsdom does not implement scrollIntoView
@@ -15,6 +15,7 @@ vi.mock("react-i18next", () => ({
 }));
 
 const mockCloseSidebar = vi.fn();
+const mockClearConsoleLogs = vi.fn();
 const mockUseConsoleSidebar = vi.fn();
 
 vi.mock("../ChatSidebar", () => ({
@@ -36,6 +37,8 @@ describe("ConsoleSidebar", () => {
     mockUseConsoleSidebar.mockReturnValue({
       sidebarOpen: true,
       closeSidebar: mockCloseSidebar,
+      consoleLogs: [],
+      clearConsoleLogs: mockClearConsoleLogs,
     });
   });
 
@@ -43,6 +46,8 @@ describe("ConsoleSidebar", () => {
     mockUseConsoleSidebar.mockReturnValue({
       sidebarOpen: false,
       closeSidebar: mockCloseSidebar,
+      consoleLogs: [],
+      clearConsoleLogs: mockClearConsoleLogs,
     });
     const { container } = render(<ConsoleSidebar />);
     expect(container).toBeEmptyDOMElement();

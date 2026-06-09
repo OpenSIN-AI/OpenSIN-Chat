@@ -31,7 +31,7 @@ export default function WorkspaceChat({ loading, workspace }: any) {
     if (loading || historyLoading) return;
     if (!workspace?.slug) {
       setLoaded({ key: "none", workspace: null, history: [] });
-      return false;
+      return;
     }
 
     setLoaded({
