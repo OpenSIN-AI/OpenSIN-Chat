@@ -320,7 +320,7 @@ function handlePfpUpload(request, response, next) {
 function handleAudioUpload(request, response, next) {
   const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 25 * 1024 * 1024 },
+    limits: { fileSize: 1024 * 1024 * 1024 },
     fileFilter: (_req, file, cb) => {
       if (!file.mimetype?.startsWith("audio/"))
         return cb(new Error("Only audio uploads are allowed."));

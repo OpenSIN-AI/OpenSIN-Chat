@@ -40,7 +40,7 @@ function workspaceParsedFilesEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        return response.sendStatus(500).end();
+        return response.status(500).json({ success: false, error: e.message });
       }
     },
   );
@@ -136,10 +136,14 @@ function workspaceParsedFilesEndpoints(app) {
     ],
     async function (request, response) {
       try {
+        if (!request.file) {
+          return response.status(400).json({ success: false, error: "No file uploaded." });
+        }
+
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
         const Collector = new CollectorApi();
-        const { originalname } = request.file;
+        const originalname = request.file?.originalname || "unknown";
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
@@ -206,7 +210,7 @@ function workspaceParsedFilesEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        return response.sendStatus(500).end();
+        return response.status(500).json({ success: false, error: e.message });
       }
     },
   );

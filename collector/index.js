@@ -19,7 +19,7 @@ const { convertAudioToWav } = require("./convertAudioToWav");
 const { verifyPayloadIntegrity } = require("./middleware/verifyIntegrity");
 const { httpLogger } = require("./middleware/httpLogger");
 const app = express();
-const FILE_LIMIT = "3GB";
+const FILE_LIMIT = "5120MB";
 const COLLECTOR_PORT = getCollectorPort();
 
 // Only log HTTP requests in development mode and if the ENABLE_HTTP_LOGGER environment variable is set to true

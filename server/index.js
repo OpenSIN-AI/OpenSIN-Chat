@@ -52,7 +52,7 @@ const { httpLogger } = require("./middleware/httpLogger");
 const BackgroundQueue = require("./utils/backgroundJobs/queue");
 const app = express();
 const apiRouter = express.Router();
-const FILE_LIMIT = "3GB";
+const FILE_LIMIT = "5120MB";
 
 // Only log HTTP requests in development mode and if the ENABLE_HTTP_LOGGER environment variable is set to true
 if (
