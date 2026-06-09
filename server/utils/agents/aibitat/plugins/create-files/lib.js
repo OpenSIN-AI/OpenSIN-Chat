@@ -319,16 +319,18 @@ class CreateFilesManager {
     // On Docker this is pre-packed images local to this lib.
     // Does not honor Whitelabeling changes/preferences right now.
     const assetsPath = path.join(__dirname, "assets");
+    // forDarkBackground=true  → white logo (openafd-logo-dark.png) for dark backgrounds
+    // forDarkBackground=false → dark logo  (openafd-logo.png)       for light backgrounds
     const filename = forDarkBackground
-      ? "openafd-logo.png"
-      : "openafd-logo-dark.png";
+      ? "openafd-logo-dark.png"
+      : "openafd-logo.png";
     try {
       if (format === "dataUri") {
         const base64 = fsSync.readFileSync(
           path.join(assetsPath, filename),
           "base64",
         );
-        return `image/png;base64,${base64}`;
+        return `data:image/png;base64,${base64}`;
       }
       return fsSync.readFileSync(path.join(assetsPath, filename));
     } catch {

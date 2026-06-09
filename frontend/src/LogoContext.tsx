@@ -18,21 +18,22 @@ export function LogoProvider({ children }) {
     const isDarkMode =
       (localStorage.getItem("theme") || "default") === "default";
     const fallbackLogo = isDarkMode ? OpenAfDLogoDark : OpenAfDLogo;
+    const defaultLoginLogo = isDarkMode ? OpenAfDLogoDark : DefaultLoginLogo;
 
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
       if (logoURL) {
         setLogo(logoURL);
-        setLoginLogo(isCustomLogo ? logoURL : DefaultLoginLogo);
+        setLoginLogo(isCustomLogo ? logoURL : defaultLoginLogo);
         setIsCustomLogo(isCustomLogo);
       } else {
         setLogo(fallbackLogo);
-        setLoginLogo(DefaultLoginLogo);
+        setLoginLogo(defaultLoginLogo);
         setIsCustomLogo(false);
       }
     } catch {
       setLogo(fallbackLogo);
-      setLoginLogo(DefaultLoginLogo);
+      setLoginLogo(defaultLoginLogo);
       setIsCustomLogo(false);
     }
   }

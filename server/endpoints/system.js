@@ -988,7 +988,7 @@ function systemEndpoints(app) {
     try {
       const currentLogoFilename = await SystemSettings.currentLogoFilename();
       const isDefaultLogo =
-        !currentLogoFilename || currentLogoFilename === LOGO_FILENAME;
+        !currentLogoFilename || isDefaultFilename(currentLogoFilename);
       response.status(200).json({ isDefaultLogo });
     } catch (error) {
       // eslint-disable-next-line no-console
