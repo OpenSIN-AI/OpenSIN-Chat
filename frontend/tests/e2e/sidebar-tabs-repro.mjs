@@ -195,7 +195,7 @@ async function main() {
   // ─── TEST 3: click Arbeitsbereich / Workspace tab ────────────────────
   log("");
   log("=== TEST 3: Click 'Arbeitsbereich' (Workspace) tab ===");
-  const r3 = await clickTabByLabel(page, /^(workspace|arbeitsbereich)$/i);
+  const r3 = await clickTabByLabel(page, /^(workspace|arbeitsbereich)\b/i);
   log(`Result: ${JSON.stringify(r3)}`);
   await page.waitForTimeout(800);
   const sidebar3 = await getActiveSidebar(page);
