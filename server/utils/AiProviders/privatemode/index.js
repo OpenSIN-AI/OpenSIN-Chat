@@ -25,7 +25,9 @@ class PrivatemodeLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     this.client = new OpenAIApi({
       baseURL: PrivatemodeLLM.parseBasePath(),
-      apiKey: null,
+      // Local/self-hosted providers usually need no key. The OpenAI SDK throws
+      // "Missing credentials" on a null/empty apiKey, so pass a placeholder.
+      apiKey: process.env.PRIVATEMODE_LLM_API_KEY || "privatemode",
     });
 
     this.model = modelPreference || process.env.PRIVATEMODE_LLM_MODEL_PREF;

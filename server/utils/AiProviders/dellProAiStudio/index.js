@@ -18,7 +18,9 @@ class DellProAiStudioLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     this.dpais = new OpenAIApi({
       baseURL: DellProAiStudioLLM.parseBasePath(),
-      apiKey: null,
+      // Local/self-hosted providers usually need no key. The OpenAI SDK throws
+      // "Missing credentials" on a null/empty apiKey, so pass a placeholder.
+      apiKey: process.env.DPAIS_LLM_API_KEY || "dell-pro-ai-studio",
     });
 
     this.model = modelPreference || process.env.DPAIS_LLM_MODEL_PREF;

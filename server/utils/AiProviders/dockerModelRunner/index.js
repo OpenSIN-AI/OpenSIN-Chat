@@ -29,7 +29,9 @@ class DockerModelRunnerLLM {
       baseURL: parseDockerModelRunnerEndpoint(
         process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
       ),
-      apiKey: null,
+      // Local/self-hosted providers usually need no key. The OpenAI SDK throws
+      // "Missing credentials" on a null/empty apiKey, so pass a placeholder.
+      apiKey: process.env.DOCKER_MODEL_RUNNER_API_KEY || "docker-model-runner",
     });
 
     this.model =

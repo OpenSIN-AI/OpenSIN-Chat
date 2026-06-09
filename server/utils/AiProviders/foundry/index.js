@@ -24,7 +24,9 @@ class FoundryLLM {
     this.model = modelPreference || process.env.FOUNDRY_MODEL_PREF;
     this.openai = new OpenAIApi({
       baseURL: parseFoundryBasePath(process.env.FOUNDRY_BASE_PATH),
-      apiKey: null,
+      // Local/self-hosted providers usually need no key. The OpenAI SDK throws
+      // "Missing credentials" on a null/empty apiKey, so pass a placeholder.
+      apiKey: process.env.FOUNDRY_API_KEY || "foundry",
     });
 
     this.embedder = embedder ?? new NativeEmbedder();
@@ -89,7 +91,9 @@ class FoundryLLM {
 
       const openai = new OpenAIApi({
         baseURL: parseFoundryBasePath(process.env.FOUNDRY_BASE_PATH),
-        apiKey: null,
+        // Local/self-hosted providers usually need no key. The OpenAI SDK throws
+        // "Missing credentials" on a null/empty apiKey, so pass a placeholder.
+        apiKey: process.env.FOUNDRY_API_KEY || "foundry",
       });
       (await openai.models.list().then((result) => result.data)).map(
         (model) => {

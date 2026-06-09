@@ -22,7 +22,9 @@ class KoboldCPPLLM {
     this.basePath = process.env.KOBOLD_CPP_BASE_PATH;
     this.openai = new OpenAIApi({
       baseURL: this.basePath,
-      apiKey: null,
+      // Local/self-hosted providers usually need no key. The OpenAI SDK throws
+      // "Missing credentials" on a null/empty apiKey, so pass a placeholder.
+      apiKey: process.env.KOBOLD_CPP_API_KEY || "kobold-cpp",
     });
     this.model = modelPreference ?? process.env.KOBOLD_CPP_MODEL_PREF ?? null;
     if (!this.model) throw new Error("KoboldCPP must have a valid model set.");
