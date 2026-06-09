@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import OpenAfDLogo from "./media/logo/openafd-logo.png";
 import OpenAfDLogoDark from "./media/logo/openafd-logo-dark.png";
 import DefaultLoginLogo from "./media/logo/openafd-logo.png";
@@ -31,15 +31,28 @@ export function LogoProvider({ children }) {
   const [logo, setLogo] = useState("");
   const [loginLogo, setLoginLogo] = useState("");
   const [isCustomLogo, setIsCustomLogo] = useState(false as any);
+  // Tracks the most recent blob object URL so it can be revoked before a new
+  // one is created (and on unmount), preventing a memory leak that would
+  // otherwise grow on every theme switch / REFETCH_LOGO_EVENT.
+  const objectUrlRef = useRef<string | null>(null);
 
   async function fetchInstanceLogo() {
     const isDarkMode = resolveDarkMode();
     const fallbackLogo = isDarkMode ? OpenAfDLogoDark : OpenAfDLogo;
     const defaultLoginLogo = isDarkMode ? OpenAfDLogoDark : DefaultLoginLogo;
 
+    const revokePreviousObjectUrl = () => {
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+        objectUrlRef.current = null;
+      }
+    };
+
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
+      revokePreviousObjectUrl();
       if (logoURL) {
+        objectUrlRef.current = logoURL;
         setLogo(logoURL);
         setLoginLogo(isCustomLogo ? logoURL : defaultLoginLogo);
         setIsCustomLogo(isCustomLogo);
@@ -49,6 +62,7 @@ export function LogoProvider({ children }) {
         setIsCustomLogo(false);
       }
     } catch {
+      revokePreviousObjectUrl();
       setLogo(fallbackLogo);
       setLoginLogo(defaultLoginLogo);
       setIsCustomLogo(false);
@@ -60,6 +74,10 @@ export function LogoProvider({ children }) {
     window.addEventListener(REFETCH_LOGO_EVENT, fetchInstanceLogo);
     return () => {
       window.removeEventListener(REFETCH_LOGO_EVENT, fetchInstanceLogo);
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+        objectUrlRef.current = null;
+      }
     };
   }, []);
 
