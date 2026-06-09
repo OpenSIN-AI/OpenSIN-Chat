@@ -114,15 +114,20 @@ class ReportGenerator {
 
     if (politicianResults.length) {
       parts.push("\n## Betroffene Abgeordnete\n");
-      politicianResults.forEach((p) => {
-        parts.push(`| **${p.fullName}** | ${p.party || "—"} | ${p.faction || "—"} | ${p.state || "—"} |`);
-      });
-      parts.push("| Name | Partei | Fraktion | Bundesland |");
-      parts.push("|------|--------|----------|------------|");
-      const rows = politicianResults.map((p) =>
-        `| ${p.fullName} | ${p.party || "—"} | ${p.faction || "—"} | ${p.state || "—"} |`
-      ).join("\n");
-      parts.push(rows);
+      // A Markdown table must be a single contiguous block: header row,
+      // separator row and data rows on consecutive lines (joined by "\n").
+      // The parent parts[] is joined with "\n\n", so the whole table has to
+      // be pushed as ONE string — otherwise a blank line is inserted between
+      // the header and separator and the table renders as plain text.
+      const tableLines = [
+        "| Name | Partei | Fraktion | Bundesland |",
+        "|------|--------|----------|------------|",
+        ...politicianResults.map(
+          (p) =>
+            `| ${p.fullName || "—"} | ${p.party || "—"} | ${p.faction || "—"} | ${p.state || "—"} |`
+        ),
+      ];
+      parts.push(tableLines.join("\n"));
     }
 
     if (extractedContent.length) {

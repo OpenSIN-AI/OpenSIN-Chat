@@ -97,19 +97,45 @@ function ThreeDotsMenu({ previewData, onAddToSources }: any) {
     return () => document.removeEventListener("mousedown", handleClick);
   }, [open]);
 
-  function handleDownload() {
-    if (!previewData?.downloadUrl) return;
-    const a = document.createElement("a");
-    a.href = previewData.downloadUrl;
-    a.download = previewData.title || "download";
-    a.click();
-    setOpen(false);
+  // Agent-generated files live behind an auth-protected route, so a plain
+  // <a href> / window.open (which sends no Bearer token) gets a 401. We fetch
+  // the file with the auth header and hand the browser a blob: URL instead.
+  async function fetchAsBlobUrl(targetUrl) {
+    const res = await fetch(targetUrl, { headers: baseHeaders() });
+    if (!res.ok) throw new Error(`${res.status}`);
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
   }
 
-  function handleOpenNewTab() {
-    if (!previewData?.downloadUrl && !previewData?.url) return;
-    window.open(previewData.downloadUrl || previewData.url, "_blank");
+  async function handleDownload() {
+    const targetUrl = previewData?.downloadUrl || previewData?.url;
+    if (!targetUrl) return;
     setOpen(false);
+    try {
+      const objectUrl = await fetchAsBlobUrl(targetUrl);
+      const a = document.createElement("a");
+      a.href = objectUrl;
+      a.download = previewData.title || "download";
+      a.click();
+      // Revoke after the click has had a chance to start the download.
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 10000);
+    } catch {
+      // Fall back to a direct navigation (works for public/non-auth URLs).
+      window.open(targetUrl, "_blank");
+    }
+  }
+
+  async function handleOpenNewTab() {
+    const targetUrl = previewData?.downloadUrl || previewData?.url;
+    if (!targetUrl) return;
+    setOpen(false);
+    try {
+      const objectUrl = await fetchAsBlobUrl(targetUrl);
+      window.open(objectUrl, "_blank");
+      setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+    } catch {
+      window.open(targetUrl, "_blank");
+    }
   }
 
   function handleAddToSources() {
