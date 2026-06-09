@@ -23,7 +23,9 @@ class LemonadeLLM {
         process.env.LEMONADE_LLM_BASE_PATH,
         "openai",
       ),
-      apiKey: process.env.LEMONADE_LLM_API_KEY || null,
+      // Lemonade runs locally and usually needs no key. The OpenAI SDK throws
+      // "Missing credentials" on a null/empty apiKey, so pass a placeholder.
+      apiKey: process.env.LEMONADE_LLM_API_KEY || "lemonade",
     });
 
     this.model = modelPreference || process.env.LEMONADE_LLM_MODEL_PREF;
@@ -221,7 +223,7 @@ class LemonadeLLM {
           process.env.LEMONADE_LLM_BASE_PATH,
           "openai",
         ),
-        apiKey: process.env.LEMONADE_LLM_API_KEY || null,
+        apiKey: process.env.LEMONADE_LLM_API_KEY || "lemonade",
       });
 
       const { labels = [] } = await client.models.retrieve(this.model);

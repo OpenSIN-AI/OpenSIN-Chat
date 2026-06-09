@@ -18,7 +18,10 @@ class OpencodeZenProvider extends InheritMultiple([Provider, UnTooled]) {
     super();
     const client = new OpenAI({
       baseURL: parseOpencodeZenBasePath(process.env.OPENCODE_ZEN_BASE_PATH),
-      apiKey: process.env.OPENCODE_ZEN_API_KEY || null,
+      // OpenAI-compatible gateways may not require a key. The OpenAI SDK throws
+      // "Missing credentials" on a null/empty apiKey, which crashed the agent
+      // loop immediately, so pass a placeholder when none is configured.
+      apiKey: process.env.OPENCODE_ZEN_API_KEY || "opencode-zen",
     });
 
     this._client = client;

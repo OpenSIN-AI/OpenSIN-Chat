@@ -452,7 +452,7 @@ class Provider {
           configuration: {
             baseURL: process.env.LEMONADE_LLM_BASE_PATH,
           },
-          apiKey: process.env.LEMONADE_LLM_API_KEY || null,
+          apiKey: process.env.LEMONADE_LLM_API_KEY || "lemonade",
           ...config,
         });
       case "dpais":
@@ -460,7 +460,7 @@ class Provider {
           configuration: {
             baseURL: DellProAiStudioLLM.parseBasePath(),
           },
-          apiKey: null,
+          apiKey: "dpais",
           ...config,
         });
       default:

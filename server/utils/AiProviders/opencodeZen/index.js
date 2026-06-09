@@ -17,7 +17,9 @@ class OpencodeZenLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     this.opencodeZen = new OpenAIApi({
       baseURL: parseOpencodeZenBasePath(process.env.OPENCODE_ZEN_BASE_PATH),
-      apiKey: process.env.OPENCODE_ZEN_API_KEY || null,
+      // OpenAI-compatible gateways may not require a key. The OpenAI SDK throws
+      // "Missing credentials" on a null/empty apiKey, so pass a placeholder.
+      apiKey: process.env.OPENCODE_ZEN_API_KEY || "opencode-zen",
     });
 
     this.model = modelPreference || process.env.OPENCODE_ZEN_MODEL_PREF;
@@ -64,7 +66,7 @@ class OpencodeZenLLM {
       baseURL: parseOpencodeZenBasePath(
         basePath || process.env.OPENCODE_ZEN_BASE_PATH,
       ),
-      apiKey: process.env.OPENCODE_ZEN_API_KEY || null,
+      apiKey: process.env.OPENCODE_ZEN_API_KEY || "opencode-zen",
     });
     const model = await openai.models
       .list()

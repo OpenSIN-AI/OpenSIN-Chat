@@ -17,7 +17,10 @@ class NvidiaNimLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     this.nvidiaNim = new OpenAIApi({
       baseURL: parseNvidiaNimBasePath(process.env.NVIDIA_NIM_LLM_BASE_PATH),
-      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || null,
+      // NIM is OpenAI-compatible and self-hosted containers usually need no key.
+      // The OpenAI SDK throws "Missing credentials" if apiKey is null/empty, so
+      // pass a placeholder when none is configured.
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || "nvidia-nim",
     });
 
     this.model = modelPreference || process.env.NVIDIA_NIM_LLM_MODEL_PREF;
@@ -64,7 +67,7 @@ class NvidiaNimLLM {
       baseURL: parseNvidiaNimBasePath(
         basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH,
       ),
-      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || null,
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || "nvidia-nim",
     });
     const model = await openai.models
       .list()

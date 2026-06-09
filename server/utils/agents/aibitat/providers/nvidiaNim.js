@@ -17,7 +17,10 @@ class NvidiaNimProvider extends InheritMultiple([Provider, UnTooled]) {
     super();
     const client = new OpenAI({
       baseURL: parseNvidiaNimBasePath(process.env.NVIDIA_NIM_LLM_BASE_PATH),
-      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || null,
+      // Self-hosted NIM containers usually need no key. The OpenAI SDK throws
+      // "Missing credentials" when apiKey is null/empty, which crashed the
+      // agent loop immediately, so pass a placeholder when none is configured.
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || "nvidia-nim",
     });
 
     this._client = client;
