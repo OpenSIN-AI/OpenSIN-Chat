@@ -18,15 +18,25 @@ function relayToSocket(message) {
   this.checkBailCommand(message);
 }
 
-function agentWebsocket(app) {
+function agentWebsocket(app, routePrefix = "") {
   if (!app) return;
-  // Guard: apiRouter is a plain express.Router() which doesn't get the
-  // `.ws` method from `@mintplex-labs/express-ws` (only the main `app` does).
-  // Skip WebSocket route registration on routers — agents can be invoked
-  // through other transports and the crash was blocking the whole server.
-  if (typeof app.ws !== "function") return;
+  // `@mintplex-labs/express-ws` only patches `.ws` onto objects that exist
+  // (and are passed) when `expressWs(app)` runs. The main `app` always has it;
+  // a plain `express.Router()` created *before* expressWs ran does NOT.
+  // So this MUST be called with the main `app` (not the apiRouter), and we
+  // prefix the route with `/api` so it still matches the client URL
+  // `${websocketURI()}/api/agent-invocation/:uuid`.
+  if (typeof app.ws !== "function") {
+    // eslint-disable-next-line no-console
+    console.error(
+      "[agentWebsocket] `.ws` is not available on the provided app/router — " +
+        "agent WebSocket route NOT registered. Agents will fail to connect. " +
+        "Ensure agentWebsocket(app) is called with the main express app after expressWs(app).",
+    );
+    return;
+  }
 
-  app.ws("/agent-invocation/:uuid", async function (socket, request) {
+  app.ws(`${routePrefix}/agent-invocation/:uuid`, async function (socket, request) {
     try {
       const agentHandler = await new AgentHandler({
         uuid: String(request.params.uuid),

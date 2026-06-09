@@ -93,7 +93,11 @@ inviteEndpoints(apiRouter);
 embedManagementEndpoints(apiRouter);
 utilEndpoints(apiRouter);
 documentEndpoints(apiRouter);
-agentWebsocket(apiRouter);
+// NOTE: agentWebsocket must be registered on the main `app` (not apiRouter).
+// `apiRouter` is created before expressWs(app) runs, so it never receives the
+// `.ws` method. We pass the main app + "/api" prefix so the route still matches
+// the client URL `/api/agent-invocation/:uuid`.
+agentWebsocket(app, "/api");
 agentSkillWhitelistEndpoints(apiRouter);
 agentFileServerEndpoints(apiRouter);
 experimentalEndpoints(apiRouter);
