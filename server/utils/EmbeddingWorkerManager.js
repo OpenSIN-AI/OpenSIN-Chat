@@ -47,7 +47,7 @@ function logEmbeddingEvent(msg) {
       failed: msg.failed ?? 0,
     },
     msg.userId ?? null,
-  ).catch(() => {});
+  ).catch((err) => { console.error("Telemetry error:", err.message); });
 }
 
 function addSSEConnection(slug, res) {

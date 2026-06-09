@@ -57,6 +57,8 @@ class ChromaCloud extends Chroma {
    * If the upsert was not successful, the error message will be returned.
    */
   async smartAdd(collection, submission) {
+    if (!submission?.ids?.length) throw new Error("Empty submission");
+
     const testSubmission = {
       id: submission.ids[0],
       embedding: submission.embeddings[0],

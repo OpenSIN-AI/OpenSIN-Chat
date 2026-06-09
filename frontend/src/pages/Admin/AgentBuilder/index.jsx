@@ -168,7 +168,7 @@ export default function AgentBuilder() {
 
     if (!name?.trim() || !description?.trim()) {
       // Make sure the flow info block is expanded first
-      if (!flowInfoBlock.isExpanded) {
+      if (!flowInfoBlock?.isExpanded) {
         setBlocks(
           blocks.map((block) =>
             block.type === BLOCK_TYPES.FLOW_INFO

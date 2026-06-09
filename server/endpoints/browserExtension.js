@@ -104,7 +104,7 @@ function browserExtensionEndpoints(app) {
           metadata,
         );
 
-        if (!success) {
+        if (!success || !documents?.length) {
           response.status(500).json({ success: false, error: reason });
           return;
         }
@@ -116,7 +116,7 @@ function browserExtensionEndpoints(app) {
         );
 
         if (failedToEmbed.length > 0) {
-          response.status(500).json({ success: false, error: errors[0] });
+          response.status(500).json({ success: false, error: errors?.[0] ?? "Unknown error" });
           return;
         }
 

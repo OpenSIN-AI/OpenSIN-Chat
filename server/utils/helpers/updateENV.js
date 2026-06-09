@@ -562,7 +562,7 @@ const KEY_MAPPING = {
     checks: [],
     preUpdate: [
       (_, __, nextValue) => {
-        if (nextValue === "true") Telemetry.sendTelemetry("telemetry_disabled");
+        if (nextValue === "true") Telemetry.sendTelemetry("telemetry_disabled").catch((err) => { console.error("Telemetry error:", err.message); });
       },
     ],
   },

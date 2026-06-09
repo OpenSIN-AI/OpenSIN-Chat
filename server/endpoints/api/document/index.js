@@ -145,7 +145,7 @@ function apiDocumentEndpoints(app) {
           metadata,
         );
 
-        if (!success) {
+        if (!success || !documents?.length) {
           return response
             .status(500)
             .json({ success: false, error: reason, documents })
@@ -299,7 +299,7 @@ function apiDocumentEndpoints(app) {
           originalname,
           metadata,
         );
-        if (!success) {
+        if (!success || !documents?.length) {
           return response
             .status(500)
             .json({ success: false, error: reason, documents })
@@ -452,7 +452,7 @@ function apiDocumentEndpoints(app) {
           scraperHeaders,
           metadata,
         );
-        if (!success) {
+        if (!success || !documents?.length) {
           return response
             .status(500)
             .json({ success: false, error: reason, documents })
@@ -599,7 +599,7 @@ function apiDocumentEndpoints(app) {
           textContent,
           metadata,
         );
-        if (!success) {
+        if (!success || !documents?.length) {
           return response
             .status(500)
             .json({ success: false, error: reason, documents })
@@ -1219,7 +1219,7 @@ function apiDocumentEndpoints(app) {
 
         Telemetry.sendTelemetry("agent_generated_file_downloaded", {
           type: mimeType,
-        }).catch(() => {});
+        }).catch((err) => { console.error("Telemetry error:", err.message); });
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(

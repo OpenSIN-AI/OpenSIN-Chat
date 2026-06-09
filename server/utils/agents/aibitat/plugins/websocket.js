@@ -300,7 +300,7 @@ const websocket = {
 
         aibitat.onMessage((message) => {
           if (message.from !== "USER")
-            Telemetry.sendTelemetry("agent_chat_sent");
+            Telemetry.sendTelemetry("agent_chat_sent").catch((err) => { console.error("Telemetry error:", err.message); });
           if (message.from === "USER" && muteUserReply) return;
           socket.send(JSON.stringify(message));
         });

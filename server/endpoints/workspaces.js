@@ -1010,6 +1010,7 @@ function workspaceEndpoints(app) {
           response.locals?.user?.id,
         );
 
+        if (!documents?.length) return response.status(400).json({ success: false, error: "No documents were returned from processing." });
         const document = documents[0];
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           currWorkspace,

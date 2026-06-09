@@ -58,7 +58,7 @@ async function processQueue() {
     totalDocs: batch.length,
   });
 
-  Telemetry.sendTelemetry("documents_embedded_in_workspace").catch(() => {});
+  Telemetry.sendTelemetry("documents_embedded_in_workspace").catch((err) => { console.error("Telemetry error:", err.message); });
   const embedded = [];
   const failedToEmbed = [];
 

@@ -15,7 +15,7 @@ export default function InviteRow({ invite }) {
       )
     )
       return false;
-    if (rowRef?.current) {
+    if (rowRef?.current && rowRef.current.children.length > 0) {
       rowRef.current.children[0].innerText = "Disabled";
     }
     setStatus("disabled");

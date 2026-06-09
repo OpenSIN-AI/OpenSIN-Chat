@@ -145,6 +145,8 @@ class Chroma extends VectorDatabase {
       nResults: topN,
     });
 
+    if (!response?.ids?.[0]?.length) return result;
+
     response.ids[0].forEach((_, i) => {
       const similarity = this.distanceToSimilarity(response.distances[0][i]);
       if (similarity < similarityThreshold) return;

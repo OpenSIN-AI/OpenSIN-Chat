@@ -1023,7 +1023,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
       );
 
       const result = await fn.handler(args);
-      Telemetry.sendTelemetry("agent_tool_call", { tool: name }, null, true);
+      Telemetry.sendTelemetry("agent_tool_call", { tool: name }, null, true).catch((err) => { console.error("Telemetry error:", err.message); });
       this.emitter.emit("toolCallResult", {
         toolName: name,
         arguments: args,
@@ -1180,7 +1180,7 @@ https://docs.openafd.com/agent/intelligent-tool-selection
       );
 
       const result = await fn.handler(args);
-      Telemetry.sendTelemetry("agent_tool_call", { tool: name }, null, true);
+      Telemetry.sendTelemetry("agent_tool_call", { tool: name }, null, true).catch((err) => { console.error("Telemetry error:", err.message); });
       this.emitter.emit("toolCallResult", {
         toolName: name,
         arguments: args,

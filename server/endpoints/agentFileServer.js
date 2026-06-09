@@ -83,7 +83,7 @@ function agentFileServerEndpoints(app) {
         response.send(fileData.buffer);
         Telemetry.sendTelemetry("agent_generated_file_downloaded", {
           type: mimeType,
-        }).catch(() => {});
+        }).catch((err) => { console.error("Telemetry error:", err.message); });
         return;
       } catch (error) {
         // eslint-disable-next-line no-console
