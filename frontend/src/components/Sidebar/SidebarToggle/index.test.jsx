@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { renderHook, act, render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { renderHook, act, render, screen, fireEvent } from "@testing-library/react";
+import { MemoryRouter, useNavigate } from "react-router-dom";
 
 function withRouter(initialPath = "/") {
   return function Wrapper({ children }) {
@@ -51,7 +51,8 @@ describe("useSidebarToggle", () => {
     expect(result.current.canToggleSidebar).toBe(false);
   });
 
-  it("reacts to react-router location changes via useLocation", async () => {
+  it("reacts to react-router location changes via useLocation", () => {
+    let navigate;
     function Probe() {
       const { canToggleSidebar } = useSidebarToggle();
       return (
@@ -61,32 +62,25 @@ describe("useSidebarToggle", () => {
         />
       );
     }
-    function At({ path }) {
-      return (
-        <MemoryRouter initialEntries={[path]}>
-          <Probe />
-        </MemoryRouter>
-      );
+    function Harness() {
+      navigate = useNavigate();
+      return <Probe />;
     }
-    const { rerender } = render(<At path="/" />);
-    await waitFor(() =>
-      expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true")
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <Harness />
+      </MemoryRouter>
     );
+    expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true");
 
-    rerender(<At path="/workspace/demo-ws" />);
-    await waitFor(() =>
-      expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true")
-    );
+    act(() => navigate("/workspace/demo-ws"));
+    expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true");
 
-    rerender(<At path="/workspace/demo-ws/t/thread-42" />);
-    await waitFor(() =>
-      expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true")
-    );
+    act(() => navigate("/workspace/demo-ws/t/thread-42"));
+    expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("true");
 
-    rerender(<At path="/settings" />);
-    await waitFor(() =>
-      expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("false")
-    );
+    act(() => navigate("/settings"));
+    expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe("false");
   });
 
   it("setShowSidebar updates state", () => {
