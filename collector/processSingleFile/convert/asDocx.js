@@ -20,7 +20,20 @@ async function asDocX({
   // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
   let pageContent = [];
-  const docs = await loader.load();
+  let docs;
+  try {
+    docs = await loader.load();
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`Could not parse docx file ${filename}.`, err);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `Failed to parse docx file: ${err.message}`,
+      documents: [],
+    };
+  }
+
   for (const doc of docs) {
     // eslint-disable-next-line no-console
     console.log(`-- Parsing content from docx page --`);

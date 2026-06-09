@@ -290,7 +290,7 @@ class GeminiProvider extends Provider {
           });
         }
 
-        if (tool_calls) {
+        if (tool_calls?.length > 0) {
           const toolCall = tool_calls[0];
           // Defensive fallback if Gemini ignores parallel_tool_calls: false.
           // Keep the first call only; extra calls would cause a 400 next request.
@@ -390,7 +390,7 @@ class GeminiProvider extends Provider {
       if (response.usage) this.recordUsage(response.usage);
 
       /** @type {OpenAI.OpenAI.Chat.ChatCompletionMessage} */
-      const completion = response.choices[0].message;
+      const completion = response.choices?.[0]?.message;
       const cost = this.getCost(response.usage);
       if (completion?.tool_calls?.length > 0) {
         const toolCall = completion.tool_calls[0];

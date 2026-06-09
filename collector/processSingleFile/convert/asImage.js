@@ -15,9 +15,21 @@ async function asImage({
   options = {},
   metadata = {},
 }) {
-  let content = await new OCRLoader({
-    targetLanguages: options?.ocr?.langList,
-  }).ocrImage(fullFilePath);
+  let content;
+  try {
+    content = await new OCRLoader({
+      targetLanguages: options?.ocr?.langList,
+    }).ocrImage(fullFilePath);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`OCR processing failed for ${filename}.`, err);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `OCR failed: ${err.message}`,
+      documents: [],
+    };
+  }
 
   if (!content?.length) {
     // eslint-disable-next-line no-console

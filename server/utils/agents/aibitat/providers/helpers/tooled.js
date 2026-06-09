@@ -224,7 +224,7 @@ async function tooledStream(
       });
     }
 
-    if (choice.delta?.tool_calls) {
+    if (choice.delta?.tool_calls?.length > 0) {
       for (const toolCall of choice.delta.tool_calls) {
         const idx = toolCall.index ?? 0;
 
@@ -325,6 +325,9 @@ async function tooledComplete(
     ...(tools.length > 0 ? { tools } : {}),
   });
 
+  if (!response.choices?.length) {
+    throw new Error(`${provider?.name || "AI"} chat: No results!`);
+  }
   const completion = response.choices[0].message;
   const cost = getCostFn(response.usage);
   const usage = response.usage || null;

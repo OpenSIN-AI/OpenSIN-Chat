@@ -160,7 +160,7 @@ class MetaGenerator {
    */
   #assembleMeta() {
     const output = [];
-    for (const tag of this.#customConfig) {
+    for (const tag of (this.#customConfig ?? this.#defaultMeta())) {
       let htmlString;
       htmlString = `<${tag.tag} `;
 
