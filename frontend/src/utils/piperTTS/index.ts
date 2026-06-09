@@ -47,6 +47,8 @@ export default class PiperTTSClient {
       };
 
       timeout = setTimeout(() => {
+        tmpWorker.removeEventListener("message", handleMessage);
+        tmpWorker.terminate();
         reject("TTS Worker timed out.");
       }, 30_000);
       tmpWorker.addEventListener("message", handleMessage);
@@ -71,6 +73,8 @@ export default class PiperTTSClient {
       };
 
       timeout = setTimeout(() => {
+        tmpWorker.removeEventListener("message", handleMessage);
+        tmpWorker.terminate();
         reject("TTS Worker timed out.");
       }, 30_000);
       tmpWorker.addEventListener("message", handleMessage);
