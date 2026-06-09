@@ -165,6 +165,7 @@ function chatEndpoints(app) {
           user,
           prompt: message,
           onRename: (thread) => {
+            if (!thread) return;
             writeResponseChunk(response, {
               action: "rename_thread",
               thread: {

@@ -740,7 +740,7 @@ async function getMinimaxModels(_apiKey = null) {
 async function getDeepSeekModels(apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
   const openai = new OpenAIApi({
-    apiKey: apiKey || process.env.DEEPSEEK_API_KEY,
+    apiKey: apiKey || process.env.DEEPSEEK_API_KEY || "deepseek",
     baseURL: "https://api.deepseek.com/v1",
   });
   const models = await openai.models

@@ -189,6 +189,7 @@ const chatHistory = {
           user: invocation.user_id ? { id: invocation.user_id } : null,
           prompt,
           onRename: (updatedThread) => {
+            if (!updatedThread) return;
             aibitat.socket?.send("rename_thread", {
               slug: updatedThread.slug,
               name: updatedThread.name,
