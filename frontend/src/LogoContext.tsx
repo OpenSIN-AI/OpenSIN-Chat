@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import OpenAfDLogo from "./media/logo/openafd-logo.png";
 import OpenAfDLogoDark from "./media/logo/openafd-logo-dark.png";
 import DefaultLoginLogo from "./media/logo/openafd-logo.png";
@@ -13,6 +13,10 @@ export function LogoProvider({ children }) {
   const [logo, setLogo] = useState("");
   const [loginLogo, setLoginLogo] = useState("");
   const [isCustomLogo, setIsCustomLogo] = useState(false as any);
+  // Tracks the most recently created blob: object URL so it can be revoked
+  // before being replaced (e.g. on theme change / REFETCH_LOGO_EVENT) and on
+  // unmount, preventing object-URL memory leaks.
+  const objectURLRef = useRef<string | null>(null);
 
   async function fetchInstanceLogo() {
     const isDarkMode =
@@ -22,7 +26,13 @@ export function LogoProvider({ children }) {
 
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
+      // Release the previously created blob URL before storing the new one.
+      if (objectURLRef.current && objectURLRef.current !== logoURL) {
+        URL.revokeObjectURL(objectURLRef.current);
+        objectURLRef.current = null;
+      }
       if (logoURL) {
+        objectURLRef.current = logoURL;
         setLogo(logoURL);
         setLoginLogo(isCustomLogo ? logoURL : defaultLoginLogo);
         setIsCustomLogo(isCustomLogo);
@@ -43,6 +53,10 @@ export function LogoProvider({ children }) {
     window.addEventListener(REFETCH_LOGO_EVENT, fetchInstanceLogo);
     return () => {
       window.removeEventListener(REFETCH_LOGO_EVENT, fetchInstanceLogo);
+      if (objectURLRef.current) {
+        URL.revokeObjectURL(objectURLRef.current);
+        objectURLRef.current = null;
+      }
     };
   }, []);
 
