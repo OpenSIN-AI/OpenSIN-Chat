@@ -263,7 +263,7 @@ export default function useChatStream({
 
     const pending = safeJsonParse(sessionStorage.getItem(PENDING_HOME_MESSAGE));
     if (pending?.message) {
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         sessionStorage.removeItem(PENDING_HOME_MESSAGE);
         sendCommand({
           text: pending.message,
@@ -271,6 +271,7 @@ export default function useChatStream({
           autoSubmit: true,
         });
       }, 100);
+      return () => clearTimeout(timer);
     }
   }, [workspace?.slug]);
 

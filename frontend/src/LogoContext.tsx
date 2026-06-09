@@ -4,55 +4,35 @@ import OpenAfDLogo from "./media/logo/openafd-logo.png";
 import OpenAfDLogoDark from "./media/logo/openafd-logo-dark.png";
 import DefaultLoginLogo from "./media/logo/openafd-logo.png";
 import System from "./models/system";
-import { resolveDarkMode } from "./hooks/useTheme";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";
 
 export const LogoContext = createContext<any>(undefined);
 
-/**
- * Resolves the stored theme preference into a concrete dark-mode boolean.
- * Handles the legacy "default" value (treated as dark) and the "system"
- * value (resolved against the OS preference). Inlined here (rather than
- * imported from useTheme) to avoid a circular import between the two modules.
- */
-function resolveDarkMode(): boolean {
-  const stored = localStorage.getItem("theme");
-  let theme = stored === "default" ? "dark" : stored || "system";
-  if (theme === "system") {
-    theme = window.matchMedia?.("(prefers-color-scheme: light)").matches
-      ? "light"
-      : "dark";
-  }
-  return theme !== "light";
-}
-
 export function LogoProvider({ children }) {
   const [logo, setLogo] = useState("");
   const [loginLogo, setLoginLogo] = useState("");
   const [isCustomLogo, setIsCustomLogo] = useState(false as any);
-  // Tracks the most recent blob object URL so it can be revoked before a new
-  // one is created (and on unmount), preventing a memory leak that would
-  // otherwise grow on every theme switch / REFETCH_LOGO_EVENT.
-  const objectUrlRef = useRef<string | null>(null);
+  // Tracks the most recently created blob: object URL so it can be revoked
+  // before being replaced (e.g. on theme change / REFETCH_LOGO_EVENT) and on
+  // unmount, preventing object-URL memory leaks.
+  const objectURLRef = useRef<string | null>(null);
 
   async function fetchInstanceLogo() {
-    const isDarkMode = resolveDarkMode();
+    const isDarkMode =
+      (localStorage.getItem("theme") || "default") === "default";
     const fallbackLogo = isDarkMode ? OpenAfDLogoDark : OpenAfDLogo;
     const defaultLoginLogo = isDarkMode ? OpenAfDLogoDark : DefaultLoginLogo;
 
-    const revokePreviousObjectUrl = () => {
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current);
-        objectUrlRef.current = null;
-      }
-    };
-
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
-      revokePreviousObjectUrl();
+      // Release the previously created blob URL before storing the new one.
+      if (objectURLRef.current && objectURLRef.current !== logoURL) {
+        URL.revokeObjectURL(objectURLRef.current);
+        objectURLRef.current = null;
+      }
       if (logoURL) {
-        objectUrlRef.current = logoURL;
+        objectURLRef.current = logoURL;
         setLogo(logoURL);
         setLoginLogo(isCustomLogo ? logoURL : defaultLoginLogo);
         setIsCustomLogo(isCustomLogo);
@@ -62,7 +42,6 @@ export function LogoProvider({ children }) {
         setIsCustomLogo(false);
       }
     } catch {
-      revokePreviousObjectUrl();
       setLogo(fallbackLogo);
       setLoginLogo(defaultLoginLogo);
       setIsCustomLogo(false);
@@ -74,9 +53,9 @@ export function LogoProvider({ children }) {
     window.addEventListener(REFETCH_LOGO_EVENT, fetchInstanceLogo);
     return () => {
       window.removeEventListener(REFETCH_LOGO_EVENT, fetchInstanceLogo);
-      if (objectUrlRef.current) {
-        URL.revokeObjectURL(objectUrlRef.current);
-        objectUrlRef.current = null;
+      if (objectURLRef.current) {
+        URL.revokeObjectURL(objectURLRef.current);
+        objectURLRef.current = null;
       }
     };
   }, []);

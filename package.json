@@ -116,6 +116,7 @@
     "react-tag-input-component": "^2.0.2",
     "react-toastify": "^11.1.0",
     "react-tooltip": "^6.0.7",
+    "regenerator-runtime": "^0.14.1",
     "rollup-plugin-visualizer": "^7.0.1",
     "swr": "^2.4.1",
     "text-case": "^1.2.11",

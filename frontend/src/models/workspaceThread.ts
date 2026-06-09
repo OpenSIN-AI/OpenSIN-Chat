@@ -96,12 +96,14 @@ const WorkspaceThread: any = {
     // to early abort the streaming response. On abort we send a special `stopGeneration`
     // event to be handled which resets the UI for us to be able to send another message.
     // The backend response abort handling is done in each LLM's handleStreamResponse.
-    window.addEventListener(ABORT_STREAM_EVENT, () => {
+    const handleAbort = () => {
       ctrl?.abort();
       handleChat({ id: v4(), type: "stopGeneration" });
-    });
+    };
+    window.addEventListener(ABORT_STREAM_EVENT, handleAbort);
 
-    await fetchEventSource(
+    try {
+      await fetchEventSource(
       `${API_BASE}/workspace/${workspaceSlug}/thread/${threadSlug}/stream-chat`,
       {
         method: "POST",
@@ -158,6 +160,9 @@ const WorkspaceThread: any = {
         },
       },
     );
+    } finally {
+      window.removeEventListener(ABORT_STREAM_EVENT, handleAbort);
+    }
   },
   _deleteEditedChats: async function (workspaceSlug: any = "", threadSlug: any = "", startingId: any, 
   ) {

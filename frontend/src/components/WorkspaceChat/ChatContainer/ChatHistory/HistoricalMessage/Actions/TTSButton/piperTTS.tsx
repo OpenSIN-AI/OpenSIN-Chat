@@ -51,6 +51,14 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
     setupPlayer();
   }, []);
 
+  // Release the generated audio blob URL when it is replaced or the component
+  // unmounts so the in-memory blob is not leaked.
+  useEffect(() => {
+    return () => {
+      if (audioSrc) URL.revokeObjectURL(audioSrc);
+    };
+  }, [audioSrc]);
+
   return (
     <div className="mt-3 relative">
       <button

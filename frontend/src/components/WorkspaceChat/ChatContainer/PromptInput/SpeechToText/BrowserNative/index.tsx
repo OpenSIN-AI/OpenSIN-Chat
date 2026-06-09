@@ -81,6 +81,17 @@ export default function BrowserNativeSTT({ sendCommand }: any) {
     }
   }, [transcript, listening]);
 
+  // Ensure the mic session and pending silence timer are torn down if the
+  // component unmounts mid-listen (e.g. navigating away during recording),
+  // otherwise the timeout fires and calls sendCommand on an unmounted component
+  // while leaving the microphone active.
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeout);
+      SpeechRecognition.stopListening();
+    };
+  }, []);
+
   if (!browserSupportsSpeechRecognition) return null;
   return (
     <MicButton

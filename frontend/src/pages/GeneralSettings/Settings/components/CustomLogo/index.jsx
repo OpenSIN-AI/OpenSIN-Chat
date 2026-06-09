@@ -34,23 +34,19 @@ export default function CustomLogo() {
     const formData = new FormData();
     formData.append("logo", file);
     const { success, error } = await System.uploadLogo(formData);
+    URL.revokeObjectURL(objectURL);
     if (!success) {
       showToast(`Failed to upload logo: ${error}`, "error");
-      URL.revokeObjectURL(objectURL);
       setLogo(_initLogo);
       return;
     }
 
     const { logoURL } = await System.fetchLogo();
     _setLogo(logoURL);
-    setLogo(logoURL);
-    // The temporary preview URL is no longer referenced once the server logo
-    // is loaded, so free it to avoid leaking the blob.
-    URL.revokeObjectURL(objectURL);
+    refreshIsDefaultLogo();
 
     showToast("Image uploaded successfully.", "success");
     setIsDefaultLogo(false);
-    refreshIsDefaultLogo();
   };
 
   const handleRemoveLogo = async () => {
@@ -69,10 +65,9 @@ export default function CustomLogo() {
 
     const { logoURL } = await System.fetchLogo();
     _setLogo(logoURL);
-    setLogo(logoURL);
+    refreshIsDefaultLogo();
 
     showToast("Image successfully removed.", "success");
-    refreshIsDefaultLogo();
   };
 
   const triggerFileInputClick = () => {

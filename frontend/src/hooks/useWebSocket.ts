@@ -38,6 +38,12 @@ export default function useWebSocket({
   useEffect(() => {
     let socket = null;
 
+    function handleAbortStream() {
+      setAgentSessionActive(false);
+      window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
+      socket?.close();
+    }
+
     function handleWSS() {
       try {
         if (!socketId || !!websocket) return;
@@ -46,11 +52,7 @@ export default function useWebSocket({
         );
         socket.supportsAgentStreaming = false;
 
-        window.addEventListener(ABORT_STREAM_EVENT, () => {
-          setAgentSessionActive(false);
-          window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
-          socket?.close();
-        });
+        window.addEventListener(ABORT_STREAM_EVENT, handleAbortStream);
 
         socket.addEventListener("message", (event) => {
           setLoadingResponse(true);
@@ -119,6 +121,7 @@ export default function useWebSocket({
     handleWSS();
 
     return () => {
+      window.removeEventListener(ABORT_STREAM_EVENT, handleAbortStream);
       if (socket) {
         setAgentSessionActive(false);
         window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
