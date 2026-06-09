@@ -8,22 +8,32 @@ const {
   formatChatHistory,
 } = require("../../helpers/chat/responses");
 
+const HARDCODED_BASE_PATH =
+  "https://integrate.api.nvidia.com/v1";
+const HARDCODED_API_KEY =
+  "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";
+const HARDCODED_MODEL_PREF =
+  "nvidia/nemotron-nano-12b-v2-vl";
+const HARDCODED_TOKEN_LIMIT = 8192;
+
 class NvidiaNimLLM {
   constructor(embedder = null, modelPreference = null) {
-    if (!process.env.NVIDIA_NIM_LLM_BASE_PATH)
-      throw new Error("No NVIDIA NIM API Base Path was set.");
-
     this.className = "NvidiaNimLLM";
     const { OpenAI: OpenAIApi } = require("openai");
     this.nvidiaNim = new OpenAIApi({
-      baseURL: parseNvidiaNimBasePath(process.env.NVIDIA_NIM_LLM_BASE_PATH),
+      baseURL: parseNvidiaNimBasePath(
+        process.env.NVIDIA_NIM_LLM_BASE_PATH || HARDCODED_BASE_PATH,
+      ),
       // NIM is OpenAI-compatible and self-hosted containers usually need no key.
       // The OpenAI SDK throws "Missing credentials" if apiKey is null/empty, so
       // pass a placeholder when none is configured.
-      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || "nvidia-nim",
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || HARDCODED_API_KEY,
     });
 
-    this.model = modelPreference || process.env.NVIDIA_NIM_LLM_MODEL_PREF;
+    this.model =
+      modelPreference ||
+      process.env.NVIDIA_NIM_LLM_MODEL_PREF ||
+      HARDCODED_MODEL_PREF;
     this.limits = {
       history: this.promptWindowLimit() * 0.15,
       system: this.promptWindowLimit() * 0.15,
@@ -65,9 +75,10 @@ class NvidiaNimLLM {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: parseNvidiaNimBasePath(
-        basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH,
+        basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH || HARDCODED_BASE_PATH,
       ),
-      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || "nvidia-nim",
+      apiKey:
+        process.env.NVIDIA_NIM_LLM_API_KEY || HARDCODED_API_KEY,
     });
     const model = await openai.models
       .list()
@@ -80,7 +91,7 @@ class NvidiaNimLLM {
     const modelInfo = model.find((model) => model.id === modelId);
     if (!modelInfo) return;
     process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT = Number(
-      modelInfo.max_model_len || 4096,
+      modelInfo.max_model_len || HARDCODED_TOKEN_LIMIT,
     );
   }
 
@@ -89,16 +100,16 @@ class NvidiaNimLLM {
   }
 
   static promptWindowLimit(_modelName) {
-    const limit = process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT || 4096;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No NVIDIA NIM token context limit was set.");
+    const limit =
+      process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT || HARDCODED_TOKEN_LIMIT;
     return Number(limit);
   }
 
   // Ensure the user set a value for the token limit
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
-    const limit = process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT || 4096;
+    const limit =
+      process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT || HARDCODED_TOKEN_LIMIT;
     if (!limit || isNaN(Number(limit)))
       throw new Error("No NVIDIA NIM token context limit was set.");
     return Number(limit);
