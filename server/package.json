@@ -61,7 +61,7 @@
     "cohere-ai": "^7.21.0",
     "cors": "^2.8.6",
     "cron-validate": "1.4.5",
-    "diff": "^8.0.3",
+    "diff": "^9.0.0",
     "docx": "9.6.1",
     "dompurify": "3.4.8",
     "dotenv": "^16.0.3",
