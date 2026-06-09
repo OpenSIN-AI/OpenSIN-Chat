@@ -330,6 +330,7 @@ export function parseChunkSource({ title = "", chunks = [] }: any) {
       url = new URL(chunks[0].chunkSource.split(sourceID)[1]);
     } catch {}
 
+    if (!url) return nullResponse;
     switch (sourceID) {
       case "link://":
         text = url.host + url.pathname;

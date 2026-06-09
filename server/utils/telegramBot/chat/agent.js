@@ -397,6 +397,9 @@ async function renderChartToBuffer(chart) {
   const canvas = new ChartJSNodeCanvas({ width: 600, height: 400 });
 
   const data = JSON.parse(chart.dataset);
+  if (!data || data.length === 0) {
+    throw new Error("Chart dataset is empty");
+  }
   const labels = data.map((d) => d.name);
   const valueKey = Object.keys(data[0]).find((k) => k !== "name");
   const values = data.map((d) => d[valueKey]);

@@ -203,8 +203,8 @@ class AnthropicLLM {
         }),
       );
 
-      const promptTokens = result.output.usage.input_tokens;
-      const completionTokens = result.output.usage.output_tokens;
+      const promptTokens = result.output?.usage?.input_tokens ?? 0;
+      const completionTokens = result.output?.usage?.output_tokens ?? 0;
 
       return {
         textResponse: result.output.content[0].text,

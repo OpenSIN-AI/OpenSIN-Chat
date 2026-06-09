@@ -417,6 +417,7 @@ class AnthropicProvider extends Provider {
         const toolCall = response.content.find(
           (res) => res.type === "tool_use",
         );
+        if (!toolCall) throw new Error("Tool use indicated but no tool_use block found in response");
 
         // Here we need the chain of thought the model may or may not have generated alongside the call.
         // this needs to be in a very specific format so we always ensure there is a 2-item content array

@@ -5,6 +5,9 @@ import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 
 export default function Completed({ settings, setSettings, setStep }) {
+  const item = settings?.item;
+  if (!item) return null;
+
   return (
     <div className="flex-[2] flex flex-col gap-y-[18px] mt-10">
       <div className="bg-theme-bg-secondary rounded-xl flex-1 p-6">
@@ -14,20 +17,20 @@ export default function Completed({ settings, setSettings, setStep }) {
           </h2>
           <div className="flex flex-col gap-y-[25px] text-theme-text-secondary text-sm">
             <p>
-              The "{settings.item.name}" {settings.item.itemType} has been
+              The "{item.name}" {item.itemType} has been
               imported successfully! It is now available in your OpenAfD Chat
               instance.
             </p>
-            {settings.item.itemType === "agent-flow" && (
+            {item.itemType === "agent-flow" && (
               <Link
                 to={paths.settings.agentSkills()}
                 className="text-theme-text-primary hover:text-blue-500 hover:underline"
               >
-                View "{settings.item.name}" in Agent Skills
+                View "{item.name}" in Agent Skills
               </Link>
             )}
             <p>
-              Any changes you make to this {settings.item.itemType} will not be
+              Any changes you make to this {item.itemType} will not be
               reflected in the community hub. You can now modify as needed.
             </p>
           </div>

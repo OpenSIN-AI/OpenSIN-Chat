@@ -35,7 +35,11 @@ export function validatedModelSelection(model) {
     const selectedOption = selectOption.querySelector(
       `option[value="${model}"]`,
     );
-    if (!selectedOption) return selectOption.querySelector(`option`).value;
+    if (!selectedOption) {
+      const firstOption = selectOption.querySelector(`option`);
+      if (!firstOption) return model;
+      return firstOption.value;
+    }
 
     // If the model is in the dropdown, return the model as is
     return model;

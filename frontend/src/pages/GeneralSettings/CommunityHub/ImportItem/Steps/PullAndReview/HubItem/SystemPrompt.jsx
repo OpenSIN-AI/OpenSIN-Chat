@@ -15,7 +15,9 @@ export default function SystemPrompt({ item, setStep }) {
     async function getWorkspaces() {
       const workspaces = await Workspace.all();
       setWorkspaces(workspaces);
-      setDestinationWorkspaceSlug(workspaces[0].slug);
+      if (workspaces.length > 0) {
+        setDestinationWorkspaceSlug(workspaces[0].slug);
+      }
     }
     getWorkspaces();
   }, []);
@@ -78,20 +80,26 @@ export default function SystemPrompt({ item, setStep }) {
           <label className="text-theme-text-primary text-sm font-semibold block mb-3">
             Apply to Workspace
           </label>
-          <select
-            name="destinationWorkspaceSlug"
-            required={true}
-            onChange={(e) => setDestinationWorkspaceSlug(e.target.value)}
-            className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
-          >
-            <optgroup label="Available workspaces">
-              {workspaces.map((workspace) => (
-                <option key={workspace.id} value={workspace.slug}>
-                  {workspace.name}
-                </option>
-              ))}
-            </optgroup>
-          </select>
+          {workspaces.length === 0 ? (
+            <p className="text-white/50 light:text-theme-text-secondary text-sm">
+              No workspaces available. Create a workspace first.
+            </p>
+          ) : (
+            <select
+              name="destinationWorkspaceSlug"
+              required={true}
+              onChange={(e) => setDestinationWorkspaceSlug(e.target.value)}
+              className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
+            >
+              <optgroup label="Available workspaces">
+                {workspaces.map((workspace) => (
+                  <option key={workspace.id} value={workspace.slug}>
+                    {workspace.name}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
+          )}
         </div>
       </div>
       {destinationWorkspaceSlug && (
