@@ -78,7 +78,7 @@ class CollectorApi {
   }
 
   async online() {
-    return await fetch(this.endpoint)
+    return await fetch(`${this.endpoint}/accepts`)
       .then((res) => res.ok)
       .catch(() => false);
   }
