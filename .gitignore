@@ -19,3 +19,4 @@ node_modules
 .sin/
 sin_goal_mode.db
 .sin_evidence/
+*.pack
