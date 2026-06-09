@@ -15,12 +15,13 @@ import SidebarTabs from "../ChatSidebar/SidebarTabs";
 import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
 import useThreads from "@/hooks/useThreads";
 import paths from "@/utils/paths";
+import { safeJsonParse } from "@/utils/request";
 
 // Re-export for backward compat with existing imports
 export { useSourcesSidebar } from "../ChatSidebar";
 
 function getWorkspaceSourceType(doc: any) {
-  const metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
+  const metadata = safeJsonParse(doc.metadata, {});
   const docpath = doc.docpath || "";
   const filename = doc.filename || "";
 
@@ -51,7 +52,7 @@ function getWorkspaceSourceType(doc: any) {
 
 function WorkspaceSourceItem({ doc, onClick }: any) {
   const { type: _type, icon: Icon, label } = getWorkspaceSourceType(doc);
-  const metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
+  const metadata = safeJsonParse(doc.metadata, {});
 
   return (
     <button
