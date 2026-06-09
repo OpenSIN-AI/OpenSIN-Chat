@@ -16,9 +16,10 @@ export default function UnauthenticatedHubModal({ show, onClose }: any) {
           <button
             onClick={onClose}
             type="button"
+            aria-label="Close"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={18} weight="bold" className="text-white" />
+            <X size={18} weight="bold" className="text-white" aria-hidden="true" />
           </button>
           <div className="flex flex-col items-center justify-center gap-y-4">
             <h3 className="text-lg font-semibold text-white">

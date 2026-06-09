@@ -10,20 +10,20 @@ import { Link } from "react-router-dom";
 
 export default function AgentFlows({ entity }: any) {
   const { t } = useTranslation();
-  const formRef = useRef(null);
-  const [isSubmitting, setIsSubmitting] = useState(false as any);
-  const [tags, setTags] = useState([] as any);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-  const [isSuccess, setIsSuccess] = useState(false as any);
-  const [itemId, setItemId] = useState(null);
-  const [expandedStep, setExpandedStep] = useState(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [itemId, setItemId] = useState<string | null>(null);
+  const [expandedStep, setExpandedStep] = useState<number | null>(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsSubmitting(true);
     try {
-      const form = new FormData(formRef.current);
+      const form = new FormData(formRef.current ?? undefined);
       const data = {
         name: form.get("name"),
         description: form.get("description"),
@@ -40,32 +40,34 @@ export default function AgentFlows({ entity }: any) {
       const { success, error, itemId } =
         await CommunityHub.createAgentFlow(data);
       if (!success) throw new Error(error);
-      setItemId(itemId);
+      setItemId(itemId ?? null);
       setIsSuccess(true);
     } catch (error) {
       console.error("Failed to publish agent flow:", error);
-      showToast(`Failed to publish agent flow: ${error.message}`, "error", {
-        clear: true,
-      });
+      showToast(
+        `Failed to publish agent flow: ${(error as Error).message}`,
+        "error",
+        { clear: true }
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleKeyDown: any = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       const value = tagInput.trim();
       if (value.length > 20) return;
       if (value && !tags.includes(value)) {
-        setTags((prevTags) => [...prevTags, value].slice(0, 5)); // Limit to 5 tags
+        setTags((prevTags) => [...prevTags, value].slice(0, 5));
         setTagInput("");
       }
     }
   };
 
-  const removeTag: any = (tagToRemove) => {
-    setTags((tags as any).filter((tag) => tag !== tagToRemove));
+  const removeTag = (tagToRemove: string) => {
+    setTags((prev) => prev.filter((tag) => tag !== tagToRemove));
   };
 
   if (isSuccess) {
@@ -151,7 +153,7 @@ export default function AgentFlows({ entity }: any) {
               {t("community_hub.publish.agent_flow.tags_description")}
             </div>
             <div className="flex flex-wrap gap-2 p-2 bg-theme-bg-secondary rounded-lg min-h-[42px]">
-              {(tags as any).map((tag, index) => (
+              {tags.map((tag, index) => (
                 <span
                   key={index}
                   className="flex items-center gap-1 px-2 py-1 text-sm text-theme-text-primary bg-white/10 light:bg-black/10 rounded-md"
@@ -159,17 +161,18 @@ export default function AgentFlows({ entity }: any) {
                   {tag}
                   <button
                     type="button"
+                    aria-label={`Remove tag ${tag}`}
                     onClick={() => removeTag(tag)}
                     className="border-none text-theme-text-primary hover:text-theme-text-secondary cursor-pointer"
                   >
-                    <X size={14} />
+                    <X size={14} aria-hidden="true" />
                   </button>
                 </span>
               ))}
               <input
                 type="text"
                 value={tagInput}
-                onChange={(e) => setTagInput(((e.target as unknown) as any)?.value)}
+                onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t(
                   "community_hub.publish.agent_flow.tags_placeholder",
@@ -198,7 +201,7 @@ export default function AgentFlows({ entity }: any) {
           </div>
           <div className="flex flex-col gap-y-0.5">
             {entity.steps && entity.steps.length > 0 ? (
-              (entity.steps as any).map((step, idx) => {
+              entity.steps.map((step: any, idx: number) => {
                 const info = BLOCK_INFO[step.type];
                 const isExpanded = expandedStep === idx;
                 const summary = info?.getSummary
@@ -206,12 +209,19 @@ export default function AgentFlows({ entity }: any) {
                   : "";
                 return (
                   <div key={idx} className="flex flex-col items-center w-full">
-                    <div
-                      className="flex flex-col bg-theme-bg-secondary rounded-lg px-3 py-2 w-full cursor-pointer group"
+                    <button
+                      type="button"
+                      aria-expanded={isExpanded}
+                      aria-label={
+                        isExpanded
+                          ? `Collapse step ${idx + 1}`
+                          : `Expand step ${idx + 1}`
+                      }
+                      className="flex flex-col bg-theme-bg-secondary rounded-lg px-3 py-2 w-full cursor-pointer group text-left border-none"
                       onClick={() => setExpandedStep(isExpanded ? null : idx)}
                     >
                       <div className="flex items-center gap-x-3 w-full">
-                        <span>{info?.icon}</span>
+                        <span aria-hidden="true">{info?.icon}</span>
                         <span className="text-theme-text-primary text-sm font-medium flex-1">
                           {info?.label || step.type}
                         </span>
@@ -221,6 +231,7 @@ export default function AgentFlows({ entity }: any) {
                           </span>
                         )}
                         <span
+                          aria-hidden="true"
                           className={`ml-2 text-theme-text-secondary transition-transform duration-200 ${isExpanded ? "rotate-90" : ""}`}
                         >
                           <CaretRight size={16} />
@@ -231,9 +242,12 @@ export default function AgentFlows({ entity }: any) {
                           {summary}
                         </div>
                       )}
-                    </div>
+                    </button>
                     {idx < entity.steps.length - 1 && (
-                      <span className="text-theme-text-secondary text-lg my-1">
+                      <span
+                        aria-hidden="true"
+                        className="text-theme-text-secondary text-lg my-1"
+                      >
                         ↓
                       </span>
                     )}

@@ -9,20 +9,20 @@ import { Link } from "react-router-dom";
 
 export default function SlashCommands({ entity }: any) {
   const { t } = useTranslation();
-  const formRef = useRef(null);
-  const [isSubmitting, setIsSubmitting] = useState(false as any);
-  const [tags, setTags] = useState([] as any);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-  const [visibility, setVisibility] = useState("public");
-  const [isSuccess, setIsSuccess] = useState(false as any);
-  const [itemId, setItemId] = useState(null);
+  const [visibility, setVisibility] = useState<"public" | "private">("public");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [itemId, setItemId] = useState<string | null>(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsSubmitting(true);
     try {
-      const form = new FormData(formRef.current);
+      const form = new FormData(formRef.current ?? undefined);
       const data = {
         name: form.get("name"),
         description: form.get("description"),
@@ -35,32 +35,34 @@ export default function SlashCommands({ entity }: any) {
       const { success, error, itemId } =
         await CommunityHub.createSlashCommand(data);
       if (!success) throw new Error(error);
-      setItemId(itemId);
+      setItemId(itemId ?? null);
       setIsSuccess(true);
     } catch (error) {
       console.error("Failed to publish slash command:", error);
-      showToast(`Failed to publish slash command: ${error.message}`, "error", {
-        clear: true,
-      });
+      showToast(
+        `Failed to publish slash command: ${(error as Error).message}`,
+        "error",
+        { clear: true }
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleKeyDown: any = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       const value = tagInput.trim();
       if (value.length > 20) return;
       if (value && !tags.includes(value)) {
-        setTags((prevTags) => [...prevTags, value].slice(0, 5)); // Limit to 5 tags
+        setTags((prevTags) => [...prevTags, value].slice(0, 5));
         setTagInput("");
       }
     }
   };
 
-  const removeTag: any = (tagToRemove) => {
-    setTags((tags as any).filter((tag) => tag !== tagToRemove));
+  const removeTag = (tagToRemove: string) => {
+    setTags((prev) => prev.filter((tag) => tag !== tagToRemove));
   };
 
   if (isSuccess) {
@@ -149,7 +151,7 @@ export default function SlashCommands({ entity }: any) {
               {t("community_hub.publish.slash_command.tags_description")}
             </div>
             <div className="flex flex-wrap gap-2 p-2 bg-theme-bg-secondary rounded-lg min-h-[42px]">
-              {(tags as any).map((tag, index) => (
+              {tags.map((tag, index) => (
                 <span
                   key={index}
                   className="flex items-center gap-1 px-2 py-1 text-sm text-theme-text-primary bg-white/10 light:bg-black/10 rounded-md"
@@ -157,17 +159,18 @@ export default function SlashCommands({ entity }: any) {
                   {tag}
                   <button
                     type="button"
+                    aria-label={`Remove tag ${tag}`}
                     onClick={() => removeTag(tag)}
                     className="border-none text-theme-text-primary hover:text-theme-text-secondary cursor-pointer"
                   >
-                    <X size={14} />
+                    <X size={14} aria-hidden="true" />
                   </button>
                 </span>
               ))}
               <input
                 type="text"
                 value={tagInput}
-                onChange={(e) => setTagInput(((e.target as unknown) as any)?.value)}
+                onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={t(
                   "community_hub.publish.slash_command.tags_placeholder",
@@ -195,7 +198,7 @@ export default function SlashCommands({ entity }: any) {
                   value="public"
                   className="peer/public hidden"
                   defaultChecked
-                  onChange={(e) => setVisibility(((e.target as unknown) as any)?.value)}
+                  onChange={(e) => setVisibility(e.target.value as "public")}
                 />
                 <input
                   type="radio"
@@ -203,7 +206,7 @@ export default function SlashCommands({ entity }: any) {
                   name="visibility"
                   value="private"
                   className="peer/private hidden"
-                  onChange={(e) => setVisibility(((e.target as unknown) as any)?.value)}
+                  onChange={(e) => setVisibility(e.target.value as "private")}
                 />
                 <label
                   htmlFor="public"

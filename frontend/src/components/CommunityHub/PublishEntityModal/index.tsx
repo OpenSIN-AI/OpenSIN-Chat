@@ -8,7 +8,11 @@ import AgentFlows from "./AgentFlows";
 import SlashCommands from "./SlashCommands";
 
 export default function PublishEntityModal({
-  show, onClose, entityType, entity, }: any) {
+  show,
+  onClose,
+  entityType,
+  entity,
+}: any) {
   const { isAuthenticated, loading } = useCommunityHubAuth();
   if (!show || loading) return null;
   if (!isAuthenticated)
@@ -34,9 +38,10 @@ export default function PublishEntityModal({
           <button
             onClick={onClose}
             type="button"
+            aria-label="Close"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={18} weight="bold" className="text-white" />
+            <X size={18} weight="bold" className="text-white" aria-hidden="true" />
           </button>
         </div>
         {renderEntityForm()}
