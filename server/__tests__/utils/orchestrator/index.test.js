@@ -2,105 +2,168 @@
 const { AgentOrchestrator, getOrchestrator } = require("../../../utils/orchestrator");
 
 describe("AgentOrchestrator", () => {
-  describe("getOrchestrator (singleton)", () => {
-    it("returns the same instance on repeated calls", () => {
-      expect(getOrchestrator()).toBe(getOrchestrator());
+  let orchestrator;
+
+  beforeEach(() => {
+    AgentOrchestrator._instance = null;
+    orchestrator = new AgentOrchestrator();
+  });
+
+  describe("constructor", () => {
+    test("creates instance with empty activeWorkflows", () => {
+      expect(orchestrator.activeWorkflows).toBeInstanceOf(Map);
+      expect(orchestrator.activeWorkflows.size).toBe(0);
     });
   });
 
-  describe("static inferSteps", () => {
-    it("infers politician + report steps for a politician/report goal", () => {
-      const types = AgentOrchestrator.inferSteps(
-        "Erstelle einen PDF-Bericht über AfD-Abgeordnete im Bundestag",
-      ).map((s) => s.type);
+  describe("startWorkflow", () => {
+    test("throws when goal is missing", async () => {
+      await expect(orchestrator.startWorkflow({})).rejects.toThrow("Goal is required");
+    });
+
+    test("creates workflow with auto-generated UUID", async () => {
+      const result = await orchestrator.startWorkflow({ goal: "Test goal", autoRun: false });
+      expect(result.workflowId).toBeDefined();
+      expect(typeof result.workflowId).toBe("string");
+      expect(result.workflowId.length).toBeGreaterThan(0);
+    });
+
+    test("returns workflow steps", async () => {
+      const result = await orchestrator.startWorkflow({ goal: "Test goal", autoRun: false });
+      expect(result.steps).toBeInstanceOf(Array);
+      expect(result.steps.length).toBeGreaterThan(0);
+      result.steps.forEach((step) => {
+        expect(step).toHaveProperty("id");
+        expect(step).toHaveProperty("type");
+        expect(step).toHaveProperty("label");
+      });
+    });
+
+    test("uses explicit steps when provided", async () => {
+      const explicitSteps = [
+        { type: "custom_step", label: "Custom Step" },
+      ];
+      const result = await orchestrator.startWorkflow({ goal: "Test", steps: explicitSteps, autoRun: false });
+      expect(result.steps).toEqual([
+        { id: "step-0", type: "custom_step", label: "Custom Step" },
+      ]);
+    });
+
+    test("stores workflow in activeWorkflows", async () => {
+      const result = await orchestrator.startWorkflow({ goal: "Test goal", autoRun: false });
+      const workflow = orchestrator.activeWorkflows.get(result.workflowId);
+      expect(workflow).toBeDefined();
+      expect(workflow.goal).toBe("Test goal");
+      expect(workflow.status).toBe("pending");
+    });
+
+    test("sets autoRun to false when specified", async () => {
+      const result = await orchestrator.startWorkflow({ goal: "Test", autoRun: false });
+      const workflow = orchestrator.activeWorkflows.get(result.workflowId);
+      expect(workflow.status).toBe("pending");
+    });
+  });
+
+  describe("getStatus", () => {
+    test("returns null for unknown workflowId", () => {
+      expect(orchestrator.getStatus("unknown-id")).toBeNull();
+    });
+
+    test("returns workflow status", async () => {
+      const result = await orchestrator.startWorkflow({ goal: "Test goal", autoRun: false });
+      const status = orchestrator.getStatus(result.workflowId);
+      expect(status).toHaveProperty("workflowId", result.workflowId);
+      expect(status).toHaveProperty("goal", "Test goal");
+      expect(status).toHaveProperty("status", "pending");
+      expect(status).toHaveProperty("currentStep", 0);
+      expect(status).toHaveProperty("totalSteps");
+      expect(status).toHaveProperty("steps");
+      expect(status).toHaveProperty("error", null);
+    });
+  });
+
+  describe("getResults", () => {
+    test("returns null for unknown workflowId", () => {
+      expect(orchestrator.getResults("unknown-id")).toBeNull();
+    });
+
+    test("returns workflow results", async () => {
+      const result = await orchestrator.startWorkflow({ goal: "Test goal", autoRun: false });
+      const results = orchestrator.getResults(result.workflowId);
+      expect(results).toHaveProperty("workflowId", result.workflowId);
+      expect(results).toHaveProperty("goal", "Test goal");
+      expect(results).toHaveProperty("status", "pending");
+      expect(results).toHaveProperty("steps");
+    });
+  });
+
+  describe("listWorkflows", () => {
+    test("returns empty array when no workflows", () => {
+      expect(orchestrator.listWorkflows()).toEqual([]);
+    });
+
+    test("returns all workflows", async () => {
+      await orchestrator.startWorkflow({ goal: "Goal 1", autoRun: false });
+      await orchestrator.startWorkflow({ goal: "Goal 2", autoRun: false });
+      const workflows = orchestrator.listWorkflows();
+      expect(workflows).toHaveLength(2);
+      workflows.forEach((w) => {
+        expect(w).toHaveProperty("workflowId");
+        expect(w).toHaveProperty("goal");
+        expect(w).toHaveProperty("status");
+        expect(w).toHaveProperty("currentStep");
+        expect(w).toHaveProperty("totalSteps");
+        expect(w).toHaveProperty("createdAt");
+      });
+    });
+  });
+
+  describe("inferSteps", () => {
+    test("infers politician search for political keywords", () => {
+      const steps = AgentOrchestrator.inferSteps("Wie ist die Position der AfD zum Klimaschutz?");
+      expect(steps.some((s) => s.type === "search_politician")).toBe(true);
+    });
+
+    test("infers deep research for research keywords", () => {
+      const steps = AgentOrchestrator.inferSteps("Recherchiere die Bundestagswahl 2025");
+      expect(steps.some((s) => s.type === "deep_research")).toBe(true);
+    });
+
+    test("infers report generation for report keywords", () => {
+      const steps = AgentOrchestrator.inferSteps("Erstelle einen PDF-Bericht über die AfD");
+      expect(steps.some((s) => s.type === "generate_report")).toBe(true);
+    });
+
+    test("infers URL extraction for deep detail keywords", () => {
+      const steps = AgentOrchestrator.inferSteps("Extrahiere Details aus Quellen zur Wahl");
+      expect(steps.some((s) => s.type === "extract_urls")).toBe(true);
+    });
+
+    test("defaults to research + report when no keywords match", () => {
+      const steps = AgentOrchestrator.inferSteps("Etwas völlig Anderes");
+      expect(steps.some((s) => s.type === "deep_research")).toBe(true);
+      expect(steps.some((s) => s.type === "generate_report")).toBe(true);
+    });
+
+    test("combines multiple step types", () => {
+      const steps = AgentOrchestrator.inferSteps("Politiker recherchieren und Bericht erstellen");
+      const types = steps.map((s) => s.type);
       expect(types).toContain("search_politician");
-      expect(types).toContain("generate_report");
-    });
-
-    it("infers deep_research + extract + report for a deep research goal", () => {
-      const types = AgentOrchestrator.inferSteps(
-        "Tiefenrecherche zur Position und Quellen analysieren, dann Gutachten erstellen",
-      ).map((s) => s.type);
       expect(types).toContain("deep_research");
-      expect(types).toContain("extract_urls");
       expect(types).toContain("generate_report");
     });
-
-    it("falls back to research + report when nothing matches", () => {
-      const types = AgentOrchestrator.inferSteps("xyz qrs tuv").map((s) => s.type);
-      expect(types).toEqual(["deep_research", "generate_report"]);
-    });
-
-    it("every inferred step has a type and a label", () => {
-      const steps = AgentOrchestrator.inferSteps("Recherche und Bericht");
-      for (const s of steps) {
-        expect(typeof s.type).toBe("string");
-        expect(typeof s.label).toBe("string");
-      }
-    });
   });
 
-  describe("startWorkflow (autoRun disabled for determinism)", () => {
-    it("throws when goal is missing", async () => {
-      const o = new AgentOrchestrator();
-      await expect(o.startWorkflow({ autoRun: false })).rejects.toThrow("Goal is required");
+  describe("getOrchestrator (singleton)", () => {
+    test("returns same instance on multiple calls", () => {
+      const instance1 = getOrchestrator();
+      const instance2 = getOrchestrator();
+      expect(instance1).toBe(instance2);
     });
 
-    it("honors explicit steps when provided", async () => {
-      const o = new AgentOrchestrator();
-      const { steps } = await o.startWorkflow({
-        goal: "egal",
-        steps: [{ type: "search_politician", label: "Custom" }],
-        autoRun: false,
-      });
-      expect(steps).toHaveLength(1);
-      expect(steps[0].type).toBe("search_politician");
-    });
-
-    it("registers a workflow and exposes a matching status", async () => {
-      const o = new AgentOrchestrator();
-      const { workflowId, steps } = await o.startWorkflow({
-        goal: "Recherche zur Energiepolitik",
-        autoRun: false,
-      });
-      expect(typeof workflowId).toBe("string");
-      expect(steps.length).toBeGreaterThan(0);
-
-      const status = o.getStatus(workflowId);
-      expect(status).not.toBeNull();
-      expect(status.workflowId).toBe(workflowId);
-      expect(status.totalSteps).toBe(steps.length);
-      expect(status.status).toBe("pending");
-    });
-
-    it("exposes results for a registered workflow", async () => {
-      const o = new AgentOrchestrator();
-      const { workflowId } = await o.startWorkflow({
-        goal: "Recherche zur Energiepolitik",
-        autoRun: false,
-      });
-      const results = o.getResults(workflowId);
-      expect(results).not.toBeNull();
-      expect(results.workflowId).toBe(workflowId);
-      expect(Array.isArray(results.steps)).toBe(true);
-    });
-  });
-
-  describe("status/results for unknown workflows", () => {
-    it("getStatus returns null for an unknown id", () => {
-      expect(new AgentOrchestrator().getStatus("nope")).toBeNull();
-    });
-
-    it("getResults returns null for an unknown id", () => {
-      expect(new AgentOrchestrator().getResults("nope")).toBeNull();
-    });
-
-    it("listWorkflows returns an array", () => {
-      const o = new AgentOrchestrator();
-      o.startWorkflow({ goal: "test", autoRun: false });
-      const list = o.listWorkflows();
-      expect(Array.isArray(list)).toBe(true);
-      expect(list.length).toBeGreaterThan(0);
+    test("instance is AgentOrchestrator", () => {
+      const instance = getOrchestrator();
+      expect(instance).toBeInstanceOf(AgentOrchestrator);
     });
   });
 });

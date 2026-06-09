@@ -14,6 +14,7 @@ const ImportedPlugin = require("./imported");
 const { AgentFlows } = require("../agentFlows");
 const MCPCompatibilityLayer = require("../MCP");
 const { getAndClearInvocationAttachments } = require("../chats/agents");
+const { getProviderModelPreference } = require("../helpers");
 const { DocumentManager } = require("../DocumentManager");
 
 class AgentHandler {
@@ -300,87 +301,224 @@ class AgentHandler {
    * @param {string} provider - The provider to find the default model for.
    * @returns {string|null} The default model for the provider.
    */
-  providerDefault(provider = this.provider) {
+  async providerDefault(provider = this.provider) {
     switch (provider) {
       case "openai":
-        return process.env.OPEN_MODEL_PREF ?? "gpt-4o";
+        return (
+          (await getProviderModelPreference("openai")) ??
+          process.env.OPEN_MODEL_PREF ??
+          "gpt-4o"
+        );
       case "anthropic":
-        return process.env.ANTHROPIC_MODEL_PREF ?? "claude-3-sonnet-20240229";
+        return (
+          (await getProviderModelPreference("anthropic")) ??
+          process.env.ANTHROPIC_MODEL_PREF ??
+          "claude-3-sonnet-20240229"
+        );
       case "lmstudio":
-        return process.env.LMSTUDIO_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("lmstudio")) ??
+          process.env.LMSTUDIO_MODEL_PREF ??
+          null
+        );
       case "ollama":
-        return process.env.OLLAMA_MODEL_PREF ?? "llama3:latest";
+        return (
+          (await getProviderModelPreference("ollama")) ??
+          process.env.OLLAMA_MODEL_PREF ??
+          "llama3:latest"
+        );
       case "groq":
-        return process.env.GROQ_MODEL_PREF ?? "llama3-70b-8192";
+        return (
+          (await getProviderModelPreference("groq")) ??
+          process.env.GROQ_MODEL_PREF ??
+          "llama3-70b-8192"
+        );
       case "togetherai":
         return (
+          (await getProviderModelPreference("togetherai")) ??
           process.env.TOGETHER_AI_MODEL_PREF ??
           "mistralai/Mixtral-8x7B-Instruct-v0.1"
         );
       case "azure":
         return (
-          process.env.AZURE_OPENAI_MODEL_PREF || process.env.OPEN_MODEL_PREF
+          (await getProviderModelPreference("azure")) ??
+          (process.env.AZURE_OPENAI_MODEL_PREF || process.env.OPEN_MODEL_PREF)
         );
       case "koboldcpp":
-        return process.env.KOBOLD_CPP_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("koboldcpp")) ??
+          process.env.KOBOLD_CPP_MODEL_PREF ??
+          null
+        );
       case "localai":
-        return process.env.LOCAL_AI_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("localai")) ??
+          process.env.LOCAL_AI_MODEL_PREF ??
+          null
+        );
       case "openrouter":
-        return process.env.OPENROUTER_MODEL_PREF ?? "openrouter/auto";
+        return (
+          (await getProviderModelPreference("openrouter")) ??
+          process.env.OPENROUTER_MODEL_PREF ??
+          "openrouter/auto"
+        );
       case "mistral":
-        return process.env.MISTRAL_MODEL_PREF ?? "mistral-medium";
+        return (
+          (await getProviderModelPreference("mistral")) ??
+          process.env.MISTRAL_MODEL_PREF ??
+          "mistral-medium"
+        );
       case "generic-openai":
-        return process.env.GENERIC_OPEN_AI_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("generic-openai")) ??
+          process.env.GENERIC_OPEN_AI_MODEL_PREF ??
+          null
+        );
       case "perplexity":
-        return process.env.PERPLEXITY_MODEL_PREF ?? "sonar-small-online";
+        return (
+          (await getProviderModelPreference("perplexity")) ??
+          process.env.PERPLEXITY_MODEL_PREF ??
+          "sonar-small-online"
+        );
       case "textgenwebui":
         return "text-generation-webui";
       case "bedrock":
-        return process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE ?? null;
+        return (
+          (await getProviderModelPreference("bedrock")) ??
+          process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE ??
+          null
+        );
       case "fireworksai":
-        return process.env.FIREWORKS_AI_LLM_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("fireworksai")) ??
+          process.env.FIREWORKS_AI_LLM_MODEL_PREF ??
+          null
+        );
       case "deepseek":
-        return process.env.DEEPSEEK_MODEL_PREF ?? "deepseek-chat";
+        return (
+          (await getProviderModelPreference("deepseek")) ??
+          process.env.DEEPSEEK_MODEL_PREF ??
+          "deepseek-chat"
+        );
       case "litellm":
-        return process.env.LITE_LLM_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("litellm")) ??
+          process.env.LITE_LLM_MODEL_PREF ??
+          null
+        );
       case "moonshotai":
-        return process.env.MOONSHOT_AI_MODEL_PREF ?? "moonshot-v1-32k";
+        return (
+          (await getProviderModelPreference("moonshotai")) ??
+          process.env.MOONSHOT_AI_MODEL_PREF ??
+          "moonshot-v1-32k"
+        );
       case "apipie":
-        return process.env.APIPIE_LLM_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("apipie")) ??
+          process.env.APIPIE_LLM_MODEL_PREF ??
+          null
+        );
       case "xai":
-        return process.env.XAI_LLM_MODEL_PREF ?? "grok-beta";
+        return (
+          (await getProviderModelPreference("xai")) ??
+          process.env.XAI_LLM_MODEL_PREF ??
+          "grok-beta"
+        );
       case "zai":
-        return process.env.ZAI_MODEL_PREF ?? "glm-4.5";
+        return (
+          (await getProviderModelPreference("zai")) ??
+          process.env.ZAI_MODEL_PREF ??
+          "glm-4.5"
+        );
       case "novita":
-        return process.env.NOVITA_LLM_MODEL_PREF ?? "deepseek/deepseek-r1";
+        return (
+          (await getProviderModelPreference("novita")) ??
+          process.env.NOVITA_LLM_MODEL_PREF ??
+          "deepseek/deepseek-r1"
+        );
       case "nvidia-nim":
-        return process.env.NVIDIA_NIM_LLM_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("nvidia-nim")) ??
+          process.env.NVIDIA_NIM_LLM_MODEL_PREF ??
+          null
+        );
       case "ppio":
-        return process.env.PPIO_MODEL_PREF ?? "qwen/qwen2.5-32b-instruct";
+        return (
+          (await getProviderModelPreference("ppio")) ??
+          process.env.PPIO_MODEL_PREF ??
+          "qwen/qwen2.5-32b-instruct"
+        );
       case "gemini":
-        return process.env.GEMINI_LLM_MODEL_PREF ?? "gemini-2.0-flash-lite";
+        return (
+          (await getProviderModelPreference("gemini")) ??
+          process.env.GEMINI_LLM_MODEL_PREF ??
+          "gemini-2.0-flash-lite"
+        );
       case "dpais":
-        return process.env.DPAIS_LLM_MODEL_PREF;
+        return (
+          (await getProviderModelPreference("dpais")) ??
+          process.env.DPAIS_LLM_MODEL_PREF
+        );
       case "cometapi":
-        return process.env.COMETAPI_LLM_MODEL_PREF ?? "gpt-5-mini";
+        return (
+          (await getProviderModelPreference("cometapi")) ??
+          process.env.COMETAPI_LLM_MODEL_PREF ??
+          "gpt-5-mini"
+        );
       case "foundry":
-        return process.env.FOUNDRY_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("foundry")) ??
+          process.env.FOUNDRY_MODEL_PREF ??
+          null
+        );
       case "giteeai":
-        return process.env.GITEE_AI_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("giteeai")) ??
+          process.env.GITEE_AI_MODEL_PREF ??
+          null
+        );
       case "cohere":
-        return process.env.COHERE_MODEL_PREF ?? "command-r-08-2024";
+        return (
+          (await getProviderModelPreference("cohere")) ??
+          process.env.COHERE_MODEL_PREF ??
+          "command-r-08-2024"
+        );
       case "docker-model-runner":
-        return process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("docker-model-runner")) ??
+          process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF ??
+          null
+        );
       case "privatemode":
-        return process.env.PRIVATEMODE_LLM_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("privatemode")) ??
+          process.env.PRIVATEMODE_LLM_MODEL_PREF ??
+          null
+        );
       case "sambanova":
-        return process.env.SAMBANOVA_LLM_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("sambanova")) ??
+          process.env.SAMBANOVA_LLM_MODEL_PREF ??
+          null
+        );
       case "lemonade":
-        return process.env.LEMONADE_LLM_MODEL_PREF ?? null;
+        return (
+          (await getProviderModelPreference("lemonade")) ??
+          process.env.LEMONADE_LLM_MODEL_PREF ??
+          null
+        );
       case "minimax":
-        return process.env.MINIMAX_MODEL_PREF ?? "MiniMax-M2.7";
+        return (
+          (await getProviderModelPreference("minimax")) ??
+          process.env.MINIMAX_MODEL_PREF ??
+          "MiniMax-M2.7"
+        );
       case "cerebras":
-        return process.env.CEREBRAS_MODEL_PREF ?? "gpt-oss-120b";
+        return (
+          (await getProviderModelPreference("cerebras")) ??
+          process.env.CEREBRAS_MODEL_PREF ??
+          "gpt-oss-120b"
+        );
       default:
         return null;
     }
@@ -394,7 +532,7 @@ class AgentHandler {
    * 3. Otherwise, return null - will likely throw an error the user can act on.
    * @returns {object|null} - An object with provider and model keys.
    */
-  #getFallbackProvider() {
+  async #getFallbackProvider() {
     // If workspace chat uses the model router, fall back to it.
     // Model is null here since the router determines it at resolve time.
     if (this.invocation.workspace.chatProvider === "openafd-router") {
@@ -419,7 +557,7 @@ class AgentHandler {
       return { provider: "openafd-router", model: null };
     }
 
-    const systemModel = this.providerDefault(systemProvider);
+    const systemModel = await this.providerDefault(systemProvider);
     if (systemProvider && systemModel) {
       return {
         provider: systemProvider,
@@ -437,11 +575,11 @@ class AgentHandler {
    * and if that fails - we assume a reasonable base model to exist.
    * @returns {string|null} the model preference value to use in API calls
    */
-  #fetchModel() {
+  async #fetchModel() {
     // Provider was not explicitly set for workspace, so we are going to run our fallback logic
     // that will set a provider and model for us to use.
     if (!this.provider) {
-      const fallback = this.#getFallbackProvider();
+      const fallback = await this.#getFallbackProvider();
       if (!fallback) throw new Error("No valid provider found for the agent.");
       this.provider = fallback.provider; // re-set the provider to the fallback provider so it is not null.
       return fallback.model; // set its defined model based on fallback logic.
@@ -453,12 +591,12 @@ class AgentHandler {
 
     // Otherwise, we have no model to use - so guess a default model to use via the provider
     // and it's system ENV params and if that fails - we return either a base model or null.
-    return this.providerDefault();
+    return await this.providerDefault();
   }
 
   async #providerSetupAndCheck() {
     this.provider = this.invocation.workspace.agentProvider ?? null; // set provider to workspace agent provider if it exists
-    this.model = this.#fetchModel();
+    this.model = await this.#fetchModel();
 
     // If provider resolved to model router, resolve the actual provider/model
     if (this.provider === "openafd-router") {

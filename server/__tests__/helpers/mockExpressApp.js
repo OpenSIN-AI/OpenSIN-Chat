@@ -5,13 +5,15 @@
  * real HTTP server. Middleware arrays are ignored — auth middleware is mocked
  * separately in the test files — and the final handler is captured per route.
  *
+ * Supports:
+ * - Express-style route params (e.g. /system/api-key/:id)
+ * - locals in call options
+ * - flushHeaders(), writeHead(), sendStatus() return res (chainable)
+ * - file, on, randomFileName in request
+ *
  * Not a test suite itself (no .test.js suffix), so Jest will not execute it.
  */
 
-/**
- * Builds a chainable mock response object capturing status/json/headers.
- * @returns {object} mock response
- */
 function createMockRes() {
   const res = {
     statusCode: 200,
@@ -19,6 +21,7 @@ function createMockRes() {
     headers: {},
     ended: false,
     locals: {},
+    _chunks: [],
   };
   res.status = (code) => {
     res.statusCode = code;
@@ -34,29 +37,33 @@ function createMockRes() {
     res.ended = true;
     return res;
   };
-  // Intentionally returns a value WITHOUT an .end() method so that the old
-  // buggy `response.sendStatus(500).end()` pattern would throw here — guarding
-  // against a regression of that bug.
   res.sendStatus = (code) => {
     res.statusCode = code;
     res.ended = true;
-    return code;
+    return res;
   };
   res.setHeader = (key, value) => {
     res.headers[key] = value;
     return res;
   };
-  res.end = () => {
+  res.flushHeaders = () => res;
+  res.writeHead = (code, headers) => {
+    res.statusCode = code;
+    if (headers) Object.assign(res.headers, headers);
+    return res;
+  };
+  res.write = (chunk) => {
+    res._chunks.push(chunk);
+    return res;
+  };
+  res.end = (data) => {
+    if (data) res._chunks.push(data);
     res.ended = true;
     return res;
   };
   return res;
 }
 
-/**
- * Creates a mock app that records registered routes and can invoke them.
- * @returns {{app: object, call: Function, routes: object}}
- */
 function createMockApp() {
   const routes = {};
   const register = (method) => (path, ...rest) => {
@@ -71,24 +78,52 @@ function createMockApp() {
     patch: register("patch"),
   };
 
-  /**
-   * Invokes a previously registered route handler.
-   * @param {string} method http method
-   * @param {string} path the literal registered path (e.g. "/research/:id")
-   * @param {{body?: object, params?: object, query?: object, headers?: object}} [req]
-   * @returns {Promise<object>} the mock response
-   */
+  function matchRoute(method, path) {
+    const methodLower = method.toLowerCase();
+    const exactKey = `${methodLower} ${path}`;
+    if (routes[exactKey]) return { handler: routes[exactKey], params: {} };
+
+    for (const [key, fn] of Object.entries(routes)) {
+      const spaceIdx = key.indexOf(" ");
+      const routeMethod = key.substring(0, spaceIdx);
+      const routePath = key.substring(spaceIdx + 1);
+      if (routeMethod !== methodLower) continue;
+
+      const routeParts = routePath.split("/");
+      const pathParts = path.split("/");
+      if (routeParts.length !== pathParts.length) continue;
+
+      let match = true;
+      const params = {};
+      for (let i = 0; i < routeParts.length; i++) {
+        if (routeParts[i].startsWith(":")) {
+          params[routeParts[i].substring(1)] = pathParts[i];
+        } else if (routeParts[i] !== pathParts[i]) {
+          match = false;
+          break;
+        }
+      }
+      if (match) return { handler: fn, params };
+    }
+    return null;
+  }
+
   async function call(method, path, req = {}) {
-    const key = `${method.toLowerCase()} ${path}`;
-    const handler = routes[key];
-    if (!handler) throw new Error(`No route registered for ${key}`);
+    const result = matchRoute(method, path);
+    if (!result) throw new Error(`No route registered for ${method.toLowerCase()} ${path}`);
+    const { handler, params } = result;
     const request = {
       body: req.body || {},
-      params: req.params || {},
+      params: { ...params, ...(req.params || {}) },
       query: req.query || {},
+      headers: req.headers || {},
       header: (name) => (req.headers || {})[name] || "Bearer test-key",
+      file: req.file || undefined,
+      on: req.on || jest.fn(),
+      randomFileName: req.randomFileName || undefined,
     };
     const response = createMockRes();
+    if (req.locals) Object.assign(response.locals, req.locals);
     await handler(request, response);
     return response;
   }

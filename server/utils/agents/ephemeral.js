@@ -146,7 +146,7 @@ class EphemeralAgentHandler extends AgentHandler {
    * 3. Otherwise, return null - will likely throw an error the user can act on.
    * @returns {object|null} - An object with provider and model keys.
    */
-  #getFallbackProvider() {
+  async #getFallbackProvider() {
     // If workspace chat uses the model router, fall back to it.
     // Model is null here since the router determines it at resolve time.
     if (this.#workspace?.chatProvider === "openafd-router") {
@@ -168,7 +168,7 @@ class EphemeralAgentHandler extends AgentHandler {
       return { provider: "openafd-router", model: null };
     }
 
-    const systemModel = this.providerDefault(systemProvider);
+    const systemModel = await this.providerDefault(systemProvider);
     if (systemProvider && systemModel) {
       return {
         provider: systemProvider,
@@ -186,11 +186,11 @@ class EphemeralAgentHandler extends AgentHandler {
    * and if that fails - we assume a reasonable base model to exist.
    * @returns {string|null} the model preference value to use in API calls
    */
-  #fetchModel() {
+  async #fetchModel() {
     // Provider was not explicitly set for workspace, so we are going to run our fallback logic
     // that will set a provider and model for us to use.
     if (!this.provider) {
-      const fallback = this.#getFallbackProvider();
+      const fallback = await this.#getFallbackProvider();
       if (!fallback) throw new Error("No valid provider found for the agent.");
       this.provider = fallback.provider; // re-set the provider to the fallback provider so it is not null.
       return fallback.model; // set its defined model based on fallback logic.
@@ -201,12 +201,12 @@ class EphemeralAgentHandler extends AgentHandler {
 
     // Otherwise, we have no model to use - so guess a default model to use via the provider
     // and it's system ENV params and if that fails - we return either a base model or null.
-    return this.providerDefault();
+    return await this.providerDefault();
   }
 
   async #providerSetupAndCheck() {
     this.provider = this.#workspace?.agentProvider ?? null;
-    this.model = this.#fetchModel();
+    this.model = await this.#fetchModel();
 
     // If provider resolved to model router, resolve the actual provider/model
     if (this.provider === "openafd-router") {
