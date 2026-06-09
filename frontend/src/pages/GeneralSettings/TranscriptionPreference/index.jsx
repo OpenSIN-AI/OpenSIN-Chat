@@ -201,16 +201,16 @@ export default function TranscriptionModelPreference() {
                   >
                     <div className="flex gap-x-4 items-center">
                       <img
-                        src={selectedProviderObject.logo}
-                        alt={`${selectedProviderObject.name} logo`}
+                        src={selectedProviderObject?.logo}
+                        alt={`${selectedProviderObject?.name} logo`}
                         className="w-10 h-10 rounded-md"
                       />
                       <div className="flex flex-col text-left">
                         <div className="text-sm font-semibold text-white">
-                          {selectedProviderObject.name}
+                          {selectedProviderObject?.name}
                         </div>
                         <div className="mt-1 text-xs text-description">
-                          {selectedProviderObject.description}
+                          {selectedProviderObject?.description}
                         </div>
                       </div>
                     </div>

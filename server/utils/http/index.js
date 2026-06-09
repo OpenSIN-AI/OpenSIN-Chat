@@ -61,7 +61,9 @@ async function userFromSession(request, response = null) {
 function decodeJWT(jwtToken) {
   try {
     return JWT.verify(jwtToken, process.env.JWT_SECRET);
-  } catch {}
+  } catch (e) {
+    console.warn("JWT decode failed:", e.message);
+  }
   return { p: null, id: null, username: null };
 }
 
@@ -81,18 +83,24 @@ function safeJsonParse(jsonString, fallback = null) {
 
   try {
     return JSON.parse(jsonString);
-  } catch {}
+  } catch (e) {
+    console.debug("safeJsonParse: JSON.parse failed:", e.message);
+  }
 
   if (jsonString?.startsWith("[") || jsonString?.startsWith("{")) {
     try {
       const repairedJson = jsonrepair(jsonString);
       return JSON.parse(repairedJson);
-    } catch {}
+    } catch (e) {
+      console.debug("safeJsonParse: jsonrepair failed:", e.message);
+    }
   }
 
   try {
     return extract(jsonString)?.[0] || fallback;
-  } catch {}
+  } catch (e) {
+    console.debug("safeJsonParse: extract failed:", e.message);
+  }
 
   return fallback;
 }
@@ -102,7 +110,9 @@ function isValidUrl(urlString = "") {
     const url = new URL(urlString);
     if (!["http:", "https:"].includes(url.protocol)) return false;
     return true;
-  } catch {}
+  } catch (e) {
+    console.debug("isValidUrl: invalid URL:", urlString, e.message);
+  }
   return false;
 }
 

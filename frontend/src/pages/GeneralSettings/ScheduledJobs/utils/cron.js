@@ -40,7 +40,8 @@ export function getTimezoneAbbreviation() {
     const parts = formatter.formatToParts(new Date());
     const tzPart = parts.find((p) => p.type === "timeZoneName");
     return tzPart?.value || "local time";
-  } catch {
+  } catch (e) {
+    console.warn("Failed to format timezone:", e);
     return "local time";
   }
 }
@@ -61,7 +62,8 @@ export function humanizeCron(cron, locale) {
       locale: toCronstrueLocale(locale),
     });
     return `${humanized} ${getTimezoneAbbreviation()}`;
-  } catch {
+  } catch (e) {
+    console.warn("Failed to humanize cron expression:", e);
     return cron;
   }
 }
