@@ -70,10 +70,14 @@ function agentFileServerEndpoints(app) {
         const safeFilename = createFilesLib.sanitizeFilenameForHeader(
           fileSource.displayFilename || filename,
         );
+        // Use "inline" for PDF so the browser can render it inside an <iframe>
+        // for the preview sidebar. All other types use "attachment" (forced download).
+        const disposition =
+          parsed.extension.toLowerCase() === "pdf" ? "inline" : "attachment";
         response.setHeader("Content-Type", mimeType);
         response.setHeader(
           "Content-Disposition",
-          `attachment; filename="${safeFilename}"`,
+          `${disposition}; filename="${safeFilename}"`,
         );
         response.setHeader("Content-Length", fileData.buffer.length);
         response.send(fileData.buffer);

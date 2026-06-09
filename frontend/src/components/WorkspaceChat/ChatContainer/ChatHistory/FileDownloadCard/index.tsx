@@ -5,6 +5,7 @@ import { DownloadSimple, CircleNotch, Eye } from "@phosphor-icons/react";
 import { humanFileSize } from "@/utils/numbers";
 import StorageFiles from "@/models/files";
 import { useChatSidebar } from "../../ChatSidebar";
+import { API_BASE } from "@/utils/constants";
 
 // Module-level guard so a freshly generated report only auto-opens the preview
 // once — never again on re-renders or when the chat history reloads.
@@ -22,7 +23,10 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
   const { openPreview } = useChatSidebar();
 
   const previewUrl =
-    downloadUrl || (storageFilename ? `/api/files/${storageFilename}` : null);
+    downloadUrl ||
+    (storageFilename
+      ? `${API_BASE}/agent-skills/generated-files/${encodeURIComponent(storageFilename)}`
+      : null);
 
   function buildPreviewData() {
     return {
