@@ -9,6 +9,24 @@ const availableThemes = {
 };
 
 /**
+ * Resolves the stored theme preference into a concrete "light" or "dark"
+ * value. Handles the legacy "default" value (treated as dark) and the
+ * "system" value (resolved against the OS preference). Pure helper usable
+ * outside of React (e.g. in LogoContext and the system API model).
+ * @returns {boolean} Whether the resolved theme is dark mode.
+ */
+export function resolveDarkMode(): boolean {
+  const stored = localStorage.getItem("theme");
+  let theme = stored === "default" ? "dark" : stored || "system";
+  if (theme === "system") {
+    theme = window.matchMedia?.("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+  }
+  return theme !== "light";
+}
+
+/**
  * @typedef {'system' | 'light' | 'dark'} ThemeOption
  */
 

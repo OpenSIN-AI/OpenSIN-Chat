@@ -4,6 +4,7 @@ import OpenAfDLogo from "./media/logo/openafd-logo.png";
 import OpenAfDLogoDark from "./media/logo/openafd-logo-dark.png";
 import DefaultLoginLogo from "./media/logo/openafd-logo.png";
 import System from "./models/system";
+import { resolveDarkMode } from "./hooks/useTheme";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";
 
