@@ -76,7 +76,7 @@
     "js-tiktoken": "^1.0.8",
     "jsdom": "26.1.0",
     "jsonrepair": "^3.7.0",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.3",
     "langchain": "^1.4.0",
     "marked": "15.0.12",
     "mime": "^3.0.0",
