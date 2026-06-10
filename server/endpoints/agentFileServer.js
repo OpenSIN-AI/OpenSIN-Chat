@@ -185,4 +185,7 @@ async function findInScheduledJobRuns(storageFilename) {
   return null;
 }
 
-module.exports = { agentFileServerEndpoints };
+module.exports = {
+  agentFileServerEndpoints,
+  INLINE_EXTENSIONS,
+};

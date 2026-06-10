@@ -822,6 +822,11 @@ const TRANSLATIONS = {
       at: "Enviado el",
     },
   },
+  preview: {
+    loading: "Cargando vista previa…",
+    load_error: "No se pudo cargar la vista previa.",
+    generated_image: "Imagen generada",
+  },
   customization: {
     interface: {
       title: "Preferencias de la interfaz de usuario",

@@ -367,7 +367,7 @@ function ImagePreview({ url, title }: { url: string; title?: string }) {
     <div className="flex items-center justify-center w-full h-full bg-zinc-900 light:bg-slate-50 p-4">
       <img
         src={blobUrl}
-        alt={title || "Generated image"}
+        alt={title || t("preview.generated_image")}
         className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
       />
     </div>

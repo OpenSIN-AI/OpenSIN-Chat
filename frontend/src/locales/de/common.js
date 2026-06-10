@@ -816,6 +816,11 @@ const TRANSLATIONS = {
       at: "Gesendet am",
     },
   },
+  preview: {
+    loading: "Vorschau wird geladen…",
+    load_error: "Vorschau konnte nicht geladen werden.",
+    generated_image: "Generiertes Bild",
+  },
   customization: {
     interface: {
       title: "UI Einstellungen",

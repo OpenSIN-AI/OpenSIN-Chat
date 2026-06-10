@@ -794,6 +794,11 @@ const TRANSLATIONS = {
       at: "Sent At",
     },
   },
+  preview: {
+    loading: "Loading preview...",
+    load_error: "Preview could not be loaded.",
+    generated_image: "Generated image",
+  },
   customization: {
     interface: {
       title: "UI Preferences",

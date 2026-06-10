@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { memo, useState, useEffect, useRef } from "react";
 import { saveAs } from "file-saver";
+import { useTranslation } from "react-i18next";
 import { DownloadSimple, CircleNotch, Eye } from "@phosphor-icons/react";
 import { humanFileSize } from "@/utils/numbers";
 import StorageFiles from "@/models/files";
@@ -18,6 +19,7 @@ const autoPreviewedFiles = new Set();
  *   preview sidebar automatically the first time this report is rendered (#55).
  */
 function FileDownloadCard({ props, autoPreview = false }: any) {
+  const { t } = useTranslation();
   const { filename, storageFilename, fileSize, downloadUrl } = props.content || {};
   const { badge, badgeBg, badgeText, fileType, isImage, previewType } = getFileDisplayInfo(filename);
   const [downloading, setDownloading] = useState(false as any);
@@ -77,7 +79,7 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
       <div className="w-full max-w-[750px] mr-4">
         {/* Inline image preview for generated images */}
         {isImage && previewUrl && (
-          <ImagePreviewBanner url={previewUrl} alt={filename || "Generated image"} />
+          <ImagePreviewBanner url={previewUrl} alt={filename || t("preview.generated_image")} />
         )}
 
         <div className="flex items-center justify-between bg-zinc-800 light:bg-slate-100 light:border light:border-slate-200/50 rounded-xl px-2 py-1">

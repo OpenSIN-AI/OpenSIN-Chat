@@ -1339,6 +1339,11 @@ const TRANSLATIONS = {
     support: "Support",
     signout: "Déconnexion",
   },
+  preview: {
+    loading: "Chargement de l'aperçu…",
+    load_error: "Impossible de charger l'aperçu.",
+    generated_image: "Image générée",
+  },
   customization: {
     interface: {
       title: "Interface",

@@ -14,8 +14,23 @@ vi.mock("@phosphor-icons/react", () => ({
   Eye: () => <svg data-testid="eye-icon" />,
   Image: () => <svg data-testid="image-icon" />,
 }));
+vi.mock("react-i18next", () => ({
+  useTranslation: () => ({
+    t: (key, fallback) => {
+      const map = {
+        "preview.generated_image": "Generated image",
+        "preview.loading": "Loading preview...",
+        "preview.load_error": "Preview could not be loaded.",
+      };
+      return map[key] || fallback || key;
+    },
+  }),
+}));
+
+// Capture the openPreview mock so individual tests can assert against it.
+const openPreviewMock = vi.fn();
 vi.mock("../../ChatSidebar", () => ({
-  useChatSidebar: () => ({ openPreview: vi.fn() }),
+  useChatSidebar: () => ({ openPreview: openPreviewMock }),
 }));
 vi.mock("@/utils/request", () => ({
   baseHeaders: () => ({ Authorization: "Bearer test-token" }),
@@ -173,6 +188,93 @@ describe("FileDownloadCard", () => {
       />
     );
     expect(screen.queryByText("Vorschau")).not.toBeInTheDocument();
+  });
+
+  it("does not render Vorschau button for svg files", () => {
+    render(
+      <FileDownloadCard
+        props={{ content: { filename: "icon.svg", storageFilename: "image-abc.svg" } }}
+      />
+    );
+    expect(screen.queryByText("Vorschau")).not.toBeInTheDocument();
+  });
+
+  // ── Regression tests for v0.6.2 fixes ─────────────────────────
+
+  it("AutoPreview (#55) does NOT open sidebar for image files (skips isImage)", async () => {
+    const blob = new Blob(["img"], { type: "image/png" });
+    mockFetch.mockResolvedValue({ ok: true, blob: () => Promise.resolve(blob) });
+    render(
+      <FileDownloadCard
+        autoPreview
+        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
+      />
+    );
+    // give the effect a tick
+    await new Promise((r) => setTimeout(r, 50));
+    expect(openPreviewMock).not.toHaveBeenCalled();
+  });
+
+  it("AutoPreview (#55) DOES open sidebar for non-image files (PDF)", async () => {
+    render(
+      <FileDownloadCard
+        autoPreview
+        props={{ content: { filename: "report.pdf", storageFilename: "report-abc.pdf" } }}
+      />
+    );
+    await waitFor(() => {
+      expect(openPreviewMock).toHaveBeenCalled();
+    });
+    const callArg = openPreviewMock.mock.calls[0][0];
+    expect(callArg.type).toBe("pdf");
+    expect(callArg.title).toBe("report.pdf");
+  });
+
+  it("renders skeleton spinner while image is loading (CLS prevention)", () => {
+    // Mock fetch to NEVER resolve — keeps the banner in loading state
+    mockFetch.mockReturnValue(new Promise(() => {}));
+    const { container } = render(
+      <FileDownloadCard
+        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
+      />
+    );
+    // Skeleton: animated div with h-[200px] container
+    const skeleton = container.querySelector(".h-\\[200px\\]");
+    expect(skeleton).toBeInTheDocument();
+    const spinner = skeleton.querySelector(".animate-spin");
+    expect(spinner).toBeInTheDocument();
+    // No image should be rendered yet
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+  });
+
+  it("renders nothing for ImagePreviewBanner when fetch fails (no fallback UI)", async () => {
+    mockFetch.mockResolvedValue({ ok: false, status: 500 });
+    const { container } = render(
+      <FileDownloadCard
+        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
+      />
+    );
+    await waitFor(() => {
+      expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    });
+    // Skeleton should be gone (no skeleton, no error message — silent fail)
+    expect(container.querySelector(".h-\\[200px\\]")).not.toBeInTheDocument();
+  });
+
+  it("ImagePreviewBanner uses filename as alt text when filename is provided", async () => {
+    const blob = new Blob(["data"], { type: "image/png" });
+    mockFetch.mockResolvedValue({ ok: true, blob: () => Promise.resolve(blob) });
+    render(
+      <FileDownloadCard
+        props={{ content: { filename: "mountain.png", storageFilename: "image-abc.png" } }}
+      />
+    );
+    await waitFor(() => {
+      expect(screen.getByRole("img")).toBeInTheDocument();
+    });
+    // alt is the filename (preferred over the translated fallback)
+    const img = screen.getByRole("img");
+    expect(img.getAttribute("alt")).toBe("mountain.png");
   });
 
   // ── Download button ──────────────────────────────────────────
