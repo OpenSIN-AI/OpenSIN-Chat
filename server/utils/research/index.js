@@ -10,10 +10,15 @@
 const { v4: uuidv4 } = require("uuid");
 const { SystemSettings } = require("../../models/systemSettings");
 const prisma = require("../prisma");
+const { BoundedJobStore } = require("../boundedJobStore");
 
 class ResearchPipeline {
   constructor() {
-    this.activeJobs = new Map();
+    this.activeJobs = new BoundedJobStore({
+      maxJobs: parseInt(process.env.RESEARCH_MAX_JOBS, 10) || 100,
+      maxActive: parseInt(process.env.RESEARCH_MAX_ACTIVE, 10) || 10,
+      ttlMs: (parseInt(process.env.RESEARCH_TTL_MINUTES, 10) || 30) * 60_000,
+    });
   }
 
   log(text, ...args) {

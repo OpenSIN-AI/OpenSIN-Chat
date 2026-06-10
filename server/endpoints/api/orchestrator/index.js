@@ -48,6 +48,9 @@ function apiOrchestratorEndpoints(app) {
       const result = await orchestrator.startWorkflow({ goal, steps, options });
       response.status(200).json(result);
     } catch (err) {
+      if (err.name === "JobCapacityError") {
+        return response.status(429).json({ error: err.message, code: "JOB_CAPACITY" });
+      }
       logger.error(`[orchestrator/start] ${err.message}`, err);
       response.status(500).json({ error: "Internal Server Error" });
     }

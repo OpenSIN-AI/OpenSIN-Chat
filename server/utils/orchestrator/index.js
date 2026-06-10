@@ -10,10 +10,15 @@
  */
 
 const { v4: uuidv4 } = require("uuid");
+const { BoundedJobStore } = require("../boundedJobStore");
 
 class AgentOrchestrator {
   constructor() {
-    this.activeWorkflows = new Map();
+    this.activeWorkflows = new BoundedJobStore({
+      maxJobs: parseInt(process.env.ORCHESTRATOR_MAX_WORKFLOWS, 10) || 50,
+      maxActive: parseInt(process.env.ORCHESTRATOR_MAX_ACTIVE, 10) || 5,
+      ttlMs: (parseInt(process.env.ORCHESTRATOR_TTL_MINUTES, 10) || 30) * 60_000,
+    });
   }
 
   log(text, ...args) {

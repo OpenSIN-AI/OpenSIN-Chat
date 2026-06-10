@@ -64,6 +64,9 @@ function apiResearchEndpoints(app) {
       });
       response.status(200).json(result);
     } catch (err) {
+      if (err.name === "JobCapacityError") {
+        return response.status(429).json({ error: err.message, code: "JOB_CAPACITY" });
+      }
       logger.error(`[research/start] ${err.message}`, err);
       response.status(500).json({ error: "Internal Server Error" });
     }
