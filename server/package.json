@@ -14,7 +14,7 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "lint": "eslint --fix .",
     "lint:check": "eslint .",
-    "test": "jest --ci --passWithNoTests",
+    "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" jest --ci --passWithNoTests",
     "test:watch": "jest --watch",
     "swagger": "node ./swagger/init.js"
   },
@@ -89,6 +89,7 @@
     "openai": "6.42.0",
     "p-queue": "6.6.2",
     "pdf-lib": "1.17.1",
+    "pdf-parse": "^2.4.5",
     "pg": "^8.11.5",
     "pinecone-client": "^1.1.0",
     "pluralize": "^8.0.0",

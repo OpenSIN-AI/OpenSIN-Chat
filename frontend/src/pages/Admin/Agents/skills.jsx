@@ -8,6 +8,7 @@ import CreateFileSkillPanel from "./CreateFileSkillPanel";
 import GMailSkillPanel from "./GMailSkillPanel";
 import GoogleCalendarSkillPanel from "./GoogleCalendarSkillPanel";
 import OutlookSkillPanel from "./OutlookSkillPanel";
+import ImageGenerationSkillPanel from "./ImageGenerationSkillPanel";
 import {
   Brain,
   File,
@@ -15,6 +16,7 @@ import {
   ChartBar,
   FolderOpen,
   FilePlus,
+  Image,
 } from "@phosphor-icons/react";
 import RAGImage from "@/media/agents/rag-memory.png";
 import SummarizeImage from "@/media/agents/view-summarize.png";
@@ -84,6 +86,15 @@ export const getConfigurableSkills = (
     skill: "create-chart",
     icon: ChartBar,
     image: GenerateChartsImage,
+  },
+  "image-generation": {
+    title: "Bildgenerierung",
+    description:
+      "Generiert Bilder mithilfe von KI-Bildgenerierungsmodellen über eine OpenAI-kompatible API.",
+    component: ImageGenerationSkillPanel,
+    skill: "image-generation",
+    icon: Image,
+    image: GenerateSaveImages,
   },
   "web-browsing": {
     title: t("agent.skill.web.title"),

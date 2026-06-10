@@ -45,6 +45,19 @@ export const getCreateFileSkills = (t) => [
     description: t("agent.skill.createFiles.skills.create-docx.description"),
     icon: FileDoc,
   },
+  {
+    name: "read-pdf-file",
+    title: "PDF lesen",
+    description: "Liest Text aus einer vorhandenen PDF-Datei.",
+    icon: FilePdf,
+  },
+  {
+    name: "edit-pdf-file",
+    title: "PDF bearbeiten",
+    description:
+      "Erstellt oder aktualisiert ein PDF-Dokument mit neuem Inhalt und Branding.",
+    icon: FilePdf,
+  },
 ];
 
 export default function CreateFileSkillPanel({

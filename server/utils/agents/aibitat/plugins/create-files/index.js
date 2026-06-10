@@ -4,6 +4,8 @@ const { CreateTextFile } = require("./text/create-text-file.js");
 const { CreatePdfFile } = require("./pdf/create-pdf-file.js");
 const { CreateExcelFile } = require("./xlsx/create-excel-file.js");
 const { CreateDocxFile } = require("./docx/create-docx-file.js");
+const { ReadPdfFile } = require("./pdf/read-pdf-file.js");
+const { EditPdfFile } = require("./pdf/edit-pdf-file.js");
 
 const createFilesAgent = {
   name: "create-files-agent",
@@ -16,6 +18,8 @@ const createFilesAgent = {
     CreatePdfFile,
     CreateExcelFile,
     CreateDocxFile,
+    ReadPdfFile,
+    EditPdfFile,
   ],
 };
 

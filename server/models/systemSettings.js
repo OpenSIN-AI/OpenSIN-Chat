@@ -83,6 +83,10 @@ const SystemSettings = {
     "meta_page_favicon",
     "memory_enabled",
     "memory_auto_extraction",
+
+    // Image generation settings
+    "image_generation_base_path",
+    "image_generation_model",
   ],
   supportedFields: [
     "logo_filename",
@@ -122,6 +126,11 @@ const SystemSettings = {
     // Memory/Personalization
     "memory_enabled",
     "memory_auto_extraction",
+
+    // Image generation settings
+    "image_generation_base_path",
+    "image_generation_api_key",
+    "image_generation_model",
   ],
   validations: {
     footer_data: (updates) => {
@@ -479,6 +488,29 @@ const SystemSettings = {
       if (prompt.trim() === SystemSettings.saneDefaultSystemPrompt)
         return SystemSettings.saneDefaultSystemPrompt;
       return String(prompt.trim());
+    },
+    image_generation_base_path: (update) => {
+      try {
+        if (!update || typeof update !== "string") return null;
+        const url = new URL(update);
+        return url.origin + url.pathname.replace(/\/+$/, "");
+      } catch {
+        return null;
+      }
+    },
+    image_generation_api_key: async (update) => {
+      if (!update || typeof update !== "string") return null;
+      if (/^\*+$/.test(update)) {
+        const existing = await SystemSettings.get({
+          label: "image_generation_api_key",
+        });
+        return existing?.value ?? null;
+      }
+      return String(update).trim();
+    },
+    image_generation_model: (update) => {
+      if (!update || typeof update !== "string") return null;
+      return String(update).trim();
     },
   },
   currentSettings: async function () {
