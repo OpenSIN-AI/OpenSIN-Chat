@@ -7,6 +7,7 @@ networks:
 services:
   openafd-chat:
     container_name: openafd
+    restart: always
     build:
       context: ../.
       dockerfile: ./docker/Dockerfile
