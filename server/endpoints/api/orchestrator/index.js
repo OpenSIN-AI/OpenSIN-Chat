@@ -13,7 +13,14 @@
  */
 
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
 const logger = require("../../../utils/logger")();
+
+const startRateLimit = simpleRateLimit({
+  bucket: "orchestrator-start",
+  max: 5,
+  windowMs: 60 * 1000,
+});
 
 const MAX_GOAL_LENGTH = 2000;
 
@@ -25,7 +32,7 @@ function getOrchestrator() {
 function apiOrchestratorEndpoints(app) {
   if (!app) return;
 
-  app.post("/orchestrator/start", [validApiKey], async (request, response) => {
+    app.post("/orchestrator/start", [startRateLimit, validApiKey], async (request, response) => {
     try {
       const { goal, steps, options } = request.body || {};
 

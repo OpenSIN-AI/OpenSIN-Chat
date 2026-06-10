@@ -13,6 +13,7 @@ const { PDFDocument, rgb, StandardFonts } = require("pdf-lib");
 const path = require("path");
 const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
+const { enforceReportRetention } = require("./retention");
 
 const STORAGE_DIR =
   process.env.NODE_ENV === "development"
@@ -47,6 +48,7 @@ class ReportGenerator {
     template = "standard",
   }) {
     if (!fs.existsSync(STORAGE_DIR)) fs.mkdirSync(STORAGE_DIR, { recursive: true });
+    enforceReportRetention(STORAGE_DIR);
 
     const markdown = ReportGenerator.#buildMarkdown({
       title,

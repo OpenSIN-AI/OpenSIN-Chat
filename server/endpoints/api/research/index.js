@@ -13,7 +13,14 @@
  */
 
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
 const logger = require("../../../utils/logger")();
+
+const startRateLimit = simpleRateLimit({
+  bucket: "research-start",
+  max: 10,
+  windowMs: 60 * 1000,
+});
 
 const VALID_DEPTHS = ["quick", "deep"];
 const VALID_SOURCES = ["web", "politician"];
@@ -27,7 +34,7 @@ function getResearchPipeline() {
 function apiResearchEndpoints(app) {
   if (!app) return;
 
-  app.post("/research/start", [validApiKey], async (request, response) => {
+    app.post("/research/start", [startRateLimit, validApiKey], async (request, response) => {
     try {
       const { query, depth, sources, workspaceId } = request.body || {};
 

@@ -54,6 +54,7 @@ const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { httpLogger } = require("./middleware/httpLogger");
 const BackgroundQueue = require("./utils/backgroundJobs/queue");
 const app = express();
+app.set("trust proxy", 1);
 const apiRouter = express.Router();
 const FILE_LIMIT = "5120MB";
 
