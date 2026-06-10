@@ -15,6 +15,11 @@ const { ScheduledJobRun } = require("../models/scheduledJobRun");
 const createFilesLib = require("../utils/agents/aibitat/plugins/create-files/lib");
 const { Telemetry } = require("../models/telemetry");
 
+// Extensions the browser can render inline (PDF for sidebar iframe,
+// raster images for <img>). SVG excluded: it can carry <script> tags
+// (stored-XSS vector). html/htm excluded for the same reason.
+const INLINE_EXTENSIONS = new Set(["pdf", "png", "jpg", "jpeg", "gif", "webp"]);
+
 /**
  * Endpoints for serving agent-generated files (PPTX, etc.) with authentication
  * and ownership validation.
@@ -70,12 +75,6 @@ function agentFileServerEndpoints(app) {
         const safeFilename = createFilesLib.sanitizeFilenameForHeader(
           fileSource.displayFilename || filename,
         );
-        // Extensions that the browser can render natively inside an
-        // <iframe> (PDF, HTML) or <img> (PNG, JPG, etc.).
-        // All others (PPTX, DOCX, XLSX …) are served as attachment.
-        const INLINE_EXTENSIONS = new Set([
-          "pdf", "png", "jpg", "jpeg", "gif", "webp", "svg", "html", "htm",
-        ]);
         const ext = parsed.extension.toLowerCase();
         const disposition = INLINE_EXTENSIONS.has(ext) ? "inline" : "attachment";
         response.setHeader("Content-Type", mimeType);

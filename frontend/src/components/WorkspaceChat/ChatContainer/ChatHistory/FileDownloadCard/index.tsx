@@ -8,9 +8,6 @@ import { useChatSidebar } from "../../ChatSidebar";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
-// Extensions that get an image <img> preview instead of an <iframe>.
-const IMAGE_EXTENSIONS = new Set(["png", "jpg", "jpeg", "gif", "webp", "svg"]);
-
 // Module-level guard so a freshly generated report only auto-opens the preview
 // once — never again on re-renders or when the chat history reloads.
 const autoPreviewedFiles = new Set();
@@ -22,13 +19,9 @@ const autoPreviewedFiles = new Set();
  */
 function FileDownloadCard({ props, autoPreview = false }: any) {
   const { filename, storageFilename, fileSize, downloadUrl } = props.content || {};
-  const { badge, badgeBg, badgeText, fileType, isImage } = getFileDisplayInfo(filename);
+  const { badge, badgeBg, badgeText, fileType, isImage, previewType } = getFileDisplayInfo(filename);
   const [downloading, setDownloading] = useState(false as any);
   const { openPreview } = useChatSidebar();
-
-  // Derive content type for the preview sidebar
-  const ext = filename?.split(".")?.pop()?.toLowerCase() ?? "";
-  const previewType = IMAGE_EXTENSIONS.has(ext) ? "image" : ext === "pdf" ? "pdf" : "doc";
 
   const previewUrl =
     downloadUrl ||
@@ -51,17 +44,17 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
   }
 
   // #55: Automatically reveal the preview sidebar when an agent generates a
-  // new file. Keyed by the file identity so it fires exactly once.
+  // new file. Skip for images — they get an inline <img> banner.
   const didAutoOpen = useRef(false);
   useEffect(() => {
-    if (!autoPreview || didAutoOpen.current || !previewUrl) return;
+    if (!autoPreview || isImage || didAutoOpen.current || !previewUrl) return;
     const key = storageFilename || downloadUrl || filename;
     if (!key || autoPreviewedFiles.has(key)) return;
     autoPreviewedFiles.add(key);
     didAutoOpen.current = true;
     openPreview(buildPreviewData());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPreview, previewUrl, storageFilename, downloadUrl, filename]);
+  }, [autoPreview, isImage, previewUrl, storageFilename, downloadUrl, filename]);
 
   const handleDownload = async () => {
     if (downloading) return;
@@ -84,10 +77,7 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
       <div className="w-full max-w-[750px] mr-4">
         {/* Inline image preview for generated images */}
         {isImage && previewUrl && (
-          <ImagePreviewBanner
-            url={previewUrl}
-            alt={filename || "Generated image"}
-          />
+          <ImagePreviewBanner url={previewUrl} alt={filename || "Generated image"} />
         )}
 
         <div className="flex items-center justify-between bg-zinc-800 light:bg-slate-100 light:border light:border-slate-200/50 rounded-xl px-2 py-1">
@@ -142,6 +132,7 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
  * Renders a generated image inline above the download bar.
  * Fetches via auth-header so the protected /agent-skills/ endpoint
  * returns 200 (a plain <img src> without Bearer would get 401).
+ * Shows a skeleton placeholder during load to prevent layout shift.
  */
 function ImagePreviewBanner({ url, alt }: { url: string; alt: string }) {
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
@@ -171,13 +162,17 @@ function ImagePreviewBanner({ url, alt }: { url: string; alt: string }) {
     };
   }, [url]);
 
-  useEffect(() => {
-    return () => {
-      if (blobUrl) URL.revokeObjectURL(blobUrl);
-    };
-  }, [blobUrl]);
+  // Error: show nothing (the download card still works)
+  if (error) return null;
 
-  if (error || (!blobUrl)) return null;
+  // Loading: skeleton to prevent CLS
+  if (!blobUrl) {
+    return (
+      <div className="mb-2 rounded-xl overflow-hidden border border-zinc-700 light:border-slate-200 bg-zinc-900 light:bg-slate-50 h-[200px] flex items-center justify-center">
+        <div className="w-8 h-8 rounded-full border-2 border-zinc-600 border-t-zinc-300 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="mb-2 rounded-xl overflow-hidden border border-zinc-700 light:border-slate-200 bg-zinc-900 light:bg-slate-50 flex items-center justify-center max-h-[420px]">
@@ -195,6 +190,12 @@ function ImagePreviewBanner({ url, alt }: { url: string; alt: string }) {
  */
 function getFileDisplayInfo(filename: any) {
   const extension = filename?.split(".")?.pop()?.toLowerCase() ?? "txt";
+  const imageExts = new Set(["png", "jpg", "jpeg", "gif", "webp", "svg"]);
+  const isImage = imageExts.has(extension);
+  let previewType = "doc";
+  if (isImage) previewType = "image";
+  else if (extension === "pdf") previewType = "pdf";
+
   switch (extension) {
     case "pptx":
     case "ppt":
@@ -203,7 +204,8 @@ function getFileDisplayInfo(filename: any) {
         badgeBg: "bg-orange-100",
         badgeText: "text-orange-700",
         fileType: "PowerPoint",
-        isImage: false,
+        isImage,
+        previewType,
       };
     case "pdf":
       return {
@@ -211,7 +213,8 @@ function getFileDisplayInfo(filename: any) {
         badgeBg: "bg-red-100",
         badgeText: "text-red-700",
         fileType: "PDF Document",
-        isImage: false,
+        isImage,
+        previewType,
       };
     case "doc":
     case "docx":
@@ -220,7 +223,8 @@ function getFileDisplayInfo(filename: any) {
         badgeBg: "bg-blue-100",
         badgeText: "text-blue-700",
         fileType: "Word Document",
-        isImage: false,
+        isImage,
+        previewType,
       };
     case "xls":
     case "xlsx":
@@ -229,7 +233,8 @@ function getFileDisplayInfo(filename: any) {
         badgeBg: "bg-green-100",
         badgeText: "text-green-700",
         fileType: "Spreadsheet",
-        isImage: false,
+        isImage,
+        previewType,
       };
     case "csv":
       return {
@@ -237,7 +242,8 @@ function getFileDisplayInfo(filename: any) {
         badgeBg: "bg-green-100",
         badgeText: "text-green-700",
         fileType: "Spreadsheet",
-        isImage: false,
+        isImage,
+        previewType,
       };
     case "png":
     case "jpg":
@@ -249,7 +255,8 @@ function getFileDisplayInfo(filename: any) {
         badgeBg: "bg-purple-100",
         badgeText: "text-purple-700",
         fileType: "Image",
-        isImage: true,
+        isImage,
+        previewType,
       };
     case "svg":
       return {
@@ -257,7 +264,8 @@ function getFileDisplayInfo(filename: any) {
         badgeBg: "bg-purple-100",
         badgeText: "text-purple-700",
         fileType: "Vector Image",
-        isImage: true,
+        isImage,
+        previewType,
       };
     default:
       return {
@@ -265,7 +273,8 @@ function getFileDisplayInfo(filename: any) {
         badgeBg: "bg-slate-200",
         badgeText: "text-slate-700",
         fileType: "File",
-        isImage: false,
+        isImage,
+        previewType,
       };
   }
 }
