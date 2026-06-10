@@ -54,9 +54,16 @@ const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { httpLogger } = require("./middleware/httpLogger");
 const BackgroundQueue = require("./utils/backgroundJobs/queue");
 const app = express();
-app.set("trust proxy", 1);
+// Required for correct client IPs (rate limiting, logging) behind a
+// reverse proxy (nginx, Cloudflare). Set TRUST_PROXY=0 to disable when
+// the server is directly exposed.
+app.set("trust proxy", parseInt(process.env.TRUST_PROXY ?? "1", 10));
 const apiRouter = express.Router();
-const FILE_LIMIT = "5120MB";
+// Body-parser limit. Historically 5120MB to support huge raw-text document
+// uploads via JSON. Operators SHOULD lower this in production (e.g. 50MB)
+// via BODY_LIMIT — large bodies are buffered fully in memory BEFORE any
+// auth middleware runs, so this is an unauthenticated memory-DoS vector.
+const FILE_LIMIT = process.env.BODY_LIMIT || "5120MB";
 
 // Only log HTTP requests in development mode and if the ENABLE_HTTP_LOGGER environment variable is set to true
 if (
