@@ -69,24 +69,38 @@ const { SystemPromptVariables } = require("../models/systemPromptVariables");
 const { VALID_COMMANDS } = require("../utils/chats");
 const { AgentSkillWhitelist } = require("../models/agentSkillWhitelist");
 const { Memory } = require("../models/memory");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 
 function systemEndpoints(app) {
   if (!app) return;
 
   app.get("/ping", (_, response) => {
-    response.status(200).json({ online: true });
+    response.status(200).json({
+      online: true,
+      version: process.env.APP_VERSION || null,
+      commit: process.env.GIT_SHA || null,
+      uptimeSeconds: Math.floor(process.uptime()),
+    });
   });
 
   app.get("/migrate", async (_, response) => {
     response.sendStatus(200);
   });
 
-  app.get("/env-dump", async (_, response) => {
-    if (process.env.NODE_ENV !== "production")
-      return response.sendStatus(200).end();
-    dumpENV();
-    response.sendStatus(200).end();
-  });
+  app.get(
+    "/env-dump",
+    [simpleRateLimit({ bucket: "env-dump", max: 2, windowMs: 60 * 1000 })],
+    async (request, response) => {
+      if (process.env.NODE_ENV !== "production")
+        return response.sendStatus(200).end();
+      // eslint-disable-next-line no-console
+      console.warn(
+        `\x1b[33m[ENV-DUMP]\x1b[0m triggered by ip=${request.ip || "unknown"}`
+      );
+      dumpENV();
+      response.sendStatus(200).end();
+    }
+  );
 
   app.get("/onboarding", async (_, response) => {
     try {

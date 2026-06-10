@@ -180,9 +180,13 @@ WORKDIR /app
 COPY --chown=opensin:opensin --from=frontend-build /app/frontend/dist /app/server/public
 
 # Setup the environment
+ARG APP_VERSION=dev
+ARG GIT_SHA=unknown
 ENV NODE_ENV=production
 ENV ANYTHING_LLM_RUNTIME=docker
 ENV DEPLOYMENT_VERSION=1.13.0
+ENV APP_VERSION=${APP_VERSION}
+ENV GIT_SHA=${GIT_SHA}
 
 # Setup the healthcheck
 HEALTHCHECK --interval=1m --timeout=10s --start-period=1m \

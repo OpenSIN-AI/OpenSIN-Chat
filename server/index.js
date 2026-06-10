@@ -52,12 +52,14 @@ const {
 const { memoryEndpoints } = require("./endpoints/memory");
 const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { httpLogger } = require("./middleware/httpLogger");
+const { securityHeaders } = require("./utils/middleware/securityHeaders");
 const BackgroundQueue = require("./utils/backgroundJobs/queue");
 const app = express();
 // Required for correct client IPs (rate limiting, logging) behind a
 // reverse proxy (nginx, Cloudflare). Set TRUST_PROXY=0 to disable when
 // the server is directly exposed.
 app.set("trust proxy", parseInt(process.env.TRUST_PROXY ?? "1", 10));
+app.use(securityHeaders());
 const apiRouter = express.Router();
 // Body-parser limit. Historically 5120MB to support huge raw-text document
 // uploads via JSON. Operators SHOULD lower this in production (e.g. 50MB)
@@ -139,9 +141,6 @@ if (process.env.NODE_ENV !== "development") {
     express.static(path.resolve(__dirname, "public"), {
       extensions: ["js"],
       setHeaders: (res, path) => {
-        // Disable I-framing of entire site UI
-        res.removeHeader("X-Powered-By");
-        res.setHeader("X-Frame-Options", "DENY");
 
         // Prevent cache issues with Vite chunk hashing on rebuilds
         // HTML always fresh, JS entry points short cache, hashed chunks immutable
