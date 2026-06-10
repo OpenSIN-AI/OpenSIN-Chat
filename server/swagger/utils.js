@@ -23,7 +23,7 @@ function useSwagger(app) {
       fs.readFileSync(path.resolve(__dirname, "index.css")),
       fs.readFileSync(path.resolve(__dirname, "dark-swagger.css")),
     ].join("\n\n\n"),
-    customSiteTitle: "OpenAfD Chat Developer API Documentation",
+    customSiteTitle: "OpenSIN Chat Developer API Documentation",
     customfavIcon: faviconUrl(),
   };
 

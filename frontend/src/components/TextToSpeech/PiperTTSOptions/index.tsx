@@ -139,7 +139,7 @@ function DemoVoiceSample({ voiceId }: any) {
         setLoading(true);
         const client = new PiperTTSClient({ voiceId });
         const blobUrl = await client.getAudioBlobForText(
-          "Hello, welcome to OpenAfD Chat!",
+          "Hello, welcome to OpenSIN Chat!",
         );
         setAudioSrc(blobUrl);
         setLoading(false);

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
@@ -85,7 +85,7 @@ import CerebrasLLMOptions from "@/components/LLMSelection/CerebrasLLMOptions";
 export const MODEL_ROUTER_PROVIDER = {
   name: "Model Router",
   value: "openafd-router",
-  logo: OpenAfDChatIcon,
+  logo: OpenSINChatIcon,
   options: (settings) => <ModelRouterOptions settings={settings} />,
   description:
     "Route messages to different LLM providers based on rules you define.",

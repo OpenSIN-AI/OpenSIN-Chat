@@ -252,7 +252,7 @@ async function streamChat({
   // We don't want to write a new method for every LLM to support openAI calls
   // via the `handleStreamResponseV2` method handler. So here we create a passthrough
   // that on writes to the main response, transforms the chunk to OpenAI format.
-  // The chunk is coming in the format from `writeResponseChunk` but in the OpenAfD Chat
+  // The chunk is coming in the format from `writeResponseChunk` but in the OpenSIN Chat
   // response chunk schema, so we here we mutate each chunk.
 
   // User is trying to query-mode chat a workspace that has no data in it - so

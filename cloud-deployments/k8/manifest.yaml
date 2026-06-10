@@ -2,7 +2,7 @@
 apiVersion: v1                                                                                                                                           
 kind: PersistentVolume                                                                                                                                   
 metadata:                                                                                                                                                
-  name: openafd-chat-volume                                                                                                                              
+  name: opensin-chat-volume                                                                                                                              
   annotations:                                                                                                                                           
     pv.beta.kubernetes.io/uid: "1000"                                                                                                                    
     pv.beta.kubernetes.io/gid: "1000"                                                                                                                    
@@ -28,7 +28,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: openafd-chat-volume-claim
+  name: opensin-chat-volume-claim
   namespace: "{{ namespace }}"
 spec:
   accessModes:
@@ -40,14 +40,14 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: openafd-chat
+  name: opensin-chat
   namespace: "{{ namespace }}"
   labels:
-    openafd-chat: "true"
+    opensin-chat: "true"
 spec:
   selector:
     matchLabels:
-      k8s-app: openafd-chat
+      k8s-app: opensin-chat
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -57,10 +57,10 @@ spec:
   template:
     metadata:
       labels:
-        openafd-chat: "true"
-        k8s-app: openafd-chat
-        app.kubernetes.io/name: openafd-chat
-        app.kubernetes.io/part-of: openafd-chat
+        opensin-chat: "true"
+        k8s-app: opensin-chat
+        app.kubernetes.io/name: opensin-chat
+        app.kubernetes.io/part-of: opensin-chat
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/path: /metrics
@@ -83,7 +83,7 @@ spec:
                 values:                                                                                                                                                                                                                                                                  
                 - us-east-1c  
       containers:
-      - name: openafd-chat
+      - name: opensin-chat
         resources:
           limits:
             memory: "1Gi"
@@ -159,18 +159,18 @@ spec:
           - name: GID
             value: "1000"
         volumeMounts: 
-          - name: openafd-chat-server-storage-volume-mount
+          - name: opensin-chat-server-storage-volume-mount
             mountPath: /storage                                                                                                                                                  
       volumes:
-        - name: openafd-chat-server-storage-volume-mount
+        - name: opensin-chat-server-storage-volume-mount
           persistentVolumeClaim:
-            claimName: openafd-chat-volume-claim
+            claimName: opensin-chat-volume-claim
 ---
 # This serves the UI and the backend.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: openafd-chat-ingress
+  name: opensin-chat-ingress
   namespace: "{{ namespace }}"
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "{{ namespace }}-chat.{{ base_domain }}"
@@ -186,7 +186,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: openafd-chat-svc
+            name: opensin-chat-svc
             port: 
               number: 3001
   tls: # < placing a host in the TLS config will indicate a cert should be created
@@ -198,8 +198,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    kubernetes.io/name: openafd-chat
-  name: openafd-chat-svc
+    kubernetes.io/name: opensin-chat
+  name: opensin-chat-svc
   namespace: "{{ namespace }}"
 spec:
   ports:
@@ -211,4 +211,4 @@ spec:
     targetPort: 9090
     name: metrics
   selector:
-    k8s-app: openafd-chat
+    k8s-app: opensin-chat

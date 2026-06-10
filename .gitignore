@@ -20,4 +20,22 @@ node_modules
 sin_goal_mode.db
 .sin_evidence/
 *.pack
+
+# Environment variables — never commit real env files
+.env
+.env.*
+!.env.example
+!.env.*.example
+server/.env
 docker/.env
+docker/.env.*
+!docker/.env.example
+!docker/.env.supabase.example
+docker-opensin/.env
+
+# Runtime storage (DB, Uploads, Vektoren) — niemals committen
+server/storage/
+server/storage-opensin/
+collector/hotdir/
+collector/outputs/
+!**/.gitkeep

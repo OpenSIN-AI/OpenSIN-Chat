@@ -2,7 +2,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// SQLite is the active datasource for OpenAfD-Chat (matches
+// SQLite is the active datasource for OpenSIN-Chat (matches
 // `server/prisma/migrations/migration_lock.toml` and the runtime
 // `server/storage/openafd.db`). The PostgreSQL block is preserved
 // upstream-style for optional future migration.

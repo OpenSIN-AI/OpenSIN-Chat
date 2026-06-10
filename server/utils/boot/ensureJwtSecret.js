@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
-// Purpose: Ensure `JWT_SECRET` is set in the environment.
-//          If the user has not configured one in `.env` (or `.env.development`),
-//          this generates a cryptographically secure 32-byte hex string, writes
-//          it back to the env file, and sets `process.env.JWT_SECRET`.
+// Purpose: Ensure `JWT_SECRET`, `SIG_KEY`, and `SIG_SALT` are set.
+//          In dev, auto-generates JWT_SECRET for convenience.
+//          In prod, exits hard if any secret is missing or weak.
 // Docs: ensureJwtSecret.doc.md
 
 const fs = require("node:fs");
@@ -10,6 +9,12 @@ const path = require("node:path");
 const crypto = require("node:crypto");
 
 const LOG_PREFIX = "\x1b[32m[JWT Secret]\x1b[0m";
+const WEAK_VALUES = new Set([
+  "my-random-string-for-seeding",
+  "passphrase",
+  "salt",
+  "hunter2",
+]);
 
 /**
  * Resolve the active .env file path based on `NODE_ENV`.
@@ -31,22 +36,32 @@ function resolveEnvFile() {
   return null;
 }
 
+function isProd() {
+  return process.env.NODE_ENV === "production";
+}
+
 /**
- * Idempotent: if `JWT_SECRET` is set, this is a no-op. Otherwise, generates
- * a 32-byte hex secret, writes it into the active .env file, and exports it
- * to `process.env.JWT_SECRET` so the rest of the server can use it.
- *
- * Safe to call early in the boot sequence. Should be called BEFORE any code
- * that depends on JWT signing (i.e. before requiring `http/index.js`).
+ * Idempotent. In development: auto-generates JWT_SECRET for convenience.
+ * In production: REQUIRES a strong JWT_SECRET to be set, otherwise exits hard.
  */
 function ensureJwtSecret() {
-  if (process.env.JWT_SECRET && process.env.JWT_SECRET.length >= 32) return;
+  const current = process.env.JWT_SECRET;
+  const isStrong = current && current.length >= 32 && !WEAK_VALUES.has(current);
+
+  if (isStrong) return;
+
+  if (isProd()) {
+    console.error(
+      `${LOG_PREFIX} FATAL: JWT_SECRET is missing or weak in production. ` +
+        `Set a stable secret (openssl rand -hex 24) before starting.`,
+    );
+    process.exit(1);
+  }
 
   const secret = crypto.randomBytes(32).toString("hex");
   const envFile = resolveEnvFile();
 
   if (envFile) {
-    // Read current file, strip any prior JWT_SECRET line, append new one.
     let content = "";
     try {
       content = fs.readFileSync(envFile, "utf8");
@@ -59,18 +74,15 @@ function ensureJwtSecret() {
     lines.push(`JWT_SECRET='${secret}'`);
     try {
       fs.writeFileSync(envFile, lines.join("\n") + "\n");
-      // eslint-disable-next-line no-console
       console.log(
         `${LOG_PREFIX} Generated new JWT_SECRET and wrote it to ${path.basename(envFile)}`,
       );
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.warn(
         `${LOG_PREFIX} Could not persist JWT_SECRET to ${envFile}: ${e.message}. Using in-memory value for this session.`,
       );
     }
   } else {
-    // eslint-disable-next-line no-console
     console.log(
       `${LOG_PREFIX} Generated in-memory JWT_SECRET (no .env file found to persist to)`,
     );
@@ -79,4 +91,35 @@ function ensureJwtSecret() {
   process.env.JWT_SECRET = secret;
 }
 
+/**
+ * Validate the encryption secrets (SIG_KEY / SIG_SALT) used to encrypt stored
+ * provider API keys. In production these MUST be present and strong, otherwise
+ * stored secrets are trivially decryptable. Dev: warn only.
+ */
+function ensureEncryptionSecrets() {
+  const checks = [
+    ["SIG_KEY", process.env.SIG_KEY],
+    ["SIG_SALT", process.env.SIG_SALT],
+  ];
+  const problems = checks.filter(
+    ([, v]) => !v || v.length < 32 || WEAK_VALUES.has(v),
+  );
+  if (problems.length === 0) return;
+
+  const names = problems.map(([n]) => n).join(", ");
+  if (isProd()) {
+    console.error(
+      `${LOG_PREFIX} FATAL: ${names} missing or weak in production. ` +
+        `Set with: openssl rand -hex 32`,
+    );
+    process.exit(1);
+  }
+  console.warn(
+    `${LOG_PREFIX} WARNING: ${names} weak/missing. Fine for local dev, ` +
+      `but stored API keys are NOT securely encrypted. Set strong values before deploying.`,
+  );
+}
+
 module.exports = ensureJwtSecret;
+module.exports.ensureJwtSecret = ensureJwtSecret;
+module.exports.ensureEncryptionSecrets = ensureEncryptionSecrets;

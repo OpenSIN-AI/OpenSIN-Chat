@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import AgentLLMItem from "./AgentLLMItem";
 import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 import { CaretUpDown, Gauge, MagnifyingGlass, X } from "@phosphor-icons/react";
@@ -61,7 +61,7 @@ const WARN_PERFORMANCE = [
 const LLM_DEFAULT = {
   name: "System Default",
   value: "none",
-  logo: OpenAfDChatIcon,
+  logo: OpenSINChatIcon,
   options: () => <React.Fragment />,
   description:
     "Agents will use the workspace or system LLM unless otherwise specified.",

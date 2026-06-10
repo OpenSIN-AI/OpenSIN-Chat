@@ -114,7 +114,7 @@
 
 **WICHTIG:** Vor jedem Commit:
 ```bash
-cd /Users/jeremy/dev/OpenAfD-Chat/server
+cd /Users/jeremy/dev/OpenSIN-Chat/server
 npx jest --testPathPattern="abgeordnetenwatchApi|bundestagApi|sync-politician-data" 2>&1
 # Alle Tests müssen grün sein
 ```

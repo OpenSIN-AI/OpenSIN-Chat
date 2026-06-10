@@ -24,7 +24,7 @@ class OpenRouterProvider extends InheritMultiple([Provider, UnTooled]) {
       apiKey: process.env.OPENROUTER_API_KEY,
       defaultHeaders: {
         "HTTP-Referer": "https://openafd.com",
-        "X-Title": "OpenAfD Chat",
+        "X-Title": "OpenSIN Chat",
       },
     });
 

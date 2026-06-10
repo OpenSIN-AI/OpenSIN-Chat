@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Looking for a language to translate OpenAfD Chat to?
+// Looking for a language to translate OpenSIN Chat to?
 // Create a `common.js` file in the language's ISO code https://www.w3.org/International/O-charset-lang.html
 // eg: Spanish => es/common.js
 // eg: French => fr/common.js

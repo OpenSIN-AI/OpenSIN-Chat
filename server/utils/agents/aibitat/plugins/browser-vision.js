@@ -144,7 +144,7 @@ async function fetchWithRetry(url) {
         signal: controller.signal,
         headers: {
           "User-Agent":
-            "Mozilla/5.0 (compatible; OpenAfD-BrowserVision/1.0; +https://openafd.de)",
+            "Mozilla/5.0 (compatible; OpenSIN-BrowserVision/1.0; +https://openafd.de)",
           Accept: "text/html,application/xhtml+xml,*/*;q=0.8",
           "Accept-Language": "de,en;q=0.7",
         },
@@ -375,7 +375,7 @@ const browserVision = {
                 signal: controller.signal,
                 headers: {
                   "User-Agent":
-                    "Mozilla/5.0 (compatible; OpenAfD-BrowserVision/1.0)",
+                    "Mozilla/5.0 (compatible; OpenSIN-BrowserVision/1.0)",
                   Accept: "text/html,*/*;q=0.5",
                 },
               });

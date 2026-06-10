@@ -24,9 +24,9 @@ const webBrowsing = {
             "Search the internet for real-time information. Look online for current news, recent updates, latest changes, or any information not available locally. Browse the web to find answers about current events, prices, weather, or live data.",
           examples: [
             {
-              prompt: "Look online for recent changes to OpenAfD Chat",
+              prompt: "Look online for recent changes to OpenSIN Chat",
               call: JSON.stringify({
-                query: "OpenAfD Chat recent changes updates",
+                query: "OpenSIN Chat recent changes updates",
               }),
             },
             {
@@ -440,7 +440,7 @@ const webBrowsing = {
               headers: {
                 Authorization: `Bearer ${process.env.AGENT_SEARCHAPI_API_KEY}`,
                 "Content-Type": "application/json",
-                "X-SearchApi-Source": "OpenAfD Chat",
+                "X-SearchApi-Source": "OpenSIN Chat",
               },
             })
               .then((res) => {
@@ -754,7 +754,7 @@ const webBrowsing = {
               headers: {
                 "X-API-KEY": process.env.AGENT_SERPLY_API_KEY,
                 "Content-Type": "application/json",
-                "User-Agent": "openafd-chat",
+                "User-Agent": "opensin-chat",
                 "X-Proxy-Location": proxy_location,
                 "X-User-Agent": device_type,
               },
@@ -831,7 +831,7 @@ const webBrowsing = {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
-                "User-Agent": "openafd-chat",
+                "User-Agent": "opensin-chat",
               },
             })
               .then((res) => {

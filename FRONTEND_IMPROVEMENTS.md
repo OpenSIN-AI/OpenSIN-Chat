@@ -1,4 +1,4 @@
-# Frontend Verbesserungen - OpenAfD-Chat
+# Frontend Verbesserungen - OpenSIN-Chat
 
 ## Implementierte Änderungen (3 Commits)
 

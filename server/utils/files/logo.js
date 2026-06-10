@@ -7,14 +7,14 @@ const { v4 } = require("uuid");
 const { SystemSettings } = require("../../models/systemSettings");
 const { normalizePath, isWithin } = require(".");
 
-// OpenAfD native logo filenames. New installations use these.
+// OpenSIN native logo filenames. New installations use these.
 const LOGO_FILENAME = "openafd-logo.png";
 const LOGO_FILENAME_DARK = "openafd-logo-dark.png";
 
 // Legacy AnythingLLM logo filenames. Kept as a compatibility shim so that
 // existing AnythingLLM installations (which may have stored an admin-uploaded
-// logo under these names) keep working when the operator migrates to OpenAfD-Chat
-// without renaming their asset files. Order matters: OpenAfD names come first
+// logo under these names) keep working when the operator migrates to OpenSIN-Chat
+// without renaming their asset files. Order matters: OpenSIN names come first
 // so a fresh install never falls back to legacy paths.
 const DEFAULT_LOGO_FILENAMES = [
   LOGO_FILENAME,
@@ -25,7 +25,7 @@ const DEFAULT_LOGO_FILENAMES = [
 
 /**
  * Checks if the filename is one of the recognized default logo filenames
- * (OpenAfD native + AnythingLLM legacy shim).
+ * (OpenSIN native + AnythingLLM legacy shim).
  * @param {string} filename - The filename to check.
  * @returns {boolean} Whether the filename is a known default logo filename.
  */
@@ -50,9 +50,9 @@ function getDefaultFilename(darkMode = true) {
 
 /**
  * Legacy shim: returns the AnythingLLM default logo filename for the given
- * theme. Used only as a last-resort fallback when no OpenAfD default is
+ * theme. Used only as a last-resort fallback when no OpenSIN default is
  * present on disk (e.g. an old AnythingLLM installation that was upgraded
- * to OpenAfD-Chat without copying/replacing the asset files).
+ * to OpenSIN-Chat without copying/replacing the asset files).
  */
 function getLegacyDefaultFilename(darkMode = true) {
   return darkMode ? "anythingllm-logo-dark.png" : "anythingllm-logo.png";
@@ -73,11 +73,11 @@ async function determineLogoFilepath(defaultFilename = LOGO_FILENAME) {
     return fs.existsSync(customLogoPath) ? customLogoPath : defaultFilepath;
   }
 
-  // No custom logo set. Try the requested OpenAfD default first.
+  // No custom logo set. Try the requested OpenSIN default first.
   if (fs.existsSync(defaultFilepath)) return defaultFilepath;
 
   // Fallback: legacy AnythingLLM default (covers the upgrade-without-rename
-  // scenario). Only consulted when the OpenAfD default is missing on disk.
+  // scenario). Only consulted when the OpenSIN default is missing on disk.
   const legacyFilename = getLegacyDefaultFilename(
     defaultFilename === LOGO_FILENAME_DARK,
   );

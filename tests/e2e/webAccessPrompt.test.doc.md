@@ -1,7 +1,7 @@
 # E2E: LLM awareness of @agent tooling
 
 ## What it does
-Sends a chat to a running OpenAfD container without the `@agent` prefix and
+Sends a chat to a running OpenSIN container without the `@agent` prefix and
 verifies the LLM acknowledges that tools (web, filesystem, etc.) are
 available via the `@agent` prefix. Also re-tests the explicit `@agent` flow
 to make sure backward compatibility holds.

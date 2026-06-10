@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# auto-deploy.sh — Lokaler Polling-Deploy für OpenAfD-Chat
+# auto-deploy.sh — Lokaler Polling-Deploy für OpenSIN-Chat
 # -----------------------------------------------------------------------------
 # Holt regelmäßig den neuesten Stand von origin/main. Wenn sich etwas geändert
 # hat, wird das Docker-Image NEU gebaut (--no-cache erzwingt ein frisches

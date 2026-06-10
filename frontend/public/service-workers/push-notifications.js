@@ -13,7 +13,7 @@ function parseEventData(event) {
     if (!payload) return;
   
     // options: https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification#options
-    self.registration.showNotification(payload.title || 'OpenAfD Chat', {
+    self.registration.showNotification(payload.title || 'OpenSIN Chat', {
       ...payload,
       icon: '/favicon.png',
     });

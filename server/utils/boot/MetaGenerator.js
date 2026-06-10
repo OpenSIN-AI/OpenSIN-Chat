@@ -7,7 +7,7 @@
  */
 
 /**
- * OpenAfD Chat — Default-Meta-Tags.
+ * OpenSIN Chat — Default-Meta-Tags.
  * Setzt Titel, Beschreibung und OG/Twitter-Karten für die Sovereign-AI-Workbench.
  */
 class MetaGenerator {
@@ -20,8 +20,8 @@ class MetaGenerator {
   #customConfig = null;
 
   #defaultManifest = {
-    name: "OpenAfD Chat",
-    short_name: "OpenAfD Chat",
+    name: "OpenSIN Chat",
+    short_name: "OpenSIN Chat",
     display: "standalone",
     orientation: "portrait",
     start_url: "/",
@@ -53,14 +53,14 @@ class MetaGenerator {
       {
         tag: "title",
         props: null,
-        content: "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+        content: "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
       },
 
       {
         tag: "meta",
         props: {
           name: "title",
-          content: "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+          content: "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
         },
       },
       {
@@ -76,13 +76,13 @@ class MetaGenerator {
       { tag: "meta", props: { property: "og:type", content: "website" } },
       {
         tag: "meta",
-        props: { property: "og:url", content: "https://openafd.delqhi.com" },
+        props: { property: "og:url", content: "https://opensin.delqhi.com" },
       },
       {
         tag: "meta",
         props: {
           property: "og:title",
-          content: "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+          content: "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
         },
       },
       {
@@ -107,14 +107,14 @@ class MetaGenerator {
         tag: "meta",
         props: {
           property: "twitter:url",
-          content: "https://openafd.delqhi.com",
+          content: "https://opensin.delqhi.com",
         },
       },
       {
         tag: "meta",
         props: {
           property: "twitter:title",
-          content: "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+          content: "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
         },
       },
       {
@@ -219,7 +219,7 @@ class MetaGenerator {
           return {
             tag: "title",
             props: null,
-            content: customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+            content: customTitle ?? "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
           };
         }
         // Override meta title
@@ -229,7 +229,7 @@ class MetaGenerator {
             props: {
               name: "title",
               content:
-                customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+                customTitle ?? "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -240,7 +240,7 @@ class MetaGenerator {
             props: {
               property: "og:title",
               content:
-                customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+                customTitle ?? "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -251,7 +251,7 @@ class MetaGenerator {
             props: {
               property: "twitter:title",
               content:
-                customTitle ?? "OpenAfD Chat — Sovereigner KI-Arbeitsraum",
+                customTitle ?? "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
             },
           };
         }
@@ -376,7 +376,7 @@ class MetaGenerator {
       const { SystemSettings } = require("../../models/systemSettings");
       const manifestName = await SystemSettings.getValueOrFallback(
         { label: "meta_page_title" },
-        "OpenAfD Chat",
+        "OpenSIN Chat",
       );
       const faviconURL = await SystemSettings.getValueOrFallback(
         { label: "meta_page_favicon" },

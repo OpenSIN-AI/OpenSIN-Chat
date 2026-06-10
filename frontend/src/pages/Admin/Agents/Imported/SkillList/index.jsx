@@ -14,12 +14,12 @@ export default function ImportedSkillList({
         <p>
           Learn about agent skills in the{" "}
           <a
-            href="https://docs.openafd.com/agent/custom/developer-guide"
+            href="https://docs.opensin.delqhi.com/agent/custom/developer-guide"
             target="_blank"
             className="text-theme-text-secondary underline hover:text-cta-button"
             rel="noreferrer"
           >
-            OpenAfD Chat Agent Docs
+            OpenSIN Chat Agent Docs
           </a>
           .
         </p>

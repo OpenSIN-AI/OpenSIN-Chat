@@ -13,7 +13,7 @@ export default function ModelSelector({
   searchInputRef,
   handleXButton,
   updateLLMChoice,
-  OpenAfDChatIcon,
+  OpenSINChatIcon,
 }) {
   return (
     <div className="relative">
@@ -35,7 +35,7 @@ export default function ModelSelector({
           searchInputRef={searchInputRef}
           handleXButton={handleXButton}
           updateLLMChoice={updateLLMChoice}
-          OpenAfDChatIcon={OpenAfDChatIcon}
+          OpenSINChatIcon={OpenSINChatIcon}
         />
       ) : (
         <button
@@ -45,7 +45,7 @@ export default function ModelSelector({
         >
           <div className="flex gap-x-4 items-center">
             <img
-              src={selectedLLMObject?.logo || OpenAfDChatIcon}
+              src={selectedLLMObject?.logo || OpenSINChatIcon}
               alt={`${selectedLLMObject?.name} logo`}
               className="w-10 h-10 rounded-md"
             />

@@ -1,8 +1,8 @@
 {
   "spdxVersion": "SPDX-2.3",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "OpenAfD-Chat",
-  "documentNamespace": "https://github.com/OpenSIN-Code/OpenAfD-Chat",
+  "name": "OpenSIN-Chat",
+  "documentNamespace": "https://github.com/OpenSIN-Code/OpenSIN-Chat",
   "creationInfo": {
     "created": "2026-06-07T14:14:17Z",
     "creators": [

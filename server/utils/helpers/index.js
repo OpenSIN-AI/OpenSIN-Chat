@@ -260,10 +260,10 @@ function getLLMProvider({ provider = null, model = null } = {}) {
       const { CerebrasLLM } = require("../AiProviders/cerebras");
       return new CerebrasLLM(embedder, model);
     case "openafd-router":
-      // Model router is handled separately in stream.js via OpenAfDChatModelRouter.
+      // Model router is handled separately in stream.js via OpenSINChatModelRouter.
       // This case should not be hit directly - if it is, throw a descriptive error.
       throw new Error(
-        "openafd-router provider must be resolved via OpenAfDChatModelRouter class, not getLLMProvider directly.",
+        "openafd-router provider must be resolved via OpenSINChatModelRouter class, not getLLMProvider directly.",
       );
     default:
       throw new Error(
@@ -457,8 +457,8 @@ function getLLMProviderClass({ provider = null } = {}) {
       const { CerebrasLLM } = require("../AiProviders/cerebras");
       return CerebrasLLM;
     case "openafd-router":
-      const { OpenAfDChatModelRouter } = require("../AiProviders/modelRouter");
-      return OpenAfDChatModelRouter;
+      const { OpenSINChatModelRouter } = require("../AiProviders/modelRouter");
+      return OpenSINChatModelRouter;
     default:
       return null;
   }
@@ -565,7 +565,7 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
  * Until this helper existed the ENV was read directly, which made @agent
  * invocations crash: the container had NVIDIA_NIM_LLM_MODEL_PREF hard-coded
  * to a model that could not serve tool-calling, and any DB override was
- * ignored. See https://github.com/Family-Team-Projects/OpenAfD-Chat/issues/100
+ * ignored. See https://github.com/Family-Team-Projects/OpenSIN-Chat/issues/100
  *
  * Wrapped in try/catch so boot-time callers (where the SystemSettings model
  * is not yet importable) still get the ENV fallback instead of throwing.
@@ -714,7 +714,7 @@ async function resolveProviderConnector({
     };
   }
 
-  const { OpenAfDChatModelRouter } = require("../AiProviders/modelRouter");
+  const { OpenSINChatModelRouter } = require("../AiProviders/modelRouter");
   const { ModelRouterService } = require("../router");
 
   const routerWorkspace = workspace?.router_id
@@ -726,7 +726,7 @@ async function resolveProviderConnector({
           : null,
       };
 
-  const router = new OpenAfDChatModelRouter(routerWorkspace);
+  const router = new OpenSINChatModelRouter(routerWorkspace);
   const ctx = await ModelRouterService.gatherRoutingContext({
     workspace,
     user,

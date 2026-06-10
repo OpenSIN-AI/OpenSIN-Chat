@@ -14,12 +14,13 @@ import {
 // Re-export so other modules can keep importing from the
 // page-level entrypoint that the rest of the codebase uses.
 export { AVAILABLE_LLM_PROVIDERS, ALL_LLM_PROVIDERS, LLM_PREFERENCE_CHANGED_EVENT };
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import PreLoader from "@/components/Preloader";
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
 import CTAButton from "@/components/lib/CTAButton";
 import useLLMProviders from "@/hooks/useLLMProviders";
+import ProviderKeyStatusPanel from "@/components/ProviderKeyStatusPanel";
 
 export default function GeneralLLMPreference() {
   const [saving, setSaving] = useState(false);
@@ -161,6 +162,9 @@ function ContentArea({
       <form onSubmit={handleSubmit} className="flex w-full">
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <Header hasChanges={hasChanges} saving={saving} handleSubmit={handleSubmit} t={t} />
+          <div className="mb-4">
+            <ProviderKeyStatusPanel />
+          </div>
           <SearchMenu
             searchMenuOpen={searchMenuOpen}
             filteredLLMs={filteredLLMs}
@@ -316,7 +320,7 @@ function SearchMenuClosed({ selectedLLMObject, setSearchMenuOpen }) {
     >
       <div className="flex gap-x-4 items-center">
         <img
-          src={selectedLLMObject?.logo || OpenAfDChatIcon}
+          src={selectedLLMObject?.logo || OpenSINChatIcon}
           alt={`${selectedLLMObject?.name} logo`}
           className="w-10 h-10 rounded-md"
         />

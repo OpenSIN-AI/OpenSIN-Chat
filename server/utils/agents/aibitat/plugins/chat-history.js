@@ -3,7 +3,7 @@ const { WorkspaceChats } = require("../../../../models/workspaceChats");
 const { WorkspaceThread } = require("../../../../models/workspaceThread");
 
 /**
- * Plugin to save chat history to OpenAfD Chat DB.
+ * Plugin to save chat history to OpenSIN Chat DB.
  */
 const chatHistory = {
   name: "chat-history",

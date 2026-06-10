@@ -4,7 +4,7 @@ const { safeJsonParse } = require("../../../../http");
 
 /**
  * Google Calendar Bridge Library
- * Handles communication with the OpenAfD Chat Google Calendar Google Apps Script deployment.
+ * Handles communication with the OpenSIN Chat Google Calendar Google Apps Script deployment.
  */
 class GoogleCalendarBridge {
   #deploymentId = null;
@@ -145,7 +145,7 @@ class GoogleCalendarBridge {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-OpenAfD Chat-UA": "OpenAfD Chat-GoogleCalendar-Agent/1.0",
+          "X-OpenSIN Chat-UA": "OpenSIN Chat-GoogleCalendar-Agent/1.0",
         },
         body: JSON.stringify({
           key: this.#apiKey,

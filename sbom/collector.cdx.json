@@ -14,7 +14,7 @@
     ],
     "component": {
       "type": "application",
-      "name": "openafd-chat-document-collector",
+      "name": "opensin-chat-document-collector",
       "version": "1.13.0",
       "licenses": [
         {

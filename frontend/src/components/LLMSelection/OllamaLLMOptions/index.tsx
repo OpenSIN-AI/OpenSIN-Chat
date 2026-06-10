@@ -186,7 +186,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                     tokens if the model supports more than that and no value is
                     specified.
                     <br /> <br />
-                    If an invalid value is entered, OpenAfD Chat will handle
+                    If an invalid value is entered, OpenSIN Chat will handle
                     this for you so that chats do not fail.
                   </p>
                 </Tooltip>

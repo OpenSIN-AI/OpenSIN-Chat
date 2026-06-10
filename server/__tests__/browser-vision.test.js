@@ -133,8 +133,8 @@ describe("browser-vision: extractMeta", () => {
 
   test("extracts meta by property (Open Graph)", () => {
     const html =
-      '<meta property="og:title" content="OpenAfD Chat">';
-    expect(extractMeta(html, "og:title")).toBe("OpenAfD Chat");
+      '<meta property="og:title" content="OpenSIN Chat">';
+    expect(extractMeta(html, "og:title")).toBe("OpenSIN Chat");
   });
 
   test("returns null when meta is missing", () => {

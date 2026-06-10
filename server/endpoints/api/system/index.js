@@ -175,11 +175,11 @@ function apiSystemEndpoints(app) {
             example: [
               {
                 "role": "user",
-                "content": "What is OpenAfD Chat?"
+                "content": "What is OpenSIN Chat?"
               },
               {
                 "role": "assistant",
-                "content": "OpenAfD Chat is a knowledge graph and vector database management system built using NodeJS express server. It provides an interface for handling all interactions, including vectorDB management and LLM (Language Model) interactions."
+                "content": "OpenSIN Chat is a knowledge graph and vector database management system built using NodeJS express server. It provides an interface for handling all interactions, including vectorDB management and LLM (Language Model) interactions."
               },
             ]
           }

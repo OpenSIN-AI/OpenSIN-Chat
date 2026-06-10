@@ -38,7 +38,7 @@ function historyIsAgentic(chatMode, chatHistory) {
 /**
  * Stream a response to Telegram by running the full RAG pipeline.
  * Uses the same pipeline as the web UI (RAG, parsed docs, pinned docs, etc.)
- * and stores chats with thread_id so they appear in the OpenAfD Chat UI.
+ * and stores chats with thread_id so they appear in the OpenSIN Chat UI.
  *
  * However, we are able to consistently handle agentic conversations in "chat" mode by checking the chat history
  * without needing to open/close an agent invocation every chat which is wasteful on the DB.

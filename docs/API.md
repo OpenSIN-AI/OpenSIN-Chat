@@ -1,7 +1,7 @@
-# OpenAfD Chat — API-Referenz
+# OpenSIN Chat — API-Referenz
 
-> **Zielgruppe:** Entwickler, die OpenAfD Chat programmatisch nutzen wollen
-> **Basis-URL:** `http://localhost:3001` (lokal) oder `https://openafd.delqhi.com` (Live)
+> **Zielgruppe:** Entwickler, die OpenSIN Chat programmatisch nutzen wollen
+> **Basis-URL:** `http://localhost:3001` (lokal) oder `https://opensin.delqhi.com` (Live)
 > **Authentifizierung:** Bearer-Token (API-Key) im `Authorization`-Header
 > **Stand:** 2026-06-08
 

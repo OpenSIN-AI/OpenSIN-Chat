@@ -9,7 +9,7 @@ Importiert Drucksachen, Plenarprotokolle und Anträge direkt aus dem
 - **Wahlperioden-Filter** — unterstützt 19., 20. (2021-2025) und 21. (2025-) Wahlperiode
 - **Dokumenttypen** — Drucksachen, Plenarprotokolle, Anträge, Kleine/Große Anfragen
 - **Volltextsuche** — Suchbegriff wie „Energiewende" oder „Migration"
-- **Direkter Import** in einen OpenAfD-Chat-Workspace
+- **Direkter Import** in einen OpenSIN-Chat-Workspace
 - **Kein Telemetrie-Outbound** — Direktverbindung, keine Drittanbieter
 
 ## ⚠️ API-Key erforderlich

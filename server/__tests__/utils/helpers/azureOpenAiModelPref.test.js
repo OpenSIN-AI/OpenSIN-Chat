@@ -6,7 +6,7 @@
  * to AZURE_OPENAI_MODEL_PREF, ensuring backwards compatibility for
  * existing users who have OPEN_MODEL_PREF set.
  *
- * Related issue: https://github.com/Family-Team-Projects/openafd-chat/issues/3839
+ * Related issue: https://github.com/Family-Team-Projects/opensin-chat/issues/3839
  */
 
 describe("AzureOpenAI model key backwards compatibility", () => {

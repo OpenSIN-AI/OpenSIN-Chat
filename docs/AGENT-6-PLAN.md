@@ -2,7 +2,7 @@
 
 ## Kontext
 
-**WICHTIGSTE Erkenntnis:** Der Container **`openafd-chat:local-v7` startet nicht** wegen 4 zusammenhängender Bugs. Issue #86 ist deshalb **P0 BLOCKER** — ohne Container kann Issue #84 (B4-Migration) nicht verifiziert werden, kann keine DB gefüllt werden, kann keine Endpoints getestet werden.
+**WICHTIGSTE Erkenntnis:** Der Container **`opensin-chat:local-v7` startet nicht** wegen 4 zusammenhängender Bugs. Issue #86 ist deshalb **P0 BLOCKER** — ohne Container kann Issue #84 (B4-Migration) nicht verifiziert werden, kann keine DB gefüllt werden, kann keine Endpoints getestet werden.
 
 **Agent 5 hat exzellente Arbeit abgeliefert** (5 Commits auf main verifiziert, 38/38 Tests grün, AC1+AC2+AC6+AC7 alle ✅). Nur die letzten 3 ACs (AC3+AC4+AC5 = Runtime-Verifikation gegen DB) sind ausstehend — und die brauchen einen laufenden Container.
 
@@ -13,13 +13,13 @@
 **Schritt 1: `docker/.env` Directory zu File machen**
 ```bash
 # ACHTUNG: Backup machen, falls was drin ist
-ls -la /Users/jeremy/dev/OpenAfD-Chat/docker/.env/
+ls -la /Users/jeremy/dev/OpenSIN-Chat/docker/.env/
 # Wenn Dateien drin, sichern. Sonst einfach:
-rm -rf /Users/jeremy/dev/OpenAfD-Chat/docker/.env
+rm -rf /Users/jeremy/dev/OpenSIN-Chat/docker/.env
 
 # .env.example als Vorlage kopieren
-cp /Users/jeremy/dev/OpenAfD-Chat/docker/.env.example /Users/jeremy/dev/OpenAfD-Chat/docker/.env
-chmod 600 /Users/jeremy/dev/OpenAfD-Chat/docker/.env
+cp /Users/jeremy/dev/OpenSIN-Chat/docker/.env.example /Users/jeremy/dev/OpenSIN-Chat/docker/.env
+chmod 600 /Users/jeremy/dev/OpenSIN-Chat/docker/.env
 
 # Keys generieren
 SIG_KEY=$(openssl rand -hex 32)   # 64 hex chars
@@ -27,13 +27,13 @@ SIG_SALT=$(openssl rand -hex 16)  # 32 hex chars
 # JWT_SECRET wird auto-generiert durch ensureJwtSecret.js
 
 # In .env eintragen (oder via updateENV helper)
-sed -i "s|# SIG_KEY='passphrase'|SIG_KEY='${SIG_KEY}'|" /Users/jeremy/dev/OpenAfD-Chat/docker/.env
-sed -i "s|# SIG_SALT='salt'|SIG_SALT='${SIG_SALT}'|" /Users/jeremy/dev/OpenAfD-Chat/docker/.env
+sed -i "s|# SIG_KEY='passphrase'|SIG_KEY='${SIG_KEY}'|" /Users/jeremy/dev/OpenSIN-Chat/docker/.env
+sed -i "s|# SIG_SALT='salt'|SIG_SALT='${SIG_SALT}'|" /Users/jeremy/dev/OpenSIN-Chat/docker/.env
 ```
 
 **Schritt 2: `docker-compose.yml` Environment ergänzen**
 ```yaml
-# In docker-compose.yml, services.openafd-chat:
+# In docker-compose.yml, services.opensin-chat:
     environment:
       - STORAGE_DIR=/app/server/storage
       - SIG_KEY=${SIG_KEY}
@@ -74,14 +74,14 @@ ODER Variante B (einfacher — healthcheck anpassen):
 
 **Schritt 5: Container neu bauen + testen**
 ```bash
-cd /Users/jeremy/dev/OpenAfD-Chat
-docker build -f docker/Dockerfile -t openafd-chat:local-v8 . 2>&1 | tail -10
+cd /Users/jeremy/dev/OpenSIN-Chat
+docker build -f docker/Dockerfile -t opensin-chat:local-v8 . 2>&1 | tail -10
 # Build dauert 10-15 min
 docker run -d --name openafd-test \
   -p 3002:3001 \
   -v openafd-storage:/app/server/storage \
   -e STORAGE_DIR=/app/server/storage \
-  openafd-chat:local-v8
+  opensin-chat:local-v8
 sleep 30
 docker ps
 # Status: healthy
@@ -157,17 +157,17 @@ curl "http://localhost:3002/api/politician/stats"
 
 ```bash
 # Server tests (müssen grün bleiben)
-cd /Users/jeremy/dev/OpenAfD-Chat/server
+cd /Users/jeremy/dev/OpenSIN-Chat/server
 npx jest 2>&1 | tail -5
 # Erwartet: 308+ tests passing
 
 # Frontend tests
-cd /Users/jeremy/dev/OpenAfD-Chat/frontend
+cd /Users/jeremy/dev/OpenSIN-Chat/frontend
 npx vitest run --reporter=dot 2>&1 | tail -5
 # Erwartet: 204+ tests passing
 
 # Vulnerabilities
-cd /Users/jeremy/dev/OpenAfD-Chat
+cd /Users/jeremy/dev/OpenSIN-Chat
 npm audit 2>&1 | tail -2  # server
 cd frontend && npm audit 2>&1 | tail -2  # frontend
 # Erwartet: 0 vulnerabilities
@@ -187,14 +187,14 @@ cd frontend && npm audit 2>&1 | tail -2  # frontend
 
 ```bash
 # Aktueller Status
-cd /Users/jeremy/dev/OpenAfD-Chat
+cd /Users/jeremy/dev/OpenSIN-Chat
 git pull --rebase origin main
 git log --oneline -5
 
 # Check existing state
 file docker/.env
 ls -la docker/.env
-docker images | grep openafd-chat
+docker images | grep opensin-chat
 docker ps -a
 ```
 
@@ -204,7 +204,7 @@ docker ps -a
 2. `docker-compose.yml` hat `STORAGE_DIR` in environment
 3. `Dockerfile` .env COPY entweder weg ODER funktional
 4. Healthcheck URL stimmt mit Endpoint überein
-5. Container `openafd-chat:local-v8` startet und bleibt `healthy`
+5. Container `opensin-chat:local-v8` startet und bleibt `healthy`
 6. Sync-Job befüllt DB mit 700+ Politikern
 7. `/api/politician/search?q=Weidel` liefert 1+ Treffer
 8. Issue #86 + #84 können geschlossen werden

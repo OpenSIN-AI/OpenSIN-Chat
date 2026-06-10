@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 /**
- * Unified Agent Orchestrator — coordinates multiple OpenAfD-Chat modules
+ * Unified Agent Orchestrator — coordinates multiple OpenSIN-Chat modules
  * (PoliticianDB, Deep Research, PDF Reports, Browser Agent) into
  * goal-driven workflows.
  *

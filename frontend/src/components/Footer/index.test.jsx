@@ -104,7 +104,7 @@ describe("Footer", () => {
   it("renders aria-labels on default footer links", () => {
     useFooterIcons.mockReturnValue({ footerData: [], isLoading: false });
     render(<Footer />);
-    const githubLink = screen.getByLabelText("OpenAfD Chat auf GitHub ansehen");
+    const githubLink = screen.getByLabelText("OpenSIN Chat auf GitHub ansehen");
     const docsLink = screen.getByLabelText("Dokumentation öffnen");
     expect(githubLink).toBeInTheDocument();
     expect(docsLink).toBeInTheDocument();

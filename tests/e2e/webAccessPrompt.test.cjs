@@ -6,7 +6,7 @@
 // prefix (workspace prompt teaches it so), and the @agent flow itself must
 // remain functional.
 //
-// Run inside the OpenAfD container (where the running server + Prisma live):
+// Run inside the OpenSIN container (where the running server + Prisma live):
 //   docker cp tests/e2e/webAccessPrompt.test.cjs openafd:/tmp/test.cjs
 //   docker exec openafd sh -c 'cd /app/server && node /tmp/test.cjs'
 

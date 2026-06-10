@@ -6,7 +6,7 @@ import LLMItem from "@/components/LLMSelection/LLMItem";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
 import CTAButton from "@/components/lib/CTAButton";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import ElevenLabsIcon from "@/media/ttsproviders/elevenlabs.png";
 import PiperTTSIcon from "@/media/ttsproviders/piper.png";
 import GenericOpenAiLogo from "@/media/ttsproviders/generic-openai.png";
@@ -25,7 +25,7 @@ const PROVIDERS = [
   {
     name: "System native",
     value: "native",
-    logo: OpenAfDChatIcon,
+    logo: OpenSINChatIcon,
     options: (settings) => <BrowserNative settings={settings} />,
     description: "Uses your browser's built in TTS service if supported.",
   },
@@ -144,7 +144,7 @@ export default function TextToSpeechProvider({ settings }) {
           </div>
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
             Here you can specify what kind of text-to-speech providers you would
-            want to use in your OpenAfD Chat experience. By default, we use the
+            want to use in your OpenSIN Chat experience. By default, we use the
             browser's built in support for these services, but you may want to
             use others.
           </p>

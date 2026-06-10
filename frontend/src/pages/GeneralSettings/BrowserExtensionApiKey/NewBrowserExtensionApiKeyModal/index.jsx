@@ -85,11 +85,11 @@ export default function NewBrowserExtensionApiKeyModal({
                 </p>
               )}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                After clicking "Create API Key", OpenAfD Chat will attempt to
+                After clicking "Create API Key", OpenSIN Chat will attempt to
                 connect to your browser extension automatically.
               </p>
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                If you see "Connected to OpenAfD Chat" in the extension, the
+                If you see "Connected to OpenSIN Chat" in the extension, the
                 connection was successful. If not, please copy the connection
                 string and paste it into the extension manually.
               </p>

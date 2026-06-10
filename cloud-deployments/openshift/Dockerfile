@@ -1,4 +1,4 @@
-# OpenShift-compatible Dockerfile for OpenAfD Chat
+# OpenShift-compatible Dockerfile for OpenSIN Chat
 # 
 # This Dockerfile is specifically designed for OpenShift deployments which use
 # arbitrary UIDs with GID 0 (root group). Do NOT use this for standard Docker
@@ -18,7 +18,7 @@ ARG ARG_UID=1000
 ARG ARG_GID=1000
 
 FROM base AS build-arm64
-RUN echo "Preparing build of OpenAfD Chat image for arm64 architecture"
+RUN echo "Preparing build of OpenSIN Chat image for arm64 architecture"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -96,7 +96,7 @@ RUN echo "Done running arm64 specific installation steps"
 
 # amd64-specific stage
 FROM base AS build-amd64
-RUN echo "Preparing build of OpenAfD Chat image for non-ARM architecture"
+RUN echo "Preparing build of OpenSIN Chat image for non-ARM architecture"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -159,7 +159,7 @@ RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
 
 # hadolint ignore=DL3006
 FROM build-${TARGETARCH} AS build
-RUN echo "Running common build flow of OpenAfD Chat image for all architectures"
+RUN echo "Running common build flow of OpenSIN Chat image for all architectures"
 
 USER openafd
 WORKDIR /app

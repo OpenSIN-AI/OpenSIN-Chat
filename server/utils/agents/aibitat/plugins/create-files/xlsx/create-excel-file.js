@@ -222,7 +222,7 @@ module.exports.CreateExcelFile = {
               const ExcelJS = await import("exceljs");
               const workbook = new ExcelJS.default.Workbook();
 
-              workbook.creator = "OpenAfD Chat";
+              workbook.creator = "OpenSIN Chat";
               workbook.created = new Date();
               workbook.modified = new Date();
 

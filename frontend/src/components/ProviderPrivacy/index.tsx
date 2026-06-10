@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import { PROVIDER_PRIVACY_MAP } from "./constants";
 import { ArrowSquareOut } from "@phosphor-icons/react";
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import { Link } from "react-router-dom";
 import { titleCase, sentenceCase } from "text-case";
 
@@ -13,9 +13,9 @@ function defaultProvider(providerString) {
       ? titleCase(sentenceCase(String(providerString)))
       : "Unknown",
     description: [
-      `"${providerString}" has no known data handling policy defined in OpenAfD Chat.`,
+      `"${providerString}" has no known data handling policy defined in OpenSIN Chat.`,
     ],
-    logo: OpenAfDChatIcon,
+    logo: OpenSINChatIcon,
   };
 }
 

@@ -6,7 +6,7 @@ const UnTooled = require("./helpers/untooled.js");
 const { tooledStream, tooledComplete } = require("./helpers/tooled.js");
 const { RetryError } = require("../error.js");
 const { toValidNumber } = require("../../../http/index.js");
-const { getOpenAfDChatUserAgent } = require("../../../../endpoints/utils");
+const { getOpenSINChatUserAgent } = require("../../../../endpoints/utils");
 const { GenericOpenAiLLM } = require("../../../AiProviders/genericOpenAi");
 
 /**
@@ -25,7 +25,7 @@ class GenericOpenAiProvider extends InheritMultiple([Provider, UnTooled]) {
       baseURL: process.env.GENERIC_OPEN_AI_BASE_PATH,
       apiKey: process.env.GENERIC_OPEN_AI_API_KEY ?? null,
       defaultHeaders: {
-        "User-Agent": getOpenAfDChatUserAgent(),
+        "User-Agent": getOpenSINChatUserAgent(),
         ...GenericOpenAiLLM.parseCustomHeaders(),
       },
     });

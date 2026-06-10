@@ -1,6 +1,6 @@
 # OpenSIN-Chat Deployment — sinchat.delqhi.com
 
-**Ziel:** Getrenntes Deployment für OpenSIN-Chat, **unabhängig** vom laufenden `openafd` (openafd.delqhi.com).
+**Ziel:** Getrenntes Deployment für OpenSIN-Chat, **unabhängig** vom laufenden `openafd` (opensin.delqhi.com).
 
 ---
 
@@ -11,18 +11,18 @@
 | **Container** | `openafd` | `opensin-chat` |
 | **Interner Port** | 3001 | 3001 |
 | **Externer Port (Host)** | 3001 | **43939** |
-| **Domain** | openafd.delqhi.com | **sinchat.delqhi.com** |
+| **Domain** | opensin.delqhi.com | **sinchat.delqhi.com** |
 | **Cloudflare Tunnel ID** | `32ab3b80-94b4-4911-aff1-fae5a3eae3c6` | `aa6a4715-1a4d-4cf9-a17e-ad27c53fee93` |
 | **Tunnel Config** | `~/.cloudflared/config-openafd.yml` | `~/.cloudflared/config-opensin.yml` |
 | **Storage** | `../server/storage` | `../server/storage-opensin` |
 | **Launchd Label** | `com.sin-solver.cloudflared.plist` | `com.opensin.tunnel.plist` |
-| **Health Endpoint** | `https://openafd.delqhi.com/api/ping` | `https://sinchat.delqhi.com/api/ping` |
+| **Health Endpoint** | `https://opensin.delqhi.com/api/ping` | `https://sinchat.delqhi.com/api/ping` |
 
 ---
 
 ## Docker Compose
 
-**Datei:** `/Users/jeremy/dev/OpenAfD-Chat/docker-opensin/docker-compose.yml`
+**Datei:** `/Users/jeremy/dev/OpenSIN-Chat/docker-opensin/docker-compose.yml`
 
 ```yaml
 name: opensin-chat
@@ -97,7 +97,7 @@ launchctl list | grep opensin
 
 ```bash
 # Build & Start
-cd /Users/jeremy/dev/OpenAfD-Chat/docker-opensin
+cd /Users/jeremy/dev/OpenSIN-Chat/docker-opensin
 docker compose build --no-cache
 docker compose up -d
 
@@ -142,8 +142,8 @@ curl -sS http://localhost:43939/api/ping
 curl -sS https://sinchat.delqhi.com/api/ping
 # → {"online":true}
 
-curl -sS https://sinchat.delqhi.com/ | grep -o "OpenAfD Chat"
-# → OpenAfD Chat (Titel im HTML)
+curl -sS https://sinchat.delqhi.com/ | grep -o "OpenSIN Chat"
+# → OpenSIN Chat (Titel im HTML)
 ```
 
 ---

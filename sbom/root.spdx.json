@@ -2,8 +2,8 @@
   "spdxVersion": "SPDX-2.3",
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
-  "name": "openafd-chat-root",
-  "documentNamespace": "https://openafd.delqhi.com/sbom/openafd-chat-root-1aa73a01-9247-40e7-abd8-3630b6c92516",
+  "name": "opensin-chat-root",
+  "documentNamespace": "https://opensin.delqhi.com/sbom/opensin-chat-root-1aa73a01-9247-40e7-abd8-3630b6c92516",
   "creationInfo": {
     "created": "2026-06-07T10:01:43.182Z",
     "creators": [
@@ -14,8 +14,8 @@
   },
   "packages": [
     {
-      "name": "openafd-chat",
-      "SPDXID": "SPDXRef-Package-openafd-chat-0.1.0",
+      "name": "opensin-chat",
+      "SPDXID": "SPDXRef-Package-opensin-chat-0.1.0",
       "versionInfo": "0.1.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
@@ -350,100 +350,100 @@
     {
       "spdxElementId": "SPDXRef-DOCUMENT",
       "relationshipType": "DESCRIBES",
-      "relatedSpdxElement": "SPDXRef-Package-openafd-chat-0.1.0"
+      "relatedSpdxElement": "SPDXRef-Package-opensin-chat-0.1.0"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--elevenlabs-elevenlabs-js-2.51.0"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--hello-pangea-dnd-18.0.1"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--mintplex-labs-mdpdf-0.1.9"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--phosphor-icons-react-2.1.10"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--prisma-client-7.8.0"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--testing-library-jest-dom-6.9.1"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--testing-library-react-16.3.2"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--vitejs-plugin-react-6.0.2"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-playwright-1.60.0"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-react-19.2.7"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-react-i18next-17.0.8"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-react-loading-skeleton-3.5.0"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-react-router-dom-7.17.0"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-rollup-plugin-visualizer-7.0.1"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-uuid-14.0.0"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-vite-8.0.16"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-vitest-4.1.8"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-concurrently-9.1.2"
     },
     {
-      "spdxElementId": "SPDXRef-Package-openafd-chat-0.1.0",
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-jest-29.7.0"
     }

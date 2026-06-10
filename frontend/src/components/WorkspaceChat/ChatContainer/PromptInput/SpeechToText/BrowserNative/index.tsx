@@ -32,7 +32,7 @@ export default function BrowserNativeSTT({ sendCommand }: any) {
   function startSTTSession() {
     if (!isMicrophoneAvailable) {
       alert(
-        "OpenAfD Chat does not have access to microphone. Please enable for this site to use this feature.",
+        "OpenSIN Chat does not have access to microphone. Please enable for this site to use this feature.",
       );
       return;
     }

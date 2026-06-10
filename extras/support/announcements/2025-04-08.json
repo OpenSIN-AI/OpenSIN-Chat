@@ -2,9 +2,9 @@
   {
     "thumbnail_url": "https://cdn.openafd.com/support/announcements/assets/mcp.jpg",
     "title": "MCP Support",
-    "short_description": "Import and leverage MCP tools using OpenAfD Chat.",
-    "goto": "https://docs.openafd.com/mcp-compatibility/overview",
-    "author": "OpenAfD Chat",
+    "short_description": "Import and leverage MCP tools using OpenSIN Chat.",
+    "goto": "https://docs.opensin.delqhi.com/mcp-compatibility/overview",
+    "author": "OpenSIN Chat",
     "date": "April 8, 2025"
   },
   {
@@ -20,7 +20,7 @@
     "title": "Community Hub Updates",
     "short_description": "We refreshed the Community Hub with a new look and feel. Check it out!",
     "goto": "https://hub.openafd.com",
-    "author": "OpenAfD Chat",
+    "author": "OpenSIN Chat",
     "date": "March 12, 2025"
   }
 ]

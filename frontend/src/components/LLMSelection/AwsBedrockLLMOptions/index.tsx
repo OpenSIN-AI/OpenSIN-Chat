@@ -18,12 +18,12 @@ export default function AwsBedrockLLMOptions({ settings }: any) {
               You should use a properly defined IAM user for inferencing.
               <br />
               <a
-                href="https://docs.openafd.com/setup/llm-configuration/cloud/aws-bedrock"
+                href="https://docs.opensin.delqhi.com/setup/llm-configuration/cloud/aws-bedrock"
                 target="_blank"
                 className="underline flex gap-x-1 items-center"
                 rel="noreferrer"
               >
-                Read more on how to use AWS Bedrock in OpenAfD Chat
+                Read more on how to use AWS Bedrock in OpenSIN Chat
                 <ArrowSquareOut size={14} />
               </a>
             </p>

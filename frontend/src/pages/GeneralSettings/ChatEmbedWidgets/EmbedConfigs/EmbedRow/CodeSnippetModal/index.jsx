@@ -54,9 +54,9 @@ https://github.com/Family-Team-Projects/openafd-embed/blob/main/README.md
 <script
   data-embed-id="${embed.uuid}"
   data-base-api-url="${serverHost}/api/embed"
-  src="${scriptHost}/embed/openafd-chat-widget.min.js">
+  src="${scriptHost}/embed/opensin-chat-widget.min.js">
 </script>
-<!-- OpenAfD Chat (https://openafd.com) -->
+<!-- OpenSIN Chat (https://openafd.com) -->
 `;
 }
 

@@ -20,7 +20,7 @@ Erstelle `vercel.json` im Root mit korrektem Build-Pfad:
 - [ ] Bestätigen, dass Build erfolgreich läuft
 
 ## Kontext
-OpenAfD-Chat ist eine selbst-gehostete Full-Stack-App (AnythingLLM-Fork):
+OpenSIN-Chat ist eine selbst-gehostete Full-Stack-App (AnythingLLM-Fork):
 - Frontend: Vite-SPA in `frontend/` mit eigenem `vite.config.js`
 - Backend: Node-Server in `server/`
 - Collector: Python-Service in `collector/`

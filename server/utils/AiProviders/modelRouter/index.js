@@ -2,9 +2,9 @@
 const { ModelRouterService } = require("../../router");
 const { getLLMProvider } = require("../../helpers");
 
-class OpenAfDChatModelRouter {
+class OpenSINChatModelRouter {
   constructor(workspace, embedder = null) {
-    this.className = "OpenAfDChatModelRouter";
+    this.className = "OpenSINChatModelRouter";
     this.workspace = workspace;
     this.embedder = embedder;
     this.routerService = ModelRouterService.getInstance();
@@ -168,4 +168,4 @@ class OpenAfDChatModelRouter {
   }
 }
 
-module.exports = { OpenAfDChatModelRouter };
+module.exports = { OpenSINChatModelRouter };

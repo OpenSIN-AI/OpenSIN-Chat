@@ -1,8 +1,8 @@
-# OpenAfD Chat — ROADMAP (GSD-Style)
+# OpenSIN Chat — ROADMAP (GSD-Style)
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
 > **Aktueller Stand:** Phase 2 fast fertig, Phase 3 in Planung.  
-> **Repo:** [Family-Team-Projects/OpenAfD-Chat](https://github.com/Family-Team-Projects/OpenAfD-Chat)  
+> **Repo:** [Family-Team-Projects/OpenSIN-Chat](https://github.com/Family-Team-Projects/OpenSIN-Chat)  
 > **Letztes Update:** 2026-06-06
 
 ---
@@ -10,7 +10,7 @@
 ## Phase 1: Foundation & Core Re-Fork ✅ **COMPLETE**
 
 > **Zeitraum:** Mai 2025 – Juni 2026  
-> **Ziel:** OpenAfD-Chat als produktionsreifes, eigenständiges Fork-Produkt etablieren.  
+> **Ziel:** OpenSIN-Chat als produktionsreifes, eigenständiges Fork-Produkt etablieren.  
 > **CEO Audit Grade:** A (96.8/100)
 
 ### Deliverables
@@ -43,7 +43,7 @@
 ## Phase 2: Core Features & Integration 🔄 **IN PROGRESS (90%)**
 
 > **Zeitraum:** Juni 2026  
-> **Ziel:** Alle neuen OpenAfD-Features in die Codebase integrieren, AI-Providers verbinden, UI/UX polieren.  
+> **Ziel:** Alle neuen OpenSIN-Features in die Codebase integrieren, AI-Providers verbinden, UI/UX polieren.  
 > **Blocker:** Browser-Cache (User), Vercel Pool Credits, Politician DB leer
 
 ### 2A: AI Provider Integration ✅
@@ -185,7 +185,7 @@
 
 | # | Feature | Status | Issue |
 |---|---------|--------|-------|
-| 3.27 | Cloudflare Tunnel (openafd.delqhi.com) | ✅ | Aktiv |
+| 3.27 | Cloudflare Tunnel (opensin.delqhi.com) | ✅ | Aktiv |
 | 3.28 | Docker / OrbStack Production | 📅 | – |
 | 3.29 | Helm Chart (Kubernetes) | 📅 | `cloud-deployments/helm/` |
 | 3.30 | OpenShift / AWS / GCP Deployments | 📅 | `cloud-deployments/` |

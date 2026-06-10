@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
@@ -333,7 +333,7 @@ const VECTOR_DB_PROVIDER_PRIVACY_MAP = {
   lancedb: {
     name: "LanceDB",
     description: [
-      "Your vectors and document text are stored privately on this instance of OpenAfD Chat.",
+      "Your vectors and document text are stored privately on this instance of OpenSIN Chat.",
     ],
     logo: LanceDbLogo,
   },
@@ -341,11 +341,11 @@ const VECTOR_DB_PROVIDER_PRIVACY_MAP = {
 
 const EMBEDDING_ENGINE_PROVIDER_PRIVACY_MAP = {
   native: {
-    name: "OpenAfD Chat Embedder",
+    name: "OpenSIN Chat Embedder",
     description: [
-      "Your document text is embedded privately on this instance of OpenAfD Chat.",
+      "Your document text is embedded privately on this instance of OpenSIN Chat.",
     ],
-    logo: OpenAfDChatIcon,
+    logo: OpenSINChatIcon,
   },
   openai: {
     name: "OpenAI",

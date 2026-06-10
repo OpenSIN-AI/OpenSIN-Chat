@@ -252,7 +252,7 @@ module.exports.CreatePptxPresentation = {
 
               pptx.title = title;
               if (author) pptx.author = author;
-              pptx.company = "OpenAfD Chat";
+              pptx.company = "OpenSIN Chat";
 
               const totalSlideCount = allSlides.length;
 

@@ -6,45 +6,46 @@ initContainers: []
   #   command: ['sh', '-c', 'chown -R 1000:1000 /storage']
 
 image:
-  repository: openafd/openafd
+  repository: mintplexlabs/anythingllm
   pullPolicy: IfNotPresent
-  tag: "1.13.0"
+  # tag leer lassen -> nutzt Chart.appVersion
+  tag: ""
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 persistentVolume:
-  # OpenAfD Chat storage data Persistent Volume access modes
+  # OpenSIN Chat storage data Persistent Volume access modes
   # Must match those of existing PV or dynamic provisioner
   # Ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
   #
   accessModes:
     - ReadWriteOnce
 
-  # OpenAfD Chat storage data Persistent Volume labels
+  # OpenSIN Chat storage data Persistent Volume labels
   #
   labels: {}
 
-  # OpenAfD Chat storage data Persistent Volume annotations
+  # OpenSIN Chat storage data Persistent Volume annotations
   #
   annotations: {}
 
-  # OpenAfD Chat storage data Persistent Volume  existing claim name
+  # OpenSIN Chat storage data Persistent Volume  existing claim name
   # If defined, PVC must be created manually before volume will be bound
   #
   existingClaim: ""
 
-  # OpenAfD Chat storage data Persistent Volume size
+  # OpenSIN Chat storage data Persistent Volume size
   #
   size: 8Gi
 
-  # OpenAfD Chat storage data Persistent Volume mount path
+  # OpenSIN Chat storage data Persistent Volume mount path
   # Must match the STORAGE_DIR config value
   #
   mountPath: /app/server/storage
 
-  # OpenAfD Chat storage data Persistent Volume Storage Class
+  # OpenSIN Chat storage data Persistent Volume Storage Class
   # If defined, storageClassName: <storageClass>
   # If set to "-", storageClassName: "", which disables dynamic provisioning
   # If undefined (the default) or set to null, no storageClassName spec is
@@ -53,7 +54,7 @@ persistentVolume:
   #
   storageClass: ""
 
-  # OpenAfD Chat storage data Persistent Volume Claim Selector
+  # OpenSIN Chat storage data Persistent Volume Claim Selector
   # Useful if Persistent Volumes have been provisioned in advance
   # Ref: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#selector
   #
@@ -64,7 +65,7 @@ persistentVolume:
   #  matchExpressions:
   #    - { key: environment, operator: In, values: [ dev ] }
   
-  # OpenAfD Chat storage data Persistent Volume Name
+  # OpenSIN Chat storage data Persistent Volume Name
   # Useful if Persistent Volumes have been provisioned in advance and you want to use a specific one
   #
   volumeName: ""
@@ -81,7 +82,7 @@ serviceAccount:
   name: ""
 
 # The Anything LLM application  deployment strategy
-# This is set to "Recreate" by default as OpenAfD Chat support is not yet
+# This is set to "Recreate" by default as OpenSIN Chat support is not yet
 # production ready.  Once it is, this can be changed to "RollingUpdate"
 # Ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
 #
@@ -109,9 +110,9 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-# OpenAfD Chat configuration options, these are stored in a ConfigMap and passed
+# OpenSIN Chat configuration options, these are stored in a ConfigMap and passed
 # to the container as environment variables.
-# See https://github.com/Family-Team-Projects/openafd-chat/blob/render/docker/.env.example
+# See https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/render/docker/.env.example
 # for all available environment variables to use as configuration options
 #
 config:
@@ -264,6 +265,6 @@ extraObjects: []
 #     data:
 #       - secretKey: open_ai_key
 #         remoteRef:
-#           key: secret/data/openafd-chat
+#           key: secret/data/opensin-chat
 #           property: open_ai_key
 

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 /**
- * OpenAfD Chat — AfD-Pressemitteilungs-Importer
+ * OpenSIN Chat — AfD-Pressemitteilungs-Importer
  *
  * Importiert Pressemitteilungen von afd.de (Parteibundesebene) und/oder
  * konfigurierbaren Fraktions-/Landesverbands-Seiten.
@@ -39,7 +39,7 @@ async function fetchHtml(url) {
   const res = await fetch(url, {
     headers: {
       "User-Agent":
-        "Mozilla/5.0 (compatible; OpenAfD-Chat/0.1; +https://openafd.delqhi.com)",
+        "Mozilla/5.0 (compatible; OpenSIN-Chat/0.1; +https://opensin.delqhi.com)",
       Accept: "text/html,application/xhtml+xml",
       "Accept-Language": "de-DE,de;q=0.9,en;q=0.5",
     },

@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Create a stack that runs OpenAfD Chat on a single instance",
+  "Description": "Create a stack that runs OpenSIN Chat on a single instance",
   "Parameters": {
     "InstanceType": {
       "Description": "EC2 instance type",
@@ -15,7 +15,7 @@
     }
   },
   "Resources": {
-    "OpenAfD ChatInstance": {
+    "OpenSIN ChatInstance": {
       "Type": "AWS::EC2::Instance",
       "Properties": {
         "ImageId": {
@@ -32,7 +32,7 @@
         },
         "SecurityGroupIds": [
           {
-            "Ref": "OpenAfD ChatInstanceSecurityGroup"
+            "Ref": "OpenSIN ChatInstanceSecurityGroup"
           }
         ],
         "BlockDeviceMappings": [
@@ -94,7 +94,7 @@
                 "echo \"Container ID: $(sudo docker ps --latest --quiet)\"\n",
                 "export ONLINE=$(curl -Is http://localhost:3001/api/ping | head -n 1|cut -d$' ' -f2)\n",
                 "echo \"Health check: $ONLINE\"\n",
-                "echo \"Setup complete! OpenAfD Chat instance is now online!\"\n",
+                "echo \"Setup complete! OpenSIN Chat instance is now online!\"\n",
                 "\n",
                 "--//--\n"
               ]
@@ -103,10 +103,10 @@
         }
       }
     },
-    "OpenAfD ChatInstanceSecurityGroup": {
+    "OpenSIN ChatInstanceSecurityGroup": {
       "Type": "AWS::EC2::SecurityGroup",
       "Properties": {
-        "GroupDescription": "OpenAfD Chat Instance Security Group",
+        "GroupDescription": "OpenSIN Chat Instance Security Group",
         "SecurityGroupIngress": [
           {
             "IpProtocol": "tcp",
@@ -132,16 +132,16 @@
   },
   "Outputs": {
     "ServerIp": {
-      "Description": "IP address of the OpenAfD Chat instance",
+      "Description": "IP address of the OpenSIN Chat instance",
       "Value": {
         "Fn::GetAtt": [
-          "OpenAfD ChatInstance",
+          "OpenSIN ChatInstance",
           "PublicIp"
         ]
       }
     },
     "ServerURL": {
-      "Description": "URL of the OpenAfD Chat server",
+      "Description": "URL of the OpenSIN Chat server",
       "Value": {
         "Fn::Join": [
           "",
@@ -149,7 +149,7 @@
             "http://",
             {
               "Fn::GetAtt": [
-                "OpenAfD ChatInstance",
+                "OpenSIN ChatInstance",
                 "PublicIp"
               ]
             },

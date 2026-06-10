@@ -1,7 +1,7 @@
-# OpenAfD Chat — Benutzer-Handbuch
+# OpenSIN Chat — Benutzer-Handbuch
 
 > **Zielgruppe:** Endnutzer — Pressestelle, Fraktionsmitarbeiter, Researcher, politische Mitarbeiter
-> **Voraussetzung:** OpenAfD Chat läuft auf `http://localhost:3001` oder `https://openafd.delqhi.com`
+> **Voraussetzung:** OpenSIN Chat läuft auf `http://localhost:3001` oder `https://opensin.delqhi.com`
 > **Stand:** 2026-06-07
 
 ---
@@ -10,7 +10,7 @@
 
 ### 1.1 Login
 
-OpenAfD Chat unterstützt zwei Modi:
+OpenSIN Chat unterstützt zwei Modi:
 
 - **Single-User-Mode** (Standard) — Du bekommst beim ersten Aufruf automatisch einen Session-Token, kein Passwort nötig
 - **Multi-User-Mode** (Docker) — Login mit Username + Passwort, verschiedene Rollen (Admin, Default)
@@ -165,7 +165,7 @@ Die Politiker-DB ist beim ersten Start leer. Zum Befüllen:
 
 ```bash
 # Sync-Job manuell anstoßen
-cd /Users/jeremy/dev/OpenAfD-Chat/server
+cd /Users/jeremy/dev/OpenSIN-Chat/server
 node jobs/sync-politician-data.js
 ```
 
@@ -290,8 +290,8 @@ Der Orchestrator zerlegt die Aufgabe in:
 ### 5.2 AfD-Branding
 
 Jeder Report enthält:
-- **Cover-Page** mit Titel, Datum, "OpenAfD Chat — Fraktionsresearch"
-- **Header** auf jeder Seite: "OpenAfD Chat" (klein, rechts)
+- **Cover-Page** mit Titel, Datum, "OpenSIN Chat — Fraktionsresearch"
+- **Header** auf jeder Seite: "OpenSIN Chat" (klein, rechts)
 - **Footer** mit Seitenzahl + Logo-Platzhalter
 - **Farbschema:** AfD-Blau `#009ee0` für Akzente
 
@@ -601,8 +601,8 @@ cd frontend && yarn build
 - **API-Dokumentation:** `docs/API.md`
 - **Architektur:** `docs/architecture.md`
 - **Roadmap:** `ROADMAP.md`
-- **Issues:** https://github.com/Family-Team-Projects/OpenAfD-Chat/issues
-- **Live-Demo:** https://openafd.delqhi.com
+- **Issues:** https://github.com/Family-Team-Projects/OpenSIN-Chat/issues
+- **Live-Demo:** https://opensin.delqhi.com
 
 ---
 

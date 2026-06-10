@@ -18,7 +18,7 @@ export default function Completed({ settings, setSettings, setStep }) {
           <div className="flex flex-col gap-y-[25px] text-theme-text-secondary text-sm">
             <p>
               The "{item.name}" {item.itemType} has been
-              imported successfully! It is now available in your OpenAfD Chat
+              imported successfully! It is now available in your OpenSIN Chat
               instance.
             </p>
             {item.itemType === "agent-flow" && (

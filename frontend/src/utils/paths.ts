@@ -56,19 +56,19 @@ export default {
     },
   },
   github: () => {
-    return "https://github.com/Family-Team-Projects/OpenAfD-Chat";
+    return "https://github.com/Family-Team-Projects/OpenSIN-Chat";
   },
   discord: () => {
     return "https://discord.gg/6UyHPeGZAC";
   },
   docs: (path = "") => {
-    return `https://openafd.delqhi.com/docs${path}`;
+    return `https://opensin.delqhi.com/docs${path}`;
   },
   chatModes: () => {
-    return "https://openafd.delqhi.com/docs/features/chat-modes";
+    return "https://opensin.delqhi.com/docs/features/chat-modes";
   },
   mailToSupport: () => {
-    return "mailto:support@openafd.delqhi.com";
+    return "mailto:support@opensin.delqhi.com";
   },
   workspace: {
     chat: (slug, options = {}) => {
@@ -116,6 +116,9 @@ export default {
     },
     llmPreference: () => {
       return "/settings/llm-preference";
+    },
+    systemHealth: () => {
+      return "/settings/system-health";
     },
     transcriptionPreference: () => {
       return "/settings/transcription-preference";
@@ -205,7 +208,7 @@ export default {
   },
   communityHub: {
     website: () => {
-      return "https://openafd.delqhi.com/hub";
+      return "https://opensin.delqhi.com/hub";
     },
     viewMoreOfType: function (type: any) {
       return `${this.website()}/list/${type}`;
@@ -227,16 +230,16 @@ export default {
       return `${this.website()}/me`;
     },
     noPrivateItems: () => {
-      return "https://openafd.delqhi.com/docs/community-hub/faq#no-private-items";
+      return "https://opensin.delqhi.com/docs/community-hub/faq#no-private-items";
     },
   },
 
   documentation: {
     mobileIntroduction: () => {
-      return "https://openafd.delqhi.com/docs/mobile/overview";
+      return "https://opensin.delqhi.com/docs/mobile/overview";
     },
     contextWindows: () => {
-      return "https://openafd.delqhi.com/docs/chatting-with-documents/introduction#you-exceed-the-context-window---what-now";
+      return "https://opensin.delqhi.com/docs/chatting-with-documents/introduction#you-exceed-the-context-window---what-now";
     },
   },
 

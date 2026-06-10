@@ -190,7 +190,7 @@ function TerminalTab() {
         <p className="text-zinc-600 light:text-slate-400 mb-2">
           {t(
             "console.terminal_hint",
-            "OpenAfD Terminal — Befehle werden auf dem Host-System ausgeführt.",
+            "OpenSIN Terminal — Befehle werden auf dem Host-System ausgeführt.",
           )}
         </p>
         {history.map((entry, idx) => (

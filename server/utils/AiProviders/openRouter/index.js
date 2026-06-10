@@ -38,7 +38,7 @@ class OpenRouterLLM {
       apiKey: process.env.OPENROUTER_API_KEY ?? null,
       defaultHeaders: {
         "HTTP-Referer": "https://openafd.com",
-        "X-Title": "OpenAfD Chat",
+        "X-Title": "OpenSIN Chat",
       },
     });
     this.model =

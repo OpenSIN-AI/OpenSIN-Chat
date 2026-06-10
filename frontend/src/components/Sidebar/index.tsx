@@ -131,7 +131,7 @@ export default function Sidebar() {
                   <span
                     className={`text-white font-bold text-lg whitespace-nowrap transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
                   >
-                    OpenAfD
+                    OpenSIN
                   </span>
                 </Link>
             </div>
@@ -227,7 +227,7 @@ export function SidebarMobileHeader() {
             alt="Logo"
             className="h-6 w-6 max-h-6 max-w-6 object-contain"
           />
-          <span className="text-white font-bold text-base">OpenAfD</span>
+          <span className="text-white font-bold text-base">OpenSIN</span>
         </div>
         <div className="w-12"></div>
       </header>
@@ -260,7 +260,7 @@ export function SidebarMobileHeader() {
                   alt="Logo"
                   className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                 />
-                <span className="text-white font-bold text-base">OpenAfD</span>
+                <span className="text-white font-bold text-base">OpenSIN</span>
               </div>
               {(!user || user?.role !== "default") && (
                 <div className="flex gap-x-2 items-center text-slate-500 shink-0">

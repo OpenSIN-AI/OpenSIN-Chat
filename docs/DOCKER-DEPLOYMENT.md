@@ -1,6 +1,6 @@
-# OpenAfD Chat — Docker Deployment Guide
+# OpenSIN Chat — Docker Deployment Guide
 
-> **Purpose:** Production-ready Docker deployment for OpenAfD Chat with all known issues, health-checks, and the politician-DB sync pre-flight documented.
+> **Purpose:** Production-ready Docker deployment for OpenSIN Chat with all known issues, health-checks, and the politician-DB sync pre-flight documented.
 >
 > **Docs:** `DOCKER-DEPLOYMENT.doc.md` (this file)
 > **Related:** `docker/HOW_TO_USE_DOCKER.md`, `docs/architecture.md`, `docs/DATA-SOURCES.md`
@@ -117,11 +117,11 @@ docker run -d --name openafd -p 3001:3001 --cap-add SYS_ADMIN `
 name: openafd
 
 networks:
-  openafd-chat:
+  opensin-chat:
     driver: bridge
 
 services:
-  openafd-chat:
+  opensin-chat:
     container_name: openafd
     build:
       context: ../.
@@ -147,7 +147,7 @@ services:
     env_file:
       - .env
     networks:
-      - openafd-chat
+      - opensin-chat
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
@@ -201,7 +201,7 @@ docker compose up -d --build
 # Wait ~5-10 min for build (first time)
 docker ps
 # Status: healthy
-docker compose logs -f openafd-chat  # Ctrl-C to exit
+docker compose logs -f opensin-chat  # Ctrl-C to exit
 ```
 
 ---
@@ -212,8 +212,8 @@ For development or custom modifications.
 
 ```bash
 # 1. Clone repo
-git clone https://github.com/Family-Team-Projects/OpenAfD-Chat.git
-cd OpenAfD-Chat
+git clone https://github.com/Family-Team-Projects/OpenSIN-Chat.git
+cd OpenSIN-Chat
 
 # 2. Checkout version
 git checkout main  # or a tagged version like v1.2.3
@@ -227,7 +227,7 @@ cd ..
 
 # 4. Build image (multi-arch: arm64 + amd64)
 cd docker
-docker build -f Dockerfile -t openafd-chat:custom ../
+docker build -f Dockerfile -t opensin-chat:custom ../
 # Build takes 5-15 min depending on cache
 
 # 5. Run with custom image
@@ -236,13 +236,13 @@ docker run -d --name openafd-dev -p 3001:3001 \
   -v $(pwd)/../server/storage:/app/server/storage \
   -v $(pwd)/.env:/app/server/.env \
   -e STORAGE_DIR=/app/server/storage \
-  openafd-chat:custom
+  opensin-chat:custom
 ```
 
 ### Build cache tips
 - **First build:** 15-20 min (downloads node, yarn, deps)
 - **Subsequent builds:** 1-3 min (uses Docker layer cache)
-- **Clean rebuild:** `docker build --no-cache -f docker/Dockerfile -t openafd-chat:custom ./`
+- **Clean rebuild:** `docker build --no-cache -f docker/Dockerfile -t opensin-chat:custom ./`
 
 ---
 
@@ -477,7 +477,7 @@ docker run ...  # Recreate
 ### Rollback to previous image
 ```bash
 # List available images
-docker images | grep openafd-chat
+docker images | grep opensin-chat
 
 # Stop current container
 docker stop openafd && docker rm openafd
@@ -488,7 +488,7 @@ docker run -d --name openafd -p 3001:3001 \
   -v $STORAGE_LOCATION:/app/server/storage \
   -v $STORAGE_LOCATION/.env:/app/server/.env \
   -e STORAGE_DIR=/app/server/storage \
-  openafd-chat:local-v7  # previous tag
+  opensin-chat:local-v7  # previous tag
 ```
 
 ### Rollback code
@@ -532,7 +532,7 @@ For production deployments via GitHub Actions, see:
 
 | Task | Command |
 |------|---------|
-| Build image | `docker build -f docker/Dockerfile -t openafd-chat:custom ./` |
+| Build image | `docker build -f docker/Dockerfile -t opensin-chat:custom ./` |
 | Run container | `docker run -d --name openafd -p 3001:3001 --cap-add SYS_ADMIN -e STORAGE_DIR=/app/server/storage -v $STORAGE_LOCATION:/app/server/storage openafd/openafd:latest` |
 | View logs | `docker logs -f openafd` |
 | Restart | `docker restart openafd` |

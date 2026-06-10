@@ -1,6 +1,6 @@
 {
-  "name": "OpenAfD Chat",
-  "short_name": "OpenAfD",
+  "name": "OpenSIN Chat",
+  "short_name": "OpenSIN",
   "display": "standalone",
   "orientation": "portrait",
   "start_url": "/",

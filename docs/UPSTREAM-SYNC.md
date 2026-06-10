@@ -1,13 +1,13 @@
 # Upstream-Sync-Strategie
 
-> OpenAfD-Chat ist ein **Snapshot-Fork** von [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm) (v1.13.0, 2026-05-26), kein Live-Sync. Diese Anleitung erklärt, wie neue Upstream-Releases in unseren Branch eingepflegt werden.
+> OpenSIN-Chat ist ein **Snapshot-Fork** von [Mintplex-Labs/anything-llm](https://github.com/Mintplex-Labs/anything-llm) (v1.13.0, 2026-05-26), kein Live-Sync. Diese Anleitung erklärt, wie neue Upstream-Releases in unseren Branch eingepflegt werden.
 
 ## Grundprinzipien
 
 1. **Ein-Release-pro-Sync.** Wir ziehen immer gegen den aktuellen Upstream-`master` (oder einen neuen Release-Tag) — nicht inkrementell pro Commit.
 2. **Squash-Patch-Serie.** Die 20-30 Commits zwischen unserem letzten Sync und Upstream-HEAD werden in **4–8 logische Gruppen** sortiert (Security, Bugfixes, Features, Docs, …).
 3. **Jede Gruppe = eigene, reviewbare Patch-Datei(en).** Maintainer reviewed pro Gruppe, nicht pro Commit. Das hält die History sauber.
-4. **Konflikte werden in der Gruppe sichtbar, nicht im Master.** Rebrand-Touch-Points (Display-Namen, `AnythingLLM` → `OpenAfD Chat`, Logo-Dateinamen) erzeugen die meisten Konflikte. Diese sind erwartet und werden vom Branding-Linter (`scripts/check-branding.sh`) in CI abgefangen.
+4. **Konflikte werden in der Gruppe sichtbar, nicht im Master.** Rebrand-Touch-Points (Display-Namen, `AnythingLLM` → `OpenSIN Chat`, Logo-Dateinamen) erzeugen die meisten Konflikte. Diese sind erwartet und werden vom Branding-Linter (`scripts/check-branding.sh`) in CI abgefangen.
 
 ## Workflow
 

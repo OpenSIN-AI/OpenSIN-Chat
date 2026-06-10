@@ -1,20 +1,20 @@
 <div align="center">
   <br />
-  <a href="https://openafd.delqhi.com">
-    <img src="./images/wordmark.png" alt="OpenAfD Chat — Sovereigner KI-Arbeitsraum" width="380" />
+  <a href="https://opensin.delqhi.com">
+    <img src="./images/wordmark.png" alt="OpenSIN Chat — Souveräner KI-Arbeitsraum" width="380" />
   </a>
   <br />
   <br />
 
-**Sovereäner KI-Arbeitsraum für patriotische Politik**
+**Souveräner, selbst gehosteter KI-Arbeitsraum**
 
 Chatte mit deinen Dokumenten. Automatisiere Recherche. Multi-User, selbst gehostet, ohne Telemetrie — auf deiner eigenen Infrastruktur.
 
   <br />
 
-[![Cloudflare-Deployment](https://img.shields.io/badge/Cloudflare-deployed-orange?logo=cloudflare)](https://openafd.delqhi.com)
+[![Cloudflare-Deployment](https://img.shields.io/badge/Cloudflare-deployed-orange?logo=cloudflare)](https://opensin.delqhi.com)
 [![License: MIT](https://img.shields.io/badge/Lizenz-MIT-gr%C3%BCn)](./LICENSE)
-[![Repo: GitHub](https://img.shields.io/badge/Repo-GitHub-black?logo=github)](https://github.com/Family-Team-Projects/OpenAfD-Chat)
+[![Repo: GitHub](https://img.shields.io/badge/Repo-GitHub-black?logo=github)](https://github.com/OpenSIN-AI/OpenSIN-Chat)
 [![DSGVO-konform](https://img.shields.io/badge/DSGVO-konform-blau)]()
 [![Keine Telemetrie](https://img.shields.io/badge/Telemetrie-KOMPLETT%20AUS-rot)]()
 
@@ -23,9 +23,9 @@ Chatte mit deinen Dokumenten. Automatisiere Recherche. Multi-User, selbst gehost
 
 ---
 
-## 🎯 Was ist OpenAfD Chat?
+## 🎯 Was ist OpenSIN Chat?
 
-OpenAfD Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, Recherche und Wissensmanagement. Sie wurde auf Basis von [OpenAfD Chat](https://github.com/Family-Team-Projects/openafd-chat) (MIT) als souveräne, markenfreie Variante für den deutschsprachigen politischen Raum weiterentwickelt.
+OpenSIN Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, Recherche und Wissensmanagement. Sie wurde auf Basis von [OpenSIN Chat](https://github.com/Family-Team-Projects/opensin-chat) (MIT) als souveräne, markenfreie Variante für den deutschsprachigen politischen Raum weiterentwickelt.
 
 **Im Kern:** Du lädst deine Dokumente hoch (Bundestags-Drucksachen, Pressemitteilungen, Gesetzesentwürfe, interne Papiere) — und die KI beantwortet Fragen **nur aus diesen Quellen**, mit nachvollziehbaren Zitaten. Keine Halluzinationen aus dem Nichts, keine Cloud-Pflicht, keine Telemetrie.
 
@@ -43,7 +43,7 @@ OpenAfD Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, R
 - 🇩🇪 **AfD-Branding** — blaues Farbschema, eigene Logo-Platzhalter, deutschsprachiger System-Prompt
 - 🚫 **Keine Telemetrie** — Null Datenverkehr zu Dritten (kein PostHog, kein CDN-Tracking)
 
-### AfD-spezifisch (neu in OpenAfD Chat)
+### AfD-spezifisch (neu in OpenSIN Chat)
 
 - 🏛 **Politiker-Datenbank** — Bundestag-API + Abgeordnetenwatch als strukturierte Quellen (Stammdaten, Mandate, Votes, Reden) — direkt abfragbar, kein Crawling nötig
 - 📜 **Plenarprotokoll-Suche** — semantische Volltextsuche über Bundestags-Reden mit Vektor-Index (LanceDB); Antworten mit Rede-Kontext und Quellenverweis
@@ -53,7 +53,7 @@ OpenAfD Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, R
 
 ## 🇩🇪 AfD-spezifische Features im Detail
 
-OpenAfD Chat erweitert AnythingLLM um vier politisch zugeschnittene Module. Sie sind als eigenständige Server-Utilities unter `server/utils/` implementiert und über geschützte REST-Endpunkte (`validApiKey`-Middleware) ansprechbar.
+OpenSIN Chat erweitert AnythingLLM um vier politisch zugeschnittene Module. Sie sind als eigenständige Server-Utilities unter `server/utils/` implementiert und über geschützte REST-Endpunkte (`validApiKey`-Middleware) ansprechbar.
 
 ### 🏛 Modul 1 — Politiker-Datenbank
 
@@ -219,13 +219,13 @@ GET  /api/orchestrator/:id/result
 
 ### Live-Demo
 
-👉 **https://openafd.delqhi.com** (Cloudflare-Deployment)
+👉 **https://opensin.delqhi.com** (Cloudflare-Deployment)
 
 ### Selbst hosten (Docker)
 
 ```bash
-git clone https://github.com/Family-Team-Projects/OpenAfD-Chat.git
-cd OpenAfD-Chat/docker
+git clone https://github.com/Family-Team-Projects/OpenSIN-Chat.git
+cd OpenSIN-Chat/docker
 cp .env.example .env
 docker compose up -d
 ```
@@ -238,11 +238,11 @@ Siehe [`BARE_METAL.md`](./BARE_METAL.md) und [`DEPLOYMENT_GUIDE.md`](./DEPLOYMEN
 
 ## 🏗 Architektur
 
-### Production-Flow (Live unter [openafd.delqhi.com](https://openafd.delqhi.com))
+### Production-Flow (Live unter [opensin.delqhi.com](https://opensin.delqhi.com))
 
 ```mermaid
 flowchart TB
-    User(["👤 Browser<br/>https://openafd.delqhi.com"])
+    User(["👤 Browser<br/>https://opensin.delqhi.com"])
 
     subgraph Cloudflare["☁️ Cloudflare Edge (DNS + Tunnel-Broker)"]
         DNS["DNS-Records<br/>A / CNAME"]
@@ -284,7 +284,7 @@ flowchart TB
 
 | Schicht | Wo | Was |
 |---|---|---|
-| 1. Browser | Welt | HTTPS-Request auf `https://openafd.delqhi.com` |
+| 1. Browser | Welt | HTTPS-Request auf `https://opensin.delqhi.com` |
 | 2. Cloudflare DNS | Cloudflare-Edge | Löst Domain zu Tunnel-Broker auf (`cf-ray`, `cf-cache-status` Header) |
 | 3. `cloudflared` | **Dein Mac** (PID 53989) | Outbound-Tunnel zurück zum Cloudflare-Broker — **kein offener Port nötig!** |
 | 4. Express | **Dein Mac** (`:3001`) | Single-Process: rendert HTML, liefert API, serviert Static |
@@ -297,7 +297,7 @@ flowchart TB
 ### Repo-Struktur
 
 ```
-OpenAfD-Chat/
+OpenSIN-Chat/
 ├── frontend/      # Vite + React (UI) — yarn build → dist/ wird nach server/public/ kopiert
 ├── server/        # Node.js Express (API, Vektor-DB, Auth, HTML-Rendering)
 │   └── utils/
@@ -311,12 +311,12 @@ OpenAfD-Chat/
 ├── docker/        # Dockerfiles, docker-compose (für Self-Hosting)
 ├── cloud-deployments/   # AWS, GCP, DigitalOcean, K8s, Helm (für Cloud-Self-Hosting)
 ├── docs/          # Doku
-└── .cloudflared/  # (lokal, nicht im Repo) cloudflared-Config für openafd.delqhi.com-Tunnel
+└── .cloudflared/  # (lokal, nicht im Repo) cloudflared-Config für opensin.delqhi.com-Tunnel
 ```
 
 ## 🔒 Sicherheit & Datenschutz
 
-- **Null Telemetrie** — `DISABLE_TELEMETRY=true` ist der Default; keine Outbound-Calls zu PostHog, OpenAfD Team-CDN oder Drittanbietern
+- **Null Telemetrie** — `DISABLE_TELEMETRY=true` ist der Default; keine Outbound-Calls zu PostHog, OpenSIN Team-CDN oder Drittanbietern
 - **DSGVO-affin** — alle Daten bleiben auf deiner Infrastruktur
 - **Keine externen LLM-Pflichten** — du kannst komplett offline mit Ollama oder LM Studio arbeiten
 - **Selbstsignierte JWT-Secrets** — keine Backdoors
@@ -334,11 +334,11 @@ Beiträge sind willkommen — siehe [`CONTRIBUTING.md`](./CONTRIBUTING.md). Code
 
 ## 🙏 Danksagung — Upstream-Credit
 
-OpenAfD Chat ist ein Community-Fork von **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)**, entwickelt von **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** unter MIT-Lizenz.
+OpenSIN Chat ist ein Community-Fork von **[AnythingLLM](https://github.com/Mintplex-Labs/anything-llm)**, entwickelt von **[Mintplex Labs Inc.](https://github.com/Mintplex-Labs)** unter MIT-Lizenz.
 
 Ohne die hervorragende Arbeit von **Timothy Carambat** und dem gesamten Mintplex-Team, der AnythingLLM-Community und allen Mitwirkenden wäre dieses Projekt nicht möglich gewesen. Wir stehen auf den Schultern von Riesen — und das soll hier ausdrücklich gewürdigt werden.
 
-> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as a reference during chatting. Built and maintained by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) — used here as the foundation for OpenAfD Chat.*
+> *AnythingLLM is a full-stack application that enables you to turn any document, resource, or piece of content into context that any LLM can use as a reference during chatting. Built and maintained by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) — used here as the foundation for OpenSIN Chat.*
 
 **Was wir von AnythingLLM übernommen haben:**
 
@@ -348,7 +348,7 @@ Ohne die hervorragende Arbeit von **Timothy Carambat** und dem gesamten Mintplex
 - Sicherheits-, Auth- und Multi-User-Konzept
 - `@mintplex-labs/*` NPM-Pakete (WebSocket, Bree Scheduler, Piper-TTS)
 
-**Was OpenAfD Chat draufsetzt:**
+**Was OpenSIN Chat draufsetzt:**
 
 - Komplettes Rebranding (AfD-Blau, deutsche Sprache, eigenes Logo)
 - Telemetrie **komplett** entfernt (statt nur abschaltbar)
@@ -372,7 +372,7 @@ Eine vollständige Liste aller Drittanbieter-Komponenten findest du in [`THIRD-P
 ## Deployment
 
 Die Live-Site läuft als Docker-Container auf einem lokalen Mac, erreichbar über
-Cloudflare Tunnel (`openafd.delqhi.com` → Cloudflare → cloudflared → localhost:3001).
+Cloudflare Tunnel (`opensin.delqhi.com` → Cloudflare → cloudflared → localhost:3001).
 
 ### Auto-Deploy
 
@@ -414,7 +414,7 @@ cd docker && docker compose build --no-cache && docker compose down && docker co
 [![MIT License](https://img.shields.io/badge/License-MIT-green)](https://github.com/Mintplex-Labs/anything-llm/blob/master/LICENSE)
 [![Discord (Original)](https://img.shields.io/badge/Discord-Original%20Community-blueviolet?logo=discord)](https://discord.gg/6UyHPeGZAC)
 
-*OpenAfD Chat is a community fork. All credit for the original codebase goes to the Mintplex Labs team and the AnythingLLM contributors.*
+*OpenSIN Chat is a community fork. All credit for the original codebase goes to the Mintplex Labs team and the AnythingLLM contributors.*
 
 </div>
 
@@ -423,5 +423,5 @@ cd docker && docker compose build --no-cache && docker compose down && docker co
 ---
 
 <div align="center">
-  <sub>OpenAfD Chat · Sovereigner KI-Arbeitsraum · Selbst gehostet · Keine Telemetrie</sub>
+  <sub>OpenSIN Chat · Sovereigner KI-Arbeitsraum · Selbst gehostet · Keine Telemetrie</sub>
 </div>

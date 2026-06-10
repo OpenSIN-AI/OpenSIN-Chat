@@ -22,8 +22,8 @@ function waitForElm(selector) {
 // Force change the Swagger logo in the header
 waitForElm(".topbar-wrapper").then((elm) => {
   if (window.SWAGGER_DOCS_ENV === "development") {
-    elm.innerHTML = `<img href='${window.location.origin}' src='http://localhost:3000/public/openafd-chat-light.png' width='200'/>`;
+    elm.innerHTML = `<img href='${window.location.origin}' src='http://localhost:3000/public/opensin-chat-light.png' width='200'/>`;
   } else {
-    elm.innerHTML = `<img href='${window.location.origin}' src='${window.location.origin}/openafd-chat-light.png' width='200'/>`;
+    elm.innerHTML = `<img href='${window.location.origin}' src='${window.location.origin}/opensin-chat-light.png' width='200'/>`;
   }
 });

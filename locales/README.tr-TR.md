@@ -1,26 +1,26 @@
 <a name="readme-top"></a>
 
 <p align="center">
-  <a href="https://openafd.com"><img src="https://github.com/Family-Team-Projects/openafd-chat/blob/master/images/wordmark.png?raw=true" alt="OpenAfD Chat logo"></a>
+  <a href="https://openafd.com"><img src="https://github.com/Family-Team-Projects/opensin-chat/blob/master/images/wordmark.png?raw=true" alt="OpenSIN Chat logo"></a>
 </p>
 
 <div align='center'>
-<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Family-Team-Projects%2Fopenafd-chat | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+<a href="https://trendshift.io/repositories/2415" target="_blank"><img src="https://trendshift.io/api/badge/repositories/2415" alt="Family-Team-Projects%2Fopensin-chat | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
 <p align="center">
-<b>OpenAfD Chat:</b> Aradığınız hepsi bir arada yapay zeka uygulaması.<br />
+<b>OpenSIN Chat:</b> Aradığınız hepsi bir arada yapay zeka uygulaması.<br />
 Belgelerinizle sohbet edin, yapay zeka ajanlarını kullanın, son derece özelleştirilebilir, çok kullanıcılı ve zahmetsiz kurulum!
 </p>
 
 <p align="center">
   <a href="https://discord.gg/6UyHPeGZAC" target="_blank">
-      <img src="https://img.shields.io/badge/chat-openafd-chat-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAH1UExURQAAAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////r6+ubn5+7u7/3+/v39/enq6urq6/v7+97f39rb26eoqT1BQ0pOT4+Rkuzs7cnKykZKS0NHSHl8fdzd3ejo6UxPUUBDRdzc3RwgIh8jJSAkJm5xcvHx8aanqB4iJFBTVezt7V5hYlJVVuLj43p9fiImKCMnKZKUlaaoqSElJ21wcfT09O3u7uvr6zE0Nr6/wCUpK5qcnf7+/nh7fEdKTHx+f0tPUOTl5aipqiouMGtubz5CRDQ4OsTGxufn515hY7a3uH1/gXBydIOFhlVYWvX29qaoqCQoKs7Pz/Pz87/AwUtOUNfY2dHR0mhrbOvr7E5RUy8zNXR2d/f39+Xl5UZJSx0hIzQ3Odra2/z8/GlsbaGjpERHSezs7L/BwScrLTQ4Odna2zM3Obm7u3x/gKSmp9jZ2T1AQu/v71pdXkVISr2+vygsLiInKTg7PaOlpisvMcXGxzk8PldaXPLy8u7u7rm6u7S1tsDBwvj4+MPExbe4ueXm5s/Q0Kyf7ewAAAAodFJOUwAABClsrNjx/QM2l9/7lhmI6jTB/kA1GgKJN+nea6vy/MLZQYeVKK3rVA5tAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+cKBAAmMZBHjXIAAAISSURBVDjLY2CAAkYmZhZWNnYODnY2VhZmJkYGVMDIycXNw6sBBbw8fFycyEoYGfkFBDVQgKAAPyMjQl5IWEQDDYgIC8FUMDKKsmlgAWyiEBWMjGJY5YEqxMAqGMWFNXAAYXGgAkYJSQ2cQFKCkYFRShq3AmkpRgYJbghbU0tbB0Tr6ukbgGhDI10gySfBwCwDUWBsYmpmDqQtLK2sbTQ0bO3sHYA8GWYGWWj4WTs6Obu4ami4OTm7exhqeHp5+4DCVJZBDmqdr7ufn3+ArkZgkJ+fU3CIRmgYWFiOARYGvo5OQUHhEUAFTkF+kVHRsLBgkIeyYmLjwoOc4hMSk5JTnINS06DC8gwcEEZ6RqZGlpOfc3ZObl5+gZ+TR2ERWFyBQQFMF5eklmqUpQb5+ReU61ZUOvkFVVXXQBSAraitq29o1GiKcfLzc29u0mjxBzq0tQ0kww5xZHtHUGeXhkZhdxBYgZ4d0LI6c4gjwd7siQQraOp1AivQ6CuAKZCDBBRQQQNQgUb/BGf3cqCCiZOcnCe3QQIKHNRTpk6bDgpZjRkzg3pBQTBrdtCcuZCgluAD0vPmL1gIdvSixUuWgqNs2YJ+DUhkEYxuggkGmOQUcckrioPTJCOXEnZ5JS5YslbGnuyVERlDDFvGEUPOWvwqaH6RVkHKeuDMK6SKnHlVhTgx8jeTmqy6Eij7K6nLqiGyPwChsa1MUrnq1wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0xMC0wNFQwMDozODo0OSswMDowMB9V0a8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMTAtMDRUMDA6Mzg6NDkrMDA6MDBuCGkTAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTEwLTA0VDAwOjM4OjQ5KzAwOjAwOR1IzAAAAABJRU5ErkJggg==" alt="Discord">
+      <img src="https://img.shields.io/badge/chat-opensin-chat-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAH1UExURQAAAP////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////r6+ubn5+7u7/3+/v39/enq6urq6/v7+97f39rb26eoqT1BQ0pOT4+Rkuzs7cnKykZKS0NHSHl8fdzd3ejo6UxPUUBDRdzc3RwgIh8jJSAkJm5xcvHx8aanqB4iJFBTVezt7V5hYlJVVuLj43p9fiImKCMnKZKUlaaoqSElJ21wcfT09O3u7uvr6zE0Nr6/wCUpK5qcnf7+/nh7fEdKTHx+f0tPUOTl5aipqiouMGtubz5CRDQ4OsTGxufn515hY7a3uH1/gXBydIOFhlVYWvX29qaoqCQoKs7Pz/Pz87/AwUtOUNfY2dHR0mhrbOvr7E5RUy8zNXR2d/f39+Xl5UZJSx0hIzQ3Odra2/z8/GlsbaGjpERHSezs7L/BwScrLTQ4Odna2zM3Obm7u3x/gKSmp9jZ2T1AQu/v71pdXkVISr2+vygsLiInKTg7PaOlpisvMcXGxzk8PldaXPLy8u7u7rm6u7S1tsDBwvj4+MPExbe4ueXm5s/Q0Kyf7ewAAAAodFJOUwAABClsrNjx/QM2l9/7lhmI6jTB/kA1GgKJN+nea6vy/MLZQYeVKK3rVA5tAAAAAWJLR0QB/wIt3gAAAAd0SU1FB+cKBAAmMZBHjXIAAAISSURBVDjLY2CAAkYmZhZWNnYODnY2VhZmJkYGVMDIycXNw6sBBbw8fFycyEoYGfkFBDVQgKAAPyMjQl5IWEQDDYgIC8FUMDKKsmlgAWyiEBWMjGJY5YEqxMAqGMWFNXAAYXGgAkYJSQ2cQFKCkYFRShq3AmkpRgYJbghbU0tbB0Tr6ukbgGhDI10gySfBwCwDUWBsYmpmDqQtLK2sbTQ0bO3sHYA8GWYGWWj4WTs6Obu4ami4OTm7exhqeHp5+4DCVJZBDmqdr7ufn3+ArkZgkJ+fU3CIRmgYWFiOARYGvo5OQUHhEUAFTkF+kVHRsLBgkIeyYmLjwoOc4hMSk5JTnINS06DC8gwcEEZ6RqZGlpOfc3ZObl5+gZ+TR2ERWFyBQQFMF5eklmqUpQb5+ReU61ZUOvkFVVXXQBSAraitq29o1GiKcfLzc29u0mjxBzq0tQ0kww5xZHtHUGeXhkZhdxBYgZ4d0LI6c4gjwd7siQQraOp1AivQ6CuAKZCDBBRQQQNQgUb/BGf3cqCCiZOcnCe3QQIKHNRTpk6bDgpZjRkzg3pBQTBrdtCcuZCgluAD0vPmL1gIdvSixUuWgqNs2YJ+DUhkEYxuggkGmOQUcckrioPTJCOXEnZ5JS5YslbGnuyVERlDDFvGEUPOWvwqaH6RVkHKeuDMK6SKnHlVhTgx8jeTmqy6Eij7K6nLqiGyPwChsa1MUrnq1wAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0xMC0wNFQwMDozODo0OSswMDowMB9V0a8AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMTAtMDRUMDA6Mzg6NDkrMDA6MDBuCGkTAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDIzLTEwLTA0VDAwOjM4OjQ5KzAwOjAwOR1IzAAAAABJRU5ErkJggg==" alt="Discord">
   </a> |
-  <a href="https://github.com/Family-Team-Projects/openafd-chat/blob/master/LICENSE" target="_blank">
+  <a href="https://github.com/Family-Team-Projects/opensin-chat/blob/master/LICENSE" target="_blank">
       <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white" alt="License">
   </a> |
-  <a href="https://docs.openafd.com" target="_blank">
+  <a href="https://docs.opensin.delqhi.com" target="_blank">
     Docs
   </a> |
    <a href="https://my.openafd.com/aio-checkout?product=openafd" target="_blank">
@@ -33,12 +33,12 @@ Belgelerinizle sohbet edin, yapay zeka ajanlarını kullanın, son derece özell
 </p>
 
 <p align="center">
-👉 Masaüstü için OpenAfD Chat (Mac, Windows ve Linux)! <a href="https://openafd.com/download" target="_blank"> Şimdi İndir</a>
+👉 Masaüstü için OpenSIN Chat (Mac, Windows ve Linux)! <a href="https://openafd.com/download" target="_blank"> Şimdi İndir</a>
 </p>
 
 Herhangi bir belgeyi, kaynağı veya içeriği sohbet sırasında herhangi bir büyük dil modelinin referans olarak kullanabileceği bir bağlama dönüştürmenizi sağlayan tam kapsamlı bir uygulama. Bu uygulama, kullanmak istediğiniz LLM veya Vektör Veritabanını seçmenize olanak tanırken, çok kullanıcılı yönetim ve yetkilendirme desteği de sunar.
 
-![Chatting](https://github.com/Family-Team-Projects/openafd-chat/releases/download/v1.11.2/OpenAfD Chat720p.gif)
+![Chatting](https://github.com/Family-Team-Projects/opensin-chat/releases/download/v1.11.2/OpenSIN Chat720p.gif)
 
 <details>
 <summary><kbd>Demoyu izle!</kbd></summary>
@@ -49,14 +49,14 @@ Herhangi bir belgeyi, kaynağı veya içeriği sohbet sırasında herhangi bir b
 
 ### Ürün Genel Bakışı
 
-OpenAfD Chat, aradığınız hepsi bir arada yapay zeka uygulamasıdır. OpenAfD Chat, favori yerel veya bulut LLM sağlayıcılarınızı kullanarak hiçbir ödün vermeden özel bir ChatGPT oluşturmak için ihtiyacınız olan her şeyi içerir. OpenAfD Chat son derece özelleştirilebilir olmakla birlikte, yerleşik ajanlar, çok kullanıcılı destek, vektör veritabanları, belge alma işlem hatları ve daha fazlası gibi hemen başlamak için ihtiyacınız olan her şeyle birlikte gelir.
+OpenSIN Chat, aradığınız hepsi bir arada yapay zeka uygulamasıdır. OpenSIN Chat, favori yerel veya bulut LLM sağlayıcılarınızı kullanarak hiçbir ödün vermeden özel bir ChatGPT oluşturmak için ihtiyacınız olan her şeyi içerir. OpenSIN Chat son derece özelleştirilebilir olmakla birlikte, yerleşik ajanlar, çok kullanıcılı destek, vektör veritabanları, belge alma işlem hatları ve daha fazlası gibi hemen başlamak için ihtiyacınız olan her şeyle birlikte gelir.
 
-OpenAfD Chat ayrıca birden fazla kullanıcıyı da destekler; burada örneğin güvenliğini veya gizliliğini ya da fikri mülkiyetinizi tehlikeye atmadan kullanıcı başına erişimi ve deneyimi kontrol edebilirsiniz.
+OpenSIN Chat ayrıca birden fazla kullanıcıyı da destekler; burada örneğin güvenliğini veya gizliliğini ya da fikri mülkiyetinizi tehlikeye atmadan kullanıcı başına erişimi ve deneyimi kontrol edebilirsiniz.
 
-## OpenAfD Chat’in Harika Özellikleri
+## OpenSIN Chat’in Harika Özellikleri
 
-- 🆕 [**Özel Yapay Zeka Ajanları**](https://docs.openafd.com/agent/custom/introduction)
-- 🆕 [**Kod yazmadan AI Ajanı oluşturma aracı**](https://docs.openafd.com/agent-flows/overview)
+- 🆕 [**Özel Yapay Zeka Ajanları**](https://docs.opensin.delqhi.com/agent/custom/introduction)
+- 🆕 [**Kod yazmadan AI Ajanı oluşturma aracı**](https://docs.opensin.delqhi.com/agent-flows/overview)
 - 🖼️ **Çoklu-mod desteği (hem kapalı kaynak hem de açık kaynak LLM'ler!)**
 - 👤 Çok kullanıcılı destek ve yetkilendirme _(Yalnızca Docker sürümünde)_
 - 🦾 Çalışma alanı içinde ajanlar (web'de gezinme vb.)
@@ -99,8 +99,8 @@ OpenAfD Chat ayrıca birden fazla kullanıcıyı da destekler; burada örneğin 
 - [Apipie](https://apipie.ai/)
 - [xAI](https://x.ai/)
 - [Z.AI (chat models)](https://z.ai/model-api)
-- [Novita AI (chat models)](https://novita.ai/model-api/product/llm-api?utm_source=github_openafd-chat&utm_medium=github_readme&utm_campaign=link)
-- [PPIO](https://ppinfra.com?utm_source=github_openafd-chat)
+- [Novita AI (chat models)](https://novita.ai/model-api/product/llm-api?utm_source=github_opensin-chat&utm_medium=github_readme&utm_campaign=link)
+- [PPIO](https://ppinfra.com?utm_source=github_opensin-chat)
 - [Docker Model Runner](https://docs.docker.com/ai/model-runner/)
 - [PrivateModeAI (chat models)](https://privatemode.ai/)
 - [SambaNova Cloud (chat models)](https://cloud.sambanova.ai/)
@@ -110,7 +110,7 @@ OpenAfD Chat ayrıca birden fazla kullanıcıyı da destekler; burada örneğin 
 
 **Embedder modelleri:**
 
-- [OpenAfD Chat Native Embedder](/server/storage/models/README.md) (default)
+- [OpenSIN Chat Native Embedder](/server/storage/models/README.md) (default)
 - [OpenAI](https://openai.com)
 - [Azure OpenAI](https://azure.microsoft.com/en-us/products/ai-services/openai-service)
 - [LocalAi (all)](https://localai.io/)
@@ -120,7 +120,7 @@ OpenAfD Chat ayrıca birden fazla kullanıcıyı da destekler; burada örneğin 
 
 **Ses Transkripsiyon Modelleri:**
 
-- [OpenAfD Chat Built-in](https://github.com/Family-Team-Projects/openafd-chat/tree/master/server/storage/models#audiovideo-transcription) (default)
+- [OpenSIN Chat Built-in](https://github.com/Family-Team-Projects/opensin-chat/tree/master/server/storage/models#audiovideo-transcription) (default)
 - [OpenAI](https://openai.com/)
 
 **TTS (text-to-speech) desteği:**
@@ -160,7 +160,7 @@ Bu monorepo üç ana bölümden oluşmaktadır:
 
 ## 🛳 Kendi Sunucunuzda Barındırma
 
-Family Team Projects ve topluluk, OpenAfD Chat'i yerel olarak çalıştırmak için çeşitli dağıtım yöntemleri, betikler ve şablonlar sunmaktadır. Aşağıdaki tabloya göz atarak tercih ettiğiniz ortamda nasıl dağıtım yapabileceğinizi öğrenebilir veya otomatik dağıtım seçeneklerini keşfedebilirsiniz.
+Family Team Projects ve topluluk, OpenSIN Chat'i yerel olarak çalıştırmak için çeşitli dağıtım yöntemleri, betikler ve şablonlar sunmaktadır. Aşağıdaki tabloya göz atarak tercih ettiğiniz ortamda nasıl dağıtım yapabileceğinizi öğrenebilir veya otomatik dağıtım seçeneklerini keşfedebilirsiniz.
 | Docker | AWS | GCP | Digital Ocean | Render.com |
 |----------------------------------------|----|-----|---------------|------------|
 | [![Deploy on Docker][docker-btn]][docker-deploy] | [![Deploy on AWS][aws-btn]][aws-deploy] | [![Deploy on GCP][gcp-btn]][gcp-deploy] | [![Deploy on DigitalOcean][do-btn]][do-deploy] | [![Deploy on Render.com][render-btn]][render-deploy] |
@@ -169,7 +169,7 @@ Family Team Projects ve topluluk, OpenAfD Chat'i yerel olarak çalıştırmak i�
 | --------------------------------------------------- | --------------------------------------------------------- | --------------------------------------------------- |
 | [![Deploy on Railway][railway-btn]][railway-deploy] | [![Deploy on RepoCloud][repocloud-btn]][repocloud-deploy] | [![Deploy on Elestio][elestio-btn]][elestio-deploy] |
 
-[veya Docker kullanmadan üretim ortamında OpenAfD Chat kurun →](../BARE_METAL.md)
+[veya Docker kullanmadan üretim ortamında OpenSIN Chat kurun →](../BARE_METAL.md)
 
 ## Geliştirme İçin Kurulum
 
@@ -183,14 +183,14 @@ Family Team Projects ve topluluk, OpenAfD Chat'i yerel olarak çalıştırmak i�
 
 ## Telemetri ve Gizlilik
 
-Family Team Projects Inc. tarafından geliştirilen OpenAfD Chat, anonim kullanım bilgilerini toplayan bir telemetri özelliği içermektedir.
+Family Team Projects Inc. tarafından geliştirilen OpenSIN Chat, anonim kullanım bilgilerini toplayan bir telemetri özelliği içermektedir.
 
 <details>
-<summary><kbd>OpenAfD Chat için Telemetri ve Gizlilik hakkında daha fazla bilgi</kbd></summary>
+<summary><kbd>OpenSIN Chat için Telemetri ve Gizlilik hakkında daha fazla bilgi</kbd></summary>
 
 ### Neden?
 
-Bu bilgileri, OpenAfD Chat’in nasıl kullanıldığını anlamak, yeni özellikler ve hata düzeltmelerine öncelik vermek ve uygulamanın performansını ve kararlılığını iyileştirmek için kullanıyoruz.
+Bu bilgileri, OpenSIN Chat’in nasıl kullanıldığını anlamak, yeni özellikler ve hata düzeltmelerine öncelik vermek ve uygulamanın performansını ve kararlılığını iyileştirmek için kullanıyoruz.
 
 ### Telemetriden Çıkış Yapma (Opt-Out)
 
@@ -208,7 +208,7 @@ Yalnızca ürün ve yol haritası kararlarını almamıza yardımcı olacak kull
 
 Bu verileri doğrulamak için kod içinde **`Telemetry.sendTelemetry` çağrılarını** inceleyebilirsiniz. Ayrıca, bu olaylar günlük kaydına yazıldığı için hangi verilerin gönderildiğini görebilirsiniz (eğer etkinleştirilmişse). **IP adresi veya diğer tanımlayıcı bilgiler toplanmaz.** Telemetri sağlayıcısı, açık kaynaklı bir telemetri toplama hizmeti olan [PostHog](https://posthog.com/)‘dur.
 
-[Kaynak kodda tüm telemetri olaylarını görüntüle](https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopenafd-chat%20.sendTelemetry(&type=code)
+[Kaynak kodda tüm telemetri olaylarını görüntüle](https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&type=code)
 
 </details>
 
@@ -220,9 +220,9 @@ Bu verileri doğrulamak için kod içinde **`Telemetry.sendTelemetry` çağrıla
 
 ## 🌟 Katkıda Bulunanlar
 
-[![openafd contributors](https://contrib.rocks/image?repo=Family-Team-Projects/OpenAfD-Chat)](https://github.com/Family-Team-Projects/OpenAfD-Chat/graphs/contributors)
+[![openafd contributors](https://contrib.rocks/image?repo=Family-Team-Projects/OpenSIN-Chat)](https://github.com/Family-Team-Projects/OpenSIN-Chat/graphs/contributors)
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Family-Team-Projects/OpenAfD-Chat&type=Timeline)](https://star-history.com/#Family-Team-Projects/OpenAfD-Chat&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Family-Team-Projects/OpenSIN-Chat&type=Timeline)](https://star-history.com/#Family-Team-Projects/OpenSIN-Chat&Date)
 
 ## 🔗 Diğer Ürünler
 
@@ -255,9 +255,9 @@ Bu proje [MIT](../LICENSE) lisansı ile lisanslanmıştır.
 [do-btn]: https://www.deploytodo.com/do-btn-blue.svg
 [do-deploy]: ./cloud-deployments/digitalocean/terraform/DEPLOY.md
 [render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Family-Team-Projects/openafd-chat&branch=render
+[render-deploy]: https://render.com/deploy?repo=https://github.com/Family-Team-Projects/opensin-chat&branch=render
 [render-btn]: https://render.com/images/deploy-to-render-button.svg
-[render-deploy]: https://render.com/deploy?repo=https://github.com/Family-Team-Projects/openafd-chat&branch=render
+[render-deploy]: https://render.com/deploy?repo=https://github.com/Family-Team-Projects/opensin-chat&branch=render
 [railway-btn]: https://railway.app/button.svg
 [railway-deploy]: https://railway.app/template/HNSCS1?referralCode=WFgJkn
 [repocloud-btn]: https://d16t0pc4846x52.cloudfront.net/deploylobe.svg

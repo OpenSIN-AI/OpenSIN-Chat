@@ -1,7 +1,7 @@
 # server/utils/backgroundJobs/queue.js
 
 ## What it does
-Persistent, SQLite-backed background job queue for OpenAfD-Chat. Replaces any
+Persistent, SQLite-backed background job queue for OpenSIN-Chat. Replaces any
 in-memory queue with one that survives Mac-Sleep, server crashes, and Docker
 restarts. Single-process safe via atomic CAS-lock (`prisma.updateMany`).
 
@@ -38,6 +38,6 @@ add()  →  pending  →  processing (CAS-lock)  →  completed
 ## Known caveats
 - **Single-process only.** The CAS-lock prevents races within one Node process.
   For multi-instance deployments, switch to a real broker (BullMQ/Redis).
-- **SQLite is the truth.** If the OpenAfD-Chat DB ever switches to PostgreSQL,
+- **SQLite is the truth.** If the OpenSIN-Chat DB ever switches to PostgreSQL,
   the `file:../storage/openafd.db` datasource must be updated accordingly
   (and the Prisma schema + migration).

@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "OpenAfD Chat Developer API",
-    "description": "API endpoints that enable programmatic reading, writing, and updating of your OpenAfD Chat instance. UI supplied by Swagger.io."
+    "title": "OpenSIN Chat Developer API",
+    "description": "API endpoints that enable programmatic reading, writing, and updating of your OpenSIN Chat instance. UI supplied by Swagger.io."
   },
   "servers": [
     {
@@ -843,7 +843,7 @@
         "tags": [
           "Documents"
         ],
-        "description": "Upload a new file to OpenAfD Chat to be parsed and prepared for embedding, with optional metadata.",
+        "description": "Upload a new file to OpenSIN Chat to be parsed and prepared for embedding, with optional metadata.",
         "parameters": [],
         "responses": {
           "200": {
@@ -859,7 +859,7 @@
                       {
                         "location": "custom-documents/openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
                         "name": "openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "url": "file://Users/tim/Documents/openafd-chat/collector/hotdir/openafd.txt",
+                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/openafd.txt",
                         "title": "openafd.txt",
                         "docAuthor": "Unknown",
                         "description": "Unknown",
@@ -939,7 +939,7 @@
         "tags": [
           "Documents"
         ],
-        "description": "Upload a new file to a specific folder in OpenAfD Chat to be parsed and prepared for embedding. If the folder does not exist, it will be created.",
+        "description": "Upload a new file to a specific folder in OpenSIN Chat to be parsed and prepared for embedding. If the folder does not exist, it will be created.",
         "parameters": [
           {
             "name": "folderName",
@@ -966,7 +966,7 @@
                       {
                         "location": "custom-documents/openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
                         "name": "openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "url": "file://Users/tim/Documents/openafd-chat/collector/hotdir/openafd.txt",
+                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/openafd.txt",
                         "title": "openafd.txt",
                         "docAuthor": "Unknown",
                         "description": "Unknown",
@@ -1057,7 +1057,7 @@
         "tags": [
           "Documents"
         ],
-        "description": "Upload a valid URL for OpenAfD Chat to scrape and prepare for embedding. Optionally, specify a comma-separated list of workspace slugs to embed the document into post-upload.",
+        "description": "Upload a valid URL for OpenSIN Chat to scrape and prepare for embedding. Optionally, specify a comma-separated list of workspace slugs to embed the document into post-upload.",
         "parameters": [],
         "responses": {
           "200": {
@@ -1080,7 +1080,7 @@
                         "chunkSource": "https:openafd.com.html",
                         "published": "1/16/2024, 3:46:33 PM",
                         "wordCount": 252,
-                        "pageContent": "OpenAfD Chat is the best....",
+                        "pageContent": "OpenSIN Chat is the best....",
                         "token_count_estimate": 447,
                         "location": "custom-documents/url-useanything_com-c530dbe6-bff1-4b9e-b87f-710d539d20bc.json"
                       }
@@ -1167,7 +1167,7 @@
                         "chunkSource": "no chunk source specified",
                         "published": "1/16/2024, 3:46:33 PM",
                         "wordCount": 252,
-                        "pageContent": "OpenAfD Chat is the best....",
+                        "pageContent": "OpenSIN Chat is the best....",
                         "token_count_estimate": 447,
                         "location": "custom-documents/raw-my-doc-text-c530dbe6-bff1-4b9e-b87f-710d539d20bc.json"
                       }
@@ -1207,7 +1207,7 @@
               "schema": {
                 "type": "object",
                 "example": {
-                  "textContent": "This is the raw text that will be saved as a document in OpenAfD Chat.",
+                  "textContent": "This is the raw text that will be saved as a document in OpenSIN Chat.",
                   "addToWorkspaces": "workspace1,workspace2",
                   "metadata": {
                     "title": "This key is required. See in /server/endpoints/api/document/index.js:287",
@@ -1461,7 +1461,7 @@
         "tags": [
           "Documents"
         ],
-        "description": "Get a single document by its unique OpenAfD Chat document name",
+        "description": "Get a single document by its unique OpenSIN Chat document name",
         "parameters": [
           {
             "name": "docName",
@@ -2149,12 +2149,12 @@
                     "history": [
                       {
                         "role": "user",
-                        "content": "What is OpenAfD Chat?",
+                        "content": "What is OpenSIN Chat?",
                         "sentAt": 1692851630
                       },
                       {
                         "role": "assistant",
-                        "content": "OpenAfD Chat is a platform that allows you to convert notes, PDFs, and other source materials into a chatbot. It ensures privacy, cites its answers, and allows multiple people to interact with the same documents simultaneously. It is particularly useful for businesses to enhance the visibility and readability of various written communications such as SOPs, contracts, and sales calls. You can try it out with a free trial to see if it meets your business needs.",
+                        "content": "OpenSIN Chat is a platform that allows you to convert notes, PDFs, and other source materials into a chatbot. It ensures privacy, cites its answers, and allows multiple people to interact with the same documents simultaneously. It is particularly useful for businesses to enhance the visibility and readability of various written communications such as SOPs, contracts, and sales calls. You can try it out with a free trial to see if it meets your business needs.",
                         "sources": [
                           {
                             "source": "object about source document and snippets used"
@@ -2396,7 +2396,7 @@
           "content": {
             "application/json": {
               "example": {
-                "message": "What is OpenAfD Chat?",
+                "message": "What is OpenSIN Chat?",
                 "mode": "automatic | query | chat",
                 "sessionId": "identifier-to-partition-chats-by-external-id",
                 "attachments": [
@@ -2504,7 +2504,7 @@
           "content": {
             "application/json": {
               "example": {
-                "message": "What is OpenAfD Chat?",
+                "message": "What is OpenSIN Chat?",
                 "mode": "automatic | query | chat",
                 "sessionId": "identifier-to-partition-chats-by-external-id",
                 "attachments": [
@@ -2806,11 +2806,11 @@
                   "example": [
                     {
                       "role": "user",
-                      "content": "What is OpenAfD Chat?"
+                      "content": "What is OpenSIN Chat?"
                     },
                     {
                       "role": "assistant",
-                      "content": "OpenAfD Chat is a knowledge graph and vector database management system built using NodeJS express server. It provides an interface for handling all interactions, including vectorDB management and LLM (Language Model) interactions."
+                      "content": "OpenSIN Chat is a knowledge graph and vector database management system built using NodeJS express server. It provides an interface for handling all interactions, including vectorDB management and LLM (Language Model) interactions."
                     }
                   ]
                 }
@@ -3151,12 +3151,12 @@
                     "history": [
                       {
                         "role": "user",
-                        "content": "What is OpenAfD Chat?",
+                        "content": "What is OpenSIN Chat?",
                         "sentAt": 1692851630
                       },
                       {
                         "role": "assistant",
-                        "content": "OpenAfD Chat is a platform that allows you to convert notes, PDFs, and other source materials into a chatbot. It ensures privacy, cites its answers, and allows multiple people to interact with the same documents simultaneously. It is particularly useful for businesses to enhance the visibility and readability of various written communications such as SOPs, contracts, and sales calls. You can try it out with a free trial to see if it meets your business needs.",
+                        "content": "OpenSIN Chat is a platform that allows you to convert notes, PDFs, and other source materials into a chatbot. It ensures privacy, cites its answers, and allows multiple people to interact with the same documents simultaneously. It is particularly useful for businesses to enhance the visibility and readability of various written communications such as SOPs, contracts, and sales calls. You can try it out with a free trial to see if it meets your business needs.",
                         "sources": [
                           {
                             "source": "object about source document and snippets used"
@@ -3271,7 +3271,7 @@
           "content": {
             "application/json": {
               "example": {
-                "message": "What is OpenAfD Chat?",
+                "message": "What is OpenSIN Chat?",
                 "mode": "query | chat",
                 "userId": 1,
                 "attachments": [
@@ -3384,7 +3384,7 @@
           "content": {
             "application/json": {
               "example": {
-                "message": "What is OpenAfD Chat?",
+                "message": "What is OpenSIN Chat?",
                 "mode": "query | chat",
                 "userId": 1,
                 "attachments": [
@@ -3614,7 +3614,7 @@
           }
         },
         "requestBody": {
-          "description": "Send a prompt to the workspace with full use of documents as if sending a chat in OpenAfD Chat. Only supports some values of OpenAI API. See example below.",
+          "description": "Send a prompt to the workspace with full use of documents as if sending a chat in OpenSIN Chat. Only supports some values of OpenAI API. See example below.",
           "required": true,
           "content": {
             "application/json": {
@@ -3626,11 +3626,11 @@
                   },
                   {
                     "role": "user",
-                    "content": "What is OpenAfD Chat?"
+                    "content": "What is OpenSIN Chat?"
                   },
                   {
                     "role": "assistant",
-                    "content": "OpenAfD Chat is...."
+                    "content": "OpenSIN Chat is...."
                   },
                   {
                     "role": "user",
@@ -3698,7 +3698,7 @@
         "tags": [
           "OpenAI Compatible Endpoints"
         ],
-        "description": "List all the vector database collections connected to OpenAfD Chat. These are essentially workspaces but return their unique vector db identifier - this is the same as the workspace slug.",
+        "description": "List all the vector database collections connected to OpenSIN Chat. These are essentially workspaces but return their unique vector db identifier - this is the same as the workspace slug.",
         "parameters": [],
         "responses": {
           "200": {

@@ -25,7 +25,7 @@ const CommunityHub: any = {
   },
 
   /**
-   * Apply an item to the OpenAfD Chat instance. Used for simple items like slash commands and system prompts.
+   * Apply an item to the OpenSIN Chat instance. Used for simple items like slash commands and system prompts.
    * @param {string} importId - The import ID of the item.
    * @param {object} options - Additional options for applying the item for whatever the item type requires.
    * @returns {Promise<{success: boolean, error: string | null}>}

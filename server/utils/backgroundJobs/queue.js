@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 /**
- * Persistente SQLite-basierte Background Job Queue für OpenAfD-Chat.
+ * Persistente SQLite-basierte Background Job Queue für OpenSIN-Chat.
  *
  * Inklusive:
  *   • Auto-Recovery bei Mac-Sleep / Server-Crash (_recoverStaleJobs)

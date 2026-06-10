@@ -78,7 +78,7 @@ describe("Sidebar (desktop)", () => {
     expect(screen.getByRole("navigation", { name: /hauptnavigation/i })).toBeInTheDocument();
   });
 
-  it("renders the OpenAfD brand link to the home page", () => {
+  it("renders the OpenSIN brand link to the home page", () => {
     renderSidebar();
     const homeLink = screen.getByRole("link", { name: /home/i });
     expect(homeLink).toBeInTheDocument();

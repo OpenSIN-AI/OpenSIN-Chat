@@ -63,7 +63,7 @@ export default function SettingsSidebar() {
               alt="Logo"
               className="h-6 w-6 max-h-6 max-w-6 object-contain"
             />
-            <span className="text-white font-bold text-base">OpenAfD</span>
+            <span className="text-white font-bold text-base">OpenSIN</span>
           </div>
           <div className="w-12"></div>
         </div>
@@ -92,7 +92,7 @@ export default function SettingsSidebar() {
                     alt="Logo"
                     className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                   />
-                  <span className="text-white font-bold text-base">OpenAfD</span>
+                  <span className="text-white font-bold text-base">OpenSIN</span>
                 </div>
                 <div className="flex gap-x-2 items-center text-slate-500 shrink-0">
                   <a
@@ -145,7 +145,7 @@ export default function SettingsSidebar() {
             alt="Logo"
             className="h-6 w-6 max-h-[24px] max-w-[24px] object-contain"
           />
-          <span className="text-white font-bold text-sm">OpenAfD</span>
+          <span className="text-white font-bold text-sm">OpenSIN</span>
         </Link>
         <div
           ref={sidebarRef}
@@ -211,6 +211,12 @@ const SidebarOptions = ({ user = null, t }: any) => (
             {
               btnText: t("settings.llm"),
               href: paths.settings.llmPreference(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
+              btnText: "System Health",
+              href: paths.settings.systemHealth(),
               flex: true,
               roles: ["admin"],
             },
@@ -497,7 +503,7 @@ function AppVersion() {
   if (isLoading || !version) return null;
   return (
     <Link
-      to={`https://github.com/Family-Team-Projects/openafd-chat/releases/tag/v${version}`}
+      to={`https://github.com/Family-Team-Projects/opensin-chat/releases/tag/v${version}`}
       target="_blank"
       rel="noreferrer"
       className="text-theme-text-secondary light:opacity-80 opacity-50 text-xs mx-3"

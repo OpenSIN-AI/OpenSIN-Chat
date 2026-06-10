@@ -1,7 +1,7 @@
 # Plan: Embeddable Widget + Developer-API
 
 ## Ziel
-Ermögliche es, OpenAfD als einbettbares Chat-Widget auf fremden Websites zu nutzen. Stelle eine öffentliche Developer-API für Integration bereit.
+Ermögliche es, OpenSIN als einbettbares Chat-Widget auf fremden Websites zu nutzen. Stelle eine öffentliche Developer-API für Integration bereit.
 
 ## Scope
 - **Embeddable Widget** — `<script>` Tag für fremde Websites
@@ -307,7 +307,7 @@ export async function POST(req: Request) {
   widget.className = 'openafd-widget'
   widget.innerHTML = `
     <div class="openafd-header">
-      <span>OpenAfD</span>
+      <span>OpenSIN</span>
       <button class="openafd-close">✕</button>
     </div>
     <div class="openafd-messages" id="messages"></div>

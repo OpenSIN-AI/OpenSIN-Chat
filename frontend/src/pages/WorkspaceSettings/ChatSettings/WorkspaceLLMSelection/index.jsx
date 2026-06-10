@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import WorkspaceLLMItem from "./WorkspaceLLMItem";
 import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
@@ -13,7 +13,7 @@ const DISABLED_PROVIDERS = [];
 const LLM_DEFAULT = {
   name: "System default",
   value: "default",
-  logo: OpenAfDChatIcon,
+  logo: OpenSINChatIcon,
   options: () => <React.Fragment />,
   description: "Use the system LLM preference for this workspace.",
   requiredConfig: [],

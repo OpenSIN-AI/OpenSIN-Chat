@@ -26,7 +26,7 @@ const crypto = require("crypto");
 
 const ROOT = path.resolve(__dirname, "..");
 const OUT_DIR = path.join(ROOT, "sbom");
-const NS = "https://openafd.delqhi.com/sbom";
+const NS = "https://opensin.delqhi.com/sbom";
 
 const WORKSPACES = [
   { name: "root", dir: ROOT },
@@ -122,7 +122,7 @@ function purl(name, version) {
 
 function buildSpdx(wsName, pkgMeta, deps) {
   const now = new Date().toISOString();
-  const docName = `openafd-chat-${wsName}`;
+  const docName = `opensin-chat-${wsName}`;
   const packages = deps.map((d) => ({
     name: d.name,
     SPDXID: spdxId(d.name, d.version),
@@ -186,7 +186,7 @@ function buildCycloneDx(wsName, pkgMeta, deps) {
       tools: [{ vendor: "Family-Team-Projects", name: "openafd-generate-sbom", version: "1.0.0" }],
       component: {
         type: "application",
-        name: pkgMeta.name || `openafd-chat-${wsName}`,
+        name: pkgMeta.name || `opensin-chat-${wsName}`,
         version: pkgMeta.version || "0.0.0",
         licenses: [{ license: { id: pkgMeta.license || "MIT" } }],
       },

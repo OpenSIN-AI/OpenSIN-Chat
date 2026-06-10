@@ -2,7 +2,7 @@
 const ImportedPlugin = require("../utils/agents/imported");
 
 /**
- * An interface to the OpenAfD Chat Community Hub external API.
+ * An interface to the OpenSIN Chat Community Hub external API.
  */
 const CommunityHub = {
   importPrefix: "allm-community-id",
@@ -67,7 +67,7 @@ const CommunityHub = {
   /**
    * Fetch a bundle item from the community hub.
    * Bundle items are entities that require a downloadURL to be fetched from the community hub.
-   * so we can unzip and import them to the OpenAfD Chat instance.
+   * so we can unzip and import them to the OpenSIN Chat instance.
    * @param {string} importId - The import ID of the item.
    * @returns {Promise<{url: string | null, item: object | null, error: string | null}>}
    */
@@ -103,7 +103,7 @@ const CommunityHub = {
   },
 
   /**
-   * Apply an item to the OpenAfD Chat instance. Used for simple items like slash commands and system prompts.
+   * Apply an item to the OpenSIN Chat instance. Used for simple items like slash commands and system prompts.
    * @param {object} item - The item to apply.
    * @param {object} options - Additional options for applying the item.
    * @param {object|null} options.currentUser - The current user object.
@@ -142,7 +142,7 @@ const CommunityHub = {
   },
 
   /**
-   * Import a bundle item to the OpenAfD Chat instance by downloading the zip file and importing it.
+   * Import a bundle item to the OpenSIN Chat instance by downloading the zip file and importing it.
    * or whatever the item type requires.
    * @param {{url: string, item: object}} params
    * @returns {Promise<{success: boolean, error: string | null}>}

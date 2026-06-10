@@ -8,7 +8,7 @@ const TRANSLATIONS = {
     llm: {
       title: "LLM-Einstellung",
       description:
-        "OpenAfD Chat ist mit vielen LLM-Anbietern kompatibel. Der ausgewählte Dienst wird für die Chats verwendet.",
+        "OpenSIN Chat ist mit vielen LLM-Anbietern kompatibel. Der ausgewählte Dienst wird für die Chats verwendet.",
     },
     userSetup: {
       title: "Benutzer Setup",
@@ -35,15 +35,15 @@ const TRANSLATIONS = {
         "Diese Einstellungen können jederzeit in den Einstellungen angepasst werden.",
     },
     survey: {
-      title: "Willkommen bei OpenAfD Chat",
+      title: "Willkommen bei OpenSIN Chat",
       description:
-        "Helfen Sie uns, OpenAfD Chat an Ihre Bedürfnisse anzupassen. (Optional)",
+        "Helfen Sie uns, OpenSIN Chat an Ihre Bedürfnisse anzupassen. (Optional)",
       email: "Wie lautet Ihre E-Mail-Adresse?",
-      useCase: "Wofür möchten Sie OpenAfD Chat verwenden?",
+      useCase: "Wofür möchten Sie OpenSIN Chat verwenden?",
       useCaseWork: "Beruflich",
       useCasePersonal: "Privat",
       useCaseOther: "Sonstiges",
-      comment: "Wie haben Sie von OpenAfD Chat erfahren?",
+      comment: "Wie haben Sie von OpenSIN Chat erfahren?",
       commentPlaceholder:
         "Reddit, Twitter, GitHub, YouTube, etc. – Teilen Sie uns mit, wie Sie uns entdeckt haben!",
       skip: "Umfrage überspringen",
@@ -98,7 +98,7 @@ const TRANSLATIONS = {
     contact: "Support kontaktieren",
     "browser-extension": "Browser-Extension",
     "system-prompt-variables": "Systempromptvariablen",
-    "mobile-app": "OpenAfD Chat Mobile",
+    "mobile-app": "OpenSIN Chat Mobile",
     "community-hub": {
       title: "Community Hub",
       trending: "Neuigkeiten",
@@ -169,7 +169,7 @@ const TRANSLATIONS = {
       add: "Neue Nachricht hinzufügen",
       save: "Nachrichten speichern",
       heading: "Erkläre mir",
-      body: "die Vorteile von OpenAfD Chat",
+      body: "die Vorteile von OpenSIN Chat",
     },
     delete: {
       title: "Workspace löschen",
@@ -776,7 +776,7 @@ const TRANSLATIONS = {
         title: "Intelligente Auswahl von Fähigkeiten",
         "beta-badge": "Beta-Version",
         description:
-          "Ermöglichen Sie die uneingeschränkte Nutzung von Werkzeugen und reduzieren Sie die Token-Nutzung pro Anfrage um bis zu 80 % – OpenAfD Chat wählt automatisch die passenden Fähigkeiten für jede Anfrage aus.",
+          "Ermöglichen Sie die uneingeschränkte Nutzung von Werkzeugen und reduzieren Sie die Token-Nutzung pro Anfrage um bis zu 80 % – OpenSIN Chat wählt automatisch die passenden Fähigkeiten für jede Anfrage aus.",
         "max-tools": {
           title: "Max Tools",
           description:
@@ -814,16 +814,16 @@ const TRANSLATIONS = {
   customization: {
     interface: {
       title: "UI Einstellungen",
-      description: "Passen Sie die Benutzeroberfläche von OpenAfD Chat an.",
+      description: "Passen Sie die Benutzeroberfläche von OpenSIN Chat an.",
     },
     branding: {
       title: "Branding & Whitelabeling",
       description:
-        "Individualisieren Sie Ihre OpenAfD Chat-Instanz durch eigenes Branding.",
+        "Individualisieren Sie Ihre OpenSIN Chat-Instanz durch eigenes Branding.",
     },
     chat: {
       title: "Chat",
-      description: "Passen Sie Ihre Chat-Einstellungen für OpenAfD Chat an.",
+      description: "Passen Sie Ihre Chat-Einstellungen für OpenSIN Chat an.",
       auto_submit: {
         title: "Spracheingaben automatisch senden",
         description:
@@ -903,7 +903,7 @@ const TRANSLATIONS = {
   api: {
     title: "API-Schlüssel",
     description:
-      "API-Schlüssel ermöglichen es dem Besitzer, programmatisch auf diese OpenAfD Chat-Instanz zuzugreifen und sie zu verwalten.",
+      "API-Schlüssel ermöglichen es dem Besitzer, programmatisch auf diese OpenSIN Chat-Instanz zuzugreifen und sie zu verwalten.",
     link: "Lesen Sie die API-Dokumentation",
     generate: "Neuen API-Schlüssel generieren",
     empty: "Keine API-Schlüssel gefunden",
@@ -917,7 +917,7 @@ const TRANSLATIONS = {
       close: "Schließen",
       create: "API-Schlüssel erstellen",
       helper:
-        "Nach der Erstellung kann der API-Schlüssel verwendet werden, um programmgesteuert auf diese OpenAfD Chat-Instanz zuzugreifen und sie zu konfigurieren.",
+        "Nach der Erstellung kann der API-Schlüssel verwendet werden, um programmgesteuert auf diese OpenSIN Chat-Instanz zuzugreifen und sie zu konfigurieren.",
       name: {
         label: "Name",
         placeholder: "Produktionsintegration",
@@ -942,7 +942,7 @@ const TRANSLATIONS = {
   llm: {
     title: "LLM-Präferenz",
     description:
-      "Dies sind die Anmeldeinformationen und Einstellungen für Ihren bevorzugten LLM-Chat- und Einbettungsanbieter. Es ist wichtig, dass diese Schlüssel aktuell und korrekt sind, sonst wird OpenAfD Chat nicht richtig funktionieren.",
+      "Dies sind die Anmeldeinformationen und Einstellungen für Ihren bevorzugten LLM-Chat- und Einbettungsanbieter. Es ist wichtig, dass diese Schlüssel aktuell und korrekt sind, sonst wird OpenSIN Chat nicht richtig funktionieren.",
     provider: "LLM-Anbieter",
     providers: {
       azure_openai: {
@@ -964,7 +964,7 @@ const TRANSLATIONS = {
       "Dies sind die Anmeldeinformationen und Einstellungen für Ihren bevorzugten Transkriptionsmodellanbieter. Es ist wichtig, dass diese Schlüssel aktuell und korrekt sind, sonst werden Mediendateien und Audio nicht transkribiert.",
     provider: "Transkriptionsanbieter",
     "warn-start":
-      "Die Verwendung des lokalen Whisper-Modells auf Maschinen mit begrenztem RAM oder CPU kann OpenAfD Chat bei der Verarbeitung von Mediendateien zum Stillstand bringen.",
+      "Die Verwendung des lokalen Whisper-Modells auf Maschinen mit begrenztem RAM oder CPU kann OpenSIN Chat bei der Verarbeitung von Mediendateien zum Stillstand bringen.",
     "warn-recommend":
       "Wir empfehlen mindestens 2 GB RAM und das Hochladen von Dateien <10 MB.",
     "warn-end":
@@ -975,7 +975,7 @@ const TRANSLATIONS = {
     "desc-start":
       "Bei der Verwendung eines LLM, das keine native Unterstützung für eine Einbettungs-Engine bietet, müssen Sie möglicherweise zusätzlich Anmeldeinformationen für die Texteinbettung angeben.",
     "desc-end":
-      "Einbettung ist der Prozess, Text in Vektoren umzuwandeln. Diese Anmeldeinformationen sind erforderlich, um Ihre Dateien und Prompts in ein Format umzuwandeln, das OpenAfD Chat zur Verarbeitung verwenden kann.",
+      "Einbettung ist der Prozess, Text in Vektoren umzuwandeln. Diese Anmeldeinformationen sind erforderlich, um Ihre Dateien und Prompts in ein Format umzuwandeln, das OpenSIN Chat zur Verarbeitung verwenden kann.",
     provider: {
       title: "Einbettungsanbieter",
     },
@@ -1001,7 +1001,7 @@ const TRANSLATIONS = {
   vector: {
     title: "Vektordatenbank",
     description:
-      "Dies sind die Anmeldeinformationen und Einstellungen für die Funktionsweise Ihrer OpenAfD Chat-Instanz. Es ist wichtig, dass diese Schlüssel aktuell und korrekt sind.",
+      "Dies sind die Anmeldeinformationen und Einstellungen für die Funktionsweise Ihrer OpenSIN Chat-Instanz. Es ist wichtig, dass diese Schlüssel aktuell und korrekt sind.",
     provider: {
       title: "Vektordatenbankanbieter",
       description: "Für LanceDB ist keine Konfiguration erforderlich.",
@@ -1046,7 +1046,7 @@ const TRANSLATIONS = {
   privacy: {
     title: "Datenschutz & Datenverarbeitung",
     description:
-      "Dies ist Ihre Konfiguration dafür, wie verbundene Drittanbieter und OpenAfD Chat Ihre Daten behandeln.",
+      "Dies ist Ihre Konfiguration dafür, wie verbundene Drittanbieter und OpenSIN Chat Ihre Daten behandeln.",
     anonymous: "Anonyme Telemetrie aktiviert",
   },
   connectors: {
@@ -1220,7 +1220,7 @@ const TRANSLATIONS = {
       fetching: "Wird abgerufen...",
       "fetch-website": "Website abrufen",
       "privacy-notice":
-        "Diese Dateien werden zum Dokumentenprozessor hochgeladen, der auf dieser OpenAfD Chat-Instanz läuft. Diese Dateien werden nicht an Dritte gesendet oder geteilt.",
+        "Diese Dateien werden zum Dokumentenprozessor hochgeladen, der auf dieser OpenSIN Chat-Instanz läuft. Diese Dateien werden nicht an Dritte gesendet oder geteilt.",
     },
     pinning: {
       what_pinning: "Was bedeutet es Dokumente anzuheften?",
@@ -1398,7 +1398,7 @@ const TRANSLATIONS = {
         edit_description: "Aktualisieren Sie den Inhalt dieses Speichers.",
         label: "Gedächtnis",
         placeholder:
-          "z.B. Benutzername: Joe, Benutzer arbeitet an OpenAfD Chat, usw.",
+          "z.B. Benutzername: Joe, Benutzer arbeitet an OpenSIN Chat, usw.",
         create: "Erstellen",
         save: "Speichern",
         cancel: "Abbrechen",
@@ -1504,7 +1504,7 @@ const TRANSLATIONS = {
         unauthenticated: {
           title: "Benötigte Authentifizierung",
           description:
-            "Sie müssen sich vor der Veröffentlichung von Inhalten über den OpenAfD Chat Community Hub authentifizieren.",
+            "Sie müssen sich vor der Veröffentlichung von Inhalten über den OpenSIN Chat Community Hub authentifizieren.",
           button: "Verbinden Sie sich mit dem Community Hub",
         },
       },
@@ -1558,7 +1558,7 @@ const TRANSLATIONS = {
     password: {
       title: "Passwortschutz",
       description:
-        "Schützen Sie Ihre OpenAfD Chat-Instanz mit einem Passwort. Wenn Sie dieses vergessen, gibt es keine Wiederherstellungsmethode, also stellen Sie sicher, dass Sie dieses Passwort speichern.",
+        "Schützen Sie Ihre OpenSIN Chat-Instanz mit einem Passwort. Wenn Sie dieses vergessen, gibt es keine Wiederherstellungsmethode, also stellen Sie sicher, dass Sie dieses Passwort speichern.",
       "password-label": "Instanzpasswort",
     },
   },

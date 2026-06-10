@@ -5,7 +5,7 @@
  *
  * Docs: politician.doc.md
  * Purpose: Provides CRUD helpers for politicians, mandates, votes, speeches,
- * and committee tables. Follows existing OpenAfD model patterns (e.g. vectors.js).
+ * and committee tables. Follows existing OpenSIN model patterns (e.g. vectors.js).
  */
 
 const prisma = require("../utils/prisma");

@@ -22,7 +22,7 @@ class DellProAiStudioProvider extends InheritMultiple([Provider, UnTooled]) {
     const model = config?.model || process.env.DPAIS_LLM_MODEL_PREF;
     const client = new OpenAI({
       baseURL: DellProAiStudioLLM.parseBasePath(), // Will use process.env.DPAIS_LLM_BASE_PATH if not provided
-      apiKey: null,
+      apiKey: process.env.DPAIS_LLM_API_KEY || "dell-pro-ai-studio",
     });
 
     this._client = client;

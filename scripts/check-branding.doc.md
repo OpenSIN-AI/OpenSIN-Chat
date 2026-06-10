@@ -1,9 +1,9 @@
-# check-branding.sh — OpenAfD Chat Branding Linter
+# check-branding.sh — OpenSIN Chat Branding Linter
 
 ## Was diese Datei tut
 
 CI-Linter, der verhindert, dass `AnythingLLM` / `Mintplex Labs`-Strings in den
-Anwendungs-Code von OpenAfD-Chat einsickern. Fails CI bei Drift, gewährt
+Anwendungs-Code von OpenSIN-Chat einsickern. Fails CI bei Drift, gewährt
 explizite Whitelist für Dateien, die das Upstream-Crediting enthalten.
 
 ## Dependency Map
@@ -29,7 +29,7 @@ verfällt die Linter-Semantik.
 | `Mintplex` | Company | `Mintplex Labs Inc.` |
 | `cdn.anythingllm.com` | Telemetry-CDN | **darf nicht mehr im Code sein** |
 | `hub.anythingllm.com` | Community-Hub | externe API, **darf nicht im Frontend** sein |
-| `docs.anythingllm.com` | Doku-CDN | optional, besser durch `openafd.delqhi.com/docs` ersetzen |
+| `docs.anythingllm.com` | Doku-CDN | optional, besser durch `opensin.delqhi.com/docs` ersetzen |
 | `team@mintplex` | Mail-Adresse | **nur in `THIRD-PARTY.md`** |
 
 ## Usage

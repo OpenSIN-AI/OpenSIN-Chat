@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 /**
- * OpenAfD Chat — Bundestag-Drucksachen Connector
+ * OpenSIN Chat — Bundestag-Drucksachen Connector
  *
  * Importiert Drucksachen, Plenarprotokolle und Anträge aus dem offiziellen
  * DIP-Open-Data-Portal des Deutschen Bundestages:
@@ -116,7 +116,7 @@ async function dipFetch(url, apiKey) {
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",
-      "User-Agent": "OpenAfD-Chat/0.1 (+https://openafd.delqhi.com)",
+      "User-Agent": "OpenSIN-Chat/0.1 (+https://opensin.delqhi.com)",
       Authorization: `apikey ${key}`,
     },
   });
@@ -130,7 +130,7 @@ async function dipFetch(url, apiKey) {
 }
 
 /**
- * Konvertiert eine DIP-Drucksache in ein Dokument, das in OpenAfD Chat
+ * Konvertiert eine DIP-Drucksache in ein Dokument, das in OpenSIN Chat
  * gespeichert und indiziert werden kann.
  * @param {object} doc - DIP-Drucksache-JSON
  * @param {string} outFolderPath - Zielordner

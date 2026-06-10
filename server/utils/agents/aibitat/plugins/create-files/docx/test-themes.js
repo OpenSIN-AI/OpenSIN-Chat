@@ -138,7 +138,7 @@ async function generateThemePreview(themeName, themeConfig, options = {}) {
       createCoverPageSection(docx, {
         title,
         subtitle: subtitle || `Demonstrating the ${themeName} color scheme`,
-        author: author || "OpenAfD Chat Theme Tester",
+        author: author || "OpenSIN Chat Theme Tester",
         date: currentDate,
         theme: themeConfig,
         margins: marginConfig,
@@ -173,7 +173,7 @@ async function generateThemePreview(themeName, themeConfig, options = {}) {
 
   const doc = new Document({
     title,
-    creator: "OpenAfD Chat Theme Tester",
+    creator: "OpenSIN Chat Theme Tester",
     description: `Theme preview for ${themeName}`,
     numbering: DEFAULT_NUMBERING_CONFIG,
     sections,

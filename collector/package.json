@@ -1,13 +1,13 @@
 {
-  "name": "openafd-chat-document-collector",
+  "name": "opensin-chat-document-collector",
   "version": "1.13.0",
   "description": "Document collector server endpoints",
   "main": "index.js",
-  "author": "Timothy Carambat (Family Team Projects)",
+  "author": "Timothy Carambat (OpenSIN-AI)",
   "license": "MIT",
   "private": false,
   "engines": {
-    "node": ">=18.12.1"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --ignore hotdir --ignore storage --trace-warnings index.js",

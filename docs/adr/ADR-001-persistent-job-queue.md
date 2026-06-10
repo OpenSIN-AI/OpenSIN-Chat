@@ -2,11 +2,11 @@
 
 **Status:** Accepted
 **Date:** 2026-06-07
-**Deciders:** Jeremy (OpenAfD-Chat maintainer)
+**Deciders:** Jeremy (OpenSIN-Chat maintainer)
 
 ## Context
 
-OpenAfD-Chat ist eine **Sovereignty-first / Offline-first** Fork von AnythingLLM
+OpenSIN-Chat ist eine **Sovereignty-first / Offline-first** Fork von AnythingLLM
 (`docs/supabase-self-hosted.md`, `SECURITY.md`). Sie läuft typischerweise als
 **Single-Node auf einem Mac hinter einem Cloudflare-Tunnel** — kein Container-
 Cluster, keine Cloud-Worker, keine externen Broker.
@@ -32,7 +32,7 @@ einer Chat-Antwort) waren vorher **nicht persistent**:
 * **Resilienz:** Jobs müssen Mac-Sleep, Server-Crashes, Docker-Neustarts
   überleben.
 * **Einfachheit:** Single-Node, Single-Process, kein Operator-Overhead.
-* **Schema-Konsistenz:** OpenAfD-Chat nutzt bereits Prisma + SQLite
+* **Schema-Konsistenz:** OpenSIN-Chat nutzt bereits Prisma + SQLite
   (`openafd.db`). Eine neue DB-Engine einzuführen wäre Architektur-Bloat.
 * **Performance:** 1 Chat = 1 Job. Burst-Raten sind klein (User-getrieben,
   kein Batch-Processing).
@@ -157,7 +157,7 @@ model job_queue {
   eines `node`-Prozesses. Zwei Server-Instanzen auf derselben DB
   könnten denselben Job picken (letzter `updateMany` gewinnt,
   aber ein Job könnte 2x laufen bevor Lock sichtbar wird).
-  * Mitigation: OpenAfD-Chat ist Single-Instance per Design
+  * Mitigation: OpenSIN-Chat ist Single-Instance per Design
     (Mac-Server, Docker, kein Cluster). Für Multi-Instance:
     siehe "Alternatives Considered".
 * **Polling-Latenz:** 5 s Worst-Case zwischen `add()` und Verarbeitung.
@@ -180,7 +180,7 @@ model job_queue {
 
 ### 2. Supabase-basierte Queue
 
-OpenAfD-Chat hat bereits optionale Supabase-Storage-Anbindung
+OpenSIN-Chat hat bereits optionale Supabase-Storage-Anbindung
 (`server/utils/storage/supabase.js`, `docker/docker-compose.supabase.yml`).
 
 * **Pro:** Bestehende Infrastruktur wiederzuverwenden klingt effizient.
@@ -199,7 +199,7 @@ OpenAfD-Chat hat bereits optionale Supabase-Storage-Anbindung
 * **Pro:** Production-grade, parallele Worker, Retries, Schedules.
 * **Contra:**
   * Redis ist eine **zusätzliche** Infrastruktur-Komponente, die nichts
-    anderes in OpenAfD-Chat nutzt.
+    anderes in OpenSIN-Chat nutzt.
   * DSGVO: Redis-Snapshots müssen verschlüsselt/sofort gelöscht werden.
   * Mac-Sleep: Redis müsste auch laufen (Homebrew-Service), zusätzlicher
     Boot-Order-Konflikt.
@@ -209,7 +209,7 @@ OpenAfD-Chat hat bereits optionale Supabase-Storage-Anbindung
 ### 4. PostgreSQL (gleicher DB-Server wie Supabase, aber als Queue-Tabelle)
 
 * **Pro:** Transactional Safety, Row-Level-Locks.
-* **Contra:** OpenAfD-Chat läuft primär auf SQLite (siehe
+* **Contra:** OpenSIN-Chat läuft primär auf SQLite (siehe
   `migration_lock.toml:provider = "sqlite"` und `openafd.db`-Pfad).
   Postgres-Switch ist explizit "out of scope" und nicht in der
   `setup`/`prisma:setup` Script-Chain.
@@ -256,7 +256,7 @@ OpenAfD-Chat hat bereits optionale Supabase-Storage-Anbindung
   Persistenz.
 * [AnythingLLM PR #1907](https://github.com/Mintplex-Labs/anything-llm/pull/1907)
   — `b5a2437b patch docker scout CVE in old express-ws pkg` —
-  Hinweis dass Mintplex aktiv an CVEs arbeitet; OpenAfD-Chat sollte
+  Hinweis dass Mintplex aktiv an CVEs arbeitet; OpenSIN-Chat sollte
   upstream-synchen und **diesen ADR unverändert lassen** (kein
   schema-merge-konflikt, da `job_queue` am Ende von `schema.prisma`).
 

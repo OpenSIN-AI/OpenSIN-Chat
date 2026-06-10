@@ -31,10 +31,10 @@ export default function MobileConnectModal({ isOpen, onClose }) {
           {/* left column */}
           <div className="flex flex-col w-1/2 gap-y-[16px]">
             <p className="text-[#FFF] text-xl font-bold">
-              Go mobile. Stay local. OpenAfD Chat Mobile.
+              Go mobile. Stay local. OpenSIN Chat Mobile.
             </p>
             <p className="text-[#FFF] text-lg">
-              OpenAfD Chat for mobile allows you to connect to your workspace's
+              OpenSIN Chat for mobile allows you to connect to your workspace's
               chats, threads, tools, and documents for you to use on the go.
               <br />
               <br />
@@ -59,7 +59,7 @@ export default function MobileConnectModal({ isOpen, onClose }) {
               <ConnectionQrCode isOpen={isOpen} />
             </div>
             <p className="text-[#FFF] text-sm w-[300px] text-center">
-              Scan the QR code with the OpenAfD Chat Mobile app to enable live
+              Scan the QR code with the OpenSIN Chat Mobile app to enable live
               sync of your workspaces, chats, threads and documents.
               <br />
               <Link

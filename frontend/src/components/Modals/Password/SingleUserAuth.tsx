@@ -75,7 +75,7 @@ export default function SingleUserAuth() {
               </h3>
             </div>
             <p className="text-zinc-400 light:text-zinc-600 text-sm text-center">
-              {t("login.sign-in", { appName: appName || "OpenAfD Chat" })}
+              {t("login.sign-in", { appName: appName || "OpenSIN Chat" })}
             </p>
           </div>
         </div>

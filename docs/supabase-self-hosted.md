@@ -1,6 +1,6 @@
 # Supabase Self-Hosted Setup
 
-OpenAfD-Chat uses a minimal self-hosted Supabase stack for three things:
+OpenSIN-Chat uses a minimal self-hosted Supabase stack for three things:
 
 | Service | Purpose |
 |---|---|
@@ -75,7 +75,7 @@ docker compose -f docker/docker-compose.supabase.yml ps
 
 ---
 
-## 4. Configure OpenAfD-Chat server
+## 4. Configure OpenSIN-Chat server
 
 Add the following to `server/.env` (copy from `server/.env.example`):
 
@@ -166,6 +166,6 @@ docker compose -f docker/docker-compose.supabase.yml down -v
 
 ## Vercel / Cloud deployment
 
-When deploying OpenAfD-Chat to Vercel (stateless), the Supabase stack must be hosted separately (e.g. on a Hetzner VPS, Fly.io, Railway, or any always-on server). Set the public host/IP in `DATABASE_URL` and `SUPABASE_STORAGE_URL` in the Vercel project environment variables.
+When deploying OpenSIN-Chat to Vercel (stateless), the Supabase stack must be hosted separately (e.g. on a Hetzner VPS, Fly.io, Railway, or any always-on server). Set the public host/IP in `DATABASE_URL` and `SUPABASE_STORAGE_URL` in the Vercel project environment variables.
 
 The local filesystem fallback (when `SUPABASE_STORAGE_ENABLED` is not set) is only suitable for local development and single-server Docker deployments where the storage volume is mounted.

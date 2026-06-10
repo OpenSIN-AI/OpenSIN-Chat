@@ -1,10 +1,10 @@
 {
-  "name": "openafd-chat",
+  "name": "opensin-chat",
   "version": "0.1.0",
-  "description": "Sovereäner KI-Arbeitsraum für patriotische Politik — selbst gehostet, ohne Telemetrie, mit Bundestags-Daten und AfD-Branding.",
+  "description": "OpenSIN Chat — souveräner, selbst gehosteter KI-Arbeitsraum ohne Telemetrie. Fork von AnythingLLM (MIT).",
   "main": "index.js",
   "type": "module",
-  "author": "Family Team Projects (OpenAfD Chat)",
+  "author": "OpenSIN-AI",
   "contributors": [
     {
       "name": "Mintplex Labs Inc.",
@@ -26,14 +26,14 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Family-Team-Projects/OpenAfD-Chat.git"
+    "url": "git+https://github.com/OpenSIN-AI/OpenSIN-Chat.git"
   },
   "bugs": {
-    "url": "https://github.com/Family-Team-Projects/OpenAfD-Chat/issues"
+    "url": "https://github.com/OpenSIN-AI/OpenSIN-Chat/issues"
   },
-  "homepage": "https://openafd.delqhi.com",
+  "homepage": "https://opensin.delqhi.com",
   "engines": {
-    "node": ">=18"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "dev": "cd frontend && npm run dev",

@@ -4,7 +4,7 @@
  * from SystemSettings (SerpAPI, DuckDuckGo, etc.).
  *
  * Docs: webSearchEngine.doc.md
- * Purpose: Reuses the existing OpenAfD search infrastructure for the research pipeline.
+ * Purpose: Reuses the existing OpenSIN search infrastructure for the research pipeline.
  */
 
 const { SystemSettings } = require("../../models/systemSettings");

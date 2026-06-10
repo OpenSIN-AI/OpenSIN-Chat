@@ -1,11 +1,11 @@
 name: openafd
 
 networks:
-  openafd-chat:
+  opensin-chat:
     driver: bridge
 
 services:
-  openafd-chat:
+  opensin-chat:
     container_name: openafd
     restart: always
     build:
@@ -32,6 +32,6 @@ services:
       # volume target (../server/storage -> /app/server/storage).
       - STORAGE_DIR=/app/server/storage
     networks:
-      - openafd-chat
+      - opensin-chat
     extra_hosts:
       - "host.docker.internal:host-gateway"

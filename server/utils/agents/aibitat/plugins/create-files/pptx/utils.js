@@ -45,7 +45,7 @@ function addBranding(slide, bgColor) {
       transparency: 78,
     });
   } else {
-    slide.addText("OpenAfD Chat", {
+    slide.addText("OpenSIN Chat", {
       x: 7.85,
       y: 5.17,
       w: 1.85,

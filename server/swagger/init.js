@@ -6,9 +6,9 @@ const path = require("path");
 const doc = {
   info: {
     version: "1.0.0",
-    title: "OpenAfD Chat Developer API",
+    title: "OpenSIN Chat Developer API",
     description:
-      "API endpoints that enable programmatic reading, writing, and updating of your OpenAfD Chat instance. UI supplied by Swagger.io.",
+      "API endpoints that enable programmatic reading, writing, and updating of your OpenSIN Chat instance. UI supplied by Swagger.io.",
   },
   // Swagger-autogen does not allow us to use relative paths as these will resolve to
   // http:///api in the openapi.json file, so we need to monkey-patch this post-generation.

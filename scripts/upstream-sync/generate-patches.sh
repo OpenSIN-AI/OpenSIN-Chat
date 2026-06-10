@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# OpenAfD-Chat — Upstream Sync Patch Generator (Option A: Squash-Patch-Serie)
+# OpenSIN-Chat — Upstream Sync Patch Generator (Option A: Squash-Patch-Serie)
 # ----------------------------------------------------------------------------
 # Generates 6 atomic patch groups from upstream Mintplex-Labs/anything-llm
 # covering the 27 commits released between v1.13.0 and current upstream master.
@@ -10,7 +10,7 @@
 # patches compose linearly when applied with `git am`.
 #
 # Apply with `apply-patches.sh` which uses `git am --3way` so the maintainer
-# resolves any conflict against the OpenAfD-Chat rebrand interactively.
+# resolves any conflict against the OpenSIN-Chat rebrand interactively.
 #
 # Docs: scripts/upstream-sync/upstream-sync.doc.md
 # Strategy: docs/UPSTREAM-SYNC.md

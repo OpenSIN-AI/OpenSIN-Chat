@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 const multer = require("multer");
 const path = require("path");
-const { getStoragePath } = require("../paths");
+const { getStoragePath, getCollectorPath } = require("../paths");
 const fs = require("fs");
 const { v4 } = require("uuid");
 const { normalizePath, sanitizeFileName } = require(".");
@@ -15,10 +15,6 @@ const supabaseStorage = require("../storage/supabase");
  * and then pushed to Supabase Storage by the supabaseUploadMiddleware.
  * When Supabase Storage is disabled the file is written to the local hotdir.
  */
-const _collectorDir =
-  process.env.STORAGE_DIR
-    ? path.resolve(process.env.STORAGE_DIR, "../../collector")
-    : path.resolve(__dirname, "../../../collector");
 
 // ----- Disk storage definitions (filesystem fallback) ----------------------
 
@@ -27,7 +23,7 @@ const fileUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../../collector/hotdir`)
-        : path.resolve(_collectorDir, `hotdir`);
+        : getCollectorPath("hotdir");
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {
@@ -47,7 +43,7 @@ const fileAPIUploadStorage = multer.diskStorage({
     const uploadOutput =
       process.env.NODE_ENV === "development"
         ? path.resolve(__dirname, `../../../collector/hotdir`)
-        : path.resolve(_collectorDir, `hotdir`);
+        : getCollectorPath("hotdir");
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {

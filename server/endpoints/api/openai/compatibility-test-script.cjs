@@ -25,10 +25,10 @@ const client = new OpenAI({
         role: "system",
         content: "You are a helpful assistant who only speaks like a pirate.",
       },
-      { role: "user", content: "What is OpenAfD Chat?" },
+      { role: "user", content: "What is OpenSIN Chat?" },
       // {
       //   role: 'assistant',
-      //   content: "Arrr, matey! OpenAfD Chat be a fine tool fer sailin' the treacherous sea o' information with a powerful language model at yer helm. It's a potent instrument to handle all manner o' tasks involvin' text, like answerin' questions, generating prose, or even havin' a chat with digital scallywags like meself. Be there any specific treasure ye seek in the realm o' OpenAfD Chat?"
+      //   content: "Arrr, matey! OpenSIN Chat be a fine tool fer sailin' the treacherous sea o' information with a powerful language model at yer helm. It's a potent instrument to handle all manner o' tasks involvin' text, like answerin' questions, generating prose, or even havin' a chat with digital scallywags like meself. Be there any specific treasure ye seek in the realm o' OpenSIN Chat?"
       // },
       // { role: "user", content: "Why are you talking like a pirate?" },
     ],
@@ -44,7 +44,7 @@ const client = new OpenAI({
         role: "system",
         content: "You are a helpful assistant who only speaks like a pirate.",
       },
-      { role: "user", content: "What is OpenAfD Chat?" },
+      { role: "user", content: "What is OpenSIN Chat?" },
     ],
     model: "openafd", // must be workspace-slug
     stream: true,
@@ -59,7 +59,7 @@ const client = new OpenAI({
   // Test embeddings creation
   console.log("Creating embeddings");
   const embedding = await client.embeddings.create({
-    model: null, // model is optional for OpenAfD Chat
+    model: null, // model is optional for OpenSIN Chat
     input: "This is a test string for embedding",
     encoding_format: "float",
   });

@@ -90,7 +90,7 @@ function TelemetryLogs({ settings }) {
             based information. To see the list of event tags collected you can
             look on{" "}
             <a
-              href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopenafd-chat%20.sendTelemetry(&type=code"
+              href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&type=code"
               className="underline text-blue-400"
               target="_blank"
               rel="noreferrer"
@@ -104,7 +104,7 @@ function TelemetryLogs({ settings }) {
             dedicated to building the best solution for integrating AI and
             documents privately and securely. If you do decide to turn off
             telemetry all we ask is to consider sending us feedback and thoughts
-            so that we can continue to improve OpenAfD Chat for you.{" "}
+            so that we can continue to improve OpenSIN Chat for you.{" "}
             <a
               href="mailto:team@openafd.com"
               className="underline text-blue-400"

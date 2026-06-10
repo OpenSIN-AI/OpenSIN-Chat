@@ -1,4 +1,4 @@
-# Supabase Self-Hosted Stack for OpenAfD-Chat
+# Supabase Self-Hosted Stack for OpenSIN-Chat
 #
 # Provides: PostgreSQL 15 + pgvector, Supabase Storage, Kong API Gateway
 # Auth/Realtime/Edge-Functions are intentionally excluded — not needed.

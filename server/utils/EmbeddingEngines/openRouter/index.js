@@ -12,7 +12,7 @@ class OpenRouterEmbedder {
       apiKey: process.env.OPENROUTER_API_KEY,
       defaultHeaders: {
         "HTTP-Referer": "https://openafd.com",
-        "X-Title": "OpenAfD Chat",
+        "X-Title": "OpenSIN Chat",
       },
     });
     this.model = process.env.EMBEDDING_MODEL_PREF || "baai/bge-m3";

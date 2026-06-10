@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
-const { getStoragePath } = require("../paths");
+const { getStoragePath, getCollectorPath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
 const { v5: uuidv5 } = require("uuid");
 const { Document } = require("../../models/documents");
 const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
-
 
 const documentsPath =
   process.env.NODE_ENV === "development"
@@ -22,12 +21,7 @@ const vectorCachePath =
 const hotdirPath =
   process.env.NODE_ENV === "development"
     ? path.resolve(__dirname, `../../../collector/hotdir`)
-    : path.resolve(
-        process.env.STORAGE_DIR
-          ? path.resolve(process.env.STORAGE_DIR, "../../collector")
-          : path.resolve(__dirname, "../../../collector"),
-        "hotdir",
-      );
+    : getCollectorPath("hotdir");
 
 // Should take in a folder that is a subfolder of documents
 // eg: youtube-subject/video-123.json

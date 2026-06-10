@@ -1219,7 +1219,7 @@ async function validDockerizedUrl(input = "") {
 
     const isPortAvailableFromDocker = await isPortInUse(port, hostname);
     if (isPortAvailableFromDocker)
-      return "Port is not running a reachable service on loopback address from inside the OpenAfD Chat container. Please use host.docker.internal (for linux use 172.17.0.1), a real machine ip, or domain to connect to your service.";
+      return "Port is not running a reachable service on loopback address from inside the OpenSIN Chat container. Please use host.docker.internal (for linux use 172.17.0.1), a real machine ip, or domain to connect to your service.";
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error.message);

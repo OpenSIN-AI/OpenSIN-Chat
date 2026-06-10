@@ -1,9 +1,9 @@
 # Production-Architektur
 
-> **Single source of truth** für „wo läuft openafd.delqhi.com eigentlich?".
+> **Single source of truth** für „wo läuft opensin.delqhi.com eigentlich?".
 > Wenn du (oder ein Agent) wissen willst, wie die Live-Deployment-Topologie aussieht — lies dieses Doc zuerst.
 
-**Live-URL:** https://openafd.delqhi.com
+**Live-URL:** https://opensin.delqhi.com
 **Letzte Aktualisierung:** 2026-06-07
 **Owner:** Delqhi (Jeremy Schulze)
 
@@ -34,7 +34,7 @@ Internet → Cloudflare DNS → Cloudflare-Tunnel-Broker
 
 ```mermaid
 flowchart TB
-    User(["👤 Browser<br/>https://openafd.delqhi.com"])
+    User(["👤 Browser<br/>https://opensin.delqhi.com"])
 
     subgraph Cloudflare["☁️ Cloudflare Edge (DNS + Tunnel-Broker)"]
         DNS["DNS-Records<br/>A / CNAME"]
@@ -76,7 +76,7 @@ flowchart TB
 
 | # | Schicht | Wo | Was |
 |---|---|---|---|
-| 1 | Browser | Welt | HTTPS-Request auf `https://openafd.delqhi.com` |
+| 1 | Browser | Welt | HTTPS-Request auf `https://opensin.delqhi.com` |
 | 2 | Cloudflare DNS | Cloudflare-Edge | Löst Domain zum Tunnel-Broker auf (siehe `cf-ray` Header) |
 | 3 | Cloudflare-Tunnel-Broker | Cloudflare-Edge | Nimmt HTTPS-Request entgegen, leitet über bestehenden Outbound-Tunnel an `cloudflared` weiter |
 | 4 | `cloudflared` | **Dein Mac** (PID 53989) | Hält persistenten Outbound-Tunnel zum Cloudflare-Broker. **Kein offener Port auf dem Mac nötig!** |
@@ -102,9 +102,9 @@ flowchart TB
 
 **Konfiguration:**
 - Domain: `delqhi.com` (Cloudflare-Account: `gigigigogo-6008` bzw. `laeunduasf-4456` — historisch gewachsen)
-- Subdomain: `openafd.delqhi.com`
+- Subdomain: `opensin.delqhi.com`
 - DNS-Record: CNAME auf den Tunnel-Broker
-- Tunnel-Name: `openafd-chat`
+- Tunnel-Name: `opensin-chat`
 - Tunnel-ID: in `~/.cloudflared/config-openafd.yml`
 
 ### 2.2 `cloudflared` (Tunnel-Client)
@@ -125,7 +125,7 @@ tunnel: <TUNNEL-UUID>
 credentials-file: /Users/simoneschulze/.cloudflared/<TUNNEL-UUID>.json
 
 ingress:
-  - hostname: openafd.delqhi.com
+  - hostname: opensin.delqhi.com
     service: http://localhost:3001
   - service: http_status:404
 ```
@@ -137,14 +137,14 @@ ingress:
 brew services start cloudflared
 
 # Oder manuell (für Debug)
-cloudflared tunnel --config ~/.cloudflared/config-openafd.yml run openafd-chat
+cloudflared tunnel --config ~/.cloudflared/config-openafd.yml run opensin-chat
 ```
 
 **Status prüfen:**
 
 ```bash
 ps aux | grep cloudflared | grep -v grep
-# Erwartet: cloudflared tunnel --config /Users/simoneschulze/.cloudflared/config-openafd.yml run openafd-chat
+# Erwartet: cloudflared tunnel --config /Users/simoneschulze/.cloudflared/config-openafd.yml run opensin-chat
 ```
 
 ### 2.3 Express-Server (`server/index.js`)
@@ -162,12 +162,12 @@ ps aux | grep cloudflared | grep -v grep
 
 ```bash
 # Build-Frontend bauen + in server/public/ kopieren
-cd /Users/jeremy/dev/OpenAfD-Chat/frontend && yarn build
-rm -rf /Users/jeremy/dev/OpenAfD-Chat/server/public
-cp -R /Users/jeremy/dev/OpenAfD-Chat/frontend/dist /Users/jeremy/dev/OpenAfD-Chat/server/public
+cd /Users/jeremy/dev/OpenSIN-Chat/frontend && yarn build
+rm -rf /Users/jeremy/dev/OpenSIN-Chat/server/public
+cp -R /Users/jeremy/dev/OpenSIN-Chat/frontend/dist /Users/jeremy/dev/OpenSIN-Chat/server/public
 
 # Prisma-Migrationen
-cd /Users/jeremy/dev/OpenAfD-Chat/server
+cd /Users/jeremy/dev/OpenSIN-Chat/server
 npx prisma generate --schema=./prisma/schema.prisma
 npx prisma migrate deploy --schema=./prisma/schema.prisma
 
@@ -198,7 +198,7 @@ curl -I http://localhost:3001/api/ping
 **Starten:**
 
 ```bash
-cd /Users/jeremy/dev/OpenAfD-Chat/collector
+cd /Users/jeremy/dev/OpenSIN-Chat/collector
 NODE_ENV=production node index.js
 ```
 
@@ -211,7 +211,7 @@ NODE_ENV=production node index.js
 **Build-Befehl:**
 
 ```bash
-cd /Users/jeremy/dev/OpenAfD-Chat/frontend
+cd /Users/jeremy/dev/OpenSIN-Chat/frontend
 yarn install
 yarn build
 # Output: frontend/dist/
@@ -266,11 +266,11 @@ server/public/
 ### Domain-Resolution
 
 ```bash
-$ dig +short openafd.delqhi.com
+$ dig +short opensin.delqhi.com
 188.114.96.3
 188.114.97.3
 
-$ curl -sI https://openafd.delqhi.com
+$ curl -sI https://opensin.delqhi.com
 HTTP/2 200
 server: cloudflare
 cf-ray: a07f700baa155053-TXL
@@ -296,14 +296,14 @@ curl -sI http://localhost:3001/api/ping
 curl -sI http://localhost:8888/api/ping
 
 # 4. Live-URL erreichbar?
-curl -sI https://openafd.delqhi.com
+curl -sI https://opensin.delqhi.com
 ```
 
 ### 4.2 Nach Code-Änderungen
 
 ```bash
 # Im Repo-Root
-cd /Users/jeremy/dev/OpenAfD-Chat
+cd /Users/jeremy/dev/OpenSIN-Chat
 
 # 1. Frontend neu bauen
 cd frontend && yarn build && cd ..
@@ -323,7 +323,7 @@ sleep 2 && curl -sI http://localhost:3001/api/ping
 
 ### 4.3 Wenn die App offline ist
 
-**Symptom:** `curl https://openafd.delqhi.com` hängt oder gibt 502/504.
+**Symptom:** `curl https://opensin.delqhi.com` hängt oder gibt 502/504.
 
 **Debug-Reihenfolge:**
 
@@ -354,7 +354,7 @@ sleep 2 && curl -sI http://localhost:3001/api/ping
 
 ```bash
 # Täglich (cron oder launchd)
-cd /Users/jeremy/dev/OpenAfD-Chat
+cd /Users/jeremy/dev/OpenSIN-Chat
 tar -czf ~/Backups/openafd-$(date +%Y%m%d).tar.gz \
     server/storage/ \
     frontend/.env \
@@ -372,7 +372,7 @@ Auf einen externen Storage syncen (z.B. per `rclone` zu Backblaze B2 oder Hetzne
 |---|---|
 | **Vercel** | Es gibt eine Vercel GitHub App auf dem Repo, die für jeden PR Preview-Builds macht. **Hat NULL mit Production zu tun.** Die App läuft auf dem Mac, nicht auf Vercel. Wenn du die Vercel-Checks komplett loswerden willst: GitHub → Settings → Integrations → Vercel → Uninstall. |
 | **Cloudflare Pages** | Wir nutzen KEIN Pages-Deployment. Cloudflare ist nur DNS + Tunnel. |
-| **`cloud-deployments/aws/`, `digitalocean/`, `gcp/`, `k8s/`, `helm/`** | Diese Verzeichnisse sind historisch aus dem Upstream-Fork (AnythingLLM). Du nutzt sie NICHT. Sie sind nur da, falls jemand OpenAfD Chat woanders hosten will. |
+| **`cloud-deployments/aws/`, `digitalocean/`, `gcp/`, `k8s/`, `helm/`** | Diese Verzeichnisse sind historisch aus dem Upstream-Fork (AnythingLLM). Du nutzt sie NICHT. Sie sind nur da, falls jemand OpenSIN Chat woanders hosten will. |
 | **`docker/docker-compose.yml`** | Du nutzt KEIN Docker in Production. Nur für Self-Hosting-User. |
 | **`BARE_METAL.md`, `DEPLOYMENT_GUIDE.md`** | Historische Doku aus dem Initial-Setup. Die Inhalte hier sind relevanter. |
 
@@ -395,7 +395,7 @@ Auf einen externen Storage syncen (z.B. per `rclone` zu Backblaze B2 oder Hetzne
 
 **Status:** Aktiv
 **Datum:** Seit Projekt-Start (~März 2026)
-**Kontext:** OpenAfD Chat ist ein Single-User-POC. Persönliche Nutzung, ~50-100 User maximal.
+**Kontext:** OpenSIN Chat ist ein Single-User-POC. Persönliche Nutzung, ~50-100 User maximal.
 
 **Entscheidung:** Der Mac des Owners (Jeremy) ist der Produktions-Server. Cloudflare-Tunnel für sicheren Public-Access.
 

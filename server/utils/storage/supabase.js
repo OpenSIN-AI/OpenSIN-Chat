@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 /**
- * Supabase Storage Adapter for OpenAfD-Chat
+ * Supabase Storage Adapter for OpenSIN-Chat
  *
  * Provides a unified interface for file uploads that routes to either:
  *   - Supabase Storage (when SUPABASE_STORAGE_ENABLED=true is set)

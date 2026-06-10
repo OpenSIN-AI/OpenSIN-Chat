@@ -21,7 +21,7 @@
 
 **Verifikation:**
 ```bash
-cd /Users/jeremy/dev/OpenAfD-Chat/frontend
+cd /Users/jeremy/dev/OpenSIN-Chat/frontend
 grep -rE "useEffect" src/components --include="*.jsx" --include="*.tsx" -A5 | grep -E "fetch\(|then\(|get\(|post\(|put\(|delete\("
 # Output: 0 Zeilen
 ```
@@ -39,7 +39,7 @@ Agent 2 hat Commit `e4ae83ef` (Phase 3.9-3.13) und `da767fe9` (Phase 3.1-3.8) al
 
 **Verifikation:**
 ```bash
-cd /Users/jeremy/dev/OpenAfD-Chat/frontend
+cd /Users/jeremy/dev/OpenSIN-Chat/frontend
 find src -name "*.test.*" -o -name "*.spec.*" | wc -l
 # Output: 74
 
@@ -59,7 +59,7 @@ cat vitest.config.js
 
 **Verifikation:**
 ```bash
-gh issue list --repo Family-Team-Projects/OpenAfD-Chat --state closed | grep -E "^#(68|69|70|71|72|73|74|75|76|77|78|79|80)"
+gh issue list --repo Family-Team-Projects/OpenSIN-Chat --state closed | grep -E "^#(68|69|70|71|72|73|74|75|76|77|78|79|80)"
 ```
 
 **Comment + Close:**

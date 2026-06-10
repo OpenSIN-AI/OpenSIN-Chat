@@ -224,7 +224,7 @@ class Weaviate extends VectorDatabase {
               .classCreator()
               .withClass({
                 class: camelCase(namespace),
-                description: `Class created by OpenAfD Chat named ${camelCase(
+                description: `Class created by OpenSIN Chat named ${camelCase(
                   namespace,
                 )}`,
                 vectorizer: "none",
@@ -331,7 +331,7 @@ class Weaviate extends VectorDatabase {
           .classCreator()
           .withClass({
             class: camelCase(namespace),
-            description: `Class created by OpenAfD Chat named ${camelCase(
+            description: `Class created by OpenSIN Chat named ${camelCase(
               namespace,
             )}`,
             vectorizer: "none",

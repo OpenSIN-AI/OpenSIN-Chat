@@ -1,5 +1,5 @@
 {
-  "name": "openafd-chat-server",
+  "name": "opensin-chat-server",
   "version": "1.13.0",
   "description": "Server endpoints to process or create content for chatting",
   "main": "index.js",

@@ -5,7 +5,7 @@
  *
  * Run: node frontend/tests/e2e/sidebar-tabs-repro.mjs [before|after]
  */
-import pkg from "/Users/jeremy/dev/OpenAfD-Chat/node_modules/playwright/index.js";
+import pkg from "/Users/jeremy/dev/OpenSIN-Chat/node_modules/playwright/index.js";
 const { chromium } = pkg;
 
 const STAGE = process.argv[2] || "before";

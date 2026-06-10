@@ -48,7 +48,7 @@ export default function AgentSkill({ item, settings, setStep }) {
             </h1>
           </div>
           <p className="text-sm">
-            Agent skills can execute code on your OpenAfD Chat instance, so only
+            Agent skills can execute code on your OpenSIN Chat instance, so only
             import agent skills from sources you trust. You should also review
             the code before importing. If you are unsure about what a skill does
             - don't import it!
@@ -82,7 +82,7 @@ export default function AgentSkill({ item, settings, setStep }) {
             </p>
           )}
           <a
-            href="https://docs.openafd.com/community-hub/faq#verification"
+            href="https://docs.opensin.delqhi.com/community-hub/faq#verification"
             target="_blank"
             className="text-xs font-mono text-blue-500 hover:underline"
             rel="noreferrer"
@@ -93,7 +93,7 @@ export default function AgentSkill({ item, settings, setStep }) {
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
         <p>
-          Agent skills unlock new capabilities for your OpenAfD Chat workspace
+          Agent skills unlock new capabilities for your OpenSIN Chat workspace
           via{" "}
           <code className="font-mono bg-zinc-900 light:bg-slate-200 px-1 py-0.5 rounded-md text-sm">
             @agent

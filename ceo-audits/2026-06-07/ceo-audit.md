@@ -1,8 +1,8 @@
-# CEO Audit Report — OpenAfD-Chat
+# CEO Audit Report — OpenSIN-Chat
 
 **Date:** 2026-06-07
 **Auditor:** SIN-Code CEO Audit Skill v3 (47-gate)
-**Repo:** `Family-Team-Projects/OpenAfD-Chat`
+**Repo:** `Family-Team-Projects/OpenSIN-Chat`
 **Branch:** `main`
 **Commit:** `ded07708`
 **Run profile:** FULL (vs. yesterdays's prior baseline at `89f4d4b9`)
@@ -262,7 +262,7 @@ References commit `acc97958` and includes E2E test evidence.
 
 ## What This Repo Is (for the board)
 
-OpenAfD-Chat is a **Sovereignty-first fork of AnythingLLM** for political
+OpenSIN-Chat is a **Sovereignty-first fork of AnythingLLM** for political
 research. It runs single-instance on a Mac behind Cloudflare, uses
 Prisma+SQLite as the primary datastore, and emphasizes **no cloud
 dependency, no telemetry, GDPR compliance**.

@@ -6,7 +6,7 @@ import System from "@/models/system";
 import showToast from "@/utils/toast";
 import PreLoader from "@/components/Preloader";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiWhisperOptions from "@/components/TranscriptionSelection/OpenAiOptions";
 import NativeTranscriptionOptions from "@/components/TranscriptionSelection/NativeTranscriptionOptions";
 import LLMItem from "@/components/LLMSelection/LLMItem";
@@ -24,9 +24,9 @@ const PROVIDERS = [
     description: "Leverage the OpenAI Whisper-large model using your API key.",
   },
   {
-    name: "OpenAfD Chat Built-In",
+    name: "OpenSIN Chat Built-In",
     value: "local",
-    logo: OpenAfDChatIcon,
+    logo: OpenSINChatIcon,
     options: (settings) => <NativeTranscriptionOptions settings={settings} />,
     description: "Run a built-in whisper model on this instance privately.",
   },

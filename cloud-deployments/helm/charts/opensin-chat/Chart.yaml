@@ -1,0 +1,9 @@
+apiVersion: v2
+name: opensin
+description: OpenSIN Chat — souveräner, selbst-hostbarer KI-Arbeitsraum mit RAG, AI-Agents und MCP. Fork von AnythingLLM (MIT).
+type: application
+version: 1.0.0
+appVersion: "1.85.0"
+icon: https://raw.githubusercontent.com/OpenSIN-AI/OpenSIN-Chat/main/frontend/public/favicon.png
+sources:
+  - https://github.com/OpenSIN-AI/OpenSIN-Chat

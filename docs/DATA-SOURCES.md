@@ -1,4 +1,4 @@
-# OpenAfD Chat — Datenquellen & Politiker-Sync
+# OpenSIN Chat — Datenquellen & Politiker-Sync
 
 > **Zweck:** Technische Dokumentation der 3 externen Datenquellen für die Politiker-Datenbank, inklusive API-Spezifikationen, Rate-Limits, Filter-Möglichkeiten und bekannten Einschränkungen.
 >

@@ -4,7 +4,7 @@
  * provider for semantic search over speech contents.
  *
  * Docs: vectorStore.doc.md
- * Purpose: Store and search politician speech embeddings using the OpenAfD
+ * Purpose: Store and search politician speech embeddings using the OpenSIN
  * PGVector provider. Reuses the same pgvector instance as document embeddings.
  */
 

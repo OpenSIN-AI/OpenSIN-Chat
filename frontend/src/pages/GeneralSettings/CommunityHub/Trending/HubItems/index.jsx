@@ -13,10 +13,10 @@ export default function HubItems() {
     <div className="w-full flex flex-col gap-y-1 pb-6 pt-6">
       <div className="flex flex-col gap-y-2 mb-4">
         <p className="text-base font-semibold text-theme-text-primary">
-          Recently Added on OpenAfD Chat Community Hub
+          Recently Added on OpenSIN Chat Community Hub
         </p>
         <p className="text-xs text-theme-text-secondary">
-          Explore the latest additions to the OpenAfD Chat Community Hub
+          Explore the latest additions to the OpenSIN Chat Community Hub
         </p>
       </div>
       <HubCategory loading={isLoading} exploreItems={exploreItems} />

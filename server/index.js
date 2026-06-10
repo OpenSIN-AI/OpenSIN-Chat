@@ -7,6 +7,8 @@ require("./utils/logger")();
 require("./utils/boot/patchSlowBuffer")();
 require("./utils/boot/patchSdkTimeouts")();
 require("./utils/boot/ensureJwtSecret")();
+require("./utils/boot/ensureJwtSecret").ensureEncryptionSecrets();
+const { logBootDiagnostics } = require("./utils/boot/logBootDiagnostics");
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -48,6 +50,7 @@ const {
   googleAgentSkillEndpoints,
 } = require("./endpoints/utils/googleAgentSkillEndpoints");
 const { memoryEndpoints } = require("./endpoints/memory");
+const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { httpLogger } = require("./middleware/httpLogger");
 const BackgroundQueue = require("./utils/backgroundJobs/queue");
 const app = express();
@@ -112,6 +115,8 @@ scheduledJobEndpoints(apiRouter);
 outlookAgentEndpoints(apiRouter);
 googleAgentSkillEndpoints(apiRouter);
 memoryEndpoints(apiRouter);
+providerStatusEndpoints(apiRouter);
+logBootDiagnostics();
 // Externally facing embedder endpoints
 embeddedEndpoints(apiRouter);
 

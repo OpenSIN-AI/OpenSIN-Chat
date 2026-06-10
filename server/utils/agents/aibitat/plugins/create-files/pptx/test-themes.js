@@ -74,8 +74,8 @@ async function generateThemePreview(themeName, outputDir) {
   const theme = getTheme(themeName);
   const pptx = new PptxGenJS();
   pptx.title = `${theme.name} Theme Preview`;
-  pptx.author = "OpenAfD Chat";
-  pptx.company = "OpenAfD Chat";
+  pptx.author = "OpenSIN Chat";
+  pptx.company = "OpenSIN Chat";
 
   const totalSlides = SAMPLE_SLIDES.length;
 
@@ -83,7 +83,7 @@ async function generateThemePreview(themeName, outputDir) {
   renderTitleSlide(
     titleSlide,
     pptx,
-    { title: `${theme.name} Theme`, author: "OpenAfD Chat Theme Preview" },
+    { title: `${theme.name} Theme`, author: "OpenSIN Chat Theme Preview" },
     theme,
   );
 

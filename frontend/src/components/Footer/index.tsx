@@ -61,7 +61,7 @@ const DEFAULT_FOOTER_ITEMS: FooterItem[] = [
     key: "github",
     Icon: GithubLogo as IconComponent,
     url: paths.github(),
-    ariaLabel: "OpenAfD Chat auf GitHub ansehen",
+    ariaLabel: "OpenSIN Chat auf GitHub ansehen",
     tooltip: "Quellcode auf GitHub ansehen",
   },
   {
@@ -69,7 +69,7 @@ const DEFAULT_FOOTER_ITEMS: FooterItem[] = [
     Icon: BookOpen as IconComponent,
     url: paths.docs(),
     ariaLabel: "Dokumentation öffnen",
-    tooltip: "OpenAfD Chat Hilfe-Dokumentation öffnen",
+    tooltip: "OpenSIN Chat Hilfe-Dokumentation öffnen",
   },
 ];
 

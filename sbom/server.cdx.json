@@ -14,7 +14,7 @@
     ],
     "component": {
       "type": "application",
-      "name": "openafd-chat-server",
+      "name": "opensin-chat-server",
       "version": "1.13.0",
       "licenses": [
         {

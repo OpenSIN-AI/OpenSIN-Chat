@@ -2,9 +2,9 @@
 
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.85.0](https://img.shields.io/badge/AppVersion-1.85.0-informational?style=flat-square)
 
-![OpenAfD Chat](https://raw.githubusercontent.com/Family-Team-Projects/openafd-chat/master/images/wordmark.png)
+![OpenSIN Chat](https://raw.githubusercontent.com/OpenSIN-AI/OpenSIN-Chat/master/images/wordmark.png)
 
-[OpenAfD Chat](https://github.com/Family-Team-Projects/openafd-chat)
+[OpenSIN Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)
 
 The all-in-one Desktop & Docker AI application with built-in RAG, AI agents, No-code agent builder, MCP compatibility, and more.
 

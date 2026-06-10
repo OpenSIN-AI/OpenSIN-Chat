@@ -15,7 +15,7 @@ class KoboldCPPProvider extends InheritMultiple([Provider, UnTooled]) {
     const model = process.env.KOBOLD_CPP_MODEL_PREF ?? null;
     const client = new OpenAI({
       baseURL: process.env.KOBOLD_CPP_BASE_PATH?.replace(/\/+$/, ""),
-      apiKey: null,
+      apiKey: process.env.KOBOLD_CPP_API_KEY || "kobold-cpp",
     });
 
     this._client = client;

@@ -309,7 +309,7 @@ class CreateFilesManager {
   }
 
   /**
-   * Gets the OpenAfD Chat logo for branding.
+   * Gets the OpenSIN Chat logo for branding.
    * @param {Object} options
    * @param {boolean} [options.forDarkBackground=false] - True to get light logo (for dark backgrounds), false for dark logo (for light backgrounds)
    * @param {"buffer"|"dataUri"} [options.format="buffer"] - Return format: "buffer" for raw Buffer, "dataUri" for base64 data URI

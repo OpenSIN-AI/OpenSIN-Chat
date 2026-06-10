@@ -7,7 +7,7 @@
 > **Status:** ACTIVE — this is the single source of truth for remaining work.
 > **Baseline:** CEO Audit 2026-06-07 — **Grade A (95.4 / 100)**, 0 CRITICAL, 0 HIGH.
 
-This document is the executive roll-up of everything left to ship OpenAfD-Chat
+This document is the executive roll-up of everything left to ship OpenSIN-Chat
 as a fully hardened, scalable product. It is organised into **epics**. Each
 epic links to a detailed plan file and to the GitHub issues that implement it.
 

@@ -8,7 +8,7 @@ Importiert Pressemitteilungen direkt von [afd.de/presse](https://www.afd.de/pres
 - **Kein Telemetrie-Outbound** — Direktverbindung, keine Drittanbieter
 - **Respektvoller Crawl** — 500 ms Pause zwischen Requests
 - **Vollständige Texte** — Titel, Hauptinhalt, Datum, Autor
-- **Direkter Import** in einen OpenAfD-Chat-Workspace
+- **Direkter Import** in einen OpenSIN-Chat-Workspace
 
 ## API
 

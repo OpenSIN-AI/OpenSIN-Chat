@@ -1,4 +1,4 @@
-# How to setup Astra Vector Database for OpenAfD Chat
+# How to setup Astra Vector Database for OpenSIN Chat
 
 [Official Astra DB Docs](https://docs.datastax.com/en/astra/astra-db-vector/get-started/quickstart.html) for reference.
 

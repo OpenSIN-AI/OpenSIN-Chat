@@ -20,7 +20,7 @@ class PrivatemodelProvider extends InheritMultiple([Provider, UnTooled]) {
       baseURL: PrivatemodeLLM.parseBasePath(
         process.env.PRIVATEMODE_LLM_BASE_PATH,
       ),
-      apiKey: null,
+      apiKey: process.env.PRIVATEMODE_LLM_API_KEY || "privatemode",
     });
 
     this._client = client;

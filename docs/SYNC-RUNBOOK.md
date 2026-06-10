@@ -1,4 +1,4 @@
-# OpenAfD Chat — Sync Runbook (Politician DB)
+# OpenSIN Chat — Sync Runbook (Politician DB)
 
 > **Purpose:** Step-by-step operational guide for triggering, monitoring, and troubleshooting the politician data sync.
 >
@@ -65,7 +65,7 @@ docker exec openafd node /app/server/jobs/sync-politician-data.js
 
 ### Option B: From host (direct)
 ```bash
-cd /Users/jeremy/dev/OpenAfD-Chat/server
+cd /Users/jeremy/dev/OpenSIN-Chat/server
 STORAGE_DIR=./storage node jobs/sync-politician-data.js
 ```
 

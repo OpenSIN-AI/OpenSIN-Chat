@@ -110,7 +110,7 @@ function utilEndpoints(app) {
       const feed =
         req.query.feed || "https://www.afd.de/feed/";
       const res = await fetchWithTimeout(feed, {
-        headers: { "User-Agent": "OpenAfD-Chat/1.0" },
+        headers: { "User-Agent": "OpenSIN-Chat/1.0" },
       });
       if (!res.ok) throw new Error(`RSS ${res.status}`);
       const xml = await res.text();
@@ -230,9 +230,9 @@ async function getDiskStorage() {
  * Returns the model tag based on the provider set in the environment.
  * This information is used to identify the parent model for the system
  * so that we can prioritize the correct model and types for future updates
- * as well as build features in OpenAfD Chat directly for a specific model or capabilities.
+ * as well as build features in OpenSIN Chat directly for a specific model or capabilities.
  *
- * Disable with  {@link https://github.com/Family-Team-Projects/openafd-chat?tab=readme-ov-file#telemetry--privacy|Disable Telemetry}
+ * Disable with  {@link https://github.com/Family-Team-Projects/opensin-chat?tab=readme-ov-file#telemetry--privacy|Disable Telemetry}
  * @returns {string} The model tag.
  */
 function getModelTag() {
@@ -365,18 +365,18 @@ function getDeploymentVersion() {
 }
 
 /**
- * Returns the user agent for the OpenAfD Chat deployment.
+ * Returns the user agent for the OpenSIN Chat deployment.
  * @returns {string} The user agent.
  */
-function getOpenAfDChatUserAgent() {
+function getOpenSINChatUserAgent() {
   const version = getDeploymentVersion() || "unknown";
-  return `OpenAfD Chat/${version}`;
+  return `OpenSIN Chat/${version}`;
 }
 
 module.exports = {
   utilEndpoints,
   getGitVersion,
   getModelTag,
-  getOpenAfDChatUserAgent,
+  getOpenSINChatUserAgent,
   getDeploymentVersion,
 };

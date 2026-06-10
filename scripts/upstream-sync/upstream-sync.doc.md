@@ -4,7 +4,7 @@
 
 ## Was diese Skripte tun
 
-OpenAfD-Chat synct nicht automatisch mit Upstream. Stattdessen generiert `generate-patches.sh` eine **sortierte Sammlung atomarer Patches** aus dem aktuellen Upstream-`master`, und `apply-patches.sh` legt sie in einer vorgegebenen Reihenfolge auf einen Branch, mit Merge-Konflikt-Markern statt Auto-Resolve.
+OpenSIN-Chat synct nicht automatisch mit Upstream. Stattdessen generiert `generate-patches.sh` eine **sortierte Sammlung atomarer Patches** aus dem aktuellen Upstream-`master`, und `apply-patches.sh` legt sie in einer vorgegebenen Reihenfolge auf einen Branch, mit Merge-Konflikt-Markern statt Auto-Resolve.
 
 **Ein Patch pro Upstream-Commit, einsortiert in 6 logische Gruppen.** Maintainer reviewed pro Gruppe, fixt Konflikte einmal pro Gruppe, nicht 27 Mal hintereinander.
 
@@ -57,8 +57,8 @@ Heuristik:
 
 1. **Konflikt-Resolution.** `apply-patches.sh` stoppt beim ersten Konflikt. Maintainer fixt manuell mit `git am --3way` + Editor + `git add` + `git am --continue`.
 2. **Branching.** Wir erstellen den Sync-Branch nicht selbst — das ist eine bewusste Designentscheidung, damit der Maintainer den Branch-Namen kontrolliert (siehe `docs/UPSTREAM-SYNC.md` Schritt 1).
-3. **Rebrand-Anpassungen.** Wenn ein Upstream-Patch einen Display-String wie "AnythingLLM" einführt, den wir auf "OpenAfD Chat" umschreiben wollen, muss das VOR `git am --continue` passieren. Der Branding-Linter fängt's danach nochmal ab.
-4. **Breaking-Changes-Detection.** Wir prüfen nicht, ob ein Sync mit dem OpenAfD-Datenmodell bricht (z. B. neues Pflicht-Feld in `workspaces`-Tabelle). Das ist manuell.
+3. **Rebrand-Anpassungen.** Wenn ein Upstream-Patch einen Display-String wie "AnythingLLM" einführt, den wir auf "OpenSIN Chat" umschreiben wollen, muss das VOR `git am --continue` passieren. Der Branding-Linter fängt's danach nochmal ab.
+4. **Breaking-Changes-Detection.** Wir prüfen nicht, ob ein Sync mit dem OpenSIN-Datenmodell bricht (z. B. neues Pflicht-Feld in `workspaces`-Tabelle). Das ist manuell.
 
 ## Fußangeln
 

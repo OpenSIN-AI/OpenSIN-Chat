@@ -187,8 +187,8 @@ function inferCellType(value) {
 }
 
 /**
- * Applies OpenAfD Chat branding to an Excel workbook.
- * Adds a subtle "Created with OpenAfD Chat" text row below the data on each sheet.
+ * Applies OpenSIN Chat branding to an Excel workbook.
+ * Adds a subtle "Created with OpenSIN Chat" text row below the data on each sheet.
  * @param {import('exceljs').Workbook} workbook - The ExcelJS workbook instance
  */
 function applyBranding(workbook) {
@@ -203,7 +203,7 @@ function applyBranding(workbook) {
     }
 
     const brandingCell = worksheet.getCell(brandingRowNum, 1);
-    brandingCell.value = "Created with OpenAfD Chat";
+    brandingCell.value = "Created with OpenSIN Chat";
     brandingCell.font = {
       italic: true,
       size: 9,

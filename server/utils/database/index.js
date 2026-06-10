@@ -84,13 +84,13 @@ async function validateTablePragmas(force = false) {
 
 // Telemetry is anonymized and your data is never read. This can be disabled by setting
 // DISABLE_TELEMETRY=true in the `.env` of however you setup. Telemetry helps us determine use
-// of how OpenAfD Chat is used and how to improve this product!
+// of how OpenSIN Chat is used and how to improve this product!
 // You can see all Telemetry events by ctrl+f `Telemetry.sendTelemetry` calls to verify this claim.
 async function setupTelemetry() {
   if (process.env.DISABLE_TELEMETRY === "true") {
     // eslint-disable-next-line no-console
     console.log(
-      `\x1b[31m[TELEMETRY DISABLED]\x1b[0m Telemetry is marked as disabled - no events will send. Telemetry helps Family Team Projects Inc improve OpenAfD Chat.`,
+      `\x1b[31m[TELEMETRY DISABLED]\x1b[0m Telemetry is marked as disabled - no events will send. Telemetry helps Family Team Projects Inc improve OpenSIN Chat.`,
     );
     return true;
   }
@@ -105,7 +105,7 @@ async function setupTelemetry() {
 
   // eslint-disable-next-line no-console
   console.log(
-    `\x1b[32m[TELEMETRY ENABLED]\x1b[0m Anonymous Telemetry enabled. Telemetry helps Family Team Projects Inc improve OpenAfD Chat.`,
+    `\x1b[32m[TELEMETRY ENABLED]\x1b[0m Anonymous Telemetry enabled. Telemetry helps Family Team Projects Inc improve OpenSIN Chat.`,
   );
   await Telemetry.findOrCreateId();
   await Telemetry.sendTelemetry("server_boot", {

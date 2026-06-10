@@ -2,7 +2,7 @@
 
 **What:** REST API for the deep research pipeline — start jobs, check status, get results.
 
-**Why:** Exposes research functionality to the OpenAfD-Chat frontend and external integrations.
+**Why:** Exposes research functionality to the OpenSIN-Chat frontend and external integrations.
 
 **Endpoints:**
 - `POST /api/research/start` — start a research job (body: `{query, depth, sources, workspaceId}`)

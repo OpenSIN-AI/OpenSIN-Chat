@@ -13,7 +13,7 @@ export default function ProviderList({
   searchInputRef,
   handleXButton,
   updateLLMChoice,
-  OpenAfDChatIcon,
+  OpenSINChatIcon,
 }) {
   return (
     <div className="absolute top-0 left-0 w-full max-w-[640px] max-h-[310px] min-h-[64px] bg-theme-settings-input-bg rounded-lg flex flex-col justify-between cursor-pointer border-2 border-primary-button z-20">

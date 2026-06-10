@@ -4,7 +4,7 @@ import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import OpenAfDChatIcon from "@/media/logo/openafd-icon.svg";
+import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
 import GeminiAiLogo from "@/media/llmprovider/gemini.png";
@@ -46,12 +46,12 @@ import useEmbeddingPreference from "@/hooks/useEmbeddingPreference";
 
 const EMBEDDERS = [
   {
-    name: "OpenAfD Chat Embedder",
+    name: "OpenSIN Chat Embedder",
     value: "native",
-    logo: OpenAfDChatIcon,
+    logo: OpenSINChatIcon,
     options: (settings) => <NativeEmbeddingOptions settings={settings} />,
     description:
-      "Use the built-in embedding provider for OpenAfD Chat. Zero setup!",
+      "Use the built-in embedding provider for OpenSIN Chat. Zero setup!",
   },
   {
     name: "OpenAI",

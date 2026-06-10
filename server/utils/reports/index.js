@@ -87,7 +87,7 @@ class ReportGenerator {
 
     if (template === "brief") {
       parts.push(`## Kurzgutachten: ${title || query}`);
-      parts.push(`*Erstellt am ${now} durch OpenAfD-Chat Recherche-Assistent*\n`);
+      parts.push(`*Erstellt am ${now} durch OpenSIN-Chat Recherche-Assistent*\n`);
       parts.push(summary || "Keine Zusammenfassung verfügbar.");
       if (searchResults.length) {
         parts.push("\n### Quellen");
@@ -147,7 +147,7 @@ class ReportGenerator {
     }
 
     parts.push("\n---\n");
-    parts.push("*Generiert durch OpenAfD-Chat — Souveräner KI-Arbeitsraum für patriotische Politik*");
+    parts.push("*Generiert durch OpenSIN-Chat — Souveräner KI-Arbeitsraum für patriotische Politik*");
 
     return parts.join("\n\n");
   }
@@ -180,7 +180,7 @@ class ReportGenerator {
         opacity: 0.8,
       });
 
-      const footerText = "OpenAfD-Chat | Souveräner KI-Arbeitsraum für patriotische Politik";
+      const footerText = "OpenSIN-Chat | Souveräner KI-Arbeitsraum für patriotische Politik";
       const fontSize = 7;
       const textWidth = font.widthOfTextAtSize(footerText, fontSize);
       page.drawText(footerText, {
@@ -259,7 +259,7 @@ class ReportGenerator {
       color: GRAY,
     });
 
-    const brandLine = "OpenAfD-Chat";
+    const brandLine = "OpenSIN-Chat";
     const brandWidth = boldFont.widthOfTextAtSize(brandLine, 16);
     coverPage.drawText(brandLine, {
       x: (width - brandWidth) / 2,

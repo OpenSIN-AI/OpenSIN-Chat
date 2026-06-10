@@ -7,11 +7,16 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v6
         with:
@@ -24,38 +29,47 @@ jobs:
         run: yarn install --frozen-lockfile --network-timeout 100000
 
       - name: Run server unit tests
+        id: server_tests
         working-directory: server
         run: npx jest --ci --maxWorkers=1
 
       - name: Dependency audit (moderate+)
+        id: yarn_audit
         working-directory: server
-        run: yarn audit --level moderate || true
+        run: yarn audit --level moderate
+
+      - name: No real .env files tracked
+        id: dotenv_guard
+        run: |
+          if git ls-files | grep -E '(^|/)\.env($|\.)' | grep -vE '\.(example|sample|template)$'; then
+            echo "::error::A real .env file is tracked in git!"
+            exit 1
+          fi
 
       - name: Check for hardcoded secrets
+        id: secrets_scan
         run: |
           ! grep -rE '(password|secret|token|api.key)\s*=\s*["\x27][^"\x27]{8,}' \
             --include="*.js" --include="*.ts" \
             server/ \
-            --exclude-dir=node_modules || exit 1
+            --exclude-dir=node_modules
 
       - name: Verify no eval/exec/spawn with user input
+        id: eval_scan
         run: |
-          ! grep -rn 'eval(' server/ --include="*.js" --exclude-dir=node_modules || exit 1
-          ! grep -rn 'child_process.spawn(' server/ --include="*.js" --exclude-dir=node_modules || exit 1
-
-      - name: Check CoDocs references
-        run: |
-          pip install sin-code-bundle 2>/dev/null || true
-          sin codocs check || echo "CoDocs check: install sin-code-bundle for full check"
+          ! grep -rn 'eval(' server/ --include="*.js" --exclude-dir=node_modules
+          ! grep -rn 'child_process.spawn(' server/ --include="*.js" --exclude-dir=node_modules
 
       - name: Branding lint
-        run: |
-          node .github/scripts/branding-lint.js || true
+        id: branding
+        run: bash scripts/check-branding.sh
 
       - name: SPDX license headers
+        id: spdx
         run: node scripts/spdx-headers.cjs --check
 
       - name: Generate SBOM (verify up to date)
+        id: sbom
         run: node scripts/generate-sbom.cjs --check
 
       - name: Dependency health report
@@ -66,14 +80,27 @@ jobs:
         run: yarn install --frozen-lockfile || yarn install
 
       - name: Run frontend unit tests
+        id: frontend_tests
         working-directory: frontend
         run: yarn test
 
       - name: Collect full server test results
+        if: always()
         working-directory: server
         run: npx jest --ci --json --outputFile=../ceo-audit-test-results.json 2>/dev/null || true
 
       - name: Generate CEO Audit report
+        if: always()
+        env:
+          SPDX_OUTCOME: ${{ steps.spdx.outcome }}
+          SBOM_OUTCOME: ${{ steps.sbom.outcome }}
+          SECRETS_OUTCOME: ${{ steps.secrets_scan.outcome }}
+          DOTENV_OUTCOME: ${{ steps.dotenv_guard.outcome }}
+          EVAL_OUTCOME: ${{ steps.eval_scan.outcome }}
+          AUDIT_OUTCOME: ${{ steps.yarn_audit.outcome }}
+          BRANDING_OUTCOME: ${{ steps.branding.outcome }}
+          SERVER_OUTCOME: ${{ steps.server_tests.outcome }}
+          FRONTEND_OUTCOME: ${{ steps.frontend_tests.outcome }}
         run: |
           node -e "
           const fs = require('fs');
@@ -84,24 +111,28 @@ jobs:
           const suites = results.testResults || [];
           const passed = suites.reduce((a, s) => a + (s.status === 'passed' ? 1 : 0), 0);
           const failed = suites.reduce((a, s) => a + (s.status === 'failed' ? 1 : 0), 0);
-          const tests  = results.numPassedTests  ?? '?';
-          const failT  = results.numFailedTests  ?? '?';
+          const tests  = results.numPassedTests ?? '?';
+          const failT  = results.numFailedTests ?? '?';
+          const st = (o) => o === 'success' ? 'PASS' : (o === 'skipped' || o === '' ? 'SKIP' : 'FAIL');
+          const e = process.env;
           const report = [
             '# CEO Audit Report',
             '',
             \`Generated: \${now}\`,
-            \`Commit: \${process.env.GITHUB_SHA || 'local'}\`,
+            \`Commit: \${e.GITHUB_SHA || 'local'}\`,
             '',
             '## Checks',
             '| Check                   | Status |',
             '|-------------------------|--------|',
-            '| SPDX license headers    | PASS   |',
-            '| SBOM (SPDX 2.3 + CDX)   | PASS   |',
-            '| Hardcoded secrets scan  | PASS   |',
-            '| eval/spawn audit        | PASS   |',
-            '| yarn audit (server)     | PASS   |',
-            \`| Server unit tests       | \${failT === 0 || failT === '?' ? 'PASS' : 'FAIL'} — \${tests} passed / \${failT} failed |\`,
-            '| Frontend unit tests     | PASS   |',
+            \`| SPDX license headers    | \${st(e.SPDX_OUTCOME)} |\`,
+            \`| SBOM (SPDX 2.3 + CDX)   | \${st(e.SBOM_OUTCOME)} |\`,
+            \`| Hardcoded secrets scan  | \${st(e.SECRETS_OUTCOME)} |\`,
+            \`| No tracked .env files   | \${st(e.DOTENV_OUTCOME)} |\`,
+            \`| eval/spawn audit        | \${st(e.EVAL_OUTCOME)} |\`,
+            \`| yarn audit (server)     | \${st(e.AUDIT_OUTCOME)} |\`,
+            \`| Branding lint           | \${st(e.BRANDING_OUTCOME)} |\`,
+            \`| Server unit tests       | \${st(e.SERVER_OUTCOME)} — \${tests} passed / \${failT} failed |\`,
+            \`| Frontend unit tests     | \${st(e.FRONTEND_OUTCOME)} |\`,
             '',
             '## Test Suites',
             \`- Total suites: \${suites.length}\`,

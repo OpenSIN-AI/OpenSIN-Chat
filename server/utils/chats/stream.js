@@ -327,7 +327,7 @@ async function streamChatWithWorkspace(
       user,
     });
 
-    // --- Persistente asynchrone Titel-Generierung (OpenAfD-Chat) ---
+    // --- Persistente asynchrone Titel-Generierung (OpenSIN-Chat) ---
     // Jobs laufen in `server/utils/backgroundJobs/queue.js` und überleben
     // Server-Restarts, Mac-Sleep und Docker-Neustarts (SQLite-basiert).
     // Nur serialisierbare Daten (IDs/Slugs/Strings) in das Payload — keine

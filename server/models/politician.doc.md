@@ -2,7 +2,7 @@
 
 ## What
 
-Thin data-access wrapper around Prisma queries for politician-related tables. Follows existing OpenAfD model patterns (e.g. vectors.js).
+Thin data-access wrapper around Prisma queries for politician-related tables. Follows existing OpenSIN model patterns (e.g. vectors.js).
 
 ## Dependencies
 
@@ -18,4 +18,4 @@ Thin data-access wrapper around Prisma queries for politician-related tables. Fo
 ## Caveats
 
 - `massInsert` uses `prisma.$transaction` for batch operations
-- Follows the same pattern as other OpenAfD models (static object with methods, not a class)
+- Follows the same pattern as other OpenSIN models (static object with methods, not a class)

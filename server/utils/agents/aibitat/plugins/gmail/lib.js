@@ -208,7 +208,7 @@ async function handleAttachments(context, messages) {
 
 /**
  * Gmail Bridge Library
- * Handles communication with the OpenAfD Chat Gmail Google Apps Script deployment.
+ * Handles communication with the OpenSIN Chat Gmail Google Apps Script deployment.
  */
 class GmailBridge {
   #deploymentId = null;
@@ -349,7 +349,7 @@ class GmailBridge {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-OpenAfD Chat-UA": "OpenAfD Chat-Gmail-Agent/1.0",
+          "X-OpenSIN Chat-UA": "OpenSIN Chat-Gmail-Agent/1.0",
         },
         body: JSON.stringify({
           key: this.#apiKey,

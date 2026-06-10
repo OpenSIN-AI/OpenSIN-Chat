@@ -1,6 +1,6 @@
 name: Branding Lint
 
-# OpenAfD-Chat — CI guard that "AnythingLLM" / "Mintplex Labs" brand strings
+# OpenSIN-Chat — CI guard that "AnythingLLM" / "Mintplex Labs" brand strings
 # only appear in the documented whitelist of files (THIRD-PARTY.md, BRANDING.md,
 # the logo shim, the env-var compat layer, the vendored chat-embed widget, …).
 # Fails the build on any new mention so accidental re-introduction is caught

@@ -73,6 +73,15 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "/settings/system-health",
+        lazy: async () => {
+          const { default: SystemHealth } = await import(
+            "@/pages/GeneralSettings/SystemHealth"
+          );
+          return { element: <AdminRoute Component={SystemHealth} /> };
+        },
+      },
+      {
         path: "/settings/transcription-preference",
         lazy: async () => {
           const { default: GeneralTranscriptionPreference } = await import(

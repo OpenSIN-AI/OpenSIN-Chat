@@ -194,7 +194,7 @@ class Provider {
             baseURL: "https://openrouter.ai/api/v1",
             defaultHeaders: {
               "HTTP-Referer": "https://openafd.com",
-              "X-Title": "OpenAfD Chat",
+              "X-Title": "OpenSIN Chat",
             },
           },
           apiKey: process.env.OPENROUTER_API_KEY ?? null,
@@ -335,7 +335,7 @@ class Provider {
           configuration: {
             baseURL: process.env.PRIVATEMODE_LLM_BASE_PATH,
           },
-          apiKey: null,
+          apiKey: process.env.PRIVATEMODE_LLM_API_KEY || "privatemode",
           ...config,
         });
       case "sambanova":
@@ -417,7 +417,7 @@ class Provider {
           configuration: {
             baseURL: process.env.NVIDIA_NIM_LLM_BASE_PATH,
           },
-          apiKey: null,
+          apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || "nvidia-nim",
           ...config,
         });
       case "opencode-zen":
@@ -433,7 +433,7 @@ class Provider {
           configuration: {
             baseURL: parseFoundryBasePath(process.env.FOUNDRY_BASE_PATH),
           },
-          apiKey: null,
+          apiKey: process.env.FOUNDRY_API_KEY || "foundry",
           ...config,
         });
       }
@@ -444,7 +444,7 @@ class Provider {
               process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
             ),
           },
-          apiKey: null,
+          apiKey: process.env.DOCKER_MODEL_RUNNER_API_KEY || "docker-model-runner",
           ...config,
         });
       case "lemonade":
@@ -480,7 +480,7 @@ class Provider {
     if (typeof provider !== "string") {
       // eslint-disable-next-line no-console
       console.log(
-        `\x1b[43m\x1b[30m[.contextLimit warning] A non-string provider for .contextLimit was given — Returning fallback context limit of 8000.\x1b[0m\n\x1b[43m\x1b[30mThis is a bug and should be reported so that context windows are properly managed by OpenAfD Chat.\x1b[0m`,
+        `\x1b[43m\x1b[30m[.contextLimit warning] A non-string provider for .contextLimit was given — Returning fallback context limit of 8000.\x1b[0m\n\x1b[43m\x1b[30mThis is a bug and should be reported so that context windows are properly managed by OpenSIN Chat.\x1b[0m`,
       );
       console.trace();
       return 8_000;
@@ -490,7 +490,7 @@ class Provider {
     if (!llm || !llm.hasOwnProperty("promptWindowLimit")) {
       // eslint-disable-next-line no-console
       console.warn(
-        `\x1b[33m[.contextLimit warning]\x1b[0m Could not determine .promptWindowLimit for provider ${provider}. This could lead to incorrect context window management by OpenAfD Chat since we cannot determine the context window limit for this provider/model combination.`,
+        `\x1b[33m[.contextLimit warning]\x1b[0m Could not determine .promptWindowLimit for provider ${provider}. This could lead to incorrect context window management by OpenSIN Chat since we cannot determine the context window limit for this provider/model combination.`,
       );
       return 8_000;
     }

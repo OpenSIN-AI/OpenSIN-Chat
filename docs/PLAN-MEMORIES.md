@@ -152,7 +152,7 @@ const memoryBlock = memories
   .join('\n')
 
 const system = [
-  `You are OpenAfD...`,
+  `You are OpenSIN...`,
   system_prompt ? `\n\n=== INSTRUCTIONS ===\n${system_prompt}` : '',
   memories.length > 0 ? `
 === REMEMBER ABOUT THIS USER ===

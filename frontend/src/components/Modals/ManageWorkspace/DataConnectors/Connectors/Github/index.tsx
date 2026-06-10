@@ -83,7 +83,7 @@ export default function GithubOptions() {
                   type="url"
                   name="repo"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="https://github.com/Family-Team-Projects/openafd-chat"
+                  placeholder="https://github.com/Family-Team-Projects/opensin-chat"
                   required={true}
                   autoComplete="off"
                   onChange={(e) => setRepo(e.target.value)}

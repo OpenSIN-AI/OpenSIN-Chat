@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { createContext, useEffect, useRef, useState } from "react";
-import OpenAfDLogo from "./media/logo/openafd-logo.png";
-import OpenAfDLogoDark from "./media/logo/openafd-logo-dark.png";
-import DefaultLoginLogo from "./media/logo/openafd-logo.png";
+import OpenSINLogo from "./media/logo/opensin-logo.png";
+import OpenSINLogoDark from "./media/logo/opensin-logo-dark.png";
+import DefaultLoginLogo from "./media/logo/opensin-logo.png";
 import System from "./models/system";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";
@@ -21,8 +21,8 @@ export function LogoProvider({ children }) {
   async function fetchInstanceLogo() {
     const isDarkMode =
       (localStorage.getItem("theme") || "default") === "default";
-    const fallbackLogo = isDarkMode ? OpenAfDLogoDark : OpenAfDLogo;
-    const defaultLoginLogo = isDarkMode ? OpenAfDLogoDark : DefaultLoginLogo;
+    const fallbackLogo = isDarkMode ? OpenSINLogoDark : OpenSINLogo;
+    const defaultLoginLogo = isDarkMode ? OpenSINLogoDark : DefaultLoginLogo;
 
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();

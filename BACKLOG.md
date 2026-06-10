@@ -1,4 +1,4 @@
-# OpenAfD-Chat — Offener Backlog (Stand: 2026-06-06)
+# OpenSIN-Chat — Offener Backlog (Stand: 2026-06-06)
 
 ## Aktueller Code-Status
 - ESLint: **0 Errors, 0 Warnings** (446 JSX-Dateien)

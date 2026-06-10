@@ -17,7 +17,7 @@ class ContentExtractor {
     try {
       const res = await fetch(url, {
         headers: {
-          "User-Agent": "OpenAfD-Chat/1.0 (Research Pipeline)",
+          "User-Agent": "OpenSIN-Chat/1.0 (Research Pipeline)",
           Accept: "text/html,text/plain,application/json",
         },
         signal: AbortSignal.timeout(15000),

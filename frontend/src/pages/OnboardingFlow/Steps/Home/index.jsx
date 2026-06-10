@@ -31,7 +31,7 @@ export default function OnboardingHome() {
 
       <div className="relative z-10 flex justify-center pt-[58px]">
         <p className="text-white/80 light:text-slate-600 text-3xl font-semibold drop-shadow-lg">
-          OpenAfD Chat
+          OpenSIN Chat
         </p>
       </div>
 

@@ -71,7 +71,7 @@ class PlenarScraper {
     for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
       try {
         return await fetch(url, {
-          headers: { "User-Agent": "OpenAfD-Chat/1.0" },
+          headers: { "User-Agent": "OpenSIN-Chat/1.0" },
           ...opts,
         });
       } catch (err) {

@@ -147,11 +147,11 @@ simoneschulze@MacBook-Pro-von-Jeremy ~ %
 | Aufgabe | Befehl |
 |---------|--------|
 | Docker Container sehen | `docker ps` |
-| Container (openafd-chat:demo-v5) | `docker logs openafd --tail 50` |
+| Container (opensin-chat:demo-v5) | `docker logs openafd --tail 50` |
 | Container neu starten | `docker restart openafd` |
 | Cloudflare Cache leeren | siehe `cloudflare-wrangler-skill` |
-| Frontend neu bauen | `cd /Users/jeremy/dev/OpenAfD-Chat/frontend && pnpm build` |
-| Git Status | `cd /Users/jeremy/dev/OpenAfD-Chat && git status` |
+| Frontend neu bauen | `cd /Users/jeremy/dev/OpenSIN-Chat/frontend && pnpm build` |
+| Git Status | `cd /Users/jeremy/dev/OpenSIN-Chat && git status` |
 | DB Status (sqlite) | `docker cp openafd:/app/server/storage/openafd.db /tmp/check.db && sqlite3 /tmp/check.db "SELECT COUNT(*) FROM workspaces;"` |
 
 ---

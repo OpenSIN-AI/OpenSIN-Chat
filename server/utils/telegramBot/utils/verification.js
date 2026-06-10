@@ -81,7 +81,7 @@ async function sendPairingRequest(bot, msg, pendingPairings) {
 
 Your pairing code is: <code>${code}</code>
 
-In OpenAfD Chat, go to Settings → Connections → Telegram and approve your request.
+In OpenSIN Chat, go to Settings → Connections → Telegram and approve your request.
 
 Make sure the pairing code shown here matches what is displayed in the settings page.
 

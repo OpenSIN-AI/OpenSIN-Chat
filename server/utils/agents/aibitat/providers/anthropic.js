@@ -5,7 +5,7 @@ const { RetryError } = require("../error.js");
 const Provider = require("./ai-provider.js");
 const { v4 } = require("uuid");
 const { safeJsonParse } = require("../../../http");
-const { getOpenAfDChatUserAgent } = require("../../../../endpoints/utils");
+const { getOpenSINChatUserAgent } = require("../../../../endpoints/utils");
 
 /**
  * The agent provider for the Anthropic API.
@@ -20,7 +20,7 @@ class AnthropicProvider extends Provider {
       options = {
         apiKey: process.env.ANTHROPIC_API_KEY,
         defaultHeaders: {
-          "User-Agent": getOpenAfDChatUserAgent(),
+          "User-Agent": getOpenSINChatUserAgent(),
         },
       },
       model = "claude-sonnet-4-6",

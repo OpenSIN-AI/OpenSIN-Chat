@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "OpenAfD Chat Agent Skill Plugin Manifest Schema",
+  "title": "OpenSIN Chat Agent Skill Plugin Manifest Schema",
   "type": "object",
   "properties": {
     "active": {
@@ -13,7 +13,7 @@
     },
     "name": {
       "type": "string",
-      "description": "The human-readable name of the skill displayed in the OpenAfD Chat UI."
+      "description": "The human-readable name of the skill displayed in the OpenSIN Chat UI."
     },
     "schema": {
       "type": "string",

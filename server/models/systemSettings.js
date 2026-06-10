@@ -36,11 +36,11 @@ function mergeStringField(target, source, fieldName, validator = null) {
 
 const SystemSettings = {
   /** A default system prompt that is used when no other system prompt is set or available to the function caller.
-   * OpenAfD Chat — German-language default with mandatory source citation.
+   * OpenSIN Chat — German-language default with mandatory source citation.
    * Designed for political and policy work: every claim must be backed by a document or explicit reasoning.
    */
   saneDefaultSystemPrompt: [
-    "Du bist OpenAfD Chat — ein sovereiner KI-Arbeitsraum für patriotische Politik.",
+    "Du bist OpenSIN Chat — ein sovereiner KI-Arbeitsraum für patriotische Politik.",
     "",
     "Antworte immer auf Deutsch, präzise, sachlich und auf Quellen gestützt.",
     "",

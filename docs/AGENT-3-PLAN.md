@@ -11,7 +11,7 @@
 
 ### Schritt 1: Audit (15min)
 ```bash
-cd /Users/jeremy/dev/OpenAfD-Chat
+cd /Users/jeremy/dev/OpenSIN-Chat
 grep -rn "style={{" frontend/src --include="*.jsx" --include="*.tsx" --include="*.js" --include="*.ts" > /tmp/inline-styles-audit.txt
 wc -l /tmp/inline-styles-audit.txt
 ```

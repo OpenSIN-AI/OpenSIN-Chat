@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "openafd.fullname" . }}
+  name: {{ include "opensin.fullname" . }}
   labels:
-    {{- include "openafd.labels" . | nindent 4 }}
+    {{- include "opensin.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "openafd.selectorLabels" . | nindent 4 }}
+    {{- include "opensin.selectorLabels" . | nindent 4 }}
