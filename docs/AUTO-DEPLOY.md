@@ -112,6 +112,7 @@ Das Skript funktioniert ohne Anpassung, lässt sich aber über Env-Vars steuern:
   (nicht Docker/OrbStack), wurde ein manuelles `node index.js` aus `/server/`
   gestartet. Töten mit `kill <PID>`, dann Docker und Cloudflared neustarten.
   Danach Browser Hard-Reload (`Cmd+Shift+R`).
+- **502 Bad Gateway auf openafd.delqhi.com?** Container vermutlich tot weil `restart: always` fehlt. Prüfen: `docker ps | grep openafd`. Fix: `docker update --restart always openafd && docker start openafd`. Danach `restart: always` in `docker-compose.yml` setzen.
 - **`docker: command not found` im cron-Log?** `PATH` im launchd-plist bzw. cron
   ergänzen (Docker Desktop liegt oft unter `/usr/local/bin`).
 - **Build dauert lange / blockiert?** Der `flock`-Lock verhindert überlappende

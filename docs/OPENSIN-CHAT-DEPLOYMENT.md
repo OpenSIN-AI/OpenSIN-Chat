@@ -32,6 +32,7 @@ networks:
 services:
   opensin-chat:
     container_name: opensin-chat
+    restart: always
     build:
       context: ../.
       dockerfile: ./docker/Dockerfile
@@ -126,6 +127,7 @@ launchctl unload ~/Library/LaunchAgents/com.opensin.tunnel.plist
 3. **NIEMALS** `../server/storage` für OpenSIN-Chat mounten — nutzt `../server/storage-opensin`.
 4. **Immer** `--no-cache` beim Build (sonst altes Frontend-Bundle).
 5. **Vor jedem Deploy:** `lsof -i :43939` prüfen — kein anderer Prozess darf den Port blockieren.
+6. **`restart: always` MUSS** in `docker-compose.yml` gesetzt sein. Fehlt es, bleibt Container nach OrbStack-Restart tot → 502. Live fixen: `docker update --restart always opensin-chat`.
 
 ---
 
@@ -150,7 +152,8 @@ curl -sS https://sinchat.delqhi.com/ | grep -o "OpenAfD Chat"
 
 | Problem | Lösung |
 |---------|--------|
-| Container nicht healthy | `docker logs opensin-chat` prüfen, DB-Lock → `storage-opensin` prüfen |
+| 502 Bad Gateway (beide Domains) | Container tot weil kein `restart: always`. Fix: `docker update --restart always <container>` + `docker start <container>` |
+| Container nicht healthy / crashed | `docker logs opensin-chat` prüfen; DB fehlt Tabelle → DB von openafd kopieren (`cp storage/openafd.db storage-opensin/openafd.db`) |
 | Tunnel nicht erreichbar | `ps aux \| grep cloudflared \| grep opensin` → restart launchd |
 | DNS nicht auflösbar | `cloudflared tunnel route dns opensin-chat sinchat.delqhi.com` |
 | Build fails (ssh) | Dockerfile hat `git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"` im collector-stage |
