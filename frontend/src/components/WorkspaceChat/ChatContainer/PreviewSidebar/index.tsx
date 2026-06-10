@@ -298,6 +298,82 @@ function IframePreview({ url, title }: any) {
   );
 }
 
+/**
+ * Renders a generated image fetched via auth-bearer blob URL.
+ * A plain <img src> without Bearer token would get a 401 from the
+ * protected /agent-skills/ endpoint, so we fetch via objectURL.
+ */
+function ImagePreview({ url, title }: { url: string; title?: string }) {
+  const { t } = useTranslation();
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
+  const [fetchError, setFetchError] = useState(false);
+
+  useEffect(() => {
+    if (!url) return;
+    let objectUrl: string | null = null;
+    let cancelled = false;
+    setFetchError(false);
+    setBlobUrl(null);
+
+    fetch(url, { headers: baseHeaders() })
+      .then((res) => {
+        if (!res.ok) throw new Error(`${res.status}`);
+        return res.blob();
+      })
+      .then((blob) => {
+        if (cancelled) return;
+        objectUrl = URL.createObjectURL(blob);
+        setBlobUrl(objectUrl);
+      })
+      .catch(() => {
+        if (!cancelled) setFetchError(true);
+      });
+
+    return () => {
+      cancelled = true;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [url]);
+
+  useEffect(() => {
+    return () => {
+      if (blobUrl) URL.revokeObjectURL(blobUrl);
+    };
+  }, [blobUrl]);
+
+  if (fetchError) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
+        <Image size={28} className="text-zinc-500 light:text-slate-400" />
+        <p className="text-xs text-zinc-500 light:text-slate-400 text-center px-4">
+          {t("preview.load_error", "Vorschau konnte nicht geladen werden.")}
+        </p>
+      </div>
+    );
+  }
+
+  if (!blobUrl) {
+    return (
+      <div className="flex items-center justify-center h-full bg-zinc-900 light:bg-white">
+        <Image
+          size={28}
+          className="text-zinc-500 light:text-slate-400 animate-pulse"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-center w-full h-full bg-zinc-900 light:bg-slate-50 p-4">
+      <img
+        src={blobUrl}
+        alt={title || "Generated image"}
+        className="max-w-full max-h-full object-contain rounded-lg shadow-lg"
+      />
+    </div>
+  );
+}
+
 function PreviewContent({ previewData, activeVersion }: any) {
   const { t } = useTranslation();
   if (!previewData) {
@@ -320,6 +396,11 @@ function PreviewContent({ previewData, activeVersion }: any) {
     version.url ||
     previewData.downloadUrl ||
     previewData.url;
+
+  // Image preview — render inline <img> instead of <iframe>
+  if (previewData.type === "image" && iframeUrl) {
+    return <ImagePreview url={iframeUrl} title={previewData.title} />;
+  }
 
   // PDF / URL preview via iframe (includes downloadUrl from generate-report)
   if (iframeUrl) {

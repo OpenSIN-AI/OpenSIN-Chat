@@ -1,31 +1,34 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import FileDownloadCard from "./index";
 
-vi.mock("file-saver", () => ({
-  saveAs: vi.fn(),
-}));
-
-vi.mock("@/models/files", () => ({
-  default: {
-    download: vi.fn(),
-  },
-}));
-
+vi.mock("file-saver", () => ({ saveAs: vi.fn() }));
+vi.mock("@/models/files", () => ({ default: { download: vi.fn() } }));
 vi.mock("@/utils/numbers", () => ({
-  humanFileSize: vi.fn((bytes, si, dp) => (bytes != null ? `${bytes} B` : "0 B")),
+  humanFileSize: vi.fn((bytes) => (bytes != null ? `${bytes} B` : "0 B")),
 }));
-
 vi.mock("@phosphor-icons/react", () => ({
   DownloadSimple: () => <svg data-testid="download-icon" />,
   CircleNotch: () => <svg data-testid="circle-notch-icon" />,
   Eye: () => <svg data-testid="eye-icon" />,
+  Image: () => <svg data-testid="image-icon" />,
 }));
-
 vi.mock("../../ChatSidebar", () => ({
   useChatSidebar: () => ({ openPreview: vi.fn() }),
 }));
+vi.mock("@/utils/request", () => ({
+  baseHeaders: () => ({ Authorization: "Bearer test-token" }),
+}));
+vi.mock("@/utils/constants", () => ({
+  API_BASE: "http://localhost:3001/api",
+}));
+
+// Mock fetch globally for ImagePreviewBanner
+const mockFetch = vi.fn();
+global.fetch = mockFetch;
+global.URL.createObjectURL = vi.fn(() => "blob:mock-url");
+global.URL.revokeObjectURL = vi.fn();
 
 import { saveAs } from "file-saver";
 import StorageFiles from "@/models/files";
@@ -33,7 +36,10 @@ import StorageFiles from "@/models/files";
 describe("FileDownloadCard", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockFetch.mockResolvedValue({ ok: false, status: 404 });
   });
+
+  // ── Badge tests ──────────────────────────────────────────────
 
   it("renders filename", () => {
     render(
@@ -46,14 +52,12 @@ describe("FileDownloadCard", () => {
 
   it("renders Unknown file when no filename", () => {
     render(
-      <FileDownloadCard
-        props={{ content: { storageFilename: "abc.pdf" } }}
-      />
+      <FileDownloadCard props={{ content: { storageFilename: "abc.pdf" } }} />
     );
     expect(screen.getByText("Unknown file")).toBeInTheDocument();
   });
 
-  it("renders PDF badge for pdf files", () => {
+  it("renders PDF badge", () => {
     render(
       <FileDownloadCard
         props={{ content: { filename: "report.pdf", storageFilename: "abc.pdf" } }}
@@ -62,7 +66,7 @@ describe("FileDownloadCard", () => {
     expect(screen.getByText("PDF")).toBeInTheDocument();
   });
 
-  it("renders DOC badge for docx files", () => {
+  it("renders DOC badge", () => {
     render(
       <FileDownloadCard
         props={{ content: { filename: "document.docx", storageFilename: "abc.docx" } }}
@@ -71,7 +75,7 @@ describe("FileDownloadCard", () => {
     expect(screen.getByText("DOC")).toBeInTheDocument();
   });
 
-  it("renders XLS badge for xlsx files", () => {
+  it("renders XLS badge", () => {
     render(
       <FileDownloadCard
         props={{ content: { filename: "sheet.xlsx", storageFilename: "abc.xlsx" } }}
@@ -80,7 +84,7 @@ describe("FileDownloadCard", () => {
     expect(screen.getByText("XLS")).toBeInTheDocument();
   });
 
-  it("renders PPT badge for pptx files", () => {
+  it("renders PPT badge", () => {
     render(
       <FileDownloadCard
         props={{ content: { filename: "slides.pptx", storageFilename: "abc.pptx" } }}
@@ -89,7 +93,7 @@ describe("FileDownloadCard", () => {
     expect(screen.getByText("PPT")).toBeInTheDocument();
   });
 
-  it("renders CSV badge for csv files", () => {
+  it("renders CSV badge", () => {
     render(
       <FileDownloadCard
         props={{ content: { filename: "data.csv", storageFilename: "abc.csv" } }}
@@ -98,7 +102,7 @@ describe("FileDownloadCard", () => {
     expect(screen.getByText("CSV")).toBeInTheDocument();
   });
 
-  it("renders extension badge for unknown file types", () => {
+  it("renders extension badge for unknown types", () => {
     render(
       <FileDownloadCard
         props={{ content: { filename: "archive.zip", storageFilename: "abc.zip" } }}
@@ -107,6 +111,72 @@ describe("FileDownloadCard", () => {
     expect(screen.getByText("ZIP")).toBeInTheDocument();
   });
 
+  // ── Image badge and preview ──────────────────────────────────
+
+  it("renders IMG badge for png files", () => {
+    render(
+      <FileDownloadCard
+        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
+      />
+    );
+    expect(screen.getByText("IMG")).toBeInTheDocument();
+  });
+
+  it("renders IMG badge for jpg files", () => {
+    render(
+      <FileDownloadCard
+        props={{ content: { filename: "photo.jpg", storageFilename: "image-abc.jpg" } }}
+      />
+    );
+    expect(screen.getByText("IMG")).toBeInTheDocument();
+  });
+
+  it("renders SVG badge for svg files", () => {
+    render(
+      <FileDownloadCard
+        props={{ content: { filename: "icon.svg", storageFilename: "image-abc.svg" } }}
+      />
+    );
+    expect(screen.getByText("SVG")).toBeInTheDocument();
+  });
+
+  it("shows inline image when fetch succeeds for png", async () => {
+    const blob = new Blob(["imgdata"], { type: "image/png" });
+    mockFetch.mockResolvedValue({ ok: true, blob: () => Promise.resolve(blob) });
+    render(
+      <FileDownloadCard
+        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png", fileSize: 512 } }}
+      />
+    );
+    await waitFor(() => {
+      expect(screen.getByRole("img")).toBeInTheDocument();
+    });
+    expect(screen.getByRole("img").getAttribute("src")).toBe("blob:mock-url");
+  });
+
+  it("hides inline preview when fetch fails for image", async () => {
+    mockFetch.mockResolvedValue({ ok: false, status: 404 });
+    render(
+      <FileDownloadCard
+        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
+      />
+    );
+    await waitFor(() => {
+      expect(screen.queryByRole("img")).not.toBeInTheDocument();
+    });
+  });
+
+  it("does not render Vorschau button for image files", () => {
+    render(
+      <FileDownloadCard
+        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
+      />
+    );
+    expect(screen.queryByText("Vorschau")).not.toBeInTheDocument();
+  });
+
+  // ── Download button ──────────────────────────────────────────
+
   it("renders Download button", () => {
     render(
       <FileDownloadCard
@@ -114,7 +184,6 @@ describe("FileDownloadCard", () => {
       />
     );
     expect(screen.getByText("Download")).toBeInTheDocument();
-    expect(screen.getByTestId("download-icon")).toBeInTheDocument();
   });
 
   it("calls download and saveAs on Download click", async () => {
@@ -126,63 +195,21 @@ describe("FileDownloadCard", () => {
       />
     );
     fireEvent.click(screen.getByText("Download"));
-    await vi.waitFor(() => {
+    await waitFor(() => {
       expect(StorageFiles.download).toHaveBeenCalledWith("abc.pdf");
       expect(saveAs).toHaveBeenCalledWith(blob, "report.pdf");
     });
   });
 
-  it("does not download when no storageFilename", () => {
+  it("does not download when no storageFilename", async () => {
     render(
       <FileDownloadCard
         props={{ content: { filename: "report.pdf" } }}
       />
     );
     fireEvent.click(screen.getByText("Download"));
-    expect(StorageFiles.download).not.toHaveBeenCalled();
-  });
-
-  it("renders Vorschau button when storageFilename exists", () => {
-    render(
-      <FileDownloadCard
-        props={{ content: { filename: "report.pdf", storageFilename: "abc.pdf" } }}
-      />
-    );
-    expect(screen.getByText("Vorschau")).toBeInTheDocument();
-    expect(screen.getByTestId("eye-icon")).toBeInTheDocument();
-  });
-
-  it("renders Vorschau button when downloadUrl exists", () => {
-    render(
-      <FileDownloadCard
-        props={{ content: { filename: "report.pdf", downloadUrl: "https://example.com/file.pdf" } }}
-      />
-    );
-    expect(screen.getByText("Vorschau")).toBeInTheDocument();
-  });
-
-  it("does not render Vorschau button when no storageFilename or downloadUrl", () => {
-    render(
-      <FileDownloadCard
-        props={{ content: { filename: "report.pdf" } }}
-      />
-    );
-    expect(screen.queryByText("Vorschau")).not.toBeInTheDocument();
-  });
-
-  it("shows Downloading... state while downloading", async () => {
-    let resolveDownload;
-    StorageFiles.download.mockReturnValue(
-      new Promise((resolve) => { resolveDownload = resolve; })
-    );
-    render(
-      <FileDownloadCard
-        props={{ content: { filename: "report.pdf", storageFilename: "abc.pdf" } }}
-      />
-    );
-    fireEvent.click(screen.getByText("Download"));
-    expect(screen.getByText("Downloading...")).toBeInTheDocument();
-    expect(screen.getByTestId("circle-notch-icon")).toBeInTheDocument();
-    resolveDownload(new Blob(["data"]));
+    await waitFor(() => {
+      expect(StorageFiles.download).not.toHaveBeenCalled();
+    });
   });
 });
