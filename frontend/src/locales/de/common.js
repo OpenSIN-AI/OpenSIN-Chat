@@ -421,6 +421,11 @@ const TRANSLATIONS = {
             description:
               "Erstellen Sie Word-Dokumente mit grundlegender Formatierung und Gestaltung.",
           },
+          "read-pdf-file": {
+            title: "PDF lesen",
+            description:
+              "Text aus einer vorhandenen PDF-Datei extrahieren",
+          },
         },
       },
       gmail: {

@@ -491,15 +491,16 @@ const SystemSettings = {
     },
     image_generation_base_path: (update) => {
       try {
-        if (!update || typeof update !== "string") return null;
+        if (!update || typeof update !== "string") return undefined;
         const url = new URL(update);
+        if (!/^https?:$/i.test(url.protocol)) return undefined;
         return url.origin + url.pathname.replace(/\/+$/, "");
       } catch {
-        return null;
+        return undefined;
       }
     },
     image_generation_api_key: async (update) => {
-      if (!update || typeof update !== "string") return null;
+      if (!update || typeof update !== "string") return undefined;
       if (/^\*+$/.test(update)) {
         const existing = await SystemSettings.get({
           label: "image_generation_api_key",

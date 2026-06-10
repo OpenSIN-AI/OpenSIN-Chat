@@ -47,15 +47,8 @@ export const getCreateFileSkills = (t) => [
   },
   {
     name: "read-pdf-file",
-    title: "PDF lesen",
-    description: "Liest Text aus einer vorhandenen PDF-Datei.",
-    icon: FilePdf,
-  },
-  {
-    name: "edit-pdf-file",
-    title: "PDF bearbeiten",
-    description:
-      "Erstellt oder aktualisiert ein PDF-Dokument mit neuem Inhalt und Branding.",
+    title: t("agent.skill.createFiles.skills.read-pdf-file.title"),
+    description: t("agent.skill.createFiles.skills.read-pdf-file.description"),
     icon: FilePdf,
   },
 ];

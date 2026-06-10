@@ -72,6 +72,7 @@ export default function ImageGenerationSkillPanel({
                 Base URL *
               </label>
               <input
+                key={basePath || "empty"}
                 name="system::image_generation_base_path"
                 type="url"
                 defaultValue={basePath}
@@ -106,6 +107,7 @@ export default function ImageGenerationSkillPanel({
                 Model
               </label>
               <input
+                key={currentModel || "empty"}
                 name="system::image_generation_model"
                 type="text"
                 defaultValue={currentModel}

@@ -426,6 +426,11 @@ const TRANSLATIONS = {
             description:
               "Create Word documents with basic styling and formatting",
           },
+          "read-pdf-file": {
+            title: "Read PDF",
+            description:
+              "Extract text content from an existing PDF document",
+          },
         },
       },
       gmail: {

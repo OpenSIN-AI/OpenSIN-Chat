@@ -413,6 +413,11 @@ const TRANSLATIONS = {
             description:
               "Créez des documents Word avec un style et une mise en page de base.",
           },
+          "read-pdf-file": {
+            title: "Lire un PDF",
+            description:
+              "Extraire le contenu textuel d'un document PDF existant",
+          },
         },
       },
       gmail: {

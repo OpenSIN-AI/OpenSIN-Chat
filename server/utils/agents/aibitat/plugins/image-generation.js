@@ -13,6 +13,7 @@ module.exports.imageGeneration = {
           description:
             "Generate an image using an AI image generation model. " +
             "Provide a detailed prompt describing the image you want to create. " +
+            "Optionally specify the filename and image size (e.g. '1024x1024'). " +
             "Returns a downloadable image file.",
           examples: [
             {
@@ -46,6 +47,11 @@ module.exports.imageGeneration = {
                 description:
                   "The filename for the generated image. The .png extension will be added automatically if not provided. Use descriptive filenames.",
               },
+              size: {
+                type: "string",
+                description:
+                  "Image size in format 'WIDTHxHEIGHT' (e.g. '1024x1024', '1792x1024'). Defaults to '1024x1024' if not specified.",
+              },
             },
             required: ["prompt", "filename"],
             additionalProperties: false,
@@ -53,6 +59,7 @@ module.exports.imageGeneration = {
           handler: async function ({
             prompt = "",
             filename = "generated-image.png",
+            size = "1024x1024",
           }) {
             try {
               this.super.handlerProps.log(
@@ -106,8 +113,9 @@ module.exports.imageGeneration = {
               const body = {
                 prompt,
                 n: 1,
-                response_format: "url",
+                response_format: "b64_json",
                 ...(model ? { model } : {}),
+                ...(size ? { size } : {}),
               };
 
               const headers = {
@@ -121,6 +129,7 @@ module.exports.imageGeneration = {
                 method: "POST",
                 headers,
                 body: JSON.stringify(body),
+                signal: AbortSignal.timeout(60_000),
               });
 
               if (!response.ok) {
@@ -132,19 +141,12 @@ module.exports.imageGeneration = {
               }
 
               const data = await response.json();
-              const imageUrl = data?.data?.[0]?.url;
-              if (!imageUrl) {
-                return "Image generation succeeded but no image URL was returned. The model may have returned an unexpected response format.";
+              const b64 = data?.data?.[0]?.b64_json;
+              if (!b64) {
+                return "Image generation succeeded but no base64 image data was returned. The model may have returned an unexpected response format.";
               }
 
-              const imageResponse = await fetch(imageUrl);
-              if (!imageResponse.ok) {
-                return "Failed to download the generated image from the provider. The URL may have expired.";
-              }
-
-              const imageBuffer = Buffer.from(
-                await imageResponse.arrayBuffer(),
-              );
+              const imageBuffer = Buffer.from(b64, "base64");
 
               const extension = filename.includes(".")
                 ? filename.split(".").pop()
