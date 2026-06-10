@@ -25,7 +25,7 @@ Chatte mit deinen Dokumenten. Automatisiere Recherche. Multi-User, selbst gehost
 
 ## 🎯 Was ist OpenSIN Chat?
 
-OpenSIN Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, Recherche und Wissensmanagement. Sie wurde auf Basis von [OpenSIN Chat](https://github.com/Family-Team-Projects/opensin-chat) (MIT) als souveräne, markenfreie Variante für den deutschsprachigen politischen Raum weiterentwickelt.
+OpenSIN Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, Recherche und Wissensmanagement. Sie wurde auf Basis von [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) (MIT) als souveräne, markenfreie Variante für den deutschsprachigen politischen Raum weiterentwickelt.
 
 **Im Kern:** Du lädst deine Dokumente hoch (Bundestags-Drucksachen, Pressemitteilungen, Gesetzesentwürfe, interne Papiere) — und die KI beantwortet Fragen **nur aus diesen Quellen**, mit nachvollziehbaren Zitaten. Keine Halluzinationen aus dem Nichts, keine Cloud-Pflicht, keine Telemetrie.
 
@@ -224,7 +224,7 @@ GET  /api/orchestrator/:id/result
 ### Selbst hosten (Docker)
 
 ```bash
-git clone https://github.com/Family-Team-Projects/OpenSIN-Chat.git
+git clone https://github.com/OpenSIN-AI/OpenSIN-Chat.git
 cd OpenSIN-Chat/docker
 cp .env.example .env
 docker compose up -d
@@ -397,11 +397,23 @@ cd docker && docker compose build --no-cache && docker compose down && docker co
 - **Vor jedem Deploy:** `lsof -i :3001 -P -n` prüfen — kein rogue `node`-Prozess darf Port 3001 blockieren.
 - **Nach Merge-Konflikten:** `rg '<<<<<' frontend/src/` laufen lassen, sonst bricht der Build.
 
-### Known Issues / Security
+### Security-Hinweise für Betreiber
 
-- Das Demo-Passwort (`Simone123`) ist hartcodiert im Frontend-Bundle — nur für Demozwecke.
-- API-Keys (NVIDIA, JWT_SECRET, SIG_KEY/SIG_SALT, OPENCODE_ZEN) liegen in `.env` —
-  diese Datei ist in `.gitignore`, aber die Keys sollten regelmäßig rotiert werden.
+- **Keine Zugangsdaten im Bundle oder Repo.** Demo-/Onboarding-Passwörter dürfen
+  niemals im Frontend-Bundle, im README oder in Commits landen. Falls ein
+  Passwort jemals veröffentlicht wurde, gilt es als kompromittiert und muss
+  sofort geändert werden.
+- **Secrets-Rotation.** Alle Keys in `.env` (LLM-Provider, `JWT_SECRET`,
+  `SIG_KEY`/`SIG_SALT`) sind deployment-spezifisch zu generieren
+  (`openssl rand -base64 32`) und regelmäßig zu rotieren. `.env` ist in
+  `.gitignore`; CI (`ceo-audit.yml`, `secrets-scan.yml`) blockt versehentliche
+  Commits.
+- **Research-SSRF-Schutz.** Die Deep-Research-Pipeline blockt private/interne
+  Ziele standardmäßig (`RESEARCH_ALLOW_PRIVATE_NETWORKS=true` für bewusste
+  VPC-Setups, `RESEARCH_STRICT_SSRF=true` für zusätzliche DNS-Prüfung).
+- **Job-Limits.** `RESEARCH_MAX_ACTIVE_JOBS` (Default 3) und
+  `ORCHESTRATOR_MAX_ACTIVE_WORKFLOWS` (Default 2) begrenzen parallele
+  Pipelines; bei Überschreitung antwortet die API mit HTTP 429.
 
 ---
 

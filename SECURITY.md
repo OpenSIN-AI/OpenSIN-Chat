@@ -2,40 +2,70 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+Only the latest state of the `main` branch receives security fixes.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.1.x   | :white_check_mark: |
-
+| Version            | Supported          |
+| ------------------ | ------------------ |
+| `main` (latest)    | :white_check_mark: |
+| older tags/commits | :x:                |
 
 ## Reporting a Vulnerability
 
-If a security concern is found that you would like to disclose you can create a PR for it or if you would like to clear this issue before posting you can email [Core Family Team Projects Team](mailto:support@opensin.delqhi.com).
+**Please do NOT open a public issue or pull request for security vulnerabilities.**
+Public PRs disclose the vulnerability to everyone before a fix is deployed.
+
+Instead, use one of these private channels:
+
+1. **GitHub Private Vulnerability Reporting** (preferred):
+   [Report a vulnerability](https://github.com/OpenSIN-AI/OpenSIN-Chat/security/advisories/new)
+2. **Email:** [support@opensin.delqhi.com](mailto:support@opensin.delqhi.com)
+   — please include steps to reproduce, affected endpoint/file, and impact.
+
+We aim to acknowledge reports within **72 hours** and to ship a fix or
+mitigation for confirmed CRITICAL/HIGH findings within **14 days**.
+
+## Scope Notes
+
+OpenSIN Chat is a self-hosted fork of [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm).
+Vulnerabilities in unmodified upstream code should additionally be reported
+upstream so the whole ecosystem benefits.
+
+## Secrets & Deployment Hygiene
+
+- Real `.env` files must never be committed (enforced by CI: `ceo-audit.yml`,
+  `secrets-scan.yml`).
+- `JWT_SECRET`, `SIG_KEY`, `SIG_SALT` and all provider API keys must be
+  generated per deployment (e.g. `openssl rand -base64 32`) and rotated
+  whenever they may have been exposed.
+- Demo or onboarding credentials must never ship in the frontend bundle or
+  README. If a credential has ever been published, treat it as compromised
+  and rotate it immediately.
 
 ## Invalid Report Types
 
-Below are some common types of invalid reports that we will not accept and should not be submitted as they will be closed immediately without action.
+The following are intentional design decisions inherited from upstream and
+will be closed without action:
 
-### SSRF Reports
+### SSRF reports against the document collector
 
-If you are about to report a SSRF about being able to call web-scraping or document collector against an internal host, [this is not a valid report](https://github.com/Family-Team-Projects/OpenSIN-Chat/blob/main/collector/utils/url/index.js#L2-L13). This is a feature of the system and is intended to be used in this way given that OpenSIN Chat is designed to be used in this way so that it can leverage internal services for scraping and collecting content when deployed inside a VPC.
+The collector is intentionally able to reach internal hosts so that
+VPC-internal deployments can scrape internal services
+(see [`collector/utils/url/index.js`](./collector/utils/url/index.js)).
 
-### XXS Reports where user must right-click and paste in the URL
+> Note: this exception applies to the **collector** only. The research
+> module's `ContentExtractor` blocks private/link-local targets by default;
+> set `RESEARCH_ALLOW_PRIVATE_NETWORKS=true` to opt in to internal access.
+> Reports that bypass this guard **are valid reports**.
 
-If you are about to report a XXS about being able to right-click on an image (like user profile picture) and paste in the URL, this is not a valid report. User profile pictures must be uploaded by the user and cannot be set by the administrator. In fact, nobody can even see them aside from the user themselves. The same goes for any other image that is uploaded by the user or even produced by the system. If the user must right-click and paste in the URL to their browser, this is not a valid report.
+### XSS reports requiring the user to right-click and paste a URL
 
-Valid XXS Reports must be zero-action - like on loading a page or a image instantly.
+Valid XSS reports must be zero-action (triggered on page or image load).
+Self-inflicted, single-victim paste scenarios are not accepted.
 
-### Any "Unauthenticated" actions
+### "Unauthenticated instance" reports
 
-If the basis of your report relies on the system not setting up a password or multi-user mode, this is not a valid report. OpenSIN Chat is designed to be used in this way so that it can be used in trusted and fully isolated environments for single user or internal user. There are three options for authentication:
-
-1. No authentication - this would have no endpoint authentication and would be accessible to anyone who knows the URL.
-2. Password - this would require a password to access the system.
-3. Multi-user mode - this would require a user to be logged in to the system with username and password and be given explicit access to the system by administrator.
-
-During onboarding, the system will prompt the user to set up a password or multi-user mode. If the user does not opt to set up a password or multi-user mode, the system will be accessible to anyone who knows the URL. This is an intentional design choice and is not a vulnerability.
-
-If your report is about being able to access the system via _bypassing the authentication_ or lackthereof, that **is a valid report** and will be investigated and fixed.
+OpenSIN Chat supports running without authentication for trusted, isolated
+environments. Operators choose between: no auth, single password, or
+multi-user mode during onboarding. A missing password setup is not a
+vulnerability — **bypassing** configured authentication absolutely is, and
+such reports are welcome.
