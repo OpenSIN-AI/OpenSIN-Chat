@@ -164,6 +164,11 @@ WORKDIR /app
 COPY --chown=openafd:openafd ./collector/ ./collector/
 WORKDIR /app/collector
 ENV PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public
+# WORKAROUND: force git to resolve github ssh://git@github.com/... over https.
+# Base image has no openssh-client; the Mintplex-Labs/epub2-static dep in
+# collector/package.json is pinned to ssh, which crashes yarn install with
+# "ssh: not found". This redirect is non-destructive and only affects this stage.
+RUN git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
 RUN yarn install --production --network-timeout 100000 && yarn cache clean
 
 WORKDIR /app
