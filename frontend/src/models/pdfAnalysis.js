@@ -106,12 +106,9 @@ const PdfAnalysis = {
   },
 
   crossCheckResult: async function (jobId) {
-    return await fetch(
-      `${API_BASE}/pdf-analysis/crosscheck/${jobId}/result`,
-      {
-        headers: baseHeaders(),
-      }
-    )
+    return await fetch(`${API_BASE}/pdf-analysis/crosscheck/${jobId}/result`, {
+      headers: baseHeaders(),
+    })
       .then((res) => res.json())
       .catch((e) => ({ error: e.message }));
   },

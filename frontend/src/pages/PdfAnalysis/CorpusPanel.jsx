@@ -68,7 +68,7 @@ function CorpusForm({ onStarted }) {
     const files = Array.from(fileRef.current?.files || []);
     if (files.length < 2 || !task.trim()) {
       setError(
-        "Mindestens 2 PDF-Dateien und ein Vergleichsauftrag sind erforderlich."
+        "Mindestens 2 PDF-Dateien und ein Vergleichsauftrag sind erforderlich.",
       );
       return;
     }
@@ -77,9 +77,7 @@ function CorpusForm({ onStarted }) {
       // Dateien sequenziell hochladen (Riesen-Dateien: kein Parallel-Upload)
       const pdfPaths = [];
       for (let i = 0; i < files.length; i++) {
-        setUploadProgress(
-          `Upload ${i + 1}/${files.length}: ${files[i].name}`
-        );
+        setUploadProgress(`Upload ${i + 1}/${files.length}: ${files[i].name}`);
         const uploaded = await PdfAnalysis.upload(files[i]);
         if (uploaded.error)
           throw new Error(`${files[i].name}: ${uploaded.error}`);
@@ -158,10 +156,7 @@ function CorpusForm({ onStarted }) {
       </label>
 
       {uploadProgress && (
-        <p
-          className="text-sm text-theme-text-secondary"
-          aria-live="polite"
-        >
+        <p className="text-sm text-theme-text-secondary" aria-live="polite">
           {uploadProgress}
         </p>
       )}
@@ -177,9 +172,7 @@ function CorpusForm({ onStarted }) {
           disabled={busy}
           className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-50"
         >
-          {busy
-            ? "Wird hochgeladen & gestartet…"
-            : "Korpus-Analyse starten"}
+          {busy ? "Wird hochgeladen & gestartet…" : "Korpus-Analyse starten"}
         </button>
       </div>
     </form>
@@ -322,8 +315,8 @@ function CorpusReportModal({ job, onClose }) {
                           .map(
                             (p) =>
                               `${p.document} (S. ${(p.pages || []).join(
-                                ", "
-                              )}): ${p.claim}`
+                                ", ",
+                              )}): ${p.claim}`,
                           )
                           .join(" — vs. — ")}
                       </li>

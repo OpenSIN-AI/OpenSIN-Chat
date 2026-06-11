@@ -242,8 +242,8 @@ function StartForm({ onStarted }) {
           onChange={(e) => setDeepScan(e.target.checked)}
           className="accent-current"
         />
-        Deep Scan: jede Seite visuell lesen (lokales Vision-Modell — präziser bei
-        Tabellen, Scans &amp; komplexen Layouts, aber langsamer)
+        Deep Scan: jede Seite visuell lesen (lokales Vision-Modell — präziser
+        bei Tabellen, Scans &amp; komplexen Layouts, aber langsamer)
       </label>
 
       {error && (
@@ -329,17 +329,17 @@ function JobRow({ job, onShowReport, onCancelled }) {
         </div>
       )}
 
-      {isActive && (progress.etaSeconds != null || progress.pagesPerMinute != null) && (
-        <p className="text-xs text-theme-text-secondary">
-          {progress.concurrency != null &&
-            `${progress.concurrency} Agenten aktiv`}
-          {progress.pagesPerMinute != null &&
-            ` · ${progress.pagesPerMinute} Seiten/min`}
-          {progress.etaSeconds != null &&
-            ` · ETA ${formatEta(progress.etaSeconds)}`}
-          )}
-        </p>
-      )}
+      {isActive &&
+        (progress.etaSeconds != null || progress.pagesPerMinute != null) && (
+          <p className="text-xs text-theme-text-secondary">
+            {progress.concurrency != null &&
+              `${progress.concurrency} Agenten aktiv`}
+            {progress.pagesPerMinute != null &&
+              ` · ${progress.pagesPerMinute} Seiten/min`}
+            {progress.etaSeconds != null &&
+              ` · ETA ${formatEta(progress.etaSeconds)}`}
+          </p>
+        )}
 
       {job.error && <p className="text-xs text-red-400">{job.error}</p>}
 
@@ -447,7 +447,6 @@ function FactsPanel({ onCrossCheck }) {
 
   useEffect(() => {
     search();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
