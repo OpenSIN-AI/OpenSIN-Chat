@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
 const SerpApiEngines = [
   { name: "Google Search", value: "google" },
   { name: "Google Images", value: "google_images_light" },
@@ -12,29 +13,30 @@ const SerpApiEngines = [
   { name: "Baidu", value: "baidu" },
 ];
 export function SerpApiOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        Get a free API key{" "}
+        {t("webSearch.getFreeApiKeySerpApi")}{" "}
         <a
           href="https://serpapi.com/"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from SerpApi.
+          {t("webSearch.fromSerpApi")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentSerpApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="SerpApi API Key"
+            placeholder={t("webSearch.serpApiApiKey")}
             defaultValue={settings?.AgentSerpApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -43,7 +45,7 @@ export function SerpApiOptions({ settings }) {
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Engine
+            {t("common.engine")}
           </label>
           <select
             name="env::AgentSerpApiEngine"
@@ -89,29 +91,30 @@ const SearchApiEngines = [
   { name: "Baidu", value: "baidu" },
 ];
 export function SearchApiOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        You can get a free API key{" "}
+        {t("webSearch.getFreeApiKeySearchApi")}{" "}
         <a
           href="https://www.searchapi.io/"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from SearchApi.
+          {t("webSearch.fromSearchApi")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentSearchApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="SearchApi API Key"
+            placeholder={t("webSearch.searchApiApiKey")}
             defaultValue={settings?.AgentSearchApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -120,7 +123,7 @@ export function SearchApiOptions({ settings }) {
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Engine
+            {t("common.engine")}
           </label>
           <select
             name="env::AgentSearchApiEngine"
@@ -151,29 +154,30 @@ export function SearchApiOptions({ settings }) {
 }
 
 export function SerperDotDevOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        You can get a free API key{" "}
+        {t("webSearch.getFreeApiKeySearchApi")}{" "}
         <a
           href="https://serper.dev"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from Serper.dev.
+          {t("webSearch.fromSerper")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentSerperApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Serper.dev API Key"
+            placeholder={t("webSearch.serperApiKey")}
             defaultValue={settings?.AgentSerperApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -186,29 +190,30 @@ export function SerperDotDevOptions({ settings }) {
 }
 
 export function BingSearchOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        You can get a Bing Web Search API subscription key{" "}
+        {t("webSearch.getBingWebSearchSubscription")}{" "}
         <a
           href="https://portal.azure.com/"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from the Azure portal.
+          {t("webSearch.fromAzurePortal")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentBingSearchApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Bing Web Search API Key"
+            placeholder={t("webSearch.bingWebSearchApiKey")}
             defaultValue={settings?.AgentBingSearchApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -217,62 +222,55 @@ export function BingSearchOptions({ settings }) {
         </div>
       </div>
       <p className="text-sm text-white/60 my-2">
-        To set up a Bing Web Search API subscription:
+        {t("webSearch.bingSetupTitle")}
       </p>
       <ol className="list-decimal text-sm text-white/60 ml-6">
         <li>
-          Go to the Azure portal:{" "}
+          {t("webSearch.bingSetupStep1")}{" "}
           <a
             href="https://portal.azure.com/"
             target="_blank"
             rel="noreferrer"
             className="text-blue-300 underline"
           >
-            https://portal.azure.com/
+            {t("webSearch.azurePortalUrl")}
           </a>
         </li>
-        <li>Create a new Azure account or sign in with an existing one.</li>
-        <li>
-          Navigate to the "Create a resource" section and search for "Grounding
-          with Bing Search".
-        </li>
-        <li>
-          Select the "Grounding with Bing Search" resource and create a new
-          subscription.
-        </li>
-        <li>Choose the pricing tier that suits your needs.</li>
-        <li>
-          Obtain the API key for your Grounding with Bing Search subscription.
-        </li>
+        <li>{t("webSearch.bingSetupStep2")}</li>
+        <li>{t("webSearch.bingSetupStep3")}</li>
+        <li>{t("webSearch.bingSetupStep4")}</li>
+        <li>{t("webSearch.bingSetupStep5")}</li>
+        <li>{t("webSearch.bingSetupStep6")}</li>
       </ol>
     </>
   );
 }
 
 export function BaiduSearchOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        You can get an API key{" "}
+        {t("webSearch.getApiKey")}{" "}
         <a
           href="https://cloud.baidu.com/doc/qianfan-api/s/Wmbq4z7e5"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from Baidu AI Cloud Qianfan.
+          {t("webSearch.fromBaidu")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentBaiduSearchApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Baidu Search API Key"
+            placeholder={t("webSearch.baiduApiKey")}
             defaultValue={
               settings?.AgentBaiduSearchApiKey ? "*".repeat(20) : ""
             }
@@ -287,29 +285,30 @@ export function BaiduSearchOptions({ settings }) {
 }
 
 export function SerplySearchOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        You can get a free API key{" "}
+        {t("webSearch.getFreeApiKeySearchApi")}{" "}
         <a
           href="https://serply.io"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from Serply.io.
+          {t("webSearch.fromSerply")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentSerplyApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Serply API Key"
+            placeholder={t("webSearch.serplyApiKey")}
             defaultValue={settings?.AgentSerplyApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -322,17 +321,18 @@ export function SerplySearchOptions({ settings }) {
 }
 
 export function SearXNGOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <div className="flex gap-x-4">
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          SearXNG API Base URL
+          {t("webSearch.searxngBaseUrl")}
         </label>
         <input
           type="url"
           name="env::AgentSearXNGApiUrl"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder="SearXNG API Base URL"
+          placeholder={t("webSearch.searxngBaseUrlPlaceholder")}
           defaultValue={settings?.AgentSearXNGApiUrl}
           required={true}
           autoComplete="off"
@@ -344,29 +344,30 @@ export function SearXNGOptions({ settings }) {
 }
 
 export function TavilySearchOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        You can get an API key{" "}
+        {t("webSearch.getApiKey")}{" "}
         <a
           href="https://tavily.com/"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from Tavily.
+          {t("webSearch.fromTavily")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentTavilyApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Tavily API Key"
+            placeholder={t("webSearch.tavilyApiKey")}
             defaultValue={settings?.AgentTavilyApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -379,39 +380,41 @@ export function TavilySearchOptions({ settings }) {
 }
 
 export function DuckDuckGoOptions() {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        DuckDuckGo is ready to use without any additional configuration.
+        {t("webSearch.duckduckgoNoConfig")}
       </p>
     </>
   );
 }
 
 export function ExaSearchOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        You can get an API key{" "}
+        {t("webSearch.getApiKey")}{" "}
         <a
           href="https://exa.ai"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from Exa.
+          {t("webSearch.fromExa")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentExaApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Exa API Key"
+            placeholder={t("webSearch.exaApiKey")}
             defaultValue={settings?.AgentExaApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -424,29 +427,30 @@ export function ExaSearchOptions({ settings }) {
 }
 
 export function PerplexitySearchOptions({ settings }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm text-white/60 my-2">
-        You can get an API key{" "}
+        {t("webSearch.getApiKey")}{" "}
         <a
           href="https://console.perplexity.ai"
           target="_blank"
           rel="noreferrer"
           className="text-blue-300 underline"
         >
-          from Perplexity.
+          {t("webSearch.fromPerplexity")}
         </a>
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("common.apiKey")}
           </label>
           <input
             type="password"
             name="env::AgentPerplexityApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Perplexity API Key"
+            placeholder={t("webSearch.perplexityApiKey")}
             defaultValue={settings?.AgentPerplexityApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
