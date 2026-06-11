@@ -9,7 +9,8 @@
  *    the server silently drops their bad input
  */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import ImageGenerationSkillPanel from "./index";
 
 vi.mock("@/hooks/useSystemSettings", () => ({
@@ -51,6 +52,8 @@ vi.mock("react-i18next", () => ({
         "agent.skill.image_generation.api_key.label": "API Key",
         "agent.skill.image_generation.api_key.help":
           "Leave empty to keep the existing key.",
+        "agent.skill.image_generation.api_key.clear":
+          "Remove the stored API key on save",
         "agent.skill.image_generation.model.label": "Model",
         "agent.skill.image_generation.model.placeholder": "dall-e-3",
         "agent.skill.image_generation.model.help":
@@ -96,10 +99,8 @@ describe("ImageGenerationSkillPanel", () => {
     expect(screen.getByPlaceholderText("dall-e-3")).toBeInTheDocument();
   });
 
-  it("renders Base URL label (no client-side validation in current implementation)", () => {
+  it("renders Base URL label with client-side validation enabled", () => {
     const { container } = render(<ImageGenerationSkillPanel {...baseProps} />);
-    // The component renders a label for Base URL but does not currently
-    // include a red asterisk or client-side validation.
     const label = Array.from(container.querySelectorAll("label")).find((el) =>
       el.textContent.includes("Base URL"),
     );
@@ -127,46 +128,63 @@ describe("ImageGenerationSkillPanel", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("does not show validation error for ftp:// URL (validation not implemented)", () => {
-    useSystemSettings.mockReturnValue({
-      settings: { image_generation_base_path: "ftp://files.example.com" },
-    });
-    render(<ImageGenerationSkillPanel {...baseProps} />);
-    // Current implementation doesn't validate URLs client-side
-    expect(
-      screen.queryByText("Please enter a valid http:// or https:// URL."),
-    ).not.toBeInTheDocument();
-  });
-
-  it("does not show validation error for unparseable URL (validation not implemented)", () => {
-    useSystemSettings.mockReturnValue({
-      settings: { image_generation_base_path: "not a url at all" },
-    });
-    render(<ImageGenerationSkillPanel {...baseProps} />);
-    expect(
-      screen.queryByText("Please enter a valid http:// or https:// URL."),
-    ).not.toBeInTheDocument();
-  });
-
-  it("does not show live validation error while typing (validation not implemented)", async () => {
+  it("shows the base_url error after blur for an ftp:// URL", async () => {
     render(<ImageGenerationSkillPanel {...baseProps} />);
     const input = screen.getByPlaceholderText("https://api.openai.com");
-    fireEvent.change(input, { target: { value: "javascript:alert(1)" } });
-    // No live validation in current implementation
-    expect(
-      screen.queryByText("Please enter a valid http:// or https:// URL."),
-    ).not.toBeInTheDocument();
+    await userEvent.type(input, "ftp://internal-host");
+    fireEvent.blur(input);
+    await waitFor(() => {
+      expect(
+        screen.getByText(/valid http:\/\/ or https:\/\//i),
+      ).toBeInTheDocument();
+    });
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(input.className).toMatch(/border-red-500/);
   });
 
-  it("does not apply red-border class for invalid URL (validation not implemented)", () => {
-    useSystemSettings.mockReturnValue({
-      settings: { image_generation_base_path: "ftp://files.example.com" },
-    });
+  it("shows the base_url error after blur for an unparseable URL", async () => {
     render(<ImageGenerationSkillPanel {...baseProps} />);
     const input = screen.getByPlaceholderText("https://api.openai.com");
-    // No validation border in current implementation
-    expect(input.className).not.toMatch(/border-red-500/);
-    expect(input.getAttribute("aria-invalid")).not.toBe("true");
+    await userEvent.type(input, "not a url at all");
+    fireEvent.blur(input);
+    await waitFor(() => {
+      expect(
+        screen.getByText(/valid http:\/\/ or https:\/\//i),
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("clears the error once the URL becomes valid while typing", async () => {
+    render(<ImageGenerationSkillPanel {...baseProps} />);
+    const input = screen.getByPlaceholderText("https://api.openai.com");
+    await userEvent.type(input, "not-a-url");
+    fireEvent.blur(input);
+    expect(screen.getByText(/valid http/i)).toBeInTheDocument();
+    await userEvent.clear(input);
+    await userEvent.type(input, "https://api.openai.com");
+    expect(screen.queryByText(/valid http/i)).not.toBeInTheDocument();
+  });
+
+  it("sends the -CLEAR- sentinel when the remove-key checkbox is checked", async () => {
+    render(<ImageGenerationSkillPanel {...baseProps} />);
+    const checkbox = screen.getByLabelText(/remove the stored api key/i);
+    await userEvent.click(checkbox);
+    const hidden = document.querySelector(
+      'input[name="system::image_generation_api_key"]',
+    );
+    expect(hidden).toHaveAttribute("type", "hidden");
+    expect(hidden).toHaveValue("-CLEAR-");
+  });
+
+  it("shows the red border and aria-invalid for invalid URL after blur", async () => {
+    render(<ImageGenerationSkillPanel {...baseProps} />);
+    const input = screen.getByPlaceholderText("https://api.openai.com");
+    await userEvent.type(input, "ftp://files.example.com");
+    fireEvent.blur(input);
+    await waitFor(() => {
+      expect(input).toHaveAttribute("aria-invalid", "true");
+    });
+    expect(input.className).toMatch(/border-red-500/);
   });
 
   it("does NOT render the configuration inputs when the skill is disabled", () => {
