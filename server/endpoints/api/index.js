@@ -13,6 +13,7 @@ const { apiPoliticianEndpoints } = require("./politician");
 const { apiResearchEndpoints } = require("./research");
 const { apiReportsEndpoints } = require("./reports");
 const { apiOrchestratorEndpoints } = require("./orchestrator");
+const { apiPdfAnalysisEndpoints } = require("./pdfAnalysis");
 
 // All endpoints must be documented and pass through the validApiKey Middleware.
 // How to JSDoc an endpoint
@@ -33,6 +34,7 @@ function developerEndpoints(app, router) {
   apiResearchEndpoints(router);
   apiReportsEndpoints(router);
   apiOrchestratorEndpoints(router);
+  apiPdfAnalysisEndpoints(router);
 }
 
 module.exports = { developerEndpoints };

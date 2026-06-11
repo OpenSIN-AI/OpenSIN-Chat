@@ -19,6 +19,7 @@ const { generateReport } = require("./generate-report.js");
 const { orchestratorAgent } = require("./orchestrator.js");
 const { browserVision } = require("./browser-vision.js");
 const { imageGeneration } = require("./image-generation.js");
+const { pdfAnalyze } = require("./pdf-analyze.js");
 
 module.exports = {
   webScraping,
@@ -41,6 +42,7 @@ module.exports = {
   orchestratorAgent,
   browserVision,
   imageGeneration,
+  pdfAnalyze,
 
   // Plugin name aliases so they can be pulled by slug as well.
   [webScraping.name]: webScraping,
@@ -63,4 +65,5 @@ module.exports = {
   [orchestratorAgent.name]: orchestratorAgent,
   [browserVision.name]: browserVision,
   [imageGeneration.name]: imageGeneration,
+  [pdfAnalyze.name]: pdfAnalyze,
 };

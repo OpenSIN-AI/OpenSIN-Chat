@@ -1,0 +1,124 @@
+// SPDX-License-Identifier: MIT
+/**
+ * @pdf-analyze — Agent-Plugin: stößt die autonome Multi-Agenten-PDF-Analyse
+ * aus dem Chat an, prüft Status und fragt gespeicherte Fakten ab.
+ */
+const {
+  PdfAnalysisPipeline,
+} = require("../../../pdfAnalysis");
+
+const pdfAnalyze = {
+  name: "pdf-analyze",
+  startupConfig: { params: {} },
+  plugin: function () {
+    return {
+      name: this.name,
+      setup(aibitat) {
+        aibitat.function({
+          super: aibitat,
+          name: "pdf-analyze-start",
+          description:
+            "Startet die autonome, parallele Multi-Agenten-Analyse eines (sehr großen) PDF-Dokuments. " +
+            "Erzeugt am Ende einen Best-Practices-Bericht und speichert ausgewählte Fakten mit Quellenbezug. " +
+            "Gibt eine jobId zurück, deren Status abgefragt werden kann.",
+          parameters: {
+            type: "object",
+            properties: {
+              pdfPath: {
+                type: "string",
+                description: "Absoluter Pfad zur PDF-Datei auf dem Server.",
+              },
+              task: {
+                type: "string",
+                description: "Was soll analysiert werden (Auftrag des Nutzers).",
+              },
+              reportType: {
+                type: "string",
+                description: "Optionale Art des Berichts.",
+              },
+              factCriteria: {
+                type: "string",
+                description:
+                  "Optionale Kriterien, welche Einzelinformationen gespeichert werden sollen.",
+              },
+            },
+            required: ["pdfPath", "task"],
+          },
+          handler: async function ({ pdfPath, task, reportType, factCriteria }) {
+            try {
+              const { jobId } = PdfAnalysisPipeline.start({
+                pdfPath,
+                task,
+                reportType,
+                factCriteria,
+              });
+              return `Analyse gestartet. Job-ID: ${jobId}. Status via pdf-analyze-status abrufbar.`;
+            } catch (e) {
+              return `Fehler beim Start: ${e.message}`;
+            }
+          },
+        });
+
+        aibitat.function({
+          super: aibitat,
+          name: "pdf-analyze-status",
+          description:
+            "Fragt Status/Fortschritt eines PDF-Analyse-Jobs ab; bei Abschluss wird der Bericht zurückgegeben.",
+          parameters: {
+            type: "object",
+            properties: {
+              jobId: { type: "string", description: "Die Job-ID." },
+            },
+            required: ["jobId"],
+          },
+          handler: async function ({ jobId }) {
+            const status = PdfAnalysisPipeline.getStatus(jobId);
+            if (!status) return "Job nicht gefunden.";
+            if (status.status !== "completed")
+              return JSON.stringify(status, null, 2);
+            const result = PdfAnalysisPipeline.getResult(jobId);
+            return [
+              `Analyse abgeschlossen (${result.totalPages} Seiten, ${result.chunks} Chunks, ${result.factsStored} Fakten gespeichert).`,
+              ``,
+              result.report,
+            ].join("\n");
+          },
+        });
+
+        aibitat.function({
+          super: aibitat,
+          name: "pdf-facts-search",
+          description:
+            "Sucht gespeicherte Einzelinformationen (Fakten) aus analysierten PDFs — immer mit Quellenangabe (Dokument, Seite, Zitat).",
+          parameters: {
+            type: "object",
+            properties: {
+              q: { type: "string", description: "Freitext-Suchbegriff." },
+              document: { type: "string", description: "Filter: Dokumentname." },
+              tag: { type: "string", description: "Filter: Tag." },
+            },
+            required: [],
+          },
+          handler: async function ({ q, document, tag }) {
+            const facts = PdfAnalysisPipeline.factStore.search({
+              q,
+              document,
+              tag,
+              limit: 20,
+            });
+            if (!facts.length) return "Keine gespeicherten Fakten gefunden.";
+            return facts
+              .map(
+                (f) =>
+                  `- ${f.detail}\n  Quelle: ${f.source.documentName}, S. ${f.source.page}` +
+                  (f.quote ? ` — "${f.quote}"` : "")
+              )
+              .join("\n");
+          },
+        });
+      },
+    };
+  },
+};
+
+module.exports = { pdfAnalyze };
