@@ -26,6 +26,7 @@ const VERDICT_LABELS = {
 };
 
 export default function CrossCheckPanel({ prefillFactIds = [] }) {
+  const { t } = useTranslation();
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -43,15 +44,15 @@ export default function CrossCheckPanel({ prefillFactIds = [] }) {
     <div className="flex flex-col gap-6">
       <CrossCheckForm prefillFactIds={prefillFactIds} onStarted={refresh} />
       <section
-        aria-label="Kreuz-Verifikationen"
+        aria-label={t("pdfAnalysis.crossCheck.sectionLabel")}
         className="flex flex-col gap-3"
       >
         <h2 className="text-sm font-semibold text-theme-text-primary uppercase tracking-wide">
-          Laufende &amp; abgeschlossene Verifikationen
+          {t("pdfAnalysis.crossCheck.sectionTitle")}
         </h2>
         {jobs.length === 0 && (
           <p className="text-sm text-theme-text-secondary">
-            Noch keine Kreuz-Verifikation gestartet.
+            {t("pdfAnalysis.crossCheck.emptyText")}
           </p>
         )}
         {jobs.map((job) => (
@@ -74,6 +75,7 @@ export default function CrossCheckPanel({ prefillFactIds = [] }) {
 }
 
 function CrossCheckForm({ prefillFactIds, onStarted }) {
+  const { t } = useTranslation();
   const [claimsText, setClaimsText] = useState("");
   const [factIdsText, setFactIdsText] = useState(prefillFactIds.join(", "));
   const [sources, setSources] = useState([]);
@@ -121,13 +123,11 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
       );
 
     if (!claims.length && !factIds.length) {
-      setError("Mindestens eine Behauptung oder Fakt-ID angeben.");
+      setError(t("pdfAnalysis.crossCheck.submitError1"));
       return;
     }
     if (!builtSources.length && !deepWeb) {
-      setError(
-        "Mindestens eine Vergleichsquelle ODER Deep-Web-Recherche aktivieren.",
-      );
+      setError(t("pdfAnalysis.crossCheck.submitError2"));
       return;
     }
 
@@ -157,47 +157,45 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
       className="flex flex-col gap-3 p-4 rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border"
     >
       <h2 className="text-sm font-semibold text-theme-text-primary uppercase tracking-wide">
-        Neue Kreuz-Verifikation
+        {t("pdfAnalysis.crossCheck.formTitle")}
       </h2>
 
       <label className="flex flex-col gap-1 text-sm text-theme-text-secondary">
-        Behauptungen (eine pro Zeile)
+        {t("pdfAnalysis.crossCheck.claimsLabel")}
         <textarea
           value={claimsText}
           onChange={(e) => setClaimsText(e.target.value)}
           rows={3}
-          placeholder={
-            "z.B. Das Förderprogramm endet am 31.12.2026\nDie Zuständigkeit liegt beim Landesamt"
-          }
+          placeholder={t("pdfAnalysis.crossCheck.claimsPlaceholder")}
           className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60 leading-relaxed"
         />
       </label>
 
       <label className="flex flex-col gap-1 text-sm text-theme-text-secondary">
-        Fakt-IDs aus dem Fakten-Speicher (kommasepariert, optional)
+        {t("pdfAnalysis.crossCheck.factIdsLabel")}
         <input
           value={factIdsText}
           onChange={(e) => setFactIdsText(e.target.value)}
-          placeholder="z.B. a1b2c3d4e5f6a7b8, b2c3d4e5f6a7b8c9"
+          placeholder={t("pdfAnalysis.crossCheck.factIdsPlaceholder")}
           className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
         />
       </label>
 
       <fieldset className="flex flex-col gap-2">
         <legend className="text-sm text-theme-text-secondary mb-1">
-          Vergleichsquellen
+          {t("pdfAnalysis.crossCheck.sourcesLegend")}
         </legend>
         {sources.map((source, index) => (
           <div key={index} className="flex flex-col md:flex-row gap-2">
             <select
               value={source.type}
               onChange={(e) => updateSource(index, { type: e.target.value })}
-              aria-label="Quelltyp"
+              aria-label={t("pdfAnalysis.crossCheck.sourceTypeAriaLabel")}
               className="md:w-48 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary"
             >
-              {SOURCE_TYPES.map((t) => (
-                <option key={t.value} value={t.value}>
-                  {t.label}
+              {SOURCE_TYPES.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {t(`pdfAnalysis.sourceTypes.${item.value}`)}
                 </option>
               ))}
             </select>
@@ -206,21 +204,21 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
               onChange={(e) => updateSource(index, { value: e.target.value })}
               placeholder={
                 source.type === "pdf"
-                  ? "/pfad/zur/datei.pdf (freigegebenes Verzeichnis)"
+                  ? t("pdfAnalysis.crossCheck.sourceValuePdfPlaceholder")
                   : source.type === "text"
-                    ? "Roh-Text einfügen…"
-                    : "https://…"
+                    ? t("pdfAnalysis.crossCheck.sourceValueTextPlaceholder")
+                    : t("pdfAnalysis.crossCheck.sourceValueUrlPlaceholder")
               }
-              aria-label="Quellwert"
+              aria-label={t("pdfAnalysis.crossCheck.sourceValueAriaLabel")}
               className="flex-1 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
             />
             <button
               type="button"
               onClick={() => removeSource(index)}
               className="text-xs px-3 py-2 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
-              aria-label="Quelle entfernen"
+              aria-label={t("pdfAnalysis.crossCheck.removeSourceAriaLabel")}
             >
-              Entfernen
+              {t("pdfAnalysis.crossCheck.removeSource")}
             </button>
           </div>
         ))}
@@ -229,7 +227,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
           onClick={addSource}
           className="self-start text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
         >
-          Quelle hinzufügen
+          {t("pdfAnalysis.crossCheck.addSource")}
         </button>
       </fieldset>
 
@@ -240,7 +238,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
           onChange={(e) => setDeepWeb(e.target.checked)}
           className="accent-current"
         />
-        Deep-Web-Recherche: Agenten recherchieren zusätzlich autonom im Web
+        {t("pdfAnalysis.crossCheck.deepWebLabel")}
       </label>
 
       {error && (
@@ -255,7 +253,9 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
           disabled={busy}
           className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-50"
         >
-          {busy ? "Wird gestartet…" : "Verifikation starten"}
+          {busy
+            ? t("pdfAnalysis.crossCheck.submitBusy")
+            : t("pdfAnalysis.crossCheck.submitIdle")}
         </button>
       </div>
     </form>
@@ -263,6 +263,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
 }
 
 function CrossCheckRow({ job, onShowReport, onCancelled }) {
+  const { t } = useTranslation();
   const { progress = {}, status } = job;
   const pct =
     progress.tasksTotal > 0
@@ -276,11 +277,14 @@ function CrossCheckRow({ job, onShowReport, onCancelled }) {
         <div className="min-w-0">
           <p className="text-sm font-medium text-theme-text-primary truncate">
             {job.claims?.[0]}
-            {job.claims?.length > 1 && ` (+${job.claims.length - 1} weitere)`}
+            {job.claims?.length > 1 &&
+              t("pdfAnalysis.crossCheck.moreClaims", {
+                count: job.claims.length - 1,
+              })}
           </p>
           <p className="text-xs text-theme-text-secondary">
-            {job.sources} Vergleichsquellen
-            {job.deepWeb && " · Deep-Web-Recherche aktiv"}
+            {t("pdfAnalysis.crossCheck.sourcesCount", { count: job.sources })}
+            {job.deepWeb && t("pdfAnalysis.crossCheck.deepWebActive")}
           </p>
         </div>
         <span
@@ -293,10 +297,10 @@ function CrossCheckRow({ job, onShowReport, onCancelled }) {
           }`}
         >
           {status === "completed"
-            ? "Abgeschlossen"
+            ? t("pdfAnalysis.crossCheck.statusCompleted")
             : status === "failed"
-              ? "Fehlgeschlagen"
-              : "Agenten recherchieren"}
+              ? t("pdfAnalysis.crossCheck.statusFailed")
+              : t("pdfAnalysis.crossCheck.statusResearching")}
         </span>
       </div>
 
@@ -315,7 +319,10 @@ function CrossCheckRow({ job, onShowReport, onCancelled }) {
             />
           </div>
           <span className="text-xs text-theme-text-secondary w-24 text-right">
-            {progress.tasksDone}/{progress.tasksTotal} Aufgaben
+            {t("pdfAnalysis.crossCheck.progressLabel", {
+              done: progress.tasksDone,
+              total: progress.tasksTotal,
+            })}
           </span>
         </div>
       )}
@@ -329,7 +336,7 @@ function CrossCheckRow({ job, onShowReport, onCancelled }) {
             onClick={onShowReport}
             className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
           >
-            Bericht anzeigen
+            {t("pdfAnalysis.crossCheck.showReport")}
           </button>
         )}
         {isActive && (
@@ -341,7 +348,7 @@ function CrossCheckRow({ job, onShowReport, onCancelled }) {
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
           >
-            Abbrechen
+            {t("pdfAnalysis.crossCheck.cancel")}
           </button>
         )}
       </div>
@@ -362,39 +369,41 @@ function CrossCheckReportModal({ job, onClose }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="Verifikationsbericht"
+      aria-label={t("pdfAnalysis.crossCheck.modalAriaLabel")}
     >
       <div className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
         <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border gap-3">
           <h3 className="text-sm font-semibold text-theme-text-primary flex-1">
-            Verifikationsbericht
+            {t("pdfAnalysis.crossCheck.modalTitle")}
           </h3>
           <a
             href={`${API_BASE}/pdf-analysis/crosscheck/${job.id}/report/download`}
             download
             className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
           >
-            Als Markdown herunterladen
+            {t("pdfAnalysis.crossCheck.downloadReport")}
           </a>
           <button
             type="button"
             onClick={onClose}
             className="text-sm text-theme-text-secondary hover:text-theme-text-primary"
-            aria-label="Schließen"
+            aria-label={t("pdfAnalysis.crossCheck.closeAriaLabel")}
           >
-            Schließen
+            {t("pdfAnalysis.crossCheck.close")}
           </button>
         </div>
         <div className="overflow-y-auto p-4 flex flex-col gap-4">
           {!result ? (
-            <p className="text-sm text-theme-text-secondary">Wird geladen…</p>
+            <p className="text-sm text-theme-text-secondary">
+              {t("pdfAnalysis.crossCheck.loading")}
+            </p>
           ) : result.report ? (
             <>
               {/* Verifikationsmatrix (kompakt) */}
               {Array.isArray(result.perClaim) && (
                 <ul
                   className="flex flex-col gap-2"
-                  aria-label="Urteile je Behauptung"
+                  aria-label={t("pdfAnalysis.crossCheck.perClaimAriaLabel")}
                 >
                   {result.perClaim.map((pc, i) => (
                     <li
@@ -411,15 +420,20 @@ function CrossCheckReportModal({ job, onClose }) {
                             className={`text-xs px-2 py-0.5 rounded-md border ${VERDICT_STYLES[sv.verdict]}`}
                             title={sv.reasoning}
                           >
-                            {sv.source}: {VERDICT_LABELS[sv.verdict]}
+                            {sv.source}:{" "}
+                            {t(`pdfAnalysis.verdicts.${sv.verdict}`)}
                           </span>
                         ))}
                         {pc.webResearch && (
                           <span
                             className={`text-xs px-2 py-0.5 rounded-md border ${VERDICT_STYLES[pc.webResearch.overall]}`}
                           >
-                            Web ({pc.webResearch.sourcesChecked} Quellen):{" "}
-                            {VERDICT_LABELS[pc.webResearch.overall]}
+                            {t("pdfAnalysis.crossCheck.webResearch", {
+                              count: pc.webResearch.sourcesChecked,
+                            })}{" "}
+                            {t(
+                              `pdfAnalysis.verdicts.${pc.webResearch.overall}`,
+                            )}
                           </span>
                         )}
                       </div>
