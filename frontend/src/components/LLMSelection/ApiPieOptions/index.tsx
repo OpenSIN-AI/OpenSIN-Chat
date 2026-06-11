@@ -27,7 +27,8 @@ export default function ApiPieLLMOptions({ settings }: any) {
 }
 
 function APIPieModelSelection({ settings }: any) {
-  const { customModels, isLoading } = useProviderModels("apipie");
+  const { customModels: groupedModels, isLoading } =
+    useProviderModels("apipie");
   if (isLoading || Object.keys(groupedModels).length === 0) {
     return (
       <div className="flex flex-col w-60">

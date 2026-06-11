@@ -26,6 +26,7 @@ export function SkillsNavigation(props) {
     activeFlowIds,
     mcpServers,
     setMcpServers,
+    selectedMcpServer,
     setSelectedMcpServer,
   } = props;
 

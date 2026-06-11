@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { X, Terminal, Bug, Trash } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import ChatSidebar, { useConsoleSidebar } from "../ChatSidebar";

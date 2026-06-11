@@ -42,7 +42,7 @@ export default class PiperTTSClient {
         }
         resolve(event.data.voices);
         tmpWorker.removeEventListener("message", handleMessage);
-        timeout && clearTimeout(timeout);
+        if (timeout) clearTimeout(timeout);
         tmpWorker.terminate();
       };
 
@@ -68,7 +68,7 @@ export default class PiperTTSClient {
         }
         resolve(event.data.flushed);
         tmpWorker.removeEventListener("message", handleMessage);
-        timeout && clearTimeout(timeout);
+        if (timeout) clearTimeout(timeout);
         tmpWorker.terminate();
       };
 
@@ -91,7 +91,7 @@ export default class PiperTTSClient {
       const handleMessage = (event) => {
         if (event.data.type === "error") {
           this.worker.removeEventListener("message", handleMessage);
-          timeout && clearTimeout(timeout);
+          if (timeout) clearTimeout(timeout);
           return resolve({ blobURL: null, error: event.data.message });
         }
 
@@ -103,7 +103,7 @@ export default class PiperTTSClient {
           error: null,
         });
         this.worker.removeEventListener("message", handleMessage);
-        timeout && clearTimeout(timeout);
+        if (timeout) clearTimeout(timeout);
       };
 
       timeout = setTimeout(() => {

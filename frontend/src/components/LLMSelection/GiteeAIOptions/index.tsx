@@ -43,7 +43,8 @@ export default function GiteeAIOptions({ settings }: any) {
 }
 
 function GiteeAIModelSelection({ settings }: any) {
-  const { customModels, isLoading } = useProviderModels("giteeai");
+  const { customModels: groupedModels, isLoading } =
+    useProviderModels("giteeai");
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">

@@ -6,7 +6,7 @@ import { COMMUNITY_HUB_SETTINGS_KEY } from "./useCommunityHubSettings";
 export const COMMUNITY_HUB_AUTH_KEY = COMMUNITY_HUB_SETTINGS_KEY;
 
 export default function useCommunityHubAuth() {
-  const { data, isLoading, error } = useSWR(
+  const { data, isLoading } = useSWR(
     COMMUNITY_HUB_AUTH_KEY,
     () => CommunityHub.getSettings(),
     { revalidateOnFocus: false },

@@ -176,11 +176,15 @@ function DockerModelRunnerModelSelection({
   setSelectedModelId,
   basePath = null,
 }: any) {
-  const { customModels, isLoading } = useProviderModels(
-    "docker-model-runner",
-    null,
-    basePath,
-  );
+  const {
+    customModels: providerCustomModels,
+    isLoading,
+    refresh: fetchModels,
+  } = useProviderModels("docker-model-runner", null, basePath);
+  const [customModels, setCustomModels] = useState([]);
+  const [filteredModels, setFilteredModels] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   async function downloadModel(
     modelId: any,
     fileSize: any,
@@ -205,7 +209,7 @@ function DockerModelRunnerModelSelection({
       progressCallback(100);
       handleSetActiveModel(modelId);
 
-      const existingModels = [...customModels];
+      const existingModels = [...providerCustomModels];
       const newModel = existingModels.find((model) => model.id === modelId);
       if (newModel) {
         newModel.downloaded = true;

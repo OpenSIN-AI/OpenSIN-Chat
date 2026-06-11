@@ -12,6 +12,7 @@ import {
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import Workspace from "@/models/workspace";
+import System from "@/models/system";
 import useDocuments from "@/hooks/useDocuments";
 import showToast from "@/utils/toast";
 import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";

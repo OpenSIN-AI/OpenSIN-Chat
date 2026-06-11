@@ -88,7 +88,9 @@ console.log(
 for (const [lang, translations] of Object.entries(TRANSLATIONS)) {
   const passed = compareStructures(lang, translations, PRIMARY);
   console.log(`${langDisplayName(lang)} (${lang}): ${passed ? "✅" : "❌"}`);
-  !passed && failed.push(lang);
+  if (!passed) {
+    failed.push(lang);
+  }
 }
 
 if (failed.length !== 0)

@@ -12,7 +12,7 @@ import {
   Plus,
   Trash,
 } from "@phosphor-icons/react";
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ThreadItem from "../ThreadItem";
 import { useDroppable } from "@dnd-kit/core";

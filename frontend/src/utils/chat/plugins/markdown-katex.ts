@@ -5,14 +5,12 @@ import "katex/dist/katex.min.css";
 // Test if potential opening or closing delimieter
 // Assumes that there is a "$" at state.src[pos]
 function isValidDelim(state, pos) {
-  let prevChar,
-    nextChar,
-    max = state.posMax,
-    can_open = true,
+  const max = state.posMax;
+  let can_open = true,
     can_close = true;
 
-  prevChar = pos > 0 ? state.src.charCodeAt(pos - 1) : -1;
-  nextChar = pos + 1 <= max ? state.src.charCodeAt(pos + 1) : -1;
+  const prevChar = pos > 0 ? state.src.charCodeAt(pos - 1) : -1;
+  const nextChar = pos + 1 <= max ? state.src.charCodeAt(pos + 1) : -1;
 
   // Only apply whitespace rules if we're dealing with $ delimiter
   if (state.src[pos] === "$") {
@@ -152,9 +150,9 @@ function math_block(state, start, end, silent) {
     next,
     lastPos,
     found = false,
-    token,
     pos = state.bMarks[start] + state.tShift[start],
     max = state.eMarks[start];
+  const token = state.push("math_block", "math", 0);
 
   // Check for $$, \[, or standalone [ as opening delimiters
   if (pos + 1 > max) {
@@ -217,7 +215,6 @@ function math_block(state, start, end, silent) {
 
   state.line = next + 1;
 
-  token = state.push("math_block", "math", 0);
   token.block = true;
   token.content =
     (firstLine && firstLine.trim() ? firstLine + "\n" : "") +

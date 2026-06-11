@@ -235,6 +235,8 @@ function DesktopForm(props) {
   const { selectedSkill, selectedFlow, selectedMcpServer } = props;
   let SelectedSkillComponent = null;
 
+  // Dynamic imports for conditional skill components
+  /* global require */
   if (selectedFlow) {
     SelectedSkillComponent = require("./AgentFlows/FlowPanel").default;
   } else if (selectedMcpServer) {

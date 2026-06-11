@@ -138,7 +138,9 @@ for (const [lang, translations] of Object.entries(TRANSLATIONS)) {
   // Verify the structure matches
   const passed = compareStructures(lang, normalized, PRIMARY);
   console.log(`${langDisplayName(lang)} (${lang}): ${passed ? "✅" : "❌"}`);
-  !passed && failed.push(lang);
+  if (!passed) {
+    failed.push(lang);
+  }
 
   const langFilename = ISOToFilename(lang);
   fs.writeFileSync(

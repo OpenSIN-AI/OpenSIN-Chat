@@ -29,9 +29,11 @@ export default function DeleteWorkspace({ workspace, visible = true }) {
       return;
     }
 
-    workspace.slug === slug
-      ? (window.location = paths.home())
-      : window.location.reload();
+    if (workspace.slug === slug) {
+      window.location = paths.home();
+    } else {
+      window.location.reload();
+    }
   };
 
   if (!visible) return null;

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import {
+import React, {
   createContext,
   useContext,
   useState,
@@ -86,9 +86,8 @@ export function ChatSidebarProvider({ children }: any) {
       const detail = (e as CustomEvent<LogEntry>).detail;
       setConsoleLogs((prev) => [...prev.slice(-499), detail]);
     }
-    window.addEventListener(LOG_EVENT, handler as EventListener);
-    return () =>
-      window.removeEventListener(LOG_EVENT, handler as EventListener);
+    window.addEventListener(LOG_EVENT, handler as any);
+    return () => window.removeEventListener(LOG_EVENT, handler as any);
   }, []);
 
   useEffect(() => {

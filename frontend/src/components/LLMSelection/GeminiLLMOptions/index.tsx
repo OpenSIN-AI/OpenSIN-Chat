@@ -63,7 +63,10 @@ export default function GeminiLLMOptions({ settings }: any) {
 }
 
 function GeminiModelSelection({ apiKey, settings }: any) {
-  const { customModels, isLoading } = useProviderModels("gemini", apiKey);
+  const { customModels: groupedModels, isLoading } = useProviderModels(
+    "gemini",
+    apiKey,
+  );
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">

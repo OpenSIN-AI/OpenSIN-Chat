@@ -14,9 +14,9 @@ import type {
 } from "@/types/workspace";
 import type { ApiResponse } from "@/types/api";
 
-interface WorkspaceResponse extends ApiResponse<Workspace> {}
-interface ThreadResponse extends ApiResponse<Thread> {}
-interface ChatHistoryResponse extends ApiResponse<ChatHistory> {}
+type WorkspaceResponse = ApiResponse<Workspace>;
+type ThreadResponse = ApiResponse<Thread>;
+type ChatHistoryResponse = ApiResponse<ChatHistory>;
 
 const Workspace: any = {
   /**

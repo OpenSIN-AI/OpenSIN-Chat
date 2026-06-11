@@ -320,7 +320,9 @@ export default function useChatStream({
       });
       return;
     }
-    loadingResponse === true && fetchReply();
+    if (loadingResponse === true) {
+      fetchReply();
+    }
   }, [loadingResponse, chatHistory, workspace]);
 
   useWebSocket({

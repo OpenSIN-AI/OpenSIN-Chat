@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import React from "react";
 import paths from "@/utils/paths";
 import {
   BookOpen,

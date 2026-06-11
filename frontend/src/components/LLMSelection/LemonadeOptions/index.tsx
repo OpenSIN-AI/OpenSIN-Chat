@@ -198,11 +198,15 @@ function LemonadeModelSelection({
   setSelectedModelId,
   basePath = null,
 }: any) {
-  const { customModels, isLoading } = useProviderModels(
-    "lemonade",
-    null,
-    basePath,
-  );
+  const {
+    customModels: providerCustomModels,
+    isLoading,
+    refresh: fetchModels,
+  } = useProviderModels("lemonade", null, basePath);
+  const [customModels, setCustomModels] = useState([]);
+  const [filteredModels, setFilteredModels] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false);
   async function uninstallModel(modelId: any) {
     try {
       if (
@@ -221,7 +225,7 @@ function LemonadeModelSelection({
           error || "An error occurred while uninstalling the model",
         );
 
-      const updatedModels = (customModels as any).map((model) =>
+      const updatedModels = (providerCustomModels as any).map((model) =>
         model.id === modelId ? { ...model, downloaded: false } : model,
       );
       setCustomModels(updatedModels);
@@ -263,7 +267,7 @@ function LemonadeModelSelection({
       progressCallback(100);
       handleSetActiveModel(modelId);
 
-      const existingModels = [...customModels];
+      const existingModels = [...providerCustomModels];
       const newModel = existingModels.find((model) => model.id === modelId);
       if (newModel) {
         newModel.downloaded = true;
