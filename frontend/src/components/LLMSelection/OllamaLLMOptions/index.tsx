@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { OLLAMA_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp, Info, CircleNotch } from "@phosphor-icons/react";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
@@ -8,6 +9,7 @@ import { Link } from "react-router-dom";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function OllamaLLMOptions({ settings }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -43,7 +45,10 @@ export default function OllamaLLMOptions({ settings }: any) {
           }}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} advanced settings
+          {showAdvancedControls
+            ? t("ollama.hideAdvanced")
+            : t("ollama.showAdvanced")}{" "}
+          {t("ollama.advancedSettings")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -59,13 +64,13 @@ export default function OllamaLLMOptions({ settings }: any) {
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center gap-1">
                   <label className="text-white text-sm font-semibold">
-                    Ollama Base URL
+                    {t("ollama.baseUrlLabel")}
                   </label>
                   <Info
                     size={18}
                     className="text-theme-text-secondary cursor-pointer"
                     data-tooltip-id="ollama-base-url"
-                    data-tooltip-content="Enter the URL where Ollama is running."
+                    data-tooltip-content={t("ollama.baseUrlTooltip")}
                   />
                   <Tooltip
                     id="ollama-base-url"
@@ -86,7 +91,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                         onClick={handleAutoDetectClick}
                         className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                       >
-                        Auto-Detect
+                        {t("ollama.autoDetect")}
                       </button>
                     )}
                   </>
@@ -96,7 +101,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                 type="url"
                 name="OllamaLLMBasePath"
                 className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                placeholder="http://127.0.0.1:11434"
+                placeholder={t("ollama.baseUrlPlaceholder")}
                 value={basePathValue.value}
                 required={true}
                 autoComplete="off"
@@ -109,7 +114,7 @@ export default function OllamaLLMOptions({ settings }: any) {
             <div className="flex flex-col w-60">
               <div className="flex items-center mb-2 gap-x-1">
                 <label className="text-white text-sm font-semibold block">
-                  Ollama Keep Alive
+                  {t("ollama.keepAliveLabel")}
                 </label>
                 <Info
                   size={18}
@@ -125,15 +130,14 @@ export default function OllamaLLMOptions({ settings }: any) {
                   className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                 >
                   <p className="text-xs leading-[18px] font-base">
-                    Choose how long Ollama should keep your model in memory
-                    before unloading.{" "}
+                    {t("ollama.keepAliveTooltip")}{" "}
                     <Link
                       className="underline text-blue-300"
                       to="https://docs.ollama.com/faq#how-do-i-keep-a-model-loaded-in-memory-or-make-it-unload-immediately"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Learn more &rarr;
+                      {t("ollama.keepAliveLearnMore")}
                     </Link>
                   </p>
                 </Tooltip>
@@ -144,10 +148,10 @@ export default function OllamaLLMOptions({ settings }: any) {
                 className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
                 defaultValue={settings?.OllamaLLMKeepAliveSeconds ?? "300"}
               >
-                <option value="0">No cache</option>
-                <option value="300">5 minutes</option>
-                <option value="3600">1 hour</option>
-                <option value="-1">Forever</option>
+                <option value="0">{t("ollama.keepAliveNoCache")}</option>
+                <option value="300">{t("ollama.keepAlive5Min")}</option>
+                <option value="3600">{t("ollama.keepAlive1Hour")}</option>
+                <option value="-1">{t("ollama.keepAliveForever")}</option>
               </select>
             </div>
           </div>
@@ -155,7 +159,7 @@ export default function OllamaLLMOptions({ settings }: any) {
             <div className="flex flex-col w-60">
               <div className="flex items-center mb-2 gap-x-1">
                 <label className="text-white text-sm font-semibold block">
-                  Model context window
+                  {t("ollama.contextWindowLabel")}
                 </label>
                 <Info
                   size={18}
@@ -171,23 +175,14 @@ export default function OllamaLLMOptions({ settings }: any) {
                   className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                 >
                   <p className="text-xs leading-[18px] font-base">
-                    Specify the maximum number of tokens that can be used for
-                    the model context window.
+                    {t("ollama.contextWindowTooltip")}
                     <br /> <br />
-                    If you leave this field blank, the context window limit will
-                    be auto-detected from the model and applied to all chats. If
-                    auto-detection fails, a fallback context window limit of
-                    4096 will be used.
+                    {t("ollama.contextWindowTooltip2")}
                     <br /> <br />
-                    <b>Important:</b> Some models have very large context
-                    windows using the full context window limit can dramatically
-                    increase the memory usage of your system. For this reason,
-                    we will automatically cap the context window limit to 16,384
-                    tokens if the model supports more than that and no value is
-                    specified.
+                    <b>{t("ollama.contextWindowTooltipImportant")}:</b>{" "}
+                    {t("ollama.contextWindowTooltipImportantText")}
                     <br /> <br />
-                    If an invalid value is entered, OpenSIN Chat will handle
-                    this for you so that chats do not fail.
+                    {t("ollama.contextWindowTooltipFallback")}
                   </p>
                 </Tooltip>
               </div>
@@ -195,7 +190,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                 type="number"
                 name="OllamaLLMTokenLimit"
                 className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                placeholder="Automatically managed"
+                placeholder={t("ollama.contextWindowPlaceholder")}
                 min={1}
                 value={maxTokens}
                 onChange={(e) =>
@@ -214,7 +209,7 @@ export default function OllamaLLMOptions({ settings }: any) {
             <div className="flex flex-col w-60">
               <div className="flex items-center mb-2 gap-x-1">
                 <label className="text-white text-sm font-semibold">
-                  Authentication Token
+                  {t("ollama.authTokenLabel")}
                 </label>
                 <Info
                   size={18}
@@ -230,11 +225,13 @@ export default function OllamaLLMOptions({ settings }: any) {
                   className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
                 >
                   <p className="text-xs leading-[18px] font-base">
-                    Enter a <code>Bearer</code> Auth Token for interacting with
-                    your Ollama server.
+                    {t("ollama.authTokenTooltip1")}{" "}
+                    <code>{t("ollama.authTokenTooltipBearer")}</code>{" "}
+                    {t("ollama.authTokenTooltip1End")}
                     <br /> <br />
-                    Used <b>only</b> if running Ollama behind an authentication
-                    server.
+                    {t("ollama.authTokenTooltip2")}{" "}
+                    <b>{t("ollama.authTokenTooltip2b")}</b>{" "}
+                    {t("ollama.authTokenTooltip2End")}
                   </p>
                 </Tooltip>
               </div>
@@ -242,7 +239,7 @@ export default function OllamaLLMOptions({ settings }: any) {
                 type="password"
                 name="OllamaLLMAuthToken"
                 className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
-                placeholder="Ollama Auth Token"
+                placeholder={t("ollama.authTokenPlaceholder")}
                 defaultValue={
                   settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""
                 }
@@ -266,6 +263,7 @@ function OllamaLLMModelSelection({
   basePath = null,
   authToken = null,
 }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels(
     "ollama",
     authToken,
@@ -275,7 +273,7 @@ function OllamaLLMModelSelection({
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
-          Ollama Model
+          {t("ollama.modelLabel")}
         </label>
         <select
           name="OllamaLLMModelPref"
@@ -283,14 +281,11 @@ function OllamaLLMModelSelection({
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            {!!basePath
-              ? "-- loading available models --"
-              : "Enter Ollama URL first"}
+            {!!basePath ? t("ollama.loadingModels") : t("ollama.enterUrlFirst")}
           </option>
         </select>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Select the Ollama model you want to use. Models will load after
-          entering a valid Ollama URL.
+          {t("ollama.selectModelHelp")}
         </p>
       </div>
     );
@@ -299,7 +294,7 @@ function OllamaLLMModelSelection({
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-2">
-        Ollama Model
+        {t("ollama.modelLabel")}
       </label>
       <select
         name="OllamaLLMModelPref"
@@ -307,7 +302,7 @@ function OllamaLLMModelSelection({
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("ollama.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option
@@ -323,7 +318,7 @@ function OllamaLLMModelSelection({
         )}
       </select>
       <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-        Choose the Ollama model you want to use for your conversations.
+        {t("ollama.chooseModelHelp")}
       </p>
     </div>
   );
