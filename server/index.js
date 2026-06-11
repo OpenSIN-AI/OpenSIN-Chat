@@ -139,6 +139,12 @@ browserExtensionEndpoints(apiRouter);
 const { PdfAnalysisPipeline } = require("./utils/pdfAnalysis");
 PdfAnalysisPipeline.resumeInterrupted();
 
+// OCR-Worker beim Prozess-Ende sauber terminieren
+const { shutdownOcr } = require("./utils/pdfAnalysis/ocr");
+process.on("beforeExit", () => {
+  shutdownOcr();
+});
+
 if (process.env.NODE_ENV !== "development") {
   const { MetaGenerator } = require("./utils/boot/MetaGenerator");
   const IndexPage = new MetaGenerator();

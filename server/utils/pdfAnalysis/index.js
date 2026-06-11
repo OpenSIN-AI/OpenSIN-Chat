@@ -22,6 +22,7 @@ const { FactStore } = require("./factStore");
 const { persistJob, loadAllJobs } = require("./jobStore");
 const { validatePdfPath } = require("./security");
 const { verifyFacts } = require("./factVerifier");
+const { reviewAndRepair } = require("./criticAgent");
 
 const jobs = new Map();
 
@@ -136,13 +137,16 @@ class PdfAnalysisPipeline {
             chunk.pageStart,
             chunk.pageEnd
           );
-          return analyzeChunk({
+          const ctx = {
             chunk,
             text,
             task: job.task,
             factCriteria: job.factCriteria,
             documentName: job.documentName,
-          });
+          };
+          const result = await analyzeChunk(ctx);
+          // Critic-Review + ggf. Repair direkt im Worker => läuft mit-parallelisiert
+          return await reviewAndRepair(result, ctx);
         },
         {
           jobId: job.id,
@@ -164,11 +168,14 @@ class PdfAnalysisPipeline {
       // Phase 3 — Synthese / Best-Practices-Report
       job.progress.phase = "synthesizing";
       persistJob(job);
-      const { report, masterSummary } = await synthesize(chunkResults, {
-        task: job.task,
-        reportType: job.reportType,
-        documentName: job.documentName,
-      });
+      const { report, masterSummary, groundingRatio } = await synthesize(
+        chunkResults,
+        {
+          task: job.task,
+          reportType: job.reportType,
+          documentName: job.documentName,
+        }
+      );
 
       fs.mkdirSync(config.REPORT_DIR, { recursive: true });
       const reportFile = path.join(config.REPORT_DIR, `${job.id}.md`);
@@ -224,6 +231,9 @@ class PdfAnalysisPipeline {
         factsVerified: verifiedFacts.filter((f) => f.verified).length,
         factsUnverified: verifiedFacts.filter((f) => !f.verified).length,
         chunkErrors: chunkResults.filter((r) => r && r.error).length,
+        chunksRepaired: chunkResults.filter((r) => r?.critic?.repaired).length,
+        ocrPages: reader.ocrPages ? reader.ocrPages.size : 0,
+        groundingRatio: Math.round((groundingRatio || 0) * 100),
       };
       job.status = "completed";
       job.progress.phase = "done";

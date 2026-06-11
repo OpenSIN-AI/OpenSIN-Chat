@@ -79,7 +79,30 @@ async function synthesize(chunkResults, { task, reportType, documentName }) {
     ].join("\n")
   );
 
-  return { report, masterSummary };
+  // "Citations or die": Absätze ohne Seitenverweis deterministisch erkennen
+  const PAGE_REF = /\(S\.\s*\d+/;
+  const paragraphs = report
+    .split(/\n{2,}/)
+    .filter(
+      (p) => p.trim().length > 120 && !p.trim().startsWith("#")
+    );
+  const uncited = paragraphs.filter((p) => !PAGE_REF.test(p));
+  const groundingRatio =
+    paragraphs.length === 0
+      ? 1
+      : (paragraphs.length - uncited.length) / paragraphs.length;
+
+  let finalReport = report;
+  if (uncited.length > 0) {
+    finalReport +=
+      `\n\n---\n\n> **Grounding-Hinweis:** ${uncited.length} von ${paragraphs.length} ` +
+      `inhaltlichen Absätzen enthalten keinen Seitenverweis (Deckungsgrad ` +
+      `${Math.round(groundingRatio * 100)} %). Aussagen ohne (S. N)-Verweis ` +
+      `sollten vor Weiterverwendung gegen das Quelldokument geprüft werden — ` +
+      `z.B. per Kreuz-Verifikation.`;
+  }
+
+  return { report: finalReport, masterSummary, groundingRatio };
 }
 
 module.exports = { synthesize };

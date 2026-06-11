@@ -14,6 +14,7 @@
  *    Dokumente mit hunderttausenden Seiten.
  */
 const fs = require("fs");
+const { ocrPage, needsOcr } = require("./ocr");
 
 const INITIAL_CHUNK_BYTES = Number(
   process.env.PDF_ANALYSIS_INITIAL_CHUNK_BYTES || 2 * 1024 * 1024 // 2 MB
@@ -107,7 +108,11 @@ class PdfReader {
   }
 
   /**
-   * Extrahiert Text einer einzelnen Seite (1-basiert) und räumt sofort auf.
+   * Extrahiert Text einer einzelnen Seite (1-basiert) mit Triage:
+   *  1. Programmatische Extraktion (Text-Layer)
+   *  2. OCR-Fallback, falls die Seite (nahezu) keinen Text-Layer hat
+   * Markiert OCR-Seiten, damit nachgelagerte Stufen (z.B. der deterministische
+   * Zitat-Verifier) die geringere Zeichengenauigkeit berücksichtigen können.
    */
   async pageText(pageNumber) {
     const page = await this.doc.getPage(pageNumber);
@@ -124,25 +129,50 @@ class PdfReader {
         out += item.str;
         lastY = y;
       }
-      return out.trim();
+      out = out.trim();
+
+      // Triage: kein Text-Layer => gescannte Seite => OCR-Fallback
+      if (needsOcr(out)) {
+        try {
+          const ocrText = await ocrPage(page);
+          if (ocrText) {
+            this.ocrPages = this.ocrPages || new Set();
+            this.ocrPages.add(pageNumber);
+            return ocrText;
+          }
+        } catch {
+          /* OCR fehlgeschlagen — mit (leerem) Extraktionstext weiterarbeiten */
+        }
+      }
+      return out;
     } finally {
       page.cleanup();
     }
   }
 
+  /** True, wenn die Seite per OCR gelesen wurde (geringere Zeichen-Treue). */
+  wasOcrPage(pageNumber) {
+    return !!(this.ocrPages && this.ocrPages.has(pageNumber));
+  }
+
   /**
    * Extrahiert einen Seitenbereich [from..to] (1-basiert, inklusiv).
+   * Markiert leere Seiten und OCR-Seiten explizit.
    */
   async rangeText(from, to) {
     const pages = [];
     for (let p = from; p <= to; p++) {
       const text = await this.pageText(p);
-      pages.push({ page: p, text });
+      pages.push({ page: p, text, ocr: this.wasOcrPage(p) });
     }
     return {
       pages,
       text: pages
-        .map((p) => `\n--- [Seite ${p.page}] ---\n${p.text}`)
+        .map((p) => {
+          const marker = p.ocr ? " (OCR)" : "";
+          const body = p.text || "[leere Seite — kein Inhalt]";
+          return `\n--- [Seite ${p.page}${marker}] ---\n${body}`;
+        })
         .join("\n"),
     };
   }
