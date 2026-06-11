@@ -7,6 +7,7 @@ const {
   PdfAnalysisPipeline,
 } = require("../../../pdfAnalysis");
 const { CrossCheckPipeline } = require("../../../pdfAnalysis/crossCheck");
+const { CorpusPipeline } = require("../../../pdfAnalysis/corpus");
 
 const pdfAnalyze = {
   name: "pdf-analyze",
@@ -202,6 +203,77 @@ const pdfAnalyze = {
               return JSON.stringify(status, null, 2);
             const result = CrossCheckPipeline.getResult(jobId);
             return result.report || "Kein Bericht verfügbar.";
+          },
+        });
+
+        aibitat.function({
+          super: aibitat,
+          name: "pdf-corpus-analyze",
+          description:
+            "Startet eine Korpus-Analyse: mehrere PDFs werden parallel analysiert und zu einem " +
+            "konsolidierten Vergleichs-Report verdichtet (Übereinstimmungen, Widersprüche mit " +
+            "Dokument+Seite-Belegen, dokumentspezifische Befunde). Gibt eine jobId zurück.",
+          parameters: {
+            type: "object",
+            properties: {
+              pdfPaths: {
+                type: "array",
+                items: { type: "string" },
+                description: "Absolute Pfade der zu vergleichenden PDFs (min. 2).",
+              },
+              task: {
+                type: "string",
+                description: "Analyse-/Vergleichsauftrag des Nutzers.",
+              },
+              factCriteria: {
+                type: "string",
+                description: "Optionale Fakten-Kriterien.",
+              },
+              deepScan: {
+                type: "boolean",
+                description: "Deep Scan für alle Dokumente.",
+              },
+            },
+            required: ["pdfPaths", "task"],
+          },
+          handler: async function ({
+            pdfPaths,
+            task,
+            factCriteria,
+            deepScan,
+          }) {
+            try {
+              const { jobId } = CorpusPipeline.start({
+                pdfPaths,
+                task,
+                factCriteria,
+                deepScan: !!deepScan,
+              });
+              return `Korpus-Analyse über ${pdfPaths.length} Dokumente gestartet. Job-ID: ${jobId}. Status via pdf-corpus-status.`;
+            } catch (e) {
+              return `Fehler beim Start: ${e.message}`;
+            }
+          },
+        });
+
+        aibitat.function({
+          super: aibitat,
+          name: "pdf-corpus-status",
+          description:
+            "Status/Ergebnis einer Korpus-Analyse; bei Abschluss wird der konsolidierte Vergleichs-Report zurückgegeben.",
+          parameters: {
+            type: "object",
+            properties: {
+              jobId: { type: "string", description: "Die Job-ID." },
+            },
+            required: ["jobId"],
+          },
+          handler: async function ({ jobId }) {
+            const status = CorpusPipeline.getStatus(jobId);
+            if (!status) return "Job nicht gefunden.";
+            if (status.status !== "completed")
+              return JSON.stringify(status, null, 2);
+            return CorpusPipeline.getResult(jobId).report || "Kein Report verfügbar.";
           },
         });
       },

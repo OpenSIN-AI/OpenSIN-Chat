@@ -143,6 +143,9 @@ PdfAnalysisPipeline.resumeInterrupted();
 const { CrossCheckPipeline } = require("./utils/pdfAnalysis/crossCheck");
 CrossCheckPipeline.restorePersisted(PdfAnalysisPipeline.factStore);
 
+// Persistierte Korpus-Jobs nach Neustart wiederherstellen
+require("./utils/pdfAnalysis/corpus").CorpusPipeline.restorePersisted();
+
 // Speicher-Hygiene starten (Retention/Cleanup beim Boot + alle 6h)
 require("./utils/pdfAnalysis/retention").startRetentionSchedule();
 

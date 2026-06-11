@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Sidebar from "@/components/Sidebar";
 import PdfAnalysis from "@/models/pdfAnalysis";
 import CrossCheckPanel from "./CrossCheckPanel";
+import CorpusPanel from "./CorpusPanel";
 import { API_BASE } from "@/utils/constants";
 
 const PHASE_LABELS = {
@@ -25,7 +26,7 @@ function formatEta(seconds) {
 }
 
 export default function PdfAnalysisPage() {
-  const [tab, setTab] = useState("jobs"); // "jobs" | "facts" | "crosscheck"
+  const [tab, setTab] = useState("jobs"); // "jobs" | "facts" | "crosscheck" | "corpus"
   const [crossCheckFactIds, setCrossCheckFactIds] = useState([]);
 
   return (
@@ -54,6 +55,12 @@ export default function PdfAnalysisPage() {
             >
               Kreuz-Verifikation
             </TabButton>
+            <TabButton
+              active={tab === "corpus"}
+              onClick={() => setTab("corpus")}
+            >
+              Korpus-Vergleich
+            </TabButton>
           </nav>
         </header>
         {tab === "jobs" ? (
@@ -65,8 +72,10 @@ export default function PdfAnalysisPage() {
               setTab("crosscheck");
             }}
           />
-        ) : (
+        ) : tab === "crosscheck" ? (
           <CrossCheckPanel prefillFactIds={crossCheckFactIds} />
+        ) : (
+          <CorpusPanel />
         )}
       </main>
     </div>

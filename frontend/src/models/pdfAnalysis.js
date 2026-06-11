@@ -124,6 +124,54 @@ const PdfAnalysis = {
       .then((res) => res.json())
       .catch((e) => ({ error: e.message }));
   },
+
+  startCorpus: async function ({
+    pdfPaths,
+    task,
+    reportType,
+    factCriteria,
+    deepScan,
+  }) {
+    return await fetch(`${API_BASE}/pdf-analysis/corpus`, {
+      method: "POST",
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({
+        pdfPaths,
+        task,
+        reportType,
+        factCriteria,
+        deepScan,
+      }),
+    })
+      .then((res) => res.json())
+      .catch((e) => ({ error: e.message }));
+  },
+
+  listCorpus: async function () {
+    return await fetch(`${API_BASE}/pdf-analysis/corpus/list`, {
+      headers: baseHeaders(),
+    })
+      .then((res) => res.json())
+      .then((res) => res.jobs || [])
+      .catch(() => []);
+  },
+
+  corpusResult: async function (jobId) {
+    return await fetch(`${API_BASE}/pdf-analysis/corpus/${jobId}/result`, {
+      headers: baseHeaders(),
+    })
+      .then((res) => res.json())
+      .catch((e) => ({ error: e.message }));
+  },
+
+  cancelCorpus: async function (jobId) {
+    return await fetch(`${API_BASE}/pdf-analysis/corpus/${jobId}`, {
+      method: "DELETE",
+      headers: baseHeaders(),
+    })
+      .then((res) => res.json())
+      .catch((e) => ({ error: e.message }));
+  },
 };
 
 export default PdfAnalysis;

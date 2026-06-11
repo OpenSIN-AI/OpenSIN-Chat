@@ -9,6 +9,7 @@ const multer = require("multer");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
 const { PdfAnalysisPipeline } = require("../../../utils/pdfAnalysis");
 const { CrossCheckPipeline } = require("../../../utils/pdfAnalysis/crossCheck");
+const { CorpusPipeline } = require("../../../utils/pdfAnalysis/corpus");
 const config = require("../../../utils/pdfAnalysis/config");
 
 const UPLOAD_DIR = path.join(config.STORAGE_DIR, "uploads");
@@ -221,6 +222,69 @@ function apiPdfAnalysisEndpoints(app) {
         `attachment; filename="verifikationsbericht-${request.params.id}.md"`
       );
       response.status(200).send(result.report);
+    }
+  );
+
+  // ---- Korpus-Analyse (vor /:id registriert!) ----
+  app.post(
+    "/api/pdf-analysis/corpus",
+    [validApiKey],
+    (request, response) => {
+      try {
+        const { pdfPaths, task, reportType, factCriteria, deepScan } =
+          request.body || {};
+        const { jobId } = CorpusPipeline.start({
+          pdfPaths: Array.isArray(pdfPaths) ? pdfPaths : [],
+          task,
+          reportType,
+          factCriteria,
+          deepScan: !!deepScan,
+        });
+        response.status(200).json({ jobId });
+      } catch (e) {
+        response
+          .status(e.statusCode || 400)
+          .json({ error: e.message });
+      }
+    }
+  );
+
+  app.get(
+    "/api/pdf-analysis/corpus/list",
+    [validApiKey],
+    (_req, response) => {
+      response.status(200).json({ jobs: CorpusPipeline.list() });
+    }
+  );
+
+  app.get(
+    "/api/pdf-analysis/corpus/:id",
+    [validApiKey],
+    (request, response) => {
+      const status = CorpusPipeline.getStatus(request.params.id);
+      if (!status)
+        return response.status(404).json({ error: "Job nicht gefunden." });
+      response.status(200).json(status);
+    }
+  );
+
+  app.get(
+    "/api/pdf-analysis/corpus/:id/result",
+    [validApiKey],
+    (request, response) => {
+      const result = CorpusPipeline.getResult(request.params.id);
+      if (!result)
+        return response.status(404).json({ error: "Job nicht gefunden." });
+      response.status(200).json(result);
+    }
+  );
+
+  app.delete(
+    "/api/pdf-analysis/corpus/:id",
+    [validApiKey],
+    (request, response) => {
+      const ok = CorpusPipeline.cancel(request.params.id);
+      response.status(ok ? 200 : 404).json({ cancelled: ok });
     }
   );
 
