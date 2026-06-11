@@ -2,12 +2,13 @@
 /**
  * PdfAnalysisPipeline — autonomer Orchestrator.
  *
- * Der Nutzer gibt nur an: PDF, Auftrag, (optional) Berichtstyp und
- * Fakten-Kriterien. Alles Weitere läuft selbstständig:
- *   1. PDF öffnen, Chunk-Plan erstellen (Seiten + Überlappung)
- *   2. Parallel-Analyse via AgentPool (Wellen, Checkpoints, Resume)
- *   3. Hierarchische Synthese → Best-Practices-Report (Markdown, optional PDF)
- *   4. Selektierte Fakten mit Quellenbezug in den FactStore schreiben
+ * NEU gegenüber Schritt 8:
+ *  - Jobs werden via JobStore auf Disk persistiert (atomar).
+ *  - resumeInterrupted(): beim Serverstart unterbrochene Jobs automatisch
+ *    fortsetzen (Chunk-Checkpoints sorgen dafür, dass bereits analysierte
+ *    Chunks NICHT erneut berechnet werden).
+ *  - Adaptive Parallelität: progress.concurrency zeigt die aktuelle
+ *    AIMD-geregelte Agenten-Anzahl live an.
  */
 const fs = require("fs");
 const path = require("path");
@@ -18,8 +19,9 @@ const { runPool, clearCheckpoint } = require("./agentPool");
 const { analyzeChunk } = require("./analysisAgent");
 const { synthesize } = require("./synthesizer");
 const { FactStore } = require("./factStore");
+const { persistJob, loadAllJobs } = require("./jobStore");
 
-const jobs = new Map(); // in-memory Job-Registry (wie research/-Modul)
+const jobs = new Map();
 
 class PdfAnalysisPipeline {
   static factStore = new FactStore();
@@ -31,9 +33,33 @@ class PdfAnalysisPipeline {
   }
 
   /**
-   * Startet einen Analyse-Job. Gibt sofort { jobId } zurück (asynchron).
-   * @param {Object} params { pdfPath, task, reportType?, factCriteria? }
+   * Beim Serverstart einmal aufrufen: lädt persistierte Jobs und setzt
+   * unterbrochene (pending/running) automatisch fort.
    */
+  static resumeInterrupted() {
+    for (const snapshot of loadAllJobs()) {
+      if (jobs.has(snapshot.id)) continue;
+      const job = { ...snapshot, cancelled: false };
+      jobs.set(job.id, job);
+      if (["pending", "running"].includes(job.status)) {
+        if (!fs.existsSync(job.pdfPath)) {
+          job.status = "failed";
+          job.error = "PDF-Datei nach Neustart nicht mehr vorhanden.";
+          persistJob(job);
+          continue;
+        }
+        console.log(
+          `[pdfAnalysis] Setze unterbrochenen Job fort: ${job.id} (${job.documentName})`
+        );
+        this._run(job).catch((e) => {
+          job.status = "failed";
+          job.error = e.message;
+          persistJob(job);
+        });
+      }
+    }
+  }
+
   static start({ pdfPath, task, reportType = null, factCriteria = null }) {
     if (!pdfPath || !task)
       throw new Error("pdfPath und task sind erforderlich.");
@@ -56,20 +82,29 @@ class PdfAnalysisPipeline {
       status: "pending",
       cancelled: false,
       createdAt: new Date().toISOString(),
-      progress: { phase: "init", chunksDone: 0, chunksTotal: 0, totalPages: 0 },
+      progress: {
+        phase: "init",
+        chunksDone: 0,
+        chunksTotal: 0,
+        totalPages: 0,
+        concurrency: config.AGENT_CONCURRENCY,
+      },
       result: null,
       error: null,
     };
     jobs.set(jobId, job);
+    persistJob(job);
     this._run(job).catch((e) => {
       job.status = "failed";
       job.error = e.message;
+      persistJob(job);
     });
     return { jobId };
   }
 
   static async _run(job) {
     job.status = "running";
+    persistJob(job);
     const reader = new PdfReader(job.pdfPath);
     try {
       // Phase 1 — Dokument öffnen + Chunk-Plan
@@ -86,9 +121,11 @@ class PdfAnalysisPipeline {
       );
       job.progress.totalPages = totalPages;
       job.progress.chunksTotal = chunks.length;
+      persistJob(job);
 
-      // Phase 2 — parallele Multi-Agenten-Analyse
+      // Phase 2 — parallele Multi-Agenten-Analyse (adaptiv geregelt)
       job.progress.phase = "analyzing";
+      let lastPersist = Date.now();
       const chunkResults = await runPool(
         chunks,
         config.AGENT_CONCURRENCY,
@@ -108,15 +145,23 @@ class PdfAnalysisPipeline {
         {
           jobId: job.id,
           isCancelled: () => job.cancelled,
-          onProgress: (done, total) => {
+          onProgress: (done, total, concurrency) => {
             job.progress.chunksDone = done;
             job.progress.chunksTotal = total;
+            job.progress.concurrency = concurrency;
+            // Job-Snapshot gedrosselt persistieren (max. alle 10 s),
+            // die feingranularen Chunk-Checkpoints schreibt der Pool selbst.
+            if (Date.now() - lastPersist > 10_000) {
+              persistJob(job);
+              lastPersist = Date.now();
+            }
           },
         }
       );
 
       // Phase 3 — Synthese / Best-Practices-Report
       job.progress.phase = "synthesizing";
+      persistJob(job);
       const { report, masterSummary } = await synthesize(chunkResults, {
         task: job.task,
         reportType: job.reportType,
@@ -127,7 +172,6 @@ class PdfAnalysisPipeline {
       const reportFile = path.join(config.REPORT_DIR, `${job.id}.md`);
       fs.writeFileSync(reportFile, report);
 
-      // Optional: druckfertiges PDF über das bestehende Reports-Modul (Modul 3)
       let pdfReport = null;
       try {
         const { ReportGenerator } = require("../reports");
@@ -138,7 +182,7 @@ class PdfAnalysisPipeline {
           summary: report,
         });
       } catch {
-        /* Reports-Modul optional — Markdown-Report existiert immer */
+        /* Reports-Modul optional */
       }
 
       // Phase 4 — Fakten mit Quellenbezug speichern
@@ -170,10 +214,11 @@ class PdfAnalysisPipeline {
         totalPages,
         chunks: chunks.length,
         factsStored,
-        chunkErrors: chunkResults.filter((r) => r.error).length,
+        chunkErrors: chunkResults.filter((r) => r && r.error).length,
       };
       job.status = "completed";
       job.progress.phase = "done";
+      persistJob(job);
       clearCheckpoint(job.id);
     } finally {
       await reader.close();
@@ -192,14 +237,17 @@ class PdfAnalysisPipeline {
     if (!job) return null;
     if (job.status !== "completed")
       return { status: job.status, error: job.error };
-    const report = fs.existsSync(job.result.reportFile)
-      ? fs.readFileSync(job.result.reportFile, "utf8")
-      : null;
+    const report =
+      job.result?.reportFile && fs.existsSync(job.result.reportFile)
+        ? fs.readFileSync(job.result.reportFile, "utf8")
+        : null;
     return { status: "completed", ...job.result, report };
   }
 
   static list() {
-    return [...jobs.values()].map((j) => PdfAnalysisPipeline.getStatus(j.id));
+    return [...jobs.values()]
+      .map((j) => PdfAnalysisPipeline.getStatus(j.id))
+      .sort((a, b) => (b.createdAt > a.createdAt ? 1 : -1));
   }
 
   static cancel(jobId) {

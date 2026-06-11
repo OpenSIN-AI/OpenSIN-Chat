@@ -266,6 +266,14 @@ function JobRow({ job, onShowReport, onCancelled }) {
           <span className="text-xs text-theme-text-secondary w-24 text-right">
             {progress.chunksDone}/{progress.chunksTotal} Chunks
           </span>
+          {progress.concurrency != null && (
+            <span
+              className="text-xs text-theme-text-secondary whitespace-nowrap"
+              title="Aktuelle parallele Agenten (AIMD-reguliert)"
+            >
+              · {progress.concurrency} Agenten
+            </span>
+          )}
         </div>
       )}
 

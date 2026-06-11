@@ -135,6 +135,10 @@ embeddedEndpoints(apiRouter);
 // Externally facing browser extension endpoints
 browserExtensionEndpoints(apiRouter);
 
+// Unterbrochene PDF-Analyse-Jobs nach Neustart automatisch fortsetzen
+const { PdfAnalysisPipeline } = require("./utils/pdfAnalysis");
+PdfAnalysisPipeline.resumeInterrupted();
+
 if (process.env.NODE_ENV !== "development") {
   const { MetaGenerator } = require("./utils/boot/MetaGenerator");
   const IndexPage = new MetaGenerator();

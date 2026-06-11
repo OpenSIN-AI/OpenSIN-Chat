@@ -1,16 +1,40 @@
 // SPDX-License-Identifier: MIT
 /**
- * AgentPool — synchronisierte Parallelverarbeitung der Seiten-Chunks.
+ * AgentPool — synchronisierte Parallelverarbeitung mit adaptiver Parallelität.
  *
- * Vorgehen ("Wellen"-Modell für Seiten-Synchronisierung):
- *  - Chunks werden in Seitenreihenfolge in Wellen der Größe CONCURRENCY abgearbeitet.
- *  - Innerhalb einer Welle laufen alle Agenten echt parallel.
- *  - Nach jeder Welle: Ergebnisse in Seitenreihenfolge mergen + Checkpoint schreiben.
- *    => deterministische Reihenfolge, Resume nach Absturz, begrenzter Speicher.
+ * Wellen-Modell (wie zuvor): Chunks in Seitenreihenfolge, Wellen laufen
+ * parallel, nach jeder Welle deterministisches Merge + atomarer Checkpoint.
+ *
+ * NEU — AIMD-Regelung (Additive Increase / Multiplicative Decrease, wie TCP):
+ *  - Rate-Limit-/Überlastfehler in einer Welle => Parallelität halbieren
+ *    (min. 1) und kurze Abkühlphase.
+ *  - N fehlerfreie Wellen in Folge => Parallelität +1 (bis zum Maximum).
+ * => Das System findet selbstständig den maximalen stabilen Durchsatz
+ *    des jeweiligen LLM-Providers, ohne manuelles Tuning.
  */
 const fs = require("fs");
 const path = require("path");
 const { CHECKPOINT_DIR } = require("./config");
+
+const INCREASE_AFTER_WAVES = Number(
+  process.env.PDF_ANALYSIS_AIMD_INCREASE_AFTER || 3
+);
+const COOLDOWN_MS = Number(process.env.PDF_ANALYSIS_AIMD_COOLDOWN_MS || 5000);
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isRateLimitError(message = "") {
+  const msg = String(message).toLowerCase();
+  return (
+    msg.includes("429") ||
+    msg.includes("rate") ||
+    msg.includes("overloaded") ||
+    msg.includes("503") ||
+    msg.includes("capacity")
+  );
+}
 
 function checkpointPath(jobId) {
   return path.join(CHECKPOINT_DIR, `${jobId}.json`);
@@ -40,20 +64,19 @@ function clearCheckpoint(jobId) {
 }
 
 /**
- * Führt workerFn für alle Chunks aus.
+ * Führt workerFn für alle Chunks aus — mit adaptiver Parallelität.
  * @param {Array} chunks geordnete Chunk-Definitionen
- * @param {number} concurrency Anzahl paralleler Agenten
+ * @param {number} maxConcurrency obere Grenze paralleler Agenten
  * @param {Function} workerFn async (chunk) => result
- * @param {Object} opts { jobId, onProgress(done,total), isCancelled() }
- * @returns geordnete Ergebnisliste (nach chunkIndex)
+ * @param {Object} opts { jobId, onProgress(done,total,concurrency), isCancelled() }
  */
-async function runPool(chunks, concurrency, workerFn, opts = {}) {
+async function runPool(chunks, maxConcurrency, workerFn, opts = {}) {
   const { jobId, onProgress, isCancelled } = opts;
   const checkpoint = jobId ? loadCheckpoint(jobId) : { completed: {} };
   const results = new Array(chunks.length);
   let done = 0;
 
-  // Bereits abgeschlossene Chunks aus Checkpoint übernehmen (Resume)
+  // Resume: bereits abgeschlossene Chunks übernehmen
   const pending = [];
   for (const chunk of chunks) {
     const saved = checkpoint.completed[chunk.index];
@@ -64,18 +87,23 @@ async function runPool(chunks, concurrency, workerFn, opts = {}) {
       pending.push(chunk);
     }
   }
-  if (onProgress) onProgress(done, chunks.length);
 
-  for (let i = 0; i < pending.length; i += concurrency) {
+  // AIMD-Zustand
+  let concurrency = Math.max(1, maxConcurrency);
+  let cleanWaveStreak = 0;
+
+  if (onProgress) onProgress(done, chunks.length, concurrency);
+
+  let cursor = 0;
+  while (cursor < pending.length) {
     if (isCancelled && isCancelled()) throw new Error("Job abgebrochen.");
-    const wave = pending.slice(i, i + concurrency);
+    const wave = pending.slice(cursor, cursor + concurrency);
 
     const waveResults = await Promise.all(
       wave.map(async (chunk) => {
         try {
           return await workerFn(chunk);
         } catch (e) {
-          // Ein fehlgeschlagener Chunk bricht den Gesamt-Job nicht ab
           return {
             chunkIndex: chunk.index,
             pageStart: chunk.pageStart,
@@ -89,14 +117,49 @@ async function runPool(chunks, concurrency, workerFn, opts = {}) {
       })
     );
 
-    // Synchronisationspunkt: Ergebnisse in Seitenreihenfolge einsortieren
+    // Synchronisationspunkt: in Seitenreihenfolge mergen + Checkpoint
+    const rateLimited = waveResults.some(
+      (r) => r.error && isRateLimitError(r.error)
+    );
+    const failedIdx = new Set();
     for (const r of waveResults) {
+      // Rate-Limit-Fehler NICHT als final speichern — Chunk kommt zurück
+      // in die Warteschlange und wird mit reduzierter Parallelität wiederholt.
+      if (r.error && isRateLimitError(r.error)) {
+        failedIdx.add(r.chunkIndex);
+        continue;
+      }
       results[r.chunkIndex] = r;
       checkpoint.completed[r.chunkIndex] = r;
       done++;
     }
     if (jobId) saveCheckpoint(jobId, checkpoint);
-    if (onProgress) onProgress(done, chunks.length);
+
+    if (rateLimited) {
+      // Fehlgeschlagene Chunks aus dieser Welle wieder einreihen
+      // (direkt nach dem aktuellen Cursor, damit sie als nächstes drankommen)
+      const successfulInWave = wave.filter(
+        (c) => !failedIdx.has(c.index)
+      );
+      cursor += successfulInWave.length;
+      const retry = wave.filter((c) => failedIdx.has(c.index));
+      pending.splice(cursor, 0, ...retry);
+
+      // Multiplicative Decrease + Abkühlphase
+      concurrency = Math.max(1, Math.floor(concurrency / 2));
+      cleanWaveStreak = 0;
+      await sleep(COOLDOWN_MS);
+    } else {
+      cursor += wave.length;
+      cleanWaveStreak++;
+      // Additive Increase nach N sauberen Wellen
+      if (cleanWaveStreak >= INCREASE_AFTER_WAVES && concurrency < maxConcurrency) {
+        concurrency++;
+        cleanWaveStreak = 0;
+      }
+    }
+
+    if (onProgress) onProgress(done, chunks.length, concurrency);
   }
 
   return results;
