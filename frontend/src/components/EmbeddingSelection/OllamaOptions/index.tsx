@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import PreLoader from "@/components/Preloader";
 import { OLLAMA_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
@@ -8,6 +9,7 @@ import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDis
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function OllamaEmbeddingOptions({ settings }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -52,21 +54,21 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
             className="flex gap-x-1 items-center mb-3"
           >
             <label className="text-white text-sm font-semibold block">
-              Max embedding chunk length
+              {t("ollamaEmbedding.maxChunkLengthLabel")}
             </label>
             <Info
               size={16}
               className="text-theme-text-secondary cursor-pointer"
             />
             <Tooltip id="max-embedding-chunk-length-tooltip">
-              Maximum length of text chunks, in characters, for embedding.
+              {t("ollamaEmbedding.maxChunkLengthTooltip")}
             </Tooltip>
           </div>
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="8192"
+            placeholder={t("ollamaEmbedding.maxChunkLengthPlaceholder")}
             min={1}
             value={maxChunkLength}
             onChange={handleMaxChunkLengthChange}
@@ -81,8 +83,8 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
           type="button"
           aria-label={
             showAdvancedControls
-              ? "Hide advanced settings"
-              : "Show advanced settings"
+              ? t("ollamaEmbedding.hideAdvancedAria")
+              : t("ollamaEmbedding.showAdvancedAria")
           }
           onClick={(e) => {
             e.preventDefault();
@@ -90,7 +92,10 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
           }}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} Advanced Settings
+          {showAdvancedControls
+            ? t("ollamaEmbedding.hideAdvanced")
+            : t("ollamaEmbedding.showAdvanced")}{" "}
+          {t("ollamaEmbedding.advancedSettings")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -104,7 +109,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
               <label className="text-white text-sm font-semibold">
-                Ollama Base URL
+                {t("ollamaEmbedding.baseUrlLabel")}
               </label>
               {loading ? (
                 <PreLoader size="6" />
@@ -113,11 +118,11 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
                   {!basePathValue.value && (
                     <button
                       type="button"
-                      aria-label="Auto-detect Ollama base URL"
+                      aria-label={t("ollamaEmbedding.autoDetectAria")}
                       onClick={handleAutoDetectClick}
                       className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("ollamaEmbedding.autoDetect")}
                     </button>
                   )}
                 </>
@@ -127,7 +132,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               type="url"
               name="EmbeddingBasePath"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="http://127.0.0.1:11434"
+              placeholder={t("ollamaEmbedding.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
               autoComplete="off"
@@ -136,7 +141,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               onBlur={basePath.onBlur}
             />
             <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-              Enter the URL where Ollama is running.
+              {t("ollamaEmbedding.baseUrlHelp")}
             </p>
           </div>
           <div className="flex flex-col w-60">
@@ -146,22 +151,21 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               className="flex gap-x-1 items-center mb-3"
             >
               <label className="text-white text-sm font-semibold block">
-                Embedding batch size
+                {t("ollamaEmbedding.batchSizeLabel")}
               </label>
               <Info
                 size={16}
                 className="text-theme-text-secondary cursor-pointer"
               />
               <Tooltip id="ollama-batch-size-tooltip">
-                Number of text chunks to embed in parallel. Higher values
-                improve speed but use more memory. Default is 1.
+                {t("ollamaEmbedding.batchSizeTooltip")}
               </Tooltip>
             </div>
             <input
               type="number"
               name="OllamaEmbeddingBatchSize"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="1"
+              placeholder={t("ollamaEmbedding.batchSizePlaceholder")}
               min={1}
               value={batchSize}
               onChange={handleBatchSizeChange}
@@ -170,19 +174,18 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               autoComplete="off"
             />
             <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-              Increase this value to process multiple chunks simultaneously for
-              faster embedding.
+              {t("ollamaEmbedding.batchSizeHelp")}
             </p>
           </div>
           <div>
             <label className="text-white font-semibold block mb-3 text-sm">
-              Auth Token (optional)
+              {t("ollamaEmbedding.authTokenLabel")}
             </label>
             <input
               type="password"
               name="OllamaLLMAuthToken"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="Enter your Auth Token"
+              placeholder={t("ollamaEmbedding.authTokenPlaceholder")}
               defaultValue={settings?.OllamaLLMAuthToken ? "*".repeat(20) : ""}
               value={authTokenValue.value}
               onChange={authToken.onChange}
@@ -192,11 +195,13 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
               spellCheck={false}
             />
             <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-              Enter a <code>Bearer</code> Auth Token for interacting with your
-              Ollama server.
+              {t("ollamaEmbedding.authTokenHelp1")}{" "}
+              <code>{t("ollamaEmbedding.authTokenBearer")}</code>{" "}
+              {t("ollamaEmbedding.authTokenHelp1End")}
               <br />
-              Used <b>only</b> if running Ollama behind an authentication
-              server.
+              {t("ollamaEmbedding.authTokenHelp2")}{" "}
+              <b>{t("ollamaEmbedding.authTokenHelp2b")}</b>{" "}
+              {t("ollamaEmbedding.authTokenHelp2End")}
             </p>
           </div>
         </div>
@@ -206,6 +211,7 @@ export default function OllamaEmbeddingOptions({ settings }: any) {
 }
 
 function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading: loading } = useProviderModels(
     basePath ? "ollama" : null,
     null,
@@ -216,7 +222,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
-          Ollama Embedding Model
+          {t("ollamaEmbedding.modelLabel")}
         </label>
         <select
           name="EmbeddingModelPref"
@@ -225,13 +231,12 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
         >
           <option disabled={true} selected={true}>
             {!!basePath
-              ? "--loading available models--"
-              : "Enter Ollama URL first"}
+              ? t("ollamaEmbedding.loadingModels")
+              : t("ollamaEmbedding.enterUrlFirst")}
           </option>
         </select>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Select the Ollama model for embeddings. Models will load after
-          entering a valid Ollama URL.
+          {t("ollamaEmbedding.selectModelHelp")}
         </p>
       </div>
     );
@@ -240,7 +245,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-2">
-        Ollama Embedding Model
+        {t("ollamaEmbedding.modelLabel")}
       </label>
       <select
         name="EmbeddingModelPref"
@@ -248,7 +253,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("ollamaEmbedding.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option
@@ -264,7 +269,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
         )}
       </select>
       <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-        Choose the Ollama model you want to use for generating embeddings.
+        {t("ollamaEmbedding.chooseModelHelp")}
       </p>
     </div>
   );
