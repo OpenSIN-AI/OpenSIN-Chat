@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useCallback, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import PdfAnalysis from "@/models/pdfAnalysis";
 import { API_BASE } from "@/utils/constants";
 
@@ -90,7 +91,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
 
   function updateSource(index, patch) {
     setSources((prev) =>
-      prev.map((s, i) => (i === index ? { ...s, ...patch } : s))
+      prev.map((s, i) => (i === index ? { ...s, ...patch } : s)),
     );
   }
 
@@ -116,7 +117,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
           ? { type: "pdf", path: s.value.trim() }
           : s.type === "text"
             ? { type: "text", text: s.value.trim() }
-            : { type: s.type, url: s.value.trim() }
+            : { type: s.type, url: s.value.trim() },
       );
 
     if (!claims.length && !factIds.length) {
@@ -125,7 +126,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }) {
     }
     if (!builtSources.length && !deepWeb) {
       setError(
-        "Mindestens eine Vergleichsquelle ODER Deep-Web-Recherche aktivieren."
+        "Mindestens eine Vergleichsquelle ODER Deep-Web-Recherche aktivieren.",
       );
       return;
     }
@@ -349,6 +350,7 @@ function CrossCheckRow({ job, onShowReport, onCancelled }) {
 }
 
 function CrossCheckReportModal({ job, onClose }) {
+  const { t } = useTranslation();
   const [result, setResult] = useState(null);
 
   useEffect(() => {
@@ -431,7 +433,7 @@ function CrossCheckReportModal({ job, onClose }) {
             </>
           ) : (
             <p className="text-sm text-red-400">
-              {result.error || "Kein Bericht verfügbar."}
+              {result.error || t("pdfAnalysis.crossCheck.noReport")}
             </p>
           )}
         </div>
