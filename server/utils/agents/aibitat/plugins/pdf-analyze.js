@@ -6,6 +6,7 @@
 const {
   PdfAnalysisPipeline,
 } = require("../../../pdfAnalysis");
+const { CrossCheckPipeline } = require("../../../pdfAnalysis/crossCheck");
 
 const pdfAnalyze = {
   name: "pdf-analyze",
@@ -114,6 +115,80 @@ const pdfAnalyze = {
                   (f.quote ? ` — "${f.quote}"` : "")
               )
               .join("\n");
+          },
+        });
+
+        aibitat.function({
+          super: aibitat,
+          name: "pdf-crosscheck-start",
+          description:
+            "Delegiert Recherche-Agenten zur Kreuz-Verifikation: prüft Behauptungen oder gespeicherte Fakten (factIds) " +
+            "gegen weitere Quellen (PDF-Pfad, URL, YouTube-Video, Roh-Text) und/oder per autonomer Deep-Web-Recherche. " +
+            "Erstellt einen konsolidierten Verifikationsbericht. Gibt eine jobId zurück.",
+          parameters: {
+            type: "object",
+            properties: {
+              claims: {
+                type: "array",
+                items: { type: "string" },
+                description: "Zu prüfende Behauptungen (Freitext).",
+              },
+              factIds: {
+                type: "array",
+                items: { type: "string" },
+                description: "IDs gespeicherter Fakten, die geprüft werden sollen.",
+              },
+              sources: {
+                type: "array",
+                description:
+                  'Vergleichsquellen, z.B. [{"type":"url","url":"https://..."}, {"type":"youtube","url":"https://youtube.com/watch?v=..."}, {"type":"pdf","path":"/.../datei.pdf"}, {"type":"text","text":"..."}]',
+                items: { type: "object" },
+              },
+              deepWeb: {
+                type: "boolean",
+                description:
+                  "true = zusätzlich autonome Web-Recherche pro Behauptung delegieren.",
+              },
+            },
+            required: [],
+          },
+          handler: async function ({
+            claims = [],
+            factIds = [],
+            sources = [],
+            deepWeb = false,
+          }) {
+            try {
+              const { jobId } = CrossCheckPipeline.start(
+                { claims, factIds, sources, deepWeb },
+                PdfAnalysisPipeline.factStore
+              );
+              return `Kreuz-Verifikation gestartet. Job-ID: ${jobId}. Status via pdf-crosscheck-status abrufbar.`;
+            } catch (e) {
+              return `Fehler beim Start: ${e.message}`;
+            }
+          },
+        });
+
+        aibitat.function({
+          super: aibitat,
+          name: "pdf-crosscheck-status",
+          description:
+            "Status/Ergebnis einer Kreuz-Verifikation; bei Abschluss wird der konsolidierte Bericht zurückgegeben.",
+          parameters: {
+            type: "object",
+            properties: {
+              jobId: { type: "string", description: "Die Job-ID." },
+            },
+            required: ["jobId"],
+          },
+          handler: async function ({ jobId }) {
+            const status = CrossCheckPipeline.getStatus(jobId);
+            if (!status) return "Job nicht gefunden.";
+            if (status.status !== "completed")
+              return JSON.stringify(status, null, 2);
+            const result = CrossCheckPipeline.getResult(jobId);
+            return result.report || "Kein Bericht verfügbar.";
           },
         });
       },

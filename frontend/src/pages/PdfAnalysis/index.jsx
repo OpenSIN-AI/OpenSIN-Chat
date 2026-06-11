@@ -8,6 +8,7 @@ const PHASE_LABELS = {
   reading: "Dokument wird gelesen",
   analyzing: "Parallele Agenten-Analyse",
   synthesizing: "Report-Synthese",
+  "verifying-facts": "Fakten werden gegen Quelltext verifiziert",
   "storing-facts": "Fakten werden gespeichert",
   done: "Abgeschlossen",
 };
@@ -434,6 +435,24 @@ function FactsPanel() {
               <div className="flex flex-wrap items-center gap-2 mt-1">
                 <span className="text-xs text-theme-text-secondary">
                   Quelle: {fact.source.documentName}, S. {fact.source.page}
+                  {fact.source.pageCorrected && (
+                    <span
+                      className="ml-1 text-blue-400"
+                      title="Seitenangabe automatisch korrigiert (Zitat lag auf einer Nachbarseite)"
+                    >
+                      · S. korrigiert
+                    </span>
+                  )}
+                  {fact.verified === true && (
+                    <span className="ml-1 text-green-400">
+                      · Zitat verifiziert
+                    </span>
+                  )}
+                  {fact.verified === false && (
+                    <span className="ml-1 text-yellow-400">
+                      · nicht verifiziert
+                    </span>
+                  )}
                 </span>
                 {fact.tags?.map((tag) => (
                   <span

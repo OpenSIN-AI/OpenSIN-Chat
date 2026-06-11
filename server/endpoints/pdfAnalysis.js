@@ -11,6 +11,7 @@ const {
   validatedRequest,
 } = require("../utils/middleware/validatedRequest");
 const { PdfAnalysisPipeline } = require("../utils/pdfAnalysis");
+const { CrossCheckPipeline } = require("../utils/pdfAnalysis/crossCheck");
 const config = require("../utils/pdfAnalysis/config");
 
 const UPLOAD_DIR = path.join(config.STORAGE_DIR, "uploads");
@@ -79,6 +80,70 @@ function pdfAnalysisEndpoints(app) {
   app.get("/pdf-analysis/list", [validatedRequest], (_request, response) => {
     response.status(200).json({ jobs: PdfAnalysisPipeline.list() });
   });
+
+  // ---- Cross-Check (Kreuz-Verifikation) — vor /:id registriert! ----
+  app.post(
+    "/pdf-analysis/crosscheck",
+    [validatedRequest],
+    (request, response) => {
+      try {
+        const { claims, factIds, sources, deepWeb } = request.body || {};
+        const { jobId } = CrossCheckPipeline.start(
+          {
+            claims: Array.isArray(claims) ? claims : [],
+            factIds: Array.isArray(factIds) ? factIds : [],
+            sources: Array.isArray(sources) ? sources : [],
+            deepWeb: !!deepWeb,
+          },
+          PdfAnalysisPipeline.factStore
+        );
+        response.status(200).json({ jobId });
+      } catch (e) {
+        response
+          .status(e.statusCode || 400)
+          .json({ error: e.message });
+      }
+    }
+  );
+
+  app.get(
+    "/pdf-analysis/crosscheck/list",
+    [validatedRequest],
+    (_req, response) => {
+      response.status(200).json({ jobs: CrossCheckPipeline.list() });
+    }
+  );
+
+  app.get(
+    "/pdf-analysis/crosscheck/:id",
+    [validatedRequest],
+    (request, response) => {
+      const status = CrossCheckPipeline.getStatus(request.params.id);
+      if (!status)
+        return response.status(404).json({ error: "Job nicht gefunden." });
+      response.status(200).json(status);
+    }
+  );
+
+  app.get(
+    "/pdf-analysis/crosscheck/:id/result",
+    [validatedRequest],
+    (request, response) => {
+      const result = CrossCheckPipeline.getResult(request.params.id);
+      if (!result)
+        return response.status(404).json({ error: "Job nicht gefunden." });
+      response.status(200).json(result);
+    }
+  );
+
+  app.delete(
+    "/pdf-analysis/crosscheck/:id",
+    [validatedRequest],
+    (request, response) => {
+      const ok = CrossCheckPipeline.cancel(request.params.id);
+      response.status(ok ? 200 : 404).json({ cancelled: ok });
+    }
+  );
 
   app.get("/pdf-analysis/facts", [validatedRequest], (request, response) => {
     const { q, document, tag, page, limit } = request.query || {};

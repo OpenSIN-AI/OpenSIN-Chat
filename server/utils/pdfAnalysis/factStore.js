@@ -65,10 +65,12 @@ class FactStore {
         quote: fact.quote || "",
         tags: fact.tags || [],
         confidence: fact.confidence ?? null,
+        verified: fact.verified ?? null,
         source: {
           documentName: fact.source.documentName,
           documentPath: fact.source.documentPath || null,
           page: fact.source.page,
+          pageCorrected: fact.source.pageCorrected || false,
           jobId: fact.source.jobId || null,
         },
         createdAt: new Date().toISOString(),

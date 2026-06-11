@@ -20,6 +20,8 @@ const { analyzeChunk } = require("./analysisAgent");
 const { synthesize } = require("./synthesizer");
 const { FactStore } = require("./factStore");
 const { persistJob, loadAllJobs } = require("./jobStore");
+const { validatePdfPath } = require("./security");
+const { verifyFacts } = require("./factVerifier");
 
 const jobs = new Map();
 
@@ -63,8 +65,8 @@ class PdfAnalysisPipeline {
   static start({ pdfPath, task, reportType = null, factCriteria = null }) {
     if (!pdfPath || !task)
       throw new Error("pdfPath und task sind erforderlich.");
-    if (!fs.existsSync(pdfPath))
-      throw new Error(`PDF nicht gefunden: ${pdfPath}`);
+    // Sicherheits-Härtung: realpath + Whitelist (uploads, documents, ENV)
+    pdfPath = validatePdfPath(pdfPath);
     if (this.activeCount() >= config.MAX_ACTIVE_JOBS)
       throw Object.assign(
         new Error("Maximale Anzahl paralleler Analyse-Jobs erreicht."),
@@ -185,8 +187,9 @@ class PdfAnalysisPipeline {
         /* Reports-Modul optional */
       }
 
-      // Phase 4 — Fakten mit Quellenbezug speichern
-      job.progress.phase = "storing-facts";
+      // Phase 4 — Fakten deterministisch verifizieren + speichern
+      job.progress.phase = "verifying-facts";
+      persistJob(job);
       const facts = [];
       for (const r of chunkResults) {
         for (const f of r.facts || []) {
@@ -205,7 +208,11 @@ class PdfAnalysisPipeline {
           });
         }
       }
-      const factsStored = this.factStore.addFacts(facts);
+      const verifiedFacts = await verifyFacts(facts, reader);
+
+      job.progress.phase = "storing-facts";
+      persistJob(job);
+      const factsStored = this.factStore.addFacts(verifiedFacts);
 
       job.result = {
         reportFile,
@@ -214,6 +221,8 @@ class PdfAnalysisPipeline {
         totalPages,
         chunks: chunks.length,
         factsStored,
+        factsVerified: verifiedFacts.filter((f) => f.verified).length,
+        factsUnverified: verifiedFacts.filter((f) => !f.verified).length,
         chunkErrors: chunkResults.filter((r) => r && r.error).length,
       };
       job.status = "completed";
