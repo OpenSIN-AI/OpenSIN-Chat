@@ -8,6 +8,8 @@ import pluginPrettier from "eslint-plugin-prettier"
 import configPrettier from "eslint-config-prettier"
 import unusedImports from "eslint-plugin-unused-imports"
 import tseslint from "typescript-eslint"
+import pluginI18nextModule from "eslint-plugin-i18next"
+const pluginI18next = pluginI18nextModule.default || pluginI18nextModule
 
 // Enable the full jsx-a11y recommended set but as warnings, so it surfaces
 // accessibility issues in CI without breaking the build on the existing
@@ -46,7 +48,8 @@ export default [
       "react-hooks": pluginReactHooks,
       "jsx-a11y": pluginJsxA11y,
       "unused-imports": unusedImports,
-      prettier: pluginPrettier
+      prettier: pluginPrettier,
+      i18next: pluginI18next
     },
     settings: {
       react: { version: "detect" }
@@ -116,7 +119,39 @@ export default [
           selector: "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
           message: "Inline styles are prohibited. Use Tailwind utilities instead. See docs/INLINE-STYLES-AUDIT.md for runtime exceptions (Type D)."
         }
+      ],
+      // i18n: forbid hardcoded user-facing strings in JSX — every visible string
+      // must go through t(). Set to "warn" so the existing backlog surfaces in CI
+      // without breaking the build. Tighten to "error" once the backlog is cleared.
+      // Prevents regressions of the v0.6.0/v0.6.1 hardcoded-German/English pattern.
+      "i18next/no-literal-string": [
+        "warn",
+        {
+          mode: "jsx-only",
+          "jsx-attributes": {
+            include: ["alt", "title", "placeholder", "aria-label", "label"]
+          },
+          words: {
+            // Brand names, technical tokens, and pure punctuation are fine.
+            exclude: [
+              "OpenSIN",
+              "PDF", "DOC", "XLS", "CSV", "IMG", "SVG", "PPT",
+              "https://api.openai.com",
+              "sk-...",
+              "dall-e-3",
+              "·", "\\*", "-", "/", ":", "%"
+            ]
+          }
+        }
       ]
+    }
+  },
+
+  // Tests may use literal strings freely (assertions on visible text).
+  {
+    files: ["src/**/*.{test,spec}.{js,jsx,ts,tsx}", "src/**/__tests__/**"],
+    rules: {
+      "i18next/no-literal-string": "off"
     }
   }
 ]

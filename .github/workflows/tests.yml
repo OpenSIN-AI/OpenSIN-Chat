@@ -27,6 +27,26 @@ jobs:
         working-directory: frontend
         run: yarn test
 
+  frontend-lint:
+    name: Frontend (ESLint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile --network-timeout 100000
+
+      - name: Run ESLint
+        working-directory: frontend
+        run: yarn lint:check
+
   server:
     name: Server (Jest)
     runs-on: ubuntu-latest
