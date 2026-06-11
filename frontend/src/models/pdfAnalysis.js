@@ -80,6 +80,50 @@ const PdfAnalysis = {
       .then((res) => res.json())
       .catch((e) => ({ error: e.message }));
   },
+
+  startCrossCheck: async function ({
+    claims = [],
+    factIds = [],
+    sources = [],
+    deepWeb = false,
+  }) {
+    return await fetch(`${API_BASE}/pdf-analysis/crosscheck`, {
+      method: "POST",
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({ claims, factIds, sources, deepWeb }),
+    })
+      .then((res) => res.json())
+      .catch((e) => ({ error: e.message }));
+  },
+
+  listCrossChecks: async function () {
+    return await fetch(`${API_BASE}/pdf-analysis/crosscheck/list`, {
+      headers: baseHeaders(),
+    })
+      .then((res) => res.json())
+      .then((res) => res.jobs || [])
+      .catch(() => []);
+  },
+
+  crossCheckResult: async function (jobId) {
+    return await fetch(
+      `${API_BASE}/pdf-analysis/crosscheck/${jobId}/result`,
+      {
+        headers: baseHeaders(),
+      }
+    )
+      .then((res) => res.json())
+      .catch((e) => ({ error: e.message }));
+  },
+
+  cancelCrossCheck: async function (jobId) {
+    return await fetch(`${API_BASE}/pdf-analysis/crosscheck/${jobId}`, {
+      method: "DELETE",
+      headers: baseHeaders(),
+    })
+      .then((res) => res.json())
+      .catch((e) => ({ error: e.message }));
+  },
 };
 
 export default PdfAnalysis;

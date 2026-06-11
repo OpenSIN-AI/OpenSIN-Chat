@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import Sidebar from "@/components/Sidebar";
 import PdfAnalysis from "@/models/pdfAnalysis";
+import CrossCheckPanel from "./CrossCheckPanel";
 
 const PHASE_LABELS = {
   init: "Initialisierung",
@@ -14,7 +15,8 @@ const PHASE_LABELS = {
 };
 
 export default function PdfAnalysisPage() {
-  const [tab, setTab] = useState("jobs"); // "jobs" | "facts"
+  const [tab, setTab] = useState("jobs"); // "jobs" | "facts" | "crosscheck"
+  const [crossCheckFactIds, setCrossCheckFactIds] = useState([]);
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
@@ -36,9 +38,26 @@ export default function PdfAnalysisPage() {
             <TabButton active={tab === "facts"} onClick={() => setTab("facts")}>
               Fakten-Speicher
             </TabButton>
+            <TabButton
+              active={tab === "crosscheck"}
+              onClick={() => setTab("crosscheck")}
+            >
+              Kreuz-Verifikation
+            </TabButton>
           </nav>
         </header>
-        {tab === "jobs" ? <JobsPanel /> : <FactsPanel />}
+        {tab === "jobs" ? (
+          <JobsPanel />
+        ) : tab === "facts" ? (
+          <FactsPanel
+            onCrossCheck={(factId) => {
+              setCrossCheckFactIds([factId]);
+              setTab("crosscheck");
+            }}
+          />
+        ) : (
+          <CrossCheckPanel prefillFactIds={crossCheckFactIds} />
+        )}
       </main>
     </div>
   );
@@ -363,7 +382,7 @@ function ReportModal({ job, onClose }) {
 
 /* ---------------- Fakten-Speicher: Suche mit Quellenbezug ---------------- */
 
-function FactsPanel() {
+function FactsPanel({ onCrossCheck }) {
   const [q, setQ] = useState("");
   const [documentFilter, setDocumentFilter] = useState("");
   const [facts, setFacts] = useState([]);
@@ -462,13 +481,40 @@ function FactsPanel() {
                     {tag}
                   </span>
                 ))}
+                {fact.crossCheck && (
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-md border ${
+                      fact.crossCheck.webOverall === "supports"
+                        ? "text-green-400 border-green-400/40"
+                        : fact.crossCheck.webOverall === "contradicts"
+                          ? "text-red-400 border-red-400/40"
+                          : "text-yellow-400 border-yellow-400/40"
+                    }`}
+                    title={`Geprüft am ${new Date(fact.crossCheck.checkedAt).toLocaleString("de-DE")}`}
+                  >
+                    Kreuz-geprüft:{" "}
+                    {fact.crossCheck.webOverall === "supports"
+                      ? "extern bestätigt"
+                      : fact.crossCheck.webOverall === "contradicts"
+                        ? "Widerspruch gefunden"
+                        : "unklar"}
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={() => onCrossCheck?.(fact.id)}
+                  className="ml-auto text-xs px-2 py-0.5 rounded-md text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
+                  aria-label={`Gegen Quellen prüfen: ${fact.detail.slice(0, 40)}`}
+                >
+                  Gegen Quellen prüfen
+                </button>
                 <button
                   type="button"
                   onClick={async () => {
                     await PdfAnalysis.deleteFact(fact.id);
                     search();
                   }}
-                  className="ml-auto text-xs text-red-400 hover:opacity-80"
+                  className="text-xs text-red-400 hover:opacity-80"
                   aria-label={`Fakt löschen: ${fact.detail.slice(0, 40)}`}
                 >
                   Löschen
