@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 const createFilesLib = require("./create-files/lib.js");
 
+const FETCH_TIMEOUT_MS = 60_000;
+
 module.exports.imageGeneration = {
   name: "image-generation",
   plugin: function () {
@@ -66,7 +68,7 @@ module.exports.imageGeneration = {
                 `Using the image-generation tool with prompt: "${prompt.slice(0, 80)}..."`,
               );
 
-              const hasExtension = /\.(png|jpg|jpeg|webp)$/i.test(filename);
+              const hasExtension = /(\.png|\.jpg|\.jpeg|\.webp)$/i.test(filename);
               if (!hasExtension) filename = `${filename}.png`;
 
               if (this.super.requestToolApproval) {
@@ -109,28 +111,45 @@ module.exports.imageGeneration = {
               }
 
               const url = `${basePath}/v1/images/generations`;
+              const headers = { "Content-Type": "application/json" };
+              if (apiKey) headers["Authorization"] = `Bearer ${apiKey}`;
 
-              const body = {
+              const baseBody = {
                 prompt,
                 n: 1,
-                response_format: "b64_json",
                 ...(model ? { model } : {}),
                 ...(size ? { size } : {}),
               };
 
-              const headers = {
-                "Content-Type": "application/json",
+              const requestGeneration = async (includeResponseFormat) => {
+                return await fetch(url, {
+                  method: "POST",
+                  headers,
+                  body: JSON.stringify(
+                    includeResponseFormat
+                      ? { ...baseBody, response_format: "b64_json" }
+                      : baseBody,
+                  ),
+                  signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+                });
               };
-              if (apiKey) {
-                headers["Authorization"] = `Bearer ${apiKey}`;
-              }
 
-              const response = await fetch(url, {
-                method: "POST",
-                headers,
-                body: JSON.stringify(body),
-                signal: AbortSignal.timeout(60_000),
-              });
+              let response = await requestGeneration(true);
+
+              if (response.status === 400) {
+                const errorText = await response.text().catch(() => "");
+                if (/response_format/i.test(errorText)) {
+                  this.super.handlerProps.log(
+                    "image-generation: provider rejected response_format, retrying without it",
+                  );
+                  response = await requestGeneration(false);
+                } else {
+                  this.super.handlerProps.log(
+                    `image-generation API error: 400 ${errorText}`,
+                  );
+                  return `Image generation API returned HTTP 400: ${errorText.slice(0, 300)}`;
+                }
+              }
 
               if (!response.ok) {
                 const errorText = await response.text().catch(() => "");
@@ -143,6 +162,13 @@ module.exports.imageGeneration = {
               const data = await response.json();
               const b64 = data?.data?.[0]?.b64_json;
               if (!b64) {
+                if (data?.data?.[0]?.url) {
+                  return (
+                    "The configured provider only returns image URLs instead of base64 data, " +
+                    "which is not supported for security reasons. Use a provider/model that " +
+                    "supports base64 responses."
+                  );
+                }
                 return "Image generation succeeded but no base64 image data was returned. The model may have returned an unexpected response format.";
               }
 
@@ -166,15 +192,11 @@ module.exports.imageGeneration = {
                 fileSize: savedFile.fileSize,
               });
 
-              createFilesLib.registerOutput(
-                this.super,
-                "ImageFileDownload",
-                {
-                  filename: savedFile.displayFilename,
-                  storageFilename: savedFile.filename,
-                  fileSize: savedFile.fileSize,
-                },
-              );
+              createFilesLib.registerOutput(this.super, "ImageFileDownload", {
+                filename: savedFile.displayFilename,
+                storageFilename: savedFile.filename,
+                fileSize: savedFile.fileSize,
+              });
 
               const bufferSizeKB = (imageBuffer.length / 1024).toFixed(2);
               this.super.introspect(
@@ -183,9 +205,7 @@ module.exports.imageGeneration = {
 
               return `Successfully generated image "${displayFilename}" (${bufferSizeKB}KB). The image is ready for download.`;
             } catch (e) {
-              this.super.handlerProps.log(
-                `image-generation error: ${e.message}`,
-              );
+              this.super.handlerProps.log(`image-generation error: ${e.message}`);
               this.super.introspect(`Error: ${e.message}`);
               return `Error generating image: ${e.message}`;
             }

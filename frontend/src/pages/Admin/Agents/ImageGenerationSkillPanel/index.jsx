@@ -1,5 +1,4 @@
-// SPDX-License-Identifier: MIT
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
 import useSystemSettings from "@/hooks/useSystemSettings";
@@ -7,7 +6,7 @@ import useSystemSettings from "@/hooks/useSystemSettings";
 const IMAGE_MODELS = [
   "dall-e-3",
   "dall-e-2",
-  "stable-diffusion-xl-1024-v1-0",
+  "gpt-image-1",
   "stable-image-ultra",
   "black-forest-labs/flux.1-schnell",
   "black-forest-labs/flux-pro",
@@ -16,8 +15,17 @@ const IMAGE_MODELS = [
 const INPUT_CLASSES =
   "bg-zinc-900 light:bg-white text-white light:text-zinc-900 border border-zinc-700 light:border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500";
 
+function isValidBaseUrl(value) {
+  if (!value) return true;
+  try {
+    const url = new URL(value);
+    return /^https?:$/i.test(url.protocol);
+  } catch {
+    return false;
+  }
+}
+
 export default function ImageGenerationSkillPanel({
-  title,
   skill,
   toggleSkill,
   enabled = false,
@@ -29,6 +37,8 @@ export default function ImageGenerationSkillPanel({
   const { t } = useTranslation();
   const { settings: fetchedSettings } = useSystemSettings();
   const settings = propSettings || fetchedSettings;
+  const [clearKey, setClearKey] = useState(false);
+  const [urlError, setUrlError] = useState(false);
 
   const basePath =
     settings?.image_generation_base_path ||
@@ -36,6 +46,7 @@ export default function ImageGenerationSkillPanel({
     "";
   const currentModel =
     settings?.image_generation_model || settings?.ImageGenerationModel || "";
+  const title = t("agent.skill.image_generation.title");
 
   return (
     <div className="p-2">
@@ -78,30 +89,59 @@ export default function ImageGenerationSkillPanel({
                 type="url"
                 defaultValue={basePath}
                 placeholder="https://api.openai.com"
-                className={INPUT_CLASSES}
+                aria-invalid={urlError}
+                onBlur={(e) => setUrlError(!isValidBaseUrl(e.target.value))}
+                onChange={(e) => {
+                  if (urlError && isValidBaseUrl(e.target.value))
+                    setUrlError(false);
+                }}
+                className={`${INPUT_CLASSES} ${urlError ? "border-red-500 focus:ring-red-500" : ""}`}
               />
-              <p className="text-theme-text-secondary text-xs">
-                {t("agent.skill.image_generation.base_url.help")}{" "}
-                <code className="bg-zinc-800 px-1 rounded">
-                  https://api.openai.com
-                </code>
-              </p>
+              {urlError ? (
+                <p className="text-red-400 text-xs" role="alert">
+                  {t("agent.skill.image_generation.base_url.invalid")}
+                </p>
+              ) : (
+                <p className="text-theme-text-secondary text-xs">
+                  {t("agent.skill.image_generation.base_url.help")}{" "}
+                  <code className="bg-zinc-800 px-1 rounded">
+                    https://api.openai.com
+                  </code>
+                </p>
+              )}
             </div>
 
             <div className="flex flex-col gap-y-1.5">
               <label className="text-theme-text-primary text-sm font-medium">
                 {t("agent.skill.image_generation.api_key.label")}
               </label>
-              <input
-                name="system::image_generation_api_key"
-                type="password"
-                placeholder="sk-..."
-                autoComplete="new-password"
-                className={INPUT_CLASSES}
-              />
+              {clearKey ? (
+                <input
+                  type="hidden"
+                  name="system::image_generation_api_key"
+                  value="-CLEAR-"
+                />
+              ) : (
+                <input
+                  name="system::image_generation_api_key"
+                  type="password"
+                  placeholder="sk-..."
+                  autoComplete="new-password"
+                  className={INPUT_CLASSES}
+                />
+              )}
               <p className="text-theme-text-secondary text-xs">
                 {t("agent.skill.image_generation.api_key.help")}
               </p>
+              <label className="flex items-center gap-x-2 text-theme-text-secondary text-xs cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={clearKey}
+                  onChange={(e) => setClearKey(e.target.checked)}
+                  className="rounded border-zinc-600"
+                />
+                {t("agent.skill.image_generation.api_key.clear")}
+              </label>
             </div>
 
             <div className="flex flex-col gap-y-1.5">

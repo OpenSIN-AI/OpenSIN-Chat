@@ -446,6 +446,7 @@ const TRANSLATIONS = {
         api_key: {
           label: "API Key",
           help: "Leave empty to keep the existing key. The stored key is never shown in the browser.",
+          clear: "Remove the stored API key on save",
         },
         model: {
           label: "Model",

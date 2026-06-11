@@ -501,6 +501,9 @@ const SystemSettings = {
     },
     image_generation_api_key: async (update) => {
       if (!update || typeof update !== "string") return undefined;
+      if (/^-CLEAR-$/.test(update)) {
+        return null;
+      }
       if (/^\*+$/.test(update)) {
         const existing = await SystemSettings.get({
           label: "image_generation_api_key",
@@ -510,7 +513,7 @@ const SystemSettings = {
       return String(update).trim();
     },
     image_generation_model: (update) => {
-      if (!update || typeof update !== "string") return null;
+      if (!update || typeof update !== "string") return undefined;
       return String(update).trim();
     },
   },

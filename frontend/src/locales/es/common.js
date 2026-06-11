@@ -448,6 +448,7 @@ const TRANSLATIONS = {
         api_key: {
           label: "Clave de API",
           help: "Déjelo vacío para conservar la clave existente. La clave almacenada nunca se muestra en el navegador.",
+          clear: "Eliminar la clave API guardada al guardar",
         },
         model: {
           label: "Modelo",

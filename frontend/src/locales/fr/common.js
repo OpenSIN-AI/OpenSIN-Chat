@@ -434,6 +434,7 @@ const TRANSLATIONS = {
         api_key: {
           label: "Clé API",
           help: "Laissez vide pour conserver la clé existante. La clé stockée n'est jamais affichée dans le navigateur.",
+          clear: "Supprimer la clé API enregistrée lors de l'enregistrement",
         },
         model: {
           label: "Modèle",

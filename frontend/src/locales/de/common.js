@@ -442,6 +442,7 @@ const TRANSLATIONS = {
         api_key: {
           label: "API-Schlüssel",
           help: "Leer lassen, um den bestehenden Schlüssel zu behalten. Der gespeicherte Schlüssel wird im Browser nie angezeigt.",
+          clear: "Gespeicherten API-Schlüssel beim Speichern entfernen",
         },
         model: {
           label: "Modell",
