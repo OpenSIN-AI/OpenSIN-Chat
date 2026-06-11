@@ -139,6 +139,13 @@ browserExtensionEndpoints(apiRouter);
 const { PdfAnalysisPipeline } = require("./utils/pdfAnalysis");
 PdfAnalysisPipeline.resumeInterrupted();
 
+// Persistierte Cross-Check-Jobs nach Neustart wiederherstellen
+const { CrossCheckPipeline } = require("./utils/pdfAnalysis/crossCheck");
+CrossCheckPipeline.restorePersisted(PdfAnalysisPipeline.factStore);
+
+// Speicher-Hygiene starten (Retention/Cleanup beim Boot + alle 6h)
+require("./utils/pdfAnalysis/retention").startRetentionSchedule();
+
 // OCR-Worker beim Prozess-Ende sauber terminieren
 const { shutdownOcr } = require("./utils/pdfAnalysis/ocr");
 process.on("beforeExit", () => {

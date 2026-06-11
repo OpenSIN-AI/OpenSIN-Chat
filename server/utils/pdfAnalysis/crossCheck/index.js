@@ -23,10 +23,54 @@ const XCHECK_CONCURRENCY = Number(
   process.env.PDF_ANALYSIS_XCHECK_CONCURRENCY || 4
 );
 const XCHECK_REPORT_DIR = path.join(config.REPORT_DIR, "crosscheck");
+const XCHECK_JOBS_DIR = path.join(config.STORAGE_DIR, "jobs-crosscheck");
 
 const REPORT_SYSTEM = `Du bist ein Senior-Verifikationsanalyst. Erstelle aus Kreuz-Verifikations-Ergebnissen einen professionellen Bericht.
 Struktur: # Titel, ## Executive Summary, ## Verifikationsmatrix (Behauptung x Quelle x Urteil), ## Detailbefunde je Behauptung (mit Beleg-Zitaten und URLs), ## Widersprüche & offene Punkte, ## Methodik.
 Jedes Urteil MUSS mit Quelle (URL/Dokument) und Beleg-Zitat ausgewiesen werden. Sprache: Deutsch. Format: Markdown. Erfinde nichts.`;
+
+// ---- Persistenz (analog zu JobStore der Analyse-Jobs) ----
+
+function persistXJob(job) {
+  fs.mkdirSync(XCHECK_JOBS_DIR, { recursive: true });
+  const snapshot = {
+    id: job.id,
+    status: job.status,
+    createdAt: job.createdAt,
+    claims: job.claims,
+    sources: job.sources,
+    deepWeb: job.deepWeb,
+    progress: job.progress,
+    result: job.result
+      ? {
+          reportFile: job.result.reportFile,
+          factsUpdated: job.result.factsUpdated,
+          perClaim: job.result.perClaim,
+        }
+      : null,
+    error: job.error,
+  };
+  const file = path.join(XCHECK_JOBS_DIR, `${job.id}.json`);
+  const tmp = `${file}.tmp`;
+  fs.writeFileSync(tmp, JSON.stringify(snapshot));
+  fs.renameSync(tmp, file); // atomar
+}
+
+function loadAllXJobs() {
+  if (!fs.existsSync(XCHECK_JOBS_DIR)) return [];
+  const out = [];
+  for (const entry of fs.readdirSync(XCHECK_JOBS_DIR)) {
+    if (!entry.endsWith(".json")) continue;
+    try {
+      out.push(
+        JSON.parse(fs.readFileSync(path.join(XCHECK_JOBS_DIR, entry), "utf8"))
+      );
+    } catch {
+      /* korrupte Datei überspringen */
+    }
+  }
+  return out;
+}
 
 const jobs = new Map();
 
@@ -70,9 +114,11 @@ class CrossCheckPipeline {
       error: null,
     };
     jobs.set(jobId, job);
+    persistXJob(job);
     this._run(job, factStore).catch((e) => {
       job.status = "failed";
       job.error = e.message;
+      persistXJob(job);
     });
     return { jobId };
   }
@@ -189,6 +235,27 @@ class CrossCheckPipeline {
 
     job.result = { reportFile, perClaim, factsUpdated };
     job.status = "completed";
+    persistXJob(job);
+  }
+
+  /**
+   * Beim Serverstart aufrufen: persistierte Verifikationen laden.
+   * Unterbrochene (running) werden als failed markiert mit klarem Hinweis —
+   * Web-Recherche-Zwischenstände sind nicht checkpointfähig, ein Neustart
+   * der Verifikation ist günstig und deterministisch nachholbar.
+   */
+  static restorePersisted(factStore) {
+    for (const snapshot of loadAllXJobs()) {
+      if (jobs.has(snapshot.id)) continue;
+      const job = { ...snapshot, cancelled: false };
+      if (job.status === "running") {
+        job.status = "failed";
+        job.error =
+          "Durch Server-Neustart unterbrochen — Verifikation bitte erneut starten.";
+        persistXJob(job);
+      }
+      jobs.set(job.id, job);
+    }
   }
 
   static getStatus(jobId) {

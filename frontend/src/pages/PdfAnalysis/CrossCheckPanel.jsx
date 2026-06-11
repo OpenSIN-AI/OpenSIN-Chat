@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React, { useCallback, useEffect, useState } from "react";
 import PdfAnalysis from "@/models/pdfAnalysis";
+import { API_BASE } from "@/utils/constants";
 
 const SOURCE_TYPES = [
   { value: "url", label: "Webseite (URL)" },
@@ -362,10 +363,17 @@ function CrossCheckReportModal({ job, onClose }) {
       aria-label="Verifikationsbericht"
     >
       <div className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
-        <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border">
-          <h3 className="text-sm font-semibold text-theme-text-primary">
+        <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border gap-3">
+          <h3 className="text-sm font-semibold text-theme-text-primary flex-1">
             Verifikationsbericht
           </h3>
+          <a
+            href={`${API_BASE}/pdf-analysis/crosscheck/${job.id}/report/download`}
+            download
+            className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
+          >
+            Als Markdown herunterladen
+          </a>
           <button
             type="button"
             onClick={onClose}

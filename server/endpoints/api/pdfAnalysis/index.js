@@ -191,6 +191,39 @@ function apiPdfAnalysisEndpoints(app) {
     }
   );
 
+  // ---- Report-Downloads (vor /:id registriert) ----
+  app.get(
+    "/api/pdf-analysis/:id/report/download",
+    [validApiKey],
+    (request, response) => {
+      const result = PdfAnalysisPipeline.getResult(request.params.id);
+      if (!result || result.status !== "completed" || !result.report)
+        return response.status(404).json({ error: "Kein Report verfügbar." });
+      response.setHeader("Content-Type", "text/markdown; charset=utf-8");
+      response.setHeader(
+        "Content-Disposition",
+        `attachment; filename="analysebericht-${request.params.id}.md"`
+      );
+      response.status(200).send(result.report);
+    }
+  );
+
+  app.get(
+    "/api/pdf-analysis/crosscheck/:id/report/download",
+    [validApiKey],
+    (request, response) => {
+      const result = CrossCheckPipeline.getResult(request.params.id);
+      if (!result || result.status !== "completed" || !result.report)
+        return response.status(404).json({ error: "Kein Bericht verfügbar." });
+      response.setHeader("Content-Type", "text/markdown; charset=utf-8");
+      response.setHeader(
+        "Content-Disposition",
+        `attachment; filename="verifikationsbericht-${request.params.id}.md"`
+      );
+      response.status(200).send(result.report);
+    }
+  );
+
   // ---- Job-Status / Ergebnis ----
   app.get("/api/pdf-analysis/:id", [validApiKey], (request, response) => {
     const status = PdfAnalysisPipeline.getStatus(request.params.id);

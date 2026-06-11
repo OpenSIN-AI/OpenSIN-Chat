@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Sidebar from "@/components/Sidebar";
 import PdfAnalysis from "@/models/pdfAnalysis";
 import CrossCheckPanel from "./CrossCheckPanel";
+import { API_BASE } from "@/utils/constants";
 
 const PHASE_LABELS = {
   init: "Initialisierung",
@@ -375,10 +376,17 @@ function ReportModal({ job, onClose }) {
       aria-label={`Report für ${job.documentName}`}
     >
       <div className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
-        <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border">
-          <h3 className="text-sm font-semibold text-theme-text-primary truncate">
+        <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border gap-3">
+          <h3 className="text-sm font-semibold text-theme-text-primary truncate flex-1">
             Report: {job.documentName}
           </h3>
+          <a
+            href={`${API_BASE}/pdf-analysis/${job.id}/report/download`}
+            download
+            className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
+          >
+            Als Markdown herunterladen
+          </a>
           <button
             type="button"
             onClick={onClose}
