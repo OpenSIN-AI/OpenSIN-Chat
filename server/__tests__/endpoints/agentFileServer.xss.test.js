@@ -13,12 +13,20 @@
  * through to the `attachment` disposition so the browser downloads them
  * instead of rendering them inline.
  *
+ * Additionally (defense in depth): every file response carries nosniff,
+ * a CSP sandbox, private cache directives, and a same-origin CORP header,
+ * so even an inline-rendered document can never execute scripts in the
+ * app origin — regardless of future changes to INLINE_EXTENSIONS.
+ *
  * These tests guard against anyone "for convenience" re-adding those
- * extensions to the inline Set.
+ * extensions to the inline Set or dropping the hardening headers.
  */
-describe("agentFileServer — XSS regression (Content-Disposition)", () => {
-  const { INLINE_EXTENSIONS } = require("../../endpoints/agentFileServer.js");
+const {
+  INLINE_EXTENSIONS,
+  buildFileResponseHeaders,
+} = require("../../endpoints/agentFileServer.js");
 
+describe("agentFileServer — XSS regression (Content-Disposition)", () => {
   it("exports INLINE_EXTENSIONS as a Set", () => {
     expect(INLINE_EXTENSIONS).toBeInstanceOf(Set);
   });
@@ -46,5 +54,62 @@ describe("agentFileServer — XSS regression (Content-Disposition)", () => {
     for (const ext of ["js", "xml", "xhtml"]) {
       expect(INLINE_EXTENSIONS.has(ext)).toBe(false);
     }
+  });
+});
+
+describe("agentFileServer — file response headers (defense in depth)", () => {
+  const baseFile = {
+    mimeType: "image/png",
+    safeFilename: "generated-image.png",
+    byteLength: 1024,
+  };
+
+  it("uses inline disposition for allowed extensions", () => {
+    const headers = buildFileResponseHeaders({ ...baseFile, extension: "png" });
+    expect(headers["Content-Disposition"]).toBe(
+      'inline; filename="generated-image.png"',
+    );
+  });
+
+  it("uses attachment disposition for svg/html/htm", () => {
+    for (const extension of ["svg", "html", "htm"]) {
+      const headers = buildFileResponseHeaders({ ...baseFile, extension });
+      expect(headers["Content-Disposition"]).toMatch(/^attachment; /);
+    }
+  });
+
+  it("is case-insensitive for the extension", () => {
+    const headers = buildFileResponseHeaders({ ...baseFile, extension: "SVG" });
+    expect(headers["Content-Disposition"]).toMatch(/^attachment; /);
+  });
+
+  it("always sets nosniff", () => {
+    const headers = buildFileResponseHeaders({ ...baseFile, extension: "pdf" });
+    expect(headers["X-Content-Type-Options"]).toBe("nosniff");
+  });
+
+  it("always sets a CSP sandbox (neutralizes scripts in inline documents)", () => {
+    for (const extension of ["pdf", "png", "svg", "html"]) {
+      const headers = buildFileResponseHeaders({ ...baseFile, extension });
+      expect(headers["Content-Security-Policy"]).toBe(
+        "sandbox; default-src 'none'",
+      );
+    }
+  });
+
+  it("marks auth-protected files as privately cacheable only", () => {
+    const headers = buildFileResponseHeaders({ ...baseFile, extension: "pdf" });
+    expect(headers["Cache-Control"]).toBe("private, max-age=0, must-revalidate");
+  });
+
+  it("blocks cross-origin embedding via CORP", () => {
+    const headers = buildFileResponseHeaders({ ...baseFile, extension: "png" });
+    expect(headers["Cross-Origin-Resource-Policy"]).toBe("same-origin");
+  });
+
+  it("passes through content type and length", () => {
+    const headers = buildFileResponseHeaders({ ...baseFile, extension: "png" });
+    expect(headers["Content-Type"]).toBe("image/png");
+    expect(headers["Content-Length"]).toBe(1024);
   });
 });

@@ -21,6 +21,45 @@ const { Telemetry } = require("../models/telemetry");
 const INLINE_EXTENSIONS = new Set(["pdf", "png", "jpg", "jpeg", "gif", "webp"]);
 
 /**
+ * Builds the response headers for a generated-file download.
+ *
+ * Defense in depth — these headers keep file responses inert even if the
+ * INLINE_EXTENSIONS set is ever widened by mistake:
+ * - `X-Content-Type-Options: nosniff` stops browsers from re-interpreting
+ *   a file as HTML/JS based on content sniffing.
+ * - `Content-Security-Policy: sandbox; default-src 'none'` neutralizes any
+ *   scripts inside an inline-rendered document (SVG/HTML) and isolates it
+ *   from the app origin.
+ * - `Cache-Control: private, max-age=0, must-revalidate` prevents shared
+ *   caches/proxies from storing auth-protected files.
+ * - `Cross-Origin-Resource-Policy: same-origin` blocks other origins from
+ *   embedding these files.
+ *
+ * Exported separately so it can be unit-tested without spinning up Express.
+ *
+ * @param {{ extension: string, mimeType: string, safeFilename: string, byteLength: number }} file
+ * @returns {Record<string, string|number>} headers to set on the response
+ */
+function buildFileResponseHeaders({
+  extension,
+  mimeType,
+  safeFilename,
+  byteLength,
+}) {
+  const ext = String(extension || "").toLowerCase();
+  const disposition = INLINE_EXTENSIONS.has(ext) ? "inline" : "attachment";
+  return {
+    "Content-Type": mimeType,
+    "Content-Disposition": `${disposition}; filename="${safeFilename}"`,
+    "Content-Length": byteLength,
+    "X-Content-Type-Options": "nosniff",
+    "Content-Security-Policy": "sandbox; default-src 'none'",
+    "Cache-Control": "private, max-age=0, must-revalidate",
+    "Cross-Origin-Resource-Policy": "same-origin",
+  };
+}
+
+/**
  * Endpoints for serving agent-generated files (PPTX, etc.) with authentication
  * and ownership validation.
  */
@@ -75,14 +114,15 @@ function agentFileServerEndpoints(app) {
         const safeFilename = createFilesLib.sanitizeFilenameForHeader(
           fileSource.displayFilename || filename,
         );
-        const ext = parsed.extension.toLowerCase();
-        const disposition = INLINE_EXTENSIONS.has(ext) ? "inline" : "attachment";
-        response.setHeader("Content-Type", mimeType);
-        response.setHeader(
-          "Content-Disposition",
-          `${disposition}; filename="${safeFilename}"`,
-        );
-        response.setHeader("Content-Length", fileData.buffer.length);
+        const headers = buildFileResponseHeaders({
+          extension: parsed.extension,
+          mimeType,
+          safeFilename,
+          byteLength: fileData.buffer.length,
+        });
+        for (const [name, value] of Object.entries(headers)) {
+          response.setHeader(name, value);
+        }
         response.send(fileData.buffer);
         Telemetry.sendTelemetry("agent_generated_file_downloaded", {
           type: mimeType,
@@ -187,5 +227,6 @@ async function findInScheduledJobRuns(storageFilename) {
 
 module.exports = {
   agentFileServerEndpoints,
+  buildFileResponseHeaders,
   INLINE_EXTENSIONS,
 };
