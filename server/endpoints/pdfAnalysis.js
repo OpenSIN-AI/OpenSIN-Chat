@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: MIT
 /**
- * REST-Endpoints: /api/pdf-analysis/*
- * Geschützt über validApiKey — analog zu /api/research/* und /api/reports/*.
+ * Browser-Endpoints: /pdf-analysis/*
+ * Session-geschützt über validatedRequest — für die Frontend-UI.
+ * (Die Developer-API unter /api/pdf-analysis/* bleibt unverändert bestehen.)
  */
 const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
-const { validApiKey } = require("../../../utils/middleware/validApiKey");
-const { PdfAnalysisPipeline } = require("../../../utils/pdfAnalysis");
-const config = require("../../../utils/pdfAnalysis/config");
+const {
+  validatedRequest,
+} = require("../utils/middleware/validatedRequest");
+const { PdfAnalysisPipeline } = require("../utils/pdfAnalysis");
+const config = require("../utils/pdfAnalysis/config");
 
 const UPLOAD_DIR = path.join(config.STORAGE_DIR, "uploads");
 
@@ -19,7 +22,6 @@ const upload = multer({
       cb(null, UPLOAD_DIR);
     },
     filename: (_req, file, cb) => {
-      // Pfad-Traversal verhindern + Kollisionen vermeiden
       const safe = path
         .basename(file.originalname)
         .replace(/[^a-zA-Z0-9._-]/g, "_");
@@ -40,13 +42,12 @@ const upload = multer({
   },
 });
 
-function apiPdfAnalysisEndpoints(app) {
+function pdfAnalysisEndpoints(app) {
   if (!app) return;
 
-  // PDF hochladen — liefert pdfPath für /start zurück
   app.post(
-    "/api/pdf-analysis/upload",
-    [validApiKey, upload.single("file")],
+    "/pdf-analysis/upload",
+    [validatedRequest, upload.single("file")],
     (request, response) => {
       if (!request.file)
         return response
@@ -60,8 +61,7 @@ function apiPdfAnalysisEndpoints(app) {
     }
   );
 
-  // Analyse starten — Nutzer gibt nur PDF + Auftrag an, Rest läuft autonom
-  app.post("/api/pdf-analysis/start", [validApiKey], (request, response) => {
+  app.post("/pdf-analysis/start", [validatedRequest], (request, response) => {
     try {
       const { pdfPath, task, reportType, factCriteria } = request.body || {};
       const { jobId } = PdfAnalysisPipeline.start({
@@ -76,12 +76,11 @@ function apiPdfAnalysisEndpoints(app) {
     }
   });
 
-  app.get("/api/pdf-analysis/list", [validApiKey], (_request, response) => {
+  app.get("/pdf-analysis/list", [validatedRequest], (_request, response) => {
     response.status(200).json({ jobs: PdfAnalysisPipeline.list() });
   });
 
-  // ---- Fakten-Speicher (vor /:id registrieren!) ----
-  app.get("/api/pdf-analysis/facts", [validApiKey], (request, response) => {
+  app.get("/pdf-analysis/facts", [validatedRequest], (request, response) => {
     const { q, document, tag, page, limit } = request.query || {};
     response.status(200).json({
       facts: PdfAnalysisPipeline.factStore.search({
@@ -95,27 +94,16 @@ function apiPdfAnalysisEndpoints(app) {
   });
 
   app.get(
-    "/api/pdf-analysis/facts/stats",
-    [validApiKey],
+    "/pdf-analysis/facts/stats",
+    [validatedRequest],
     (_request, response) => {
       response.status(200).json(PdfAnalysisPipeline.factStore.stats());
     }
   );
 
-  app.get(
-    "/api/pdf-analysis/facts/:factId",
-    [validApiKey],
-    (request, response) => {
-      const fact = PdfAnalysisPipeline.factStore.get(request.params.factId);
-      if (!fact)
-        return response.status(404).json({ error: "Fakt nicht gefunden." });
-      response.status(200).json(fact);
-    }
-  );
-
   app.delete(
-    "/api/pdf-analysis/facts/:factId",
-    [validApiKey],
+    "/pdf-analysis/facts/:factId",
+    [validatedRequest],
     (request, response) => {
       const removed = PdfAnalysisPipeline.factStore.remove(
         request.params.factId
@@ -124,8 +112,7 @@ function apiPdfAnalysisEndpoints(app) {
     }
   );
 
-  // ---- Job-Status / Ergebnis ----
-  app.get("/api/pdf-analysis/:id", [validApiKey], (request, response) => {
+  app.get("/pdf-analysis/:id", [validatedRequest], (request, response) => {
     const status = PdfAnalysisPipeline.getStatus(request.params.id);
     if (!status)
       return response.status(404).json({ error: "Job nicht gefunden." });
@@ -133,8 +120,8 @@ function apiPdfAnalysisEndpoints(app) {
   });
 
   app.get(
-    "/api/pdf-analysis/:id/result",
-    [validApiKey],
+    "/pdf-analysis/:id/result",
+    [validatedRequest],
     (request, response) => {
       const result = PdfAnalysisPipeline.getResult(request.params.id);
       if (!result)
@@ -143,10 +130,10 @@ function apiPdfAnalysisEndpoints(app) {
     }
   );
 
-  app.delete("/api/pdf-analysis/:id", [validApiKey], (request, response) => {
+  app.delete("/pdf-analysis/:id", [validatedRequest], (request, response) => {
     const ok = PdfAnalysisPipeline.cancel(request.params.id);
     response.status(ok ? 200 : 404).json({ cancelled: ok });
   });
 }
 
-module.exports = { apiPdfAnalysisEndpoints };
+module.exports = { pdfAnalysisEndpoints };

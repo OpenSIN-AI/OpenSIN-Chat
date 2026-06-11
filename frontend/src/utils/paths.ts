@@ -198,6 +198,9 @@ export default {
       return `/settings/scheduled-jobs/${jobId}/runs/${runId}`;
     },
   },
+  pdfAnalysis: () => {
+    return "/pdf-analysis";
+  },
   agents: {
     builder: () => {
       return `/settings/agents/builder`;

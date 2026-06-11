@@ -431,6 +431,15 @@ const router = createBrowserRouter([
           };
         },
       },
+      {
+        path: "/pdf-analysis",
+        lazy: async () => {
+          const { default: PdfAnalysisPage } = await import(
+            "@/pages/PdfAnalysis"
+          );
+          return { element: <AdminRoute Component={PdfAnalysisPage} /> };
+        },
+      },
       // Catch-all route for 404s
       {
         path: "*",

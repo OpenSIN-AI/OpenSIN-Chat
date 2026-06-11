@@ -43,6 +43,7 @@ const { mobileEndpoints } = require("./endpoints/mobile");
 const { webPushEndpoints } = require("./endpoints/webPush");
 const { telegramEndpoints } = require("./endpoints/telegram");
 const { scheduledJobEndpoints } = require("./endpoints/scheduledJobs");
+const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const {
   outlookAgentEndpoints,
 } = require("./endpoints/utils/outlookAgentUtils");
@@ -124,6 +125,7 @@ telegramEndpoints(apiRouter);
 scheduledJobEndpoints(apiRouter);
 outlookAgentEndpoints(apiRouter);
 googleAgentSkillEndpoints(apiRouter);
+pdfAnalysisEndpoints(apiRouter);
 memoryEndpoints(apiRouter);
 providerStatusEndpoints(apiRouter);
 logBootDiagnostics();
