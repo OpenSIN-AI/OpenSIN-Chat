@@ -64,13 +64,15 @@ function apiPdfAnalysisEndpoints(app) {
   // Analyse starten — Nutzer gibt nur PDF + Auftrag an, Rest läuft autonom
   app.post("/api/pdf-analysis/start", [validApiKey], (request, response) => {
     try {
-      const { pdfPath, task, reportType, factCriteria } = request.body || {};
-      const { jobId } = PdfAnalysisPipeline.start({
-        pdfPath,
-        task,
-        reportType,
-        factCriteria,
-      });
+    const { pdfPath, task, reportType, factCriteria, deepScan } =
+      request.body || {};
+    const { jobId } = PdfAnalysisPipeline.start({
+      pdfPath,
+      task,
+      reportType,
+      factCriteria,
+      deepScan: !!deepScan,
+    });
       response.status(200).json({ jobId });
     } catch (e) {
       response.status(e.statusCode || 400).json({ error: e.message });

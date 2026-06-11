@@ -64,12 +64,14 @@ function pdfAnalysisEndpoints(app) {
 
   app.post("/pdf-analysis/start", [validatedRequest], (request, response) => {
     try {
-      const { pdfPath, task, reportType, factCriteria } = request.body || {};
+      const { pdfPath, task, reportType, factCriteria, deepScan } =
+        request.body || {};
       const { jobId } = PdfAnalysisPipeline.start({
         pdfPath,
         task,
         reportType,
         factCriteria,
+        deepScan: !!deepScan,
       });
       response.status(200).json({ jobId });
     } catch (e) {

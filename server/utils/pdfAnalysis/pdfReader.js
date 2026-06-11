@@ -16,6 +16,7 @@
 const fs = require("fs");
 const { ocrPage, needsOcr } = require("./ocr");
 const { describeImage } = require("./visionAgent");
+const { deepScanPage } = require("./deepScan");
 
 const VISION_MIN_IMAGE_AREA = Number(
   process.env.PDF_ANALYSIS_VISION_MIN_AREA || 0.08 // Bildfläche >= 8% der Seite
@@ -72,10 +73,11 @@ function buildRangeTransport(lib, fd, fileSize) {
 }
 
 class PdfReader {
-  constructor(pdfPath) {
+  constructor(pdfPath, { deepScan = false } = {}) {
     if (!fs.existsSync(pdfPath))
       throw new Error(`PDF nicht gefunden: ${pdfPath}`);
     this.pdfPath = pdfPath;
+    this.deepScan = deepScan;
     this.doc = null;
     this.fd = null;
   }
@@ -123,6 +125,21 @@ class PdfReader {
    * Zitat-Verifier) die geringere Zeichengenauigkeit berücksichtigen können.
    */
   async pageText(pageNumber) {
+    // Deep-Scan-Modus: Seite komplett visuell lesen (MiniCPM-V lokal).
+    // Fallback auf Text-Layer/OCR, falls das lokale Modell nicht antwortet.
+    if (this.deepScan) {
+      try {
+        const scanned = await deepScanPage(this.doc, pageNumber);
+        if (scanned) {
+          this.deepScannedPages = this.deepScannedPages || new Set();
+          this.deepScannedPages.add(pageNumber);
+          return scanned;
+        }
+      } catch {
+        /* Fallback auf normalen Pfad */
+      }
+    }
+
     const page = await this.doc.getPage(pageNumber);
     try {
       const content = await page.getTextContent();

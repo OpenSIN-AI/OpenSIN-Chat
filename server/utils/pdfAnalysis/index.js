@@ -63,7 +63,13 @@ class PdfAnalysisPipeline {
     }
   }
 
-  static start({ pdfPath, task, reportType = null, factCriteria = null }) {
+  static start({
+    pdfPath,
+    task,
+    reportType = null,
+    factCriteria = null,
+    deepScan = false,
+  }) {
     if (!pdfPath || !task)
       throw new Error("pdfPath und task sind erforderlich.");
     // Sicherheits-Härtung: realpath + Whitelist (uploads, documents, ENV)
@@ -82,6 +88,7 @@ class PdfAnalysisPipeline {
       task,
       reportType,
       factCriteria,
+      deepScan: !!deepScan,
       status: "pending",
       cancelled: false,
       createdAt: new Date().toISOString(),
@@ -108,7 +115,9 @@ class PdfAnalysisPipeline {
   static async _run(job) {
     job.status = "running";
     persistJob(job);
-    const reader = new PdfReader(job.pdfPath);
+    const reader = new PdfReader(job.pdfPath, {
+      deepScan: !!job.deepScan,
+    });
     try {
       // Phase 1 — Dokument öffnen + Chunk-Plan
       job.progress.phase = "reading";
@@ -255,6 +264,9 @@ class PdfAnalysisPipeline {
         chunksRepaired: chunkResults.filter((r) => r?.critic?.repaired).length,
         ocrPages: reader.ocrPages ? reader.ocrPages.size : 0,
         visionPages: reader.visionPages ? reader.visionPages.size : 0,
+        deepScannedPages: reader.deepScannedPages
+          ? reader.deepScannedPages.size
+          : 0,
         groundingRatio: Math.round((groundingRatio || 0) * 100),
       };
       job.status = "completed";

@@ -138,6 +138,7 @@ function StartForm({ onStarted }) {
   const [task, setTask] = useState("");
   const [reportType, setReportType] = useState("");
   const [factCriteria, setFactCriteria] = useState("");
+  const [deepScan, setDeepScan] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
@@ -158,6 +159,7 @@ function StartForm({ onStarted }) {
         task: task.trim(),
         reportType: reportType.trim() || undefined,
         factCriteria: factCriteria.trim() || undefined,
+        deepScan,
       });
       if (started.error) throw new Error(started.error);
       setTask("");
@@ -222,6 +224,17 @@ function StartForm({ onStarted }) {
           />
         </label>
       </div>
+
+      <label className="flex items-center gap-2 text-sm text-theme-text-secondary">
+        <input
+          type="checkbox"
+          checked={deepScan}
+          onChange={(e) => setDeepScan(e.target.checked)}
+          className="accent-current"
+        />
+        Deep Scan: jede Seite visuell lesen (lokales Vision-Modell — präziser bei
+        Tabellen, Scans &amp; komplexen Layouts, aber langsamer)
+      </label>
 
       {error && (
         <p role="alert" className="text-sm text-red-400">

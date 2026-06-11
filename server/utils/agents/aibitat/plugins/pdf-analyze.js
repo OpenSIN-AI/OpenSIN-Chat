@@ -42,16 +42,29 @@ const pdfAnalyze = {
                 description:
                   "Optionale Kriterien, welche Einzelinformationen gespeichert werden sollen.",
               },
+              deepScan: {
+                type: "boolean",
+                description:
+                  "true = Deep Scan: jede Seite wird visuell durch das lokale Vision-Modell " +
+                  "(MiniCPM-V) gelesen — für komplexe Layouts, Tabellen, Scans, Formulare.",
+              },
             },
             required: ["pdfPath", "task"],
           },
-          handler: async function ({ pdfPath, task, reportType, factCriteria }) {
+          handler: async function ({
+            pdfPath,
+            task,
+            reportType,
+            factCriteria,
+            deepScan,
+          }) {
             try {
               const { jobId } = PdfAnalysisPipeline.start({
                 pdfPath,
                 task,
                 reportType,
                 factCriteria,
+                deepScan: !!deepScan,
               });
               return `Analyse gestartet. Job-ID: ${jobId}. Status via pdf-analyze-status abrufbar.`;
             } catch (e) {
