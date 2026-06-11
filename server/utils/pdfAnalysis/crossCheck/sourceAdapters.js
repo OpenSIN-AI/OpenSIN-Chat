@@ -15,6 +15,7 @@ const dns = require("dns").promises;
 const net = require("net");
 const { PdfReader } = require("../pdfReader");
 const { validatePdfPath } = require("../security");
+const { analyzeImageUrl, analyzeVideoUrl } = require("./mediaAdapters");
 
 const MAX_FETCH_BYTES = Number(
   process.env.PDF_ANALYSIS_XCHECK_MAX_FETCH_BYTES || 5 * 1024 * 1024
@@ -166,17 +167,48 @@ async function loadSource(source) {
         await reader.close();
       }
     }
+    case "image": {
+      await assertSafeUrl(source.url);
+      return analyzeImageUrl(source.url, fetchBuffer);
+    }
+    case "video": {
+      await assertSafeUrl(source.url);
+      return analyzeVideoUrl(source.url);
+    }
     case "youtube": {
       const { text, title } = await youtubeTranscript(source.url);
       return { label: title, text };
     }
     case "url": {
+      // Content-Type-Triage: Bild/Video-URLs automatisch an Medien-Adapter routen
+      await assertSafeUrl(source.url);
+      const head = await fetch(source.url, {
+        method: "HEAD",
+        headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
+      }).catch(() => null);
+      const contentType = head?.headers?.get("content-type") || "";
+      if (contentType.startsWith("image/"))
+        return analyzeImageUrl(source.url, fetchBuffer);
+      if (contentType.startsWith("video/"))
+        return analyzeVideoUrl(source.url);
       const html = await fetchWithLimits(source.url);
       return { label: source.url, text: htmlToText(html) };
     }
     default:
       throw new Error(`Unbekannter Quelltyp: ${source.type}`);
   }
+}
+
+async function fetchBuffer(url) {
+  await assertSafeUrl(url);
+  const res = await fetch(url, {
+    headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  if (buf.byteLength > MAX_FETCH_BYTES)
+    return buf.subarray(0, MAX_FETCH_BYTES);
+  return buf;
 }
 
 async function loadSourceSafe(source) {

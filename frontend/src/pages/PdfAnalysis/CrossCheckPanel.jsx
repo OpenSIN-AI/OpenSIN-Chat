@@ -5,6 +5,8 @@ import PdfAnalysis from "@/models/pdfAnalysis";
 const SOURCE_TYPES = [
   { value: "url", label: "Webseite (URL)" },
   { value: "youtube", label: "YouTube-Video" },
+  { value: "image", label: "Bild (URL)" },
+  { value: "video", label: "Video-Datei (URL)" },
   { value: "pdf", label: "PDF (Server-Pfad)" },
   { value: "text", label: "Roh-Text" },
 ];

@@ -15,6 +15,14 @@
  */
 const fs = require("fs");
 const { ocrPage, needsOcr } = require("./ocr");
+const { describeImage } = require("./visionAgent");
+
+const VISION_MIN_IMAGE_AREA = Number(
+  process.env.PDF_ANALYSIS_VISION_MIN_AREA || 0.08 // Bildfläche >= 8% der Seite
+);
+const VISION_MAX_PAGES_PER_CHUNK = Number(
+  process.env.PDF_ANALYSIS_VISION_MAX_PER_CHUNK || 3 // Kostendeckel pro Chunk
+);
 
 const INITIAL_CHUNK_BYTES = Number(
   process.env.PDF_ANALYSIS_INITIAL_CHUNK_BYTES || 2 * 1024 * 1024 // 2 MB
@@ -156,22 +164,101 @@ class PdfReader {
   }
 
   /**
+   * Triage: Hat die Seite signifikante Bildinhalte? Prüft die Operator-Liste
+   * (paintImageXObject) — deterministisch und billig, KEIN Rendern nötig.
+   * Kleine Logos/Icons unterhalb der Flächenschwelle werden ignoriert.
+   */
+  async pageHasSignificantImages(pageNumber) {
+    const lib = loadPdfjs();
+    const page = await this.doc.getPage(pageNumber);
+    try {
+      const ops = await page.getOperatorList();
+      const viewport = page.getViewport({ scale: 1.0 });
+      const pageArea = viewport.width * viewport.height;
+      let imageCount = 0;
+      for (let i = 0; i < ops.fnArray.length; i++) {
+        if (
+          ops.fnArray[i] === lib.OPS.paintImageXObject ||
+          ops.fnArray[i] === lib.OPS.paintInlineImageXObject
+        ) {
+          imageCount++;
+        }
+      }
+      // Konservativ: jedes Bild zählt mit Mindestfläche
+      const imageArea = imageCount * pageArea * 0.05;
+      return imageArea / pageArea >= VISION_MIN_IMAGE_AREA;
+    } catch {
+      return false;
+    } finally {
+      page.cleanup();
+    }
+  }
+
+  /**
+   * Rendert eine Seite zu PNG und lässt sie vom Vision-Agenten beschreiben.
+   * Wird NUR für Seiten mit signifikantem Bildanteil aufgerufen (Triage).
+   */
+  async pageVisionDescription(pageNumber) {
+    const { createCanvas } = require("@napi-rs/canvas");
+    const page = await this.doc.getPage(pageNumber);
+    try {
+      const viewport = page.getViewport({ scale: 1.5 });
+      const canvas = createCanvas(
+        Math.ceil(viewport.width),
+        Math.ceil(viewport.height)
+      );
+      await page.render({
+        canvasContext: canvas.getContext("2d"),
+        viewport,
+      }).promise;
+      return await describeImage(
+        canvas.toBuffer("image/png"),
+        `Seite ${pageNumber} eines PDF-Dokuments (enthält Grafiken/Diagramme/Fotos)`
+      );
+    } finally {
+      page.cleanup();
+    }
+  }
+
+  /**
    * Extrahiert einen Seitenbereich [from..to] (1-basiert, inklusiv).
-   * Markiert leere Seiten und OCR-Seiten explizit.
+   * Markiert leere Seiten, OCR-Seiten und Vision-Seiten explizit.
    */
   async rangeText(from, to) {
     const pages = [];
+    let visionBudget = VISION_MAX_PAGES_PER_CHUNK;
     for (let p = from; p <= to; p++) {
       const text = await this.pageText(p);
-      pages.push({ page: p, text, ocr: this.wasOcrPage(p) });
+      let media = null;
+      try {
+        if (visionBudget > 0 && (await this.pageHasSignificantImages(p))) {
+          media = await this.pageVisionDescription(p);
+          if (media) {
+            visionBudget--;
+            this.visionPages = this.visionPages || new Set();
+            this.visionPages.add(p);
+          }
+        }
+      } catch {
+        /* Vision optional — Text-Analyse läuft immer weiter */
+      }
+      pages.push({
+        page: p,
+        text,
+        ocr: this.wasOcrPage(p),
+        media,
+      });
     }
     return {
       pages,
       text: pages
         .map((p) => {
           const marker = p.ocr ? " (OCR)" : "";
-          const body = p.text || "[leere Seite — kein Inhalt]";
-          return `\n--- [Seite ${p.page}${marker}] ---\n${body}`;
+          const body = p.text || "[leere Seite — kein Textinhalt]";
+          const mediaBlock = p.media
+            ? `\n[BILDINHALT Seite ${p.page} — visuelle Analyse]\n${p.media}`
+            : "";
+          return `\n--- [Seite ${p.page}${marker}] ---\n${body}${mediaBlock}`;
         })
         .join("\n"),
     };

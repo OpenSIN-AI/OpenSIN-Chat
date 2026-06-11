@@ -173,9 +173,7 @@ class CrossCheckPipeline {
     let factsUpdated = 0;
     for (const pc of perClaim) {
       if (!pc.factId) continue;
-      const fact = factStore.get(pc.factId);
-      if (!fact) continue;
-      fact.crossCheck = {
+      const ok = factStore.updateCrossCheck(pc.factId, {
         jobId: job.id,
         checkedAt: new Date().toISOString(),
         sourceVerdicts: pc.sourceVerdicts,
@@ -185,10 +183,9 @@ class CrossCheckPipeline {
           verdict: e.verdict,
           quote: e.quote,
         })),
-      };
-      factsUpdated++;
+      });
+      if (ok) factsUpdated++;
     }
-    if (factsUpdated > 0) factStore._save();
 
     job.result = { reportFile, perClaim, factsUpdated };
     job.status = "completed";

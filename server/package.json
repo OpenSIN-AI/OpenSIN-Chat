@@ -93,6 +93,8 @@
     "pdfjs-dist": "^4.7.76",
     "tesseract.js": "^5.1.1",
     "@napi-rs/canvas": "^0.1.56",
+    "better-sqlite3": "^11.5.0",
+    "ffmpeg-static": "^5.2.0",
     "pg": "^8.11.5",
     "pinecone-client": "^1.1.0",
     "pluralize": "^8.0.0",

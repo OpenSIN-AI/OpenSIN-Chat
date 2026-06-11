@@ -129,6 +129,13 @@ class PdfAnalysisPipeline {
       // Phase 2 — parallele Multi-Agenten-Analyse (adaptiv geregelt)
       job.progress.phase = "analyzing";
       let lastPersist = Date.now();
+
+      // Telemetrie für ETA/Durchsatz
+      const telemetry = {
+        startedAt: Date.now(),
+        pagesPerChunk: config.PAGES_PER_CHUNK,
+      };
+
       const chunkResults = await runPool(
         chunks,
         config.AGENT_CONCURRENCY,
@@ -155,6 +162,20 @@ class PdfAnalysisPipeline {
             job.progress.chunksDone = done;
             job.progress.chunksTotal = total;
             job.progress.concurrency = concurrency;
+
+            // Telemetrie: ETA + Durchsatz
+            const elapsedMs = Date.now() - telemetry.startedAt;
+            if (done > 0 && elapsedMs > 5000) {
+              const msPerChunk = elapsedMs / done;
+              const remaining = total - done;
+              job.progress.etaSeconds = Math.round(
+                (remaining * msPerChunk) / 1000
+              );
+              job.progress.pagesPerMinute = Math.round(
+                (done * telemetry.pagesPerChunk) / (elapsedMs / 60000)
+              );
+            }
+
             // Job-Snapshot gedrosselt persistieren (max. alle 10 s),
             // die feingranularen Chunk-Checkpoints schreibt der Pool selbst.
             if (Date.now() - lastPersist > 10_000) {
@@ -233,6 +254,7 @@ class PdfAnalysisPipeline {
         chunkErrors: chunkResults.filter((r) => r && r.error).length,
         chunksRepaired: chunkResults.filter((r) => r?.critic?.repaired).length,
         ocrPages: reader.ocrPages ? reader.ocrPages.size : 0,
+        visionPages: reader.visionPages ? reader.visionPages.size : 0,
         groundingRatio: Math.round((groundingRatio || 0) * 100),
       };
       job.status = "completed";

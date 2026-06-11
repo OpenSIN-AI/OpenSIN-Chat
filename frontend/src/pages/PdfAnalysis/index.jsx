@@ -14,6 +14,15 @@ const PHASE_LABELS = {
   done: "Abgeschlossen",
 };
 
+function formatEta(seconds) {
+  if (seconds == null) return null;
+  if (seconds < 60) return `${seconds} s`;
+  if (seconds < 3600) return `${Math.round(seconds / 60)} min`;
+  const h = Math.floor(seconds / 3600);
+  const m = Math.round((seconds % 3600) / 60);
+  return `${h} h ${m} min`;
+}
+
 export default function PdfAnalysisPage() {
   const [tab, setTab] = useState("jobs"); // "jobs" | "facts" | "crosscheck"
   const [crossCheckFactIds, setCrossCheckFactIds] = useState([]);
@@ -293,6 +302,18 @@ function JobRow({ job, onShowReport, onCancelled }) {
             >
               · {progress.concurrency} Agenten
             </span>
+          )}
+        </div>
+      )}
+
+      {isActive && (progress.etaSeconds != null || progress.pagesPerMinute != null) && (
+        <p className="text-xs text-theme-text-secondary">
+          {progress.concurrency != null &&
+            `${progress.concurrency} Agenten aktiv`}
+          {progress.pagesPerMinute != null &&
+            ` · ${progress.pagesPerMinute} Seiten/min`}
+          {progress.etaSeconds != null &&
+            ` · ETA ${formatEta(progress.etaSeconds)}`}
           )}
         </div>
       )}
