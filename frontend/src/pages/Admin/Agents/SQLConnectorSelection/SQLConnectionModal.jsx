@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { createPortal } from "react-dom";
 import ModalWrapper from "@/components/ModalWrapper";
 import { WarningOctagon, X } from "@phosphor-icons/react";
@@ -92,6 +93,7 @@ export default function SQLConnectionModal({
   existingConnection = null, // { database_id, engine } for edit mode
   connections = [], // List of all existing connections for duplicate detection
 }) {
+  const { t } = useTranslation();
   const isEditMode = !!existingConnection;
   const [engine, setEngine] = useState(DEFAULT_ENGINE);
   const [config, setConfig] = useState(DEFAULT_CONFIG);
@@ -190,7 +192,7 @@ export default function SQLConnectionModal({
     // Check for duplicate connection names before validation
     if (isDuplicateConnectionName(slugifiedDatabaseId)) {
       showToast(
-        `A connection with the name "${slugifiedDatabaseId}" already exists. Please choose a different name.`,
+        t("sqlConnection.duplicateError", { name: slugifiedDatabaseId }),
         "error",
         { clear: true },
       );
@@ -205,12 +207,9 @@ export default function SQLConnectionModal({
         connectionString,
       );
       if (!success) {
-        showToast(
-          error ||
-            "Failed to establish database connection. Please check your connection details.",
-          "error",
-          { clear: true },
-        );
+        showToast(error || t("sqlConnection.connectionFailed"), "error", {
+          clear: true,
+        });
         setIsValidating(false);
         return;
       }
@@ -245,8 +244,7 @@ export default function SQLConnectionModal({
     } catch (error) {
       console.error("Error validating connection:", error);
       showToast(
-        error?.message ||
-          "Failed to validate connection. Please check your connection details.",
+        error?.message || t("sqlConnection.validationFailed"),
         "error",
         { clear: true },
       );
@@ -265,7 +263,9 @@ export default function SQLConnectionModal({
           <div className="relative p-6 border-b rounded-t border-theme-modal-border">
             <div className="w-full flex gap-x-2 items-center">
               <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {isEditMode ? "Edit SQL Connection" : "New SQL Connection"}
+                {isEditMode
+                  ? t("sqlConnection.editTitle")
+                  : t("sqlConnection.newTitle")}
               </h3>
             </div>
             <button
@@ -285,23 +285,26 @@ export default function SQLConnectionModal({
               <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
                 <p className="text-sm text-white/60">
                   {isEditMode
-                    ? "Update the connection information for your database below."
-                    : "Add the connection information for your database below and it will be available for future SQL agent calls."}
+                    ? t("sqlConnection.descriptionEdit")
+                    : t("sqlConnection.descriptionNew")}
                 </p>
                 <div className="flex flex-col w-full">
                   <div className="border border-red-800 bg-zinc-800 light:bg-red-200/50 p-4 rounded-lg flex items-center gap-x-2 text-sm text-red-400 light:text-red-500">
                     <WarningOctagon size={28} className="shrink-0" />
                     <p>
-                      <b>WARNING:</b> The SQL agent has been <i>instructed</i>{" "}
-                      to only perform non-modifying queries. This{" "}
-                      <b>does not</b> prevent a hallucination from still
-                      deleting data. Only connect with a user who has{" "}
-                      <b>READ_ONLY</b> permissions.
+                      <b>{t("sqlConnection.warningLabel")}</b>{" "}
+                      {t("sqlConnection.warningText")}{" "}
+                      <i>{t("sqlConnection.warningInstructed")}</i>{" "}
+                      {t("sqlConnection.warningToOnlyPerform")}{" "}
+                      <b>{t("sqlConnection.warningDoesNotPrevent")}</b>{" "}
+                      {t("sqlConnection.warningDoesNotPrevent2")}{" "}
+                      <b>{t("sqlConnection.warningReadOnly")}</b>{" "}
+                      {t("sqlConnection.warningReadOnly2")}
                     </p>
                   </div>
 
                   <label className="block mb-2 text-sm font-medium text-white mt-4">
-                    Select your SQL engine
+                    {t("sqlConnection.selectEngine")}
                   </label>
                   <div className="grid md:grid-cols-4 gap-4 grid-cols-2">
                     <DBEngine
@@ -324,13 +327,13 @@ export default function SQLConnectionModal({
 
                 <div className="flex flex-col w-full">
                   <label className="block mb-2 text-sm font-medium text-white">
-                    Connection name
+                    {t("sqlConnection.connectionName")}
                   </label>
                   <input
                     type="text"
                     name="name"
                     className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                    placeholder="a unique name to identify this SQL connection"
+                    placeholder={t("sqlConnection.connectionNamePlaceholder")}
                     required={true}
                     autoComplete="off"
                     spellCheck={false}
@@ -341,13 +344,13 @@ export default function SQLConnectionModal({
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="flex flex-col">
                     <label className="block mb-2 text-sm font-medium text-white">
-                      Database user
+                      {t("sqlConnection.databaseUser")}
                     </label>
                     <input
                       type="text"
                       name="username"
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder="root"
+                      placeholder={t("sqlConnection.databaseUserPlaceholder")}
                       required={true}
                       autoComplete="off"
                       spellCheck={false}
@@ -356,13 +359,15 @@ export default function SQLConnectionModal({
                   </div>
                   <div className="flex flex-col">
                     <label className="block mb-2 text-sm font-medium text-white">
-                      Database user password
+                      {t("sqlConnection.databasePassword")}
                     </label>
                     <input
                       type="password"
                       name="password"
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder="password123"
+                      placeholder={t(
+                        "sqlConnection.databasePasswordPlaceholder",
+                      )}
                       required={true}
                       autoComplete="off"
                       spellCheck={false}
@@ -374,13 +379,13 @@ export default function SQLConnectionModal({
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <div className="sm:col-span-2">
                     <label className="block mb-2 text-sm font-medium text-white">
-                      Server endpoint
+                      {t("sqlConnection.serverEndpoint")}
                     </label>
                     <input
                       type="text"
                       name="host"
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder="the hostname or endpoint for your database"
+                      placeholder={t("sqlConnection.serverEndpointPlaceholder")}
                       required={true}
                       autoComplete="off"
                       spellCheck={false}
@@ -389,13 +394,13 @@ export default function SQLConnectionModal({
                   </div>
                   <div>
                     <label className="block mb-2 text-sm font-medium text-white">
-                      Port
+                      {t("sqlConnection.port")}
                     </label>
                     <input
                       type="text"
                       name="port"
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder="3306"
+                      placeholder={t("sqlConnection.portPlaceholder")}
                       required={false}
                       autoComplete="off"
                       spellCheck={false}
@@ -406,13 +411,13 @@ export default function SQLConnectionModal({
 
                 <div className="flex flex-col">
                   <label className="block mb-2 text-sm font-medium text-white">
-                    Database
+                    {t("sqlConnection.database")}
                   </label>
                   <input
                     type="text"
                     name="database"
                     className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                    placeholder="the database the agent will interact with"
+                    placeholder={t("sqlConnection.databasePlaceholder")}
                     required={true}
                     autoComplete="off"
                     spellCheck={false}
@@ -423,13 +428,13 @@ export default function SQLConnectionModal({
                 {engine === "postgresql" && (
                   <div className="flex flex-col">
                     <label className="block mb-2 text-sm font-medium text-white">
-                      Schema (optional)
+                      {t("sqlConnection.schemaOptional")}
                     </label>
                     <input
                       type="text"
                       name="schema"
                       className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder="public (default schema if not specified)"
+                      placeholder={t("sqlConnection.schemaPlaceholder")}
                       required={false}
                       autoComplete="off"
                       spellCheck={false}
@@ -443,13 +448,13 @@ export default function SQLConnectionModal({
                     name="encrypt"
                     value="true"
                     size="md"
-                    label="Enable Encryption"
+                    label={t("sqlConnection.enableEncryption")}
                     enabled={config.encrypt}
                   />
                 )}
 
                 <p className="text-theme-text-secondary text-sm">
-                  {assembleConnectionString({ engine, ...config })}
+                  {t(assembleConnectionString({ engine, ...config }))}
                 </p>
               </div>
             </div>
@@ -459,7 +464,7 @@ export default function SQLConnectionModal({
                 onClick={handleClose}
                 className="transition-all duration-300 text-white hover:bg-zinc-700 light:hover:bg-theme-bg-primary px-4 py-2 rounded-lg text-sm"
               >
-                Cancel
+                {t("sqlConnection.cancel")}
               </button>
               <button
                 type="submit"
@@ -467,7 +472,9 @@ export default function SQLConnectionModal({
                 disabled={isValidating}
                 className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm disabled:opacity-50"
               >
-                {isValidating ? "Validating..." : "Save connection"}
+                {isValidating
+                  ? t("sqlConnection.validating")
+                  : t("sqlConnection.saveConnection")}
               </button>
             </div>
           </form>
@@ -489,6 +496,7 @@ export default function SQLConnectionModal({
  * @returns {JSX.Element} - Button element with database logo
  */
 function DBEngine({ provider, active, onClick }) {
+  const { t } = useTranslation();
   return (
     <button
       type="button"
