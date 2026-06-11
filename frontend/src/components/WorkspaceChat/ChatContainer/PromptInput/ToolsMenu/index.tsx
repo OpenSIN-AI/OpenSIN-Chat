@@ -45,7 +45,14 @@ function getTabs(t, user: any) {
  * @param {boolean} [props.centered] - when true, popup opens below the input
  */
 export default function ToolsMenu({
-  workspace, showing, setShowing, sendCommand, promptRef, centered = false, highlightedIndexRef, }: any) {
+  workspace,
+  showing,
+  setShowing,
+  sendCommand,
+  promptRef,
+  centered = false,
+  highlightedIndexRef,
+}: any) {
   const { t } = useTranslation();
   const { user } = useUser();
   const TABS = useMemo(() => getTabs(t, user), [t, user]);
@@ -130,7 +137,8 @@ export default function ToolsMenu({
 
   if (!showing) return null;
 
-  const { component: ActiveTab } = TABS.find((tab) => tab.key === activeTab) ?? {};
+  const { component: ActiveTab } =
+    TABS.find((tab) => tab.key === activeTab) ?? {};
 
   return (
     <>

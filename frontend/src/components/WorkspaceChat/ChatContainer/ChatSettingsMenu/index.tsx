@@ -6,7 +6,6 @@ import {
   FolderOpen,
   Database,
   Newspaper,
-  BookOpen,
   Terminal,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";

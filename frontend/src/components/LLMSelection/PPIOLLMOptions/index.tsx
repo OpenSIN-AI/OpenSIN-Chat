@@ -1,5 +1,4 @@
-
-import useProviderModels from "@/hooks/useProviderModels";// SPDX-License-Identifier: MIT
+import useProviderModels from "@/hooks/useProviderModels"; // SPDX-License-Identifier: MIT
 export default function PPIOLLMOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-7">

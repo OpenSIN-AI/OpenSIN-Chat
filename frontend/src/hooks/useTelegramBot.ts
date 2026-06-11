@@ -8,7 +8,7 @@ export default function useTelegramBot() {
   const { data, error, isLoading, mutate } = useSWR(
     TELEGRAM_BOT_KEY,
     () => Telegram.getConfig(),
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false },
   );
 
   return {

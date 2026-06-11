@@ -94,7 +94,8 @@ export const DocumentWatchAlert = memo(() => {
   useEffect(() => {
     if (!window || !!window?.localStorage?.getItem(SEEN_WATCH_ALERT)) return;
     window?.addEventListener("watch_document_for_changes", handlePinEvent);
-    return () => window.removeEventListener("watch_document_for_changes", handlePinEvent);
+    return () =>
+      window.removeEventListener("watch_document_for_changes", handlePinEvent);
   }, []);
 
   return (

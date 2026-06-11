@@ -67,7 +67,15 @@ function NextButton({ onClick }: any) {
  * there is no inline anchor so Skip rides along here when `allowSkip` is set.
  */
 export default function Footer({
-  isSingle, isLast, allowSkip, answeredCount, total, onSkipThis, onNext, onSubmitAll, }: any) {
+  isSingle,
+  isLast,
+  allowSkip,
+  answeredCount,
+  total,
+  onSkipThis,
+  onNext,
+  onSubmitAll,
+}: any) {
   return (
     <div className="flex items-center justify-between gap-2 mt-1">
       {!isSingle && (

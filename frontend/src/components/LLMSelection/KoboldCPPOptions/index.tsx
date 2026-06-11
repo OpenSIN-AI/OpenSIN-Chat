@@ -28,11 +28,11 @@ export default function KoboldCPPOptions({ settings }: any) {
   );
 
   const handleTokenLimitChange: any = (e) => {
-    setTokenLimit(Number(((e.target as unknown) as any)?.value));
+    setTokenLimit(Number((e.target as unknown as any)?.value));
   };
 
   const handleMaxTokensChange: any = (e) => {
-    setMaxTokens(Number(((e.target as unknown) as any)?.value));
+    setMaxTokens(Number((e.target as unknown as any)?.value));
   };
 
   return (
@@ -145,7 +145,11 @@ export default function KoboldCPPOptions({ settings }: any) {
 }
 
 function KoboldCPPModelSelection({ settings, basePath = null }: any) {
-  const { customModels, isLoading } = useProviderModels("koboldcpp", null, basePath);
+  const { customModels, isLoading } = useProviderModels(
+    "koboldcpp",
+    null,
+    basePath,
+  );
   if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">

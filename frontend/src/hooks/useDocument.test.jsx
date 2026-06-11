@@ -29,8 +29,16 @@ describe("useDocument", () => {
   });
 
   it("builds a scoped cache key and returns null for a missing slug", () => {
-    expect(workspaceDocumentKey("foo")).toEqual(["workspace-documents", "foo", null]);
-    expect(workspaceDocumentKey("foo", "bar")).toEqual(["workspace-documents", "foo", "bar"]);
+    expect(workspaceDocumentKey("foo")).toEqual([
+      "workspace-documents",
+      "foo",
+      null,
+    ]);
+    expect(workspaceDocumentKey("foo", "bar")).toEqual([
+      "workspace-documents",
+      "foo",
+      "bar",
+    ]);
     expect(workspaceDocumentKey(undefined)).toBeNull();
   });
 
@@ -51,7 +59,11 @@ describe("useDocument", () => {
   });
 
   it("fetches parsed files for a workspace thread", async () => {
-    const fixture = { files: [], contextWindow: 4096, currentContextTokenCount: 0 };
+    const fixture = {
+      files: [],
+      contextWindow: 4096,
+      currentContextTokenCount: 0,
+    };
     Workspace.getParsedFiles.mockResolvedValue(fixture);
 
     const { result } = renderHook(() => useDocument("foo", "bar"), { wrapper });

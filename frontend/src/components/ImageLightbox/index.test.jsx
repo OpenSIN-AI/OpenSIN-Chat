@@ -30,7 +30,7 @@ describe("ImageLightbox", () => {
     act(() => {
       openImageLightbox(
         [{ contentString: "data:image/png;base64,abc", name: "test.png" }],
-        0
+        0,
       );
     });
     expect(screen.getByRole("img")).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe("ImageLightbox", () => {
     act(() => {
       openImageLightbox(
         [{ contentString: "data:image/png;base64,abc", name: "img.png" }],
-        0
+        0,
       );
     });
     expect(screen.getByLabelText("Close lightbox")).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("ImageLightbox", () => {
     act(() => {
       openImageLightbox(
         [{ contentString: "data:image/png;base64,abc", name: "img.png" }],
-        0
+        0,
       );
     });
     expect(screen.getByRole("img")).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe("ImageLightbox", () => {
     act(() => {
       openImageLightbox(
         [{ contentString: "data:image/png;base64,abc", name: "single.png" }],
-        0
+        0,
       );
     });
     expect(screen.queryByLabelText("Previous image")).not.toBeInTheDocument();
@@ -81,7 +81,7 @@ describe("ImageLightbox", () => {
           { contentString: "data:image/png;base64,aaa", name: "a.png" },
           { contentString: "data:image/png;base64,bbb", name: "b.png" },
         ],
-        0
+        0,
       );
     });
     expect(screen.getByLabelText("Previous image")).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe("ImageLightbox", () => {
           { contentString: "data:image/png;base64,bbb", name: "b.png" },
           { contentString: "data:image/png;base64,ccc", name: "c.png" },
         ],
-        1
+        1,
       );
     });
     expect(screen.getByText("2 / 3")).toBeInTheDocument();
@@ -111,7 +111,7 @@ describe("ImageLightbox", () => {
           { contentString: "data:image/png;base64,aaa", name: "a.png" },
           { contentString: "data:image/png;base64,bbb", name: "b.png" },
         ],
-        0
+        0,
       );
     });
     expect(screen.getByAltText("a.png")).toBeInTheDocument();
@@ -127,7 +127,7 @@ describe("ImageLightbox", () => {
           { contentString: "data:image/png;base64,aaa", name: "a.png" },
           { contentString: "data:image/png;base64,bbb", name: "b.png" },
         ],
-        1
+        1,
       );
     });
     expect(screen.getByAltText("b.png")).toBeInTheDocument();
@@ -143,7 +143,7 @@ describe("ImageLightbox", () => {
           { contentString: "data:image/png;base64,aaa", name: "a.png" },
           { contentString: "data:image/png;base64,bbb", name: "b.png" },
         ],
-        1
+        1,
       );
     });
     fireEvent.click(screen.getByLabelText("Next image"));
@@ -158,7 +158,7 @@ describe("ImageLightbox", () => {
           { contentString: "data:image/png;base64,aaa", name: "a.png" },
           { contentString: "data:image/png;base64,bbb", name: "b.png" },
         ],
-        0
+        0,
       );
     });
     fireEvent.click(screen.getByLabelText("Previous image"));
@@ -170,7 +170,7 @@ describe("ImageLightbox", () => {
     act(() => {
       openImageLightbox(
         [{ contentString: "data:image/png;base64,abc", name: "esc.png" }],
-        0
+        0,
       );
     });
     expect(screen.getByRole("img")).toBeInTheDocument();

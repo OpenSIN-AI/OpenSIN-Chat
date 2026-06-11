@@ -9,9 +9,7 @@ import { FullScreenLoader } from "@/components/Preloader";
 import paths from "@/utils/paths";
 import { Info } from "@phosphor-icons/react";
 import UserItems from "./UserItems";
-import useCommunityHubSettings, {
-  COMMUNITY_HUB_SETTINGS_KEY,
-} from "@/hooks/useCommunityHubSettings";
+import useCommunityHubSettings from "@/hooks/useCommunityHubSettings";
 
 export default function CommunityHubAuthentication() {
   const { settings, isLoading, mutate } = useCommunityHubSettings();

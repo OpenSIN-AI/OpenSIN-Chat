@@ -11,7 +11,7 @@ vi.mock("@/models/system", () => ({
 }));
 
 import System from "@/models/system";
-import useDocuments, { DOCUMENTS_KEY } from "./useDocuments";
+import useDocuments from "./useDocuments";
 
 // Each test gets a fresh, isolated SWR cache and de-duping disabled so calls
 // are deterministic.
@@ -31,7 +31,11 @@ describe("useDocuments", () => {
   it("returns documents from System.localFiles()", async () => {
     const fixture = {
       items: [
-        { name: "custom-documents", type: "folder", items: [{ id: 1, name: "doc1.txt", type: "file" }] },
+        {
+          name: "custom-documents",
+          type: "folder",
+          items: [{ id: 1, name: "doc1.txt", type: "file" }],
+        },
       ],
     };
     System.localFiles.mockResolvedValue(fixture);
@@ -60,7 +64,9 @@ describe("useDocuments", () => {
     // in a single underlying request.
     function sharedWrapper({ children }) {
       return (
-        <SWRConfig value={{ provider: () => new Map(), dedupingInterval: 2000 }}>
+        <SWRConfig
+          value={{ provider: () => new Map(), dedupingInterval: 2000 }}
+        >
           {children}
         </SWRConfig>
       );

@@ -38,8 +38,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
 
   const effectiveProvider =
     workspace?.chatProvider ?? systemSettings?.LLMProvider;
-  const routerId =
-    workspace?.router_id || systemSettings?.ModelRouterId;
+  const routerId = workspace?.router_id || systemSettings?.ModelRouterId;
   const { router } = useModelRouter(
     effectiveProvider === "openafd-router" ? routerId : null,
   );

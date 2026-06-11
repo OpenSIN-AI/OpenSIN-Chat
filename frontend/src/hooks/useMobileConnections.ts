@@ -8,7 +8,7 @@ export default function useMobileConnections() {
   const { data, error, isLoading, mutate } = useSWR(
     MOBILE_CONNECTIONS_KEY,
     () => MobileConnection.getDevices(),
-    { revalidateOnFocus: false, refreshInterval: 5000 }
+    { revalidateOnFocus: false, refreshInterval: 5000 },
   );
 
   return {

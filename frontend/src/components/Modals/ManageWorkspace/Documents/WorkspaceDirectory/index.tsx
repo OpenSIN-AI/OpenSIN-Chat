@@ -38,7 +38,9 @@ function WorkspaceDirectory({
   const [selectedItems, setSelectedItems] = useState({});
 
   if (loading) {
-    return <LoadingState workspace={workspace} loadingMessage={loadingMessage} />;
+    return (
+      <LoadingState workspace={workspace} loadingMessage={loadingMessage} />
+    );
   }
 
   if (embeddingProgress) {
@@ -98,7 +100,9 @@ function WorkspaceDirectory({
   return (
     <div className="px-8">
       <div className="flex items-center justify-start w-[560px]">
-        <h3 className="text-white text-base font-bold ml-5">{workspace.name}</h3>
+        <h3 className="text-white text-base font-bold ml-5">
+          {workspace.name}
+        </h3>
       </div>
       <div className="relative w-[560px] h-[445px] mt-5">
         <div
@@ -109,7 +113,8 @@ function WorkspaceDirectory({
         <div className="relative w-full h-full bg-theme-settings-input-bg rounded-2xl overflow-hidden border border-theme-modal-border">
           <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10">
             <div className="col-span-10 flex items-center gap-x-[4px]">
-              {!hasChanges && files.items.some((folder) => folder.items.length > 0) ? (
+              {!hasChanges &&
+              files.items.some((folder) => folder.items.length > 0) ? (
                 <div
                   className="shrink-0 w-3 h-3 rounded border-[1px] border-solid border-white text-theme-text-primary flex justify-center items-center cursor-pointer"
                   role="checkbox"
@@ -117,7 +122,9 @@ function WorkspaceDirectory({
                   tabIndex={0}
                   onClick={handleToggleSelectAll}
                 >
-                  {allSelected && <div className="w-2 h-2 bg-white rounded-[2px]" />}
+                  {allSelected && (
+                    <div className="w-2 h-2 bg-white rounded-[2px]" />
+                  )}
                 </div>
               ) : (
                 <div className="shrink-0 w-3 h-3" />

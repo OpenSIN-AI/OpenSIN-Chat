@@ -27,10 +27,12 @@ describe("AgentFlows model", () => {
 
   describe("saveFlow", () => {
     it("saves new flow without uuid", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({
-        success: true,
-        flow: { name: "Test Flow", config: { steps: [] }, uuid: "new-uuid" }
-      }));
+      global.fetch = vi.fn().mockResolvedValue(
+        jsonResponse({
+          success: true,
+          flow: { name: "Test Flow", config: { steps: [] }, uuid: "new-uuid" },
+        }),
+      );
       const { default: AgentFlows } = await import("./agentFlows");
       const result = await AgentFlows.saveFlow("Test Flow", { steps: [] });
       expect(result.success).toBe(true);
@@ -38,29 +40,49 @@ describe("AgentFlows model", () => {
         "/api/agent-flows/save",
         expect.objectContaining({
           method: "POST",
-          body: JSON.stringify({ name: "Test Flow", config: { steps: [] }, uuid: null }),
-        })
+          body: JSON.stringify({
+            name: "Test Flow",
+            config: { steps: [] },
+            uuid: null,
+          }),
+        }),
       );
     });
 
     it("saves flow with uuid for update", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({
-        success: true,
-        flow: { name: "Updated Flow", config: { steps: [] }, uuid: "existing-uuid" }
-      }));
+      global.fetch = vi.fn().mockResolvedValue(
+        jsonResponse({
+          success: true,
+          flow: {
+            name: "Updated Flow",
+            config: { steps: [] },
+            uuid: "existing-uuid",
+          },
+        }),
+      );
       const { default: AgentFlows } = await import("./agentFlows");
-      const result = await AgentFlows.saveFlow("Updated Flow", { steps: [] }, "existing-uuid");
+      const result = await AgentFlows.saveFlow(
+        "Updated Flow",
+        { steps: [] },
+        "existing-uuid",
+      );
       expect(result.success).toBe(true);
       expect(global.fetch).toHaveBeenCalledWith(
         "/api/agent-flows/save",
         expect.objectContaining({
-          body: JSON.stringify({ name: "Updated Flow", config: { steps: [] }, uuid: "existing-uuid" }),
-        })
+          body: JSON.stringify({
+            name: "Updated Flow",
+            config: { steps: [] },
+            uuid: "existing-uuid",
+          }),
+        }),
       );
     });
 
     it("returns error on failed save", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ error: "Validation failed" }, 400));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ error: "Validation failed" }, 400));
       const { default: AgentFlows } = await import("./agentFlows");
       const result = await AgentFlows.saveFlow("Test", {});
       expect(result.success).toBe(false);
@@ -78,18 +100,23 @@ describe("AgentFlows model", () => {
 
   describe("listFlows", () => {
     it("returns list of flows on success", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({
-        success: true,
-        flows: [
-          { name: "Flow 1", uuid: "1", description: "Desc 1", steps: [] },
-          { name: "Flow 2", uuid: "2", description: "Desc 2", steps: [] },
-        ]
-      }));
+      global.fetch = vi.fn().mockResolvedValue(
+        jsonResponse({
+          success: true,
+          flows: [
+            { name: "Flow 1", uuid: "1", description: "Desc 1", steps: [] },
+            { name: "Flow 2", uuid: "2", description: "Desc 2", steps: [] },
+          ],
+        }),
+      );
       const { default: AgentFlows } = await import("./agentFlows");
       const result = await AgentFlows.listFlows();
       expect(result.success).toBe(true);
       expect(result.flows).toHaveLength(2);
-      expect(global.fetch).toHaveBeenCalledWith("/api/agent-flows/list", expect.any(Object));
+      expect(global.fetch).toHaveBeenCalledWith(
+        "/api/agent-flows/list",
+        expect.any(Object),
+      );
     });
 
     it("returns empty array on error", async () => {
@@ -103,19 +130,26 @@ describe("AgentFlows model", () => {
 
   describe("getFlow", () => {
     it("returns flow by uuid", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({
-        success: true,
-        flow: { name: "Test Flow", config: { steps: [] }, uuid: "test-uuid" }
-      }));
+      global.fetch = vi.fn().mockResolvedValue(
+        jsonResponse({
+          success: true,
+          flow: { name: "Test Flow", config: { steps: [] }, uuid: "test-uuid" },
+        }),
+      );
       const { default: AgentFlows } = await import("./agentFlows");
       const result = await AgentFlows.getFlow("test-uuid");
       expect(result.success).toBe(true);
       expect(result.flow.name).toBe("Test Flow");
-      expect(global.fetch).toHaveBeenCalledWith("/api/agent-flows/test-uuid", expect.any(Object));
+      expect(global.fetch).toHaveBeenCalledWith(
+        "/api/agent-flows/test-uuid",
+        expect.any(Object),
+      );
     });
 
     it("returns error on failed get", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ error: "Not found" }, 404));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ error: "Not found" }, 404));
       const { default: AgentFlows } = await import("./agentFlows");
       const result = await AgentFlows.getFlow("invalid");
       expect(result.success).toBe(false);
@@ -137,11 +171,16 @@ describe("AgentFlows model", () => {
       const { default: AgentFlows } = await import("./agentFlows");
       const result = await AgentFlows.deleteFlow("test-uuid");
       expect(result.success).toBe(true);
-      expect(global.fetch).toHaveBeenCalledWith("/api/agent-flows/test-uuid", expect.objectContaining({ method: "DELETE" }));
+      expect(global.fetch).toHaveBeenCalledWith(
+        "/api/agent-flows/test-uuid",
+        expect.objectContaining({ method: "DELETE" }),
+      );
     });
 
     it("returns error on failed delete", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ error: "Failed" }, 500));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ error: "Failed" }, 500));
       const { default: AgentFlows } = await import("./agentFlows");
       const result = await AgentFlows.deleteFlow("test-uuid");
       expect(result.success).toBe(false);
@@ -150,10 +189,12 @@ describe("AgentFlows model", () => {
 
   describe("toggleFlow", () => {
     it("toggles flow active status", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({
-        success: true,
-        flow: { name: "Test", active: true }
-      }));
+      global.fetch = vi.fn().mockResolvedValue(
+        jsonResponse({
+          success: true,
+          flow: { name: "Test", active: true },
+        }),
+      );
       const { default: AgentFlows } = await import("./agentFlows");
       const result = await AgentFlows.toggleFlow("test-uuid", true);
       expect(result.success).toBe(true);
@@ -162,7 +203,7 @@ describe("AgentFlows model", () => {
         expect.objectContaining({
           method: "POST",
           body: JSON.stringify({ active: true }),
-        })
+        }),
       );
     });
 

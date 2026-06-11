@@ -18,7 +18,7 @@ export default function useGetProviderModels(provider: string | null = null) {
   return {
     defaultModels:
       provider && PROVIDER_DEFAULT_MODELS.hasOwnProperty(provider)
-        ? PROVIDER_DEFAULT_MODELS[provider] ?? []
+        ? (PROVIDER_DEFAULT_MODELS[provider] ?? [])
         : [],
     customModels,
     loading: isLoading,

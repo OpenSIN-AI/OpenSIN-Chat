@@ -29,7 +29,10 @@ describe("useCanViewChatHistory", () => {
   });
 
   it("resolves viewable from API response", async () => {
-    System.fetchCanViewChatHistory.mockResolvedValue({ viewable: true, error: null });
+    System.fetchCanViewChatHistory.mockResolvedValue({
+      viewable: true,
+      error: null,
+    });
     const { result } = renderHook(() => useCanViewChatHistory(), { wrapper });
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.viewable).toBe(true);
@@ -37,7 +40,10 @@ describe("useCanViewChatHistory", () => {
   });
 
   it("defaults to viewable=false when API returns no viewable", async () => {
-    System.fetchCanViewChatHistory.mockResolvedValue({ viewable: false, error: null });
+    System.fetchCanViewChatHistory.mockResolvedValue({
+      viewable: false,
+      error: null,
+    });
     const { result } = renderHook(() => useCanViewChatHistory(), { wrapper });
     await waitFor(() => expect(result.current.loading).toBe(false));
     expect(result.current.viewable).toBe(false);

@@ -77,7 +77,9 @@ const modelPatterns = [
  */
 function findIconByModelName(modelName: any) {
   if (!modelName) return null;
-  const match = modelPatterns.find(({ pattern }: any) => pattern.test(modelName));
+  const match = modelPatterns.find(({ pattern }: any) =>
+    pattern.test(modelName),
+  );
   return match?.icon || null;
 }
 
@@ -91,7 +93,12 @@ function findIconByModelName(modelName: any) {
  * @returns {React.ReactNode}
  */
 export default function MonoProviderIcon({
-  provider, match = "exact", size = 24, className = "", fallbackIconKey = null, }: any) {
+  provider,
+  match = "exact",
+  size = 24,
+  className = "",
+  fallbackIconKey = null,
+}: any) {
   let Icon = null;
 
   if (match === "exact") Icon = providerIcons[provider?.toLowerCase()];

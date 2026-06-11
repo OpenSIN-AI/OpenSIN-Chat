@@ -8,12 +8,8 @@ import CTAButton from "@/components/lib/CTAButton";
 import useWorkspaceMembers from "@/hooks/useWorkspaceMembers";
 
 export default function Members({ workspace }) {
-  const {
-    users,
-    workspaceUsers,
-    adminWorkspace,
-    isLoading,
-  } = useWorkspaceMembers(workspace.id);
+  const { users, workspaceUsers, adminWorkspace, isLoading } =
+    useWorkspaceMembers(workspace.id);
 
   const { isOpen, openModal, closeModal } = useModal();
 

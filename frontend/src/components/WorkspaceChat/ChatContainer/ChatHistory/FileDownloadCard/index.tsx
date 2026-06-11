@@ -7,22 +7,119 @@ import { humanFileSize } from "@/utils/numbers";
 import StorageFiles from "@/models/files";
 import { useChatSidebar } from "../../ChatSidebar";
 import { API_BASE } from "@/utils/constants";
-import { baseHeaders } from "@/utils/request";
+import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
 
-// Module-level guard so a freshly generated report only auto-opens the preview
-// once — never again on re-renders or when the chat history reloads.
 const autoPreviewedFiles = new Set();
 
-/**
- * @param {{content: {filename: string, storageFilename?: string, fileSize?: number}}} props
- * @param {boolean} [autoPreview] - When true (live agent output), opens the
- *   preview sidebar automatically the first time this report is rendered (#55).
- */
-function FileDownloadCard({ props, autoPreview = false }: any) {
+const IMAGE_EXTENSIONS = new Set(["png", "jpg", "jpeg", "gif", "webp", "svg"]);
+
+const FILE_TYPE_MAP = {
+  ppt: {
+    badge: "PPT",
+    badgeBg: "bg-orange-100",
+    badgeText: "text-orange-700",
+    fileType: "PowerPoint",
+  },
+  pptx: {
+    badge: "PPT",
+    badgeBg: "bg-orange-100",
+    badgeText: "text-orange-700",
+    fileType: "PowerPoint",
+  },
+  pdf: {
+    badge: "PDF",
+    badgeBg: "bg-red-100",
+    badgeText: "text-red-700",
+    fileType: "PDF Document",
+  },
+  doc: {
+    badge: "DOC",
+    badgeBg: "bg-blue-100",
+    badgeText: "text-blue-700",
+    fileType: "Word Document",
+  },
+  docx: {
+    badge: "DOC",
+    badgeBg: "bg-blue-100",
+    badgeText: "text-blue-700",
+    fileType: "Word Document",
+  },
+  xls: {
+    badge: "XLS",
+    badgeBg: "bg-green-100",
+    badgeText: "text-green-700",
+    fileType: "Spreadsheet",
+  },
+  xlsx: {
+    badge: "XLS",
+    badgeBg: "bg-green-100",
+    badgeText: "text-green-700",
+    fileType: "Spreadsheet",
+  },
+  csv: {
+    badge: "CSV",
+    badgeBg: "bg-green-100",
+    badgeText: "text-green-700",
+    fileType: "Spreadsheet",
+  },
+  png: {
+    badge: "IMG",
+    badgeBg: "bg-purple-100",
+    badgeText: "text-purple-700",
+    fileType: "Image",
+  },
+  jpg: {
+    badge: "IMG",
+    badgeBg: "bg-purple-100",
+    badgeText: "text-purple-700",
+    fileType: "Image",
+  },
+  jpeg: {
+    badge: "IMG",
+    badgeBg: "bg-purple-100",
+    badgeText: "text-purple-700",
+    fileType: "Image",
+  },
+  gif: {
+    badge: "IMG",
+    badgeBg: "bg-purple-100",
+    badgeText: "text-purple-700",
+    fileType: "Image",
+  },
+  webp: {
+    badge: "IMG",
+    badgeBg: "bg-purple-100",
+    badgeText: "text-purple-700",
+    fileType: "Image",
+  },
+  svg: {
+    badge: "SVG",
+    badgeBg: "bg-purple-100",
+    badgeText: "text-purple-700",
+    fileType: "Vector Image",
+  },
+};
+
+export function getFileDisplayInfo(filename) {
+  const extension = filename?.split(".")?.pop()?.toLowerCase() ?? "txt";
+  const isImage = IMAGE_EXTENSIONS.has(extension);
+  const previewType = isImage ? "image" : extension === "pdf" ? "pdf" : "doc";
+  const base = FILE_TYPE_MAP[extension] ?? {
+    badge: extension.toUpperCase().slice(0, 4),
+    badgeBg: "bg-slate-200",
+    badgeText: "text-slate-700",
+    fileType: "File",
+  };
+  return { ...base, extension, isImage, previewType };
+}
+
+function FileDownloadCard({ props, autoPreview = false }) {
   const { t } = useTranslation();
-  const { filename, storageFilename, fileSize, downloadUrl } = props.content || {};
-  const { badge, badgeBg, badgeText, fileType, isImage, previewType } = getFileDisplayInfo(filename);
-  const [downloading, setDownloading] = useState(false as any);
+  const { filename, storageFilename, fileSize, downloadUrl } =
+    props.content || {};
+  const { badge, badgeBg, badgeText, fileType, isImage, previewType } =
+    getFileDisplayInfo(filename);
+  const [downloading, setDownloading] = useState(false);
   const { openPreview } = useChatSidebar();
 
   const previewUrl =
@@ -33,7 +130,7 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
 
   function buildPreviewData() {
     return {
-      title: filename || "Vorschau",
+      title: filename || t("preview.title"),
       type: previewType,
       downloadUrl: previewUrl,
       versions: [],
@@ -45,8 +142,6 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
     openPreview(buildPreviewData());
   }
 
-  // #55: Automatically reveal the preview sidebar when an agent generates a
-  // new file. Skip for images — they get an inline <img> banner.
   const didAutoOpen = useRef(false);
   useEffect(() => {
     if (!autoPreview || isImage || didAutoOpen.current || !previewUrl) return;
@@ -55,8 +150,14 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
     autoPreviewedFiles.add(key);
     didAutoOpen.current = true;
     openPreview(buildPreviewData());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPreview, isImage, previewUrl, storageFilename, downloadUrl, filename]);
+  }, [
+    autoPreview,
+    isImage,
+    previewUrl,
+    storageFilename,
+    downloadUrl,
+    filename,
+  ]);
 
   const handleDownload = async () => {
     if (downloading) return;
@@ -77,9 +178,11 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
   return (
     <div className="flex justify-center w-full my-2">
       <div className="w-full max-w-[750px] mr-4">
-        {/* Inline image preview for generated images */}
         {isImage && previewUrl && (
-          <ImagePreviewBanner url={previewUrl} alt={filename || t("preview.generated_image")} />
+          <ImagePreviewBanner
+            url={previewUrl}
+            alt={filename || t("preview.generated_image")}
+          />
         )}
 
         <div className="flex items-center justify-between bg-zinc-800 light:bg-slate-100 light:border light:border-slate-200/50 rounded-xl px-2 py-1">
@@ -91,7 +194,7 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
             </div>
             <div className="flex flex-col min-w-0">
               <p className="text-white light:text-slate-900 text-sm font-medium truncate leading-snug">
-                {filename || "Unknown file"}
+                {filename || t("preview.unknown_file")}
               </p>
               <p className="text-zinc-400 light:text-slate-500 text-xs leading-snug">
                 {humanFileSize(fileSize, true, 1)}
@@ -108,7 +211,7 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
                 className="flex items-center gap-x-1.5 px-3 py-2 rounded-lg border border-zinc-700 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-zinc-300 light:text-theme-text-secondary text-sm font-medium"
               >
                 <Eye size={15} weight="regular" />
-                <span>Vorschau</span>
+                <span>{t("preview.open")}</span>
               </button>
             )}
             <button
@@ -121,7 +224,9 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
               ) : (
                 <DownloadSimple size={16} weight="bold" />
               )}
-              <span>{downloading ? "Downloading..." : "Download"}</span>
+              <span>
+                {downloading ? t("preview.downloading") : t("preview.download")}
+              </span>
             </button>
           </div>
         </div>
@@ -130,45 +235,12 @@ function FileDownloadCard({ props, autoPreview = false }: any) {
   );
 }
 
-/**
- * Renders a generated image inline above the download bar.
- * Fetches via auth-header so the protected /agent-skills/ endpoint
- * returns 200 (a plain <img src> without Bearer would get 401).
- * Shows a skeleton placeholder during load to prevent layout shift.
- */
-function ImagePreviewBanner({ url, alt }: { url: string; alt: string }) {
-  const [blobUrl, setBlobUrl] = useState<string | null>(null);
-  const [error, setError] = useState(false);
+function ImagePreviewBanner({ url, alt }) {
+  const { blobUrl, error, loading } = useAuthenticatedBlobUrl(url);
 
-  useEffect(() => {
-    let objectUrl: string | null = null;
-    let cancelled = false;
-
-    fetch(url, { headers: baseHeaders() })
-      .then((res) => {
-        if (!res.ok) throw new Error(`${res.status}`);
-        return res.blob();
-      })
-      .then((blob) => {
-        if (cancelled) return;
-        objectUrl = URL.createObjectURL(blob);
-        setBlobUrl(objectUrl);
-      })
-      .catch(() => {
-        if (!cancelled) setError(true);
-      });
-
-    return () => {
-      cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [url]);
-
-  // Error: show nothing (the download card still works)
   if (error) return null;
 
-  // Loading: skeleton to prevent CLS
-  if (!blobUrl) {
+  if (loading) {
     return (
       <div className="mb-2 rounded-xl overflow-hidden border border-zinc-700 light:border-slate-200 bg-zinc-900 light:bg-slate-50 h-[200px] flex items-center justify-center">
         <div className="w-8 h-8 rounded-full border-2 border-zinc-600 border-t-zinc-300 animate-spin" />
@@ -185,100 +257,6 @@ function ImagePreviewBanner({ url, alt }: { url: string; alt: string }) {
       />
     </div>
   );
-}
-
-/**
- * Get display info for a file based on its extension.
- */
-function getFileDisplayInfo(filename: any) {
-  const extension = filename?.split(".")?.pop()?.toLowerCase() ?? "txt";
-  const imageExts = new Set(["png", "jpg", "jpeg", "gif", "webp", "svg"]);
-  const isImage = imageExts.has(extension);
-  let previewType = "doc";
-  if (isImage) previewType = "image";
-  else if (extension === "pdf") previewType = "pdf";
-
-  switch (extension) {
-    case "pptx":
-    case "ppt":
-      return {
-        badge: "PPT",
-        badgeBg: "bg-orange-100",
-        badgeText: "text-orange-700",
-        fileType: "PowerPoint",
-        isImage,
-        previewType,
-      };
-    case "pdf":
-      return {
-        badge: "PDF",
-        badgeBg: "bg-red-100",
-        badgeText: "text-red-700",
-        fileType: "PDF Document",
-        isImage,
-        previewType,
-      };
-    case "doc":
-    case "docx":
-      return {
-        badge: "DOC",
-        badgeBg: "bg-blue-100",
-        badgeText: "text-blue-700",
-        fileType: "Word Document",
-        isImage,
-        previewType,
-      };
-    case "xls":
-    case "xlsx":
-      return {
-        badge: "XLS",
-        badgeBg: "bg-green-100",
-        badgeText: "text-green-700",
-        fileType: "Spreadsheet",
-        isImage,
-        previewType,
-      };
-    case "csv":
-      return {
-        badge: "CSV",
-        badgeBg: "bg-green-100",
-        badgeText: "text-green-700",
-        fileType: "Spreadsheet",
-        isImage,
-        previewType,
-      };
-    case "png":
-    case "jpg":
-    case "jpeg":
-    case "gif":
-    case "webp":
-      return {
-        badge: "IMG",
-        badgeBg: "bg-purple-100",
-        badgeText: "text-purple-700",
-        fileType: "Image",
-        isImage,
-        previewType,
-      };
-    case "svg":
-      return {
-        badge: "SVG",
-        badgeBg: "bg-purple-100",
-        badgeText: "text-purple-700",
-        fileType: "Vector Image",
-        isImage,
-        previewType,
-      };
-    default:
-      return {
-        badge: extension.toUpperCase().slice(0, 4),
-        badgeBg: "bg-slate-200",
-        badgeText: "text-slate-700",
-        fileType: "File",
-        isImage,
-        previewType,
-      };
-  }
 }
 
 export default memo(FileDownloadCard);

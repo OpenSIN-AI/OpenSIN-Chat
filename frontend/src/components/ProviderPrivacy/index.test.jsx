@@ -43,7 +43,11 @@ describe("ProviderPrivacy", () => {
 
   it("renders three provider sections when settings are loaded", () => {
     useSystemSettings.mockReturnValue({
-      settings: { LLMProvider: "openai", EmbeddingEngine: "native", VectorDB: "chroma" },
+      settings: {
+        LLMProvider: "openai",
+        EmbeddingEngine: "native",
+        VectorDB: "chroma",
+      },
       loading: false,
     });
     render(<ProviderPrivacy />);
@@ -54,7 +58,11 @@ describe("ProviderPrivacy", () => {
 
   it("renders provider name from PROVIDER_PRIVACY_MAP", () => {
     useSystemSettings.mockReturnValue({
-      settings: { LLMProvider: "openai", EmbeddingEngine: "native", VectorDB: "chroma" },
+      settings: {
+        LLMProvider: "openai",
+        EmbeddingEngine: "native",
+        VectorDB: "chroma",
+      },
       loading: false,
     });
     render(<ProviderPrivacy />);
@@ -64,26 +72,36 @@ describe("ProviderPrivacy", () => {
 
   it("renders privacy policy link when provider has policyUrl", () => {
     useSystemSettings.mockReturnValue({
-      settings: { LLMProvider: "openai", EmbeddingEngine: "native", VectorDB: "chroma" },
+      settings: {
+        LLMProvider: "openai",
+        EmbeddingEngine: "native",
+        VectorDB: "chroma",
+      },
       loading: false,
     });
     render(<ProviderPrivacy />);
     const link = screen.getByTestId("policy-link");
     expect(link).toBeInTheDocument();
-    expect(link.getAttribute("href")).toBe("https://openai.com/policies/privacy-policy/");
+    expect(link.getAttribute("href")).toBe(
+      "https://openai.com/policies/privacy-policy/",
+    );
     expect(screen.getByText("privacy policy")).toBeInTheDocument();
   });
 
   it("renders description list when provider has no policyUrl", () => {
     useSystemSettings.mockReturnValue({
-      settings: { LLMProvider: "ollama", EmbeddingEngine: "native", VectorDB: "lancedb" },
+      settings: {
+        LLMProvider: "ollama",
+        EmbeddingEngine: "native",
+        VectorDB: "lancedb",
+      },
       loading: false,
     });
     render(<ProviderPrivacy />);
     expect(
       screen.getByText(
-        "Your model and chats are only accessible on the machine running Ollama models."
-      )
+        "Your model and chats are only accessible on the machine running Ollama models.",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -99,7 +117,11 @@ describe("ProviderPrivacy", () => {
 
   it("renders default provider name for unknown provider strings", () => {
     useSystemSettings.mockReturnValue({
-      settings: { LLMProvider: "some-unknown-provider", EmbeddingEngine: "native", VectorDB: "chroma" },
+      settings: {
+        LLMProvider: "some-unknown-provider",
+        EmbeddingEngine: "native",
+        VectorDB: "chroma",
+      },
       loading: false,
     });
     render(<ProviderPrivacy />);

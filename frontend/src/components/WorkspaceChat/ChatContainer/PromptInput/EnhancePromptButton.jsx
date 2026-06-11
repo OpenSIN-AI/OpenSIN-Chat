@@ -44,7 +44,10 @@ export default function EnhancePromptButton({
         onClick={handleEnhance}
         disabled={loading || isStreaming}
         data-tooltip-id="enhance-prompt"
-        data-tooltip-content={t("chat_window.enhance_prompt", "Prompt verbessern")}
+        data-tooltip-content={t(
+          "chat_window.enhance_prompt",
+          "Prompt verbessern",
+        )}
         aria-label={t("chat_window.enhance_prompt", "Prompt verbessern")}
         className={`group border-none flex justify-center items-center rounded-full w-8 h-8 transition-all ${
           loading || isStreaming

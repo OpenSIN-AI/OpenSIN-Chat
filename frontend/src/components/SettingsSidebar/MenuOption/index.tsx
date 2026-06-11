@@ -7,7 +7,16 @@ import { isPathMatch } from "@/utils/paths";
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 
 export default function MenuOption({
-  btnText, icon, href, childOptions = [], flex = false, user = null, roles = [], hidden = false, isChild = false, }: any) {
+  btnText,
+  icon,
+  href,
+  childOptions = [],
+  flex = false,
+  user = null,
+  roles = [],
+  hidden = false,
+  isChild = false,
+}: any) {
   const storageKey = generateStorageKey({ key: btnText });
   const location = useLocation();
   const hasChildren = childOptions.length > 0;
@@ -125,14 +134,20 @@ export default function MenuOption({
 }
 
 function useIsExpanded({
-  storageKey = "", hasVisibleChildren = false, childOptions = [], location = null, }: any) {
+  storageKey = "",
+  hasVisibleChildren = false,
+  childOptions = [],
+  location = null,
+}: any) {
   const [isExpanded, setIsExpanded] = useState(() => {
     if (hasVisibleChildren) {
       const storedValue = localStorage.getItem(storageKey);
       if (storedValue !== null) {
         return safeJsonParse(storedValue, false);
       }
-      return (childOptions as any).some((child) => isPathMatch(child.href, location));
+      return (childOptions as any).some((child) =>
+        isPathMatch(child.href, location),
+      );
     }
     return false;
   });
@@ -165,7 +180,11 @@ function hasVisibleOptions(user: any = null, childOptions: any = []) {
   if (!Array.isArray(childOptions) || childOptions?.length === 0) return false;
 
   function isVisible({
-    roles = [], user = null, flex = false, hidden = false, }: any) {
+    roles = [],
+    user = null,
+    flex = false,
+    hidden = false,
+  }: any) {
     if (hidden) return false;
     if (!flex && !roles.includes(user?.role)) return false;
     if (flex && !!user && !roles.includes(user?.role)) return false;

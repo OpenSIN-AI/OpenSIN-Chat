@@ -1,5 +1,4 @@
-
-import useProviderModels from "@/hooks/useProviderModels";// SPDX-License-Identifier: MIT
+import useProviderModels from "@/hooks/useProviderModels"; // SPDX-License-Identifier: MIT
 export default function ApiPieLLMOptions({ settings }: any) {
   return (
     <div className="flex flex-col gap-y-4 mt-1.5">

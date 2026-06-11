@@ -60,16 +60,17 @@ describe("useUsers", () => {
 
     function sharedWrapper({ children }) {
       return (
-        <SWRConfig value={{ provider: () => new Map(), dedupingInterval: 2000 }}>
+        <SWRConfig
+          value={{ provider: () => new Map(), dedupingInterval: 2000 }}
+        >
           {children}
         </SWRConfig>
       );
     }
 
-    const { result } = renderHook(
-      () => ({ a: useUsers(), b: useUsers() }),
-      { wrapper: sharedWrapper },
-    );
+    const { result } = renderHook(() => ({ a: useUsers(), b: useUsers() }), {
+      wrapper: sharedWrapper,
+    });
 
     await waitFor(() => expect(result.current.a.isLoading).toBe(false));
     expect(Admin.users).toHaveBeenCalledTimes(1);

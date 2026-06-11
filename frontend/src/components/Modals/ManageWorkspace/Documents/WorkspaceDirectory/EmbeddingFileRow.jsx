@@ -1,4 +1,10 @@
-import { CheckCircle, XCircle, CircleNotch, Clock, X } from "@phosphor-icons/react";
+import {
+  CheckCircle,
+  XCircle,
+  CircleNotch,
+  Clock,
+  X,
+} from "@phosphor-icons/react";
 import { middleTruncate } from "@/utils/directories";
 
 /**

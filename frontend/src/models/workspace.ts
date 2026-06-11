@@ -4,9 +4,14 @@
  * Handles workspace, thread, and chat operations.
  */
 
-import { API_BASE, fullApiUrl } from "@/utils/constants";
-import { baseHeaders, safeJsonParse } from "@/utils/request";
-import type { Workspace, Thread, Message, ChatHistory } from "@/types/workspace";
+import { fullApiUrl } from "@/utils/constants";
+import { baseHeaders } from "@/utils/request";
+import type {
+  Workspace,
+  Thread,
+  Message,
+  ChatHistory,
+} from "@/types/workspace";
 import type { ApiResponse } from "@/types/api";
 
 interface WorkspaceResponse extends ApiResponse<Workspace> {}
@@ -65,7 +70,7 @@ const Workspace: any = {
    */
   update: async function (
     slug: string,
-    data: Partial<Workspace>
+    data: Partial<Workspace>,
   ): Promise<Workspace | null> {
     try {
       const res = await fetch(`${fullApiUrl()}/workspace/${slug}`, {
@@ -105,9 +110,12 @@ const Workspace: any = {
      */
     all: async function (workspaceSlug: string): Promise<Thread[]> {
       try {
-        const res = await fetch(`${fullApiUrl()}/workspace/${workspaceSlug}/threads`, {
-          headers: baseHeaders(),
-        });
+        const res = await fetch(
+          `${fullApiUrl()}/workspace/${workspaceSlug}/threads`,
+          {
+            headers: baseHeaders(),
+          },
+        );
         if (!res.ok) return [];
         const json = await res.json();
         return json?.threads || [];
@@ -121,12 +129,12 @@ const Workspace: any = {
      */
     bySlug: async function (
       workspaceSlug: string,
-      threadSlug: string
+      threadSlug: string,
     ): Promise<Thread | null> {
       try {
         const res = await fetch(
           `${fullApiUrl()}/workspace/${workspaceSlug}/thread/${threadSlug}`,
-          { headers: baseHeaders() }
+          { headers: baseHeaders() },
         );
         if (!res.ok) return null;
         const json = await res.json();
@@ -141,12 +149,12 @@ const Workspace: any = {
      */
     chatHistory: async function (
       workspaceSlug: string,
-      threadSlug: string
+      threadSlug: string,
     ): Promise<Message[]> {
       try {
         const res = await fetch(
           `${fullApiUrl()}/workspace/${workspaceSlug}/thread/${threadSlug}/messages`,
-          { headers: baseHeaders() }
+          { headers: baseHeaders() },
         );
         if (!res.ok) return [];
         const json = await res.json();
@@ -161,14 +169,17 @@ const Workspace: any = {
      */
     create: async function (
       workspaceSlug: string,
-      data: Partial<Thread>
+      data: Partial<Thread>,
     ): Promise<Thread | null> {
       try {
-        const res = await fetch(`${fullApiUrl()}/workspace/${workspaceSlug}/thread/new`, {
-          method: "POST",
-          headers: baseHeaders(),
-          body: JSON.stringify(data),
-        });
+        const res = await fetch(
+          `${fullApiUrl()}/workspace/${workspaceSlug}/thread/new`,
+          {
+            method: "POST",
+            headers: baseHeaders(),
+            body: JSON.stringify(data),
+          },
+        );
         if (!res.ok) throw new Error("Failed to create thread");
         const json = await res.json();
         return json?.thread || null;
@@ -183,7 +194,7 @@ const Workspace: any = {
     update: async function (
       workspaceSlug: string,
       threadSlug: string,
-      data: Partial<Thread>
+      data: Partial<Thread>,
     ): Promise<Thread | null> {
       try {
         const res = await fetch(
@@ -192,7 +203,7 @@ const Workspace: any = {
             method: "POST",
             headers: baseHeaders(),
             body: JSON.stringify(data),
-          }
+          },
         );
         if (!res.ok) throw new Error("Failed to update thread");
         const json = await res.json();
@@ -207,12 +218,12 @@ const Workspace: any = {
      */
     delete: async function (
       workspaceSlug: string,
-      threadSlug: string
+      threadSlug: string,
     ): Promise<boolean> {
       try {
         const res = await fetch(
           `${fullApiUrl()}/workspace/${workspaceSlug}/thread/${threadSlug}`,
-          { method: "DELETE", headers: baseHeaders() }
+          { method: "DELETE", headers: baseHeaders() },
         );
         return res.ok;
       } catch {
@@ -228,7 +239,7 @@ const Workspace: any = {
     workspaceSlug: string,
     threadSlug: string,
     message: string,
-    onStream?: (chunk: string) => void
+    onStream?: (chunk: string) => void,
   ): Promise<string> {
     try {
       const res = await fetch(
@@ -237,7 +248,7 @@ const Workspace: any = {
           method: "POST",
           headers: baseHeaders(),
           body: JSON.stringify({ message }),
-        }
+        },
       );
       if (!res.ok) throw new Error("Failed to send message");
       const json = await res.json();
@@ -253,14 +264,17 @@ const Workspace: any = {
    */
   modifyEmbeddings: async function (
     slug: string,
-    data: { adds: string[]; deletes: string[] }
+    data: { adds: string[]; deletes: string[] },
   ): Promise<{ success: boolean }> {
     try {
-      const res = await fetch(`${fullApiUrl()}/workspace/${slug}/modify-embeddings`, {
-        method: "POST",
-        headers: baseHeaders(),
-        body: JSON.stringify(data),
-      });
+      const res = await fetch(
+        `${fullApiUrl()}/workspace/${slug}/modify-embeddings`,
+        {
+          method: "POST",
+          headers: baseHeaders(),
+          body: JSON.stringify(data),
+        },
+      );
       if (!res.ok) throw new Error("Failed to modify embeddings");
       return { success: true };
     } catch {

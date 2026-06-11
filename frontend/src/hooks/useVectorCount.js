@@ -7,7 +7,7 @@ export const VECTOR_COUNT_KEY = "system/vector-count";
 export default function useVectorCount(slug) {
   const { data, error, isLoading, mutate } = useSWR(
     slug ? [VECTOR_COUNT_KEY, slug] : null,
-    () => System.totalIndexes(slug)
+    () => System.totalIndexes(slug),
   );
 
   return {

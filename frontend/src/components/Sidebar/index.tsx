@@ -39,11 +39,7 @@ export default function Sidebar() {
     const stored = window.localStorage.getItem(SIDEBAR_WIDTH_STORAGE_KEY);
     if (stored) {
       const n = Number(stored);
-      if (
-        !isNaN(n) &&
-        n >= SIDEBAR_MIN_WIDTH &&
-        n <= SIDEBAR_MAX_WIDTH
-      )
+      if (!isNaN(n) && n >= SIDEBAR_MIN_WIDTH && n <= SIDEBAR_MAX_WIDTH)
         return n;
     }
     return SIDEBAR_DEFAULT_WIDTH;
@@ -57,7 +53,7 @@ export default function Sidebar() {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(
         SIDEBAR_WIDTH_STORAGE_KEY,
-        String(sidebarWidth)
+        String(sidebarWidth),
       );
     }
   }, [sidebarWidth]);
@@ -79,7 +75,7 @@ export default function Sidebar() {
       const delta = e.clientX - resizeStartXRef.current;
       const newWidth = Math.min(
         SIDEBAR_MAX_WIDTH,
-        Math.max(SIDEBAR_MIN_WIDTH, resizeStartWidthRef.current + delta)
+        Math.max(SIDEBAR_MIN_WIDTH, resizeStartWidthRef.current + delta),
       );
       setSidebarWidth(newWidth);
     }
@@ -118,22 +114,22 @@ export default function Sidebar() {
               className="flex items-center"
               style={{ width: sidebarWidth - 48 }}
             >
-                <Link
-                  to={paths.home()}
-                  aria-label="Home"
-                  className="flex items-center gap-x-2.5"
+              <Link
+                to={paths.home()}
+                aria-label="Home"
+                className="flex items-center gap-x-2.5"
+              >
+                <img
+                  src={logo}
+                  alt="Logo"
+                  className={`h-9 w-9 max-h-[36px] max-w-[36px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
+                />
+                <span
+                  className={`text-white font-bold text-lg whitespace-nowrap transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
                 >
-                  <img
-                    src={logo}
-                    alt="Logo"
-                    className={`h-9 w-9 max-h-[36px] max-w-[36px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
-                  />
-                  <span
-                    className={`text-white font-bold text-lg whitespace-nowrap transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
-                  >
-                    OpenSIN
-                  </span>
-                </Link>
+                  OpenSIN
+                </span>
+              </Link>
             </div>
           </div>
           <div

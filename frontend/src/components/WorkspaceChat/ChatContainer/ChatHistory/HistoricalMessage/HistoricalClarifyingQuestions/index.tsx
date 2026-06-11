@@ -26,10 +26,7 @@ function SurveyCard({ survey }: any) {
   if (questions.length === 0) return null;
 
   return (
-    <div
-      
-      className="rounded-[20px] border border-solid border-zinc-700 light:border-zinc-300 bg-transparent p-[18px] flex flex-col gap-[18px]"
-    >
+    <div className="rounded-[20px] border border-solid border-zinc-700 light:border-zinc-300 bg-transparent p-[18px] flex flex-col gap-[18px]">
       <SurveyBody questions={questions} result={result} />
     </div>
   );

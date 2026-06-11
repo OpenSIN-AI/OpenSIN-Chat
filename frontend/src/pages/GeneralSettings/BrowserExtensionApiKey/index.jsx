@@ -14,7 +14,8 @@ import { Tooltip } from "react-tooltip";
 import useBrowserExtensionApiKey from "@/hooks/useBrowserExtensionApiKey";
 
 export default function BrowserExtensionApiKeys() {
-  const { apiKeys, isMultiUser, isLoading, error, refresh } = useBrowserExtensionApiKey();
+  const { apiKeys, isMultiUser, isLoading, error, refresh } =
+    useBrowserExtensionApiKey();
   const { isOpen, openModal, closeModal } = useModal();
 
   const removeApiKey = (id) => {

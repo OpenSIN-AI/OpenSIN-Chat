@@ -13,7 +13,12 @@ import ModalWrapper from "@/components/ModalWrapper";
  * @param {"create"|"edit"} [props.mode]
  */
 export default function MemoryModal({
-  isOpen, onClose, onSubmit, initialContent = "", mode = "create", }: any) {
+  isOpen,
+  onClose,
+  onSubmit,
+  initialContent = "",
+  mode = "create",
+}: any) {
   const { t } = useTranslation();
   const [content, setContent] = useState(initialContent);
   const isCreate = mode === "create";
@@ -74,7 +79,7 @@ export default function MemoryModal({
               e.currentTarget.setSelectionRange(len, len);
             }}
             value={content}
-            onChange={(e) => setContent(((e.target as unknown) as any)?.value)}
+            onChange={(e) => setContent((e.target as unknown as any)?.value)}
             placeholder={t("chat_window.memories.modal.placeholder")}
             rows={4}
             className="w-full bg-zinc-800 light:bg-white text-zinc-50 light:border light:border-slate-300 light:text-slate-700 placeholder:text-zinc-500 light:placeholder:text-slate-400 text-sm rounded-lg p-3 resize-none outline-none focus:border-zinc-500 light:focus:border-slate-400"

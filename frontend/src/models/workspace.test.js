@@ -24,7 +24,9 @@ describe("Workspace", () => {
   describe("static properties", () => {
     it("workspaceOrderStorageKey is a string", () => {
       expect(typeof Workspace.workspaceOrderStorageKey).toBe("string");
-      expect(Workspace.workspaceOrderStorageKey).toBe("openafd-workspace-order");
+      expect(Workspace.workspaceOrderStorageKey).toBe(
+        "openafd-workspace-order",
+      );
     });
 
     it("maxContextWindowLimit is 0.8", () => {
@@ -35,18 +37,22 @@ describe("Workspace", () => {
   describe("new", () => {
     it("sends POST to /workspace/new", async () => {
       const ws = { slug: "test-ws", name: "Test" };
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ workspace: ws, message: "created" }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ workspace: ws, message: "created" }));
 
       await Workspace.new({ name: "Test" });
       expect(global.fetch).toHaveBeenCalledWith(
         expect.stringContaining("/workspace/new"),
-        expect.objectContaining({ method: "POST" })
+        expect.objectContaining({ method: "POST" }),
       );
     });
 
     it("returns { workspace, message } on success", async () => {
       const ws = { slug: "test-ws", name: "Test" };
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ workspace: ws, message: "created" }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ workspace: ws, message: "created" }));
 
       const result = await Workspace.new({ name: "Test" });
       expect(result).toEqual({ workspace: ws, message: "created" });
@@ -64,18 +70,22 @@ describe("Workspace", () => {
   describe("update", () => {
     it("sends POST to /workspace/{slug}/update", async () => {
       const ws = { slug: "my-ws", name: "Updated" };
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ workspace: ws, message: "updated" }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ workspace: ws, message: "updated" }));
 
       await Workspace.update("my-ws", { name: "Updated" });
       expect(global.fetch).toHaveBeenCalledWith(
         expect.stringContaining("/workspace/my-ws/update"),
-        expect.objectContaining({ method: "POST" })
+        expect.objectContaining({ method: "POST" }),
       );
     });
 
     it("returns { workspace, message } on success", async () => {
       const ws = { slug: "my-ws", name: "Updated" };
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ workspace: ws, message: "updated" }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ workspace: ws, message: "updated" }));
 
       const result = await Workspace.update("my-ws", { name: "Updated" });
       expect(result).toEqual({ workspace: ws, message: "updated" });

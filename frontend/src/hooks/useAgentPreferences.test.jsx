@@ -26,7 +26,9 @@ vi.mock("@/models/agentFlows", () => ({
 import System from "@/models/system";
 import Admin from "@/models/admin";
 import AgentFlows from "@/models/agentFlows";
-import useAgentPreferences, { AGENT_PREFERENCES_KEY } from "./useAgentPreferences";
+import useAgentPreferences, {
+  AGENT_PREFERENCES_KEY,
+} from "./useAgentPreferences";
 
 function wrapper({ children }) {
   return (

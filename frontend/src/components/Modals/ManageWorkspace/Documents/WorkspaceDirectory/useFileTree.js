@@ -1,7 +1,14 @@
 import { useState } from "react";
 import Workspace from "@/models/workspace";
 
-export function useFileTree({ workspace, files, setLoading, setLoadingMessage, fetchKeys, saveChanges }) {
+export function useFileTree({
+  workspace,
+  files,
+  setLoading,
+  setLoadingMessage,
+  fetchKeys,
+  saveChanges,
+}) {
   const [selectedItems, setSelectedItems] = useState({});
   const embeddedDocCount = (files?.items ?? []).reduce(
     (sum, folder) => sum + (folder.items?.length ?? 0),

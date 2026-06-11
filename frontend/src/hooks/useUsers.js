@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useEffect } from "react";
 import useSWR from "swr";
 import Admin from "@/models/admin";
 

@@ -33,9 +33,7 @@ describe("useAgentSQLConnections", () => {
   });
 
   it("returns the connections list", async () => {
-    const fakeConnections = [
-      { database_id: "db1", engine: "postgresql" },
-    ];
+    const fakeConnections = [{ database_id: "db1", engine: "postgresql" }];
     Admin.systemPreferencesByFields.mockResolvedValue({
       settings: { agent_sql_connections: fakeConnections },
     });

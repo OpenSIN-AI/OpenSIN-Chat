@@ -19,7 +19,10 @@ import { useIsAgentSessionActive } from "@/utils/chat/agent";
 const MIN_ITEMS_TO_SHOW_SEARCH: any = 10;
 
 export default function AgentSkillsTab({
-  highlightedIndex = -1, registerItemCount, workspace, }: any) {
+  highlightedIndex = -1,
+  registerItemCount,
+  workspace,
+}: any) {
   const { t } = useTranslation();
   const { showAgentCommand = true } = workspace ?? {};
   const agentSessionActive = useIsAgentSessionActive();
@@ -214,7 +217,9 @@ export default function AgentSkillsTab({
                   name={t("chat_window.sub_skills")}
                   expanded={isSubSectionExpanded(item.id)}
                   onToggle={() => toggleSubSection(item.id)}
-                  enabledCount={(item.subSkills as any).filter((s) => s.enabled).length}
+                  enabledCount={
+                    (item.subSkills as any).filter((s) => s.enabled).length
+                  }
                   totalCount={item.subSkills.length}
                   highlighted={
                     highlightedIndex === flatIndexMap[`subsection-${item.id}`]
@@ -280,7 +285,7 @@ function SearchInput({ value, onChange, placeholder }: any) {
         type="text"
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(((e.target as unknown) as any)?.value)}
+        onChange={(e) => onChange((e.target as unknown as any)?.value)}
         onMouseDown={(e) => e.stopPropagation()}
         onKeyDown={(e) => {
           if (e.key === "Escape") {

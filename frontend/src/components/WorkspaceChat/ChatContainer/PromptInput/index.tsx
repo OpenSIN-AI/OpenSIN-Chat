@@ -57,7 +57,13 @@ export default function PromptInput({
     handleChange,
     agentSessionActive,
     showAgentCommand,
-  } = usePromptState({ workspace, submit, isStreaming, sendCommand, isDisabled });
+  } = usePromptState({
+    workspace,
+    submit,
+    isStreaming,
+    sendCommand,
+    isDisabled,
+  });
 
   return (
     <div

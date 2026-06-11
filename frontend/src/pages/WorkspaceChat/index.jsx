@@ -27,7 +27,12 @@ export default function WorkspaceChat() {
 
 function ShowWorkspaceChat() {
   const { slug } = useParams();
-  const { workspace: rawWorkspace, suggestedMessages, showAgentCommand, isLoading } = useWorkspaceChats(slug);
+  const {
+    workspace: rawWorkspace,
+    suggestedMessages,
+    showAgentCommand,
+    isLoading,
+  } = useWorkspaceChats(slug);
   const [workspace, setWorkspace] = useState(null);
   // Tracks which workspace `workspace` belongs to. While a new workspace's
   // data is in flight, we keep the previous workspace's chat mounted

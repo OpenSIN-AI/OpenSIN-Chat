@@ -6,7 +6,14 @@ import { useTranslation } from "react-i18next";
 import useTimeoutProgress from "@/hooks/useTimeoutProgress";
 
 export default function ToolApprovalRequest({
-  requestId, skillName, payload = {}, description = null, timeoutMs = null, websocket, onResponse, }: any) {
+  requestId,
+  skillName,
+  payload = {},
+  description = null,
+  timeoutMs = null,
+  websocket,
+  onResponse,
+}: any) {
   const [isExpanded, setIsExpanded] = useState(false as any);
   const [responded, setResponded] = useState(false as any);
   const [approved, setApproved] = useState(null);
@@ -54,9 +61,7 @@ export default function ToolApprovalRequest({
     <div className="flex justify-center w-full my-1 pr-4">
       <div className="w-full flex flex-col">
         <div className="w-full">
-          <div
-            className="relative bg-zinc-800 light:bg-slate-100 p-4 pb-2 flex flex-col gap-y-1 overflow-hidden rounded-2xl transition-all duration-100 ease-in-out"
-          >
+          <div className="relative bg-zinc-800 light:bg-slate-100 p-4 pb-2 flex flex-col gap-y-1 overflow-hidden rounded-2xl transition-all duration-100 ease-in-out">
             <ToolApprovalHeader
               skillName={skillName}
               hasPayload={hasPayload}
@@ -96,7 +101,11 @@ export default function ToolApprovalRequest({
 }
 
 function ToolApprovalHeader({
-  skillName, hasPayload, isExpanded, setIsExpanded, }: any) {
+  skillName,
+  hasPayload,
+  isExpanded,
+  setIsExpanded,
+}: any) {
   const { t } = useTranslation();
   return (
     <div className="flex w-full items-center justify-between">
@@ -147,7 +156,13 @@ function ToolApprovalPayload({ payload, isExpanded }: any) {
 }
 
 function ToolApprovalResponseOption({
-  approved, skillName, alwaysAllow, setAlwaysAllow, onApprove, onReject, }: any) {
+  approved,
+  skillName,
+  alwaysAllow,
+  setAlwaysAllow,
+  onApprove,
+  onReject,
+}: any) {
   const { t } = useTranslation();
   if (approved !== null) return null;
 
@@ -173,7 +188,9 @@ function ToolApprovalResponseOption({
         <input
           type="checkbox"
           checked={alwaysAllow}
-          onChange={(e) => setAlwaysAllow((e.target as HTMLInputElement).checked)}
+          onChange={(e) =>
+            setAlwaysAllow((e.target as HTMLInputElement).checked)
+          }
           className="w-3.5 h-3.5 rounded border-white/20 bg-transparent cursor-pointer"
         />
         <span>

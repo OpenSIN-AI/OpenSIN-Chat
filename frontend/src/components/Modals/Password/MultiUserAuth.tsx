@@ -197,7 +197,7 @@ export default function MultiUserAuth() {
     e.preventDefault();
     const data = {};
     const form = new FormData(e.target);
-    for (var [key, value] of form.entries()) data[key] = value;
+    for (const [key, value] of form.entries()) data[key] = value;
     const { valid, user, token, message, recoveryCodes } =
       await System.requestToken(data);
     if (valid && !!token && !!user) {

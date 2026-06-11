@@ -428,9 +428,29 @@ const TRANSLATIONS = {
           },
           "read-pdf-file": {
             title: "Read PDF",
-            description:
-              "Extract text content from an existing PDF document",
+            description: "Extract text content from an existing PDF document",
           },
+        },
+      },
+      image_generation: {
+        title: "Image Generation",
+        description:
+          "Generate images using any OpenAI-compatible image generation API. Configure the endpoint, API key, and model below.",
+        base_url: {
+          label: "Base URL",
+          required: "(required)",
+          placeholder: "https://api.openai.com",
+          help: "Base URL for the OpenAI-compatible API (e.g., {{example}})",
+          invalid: "Please enter a valid http:// or https:// URL.",
+        },
+        api_key: {
+          label: "API Key",
+          help: "Leave empty to keep the existing key. The stored key is never shown in the browser.",
+        },
+        model: {
+          label: "Model",
+          placeholder: "dall-e-3",
+          help: "Model name for image generation. Common models are shown as suggestions.",
         },
       },
       gmail: {
@@ -798,6 +818,20 @@ const TRANSLATIONS = {
     loading: "Loading preview...",
     load_error: "Preview could not be loaded.",
     generated_image: "Generated image",
+    open_externally: "Open in new tab",
+    iframe_title: "Preview",
+    menu: {
+      download: "Download",
+      open_new_tab: "Open in new tab",
+      add_to_sources: "Add to sources",
+    },
+    empty:
+      "No content to preview. Generate a report or document to view it here.",
+    title: "Preview",
+    unknown_file: "Unknown file",
+    open: "Preview",
+    download: "Download",
+    downloading: "Downloading...",
   },
   customization: {
     interface: {

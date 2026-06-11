@@ -38,7 +38,9 @@ export default function KokoroTTSOptions({ settings }: any) {
             required={true}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setInputEndpoint(((e.target as unknown) as any)?.value)}
+            onChange={(e) =>
+              setInputEndpoint((e.target as unknown as any)?.value)
+            }
             onBlur={() => setEndpoint(inputEndpoint)}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
@@ -57,7 +59,9 @@ export default function KokoroTTSOptions({ settings }: any) {
             defaultValue={settings?.TTSKokoroKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setInputApiKey(((e.target as unknown) as any)?.value)}
+            onChange={(e) =>
+              setInputApiKey((e.target as unknown as any)?.value)
+            }
             onBlur={() => setApiKey(inputApiKey)}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">

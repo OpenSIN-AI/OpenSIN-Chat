@@ -20,7 +20,18 @@ import { CSS } from "@dnd-kit/utilities";
 
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 export default function ThreadItem({
-  idx, activeIdx, isActive, workspace, thread, onRemove, toggleMarkForDeletion, hasNext, ctrlPressed = false, draggable = false, folderId = null, }: any) {
+  idx,
+  activeIdx,
+  isActive,
+  workspace,
+  thread,
+  onRemove,
+  toggleMarkForDeletion,
+  hasNext,
+  ctrlPressed = false,
+  draggable = false,
+  folderId = null,
+}: any) {
   const { slug: urlSlug, threadSlug = null } = useParams();
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
@@ -56,7 +67,9 @@ export default function ThreadItem({
     <div
       ref={setDragRef}
       style={dragStyle}
-      {...(draggable && thread.slug && !thread.virtual ? { ...attributes, ...listeners } : {})}
+      {...(draggable && thread.slug && !thread.virtual
+        ? { ...attributes, ...listeners }
+        : {})}
       className="w-full relative flex h-[38px] items-center border-none rounded-lg"
       role="listitem"
     >
@@ -175,7 +188,13 @@ export default function ThreadItem({
 }
 
 function OptionsMenu({
-  containerRef, workspace, thread, onRemove, close, currentThreadSlug, }: any) {
+  containerRef,
+  workspace,
+  thread,
+  onRemove,
+  close,
+  currentThreadSlug,
+}: any) {
   const menuRef: any = useRef(null);
   const navigate = useNavigate();
 
@@ -213,9 +232,13 @@ function OptionsMenu({
 
   const handleNewChat = async () => {
     close();
-    const { thread: newThread, message } = await Workspace.threads.new(workspace.slug);
+    const { thread: newThread, message } = await Workspace.threads.new(
+      workspace.slug,
+    );
     if (message || !newThread) {
-      showToast(`Chat konnte nicht erstellt werden: ${message}`, "error", { clear: true });
+      showToast(`Chat konnte nicht erstellt werden: ${message}`, "error", {
+        clear: true,
+      });
       return;
     }
     invalidateThreads(workspace.slug);
@@ -224,11 +247,18 @@ function OptionsMenu({
 
   const handleCopyLink = () => {
     const link = `${window.location.origin}${paths.workspace.thread(workspace.slug, thread.slug)}`;
-    navigator.clipboard.writeText(link).then(() => {
-      showToast("Link in Zwischenablage kopiert!", "success", { clear: true });
-    }).catch(() => {
-      showToast("Link konnte nicht kopiert werden.", "error", { clear: true });
-    });
+    navigator.clipboard
+      .writeText(link)
+      .then(() => {
+        showToast("Link in Zwischenablage kopiert!", "success", {
+          clear: true,
+        });
+      })
+      .catch(() => {
+        showToast("Link konnte nicht kopiert werden.", "error", {
+          clear: true,
+        });
+      });
     close();
   };
 

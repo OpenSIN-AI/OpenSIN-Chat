@@ -24,7 +24,9 @@ export default function LiteLLMOptions({ settings }: any) {
             required={true}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setBasePathValue(((e.target as unknown) as any)?.value)}
+            onChange={(e) =>
+              setBasePathValue((e.target as unknown as any)?.value)
+            }
             onBlur={() => setBasePath(basePathValue)}
           />
         </div>
@@ -65,7 +67,9 @@ export default function LiteLLMOptions({ settings }: any) {
             defaultValue={settings?.LiteLLMAPIKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setApiKeyValue(((e.target as unknown) as any)?.value)}
+            onChange={(e) =>
+              setApiKeyValue((e.target as unknown as any)?.value)
+            }
             onBlur={() => setApiKey(apiKeyValue)}
           />
         </div>
@@ -74,8 +78,16 @@ export default function LiteLLMOptions({ settings }: any) {
   );
 }
 
-function LiteLLMModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const { customModels, isLoading } = useProviderModels("litellm", apiKey, basePath);
+function LiteLLMModelSelection({
+  settings,
+  basePath = null,
+  apiKey = null,
+}: any) {
+  const { customModels, isLoading } = useProviderModels(
+    "litellm",
+    apiKey,
+    basePath,
+  );
   if (isLoading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">

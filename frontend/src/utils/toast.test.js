@@ -22,12 +22,18 @@ describe("toast utility", () => {
 
   it("calls toast.success for success type", () => {
     showToast("Success message", "success");
-    expect(toast.success).toHaveBeenCalledWith("Success message", expect.any(Object));
+    expect(toast.success).toHaveBeenCalledWith(
+      "Success message",
+      expect.any(Object),
+    );
   });
 
   it("calls toast.error for error type", () => {
     showToast("Error message", "error");
-    expect(toast.error).toHaveBeenCalledWith("Error message", expect.any(Object));
+    expect(toast.error).toHaveBeenCalledWith(
+      "Error message",
+      expect.any(Object),
+    );
   });
 
   it("calls toast.info for info type", () => {
@@ -37,7 +43,10 @@ describe("toast utility", () => {
 
   it("calls toast.warn for warning type", () => {
     showToast("Warning message", "warning");
-    expect(toast.warn).toHaveBeenCalledWith("Warning message", expect.any(Object));
+    expect(toast.warn).toHaveBeenCalledWith(
+      "Warning message",
+      expect.any(Object),
+    );
   });
 
   it("dismisses all toasts when clear option is true", () => {

@@ -10,7 +10,9 @@ vi.mock("@/models/workspace", () => ({
 }));
 
 import Workspace from "@/models/workspace";
-import useSuggestedMessages, { SUGGESTED_MESSAGES_KEY } from "./useSuggestedMessages";
+import useSuggestedMessages, {
+  SUGGESTED_MESSAGES_KEY,
+} from "./useSuggestedMessages";
 
 function wrapper({ children }) {
   return (

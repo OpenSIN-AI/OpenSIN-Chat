@@ -16,7 +16,9 @@ export default function ObsidianOptions() {
     if (files.length === 0) return;
 
     // Filter for .md files only
-    const markdownFiles = (files as any).filter((file) => file.name.endsWith(".md"));
+    const markdownFiles = (files as any).filter((file) =>
+      file.name.endsWith(".md"),
+    );
     setSelectedFiles(markdownFiles);
 
     // Set the folder path from the first file

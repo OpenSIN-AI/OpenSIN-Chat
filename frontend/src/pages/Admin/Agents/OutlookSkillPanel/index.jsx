@@ -125,7 +125,6 @@ export default function OutlookSkillPanel({
     prevHasChanges.current = hasChanges;
   }, [hasChanges, refresh]);
 
-
   function toggleOutlookSkill(skillName) {
     setHasChanges(true);
     setDisabledSkills((prev) =>

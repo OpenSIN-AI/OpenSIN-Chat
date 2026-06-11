@@ -46,11 +46,7 @@ export default function NativeTTSMessage({ chatId, message }: any) {
         className="border-none text-zinc-300 light:text-slate-500"
         aria-label={speaking ? "Pause speech" : "Speak message"}
       >
-        {speaking ? (
-          <PauseCircle size={20} />
-        ) : (
-          <SpeakerHigh size={20} />
-        )}
+        {speaking ? <PauseCircle size={20} /> : <SpeakerHigh size={20} />}
       </button>
     </div>
   );

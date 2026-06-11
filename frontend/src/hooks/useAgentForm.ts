@@ -23,8 +23,12 @@ export function useAgentForm() {
   const [agentFlows, setAgentFlows] = useState([] as any);
   const [activeFlowIds, setActiveFlowIds] = useState([] as any);
   const [mcpServers, setMcpServers] = useState([] as any);
-  const [fileSystemAgentAvailable, setFileSystemAgentAvailable] = useState(false as any);
-  const [createFilesAgentAvailable, setCreateFilesAgentAvailable] = useState(false as any);
+  const [fileSystemAgentAvailable, setFileSystemAgentAvailable] = useState(
+    false as any,
+  );
+  const [createFilesAgentAvailable, setCreateFilesAgentAvailable] = useState(
+    false as any,
+  );
   const [loading, setLoading] = useState(true as any);
   const formEl = useRef(null);
 
@@ -53,9 +57,13 @@ export function useAgentForm() {
       const { flows = [] } = flowsRes;
       setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
       setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
-      setDisabledAgentSkills(_preferences.settings?.disabled_agent_skills ?? []);
+      setDisabledAgentSkills(
+        _preferences.settings?.disabled_agent_skills ?? [],
+      );
       setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
-      setActiveFlowIds((flows as any).filter((f) => f.active).map((f) => f.uuid));
+      setActiveFlowIds(
+        (flows as any).filter((f) => f.active).map((f) => f.uuid),
+      );
       setAgentFlows(flows);
       setFileSystemAgentAvailable(fsAgentAvailable);
       setCreateFilesAgentAvailable(createFilesAvailable);
@@ -123,7 +131,7 @@ export function useAgentForm() {
     };
 
     const form = new FormData(formEl.current);
-    for (var [key, value] of form.entries()) {
+    for (const [key, value] of form.entries()) {
       if (key.startsWith("system::")) {
         const [_, label] = key.split("system::");
         data.system[label] = String(value);
@@ -149,9 +157,13 @@ export function useAgentForm() {
       ]);
       setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
       setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
-      setDisabledAgentSkills(_preferences.settings?.disabled_agent_skills ?? []);
+      setDisabledAgentSkills(
+        _preferences.settings?.disabled_agent_skills ?? [],
+      );
       setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
-      showToast(`Agent preferences saved successfully.`, "success", { clear: true });
+      showToast(`Agent preferences saved successfully.`, "success", {
+        clear: true,
+      });
     } else {
       showToast(`Agent preferences failed to save.`, "error", { clear: true });
     }

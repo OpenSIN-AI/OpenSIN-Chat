@@ -5,7 +5,14 @@ import { DotsThree } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
 export default function SlashCommandRow({
-  command, description, onClick, onEdit, onPublish, showMenu = false, highlighted = false, }: any) {
+  command,
+  description,
+  onClick,
+  onEdit,
+  onPublish,
+  showMenu = false,
+  highlighted = false,
+}: any) {
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false as any);
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 } as any);

@@ -27,10 +27,13 @@ describe("Memory", () => {
       });
 
       const result = await Memory.forWorkspace("my-workspace");
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/workspaces/my-workspace/memories", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/workspaces/my-workspace/memories",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(memories);
     });
 
@@ -60,12 +63,18 @@ describe("Memory", () => {
         json: () => Promise.resolve({ memory: mem }),
       });
 
-      const result = await Memory.create("ws", { content: "new", scope: "workspace" });
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/workspaces/ws/memories", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: "new", scope: "workspace" }),
+      const result = await Memory.create("ws", {
+        content: "new",
+        scope: "workspace",
       });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/workspaces/ws/memories",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: "new", scope: "workspace" }),
+        },
+      );
       expect(result).toEqual({ memory: mem });
     });
 
@@ -77,7 +86,10 @@ describe("Memory", () => {
 
       await Memory.create("ws", { content: "test" });
       const call = globalThis.fetch.mock.calls[0];
-      expect(JSON.parse(call[1].body)).toEqual({ content: "test", scope: "workspace" });
+      expect(JSON.parse(call[1].body)).toEqual({
+        content: "test",
+        scope: "workspace",
+      });
     });
 
     it("returns error on fetch rejection", async () => {
@@ -169,10 +181,13 @@ describe("Memory", () => {
       });
 
       const result = await Memory.demoteToWorkspace(8, "my-ws");
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/memories/8/demote/my-ws", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/memories/8/demote/my-ws",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual({ memory: mem });
     });
 

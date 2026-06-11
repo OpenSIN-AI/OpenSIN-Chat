@@ -8,7 +8,7 @@ export default function useEmbedConfigs() {
   const { data, error, isLoading, mutate } = useSWR(
     EMBED_CONFIGS_KEY,
     () => Embed.embeds(),
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false },
   );
 
   return {

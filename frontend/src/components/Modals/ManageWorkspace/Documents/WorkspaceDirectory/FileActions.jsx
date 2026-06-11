@@ -1,5 +1,3 @@
-import { useTranslation } from "react-i18next";
-
 export function FileActions({ hasChanges, handleSaveChanges, t }) {
   if (!hasChanges) return null;
 

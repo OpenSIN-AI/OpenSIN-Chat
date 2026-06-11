@@ -88,9 +88,8 @@ export const getConfigurableSkills = (
     image: GenerateChartsImage,
   },
   "image-generation": {
-    title: "Bildgenerierung",
-    description:
-      "Generiert Bilder mithilfe von KI-Bildgenerierungsmodellen über eine OpenAI-kompatible API.",
+    title: t("agent.skill.image_generation.title"),
+    description: t("agent.skill.image_generation.description"),
     component: ImageGenerationSkillPanel,
     skill: "image-generation",
     icon: Image,

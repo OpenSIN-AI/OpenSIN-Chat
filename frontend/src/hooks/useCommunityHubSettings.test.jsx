@@ -10,7 +10,9 @@ vi.mock("@/models/communityHub", () => ({
 }));
 
 import CommunityHub from "@/models/communityHub";
-import useCommunityHubSettings, { COMMUNITY_HUB_SETTINGS_KEY } from "./useCommunityHubSettings";
+import useCommunityHubSettings, {
+  COMMUNITY_HUB_SETTINGS_KEY,
+} from "./useCommunityHubSettings";
 
 function wrapper({ children }) {
   return (

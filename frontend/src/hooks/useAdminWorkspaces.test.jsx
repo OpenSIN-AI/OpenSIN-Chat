@@ -18,9 +18,7 @@ vi.mock("@/models/system", () => ({
 
 import Admin from "@/models/admin";
 import System from "@/models/system";
-import useAdminWorkspaces, {
-  ADMIN_WORKSPACES_KEY,
-} from "./useAdminWorkspaces";
+import useAdminWorkspaces, { ADMIN_WORKSPACES_KEY } from "./useAdminWorkspaces";
 
 function wrapper({ children }) {
   return (

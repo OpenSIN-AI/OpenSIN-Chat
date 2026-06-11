@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { isMobile } from "react-device-detect";
 import { Robot } from "@phosphor-icons/react";
 import AgentSkillSettings from "./AgentSkillSettings";
 import SkillList from "./SkillList";
@@ -47,7 +46,7 @@ export function SkillsNavigation(props) {
             selectedSkill={selectedSkill}
             handleClick={handleSkillClick}
             activeSkills={Object.keys(defaultSkills).filter(
-              (skill) => !disabledAgentSkills.includes(skill)
+              (skill) => !disabledAgentSkills.includes(skill),
             )}
           />
           <SkillList

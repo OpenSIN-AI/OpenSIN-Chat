@@ -5,8 +5,7 @@
  */
 
 import { API_BASE, AUTH_TIMESTAMP, fullApiUrl } from "@/utils/constants";
-import { baseHeaders, safeJsonParse } from "@/utils/request";
-import type { ApiResponse } from "@/types/api";
+import { baseHeaders } from "@/utils/request";
 
 interface SystemKeys {
   [key: string]: any;
@@ -138,7 +137,9 @@ const System: any = {
   /**
    * Request new auth token
    */
-  requestToken: async function (body: Record<string, unknown>): Promise<string | null> {
+  requestToken: async function (
+    body: Record<string, unknown>,
+  ): Promise<string | null> {
     try {
       const res = await fetch(`${API_BASE}/request-token`, {
         method: "POST",
@@ -156,7 +157,9 @@ const System: any = {
   /**
    * Update system configuration
    */
-  updateSystem: async function (data: Record<string, unknown>): Promise<{ success: boolean }> {
+  updateSystem: async function (
+    data: Record<string, unknown>,
+  ): Promise<{ success: boolean }> {
     try {
       const res = await fetch(`${API_BASE}/system/update`, {
         method: "POST",
@@ -174,9 +177,12 @@ const System: any = {
    */
   isFileSystemAgentAvailable: async function (): Promise<boolean> {
     try {
-      const res = await fetch(`${API_BASE}/system/agents/filesystem/available`, {
-        headers: baseHeaders(),
-      });
+      const res = await fetch(
+        `${API_BASE}/system/agents/filesystem/available`,
+        {
+          headers: baseHeaders(),
+        },
+      );
       return res.ok;
     } catch {
       return false;
@@ -188,9 +194,12 @@ const System: any = {
    */
   isCreateFilesAgentAvailable: async function (): Promise<boolean> {
     try {
-      const res = await fetch(`${API_BASE}/system/agents/create-files/available`, {
-        headers: baseHeaders(),
-      });
+      const res = await fetch(
+        `${API_BASE}/system/agents/create-files/available`,
+        {
+          headers: baseHeaders(),
+        },
+      );
       return res.ok;
     } catch {
       return false;

@@ -27,7 +27,15 @@ export default function DataHandling({ setHeader, setForwardBtn, setBackBtn }) {
     setHeader({ title: TITLE, description: DESCRIPTION });
     setForwardBtn({ showing: true, disabled: false, onClick: handleForward });
     setBackBtn({ showing: false, disabled: false, onClick: handleBack });
-  }, [TITLE, DESCRIPTION, setHeader, setForwardBtn, setBackBtn, handleForward, handleBack]);
+  }, [
+    TITLE,
+    DESCRIPTION,
+    setHeader,
+    setForwardBtn,
+    setBackBtn,
+    handleForward,
+    handleBack,
+  ]);
 
   return (
     <div className="w-full flex items-center justify-center flex-col gap-y-6">

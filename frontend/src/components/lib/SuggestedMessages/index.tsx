@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 export default function SuggestedMessages({
-  suggestedMessages = [], sendCommand, }: any) {
+  suggestedMessages = [],
+  sendCommand,
+}: any) {
   if (!suggestedMessages?.length) return null;
 
   return (

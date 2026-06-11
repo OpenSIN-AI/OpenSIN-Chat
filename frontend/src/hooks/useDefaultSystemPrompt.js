@@ -7,7 +7,7 @@ export const DEFAULT_SYSTEM_PROMPT_KEY = "system/default-system-prompt";
 export default function useDefaultSystemPrompt() {
   const { data, error, isLoading, mutate } = useSWR(
     DEFAULT_SYSTEM_PROMPT_KEY,
-    () => System.fetchDefaultSystemPrompt()
+    () => System.fetchDefaultSystemPrompt(),
   );
 
   return {

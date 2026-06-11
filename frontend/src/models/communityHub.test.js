@@ -57,11 +57,17 @@ describe("CommunityHub", () => {
       mockFetchOk(resp);
 
       const result = await CommunityHub.applyItem("imp-2", { autoApply: true });
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/apply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ importId: "imp-2", options: { autoApply: true } }),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/apply",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            importId: "imp-2",
+            options: { autoApply: true },
+          }),
+        },
+      );
       expect(result).toEqual(resp);
     });
 
@@ -75,7 +81,10 @@ describe("CommunityHub", () => {
       mockFetchOk({ success: true });
       await CommunityHub.applyItem("imp-3");
       const call = globalThis.fetch.mock.calls[0];
-      expect(JSON.parse(call[1].body)).toEqual({ importId: "imp-3", options: {} });
+      expect(JSON.parse(call[1].body)).toEqual({
+        importId: "imp-3",
+        options: {},
+      });
     });
   });
 
@@ -88,11 +97,14 @@ describe("CommunityHub", () => {
       });
 
       const result = await CommunityHub.importBundleItem("b-1");
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/import", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ importId: "b-1" }),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/import",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ importId: "b-1" }),
+        },
+      );
       expect(result).toEqual(resp);
     });
 
@@ -133,11 +145,14 @@ describe("CommunityHub", () => {
       });
 
       const result = await CommunityHub.updateSettings({ apiKey: "abc" });
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/settings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ apiKey: "abc" }),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/settings",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ apiKey: "abc" }),
+        },
+      );
       expect(result).toEqual({ success: true, error: null });
     });
 
@@ -158,7 +173,10 @@ describe("CommunityHub", () => {
       });
 
       const result = await CommunityHub.updateSettings({});
-      expect(result).toEqual({ success: false, error: "Failed to update settings" });
+      expect(result).toEqual({
+        success: false,
+        error: "Failed to update settings",
+      });
     });
 
     it("returns error on fetch rejection", async () => {
@@ -176,10 +194,13 @@ describe("CommunityHub", () => {
       });
 
       const result = await CommunityHub.getSettings();
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/settings", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/settings",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual({ connectionKey: "ck-2", error: null });
     });
 
@@ -202,21 +223,30 @@ describe("CommunityHub", () => {
 
   describe("fetchExploreItems", () => {
     it("sends GET and returns explore data", async () => {
-      const data = { agentSkills: { items: [], hasMore: false, totalCount: 0 } };
+      const data = {
+        agentSkills: { items: [], hasMore: false, totalCount: 0 },
+      };
       mockFetchOk(data);
 
       const result = await CommunityHub.fetchExploreItems();
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/explore", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/explore",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
     it("returns error fallback on fetch rejection", async () => {
       mockFetchError("explore fail");
       const result = await CommunityHub.fetchExploreItems();
-      expect(result).toEqual({ success: false, error: "explore fail", result: null });
+      expect(result).toEqual({
+        success: false,
+        error: "explore fail",
+        result: null,
+      });
     });
   });
 
@@ -226,17 +256,25 @@ describe("CommunityHub", () => {
       mockFetchOk(data);
 
       const result = await CommunityHub.fetchUserItems();
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/items", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/items",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
     it("returns error fallback on fetch rejection", async () => {
       mockFetchError("items fail");
       const result = await CommunityHub.fetchUserItems();
-      expect(result).toEqual({ success: false, error: "items fail", createdByMe: {}, teamItems: [] });
+      expect(result).toEqual({
+        success: false,
+        error: "items fail",
+        createdByMe: {},
+        teamItems: [],
+      });
     });
   });
 
@@ -249,11 +287,14 @@ describe("CommunityHub", () => {
 
       const payload = { name: "test", prompt: "hello", visibility: "public" };
       const result = await CommunityHub.createSystemPrompt(payload);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/system-prompt/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/system-prompt/create",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       expect(result).toEqual({ success: true, error: null, itemId: "sp-1" });
     });
 
@@ -283,11 +324,14 @@ describe("CommunityHub", () => {
 
       const payload = { name: "flow" };
       const result = await CommunityHub.createAgentFlow(payload);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/agent-flow/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/agent-flow/create",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       expect(result).toEqual({ success: true, error: null, itemId: "af-1" });
     });
 
@@ -297,7 +341,9 @@ describe("CommunityHub", () => {
         json: () => Promise.resolve({ error: "bad flow" }),
       });
 
-      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow("bad flow");
+      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow(
+        "bad flow",
+      );
     });
 
     it("throws generic error when response has no error field and !res.ok", async () => {
@@ -306,13 +352,17 @@ describe("CommunityHub", () => {
         json: () => Promise.resolve({}),
       });
 
-      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow("Failed to create agent flow");
+      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow(
+        "Failed to create agent flow",
+      );
     });
 
     it("throws on fetch rejection (no .catch handler)", async () => {
       vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("flow fail"));
 
-      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow("flow fail");
+      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow(
+        "flow fail",
+      );
     });
   });
 
@@ -325,11 +375,14 @@ describe("CommunityHub", () => {
 
       const payload = { name: "/test", command: "/test", prompt: "do it" };
       const result = await CommunityHub.createSlashCommand(payload);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/community-hub/slash-command/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/community-hub/slash-command/create",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       expect(result).toEqual({ success: true, error: null, itemId: "sc-1" });
     });
 
@@ -350,7 +403,10 @@ describe("CommunityHub", () => {
       });
 
       const result = await CommunityHub.createSlashCommand({});
-      expect(result).toEqual({ success: false, error: "Failed to create slash command" });
+      expect(result).toEqual({
+        success: false,
+        error: "Failed to create slash command",
+      });
     });
 
     it("returns error on fetch rejection", async () => {

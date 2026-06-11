@@ -27,7 +27,7 @@ export default function ChatPromptSettings({
 
   // UI state
   const [isEditing, setIsEditing] = useState(
-    searchParams.get("action") === "focus-system-prompt"
+    searchParams.get("action") === "focus-system-prompt",
   );
   const [showPromptHistory, setShowPromptHistory] = useState(false);
 

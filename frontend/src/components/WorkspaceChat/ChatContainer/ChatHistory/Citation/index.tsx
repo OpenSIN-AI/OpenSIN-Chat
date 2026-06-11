@@ -58,7 +58,12 @@ export function getCustomImage(type: any) {
  * @param {string} [props.customImage] - Optional custom image to display
  */
 export function SourceTypeCircle({
-  type = "file", size = 22, iconSize = 12, url = null, customImage = null, }: any) {
+  type = "file",
+  size = 22,
+  iconSize = 12,
+  url = null,
+  customImage = null,
+}: any) {
   const Icon = CIRCLE_ICONS[type] || CIRCLE_ICONS.file;
   const [imgError, setImgError] = useState(false as any);
 

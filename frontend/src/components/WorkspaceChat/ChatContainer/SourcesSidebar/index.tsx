@@ -2,7 +2,13 @@
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
-import { X, Globe, FileText, Database, ChatCircleText } from "@phosphor-icons/react";
+import {
+  X,
+  Globe,
+  FileText,
+  Database,
+  ChatCircleText,
+} from "@phosphor-icons/react";
 import { Link, useParams } from "react-router-dom";
 import {
   combineLikeSources,
@@ -96,7 +102,12 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
 
   const allThreads = [
     // Default thread (no slug)
-    { id: "__default__", slug: null, name: workspace?.name || "Default", virtual: true },
+    {
+      id: "__default__",
+      slug: null,
+      name: workspace?.name || "Default",
+      virtual: true,
+    },
     ...threads.filter((t: any) => !t.virtual && !t.deleted),
   ];
 
@@ -195,17 +206,15 @@ export default function SourcesSidebar({ workspace }: any) {
   return (
     <MemoriesProvider workspace={workspace}>
       <ChatSidebar isOpen={sidebarOpen}>
-        <div
-          className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 p-4 flex flex-col gap-4 overflow-hidden"
-        >
+        <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 p-4 flex flex-col gap-4 overflow-hidden">
           <div className="flex flex-col shrink-0 gap-2">
             <div className="flex items-start justify-between">
               <p className="font-medium text-base leading-6 text-white light:text-slate-900">
                 {activeTab === "chats"
                   ? t("chat_window.workspace_chats", "Chats")
                   : isWorkspaceMode
-                  ? t("chat_window.workspace_sources")
-                  : t("chat_window.sources")}
+                    ? t("chat_window.workspace_sources")
+                    : t("chat_window.sources")}
               </p>
               <button
                 onClick={closeSidebar}

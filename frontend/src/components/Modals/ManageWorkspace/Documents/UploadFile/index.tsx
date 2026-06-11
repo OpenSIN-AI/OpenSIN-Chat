@@ -11,7 +11,11 @@ import debounce from "lodash.debounce";
 import useDocumentProcessorOnline from "@/hooks/useDocumentProcessorOnline";
 
 export default function UploadFile({
-  workspace, fetchKeys, setLoading, setLoadingMessage, }: any) {
+  workspace,
+  fetchKeys,
+  setLoading,
+  setLoadingMessage,
+}: any) {
   const { t } = useTranslation();
   const [files, setFiles] = useState<string[]>([]);
   const [fetchingUrl, setFetchingUrl] = useState<boolean>(false);
@@ -82,7 +86,10 @@ export default function UploadFile({
         <input {...getInputProps()} />
         {ready === false ? (
           <div className="flex flex-col items-center justify-center h-full">
-            <CloudArrowUp className="w-8 h-8 text-white/80 light:invert" aria-hidden="true" />
+            <CloudArrowUp
+              className="w-8 h-8 text-white/80 light:invert"
+              aria-hidden="true"
+            />
             <div className="text-white text-opacity-80 text-sm font-semibold py-1">
               {t("connectors.upload.processor-offline")}
             </div>
@@ -92,7 +99,10 @@ export default function UploadFile({
           </div>
         ) : files.length === 0 ? (
           <div className="flex flex-col items-center justify-center">
-            <CloudArrowUp className="w-8 h-8 text-white/80 light:invert" aria-hidden="true" />
+            <CloudArrowUp
+              className="w-8 h-8 text-white/80 light:invert"
+              aria-hidden="true"
+            />
             <div className="text-white text-opacity-80 text-sm font-semibold py-1">
               {t("connectors.upload.click-upload")}
             </div>

@@ -5,8 +5,7 @@
  */
 
 import { useCallback, useState, useEffect } from "react";
-import type { Workspace, Thread, ChatHistory } from "@/types/workspace";
-import type { Agent, Skill } from "@/types/agent";
+import type { Workspace, Thread } from "@/types/workspace";
 import Workspace from "@/models/workspace";
 import System from "@/models/system";
 import useChatHistorySWR, {

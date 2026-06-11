@@ -17,9 +17,7 @@ export default function DatabaseSidebar() {
 
   return (
     <ChatSidebar isOpen={sidebarOpen}>
-      <div
-        className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden"
-      >
+      <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <Database size={15} className="text-zinc-400 light:text-slate-500" />
@@ -94,8 +92,14 @@ export default function DatabaseSidebar() {
           )}
 
           {politicians.map((p) => {
-            const name = `${p.first_name || ""} ${p.last_name || ""}`.trim() || p.label || "—";
-            const constituency = p.constituency?.label || p.electoral_data?.constituency?.label || null;
+            const name =
+              `${p.first_name || ""} ${p.last_name || ""}`.trim() ||
+              p.label ||
+              "—";
+            const constituency =
+              p.constituency?.label ||
+              p.electoral_data?.constituency?.label ||
+              null;
             const profileUrl = p.abgeordnetenwatch_url || null;
             return (
               <div
@@ -103,12 +107,19 @@ export default function DatabaseSidebar() {
                 className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200"
               >
                 <div className="w-8 h-8 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0">
-                  <Users size={15} className="text-zinc-400 light:text-slate-500" />
+                  <Users
+                    size={15}
+                    className="text-zinc-400 light:text-slate-500"
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white light:text-slate-900 truncate">{name}</p>
+                  <p className="text-sm font-medium text-white light:text-slate-900 truncate">
+                    {name}
+                  </p>
                   {constituency && (
-                    <p className="text-[11px] text-zinc-500 light:text-slate-400 truncate">{constituency}</p>
+                    <p className="text-[11px] text-zinc-500 light:text-slate-400 truncate">
+                      {constituency}
+                    </p>
                   )}
                 </div>
                 {profileUrl && (
@@ -128,7 +139,10 @@ export default function DatabaseSidebar() {
 
           <div className="mt-3 p-3 rounded-xl bg-zinc-800/50 border border-zinc-700">
             <p className="text-[10px] text-zinc-500 leading-relaxed">
-              {t("sidebar.database.hint", 'Tipp: "@agent Suche AfD Abgeordnete..." im Chat für detaillierte Abfragen.')}
+              {t(
+                "sidebar.database.hint",
+                'Tipp: "@agent Suche AfD Abgeordnete..." im Chat für detaillierte Abfragen.',
+              )}
             </p>
           </div>
         </div>

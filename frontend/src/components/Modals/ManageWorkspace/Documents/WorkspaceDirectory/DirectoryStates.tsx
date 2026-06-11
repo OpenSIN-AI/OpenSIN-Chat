@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
 import { X } from "@phosphor-icons/react";
-import { Tooltip } from "react-tooltip";
 
 export function LoadingState({ workspace, loadingMessage }: any) {
   return (
     <div className="px-8">
       <div className="flex items-center justify-start w-[560px]">
-        <h3 className="text-white text-base font-bold ml-5">{workspace.name}</h3>
+        <h3 className="text-white text-base font-bold ml-5">
+          {workspace.name}
+        </h3>
       </div>
       <div className="relative w-[560px] h-[445px] bg-theme-settings-input-bg rounded-2xl mt-5 border border-theme-modal-border">
         <div className="w-full h-[calc(100%-40px)] flex items-center justify-center flex-col gap-y-5">
@@ -22,11 +23,19 @@ export function LoadingState({ workspace, loadingMessage }: any) {
 }
 
 export function EmbeddingProgressState({
-  workspace, embeddingProgress, hasChanges, movedItems, handleSaveChanges, removeQueuedFile, }: any) {
+  workspace,
+  embeddingProgress,
+  hasChanges,
+  movedItems,
+  handleSaveChanges,
+  removeQueuedFile,
+}: any) {
   return (
     <div className="px-8">
       <div className="flex items-center justify-start w-[560px]">
-        <h3 className="text-white text-base font-bold ml-5">{workspace.name}</h3>
+        <h3 className="text-white text-base font-bold ml-5">
+          {workspace.name}
+        </h3>
       </div>
       <div className="relative w-[560px] h-[445px] bg-theme-settings-input-bg rounded-2xl mt-5 border border-theme-modal-border">
         <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10 rounded-t-2xl">

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import RightSidebarIconBar from "./index";
 
 vi.mock("react-i18next", () => ({
@@ -34,14 +34,18 @@ describe("RightSidebarIconBar", () => {
 
   it("calls toggleRightSidebar when the collapse icon is clicked", () => {
     const { container } = render(<RightSidebarIconBar />);
-    const collapseButton = container.querySelector('button[aria-label="Einklappen"]');
+    const collapseButton = container.querySelector(
+      'button[aria-label="Einklappen"]',
+    );
     fireEvent.click(collapseButton);
     expect(mockToggleRightSidebar).toHaveBeenCalledTimes(1);
   });
 
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {
     const { container } = render(<RightSidebarIconBar />);
-    const previewButton = container.querySelector('button[aria-label="Vorschau"]');
+    const previewButton = container.querySelector(
+      'button[aria-label="Vorschau"]',
+    );
     fireEvent.click(previewButton);
     expect(mockToggleSidebar).toHaveBeenCalledWith("preview");
   });
@@ -65,13 +69,18 @@ describe("RightSidebarIconBar", () => {
 
   it("has aria-expanded on the toggle button reflecting sidebar state", () => {
     const { container } = render(<RightSidebarIconBar />);
-    const toggleButton = container.querySelector('button[aria-label="Einklappen"]');
+    const toggleButton = container.querySelector(
+      'button[aria-label="Einklappen"]',
+    );
     expect(toggleButton).toHaveAttribute("aria-expanded", "true");
   });
 
   it("has aria-controls pointing to the sidebar panel", () => {
     const { container } = render(<RightSidebarIconBar />);
     const toggleButton = container.querySelector("button[aria-expanded]");
-    expect(toggleButton).toHaveAttribute("aria-controls", "right-sidebar-panel");
+    expect(toggleButton).toHaveAttribute(
+      "aria-controls",
+      "right-sidebar-panel",
+    );
   });
 });

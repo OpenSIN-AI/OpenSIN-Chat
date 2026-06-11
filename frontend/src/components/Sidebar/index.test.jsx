@@ -75,7 +75,9 @@ beforeEach(() => {
 describe("Sidebar (desktop)", () => {
   it("renders the navigation landmark", () => {
     renderSidebar();
-    expect(screen.getByRole("navigation", { name: /hauptnavigation/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: /hauptnavigation/i }),
+    ).toBeInTheDocument();
   });
 
   it("renders the OpenSIN brand link to the home page", () => {
@@ -98,7 +100,9 @@ describe("Sidebar (desktop)", () => {
 
   it("renders the resize handle when the sidebar is visible", () => {
     renderSidebar();
-    const handle = screen.getByRole("separator", { name: /seitenleiste skalieren/i });
+    const handle = screen.getByRole("separator", {
+      name: /seitenleiste skalieren/i,
+    });
     expect(handle).toBeInTheDocument();
     expect(handle).toHaveAttribute("aria-orientation", "vertical");
   });

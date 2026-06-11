@@ -2,7 +2,6 @@
 import { useState } from "react";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { CircleNotch, Info } from "@phosphor-icons/react";
-import strDistance from "js-levenshtein";
 import { LLM_PREFERENCE_CHANGED_EVENT } from "@/pages/GeneralSettings/LLMPreference";
 import { LEMONADE_COMMON_URLS } from "@/utils/constants";
 import { Tooltip } from "react-tooltip";
@@ -144,7 +143,9 @@ export default function LemonadeOptions({ settings }: any) {
             placeholder="8192"
             min={1}
             value={maxTokens}
-            onChange={(e) => setMaxTokens(Number(((e.target as unknown) as any)?.value))}
+            onChange={(e) =>
+              setMaxTokens(Number((e.target as unknown as any)?.value))
+            }
             onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
@@ -193,8 +194,15 @@ export default function LemonadeOptions({ settings }: any) {
 }
 
 function LemonadeModelSelection({
-  selectedModelId, setSelectedModelId, basePath = null, }: any) {
-  const { customModels, isLoading } = useProviderModels("lemonade", null, basePath);
+  selectedModelId,
+  setSelectedModelId,
+  basePath = null,
+}: any) {
+  const { customModels, isLoading } = useProviderModels(
+    "lemonade",
+    null,
+    basePath,
+  );
   async function uninstallModel(modelId: any) {
     try {
       if (
@@ -231,7 +239,11 @@ function LemonadeModelSelection({
     }
   }
 
-  async function downloadModel(modelId: any, fileSize: any, progressCallback: any) {
+  async function downloadModel(
+    modelId: any,
+    fileSize: any,
+    progressCallback: any,
+  ) {
     try {
       if (
         !window.confirm(
@@ -283,9 +295,13 @@ function LemonadeModelSelection({
     }, {});
 
     Object.entries(groupedModels).forEach(([organization, customModels]) => {
-      const hasInstalled = (customModels as any).some((model) => model.downloaded);
+      const hasInstalled = (customModels as any).some(
+        (model) => model.downloaded,
+      );
       if (hasInstalled) {
-        const installedModels = (customModels as any).filter((model) => model.downloaded);
+        const installedModels = (customModels as any).filter(
+          (model) => model.downloaded,
+        );
         mapping
           .get("installed")
           .set("Downloaded Models", [
@@ -356,7 +372,9 @@ function LemonadeModelSelection({
         <ModelTableLoadingSkeleton />
       ) : filteredModels.length === 0 ? (
         <div className="flex flex-col w-full gap-y-2 mt-4">
-          <p className="text-theme-text-secondary text-sm">No customModels found!</p>
+          <p className="text-theme-text-secondary text-sm">
+            No customModels found!
+          </p>
         </div>
       ) : (
         Object.entries(groupedModels).map(([alias, customModels]) => (

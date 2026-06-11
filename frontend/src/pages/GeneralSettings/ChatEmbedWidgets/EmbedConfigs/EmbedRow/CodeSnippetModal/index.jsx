@@ -112,7 +112,7 @@ const ScriptTag = ({ embed }) => {
               hljs.highlight(snippet, {
                 language: "html",
                 ignoreIllegals: true,
-              }).value
+              }).value,
             ),
           }}
         />

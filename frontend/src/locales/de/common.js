@@ -423,9 +423,30 @@ const TRANSLATIONS = {
           },
           "read-pdf-file": {
             title: "PDF lesen",
-            description:
-              "Text aus einer vorhandenen PDF-Datei extrahieren",
+            description: "Text aus einer vorhandenen PDF-Datei extrahieren",
           },
+        },
+      },
+      image_generation: {
+        title: "Bildgenerierung",
+        description:
+          "Erstellen Sie Bilder mit jeder OpenAI-kompatiblen Bildgenerierungs-API. Konfigurieren Sie den Endpunkt, den API-Schlüssel und das Modell unten.",
+        base_url: {
+          label: "Basis-URL",
+          required: "(Pflichtfeld)",
+          placeholder: "https://api.openai.com",
+          help: "Basis-URL für die OpenAI-kompatible API (z. B. {{example}})",
+          invalid:
+            "Bitte geben Sie eine gültige http://- oder https://-URL ein.",
+        },
+        api_key: {
+          label: "API-Schlüssel",
+          help: "Leer lassen, um den bestehenden Schlüssel zu behalten. Der gespeicherte Schlüssel wird im Browser nie angezeigt.",
+        },
+        model: {
+          label: "Modell",
+          placeholder: "dall-e-3",
+          help: "Modellname für die Bildgenerierung. Häufige Modelle werden als Vorschläge angezeigt.",
         },
       },
       gmail: {
@@ -820,6 +841,20 @@ const TRANSLATIONS = {
     loading: "Vorschau wird geladen…",
     load_error: "Vorschau konnte nicht geladen werden.",
     generated_image: "Generiertes Bild",
+    open_externally: "In neuem Tab öffnen",
+    iframe_title: "Vorschau",
+    menu: {
+      download: "Herunterladen",
+      open_new_tab: "In neuem Tab öffnen",
+      add_to_sources: "Zu Quellen hinzufügen",
+    },
+    empty:
+      "Kein Inhalt zur Vorschau. Generiere einen Bericht oder ein Dokument, um es hier anzuzeigen.",
+    title: "Vorschau",
+    unknown_file: "Unbekannte Datei",
+    open: "Vorschau",
+    download: "Herunterladen",
+    downloading: "Herunterladen…",
   },
   customization: {
     interface: {

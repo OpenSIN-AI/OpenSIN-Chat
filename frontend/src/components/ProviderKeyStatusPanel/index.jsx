@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: MIT
-import { ArrowsClockwise, CheckCircle, Info, WarningCircle } from "@phosphor-icons/react";
+import {
+  ArrowsClockwise,
+  CheckCircle,
+  Info,
+  WarningCircle,
+} from "@phosphor-icons/react";
 import useProviderKeyStatus from "@/hooks/useProviderKeyStatus";
 
 function StatusBadge({ status }) {
@@ -58,7 +63,8 @@ export default function ProviderKeyStatusPanel() {
     useProviderKeyStatus();
 
   const pathProblem =
-    paths && (!paths.storageExists || !paths.storageWritable || !paths.hotdirExists);
+    paths &&
+    (!paths.storageExists || !paths.storageWritable || !paths.hotdirExists);
 
   return (
     <section
@@ -71,7 +77,9 @@ export default function ProviderKeyStatusPanel() {
             Lokale Provider — API-Key-Status
           </h3>
           <p className="text-xs text-theme-text-secondary">
-            {"Fallback aktiv = Provider läuft mit sicherem Platzhalter-Key (kein Crash, aber kein echter Key gesetzt)."}
+            {
+              "Fallback aktiv = Provider läuft mit sicherem Platzhalter-Key (kein Crash, aber kein echter Key gesetzt)."
+            }
           </p>
         </div>
         <button
@@ -81,19 +89,27 @@ export default function ProviderKeyStatusPanel() {
           className="flex items-center gap-x-1 rounded-lg border border-theme-sidebar-border px-2.5 py-1.5 text-xs text-theme-text-primary hover:bg-theme-bg-secondary disabled:opacity-50"
           aria-label="Status neu laden"
         >
-          <ArrowsClockwise size={14} className={isLoading ? "animate-spin" : ""} />
+          <ArrowsClockwise
+            size={14}
+            className={isLoading ? "animate-spin" : ""}
+          />
           Aktualisieren
         </button>
       </header>
 
       {error && (
-        <p role="alert" className="rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-red-400">
+        <p
+          role="alert"
+          className="rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-red-400"
+        >
           {`Status konnte nicht geladen werden: ${error}`}
         </p>
       )}
 
       {!error && isLoading && (
-        <p className="px-1 text-xs text-theme-text-secondary">Lade Provider-Status…</p>
+        <p className="px-1 text-xs text-theme-text-secondary">
+          Lade Provider-Status…
+        </p>
       )}
 
       {!error && !isLoading && providers.length === 0 && (
@@ -111,7 +127,10 @@ export default function ProviderKeyStatusPanel() {
       )}
 
       {pathProblem && (
-        <p role="alert" className="flex items-start gap-x-1.5 rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-amber-400">
+        <p
+          role="alert"
+          className="flex items-start gap-x-1.5 rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-amber-400"
+        >
           <WarningCircle size={14} weight="fill" className="mt-0.5 shrink-0" />
           {`Speicherpfad-Problem erkannt: ${paths.storagePath} (existiert: ${paths.storageExists ? "ja" : "nein"}, beschreibbar: ${paths.storageWritable ? "ja" : "nein"}, Hotdir: ${paths.hotdirExists ? "ok" : "fehlt"}).`}
         </p>

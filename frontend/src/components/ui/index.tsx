@@ -4,7 +4,11 @@
  * Demonstrates best practices for React component props typing.
  */
 
-import React, { ReactNode, ButtonHTMLAttributes, InputHTMLAttributes } from "react";
+import React, {
+  ReactNode,
+  ButtonHTMLAttributes,
+  InputHTMLAttributes,
+} from "react";
 
 /**
  * Button Component Props
@@ -33,7 +37,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       type = "button",
       ...props
     },
-    ref
+    ref,
   ) => {
     const variantClasses = {
       primary: "bg-blue-600 text-white hover:bg-blue-700",
@@ -66,7 +70,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? "Loading..." : children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";
@@ -101,10 +105,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && <span className="text-sm text-red-500">{error}</span>}
-        {helperText && <span className="text-sm text-gray-500">{helperText}</span>}
+        {helperText && (
+          <span className="text-sm text-gray-500">{helperText}</span>
+        )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";
@@ -194,7 +200,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         {children}
       </div>
     );
-  }
+  },
 );
 
 Card.displayName = "Card";
@@ -207,7 +213,8 @@ export interface SelectOption<T = string> {
   value: T;
 }
 
-export interface SelectProps<T = string> extends InputHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps<T = string>
+  extends InputHTMLAttributes<HTMLSelectElement> {
   options: SelectOption<T>[];
   placeholder?: string;
   label?: string;
@@ -239,7 +246,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         </select>
       </div>
     );
-  }
+  },
 );
 
 Select.displayName = "Select";

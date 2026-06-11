@@ -2,12 +2,17 @@
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import { Plus, CircleNotch, Trash, FolderSimplePlus } from "@phosphor-icons/react";
+import {
+  Plus,
+  CircleNotch,
+  Trash,
+  FolderSimplePlus,
+} from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
 import { useParams } from "react-router-dom";
-import useThreads, { invalidateThreads } from "@/hooks/useThreads";
+import useThreads from "@/hooks/useThreads";
 import {
   DndContext,
   PointerSensor,
@@ -205,14 +210,18 @@ export default function ThreadContainer({
       newFolderId,
     );
     if (!ok) {
-      showToast("Thread konnte nicht verschoben werden.", "error", { clear: true });
+      showToast("Thread konnte nicht verschoben werden.", "error", {
+        clear: true,
+      });
       mutate(
         (current) => {
           const currentThreads = current?.threads || [];
           return {
             ...current,
             threads: currentThreads.map((t) =>
-              t.slug === draggedSlug ? { ...t, folder_id: thread.folder_id } : t,
+              t.slug === draggedSlug
+                ? { ...t, folder_id: thread.folder_id }
+                : t,
             ),
           };
         },
@@ -272,7 +281,9 @@ export default function ThreadContainer({
     isVirtualThread || (!threadSlug && !defaultThreadHasChats);
 
   const unfolderedThreads = threads.filter((t) => !t.folder_id);
-  const draggedThread = activeId ? threads.find((t) => t.slug === activeId) : null;
+  const draggedThread = activeId
+    ? threads.find((t) => t.slug === activeId)
+    : null;
 
   return (
     <DndContext
@@ -289,11 +300,17 @@ export default function ThreadContainer({
             isActive={activeThreadIdx === 0}
             workspace={workspace}
             thread={{ slug: null, name: "default" }}
-            hasNext={unfolderedThreads.length > 0 || showVirtualThread || folders.length > 0}
+            hasNext={
+              unfolderedThreads.length > 0 ||
+              showVirtualThread ||
+              folders.length > 0
+            }
           />
         )}
         {folders.map((folder) => {
-          const folderThreads = threads.filter((t) => t.folder_id === folder.id);
+          const folderThreads = threads.filter(
+            (t) => t.folder_id === folder.id,
+          );
           return (
             <ThreadFolderItem
               key={folder.id}
@@ -455,11 +472,9 @@ function NewFolderButton({ workspace, onCreated }) {
     );
     setLoading(false);
     if (message || !folder) {
-      showToast(
-        `Ordner konnte nicht erstellt werden: ${message}`,
-        "error",
-        { clear: true },
-      );
+      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", {
+        clear: true,
+      });
       return;
     }
     onCreated(folder);

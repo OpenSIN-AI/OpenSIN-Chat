@@ -27,7 +27,9 @@ describe("useFooterSettings", () => {
 
   it("returns footer icons", async () => {
     Admin.systemPreferencesByFields.mockResolvedValue({
-      settings: { footer_data: '[{"icon":"github","url":"https://github.com"}]' },
+      settings: {
+        footer_data: '[{"icon":"github","url":"https://github.com"}]',
+      },
     });
 
     const { result } = renderHook(() => useFooterSettings(), { wrapper });

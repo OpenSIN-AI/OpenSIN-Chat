@@ -13,7 +13,11 @@ const OutlookAgent: any = {
    * @returns {Promise<{success: boolean, url?: string, error?: string}>}
    */
   saveCredentialsAndGetAuthUrl: async ({
-    clientId, tenantId, clientSecret, authType, }: any) => {
+    clientId,
+    tenantId,
+    clientSecret,
+    authType,
+  }: any) => {
     return await fetch(`${API_BASE}/admin/agent-skills/outlook/auth-url`, {
       method: "POST",
       headers: baseHeaders(),

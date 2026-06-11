@@ -26,7 +26,7 @@ describe("fetchWithTimeout", () => {
     expect(result.ok).toBe(true);
     expect(global.fetch).toHaveBeenCalledWith(
       "https://example.com/api",
-      expect.objectContaining({ signal: expect.any(AbortSignal) })
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
     );
   });
 
@@ -41,7 +41,9 @@ describe("fetchWithTimeout", () => {
       });
     });
 
-    const promise = fetchWithTimeout("https://example.com/api", { timeoutMs: 5000 });
+    const promise = fetchWithTimeout("https://example.com/api", {
+      timeoutMs: 5000,
+    });
     vi.advanceTimersByTime(5000);
 
     await expect(promise).rejects.toThrow("Zeitüberschreitung");
@@ -52,11 +54,15 @@ describe("fetchWithTimeout", () => {
     controller.abort();
 
     global.fetch = vi.fn().mockImplementation((_url, opts) => {
-      return Promise.reject(new DOMException("The operation was aborted.", "AbortError"));
+      return Promise.reject(
+        new DOMException("The operation was aborted.", "AbortError"),
+      );
     });
 
     await expect(
-      fetchWithTimeout("https://example.com/api", { signal: controller.signal })
+      fetchWithTimeout("https://example.com/api", {
+        signal: controller.signal,
+      }),
     ).rejects.toThrow("The operation was aborted");
   });
 
@@ -114,7 +120,9 @@ describe("fetchWithTimeout", () => {
       });
     });
 
-    const promise = fetchWithTimeout("https://example.com/api", { timeoutMs: 2000 });
+    const promise = fetchWithTimeout("https://example.com/api", {
+      timeoutMs: 2000,
+    });
 
     vi.advanceTimersByTime(1999);
     expect(capturedSignal.aborted).toBe(false);
@@ -126,9 +134,9 @@ describe("fetchWithTimeout", () => {
   it("propagates network errors", async () => {
     global.fetch = vi.fn().mockRejectedValue(new TypeError("Failed to fetch"));
 
-    await expect(
-      fetchWithTimeout("https://example.com/api")
-    ).rejects.toThrow("Failed to fetch");
+    await expect(fetchWithTimeout("https://example.com/api")).rejects.toThrow(
+      "Failed to fetch",
+    );
   });
 
   it("clears timeout timer after successful fetch", async () => {

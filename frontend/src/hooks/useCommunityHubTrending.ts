@@ -17,7 +17,7 @@ export default function useCommunityHubTrending() {
       const { success, result } = await CommunityHub.fetchExploreItems();
       return success ? result : DEFAULT_EXPLORE_ITEMS;
     },
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false },
   );
 
   return {

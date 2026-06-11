@@ -16,7 +16,12 @@ import { createPortal } from "react-dom";
  * @param {ModalWrapperProps} props - ModalWrapperProps to pass
  * @returns {import("react").ReactNode}
  */
-export default function ModalWrapper({ children, isOpen, noPortal = false, closeModal }: any) {
+export default function ModalWrapper({
+  children,
+  isOpen,
+  noPortal = false,
+  closeModal,
+}: any) {
   useEffect(() => {
     if (!closeModal) return;
     const handler = (e: KeyboardEvent) => {
@@ -29,9 +34,7 @@ export default function ModalWrapper({ children, isOpen, noPortal = false, close
   if (!isOpen) return null;
 
   const modalContent = closeModal ? (
-    <div onClick={(e: any) => e.stopPropagation()}>
-      {children}
-    </div>
+    <div onClick={(e: any) => e.stopPropagation()}>{children}</div>
   ) : (
     children
   );

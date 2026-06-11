@@ -70,7 +70,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
 function NvidiaNimModelSelection({ settings, basePath }: any) {
   const { customModels, defaultModels, isLoading } = useProviderModels(
     "nvidia-nim",
-    basePath
+    basePath,
   );
   // Combine API-fetched models with default fallback models
   const allModels = customModels.length > 0 ? customModels : defaultModels;
@@ -106,13 +106,15 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
       >
         {(allModels as any).map((model) => {
           const id = typeof model === "string" ? model : model.id;
-          const name = typeof model === "string" ? model : model.name || model.id;
+          const name =
+            typeof model === "string" ? model : model.name || model.id;
           return (
             <option
               key={id}
               value={id}
               selected={
-                settings?.NvidiaNimLLMModelPref === id || !settings?.NvidiaNimLLMModelPref
+                settings?.NvidiaNimLLMModelPref === id ||
+                !settings?.NvidiaNimLLMModelPref
               }
             >
               {name}

@@ -36,7 +36,12 @@ export default function AvailableAgentsButton({ showing, setShowAgents }: any) {
 }
 
 export function AvailableAgents({
-  showing, setShowing, sendCommand, promptRef, centered = false, }: any) {
+  showing,
+  setShowing,
+  sendCommand,
+  promptRef,
+  centered = false,
+}: any) {
   const formRef = useRef(null);
   const agentSessionActive = useIsAgentSessionActive();
   const [searchParams] = useSearchParams();

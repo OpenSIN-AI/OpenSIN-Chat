@@ -6,7 +6,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { QrCode } from "@phosphor-icons/react";
 import { useModal } from "@/hooks/useModal";
 import CTAButton from "@/components/lib/CTAButton";
-import MobileConnection from "@/models/mobile";
 import ConnectionModal from "./ConnectionModal";
 import DeviceRow from "./DeviceRow";
 import { isMobile } from "react-device-detect";
@@ -24,10 +23,7 @@ export default function MobileDevices() {
   }
 
   const removeDevice = (id) => {
-    mutate(
-      (prev) => (prev || []).filter((device) => device.id !== id),
-      false,
-    );
+    mutate((prev) => (prev || []).filter((device) => device.id !== id), false);
   };
 
   return (

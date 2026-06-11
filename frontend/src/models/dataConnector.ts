@@ -26,7 +26,12 @@ const DataConnector: any = {
           return { branches: [], error: e.message };
         });
     },
-    collect: async function ({ repo, accessToken, branch, ignorePaths = [] }: any) {
+    collect: async function ({
+      repo,
+      accessToken,
+      branch,
+      ignorePaths = [],
+    }: any) {
       return await fetch(`${API_BASE}/ext/github/repo`, {
         method: "POST",
         headers: baseHeaders(),
@@ -66,7 +71,13 @@ const DataConnector: any = {
         });
     },
     collect: async function ({
-      repo, accessToken, branch, ignorePaths = [], fetchIssues = false, fetchWikis = false, }: any) {
+      repo,
+      accessToken,
+      branch,
+      ignorePaths = [],
+      fetchIssues = false,
+      fetchWikis = false,
+    }: any) {
       return await fetch(`${API_BASE}/ext/gitlab/repo`, {
         method: "POST",
         headers: baseHeaders(),
@@ -129,7 +140,14 @@ const DataConnector: any = {
 
   confluence: {
     collect: async function ({
-      baseUrl, spaceKey, username, accessToken, cloud, personalAccessToken, bypassSSL, }: any) {
+      baseUrl,
+      spaceKey,
+      username,
+      accessToken,
+      cloud,
+      personalAccessToken,
+      bypassSSL,
+    }: any) {
       return await fetch(`${API_BASE}/ext/confluence`, {
         method: "POST",
         headers: baseHeaders(),

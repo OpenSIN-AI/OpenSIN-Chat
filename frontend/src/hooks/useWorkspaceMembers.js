@@ -13,11 +13,9 @@ export default function useWorkspaceMembers(workspaceId) {
         Admin.workspaceUsers(workspaceId),
         Admin.workspaces(),
       ]);
-      const adminWorkspace = adminWorkspaces.find(
-        (w) => w.id === workspaceId,
-      );
+      const adminWorkspace = adminWorkspaces.find((w) => w.id === workspaceId);
       return { users, workspaceUsers, adminWorkspace };
-    }
+    },
   );
 
   return {

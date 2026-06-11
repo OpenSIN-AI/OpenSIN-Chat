@@ -24,10 +24,13 @@ describe("MCPServers", () => {
       });
 
       const result = await MCPServers.forceReload();
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/mcp-servers/force-reload", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/mcp-servers/force-reload",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -36,7 +39,11 @@ describe("MCPServers", () => {
       vi.spyOn(globalThis, "fetch").mockRejectedValue(err);
 
       const result = await MCPServers.forceReload();
-      expect(result).toEqual({ servers: [], success: false, error: "reload fail" });
+      expect(result).toEqual({
+        servers: [],
+        success: false,
+        error: "reload fail",
+      });
     });
   });
 
@@ -60,7 +67,11 @@ describe("MCPServers", () => {
       vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("list fail"));
 
       const result = await MCPServers.listServers();
-      expect(result).toEqual({ success: false, error: "list fail", servers: [] });
+      expect(result).toEqual({
+        success: false,
+        error: "list fail",
+        servers: [],
+      });
     });
   });
 
@@ -123,11 +134,18 @@ describe("MCPServers", () => {
       });
 
       const result = await MCPServers.toggleTool("s1", "tool-a", true);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/mcp-servers/toggle-tool", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ serverName: "s1", toolName: "tool-a", enabled: true }),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/mcp-servers/toggle-tool",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            serverName: "s1",
+            toolName: "tool-a",
+            enabled: true,
+          }),
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -135,7 +153,11 @@ describe("MCPServers", () => {
       vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("tool fail"));
 
       const result = await MCPServers.toggleTool("s1", "tool-a", false);
-      expect(result).toEqual({ success: false, error: "tool fail", suppressedTools: [] });
+      expect(result).toEqual({
+        success: false,
+        error: "tool fail",
+        suppressedTools: [],
+      });
     });
   });
 });

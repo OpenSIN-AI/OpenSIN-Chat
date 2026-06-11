@@ -8,7 +8,7 @@ export default function useRunDetail(runId: string | null) {
   const { data, error, isLoading, mutate } = useSWR(
     runId ? [RUN_DETAIL_KEY, runId] : null,
     () => ScheduledJobs.getRun(runId),
-    { revalidateOnFocus: false, refreshInterval: 3000 }
+    { revalidateOnFocus: false, refreshInterval: 3000 },
   );
 
   return {

@@ -111,10 +111,7 @@ function TerminalTab() {
 
     setCmdHistory((prev) => [trimmed, ...prev].slice(0, 100));
     setHistoryIdx(-1);
-    setHistory((prev) => [
-      ...prev,
-      { type: "input", text: `$ ${trimmed}` },
-    ]);
+    setHistory((prev) => [...prev, { type: "input", text: `$ ${trimmed}` }]);
 
     try {
       const res = await fetch("/api/utils/terminal/exec", {
@@ -161,9 +158,9 @@ function TerminalTab() {
       setInput(cmdHistory[idx] ?? "");
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
-      const idx = Math.max(historyIdx + 1, -1);  // FIXED: +1 not -1
+      const idx = Math.max(historyIdx + 1, -1); // FIXED: +1 not -1
       setHistoryIdx(idx);
-      setInput(idx === -1 ? "" : cmdHistory[idx] ?? "");
+      setInput(idx === -1 ? "" : (cmdHistory[idx] ?? ""));
     }
   }
 

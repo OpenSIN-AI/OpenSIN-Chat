@@ -60,7 +60,10 @@ function getTitle(doc: any) {
  * @param {Array} props.documents - Documents embedded in the active workspace
  * @param {Function} props.onAddSources - Handler to add new sources (opens uploader)
  */
-export default function WorkspaceSources({ documents = [], onAddSources }: any) {
+export default function WorkspaceSources({
+  documents = [],
+  onAddSources,
+}: any) {
   const { t } = useTranslation();
   const hasSources = documents.length > 0;
 

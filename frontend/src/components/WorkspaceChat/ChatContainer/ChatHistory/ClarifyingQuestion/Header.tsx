@@ -13,7 +13,14 @@ function QuestionText({ children }: any) {
   );
 }
 
-function PaginationControls({ index, total, onPrev, onNext, isFirst, isLast }: any) {
+function PaginationControls({
+  index,
+  total,
+  onPrev,
+  onNext,
+  isFirst,
+  isLast,
+}: any) {
   const { t } = useTranslation();
   return (
     <div className="flex items-center gap-2 shrink-0">
@@ -66,7 +73,17 @@ function CloseButton({ disabled, onClick }: any) {
  * surveys and after the user has responded.
  */
 export default function Header({
-  question, index, total, isSingle, responded, onPrev, onNext, onClose, isFirst, isLast, }: any) {
+  question,
+  index,
+  total,
+  isSingle,
+  responded,
+  onPrev,
+  onNext,
+  onClose,
+  isFirst,
+  isLast,
+}: any) {
   const showPagination = !isSingle && !responded;
 
   return (

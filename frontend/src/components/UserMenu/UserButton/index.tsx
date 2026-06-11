@@ -27,9 +27,7 @@ export default function UserButton() {
   const [showMenu, setShowMenu] = useState(false);
   const [showAccountSettings, setShowAccountSettings] = useState(false);
 
-  const supportEmail = email
-    ? `mailto:${email}`
-    : paths.mailToSupport();
+  const supportEmail = email ? `mailto:${email}` : paths.mailToSupport();
 
   const handleClose = (event) => {
     if (

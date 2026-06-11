@@ -17,10 +17,14 @@ export function SendPromptButton({ formRef, promptInput, isDisabled }: any) {
   );
 }
 
-export function EnhancePromptButton({ promptInput, setPromptInput, isStreaming }: any) {
+export function EnhancePromptButton({
+  promptInput,
+  setPromptInput,
+  isStreaming,
+}: any) {
   const { t } = useTranslation();
   const [enhancing, setEnhancing] = useEnhancing(false);
-  
+
   const handleEnhance = async () => {
     setEnhancing(true);
     // Enhancement logic here

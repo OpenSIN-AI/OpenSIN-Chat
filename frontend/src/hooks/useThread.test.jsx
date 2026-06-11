@@ -45,7 +45,9 @@ describe("useThread", () => {
       defaultThreadChatCount: 0,
     });
 
-    const { result } = renderHook(() => useThread("ws", "missing"), { wrapper });
+    const { result } = renderHook(() => useThread("ws", "missing"), {
+      wrapper,
+    });
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.thread).toBeNull();

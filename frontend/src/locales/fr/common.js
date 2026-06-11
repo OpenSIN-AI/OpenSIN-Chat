@@ -420,6 +420,27 @@ const TRANSLATIONS = {
           },
         },
       },
+      image_generation: {
+        title: "Génération d'images",
+        description:
+          "Générer des images avec n'importe quelle API de génération d'images compatible OpenAI. Configurez le point de terminaison, la clé API et le modèle ci-dessous.",
+        base_url: {
+          label: "URL de base",
+          required: "(requis)",
+          placeholder: "https://api.openai.com",
+          help: "URL de base de l'API compatible OpenAI (par ex. {{example}})",
+          invalid: "Veuillez saisir une URL http:// ou https:// valide.",
+        },
+        api_key: {
+          label: "Clé API",
+          help: "Laissez vide pour conserver la clé existante. La clé stockée n'est jamais affichée dans le navigateur.",
+        },
+        model: {
+          label: "Modèle",
+          placeholder: "dall-e-3",
+          help: "Nom du modèle pour la génération d'images. Les modèles courants sont suggérés.",
+        },
+      },
       gmail: {
         title: "Connecteur GMail",
         description:
@@ -1343,6 +1364,20 @@ const TRANSLATIONS = {
     loading: "Chargement de l'aperçu…",
     load_error: "Impossible de charger l'aperçu.",
     generated_image: "Image générée",
+    open_externally: "Ouvrir dans un nouvel onglet",
+    iframe_title: "Aperçu",
+    menu: {
+      download: "Télécharger",
+      open_new_tab: "Ouvrir dans un nouvel onglet",
+      add_to_sources: "Ajouter aux sources",
+    },
+    empty:
+      "Aucun contenu à prévisualiser. Générez un rapport ou un document pour l'afficher ici.",
+    title: "Aperçu",
+    unknown_file: "Fichier inconnu",
+    open: "Aperçu",
+    download: "Télécharger",
+    downloading: "Téléchargement…",
   },
   customization: {
     interface: {

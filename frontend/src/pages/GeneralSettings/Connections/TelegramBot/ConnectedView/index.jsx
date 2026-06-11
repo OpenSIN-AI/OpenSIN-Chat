@@ -13,7 +13,11 @@ export default function ConnectedView({
 }) {
   const connected = config.connected;
   const [newToken, setNewToken] = useState("");
-  const { pendingUsers, approvedUsers, refresh: fetchUsers } = useTelegramUsers();
+  const {
+    pendingUsers,
+    approvedUsers,
+    refresh: fetchUsers,
+  } = useTelegramUsers();
 
   if (!connected) {
     return (

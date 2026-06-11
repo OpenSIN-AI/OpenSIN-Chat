@@ -6,7 +6,6 @@
 
 import { fullApiUrl } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
-import type { ApiResponse } from "@/types/api";
 
 export interface SystemPreference {
   [key: string]: any;
@@ -21,7 +20,7 @@ const Admin: any = {
    * Get system preferences by field names
    */
   systemPreferencesByFields: async function (
-    fields: string[]
+    fields: string[],
   ): Promise<SystemPreferencesResponse> {
     try {
       const res = await fetch(`${fullApiUrl()}/system/preferences`, {
@@ -41,7 +40,7 @@ const Admin: any = {
    * Update system preferences
    */
   updateSystemPreferences: async function (
-    data: Record<string, unknown>
+    data: Record<string, unknown>,
   ): Promise<{ success: boolean; error?: string }> {
     try {
       const res = await fetch(`${fullApiUrl()}/system/preferences/update`, {

@@ -7,10 +7,14 @@ import { swrFetcher } from "@/utils/swrFetcher";
 const FILESYSTEM_KEY = "/utils/filesystem";
 
 export function useFilesystem() {
-  const { data, error, isLoading, mutate } = useSWR(FILESYSTEM_KEY, swrFetcher, {
-    revalidateOnFocus: false,
-    dedupingInterval: 30000,
-  });
+  const { data, error, isLoading, mutate } = useSWR(
+    FILESYSTEM_KEY,
+    swrFetcher,
+    {
+      revalidateOnFocus: false,
+      dedupingInterval: 30000,
+    },
+  );
   return {
     data,
     loading: isLoading,

@@ -37,7 +37,10 @@ describe("useTelegramBot", () => {
     Telegram.getConfig.mockResolvedValue(fakeConfig);
     const { result } = renderHook(() => useTelegramBot(), { wrapper });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(result.current.config).toEqual({ active: true, bot_username: "testbot" });
+    expect(result.current.config).toEqual({
+      active: true,
+      bot_username: "testbot",
+    });
   });
 
   it("captures errors", async () => {

@@ -17,7 +17,6 @@ import {
   CheckCircle,
   Info,
 } from "@phosphor-icons/react";
-import GoogleAgentSkills from "@/models/googleAgentSkills";
 import { useGoogleCalendarAgent } from "@/hooks/useGoogleAgent";
 import { getGoogleCalendarSkills, filterSkillCategories } from "./utils";
 import { Tooltip } from "react-tooltip";

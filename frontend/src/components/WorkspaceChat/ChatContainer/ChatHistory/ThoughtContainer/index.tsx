@@ -10,7 +10,6 @@ import {
 } from "react";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "dompurify";
-import { isMobile } from "react-device-detect";
 import ThinkingAnimation from "@/media/animations/thinking-animation.webm";
 import ThinkingStatic from "@/media/animations/thinking-static.png";
 
@@ -60,16 +59,22 @@ export function useThoughtExpansion(messageId: any) {
 const THOUGHT_KEYWORDS = ["thought", "thinking", "think", "thought_chain"];
 const CLOSING_TAGS = [...THOUGHT_KEYWORDS, "response", "answer"];
 export const THOUGHT_REGEX_OPEN = new RegExp(
-  (THOUGHT_KEYWORDS as any).map((keyword) => `<${keyword}\\s*(?:[^>]*?)?\\s*>`).join("|"),
+  (THOUGHT_KEYWORDS as any)
+    .map((keyword) => `<${keyword}\\s*(?:[^>]*?)?\\s*>`)
+    .join("|"),
 );
 export const THOUGHT_REGEX_CLOSE = new RegExp(
-  (CLOSING_TAGS as any).map((keyword) => `</${keyword}\\s*(?:[^>]*?)?>`).join("|"),
+  (CLOSING_TAGS as any)
+    .map((keyword) => `</${keyword}\\s*(?:[^>]*?)?>`)
+    .join("|"),
 );
 export const THOUGHT_REGEX_COMPLETE = new RegExp(
-  (THOUGHT_KEYWORDS as any).map(
-    (keyword) =>
-      `<${keyword}\\s*(?:[^>]*?)?\\s*>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
-  ).join("|"),
+  (THOUGHT_KEYWORDS as any)
+    .map(
+      (keyword) =>
+        `<${keyword}\\s*(?:[^>]*?)?\\s*>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
+    )
+    .join("|"),
 );
 
 function contentIsNotEmpty(content: any = "") {
@@ -92,7 +97,8 @@ export function ThoughtBrainButton({ messageId, content }: any) {
   const isThinking =
     content?.match(THOUGHT_REGEX_OPEN) && !content?.match(THOUGHT_REGEX_CLOSE);
   const isComplete =
-    content?.match(THOUGHT_REGEX_COMPLETE) || content?.match(THOUGHT_REGEX_CLOSE);
+    content?.match(THOUGHT_REGEX_COMPLETE) ||
+    content?.match(THOUGHT_REGEX_CLOSE);
   const hasContent = contentIsNotEmpty(content);
 
   if (!hasContent) return null;

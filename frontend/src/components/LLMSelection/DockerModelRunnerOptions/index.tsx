@@ -2,7 +2,6 @@
 import { useState } from "react";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { CircleNotch, Info } from "@phosphor-icons/react";
-import strDistance from "js-levenshtein";
 import { LLM_PREFERENCE_CHANGED_EVENT } from "@/pages/GeneralSettings/LLMPreference";
 import { DOCKER_MODEL_RUNNER_COMMON_URLS } from "@/utils/constants";
 import { Tooltip } from "react-tooltip";
@@ -154,7 +153,9 @@ export default function DockerModelRunnerOptions({ settings }: any) {
             placeholder="4096"
             min={1}
             value={maxTokens}
-            onChange={(e) => setMaxTokens(Number(((e.target as unknown) as any)?.value))}
+            onChange={(e) =>
+              setMaxTokens(Number((e.target as unknown as any)?.value))
+            }
             onScroll={(e) => (e.target as HTMLElement).blur()}
             required={true}
             autoComplete="off"
@@ -171,9 +172,20 @@ export default function DockerModelRunnerOptions({ settings }: any) {
 }
 
 function DockerModelRunnerModelSelection({
-  selectedModelId, setSelectedModelId, basePath = null, }: any) {
-  const { customModels, isLoading } = useProviderModels("docker-model-runner", null, basePath);
-  async function downloadModel(modelId: any, fileSize: any, progressCallback: any) {
+  selectedModelId,
+  setSelectedModelId,
+  basePath = null,
+}: any) {
+  const { customModels, isLoading } = useProviderModels(
+    "docker-model-runner",
+    null,
+    basePath,
+  );
+  async function downloadModel(
+    modelId: any,
+    fileSize: any,
+    progressCallback: any,
+  ) {
     try {
       if (
         !window.confirm(
@@ -227,7 +239,9 @@ function DockerModelRunnerModelSelection({
     Object.entries(customModels).forEach(([organization, models]) => {
       const hasInstalled = (models as any).some((model) => model.downloaded);
       if (hasInstalled) {
-        const installedModels = (models as any).filter((model) => model.downloaded);
+        const installedModels = (models as any).filter(
+          (model) => model.downloaded,
+        );
         mapping
           .get("installed")
           .set("Downloaded Models", [

@@ -21,6 +21,17 @@ vi.mock("react-i18next", () => ({
         "preview.generated_image": "Generated image",
         "preview.loading": "Loading preview...",
         "preview.load_error": "Preview could not be loaded.",
+        "preview.menu.download": "Download",
+        "preview.menu.open_new_tab": "Open in new tab",
+        "preview.menu.add_to_sources": "Add to sources",
+        "preview.open_externally": "Open in new tab",
+        "preview.iframe_title": "Preview",
+        "preview.empty": "No content to preview.",
+        "preview.title": "Preview",
+        "preview.unknown_file": "Unknown file",
+        "preview.open": "Preview",
+        "preview.download": "Download",
+        "preview.downloading": "Downloading...",
       };
       return map[key] || fallback || key;
     },
@@ -59,15 +70,21 @@ describe("FileDownloadCard", () => {
   it("renders filename", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "report.pdf", storageFilename: "abc.pdf", fileSize: 1024 } }}
-      />
+        props={{
+          content: {
+            filename: "report.pdf",
+            storageFilename: "abc.pdf",
+            fileSize: 1024,
+          },
+        }}
+      />,
     );
     expect(screen.getByText("report.pdf")).toBeInTheDocument();
   });
 
   it("renders Unknown file when no filename", () => {
     render(
-      <FileDownloadCard props={{ content: { storageFilename: "abc.pdf" } }} />
+      <FileDownloadCard props={{ content: { storageFilename: "abc.pdf" } }} />,
     );
     expect(screen.getByText("Unknown file")).toBeInTheDocument();
   });
@@ -75,8 +92,10 @@ describe("FileDownloadCard", () => {
   it("renders PDF badge", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "report.pdf", storageFilename: "abc.pdf" } }}
-      />
+        props={{
+          content: { filename: "report.pdf", storageFilename: "abc.pdf" },
+        }}
+      />,
     );
     expect(screen.getByText("PDF")).toBeInTheDocument();
   });
@@ -84,8 +103,10 @@ describe("FileDownloadCard", () => {
   it("renders DOC badge", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "document.docx", storageFilename: "abc.docx" } }}
-      />
+        props={{
+          content: { filename: "document.docx", storageFilename: "abc.docx" },
+        }}
+      />,
     );
     expect(screen.getByText("DOC")).toBeInTheDocument();
   });
@@ -93,8 +114,10 @@ describe("FileDownloadCard", () => {
   it("renders XLS badge", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "sheet.xlsx", storageFilename: "abc.xlsx" } }}
-      />
+        props={{
+          content: { filename: "sheet.xlsx", storageFilename: "abc.xlsx" },
+        }}
+      />,
     );
     expect(screen.getByText("XLS")).toBeInTheDocument();
   });
@@ -102,8 +125,10 @@ describe("FileDownloadCard", () => {
   it("renders PPT badge", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "slides.pptx", storageFilename: "abc.pptx" } }}
-      />
+        props={{
+          content: { filename: "slides.pptx", storageFilename: "abc.pptx" },
+        }}
+      />,
     );
     expect(screen.getByText("PPT")).toBeInTheDocument();
   });
@@ -111,8 +136,10 @@ describe("FileDownloadCard", () => {
   it("renders CSV badge", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "data.csv", storageFilename: "abc.csv" } }}
-      />
+        props={{
+          content: { filename: "data.csv", storageFilename: "abc.csv" },
+        }}
+      />,
     );
     expect(screen.getByText("CSV")).toBeInTheDocument();
   });
@@ -120,8 +147,10 @@ describe("FileDownloadCard", () => {
   it("renders extension badge for unknown types", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "archive.zip", storageFilename: "abc.zip" } }}
-      />
+        props={{
+          content: { filename: "archive.zip", storageFilename: "abc.zip" },
+        }}
+      />,
     );
     expect(screen.getByText("ZIP")).toBeInTheDocument();
   });
@@ -131,8 +160,10 @@ describe("FileDownloadCard", () => {
   it("renders IMG badge for png files", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
-      />
+        props={{
+          content: { filename: "photo.png", storageFilename: "image-abc.png" },
+        }}
+      />,
     );
     expect(screen.getByText("IMG")).toBeInTheDocument();
   });
@@ -140,8 +171,10 @@ describe("FileDownloadCard", () => {
   it("renders IMG badge for jpg files", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "photo.jpg", storageFilename: "image-abc.jpg" } }}
-      />
+        props={{
+          content: { filename: "photo.jpg", storageFilename: "image-abc.jpg" },
+        }}
+      />,
     );
     expect(screen.getByText("IMG")).toBeInTheDocument();
   });
@@ -149,19 +182,30 @@ describe("FileDownloadCard", () => {
   it("renders SVG badge for svg files", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "icon.svg", storageFilename: "image-abc.svg" } }}
-      />
+        props={{
+          content: { filename: "icon.svg", storageFilename: "image-abc.svg" },
+        }}
+      />,
     );
     expect(screen.getByText("SVG")).toBeInTheDocument();
   });
 
   it("shows inline image when fetch succeeds for png", async () => {
     const blob = new Blob(["imgdata"], { type: "image/png" });
-    mockFetch.mockResolvedValue({ ok: true, blob: () => Promise.resolve(blob) });
+    mockFetch.mockResolvedValue({
+      ok: true,
+      blob: () => Promise.resolve(blob),
+    });
     render(
       <FileDownloadCard
-        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png", fileSize: 512 } }}
-      />
+        props={{
+          content: {
+            filename: "photo.png",
+            storageFilename: "image-abc.png",
+            fileSize: 512,
+          },
+        }}
+      />,
     );
     await waitFor(() => {
       expect(screen.getByRole("img")).toBeInTheDocument();
@@ -173,42 +217,53 @@ describe("FileDownloadCard", () => {
     mockFetch.mockResolvedValue({ ok: false, status: 404 });
     render(
       <FileDownloadCard
-        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
-      />
+        props={{
+          content: { filename: "photo.png", storageFilename: "image-abc.png" },
+        }}
+      />,
     );
     await waitFor(() => {
       expect(screen.queryByRole("img")).not.toBeInTheDocument();
     });
   });
 
-  it("does not render Vorschau button for image files", () => {
+  it("does not render Open in new tab button for image files", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
-      />
+        props={{
+          content: { filename: "photo.png", storageFilename: "image-abc.png" },
+        }}
+      />,
     );
-    expect(screen.queryByText("Vorschau")).not.toBeInTheDocument();
+    expect(screen.queryByText("Open in new tab")).not.toBeInTheDocument();
   });
 
-  it("does not render Vorschau button for svg files", () => {
+  it("does not render Open in new tab button for svg files", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "icon.svg", storageFilename: "image-abc.svg" } }}
-      />
+        props={{
+          content: { filename: "icon.svg", storageFilename: "image-abc.svg" },
+        }}
+      />,
     );
-    expect(screen.queryByText("Vorschau")).not.toBeInTheDocument();
+    expect(screen.queryByText("Open in new tab")).not.toBeInTheDocument();
   });
 
   // ── Regression tests for v0.6.2 fixes ─────────────────────────
 
   it("AutoPreview (#55) does NOT open sidebar for image files (skips isImage)", async () => {
     const blob = new Blob(["img"], { type: "image/png" });
-    mockFetch.mockResolvedValue({ ok: true, blob: () => Promise.resolve(blob) });
+    mockFetch.mockResolvedValue({
+      ok: true,
+      blob: () => Promise.resolve(blob),
+    });
     render(
       <FileDownloadCard
         autoPreview
-        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
-      />
+        props={{
+          content: { filename: "photo.png", storageFilename: "image-abc.png" },
+        }}
+      />,
     );
     // give the effect a tick
     await new Promise((r) => setTimeout(r, 50));
@@ -219,8 +274,13 @@ describe("FileDownloadCard", () => {
     render(
       <FileDownloadCard
         autoPreview
-        props={{ content: { filename: "report.pdf", storageFilename: "report-abc.pdf" } }}
-      />
+        props={{
+          content: {
+            filename: "report.pdf",
+            storageFilename: "report-abc.pdf",
+          },
+        }}
+      />,
     );
     await waitFor(() => {
       expect(openPreviewMock).toHaveBeenCalled();
@@ -235,8 +295,10 @@ describe("FileDownloadCard", () => {
     mockFetch.mockReturnValue(new Promise(() => {}));
     const { container } = render(
       <FileDownloadCard
-        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
-      />
+        props={{
+          content: { filename: "photo.png", storageFilename: "image-abc.png" },
+        }}
+      />,
     );
     // Skeleton: animated div with h-[200px] container
     const skeleton = container.querySelector(".h-\\[200px\\]");
@@ -251,8 +313,10 @@ describe("FileDownloadCard", () => {
     mockFetch.mockResolvedValue({ ok: false, status: 500 });
     const { container } = render(
       <FileDownloadCard
-        props={{ content: { filename: "photo.png", storageFilename: "image-abc.png" } }}
-      />
+        props={{
+          content: { filename: "photo.png", storageFilename: "image-abc.png" },
+        }}
+      />,
     );
     await waitFor(() => {
       expect(screen.queryByRole("img")).not.toBeInTheDocument();
@@ -263,11 +327,19 @@ describe("FileDownloadCard", () => {
 
   it("ImagePreviewBanner uses filename as alt text when filename is provided", async () => {
     const blob = new Blob(["data"], { type: "image/png" });
-    mockFetch.mockResolvedValue({ ok: true, blob: () => Promise.resolve(blob) });
+    mockFetch.mockResolvedValue({
+      ok: true,
+      blob: () => Promise.resolve(blob),
+    });
     render(
       <FileDownloadCard
-        props={{ content: { filename: "mountain.png", storageFilename: "image-abc.png" } }}
-      />
+        props={{
+          content: {
+            filename: "mountain.png",
+            storageFilename: "image-abc.png",
+          },
+        }}
+      />,
     );
     await waitFor(() => {
       expect(screen.getByRole("img")).toBeInTheDocument();
@@ -282,8 +354,10 @@ describe("FileDownloadCard", () => {
   it("renders Download button", () => {
     render(
       <FileDownloadCard
-        props={{ content: { filename: "report.pdf", storageFilename: "abc.pdf" } }}
-      />
+        props={{
+          content: { filename: "report.pdf", storageFilename: "abc.pdf" },
+        }}
+      />,
     );
     expect(screen.getByText("Download")).toBeInTheDocument();
   });
@@ -293,8 +367,10 @@ describe("FileDownloadCard", () => {
     StorageFiles.download.mockResolvedValue(blob);
     render(
       <FileDownloadCard
-        props={{ content: { filename: "report.pdf", storageFilename: "abc.pdf" } }}
-      />
+        props={{
+          content: { filename: "report.pdf", storageFilename: "abc.pdf" },
+        }}
+      />,
     );
     fireEvent.click(screen.getByText("Download"));
     await waitFor(() => {
@@ -305,9 +381,7 @@ describe("FileDownloadCard", () => {
 
   it("does not download when no storageFilename", async () => {
     render(
-      <FileDownloadCard
-        props={{ content: { filename: "report.pdf" } }}
-      />
+      <FileDownloadCard props={{ content: { filename: "report.pdf" } }} />,
     );
     fireEvent.click(screen.getByText("Download"));
     await waitFor(() => {

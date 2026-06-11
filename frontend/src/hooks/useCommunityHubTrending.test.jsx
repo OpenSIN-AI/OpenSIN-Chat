@@ -10,7 +10,9 @@ vi.mock("@/models/communityHub", () => ({
 }));
 
 import CommunityHub from "@/models/communityHub";
-import useCommunityHubTrending, { COMMUNITY_HUB_TRENDING_KEY } from "./useCommunityHubTrending";
+import useCommunityHubTrending, {
+  COMMUNITY_HUB_TRENDING_KEY,
+} from "./useCommunityHubTrending";
 
 const DEFAULT_EXPLORE_ITEMS = {
   agentSkills: { items: [], hasMore: false, totalCount: 0 },
@@ -44,14 +46,20 @@ describe("useCommunityHubTrending", () => {
       systemPrompts: { items: [], hasMore: false, totalCount: 0 },
       slashCommands: { items: [], hasMore: false, totalCount: 0 },
     };
-    CommunityHub.fetchExploreItems.mockResolvedValue({ success: true, result: fakeResult });
+    CommunityHub.fetchExploreItems.mockResolvedValue({
+      success: true,
+      result: fakeResult,
+    });
     const { result } = renderHook(() => useCommunityHubTrending(), { wrapper });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.exploreItems).toEqual(fakeResult);
   });
 
   it("returns default when fetch is not successful", async () => {
-    CommunityHub.fetchExploreItems.mockResolvedValue({ success: false, result: null });
+    CommunityHub.fetchExploreItems.mockResolvedValue({
+      success: false,
+      result: null,
+    });
     const { result } = renderHook(() => useCommunityHubTrending(), { wrapper });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.exploreItems).toEqual(DEFAULT_EXPLORE_ITEMS);

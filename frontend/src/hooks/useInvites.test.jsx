@@ -60,7 +60,9 @@ describe("useInvites", () => {
 
     function sharedWrapper({ children }) {
       return (
-        <SWRConfig value={{ provider: () => new Map(), dedupingInterval: 2000 }}>
+        <SWRConfig
+          value={{ provider: () => new Map(), dedupingInterval: 2000 }}
+        >
           {children}
         </SWRConfig>
       );

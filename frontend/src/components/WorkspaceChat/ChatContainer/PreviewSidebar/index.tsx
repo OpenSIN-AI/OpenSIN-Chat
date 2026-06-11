@@ -19,6 +19,7 @@ import DOMPurify from "@/utils/chat/purify";
 import ChatSidebar from "../ChatSidebar";
 import { usePreviewSidebar, useChatSidebar } from "../ChatSidebar";
 import { baseHeaders } from "@/utils/request";
+import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
 
 // Icon map for preview content types
 const TYPE_ICONS = {
@@ -188,52 +189,10 @@ function ThreeDotsMenu({ previewData, onAddToSources }: any) {
 
 function IframePreview({ url, title }: any) {
   const { t } = useTranslation();
-  const [blobUrl, setBlobUrl] = useState<string | null>(null);
-  const [loaded, setLoaded] = useState(false as any);
-  const [fetchError, setFetchError] = useState(false as any);
+  const { blobUrl, error: fetchError } = useAuthenticatedBlobUrl(url);
+  const [loaded, setLoaded] = useState(false);
 
-  // The agent file endpoint is auth-protected — a plain iframe src without a
-  // Bearer token will get a 401 and render nothing. We fetch the file with the
-  // auth header, turn it into a blob: URL and use that as the iframe src.
-  // The previous blob URL is revoked before being replaced, and on unmount.
-  useEffect(() => {
-    if (!url) return;
-    let objectUrl: string | null = null;
-    let cancelled = false;
-    setLoaded(false);
-    setFetchError(false);
-    setBlobUrl(null);
-
-    fetch(url, { headers: baseHeaders() })
-      .then((res) => {
-        if (!res.ok) throw new Error(`${res.status}`);
-        return res.blob();
-      })
-      .then((blob) => {
-        if (cancelled) return;
-        objectUrl = URL.createObjectURL(blob);
-        setBlobUrl(objectUrl);
-      })
-      .catch(() => {
-        if (!cancelled) setFetchError(true);
-      });
-
-    return () => {
-      cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [url]);
-
-  // Revoke the blob URL when it is replaced (dependency array catches changes)
-  // and when the component unmounts.
-  useEffect(() => {
-    return () => {
-      if (blobUrl) URL.revokeObjectURL(blobUrl);
-    };
-  }, [blobUrl]);
-
-  // If the iframe never reports load, show a fallback link after a grace period.
-  const [graceElapsed, setGraceElapsed] = useState(false as any);
+  const [graceElapsed, setGraceElapsed] = useState(false);
   useEffect(() => {
     setLoaded(false);
     setGraceElapsed(false);
@@ -246,7 +205,7 @@ function IframePreview({ url, title }: any) {
       <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
         <FilePdf size={28} className="text-zinc-500 light:text-slate-400" />
         <p className="text-xs text-zinc-500 light:text-slate-400 text-center px-4">
-          {t("preview.load_error", "Vorschau konnte nicht geladen werden.")}
+          {t("preview.load_error")}
         </p>
         <a
           href={url}
@@ -255,7 +214,7 @@ function IframePreview({ url, title }: any) {
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"
         >
           <ArrowSquareOut size={12} />
-          {t("preview.open_externally", "In neuem Tab öffnen")}
+          {t("preview.open_externally")}
         </a>
       </div>
     );
@@ -268,7 +227,7 @@ function IframePreview({ url, title }: any) {
           src={blobUrl}
           onLoad={() => setLoaded(true)}
           className="w-full h-full rounded border-none bg-white"
-          title={title || "Vorschau"}
+          title={title || t("preview.iframe_title")}
           sandbox="allow-same-origin allow-scripts allow-popups"
         />
       )}
@@ -279,7 +238,7 @@ function IframePreview({ url, title }: any) {
             className="text-zinc-500 light:text-slate-400 animate-pulse"
           />
           <p className="text-xs text-zinc-500 light:text-slate-400">
-            {t("preview.loading", "Vorschau wird geladen…")}
+            {t("preview.loading")}
           </p>
           {graceElapsed && blobUrl && (
             <a
@@ -289,7 +248,7 @@ function IframePreview({ url, title }: any) {
               className="pointer-events-auto flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-800 light:bg-slate-100 text-xs text-zinc-300 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors no-underline"
             >
               <ArrowSquareOut size={12} />
-              {t("preview.open_externally", "In neuem Tab öffnen")}
+              {t("preview.open_externally")}
             </a>
           )}
         </div>
@@ -305,48 +264,14 @@ function IframePreview({ url, title }: any) {
  */
 function ImagePreview({ url, title }: { url: string; title?: string }) {
   const { t } = useTranslation();
-  const [blobUrl, setBlobUrl] = useState<string | null>(null);
-  const [fetchError, setFetchError] = useState(false);
-
-  useEffect(() => {
-    if (!url) return;
-    let objectUrl: string | null = null;
-    let cancelled = false;
-    setFetchError(false);
-    setBlobUrl(null);
-
-    fetch(url, { headers: baseHeaders() })
-      .then((res) => {
-        if (!res.ok) throw new Error(`${res.status}`);
-        return res.blob();
-      })
-      .then((blob) => {
-        if (cancelled) return;
-        objectUrl = URL.createObjectURL(blob);
-        setBlobUrl(objectUrl);
-      })
-      .catch(() => {
-        if (!cancelled) setFetchError(true);
-      });
-
-    return () => {
-      cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [url]);
-
-  useEffect(() => {
-    return () => {
-      if (blobUrl) URL.revokeObjectURL(blobUrl);
-    };
-  }, [blobUrl]);
+  const { blobUrl, error: fetchError } = useAuthenticatedBlobUrl(url);
 
   if (fetchError) {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 bg-zinc-900 light:bg-white">
         <Image size={28} className="text-zinc-500 light:text-slate-400" />
         <p className="text-xs text-zinc-500 light:text-slate-400 text-center px-4">
-          {t("preview.load_error", "Vorschau konnte nicht geladen werden.")}
+          {t("preview.load_error")}
         </p>
       </div>
     );

@@ -199,7 +199,11 @@ export default function OllamaLLMOptions({ settings }: any) {
                 min={1}
                 value={maxTokens}
                 onChange={(e) =>
-                  setMaxTokens(((e.target as unknown) as any)?.value ? Number(((e.target as unknown) as any)?.value) : "")
+                  setMaxTokens(
+                    (e.target as unknown as any)?.value
+                      ? Number((e.target as unknown as any)?.value)
+                      : "",
+                  )
                 }
                 onScroll={(e) => (e.target as HTMLElement).blur()}
                 required={false}
@@ -258,8 +262,15 @@ export default function OllamaLLMOptions({ settings }: any) {
 }
 
 function OllamaLLMModelSelection({
-  settings, basePath = null, authToken = null, }: any) {
-  const { customModels, isLoading } = useProviderModels("ollama", authToken, basePath);
+  settings,
+  basePath = null,
+  authToken = null,
+}: any) {
+  const { customModels, isLoading } = useProviderModels(
+    "ollama",
+    authToken,
+    basePath,
+  );
   if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">

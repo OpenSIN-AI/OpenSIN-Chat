@@ -13,7 +13,9 @@ const md = new MarkdownIt({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(str, { language: lang }).value;
-      } catch (e) { console.warn("highlight.js failed:", e); }
+      } catch (e) {
+        console.warn("highlight.js failed:", e);
+      }
     }
     return ""; // use external default escaping
   },

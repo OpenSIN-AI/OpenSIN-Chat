@@ -8,7 +8,7 @@ export default function useScheduledJob(id: string | null) {
   const { data, error, isLoading, mutate } = useSWR(
     id ? [SCHEDULED_JOB_KEY, id] : null,
     () => ScheduledJobs.get(id),
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false },
   );
 
   return {

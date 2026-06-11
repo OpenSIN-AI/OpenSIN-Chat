@@ -16,7 +16,14 @@ import { useTranslation } from "react-i18next";
  * @param {function} props.onDelete
  */
 export default function CardMenu({
-  menuRef, buttonRef, isWorkspace, canMove, onEdit, onMove, onDelete, }: any) {
+  menuRef,
+  buttonRef,
+  isWorkspace,
+  canMove,
+  onEdit,
+  onMove,
+  onDelete,
+}: any) {
   const { t } = useTranslation();
   const [pos, setPos] = useState({ top: 0, left: 0 } as any);
 

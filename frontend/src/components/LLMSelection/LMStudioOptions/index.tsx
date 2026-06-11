@@ -34,7 +34,11 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
   );
 
   const handleMaxTokensChange: any = (e) => {
-    setMaxTokens(((e.target as unknown) as any)?.value ? Number(((e.target as unknown) as any)?.value) : "");
+    setMaxTokens(
+      (e.target as unknown as any)?.value
+        ? Number((e.target as unknown as any)?.value)
+        : "",
+    );
   };
 
   return (
@@ -210,8 +214,16 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
   );
 }
 
-function LMStudioModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const { customModels, isLoading } = useProviderModels("lmstudio", apiKey, basePath);
+function LMStudioModelSelection({
+  settings,
+  basePath = null,
+  apiKey = null,
+}: any) {
+  const { customModels, isLoading } = useProviderModels(
+    "lmstudio",
+    apiKey,
+    basePath,
+  );
   if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">

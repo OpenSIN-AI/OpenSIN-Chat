@@ -12,7 +12,9 @@ const Wrapper = ({ children }) => (
 
 describe("usePoliticalData", () => {
   it("returns empty arrays initially", () => {
-    const { result } = renderHook(() => usePoliticalData(), { wrapper: Wrapper });
+    const { result } = renderHook(() => usePoliticalData(), {
+      wrapper: Wrapper,
+    });
     expect(result.current.drucksachen).toEqual([]);
     expect(result.current.rssItems).toEqual([]);
     expect(result.current.loadingDrucksachen).toBe(true);
@@ -25,7 +27,8 @@ describe("usePoliticalData", () => {
         if (url.includes("drucksachen")) {
           return Promise.resolve({
             ok: true,
-            json: () => Promise.resolve({ documents: [{ id: 1, title: "Test" }] }),
+            json: () =>
+              Promise.resolve({ documents: [{ id: 1, title: "Test" }] }),
           });
         }
         return Promise.resolve({
@@ -34,7 +37,9 @@ describe("usePoliticalData", () => {
         });
       }),
     );
-    const { result } = renderHook(() => usePoliticalData(), { wrapper: Wrapper });
+    const { result } = renderHook(() => usePoliticalData(), {
+      wrapper: Wrapper,
+    });
     await waitFor(() => expect(result.current.drucksachen.length).toBe(1));
     expect(result.current.drucksachen[0].title).toBe("Test");
     expect(result.current.rssItems[0].title).toBe("News");

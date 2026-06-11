@@ -36,7 +36,10 @@ export default function messageToSpeech(message = "") {
   for (const keyword of THOUGHT_KEYWORDS) {
     // Complete blocks: <thinking ...>...</thinking>
     text = text.replace(
-      new RegExp(`<${keyword}\\s*(?:[^>]*?)?>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`, "gi"),
+      new RegExp(
+        `<${keyword}\\s*(?:[^>]*?)?>[\\s\\S]*?<\\/${keyword}\\s*(?:[^>]*?)?>`,
+        "gi",
+      ),
       " ",
     );
   }

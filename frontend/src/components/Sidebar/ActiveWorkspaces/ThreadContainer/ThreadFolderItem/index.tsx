@@ -26,7 +26,8 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
   useEffect(() => {
     if (!isOpen) return;
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setIsOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setIsOpen(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -37,7 +38,9 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
     setIsOpen(false);
     const { thread, error } = await Workspace.threads.new(workspace.slug);
     if (error) {
-      showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", { clear: true });
+      showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", {
+        clear: true,
+      });
       return;
     }
     invalidateThreads(workspace.slug);
@@ -49,9 +52,14 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
     setIsOpen(false);
     const name = window.prompt("Ordnername:")?.trim();
     if (!name) return;
-    const { folder: newFolder, message } = await Workspace.threads.folders.new(workspace.slug, name);
+    const { folder: newFolder, message } = await Workspace.threads.folders.new(
+      workspace.slug,
+      name,
+    );
     if (message || !newFolder) {
-      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", { clear: true });
+      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", {
+        clear: true,
+      });
       return;
     }
     invalidateThreads(workspace.slug);
@@ -61,11 +69,17 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
     <div ref={ref} className="relative flex items-center">
       <button
         type="button"
-        onClick={(e) => { e.stopPropagation(); setIsOpen((p: boolean) => !p); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen((p: boolean) => !p);
+        }}
         className="p-1 rounded hover:bg-white/10 light:hover:bg-slate-300"
         title="Neuen Chat oder Ordner erstellen"
       >
-        <Plus size={12} className="text-white/60 light:text-theme-text-secondary" />
+        <Plus
+          size={12}
+          className="text-white/60 light:text-theme-text-secondary"
+        />
       </button>
 
       {isOpen && (
@@ -94,9 +108,21 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
 }
 
 export default function ThreadFolderItem({
-  folder, workspace, threads = [], activeThreadIdx, defaultThreadHasChats, ctrlPressed = false, toggleMarkForDeletion, onRemoveThread, onFolderDeleted, onFolderRenamed, }: any) {
+  folder,
+  workspace,
+  threads = [],
+  activeThreadIdx,
+  defaultThreadHasChats,
+  ctrlPressed = false,
+  toggleMarkForDeletion,
+  onRemoveThread,
+  onFolderDeleted,
+  onFolderRenamed,
+}: any) {
   const { threadSlug = null } = useParams();
-  const containsActiveThread = (threads as any).some((t) => t.slug === threadSlug);
+  const containsActiveThread = (threads as any).some(
+    (t) => t.slug === threadSlug,
+  );
   const [open, setOpen] = useState(true);
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState<string>(folder.name);
@@ -188,7 +214,7 @@ export default function ThreadFolderItem({
             <input
               ref={inputRef}
               value={name}
-              onChange={(e) => setName(((e.target as unknown) as any)?.value)}
+              onChange={(e) => setName((e.target as unknown as any)?.value)}
               onBlur={saveRename}
               onKeyDown={(e) => {
                 if (e.key === "Enter") saveRename();
@@ -213,8 +239,15 @@ export default function ThreadFolderItem({
 
         {/* Action buttons - only show on hover (or when quickAdd dropdown is open) */}
         {!editing && (
-          <div className={`flex items-center gap-x-0.5 transition-opacity ${quickAddOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}>
-            <FolderQuickAdd workspace={workspace} folder={folder} isOpen={quickAddOpen} setIsOpen={setQuickAddOpen} />
+          <div
+            className={`flex items-center gap-x-0.5 transition-opacity ${quickAddOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+          >
+            <FolderQuickAdd
+              workspace={workspace}
+              folder={folder}
+              isOpen={quickAddOpen}
+              setIsOpen={setQuickAddOpen}
+            />
             <button
               type="button"
               onClick={(e) => {

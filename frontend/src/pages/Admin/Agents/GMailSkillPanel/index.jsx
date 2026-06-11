@@ -18,7 +18,6 @@ import {
   Info,
 } from "@phosphor-icons/react";
 import GMailIcon from "./gmail.png";
-import GoogleAgentSkills from "@/models/googleAgentSkills";
 import { useGmailAgent } from "@/hooks/useGoogleAgent";
 import { getGmailSkills, filterSkillCategories } from "./utils";
 import { Tooltip } from "react-tooltip";

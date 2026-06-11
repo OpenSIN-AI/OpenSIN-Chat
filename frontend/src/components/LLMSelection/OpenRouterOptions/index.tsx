@@ -32,7 +32,9 @@ export default function OpenRouterOptions({ settings }: any) {
 }
 
 function AdvancedControls({ settings }: any) {
-  const [showAdvancedControls, setShowAdvancedControls] = useState(false as any);
+  const [showAdvancedControls, setShowAdvancedControls] = useState(
+    false as any,
+  );
 
   return (
     <div className="flex flex-col gap-y-4">

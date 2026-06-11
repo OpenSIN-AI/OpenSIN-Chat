@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Chartable } from "./index";
 
 vi.mock("uuid", () => ({ v4: () => "test-uuid-1234" }));
@@ -24,12 +24,20 @@ vi.mock("@tremor/react", () => ({
 }));
 
 vi.mock("recharts", () => ({
-  ComposedChart: ({ children }) => <div data-testid="composed-chart">{children}</div>,
-  ScatterChart: ({ children }) => <div data-testid="scatter-chart">{children}</div>,
+  ComposedChart: ({ children }) => (
+    <div data-testid="composed-chart">{children}</div>
+  ),
+  ScatterChart: ({ children }) => (
+    <div data-testid="scatter-chart">{children}</div>
+  ),
   RadarChart: ({ children }) => <div data-testid="radar-chart">{children}</div>,
-  RadialBarChart: ({ children }) => <div data-testid="radialbar-chart">{children}</div>,
+  RadialBarChart: ({ children }) => (
+    <div data-testid="radialbar-chart">{children}</div>
+  ),
   Treemap: ({ children }) => <div data-testid="treemap">{children}</div>,
-  FunnelChart: ({ children }) => <div data-testid="funnel-chart">{children}</div>,
+  FunnelChart: ({ children }) => (
+    <div data-testid="funnel-chart">{children}</div>
+  ),
   Bar: () => <div>Bar</div>,
   Line: () => <div>Line</div>,
   CartesianGrid: () => <div>Grid</div>,
@@ -59,7 +67,11 @@ vi.mock("./CustomTooltip.jsx", () => ({
 
 vi.mock("@/utils/request.js", () => ({
   safeJsonParse: (str, fallback) => {
-    try { return JSON.parse(str); } catch { return fallback; }
+    try {
+      return JSON.parse(str);
+    } catch {
+      return fallback;
+    }
   },
 }));
 
@@ -85,7 +97,9 @@ vi.mock("recharts-to-png", () => ({
 vi.mock("@phosphor-icons/react", () => ({
   CircleNotch: ({ className }) => <span className={className}>Notch</span>,
   DownloadSimple: ({ onClick, className }) => (
-    <span onClick={onClick} className={className}>Download</span>
+    <span onClick={onClick} className={className}>
+      Download
+    </span>
   ),
 }));
 
@@ -173,7 +187,11 @@ describe("Chartable", () => {
   });
 
   it("renders caption when provided", () => {
-    render(<Chartable {...makeProps("area", sampleDataset, { caption: "My caption" })} />);
+    render(
+      <Chartable
+        {...makeProps("area", sampleDataset, { caption: "My caption" })}
+      />,
+    );
     expect(screen.getByText("My caption")).toBeInTheDocument();
   });
 

@@ -12,9 +12,9 @@ export default function CredentialsForm({
       className="mt-4 flex flex-col gap-y-1"
     >
       {selectedLLM &&
-        availableProviders.find(
-          (llm) => llm.value === selectedLLM,
-        )?.options?.(settings)}
+        availableProviders
+          .find((llm) => llm.value === selectedLLM)
+          ?.options?.(settings)}
     </div>
   );
 }

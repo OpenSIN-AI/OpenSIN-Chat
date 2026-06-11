@@ -39,7 +39,12 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
               aria-label="Close manage workspace dialog"
               className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
             >
-              <X size={24} weight="bold" className="text-white" aria-hidden="true" />
+              <X
+                size={24}
+                weight="bold"
+                className="text-white"
+                aria-hidden="true"
+              />
             </button>
           </div>
           <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
@@ -76,7 +81,12 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
               aria-label="Close manage workspace dialog"
               className="z-29 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
             >
-              <X size={20} weight="bold" className="text-white" aria-hidden="true" />
+              <X
+                size={20}
+                weight="bold"
+                className="text-white"
+                aria-hidden="true"
+              />
             </button>
           </div>
 

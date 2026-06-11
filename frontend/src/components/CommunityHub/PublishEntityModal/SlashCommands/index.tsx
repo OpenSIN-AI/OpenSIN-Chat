@@ -42,7 +42,7 @@ export default function SlashCommands({ entity }: any) {
       showToast(
         `Failed to publish slash command: ${(error as Error).message}`,
         "error",
-        { clear: true }
+        { clear: true },
       );
     } finally {
       setIsSubmitting(false);

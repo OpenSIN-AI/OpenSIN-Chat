@@ -45,7 +45,7 @@ describe("UnauthenticatedHubModal", () => {
     const { container } = render(
       <MemoryRouter>
         <UnauthenticatedHubModal show={false} onClose={vi.fn()} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(container.innerHTML).toBe("");
   });
@@ -54,11 +54,11 @@ describe("UnauthenticatedHubModal", () => {
     render(
       <MemoryRouter>
         <UnauthenticatedHubModal show={true} onClose={vi.fn()} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(screen.getByTestId("modal-wrapper")).toBeInTheDocument();
     expect(
-      screen.getByText("community_hub.publish.generic.unauthenticated.title")
+      screen.getByText("community_hub.publish.generic.unauthenticated.title"),
     ).toBeInTheDocument();
   });
 
@@ -66,10 +66,12 @@ describe("UnauthenticatedHubModal", () => {
     render(
       <MemoryRouter>
         <UnauthenticatedHubModal show={true} onClose={vi.fn()} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(
-      screen.getByText("community_hub.publish.generic.unauthenticated.description")
+      screen.getByText(
+        "community_hub.publish.generic.unauthenticated.description",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -77,7 +79,7 @@ describe("UnauthenticatedHubModal", () => {
     render(
       <MemoryRouter>
         <UnauthenticatedHubModal show={true} onClose={vi.fn()} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const closeButton = screen.getByRole("button", { name: "Close" });
     expect(closeButton).toBeInTheDocument();
@@ -89,7 +91,7 @@ describe("UnauthenticatedHubModal", () => {
     render(
       <MemoryRouter>
         <UnauthenticatedHubModal show={true} onClose={vi.fn()} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const xIcon = screen.getByTestId("x-icon");
     expect(xIcon).toHaveAttribute("aria-hidden", "true");
@@ -100,7 +102,7 @@ describe("UnauthenticatedHubModal", () => {
     render(
       <MemoryRouter>
         <UnauthenticatedHubModal show={true} onClose={onClose} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     fireEvent.click(screen.getByRole("button", { name: "Close" }));
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -110,14 +112,14 @@ describe("UnauthenticatedHubModal", () => {
     render(
       <MemoryRouter>
         <UnauthenticatedHubModal show={true} onClose={vi.fn()} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const link = screen.getByText(
-      "community_hub.publish.generic.unauthenticated.button"
+      "community_hub.publish.generic.unauthenticated.button",
     );
     expect(link.closest("a")).toHaveAttribute(
       "href",
-      "/settings/community-hub/authentication"
+      "/settings/community-hub/authentication",
     );
   });
 });

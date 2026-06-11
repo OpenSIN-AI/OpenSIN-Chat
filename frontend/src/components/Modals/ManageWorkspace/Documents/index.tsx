@@ -185,8 +185,8 @@ export default function DocumentSettings({ workspace }) {
 
     setMovedItems([...movedItems, ...newMovedItems]);
 
-    let newAvailableDocs = JSON.parse(JSON.stringify(availableDocs));
-    let newWorkspaceDocs = JSON.parse(JSON.stringify(workspaceDocs));
+    const newAvailableDocs = JSON.parse(JSON.stringify(availableDocs));
+    const newWorkspaceDocs = JSON.parse(JSON.stringify(workspaceDocs));
 
     for (const itemId of Object.keys(selectedItems)) {
       let foundItem = null;

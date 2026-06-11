@@ -31,12 +31,21 @@ export default function useWorkspaceChats(slug) {
     WORKSPACE_CHATS_KEY(slug),
     async () => {
       const workspace = await Workspace.bySlug(slug);
-      if (!workspace) return { workspace: null, suggestedMessages: [], showAgentCommand: false };
+      if (!workspace)
+        return {
+          workspace: null,
+          suggestedMessages: [],
+          showAgentCommand: false,
+        };
       const [suggestedMessages, { showAgentCommand }] = await Promise.all([
         Workspace.getSuggestedMessages(slug),
         Workspace.agentCommandAvailable(slug),
       ]);
-      return { workspace, suggestedMessages: suggestedMessages || [], showAgentCommand: !!showAgentCommand };
+      return {
+        workspace,
+        suggestedMessages: suggestedMessages || [],
+        showAgentCommand: !!showAgentCommand,
+      };
     },
   );
 

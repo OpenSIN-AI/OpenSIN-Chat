@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState } from "react";
-import showToast from "@/utils/toast";
+import React from "react";
 import { Plus } from "@phosphor-icons/react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";

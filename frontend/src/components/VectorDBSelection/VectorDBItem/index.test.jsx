@@ -41,13 +41,17 @@ describe("VectorDBItem", () => {
   });
 
   it("applies bg-theme-bg-secondary class when checked", () => {
-    const { container } = render(<VectorDBItem {...defaultProps} checked={true} />);
+    const { container } = render(
+      <VectorDBItem {...defaultProps} checked={true} />,
+    );
     const wrapper = container.querySelector(".bg-theme-bg-secondary");
     expect(wrapper).toBeInTheDocument();
   });
 
   it("does not apply bg-theme-bg-secondary when not checked", () => {
-    const { container } = render(<VectorDBItem {...defaultProps} checked={false} />);
+    const { container } = render(
+      <VectorDBItem {...defaultProps} checked={false} />,
+    );
     const wrapper = container.querySelector(".bg-theme-bg-secondary");
     expect(wrapper).not.toBeInTheDocument();
   });

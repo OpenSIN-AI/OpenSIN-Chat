@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useEffect } from "react";
 import useSWR from "swr";
 import Workspace from "@/models/workspace";
 

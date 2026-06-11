@@ -23,10 +23,7 @@ function CardWrapper({ children }: any) {
   return (
     <div className="flex justify-center w-full my-1 pr-4">
       <div className="w-full flex flex-col">
-        <div
-          
-          className="rounded-[20px] relative border border-solid border-zinc-700 light:border-zinc-300 bg-transparent p-[18px] flex flex-col gap-[18px] overflow-hidden"
-        >
+        <div className="rounded-[20px] relative border border-solid border-zinc-700 light:border-zinc-300 bg-transparent p-[18px] flex flex-col gap-[18px] overflow-hidden">
           {children}
         </div>
       </div>
@@ -47,7 +44,13 @@ function ActiveInputForm({ question, draft, updateDraft, onSubmit }: any) {
 }
 
 function ActiveChoiceForm({
-  question, draft, updateDraft, onAutoAdvance, allowSkip, onSkip, }: any) {
+  question,
+  draft,
+  updateDraft,
+  onAutoAdvance,
+  allowSkip,
+  onSkip,
+}: any) {
   if (question?.kind !== "choice") return null;
   return (
     <ChoiceForm
@@ -66,7 +69,17 @@ function ActiveChoiceForm({
 }
 
 function ActiveFooter({
-  question, draft, isSingle, isLast, allowSkip, answeredCount, total, onSkipThis, onNext, onSubmitAll, }: any) {
+  question,
+  draft,
+  isSingle,
+  isLast,
+  allowSkip,
+  answeredCount,
+  total,
+  onSkipThis,
+  onNext,
+  onSubmitAll,
+}: any) {
   const isChoice = question?.kind === "choice";
   const isInput = question?.kind === "input";
   const showFooter =
@@ -92,7 +105,11 @@ function CompletedSurvey({ questions, drafts, submittedResult }: any) {
   const result =
     submittedResult?.timedOut || submittedResult?.skipped
       ? submittedResult
-      : { answers: (questions as any).map((q, i) => answerForDraft(q, drafts[i])) };
+      : {
+          answers: (questions as any).map((q, i) =>
+            answerForDraft(q, drafts[i]),
+          ),
+        };
 
   return <SurveyBody questions={questions} result={result} />;
 }
@@ -105,7 +122,12 @@ function CompletedSurvey({ questions, drafts, submittedResult }: any) {
  * Persisted/historical chats use the same SurveyBody via HistoricalClarifyingQuestions.
  */
 export default function ClarifyingQuestionCard({
-  requestId, questions = [], allowSkip = true, timeoutMs = null, websocket, }: any) {
+  requestId,
+  questions = [],
+  allowSkip = true,
+  timeoutMs = null,
+  websocket,
+}: any) {
   const [index, setIndex] = useState(0 as any);
   const [responded, setResponded] = useState(false as any);
   const [submittedResult, setSubmittedResult] = useState(null);
@@ -184,9 +206,13 @@ export default function ClarifyingQuestionCard({
 
   function handleSubmitAll(pendingPatch: any) {
     const resolved = pendingPatch
-      ? (drafts as any).map((d, i) => (i === index ? { ...d, ...pendingPatch } : d))
+      ? (drafts as any).map((d, i) =>
+          i === index ? { ...d, ...pendingPatch } : d,
+        )
       : drafts;
-    const answers = (questions as any).map((q, i) => answerForDraft(q, resolved[i]));
+    const answers = (questions as any).map((q, i) =>
+      answerForDraft(q, resolved[i]),
+    );
     send({ skipped: false, answers });
   }
 

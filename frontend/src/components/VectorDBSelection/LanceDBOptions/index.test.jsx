@@ -7,7 +7,8 @@ vi.mock("react-i18next", () => ({
   useTranslation: () => ({
     t: (key) => {
       const map = {
-        "vector.provider.description": "LanceDB is an embedded vector database.",
+        "vector.provider.description":
+          "LanceDB is an embedded vector database.",
       };
       return map[key] ?? key;
     },

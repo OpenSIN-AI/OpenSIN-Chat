@@ -27,7 +27,9 @@ describe("useSystemPromptVariables", () => {
 
   it("returns empty variables while loading", () => {
     SystemPromptVariable.getAll.mockReturnValue(new Promise(() => {}));
-    const { result } = renderHook(() => useSystemPromptVariables(), { wrapper });
+    const { result } = renderHook(() => useSystemPromptVariables(), {
+      wrapper,
+    });
     expect(result.current.variables).toEqual([]);
     expect(result.current.isLoading).toBe(true);
   });
@@ -35,7 +37,9 @@ describe("useSystemPromptVariables", () => {
   it("returns variables list", async () => {
     const fakeVars = [{ id: 1, key: "org_name", value: "Acme" }];
     SystemPromptVariable.getAll.mockResolvedValue({ variables: fakeVars });
-    const { result } = renderHook(() => useSystemPromptVariables(), { wrapper });
+    const { result } = renderHook(() => useSystemPromptVariables(), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.variables).toEqual(fakeVars);
   });

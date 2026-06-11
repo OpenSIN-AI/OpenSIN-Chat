@@ -1,5 +1,4 @@
-
-import useProviderModels from "@/hooks/useProviderModels";// SPDX-License-Identifier: MIT
+import useProviderModels from "@/hooks/useProviderModels"; // SPDX-License-Identifier: MIT
 export default function PerplexityOptions({ settings }: any) {
   return (
     <div className="flex gap-[36px] mt-1.5">

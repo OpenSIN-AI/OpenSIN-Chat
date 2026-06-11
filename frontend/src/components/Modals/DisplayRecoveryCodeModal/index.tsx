@@ -92,18 +92,16 @@ export default function RecoveryCodeModal({
               className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm flex items-center gap-x-2"
               onClick={downloadClicked ? handleClose : downloadRecoveryCodes}
               aria-label={
-                downloadClicked ? "Close recovery codes" : "Download recovery codes"
+                downloadClicked
+                  ? "Close recovery codes"
+                  : "Download recovery codes"
               }
             >
               {downloadClicked ? (
                 "Close"
               ) : (
                 <>
-                  <DownloadSimple
-                    weight="bold"
-                    size={18}
-                    aria-hidden="true"
-                  />
+                  <DownloadSimple weight="bold" size={18} aria-hidden="true" />
                   <p>Download</p>
                 </>
               )}

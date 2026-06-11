@@ -78,7 +78,11 @@ describe("useGeneratedFiles", () => {
 
   function createWrapper() {
     return function Wrapper({ children }) {
-      return React.createElement(SWRConfig, { value: { dedupingInterval: 0, provider: () => new Map() } }, children);
+      return React.createElement(
+        SWRConfig,
+        { value: { dedupingInterval: 0, provider: () => new Map() } },
+        children,
+      );
     };
   }
 
@@ -89,10 +93,15 @@ describe("useGeneratedFiles", () => {
       json: () => Promise.resolve(filesData),
     });
 
-    const { result } = renderHook(() => useGeneratedFiles(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useGeneratedFiles(), {
+      wrapper: createWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
-    expect(result.current.files).toEqual([{ name: "a.txt" }, { name: "b.txt" }]);
+    expect(result.current.files).toEqual([
+      { name: "a.txt" },
+      { name: "b.txt" },
+    ]);
     expect(result.current.error).toBeUndefined();
   });
 
@@ -102,7 +111,9 @@ describe("useGeneratedFiles", () => {
       json: () => Promise.resolve({}),
     });
 
-    const { result } = renderHook(() => useGeneratedFiles(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useGeneratedFiles(), {
+      wrapper: createWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.files).toEqual([]);
@@ -114,7 +125,9 @@ describe("useGeneratedFiles", () => {
       status: 500,
     });
 
-    const { result } = renderHook(() => useGeneratedFiles(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useGeneratedFiles(), {
+      wrapper: createWrapper(),
+    });
 
     await waitFor(() => expect(result.current.error).toBeDefined());
     expect(result.current.files).toEqual([]);
@@ -126,7 +139,9 @@ describe("useGeneratedFiles", () => {
       json: () => Promise.resolve({ files: [] }),
     });
 
-    const { result } = renderHook(() => useGeneratedFiles(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useGeneratedFiles(), {
+      wrapper: createWrapper(),
+    });
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(typeof result.current.refresh).toBe("function");

@@ -92,7 +92,9 @@ export default function SettingsSidebar() {
                     alt="Logo"
                     className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                   />
-                  <span className="text-white font-bold text-base">OpenSIN</span>
+                  <span className="text-white font-bold text-base">
+                    OpenSIN
+                  </span>
                 </div>
                 <div className="flex gap-x-2 items-center text-slate-500 shrink-0">
                   <a

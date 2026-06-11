@@ -86,7 +86,9 @@ export default function handleSocketResponse(socket, event, setChatHistory) {
 
     return setChatHistory((prev) => {
       if (data.content.type === "removeStatusResponse")
-        return [...(prev as any).filter((msg) => msg.uuid !== data.content.uuid)];
+        return [
+          ...(prev as any).filter((msg) => msg.uuid !== data.content.uuid),
+        ];
 
       if (data.content.type === "modelRouteNotification") {
         if (!data.content.routedTo) return prev;

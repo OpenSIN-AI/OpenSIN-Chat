@@ -19,7 +19,10 @@ function Section({ title, loading, error, onRetry, retryLabel, children }) {
       {loading && (
         <div className="flex flex-col gap-2">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-10 rounded-xl bg-zinc-800 animate-pulse" />
+            <div
+              key={i}
+              className="h-10 rounded-xl bg-zinc-800 animate-pulse"
+            />
           ))}
         </div>
       )}
@@ -60,9 +63,7 @@ export default function PoliticalSidebar() {
 
   return (
     <ChatSidebar isOpen={sidebarOpen}>
-      <div
-        className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden"
-      >
+      <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <Newspaper size={15} className="text-zinc-400 light:text-slate-500" />
@@ -95,7 +96,10 @@ export default function PoliticalSidebar() {
         <div className="flex-1 overflow-y-auto p-4 no-scroll flex flex-col gap-4">
           {/* Drucksachen */}
           <Section
-            title={t("sidebar.political.drucksachen", "Bundestag-Drucksachen (AfD)")}
+            title={t(
+              "sidebar.political.drucksachen",
+              "Bundestag-Drucksachen (AfD)",
+            )}
             loading={loadingDrucksachen}
             error={errorDrucksachen}
             onRetry={refreshDrucksachen}
@@ -122,7 +126,10 @@ export default function PoliticalSidebar() {
                   <p className="text-xs text-zinc-200 light:text-slate-800 leading-snug line-clamp-2 flex-1">
                     {d.titel || d.title || "—"}
                   </p>
-                  <ArrowSquareOut size={11} className="text-zinc-600 flex-shrink-0 mt-0.5" />
+                  <ArrowSquareOut
+                    size={11}
+                    className="text-zinc-600 flex-shrink-0 mt-0.5"
+                  />
                 </a>
               ))
             )}
@@ -138,7 +145,10 @@ export default function PoliticalSidebar() {
           >
             {rssItems.length === 0 ? (
               <p className="text-xs text-zinc-500 italic">
-                {t("sidebar.political.rss_empty", "Keine Pressemitteilungen gefunden.")}
+                {t(
+                  "sidebar.political.rss_empty",
+                  "Keine Pressemitteilungen gefunden.",
+                )}
               </p>
             ) : (
               rssItems.map((item, i) => (
@@ -157,7 +167,10 @@ export default function PoliticalSidebar() {
                   <p className="text-xs text-zinc-200 light:text-slate-800 leading-snug line-clamp-2 flex-1">
                     {item.title}
                   </p>
-                  <ArrowSquareOut size={11} className="text-zinc-600 flex-shrink-0 mt-0.5" />
+                  <ArrowSquareOut
+                    size={11}
+                    className="text-zinc-600 flex-shrink-0 mt-0.5"
+                  />
                 </a>
               ))
             )}

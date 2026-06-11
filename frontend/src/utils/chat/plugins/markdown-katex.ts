@@ -5,7 +5,7 @@ import "katex/dist/katex.min.css";
 // Test if potential opening or closing delimieter
 // Assumes that there is a "$" at state.src[pos]
 function isValidDelim(state, pos) {
-  var prevChar,
+  let prevChar,
     nextChar,
     max = state.posMax,
     can_open = true,
@@ -35,7 +35,7 @@ function isValidDelim(state, pos) {
 }
 
 function math_inline(state, silent) {
-  var start, match, token, res, pos;
+  let start, match, token, res, pos;
 
   // Only process $ and \( delimiters for inline math
   if (
@@ -147,7 +147,7 @@ function math_inline(state, silent) {
 }
 
 function math_block(state, start, end, silent) {
-  var firstLine,
+  let firstLine,
     lastLine,
     next,
     lastPos,
@@ -161,9 +161,9 @@ function math_block(state, start, end, silent) {
     return false;
   }
 
-  let openDelim = state.src.slice(pos, pos + 2);
-  let isDoubleDollar = openDelim === "$$";
-  let isLatexBracket = openDelim === "\\[";
+  const openDelim = state.src.slice(pos, pos + 2);
+  const isDoubleDollar = openDelim === "$$";
+  const isLatexBracket = openDelim === "\\[";
 
   if (!isDoubleDollar && !isLatexBracket) {
     return false;
@@ -232,7 +232,7 @@ export default function math_plugin(md, options) {
   // Default options
   options = options || {};
 
-  var katexInline: any = function (latex) {
+  const katexInline: any = function (latex) {
     options.displayMode = false;
     try {
       latex = latex
@@ -248,11 +248,11 @@ export default function math_plugin(md, options) {
     }
   };
 
-  var inlineRenderer: any = function (tokens, idx: any) {
+  const inlineRenderer: any = function (tokens, idx: any) {
     return katexInline(tokens[idx].content);
   };
 
-  var katexBlock: any = function (latex) {
+  const katexBlock: any = function (latex) {
     options.displayMode = true;
     try {
       // Remove surrounding delimiters if present
@@ -266,7 +266,7 @@ export default function math_plugin(md, options) {
     }
   };
 
-  var blockRenderer: any = function (tokens, idx: any) {
+  const blockRenderer: any = function (tokens, idx: any) {
     return katexBlock(tokens[idx].content) + "\n";
   };
 

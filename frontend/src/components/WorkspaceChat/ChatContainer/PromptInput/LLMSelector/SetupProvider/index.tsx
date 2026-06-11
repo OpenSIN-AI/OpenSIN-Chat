@@ -7,7 +7,12 @@ import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 
 export default function SetupProvider({
-  isOpen, closeModal, postSubmit, settings, llmProvider, }: any) {
+  isOpen,
+  closeModal,
+  postSubmit,
+  settings,
+  llmProvider,
+}: any) {
   if (!isOpen) return null;
 
   async function handleUpdate(e: any) {
@@ -15,7 +20,7 @@ export default function SetupProvider({
     e.stopPropagation();
     const data = {};
     const form = new FormData(e.target);
-    for (var [key, value] of form.entries()) data[key] = value;
+    for (const [key, value] of form.entries()) data[key] = value;
     const { error } = await System.updateSystem(data);
     if (error) {
       showToast(

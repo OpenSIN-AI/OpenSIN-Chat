@@ -86,12 +86,14 @@ describe("constants – provider URL arrays", () => {
   });
 
   it("NVIDIA_NIM_COMMON_URLS contains expected entries", () => {
-    expect(NVIDIA_NIM_COMMON_URLS).toContain("http://127.0.0.1:8000/v1/version");
+    expect(NVIDIA_NIM_COMMON_URLS).toContain(
+      "http://127.0.0.1:8000/v1/version",
+    );
   });
 
   it("DOCKER_MODEL_RUNNER_COMMON_URLS contains expected entries", () => {
     expect(DOCKER_MODEL_RUNNER_COMMON_URLS).toContain(
-      "http://localhost:12434/engines/llama.cpp/v1"
+      "http://localhost:12434/engines/llama.cpp/v1",
     );
   });
 

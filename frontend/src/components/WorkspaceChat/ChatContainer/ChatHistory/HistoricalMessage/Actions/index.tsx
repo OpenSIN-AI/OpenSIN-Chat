@@ -11,7 +11,18 @@ import { useParams } from "react-router-dom";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
 
 const Actions: any = ({
-  message, feedbackScore, chatId, slug, isLastMessage, regenerateMessage, forkThread, isEditing, role, metrics = {}, ttsButton = null, }: any) => {
+  message,
+  feedbackScore,
+  chatId,
+  slug,
+  isLastMessage,
+  regenerateMessage,
+  forkThread,
+  isEditing,
+  role,
+  metrics = {},
+  ttsButton = null,
+}: any) => {
   const { t } = useTranslation();
   const { threadSlug = null } = useParams();
   const [selectedFeedback, setSelectedFeedback] = useState(feedbackScore);
@@ -70,7 +81,11 @@ const Actions: any = ({
 };
 
 function FeedbackButton({
-  isSelected, handleFeedback, tooltipContent, IconComponent, }: any) {
+  isSelected,
+  handleFeedback,
+  tooltipContent,
+  IconComponent,
+}: any) {
   return (
     <div className="relative flex items-center justify-center h-7 w-7">
       <button
@@ -80,10 +95,7 @@ function FeedbackButton({
         className="text-zinc-300 light:text-slate-500"
         aria-label={tooltipContent}
       >
-        <IconComponent
-          size={20}
-          weight={isSelected ? "fill" : "regular"}
-        />
+        <IconComponent size={20} weight={isSelected ? "fill" : "regular"} />
       </button>
     </div>
   );
@@ -102,11 +114,7 @@ function CopyMessage({ message }: any) {
         className="text-zinc-300 light:text-slate-500"
         aria-label={t("chat_window.copy")}
       >
-        {copied ? (
-          <Check size={20} />
-        ) : (
-          <Copy size={20} />
-        )}
+        {copied ? <Check size={20} /> : <Copy size={20} />}
       </button>
     </div>
   );

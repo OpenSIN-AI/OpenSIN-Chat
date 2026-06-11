@@ -19,7 +19,7 @@ export default function useFooterSettings() {
         return safeJsonParse(footerData, []);
       }
       return [];
-    }
+    },
   );
 
   const footerIcons = data

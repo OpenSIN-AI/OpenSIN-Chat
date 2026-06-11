@@ -14,7 +14,12 @@ import SlashCommandRow from "./SlashCommandRow";
 import System from "@/models/system";
 
 export default function SlashCommandsTab({
-  sendCommand, setShowing, promptRef, highlightedIndex = -1, registerItemCount, }: any) {
+  sendCommand,
+  setShowing,
+  promptRef,
+  highlightedIndex = -1,
+  registerItemCount,
+}: any) {
   const { t } = useTranslation();
   const {
     isOpen: isAddModalOpen,

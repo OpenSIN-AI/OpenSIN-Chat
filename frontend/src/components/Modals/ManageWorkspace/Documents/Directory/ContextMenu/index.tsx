@@ -2,7 +2,12 @@
 import { useRef, useEffect } from "react";
 
 export default function ContextMenu({
-  contextMenu, closeContextMenu, files, selectedItems, setSelectedItems, }: any) {
+  contextMenu,
+  closeContextMenu,
+  files,
+  selectedItems,
+  setSelectedItems,
+}: any) {
   const contextMenuRef: any = useRef(null);
 
   useEffect(() => {

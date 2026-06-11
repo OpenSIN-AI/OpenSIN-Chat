@@ -7,7 +7,7 @@ export const SUGGESTED_MESSAGES_KEY = "workspace/suggested-messages";
 export default function useSuggestedMessages(slug) {
   const { data, error, isLoading, mutate } = useSWR(
     slug ? [SUGGESTED_MESSAGES_KEY, slug] : null,
-    () => Workspace.getSuggestedMessages(slug)
+    () => Workspace.getSuggestedMessages(slug),
   );
 
   return {

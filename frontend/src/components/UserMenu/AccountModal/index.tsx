@@ -55,14 +55,14 @@ export default function AccountModal({ user, hideModal }: any) {
 
     const data = {};
     const form = new FormData(e.target);
-    for (var [key, value] of form.entries()) {
+    for (const [key, value] of form.entries()) {
       if (!value || value === null) continue;
       data[key] = value;
     }
 
     const { success, error } = await System.updateUser(data);
     if (success) {
-      let storedUser = safeJsonParse(localStorage.getItem(AUTH_USER), null);
+      const storedUser = safeJsonParse(localStorage.getItem(AUTH_USER), null);
       if (storedUser) {
         storedUser.username = data.username;
         storedUser.bio = data.bio;
@@ -243,7 +243,7 @@ function LanguagePreference() {
         name="userLang"
         className="border-none bg-theme-settings-input-bg w-fit mt-2 px-4 focus:outline-primary-button active:outline-primary-button outline-none text-white text-sm rounded-lg block py-2"
         defaultValue={currentLanguage || "en"}
-        onChange={(e) => changeLanguage(((e.target as unknown) as any)?.value)}
+        onChange={(e) => changeLanguage((e.target as unknown as any)?.value)}
       >
         {(supportedLanguages as any).map((lang) => {
           return (
@@ -271,7 +271,7 @@ function ThemePreference() {
       <select
         name="theme"
         value={theme}
-        onChange={(e) => setTheme(((e.target as unknown) as any)?.value)}
+        onChange={(e) => setTheme((e.target as unknown as any)?.value)}
         className="border-none bg-theme-settings-input-bg w-fit px-4 focus:outline-primary-button active:outline-primary-button outline-none text-white text-sm rounded-lg block py-2"
       >
         {Object.entries(availableThemes).map(([key, value]) => (

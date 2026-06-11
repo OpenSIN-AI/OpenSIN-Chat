@@ -35,7 +35,9 @@ describe("BrowserExtensionApiKey", () => {
     it("returns fallback object on fetch error", async () => {
       const error = new Error("Network failure");
       vi.spyOn(globalThis, "fetch").mockRejectedValue(error);
-      const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+      const consoleSpy = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {});
 
       const result = await BrowserExtensionApiKey.getAll();
       expect(result).toEqual({

@@ -22,7 +22,7 @@ export default function AddPresetModal({ isOpen, onClose, onSave }: any) {
   };
 
   const handleCommandChange: any = (e) => {
-    const value = ((e.target as unknown) as any)?.value.replace(CMD_REGEX, "");
+    const value = (e.target as unknown as any)?.value.replace(CMD_REGEX, "");
     setCommand(value);
   };
 
@@ -43,10 +43,7 @@ export default function AddPresetModal({ isOpen, onClose, onSave }: any) {
             <X size={24} weight="bold" className="text-white" />
           </button>
         </div>
-        <div
-          className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]"
-          
-        >
+        <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <form onSubmit={handleSubmit}>
             <div className="py-7 px-9 space-y-2 flex-col">
               <div className="w-full flex flex-col gap-y-4">

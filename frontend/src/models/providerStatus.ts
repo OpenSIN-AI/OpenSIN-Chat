@@ -52,12 +52,19 @@ const ProviderStatus = {
     })
       .then((res) => {
         if (!res.ok)
-          throw new Error(`Could not fetch provider status (HTTP ${res.status}).`);
+          throw new Error(
+            `Could not fetch provider status (HTTP ${res.status}).`,
+          );
         return res.json();
       })
       .catch((e) => {
         console.error(e);
-        return { providers: [], paths: null, checkedAt: null, error: e.message };
+        return {
+          providers: [],
+          paths: null,
+          checkedAt: null,
+          error: e.message,
+        };
       });
   },
 

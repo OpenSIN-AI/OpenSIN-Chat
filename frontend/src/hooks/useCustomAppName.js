@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useEffect } from "react";
 import useSWR from "swr";
 import System from "@/models/system";
 
@@ -22,9 +21,8 @@ export const CUSTOM_APP_NAME_KEY = "system/custom-app-name";
  * }}
  */
 export default function useCustomAppName() {
-  const { data, error, isLoading, mutate } = useSWR(
-    CUSTOM_APP_NAME_KEY,
-    () => System.fetchCustomAppName(),
+  const { data, error, isLoading, mutate } = useSWR(CUSTOM_APP_NAME_KEY, () =>
+    System.fetchCustomAppName(),
   );
 
   return {

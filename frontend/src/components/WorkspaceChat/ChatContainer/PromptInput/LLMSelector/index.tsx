@@ -27,7 +27,8 @@ export default function LLMSelectorModal({
   const slug = urlSlug ?? workspaceSlug;
   const { t } = useTranslation();
   const { workspace, loading: workspaceLoading } = useWorkspace(slug);
-  const { settings: systemSettings, loading: settingsLoading } = useSystemSettings();
+  const { settings: systemSettings, loading: settingsLoading } =
+    useSystemSettings();
   const [settings, setSettings] = useState(null);
   const [selectedLLMProvider, setSelectedLLMProvider] = useState(null);
   const [selectedLLMModel, setSelectedLLMModel] = useState("");
@@ -43,8 +44,7 @@ export default function LLMSelectorModal({
 
   useEffect(() => {
     if (!workspace || !systemSettings) return;
-    const savedProvider =
-      workspace.chatProvider ?? systemSettings.LLMProvider;
+    const savedProvider = workspace.chatProvider ?? systemSettings.LLMProvider;
     const savedModel = workspace.chatModel ?? systemSettings.LLMModel;
     const providerToSelect = initialProvider ?? savedProvider;
 

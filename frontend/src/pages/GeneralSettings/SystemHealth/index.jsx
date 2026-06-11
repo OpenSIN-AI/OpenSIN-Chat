@@ -13,7 +13,9 @@ function ConnectivityRow({ result }) {
     return (
       <li className="flex items-center justify-between gap-x-4 rounded-lg bg-theme-bg-secondary px-3 py-2 opacity-60">
         <span className="text-sm text-theme-text-primary">{result.name}</span>
-        <span className="text-xs text-theme-text-secondary">Nicht konfiguriert</span>
+        <span className="text-xs text-theme-text-secondary">
+          Nicht konfiguriert
+        </span>
       </li>
     );
   }
@@ -96,7 +98,9 @@ function ConnectivityPanel() {
 
       {results === null && !checking && (
         <p className="rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-theme-text-secondary">
-          {"Noch kein Test ausgeführt. Klicke auf \u201EJetzt testen\u201C, um alle konfigurierten Provider zu prüfen."}
+          {
+            "Noch kein Test ausgeführt. Klicke auf \u201EJetzt testen\u201C, um alle konfigurierten Provider zu prüfen."
+          }
         </p>
       )}
 
@@ -125,8 +129,9 @@ export default function SystemHealth() {
               System Health
             </h1>
             <p className="text-xs leading-[18px] text-theme-text-secondary text-pretty">
-              Diagnose für lokale LLM-Provider und Speicherpfade: API-Key-Status,
-              aktive Fallbacks und Erreichbarkeit der konfigurierten Endpunkte.
+              Diagnose für lokale LLM-Provider und Speicherpfade:
+              API-Key-Status, aktive Fallbacks und Erreichbarkeit der
+              konfigurierten Endpunkte.
             </p>
           </div>
           <ProviderKeyStatusPanel />

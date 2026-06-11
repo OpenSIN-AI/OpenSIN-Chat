@@ -60,7 +60,10 @@ describe("ScheduledJobs", () => {
       vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("err"));
 
       const result = await ScheduledJobs.create({});
-      expect(result).toEqual({ job: null, error: "Failed to create scheduled job" });
+      expect(result).toEqual({
+        job: null,
+        error: "Failed to create scheduled job",
+      });
     });
   });
 
@@ -145,10 +148,13 @@ describe("ScheduledJobs", () => {
       });
 
       const result = await ScheduledJobs.toggle(1);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/scheduled-jobs/1/toggle", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/scheduled-jobs/1/toggle",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -169,15 +175,20 @@ describe("ScheduledJobs", () => {
       });
 
       const result = await ScheduledJobs.trigger(1);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/scheduled-jobs/1/trigger", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/scheduled-jobs/1/trigger",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
     it("returns fallback on fetch error", async () => {
-      vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("trigger fail"));
+      vi.spyOn(globalThis, "fetch").mockRejectedValue(
+        new Error("trigger fail"),
+      );
 
       const result = await ScheduledJobs.trigger(1);
       expect(result).toEqual({ success: false, error: "trigger fail" });
@@ -193,9 +204,12 @@ describe("ScheduledJobs", () => {
       });
 
       const result = await ScheduledJobs.runs(1);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/scheduled-jobs/1/runs", {
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/scheduled-jobs/1/runs",
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -216,9 +230,12 @@ describe("ScheduledJobs", () => {
       });
 
       const result = await ScheduledJobs.getRun(100);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/scheduled-jobs/runs/100", {
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/scheduled-jobs/runs/100",
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -239,10 +256,13 @@ describe("ScheduledJobs", () => {
       });
 
       const result = await ScheduledJobs.markRunRead(100);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/scheduled-jobs/runs/100/read", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/scheduled-jobs/runs/100/read",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -263,10 +283,13 @@ describe("ScheduledJobs", () => {
       });
 
       const result = await ScheduledJobs.continueInThread(100);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/scheduled-jobs/runs/100/continue", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/scheduled-jobs/runs/100/continue",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -274,7 +297,11 @@ describe("ScheduledJobs", () => {
       vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("cont fail"));
 
       const result = await ScheduledJobs.continueInThread(100);
-      expect(result).toEqual({ workspaceSlug: null, threadSlug: null, error: "cont fail" });
+      expect(result).toEqual({
+        workspaceSlug: null,
+        threadSlug: null,
+        error: "cont fail",
+      });
     });
   });
 
@@ -287,9 +314,12 @@ describe("ScheduledJobs", () => {
       });
 
       const result = await ScheduledJobs.availableTools();
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/scheduled-jobs/available-tools", {
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/scheduled-jobs/available-tools",
+        {
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -310,10 +340,13 @@ describe("ScheduledJobs", () => {
       });
 
       const result = await ScheduledJobs.killRun(100);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/scheduled-jobs/runs/100/kill", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/scheduled-jobs/runs/100/kill",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual(data);
     });
 

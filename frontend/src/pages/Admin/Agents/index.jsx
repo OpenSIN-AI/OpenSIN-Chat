@@ -49,8 +49,8 @@ export default function AdminAgents() {
   } = useAgentForm();
 
   const isMultiUserMode = settings?.MultiUserMode ?? false;
-  const { configurableSkills, appIntegrationSkills, defaultSkills } = useMemo(
-    () => {
+  const { configurableSkills, appIntegrationSkills, defaultSkills } =
+    useMemo(() => {
       const filterByMode = ([_, config]) => {
         if (!config.mode) return true;
         if (config.mode.includes("singleUserOnly") && isMultiUserMode)
@@ -66,16 +66,19 @@ export default function AdminAgents() {
             getConfigurableSkills(t, {
               fileSystemAgentAvailable,
               createFilesAgentAvailable,
-            })
-          ).filter(filterByMode)
+            }),
+          ).filter(filterByMode),
         ),
         appIntegrationSkills: Object.fromEntries(
-          Object.entries(getAppIntegrationSkills(t)).filter(filterByMode)
+          Object.entries(getAppIntegrationSkills(t)).filter(filterByMode),
         ),
       };
-    },
-    [isMultiUserMode, fileSystemAgentAvailable, createFilesAgentAvailable, t]
-  );
+    }, [
+      isMultiUserMode,
+      fileSystemAgentAvailable,
+      createFilesAgentAvailable,
+      t,
+    ]);
 
   const clearSelections = () => {
     setSelectedSkill(null);
@@ -108,14 +111,16 @@ export default function AdminAgents() {
 
   const handleMCPServerDelete = (serverName) => {
     setSelectedMcpServer(null);
-    setMcpServers((prev) => prev.filter((server) => server.name !== serverName));
+    setMcpServers((prev) =>
+      prev.filter((server) => server.name !== serverName),
+    );
   };
 
   const handleMCPToolToggle = async (serverName, toolName, enabled) => {
     const { success, error, suppressedTools } = await MCPServers.toggleTool(
       serverName,
       toolName,
-      enabled
+      enabled,
     );
 
     if (!success) {
@@ -133,7 +138,7 @@ export default function AdminAgents() {
             openafd: { ...server.config?.openafd, suppressedTools },
           },
         };
-      })
+      }),
     );
 
     setSelectedMcpServer((prev) => {
@@ -199,7 +204,11 @@ export default function AdminAgents() {
       handleCancel={() => setHasChanges(false)}
       handleSubmit={layoutProps.handleSubmit}
     >
-      {isMobile ? <MobileForm {...layoutProps} /> : <DesktopForm {...layoutProps} />}
+      {isMobile ? (
+        <MobileForm {...layoutProps} />
+      ) : (
+        <DesktopForm {...layoutProps} />
+      )}
     </SkillLayout>
   );
 }
@@ -209,7 +218,9 @@ function MobileForm(props) {
     <form
       onSubmit={props.handleSubmit}
       onChange={() =>
-        !props.selectedFlow && props.setImportedSkills && props.toggleAgentSkill("")
+        !props.selectedFlow &&
+        props.setImportedSkills &&
+        props.toggleAgentSkill("")
       }
       ref={props.formEl}
       className="flex flex-col w-full p-4 mt-10"
@@ -233,7 +244,8 @@ function DesktopForm(props) {
   } else if (props.configurableSkills[selectedSkill]) {
     SelectedSkillComponent = props.configurableSkills[selectedSkill]?.component;
   } else if (props.appIntegrationSkills[selectedSkill]) {
-    SelectedSkillComponent = props.appIntegrationSkills[selectedSkill]?.component;
+    SelectedSkillComponent =
+      props.appIntegrationSkills[selectedSkill]?.component;
   } else if (props.defaultSkills[selectedSkill]) {
     SelectedSkillComponent = props.defaultSkills[selectedSkill]?.component;
   }

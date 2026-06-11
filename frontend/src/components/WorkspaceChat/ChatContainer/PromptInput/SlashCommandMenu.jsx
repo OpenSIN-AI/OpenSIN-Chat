@@ -1,6 +1,10 @@
 import { useCallback } from "react";
 
-export function useSlashCommand({ promptInput, setShowTools, autoOpenedToolsRef }) {
+export function useSlashCommand({
+  promptInput,
+  setShowTools,
+  autoOpenedToolsRef,
+}) {
   const handleSlashCommand = useCallback(
     (event) => {
       if (

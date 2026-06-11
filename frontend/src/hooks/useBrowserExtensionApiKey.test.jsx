@@ -27,7 +27,9 @@ describe("useBrowserExtensionApiKey", () => {
 
   it("returns empty defaults while loading", () => {
     BrowserExtensionApiKey.getAll.mockReturnValue(new Promise(() => {}));
-    const { result } = renderHook(() => useBrowserExtensionApiKey(), { wrapper });
+    const { result } = renderHook(() => useBrowserExtensionApiKey(), {
+      wrapper,
+    });
     expect(result.current.apiKeys).toEqual([]);
     expect(result.current.isMultiUser).toBe(false);
     expect(result.current.isLoading).toBe(true);
@@ -41,7 +43,9 @@ describe("useBrowserExtensionApiKey", () => {
         { id: 2, key: "k2", user: { id: 1 } },
       ],
     });
-    const { result } = renderHook(() => useBrowserExtensionApiKey(), { wrapper });
+    const { result } = renderHook(() => useBrowserExtensionApiKey(), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.apiKeys).toHaveLength(2);
     expect(result.current.isMultiUser).toBe(true);
@@ -53,7 +57,9 @@ describe("useBrowserExtensionApiKey", () => {
       error: "Unauthorized",
       apiKeys: [],
     });
-    const { result } = renderHook(() => useBrowserExtensionApiKey(), { wrapper });
+    const { result } = renderHook(() => useBrowserExtensionApiKey(), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.error).toBe("Unauthorized");
   });

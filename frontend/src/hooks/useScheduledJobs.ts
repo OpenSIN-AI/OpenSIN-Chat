@@ -8,7 +8,7 @@ export default function useScheduledJobs() {
   const { data, error, isLoading, mutate } = useSWR(
     SCHEDULED_JOBS_KEY,
     () => ScheduledJobs.list(),
-    { revalidateOnFocus: false, refreshInterval: 5000 }
+    { revalidateOnFocus: false, refreshInterval: 5000 },
   );
 
   return {

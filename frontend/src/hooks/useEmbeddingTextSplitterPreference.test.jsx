@@ -27,10 +27,9 @@ describe("useEmbeddingTextSplitterPreference", () => {
 
   it("returns empty settings while loading", () => {
     Admin.systemPreferencesByFields.mockReturnValue(new Promise(() => {}));
-    const { result } = renderHook(
-      () => useEmbeddingTextSplitterPreference(),
-      { wrapper },
-    );
+    const { result } = renderHook(() => useEmbeddingTextSplitterPreference(), {
+      wrapper,
+    });
     expect(result.current.settings).toEqual({});
     expect(result.current.isLoading).toBe(true);
   });
@@ -43,10 +42,9 @@ describe("useEmbeddingTextSplitterPreference", () => {
         max_embed_chunk_size: 2000,
       },
     });
-    const { result } = renderHook(
-      () => useEmbeddingTextSplitterPreference(),
-      { wrapper },
-    );
+    const { result } = renderHook(() => useEmbeddingTextSplitterPreference(), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.settings.text_splitter_chunk_size).toBe(1000);
   });

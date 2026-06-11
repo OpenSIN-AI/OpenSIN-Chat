@@ -54,9 +54,16 @@ vi.mock("@phosphor-icons/react", () => ({
   GitlabLogo: () => <span>GL</span>,
 }));
 
-vi.mock("@/pages/Admin/Agents/GMailSkillPanel/gmail.png", () => ({ default: "gmail-mock.png" }));
-vi.mock("@/pages/Admin/Agents/GoogleCalendarSkillPanel/google-calendar.png", () => ({ default: "gcal-mock.png" }));
-vi.mock("@/pages/Admin/Agents/OutlookSkillPanel/outlook.png", () => ({ default: "outlook-mock.png" }));
+vi.mock("@/pages/Admin/Agents/GMailSkillPanel/gmail.png", () => ({
+  default: "gmail-mock.png",
+}));
+vi.mock(
+  "@/pages/Admin/Agents/GoogleCalendarSkillPanel/google-calendar.png",
+  () => ({ default: "gcal-mock.png" }),
+);
+vi.mock("@/pages/Admin/Agents/OutlookSkillPanel/outlook.png", () => ({
+  default: "outlook-mock.png",
+}));
 
 vi.mock("@/utils/numbers", () => ({
   toPercentString: (n) => `${Math.round(n * 100)}%`,
@@ -88,7 +95,7 @@ describe("Citation", () => {
     });
 
     it("strips document_metadata header", () => {
-      const text = '<document_metadata>meta</document_metadata>real content';
+      const text = "<document_metadata>meta</document_metadata>real content";
       expect(omitChunkHeader(text)).toBe("real content");
     });
   });
@@ -169,9 +176,7 @@ describe("Citation", () => {
     });
 
     it("renders with custom image when provided", () => {
-      const { container } = render(
-        <SourceTypeCircle customImage="test.png" />,
-      );
+      const { container } = render(<SourceTypeCircle customImage="test.png" />);
       const img = container.querySelector("img");
       expect(img).toBeInTheDocument();
       expect(img.getAttribute("src")).toBe("test.png");
@@ -224,9 +229,7 @@ describe("Citation", () => {
     const mockSource = {
       title: "Test Document",
       references: 1,
-      chunks: [
-        { text: "chunk text content", score: 0.85, chunkSource: "" },
-      ],
+      chunks: [{ text: "chunk text content", score: 0.85, chunkSource: "" }],
     };
 
     it("renders modal when source is provided", () => {
@@ -258,7 +261,11 @@ describe("Citation", () => {
         title: "Test Page",
         references: 1,
         chunks: [
-          { text: "chunk", score: null, chunkSource: "link://https://example.com/path" },
+          {
+            text: "chunk",
+            score: null,
+            chunkSource: "link://https://example.com/path",
+          },
         ],
       };
       render(<CitationDetailModal source={urlSource} onClose={vi.fn()} />);

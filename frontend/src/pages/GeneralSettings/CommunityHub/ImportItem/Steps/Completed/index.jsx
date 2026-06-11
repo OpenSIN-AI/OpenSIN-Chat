@@ -17,9 +17,8 @@ export default function Completed({ settings, setSettings, setStep }) {
           </h2>
           <div className="flex flex-col gap-y-[25px] text-theme-text-secondary text-sm">
             <p>
-              The "{item.name}" {item.itemType} has been
-              imported successfully! It is now available in your OpenSIN Chat
-              instance.
+              The "{item.name}" {item.itemType} has been imported successfully!
+              It is now available in your OpenSIN Chat instance.
             </p>
             {item.itemType === "agent-flow" && (
               <Link
@@ -30,8 +29,8 @@ export default function Completed({ settings, setSettings, setStep }) {
               </Link>
             )}
             <p>
-              Any changes you make to this {item.itemType} will not be
-              reflected in the community hub. You can now modify as needed.
+              Any changes you make to this {item.itemType} will not be reflected
+              in the community hub. You can now modify as needed.
             </p>
           </div>
           <CTAButton

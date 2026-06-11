@@ -114,7 +114,12 @@ export default function ServerSTT({ sendCommand }: any) {
   );
 }
 
-async function uploadAndDispatch(blob: any, mimeType: any, sendCommand: any, setProcessing: any, t: any, 
+async function uploadAndDispatch(
+  blob: any,
+  mimeType: any,
+  sendCommand: any,
+  setProcessing: any,
+  t: any,
 ) {
   setProcessing(true);
   const extension = mimeType.includes("ogg") ? "ogg" : "webm";

@@ -4,7 +4,9 @@ import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function AnthropicAiOptions({ settings }: any) {
-  const [showAdvancedControls, setShowAdvancedControls] = useState(false as any);
+  const [showAdvancedControls, setShowAdvancedControls] = useState(
+    false as any,
+  );
   const [inputValue, setInputValue] = useState(settings?.AnthropicApiKey);
   const [anthropicApiKey, setAnthropicApiKey] = useState(
     settings?.AnthropicApiKey,
@@ -26,7 +28,7 @@ export default function AnthropicAiOptions({ settings }: any) {
             required={true}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setInputValue(((e.target as unknown) as any)?.value)}
+            onChange={(e) => setInputValue((e.target as unknown as any)?.value)}
             onBlur={() => setAnthropicApiKey(inputValue)}
           />
         </div>

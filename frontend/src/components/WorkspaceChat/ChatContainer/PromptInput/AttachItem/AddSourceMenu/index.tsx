@@ -274,14 +274,16 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
     // <-- VERBESSERUNG: Client-seitige URL-Validierung
     // ==========================================
     if (!trimmed.includes(".") && !trimmed.includes("localhost")) {
-      const msg = "Bitte gib eine vollständige Web-Adresse ein (z.B. example.com).";
+      const msg =
+        "Bitte gib eine vollständige Web-Adresse ein (z.B. example.com).";
       setError(msg);
       showToast(msg, "error");
       return;
     }
     const normalizedUrl = isValidUrl(trimmed);
     if (!normalizedUrl) {
-      const msg = "Ungültige URL. Bitte prüfe das Format (z.B. https://example.com).";
+      const msg =
+        "Ungültige URL. Bitte prüfe das Format (z.B. https://example.com).";
       setError(msg);
       showToast(msg, "error");
       return;

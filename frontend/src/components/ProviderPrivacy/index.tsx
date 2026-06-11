@@ -23,7 +23,8 @@ export default function ProviderPrivacy() {
   const { settings, loading } = useSystemSettings();
 
   const providers = useMemo(() => {
-    if (!settings) return { llmProvider: null, embeddingEngine: null, vectorDb: null };
+    if (!settings)
+      return { llmProvider: null, embeddingEngine: null, vectorDb: null };
     const providerDefinition =
       PROVIDER_PRIVACY_MAP.llm[settings?.LLMProvider] ||
       defaultProvider(settings?.LLMProvider);

@@ -26,7 +26,9 @@ export default function GenericOpenAiOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="eg: https://proxy.openai.com"
             defaultValue={settings?.GenericOpenAiBasePath}
-            onChange={(e) => setGenericOpenAiBasePath(((e.target as unknown) as any)?.value)}
+            onChange={(e) =>
+              setGenericOpenAiBasePath((e.target as unknown as any)?.value)
+            }
             required={true}
             autoComplete="off"
             spellCheck={false}
@@ -42,7 +44,9 @@ export default function GenericOpenAiOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             placeholder="Generic service API Key"
             defaultValue={settings?.GenericOpenAiKey ? "*".repeat(20) : ""}
-            onChange={(e) => setGenericOpenAiApiKey(((e.target as unknown) as any)?.value)}
+            onChange={(e) =>
+              setGenericOpenAiApiKey((e.target as unknown as any)?.value)
+            }
             required={false}
             autoComplete="off"
             spellCheck={false}
@@ -94,8 +98,17 @@ export default function GenericOpenAiOptions({ settings }: any) {
 }
 
 function GenericOpenAiModelSelection({
-  settings, basePath = null, apiKey = null, genericOpenAiModelPref, setGenericOpenAiModelPref, }: any) {
-  const { customModels, isLoading } = useProviderModels("generic-openai", apiKey, basePath);
+  settings,
+  basePath = null,
+  apiKey = null,
+  genericOpenAiModelPref,
+  setGenericOpenAiModelPref,
+}: any) {
+  const { customModels, isLoading } = useProviderModels(
+    "generic-openai",
+    apiKey,
+    basePath,
+  );
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">
@@ -130,7 +143,9 @@ function GenericOpenAiModelSelection({
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
           placeholder="Model id used for chat requests"
           defaultValue={genericOpenAiModelPref}
-          onChange={(e) => setGenericOpenAiModelPref(((e.target as unknown) as any)?.value)}
+          onChange={(e) =>
+            setGenericOpenAiModelPref((e.target as unknown as any)?.value)
+          }
           onBlur={() => setGenericOpenAiModelPref(genericOpenAiModelPref)}
           required={true}
           autoComplete="off"

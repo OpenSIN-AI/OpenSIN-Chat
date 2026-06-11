@@ -434,6 +434,27 @@ const TRANSLATIONS = {
           },
         },
       },
+      image_generation: {
+        title: "Generación de imágenes",
+        description:
+          "Genere imágenes con cualquier API de generación de imágenes compatible con OpenAI. Configure el endpoint, la clave de API y el modelo a continuación.",
+        base_url: {
+          label: "URL base",
+          required: "(obligatorio)",
+          placeholder: "https://api.openai.com",
+          help: "URL base de la API compatible con OpenAI (p. ej. {{example}})",
+          invalid: "Por favor, introduzca una URL http:// o https:// válida.",
+        },
+        api_key: {
+          label: "Clave de API",
+          help: "Déjelo vacío para conservar la clave existente. La clave almacenada nunca se muestra en el navegador.",
+        },
+        model: {
+          label: "Modelo",
+          placeholder: "dall-e-3",
+          help: "Nombre del modelo para la generación de imágenes. Los modelos comunes se muestran como sugerencias.",
+        },
+      },
       gmail: {
         title: "Conector de GMail",
         description:
@@ -826,6 +847,20 @@ const TRANSLATIONS = {
     loading: "Cargando vista previa…",
     load_error: "No se pudo cargar la vista previa.",
     generated_image: "Imagen generada",
+    open_externally: "Abrir en nueva pestaña",
+    iframe_title: "Vista previa",
+    menu: {
+      download: "Descargar",
+      open_new_tab: "Abrir en nueva pestaña",
+      add_to_sources: "Añadir a fuentes",
+    },
+    empty:
+      "Sin contenido para previsualizar. Genera un informe o documento para verlo aquí.",
+    title: "Vista previa",
+    unknown_file: "Archivo desconocido",
+    open: "Vista previa",
+    download: "Descargar",
+    downloading: "Descargando…",
   },
   customization: {
     interface: {

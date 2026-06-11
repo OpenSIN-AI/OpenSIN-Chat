@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useEffect } from "react";
 import useSWR from "swr";
 import System from "@/models/system";
 
@@ -22,9 +21,8 @@ export const SUPPORT_EMAIL_KEY = "system/support-email";
  * }}
  */
 export default function useSupportEmail() {
-  const { data, error, isLoading, mutate } = useSWR(
-    SUPPORT_EMAIL_KEY,
-    () => System.fetchSupportEmail(),
+  const { data, error, isLoading, mutate } = useSWR(SUPPORT_EMAIL_KEY, () =>
+    System.fetchSupportEmail(),
   );
 
   return {

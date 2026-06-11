@@ -99,7 +99,10 @@ export function ChatSidebarProvider({ children }: any) {
 
   useEffect(() => {
     try {
-      localStorage.setItem("openafd_right_sidebar_open", String(rightSidebarOpen));
+      localStorage.setItem(
+        "openafd_right_sidebar_open",
+        String(rightSidebarOpen),
+      );
     } catch {}
   }, [rightSidebarOpen]);
 
@@ -156,17 +159,21 @@ export function ChatSidebarProvider({ children }: any) {
 
 export function useChatSidebar() {
   const ctx = useContext(ChatSidebarContext);
-  if (!ctx) throw new Error("useChatSidebar must be used within ChatSidebarProvider");
+  if (!ctx)
+    throw new Error("useChatSidebar must be used within ChatSidebarProvider");
   return ctx;
 }
 
 export function useSourcesSidebar() {
   const ctx = useContext(ChatSidebarContext);
-  if (!ctx) throw new Error("useSourcesSidebar must be used within ChatSidebarProvider");
+  if (!ctx)
+    throw new Error(
+      "useSourcesSidebar must be used within ChatSidebarProvider",
+    );
   const { activeSidebar, sidebarData, openSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "sources",
-    sources: activeSidebar === "sources" ? (sidebarData || []) : [],
+    sources: activeSidebar === "sources" ? sidebarData || [] : [],
     openSidebar: (sources) => openSidebar("sources", sources),
     closeSidebar,
   };
@@ -174,7 +181,10 @@ export function useSourcesSidebar() {
 
 export function useMemoriesSidebar() {
   const ctx = useContext(ChatSidebarContext);
-  if (!ctx) throw new Error("useMemoriesSidebar must be used within ChatSidebarProvider");
+  if (!ctx)
+    throw new Error(
+      "useMemoriesSidebar must be used within ChatSidebarProvider",
+    );
   const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "memories",
@@ -185,8 +195,17 @@ export function useMemoriesSidebar() {
 
 export function usePreviewSidebar() {
   const ctx = useContext(ChatSidebarContext);
-  if (!ctx) throw new Error("usePreviewSidebar must be used within ChatSidebarProvider");
-  const { activeSidebar, previewData, openPreview, closeSidebar, toggleSidebar } = ctx;
+  if (!ctx)
+    throw new Error(
+      "usePreviewSidebar must be used within ChatSidebarProvider",
+    );
+  const {
+    activeSidebar,
+    previewData,
+    openPreview,
+    closeSidebar,
+    toggleSidebar,
+  } = ctx;
   return {
     sidebarOpen: activeSidebar === "preview",
     previewData,
@@ -198,8 +217,17 @@ export function usePreviewSidebar() {
 
 export function useConsoleSidebar() {
   const ctx = useContext(ChatSidebarContext);
-  if (!ctx) throw new Error("useConsoleSidebar must be used within ChatSidebarProvider");
-  const { activeSidebar, toggleSidebar, closeSidebar, consoleLogs, clearConsoleLogs } = ctx;
+  if (!ctx)
+    throw new Error(
+      "useConsoleSidebar must be used within ChatSidebarProvider",
+    );
+  const {
+    activeSidebar,
+    toggleSidebar,
+    closeSidebar,
+    consoleLogs,
+    clearConsoleLogs,
+  } = ctx;
   return {
     sidebarOpen: activeSidebar === "console",
     toggleConsole: () => toggleSidebar("console"),
@@ -211,7 +239,10 @@ export function useConsoleSidebar() {
 
 export function useFilesystemSidebar() {
   const ctx = useContext(ChatSidebarContext);
-  if (!ctx) throw new Error("useFilesystemSidebar must be used within ChatSidebarProvider");
+  if (!ctx)
+    throw new Error(
+      "useFilesystemSidebar must be used within ChatSidebarProvider",
+    );
   const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "filesystem",
@@ -222,7 +253,10 @@ export function useFilesystemSidebar() {
 
 export function useDatabaseSidebar() {
   const ctx = useContext(ChatSidebarContext);
-  if (!ctx) throw new Error("useDatabaseSidebar must be used within ChatSidebarProvider");
+  if (!ctx)
+    throw new Error(
+      "useDatabaseSidebar must be used within ChatSidebarProvider",
+    );
   const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "database",
@@ -233,7 +267,10 @@ export function useDatabaseSidebar() {
 
 export function usePoliticalSidebar() {
   const ctx = useContext(ChatSidebarContext);
-  if (!ctx) throw new Error("usePoliticalSidebar must be used within ChatSidebarProvider");
+  if (!ctx)
+    throw new Error(
+      "usePoliticalSidebar must be used within ChatSidebarProvider",
+    );
   const { activeSidebar, toggleSidebar, closeSidebar } = ctx;
   return {
     sidebarOpen: activeSidebar === "political",
@@ -254,9 +291,7 @@ export default function ChatSidebar({ isOpen, children }: any) {
   const [width, setWidth] = useState(() => {
     if (typeof window === "undefined") return 366;
     try {
-      const stored = window.localStorage.getItem(
-        "openafd-right-sidebar-width"
-      );
+      const stored = window.localStorage.getItem("openafd-right-sidebar-width");
       if (stored) {
         const n = Number(stored);
         if (!isNaN(n) && n >= 240 && n <= 800) return n;
@@ -271,7 +306,10 @@ export default function ChatSidebar({ isOpen, children }: any) {
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
-        window.localStorage.setItem("openafd-right-sidebar-width", String(width));
+        window.localStorage.setItem(
+          "openafd-right-sidebar-width",
+          String(width),
+        );
       } catch {}
     }
   }, [width]);
@@ -283,7 +321,7 @@ export default function ChatSidebar({ isOpen, children }: any) {
       const delta = resizeStartXRef.current - e.clientX;
       const newWidth = Math.min(
         800,
-        Math.max(240, resizeStartWidthRef.current + delta)
+        Math.max(240, resizeStartWidthRef.current + delta),
       );
       setWidth(newWidth);
     }

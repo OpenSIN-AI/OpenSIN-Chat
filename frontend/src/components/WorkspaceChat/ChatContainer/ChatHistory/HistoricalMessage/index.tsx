@@ -152,22 +152,48 @@ const HistoricalMessage = ({
           <div className="break-words">
             <HistoricalClarifyingQuestions surveys={clarifyingQuestions} />
             {/* Thought chain content — only visible when brain icon is toggled */}
-            {role === "assistant" && (() => {
-              let thoughtChain = null;
-              if (message?.match(THOUGHT_REGEX_COMPLETE)) thoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
-              else if (message?.match(THOUGHT_REGEX_OPEN) && !message?.match(THOUGHT_REGEX_CLOSE)) thoughtChain = message;
-              return thoughtChain ? <ThoughtChainComponent content={thoughtChain} messageId={uuid} /> : null;
-            })()}
+            {role === "assistant" &&
+              (() => {
+                let thoughtChain = null;
+                if (message?.match(THOUGHT_REGEX_COMPLETE))
+                  thoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
+                else if (
+                  message?.match(THOUGHT_REGEX_OPEN) &&
+                  !message?.match(THOUGHT_REGEX_CLOSE)
+                )
+                  thoughtChain = message;
+                return thoughtChain ? (
+                  <ThoughtChainComponent
+                    content={thoughtChain}
+                    messageId={uuid}
+                  />
+                ) : null;
+              })()}
             {/* Brain icon + message side by side */}
             <div className="flex items-start gap-x-1.5">
-              {role === "assistant" && (() => {
-                let thoughtChain = null;
-                if (message?.match(THOUGHT_REGEX_COMPLETE)) thoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
-                else if (message?.match(THOUGHT_REGEX_OPEN) && !message?.match(THOUGHT_REGEX_CLOSE)) thoughtChain = message;
-                return thoughtChain ? <ThoughtBrainButton messageId={uuid} content={thoughtChain} /> : null;
-              })()}
+              {role === "assistant" &&
+                (() => {
+                  let thoughtChain = null;
+                  if (message?.match(THOUGHT_REGEX_COMPLETE))
+                    thoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
+                  else if (
+                    message?.match(THOUGHT_REGEX_OPEN) &&
+                    !message?.match(THOUGHT_REGEX_CLOSE)
+                  )
+                    thoughtChain = message;
+                  return thoughtChain ? (
+                    <ThoughtBrainButton
+                      messageId={uuid}
+                      content={thoughtChain}
+                    />
+                  ) : null;
+                })()}
               <div className="flex-1 min-w-0">
-                <RenderChatContent role={role} message={message} messageId={uuid} />
+                <RenderChatContent
+                  role={role}
+                  message={message}
+                  messageId={uuid}
+                />
               </div>
             </div>
             {isRefusalMessage && (
@@ -214,7 +240,10 @@ const HistoricalMessage = ({
                       if (!message) return message;
                       let ttsMessage = message;
                       // Remove complete thought blocks entirely.
-                      ttsMessage = ttsMessage.replace(THOUGHT_REGEX_COMPLETE, "");
+                      ttsMessage = ttsMessage.replace(
+                        THOUGHT_REGEX_COMPLETE,
+                        "",
+                      );
                       // If an unclosed opening tag remains, strip it and everything after.
                       if (
                         ttsMessage.match(THOUGHT_REGEX_OPEN) &&

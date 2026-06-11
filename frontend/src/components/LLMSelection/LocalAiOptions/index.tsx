@@ -83,7 +83,9 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
             defaultValue={settings?.LocalAiApiKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
-            onChange={(e) => setApiKeyValue(((e.target as unknown) as any)?.value)}
+            onChange={(e) =>
+              setApiKeyValue((e.target as unknown as any)?.value)
+            }
             onBlur={() => setApiKey(apiKeyValue)}
           />
         </div>
@@ -145,8 +147,16 @@ export default function LocalAiOptions({ settings, showAlert = false }: any) {
   );
 }
 
-function LocalAIModelSelection({ settings, basePath = null, apiKey = null }: any) {
-  const { customModels, isLoading } = useProviderModels("localai", apiKey, basePath);
+function LocalAIModelSelection({
+  settings,
+  basePath = null,
+  apiKey = null,
+}: any) {
+  const { customModels, isLoading } = useProviderModels(
+    "localai",
+    apiKey,
+    basePath,
+  );
   if (isLoading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">

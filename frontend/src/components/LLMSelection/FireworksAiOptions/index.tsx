@@ -23,7 +23,7 @@ export default function FireworksAiOptions({ settings }: any) {
           required={true}
           autoComplete="off"
           spellCheck={false}
-          onChange={(e) => setInputValue(((e.target as unknown) as any)?.value)}
+          onChange={(e) => setInputValue((e.target as unknown as any)?.value)}
           onBlur={() => setFireworksAiApiKey(inputValue)}
         />
       </div>

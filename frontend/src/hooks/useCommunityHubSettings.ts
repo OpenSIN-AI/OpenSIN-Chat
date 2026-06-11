@@ -8,7 +8,7 @@ export default function useCommunityHubSettings() {
   const { data, error, isLoading, mutate } = useSWR(
     COMMUNITY_HUB_SETTINGS_KEY,
     () => CommunityHub.getSettings(),
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false },
   );
 
   return {

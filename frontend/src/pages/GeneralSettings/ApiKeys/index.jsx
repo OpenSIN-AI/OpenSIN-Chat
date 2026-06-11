@@ -111,10 +111,7 @@ export default function AdminApiKeys() {
           </div>
         </div>
         <ModalWrapper isOpen={isOpen}>
-          <NewApiKeyModal
-            closeModal={closeModal}
-            onSuccess={refresh}
-          />
+          <NewApiKeyModal closeModal={closeModal} onSuccess={refresh} />
         </ModalWrapper>
       </div>
     </div>

@@ -12,7 +12,7 @@
  * fallback instead of the actual translation key. v0.6.4 fixed both.
  */
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { createInstance } from "i18next";
 import { initReactI18next } from "react-i18next";

@@ -54,16 +54,11 @@ export default function ModelSelector({
                 {selectedLLMObject?.name || "None selected"}
               </div>
               <div className="mt-1 text-xs text-description">
-                {selectedLLMObject?.description ||
-                  "You need to select an LLM"}
+                {selectedLLMObject?.description || "You need to select an LLM"}
               </div>
             </div>
           </div>
-          <CaretUpDown
-            size={24}
-            weight="bold"
-            className="text-white"
-          />
+          <CaretUpDown size={24} weight="bold" className="text-white" />
         </button>
       )}
     </div>

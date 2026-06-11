@@ -33,9 +33,11 @@ export function MemoriesProvider({ workspace, children }) {
   const [enabled, setEnabled] = useState(false);
   const [autoExtraction, setAutoExtraction] = useState(true);
 
-  const { memories, isLoading: memoriesLoading, refresh: refreshMemories } = useMemories(
-    sidebarOpen && enabled ? workspace?.slug : null,
-  );
+  const {
+    memories,
+    isLoading: memoriesLoading,
+    refresh: refreshMemories,
+  } = useMemories(sidebarOpen && enabled ? workspace?.slug : null);
 
   useEffect(() => {
     if (settingsLoading) return;

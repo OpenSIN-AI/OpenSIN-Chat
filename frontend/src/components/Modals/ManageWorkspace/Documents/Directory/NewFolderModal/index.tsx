@@ -44,7 +44,12 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
             aria-label="Close new folder dialog"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={24} weight="bold" className="text-white" aria-hidden="true" />
+            <X
+              size={24}
+              weight="bold"
+              className="text-white"
+              aria-hidden="true"
+            />
           </button>
         </div>
         <div className="p-6">

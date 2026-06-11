@@ -23,11 +23,26 @@ describe("System", () => {
 
   describe("cacheKeys", () => {
     it("contains expected cache key strings", () => {
-      expect(System.cacheKeys).toHaveProperty("footerIcons", "openafd_footer_links");
-      expect(System.cacheKeys).toHaveProperty("supportEmail", "openafd_support_email");
-      expect(System.cacheKeys).toHaveProperty("customAppName", "openafd_custom_app_name");
-      expect(System.cacheKeys).toHaveProperty("canViewChatHistory", "openafd_can_view_chat_history");
-      expect(System.cacheKeys).toHaveProperty("deploymentVersion", "openafd_deployment_version");
+      expect(System.cacheKeys).toHaveProperty(
+        "footerIcons",
+        "openafd_footer_links",
+      );
+      expect(System.cacheKeys).toHaveProperty(
+        "supportEmail",
+        "openafd_support_email",
+      );
+      expect(System.cacheKeys).toHaveProperty(
+        "customAppName",
+        "openafd_custom_app_name",
+      );
+      expect(System.cacheKeys).toHaveProperty(
+        "canViewChatHistory",
+        "openafd_can_view_chat_history",
+      );
+      expect(System.cacheKeys).toHaveProperty(
+        "deploymentVersion",
+        "openafd_deployment_version",
+      );
     });
   });
 
@@ -53,13 +68,17 @@ describe("System", () => {
 
   describe("totalIndexes", () => {
     it("returns vectorCount on success", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ vectorCount: 42 }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ vectorCount: 42 }));
       const result = await System.totalIndexes("my-workspace");
       expect(result).toBe(42);
     });
 
     it("returns 0 when response is not ok", async () => {
-      global.fetch = vi.fn().mockResolvedValue(new Response(null, { status: 500 }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(new Response(null, { status: 500 }));
       const result = await System.totalIndexes();
       expect(result).toBe(0);
     });
@@ -73,19 +92,25 @@ describe("System", () => {
 
   describe("isOnboardingComplete", () => {
     it("returns true when onboardingComplete is true", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ onboardingComplete: true }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ onboardingComplete: true }));
       const result = await System.isOnboardingComplete();
       expect(result).toBe(true);
     });
 
     it("returns false when onboardingComplete is false", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ onboardingComplete: false }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(jsonResponse({ onboardingComplete: false }));
       const result = await System.isOnboardingComplete();
       expect(result).toBe(false);
     });
 
     it("returns false when response is not ok", async () => {
-      global.fetch = vi.fn().mockResolvedValue(new Response(null, { status: 500 }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(new Response(null, { status: 500 }));
       const result = await System.isOnboardingComplete();
       expect(result).toBe(false);
     });
@@ -106,7 +131,9 @@ describe("System", () => {
     });
 
     it("returns null when response is not ok", async () => {
-      global.fetch = vi.fn().mockResolvedValue(new Response(null, { status: 500 }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(new Response(null, { status: 500 }));
       const result = await System.keys();
       expect(result).toBeNull();
     });

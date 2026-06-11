@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
-import { Image } from "@phosphor-icons/react";
 import useSystemSettings from "@/hooks/useSystemSettings";
 
 const IMAGE_MODELS = [
@@ -13,6 +13,9 @@ const IMAGE_MODELS = [
   "black-forest-labs/flux-pro",
 ];
 
+const INPUT_CLASSES =
+  "bg-zinc-900 light:bg-white text-white light:text-zinc-900 border border-zinc-700 light:border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500";
+
 export default function ImageGenerationSkillPanel({
   title,
   skill,
@@ -23,6 +26,7 @@ export default function ImageGenerationSkillPanel({
   icon,
   settings: propSettings,
 }) {
+  const { t } = useTranslation();
   const { settings: fetchedSettings } = useSystemSettings();
   const settings = propSettings || fetchedSettings;
 
@@ -31,9 +35,7 @@ export default function ImageGenerationSkillPanel({
     settings?.ImageGenerationBasePath ||
     "";
   const currentModel =
-    settings?.image_generation_model ||
-    settings?.ImageGenerationModel ||
-    "";
+    settings?.image_generation_model || settings?.ImageGenerationModel || "";
 
   return (
     <div className="p-2">
@@ -61,15 +63,14 @@ export default function ImageGenerationSkillPanel({
         {image && <img src={image} alt={title} className="w-full rounded-md" />}
 
         <p className="text-theme-text-secondary text-opacity-60 text-xs font-medium">
-          Generate images using any OpenAI-compatible image generation API.
-          Configure the endpoint, API key, and model below.
+          {t("agent.skill.image_generation.description")}
         </p>
 
         {enabled && (
           <div className="flex flex-col gap-y-4 mt-2">
             <div className="flex flex-col gap-y-1.5">
               <label className="text-theme-text-primary text-sm font-medium">
-                Base URL *
+                {t("agent.skill.image_generation.base_url.label")}
               </label>
               <input
                 key={basePath || "empty"}
@@ -77,34 +78,35 @@ export default function ImageGenerationSkillPanel({
                 type="url"
                 defaultValue={basePath}
                 placeholder="https://api.openai.com"
-                className="bg-zinc-900 light:bg-white text-white light:text-zinc-900 border border-zinc-700 light:border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className={INPUT_CLASSES}
               />
               <p className="text-theme-text-secondary text-xs">
-                Base URL for the OpenAI-compatible API (e.g.,{" "}
-                <code className="bg-zinc-800 px-1 rounded">https://api.openai.com</code>
-                )
+                {t("agent.skill.image_generation.base_url.help")}{" "}
+                <code className="bg-zinc-800 px-1 rounded">
+                  https://api.openai.com
+                </code>
               </p>
             </div>
 
             <div className="flex flex-col gap-y-1.5">
               <label className="text-theme-text-primary text-sm font-medium">
-                API Key
+                {t("agent.skill.image_generation.api_key.label")}
               </label>
               <input
                 name="system::image_generation_api_key"
                 type="password"
                 placeholder="sk-..."
                 autoComplete="new-password"
-                className="bg-zinc-900 light:bg-white text-white light:text-zinc-900 border border-zinc-700 light:border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className={INPUT_CLASSES}
               />
               <p className="text-theme-text-secondary text-xs">
-                Leave empty to keep the existing key. The stored key is never shown in the browser.
+                {t("agent.skill.image_generation.api_key.help")}
               </p>
             </div>
 
             <div className="flex flex-col gap-y-1.5">
               <label className="text-theme-text-primary text-sm font-medium">
-                Model
+                {t("agent.skill.image_generation.model.label")}
               </label>
               <input
                 key={currentModel || "empty"}
@@ -113,7 +115,7 @@ export default function ImageGenerationSkillPanel({
                 defaultValue={currentModel}
                 list="image-models"
                 placeholder="dall-e-3"
-                className="bg-zinc-900 light:bg-white text-white light:text-zinc-900 border border-zinc-700 light:border-zinc-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                className={INPUT_CLASSES}
               />
               <datalist id="image-models">
                 {IMAGE_MODELS.map((model) => (
@@ -121,7 +123,7 @@ export default function ImageGenerationSkillPanel({
                 ))}
               </datalist>
               <p className="text-theme-text-secondary text-xs">
-                Model name for image generation. Common models are shown as suggestions.
+                {t("agent.skill.image_generation.model.help")}
               </p>
             </div>
           </div>

@@ -8,7 +8,7 @@ export default function useModelRouters() {
   const { data, error, isLoading, mutate } = useSWR(
     MODEL_ROUTERS_KEY,
     () => ModelRouter.getAll(),
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false },
   );
 
   return {

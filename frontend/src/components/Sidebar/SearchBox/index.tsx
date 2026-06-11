@@ -25,7 +25,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
 
   async function handleSearchDebounced(e: any) {
     try {
-      const searchValue = ((e.target as unknown) as any)?.value;
+      const searchValue = (e.target as unknown as any)?.value;
       setSearchTerm(searchValue);
       setLoading(true);
       const searchResults =

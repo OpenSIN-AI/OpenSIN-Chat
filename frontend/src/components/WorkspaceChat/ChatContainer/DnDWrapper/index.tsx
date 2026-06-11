@@ -43,7 +43,10 @@ export const PARSED_FILE_ATTACHMENT_REMOVED_EVENT =
  */
 
 export function DnDFileUploaderProvider({
-  workspace, threadSlug = null, children, }: any) {
+  workspace,
+  threadSlug = null,
+  children,
+}: any) {
   const [files, setFiles] = useState([] as any);
   const [ready, setReady] = useState(false as any);
   const [dragging, setDragging] = useState(false as any);
@@ -54,7 +57,10 @@ export function DnDFileUploaderProvider({
   const [tokenCount, setTokenCount] = useState(0 as any);
   const [maxTokens, setMaxTokens] = useState(Number.POSITIVE_INFINITY as any);
 
-  const { mutate: mutateParsedFiles } = useDocument(workspace?.slug, threadSlug);
+  const { mutate: mutateParsedFiles } = useDocument(
+    workspace?.slug,
+    threadSlug,
+  );
 
   useEffect(() => {
     System.checkDocumentProcessorOnline().then((status) => setReady(status));
@@ -102,7 +108,9 @@ export function DnDFileUploaderProvider({
   async function handleRemove(event: any) {
     /** @type {{uid: Attachment['uid'], document: Attachment['document']}} */
     const { uid, document } = event.detail;
-    setFiles((prev) => (prev as any).filter((prevFile) => prevFile.uid !== uid));
+    setFiles((prev) =>
+      (prev as any).filter((prevFile) => prevFile.uid !== uid),
+    );
     if (!document?.location) return;
     await Workspace.deleteAndUnembedFile(workspace.slug, document.location);
   }
@@ -223,7 +231,7 @@ export function DnDFileUploaderProvider({
     setMaxTokens(workspaceContextWindow);
 
     let totalTokenCount = currentContextTokenCount;
-    let batchPendingFiles = [];
+    const batchPendingFiles = [];
 
     for (const attachment of newAttachments) {
       // Images/attachments are chat specific.
@@ -317,7 +325,9 @@ export function DnDFileUploaderProvider({
     setFiles((prev) =>
       (prev as any).filter(
         (prevFile) =>
-          !(pendingFiles as any).some((file) => file.attachment.uid === prevFile.uid),
+          !(pendingFiles as any).some(
+            (file) => file.attachment.uid === prevFile.uid,
+          ),
       ),
     );
     setShowWarningModal(false);

@@ -10,7 +10,9 @@ vi.mock("@/models/system", () => ({
 }));
 
 import System from "@/models/system";
-import useDocumentProcessorOnline, { CACHE_KEY } from "./useDocumentProcessorOnline";
+import useDocumentProcessorOnline, {
+  CACHE_KEY,
+} from "./useDocumentProcessorOnline";
 
 function wrapper({ children }) {
   return (
@@ -28,7 +30,9 @@ describe("useDocumentProcessorOnline", () => {
   it("returns isOnline from SWR data", async () => {
     System.checkDocumentProcessorOnline.mockResolvedValue(true);
 
-    const { result } = renderHook(() => useDocumentProcessorOnline(), { wrapper });
+    const { result } = renderHook(() => useDocumentProcessorOnline(), {
+      wrapper,
+    });
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.isOnline).toBe(true);

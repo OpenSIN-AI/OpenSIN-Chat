@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 export default function CTAButton({
-  children, disabled = false, onClick, className = "", }: any) {
+  children,
+  disabled = false,
+  onClick,
+  className = "",
+}: any) {
   return (
     <button
       disabled={disabled}

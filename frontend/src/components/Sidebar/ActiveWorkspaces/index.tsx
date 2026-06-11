@@ -8,7 +8,14 @@ import ManageWorkspace, {
 } from "../../Modals/ManageWorkspace";
 import paths from "@/utils/paths";
 import { Link, useParams, useNavigate, useMatch } from "react-router-dom";
-import { GearSix, UploadSimple, DotsSixVertical, Plus, ChatCircleText, FolderSimplePlus } from "@phosphor-icons/react";
+import {
+  GearSix,
+  UploadSimple,
+  DotsSixVertical,
+  Plus,
+  ChatCircleText,
+  FolderSimplePlus,
+} from "@phosphor-icons/react";
 import useUser from "@/hooks/useUser";
 import useWorkspaces from "@/hooks/useWorkspaces";
 import ThreadContainer from "./ThreadContainer";
@@ -27,7 +34,8 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
   useEffect(() => {
     if (!open) return;
     const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -39,7 +47,9 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     setOpen(false);
     const { thread, error } = await Workspace.threads.new(workspace.slug);
     if (error) {
-      showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", { clear: true });
+      showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", {
+        clear: true,
+      });
       return;
     }
     invalidateThreads(workspace.slug);
@@ -52,9 +62,14 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     setOpen(false);
     const name = window.prompt("Ordnername:")?.trim();
     if (!name) return;
-    const { folder, message } = await Workspace.threads.folders.new(workspace.slug, name);
+    const { folder, message } = await Workspace.threads.folders.new(
+      workspace.slug,
+      name,
+    );
     if (message || !folder) {
-      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", { clear: true });
+      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", {
+        clear: true,
+      });
       return;
     }
     invalidateThreads(workspace.slug);
@@ -64,7 +79,11 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     <div ref={ref} className="relative flex items-center">
       <button
         type="button"
-        onClick={(e) => { e.preventDefault(); e.stopPropagation(); setOpen((p) => !p); }}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setOpen((p) => !p);
+        }}
         data-tooltip-id="workspace-quick-add"
         data-tooltip-content="Neuen Chat oder Ordner erstellen"
         className={`group/plus border-none rounded-md flex items-center justify-center p-[2px] transition-colors ${
@@ -249,7 +268,10 @@ export default function ActiveWorkspaces() {
                               <div
                                 className={`flex items-center gap-x-[2px] transition-opacity duration-200 ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                               >
-                                <WorkspaceQuickAdd workspace={workspace} isActive={isActive} />
+                                <WorkspaceQuickAdd
+                                  workspace={workspace}
+                                  isActive={isActive}
+                                />
                                 <button
                                   type="button"
                                   onClick={(e) => {

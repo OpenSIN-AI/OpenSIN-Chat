@@ -54,7 +54,8 @@ export default function AdminWorkspaces() {
 }
 
 function WorkspacesContainer() {
-  const { users, workspaces, deletionProtected, isLoading } = useAdminWorkspaces();
+  const { users, workspaces, deletionProtected, isLoading } =
+    useAdminWorkspaces();
 
   if (isLoading) {
     return (

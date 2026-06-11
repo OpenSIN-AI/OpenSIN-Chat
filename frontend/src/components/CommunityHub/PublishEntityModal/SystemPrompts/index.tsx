@@ -38,9 +38,13 @@ export default function SystemPrompts({ entity }: any) {
       setIsSuccess(true);
     } catch (error) {
       console.error("Failed to publish prompt:", error);
-      showToast(`Failed to publish prompt: ${(error as Error).message}`, "error", {
-        clear: true,
-      });
+      showToast(
+        `Failed to publish prompt: ${(error as Error).message}`,
+        "error",
+        {
+          clear: true,
+        },
+      );
     } finally {
       setIsSubmitting(false);
     }

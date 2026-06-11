@@ -8,7 +8,7 @@ export default function useRunHistory(id: string | null) {
   const { data, error, isLoading, mutate } = useSWR(
     id ? [RUN_HISTORY_KEY, id] : null,
     () => ScheduledJobs.runs(id),
-    { revalidateOnFocus: false, refreshInterval: 5000 }
+    { revalidateOnFocus: false, refreshInterval: 5000 },
   );
 
   return {

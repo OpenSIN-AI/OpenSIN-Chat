@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
-import { Robot, CaretRight } from "@phosphor-icons/react";
+import { Robot } from "@phosphor-icons/react";
 import FlowPanel from "./AgentFlows/FlowPanel";
 import ImportedSkillConfig from "./Imported/ImportedSkillConfig";
 import ServerPanel from "./MCPServers/ServerPanel";
-import { DefaultBadge } from "./Badges/default";
-import SkillList from "./SkillList";
 
 export function SkillPanel({
   selectedSkill,
@@ -61,7 +59,7 @@ export function SkillPanel({
                     toggleSkill={toggleDefaultSkill}
                     enabled={
                       !disabledAgentSkills.includes(
-                        defaultSkills[selectedSkill]?.skill
+                        defaultSkills[selectedSkill]?.skill,
                       )
                     }
                     {...defaultSkills[selectedSkill]}
@@ -72,7 +70,7 @@ export function SkillPanel({
                     settings={settings}
                     toggleSkill={toggleAgentSkill}
                     enabled={agentSkills.includes(
-                      configurableSkills[selectedSkill]?.skill
+                      configurableSkills[selectedSkill]?.skill,
                     )}
                     {...configurableSkills[selectedSkill]}
                   />
@@ -82,7 +80,7 @@ export function SkillPanel({
                     settings={settings}
                     toggleSkill={toggleAgentSkill}
                     enabled={agentSkills.includes(
-                      appIntegrationSkills[selectedSkill]?.skill
+                      appIntegrationSkills[selectedSkill]?.skill,
                     )}
                     {...appIntegrationSkills[selectedSkill]}
                   />

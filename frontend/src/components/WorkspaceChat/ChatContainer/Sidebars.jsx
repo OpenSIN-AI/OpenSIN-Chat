@@ -5,7 +5,9 @@ import ConsoleSidebar from "./ConsoleSidebar";
 import FilesystemSidebar from "./FilesystemSidebar";
 import DatabaseSidebar from "./DatabaseSidebar";
 import PoliticalSidebar from "./PoliticalSidebar";
-import RightSidebarIconBar, { RightSidebarToggleButton } from "./RightSidebarIconBar";
+import RightSidebarIconBar, {
+  RightSidebarToggleButton,
+} from "./RightSidebarIconBar";
 import { useChatSidebar } from "./ChatSidebar";
 
 const PANEL_W = 360; // px — default panel content width
@@ -30,8 +32,12 @@ export default function Sidebars({ workspace }) {
           style={{ width: PANEL_W }}
           className="h-full overflow-hidden flex-shrink-0 relative bg-zinc-900 light:bg-white"
         >
-          {activeSidebar === "sources" && <SourcesSidebar workspace={workspace} />}
-          {activeSidebar === "memories" && <MemoriesSidebar workspace={workspace} />}
+          {activeSidebar === "sources" && (
+            <SourcesSidebar workspace={workspace} />
+          )}
+          {activeSidebar === "memories" && (
+            <MemoriesSidebar workspace={workspace} />
+          )}
           {activeSidebar === "preview" && <PreviewSidebar />}
           {activeSidebar === "console" && <ConsoleSidebar />}
           {activeSidebar === "filesystem" && <FilesystemSidebar />}

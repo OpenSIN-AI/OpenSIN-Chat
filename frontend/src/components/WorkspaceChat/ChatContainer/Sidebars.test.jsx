@@ -43,7 +43,9 @@ vi.mock("./PoliticalSidebar", () => ({
 
 vi.mock("./RightSidebarIconBar", () => ({
   default: () => <div data-testid="right-sidebar-icon-bar" />,
-  RightSidebarToggleButton: () => <button type="button" data-testid="toggle-button" />,
+  RightSidebarToggleButton: () => (
+    <button type="button" data-testid="toggle-button" />
+  ),
 }));
 
 const workspace = { id: 1, name: "Test Workspace" };
@@ -98,7 +100,9 @@ describe("Sidebars", () => {
     });
     render(<Sidebars workspace={workspace} />);
     expect(screen.getByTestId("toggle-button")).toBeInTheDocument();
-    expect(screen.queryByTestId("right-sidebar-icon-bar")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("right-sidebar-icon-bar"),
+    ).not.toBeInTheDocument();
   });
 
   it("panel width is 360px when shown", () => {

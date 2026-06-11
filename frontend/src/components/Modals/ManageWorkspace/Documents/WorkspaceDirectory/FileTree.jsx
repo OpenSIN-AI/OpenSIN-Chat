@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import WorkspaceFileRow from "./WorkspaceFileRow";
 import { RenderFileRows } from "./RenderFileRows";
 
@@ -24,7 +23,8 @@ export function FileTree({
     (sum, folder) => sum + folder.items.length,
     0,
   );
-  const allSelected = Object.keys(selectedItems).length === allCount && allCount > 0;
+  const allSelected =
+    Object.keys(selectedItems).length === allCount && allCount > 0;
 
   return (
     <div className="px-8">

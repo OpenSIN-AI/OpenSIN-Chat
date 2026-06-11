@@ -124,7 +124,13 @@ export default function GeneralVectorDatabase() {
   const searchInputRef = useRef(null);
   const { isOpen, openModal, closeModal } = useModal();
   const { t } = useTranslation();
-  const { settings: systemSettings, vectorDB, hasEmbeddings, isLoading, mutate } = useVectorDBs();
+  const {
+    settings: systemSettings,
+    vectorDB,
+    hasEmbeddings,
+    isLoading,
+    mutate,
+  } = useVectorDBs();
 
   // Sync local settings state from SWR when it loads
   useEffect(() => {

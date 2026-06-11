@@ -30,7 +30,11 @@ describe("Document model", () => {
 
   describe("createFolder", () => {
     it("creates folder with name", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true, folder: "new-folder" }));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          jsonResponse({ success: true, folder: "new-folder" }),
+        );
       const { default: Document } = await import("./document");
       const result = await Document.createFolder("new-folder");
       expect(result.success).toBe(true);
@@ -39,7 +43,7 @@ describe("Document model", () => {
         expect.objectContaining({
           method: "POST",
           body: JSON.stringify({ name: "new-folder" }),
-        })
+        }),
       );
     });
 
@@ -53,7 +57,11 @@ describe("Document model", () => {
     });
 
     it("handles non-ok response", async () => {
-      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: false, error: "Invalid name" }, 400));
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(
+          jsonResponse({ success: false, error: "Invalid name" }, 400),
+        );
       const { default: Document } = await import("./document");
       const result = await Document.createFolder("test");
       expect(result.success).toBe(false);
@@ -65,14 +73,14 @@ describe("Document model", () => {
     it("moves files to folder with correct mapping", async () => {
       global.fetch = vi.fn().mockResolvedValue(jsonResponse({ success: true }));
       const { default: Document } = await import("./document");
-      
+
       const files = [
         { name: "file1.txt", folderName: "source" },
         { name: "file2.txt" },
       ];
-      
+
       const result = await Document.moveToFolder(files, "destination");
-      
+
       expect(result.success).toBe(true);
       expect(global.fetch).toHaveBeenCalledWith(
         "/api/document/move-files",
@@ -84,14 +92,17 @@ describe("Document model", () => {
               { from: "file2.txt", to: "destination/file2.txt" },
             ],
           }),
-        })
+        }),
       );
     });
 
     it("returns error on failure", async () => {
       global.fetch = vi.fn().mockRejectedValue(new Error("Move failed"));
       const { default: Document } = await import("./document");
-      const result = await Document.moveToFolder([{ name: "file.txt" }], "dest");
+      const result = await Document.moveToFolder(
+        [{ name: "file.txt" }],
+        "dest",
+      );
       expect(result.success).toBe(false);
       expect(result.error).toBe("Move failed");
     });
@@ -105,7 +116,7 @@ describe("Document model", () => {
         "/api/document/move-files",
         expect.objectContaining({
           body: JSON.stringify({ files: [] }),
-        })
+        }),
       );
     });
   });

@@ -47,7 +47,7 @@ export default function AgentFlows({ entity }: any) {
       showToast(
         `Failed to publish agent flow: ${(error as Error).message}`,
         "error",
-        { clear: true }
+        { clear: true },
       );
     } finally {
       setIsSubmitting(false);

@@ -9,7 +9,7 @@ export default function useCommunityHubAuth() {
   const { data, isLoading, error } = useSWR(
     COMMUNITY_HUB_AUTH_KEY,
     () => CommunityHub.getSettings(),
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false },
   );
 
   const connectionKey = data?.connectionKey ?? null;

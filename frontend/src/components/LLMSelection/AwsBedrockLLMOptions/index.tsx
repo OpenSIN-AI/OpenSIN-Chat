@@ -49,7 +49,9 @@ export default function AwsBedrockLLMOptions({ settings }: any) {
           name="AwsBedrockLLMConnectionMethod"
           value={connectionMethod}
           required={true}
-          onChange={(e) => setConnectionMethod(((e.target as unknown) as any)?.value)}
+          onChange={(e) =>
+            setConnectionMethod((e.target as unknown as any)?.value)
+          }
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit p-2.5"
         >
           <option value="iam">IAM (Explicit Credentials)</option>

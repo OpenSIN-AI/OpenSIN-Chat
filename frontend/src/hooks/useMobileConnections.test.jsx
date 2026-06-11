@@ -10,7 +10,9 @@ vi.mock("@/models/mobile", () => ({
 }));
 
 import MobileConnection from "@/models/mobile";
-import useMobileConnections, { MOBILE_CONNECTIONS_KEY } from "./useMobileConnections";
+import useMobileConnections, {
+  MOBILE_CONNECTIONS_KEY,
+} from "./useMobileConnections";
 
 function wrapper({ children }) {
   return (

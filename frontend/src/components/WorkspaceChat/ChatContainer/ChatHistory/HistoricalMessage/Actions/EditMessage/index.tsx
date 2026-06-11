@@ -47,7 +47,13 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any) {
 }
 
 export function EditMessageForm({
-  role, chatId, message, attachments = [], adjustTextArea, saveChanges, }: any) {
+  role,
+  chatId,
+  message,
+  attachments = [],
+  adjustTextArea,
+  saveChanges,
+}: any) {
   const formRef: any = useRef(null);
 
   function handleSubmit(e) {

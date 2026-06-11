@@ -40,9 +40,13 @@ describe("useWorkspaceChats", () => {
     const suggestedMessages = ["Hello", "How can I help?"];
     Workspace.bySlug.mockResolvedValue(workspace);
     Workspace.getSuggestedMessages.mockResolvedValue(suggestedMessages);
-    Workspace.agentCommandAvailable.mockResolvedValue({ showAgentCommand: true });
+    Workspace.agentCommandAvailable.mockResolvedValue({
+      showAgentCommand: true,
+    });
 
-    const { result } = renderHook(() => useWorkspaceChats("test-workspace"), { wrapper });
+    const { result } = renderHook(() => useWorkspaceChats("test-workspace"), {
+      wrapper,
+    });
 
     expect(result.current.isLoading).toBe(true);
     await waitFor(() => expect(result.current.isLoading).toBe(false));
@@ -50,16 +54,24 @@ describe("useWorkspaceChats", () => {
     expect(result.current.suggestedMessages).toEqual(suggestedMessages);
     expect(result.current.showAgentCommand).toBe(true);
     expect(Workspace.bySlug).toHaveBeenCalledWith("test-workspace");
-    expect(Workspace.getSuggestedMessages).toHaveBeenCalledWith("test-workspace");
-    expect(Workspace.agentCommandAvailable).toHaveBeenCalledWith("test-workspace");
+    expect(Workspace.getSuggestedMessages).toHaveBeenCalledWith(
+      "test-workspace",
+    );
+    expect(Workspace.agentCommandAvailable).toHaveBeenCalledWith(
+      "test-workspace",
+    );
   });
 
   it("returns empty values when workspace is not found", async () => {
     Workspace.bySlug.mockResolvedValue(null);
     Workspace.getSuggestedMessages.mockResolvedValue([]);
-    Workspace.agentCommandAvailable.mockResolvedValue({ showAgentCommand: false });
+    Workspace.agentCommandAvailable.mockResolvedValue({
+      showAgentCommand: false,
+    });
 
-    const { result } = renderHook(() => useWorkspaceChats("missing"), { wrapper });
+    const { result } = renderHook(() => useWorkspaceChats("missing"), {
+      wrapper,
+    });
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.workspace).toBeNull();

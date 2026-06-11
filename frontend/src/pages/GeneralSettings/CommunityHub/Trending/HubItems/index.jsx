@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import CommunityHub from "@/models/communityHub";
 import paths from "@/utils/paths";
 import HubItemCard from "./HubItemCard";
 import * as Skeleton from "react-loading-skeleton";

@@ -28,13 +28,15 @@ describe("useResearch", () => {
         if (url.includes("politicians")) {
           return Promise.resolve({
             ok: true,
-            json: () => Promise.resolve({ data: [{ id: 1, last_name: "Test" }] }),
+            json: () =>
+              Promise.resolve({ data: [{ id: 1, last_name: "Test" }] }),
           });
         }
         if (url.includes("drucksachen")) {
           return Promise.resolve({
             ok: true,
-            json: () => Promise.resolve({ documents: [{ id: 1, title: "Doc" }] }),
+            json: () =>
+              Promise.resolve({ documents: [{ id: 1, title: "Doc" }] }),
           });
         }
         return Promise.resolve({

@@ -15,13 +15,17 @@ describe("validateSessionTokenForUser", () => {
   });
 
   it("returns true when response status is 200", async () => {
-    global.fetch = vi.fn().mockResolvedValue(new Response(null, { status: 200 }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 200 }));
     const result = await validateSessionTokenForUser();
     expect(result).toBe(true);
   });
 
   it("returns false when response status is not 200", async () => {
-    global.fetch = vi.fn().mockResolvedValue(new Response(null, { status: 401 }));
+    global.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response(null, { status: 401 }));
     const result = await validateSessionTokenForUser();
     expect(result).toBe(false);
   });

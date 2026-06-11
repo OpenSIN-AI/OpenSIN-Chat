@@ -31,7 +31,9 @@ describe("PoliticalSidebar", () => {
   });
 
   it("renders without crashing", () => {
-    expect(() => render(<PoliticalSidebar />, { wrapper: Wrapper })).not.toThrow();
+    expect(() =>
+      render(<PoliticalSidebar />, { wrapper: Wrapper }),
+    ).not.toThrow();
   });
 
   it("survives 500 errors without crashing", () => {
@@ -39,7 +41,9 @@ describe("PoliticalSidebar", () => {
       "fetch",
       vi.fn(() => Promise.resolve({ ok: false, status: 500 })),
     );
-    expect(() => render(<PoliticalSidebar />, { wrapper: Wrapper })).not.toThrow();
+    expect(() =>
+      render(<PoliticalSidebar />, { wrapper: Wrapper }),
+    ).not.toThrow();
     vi.unstubAllGlobals();
   });
 });

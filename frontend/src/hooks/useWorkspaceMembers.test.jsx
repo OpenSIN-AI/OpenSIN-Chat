@@ -12,7 +12,9 @@ vi.mock("@/models/admin", () => ({
 }));
 
 import Admin from "@/models/admin";
-import useWorkspaceMembers, { WORKSPACE_MEMBERS_KEY } from "./useWorkspaceMembers";
+import useWorkspaceMembers, {
+  WORKSPACE_MEMBERS_KEY,
+} from "./useWorkspaceMembers";
 
 function wrapper({ children }) {
   return (
@@ -29,7 +31,9 @@ describe("useWorkspaceMembers", () => {
 
   it("returns workspace members data", async () => {
     Admin.users.mockResolvedValue([{ id: 1, username: "alice" }]);
-    Admin.workspaceUsers.mockResolvedValue([{ id: 1, username: "alice", role: "admin" }]);
+    Admin.workspaceUsers.mockResolvedValue([
+      { id: 1, username: "alice", role: "admin" },
+    ]);
     Admin.workspaces.mockResolvedValue([{ id: 5, name: "ws" }]);
 
     const { result } = renderHook(() => useWorkspaceMembers(5), { wrapper });

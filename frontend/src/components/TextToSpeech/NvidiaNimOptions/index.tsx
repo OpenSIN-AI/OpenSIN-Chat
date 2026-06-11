@@ -34,7 +34,10 @@ export default function NvidiaNimTTSOptions({ settings }: any) {
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-2">
-            Base URL <span className="text-white text-opacity-40 font-normal">(optional)</span>
+            Base URL{" "}
+            <span className="text-white text-opacity-40 font-normal">
+              (optional)
+            </span>
           </label>
           <input
             type="url"
@@ -54,7 +57,10 @@ export default function NvidiaNimTTSOptions({ settings }: any) {
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            TTS Model <span className="text-white text-opacity-40 font-normal">(optional)</span>
+            TTS Model{" "}
+            <span className="text-white text-opacity-40 font-normal">
+              (optional)
+            </span>
           </label>
           <input
             type="text"
@@ -75,7 +81,10 @@ export default function NvidiaNimTTSOptions({ settings }: any) {
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Voice <span className="text-white text-opacity-40 font-normal">(optional)</span>
+            Voice{" "}
+            <span className="text-white text-opacity-40 font-normal">
+              (optional)
+            </span>
           </label>
           <input
             type="text"

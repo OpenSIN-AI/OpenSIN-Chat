@@ -32,7 +32,9 @@ describe("useMemories", () => {
       global: [{ id: 1, content: "global mem" }],
       workspace: [{ id: 2, content: "ws mem" }],
     });
-    const { result } = renderHook(() => useMemories("my-workspace"), { wrapper });
+    const { result } = renderHook(() => useMemories("my-workspace"), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.memories.global).toHaveLength(1);
     expect(result.current.memories.workspace).toHaveLength(1);

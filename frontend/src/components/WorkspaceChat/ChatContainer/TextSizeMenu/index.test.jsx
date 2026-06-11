@@ -23,12 +23,18 @@ vi.mock("@/hooks/useLoginMode", () => ({
 
 const __isMobile = { value: false };
 vi.mock("react-device-detect", () => ({
-  get isMobile() { return __isMobile.value; },
+  get isMobile() {
+    return __isMobile.value;
+  },
 }));
 
 vi.mock("@phosphor-icons/react", () => ({
   SlidersHorizontal: ({ size, className }) => (
-    <span data-testid="sliders-icon" className={className} style={{ fontSize: size }}>
+    <span
+      data-testid="sliders-icon"
+      className={className}
+      style={{ fontSize: size }}
+    >
       Sliders
     </span>
   ),
@@ -100,7 +106,8 @@ describe("TextSizeMenu", () => {
     fireEvent.click(screen.getByRole("button"));
     fireEvent.click(screen.getByText("Large"));
     expect(dispatchSpy).toHaveBeenCalled();
-    const lastCall = dispatchSpy.mock.calls[dispatchSpy.mock.calls.length - 1][0];
+    const lastCall =
+      dispatchSpy.mock.calls[dispatchSpy.mock.calls.length - 1][0];
     expect(lastCall.type).toBe("textSizeChange");
     expect(lastCall.detail).toBe("large");
   });

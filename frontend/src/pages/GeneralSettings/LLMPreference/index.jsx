@@ -13,7 +13,11 @@ import {
 
 // Re-export so other modules can keep importing from the
 // page-level entrypoint that the rest of the codebase uses.
-export { AVAILABLE_LLM_PROVIDERS, ALL_LLM_PROVIDERS, LLM_PREFERENCE_CHANGED_EVENT };
+export {
+  AVAILABLE_LLM_PROVIDERS,
+  ALL_LLM_PROVIDERS,
+  LLM_PREFERENCE_CHANGED_EVENT,
+};
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import PreLoader from "@/components/Preloader";
 import LLMItem from "@/components/LLMSelection/LLMItem";
@@ -161,7 +165,12 @@ function ContentArea({
     >
       <form onSubmit={handleSubmit} className="flex w-full">
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
-          <Header hasChanges={hasChanges} saving={saving} handleSubmit={handleSubmit} t={t} />
+          <Header
+            hasChanges={hasChanges}
+            saving={saving}
+            handleSubmit={handleSubmit}
+            t={t}
+          />
           <div className="mb-4">
             <ProviderKeyStatusPanel />
           </div>
@@ -329,16 +338,11 @@ function SearchMenuClosed({ selectedLLMObject, setSearchMenuOpen }) {
             {selectedLLMObject?.name || "None selected"}
           </div>
           <div className="mt-1 text-xs text-description">
-            {selectedLLMObject?.description ||
-              "You need to select an LLM"}
+            {selectedLLMObject?.description || "You need to select an LLM"}
           </div>
         </div>
       </div>
-      <CaretUpDown
-        size={24}
-        weight="bold"
-        className="text-white"
-      />
+      <CaretUpDown size={24} weight="bold" className="text-white" />
     </button>
   );
 }

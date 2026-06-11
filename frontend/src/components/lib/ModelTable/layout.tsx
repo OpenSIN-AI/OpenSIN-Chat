@@ -48,7 +48,7 @@ export default function ModelTableLayout({
             onChange={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              setSearchQuery(((e.target as unknown) as any)?.value);
+              setSearchQuery((e.target as unknown as any)?.value);
             }}
           />
         </div>

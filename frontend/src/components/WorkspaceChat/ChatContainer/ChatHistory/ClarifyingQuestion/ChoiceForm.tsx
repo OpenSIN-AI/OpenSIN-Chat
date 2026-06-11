@@ -83,7 +83,7 @@ function OtherInput({ value, onChange }: any) {
       autoFocus
       type="text"
       value={value}
-      onChange={(e) => onChange(((e.target as unknown) as any)?.value)}
+      onChange={(e) => onChange((e.target as unknown as any)?.value)}
       placeholder={t(
         "chat_window.agent_invocation.clarifying_other_placeholder",
       )}
@@ -102,7 +102,13 @@ function OtherInput({ value, onChange }: any) {
  * the Other row instead of in the Footer.
  */
 export default function ChoiceForm({
-  question, draft, onChange, onAutoAdvance, allowSkip, onSkip, }: any) {
+  question,
+  draft,
+  onChange,
+  onAutoAdvance,
+  allowSkip,
+  onSkip,
+}: any) {
   const showOther: any = question.allowOther !== false;
 
   function isChecked(opt) {

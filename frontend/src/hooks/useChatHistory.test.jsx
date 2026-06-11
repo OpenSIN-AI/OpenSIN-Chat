@@ -14,10 +14,7 @@ vi.mock("@/models/workspace", () => ({
 }));
 
 import Workspace from "@/models/workspace";
-import useChatHistory, {
-  chatHistoryKey,
-  invalidateChatHistory,
-} from "./useChatHistory";
+import useChatHistory, { chatHistoryKey } from "./useChatHistory";
 
 function wrapper({ children }) {
   return (
@@ -64,7 +61,10 @@ describe("useChatHistory", () => {
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.history).toEqual(fixture);
-    expect(Workspace.threads.chatHistory).toHaveBeenCalledWith("ws", "thread-1");
+    expect(Workspace.threads.chatHistory).toHaveBeenCalledWith(
+      "ws",
+      "thread-1",
+    );
   });
 
   it("does not fetch when workspace slug is missing", async () => {
@@ -90,7 +90,9 @@ describe("useChatHistory", () => {
 
     function sharedWrapper({ children }) {
       return (
-        <SWRConfig value={{ provider: () => new Map(), dedupingInterval: 2000 }}>
+        <SWRConfig
+          value={{ provider: () => new Map(), dedupingInterval: 2000 }}
+        >
           {children}
         </SWRConfig>
       );

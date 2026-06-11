@@ -7,7 +7,17 @@ import { humanFileSize, milliToHms } from "../../../../../../utils/numbers";
 import PreLoader from "../../../../../Preloader";
 
 function FileUploadProgressComponent({
-  slug, uuid, file, setFiles, rejected = false, reason = null, onUploadSuccess, onUploadError, setLoading, setLoadingMessage, }: any) {
+  slug,
+  uuid,
+  file,
+  setFiles,
+  rejected = false,
+  reason = null,
+  onUploadSuccess,
+  onUploadError,
+  setLoading,
+  setLoadingMessage,
+}: any) {
   const [timerMs, setTimerMs] = useState<number>(10);
   const [status, setStatus] = useState("pending");
   const [error, setError] = useState("");
@@ -35,7 +45,10 @@ function FileUploadProgressComponent({
       const formData = new FormData();
       formData.append("file", file, file.name);
       const timer = setInterval(() => {
-        if (!mountedRef.current) { clearInterval(timer); return; }
+        if (!mountedRef.current) {
+          clearInterval(timer);
+          return;
+        }
         setTimerMs(Number(new Date()) - start);
       }, 100);
 
@@ -62,7 +75,9 @@ function FileUploadProgressComponent({
       }, 5000);
     }
     if (!!file && !rejected) uploadFile();
-    return () => { mountedRef.current = false; };
+    return () => {
+      mountedRef.current = false;
+    };
   }, []);
 
   if (rejected) {
@@ -76,7 +91,8 @@ function FileUploadProgressComponent({
           <XCircle
             color="var(--theme-bg-primary)"
             className="w-6 h-6 stroke-white bg-error rounded-full p-1 w-full h-full"
-            aria-hidden="true" />
+            aria-hidden="true"
+          />
         </div>
         <div className="flex flex-col">
           <p className="text-white light:text-red-600 text-xs font-semibold">
@@ -101,7 +117,8 @@ function FileUploadProgressComponent({
           <XCircle
             color="var(--theme-bg-primary)"
             className="w-6 h-6 stroke-white bg-error rounded-full p-1 w-full h-full"
-            aria-hidden="true" />
+            aria-hidden="true"
+          />
         </div>
         <div className="flex flex-col">
           <p className="text-white light:text-red-600 text-xs font-semibold">
@@ -130,7 +147,8 @@ function FileUploadProgressComponent({
           <CheckCircle
             color="var(--theme-bg-primary)"
             className="w-6 h-6 stroke-white bg-green-500 rounded-full p-1 w-full h-full"
-            aria-hidden="true" />
+            aria-hidden="true"
+          />
         )}
       </div>
       <div className="flex flex-col">

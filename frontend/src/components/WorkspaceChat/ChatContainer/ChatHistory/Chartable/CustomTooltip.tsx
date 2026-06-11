@@ -15,7 +15,7 @@ function invertColor(hex: any, bw: any) {
   if (hex.length !== 6) {
     throw new Error("Invalid HEX color.");
   }
-  var r = parseInt(hex.slice(0, 2), 16),
+  let r = parseInt(hex.slice(0, 2), 16),
     g = parseInt(hex.slice(2, 4), 16),
     b = parseInt(hex.slice(4, 6), 16);
   if (bw) {
@@ -33,7 +33,7 @@ function invertColor(hex: any, bw: any) {
 
 function padZero(str: any, len: any) {
   len = len || 2;
-  var zeros = new Array(len).join("0");
+  const zeros = new Array(len).join("0");
   return (zeros + str).slice(-len);
 }
 

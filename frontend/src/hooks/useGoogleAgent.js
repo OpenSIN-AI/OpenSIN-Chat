@@ -39,7 +39,8 @@ export function useGmailAgent() {
       return {
         disabledSkills: prefsRes?.settings?.disabled_gmail_skills ?? [],
         isMultiUserMode: settingsRes?.MultiUserMode ?? false,
-        config: statusRes?.success && statusRes.config ? statusRes.config : null,
+        config:
+          statusRes?.success && statusRes.config ? statusRes.config : null,
       };
     },
     {
@@ -85,7 +86,8 @@ export function useGoogleCalendarAgent() {
         disabledSkills:
           prefsRes?.settings?.disabled_google_calendar_skills ?? [],
         isMultiUserMode: settingsRes?.MultiUserMode ?? false,
-        config: statusRes?.success && statusRes.config ? statusRes.config : null,
+        config:
+          statusRes?.success && statusRes.config ? statusRes.config : null,
       };
     },
     {

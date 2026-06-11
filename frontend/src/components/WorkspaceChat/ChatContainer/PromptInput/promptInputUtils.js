@@ -16,7 +16,12 @@ export function resetTextAreaHeight(textareaRef) {
   textareaRef.current.style.height = "auto";
 }
 
-export function saveEditState(promptInput, textareaRef, undoStack, adjustment = 0) {
+export function saveEditState(
+  promptInput,
+  textareaRef,
+  undoStack,
+  adjustment = 0,
+) {
   if (undoStack.current.length >= MAX_EDIT_STACK_SIZE)
     undoStack.current.shift();
   undoStack.current.push({

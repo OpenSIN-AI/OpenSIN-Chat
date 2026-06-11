@@ -230,115 +230,115 @@ export default function BlockList({
   return (
     <div className="space-y-1">
       {blocks.map((block, index) => {
-            const info = BLOCK_INFO[block.type] || UNKNOWN_BLOCK;
-            return (
-        <div key={block.id} className="flex flex-col">
-          <div
-            className={`bg-theme-action-menu-bg border border-white/10 rounded-lg overflow-hidden transition-all duration-300 ${
-              block.isExpanded ? "w-full" : "w-[280px] mx-auto"
-            }`}
-          >
+        const info = BLOCK_INFO[block.type] || UNKNOWN_BLOCK;
+        return (
+          <div key={block.id} className="flex flex-col">
             <div
-              onClick={() => toggleBlockExpansion(block.id)}
-              className="w-full p-4 flex items-center justify-between hover:bg-theme-action-menu-item-hover transition-colors duration-300 group cursor-pointer"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-lg bg-white/10 light:bg-white flex items-center justify-center">
-                  {React.cloneElement(info.icon, {
-                    className: "w-4 h-4 text-white",
-                  })}
-                </div>
-                <div className="flex-1 text-left min-w-0 max-w-[115px]">
-                  <span className="text-sm font-medium text-white block">
-                    {info.label}
-                  </span>
-                  {!block.isExpanded && (
-                    <p className="text-xs text-white/60 truncate">
-                      {info.getSummary(block.config)}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="flex items-center">
-                {block.id !== "start" &&
-                  block.type !== BLOCK_TYPES.FINISH &&
-                  block.type !== BLOCK_TYPES.FLOW_INFO && (
-                    <div className="flex items-center gap-1">
-                      {index > 2 && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            moveBlock(index, index - 1);
-                          }}
-                          className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
-                          data-tooltip-id="block-action"
-                          data-tooltip-content="Move block up"
-                        >
-                          <CaretUp className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                      {index < blocks.length - 2 && (
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            moveBlock(index, index + 1);
-                          }}
-                          className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
-                          data-tooltip-id="block-action"
-                          data-tooltip-content="Move block down"
-                        >
-                          <CaretDown className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeBlock(block.id);
-                        }}
-                        className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-red-400 hover:bg-red-500/10 hover:border-red-500/20 transition-colors duration-300"
-                        data-tooltip-id="block-action"
-                        data-tooltip-content="Delete block"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  )}
-              </div>
-            </div>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                block.isExpanded
-                  ? "max-h-[1000px] opacity-100"
-                  : "max-h-0 opacity-0"
+              className={`bg-theme-action-menu-bg border border-white/10 rounded-lg overflow-hidden transition-all duration-300 ${
+                block.isExpanded ? "w-full" : "w-[280px] mx-auto"
               }`}
             >
-              <div className="border-t border-white/10 p-4 bg-theme-bg-secondary rounded-b-lg">
-                {renderBlockConfig(block)}
+              <div
+                onClick={() => toggleBlockExpansion(block.id)}
+                className="w-full p-4 flex items-center justify-between hover:bg-theme-action-menu-item-hover transition-colors duration-300 group cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 rounded-lg bg-white/10 light:bg-white flex items-center justify-center">
+                    {React.cloneElement(info.icon, {
+                      className: "w-4 h-4 text-white",
+                    })}
+                  </div>
+                  <div className="flex-1 text-left min-w-0 max-w-[115px]">
+                    <span className="text-sm font-medium text-white block">
+                      {info.label}
+                    </span>
+                    {!block.isExpanded && (
+                      <p className="text-xs text-white/60 truncate">
+                        {info.getSummary(block.config)}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  {block.id !== "start" &&
+                    block.type !== BLOCK_TYPES.FINISH &&
+                    block.type !== BLOCK_TYPES.FLOW_INFO && (
+                      <div className="flex items-center gap-1">
+                        {index > 2 && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              moveBlock(index, index - 1);
+                            }}
+                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
+                            data-tooltip-id="block-action"
+                            data-tooltip-content="Move block up"
+                          >
+                            <CaretUp className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                        {index < blocks.length - 2 && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              moveBlock(index, index + 1);
+                            }}
+                            className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
+                            data-tooltip-id="block-action"
+                            data-tooltip-content="Move block down"
+                          >
+                            <CaretDown className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeBlock(block.id);
+                          }}
+                          className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-red-400 hover:bg-red-500/10 hover:border-red-500/20 transition-colors duration-300"
+                          data-tooltip-id="block-action"
+                          data-tooltip-content="Delete block"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    )}
+                </div>
+              </div>
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  block.isExpanded
+                    ? "max-h-[1000px] opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="border-t border-white/10 p-4 bg-theme-bg-secondary rounded-b-lg">
+                  {renderBlockConfig(block)}
+                </div>
               </div>
             </div>
+            {index < blocks.length - 1 && (
+              <div className="flex justify-center my-1">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-white/40 light:invert"
+                >
+                  <path
+                    d="M12 4L12 20M12 20L6 14M12 20L18 14"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
-          {index < blocks.length - 1 && (
-            <div className="flex justify-center my-1">
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-white/40 light:invert"
-              >
-                <path
-                  d="M12 4L12 20M12 20L6 14M12 20L18 14"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-          )}
-        </div>
-      );
+        );
       })}
       <Tooltip
         id="block-action"

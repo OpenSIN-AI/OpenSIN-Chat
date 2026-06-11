@@ -13,7 +13,13 @@ import {
   ThoughtBrainButton,
 } from "../ThoughtContainer";
 
-const PromptReply: any = ({ uuid, reply, pending, error, sources = [] }: any) => {
+const PromptReply: any = ({
+  uuid,
+  reply,
+  pending,
+  error,
+  sources = [],
+}: any) => {
   if (!reply && sources.length === 0 && !pending && !error) return null;
 
   if (pending) {
@@ -83,7 +89,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
   // Determine thought chain content for the brain button
   const thoughtChainContent = thinking
     ? message
-    : message.match(THOUGHT_REGEX_COMPLETE)?.[0] ?? null;
+    : (message.match(THOUGHT_REGEX_COMPLETE)?.[0] ?? null);
 
   if (thinking)
     return (
@@ -111,7 +117,10 @@ function RenderAssistantChatContent({ message, messageId }: any) {
       )}
       <div className="flex items-start gap-x-1.5">
         {thoughtChainContent && (
-          <ThoughtBrainButton messageId={messageId} content={thoughtChainContent} />
+          <ThoughtBrainButton
+            messageId={messageId}
+            content={thoughtChainContent}
+          />
         )}
         <span
           className="flex-1 min-w-0 break-words"

@@ -41,7 +41,11 @@ export default function OnboardingHome() {
         aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
         className="absolute top-6 right-6 z-20 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 light:bg-zinc-900/10 light:hover:bg-zinc-900/20 backdrop-blur-sm text-white light:text-zinc-900 transition-colors duration-200"
       >
-        {isLight ? <Moon size={20} weight="bold" /> : <Sun size={20} weight="bold" />}
+        {isLight ? (
+          <Moon size={20} weight="bold" />
+        ) : (
+          <Sun size={20} weight="bold" />
+        )}
       </button>
 
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center -mt-8">

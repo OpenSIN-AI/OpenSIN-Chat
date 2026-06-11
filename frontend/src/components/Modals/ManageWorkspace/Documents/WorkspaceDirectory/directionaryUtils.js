@@ -45,7 +45,6 @@ export const getEmbeddedDocCount = (files) => {
 export const isAllItemsSelected = (selectedItems, files) => {
   const allItems = files.items.flatMap((folder) => folder.items);
   return (
-    Object.keys(selectedItems).length === allItems.length &&
-    allItems.length > 0
+    Object.keys(selectedItems).length === allItems.length && allItems.length > 0
   );
 };

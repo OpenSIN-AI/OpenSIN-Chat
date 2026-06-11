@@ -49,8 +49,13 @@ function ShowWorkspaceChat() {
   const { t } = useTranslation();
   const { slug, tab } = useParams();
   const { user } = useUser();
-  const { workspace: rawWorkspace, suggestedMessages, isLoading: workspaceLoading } = useWorkspaceChats(slug);
-  const { settings: systemSettings, loading: settingsLoading } = useSystemSettings();
+  const {
+    workspace: rawWorkspace,
+    suggestedMessages,
+    isLoading: workspaceLoading,
+  } = useWorkspaceChats(slug);
+  const { settings: systemSettings, loading: settingsLoading } =
+    useSystemSettings();
   const [workspace, setWorkspace] = useState(null);
   const [deletionProtected, setDeletionProtected] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -73,7 +78,15 @@ function ShowWorkspaceChat() {
     });
     setDeletionProtected(systemSettings?.WorkspaceDeletionProtection === true);
     setLoading(false);
-  }, [slug, tab, workspaceLoading, settingsLoading, rawWorkspace, suggestedMessages, systemSettings]);
+  }, [
+    slug,
+    tab,
+    workspaceLoading,
+    settingsLoading,
+    rawWorkspace,
+    suggestedMessages,
+    systemSettings,
+  ]);
 
   if (loading) return <FullScreenLoader />;
 

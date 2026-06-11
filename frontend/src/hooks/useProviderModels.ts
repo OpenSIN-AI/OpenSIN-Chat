@@ -114,9 +114,10 @@ export default function useProviderModels(
   const isGrouped = provider && GROUPED_PROVIDERS.includes(provider);
 
   return {
-    defaultModels: hasDefaults && !isGrouped
-      ? PROVIDER_DEFAULT_MODELS[provider!] ?? []
-      : [],
+    defaultModels:
+      hasDefaults && !isGrouped
+        ? (PROVIDER_DEFAULT_MODELS[provider!] ?? [])
+        : [],
     customModels: isGrouped ? groupModels(models) : models,
     isLoading,
     error,

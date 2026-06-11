@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 vi.mock("@/models/workspace", () => ({
   default: {
-    searchWorkspaceOrThread: vi.fn().mockResolvedValue({ workspaces: [], threads: [] }),
+    searchWorkspaceOrThread: vi
+      .fn()
+      .mockResolvedValue({ workspaces: [], threads: [] }),
   },
 }));
 
@@ -38,7 +40,7 @@ describe("SearchBox", () => {
     render(
       <MemoryRouter>
         <SearchBox {...defaultProps} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const input = document.querySelector("input[type='search']");
     expect(input).toBeInTheDocument();
@@ -48,7 +50,7 @@ describe("SearchBox", () => {
     render(
       <MemoryRouter>
         <SearchBox {...defaultProps} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const button = document.querySelector("button");
     expect(button).toBeInTheDocument();
@@ -59,7 +61,7 @@ describe("SearchBox", () => {
     render(
       <MemoryRouter>
         <SearchBox user={{ id: 1 }} showNewWsModal={showNewWsModal} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const button = document.querySelector("button");
     fireEvent.click(button);
@@ -70,7 +72,7 @@ describe("SearchBox", () => {
     render(
       <MemoryRouter>
         <SearchBox {...defaultProps} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const input = document.querySelector("input[type='search']");
     fireEvent.change(input, { target: { value: "test" } });
@@ -81,13 +83,16 @@ describe("SearchBox", () => {
     render(
       <MemoryRouter>
         <SearchBox {...defaultProps} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const input = document.querySelector("input[type='search']");
     fireEvent.change(input, { target: { value: "afd" } });
     // Wait for debounce to complete
-    await waitFor(() => {
-      expect(Workspace.searchWorkspaceOrThread).toHaveBeenCalledWith("afd");
-    }, { timeout: 1000 });
+    await waitFor(
+      () => {
+        expect(Workspace.searchWorkspaceOrThread).toHaveBeenCalledWith("afd");
+      },
+      { timeout: 1000 },
+    );
   });
 });

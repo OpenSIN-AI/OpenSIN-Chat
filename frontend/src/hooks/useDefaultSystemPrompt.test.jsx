@@ -10,7 +10,9 @@ vi.mock("@/models/system", () => ({
 }));
 
 import System from "@/models/system";
-import useDefaultSystemPrompt, { DEFAULT_SYSTEM_PROMPT_KEY } from "./useDefaultSystemPrompt";
+import useDefaultSystemPrompt, {
+  DEFAULT_SYSTEM_PROMPT_KEY,
+} from "./useDefaultSystemPrompt";
 
 function wrapper({ children }) {
   return (
@@ -36,7 +38,7 @@ describe("useDefaultSystemPrompt", () => {
     expect(result.current.isLoading).toBe(true);
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.defaultSystemPrompt).toBe(
-      "You are a helpful assistant."
+      "You are a helpful assistant.",
     );
   });
 

@@ -48,9 +48,7 @@ describe("api utilities", () => {
     });
 
     it("throws ApiError with correct status on failure", async () => {
-      global.fetch = vi.fn().mockResolvedValue(
-        textResponse("not found", 404)
-      );
+      global.fetch = vi.fn().mockResolvedValue(textResponse("not found", 404));
 
       try {
         await apiGet("/api/items/999");
@@ -67,7 +65,7 @@ describe("api utilities", () => {
       await apiGet("/api/test");
       expect(global.fetch).toHaveBeenCalledWith(
         "/api/test",
-        expect.objectContaining({ method: "GET", credentials: "include" })
+        expect.objectContaining({ method: "GET", credentials: "include" }),
       );
     });
   });
@@ -86,7 +84,7 @@ describe("api utilities", () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
-        })
+        }),
       );
     });
 
@@ -96,14 +94,14 @@ describe("api utilities", () => {
       await apiPost("/api/items");
       expect(global.fetch).toHaveBeenCalledWith(
         "/api/items",
-        expect.objectContaining({ body: undefined })
+        expect.objectContaining({ body: undefined }),
       );
     });
 
     it("throws ApiError on non-ok response", async () => {
-      global.fetch = vi.fn().mockResolvedValue(
-        textResponse("bad request", 400)
-      );
+      global.fetch = vi
+        .fn()
+        .mockResolvedValue(textResponse("bad request", 400));
 
       try {
         await apiPost("/api/items", {});
@@ -128,14 +126,12 @@ describe("api utilities", () => {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
-        })
+        }),
       );
     });
 
     it("throws ApiError on non-ok response", async () => {
-      global.fetch = vi.fn().mockResolvedValue(
-        textResponse("forbidden", 403)
-      );
+      global.fetch = vi.fn().mockResolvedValue(textResponse("forbidden", 403));
 
       try {
         await apiPut("/api/items/1", {});
@@ -156,18 +152,14 @@ describe("api utilities", () => {
     });
 
     it("returns undefined when response has no JSON content-type", async () => {
-      global.fetch = vi.fn().mockResolvedValue(
-        textResponse("", 200)
-      );
+      global.fetch = vi.fn().mockResolvedValue(textResponse("", 200));
 
       const result = await apiDelete("/api/items/1");
       expect(result).toBeUndefined();
     });
 
     it("throws ApiError on non-ok response", async () => {
-      global.fetch = vi.fn().mockResolvedValue(
-        textResponse("not found", 404)
-      );
+      global.fetch = vi.fn().mockResolvedValue(textResponse("not found", 404));
 
       try {
         await apiDelete("/api/items/999");

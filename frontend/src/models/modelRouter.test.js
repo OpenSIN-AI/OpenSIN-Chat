@@ -163,11 +163,14 @@ describe("ModelRouter", () => {
 
       const payload = { condition: "x" };
       const result = await ModelRouter.createRule(1, payload);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/model-routers/1/rules/new", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/model-routers/1/rules/new",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       expect(result).toEqual(data);
     });
 
@@ -190,16 +193,21 @@ describe("ModelRouter", () => {
 
       const payload = { condition: "y" };
       const result = await ModelRouter.updateRule(1, 10, payload);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/model-routers/1/rules/10", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/model-routers/1/rules/10",
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       expect(result).toEqual(data);
     });
 
     it("returns error on fetch rejection", async () => {
-      vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("update rule fail"));
+      vi.spyOn(globalThis, "fetch").mockRejectedValue(
+        new Error("update rule fail"),
+      );
       vi.spyOn(console, "error").mockImplementation(() => {});
 
       const result = await ModelRouter.updateRule(1, 10, {});
@@ -215,15 +223,20 @@ describe("ModelRouter", () => {
       });
 
       const result = await ModelRouter.deleteRule(1, 10);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/model-routers/1/rules/10", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/model-routers/1/rules/10",
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       expect(result).toEqual({ success: true });
     });
 
     it("returns error on fetch rejection", async () => {
-      vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("del rule fail"));
+      vi.spyOn(globalThis, "fetch").mockRejectedValue(
+        new Error("del rule fail"),
+      );
       vi.spyOn(console, "error").mockImplementation(() => {});
 
       const result = await ModelRouter.deleteRule(1, 10);
@@ -238,18 +251,26 @@ describe("ModelRouter", () => {
         json: () => Promise.resolve({ success: true }),
       });
 
-      const updates = [{ id: 1, order: 0 }, { id: 2, order: 1 }];
+      const updates = [
+        { id: 1, order: 0 },
+        { id: 2, order: 1 },
+      ];
       const result = await ModelRouter.reorderRules(1, updates);
-      expect(globalThis.fetch).toHaveBeenCalledWith("/api/model-routers/1/rules/reorder", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ruleUpdates: updates }),
-      });
+      expect(globalThis.fetch).toHaveBeenCalledWith(
+        "/api/model-routers/1/rules/reorder",
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ruleUpdates: updates }),
+        },
+      );
       expect(result).toEqual({ success: true });
     });
 
     it("returns error on fetch rejection", async () => {
-      vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("reorder fail"));
+      vi.spyOn(globalThis, "fetch").mockRejectedValue(
+        new Error("reorder fail"),
+      );
       vi.spyOn(console, "error").mockImplementation(() => {});
 
       const result = await ModelRouter.reorderRules(1, []);

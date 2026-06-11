@@ -17,7 +17,7 @@ export default function useTelegramUsers() {
         approvedUsers: approved?.users || [],
       };
     },
-    { revalidateOnFocus: false, refreshInterval: 5000 }
+    { revalidateOnFocus: false, refreshInterval: 5000 },
   );
 
   return {

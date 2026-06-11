@@ -31,7 +31,9 @@ describe("useProviderModels", () => {
     System.customModels.mockResolvedValue({
       models: [{ id: "gpt-4", name: "GPT-4", organization: "OpenAI" }],
     });
-    const { result } = renderHook(() => useProviderModels("openai", "key123"), { wrapper });
+    const { result } = renderHook(() => useProviderModels("openai", "key123"), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.customModels).toEqual({
       OpenAI: [{ id: "gpt-4", name: "GPT-4", organization: "OpenAI" }],
@@ -42,7 +44,10 @@ describe("useProviderModels", () => {
     System.customModels.mockResolvedValue({
       models: [{ id: "llama3", name: "Llama 3" }],
     });
-    const { result } = renderHook(() => useProviderModels("ollama", null, "http://localhost:11434"), { wrapper });
+    const { result } = renderHook(
+      () => useProviderModels("ollama", null, "http://localhost:11434"),
+      { wrapper },
+    );
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(Array.isArray(result.current.customModels)).toBe(true);
   });
