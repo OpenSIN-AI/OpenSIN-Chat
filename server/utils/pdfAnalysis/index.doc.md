@@ -1,31 +1,59 @@
 # pdfAnalysis Module
 
-Autonomes Multi-Agenten-Modul für die Analyse sehr großer PDF-Dokumente.
+Autonomes Multi-Agenten-Modul für die Analyse sehr großer PDF-Dokumente
+(100.000+ Seiten) mit Vision, Cross-Check, OCR und Deep-Scan.
 
 ## Zweck
 
-Ermöglicht die vollständige Analyse großer PDFs (100.000+ Seiten) durch parallele Multi-Agenten-Verarbeitung mit hierarchischer Map-Reduce-Synthese und Fakten-Speicherung.
+Ermöglicht die vollständige Analyse großer PDFs (100.000+ Seiten) durch:
 
-## Architektur
+- **Parallele Multi-Agenten-Verarbeitung** mit AIMD-adaptiver Parallelität
+- **Hierarchische Map-Reduce-Synthese** → Best-Practices-Report
+- **Fakten-Speicher** (SQLite + FTS5) mit Quellenbezug
+- **Deterministische Zitat-Verifikation**
+- **Cross-Verifikation** gegen externe Quellen + Deep-Web-Recherche
+- **Vision-Analyse** (lokal via MiniCPM-V/Ollama oder Cloud)
+- **OCR-Triage** für gescannte PDFs
+- **Deep-Scan-Modus** für komplexe Layouts
+- **Job-Persistenz** für Resume nach Server-Crash
 
-```
-pdfAnalysis/
-├── config.js         — Zentrale Konfiguration (alle Werte per ENV)
-├── pdfReader.js      — Speicherschonendes, seitenweises PDF-Auslesen
-├── llm.js            — LLM-Provider-Wrapper (getLLMProvider)
-├── analysisAgent.js  — Einzel-Chunk-Analyse-Agent
-├── agentPool.js      — Wellen-synchronisierte Parallelverarbeitung
-├── synthesizer.js    — Hierarchisches Map-Reduce → Best-Practices-Report
-├── factStore.js      — Fakten-Speicher mit Quellenbezug
-└── index.js          — Orchestrator (PdfAnalysisPipeline)
-```
+## Verwandte Dateien
 
-## Pipeline
+### Server-Kern
+- `config.js` — Zentrale Konfiguration (alle Werte per ENV)
+- `pdfReader.js` — Range-basiertes PDF-Streaming, OCR, Vision, Deep-Scan
+- `llm.js` — LLM-Provider-Wrapper mit Retry/Backoff
+- `analysisAgent.js` — Einzel-Chunk-Analyse mit JSON-Schema
+- `agentPool.js` — Wellen-synchronisierte Parallelverarbeitung mit AIMD
+- `synthesizer.js` — Hierarchisches Map-Reduce + Citation-Grounding
+- `factStore.js` — SQLite + FTS5 + Auto-Migration + updateCrossCheck
+- `factVerifier.js` — Deterministische Zitat-Verifikation gegen Seitentext
+- `criticAgent.js` — 2-stufige Multi-Agent-Reflexion
+- `jobStore.js` — Job-Persistenz auf Disk
+- `security.js` — pdfPath-Whitelist + realpath + 403
+- `ocr.js` — Tesseract.js-OCR-Fallback mit lazy init
+- `visionAgent.js` — Provider-Abstraktion (lokal/Cloud)
+- `localVision.js` — Ollama/MiniCPM-V-Backend
+- `deepScan.js` — Komplette Seiten-Visualanalyse via MiniCPM-V
+- `index.js` — PdfAnalysisPipeline-Orchestrator
 
-1. **Init**: PDF öffnen, Chunk-Plan erstellen (Seiten + Überlappung)
-2. **Analyze**: Parallel via AgentPool (Wellen, Checkpoints, Resume)
-3. **Synthesize**: Hierarchische Synthese → Best-Practices-Report
-4. **Store**: Fakten mit Quellenbezug in FactStore schreiben
+### Cross-Check-Submodul
+- `crossCheck/sourceAdapters.js` — PDF/URL/YouTube/Text-Quellen
+- `crossCheck/researchAgent.js` — Delegierte Recherche-Agenten
+- `crossCheck/mediaAdapters.js` — Bild-URL + Video-Keyframe
+- `crossCheck/index.js` — CrossCheckPipeline-Orchestrator
+
+### Endpoints
+- `endpoints/api/pdfAnalysis/index.js` — Developer-API (API-Key)
+- `endpoints/pdfAnalysis.js` — Browser-Endpoints (Session-Auth)
+
+### Agent-Plugin
+- `utils/agents/aibitat/plugins/pdf-analyze.js` — `@pdf-analyze` + `@pdf-crosscheck-start`
+
+### Frontend
+- `frontend/src/models/pdfAnalysis.js` — API-Client
+- `frontend/src/pages/PdfAnalysis/index.jsx` — Hauptseite (3 Tabs)
+- `frontend/src/pages/PdfAnalysis/CrossCheckPanel.jsx` — Cross-Check-UI
 
 ## Verwendung
 
@@ -33,30 +61,37 @@ pdfAnalysis/
 # Start
 curl -X POST http://localhost:3001/api/pdf-analysis/start \
   -H "Authorization: Bearer $API_KEY" \
-  -d '{"pdfPath":"/app/server/storage/uploads/drucksache.pdf","task":"Vollständige Analyse aller Förderprogramme"}'
+  -d '{"pdfPath":"...","task":"Vollständige Analyse","deepScan":true}'
 
-# Status abfragen
-curl http://localhost:3001/api/pdf-analysis/<jobId> -H "Authorization: Bearer $API_KEY"
-
-# Ergebnis abrufen
-curl http://localhost:3001/api/pdf-analysis/<jobId>/result -H "Authorization: Bearer $API_KEY"
+# Status
+curl http://localhost:3001/api/pdf-analysis/<jobId>
 
 # Fakten durchsuchen
-curl "http://localhost:3001/api/pdf-analysis/facts?q=Frist&document=drucksache" -H "Authorization: Bearer $API_KEY"
+curl "http://localhost:3001/api/pdf-analysis/facts?q=Frist" -H "Authorization: Bearer $API_KEY"
+
+# Cross-Check
+curl -X POST http://localhost:3001/api/pdf-analysis/crosscheck \
+  -H "Authorization: Bearer $API_KEY" \
+  -d '{"claims":["..."],"sources":[{"type":"url","url":"https://..."}],"deepWeb":true}'
 ```
-
-## Agent-Plugin
-
-`@pdf-analyze` (verfügbar im Agent):
-- `pdf-analyze-start` — Startet Analyse-Job
-- `pdf-analyze-status` — Fragt Status ab
-- `pdf-facts-search` — Durchsucht Fakten-Speicher
 
 ## ENV-Konfiguration
 
-- `PDF_ANALYSIS_CONCURRENCY` (default: 6)
-- `PDF_ANALYSIS_PAGES_PER_CHUNK` (default: 8)
-- `PDF_ANALYSIS_OVERLAP_PAGES` (default: 1)
-- `PDF_ANALYSIS_MAX_ACTIVE_JOBS` (default: 2)
-- `PDF_ANALYSIS_MAX_PAGES` (default: 0 = unbegrenzt)
-- `PDF_ANALYSIS_FACT_MIN_CONF` (default: 0.7)
+Vollständige Liste: siehe `server/utils/pdfAnalysis/README.md`
+
+Wichtigste Variablen:
+- `PDF_ANALYSIS_CONCURRENCY` — Parallele Agenten (AIMD-Start)
+- `PDF_ANALYSIS_VISION_BACKEND` — `auto` | `ollama` | `cloud`
+- `PDF_ANALYSIS_OCR` — OCR für gescannte PDFs
+- `PDF_ANALYSIS_CRITIC` — Multi-Agent-Reflexion
+- `PDF_ANALYSIS_OLLAMA_URL` — Lokales Ollama-Endpoint
+- `PDF_ANALYSIS_DEEPSCAN_SCALE` — Deep-Scan-Render-Auflösung
+
+## Setup
+
+```bash
+cd server && yarn add pdfjs-dist tesseract.js @napi-rs/canvas better-sqlite3 ffmpeg-static
+
+# Optional: Lokale Vision
+brew install ollama && ollama serve && ollama pull minicpm-v
+```
