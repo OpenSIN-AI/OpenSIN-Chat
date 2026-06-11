@@ -338,7 +338,7 @@ function JobRow({ job, onShowReport, onCancelled }) {
           {progress.etaSeconds != null &&
             ` · ETA ${formatEta(progress.etaSeconds)}`}
           )}
-        </div>
+        </p>
       )}
 
       {job.error && <p className="text-xs text-red-400">{job.error}</p>}

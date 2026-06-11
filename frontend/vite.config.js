@@ -91,8 +91,21 @@ export default defineConfig({
             return "vendor-markdown";
           if (/[\\/]node_modules[\\/](@phosphor-icons|react-icons|lucide-react)[\\/]/.test(id))
             return "vendor-icons";
+          // KEEP recharts / @tremor / d3 in the main entry chunk. The previous
+          // vendor-charts split produced an ESM TDZ race in the browser:
+          // the minified chart bundle did `import{... R as s ...} from "./vendor-..."`
+          // where `s` was the React namespace from the catch-all vendor chunk.
+          // Because Vite emits modulepreload links and the browser evaluates
+          // sibling chunks in parallel, the recharts top-level factory
+          // (e.g. `s.forwardRef(function(...){... "recharts-layer" ...})`)
+          // was reached before the vendor chunk's React binding had finished
+          // initializing, throwing:
+          //   Uncaught ReferenceError: Cannot access 's' before initialization
+          //     at vendor-charts-*.js:9:16948
+          // Keeping the chart libs in the main chunk eliminates the cross-chunk
+          // import and lets React resolve synchronously. See #125.
           if (/[\\/]node_modules[\\/](recharts|d3-|@tremor)[\\/]/.test(id))
-            return "vendor-charts";
+            return undefined;
           if (/[\\/]node_modules[\\/](onnxruntime-web|@mintplex-labs[\\/]piper-tts-web|@openafd[\\/]piper-tts-web)[\\/]/.test(id))
             return "vendor-tts";
           if (/[\\/]node_modules[\\/](lodash|moment|date-fns|dayjs)[\\/]/.test(id))
