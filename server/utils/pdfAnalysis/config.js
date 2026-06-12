@@ -4,9 +4,9 @@
  * Alle Werte sind per ENV übersteuerbar.
  */
 const path = require("path");
+const { getStoragePath } = require("../paths");
 
-const STORAGE_ROOT =
-  process.env.STORAGE_DIR || path.resolve(__dirname, "../../storage");
+const STORAGE_ROOT = getStoragePath("pdf-analysis");
 
 // Roh-ENV-Werte parsen, mit defensiver Fallback- und Range-Validierung.
 // Number(undefined) -> NaN; Number("") -> 0. Beides wollen wir abfangen.

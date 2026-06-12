@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import truncate from "truncate";
 import { CheckCircle, XCircle } from "@phosphor-icons/react";
-import Workspace from "../../../../../../models/workspace";
+import { useDocumentUpload } from "@/hooks/useDocuments";
 import { humanFileSize, milliToHms } from "../../../../../../utils/numbers";
 import PreLoader from "../../../../../Preloader";
 
@@ -22,6 +22,7 @@ function FileUploadProgressComponent({
   const [status, setStatus] = useState("pending");
   const [error, setError] = useState("");
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
+  const { upload } = useDocumentUpload();
 
   const fadeOut: any = (cb) => {
     setIsFadingOut(true);
@@ -53,7 +54,8 @@ function FileUploadProgressComponent({
       }, 100);
 
       // Chunk streaming not working in production so we just sit and wait
-      const { response, data } = await Workspace.uploadFile(slug, formData);
+      const result = await upload({ slug, formData });
+      const { response, data } = result;
       if (!mountedRef.current) return;
       if (!response.ok) {
         setStatus("failed");
@@ -69,7 +71,7 @@ function FileUploadProgressComponent({
       }
 
       // Begin fadeout timer to clear uploader queue.
-      const fadeTimer = setTimeout(() => {
+      setTimeout(() => {
         if (!mountedRef.current) return;
         fadeOut(() => setTimeout(() => beginFadeOut(), 300));
       }, 5000);

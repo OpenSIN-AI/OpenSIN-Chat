@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import UploadFile from "../UploadFile";
 import PreLoader from "@/components/Preloader";
-import { memo, useEffect, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import FolderRow from "./FolderRow";
 import System from "@/models/system";
@@ -37,7 +37,10 @@ function Directory({
   const { mutate: mutateDocuments } = useDocuments();
   const { mutate: mutateWorkspace } = useWorkspaceBySlug(workspace.slug);
   const { t } = useTranslation();
-  const [amountSelected, setAmountSelected] = useState(0);
+  const amountSelected = useMemo(
+    () => Object.keys(selectedItems).length,
+    [selectedItems],
+  );
   const [showFolderSelection, setShowFolderSelection] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const {
@@ -50,10 +53,6 @@ function Directory({
     x: 0,
     y: 0,
   });
-
-  useEffect(() => {
-    setAmountSelected(Object.keys(selectedItems).length);
-  }, [selectedItems]);
 
   const deleteFiles = async (event) => {
     event.stopPropagation();

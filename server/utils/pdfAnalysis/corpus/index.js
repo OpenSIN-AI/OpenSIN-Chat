@@ -19,6 +19,7 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const config = require("../config");
+const { getStoragePath } = require("../../paths");
 const { PdfAnalysisPipeline } = require("../index");
 const { compareCorpus } = require("./comparator");
 
@@ -27,8 +28,8 @@ const { compareCorpus } = require("./comparator");
 // ein Fehl-ENV-Wert den LLM-Endpoint nicht killt.
 const DOC_CONCURRENCY = config.CORPUS_CONCURRENCY;
 const POLL_MS = 5000;
-const CORPUS_REPORT_DIR = path.join(config.REPORT_DIR, "corpus");
-const CORPUS_JOBS_DIR = path.join(config.STORAGE_DIR, "jobs-corpus");
+const CORPUS_REPORT_DIR = getStoragePath("pdf-analysis", "reports", "corpus");
+const CORPUS_JOBS_DIR = getStoragePath("pdf-analysis", "jobs-corpus");
 
 const jobs = new Map();
 

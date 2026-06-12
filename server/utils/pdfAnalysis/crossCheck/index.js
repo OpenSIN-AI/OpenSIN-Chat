@@ -15,6 +15,7 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const config = require("../config");
+const { getStoragePath } = require("../../paths");
 const { runPool } = require("../agentPool");
 const { chat } = require("../llm");
 const { compareAgainstSource, deepWebResearch } = require("./researchAgent");
@@ -22,8 +23,8 @@ const { compareAgainstSource, deepWebResearch } = require("./researchAgent");
 const XCHECK_CONCURRENCY = Number(
   process.env.PDF_ANALYSIS_XCHECK_CONCURRENCY || 4
 );
-const XCHECK_REPORT_DIR = path.join(config.REPORT_DIR, "crosscheck");
-const XCHECK_JOBS_DIR = path.join(config.STORAGE_DIR, "jobs-crosscheck");
+const XCHECK_REPORT_DIR = getStoragePath("pdf-analysis", "reports", "crosscheck");
+const XCHECK_JOBS_DIR = getStoragePath("pdf-analysis", "jobs-crosscheck");
 
 const REPORT_SYSTEM = `Du bist ein Senior-Verifikationsanalyst. Erstelle aus Kreuz-Verifikations-Ergebnissen einen professionellen Bericht.
 Struktur: # Titel, ## Executive Summary, ## Verifikationsmatrix (Behauptung x Quelle x Urteil), ## Detailbefunde je Behauptung (mit Beleg-Zitaten und URLs), ## Widersprüche & offene Punkte, ## Methodik.

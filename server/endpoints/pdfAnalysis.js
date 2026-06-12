@@ -13,9 +13,9 @@ const {
 const { PdfAnalysisPipeline } = require("../utils/pdfAnalysis");
 const { CrossCheckPipeline } = require("../utils/pdfAnalysis/crossCheck");
 const { CorpusPipeline } = require("../utils/pdfAnalysis/corpus");
-const config = require("../utils/pdfAnalysis/config");
+const { getStoragePath } = require("../utils/paths");
 
-const UPLOAD_DIR = path.join(config.STORAGE_DIR, "uploads");
+const UPLOAD_DIR = getStoragePath("pdf-analysis", "uploads");
 
 const upload = multer({
   storage: multer.diskStorage({

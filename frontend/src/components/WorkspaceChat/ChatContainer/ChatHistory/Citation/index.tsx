@@ -84,12 +84,14 @@ export function SourceTypeCircle({
   return (
     <div
       className={`${customImage ? "bg-transparent border-none" : "bg-white light:bg-slate-100 border-zinc-800 light:border-white rounded-full"} flex items-center justify-center overflow-hidden`}
+      // Dynamic: dimensions passed as props (runtime variable)
       style={{ width: size, height: size }}
     >
       {faviconUrl && !imgError ? (
         <img
           src={faviconUrl}
           alt="favicon"
+          // Dynamic: dimensions passed as props (runtime variable)
           style={{ width: size, height: size }}
           className="object-cover"
           onError={() => setImgError(true)}
@@ -98,6 +100,7 @@ export function SourceTypeCircle({
         <img
           src={customImage}
           alt={type}
+          // Dynamic: dimensions passed as props (runtime variable)
           style={{ width: size, height: size }}
           className="object-contain bg-transparent"
         />

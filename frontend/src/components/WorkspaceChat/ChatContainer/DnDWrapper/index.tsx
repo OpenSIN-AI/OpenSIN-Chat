@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect, createContext, useContext } from "react";
 import { v4 } from "uuid";
-import System from "@/models/system";
 import { useDropzone } from "react-dropzone";
 import DndIcon from "./dnd-icon.png";
 import Workspace from "@/models/workspace";
 import useDocument from "@/hooks/useDocument";
+import useDocumentProcessorOnline from "@/hooks/useDocumentProcessorOnline";
 import showToast from "@/utils/toast";
 import FileUploadWarningModal from "./FileUploadWarningModal";
 import pluralize from "pluralize";
@@ -48,7 +48,7 @@ export function DnDFileUploaderProvider({
   children,
 }: any) {
   const [files, setFiles] = useState([] as any);
-  const [ready, setReady] = useState(false as any);
+  const { isOnline: ready } = useDocumentProcessorOnline();
   const [dragging, setDragging] = useState(false as any);
   const [showWarningModal, setShowWarningModal] = useState(false as any);
   const [isEmbedding, setIsEmbedding] = useState(false as any);
@@ -61,10 +61,6 @@ export function DnDFileUploaderProvider({
     workspace?.slug,
     threadSlug,
   );
-
-  useEffect(() => {
-    System.checkDocumentProcessorOnline().then((status) => setReady(status));
-  }, []);
 
   useEffect(() => {
     window.addEventListener(REMOVE_ATTACHMENT_EVENT, handleRemove);

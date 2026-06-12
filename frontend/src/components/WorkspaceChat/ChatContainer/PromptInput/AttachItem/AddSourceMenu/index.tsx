@@ -12,7 +12,6 @@ import {
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import Workspace from "@/models/workspace";
-import System from "@/models/system";
 import useDocuments from "@/hooks/useDocuments";
 import showToast from "@/utils/toast";
 import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";
@@ -161,7 +160,11 @@ function BackHeader({ label, onBack }) {
 }
 
 function SourcesView({ t, workspaceSlug, onBack, onClose }) {
-  const { documents: localFiles, isLoading: loading } = useDocuments();
+  const {
+    documents: localFiles,
+    isLoading: loading,
+    mutate: mutateDocuments,
+  } = useDocuments();
   const files = useMemo(() => flattenLocalFiles(localFiles), [localFiles]);
   const [addingId, setAddingId] = useState(null);
 
@@ -181,6 +184,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
       return;
     }
     showToast(t("chat_window.attach_menu.add_success"), "success");
+    await mutateDocuments();
     window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT));
     onClose?.();
   }
@@ -239,6 +243,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
   const [link, setLink] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const { mutate: refreshDocuments } = useDocuments();
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -295,7 +300,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
 
     // Snapshot existing docpaths so we can detect the freshly scraped document.
     const before = new Set(
-      flattenLocalFiles(await System.localFiles()).map((f) => f.docpath),
+      flattenLocalFiles(await refreshDocuments()).map((f) => f.docpath),
     );
 
     const { response, data } = await Workspace.uploadLink(
@@ -317,7 +322,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
     }
 
     // Find and embed the newly created document(s) into the current workspace.
-    const after = flattenLocalFiles(await System.localFiles());
+    const after = flattenLocalFiles(await refreshDocuments());
     const newDocpaths = after
       .map((f) => f.docpath)
       .filter((docpath) => !before.has(docpath));
@@ -326,6 +331,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
         adds: newDocpaths,
         deletes: [],
       });
+      await refreshDocuments();
     }
 
     setSubmitting(false);

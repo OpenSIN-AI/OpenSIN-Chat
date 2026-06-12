@@ -163,8 +163,7 @@ export default function Sidebar() {
             aria-orientation="vertical"
             aria-label="Seitenleiste skalieren"
             title="Ziehen um die Breite der Seitenleiste zu ändern"
-            className="absolute top-0 right-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors"
-            style={{ marginRight: "-3px" }}
+            className="absolute top-0 right-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors -mr-[3px]"
           >
             <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />
           </div>

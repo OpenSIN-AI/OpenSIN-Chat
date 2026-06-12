@@ -1794,6 +1794,106 @@ const TRANSLATIONS = {
       "Wählen Sie das Ollama-Modell aus, das Sie zum Erzeugen von Embeddings verwenden möchten.",
   },
 
+  providerSettings: {
+    voyageAi: {
+      apiKey: "API-Schlüssel",
+      modelPreference: "Modellpräferenz",
+      availableModels: "Verfügbare Embedding-Modelle",
+      apiKeyPlaceholder: "Voyage AI API-Schlüssel",
+    },
+    lemonade: {
+      baseUrl: "Basis-URL",
+      autoDetect: "Automatisch erkennen",
+      baseUrlTooltip1: "Geben Sie die URL ein, unter der Lemonade läuft.",
+      baseUrlTooltip2:
+        "Sie müssen die Lemonade TCP-Unterstützung aktiviert haben, damit dies funktioniert.",
+      learnMore: "Mehr erfahren",
+      baseUrlPlaceholder: "http://localhost:13305",
+      modelContextWindow: "Modell-Kontextfenster",
+      modelContextWindowTooltip:
+        "Die maximale Anzahl an Token, die für ein Modell-Kontextfenster verwendet werden können. Dies muss auf einen vom Modell unterstützten Wert gesetzt werden.",
+      apiKeyOptional: "API-Schlüssel (optional)",
+      apiKeyTooltip: "Der API-Schlüssel für Ihren Lemonade-Server",
+      tokenLimitPlaceholder: "8192",
+      noModelsFound: "Keine Modelle gefunden!",
+      downloadedModels: "Heruntergeladene Modelle",
+      uninstallConfirm:
+        "Sind Sie sicher, dass Sie dieses Modell deinstallieren möchten? Sie müssen es erneut herunterladen, um es zu verwenden.",
+      downloadConfirm:
+        "Sind Sie sicher, dass Sie dieses Modell herunterladen möchten? Es hat eine Größe von {{fileSize}} und der Download kann eine Weile dauern.",
+    },
+    cometApi: {
+      apiKey: "CometAPI API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      typeOrSelectModel: "Modell eingeben oder auswählen",
+      modelInputHelp:
+        "Sie können die Modell-ID direkt eingeben oder aus Vorschlägen auswählen.",
+      advancedSettings: "erweiterte Einstellungen",
+      streamTimeout: "Stream-Timeout (ms)",
+      timeoutDescription:
+        "Timeout-Wert zwischen Token-Antworten zum automatischen Beenden des Streams.",
+    },
+    genericOpenAi: {
+      baseUrl: "Basis-URL",
+      baseUrlPlaceholder: "z.B.: https://proxy.openai.com",
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "Generischer API-Schlüssel",
+      modelContextWindow: "Modell-Kontextfenster",
+      contextWindowPlaceholder: "Kontextfenster-Limit (z.B.: 4096)",
+      maxTokens: "Max. Token",
+      maxTokensPlaceholder: "Max. Token pro Anfrage (z.B.: 1024)",
+      selectedModel: "Ausgewähltes Modell",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      modelPlaceholder: "Modell-ID für Chat-Anfragen",
+      loadedModels: "Ihre geladenen Modelle",
+    },
+    anthropic: {
+      apiKey: "Anthropic API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      advancedSettings: "erweiterte Einstellungen",
+      promptCaching: "Prompt-Caching",
+      noCaching: "Kein Caching",
+      fiveMinutes: "5 Minuten",
+      oneHour: "1 Stunde",
+    },
+    dpais: {
+      modelContextWindow: "Modell-Kontextfenster",
+      tokenLimitPlaceholder: "4096",
+      advancedSettings: "erweiterte Einstellungen",
+      baseUrl: "Dell Pro AI Studio Basis-URL",
+      autoDetect: "Automatisch erkennen",
+      baseUrlPlaceholder: "http://localhost:8553/v1/openai",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      loadedModels: "Ihre geladenen Modelle",
+    },
+    litellm: {
+      baseUrl: "Basis-URL",
+      baseUrlPlaceholder: "http://127.0.0.1:4000",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      waitingForUrl: "-- warte auf URL --",
+      modelContextWindow: "Modell-Kontextfenster",
+      tokenLimitPlaceholder: "8192",
+      apiKey: "API-Schlüssel",
+      apiKeyOptional: "optional",
+      apiKeyPlaceholder: "sk-meingeheimschlüssel",
+      loadedModels: "Ihre geladenen Modelle",
+    },
+    novita: {
+      apiKey: "Novita API-Schlüssel",
+      apiKeyPlaceholder: "Novita API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      advancedSettings: "erweiterte Einstellungen",
+      streamTimeout: "Stream-Timeout (ms)",
+      timeoutDescription:
+        "Timeout-Wert zwischen Token-Antworten zum automatischen Beenden des Streams.",
+    },
+  },
+
   pdfAnalysis: {
     crossCheck: {
       sectionLabel: "Kreuz-Verifikationen",

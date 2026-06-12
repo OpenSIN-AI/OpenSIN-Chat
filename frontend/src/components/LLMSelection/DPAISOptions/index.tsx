@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import PreLoader from "@/components/Preloader";
 import { DPAIS_COMMON_URLS } from "@/utils/constants";
@@ -7,6 +8,7 @@ import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDis
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function DellProAIStudioOptions({ settings }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -31,13 +33,13 @@ export default function DellProAIStudioOptions({ settings }: any) {
             />
             <div className="flex flex-col w-60">
               <label className="text-white text-sm font-semibold block mb-2">
-                Model context window
+                {t("dpais.modelContextWindow")}
               </label>
               <input
                 type="number"
                 name="DellProAiStudioTokenLimit"
                 className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                placeholder="4096"
+                placeholder={t("dpais.tokenLimitPlaceholder")}
                 min={1}
                 onScroll={(e) => (e.target as HTMLElement).blur()}
                 defaultValue={settings?.DellProAiStudioTokenLimit}
@@ -56,7 +58,8 @@ export default function DellProAIStudioOptions({ settings }: any) {
           }}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} advanced settings
+          {showAdvancedControls ? t("common.hide") : t("common.show")}{" "}
+          {t("dpais.advancedSettings")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -69,7 +72,7 @@ export default function DellProAIStudioOptions({ settings }: any) {
           <div className="flex flex-col w-fit">
             <div className="flex justify-between items-center mb-2 gap-x-2">
               <label className="text-white text-sm font-semibold">
-                Dell Pro AI Studio Base URL
+                {t("dpais.baseUrl")}
               </label>
               {loading ? (
                 <PreLoader size="6" />
@@ -80,7 +83,7 @@ export default function DellProAIStudioOptions({ settings }: any) {
                       onClick={handleAutoDetectClick}
                       className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("dpais.autoDetect")}
                     </button>
                   )}
                 </>
@@ -90,7 +93,7 @@ export default function DellProAIStudioOptions({ settings }: any) {
               type="url"
               name="DellProAiStudioBasePath"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="http://localhost:8553/v1/openai"
+              placeholder={t("dpais.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
               autoComplete="off"
@@ -106,12 +109,13 @@ export default function DellProAIStudioOptions({ settings }: any) {
 }
 
 function DellProAiStudioModelSelection({ settings, basePath = null }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels("dpais", basePath);
   if (isLoading || customModels.length == 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
-          Chat Model Selection
+          {t("dpais.modelSelection")}
         </label>
         <select
           name="DellProAiStudioModelPref"
@@ -119,7 +123,7 @@ function DellProAiStudioModelSelection({ settings, basePath = null }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("dpais.loadingModels")}
           </option>
         </select>
       </div>
@@ -129,7 +133,7 @@ function DellProAiStudioModelSelection({ settings, basePath = null }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-2">
-        Chat Model Selection
+        {t("dpais.modelSelection")}
       </label>
       <select
         name="DellProAiStudioModelPref"
@@ -137,7 +141,7 @@ function DellProAiStudioModelSelection({ settings, basePath = null }: any) {
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("dpais.loadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option

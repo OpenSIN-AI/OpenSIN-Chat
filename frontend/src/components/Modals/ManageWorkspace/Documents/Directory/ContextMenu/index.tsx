@@ -55,6 +55,7 @@ export default function ContextMenu({
   return (
     <div
       ref={contextMenuRef}
+      // Dynamic: position depends on click coordinates (runtime values)
       style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
       className="fixed z-[1000] bg-theme-bg-secondary border border-theme-modal-border rounded-md shadow-lg"
     >

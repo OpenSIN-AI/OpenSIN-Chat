@@ -60,6 +60,7 @@ export default function Tooltip({ legendColor, ...props }: any) {
                   <div className="flex items-center space-x-2">
                     <span
                       className="shrink-0 h-3 w-3 border-theme-bg-primary rounded-md rounded-full border-2 shadow-md"
+                      // Dynamic: color depends on chart legend color (runtime prop)
                       style={{ backgroundColor: legendColor }}
                     />
                     <p

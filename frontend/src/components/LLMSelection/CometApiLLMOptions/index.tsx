@@ -1,21 +1,23 @@
 // SPDX-License-Identifier: MIT
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function CometApiLLMOptions({ settings }: any) {
+  const { t } = useTranslation();
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-start gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
           <label className="text-theme-text-primary text-sm font-semibold block mb-3">
-            CometAPI API Key
+            {t("cometApi.apiKey")}
           </label>
           <input
             type="password"
             name="CometApiLLMApiKey"
             className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="CometAPI API Key"
+            placeholder={t("cometApi.apiKey")}
             defaultValue={settings?.CometApiLLMApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -32,6 +34,7 @@ export default function CometApiLLMOptions({ settings }: any) {
 }
 
 function AdvancedControls({ settings }: any) {
+  const { t } = useTranslation();
   const [showAdvancedControls, setShowAdvancedControls] = useState(
     false as any,
   );
@@ -44,7 +47,8 @@ function AdvancedControls({ settings }: any) {
           onClick={() => setShowAdvancedControls(!showAdvancedControls)}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} advanced settings
+          {showAdvancedControls ? t("common.hide") : t("common.show")}{" "}
+          {t("cometApi.advancedSettings")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -55,13 +59,13 @@ function AdvancedControls({ settings }: any) {
       <div hidden={!showAdvancedControls}>
         <div className="flex flex-col w-60">
           <label className="text-theme-text-primary text-sm font-semibold block mb-3">
-            Stream Timeout (ms)
+            {t("cometApi.streamTimeout")}
           </label>
           <input
             type="number"
             name="CometApiLLMTimeout"
             className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Timeout value between token responses to auto-timeout the stream"
+            placeholder={t("cometApi.timeoutDescription")}
             defaultValue={settings?.CometApiLLMTimeout ?? 3_000}
             autoComplete="off"
             onScroll={(e) => (e.target as HTMLElement).blur()}
@@ -69,7 +73,7 @@ function AdvancedControls({ settings }: any) {
             step={1}
           />
           <p className="text-xs leading-[18px] font-base text-theme-text-primary text-opacity-60 mt-2">
-            Timeout value between token responses to auto-timeout the stream.
+            {t("cometApi.timeoutDescription")}
           </p>
         </div>
       </div>
@@ -78,18 +82,19 @@ function AdvancedControls({ settings }: any) {
 }
 
 function CometApiModelSelection({ settings }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels("cometapi");
   if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-theme-text-primary text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("cometApi.modelSelection")}
         </label>
         <input
           type="text"
           name="CometApiLLMModelPref"
           className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg block w-full p-2.5"
-          placeholder="-- loading available models --"
+          placeholder={t("cometApi.loadingModels")}
           disabled
         />
       </div>
@@ -99,7 +104,7 @@ function CometApiModelSelection({ settings }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-theme-text-primary text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("cometApi.modelSelection")}
       </label>
       <input
         type="text"
@@ -107,7 +112,7 @@ function CometApiModelSelection({ settings }: any) {
         list="cometapi-customModels-list"
         required
         className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg block w-full p-2.5"
-        placeholder="Type or select a model"
+        placeholder={t("cometApi.typeOrSelectModel")}
         defaultValue={settings?.CometApiLLMModelPref || ""}
         autoComplete="off"
         spellCheck={false}
@@ -120,7 +125,7 @@ function CometApiModelSelection({ settings }: any) {
         ))}
       </datalist>
       <p className="text-xs leading-[18px] font-base text-theme-text-primary text-opacity-60 mt-2">
-        You can type the model id directly or pick from suggestions.
+        {t("cometApi.modelInputHelp")}
       </p>
     </div>
   );

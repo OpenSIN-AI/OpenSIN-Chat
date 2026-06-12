@@ -11,13 +11,13 @@
  */
 const fs = require("fs");
 const path = require("path");
-const config = require("./config");
+const { getStoragePath } = require("../paths");
 
 function allowedRoots() {
   const roots = [
-    path.join(config.STORAGE_DIR, "uploads"),
+    getStoragePath("pdf-analysis", "uploads"),
     // Dokument-Storage des Forks (hot-dir / documents), falls vorhanden:
-    path.resolve(config.STORAGE_DIR, "..", "documents"),
+    getStoragePath("documents"),
   ];
   // Zusätzliche Freigaben per ENV (kommasepariert, absolute Pfade)
   const extra = (process.env.PDF_ANALYSIS_ALLOWED_DIRS || "")

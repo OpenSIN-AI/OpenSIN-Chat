@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { CircleNotch, Info } from "@phosphor-icons/react";
 import { LLM_PREFERENCE_CHANGED_EVENT } from "@/pages/GeneralSettings/LLMPreference";
@@ -23,6 +24,7 @@ export function cleanBasePath(basePath: any = "") {
 }
 
 export default function LemonadeOptions({ settings }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -47,7 +49,7 @@ export default function LemonadeOptions({ settings }: any) {
           <div className="flex items-center gap-1 mb-3">
             <div className="flex justify-between items-center gap-x-2">
               <label className="text-white text-sm font-semibold">
-                Base URL
+                {t("lemonade.baseUrl")}
               </label>
               {loading ? (
                 <CircleNotch className="w-4 h-4 text-theme-text-secondary animate-spin" />
@@ -58,7 +60,7 @@ export default function LemonadeOptions({ settings }: any) {
                       onClick={handleAutoDetectClick}
                       className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("lemonade.autoDetect")}
                     </button>
                   )}
                 </>
@@ -72,11 +74,10 @@ export default function LemonadeOptions({ settings }: any) {
               clickable={true}
               className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
             >
-              Enter the URL where the Lemonade is running.
+              {t("lemonade.baseUrlTooltip1")}
               <br />
               <br />
-              You <b>must</b> have enabled the Lemonade TCP support for this to
-              work.
+              {t("lemonade.baseUrlTooltip2")}
               <br />
               <br />
               <Link
@@ -84,7 +85,7 @@ export default function LemonadeOptions({ settings }: any) {
                 target="_blank"
                 className="text-blue-500 hover:underline"
               >
-                Learn more &rarr;
+                {t("lemonade.learnMore")}
               </Link>
             </Tooltip>
             <div
@@ -101,7 +102,7 @@ export default function LemonadeOptions({ settings }: any) {
             type="url"
             name="LemonadeLLMBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="http://localhost:13305"
+            placeholder={t("lemonade.baseUrlPlaceholder")}
             value={cleanBasePath(basePathValue.value)}
             required={true}
             autoComplete="off"
@@ -113,7 +114,7 @@ export default function LemonadeOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-1 mb-3">
             <label className="text-white text-sm font-semibold block">
-              Model context window
+              {t("lemonade.modelContextWindow")}
             </label>
             <Tooltip
               id="lemonade-model-context-window"
@@ -123,9 +124,7 @@ export default function LemonadeOptions({ settings }: any) {
               clickable={true}
               className="tooltip !text-xs !opacity-100 z-99 !max-w-[350px] !whitespace-normal !break-words"
             >
-              The maximum number of tokens that can be used for a model context
-              window. This must be set to a value that is supported by the
-              model.
+              {t("lemonade.modelContextWindowTooltip")}
             </Tooltip>
             <div
               className="text-theme-text-secondary cursor-pointer hover:bg-theme-bg-primary flex items-center justify-center rounded-full"
@@ -140,7 +139,7 @@ export default function LemonadeOptions({ settings }: any) {
             type="number"
             name="LemonadeLLMModelTokenLimit"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="8192"
+            placeholder={t("lemonade.tokenLimitPlaceholder")}
             min={1}
             value={maxTokens}
             onChange={(e) =>
@@ -154,7 +153,7 @@ export default function LemonadeOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-1 mb-3">
             <label className="text-white text-sm font-semibold block">
-              API Key (optional)
+              {t("lemonade.apiKeyOptional")}
             </label>
             <Tooltip
               id="lemonade-api-key"
@@ -164,7 +163,7 @@ export default function LemonadeOptions({ settings }: any) {
               clickable={true}
               className="tooltip !text-xs !opacity-100 z-99 !max-w-[350px] !whitespace-normal !break-words"
             >
-              The API key for your Lemonade server
+              {t("lemonade.apiKeyTooltip")}
             </Tooltip>
             <div
               className="text-theme-text-secondary cursor-pointer hover:bg-theme-bg-primary flex items-center justify-center rounded-full"
@@ -198,6 +197,7 @@ function LemonadeModelSelection({
   setSelectedModelId,
   basePath = null,
 }: any) {
+  const { t } = useTranslation();
   const {
     customModels: providerCustomModels,
     isLoading,
@@ -209,12 +209,7 @@ function LemonadeModelSelection({
   const [loading, setLoading] = useState(false);
   async function uninstallModel(modelId: any) {
     try {
-      if (
-        !window.confirm(
-          `Are you sure you want to uninstall this model? You will need to download it again to use it.`,
-        )
-      )
-        return;
+      if (!window.confirm(t("lemonade.uninstallConfirm"))) return;
       const { success, error } = await LemonadeUtils.deleteModel(
         modelId,
         basePath,
@@ -249,12 +244,7 @@ function LemonadeModelSelection({
     progressCallback: any,
   ) {
     try {
-      if (
-        !window.confirm(
-          `Are you sure you want to download this model? It is ${fileSize} in size and may take a while to download.`,
-        )
-      )
-        return;
+      if (!window.confirm(t("lemonade.downloadConfirm", { fileSize }))) return;
       const { success, error } = await LemonadeUtils.downloadModel(
         modelId,
         basePath,
@@ -308,8 +298,9 @@ function LemonadeModelSelection({
         );
         mapping
           .get("installed")
-          .set("Downloaded Models", [
-            ...(mapping.get("installed").get("Downloaded Models") || []),
+          .set(t("lemonade.downloadedModels"), [
+            ...(mapping.get("installed").get(t("lemonade.downloadedModels")) ||
+              []),
             ...installedModels,
           ]);
       }
@@ -377,7 +368,7 @@ function LemonadeModelSelection({
       ) : filteredModels.length === 0 ? (
         <div className="flex flex-col w-full gap-y-2 mt-4">
           <p className="text-theme-text-secondary text-sm">
-            No customModels found!
+            {t("lemonade.noModelsFound")}
           </p>
         </div>
       ) : (

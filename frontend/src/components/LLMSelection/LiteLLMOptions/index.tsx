@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LiteLLMOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [basePathValue, setBasePathValue] = useState(settings?.LiteLLMBasePath);
   const [basePath, setBasePath] = useState(settings?.LiteLLMBasePath);
   const [apiKeyValue, setApiKeyValue] = useState(settings?.LiteLLMAPIKey);
@@ -13,13 +15,13 @@ export default function LiteLLMOptions({ settings }: any) {
       <div className="w-full flex items-center gap-[36px]">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Base URL
+            {t("litellm.baseUrl")}
           </label>
           <input
             type="url"
             name="LiteLLMBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="http://127.0.0.1:4000"
+            placeholder={t("litellm.baseUrlPlaceholder")}
             defaultValue={settings?.LiteLLMBasePath}
             required={true}
             autoComplete="off"
@@ -37,13 +39,13 @@ export default function LiteLLMOptions({ settings }: any) {
         />
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Model context window
+            {t("litellm.modelContextWindow")}
           </label>
           <input
             type="number"
             name="LiteLLMTokenLimit"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="8192"
+            placeholder={t("litellm.tokenLimitPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
             defaultValue={settings?.LiteLLMTokenLimit}
@@ -56,14 +58,17 @@ export default function LiteLLMOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex flex-col gap-y-1 mb-4">
             <label className="text-white text-sm font-semibold flex items-center gap-x-2">
-              API Key <p className="!text-xs !italic !font-thin">optional</p>
+              {t("litellm.apiKey")}{" "}
+              <p className="!text-xs !italic !font-thin">
+                {t("litellm.apiKeyOptional")}
+              </p>
             </label>
           </div>
           <input
             type="password"
             name="LiteLLMAPIKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="sk-mysecretkey"
+            placeholder={t("litellm.apiKeyPlaceholder")}
             defaultValue={settings?.LiteLLMAPIKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
@@ -83,6 +88,7 @@ function LiteLLMModelSelection({
   basePath = null,
   apiKey = null,
 }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels(
     "litellm",
     apiKey,
@@ -92,7 +98,7 @@ function LiteLLMModelSelection({
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("litellm.modelSelection")}
         </label>
         <select
           name="LiteLLMModelPref"
@@ -101,8 +107,8 @@ function LiteLLMModelSelection({
         >
           <option disabled={true} selected={true}>
             {basePath?.includes("/v1")
-              ? "-- loading available models --"
-              : "-- waiting for URL --"}
+              ? t("litellm.loadingModels")
+              : t("litellm.waitingForUrl")}
           </option>
         </select>
       </div>
@@ -112,7 +118,7 @@ function LiteLLMModelSelection({
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("litellm.modelSelection")}
       </label>
       <select
         name="LiteLLMModelPref"
@@ -120,7 +126,7 @@ function LiteLLMModelSelection({
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("litellm.loadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option

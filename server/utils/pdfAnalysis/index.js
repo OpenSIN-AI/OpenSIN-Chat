@@ -14,6 +14,7 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const config = require("./config");
+const { getStoragePath } = require("../paths");
 const { PdfReader, buildChunkPlan } = require("./pdfReader");
 const { runPool, clearCheckpoint } = require("./agentPool");
 const { analyzeChunk } = require("./analysisAgent");
@@ -207,8 +208,9 @@ class PdfAnalysisPipeline {
         }
       );
 
-      fs.mkdirSync(config.REPORT_DIR, { recursive: true });
-      const reportFile = path.join(config.REPORT_DIR, `${job.id}.md`);
+      const reportDir = getStoragePath("pdf-analysis", "reports");
+      fs.mkdirSync(reportDir, { recursive: true });
+      const reportFile = path.join(reportDir, `${job.id}.md`);
       fs.writeFileSync(reportFile, report);
 
       let pdfReport = null;

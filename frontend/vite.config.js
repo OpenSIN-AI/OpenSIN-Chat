@@ -23,9 +23,7 @@ export default defineConfig({
     host: "0.0.0.0",
     allowedHosts: ["sb-19llfl8xfbze.vercel.run", "localhost", "127.0.0.1"]
   },
-  define: {
-    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "production")
-  },
+
   css: {
     postcss
   },

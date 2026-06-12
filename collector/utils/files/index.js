@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { getStoragePath } = require("../paths");
+const { getStoragePath, getCollectorPath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
 const { MimeDetector } = require("./mime");
@@ -8,20 +8,14 @@ const { MimeDetector } = require("./mime");
  * The folder where documents are stored to be stored when
  * processed by the collector.
  */
-const documentsFolder =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, `../../../server/storage/documents`)
-    : getStoragePath("documents");
+const documentsFolder = getStoragePath("documents");
 
 /**
  * The folder where direct uploads are stored to be stored when
  * processed by the collector. These are files that were DnD'd into UI
  * and are not to be embedded or selectable from the file picker.
  */
-const directUploadsFolder =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, `../../../server/storage/direct-uploads`)
-    : getStoragePath("direct-uploads");
+const directUploadsFolder = getStoragePath("direct-uploads");
 
 /**
  * Checks if a file is text by checking the mime type and then falling back to buffer inspection.
@@ -158,7 +152,7 @@ function writeToServerDocuments({
 // force remove them.
 async function wipeCollectorStorage() {
   const cleanHotDir = new Promise((resolve) => {
-    const directory = path.resolve(__dirname, "../../hotdir");
+    const directory = getCollectorPath("hotdir");
     fs.readdir(directory, (err, files) => {
       if (err) resolve();
 
@@ -173,7 +167,7 @@ async function wipeCollectorStorage() {
   });
 
   const cleanTmpDir = new Promise((resolve) => {
-    const directory = path.resolve(__dirname, "../../storage/tmp");
+    const directory = getStoragePath("tmp");
     fs.readdir(directory, (err, files) => {
       if (err) resolve();
 

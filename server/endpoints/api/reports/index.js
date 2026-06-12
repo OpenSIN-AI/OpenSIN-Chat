@@ -39,10 +39,7 @@ function getResearchPipeline() {
   return getResearchPipeline();
 }
 
-const STORAGE_DIR =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, "../../../storage/generated-reports")
-    : getStoragePath("generated-reports");
+const STORAGE_DIR = getStoragePath("generated-reports");
 
 function apiReportsEndpoints(app) {
   if (!app) return;

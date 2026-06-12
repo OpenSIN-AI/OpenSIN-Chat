@@ -15,10 +15,7 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 const { enforceReportRetention } = require("./retention");
 
-const STORAGE_DIR =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, "../../storage/generated-reports")
-    : getStoragePath("generated-reports");
+const STORAGE_DIR = getStoragePath("generated-reports");
 
 const AFD_BLUE = rgb(0 / 255, 158 / 255, 224 / 255);
 const AFD_DARK = rgb(0 / 255, 102 / 255, 165 / 255);

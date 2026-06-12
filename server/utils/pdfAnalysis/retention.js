@@ -20,7 +20,7 @@
  */
 const fs = require("fs");
 const path = require("path");
-const config = require("./config");
+const { getStoragePath } = require("../paths");
 const { loadAllJobs } = require("./jobStore");
 
 const UPLOAD_TTL_DAYS = Number(
@@ -34,8 +34,10 @@ const INTERVAL_MS = Number(
   process.env.PDF_ANALYSIS_CLEANUP_INTERVAL_MS || 6 * 60 * 60 * 1000
 );
 
-const UPLOAD_DIR = path.join(config.STORAGE_DIR, "uploads");
-const JOBS_DIR = path.join(config.STORAGE_DIR, "jobs");
+const UPLOAD_DIR = getStoragePath("pdf-analysis", "uploads");
+const JOBS_DIR = getStoragePath("pdf-analysis", "jobs");
+const CHECKPOINT_DIR = getStoragePath("pdf-analysis", "checkpoints");
+const REPORT_DIR = getStoragePath("pdf-analysis", "reports");
 
 function olderThanDays(filePath, days) {
   if (days <= 0) return false;
@@ -88,7 +90,7 @@ function runCleanup() {
   }
 
   // 2. Checkpoints: Job fertig/gescheitert oder verwaist
-  for (const file of listFiles(config.CHECKPOINT_DIR)) {
+  for (const file of listFiles(CHECKPOINT_DIR)) {
     const jobId = path.basename(file).replace(/\.json(\.tmp)?$/, "");
     if (finishedJobIds.has(jobId) || !knownJobIds.has(jobId)) {
       if (safeUnlink(file)) removed.checkpoints++;
@@ -98,8 +100,8 @@ function runCleanup() {
   // 3. Reports: nur wenn TTL gesetzt (Default 0 = behalten)
   if (REPORT_TTL_DAYS > 0) {
     const reportFiles = [
-      ...listFiles(config.REPORT_DIR).filter((f) => f.endsWith(".md")),
-      ...listFiles(path.join(config.REPORT_DIR, "crosscheck")),
+      ...listFiles(REPORT_DIR).filter((f) => f.endsWith(".md")),
+      ...listFiles(path.join(REPORT_DIR, "crosscheck")),
     ];
     for (const file of reportFiles) {
       if (olderThanDays(file, REPORT_TTL_DAYS) && safeUnlink(file))

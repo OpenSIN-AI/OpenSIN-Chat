@@ -154,6 +154,7 @@ export default function ToolsMenu({
           // Skip for portaled modals so their inputs can still receive focus.
           if (e.currentTarget.contains(e.target)) e.preventDefault();
         }}
+        // Dynamic: maxHeight computed from viewport measurements at runtime
         style={{ maxHeight }}
         className={`absolute left-2 right-2 md:left-14 md:right-auto md:w-[400px] z-50 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-lg p-3 flex flex-col gap-2.5 shadow-lg overflow-hidden ${
           centered ? "top-full mt-2" : "bottom-full mb-2"

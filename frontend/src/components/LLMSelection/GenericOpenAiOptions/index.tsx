@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function GenericOpenAiOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [genericOpenAiBasePath, setGenericOpenAiBasePath] = useState(
     settings?.GenericOpenAiBasePath,
   );
@@ -18,13 +20,13 @@ export default function GenericOpenAiOptions({ settings }: any) {
       <div className="flex gap-[36px] mt-1.5 flex-wrap">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Base URL
+            {t("genericOpenAi.baseUrl")}
           </label>
           <input
             type="url"
             name="GenericOpenAiBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="eg: https://proxy.openai.com"
+            placeholder={t("genericOpenAi.baseUrlPlaceholder")}
             defaultValue={settings?.GenericOpenAiBasePath}
             onChange={(e) =>
               setGenericOpenAiBasePath((e.target as unknown as any)?.value)
@@ -36,13 +38,13 @@ export default function GenericOpenAiOptions({ settings }: any) {
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("genericOpenAi.apiKey")}
           </label>
           <input
             type="password"
             name="GenericOpenAiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Generic service API Key"
+            placeholder={t("genericOpenAi.apiKeyPlaceholder")}
             defaultValue={settings?.GenericOpenAiKey ? "*".repeat(20) : ""}
             onChange={(e) =>
               setGenericOpenAiApiKey((e.target as unknown as any)?.value)
@@ -63,13 +65,13 @@ export default function GenericOpenAiOptions({ settings }: any) {
       <div className="flex gap-[36px] flex-wrap">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Model context window
+            {t("genericOpenAi.modelContextWindow")}
           </label>
           <input
             type="number"
             name="GenericOpenAiTokenLimit"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Content window limit (eg: 4096)"
+            placeholder={t("genericOpenAi.contextWindowPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
             defaultValue={settings?.GenericOpenAiTokenLimit}
@@ -79,13 +81,13 @@ export default function GenericOpenAiOptions({ settings }: any) {
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Max Tokens
+            {t("genericOpenAi.maxTokens")}
           </label>
           <input
             type="number"
             name="GenericOpenAiMaxTokens"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Max tokens per request (eg: 1024)"
+            placeholder={t("genericOpenAi.maxTokensPlaceholder")}
             min={1}
             defaultValue={settings?.GenericOpenAiMaxTokens || 1024}
             required={true}
@@ -104,6 +106,7 @@ function GenericOpenAiModelSelection({
   genericOpenAiModelPref,
   setGenericOpenAiModelPref,
 }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels(
     "generic-openai",
     apiKey,
@@ -114,7 +117,7 @@ function GenericOpenAiModelSelection({
       <div className="flex flex-col w-60">
         <div className="flex items-center mb-2 gap-x-1">
           <label className="text-white text-sm font-semibold">
-            Selected Model
+            {t("genericOpenAi.selectedModel")}
           </label>
         </div>
         <select
@@ -123,7 +126,7 @@ function GenericOpenAiModelSelection({
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("genericOpenAi.loadingModels")}
           </option>
         </select>
       </div>
@@ -135,13 +138,13 @@ function GenericOpenAiModelSelection({
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
-          Selected Model
+          {t("genericOpenAi.selectedModel")}
         </label>
         <input
           type="text"
           name="GenericOpenAiModelPref"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder="Model id used for chat requests"
+          placeholder={t("genericOpenAi.modelPlaceholder")}
           defaultValue={genericOpenAiModelPref}
           onChange={(e) =>
             setGenericOpenAiModelPref((e.target as unknown as any)?.value)
@@ -158,7 +161,7 @@ function GenericOpenAiModelSelection({
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-2">
-        Selected Model
+        {t("genericOpenAi.selectedModel")}
       </label>
       <select
         name="GenericOpenAiModelPref"
@@ -166,7 +169,7 @@ function GenericOpenAiModelSelection({
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("genericOpenAi.loadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option
