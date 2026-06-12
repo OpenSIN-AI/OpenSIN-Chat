@@ -4,6 +4,7 @@ import CommunityHubImportItemSteps from "..";
 import CTAButton from "@/components/lib/CTAButton";
 import { useEffect, useState } from "react";
 import HubItemComponent from "./HubItem";
+import { useTranslation } from "react-i18next";
 
 function useGetCommunityHubItem({ importId, updateSettings }) {
   const [item, setItem] = useState(null);
@@ -28,6 +29,7 @@ function useGetCommunityHubItem({ importId, updateSettings }) {
 }
 
 export default function PullAndReview({ settings, setSettings, setStep }) {
+  const { t } = useTranslation();
   const { item, loading, error } = useGetCommunityHubItem({
     importId: settings.itemId,
     updateSettings: setSettings,
@@ -40,14 +42,14 @@ export default function PullAndReview({ settings, setSettings, setStep }) {
       <div className="bg-theme-bg-secondary rounded-xl flex-1 p-6">
         <div className="w-full flex flex-col gap-y-2 max-w-[700px]">
           <h2 className="text-base text-theme-text-primary font-semibold">
-            Review item
+            {t("pullAndReview.title")}
           </h2>
 
           {loading && (
             <div className="flex h-[200px] w-full rounded-lg animate-pulse">
               <div className="w-full h-full flex items-center justify-center">
                 <p className="text-sm text-theme-text-secondary">
-                  Pulling item details from community hub...
+                  {t("pullAndReview.pulling")}
                 </p>
               </div>
             </div>
@@ -56,8 +58,7 @@ export default function PullAndReview({ settings, setSettings, setStep }) {
             <>
               <div className="flex flex-col gap-y-2 mt-8">
                 <p className="text-red-500">
-                  An error occurred while fetching the item. Please try again
-                  later.
+                  {t("pullAndReview.error")}
                 </p>
                 <p className="text-red-500/80 text-sm font-mono">{error}</p>
               </div>
@@ -68,7 +69,7 @@ export default function PullAndReview({ settings, setSettings, setStep }) {
                   setStep(CommunityHubImportItemSteps.itemId.key);
                 }}
               >
-                Try another item
+                {t("pullAndReview.tryAnotherItem")}
               </CTAButton>
             </>
           )}

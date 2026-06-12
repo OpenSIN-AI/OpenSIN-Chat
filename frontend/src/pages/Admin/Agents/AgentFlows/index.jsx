@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
 import { CaretRight } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 
 export default function AgentFlowsList({
   flows = [],
@@ -8,17 +9,18 @@ export default function AgentFlowsList({
   handleClick,
   activeFlowIds = [],
 }) {
+  const { t } = useTranslation();
   if (flows.length === 0) {
     return (
       <div className="text-theme-text-secondary text-center text-xs flex flex-col gap-y-2">
-        <p>No agent flows found</p>
+        <p>{t("agentFlows.empty.noFlows")}</p>
         <a
           href="https://docs.opensin.delqhi.com/agent-flows/getting-started"
           target="_blank"
           className="text-theme-text-secondary underline hover:text-cta-button"
           rel="noreferrer"
         >
-          Learn more about Agent Flows.
+          {t("agentFlows.empty.learnMore")}
         </a>
       </div>
     );
@@ -45,7 +47,9 @@ export default function AgentFlowsList({
           <div className="text-sm font-light">{flow.name}</div>
           <div className="flex items-center gap-x-2">
             <div className="text-sm text-theme-text-secondary font-medium">
-              {activeFlowIds.includes(flow.uuid) ? "On" : "Off"}
+              {activeFlowIds.includes(flow.uuid)
+                ? t("agentFlows.status.on")
+                : t("agentFlows.status.off")}
             </div>
             <CaretRight
               size={14}

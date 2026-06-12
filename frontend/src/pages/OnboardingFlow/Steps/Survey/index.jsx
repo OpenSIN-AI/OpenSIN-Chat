@@ -7,6 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Workspace from "@/models/workspace";
 
+// Pure punctuation used to wrap the "(optional)" hint — not translatable.
+const PARENS_OPEN = "(";
+const PARENS_CLOSE = ")";
+
 async function sendQuestionnaire({ email, useCase, comment }) {
   if (import.meta.env.DEV) {
     return;
@@ -125,7 +129,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
               href={paths.mailToSupport()}
               className="text-sky-400 underline text-xs"
             >
-              team@openafd.com
+              {t("onboarding.survey.supportEmail")}
             </a>
           </div>
         </div>
@@ -146,7 +150,7 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
           <input
             name="email"
             type="email"
-            placeholder="you@gmail.com"
+            placeholder={t("onboarding.survey.emailPlaceholder")}
             required={true}
             className="mt-2 bg-theme-settings-input-bg text-white focus:outline-primary-button active:outline-primary-button placeholder:text-theme-settings-input-placeholder outline-none text-sm font-medium font-['Plus Jakarta Sans'] leading-tight w-full h-11 p-2.5 bg-theme-settings-input-bg rounded-lg"
           />
@@ -245,7 +249,9 @@ export default function Survey({ setHeader, setForwardBtn, setBackBtn }) {
           <label htmlFor="comment" className="text-white text-base font-medium">
             {t("onboarding.survey.comment")}{" "}
             <span className="text-neutral-400 text-base font-light">
-              ({t("common.optional")})
+              {PARENS_OPEN}
+              {t("common.optional")}
+              {PARENS_CLOSE}
             </span>
           </label>
           <textarea

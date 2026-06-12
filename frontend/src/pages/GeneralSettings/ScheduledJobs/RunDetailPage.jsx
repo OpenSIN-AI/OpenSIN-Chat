@@ -29,6 +29,10 @@ import {
 } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/ThoughtContainer";
 import useRunDetail from "@/hooks/useRunDetail";
 
+// Pure punctuation used as a list marker — not user-facing copy.
+const PERIOD = ".";
+const LTS_FORMAT_TOKEN = "LTS";
+
 export default function RunDetailPage() {
   const { t } = useTranslation();
   const { id, runId } = useParams();
@@ -197,7 +201,7 @@ function RunHeader({
         <div className="flex items-center gap-2 text-xs">
           <span className={style}>{text}</span>
           <span className="text-zinc-400 light:text-slate-600">
-            {moment(run.startedAt).format("LTS")}
+            {moment(run.startedAt).format(LTS_FORMAT_TOKEN)}
           </span>
           {result.duration && (
             <span className="text-zinc-400 light:text-slate-600">
@@ -282,7 +286,8 @@ function AgentThoughtsSection({ t, result }) {
             className="flex items-start gap-2 text-sm text-theme-text-secondary"
           >
             <span className="text-xs text-theme-text-secondary/50 mt-0.5 min-w-[20px]">
-              {i + 1}.
+              {i + 1}
+              {PERIOD}
             </span>
             <span>{thought}</span>
           </div>
@@ -380,9 +385,10 @@ function MetricsSection({ t, metrics }) {
 
   function renderModel(metrics) {
     if (!metrics.model) return null;
+    const modelLabel = `(${metrics.model})`;
     return (
       <span className="font-mono text-xs font-normal text-zinc-50/50 light:text-slate-950/50">
-        ({metrics.model})
+        {modelLabel}
       </span>
     );
   }

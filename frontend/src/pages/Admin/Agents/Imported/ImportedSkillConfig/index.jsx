@@ -5,6 +5,7 @@ import { Gear, Plug } from "@phosphor-icons/react";
 import { useEffect, useState, useRef } from "react";
 import { sentenceCase } from "text-case";
 import Toggle from "@/components/lib/Toggle";
+import { useTranslation } from "react-i18next";
 
 /**
  * Converts setup_args to inputs for the form builder
@@ -37,6 +38,7 @@ export default function ImportedSkillConfig({
   selectedSkill, // imported skill config object
   setImportedSkills, // function to set imported skills since config is file-write
 }) {
+  const { t } = useTranslation();
   const [config, setConfig] = useState(selectedSkill);
   const [hasChanges, setHasChanges] = useState(false);
   const [inputs, setInputs] = useState(
@@ -132,7 +134,10 @@ export default function ImportedSkillConfig({
             </div>
           </div>
           <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
-            {config.description} by{" "}
+            {t("importedSkillConfig.descriptionByAuthor", {
+              description: config.description,
+            })}
+            {" "}
             <a
               href={config.author_url}
               target="_blank"
@@ -175,13 +180,13 @@ export default function ImportedSkillConfig({
                   type="button"
                   className="bg-blue-500 text-white light:text-white rounded-md p-2"
                 >
-                  Save
+                  {t("importedSkillConfig.save")}
                 </button>
               )}
             </div>
           ) : (
             <p className="text-white text-opacity-60 text-sm font-medium py-1.5">
-              There are no options to modify for this skill.
+              {t("importedSkillConfig.noOptions")}
             </p>
           )}
         </div>
@@ -191,6 +196,7 @@ export default function ImportedSkillConfig({
 }
 
 function ManageSkillMenu({ config, setImportedSkills }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -243,7 +249,7 @@ function ManageSkillMenu({ config, setImportedSkills }) {
             onClick={deleteSkill}
             className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
-            <span className="text-sm">Delete Skill</span>
+            <span className="text-sm">{t("importedSkillConfig.deleteSkill")}</span>
           </button>
         </div>
       )}

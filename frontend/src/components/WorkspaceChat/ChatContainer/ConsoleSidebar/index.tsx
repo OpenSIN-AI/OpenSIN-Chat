@@ -68,12 +68,14 @@ function LogsTab() {
           consoleLogs.map((log, idx) => (
             <div key={idx} className="flex gap-2 mb-0.5">
               <span className="text-zinc-600 light:text-slate-400 shrink-0">
+                {/* eslint-disable i18next/no-literal-string */}
                 {new Date(log.timestamp).toLocaleTimeString("de-DE", {
                   hour12: false,
                   hour: "2-digit",
                   minute: "2-digit",
                   second: "2-digit",
                 })}
+                {/* eslint-enable i18next/no-literal-string */}
               </span>
               <span className={LEVEL_COLORS[log.level] ?? LEVEL_COLORS.info}>
                 {log.message}
@@ -205,7 +207,11 @@ function TerminalTab() {
       </div>
       {/* Input line */}
       <div className="flex items-center gap-1 px-3 py-2 border-t border-zinc-800 light:border-slate-200 shrink-0">
-        <span className="text-zinc-500 font-mono text-[11px]">$</span>
+        <span className="text-zinc-500 font-mono text-[11px]">
+          {/* eslint-disable i18next/no-literal-string */}
+          $
+          {/* eslint-enable i18next/no-literal-string */}
+        </span>
         <input
           ref={inputRef}
           type="text"

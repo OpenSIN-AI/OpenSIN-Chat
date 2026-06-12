@@ -35,7 +35,10 @@ export default function MemoryTabs() {
             {workspaceName}
           </span>
           <span className="text-zinc-400 light:text-slate-600 font-normal">
-            ({workspaceCount}/{LIMITS.workspace})
+            {t("chat_window.memories.count", {
+              current: workspaceCount,
+              max: LIMITS.workspace,
+            })}
           </span>
         </button>
         <button
@@ -51,7 +54,10 @@ export default function MemoryTabs() {
             {t("chat_window.memories.tab_global")}
           </span>
           <span className="text-zinc-400 light:text-slate-600 font-normal">
-            ({globalCount}/{LIMITS.global})
+            {t("chat_window.memories.count", {
+              current: globalCount,
+              max: LIMITS.global,
+            })}
           </span>
         </button>
       </div>

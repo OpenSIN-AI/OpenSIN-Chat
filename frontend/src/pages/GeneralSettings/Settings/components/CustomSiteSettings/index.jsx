@@ -31,7 +31,7 @@ export default function CustomSiteSettings() {
       meta_page_favicon: settings.faviconUrl ?? null,
     });
     showToast(
-      "Site preferences updated! They will reflect on page reload.",
+      t("customSiteSettings.updateSuccess"),
       "success",
       { clear: true },
     );
@@ -64,7 +64,7 @@ export default function CustomSiteSettings() {
             name="meta_page_title"
             type="text"
             className="border-none bg-theme-settings-input-bg mt-2 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
-            placeholder="OpenSIN Chat | Your personal LLM trained on anything"
+            placeholder={t("customSiteSettings.titlePlaceholder")}
             autoComplete="off"
             onChange={(e) => {
               setSettings((prev) => {
@@ -72,8 +72,7 @@ export default function CustomSiteSettings() {
               });
             }}
             value={
-              settings.title ??
-              "OpenSIN Chat | Your personal LLM trained on anything"
+              settings.title ?? t("customSiteSettings.titleDefault")
             }
           />
         </div>
@@ -91,13 +90,14 @@ export default function CustomSiteSettings() {
             src={settings.faviconUrl ?? "/favicon.png"}
             onError={(e) => (e.target.src = "/favicon.png")}
             className="h-10 w-10 rounded-lg mt-2"
+            // eslint-disable-next-line i18next/no-literal-string
             alt="Site favicon"
           />
           <input
             name="meta_page_favicon"
             type="url"
             className="border-none bg-theme-settings-input-bg mt-2 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
-            placeholder="url to your image"
+            placeholder={t("customSiteSettings.faviconPlaceholder")}
             onChange={(e) => {
               setSettings((prev) => {
                 return { ...prev, faviconUrl: e.target.value };
@@ -114,7 +114,7 @@ export default function CustomSiteSettings() {
           type="submit"
           className="transition-all mt-2 w-fit duration-300 border border-slate-200 px-5 py-2.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
         >
-          Save
+          {t("customSiteSettings.save")}
         </button>
       )}
     </form>

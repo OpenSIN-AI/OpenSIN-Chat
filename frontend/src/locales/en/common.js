@@ -38,6 +38,7 @@ const TRANSLATIONS = {
       title: "Welcome to OpenSIN Chat",
       description: "Help us make OpenSIN Chat built for your needs. Optional.",
       email: "What's your email?",
+      emailPlaceholder: "you@gmail.com",
       useCase: "What will you use OpenSIN Chat for?",
       useCaseWork: "For work",
       useCasePersonal: "For personal use",
@@ -47,6 +48,7 @@ const TRANSLATIONS = {
         "Reddit, Twitter, GitHub, YouTube, etc. - Let us know how you found us!",
       skip: "Skip Survey",
       thankYou: "Thank you for your feedback!",
+      supportEmail: "team@openafd.com",
     },
   },
   modals: {
@@ -1361,6 +1363,8 @@ const TRANSLATIONS = {
         clientSecret: "Client Secret",
         clientSecretHelp:
           "The client secret value from your Azure AD app registration",
+        clientSecretPlaceholder: "Your client secret...",
+        uuidPlaceholder: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
         configurationRequired:
           "Please configure the Client ID and Client Secret to enable Outlook skills.",
         authRequired:
@@ -1864,6 +1868,8 @@ const TRANSLATIONS = {
       "We recommend at least 2GB of RAM and upload files <10Mb.",
     "warn-end":
       "The built-in model will automatically download on the first use.",
+    sizeMb: "(250mb)",
+    sizeGb: "(1.56GB)",
   },
   embedding: {
     title: "Embedding Preference",
@@ -2376,6 +2382,7 @@ const TRANSLATIONS = {
       empty_cta: "create a new memory",
       tab_workspace: "Workspace",
       tab_global: "Global",
+      count: "({{current}}/{{max}})",
       toggle: {
         label: "Enable Personalization",
         description:
@@ -3867,6 +3874,84 @@ const TRANSLATIONS = {
     previous: "Previous image",
     next: "Next image",
     attachment: "attachment",
+  },
+
+  // ── Batch 9 — i18next/no-literal-string fixes ─────────────────────
+  ui: {
+    loading: "Loading...",
+    dialogTitle: "Dialog",
+    closeDialog: "Close dialog",
+  },
+
+  citation: {
+    referencedTimes: "Referenced {{count}} times.",
+    moreCount: "+ {{count}}",
+  },
+
+  contextualSaveBar: {
+    unsavedChanges: "Unsaved Changes",
+    cancel: "Cancel",
+    save: "Save",
+  },
+
+  agentBuilder: {
+    nodes: {
+      llmInstruction: {
+        instruction: "Instruction",
+        instructionPlaceholder: "Enter instructions for the LLM...",
+        resultVariable: "Result Variable",
+        selectOrCreateVariable: "Select or create variable",
+      },
+    },
+  },
+
+  agentFlows: {
+    empty: {
+      noFlows: "No agent flows found",
+      learnMore: "Learn more about Agent Flows.",
+    },
+    status: {
+      on: "On",
+      off: "Off",
+    },
+  },
+
+  importedSkillConfig: {
+    save: "Save",
+    noOptions: "There are no options to modify for this skill.",
+    deleteSkill: "Delete Skill",
+    descriptionByAuthor: "{{description}} by",
+  },
+
+  userRow: {
+    edit: "Edit",
+    suspend: "Suspend",
+    unsuspend: "Unsuspend",
+    delete: "Delete",
+  },
+
+  pullAndReview: {
+    title: "Review item",
+    pulling: "Pulling item details from community hub...",
+    error: "An error occurred while fetching the item. Please try again later.",
+    tryAnotherItem: "Try another item",
+  },
+
+  customSiteSettings: {
+    updateSuccess:
+      "Site preferences updated! They will reflect on page reload.",
+    titlePlaceholder: "OpenSIN Chat | Your personal LLM trained on anything",
+    titleDefault: "OpenSIN Chat | Your personal LLM trained on anything",
+    faviconPlaceholder: "url to your image",
+    save: "Save",
+  },
+
+  agentConfig: {
+    configureAgentSkills: "Configure Agent Skills",
+    configureDescription:
+      "Customize and enhance the default agent's capabilities by enabling or disabling specific skills. These settings will be applied across all workspaces.",
+    updatingAgent: "Updating agent...",
+    updateWorkspaceAgent: "Update workspace agent",
   },
 };
 

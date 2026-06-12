@@ -60,6 +60,7 @@ export default function SettingsSidebar() {
           <div className="flex items-center justify-center flex-grow gap-x-2">
             <img
               src={logo}
+              // eslint-disable-next-line i18next/no-literal-string
               alt="Logo"
               className="h-6 w-6 max-h-6 max-w-6 object-contain"
             />
@@ -89,6 +90,7 @@ export default function SettingsSidebar() {
                 <div className="flex shrink-1 w-fit items-center justify-start gap-x-2">
                   <img
                     src={logo}
+                    // eslint-disable-next-line i18next/no-literal-string
                     alt="Logo"
                     className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                   />
@@ -144,6 +146,7 @@ export default function SettingsSidebar() {
         >
           <img
             src={logo}
+            // eslint-disable-next-line i18next/no-literal-string
             alt="Logo"
             className="h-6 w-6 max-h-[24px] max-w-[24px] object-contain"
           />
@@ -504,13 +507,17 @@ function AppVersion() {
   const { version, isLoading } = useAppVersion();
   if (isLoading || !version) return null;
   return (
-    <Link
-      to={`https://github.com/Family-Team-Projects/opensin-chat/releases/tag/v${version}`}
-      target="_blank"
-      rel="noreferrer"
-      className="text-theme-text-secondary light:opacity-80 opacity-50 text-xs mx-3"
-    >
-      v{version}
-    </Link>
+    <>
+      {/* eslint-disable i18next/no-literal-string */}
+      <Link
+        to={`https://github.com/Family-Team-Projects/opensin-chat/releases/tag/v${version}`}
+        target="_blank"
+        rel="noreferrer"
+        className="text-theme-text-secondary light:opacity-80 opacity-50 text-xs mx-3"
+      >
+        v{version}
+      </Link>
+      {/* eslint-enable i18next/no-literal-string */}
+    </>
   );
 }

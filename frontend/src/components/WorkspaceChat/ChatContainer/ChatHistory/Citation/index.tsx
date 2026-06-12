@@ -95,6 +95,7 @@ export function SourceTypeCircle({
       {faviconUrl && !imgError ? (
         <img
           src={faviconUrl}
+          // eslint-disable-next-line i18next/no-literal-string
           alt="favicon"
           // Dynamic: dimensions passed as props (runtime variable)
           style={{ width: size, height: size }}
@@ -191,7 +192,7 @@ export default function Citations({ sources = [] }: any) {
       </div>
       {remainingCount > 0 && (
         <span className="text-xs text-white light:text-slate-800">
-          + {remainingCount}
+          {t("citation.moreCount", { count: remainingCount })}
         </span>
       )}
     </button>
@@ -235,7 +236,7 @@ export function CitationDetailModal({ source, onClose }: any) {
           </div>
           {references > 1 && (
             <p className="text-xs text-zinc-400 light:text-slate-500 mt-2">
-              Referenced {references} times.
+              {t("citation.referencedTimes", { count: references })}
             </p>
           )}
           <button

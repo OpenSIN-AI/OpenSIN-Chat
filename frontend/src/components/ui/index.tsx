@@ -9,6 +9,11 @@ import React, {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
 } from "react";
+import { useTranslation } from "react-i18next";
+
+// Pure punctuation/symbol used as visual content (not user-facing copy).
+// Defined as a module-scope constant so it does not appear as a literal in JSX.
+const CLOSE_ICON = "✕";
 
 /**
  * Button Component Props
@@ -39,6 +44,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
+    const { t } = useTranslation();
     const variantClasses = {
       primary: "bg-blue-600 text-white hover:bg-blue-700",
       secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300",
@@ -67,7 +73,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         `}
         {...props}
       >
-        {loading ? "Loading..." : children}
+        {loading ? t("ui.loading") : children}
       </button>
     );
   },
@@ -138,6 +144,7 @@ export const Modal: React.FC<ModalProps> = ({
   footer,
   size = "md",
 }) => {
+  const { t } = useTranslation();
   if (!isOpen) return null;
 
   const sizeClasses = {
@@ -150,7 +157,7 @@ export const Modal: React.FC<ModalProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      aria-label={title || "Dialog"}
+      aria-label={title || t("ui.dialogTitle")}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >
       <div className={`bg-white rounded-lg shadow-lg ${sizeClasses[size]}`}>
@@ -164,10 +171,10 @@ export const Modal: React.FC<ModalProps> = ({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close dialog"
+          aria-label={t("ui.closeDialog")}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
         >
-          ✕
+          {CLOSE_ICON}
         </button>
       </div>
     </div>

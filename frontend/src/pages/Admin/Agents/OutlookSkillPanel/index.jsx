@@ -181,7 +181,12 @@ export default function OutlookSkillPanel({
       <div className="flex flex-col gap-y-[18px] max-w-[500px]">
         <div className="flex w-full justify-between items-center">
           <div className="flex items-center gap-x-2">
-            <img src={OutlookIcon} alt="Outlook" className="w-6 h-6" />
+            <img
+              src={OutlookIcon}
+              // eslint-disable-next-line i18next/no-literal-string
+              alt="Outlook"
+              className="w-6 h-6"
+            />
             <label className="text-theme-text-primary text-md font-bold">
               {title}
             </label>
@@ -381,7 +386,7 @@ function ConfigurationSection({
                 setClientId(e.target.value);
                 setHasChanges(true);
               }}
-              placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+              placeholder={t("agent.skill.outlook.uuidPlaceholder")}
               className="w-full px-3 py-2 bg-theme-bg-primary border border-theme-sidebar-border rounded-lg text-theme-text-primary text-sm placeholder:text-theme-text-secondary/50"
             />
           </div>
@@ -413,7 +418,7 @@ function ConfigurationSection({
                   setTenantId(e.target.value);
                   setHasChanges(true);
                 }}
-                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                placeholder={t("agent.skill.outlook.uuidPlaceholder")}
                 className="w-full px-3 py-2 bg-theme-bg-primary border border-theme-sidebar-border rounded-lg text-theme-text-primary text-sm placeholder:text-theme-text-secondary/50"
               />
             </div>
@@ -445,7 +450,7 @@ function ConfigurationSection({
                 setClientSecret(e.target.value);
                 setHasChanges(true);
               }}
-              placeholder="Your client secret..."
+              placeholder={t("agent.skill.outlook.clientSecretPlaceholder")}
               className="w-full px-3 py-2 bg-theme-bg-primary border border-theme-sidebar-border rounded-lg text-theme-text-primary text-sm placeholder:text-theme-text-secondary/50"
             />
           </div>

@@ -90,7 +90,10 @@ export default function SidebarTabs() {
             {t("chat_window.memories.tab_workspace")}
           </span>
           <span className="text-zinc-400 light:text-slate-600 font-normal">
-            ({memories.workspace.length}/{LIMITS.workspace})
+            {t("chat_window.memories.count", {
+              current: memories.workspace.length,
+              max: LIMITS.workspace,
+            })}
           </span>
         </button>
         <button
@@ -108,7 +111,10 @@ export default function SidebarTabs() {
             {t("chat_window.memories.tab_global")}
           </span>
           <span className="text-zinc-400 light:text-slate-600 font-normal">
-            ({memories.global.length}/{LIMITS.global})
+            {t("chat_window.memories.count", {
+              current: memories.global.length,
+              max: LIMITS.global,
+            })}
           </span>
         </button>
       </div>

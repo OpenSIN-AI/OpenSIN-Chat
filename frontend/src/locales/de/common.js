@@ -39,6 +39,7 @@ const TRANSLATIONS = {
       description:
         "Helfen Sie uns, OpenSIN Chat an Ihre Bedürfnisse anzupassen. (Optional)",
       email: "Wie lautet Ihre E-Mail-Adresse?",
+      emailPlaceholder: "sie@gmail.com",
       useCase: "Wofür möchten Sie OpenSIN Chat verwenden?",
       useCaseWork: "Beruflich",
       useCasePersonal: "Privat",
@@ -48,6 +49,7 @@ const TRANSLATIONS = {
         "Reddit, Twitter, GitHub, YouTube, etc. – Teilen Sie uns mit, wie Sie uns entdeckt haben!",
       skip: "Umfrage überspringen",
       thankYou: "Vielen Dank für Ihr Feedback!",
+      supportEmail: "team@openafd.com",
     },
   },
   modals: {
@@ -721,6 +723,8 @@ const TRANSLATIONS = {
         clientSecret: "Client-Schlüssel",
         clientSecretHelp:
           "Der geheime Wert, den Sie für die Registrierung Ihrer Azure AD-Anwendung festgelegt haben.",
+        clientSecretPlaceholder: "Ihr Client-Schlüssel...",
+        uuidPlaceholder: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
         configurationRequired:
           "Bitte konfigurieren Sie die Client-ID und den Client-Schlüssel, um die Outlook-Funktionen zu aktivieren.",
         authRequired:
@@ -1150,6 +1154,8 @@ const TRANSLATIONS = {
       "Wir empfehlen mindestens 2 GB RAM und das Hochladen von Dateien <10 MB.",
     "warn-end":
       "Das eingebaute Modell wird bei der ersten Verwendung automatisch heruntergeladen.",
+    sizeMb: "(250 MB)",
+    sizeGb: "(1,56 GB)",
   },
   embedding: {
     title: "Einbettungspräferenz",
@@ -1578,6 +1584,7 @@ const TRANSLATIONS = {
       empty_cta: "erstellen Sie einen neuen Speicher",
       tab_workspace: "Arbeitsbereich",
       tab_global: "Global",
+      count: "({{current}}/{{max}})",
       toggle: {
         label: "Personalisierung aktivieren",
         description:
@@ -3942,6 +3949,85 @@ const TRANSLATIONS = {
     previous: "Vorheriges Bild",
     next: "Nächstes Bild",
     attachment: "Anhang",
+  },
+
+  // ── Batch 9 — i18next/no-literal-string fixes ─────────────────────
+  ui: {
+    loading: "Wird geladen...",
+    dialogTitle: "Dialog",
+    closeDialog: "Dialog schließen",
+  },
+
+  citation: {
+    referencedTimes: "{{count}}-mal referenziert.",
+    moreCount: "+ {{count}}",
+  },
+
+  contextualSaveBar: {
+    unsavedChanges: "Ungespeicherte Änderungen",
+    cancel: "Abbrechen",
+    save: "Speichern",
+  },
+
+  agentBuilder: {
+    nodes: {
+      llmInstruction: {
+        instruction: "Anweisung",
+        instructionPlaceholder: "Anweisungen für das LLM eingeben...",
+        resultVariable: "Ergebnisvariable",
+        selectOrCreateVariable: "Variable auswählen oder erstellen",
+      },
+    },
+  },
+
+  agentFlows: {
+    empty: {
+      noFlows: "Keine Agent-Flows gefunden",
+      learnMore: "Mehr über Agent-Flows erfahren.",
+    },
+    status: {
+      on: "An",
+      off: "Aus",
+    },
+  },
+
+  importedSkillConfig: {
+    save: "Speichern",
+    noOptions: "Für diesen Skill gibt es keine zu ändernden Optionen.",
+    deleteSkill: "Skill löschen",
+    descriptionByAuthor: "{{description}} von",
+  },
+
+  userRow: {
+    edit: "Bearbeiten",
+    suspend: "Sperren",
+    unsuspend: "Entsperren",
+    delete: "Löschen",
+  },
+
+  pullAndReview: {
+    title: "Element überprüfen",
+    pulling: "Elementdetails werden aus dem Community Hub geladen...",
+    error:
+      "Beim Abrufen des Elements ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+    tryAnotherItem: "Anderes Element versuchen",
+  },
+
+  customSiteSettings: {
+    updateSuccess:
+      "Seiteneinstellungen aktualisiert! Sie werden beim Neuladen der Seite wirksam.",
+    titlePlaceholder: "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
+    titleDefault: "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
+    faviconPlaceholder: "URL zu Ihrem Bild",
+    save: "Speichern",
+  },
+
+  agentConfig: {
+    configureAgentSkills: "Agent-Skills konfigurieren",
+    configureDescription:
+      "Passen Sie die Fähigkeiten des Standard-Agenten an, indem Sie bestimmte Skills aktivieren oder deaktivieren. Diese Einstellungen gelten für alle Arbeitsbereiche.",
+    updatingAgent: "Agent wird aktualisiert...",
+    updateWorkspaceAgent: "Workspace-Agent aktualisieren",
   },
 };
 

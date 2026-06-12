@@ -21,6 +21,8 @@ export default function NativeTranscriptionOptions({ settings }: any) {
             onChange={(e) => setModel((e.target as unknown as any)?.value)}
             className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
           >
+            {/* Model identifiers are technical tokens, not user-facing copy. */}
+            {/* eslint-disable-next-line i18next/no-literal-string */}
             {["Xenova/whisper-small", "Xenova/whisper-large"].map(
               (value, i) => {
                 return (
@@ -61,7 +63,9 @@ function WhisperSmall() {
           {t("transcription.warn-recommend")}
           <br />
           <br />
-          <i>{t("transcription.warn-end")} (250mb)</i>
+          <i>
+            {t("transcription.warn-end")} {t("transcription.sizeMb")}
+          </i>
         </p>
       </div>
     </div>
@@ -81,7 +85,9 @@ function WhisperLarge() {
           {t("transcription.warn-recommend")}
           <br />
           <br />
-          <i>{t("transcription.warn-end")} (1.56GB)</i>
+          <i>
+            {t("transcription.warn-end")} {t("transcription.sizeGb")}
+          </i>
         </p>
       </div>
     </div>
