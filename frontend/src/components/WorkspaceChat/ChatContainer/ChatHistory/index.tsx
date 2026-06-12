@@ -366,7 +366,7 @@ function buildMessages({
           }
         >
           <Chartable props={props} />
-        </Suspense>
+        </Suspense>,
       );
     } else if (props.type === "fileDownloadCard" && !!props.content) {
       // #55: Auto-open the preview sidebar only for reports just streamed in

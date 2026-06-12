@@ -1,9 +1,10 @@
 # OpenSIN Chat — ROADMAP (GSD-Style)
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
-> **Aktueller Stand:** Phase 2 fast fertig, Phase 3 in Planung.  
+> **Aktueller Stand:** Phase 2 ✅ COMPLETE (inkl. PDF Analysis, Infrastruktur), Phase 3 in PLAN.md  
 > **Repo:** [Family-Team-Projects/OpenSIN-Chat](https://github.com/Family-Team-Projects/OpenSIN-Chat)  
-> **Letztes Update:** 2026-06-06
+> **Letztes Update:** 2026-06-12  
+> **Aktueller PLAN:** [PLAN.md](PLAN.md) — 5 Prioritäten mit geschätztem Aufwand
 
 ---
 
@@ -40,7 +41,7 @@
 
 ---
 
-## Phase 2: Core Features & Integration 🔄 **IN PROGRESS (90%)**
+## Phase 2: Core Features & Integration ✅ **COMPLETE (100%)**
 
 > **Zeitraum:** Juni 2026  
 > **Ziel:** Alle neuen OpenSIN-Features in die Codebase integrieren, AI-Providers verbinden, UI/UX polieren.  
@@ -118,92 +119,89 @@
 | 2.38 | Document Processor 503 | ⚠️ | Python-Service offline – erwartet, kein Bug |
 | 2.39 | Logo 204 (No Custom Logo) | ⚠️ | Harmless – kein Custom Logo hochgeladen |
 
-### Phase 2 Blocker
+### 2G: Multi-Agent PDF Analysis Module ✅
 
-| Blocker | Status | Action |
-|---------|--------|--------|
-| **User Browser Cache** | 🔴 | Hard Refresh (`Cmd+Shift+R`) oder DevTools → Clear Site Data |
-| **Vercel Pool Credits** | 🔴 | `insufficient_funds` – Credits nachladen |
-| **Politician DB leer** | 🔴 | Sync-Job noch nicht gelaufen → Issue #21 |
-| **npm audit (44 vulns)** | 🟡 | `--force` nötig, aber upstream transitive deps |
+| # | Feature | Status | Commit / Issue |
+|---|---------|--------|---------------|
+| 2.40 | PDF Analysis Architektur (Agents, Pipeline, UI) | ✅ | `server/utils/pdfAnalysis/` (18 Server-Module) |
+| 2.41 | Range-basiertes PDF-Streaming (Seite 1–1000) | ✅ | `pdfReader.js` – Konfigurierbare Step-Größe |
+| 2.42 | OCR (tesseract.js, Deutsch + Englisch) | ✅ | `ocr.js` – Fallback-Kaskade |
+| 2.43 | Vision Agent (MiniCPM-V Ollama + Cloud) | ✅ | `visionAgent.js` + `localVision.js` – `auto\|ollama\|cloud` |
+| 2.44 | Deep Scan Extraktion | ✅ | `deepScan.js` – Tabellen, Metadaten, Struktur |
+| 2.45 | AIMD Adaptive Parallelität | ✅ | `agentPool.js` – Congestion-Avoidance |
+| 2.46 | Deterministische Fact-Verifikation | ✅ | `factVerifier.js` – Substring-Quote-Match ±1 Seite |
+| 2.47 | Cross-Check (URL/PDF/YouTube/Suche) | ✅ | `crossCheck/` – Serper + SearchApi Deep-Web |
+| 2.48 | Corpus Comparison (Multi-PDF Konsens/Konflikt) | ✅ | `corpus/comparator.js` + `corpus/index.js` |
+| 2.49 | SQLite+FTS5 Fakt-Store (Millionen-Fakten) | ✅ | `factStore.js` – Auto-Migration von facts.json |
+| 2.50 | 2-Stage Critic Agent (Reflexion + Repair) | ✅ | `criticAgent.js` – Selbstkorrektur |
+| 2.51 | Citation Grounding + Source Linking | ✅ | `synthesizer.js` – Seitenzahlen, URLs |
+| 2.52 | Retention & Cleanup Scheduler | ✅ | `retention.js` – Alter/Size-basiert |
+| 2.53 | Security (Rate-Limit, Auth, Path-Traversal) | ✅ | `security.js` – Multi-Layer |
+| 2.54 | Live Telemetry / ETA | ✅ | `jobStore.js` – SSE-Rückkanal |
+| 2.55 | Browser-UI (4 Tabs: Analysen, Fakten, Cross-Check, Korpus) | ✅ | `frontend/src/pages/PdfAnalysis/` |
+| 2.56 | Report Download (`.md`) | ✅ | PDF → Markdown Export |
+| 2.57 | Agent Plugin (`@pdf-analyze`) | ✅ | `server/utils/agents/aibitat/plugins/pdf-analyze.js` |
+| 2.58 | REST API (`/api/pdfAnalysis/*`) | ✅ | `server/endpoints/api/pdfAnalysis/index.js` |
+| 2.59 | Config-ENVs (19 Parameter) | ✅ | `config.js` + `.env.example` |
+
+### 2H: Infrastructure & Bugfixes ✅
+
+| # | Feature | Status | Commit / Issue |
+|---|---------|--------|---------------|
+| 2.60 | Cloudflare Tunnel Health-Check (beide Tunnels) | ✅ | `tunnel-health-check.sh` + cron 30s |
+| 2.61 | ESLint 320→0 Errors (Flat Config) | ✅ | Commit `c5a1503f` |
+| 2.62 | i18next Warnings 1976→1859 (−6%) | ✅ | 5 Top-Files gefixt, ~230 Keys hinzugefügt |
+| 2.63 | Chart.js TDZ Fix (React.lazy + Suspense) | ✅ | Commit `5e28b6d7` |
+| 2.64 | Cache-Control Header (no-cache, no-store) | ✅ | MetaGenerator + Express Middleware |
+| 2.65 | Container Deploy (docker cp + root cleanup) | ✅ | Hot-Deploy ohne Rebuild |
+
+### 2I: Workspace & UI Features ✅
+
+| # | Feature | Status | Commit / Issue |
+|---|---------|--------|---------------|
+| 2.66 | SidebarTabs (Sources ↔ Memories) | ✅ | `b36e0144` |
+| 2.67 | SourcesSidebar mit Workspace-Fallback | ✅ | `8ac62a24` |
+| 2.68 | SourceFilter (All/Documents/Media) | ✅ | `8ac62a24` |
+| 2.69 | ChatSettingsMenu + SourcesRow | ✅ | `8ac62a24` |
+| 2.70 | MemoriesSidebar Syntax Fix | ✅ | `620f849d` |
+
+### Phase 2 Blocker (gelöst)
+
+| Blocker | Status | Resolution |
+|---------|--------|------------|
+| **User Browser Cache** | ✅ | Cache-Control Header gesetzt + alte vendor-charts gelöscht |
+| **Vercel Pool Credits** | 🔴 | `insufficient_funds` – Credits nachladen (bleibt) |
+| **Politician DB leer** | 🔴 | Sync-Job noch nicht gelaufen → Issue #21 (bleibt) |
+| **npm audit (44 vulns)** | 🟡 | `--force` nötig, aber upstream transitive deps (bleibt) |
 | **AIbitat `opencode-zen` Case** | ✅ | Gefixt in `3690f5ed` |
 
 ---
 
-## Phase 3: Production Hardening & Scale 📅 **PLANNED**
+## Phase 3: i18next Elimination & Code Quality 📅 **IN PLAN.md**
 
-> **Ziel:** Vollständige Produktionsreife, Compliance, Tests, Scale-Out.  
-> **ETA:** Juni – Juli 2026
+> **Siehe [PLAN.md](PLAN.md) Priorität 1**  
+> **Ziel:** 1859 i18next Warnings → 0. Geschätzter Aufwand: 4-6h
 
-### 3A: Testing & Quality Gates
+---
 
-| # | Feature | Status | Issue |
-|---|---------|--------|-------|
-| 3.1 | Unit Tests (Politician DB) | 📅 | #22 |
-| 3.2 | Unit Tests (Research Pipeline) | 📅 | #22 |
-| 3.3 | Unit Tests (PDF Reports) | 📅 | #22 |
-| 3.4 | Unit Tests (Orchestrator) | 📅 | #22 |
-| 3.5 | Integration Tests (E2E Chat Flow) | 📅 | #22 |
-| 3.6 | Performance Tests (Nemotron 1M Context) | 📅 | – |
-| 3.7 | CEO Audit Re-Run (nach Fixes) | 📅 | #24 |
-| 3.8 | Close CEO Audit Gaps (3 MEDIUM, 2 LOW) | 📅 | #24 |
+## Phase 4: PDF Analysis Hardening 📅 **IN PLAN.md**
 
-### 3B: Compliance & Security
+> **Siehe [PLAN.md](PLAN.md) Priorität 2**  
+> **Ziel:** Concurrency-Tuning, Memory-Limits, Job-Timeout, CoDocs. Geschätzter Aufwand: 2-3h
 
-| # | Feature | Status | Issue |
-|---|---------|--------|-------|
-| 3.9 | SPDX SBOM Generation | 📅 | #23, #4 |
-| 3.10 | License Headers (remaining MEDIUM) | 📅 | #3 |
-| 3.11 | Abandoned Packages Audit (MEDIUM) | 📅 | #5 |
-| 3.12 | npm audit --force (44 vulns) | 📅 | #5 |
-| 3.13 | Secret Rotation (Vercel Pool 12 Tokens) | 📅 | – |
-| 3.14 | Dependabot Weekly Scan | ✅ | `.github/dependabot.yml` |
-| 3.15 | CEO Audit CI (automated) | ✅ | `.github/workflows/ceo-audit.yml` |
+---
 
-### 3C: Data & Sync
+## Phase 5: Build Cleanup & Infrastruktur 📅 **IN PLAN.md**
 
-| # | Feature | Status | Issue |
-|---|---------|--------|-------|
-| 3.16 | Politician Sync Job (erster Lauf) | 📅 | #21 |
-| 3.17 | Bundestag 21. WP Migration (parliament ID) | 📅 | – |
-| 3.18 | Abgeordnetenwatch API v2 (neue Felder) | 📅 | – |
-| 3.19 | PostgreSQL + pgvector (Production DB) | 📅 | – |
-| 3.20 | PoliticianVectorStore aktivieren | 📅 | – |
-| 3.21 | Full-Text Search (Speeches, Protocols) | 📅 | – |
+> **Siehe [PLAN.md](PLAN.md) Prioritäten 3+4**  
+> **Ziel:** Build modulepreload-Hints fixen, Tunnel Health-Check via launchd. Geschätzter Aufwand: 1h
 
-### 3D: Browser & Vision
+---
 
-| # | Feature | Status | Issue |
-|---|---------|--------|-------|
-| 3.22 | SIN-Browser-Tools Integration (Vision) | 📅 | #20, #8 |
-| 3.23 | Video Analysis (Frame Extraction) | 📅 | #8 |
-| 3.24 | URL Analysis (Auto-Scrape) | 📅 | #8 |
-| 3.25 | Browser Agent Plugin (`@browser-agent`) | 📅 | #8 |
-| 3.26 | Screenshot → LLM Vision Pipeline | 📅 | #8 |
+## Phase 6: Legacy Issues abarbeiten 📅 **IN PLAN.md**
 
-### 3E: Scale & Deploy
-
-| # | Feature | Status | Issue |
-|---|---------|--------|-------|
-| 3.27 | Cloudflare Tunnel (opensin.delqhi.com) | ✅ | Aktiv |
-| 3.28 | Docker / OrbStack Production | 📅 | – |
-| 3.29 | Helm Chart (Kubernetes) | 📅 | `cloud-deployments/helm/` |
-| 3.30 | OpenShift / AWS / GCP Deployments | 📅 | `cloud-deployments/` |
-| 3.31 | Multi-Node (Horizontal Scaling) | 📅 | – |
-| 3.32 | Redis (Session Cache) | 📅 | – |
-| 3.33 | CDN (Assets) | 📅 | – |
-
-### 3F: Memories & Widgets (Post-MVP)
-
-| # | Feature | Status | Plan Doc |
-|---|---------|--------|----------|
-| 3.34 | Memory System (Auto-Extraction) | 📅 | `docs/PLAN-MEMORIES.md` |
-| 3.35 | Memory Vector Store (pgvector) | 📅 | `docs/PLAN-MEMORIES.md` |
-| 3.36 | Memory Privacy Controls | 📅 | `docs/PLAN-MEMORIES.md` |
-| 3.37 | Embeddable Widget API | 📅 | `docs/PLAN-WIDGET-API.md` |
-| 3.38 | Widget SDK (React, Vue, Vanilla) | 📅 | `docs/PLAN-WIDGET-API.md` |
-| 3.39 | Voice/Vision Enhancements | 📅 | `docs/PLAN-VOICE-VISION.md` |
-| 3.40 | Multi-Provider Fallback Chain | 📅 | `docs/PLAN-MULTI-PROVIDER.md` |
+> **Siehe [PLAN.md](PLAN.md) Priorität 5**  
+> **Ziel:** P0–P3 Issues aus altem Sprint backlog schließen (#105–#117). Geschätzter Aufwand: 8-12h
 
 ---
 
@@ -211,34 +209,52 @@
 
 | Issue | Titel | Phase | Status |
 |-------|-------|-------|--------|
-| #3 | Missing license headers (MEDIUM) | 3B | 🔴 OPEN |
-| #4 | Generate SBOM (LOW) | 3B | 🔴 OPEN |
-| #5 | Abandoned packages (MEDIUM) | 3B | 🔴 OPEN |
-| #6 | Politiker-Datenbank Module | 2B | ✅ DONE (Code) – Sync offen |
-| #7 | Deep Research Pipeline | 2C | ✅ DONE (Code) |
-| #8 | Browser Agent Integration | 3D | 📅 PLANNED |
-| #9 | PDF Report Generator | 2D | ✅ DONE (Code) |
-| #10 | Unified Agent Orchestrator | 2E | ✅ DONE (Code) |
-| #20 | SIN-Browser-Tools Integration | 3D | 📅 PLANNED |
-| #21 | Politician Sync Job | 3C | 🔴 OPEN (Blocker) |
-| #22 | Unit Tests | 3A | 🔴 OPEN |
-| #23 | SPDX SBOM | 3B | 🔴 OPEN |
-| #24 | Finalize CEO Audit | 3A | 🔴 OPEN |
+| #3 | Missing license headers (MEDIUM) | 6 | 🔴 OPEN |
+| #4 | Generate SBOM (LOW) | 6 | 🔴 OPEN |
+| #5 | Abandoned packages (MEDIUM) | 6 | 🔴 OPEN |
+| #6 | Politiker-Datenbank Module | 2B | ✅ DONE |
+| #7 | Deep Research Pipeline | 2C | ✅ DONE |
+| #8 | Browser Agent Integration | 6 | 📅 PLANNED |
+| #9 | PDF Report Generator | 2D | ✅ DONE |
+| #10 | Unified Agent Orchestrator | 2E | ✅ DONE |
+| #20 | SIN-Browser-Tools Integration | 6 | 📅 PLANNED |
+| #21 | Politician Sync Job | 2B | 🔴 OPEN (Blocker) |
+| #22 | Unit Tests | 6 | 🔴 OPEN |
+| #23 | SPDX SBOM | 6 | 🔴 OPEN |
+| #24 | Finalize CEO Audit | 6 | 🔴 OPEN |
+| #105 | [P0] esbuild h-[calc(100%-32px)] | 6 | 🔴 OPEN |
+| #106 | [REFACTOR] getStoragePath() Helper — 30+ Files | 6 | 🔴 OPEN |
+| #108 | [CHORE] Vite define() warning | 6 | 🔴 OPEN |
+| #111 | [STYLE] 21 inline styles | 6 | 🔴 OPEN |
+| #112 | [BUG] NVIDIA NIM model mismatch crash | 6 | 🔴 OPEN |
+| #113 | [BUG] Onboarding 'Weiter' button | 6 | 🔴 OPEN |
+| #114 | [BUG] paths.js Demo-Container | 6 | 🔴 OPEN |
+| #115 | [CHORE] Branches aufräumen | 6 | 🔴 OPEN |
+| #116 | [BUG] @agent crashes on local providers | 6 | 🔴 OPEN |
+| #117 | Repo hardening & consistency | 6 | 🔴 OPEN |
+| #118 | NEW Änderungen | 6 | 🔴 OPEN |
+| #119 | Cloudflare Tunnel 502 Prevention | 2H | 🟡 OPEN (dokumentiert) |
+| #121 | i18next Common UI Strings | 3 | 🔴 OPEN |
+| #125 | Chart.js TDZ Error | 2H | ✅ CLOSED |
 
 ---
 
 ## Quick Stats
 
-- **Total Commits:** 20+ (Phase 1 + 2)
-- **Files Changed:** 150+ (neue Module + Fixes)
+- **Total Commits:** 30+ (Phase 1 + 2 + Hotfixes)
+- **Files Changed:** 200+ (darunter 18 PDF Analysis Module, 4 neue UI-Tabs)
 - **CEO Audit:** Grade A (96.8/100)
-- **GitHub Issues:** 13 offen, 0 geschlossen
-- **CoDocs:** 0 broken refs, 21+ `.doc.md` companions
+- **GitHub Issues:** 22 offen, 3 geschlossen (125, 124, 120)
+- **CoDocs:** 0 broken refs, 30+ `.doc.md` companions
 - **SPDX Headers:** 21 Module mit License-Header
 - **CI/CD:** 2 Workflows (CEO Audit + Dependabot)
+- **Tunnel:** 2 Cloudflare Tunnels (openafd + opensin), Health-Check alle 30s
+- **i18next:** 1859 Warnings remaining (−6% von 1976)
+- **ESLint:** 0 Errors, 0 Warnings (ohne i18next)
 
 ---
 
-*Next Milestone: Phase 2 Closure (Browser-Cache fix + Vercel Credits + Politician Sync)*  
+*Next Milestone: i18next 0 Warnings → PDF Hardening → Build Cleanup*  
 *Owner: @Family-Team-Projects*  
-*Updated: 2026-06-06*
+*Updated: 2026-06-12*  
+*Current PLAN: [PLAN.md](PLAN.md)*

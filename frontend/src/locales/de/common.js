@@ -2324,6 +2324,68 @@ const TRANSLATIONS = {
     connectionFailed:
       "Datenbankverbindung konnte nicht hergestellt werden. Bitte überprüfen Sie Ihre Verbindungsdaten.",
   },
+
+  apiCallNode: {
+    url: "URL",
+    urlPlaceholder: "https://api.example.com/endpoint",
+    insertVariable: "Variable einfügen",
+    selectVariableToInsert: "Variable zum Einfügen auswählen",
+    method: "Methode",
+    headers: "Header",
+    addHeader: "Header hinzufügen",
+    headerName: "Header-Name",
+    headerValue: "Wert",
+    removeHeader: "Header entfernen",
+    requestBody: "Request Body",
+    json: "JSON",
+    rawText: "Rohtext",
+    formData: "Formulardaten",
+    jsonPlaceholder: '{"key": "value"}',
+    formKey: "Schlüssel",
+    formValue: "Wert",
+    removeField: "Feld entfernen",
+    addFormField: "Formularfeld hinzufügen",
+    rawRequestBody: "Roher Anfragebody...",
+    storeResponseIn: "Antwort speichern in",
+    selectOrCreateVariable: "Variable auswählen oder erstellen",
+  },
+
+  drupalWiki: {
+    baseUrlLabel: "Drupal Wiki Basis-URL",
+    baseUrlDescription:
+      "Dies ist die Basis-URL Ihrer <a>Drupal Wiki</a>-Seite.",
+    baseUrlPlaceholder:
+      "z.B. https://mywiki.drupal-wiki.net, https://drupalwiki.myfirma.tld, usw...",
+    spaceIdsLabel: "Drupal Wiki Space-IDs",
+    spaceIdsDescription:
+      "Kommagetrennte Space-IDs, die Sie extrahieren möchten. Siehe <a>Handbuch</a> zum Abrufen der Space-IDs. Stellen Sie sicher, dass Ihr 'API-Token-Benutzer' Zugriff auf diese Spaces hat.",
+    spaceIdsPlaceholder: "z.B. 12,34,69",
+    apiTokenLabel: "Drupal Wiki API-Token",
+    apiTokenTooltip:
+      "Sie müssen einen API-Token zur Authentifizierung bereitstellen. Siehe das Drupal Wiki <a>Handbuch</a> zum Generieren eines API-Tokens für Ihren Benutzer.",
+    apiTokenDescription: "Zugriffstoken für die Authentifizierung.",
+    apiTokenPlaceholder: "pat:123",
+    submitButton: "Absenden",
+    collectingButton: "Seiten werden gesammelt...",
+    collectingDescription:
+      "Nach Abschluss stehen alle Seiten zur Einbettung in Workspaces zur Verfügung.",
+    toastFetching:
+      "Alle Seiten für die angegebenen Drupal Wiki Spaces werden abgerufen - dies kann eine Weile dauern.",
+    toastSuccess:
+      "Seiten von Drupal Wiki Spaces {{spaceIds}} gesammelt. Ausgabeordner ist {{destination}}.",
+  },
+
+  fileUploadWarning: {
+    embeddingProgress: "Einbettung {{current}} von {{total}} {{fileWord}}",
+    pleaseWait: "Bitte warten Sie, während wir Ihre Dateien einbetten...",
+    title: "Kontextfenster-Warnung",
+    description:
+      "Ihr Workspace verwendet {{tokenCount}} von {{maxTokens}} verfügbaren Token. Wir empfehlen, die Nutzung unter {{limit}}% zu halten, um die beste Chat-Erfahrung zu gewährleisten. Das Hinzufügen von {{fileCount}} weiteren {{fileWord}} würde dieses Limit überschreiten. <a>Mehr über Kontextfenster erfahren →</a>",
+    chooseAction: "Wählen Sie, wie Sie mit diesen Uploads fortfahren möchten.",
+    cancel: "Abbrechen",
+    continueAnyway: "Trotzdem fortfahren",
+    embedFile: "{{fileWord}} einbetten",
+  },
 };
 
 export default TRANSLATIONS;

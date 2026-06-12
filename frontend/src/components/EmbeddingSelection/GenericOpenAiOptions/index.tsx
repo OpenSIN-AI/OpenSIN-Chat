@@ -1,22 +1,24 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
 export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [showAdvancedControls, setShowAdvancedControls] = useState(false);
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5 flex-wrap">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Base URL
+            {t("genericOpenAiEmbedding.baseUrlLabel")}
           </label>
           <input
             type="url"
             name="EmbeddingBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="https://api.openai.com/v1"
+            placeholder={t("genericOpenAiEmbedding.baseUrlPlaceholder")}
             defaultValue={settings?.EmbeddingBasePath}
             required={true}
             autoComplete="off"
@@ -25,13 +27,13 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Embedding Model
+            {t("genericOpenAiEmbedding.modelLabel")}
           </label>
           <input
             type="text"
             name="EmbeddingModelPref"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="text-embedding-ada-002"
+            placeholder={t("genericOpenAiEmbedding.modelPlaceholder")}
             defaultValue={settings?.EmbeddingModelPref}
             required={true}
             autoComplete="off"
@@ -49,17 +51,17 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
               className="text-theme-text-secondary cursor-pointer"
             />
             <label className="text-white text-sm font-semibold block">
-              Max embedding chunk length
+              {t("genericOpenAiEmbedding.maxChunkLengthLabel")}
             </label>
             <Tooltip id="max-embedding-chunk-length-tooltip">
-              Maximum length of text chunks, in characters, for embedding.
+              {t("genericOpenAiEmbedding.maxChunkLengthTooltip")}
             </Tooltip>
           </div>
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="8192"
+            placeholder={t("genericOpenAiEmbedding.maxChunkLengthPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
             defaultValue={settings?.EmbeddingModelMaxChunkLength}
@@ -72,14 +74,17 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex flex-col gap-y-1 mb-4">
             <label className="text-white text-sm font-semibold flex items-center gap-x-2">
-              API Key <p className="!text-xs !italic !font-thin">optional</p>
+              {t("genericOpenAiEmbedding.apiKeyLabel")}{" "}
+              <p className="!text-xs !italic !font-thin">
+                {t("genericOpenAiEmbedding.optional")}
+              </p>
             </label>
           </div>
           <input
             type="password"
             name="GenericOpenAiEmbeddingApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="sk-mysecretkey"
+            placeholder={t("genericOpenAiEmbedding.apiKeyPlaceholder")}
             defaultValue={
               settings?.GenericOpenAiEmbeddingApiKey ? "*".repeat(20) : ""
             }
@@ -93,8 +98,8 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
           type="button"
           aria-label={
             showAdvancedControls
-              ? "Hide advanced settings"
-              : "Show advanced settings"
+              ? t("genericOpenAiEmbedding.hideAdvancedAria")
+              : t("genericOpenAiEmbedding.showAdvancedAria")
           }
           onClick={(e) => {
             e.preventDefault();
@@ -102,7 +107,10 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
           }}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} advanced settings
+          {showAdvancedControls
+            ? t("genericOpenAiEmbedding.hideAdvanced")
+            : t("genericOpenAiEmbedding.showAdvanced")}{" "}
+          {t("genericOpenAiEmbedding.advancedSettings")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -115,15 +123,19 @@ export default function GenericOpenAiEmbeddingOptions({ settings }: any) {
           <div className="flex flex-col w-60">
             <div className="flex flex-col gap-y-1 mb-4">
               <label className="text-white text-sm font-semibold flex items-center gap-x-2">
-                Max concurrent Chunks
-                <p className="!text-xs !italic !font-thin">optional</p>
+                {t("genericOpenAiEmbedding.maxConcurrentChunksLabel")}
+                <p className="!text-xs !italic !font-thin">
+                  {t("genericOpenAiEmbedding.optional")}
+                </p>
               </label>
             </div>
             <input
               type="number"
               name="GenericOpenAiEmbeddingMaxConcurrentChunks"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="500"
+              placeholder={t(
+                "genericOpenAiEmbedding.maxConcurrentChunksPlaceholder",
+              )}
               min={1}
               onScroll={(e) => (e.target as HTMLElement).blur()}
               defaultValue={settings?.GenericOpenAiEmbeddingMaxConcurrentChunks}

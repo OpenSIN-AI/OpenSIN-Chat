@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
 import {
   CaretDown,
@@ -13,6 +14,7 @@ import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDis
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LMStudioEmbeddingOptions({ settings }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -51,21 +53,21 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
             className="flex gap-x-1 items-center mb-3"
           >
             <label className="text-white text-sm font-semibold block">
-              Max embedding chunk length
+              {t("lmStudioEmbedding.maxChunkLengthLabel")}
             </label>
             <Info
               size={16}
               className="text-theme-text-secondary cursor-pointer"
             />
             <Tooltip id="max-embedding-chunk-length-tooltip">
-              Maximum length of text chunks, in characters, for embedding.
+              {t("lmStudioEmbedding.maxChunkLengthTooltip")}
             </Tooltip>
           </div>
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="8192"
+            placeholder="8192" /* eslint-disable-line i18next/no-literal-string */
             min={1}
             value={maxChunkLength}
             onChange={handleMaxChunkLengthChange}
@@ -80,8 +82,8 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
           type="button"
           aria-label={
             showAdvancedControls
-              ? "Hide manual endpoint input"
-              : "Show manual endpoint input"
+              ? t("lmStudioEmbedding.hideManualEndpointAria")
+              : t("lmStudioEmbedding.showManualEndpointAria")
           }
           onClick={(e) => {
             e.preventDefault();
@@ -89,7 +91,10 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
           }}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} Manual Endpoint Input
+          {showAdvancedControls
+            ? t("lmStudioEmbedding.hideManualEndpoint")
+            : t("lmStudioEmbedding.showManualEndpoint")}{" "}
+          {t("lmStudioEmbedding.manualEndpointInput")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -104,13 +109,13 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-1">
                 <label className="text-white text-sm font-semibold">
-                  LM Studio Base URL
+                  {t("lmStudioEmbedding.baseUrlLabel")}
                 </label>
                 <Info
                   size={18}
                   className="text-theme-text-secondary cursor-pointer"
                   data-tooltip-id="lmstudio-base-url"
-                  data-tooltip-content="Enter the URL where LM Studio is running."
+                  data-tooltip-content={t("lmStudioEmbedding.baseUrlTooltip")}
                 />
                 <Tooltip
                   id="lmstudio-base-url"
@@ -129,11 +134,11 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
                   {!basePathValue.value && (
                     <button
                       type="button"
-                      aria-label="Auto-detect LM Studio base URL"
+                      aria-label={t("lmStudioEmbedding.autoDetectAria")}
                       onClick={handleAutoDetectClick}
                       className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("lmStudioEmbedding.autoDetect")}
                     </button>
                   )}
                 </>
@@ -143,7 +148,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
               type="url"
               name="EmbeddingBasePath"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="http://localhost:1234/v1"
+              placeholder={t("lmStudioEmbedding.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
               autoComplete="off"
@@ -155,7 +160,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
           <div className="flex flex-col w-60">
             <div className="flex items-center mb-2 gap-x-1">
               <label className="text-white text-sm font-semibold">
-                Authentication Token
+                {t("lmStudioEmbedding.authTokenLabel")}
               </label>
               <Info
                 size={18}
@@ -171,10 +176,11 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
                 className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
               >
                 <p className="text-xs leading-[18px] font-base">
-                  Enter a <code>Bearer</code> Auth Token for interacting with
-                  your LM Studio server.
+                  {t("lmStudioEmbedding.authTokenTooltipPart1")}{" "}
+                  <code>{t("lmStudioEmbedding.authTokenTooltipBearer")}</code>{" "}
+                  {t("lmStudioEmbedding.authTokenTooltipPart2")}
                   <br /> <br />
-                  Useful if running LM Studio behind an authentication or proxy.
+                  {t("lmStudioEmbedding.authTokenTooltipPart3")}
                 </p>
               </Tooltip>
             </div>
@@ -182,7 +188,7 @@ export default function LMStudioEmbeddingOptions({ settings }: any) {
               type="password"
               name="LMStudioAuthToken"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
-              placeholder="LM Studio Auth Token"
+              placeholder={t("lmStudioEmbedding.authTokenPlaceholder")}
               defaultValue={settings?.LMStudioAuthToken ? "*".repeat(20) : ""}
               value={authTokenValue.value}
               onChange={authToken.onChange}
@@ -203,6 +209,7 @@ function LMStudioModelSelection({
   basePath = null,
   apiKey = null,
 }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading: loading } = useProviderModels(
     basePath ? "lmstudio" : null,
     apiKey,
@@ -214,7 +221,7 @@ function LMStudioModelSelection({
       <div className="flex flex-col w-60">
         <div className="flex items-center mb-2 gap-x-1">
           <label className="text-white text-sm font-semibold">
-            Embedding Model
+            {t("lmStudioEmbedding.modelLabel")}
           </label>
           {!loading && !!basePath && (
             <>
@@ -232,8 +239,7 @@ function LMStudioModelSelection({
                 className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
               >
                 <p className="text-xs leading-[18px] font-base">
-                  Could not reach LM Studio. Verify the URL is correct and the
-                  LMStudio server is running and accessible.
+                  {t("lmStudioEmbedding.modelErrorTooltip")}
                 </p>
               </Tooltip>
             </>
@@ -246,10 +252,10 @@ function LMStudioModelSelection({
         >
           <option disabled={true} selected={true}>
             {loading
-              ? "--loading available models--"
+              ? t("lmStudioEmbedding.loadingModels")
               : !!basePath
-                ? "No models found"
-                : "Enter LM Studio URL first"}
+                ? t("lmStudioEmbedding.noModelsFound")
+                : t("lmStudioEmbedding.enterUrlFirst")}
           </option>
         </select>
       </div>
@@ -259,7 +265,7 @@ function LMStudioModelSelection({
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-2">
-        LM Studio Embedding Model
+        {t("lmStudioEmbedding.modelLabelReady")}
       </label>
       <select
         name="EmbeddingModelPref"
@@ -267,7 +273,7 @@ function LMStudioModelSelection({
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("lmStudioEmbedding.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option
@@ -283,7 +289,7 @@ function LMStudioModelSelection({
         )}
       </select>
       <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-        Choose the LM Studio model you want to use for generating embeddings.
+        {t("lmStudioEmbedding.modelDescription")}
       </p>
     </div>
   );

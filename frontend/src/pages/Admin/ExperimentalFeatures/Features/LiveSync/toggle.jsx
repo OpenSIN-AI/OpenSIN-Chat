@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
 import System from "@/models/system";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
@@ -8,13 +9,14 @@ import { Link } from "react-router-dom";
 import Toggle from "@/components/lib/Toggle";
 
 export default function LiveSyncToggle({ enabled = false, onToggle }) {
+  const { t } = useTranslation();
   const [status, setStatus] = useState(enabled);
 
   async function toggleFeatureFlag() {
     const updated =
       await System.experimentalFeatures.liveSync.toggleFeature(!status);
     if (!updated) {
-      showToast("Failed to update status of feature.", "error", {
+      showToast(t("experimentalFeatures.toggleFailed"), "error", {
         clear: true,
       });
       return false;
@@ -22,9 +24,9 @@ export default function LiveSyncToggle({ enabled = false, onToggle }) {
 
     setStatus(!status);
     showToast(
-      `Live document content sync has been ${
-        !status ? "enabled" : "disabled"
-      }.`,
+      !status
+        ? t("experimentalFeatures.toggleEnabled")
+        : t("experimentalFeatures.toggleDisabled"),
       "success",
       { clear: true },
     );
@@ -36,23 +38,19 @@ export default function LiveSyncToggle({ enabled = false, onToggle }) {
       <div className="flex flex-col gap-y-6 max-w-[500px]">
         <div className="flex items-center justify-between">
           <h2 className="text-theme-text-primary text-md font-bold">
-            Automatic Document Content Sync
+            {t("experimentalFeatures.autoSyncTitle")}
           </h2>
           <Toggle size="lg" enabled={status} onChange={toggleFeatureFlag} />
         </div>
         <div className="flex flex-col space-y-4">
           <p className="text-theme-text-secondary text-sm">
-            Enable the ability to specify a document to be "watched". Watched
-            document's content will be regularly fetched and updated in OpenSIN
-            Chat.
+            {t("experimentalFeatures.autoSyncDesc1")}
           </p>
           <p className="text-theme-text-secondary text-sm">
-            Watched documents will automatically update in all workspaces they
-            are referenced in at the same time of update.
+            {t("experimentalFeatures.autoSyncDesc2")}
           </p>
           <p className="text-theme-text-secondary text-xs italic">
-            This feature only applies to web-based content, such as websites,
-            Confluence, YouTube, and GitHub files.
+            {t("experimentalFeatures.autoSyncDesc3")}
           </p>
         </div>
       </div>
@@ -66,7 +64,7 @@ export default function LiveSyncToggle({ enabled = false, onToggle }) {
               rel="noreferrer"
             >
               <ArrowSquareOut size={14} />
-              <span>Feature Documentation and Warnings</span>
+              <span>{t("experimentalFeatures.featureDocs")}</span>
             </a>
           </li>
           <li>
@@ -74,7 +72,7 @@ export default function LiveSyncToggle({ enabled = false, onToggle }) {
               to={paths.experimental.liveDocumentSync.manage()}
               className="text-sm text-blue-400 light:text-blue-500 hover:underline"
             >
-              Manage Watched Documents &rarr;
+              {t("experimentalFeatures.manageWatched")}
             </Link>
           </li>
         </ul>

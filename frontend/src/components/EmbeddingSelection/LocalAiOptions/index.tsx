@@ -6,8 +6,10 @@ import PreLoader from "@/components/Preloader";
 import { LOCALAI_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { Tooltip } from "react-tooltip";
+import { useTranslation } from "react-i18next";
 
 export default function LocalAiOptions({ settings }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -35,7 +37,7 @@ export default function LocalAiOptions({ settings }: any) {
           <div className="flex flex-col gap-y-1 mb-2">
             <div className="flex gap-x-1 items-center">
               <label className="text-white text-sm font-semibold block">
-                Local AI API Key
+                {t("localAiEmbedding.apiKeyLabel")}
               </label>
               <Info
                 size={16}
@@ -48,7 +50,7 @@ export default function LocalAiOptions({ settings }: any) {
                 delayShow={300}
                 className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
               >
-                The API key for the LocalAI server (if applicable).
+                {t("localAiEmbedding.apiKeyTooltip")}
               </Tooltip>
             </div>
           </div>
@@ -56,7 +58,7 @@ export default function LocalAiOptions({ settings }: any) {
             type="password"
             name="LocalAiApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="sk-mysecretkey"
+            placeholder={t("localAiEmbedding.apiKeyPlaceholder")}
             defaultValue={settings?.LocalAiApiKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
@@ -75,7 +77,7 @@ export default function LocalAiOptions({ settings }: any) {
             className="flex gap-x-1 items-center mb-3"
           >
             <label className="text-white text-sm font-semibold block">
-              Max embedding chunk length
+              {t("localAiEmbedding.maxChunkLengthLabel")}
             </label>
             <Info
               size={16}
@@ -87,14 +89,14 @@ export default function LocalAiOptions({ settings }: any) {
               delayShow={300}
               className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
             >
-              Maximum length of text chunks, in characters, for embedding.
+              {t("localAiEmbedding.maxChunkLengthTooltip")}
             </Tooltip>
           </div>
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="1000"
+            placeholder={t("localAiEmbedding.maxChunkLengthPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
             defaultValue={settings?.EmbeddingModelMaxChunkLength}
@@ -109,7 +111,7 @@ export default function LocalAiOptions({ settings }: any) {
             className="flex gap-x-1 items-center mb-3"
           >
             <label className="text-white text-sm font-semibold block">
-              Output dimensions
+              {t("localAiEmbedding.outputDimensionsLabel")}
             </label>
             <Info
               size={16}
@@ -121,18 +123,16 @@ export default function LocalAiOptions({ settings }: any) {
               delayShow={300}
               className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
             >
-              The number of dimensions the resulting output embeddings should
-              have if it supports multiple dimensions output.
+              {t("localAiEmbedding.outputDimensionsTooltip1")}
               <br />
-              <br /> Leave blank to use the default dimensions for the selected
-              model.
+              <br /> {t("localAiEmbedding.outputDimensionsTooltip2")}
             </Tooltip>
           </div>
           <input
             type="number"
             name="EmbeddingOutputDimensions"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Assume default dimensions"
+            placeholder={t("localAiEmbedding.outputDimensionsPlaceholder")}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
             defaultValue={settings?.EmbeddingOutputDimensions}
@@ -146,8 +146,8 @@ export default function LocalAiOptions({ settings }: any) {
           type="button"
           aria-label={
             showAdvancedControls
-              ? "Hide advanced settings"
-              : "Show advanced settings"
+              ? t("localAiEmbedding.hideAdvancedAria")
+              : t("localAiEmbedding.showAdvancedAria")
           }
           onClick={(e) => {
             e.preventDefault();
@@ -155,7 +155,10 @@ export default function LocalAiOptions({ settings }: any) {
           }}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} advanced settings
+          {showAdvancedControls
+            ? t("localAiEmbedding.hideAdvanced")
+            : t("localAiEmbedding.showAdvanced")}{" "}
+          {t("localAiEmbedding.advancedSettings")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -168,7 +171,7 @@ export default function LocalAiOptions({ settings }: any) {
           <div className="flex flex-col w-60">
             <div className="flex justify-between items-center mb-2">
               <label className="text-white text-sm font-semibold">
-                LocalAI Base URL
+                {t("localAiEmbedding.baseUrlLabel")}
               </label>
               {loading ? (
                 <PreLoader size="6" />
@@ -177,11 +180,11 @@ export default function LocalAiOptions({ settings }: any) {
                   {!basePathValue.value && (
                     <button
                       type="button"
-                      aria-label="Auto-detect LocalAI base URL"
+                      aria-label={t("localAiEmbedding.autoDetectAria")}
                       onClick={handleAutoDetectClick}
                       className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("localAiEmbedding.autoDetect")}
                     </button>
                   )}
                 </>
@@ -191,7 +194,7 @@ export default function LocalAiOptions({ settings }: any) {
               type="url"
               name="EmbeddingBasePath"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="http://localhost:8080/v1"
+              placeholder={t("localAiEmbedding.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
               autoComplete="off"
@@ -211,6 +214,7 @@ function LocalAIModelSelection({
   apiKey = null,
   basePath = null,
 }: any) {
+  const { t } = useTranslation();
   const [customModels, setCustomModels] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -237,7 +241,7 @@ function LocalAIModelSelection({
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
-          Embedding Model Name
+          {t("localAiEmbedding.modelLabel")}
         </label>
         <select
           name="EmbeddingModelPref"
@@ -246,8 +250,8 @@ function LocalAIModelSelection({
         >
           <option disabled={true} selected={true}>
             {basePath?.includes("/v1")
-              ? "-- loading available models --"
-              : "-- waiting for URL --"}
+              ? t("localAiEmbedding.loadingModels")
+              : t("localAiEmbedding.waitingUrl")}
           </option>
         </select>
       </div>
@@ -257,7 +261,7 @@ function LocalAIModelSelection({
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-2">
-        Embedding Model Name
+        {t("localAiEmbedding.modelLabel")}
       </label>
       <select
         name="EmbeddingModelPref"
@@ -265,7 +269,7 @@ function LocalAIModelSelection({
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("localAiEmbedding.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option

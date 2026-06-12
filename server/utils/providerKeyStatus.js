@@ -49,6 +49,13 @@ const LOCAL_PROVIDERS = [
     basePathKey: "DOCKER_MODEL_RUNNER_BASE_PATH",
     placeholder: "docker-model-runner",
   },
+  {
+    provider: "lemonade",
+    name: "Lemonade",
+    envKey: "LEMONADE_LLM_API_KEY",
+    basePathKey: "LEMONADE_LLM_BASE_PATH",
+    placeholder: "lemonade",
+  },
 ];
 
 /**

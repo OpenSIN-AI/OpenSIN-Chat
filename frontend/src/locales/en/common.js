@@ -2251,6 +2251,67 @@ const TRANSLATIONS = {
       },
     },
   },
+
+  apiCallNode: {
+    url: "URL",
+    urlPlaceholder: "https://api.example.com/endpoint",
+    insertVariable: "Insert variable",
+    selectVariableToInsert: "Select variable to insert",
+    method: "Method",
+    headers: "Headers",
+    addHeader: "Add header",
+    headerName: "Header name",
+    headerValue: "Value",
+    removeHeader: "Remove header",
+    requestBody: "Request Body",
+    json: "JSON",
+    rawText: "Raw Text",
+    formData: "Form Data",
+    jsonPlaceholder: '{"key": "value"}',
+    formKey: "Key",
+    formValue: "Value",
+    removeField: "Remove field",
+    addFormField: "Add Form Field",
+    rawRequestBody: "Raw request body...",
+    storeResponseIn: "Store Response In",
+    selectOrCreateVariable: "Select or create variable",
+  },
+
+  drupalWiki: {
+    baseUrlLabel: "Drupal Wiki base URL",
+    baseUrlDescription: "This is the base URL of your <a>Drupal Wiki</a>.",
+    baseUrlPlaceholder:
+      "eg: https://mywiki.drupal-wiki.net, https://drupalwiki.mycompany.tld, etc...",
+    spaceIdsLabel: "Drupal Wiki Space IDs",
+    spaceIdsDescription:
+      "Comma separated Space IDs you want to extract. See the <a>manual</a> on how to retrieve the Space IDs. Be sure that your 'API-Token User' has access to those spaces.",
+    spaceIdsPlaceholder: "eg: 12,34,69",
+    apiTokenLabel: "Drupal Wiki API Token",
+    apiTokenTooltip:
+      "You need to provide an API token for authentication. See the Drupal Wiki <a>manual</a> on how to generate an API-Token for your user.",
+    apiTokenDescription: "Access token for authentication.",
+    apiTokenPlaceholder: "pat:123",
+    submitButton: "Submit",
+    collectingButton: "Collecting pages...",
+    collectingDescription:
+      "Once complete, all pages will be available for embedding into workspaces.",
+    toastFetching:
+      "Fetching all pages for the given Drupal Wiki spaces - this may take a while.",
+    toastSuccess:
+      "Pages collected from Drupal Wiki spaces {{spaceIds}}. Output folder is {{destination}}.",
+  },
+
+  fileUploadWarning: {
+    embeddingProgress: "Embedding {{current}} of {{total}} {{fileWord}}",
+    pleaseWait: "Please wait while we embed your files...",
+    title: "Context Window Warning",
+    description:
+      "Your workspace is using {{tokenCount}} of {{maxTokens}} available tokens. We recommend keeping usage below {{limit}}% to ensure the best chat experience. Adding {{fileCount}} more {{fileWord}} would exceed this limit. <a>Learn more about context windows \u2192</a>",
+    chooseAction: "Choose how you would like to proceed with these uploads.",
+    cancel: "Cancel",
+    continueAnyway: "Continue Anyway",
+    embedFile: "Embed {{fileWord}}",
+  },
 };
 
 export default TRANSLATIONS;

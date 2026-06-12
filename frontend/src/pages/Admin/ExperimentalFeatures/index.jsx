@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import { FullScreenLoader } from "@/components/Preloader";
@@ -11,6 +12,7 @@ import showToast from "@/utils/toast";
 import useExperimentalFeatures from "@/hooks/useExperimentalFeatures";
 
 export default function ExperimentalFeatures() {
+  const { t } = useTranslation();
   const { featureFlags, isLoading, refresh } = useExperimentalFeatures();
   const [selectedFeature, setSelectedFeature] = useState(
     "experimental_live_file_sync",
@@ -33,7 +35,9 @@ export default function ExperimentalFeatures() {
         <div className="flex flex-col gap-y-[18px]">
           <div className="text-white flex items-center gap-x-2">
             <Flask size={24} />
-            <p className="text-lg font-medium">Experimental Features</p>
+            <p className="text-lg font-medium">
+              {t("experimentalFeatures.title")}
+            </p>
           </div>
           <div className="bg-theme-bg-secondary text-white rounded-xl min-w-[360px] w-fit">
             {Object.values(configurableFeatures).map((feature, index) => {
@@ -71,7 +75,9 @@ export default function ExperimentalFeatures() {
               ) : (
                 <div className="flex flex-col items-center justify-center h-full text-white/60">
                   <Flask size={40} />
-                  <p className="font-medium">Select an experimental feature</p>
+                  <p className="font-medium">
+                    {t("experimentalFeatures.selectFeature")}
+                  </p>
                 </div>
               )}
             </div>
@@ -106,6 +112,7 @@ function FeatureItem({
   handleClick = () => {},
   borderClass = "border-b border-white/10",
 }) {
+  const { t } = useTranslation();
   return (
     <div
       key={feature.key}
@@ -122,14 +129,14 @@ function FeatureItem({
         {feature.autoEnabled ? (
           <>
             <div className="text-sm text-theme-text-secondary font-medium">
-              On
+              {t("common.on")}
             </div>
             <div className="w-[14px]" />
           </>
         ) : (
           <>
             <div className="text-sm text-theme-text-secondary font-medium">
-              {isActive ? "On" : "Off"}
+              {isActive ? t("common.on") : t("common.off")}
             </div>
             <CaretRight
               size={14}
@@ -155,6 +162,7 @@ function SelectedFeatureComponent({ feature, settings, refresh }) {
 }
 
 function FeatureVerification({ children }) {
+  const { t } = useTranslation();
   if (!window.localStorage.getItem("openafd_tos_experimental_feature_set")) {
     function acceptTos(e) {
       e.preventDefault();
@@ -163,10 +171,7 @@ function FeatureVerification({ children }) {
         "openafd_tos_experimental_feature_set",
         "accepted",
       );
-      showToast(
-        "Experimental Feature set enabled. Reloading the page.",
-        "success",
-      );
+      showToast(t("experimentalFeatures.toastEnabled"), "success");
       setTimeout(() => {
         window.location.reload();
       }, 2_500);
@@ -181,75 +186,39 @@ function FeatureVerification({ children }) {
               <div className="flex items-center gap-2">
                 <Flask size={24} className="text-theme-text-primary" />
                 <h3 className="text-xl font-semibold text-white">
-                  Terms of use for experimental features
+                  {t("experimentalFeatures.termsTitle")}
                 </h3>
               </div>
             </div>
             <form onSubmit={acceptTos}>
               <div className="py-7 px-9 space-y-4 flex-col">
                 <div className="w-full text-white text-md flex flex-col gap-y-4">
-                  <p>
-                    Experimental features of OpenSIN Chat are features that we
-                    are piloting and are <b>opt-in</b>. We proactively will
-                    condition or warn you on any potential concerns should any
-                    exist prior to approval of any feature.
-                  </p>
+                  <p>{t("experimentalFeatures.termsP1")}</p>
 
                   <div>
-                    <p>
-                      Use of any feature on this page can result in, but not
-                      limited to, the following possibilities.
-                    </p>
+                    <p>{t("experimentalFeatures.termsP2")}</p>
                     <ul className="list-disc ml-6 text-sm font-mono mt-2">
-                      <li>Loss of data.</li>
-                      <li>Change in quality of results.</li>
-                      <li>Increased storage.</li>
-                      <li>Increased resource consumption.</li>
-                      <li>
-                        Increased cost or use of any connected LLM or embedding
-                        provider.
-                      </li>
-                      <li>Potential bugs or issues using OpenSIN Chat.</li>
+                      <li>{t("experimentalFeatures.termsLi1")}</li>
+                      <li>{t("experimentalFeatures.termsLi2")}</li>
+                      <li>{t("experimentalFeatures.termsLi3")}</li>
+                      <li>{t("experimentalFeatures.termsLi4")}</li>
+                      <li>{t("experimentalFeatures.termsLi5")}</li>
+                      <li>{t("experimentalFeatures.termsLi6")}</li>
                     </ul>
                   </div>
 
                   <div>
-                    <p>
-                      Use of an experimental feature also comes with the
-                      following list of non-exhaustive conditions.
-                    </p>
+                    <p>{t("experimentalFeatures.termsP3")}</p>
                     <ul className="list-disc ml-6 text-sm font-mono mt-2">
-                      <li>Feature may not exist in future updates.</li>
-                      <li>The feature being used is not currently stable.</li>
-                      <li>
-                        The feature may not be available in future versions,
-                        configurations, or subscriptions of OpenSIN Chat.
-                      </li>
-                      <li>
-                        Your privacy settings <b>will be honored</b> with use of
-                        any beta feature.
-                      </li>
-                      <li>These conditions may change in future updates.</li>
+                      <li>{t("experimentalFeatures.termsLi7")}</li>
+                      <li>{t("experimentalFeatures.termsLi8")}</li>
+                      <li>{t("experimentalFeatures.termsLi9")}</li>
+                      <li>{t("experimentalFeatures.termsLi10")}</li>
+                      <li>{t("experimentalFeatures.termsLi11")}</li>
                     </ul>
                   </div>
 
-                  <p>
-                    Access to any features requires approval of this modal. If
-                    you would like to read more you can refer to{" "}
-                    <a
-                      href="https://docs.opensin.delqhi.com/beta-preview/overview"
-                      className="underline text-blue-500"
-                    >
-                      docs.opensin.delqhi.com
-                    </a>{" "}
-                    or email{" "}
-                    <a
-                      href="mailto:team@openafd.com"
-                      className="underline text-blue-500"
-                    >
-                      team@openafd.com
-                    </a>
-                  </p>
+                  <p>{t("experimentalFeatures.termsP4")}</p>
                 </div>
               </div>
               <div className="flex w-full justify-between items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
@@ -257,13 +226,13 @@ function FeatureVerification({ children }) {
                   href={paths.home()}
                   className="transition-all duration-300 bg-transparent text-white hover:bg-red-500/50 light:hover:bg-red-300/50 px-4 py-2 rounded-lg text-sm border border-theme-modal-border"
                 >
-                  Reject & close
+                  {t("experimentalFeatures.reject")}
                 </a>
                 <button
                   type="submit"
                   className="transition-all duration-300 bg-white text-black hover:opacity-60 px:4 py-2 rounded-lg text-sm border border-theme-modal-border"
                 >
-                  I understand
+                  {t("experimentalFeatures.accept")}
                 </button>
               </div>
             </form>

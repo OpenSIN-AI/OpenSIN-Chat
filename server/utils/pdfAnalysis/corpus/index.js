@@ -5,9 +5,9 @@
  *
  * Vorgehen (maximale Wiederverwendung der Einzel-Pipeline):
  *  1. Pro Dokument einen regulären PdfAnalysisPipeline-Job starten —
- *     sequenziell gestaffelt nach CORPUS_DOC_CONCURRENCY (die Agenten-
+ *     sequenziell gestaffelt nach config.CORPUS_CONCURRENCY (die Agenten-
  *     Parallelität LEBT bereits in jedem Einzel-Job; mehrere gleichzeitig
- *     laufende Dokumente multiplizieren die LLM-Last).
+ *     laufende Dokumente multiplizieren die LLM-Last, deshalb hart deckeln).
  *  2. Auf Abschluss aller Einzel-Jobs warten (Polling, abbruchfähig).
  *     Fakten/Verifikation/Critic laufen dabei automatisch mit — alle
  *     Fakten landen mit Dokument-Quellenbezug im gemeinsamen FactStore.
@@ -22,14 +22,55 @@ const config = require("../config");
 const { PdfAnalysisPipeline } = require("../index");
 const { compareCorpus } = require("./comparator");
 
-const DOC_CONCURRENCY = Number(
-  process.env.PDF_ANALYSIS_CORPUS_DOC_CONCURRENCY || 1
-);
+// Korpus-Doc-Parallelität kommt aus der zentralen Config (ENV:
+// PDF_ANALYSIS_CORPUS_CONCURRENCY, default 3). Härter cap nach oben, damit
+// ein Fehl-ENV-Wert den LLM-Endpoint nicht killt.
+const DOC_CONCURRENCY = config.CORPUS_CONCURRENCY;
 const POLL_MS = 5000;
 const CORPUS_REPORT_DIR = path.join(config.REPORT_DIR, "corpus");
 const CORPUS_JOBS_DIR = path.join(config.STORAGE_DIR, "jobs-corpus");
 
 const jobs = new Map();
+
+/**
+ * asyncPool — minimaler Promise-Semaphor (kein p-limit-Dependency nötig).
+ *
+ * Ruft iteratorFn für jedes Element von `array` auf, lässt höchstens
+ * `poolLimit` Promises gleichzeitig laufen, gibt alle Ergebnisse in
+ * Eingabereihenfolge zurück. Fehler in iteratorFn werden durchgereicht
+ * (Promise.all am Ende wirft beim ersten Fehler).
+ *
+ * @template T, R
+ * @param {number} poolLimit Maximal gleichzeitig laufende iterator-Aufrufe.
+ * @param {readonly T[]} array Eingabe-Liste.
+ * @param {(item: T, index: number) => Promise<R>} iteratorFn
+ * @returns {Promise<R[]>}
+ */
+async function asyncPool(poolLimit, array, iteratorFn) {
+  // Defensiv: bei poolLimit<=0 oder leerem Array sofort auflösen.
+  const limit = Math.max(1, Math.floor(poolLimit) || 1);
+  const ret = [];
+  const executing = new Set();
+  for (let i = 0; i < array.length; i++) {
+    // Iterator-Funktion "in eine Promise verpacken", damit .then(cb) sicher ist
+    // und iteratorFn auch synchron returnen darf (z. B. throws werden zu rejection).
+    const p = Promise.resolve()
+      .then(() => iteratorFn(array[i], i))
+      .finally(() => {
+        executing.delete(p);
+      });
+    ret.push(p);
+    executing.add(p);
+    if (executing.size >= limit) {
+      // Auf den ersten Abschluss warten, dann nächste Iteration freigeben.
+      // Promise.race statt Promise.any: wirft, sobald irgendeiner wirft;
+      // das ist OK, weil das Endergebnis ohnehin über Promise.all(ret) läuft
+      // und Konsumenten mit try/catch arbeiten.
+      await Promise.race(executing);
+    }
+  }
+  return Promise.all(ret);
+}
 
 function persistCorpusJob(job) {
   fs.mkdirSync(CORPUS_JOBS_DIR, { recursive: true });
@@ -121,7 +162,18 @@ class CorpusPipeline {
   }
 
   static async _run(job) {
-    // Phase 1+2 — Einzel-Analysen gestaffelt starten und abwarten
+    // Phase 1+2 — Einzel-Analysen gestaffelt starten und abwarten.
+    //
+    // Concurrency-Modell:
+    //   * DOC_CONCURRENCY (aus config.CORPUS_CONCURRENCY, default 3) regelt,
+    //     wie viele PdfAnalysisPipeline-Jobs gleichzeitig aktiv sein dürfen.
+    //   * Innerhalb jedes Child-Jobs gilt weiterhin AGENT_CONCURRENCY
+    //     (default 6) — die dortige AIMD-Steuerung reagiert auf 429/503.
+    //   * Wir respektieren 429 von PdfAnalysisPipeline.start() und warten
+    //     bis zum nächsten Poll, statt weiter aufzustauen.
+    //   * Promise.all/forEach über alle pdfPaths wäre FALSCH: das würde
+    //     PdfAnalysisPipeline.MAX_ACTIVE_JOBS (default 4) komplett durch
+    //     EINEN Korpus-Job besetzen und alle anderen Nutzer aussperren.
     const docResults = [];
     const queue = [...job.pdfPaths];
     const active = new Map(); // childJobId -> pdfPath
@@ -204,7 +256,9 @@ class CorpusPipeline {
         `Zu wenige erfolgreich analysierte Dokumente für einen Vergleich (${usable.length}/2).`
       );
 
-    // Phase 3 — Vergleichs-Synthese + konsolidierter Report
+    // Phase 3 — Vergleichs-Synthese + konsolidierter Report.
+    // Der Comparator macht intern 2 sequentielle LLM-Calls (Konfliktanalyse
+    // + Report-Synthese); weitere Concurrency-Limitierung liegt in ihm.
     job.progress.phase = "comparing";
     persistCorpusJob(job);
     const { report, comparison } = await compareCorpus(usable, job.task);
@@ -236,7 +290,7 @@ class CorpusPipeline {
           "(siehe Analyse-Jobs); Korpus-Vergleich bitte erneut starten.";
         persistCorpusJob(job);
       }
-      jobs.set(job.id, job);
+      jobs.set(snapshot.id, job);
     }
   }
 
@@ -271,4 +325,4 @@ class CorpusPipeline {
   }
 }
 
-module.exports = { CorpusPipeline };
+module.exports = { CorpusPipeline, asyncPool };

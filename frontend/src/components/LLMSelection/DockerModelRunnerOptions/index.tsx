@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { CircleNotch, Info } from "@phosphor-icons/react";
 import { LLM_PREFERENCE_CHANGED_EVENT } from "@/pages/GeneralSettings/LLMPreference";
@@ -14,6 +15,7 @@ import showToast from "@/utils/toast";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function DockerModelRunnerOptions({ settings }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -38,7 +40,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
           <div className="flex items-center gap-1 mb-3">
             <div className="flex justify-between items-center gap-x-2">
               <label className="text-white text-sm font-semibold">
-                Base URL
+                {t("dockerModelRunner.baseUrlLabel")}
               </label>
               {loading ? (
                 <CircleNotch className="w-4 h-4 text-theme-text-secondary animate-spin" />
@@ -49,7 +51,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
                       onClick={handleAutoDetectClick}
                       className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("dockerModelRunner.autoDetect")}
                     </button>
                   )}
                 </>
@@ -63,11 +65,12 @@ export default function DockerModelRunnerOptions({ settings }: any) {
               clickable={true}
               className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
             >
-              Enter the URL where the Docker Model Runner is running.
+              {t("dockerModelRunner.baseUrlTooltip1")}
               <br />
               <br />
-              You <b>must</b> have enabled the Docker Model Runner TCP support
-              for this to work.
+              {t("dockerModelRunner.baseUrlTooltip2a")}{" "}
+              <b>{t("dockerModelRunner.baseUrlTooltip2b")}</b>{" "}
+              {t("dockerModelRunner.baseUrlTooltip2c")}
               <br />
               <br />
               <Link
@@ -75,7 +78,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
                 target="_blank"
                 className="text-blue-500 hover:underline"
               >
-                Learn more &rarr;
+                {t("dockerModelRunner.learnMore")}
               </Link>
             </Tooltip>
             <div
@@ -92,7 +95,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
             type="url"
             name="DockerModelRunnerBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="http://localhost:12434/engines/llama.cpp/v1"
+            placeholder={t("dockerModelRunner.baseUrlPlaceholder")}
             value={basePathValue.value}
             required={true}
             autoComplete="off"
@@ -104,7 +107,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-1 mb-3">
             <label className="text-white text-sm font-semibold block">
-              Model context window
+              {t("dockerModelRunner.modelContextWindowLabel")}
             </label>
             <Tooltip
               id="docker-model-runner-model-context-window"
@@ -114,19 +117,26 @@ export default function DockerModelRunnerOptions({ settings }: any) {
               clickable={true}
               className="tooltip !text-xs !opacity-100 z-99 !max-w-[350px] !whitespace-normal !break-words"
             >
-              The maximum number of tokens that can be used for a model context
-              window.
+              {t("dockerModelRunner.modelContextWindowTooltip1")}
               <br />
               <br />
-              To set the context window limit for a model, you can use the{" "}
-              <code>docker run</code> command with the{" "}
-              <code>--context-window</code> parameter.
+              {t("dockerModelRunner.modelContextWindowTooltip2a")}{" "}
+              <code>
+                {t("dockerModelRunner.modelContextWindowTooltipCode")}
+              </code>{" "}
+              {t("dockerModelRunner.modelContextWindowTooltip2b")}{" "}
+              <code>
+                {t("dockerModelRunner.modelContextWindowTooltipCode2")}
+              </code>{" "}
+              {t("dockerModelRunner.modelContextWindowTooltip2c")}
               <br />
               <br />
+              {/* eslint-disable i18next/no-literal-string */}
               <code>
                 docker model configure --context-size {maxTokens || 8192}{" "}
                 {selectedModelId ?? "ai/qwen3:latest"}
               </code>
+              {/* eslint-enable i18next/no-literal-string */}
               <br />
               <br />
               <Link
@@ -134,7 +144,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
                 target="_blank"
                 className="text-blue-500 hover:underline"
               >
-                Learn more &rarr;
+                {t("dockerModelRunner.learnMore")}
               </Link>
             </Tooltip>
             <div
@@ -150,7 +160,7 @@ export default function DockerModelRunnerOptions({ settings }: any) {
             type="number"
             name="DockerModelRunnerModelTokenLimit"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="4096"
+            placeholder={t("dockerModelRunner.contextWindowPlaceholder")}
             min={1}
             value={maxTokens}
             onChange={(e) =>
@@ -176,6 +186,7 @@ function DockerModelRunnerModelSelection({
   setSelectedModelId,
   basePath = null,
 }: any) {
+  const { t } = useTranslation();
   const {
     customModels: providerCustomModels,
     isLoading,
@@ -316,7 +327,9 @@ function DockerModelRunnerModelSelection({
         <ModelTableLoadingSkeleton />
       ) : filteredModels.length === 0 ? (
         <div className="flex flex-col w-full gap-y-2 mt-4">
-          <p className="text-theme-text-secondary text-sm">No models found!</p>
+          <p className="text-theme-text-secondary text-sm">
+            {t("dockerModelRunner.noModelsFound")}
+          </p>
         </div>
       ) : (
         Object.entries(groupedCustomModels).map(([alias, models]) => (

@@ -1,14 +1,10 @@
 // SPDX-License-Identifier: MIT
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import PdfAnalysis from "@/models/pdfAnalysis";
 
-const CORPUS_PHASE_LABELS = {
-  "analyzing-documents": "Dokumente werden analysiert",
-  comparing: "Dokumentübergreifender Vergleich",
-  done: "Abgeschlossen",
-};
-
 export default function CorpusPanel() {
+  const { t } = useTranslation();
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -22,16 +18,25 @@ export default function CorpusPanel() {
     return () => clearInterval(interval);
   }, [refresh]);
 
+  const CORPUS_PHASE_LABELS = {
+    "analyzing-documents": t("pdfAnalysis.corpus.phaseAnalyzingDocs"),
+    comparing: t("pdfAnalysis.corpus.phaseComparing"),
+    done: t("pdfAnalysis.corpus.phaseDone"),
+  };
+
   return (
     <div className="flex flex-col gap-6">
       <CorpusForm onStarted={refresh} />
-      <section aria-label="Korpus-Analysen" className="flex flex-col gap-3">
+      <section
+        aria-label={t("pdfAnalysis.corpus.section")}
+        className="flex flex-col gap-3"
+      >
         <h2 className="text-sm font-semibold text-theme-text-primary uppercase tracking-wide">
-          Laufende &amp; abgeschlossene Korpus-Analysen
+          {t("pdfAnalysis.corpus.section")}
         </h2>
         {jobs.length === 0 && (
           <p className="text-sm text-theme-text-secondary">
-            Noch keine Korpus-Analyse gestartet.
+            {t("pdfAnalysis.corpus.noJobs")}
           </p>
         )}
         {jobs.map((job) => (
@@ -54,6 +59,7 @@ export default function CorpusPanel() {
 }
 
 function CorpusForm({ onStarted }) {
+  const { t } = useTranslation();
   const fileRef = useRef(null);
   const [task, setTask] = useState("");
   const [factCriteria, setFactCriteria] = useState("");
@@ -67,14 +73,11 @@ function CorpusForm({ onStarted }) {
     setError(null);
     const files = Array.from(fileRef.current?.files || []);
     if (files.length < 2 || !task.trim()) {
-      setError(
-        "Mindestens 2 PDF-Dateien und ein Vergleichsauftrag sind erforderlich.",
-      );
+      setError(t("pdfAnalysis.corpus.submitError"));
       return;
     }
     setBusy(true);
     try {
-      // Dateien sequenziell hochladen (Riesen-Dateien: kein Parallel-Upload)
       const pdfPaths = [];
       for (let i = 0; i < files.length; i++) {
         setUploadProgress(`Upload ${i + 1}/${files.length}: ${files[i].name}`);
@@ -110,11 +113,11 @@ function CorpusForm({ onStarted }) {
       className="flex flex-col gap-3 p-4 rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border"
     >
       <h2 className="text-sm font-semibold text-theme-text-primary uppercase tracking-wide">
-        Neue Korpus-Analyse (mehrere PDFs vergleichen)
+        {t("pdfAnalysis.corpus.newAnalysis")}
       </h2>
 
       <label className="flex flex-col gap-1 text-sm text-theme-text-secondary">
-        PDF-Dateien (mindestens 2)
+        {t("pdfAnalysis.corpus.pdfFiles")}
         <input
           ref={fileRef}
           type="file"
@@ -125,22 +128,22 @@ function CorpusForm({ onStarted }) {
       </label>
 
       <label className="flex flex-col gap-1 text-sm text-theme-text-secondary">
-        Vergleichsauftrag (erforderlich)
+        {t("pdfAnalysis.corpus.taskRequired")}
         <textarea
           value={task}
           onChange={(e) => setTask(e.target.value)}
           rows={2}
-          placeholder="z.B. Vergleiche die Förderbedingungen, Fristen und Zuständigkeiten in allen Dokumenten"
+          placeholder={t("pdfAnalysis.corpus.taskPlaceholder")}
           className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60 leading-relaxed"
         />
       </label>
 
       <label className="flex flex-col gap-1 text-sm text-theme-text-secondary">
-        Fakten-Kriterien (optional)
+        {t("pdfAnalysis.corpus.factCriteria")}
         <input
           value={factCriteria}
           onChange={(e) => setFactCriteria(e.target.value)}
-          placeholder="z.B. Beträge, Fristen, Zuständigkeiten"
+          placeholder={t("pdfAnalysis.corpus.factCriteriaPlaceholder")}
           className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
         />
       </label>
@@ -152,7 +155,7 @@ function CorpusForm({ onStarted }) {
           onChange={(e) => setDeepScan(e.target.checked)}
           className="accent-current"
         />
-        Deep Scan: jede Seite aller Dokumente visuell lesen (langsamer)
+        {t("pdfAnalysis.corpus.deepScan")}
       </label>
 
       {uploadProgress && (
@@ -172,7 +175,9 @@ function CorpusForm({ onStarted }) {
           disabled={busy}
           className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-50"
         >
-          {busy ? "Wird hochgeladen & gestartet…" : "Korpus-Analyse starten"}
+          {busy
+            ? t("pdfAnalysis.corpus.submitBusy")
+            : t("pdfAnalysis.corpus.submitIdle")}
         </button>
       </div>
     </form>
@@ -180,12 +185,19 @@ function CorpusForm({ onStarted }) {
 }
 
 function CorpusRow({ job, onShowReport, onCancelled }) {
+  const { t } = useTranslation();
   const { progress = {}, status } = job;
   const pct =
     progress.docsTotal > 0
       ? Math.round((progress.docsDone / progress.docsTotal) * 100)
       : 0;
   const isActive = status === "running" || status === "pending";
+
+  const CORPUS_PHASE_LABELS = {
+    "analyzing-documents": t("pdfAnalysis.corpus.phaseAnalyzingDocs"),
+    comparing: t("pdfAnalysis.corpus.phaseComparing"),
+    done: t("pdfAnalysis.corpus.phaseDone"),
+  };
 
   return (
     <div className="flex flex-col gap-2 p-4 rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
@@ -208,9 +220,9 @@ function CorpusRow({ job, onShowReport, onCancelled }) {
           }`}
         >
           {status === "completed"
-            ? "Abgeschlossen"
+            ? t("pdfAnalysis.corpus.statusCompleted")
             : status === "failed"
-              ? "Fehlgeschlagen"
+              ? t("pdfAnalysis.corpus.statusFailed")
               : CORPUS_PHASE_LABELS[progress.phase] || status}
         </span>
       </div>
@@ -230,7 +242,10 @@ function CorpusRow({ job, onShowReport, onCancelled }) {
             />
           </div>
           <span className="text-xs text-theme-text-secondary w-28 text-right">
-            {progress.docsDone}/{progress.docsTotal} Dokumente
+            {t("pdfAnalysis.corpus.docsCount", {
+              done: progress.docsDone,
+              total: progress.docsTotal,
+            })}
           </span>
         </div>
       )}
@@ -244,7 +259,7 @@ function CorpusRow({ job, onShowReport, onCancelled }) {
             onClick={onShowReport}
             className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
           >
-            Vergleichs-Report anzeigen
+            {t("pdfAnalysis.corpus.showReport")}
           </button>
         )}
         {isActive && (
@@ -256,7 +271,7 @@ function CorpusRow({ job, onShowReport, onCancelled }) {
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
           >
-            Abbrechen
+            {t("pdfAnalysis.corpus.cancel")}
           </button>
         )}
       </div>
@@ -265,6 +280,7 @@ function CorpusRow({ job, onShowReport, onCancelled }) {
 }
 
 function CorpusReportModal({ job, onClose }) {
+  const { t } = useTranslation();
   const [result, setResult] = useState(null);
 
   useEffect(() => {
@@ -278,31 +294,37 @@ function CorpusReportModal({ job, onClose }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
       role="dialog"
       aria-modal="true"
-      aria-label="Korpus-Vergleichs-Report"
+      aria-label={t("pdfAnalysis.corpus.reportAria")}
     >
       <div className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
         <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border">
           <h3 className="text-sm font-semibold text-theme-text-primary">
-            Korpus-Report ({job.documents?.length} Dokumente)
+            {t("pdfAnalysis.corpus.reportTitle", {
+              count: job.documents?.length,
+            })}
           </h3>
           <button
             type="button"
             onClick={onClose}
             className="text-sm text-theme-text-secondary hover:text-theme-text-primary"
-            aria-label="Schließen"
+            aria-label={t("pdfAnalysis.corpus.close")}
           >
-            Schließen
+            {t("pdfAnalysis.corpus.close")}
           </button>
         </div>
         <div className="overflow-y-auto p-4 flex flex-col gap-4">
           {!result ? (
-            <p className="text-sm text-theme-text-secondary">Wird geladen…</p>
+            <p className="text-sm text-theme-text-secondary">
+              {t("pdfAnalysis.corpus.loading")}
+            </p>
           ) : result.report ? (
             <>
               {conflicts.length > 0 && (
                 <div className="flex flex-col gap-2 p-3 rounded-md bg-theme-bg-container border border-red-400/40">
                   <p className="text-xs font-semibold text-red-400 uppercase tracking-wide">
-                    {conflicts.length} Widersprüche zwischen Dokumenten
+                    {t("pdfAnalysis.corpus.conflictsFound", {
+                      count: conflicts.length,
+                    })}
                   </p>
                   <ul className="flex flex-col gap-2">
                     {conflicts.map((c, i) => (
@@ -312,12 +334,12 @@ function CorpusReportModal({ job, onClose }) {
                       >
                         <span className="font-medium">{c.topic}:</span>{" "}
                         {(c.positions || [])
+
                           .map(
                             (p) =>
-                              `${p.document} (S. ${(p.pages || []).join(
-                                ", ",
-                              )}): ${p.claim}`,
+                              `${p.document} (S. ${(p.pages || []).join(", ")}): ${p.claim}`,
                           )
+                          // eslint-disable-next-line i18next/no-literal-string
                           .join(" — vs. — ")}
                       </li>
                     ))}
@@ -325,9 +347,13 @@ function CorpusReportModal({ job, onClose }) {
                 </div>
               )}
               <p className="text-xs text-theme-text-secondary">
-                {result.documentsAnalyzed} Dokumente analysiert
+                {t("pdfAnalysis.corpus.docsAnalyzed", {
+                  count: result.documentsAnalyzed,
+                })}
                 {result.documentsFailed > 0 &&
-                  ` · ${result.documentsFailed} fehlgeschlagen`}
+                  t("pdfAnalysis.corpus.docsFailed", {
+                    count: result.documentsFailed,
+                  })}
               </p>
               <pre className="whitespace-pre-wrap text-sm text-theme-text-primary leading-relaxed font-sans">
                 {result.report}
@@ -335,7 +361,7 @@ function CorpusReportModal({ job, onClose }) {
             </>
           ) : (
             <p className="text-sm text-red-400">
-              {result.error || "Kein Report verfügbar."}
+              {result.error || t("pdfAnalysis.corpus.noReport")}
             </p>
           )}
         </div>

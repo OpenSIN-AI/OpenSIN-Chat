@@ -7,6 +7,7 @@ import {
   CircleNotch,
   Warning,
 } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 import paths from "@/utils/paths";
 import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
@@ -14,6 +15,7 @@ import { Tooltip } from "react-tooltip";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LMStudioOptions({ settings, showAlert = false }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -48,15 +50,14 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
           <div className="gap-x-2 flex items-center">
             <Info size={12} className="hidden md:visible" />
             <p className="text-sm md:text-base">
-              LMStudio as your LLM requires you to set an embedding service to
-              use.
+              {t("lmStudio.embeddingAlert")}
             </p>
           </div>
           <a
             href={paths.settings.embedder.modelPreference()}
             className="text-sm md:text-base my-2 underline"
           >
-            Manage embedding &rarr;
+            {t("lmStudio.manageEmbedding")}
           </a>
         </div>
       )}
@@ -75,7 +76,10 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
           }}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} advanced settings
+          {showAdvancedControls
+            ? t("lmStudio.hideAdvanced")
+            : t("lmStudio.showAdvanced")}{" "}
+          {t("lmStudio.advancedSettings")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -90,13 +94,13 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-1">
                 <label className="text-white text-sm font-semibold">
-                  LM Studio Base URL
+                  {t("lmStudio.baseUrlLabel")}
                 </label>
                 <Info
                   size={18}
                   className="text-theme-text-secondary cursor-pointer"
                   data-tooltip-id="lmstudio-base-url"
-                  data-tooltip-content="Enter the URL where LM Studio is running."
+                  data-tooltip-content={t("lmStudio.baseUrlTooltip")}
                 />
                 <Tooltip
                   id="lmstudio-base-url"
@@ -117,7 +121,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
                       onClick={handleAutoDetectClick}
                       className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("lmStudio.autoDetect")}
                     </button>
                   )}
                 </>
@@ -127,7 +131,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
               type="url"
               name="LMStudioBasePath"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="http://localhost:1234/v1"
+              placeholder={t("lmStudio.baseUrlPlaceholder")}
               value={basePathValue.value}
               required={true}
               autoComplete="off"
@@ -139,13 +143,13 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
           <div className="flex flex-col w-60">
             <div className="flex items-center mb-2 gap-x-1">
               <label className="text-white text-sm font-semibold">
-                Model Context Window
+                {t("lmStudio.contextWindowLabel")}
               </label>
               <Info
                 size={18}
                 className="text-theme-text-secondary cursor-pointer"
                 data-tooltip-id="lmstudio-max-tokens"
-                data-tooltip-content="Override the context window limit. Leave empty to auto-detect from the model (defaults to 4096 if detection fails)."
+                data-tooltip-content={t("lmStudio.contextWindowTooltip")}
               />
               <Tooltip
                 id="lmstudio-max-tokens"
@@ -156,7 +160,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
               type="number"
               name="LMStudioTokenLimit"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="Automatically managed"
+              placeholder={t("lmStudio.contextWindowPlaceholder")}
               min={1}
               value={maxTokens}
               onChange={handleMaxTokensChange}
@@ -171,7 +175,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
           <div className="flex flex-col w-60">
             <div className="flex items-center mb-2 gap-x-1">
               <label className="text-white text-sm font-semibold">
-                Authentication Token
+                {t("lmStudio.authTokenLabel")}
               </label>
               <Info
                 size={18}
@@ -187,10 +191,11 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
                 className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
               >
                 <p className="text-xs leading-[18px] font-base">
-                  Enter a <code>Bearer</code> Auth Token for interacting with
-                  your LM Studio server.
+                  {t("lmStudio.authTokenTooltipPart1")}{" "}
+                  <code>{t("lmStudio.authTokenTooltipBearer")}</code>{" "}
+                  {t("lmStudio.authTokenTooltipPart2")}
                   <br /> <br />
-                  Useful if running LM Studio behind an authentication or proxy.
+                  {t("lmStudio.authTokenTooltipPart3")}
                 </p>
               </Tooltip>
             </div>
@@ -198,7 +203,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
               type="password"
               name="LMStudioAuthToken"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg outline-none block w-full p-2.5 focus:outline-primary-button active:outline-primary-button"
-              placeholder="LM Studio Auth Token"
+              placeholder={t("lmStudio.authTokenPlaceholder")}
               defaultValue={settings?.LMStudioAuthToken ? "*".repeat(20) : ""}
               value={authTokenValue.value}
               onChange={authToken.onChange}
@@ -219,6 +224,7 @@ function LMStudioModelSelection({
   basePath = null,
   apiKey = null,
 }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels(
     "lmstudio",
     apiKey,
@@ -229,7 +235,7 @@ function LMStudioModelSelection({
       <div className="flex flex-col w-60">
         <div className="flex items-center mb-2 gap-x-1">
           <label className="text-white text-sm font-semibold">
-            Selected Model
+            {t("lmStudio.modelLabel")}
           </label>
           {!isLoading && !!basePath && (
             <>
@@ -247,8 +253,7 @@ function LMStudioModelSelection({
                 className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
               >
                 <p className="text-xs leading-[18px] font-base">
-                  Could not reach LM Studio. Verify the URL is correct and the
-                  LMStudio server is running and accessible.
+                  {t("lmStudio.modelErrorTooltip")}
                 </p>
               </Tooltip>
             </>
@@ -261,10 +266,10 @@ function LMStudioModelSelection({
         >
           <option disabled={true} selected={true}>
             {isLoading
-              ? "-- loading available models --"
+              ? t("lmStudio.loadingModels")
               : !!basePath
-                ? "No customModels found"
-                : "Enter LM Studio URL first"}
+                ? t("lmStudio.noModelsFound")
+                : t("lmStudio.enterUrlFirst")}
           </option>
         </select>
       </div>
@@ -274,7 +279,7 @@ function LMStudioModelSelection({
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-2">
-        Selected Model
+        {t("lmStudio.modelLabel")}
       </label>
       <select
         name="LMStudioModelPref"
@@ -282,7 +287,7 @@ function LMStudioModelSelection({
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("lmStudio.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option

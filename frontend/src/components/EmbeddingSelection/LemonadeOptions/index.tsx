@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LEMONADE_COMMON_URLS } from "@/utils/constants";
 import { CaretDown, CaretUp, Info, CircleNotch } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
@@ -8,6 +9,8 @@ import { cleanBasePath } from "@/components/LLMSelection/LemonadeOptions";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function LemonadeEmbeddingOptions({ settings }: any) {
+  const { t } = useTranslation();
+
   const {
     autoDetecting: loading,
     basePath,
@@ -40,21 +43,21 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
             className="flex gap-x-1 items-center mb-3"
           >
             <label className="text-white text-sm font-semibold block">
-              Max embedding chunk length
+              {t("lemonadeEmbedding.maxChunkLengthLabel")}
             </label>
             <Info
               size={16}
               className="text-theme-text-secondary cursor-pointer"
             />
             <Tooltip id="max-embedding-chunk-length-tooltip">
-              Maximum length of text chunks, in characters, for embedding.
+              {t("lemonadeEmbedding.maxChunkLengthTooltip")}
             </Tooltip>
           </div>
           <input
             type="number"
             name="EmbeddingModelMaxChunkLength"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="8192"
+            placeholder={t("lemonadeEmbedding.maxChunkLengthPlaceholder")}
             min={1}
             value={maxChunkLength}
             onChange={handleMaxChunkLengthChange}
@@ -70,14 +73,14 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
             className="flex gap-x-1 items-center mb-3"
           >
             <label className="text-white text-sm font-semibold block">
-              API Key (optional)
+              {t("lemonadeEmbedding.apiKeyLabel")}
             </label>
             <Info
               size={16}
               className="text-theme-text-secondary cursor-pointer"
             />
             <Tooltip id="lemonade-embedding-api-key">
-              The API key for your Lemonade instance
+              {t("lemonadeEmbedding.apiKeyTooltip")}
             </Tooltip>
           </div>
           <input
@@ -94,8 +97,8 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
           type="button"
           aria-label={
             showAdvancedControls
-              ? "Hide manual endpoint input"
-              : "Show manual endpoint input"
+              ? t("lemonadeEmbedding.hideManualEndpointAria")
+              : t("lemonadeEmbedding.showManualEndpointAria")
           }
           onClick={(e) => {
             e.preventDefault();
@@ -103,7 +106,10 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
           }}
           className="border-none text-theme-text-primary hover:text-theme-text-secondary flex items-center text-sm"
         >
-          {showAdvancedControls ? "Hide" : "Show"} Manual Endpoint Input
+          {showAdvancedControls
+            ? t("lemonadeEmbedding.hideManualEndpoint")
+            : t("lemonadeEmbedding.showManualEndpoint")}{" "}
+          {t("lemonadeEmbedding.manualEndpointInput")}
           {showAdvancedControls ? (
             <CaretUp size={14} className="ml-1" />
           ) : (
@@ -118,13 +124,13 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-1">
                 <label className="text-white text-sm font-semibold">
-                  Lemonade Base URL
+                  {t("lemonadeEmbedding.baseUrlLabel")}
                 </label>
                 <Info
                   size={18}
                   className="text-theme-text-secondary cursor-pointer"
                   data-tooltip-id="lemonade-base-url"
-                  data-tooltip-content="Enter the URL where Lemonade is running."
+                  data-tooltip-content={t("lemonadeEmbedding.baseUrlTooltip")}
                 />
                 <Tooltip
                   id="lemonade-base-url"
@@ -143,11 +149,11 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
                   {!basePathValue.value && (
                     <button
                       type="button"
-                      aria-label="Auto-detect Lemonade base URL"
+                      aria-label={t("lemonadeEmbedding.autoDetectAria")}
                       onClick={handleAutoDetectClick}
                       className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("lemonadeEmbedding.autoDetect")}
                     </button>
                   )}
                 </>
@@ -157,7 +163,7 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
               type="url"
               name="EmbeddingBasePath"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="http://localhost:8000/live"
+              placeholder={t("lemonadeEmbedding.baseUrlPlaceholder")}
               value={cleanBasePath(basePathValue.value)}
               required={true}
               autoComplete="off"
@@ -173,6 +179,8 @@ export default function LemonadeEmbeddingOptions({ settings }: any) {
 }
 
 function LemonadeModelSelection({ settings, basePath = null }: any) {
+  const { t } = useTranslation();
+
   const { customModels, isLoading: loading } = useProviderModels(
     basePath ? "lemonade-embedder" : null,
     null,
@@ -183,7 +191,7 @@ function LemonadeModelSelection({ settings, basePath = null }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
-          Lemonade Embedding Model
+          {t("lemonadeEmbedding.modelLabel")}
         </label>
         <select
           name="EmbeddingModelPref"
@@ -192,13 +200,12 @@ function LemonadeModelSelection({ settings, basePath = null }: any) {
         >
           <option disabled={true} selected={true}>
             {!!basePath
-              ? "--loading available models--"
-              : "Enter Lemonade URL first"}
+              ? t("lemonadeEmbedding.loadingModels")
+              : t("lemonadeEmbedding.enterUrlFirst")}
           </option>
         </select>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Select the Lemonade model for embeddings. Models will load after
-          entering a valid Lemonade URL.
+          {t("lemonadeEmbedding.selectModelHelp")}
         </p>
       </div>
     );
@@ -207,7 +214,7 @@ function LemonadeModelSelection({ settings, basePath = null }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Lemonade Embedding Model
+        {t("lemonadeEmbedding.modelLabel")}
       </label>
       <select
         name="EmbeddingModelPref"
@@ -215,7 +222,7 @@ function LemonadeModelSelection({ settings, basePath = null }: any) {
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Your loaded models">
+          <optgroup label={t("lemonadeEmbedding.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option

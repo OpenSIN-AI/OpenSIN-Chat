@@ -1,20 +1,11 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/Sidebar";
 import PdfAnalysis from "@/models/pdfAnalysis";
 import CrossCheckPanel from "./CrossCheckPanel";
 import CorpusPanel from "./CorpusPanel";
 import { API_BASE } from "@/utils/constants";
-
-const PHASE_LABELS = {
-  init: "Initialisierung",
-  reading: "Dokument wird gelesen",
-  analyzing: "Parallele Agenten-Analyse",
-  synthesizing: "Report-Synthese",
-  "verifying-facts": "Fakten werden gegen Quelltext verifiziert",
-  "storing-facts": "Fakten werden gespeichert",
-  done: "Abgeschlossen",
-};
 
 function formatEta(seconds) {
   if (seconds == null) return null;
@@ -26,8 +17,19 @@ function formatEta(seconds) {
 }
 
 export default function PdfAnalysisPage() {
-  const [tab, setTab] = useState("jobs"); // "jobs" | "facts" | "crosscheck" | "corpus"
+  const { t } = useTranslation();
+  const [tab, setTab] = useState("jobs");
   const [crossCheckFactIds, setCrossCheckFactIds] = useState([]);
+
+  const PHASE_LABELS = {
+    init: t("pdfAnalysis.panel.phaseInit"),
+    reading: t("pdfAnalysis.panel.phaseReading"),
+    analyzing: t("pdfAnalysis.panel.phaseAnalyzing"),
+    synthesizing: t("pdfAnalysis.panel.phaseSynthesizing"),
+    "verifying-facts": t("pdfAnalysis.panel.phaseVerifying"),
+    "storing-facts": t("pdfAnalysis.panel.phaseStoring"),
+    done: t("pdfAnalysis.panel.phaseDone"),
+  };
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
@@ -35,31 +37,32 @@ export default function PdfAnalysisPage() {
       <main className="flex-1 overflow-y-auto p-6">
         <header className="flex flex-col gap-2 mb-6">
           <h1 className="text-xl font-semibold text-theme-text-primary text-balance">
-            PDF-Analyse (Multi-Agenten)
+            {t("pdfAnalysis.panel.title")}
           </h1>
           <p className="text-sm text-theme-text-secondary leading-relaxed">
-            Großes PDF hochladen, Auftrag beschreiben — die Agenten analysieren
-            autonom, erstellen einen Best-Practices-Report und speichern
-            ausgewählte Fakten mit Quellenbezug.
+            {t("pdfAnalysis.panel.description")}
           </p>
-          <nav className="flex gap-2 mt-2" aria-label="Bereiche">
+          <nav
+            className="flex gap-2 mt-2"
+            aria-label={t("pdfAnalysis.panel.tabJobs")}
+          >
             <TabButton active={tab === "jobs"} onClick={() => setTab("jobs")}>
-              Analysen
+              {t("pdfAnalysis.panel.tabJobs")}
             </TabButton>
             <TabButton active={tab === "facts"} onClick={() => setTab("facts")}>
-              Fakten-Speicher
+              {t("pdfAnalysis.panel.tabFacts")}
             </TabButton>
             <TabButton
               active={tab === "crosscheck"}
               onClick={() => setTab("crosscheck")}
             >
-              Kreuz-Verifikation
+              {t("pdfAnalysis.panel.tabCrossCheck")}
             </TabButton>
             <TabButton
               active={tab === "corpus"}
               onClick={() => setTab("corpus")}
             >
-              Korpus-Vergleich
+              {t("pdfAnalysis.panel.tabCorpus")}
             </TabButton>
           </nav>
         </header>
@@ -101,6 +104,7 @@ function TabButton({ active, onClick, children }) {
 /* ---------------- Analysen: Start-Formular + Job-Liste ---------------- */
 
 function JobsPanel() {
+  const { t } = useTranslation();
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -108,7 +112,6 @@ function JobsPanel() {
     setJobs(await PdfAnalysis.list());
   }, []);
 
-  // Polling, solange Jobs aktiv sind
   useEffect(() => {
     refresh();
     const interval = setInterval(refresh, 4000);
@@ -118,13 +121,16 @@ function JobsPanel() {
   return (
     <div className="flex flex-col gap-6">
       <StartForm onStarted={refresh} />
-      <section aria-label="Analyse-Jobs" className="flex flex-col gap-3">
+      <section
+        aria-label={t("pdfAnalysis.panel.jobsSection")}
+        className="flex flex-col gap-3"
+      >
         <h2 className="text-sm font-semibold text-theme-text-primary uppercase tracking-wide">
-          Laufende &amp; abgeschlossene Analysen
+          {t("pdfAnalysis.panel.jobsSection")}
         </h2>
         {jobs.length === 0 && (
           <p className="text-sm text-theme-text-secondary">
-            Noch keine Analysen gestartet.
+            {t("pdfAnalysis.panel.noJobs")}
           </p>
         )}
         {jobs.map((job) => (
@@ -144,6 +150,7 @@ function JobsPanel() {
 }
 
 function StartForm({ onStarted }) {
+  const { t } = useTranslation();
   const fileRef = useRef(null);
   const [task, setTask] = useState("");
   const [reportType, setReportType] = useState("");
@@ -157,7 +164,7 @@ function StartForm({ onStarted }) {
     setError(null);
     const file = fileRef.current?.files?.[0];
     if (!file || !task.trim()) {
-      setError("PDF-Datei und Analyse-Auftrag sind erforderlich.");
+      setError(t("pdfAnalysis.panel.fileRequired"));
       return;
     }
     setBusy(true);
@@ -190,11 +197,11 @@ function StartForm({ onStarted }) {
       className="flex flex-col gap-3 p-4 rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border"
     >
       <h2 className="text-sm font-semibold text-theme-text-primary uppercase tracking-wide">
-        Neue Analyse starten
+        {t("pdfAnalysis.panel.newAnalysis")}
       </h2>
 
       <label className="flex flex-col gap-1 text-sm text-theme-text-secondary">
-        PDF-Datei
+        {t("pdfAnalysis.panel.pdfFile")}
         <input
           ref={fileRef}
           type="file"
@@ -204,32 +211,32 @@ function StartForm({ onStarted }) {
       </label>
 
       <label className="flex flex-col gap-1 text-sm text-theme-text-secondary">
-        Analyse-Auftrag (erforderlich)
+        {t("pdfAnalysis.panel.taskRequired")}
         <textarea
           value={task}
           onChange={(e) => setTask(e.target.value)}
           rows={2}
-          placeholder="z.B. Vollständige Analyse aller Förderprogramme inkl. Bedingungen"
+          placeholder={t("pdfAnalysis.panel.taskPlaceholder")}
           className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60 leading-relaxed"
         />
       </label>
 
       <div className="flex flex-col md:flex-row gap-3">
         <label className="flex-1 flex flex-col gap-1 text-sm text-theme-text-secondary">
-          Berichtstyp (optional)
+          {t("pdfAnalysis.panel.reportType")}
           <input
             value={reportType}
             onChange={(e) => setReportType(e.target.value)}
-            placeholder="z.B. Management-Summary, technischer Tiefenbericht"
+            placeholder={t("pdfAnalysis.panel.reportTypePlaceholder")}
             className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
           />
         </label>
         <label className="flex-1 flex flex-col gap-1 text-sm text-theme-text-secondary">
-          Fakten-Kriterien (optional)
+          {t("pdfAnalysis.panel.factCriteria")}
           <input
             value={factCriteria}
             onChange={(e) => setFactCriteria(e.target.value)}
-            placeholder="z.B. Beträge, Fristen, Zuständigkeiten"
+            placeholder={t("pdfAnalysis.panel.factCriteriaPlaceholder")}
             className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
           />
         </label>
@@ -242,8 +249,7 @@ function StartForm({ onStarted }) {
           onChange={(e) => setDeepScan(e.target.checked)}
           className="accent-current"
         />
-        Deep Scan: jede Seite visuell lesen (lokales Vision-Modell — präziser
-        bei Tabellen, Scans &amp; komplexen Layouts, aber langsamer)
+        {t("pdfAnalysis.panel.deepScan")}
       </label>
 
       {error && (
@@ -258,7 +264,9 @@ function StartForm({ onStarted }) {
           disabled={busy}
           className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-50"
         >
-          {busy ? "Wird hochgeladen & gestartet…" : "Analyse starten"}
+          {busy
+            ? t("pdfAnalysis.panel.submitBusy")
+            : t("pdfAnalysis.panel.submitIdle")}
         </button>
       </div>
     </form>
@@ -266,12 +274,23 @@ function StartForm({ onStarted }) {
 }
 
 function JobRow({ job, onShowReport, onCancelled }) {
+  const { t } = useTranslation();
   const { progress = {}, status } = job;
   const pct =
     progress.chunksTotal > 0
       ? Math.round((progress.chunksDone / progress.chunksTotal) * 100)
       : 0;
   const isActive = status === "pending" || status === "running";
+
+  const PHASE_LABELS = {
+    init: t("pdfAnalysis.panel.phaseInit"),
+    reading: t("pdfAnalysis.panel.phaseReading"),
+    analyzing: t("pdfAnalysis.panel.phaseAnalyzing"),
+    synthesizing: t("pdfAnalysis.panel.phaseSynthesizing"),
+    "verifying-facts": t("pdfAnalysis.panel.phaseVerifying"),
+    "storing-facts": t("pdfAnalysis.panel.phaseStoring"),
+    done: t("pdfAnalysis.panel.phaseDone"),
+  };
 
   return (
     <div className="flex flex-col gap-2 p-4 rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
@@ -294,9 +313,9 @@ function JobRow({ job, onShowReport, onCancelled }) {
           }`}
         >
           {status === "completed"
-            ? "Abgeschlossen"
+            ? t("pdfAnalysis.panel.statusCompleted")
             : status === "failed"
-              ? "Fehlgeschlagen"
+              ? t("pdfAnalysis.panel.statusFailed")
               : PHASE_LABELS[progress.phase] || status}
         </span>
       </div>
@@ -316,14 +335,20 @@ function JobRow({ job, onShowReport, onCancelled }) {
             />
           </div>
           <span className="text-xs text-theme-text-secondary w-24 text-right">
-            {progress.chunksDone}/{progress.chunksTotal} Chunks
+            {t("pdfAnalysis.panel.chunksCount", {
+              done: progress.chunksDone,
+              total: progress.chunksTotal,
+            })}
           </span>
           {progress.concurrency != null && (
             <span
               className="text-xs text-theme-text-secondary whitespace-nowrap"
-              title="Aktuelle parallele Agenten (AIMD-reguliert)"
+              title={t("pdfAnalysis.panel.agentTitle")}
             >
-              · {progress.concurrency} Agenten
+              · {progress.concurrency}{" "}
+              {t("pdfAnalysis.panel.agentsActive", {
+                count: progress.concurrency,
+              })}
             </span>
           )}
         </div>
@@ -333,11 +358,13 @@ function JobRow({ job, onShowReport, onCancelled }) {
         (progress.etaSeconds != null || progress.pagesPerMinute != null) && (
           <p className="text-xs text-theme-text-secondary">
             {progress.concurrency != null &&
-              `${progress.concurrency} Agenten aktiv`}
+              t("pdfAnalysis.panel.agentsActive", {
+                count: progress.concurrency,
+              })}
             {progress.pagesPerMinute != null &&
-              ` · ${progress.pagesPerMinute} Seiten/min`}
+              ` · ${t("pdfAnalysis.panel.pagesPerMin", { count: progress.pagesPerMinute })}`}
             {progress.etaSeconds != null &&
-              ` · ETA ${formatEta(progress.etaSeconds)}`}
+              ` · ${t("pdfAnalysis.panel.eta", { time: formatEta(progress.etaSeconds) })}`}
           </p>
         )}
 
@@ -350,7 +377,7 @@ function JobRow({ job, onShowReport, onCancelled }) {
             onClick={onShowReport}
             className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
           >
-            Report anzeigen
+            {t("pdfAnalysis.panel.showReport")}
           </button>
         )}
         {isActive && (
@@ -362,7 +389,7 @@ function JobRow({ job, onShowReport, onCancelled }) {
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
           >
-            Abbrechen
+            {t("pdfAnalysis.panel.cancel")}
           </button>
         )}
       </div>
@@ -371,6 +398,7 @@ function JobRow({ job, onShowReport, onCancelled }) {
 }
 
 function ReportModal({ job, onClose }) {
+  const { t } = useTranslation();
   const [result, setResult] = useState(null);
 
   useEffect(() => {
@@ -382,39 +410,46 @@ function ReportModal({ job, onClose }) {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
       role="dialog"
       aria-modal="true"
-      aria-label={`Report für ${job.documentName}`}
+      aria-label={t("pdfAnalysis.panel.reportFor", { name: job.documentName })}
     >
       <div className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
         <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border gap-3">
           <h3 className="text-sm font-semibold text-theme-text-primary truncate flex-1">
-            Report: {job.documentName}
+            {t("pdfAnalysis.panel.reportFor", { name: job.documentName })}
           </h3>
           <a
             href={`${API_BASE}/pdf-analysis/${job.id}/report/download`}
             download
             className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
           >
-            Als Markdown herunterladen
+            {t("pdfAnalysis.panel.downloadReport")}
           </a>
           <button
             type="button"
             onClick={onClose}
             className="text-sm text-theme-text-secondary hover:text-theme-text-primary"
-            aria-label="Schließen"
+            aria-label={t("pdfAnalysis.panel.close")}
           >
-            Schließen
+            {t("pdfAnalysis.panel.close")}
           </button>
         </div>
         <div className="overflow-y-auto p-4">
           {!result ? (
-            <p className="text-sm text-theme-text-secondary">Wird geladen…</p>
+            <p className="text-sm text-theme-text-secondary">
+              {t("pdfAnalysis.panel.loading")}
+            </p>
           ) : result.report ? (
             <>
               <p className="text-xs text-theme-text-secondary mb-3">
-                {result.totalPages} Seiten · {result.chunks} Chunks ·{" "}
-                {result.factsStored} Fakten gespeichert
+                {t("pdfAnalysis.panel.summary", {
+                  totalPages: result.totalPages,
+                  chunks: result.chunks,
+                  factsStored: result.factsStored,
+                })}
                 {result.chunkErrors > 0 &&
-                  ` · ${result.chunkErrors} Chunk-Fehler`}
+                  t("pdfAnalysis.panel.chunkErrors", {
+                    count: result.chunkErrors,
+                  })}
               </p>
               <pre className="whitespace-pre-wrap text-sm text-theme-text-primary leading-relaxed font-sans">
                 {result.report}
@@ -422,7 +457,7 @@ function ReportModal({ job, onClose }) {
             </>
           ) : (
             <p className="text-sm text-red-400">
-              {result.error || "Kein Report verfügbar."}
+              {result.error || t("pdfAnalysis.panel.noReport")}
             </p>
           )}
         </div>
@@ -434,6 +469,7 @@ function ReportModal({ job, onClose }) {
 /* ---------------- Fakten-Speicher: Suche mit Quellenbezug ---------------- */
 
 function FactsPanel({ onCrossCheck }) {
+  const { t } = useTranslation();
   const [q, setQ] = useState("");
   const [documentFilter, setDocumentFilter] = useState("");
   const [facts, setFacts] = useState([]);
@@ -461,33 +497,38 @@ function FactsPanel({ onCrossCheck }) {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Freitext-Suche (z.B. Frist, Betrag, Name)…"
-          aria-label="Freitext-Suche"
+          placeholder={t("pdfAnalysis.panel.searchPlaceholder")}
+          aria-label={t("pdfAnalysis.panel.searchAria")}
           className="flex-1 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
         />
         <input
           value={documentFilter}
           onChange={(e) => setDocumentFilter(e.target.value)}
-          placeholder="Dokumentname filtern…"
-          aria-label="Dokumentname filtern"
+          placeholder={t("pdfAnalysis.panel.documentFilterPlaceholder")}
+          aria-label={t("pdfAnalysis.panel.documentFilterAria")}
           className="md:w-64 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
         />
         <button
           type="submit"
           className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
         >
-          Suchen
+          {t("pdfAnalysis.panel.search")}
         </button>
       </form>
 
       {loading ? (
-        <p className="text-sm text-theme-text-secondary">Wird gesucht…</p>
+        <p className="text-sm text-theme-text-secondary">
+          {t("pdfAnalysis.panel.searching")}
+        </p>
       ) : facts.length === 0 ? (
         <p className="text-sm text-theme-text-secondary">
-          Keine gespeicherten Fakten gefunden.
+          {t("pdfAnalysis.panel.noFacts")}
         </p>
       ) : (
-        <ul className="flex flex-col gap-3" aria-label="Gefundene Fakten">
+        <ul
+          className="flex flex-col gap-3"
+          aria-label={t("pdfAnalysis.panel.foundFactsAria")}
+        >
           {facts.map((fact) => (
             <li
               key={fact.id}
@@ -503,23 +544,26 @@ function FactsPanel({ onCrossCheck }) {
               )}
               <div className="flex flex-wrap items-center gap-2 mt-1">
                 <span className="text-xs text-theme-text-secondary">
-                  Quelle: {fact.source.documentName}, S. {fact.source.page}
+                  {t("pdfAnalysis.panel.sourceLabel", {
+                    docName: fact.source.documentName,
+                    page: fact.source.page,
+                  })}
                   {fact.source.pageCorrected && (
                     <span
                       className="ml-1 text-blue-400"
-                      title="Seitenangabe automatisch korrigiert (Zitat lag auf einer Nachbarseite)"
+                      title={t("pdfAnalysis.panel.pageCorrectedAria")}
                     >
-                      · S. korrigiert
+                      {t("pdfAnalysis.panel.pageCorrected")}
                     </span>
                   )}
                   {fact.verified === true && (
                     <span className="ml-1 text-green-400">
-                      · Zitat verifiziert
+                      {t("pdfAnalysis.panel.verified")}
                     </span>
                   )}
                   {fact.verified === false && (
                     <span className="ml-1 text-yellow-400">
-                      · nicht verifiziert
+                      {t("pdfAnalysis.panel.notVerified")}
                     </span>
                   )}
                 </span>
@@ -540,23 +584,29 @@ function FactsPanel({ onCrossCheck }) {
                           ? "text-red-400 border-red-400/40"
                           : "text-yellow-400 border-yellow-400/40"
                     }`}
-                    title={`Geprüft am ${new Date(fact.crossCheck.checkedAt).toLocaleString("de-DE")}`}
+                    title={t("pdfAnalysis.panel.checkedAt", {
+                      date: new Date(fact.crossCheck.checkedAt).toLocaleString(
+                        "de-DE",
+                      ),
+                    })}
                   >
-                    Kreuz-geprüft:{" "}
+                    {t("pdfAnalysis.panel.crossChecked")}{" "}
                     {fact.crossCheck.webOverall === "supports"
-                      ? "extern bestätigt"
+                      ? t("pdfAnalysis.panel.crossCheckSupports")
                       : fact.crossCheck.webOverall === "contradicts"
-                        ? "Widerspruch gefunden"
-                        : "unklar"}
+                        ? t("pdfAnalysis.panel.crossCheckContradicts")
+                        : t("pdfAnalysis.panel.crossCheckInconclusive")}
                   </span>
                 )}
                 <button
                   type="button"
                   onClick={() => onCrossCheck?.(fact.id)}
                   className="ml-auto text-xs px-2 py-0.5 rounded-md text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
-                  aria-label={`Gegen Quellen prüfen: ${fact.detail.slice(0, 40)}`}
+                  aria-label={t("pdfAnalysis.panel.checkSourcesAria", {
+                    text: fact.detail.slice(0, 40),
+                  })}
                 >
-                  Gegen Quellen prüfen
+                  {t("pdfAnalysis.panel.checkSources")}
                 </button>
                 <button
                   type="button"
@@ -565,9 +615,11 @@ function FactsPanel({ onCrossCheck }) {
                     search();
                   }}
                   className="text-xs text-red-400 hover:opacity-80"
-                  aria-label={`Fakt löschen: ${fact.detail.slice(0, 40)}`}
+                  aria-label={t("pdfAnalysis.panel.deleteFactAria", {
+                    text: fact.detail.slice(0, 40),
+                  })}
                 >
-                  Löschen
+                  {t("pdfAnalysis.panel.delete")}
                 </button>
               </div>
             </li>
