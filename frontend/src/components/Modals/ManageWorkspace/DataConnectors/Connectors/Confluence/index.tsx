@@ -20,7 +20,7 @@ export default function ConfluenceOptions() {
     try {
       setLoading(true);
       showToast(
-        "Fetching all pages for Confluence space - this may take a while.",
+        t("connectors.confluence.fetching_pages"),
         "info",
         {
           clear: true,
@@ -44,7 +44,7 @@ export default function ConfluenceOptions() {
       }
 
       showToast(
-        `Pages collected from Confluence space ${data.spaceKey}. Output folder is ${data.destination}.`,
+        t("connectors.confluence.pages_collected", { spaceKey: data.spaceKey, destination: data.destination }),
         "success",
         { clear: true },
       );
@@ -83,8 +83,8 @@ export default function ConfluenceOptions() {
                   defaultValue="true"
                   onChange={(e) => setIsCloud(e.target.value === "true")}
                 >
-                  <option value="true">Atlassian Cloud</option>
-                  <option value="false">Self-hosted</option>
+                  <option value="true">{t("connectors.confluence.atlassian_cloud")}</option>
+                  <option value="false">{t("connectors.confluence.self_hosted")}</option>
                 </select>
               </div>
 
@@ -103,7 +103,7 @@ export default function ConfluenceOptions() {
                   type="url"
                   name="baseUrl"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="eg: https://example.atlassian.net, http://localhost:8211, etc..."
+                  placeholder={t("connectors.confluence.base_url_placeholder")}
                   required={true}
                   autoComplete="off"
                   spellCheck={false}
@@ -122,7 +122,7 @@ export default function ConfluenceOptions() {
                   type="text"
                   name="spaceKey"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="eg: ~7120208c08555d52224113949698b933a3bb56"
+                  placeholder={t("connectors.confluence.space_key_placeholder")}
                   required={true}
                   autoComplete="off"
                   spellCheck={false}
@@ -176,7 +176,7 @@ export default function ConfluenceOptions() {
                       type="text"
                       name="username"
                       className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder="jdoe@example.com"
+                      placeholder={t("connectors.confluence.username_placeholder")}
                       required={true}
                       autoComplete="off"
                       spellCheck={false}
@@ -245,7 +245,7 @@ export default function ConfluenceOptions() {
                     type="password"
                     name="personalAccessToken"
                     className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                    placeholder="abcd1234"
+                    placeholder={t("connectors.confluence.pat_placeholder")}
                     required={true}
                     autoComplete="off"
                     spellCheck={false}
@@ -281,7 +281,7 @@ export default function ConfluenceOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? "Collecting pages..." : "Submit"}
+              {loading ? t("connectors.confluence.collecting_pages") : t("connectors.confluence.submit")}
             </button>
             {loading && (
               <p className="text-xs text-theme-text-secondary">

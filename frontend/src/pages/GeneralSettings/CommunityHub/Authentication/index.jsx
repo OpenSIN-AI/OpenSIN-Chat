@@ -10,8 +10,10 @@ import paths from "@/utils/paths";
 import { Info } from "@phosphor-icons/react";
 import UserItems from "./UserItems";
 import useCommunityHubSettings from "@/hooks/useCommunityHubSettings";
+import { useTranslation } from "react-i18next";
 
 export default function CommunityHubAuthentication() {
+  const { t } = useTranslation();
   const { settings, isLoading, mutate } = useCommunityHubSettings();
   const connectionKeyFromSettings = settings?.connectionKey || "";
   const [originalConnectionKey, setOriginalConnectionKey] = useState("");
@@ -45,14 +47,14 @@ export default function CommunityHubAuthentication() {
         hub_api_key: connectionKey,
       });
       if (!response.success)
-        return showToast("Failed to save API key", "error");
+        return showToast(t("communityHub.auth.toast.saveFailed"), "error");
       setHasChanges(false);
-      showToast("API key saved successfully", "success");
+      showToast(t("communityHub.auth.toast.saveSuccess"), "success");
       setOriginalConnectionKey(connectionKey);
       mutate();
     } catch (error) {
       console.error(error);
-      showToast("Failed to save API key", "error");
+      showToast(t("communityHub.auth.toast.saveFailed"), "error");
     } finally {
       setLoading(false);
     }
@@ -65,15 +67,15 @@ export default function CommunityHubAuthentication() {
         hub_api_key: "",
       });
       if (!response.success)
-        return showToast("Failed to disconnect from hub", "error");
+        return showToast(t("communityHub.auth.toast.disconnectFailed"), "error");
       setHasChanges(false);
-      showToast("Disconnected from OpenSIN Chat Community Hub", "success");
+      showToast(t("communityHub.auth.toast.disconnectSuccess"), "success");
       setOriginalConnectionKey("");
       setConnectionKey("");
       mutate();
     } catch (error) {
       console.error(error);
-      showToast("Failed to disconnect from hub", "error");
+      showToast(t("communityHub.auth.toast.disconnectFailed"), "error");
     } finally {
       setLoading(false);
     }
@@ -96,13 +98,11 @@ export default function CommunityHubAuthentication() {
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
             <div className="items-center">
               <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                Your OpenSIN Chat Community Hub Account
+                {t("communityHub.auth.title")}
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              Connecting your OpenSIN Chat Community Hub account allows you to
-              access your <b>private</b> OpenSIN Chat Community Hub items as
-              well as upload your own items to the OpenSIN Chat Community Hub.
+              {t("communityHub.auth.descriptionPart1")}<b>{t("communityHub.auth.private")}</b>{t("communityHub.auth.descriptionPart2")}
             </p>
           </div>
 
@@ -112,20 +112,15 @@ export default function CommunityHubAuthentication() {
                 <div className="gap-x-2 flex items-center">
                   <Info size={25} />
                   <h1 className="text-lg font-semibold">
-                    Why connect my OpenSIN Chat Community Hub account?
+                    {t("communityHub.auth.whyConnectTitle")}
                   </h1>
                 </div>
                 <p className="text-sm text-theme-text-secondary">
-                  Connecting your OpenSIN Chat Community Hub account allows you
-                  to pull in your <b>private</b> items from the OpenSIN Chat
-                  Community Hub as well as upload your own items to the OpenSIN
-                  Chat Community Hub.
+                  {t("communityHub.auth.whyConnectBodyPart1")}<b>{t("communityHub.auth.private")}</b>{t("communityHub.auth.whyConnectBodyPart2")}
                   <br />
                   <br />
                   <i>
-                    You do not need to connect your OpenSIN Chat Community Hub
-                    account to pull in public items from the OpenSIN Chat
-                    Community Hub.
+                    {t("communityHub.auth.whyConnectNote")}
                   </i>
                 </p>
               </div>
@@ -136,24 +131,25 @@ export default function CommunityHubAuthentication() {
           <div className="mt-6 mb-12">
             <div className="flex flex-col w-full max-w-[400px]">
               <label className="text-theme-text-primary text-sm font-semibold block mb-2">
-                OpenSIN Chat Hub API Key
+                {t("communityHub.auth.apiKeyLabel")}
               </label>
               <input
                 type="password"
                 value={connectionKey || ""}
                 onChange={onConnectionKeyChange}
                 className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                placeholder="Enter your OpenSIN Chat Hub API key"
+                placeholder={t("communityHub.auth.apiKeyPlaceholder")}
               />
               <div className="flex items-center justify-between mt-2">
                 <p className="text-theme-text-secondary text-xs">
-                  You can get your API key from your{" "}
+                  {t("communityHub.auth.apiKeyHelp")}{" "}
                   <a
                     href={paths.communityHub.profile()}
                     className="underline text-primary-button"
                   >
-                    OpenSIN Chat Community Hub profile page
+                    {t("communityHub.auth.apiKeyHelpLink")}
                   </a>
+                  {/* eslint-disable-next-line i18next/no-literal-string */}
                   .
                 </p>
                 {!!originalConnectionKey && (
@@ -161,7 +157,7 @@ export default function CommunityHubAuthentication() {
                     onClick={disconnectHub}
                     className="border-none text-red-500 hover:text-red-600 text-sm font-medium transition-colors duration-200"
                   >
-                    Disconnect
+                    {t("communityHub.auth.disconnect")}
                   </button>
                 )}
               </div>

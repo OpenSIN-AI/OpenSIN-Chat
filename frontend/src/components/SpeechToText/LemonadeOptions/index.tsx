@@ -5,8 +5,10 @@ import { Tooltip } from "react-tooltip";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { cleanBasePath } from "@/components/LLMSelection/LemonadeOptions";
 import useProviderModels from "@/hooks/useProviderModels";
+import { useTranslation } from "react-i18next";
 
 export default function LemonadeSpeechToTextOptions({ settings }: any) {
+  const { t } = useTranslation();
   const {
     autoDetecting: loading,
     basePath,
@@ -25,7 +27,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
           <div className="flex items-center gap-1 mb-3">
             <div className="flex justify-between items-center gap-x-2">
               <label className="text-white text-sm font-semibold">
-                Base URL
+                {t("speechToText.lemonade.baseUrl")}
               </label>
               {loading ? (
                 <CircleNotch className="w-4 h-4 text-theme-text-secondary animate-spin" />
@@ -37,7 +39,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
                       onClick={handleAutoDetectClick}
                       className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >
-                      Auto-Detect
+                      {t("speechToText.lemonade.autoDetect")}
                     </button>
                   )}
                 </>
@@ -51,7 +53,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
               clickable={true}
               className="tooltip !text-xs !opacity-100 z-99 !max-w-[250px] !whitespace-normal !break-words"
             >
-              Enter the URL where your Lemonade server is running.
+              {t("speechToText.lemonade.baseUrlTooltip")}
             </Tooltip>
             <div
               className="text-theme-text-secondary cursor-pointer hover:bg-theme-bg-primary flex items-center justify-center rounded-full"
@@ -66,7 +68,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
             type="url"
             name="STTLemonadeBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="http://localhost:13305"
+            placeholder={t("speechToText.lemonade.baseUrlPlaceholder")}
             value={cleanBasePath(basePathValue.value)}
             required={true}
             autoComplete="off"
@@ -82,7 +84,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-1 mb-3">
             <label className="text-white text-sm font-semibold block">
-              API Key (optional)
+              {t("speechToText.lemonade.apiKeyOptional")}
             </label>
             <Tooltip
               id="lemonade-stt-api-key"
@@ -92,8 +94,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
               clickable={true}
               className="tooltip !text-xs !opacity-100 z-99 !max-w-[350px] !whitespace-normal !break-words"
             >
-              The API key for your Lemonade server. Shared with the Lemonade LLM
-              and embedder settings.
+              {t("speechToText.lemonade.apiKeyTooltip")}
             </Tooltip>
             <div
               className="text-theme-text-secondary cursor-pointer hover:bg-theme-bg-primary flex items-center justify-center rounded-full"
@@ -118,6 +119,7 @@ export default function LemonadeSpeechToTextOptions({ settings }: any) {
 }
 
 function LemonadeSTTModelSelection({ settings, basePath = null }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading: loading } = useProviderModels(
     basePath ? "lemonade-stt" : null,
     null,
@@ -128,7 +130,7 @@ function LemonadeSTTModelSelection({ settings, basePath = null }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Transcription Model
+          {t("speechToText.lemonade.transcriptionModel")}
         </label>
         <select
           name="STTLemonadeModelPref"
@@ -137,13 +139,12 @@ function LemonadeSTTModelSelection({ settings, basePath = null }: any) {
         >
           <option disabled={true} selected={true}>
             {basePath
-              ? "-- no transcription models found --"
-              : "Enter Lemonade URL first"}
+              ? t("speechToText.lemonade.noModelsFound")
+              : t("speechToText.lemonade.enterUrlFirst")}
           </option>
         </select>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Load a Whisper or transcription model into your Lemonade server, then
-          it will appear here.
+          {t("speechToText.lemonade.modelHelp")}
         </p>
       </div>
     );
@@ -152,14 +153,14 @@ function LemonadeSTTModelSelection({ settings, basePath = null }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Transcription Model
+        {t("speechToText.lemonade.transcriptionModel")}
       </label>
       <select
         name="STTLemonadeModelPref"
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        <optgroup label="Your loaded models">
+        <optgroup label={t("speechToText.lemonade.loadedModels")}>
           {(customModels as any).map((model) => (
             <option
               key={model.id}

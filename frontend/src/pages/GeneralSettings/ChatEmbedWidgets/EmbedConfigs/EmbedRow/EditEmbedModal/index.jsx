@@ -12,8 +12,10 @@ import {
 import Embed from "@/models/embed";
 import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";
+import { useTranslation } from "react-i18next";
 
 export default function EditEmbedModal({ embed, closeModal }) {
+  const { t } = useTranslation();
   const [error, setError] = useState(null);
 
   const handleUpdate = async (e) => {
@@ -23,7 +25,7 @@ export default function EditEmbedModal({ embed, closeModal }) {
     const data = enforceSubmissionSchema(form);
     const { success, error } = await Embed.updateEmbed(embed.id, data);
     if (success) {
-      showToast("Embed updated successfully.", "success", { clear: true });
+      showToast(t("chatEmbedWidgets.editEmbed.updateSuccess"), "success", { clear: true });
       setTimeout(() => {
         window.location.reload();
       }, 800);
@@ -37,7 +39,7 @@ export default function EditEmbedModal({ embed, closeModal }) {
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
             <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-              Update embed #{embed.id}
+              {t("chatEmbedWidgets.editEmbed.title", { id: embed.id })}
             </h3>
           </div>
           <button
@@ -60,49 +62,44 @@ export default function EditEmbedModal({ embed, closeModal }) {
               />
               <NumberInput
                 name="max_chats_per_day"
-                title="Max chats per day"
-                hint="Limit the amount of chats this embedded chat can process in a 24 hour period. Zero is unlimited."
+                title={t("chatEmbedWidgets.editEmbed.maxChatsPerDay")}
+                hint={t("chatEmbedWidgets.editEmbed.maxChatsPerDayHint")}
                 defaultValue={embed.max_chats_per_day}
               />
               <NumberInput
                 name="max_chats_per_session"
-                title="Max chats per session"
-                hint="Limit the amount of chats a session user can send with this embed in a 24 hour period. Zero is unlimited."
+                title={t("chatEmbedWidgets.editEmbed.maxChatsPerSession")}
+                hint={t("chatEmbedWidgets.editEmbed.maxChatsPerSessionHint")}
                 defaultValue={embed.max_chats_per_session}
               />
               <NumberInput
                 name="message_limit"
-                title="Message History Limit"
-                hint="The number of previous messages to include in the chat context. Default is 20."
+                title={t("chatEmbedWidgets.editEmbed.messageHistoryLimit")}
+                hint={t("chatEmbedWidgets.editEmbed.messageHistoryLimitHint")}
                 defaultValue={embed.message_limit}
               />
               <BooleanInput
                 name="allow_model_override"
-                title="Enable dynamic model use"
-                hint="Allow setting of the preferred LLM model to override the workspace default."
+                title={t("chatEmbedWidgets.editEmbed.enableDynamicModel")}
+                hint={t("chatEmbedWidgets.editEmbed.enableDynamicModelHint")}
                 defaultValue={embed.allow_model_override}
               />
               <BooleanInput
                 name="allow_temperature_override"
-                title="Enable dynamic LLM temperature"
-                hint="Allow setting of the LLM temperature to override the workspace default."
+                title={t("chatEmbedWidgets.editEmbed.enableDynamicTemperature")}
+                hint={t("chatEmbedWidgets.editEmbed.enableDynamicTemperatureHint")}
                 defaultValue={embed.allow_temperature_override}
               />
               <BooleanInput
                 name="allow_prompt_override"
-                title="Enable Prompt Override"
-                hint="Allow setting of the system prompt to override the workspace default."
+                title={t("chatEmbedWidgets.editEmbed.enablePromptOverride")}
+                hint={t("chatEmbedWidgets.editEmbed.enablePromptOverrideHint")}
                 defaultValue={embed.allow_prompt_override}
               />
 
-              {error && <p className="text-red-400 text-sm">Error: {error}</p>}
+              {error && <p className="text-red-400 text-sm">{t("chatEmbedWidgets.editEmbed.error", { error })}</p>}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
-                After creating an embed you will be provided a link that you can
-                publish on your website with a simple
-                <code className="border-none bg-theme-settings-input-bg text-white mx-1 px-1 rounded-sm">
-                  &lt;script&gt;
-                </code>{" "}
-                tag.
+                {t("chatEmbedWidgets.editEmbed.scriptTagNotice")}
               </p>
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
@@ -111,13 +108,13 @@ export default function EditEmbedModal({ embed, closeModal }) {
                 type="button"
                 className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
               >
-                Cancel
+                {t("chatEmbedWidgets.editEmbed.cancel")}
               </button>
               <button
                 type="submit"
                 className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
               >
-                Update embed
+                {t("chatEmbedWidgets.editEmbed.updateEmbed")}
               </button>
             </div>
           </form>

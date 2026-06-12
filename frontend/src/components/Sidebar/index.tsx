@@ -32,6 +32,7 @@ export default function Sidebar() {
     showModal: showNewWsModal,
     hideModal: hideNewWsModal,
   } = useNewWorkspaceModal();
+  const { t } = useTranslation();
 
   // Sidebar width state with localStorage persistence
   const [sidebarWidth, setSidebarWidth] = useState(() => {
@@ -96,7 +97,7 @@ export default function Sidebar() {
   return (
     <>
       <nav
-        aria-label="Hauptnavigation"
+        aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? sidebarWidth : 0 }}
         className={`relative transition-all duration-500 ${
           showSidebar ? "pl-0" : "pl-4"
@@ -116,12 +117,12 @@ export default function Sidebar() {
             >
               <Link
                 to={paths.home()}
-                aria-label="Home"
+                aria-label={t("sidebar.home")}
                 className="flex items-center gap-x-2.5"
               >
                 <img
                   src={logo}
-                  alt="Logo"
+                  alt={t("sidebar.logo")}
                   className={`h-9 w-9 max-h-[36px] max-w-[36px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
                 />
                 <span
@@ -161,8 +162,8 @@ export default function Sidebar() {
             onMouseDown={handleResizeStart}
             role="separator"
             aria-orientation="vertical"
-            aria-label="Seitenleiste skalieren"
-            title="Ziehen um die Breite der Seitenleiste zu ändern"
+            aria-label={t("sidebar.resizeSidebar")}
+            title={t("sidebar.resizeSidebarTitle")}
             className="absolute top-0 right-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors -mr-[3px]"
           >
             <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />
@@ -186,6 +187,7 @@ export function SidebarMobileHeader() {
     hideModal: hideNewWsModal,
   } = useNewWorkspaceModal();
   const { user } = useUser();
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Darkens the rest of the screen
@@ -205,13 +207,13 @@ export function SidebarMobileHeader() {
   return (
     <>
       <header
-        aria-label="Obere Navigation - Mobile"
+        aria-label={t("sidebar.topNavigationMobile")}
         className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-theme-bg-sidebar light:bg-white text-slate-200 shadow-lg h-16"
       >
         <button
           onClick={() => setShowSidebar(true)}
           className="rounded-md p-2 flex items-center justify-center text-theme-text-secondary hover:bg-white/10 transition-colors"
-          aria-label="Seitenleiste öffnen"
+          aria-label={t("sidebar.openSidebar")}
           aria-expanded={showSidebar}
         >
           <List className="h-6 w-6" />
@@ -219,7 +221,7 @@ export function SidebarMobileHeader() {
         <div className="flex items-center justify-center flex-grow gap-x-2">
           <img
             src={logo}
-            alt="Logo"
+            alt={t("sidebar.logo")}
             className="h-6 w-6 max-h-6 max-w-6 object-contain"
           />
           <span className="text-white font-bold text-base">OpenSIN</span>
@@ -244,7 +246,7 @@ export function SidebarMobileHeader() {
           ref={sidebarRef}
           className="relative h-[100vh] fixed top-0 left-0  rounded-r-[26px] bg-theme-bg-sidebar w-[80%] p-[18px]"
           role="navigation"
-          aria-label="Seitenleisten-Navigation - Mobile"
+          aria-label={t("sidebar.mobileNavigation")}
         >
           <div className="w-full h-full flex flex-col overflow-x-hidden items-between">
             {/* Header Information */}
@@ -252,7 +254,7 @@ export function SidebarMobileHeader() {
               <div className="flex shrink-1 w-fit items-center justify-start gap-x-2">
                 <img
                   src={logo}
-                  alt="Logo"
+                  alt={t("sidebar.logo")}
                   className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                 />
                 <span className="text-white font-bold text-base">OpenSIN</span>

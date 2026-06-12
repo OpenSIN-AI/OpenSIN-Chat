@@ -6,13 +6,14 @@ import { humanFileSize } from "@/utils/numbers";
 import showToast from "@/utils/toast";
 import { CircleNotch, PauseCircle, PlayCircle } from "@phosphor-icons/react";
 import usePiperVoices from "@/hooks/usePiperVoices";
+import { useTranslation } from "react-i18next";
 
 export default function PiperTTSOptions({ settings }: any) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="text-sm font-base text-white text-opacity-60 mb-4">
-        All PiperTTS models will run in your browser locally. This can be
-        resource intensive on lower-end devices.
+        {t("textToSpeech.piper.description")}
       </p>
       <div className="flex gap-x-4 items-center">
         <PiperTTSModelSelection settings={settings} />
@@ -39,6 +40,7 @@ function voiceDisplayName(voice: any) {
 }
 
 function PiperTTSModelSelection({ settings }: any) {
+  const { t } = useTranslation();
   const { voices, isLoading: loading } = usePiperVoices();
   const [selectedVoice, setSelectedVoice] = useState(
     settings?.TTSPiperTTSVoiceModel,
@@ -47,7 +49,7 @@ function PiperTTSModelSelection({ settings }: any) {
   function flushVoices() {
     PiperTTSClient.flush()
       .then(() =>
-        showToast("All voices flushed from browser storage", "info", {
+        showToast(t("textToSpeech.piper.flushSuccess"), "info", {
           clear: true,
         }),
       )
@@ -59,7 +61,7 @@ function PiperTTSModelSelection({ settings }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Voice Model Selection
+          {t("textToSpeech.piper.voiceModelSelection")}
         </label>
         <select
           name="TTSPiperTTSVoiceModel"
@@ -68,7 +70,7 @@ function PiperTTSModelSelection({ settings }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option value="" disabled={true}>
-            -- loading available models --
+            {t("textToSpeech.piper.loadingModels")}
           </option>
         </select>
       </div>
@@ -79,7 +81,7 @@ function PiperTTSModelSelection({ settings }: any) {
     <div className="flex flex-col w-fit">
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Voice Model Selection
+          {t("textToSpeech.piper.voiceModelSelection")}
         </label>
         <div className="flex items-center w-fit gap-x-4 mb-2">
           <select
@@ -106,8 +108,7 @@ function PiperTTSModelSelection({ settings }: any) {
           <DemoVoiceSample voiceId={selectedVoice} />
         </div>
         <p className="text-xs text-white/40">
-          The "✔" indicates this model is already stored locally and does not
-          need to be downloaded when run.
+          {t("textToSpeech.piper.storedIndicator")}
         </p>
       </div>
       {!!voices.find((voice) => voice.is_stored) && (
@@ -116,7 +117,7 @@ function PiperTTSModelSelection({ settings }: any) {
           onClick={flushVoices}
           className="w-fit border-none hover:text-white hover:underline text-white/40 text-sm my-4"
         >
-          Flush voice cache
+          {t("textToSpeech.piper.flushVoiceCache")}
         </button>
       )}
     </div>
@@ -124,6 +125,7 @@ function PiperTTSModelSelection({ settings }: any) {
 }
 
 function DemoVoiceSample({ voiceId }: any) {
+  const { t } = useTranslation();
   const playerRef = useRef(null);
   const [speaking, setSpeaking] = useState(false as any);
   const [loading, setLoading] = useState(false as any);
@@ -141,7 +143,7 @@ function DemoVoiceSample({ voiceId }: any) {
         setLoading(true);
         const client = new PiperTTSClient({ voiceId });
         const blobUrl = await client.getAudioBlobForText(
-          "Hello, welcome to OpenSIN Chat!",
+          t("textToSpeech.piper.demoText"),
         );
         setAudioSrc(blobUrl);
         setLoading(false);
@@ -190,19 +192,19 @@ function DemoVoiceSample({ voiceId }: any) {
       {speaking ? (
         <>
           <PauseCircle size={20} className="flex-shrink-0" />
-          <p className="text-sm flex-shrink-0">Stop demo</p>
+          <p className="text-sm flex-shrink-0">{t("textToSpeech.piper.stopDemo")}</p>
         </>
       ) : (
         <>
           {loading ? (
             <>
               <CircleNotch size={20} className="animate-spin flex-shrink-0" />
-              <p className="text-sm flex-shrink-0">Loading voice</p>
+              <p className="text-sm flex-shrink-0">{t("textToSpeech.piper.loadingVoice")}</p>
             </>
           ) : (
             <>
               <PlayCircle size={20} className="flex-shrink-0 text-white" />
-              <p className="text-white text-sm flex-shrink-0">Play sample</p>
+              <p className="text-white text-sm flex-shrink-0">{t("textToSpeech.piper.playSample")}</p>
             </>
           )}
         </>

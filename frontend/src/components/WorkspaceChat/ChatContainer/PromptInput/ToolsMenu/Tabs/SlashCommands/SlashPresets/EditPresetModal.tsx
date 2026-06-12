@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { X } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
 import { CMD_REGEX } from "./constants";
+import { useTranslation } from "react-i18next";
 
 export default function EditPresetModal({
   isOpen,
@@ -11,6 +12,7 @@ export default function EditPresetModal({
   onDelete,
   preset,
 }: any) {
+  const { t } = useTranslation();
   const [command, setCommand] = useState("");
   const [deleting, setDeleting] = useState(false as any);
 
@@ -38,7 +40,7 @@ export default function EditPresetModal({
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this preset?")) return;
+    if (!window.confirm(t("slashPresets.editPreset.deleteConfirm"))) return;
 
     setDeleting(true);
     await onDelete(preset.id);
@@ -52,7 +54,7 @@ export default function EditPresetModal({
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
             <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-              Edit Preset
+              {t("slashPresets.editPreset.title")}
             </h3>
           </div>
           <button
@@ -72,14 +74,14 @@ export default function EditPresetModal({
                     htmlFor="command"
                     className="block mb-2 text-sm font-medium text-white"
                   >
-                    Command
+                    {t("slashPresets.editPreset.command")}
                   </label>
                   <div className="flex items-center">
                     <span className="text-white text-sm mr-2 font-bold">/</span>
                     <input
                       type="text"
                       name="command"
-                      placeholder="your-command"
+                      placeholder={t("slashPresets.editPreset.commandPlaceholder")}
                       value={command}
                       onChange={handleCommandChange}
                       required={true}
@@ -92,11 +94,11 @@ export default function EditPresetModal({
                     htmlFor="prompt"
                     className="block mb-2 text-sm font-medium text-white"
                   >
-                    Prompt
+                    {t("slashPresets.editPreset.prompt")}
                   </label>
                   <textarea
                     name="prompt"
-                    placeholder="This is a test prompt. Please respond with a poem about LLMs."
+                    placeholder={t("slashPresets.editPreset.promptPlaceholder")}
                     defaultValue={preset.prompt}
                     required={true}
                     className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
@@ -107,13 +109,13 @@ export default function EditPresetModal({
                     htmlFor="description"
                     className="block mb-2 text-sm font-medium text-white"
                   >
-                    Description
+                    {t("slashPresets.editPreset.description")}
                   </label>
                   <input
                     type="text"
                     name="description"
                     defaultValue={preset.description}
-                    placeholder="Responds with a poem about LLMs."
+                    placeholder={t("slashPresets.editPreset.descriptionPlaceholder")}
                     required={true}
                     className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   />
@@ -127,7 +129,7 @@ export default function EditPresetModal({
                 type="button"
                 className="border-none transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/25 px-4 py-2 rounded-lg text-sm disabled:opacity-50"
               >
-                {deleting ? "Deleting..." : "Delete Preset"}
+                {deleting ? t("slashPresets.editPreset.deleting") : t("slashPresets.editPreset.deletePreset")}
               </button>
               <div className="flex space-x-2">
                 <button
@@ -135,13 +137,13 @@ export default function EditPresetModal({
                   type="button"
                   className="border-none transition-all duration-300 bg-transparent text-white hover:opacity-60 px-4 py-2 rounded-lg text-sm"
                 >
-                  Cancel
+                  {t("slashPresets.editPreset.cancel")}
                 </button>
                 <button
                   type="submit"
                   className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
                 >
-                  Save
+                  {t("slashPresets.editPreset.save")}
                 </button>
               </div>
             </div>

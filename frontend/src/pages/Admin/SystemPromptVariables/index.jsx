@@ -11,10 +11,12 @@ import { useModal } from "@/hooks/useModal";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";
+import { useTranslation } from "react-i18next";
 
 export default function SystemPromptVariables() {
   const { variables, isLoading, refresh } = useSystemPromptVariables();
   const { isOpen, openModal, closeModal } = useModal();
+  const { t } = useTranslation();
 
   if (isLoading) {
     return (
@@ -28,13 +30,11 @@ export default function SystemPromptVariables() {
             <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
               <div className="items-center flex gap-x-4">
                 <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                  System Prompt Variables
+                  {t("admin.systemPromptVariables.page.title")}
                 </p>
               </div>
               <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-                System prompt variables are used to store configuration values
-                that can be referenced in your system prompt to enable dynamic
-                content in your prompts.
+                {t("admin.systemPromptVariables.page.description")}
               </p>
             </div>
             <Skeleton.default
@@ -63,13 +63,11 @@ export default function SystemPromptVariables() {
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">
               <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                System Prompt Variables
+                {t("admin.systemPromptVariables.page.title")}
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              System prompt variables are used to store configuration values
-              that can be referenced in your system prompt to enable dynamic
-              content in your prompts.
+              {t("admin.systemPromptVariables.page.description")}
             </p>
           </div>
 
@@ -78,30 +76,30 @@ export default function SystemPromptVariables() {
               onClick={openModal}
               className="mt-3 mr-0 mb-4 md:-mb-6 z-10"
             >
-              <Plus className="h-4 w-4" weight="bold" /> Add Variable
+              <Plus className="h-4 w-4" weight="bold" /> {t("admin.systemPromptVariables.page.addVariable")}
             </CTAButton>
           </div>
 
           <div className="overflow-x-auto">
             {variables.length === 0 ? (
               <div className="text-center py-4 text-theme-text-secondary">
-                No variables found
+                {t("admin.systemPromptVariables.page.noVariablesFound")}
               </div>
             ) : (
               <table className="w-full text-sm text-left rounded-lg min-w-[640px] border-spacing-0">
                 <thead className="text-theme-text-secondary text-xs leading-[18px] font-bold uppercase border-white/10 border-b">
                   <tr>
                     <th scope="col" className="px-4 py-2 rounded-tl-lg">
-                      Key
+                      {t("admin.systemPromptVariables.page.key")}
                     </th>
                     <th scope="col" className="px-4 py-2">
-                      Value
+                      {t("admin.systemPromptVariables.page.value")}
                     </th>
                     <th scope="col" className="px-4 py-2">
-                      Description
+                      {t("admin.systemPromptVariables.page.description")}
                     </th>
                     <th scope="col" className="px-4 py-2">
-                      Type
+                      {t("admin.systemPromptVariables.page.type")}
                     </th>
                   </tr>
                 </thead>

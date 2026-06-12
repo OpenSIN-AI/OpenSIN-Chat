@@ -1,18 +1,20 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function WebsiteNode({
   config,
   onConfigChange,
   renderVariableSelect,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">URL</label>
+        <label className="block text-sm font-medium text-white mb-2">{t("agentBuilder.websiteNode.url")}</label>
         <input
           type="text"
-          placeholder="https://example.com"
+          placeholder={t("agentBuilder.websiteNode.urlPlaceholder")}
           value={config.url}
           onChange={(e) => onConfigChange({ url: e.target.value })}
           className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white placeholder:text-white/20 focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
@@ -22,7 +24,7 @@ export default function WebsiteNode({
       </div>
       <div>
         <label className="block text-sm font-medium text-white mb-2">
-          Action
+          {t("agentBuilder.websiteNode.action")}
         </label>
         <select
           value={config.action}
@@ -30,23 +32,23 @@ export default function WebsiteNode({
           className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
         >
           <option value="read" className="bg-theme-bg-primary">
-            Read Content
+            {t("agentBuilder.websiteNode.readContent")}
           </option>
           <option value="click" className="bg-theme-bg-primary">
-            Click Element
+            {t("agentBuilder.websiteNode.clickElement")}
           </option>
           <option value="type" className="bg-theme-bg-primary">
-            Type Text
+            {t("agentBuilder.websiteNode.typeText")}
           </option>
         </select>
       </div>
       <div>
         <label className="block text-sm font-medium text-white mb-2">
-          CSS Selector
+          {t("agentBuilder.websiteNode.cssSelector")}
         </label>
         <input
           type="text"
-          placeholder="#element-id or .class-name"
+          placeholder={t("agentBuilder.websiteNode.cssSelectorPlaceholder")}
           value={config.selector}
           onChange={(e) => onConfigChange({ selector: e.target.value })}
           className="w-full p-2.5 text-sm rounded-lg bg-theme-bg-primary border border-white/5 text-white placeholder:text-white/20 focus:border-primary-button focus:ring-1 focus:ring-primary-button outline-none"
@@ -56,12 +58,12 @@ export default function WebsiteNode({
       </div>
       <div>
         <label className="block text-sm font-medium text-white mb-2">
-          Store Result In
+          {t("agentBuilder.websiteNode.storeResultIn")}
         </label>
         {renderVariableSelect(
           config.resultVariable,
           (value) => onConfigChange({ resultVariable: value }),
-          "Select or create variable",
+          t("agentBuilder.websiteNode.selectOrCreateVariable"),
         )}
       </div>
     </div>

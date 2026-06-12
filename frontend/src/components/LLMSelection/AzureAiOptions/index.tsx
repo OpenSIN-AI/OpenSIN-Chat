@@ -17,7 +17,7 @@ export default function AzureAiOptions({ settings }: any) {
             type="url"
             name="AzureOpenAiEndpoint"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="https://my-azure.openai.azure.com"
+            placeholder={t("llm.providers.azure_openai.azure_service_endpoint_placeholder")}
             defaultValue={settings?.AzureOpenAiEndpoint}
             required={true}
             autoComplete="off"
@@ -33,7 +33,7 @@ export default function AzureAiOptions({ settings }: any) {
             type="password"
             name="AzureOpenAiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Azure OpenAI API Key"
+            placeholder={t("llm.providers.azure_openai.api_key_placeholder")}
             defaultValue={settings?.AzureOpenAiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -49,7 +49,7 @@ export default function AzureAiOptions({ settings }: any) {
             type="text"
             name="AzureOpenAiModelPref"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Azure OpenAI chat model deployment name"
+            placeholder={t("llm.providers.azure_openai.chat_deployment_name_placeholder")}
             defaultValue={settings?.AzureOpenAiModelPref}
             required={true}
             autoComplete="off"
@@ -69,15 +69,15 @@ export default function AzureAiOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             required={true}
           >
-            <option value={4096}>4,096 (gpt-3.5-turbo)</option>
-            <option value={16384}>16,384 (gpt-3.5-16k)</option>
-            <option value={8192}>8,192 (gpt-4)</option>
-            <option value={32768}>32,768 (gpt-4-32k)</option>
+            <option value={4096}>{t("llm.providers.azure_openai.token_limit.4096")}</option>
+            <option value={16384}>{t("llm.providers.azure_openai.token_limit.16384")}</option>
+            <option value={8192}>{t("llm.providers.azure_openai.token_limit.8192")}</option>
+            <option value={32768}>{t("llm.providers.azure_openai.token_limit.32768")}</option>
             <option value={128000}>
-              128,000 (gpt-4-turbo,gpt-4o,gpt-4o-mini,o1-mini)
+              {t("llm.providers.azure_openai.token_limit.128000")}
             </option>
-            <option value={200000}>200,000 (o1,o1-pro,o3-mini)</option>
-            <option value={1047576}>1,047,576 (gpt-4.1)</option>
+            <option value={200000}>{t("llm.providers.azure_openai.token_limit.200000")}</option>
+            <option value={1047576}>{t("llm.providers.azure_openai.token_limit.1047576")}</option>
           </select>
         </div>
 

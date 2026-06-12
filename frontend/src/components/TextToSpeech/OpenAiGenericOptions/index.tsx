@@ -1,38 +1,39 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function OpenAiGenericTextToSpeechOptions({ settings }: any) {
+  const { t } = useTranslation();
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <div className="flex justify-between items-start mb-2">
-            <label className="text-white text-sm font-semibold">Base URL</label>
+            <label className="text-white text-sm font-semibold">{t("textToSpeech.openAiGeneric.baseUrl")}</label>
           </div>
           <input
             type="url"
             name="TTSOpenAICompatibleEndpoint"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="http://localhost:7851/v1"
+            placeholder={t("textToSpeech.openAiGeneric.baseUrlPlaceholder")}
             defaultValue={settings?.TTSOpenAICompatibleEndpoint}
             required={false}
             autoComplete="off"
             spellCheck={false}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-            This should be the base URL of the OpenAI compatible TTS service you
-            will generate TTS responses from.
+            {t("textToSpeech.openAiGeneric.baseUrlDescription")}
           </p>
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-2">
-            API Key
+            {t("textToSpeech.openAiGeneric.apiKey")}
           </label>
           <input
             type="password"
             name="TTSOpenAICompatibleKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="API Key"
+            placeholder={t("textToSpeech.openAiGeneric.apiKeyPlaceholder")}
             defaultValue={
               settings?.TTSOpenAICompatibleKey ? "*".repeat(20) : ""
             }
@@ -40,49 +41,47 @@ export default function OpenAiGenericTextToSpeechOptions({ settings }: any) {
             spellCheck={false}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-            Some TTS services require an API key to generate TTS responses -
-            this is optional if your service does not require one.
+            {t("textToSpeech.openAiGeneric.apiKeyDescription")}
           </p>
         </div>
       </div>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            TTS Model
+            {t("textToSpeech.openAiGeneric.ttsModel")}
           </label>
           <input
             type="text"
             name="TTSOpenAICompatibleModel"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Your TTS model identifier"
+            placeholder={t("textToSpeech.openAiGeneric.ttsModelPlaceholder")}
             defaultValue={settings?.TTSOpenAICompatibleModel}
             required={true}
             autoComplete="off"
             spellCheck={false}
           />
+          {/* eslint-disable i18next/no-literal-string */}
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-            Most TTS services will have several models available. This is the{" "}
-            <code>model</code> parameter you will use to select the model you
-            want to use. Note: This is not the same as the voice model.
+            {t("textToSpeech.openAiGeneric.ttsModelDescriptionPart1")}<code>model</code>{t("textToSpeech.openAiGeneric.ttsModelDescriptionPart2")}
           </p>
+          {/* eslint-enable i18next/no-literal-string */}
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Voice Model
+            {t("textToSpeech.openAiGeneric.voiceModel")}
           </label>
           <input
             type="text"
             name="TTSOpenAICompatibleVoiceModel"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Your voice model identifier"
+            placeholder={t("textToSpeech.openAiGeneric.voiceModelPlaceholder")}
             defaultValue={settings?.TTSOpenAICompatibleVoiceModel}
             required={true}
             autoComplete="off"
             spellCheck={false}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-            Most TTS services will have several voice models available, this is
-            the identifier for the voice model you want to use.
+            {t("textToSpeech.openAiGeneric.voiceModelDescription")}
           </p>
         </div>
       </div>

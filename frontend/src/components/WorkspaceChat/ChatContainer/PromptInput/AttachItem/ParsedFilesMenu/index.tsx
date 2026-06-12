@@ -7,6 +7,7 @@ import showToast from "@/utils/toast";
 import pluralize from "pluralize";
 import { PARSED_FILE_ATTACHMENT_REMOVED_EVENT } from "../../../DnDWrapper";
 import useUser from "@/hooks/useUser";
+import { useTranslation } from "react-i18next";
 
 export default function ParsedFilesMenu({
   onEmbeddingChange,
@@ -19,6 +20,7 @@ export default function ParsedFilesMenu({
   threadSlug = null,
   refresh,
 }) {
+  const { t } = useTranslation();
   const { user } = useUser();
   const canEmbed = !user || user.role !== "default";
   const initialContextWindowLimitExceeded =
@@ -38,7 +40,6 @@ export default function ParsedFilesMenu({
     const success = await Workspace.deleteParsedFiles(workspaceSlug, [file.id]);
     if (!success) return;
 
-    // Dispatch an event to the DnDFileUploaderWrapper to update the files list in attachment manager if it exists
     window.dispatchEvent(
       new CustomEvent(PARSED_FILE_ATTACHMENT_REMOVED_EVENT, {
         detail: { document: file },
@@ -47,11 +48,6 @@ export default function ParsedFilesMenu({
     await refresh();
   }
 
-  /**
-   * Handles the embedding of the files when the user exceeds the context window limit
-   * and opts to embed the files into the workspace instead.
-   * @returns {Promise<void>}
-   */
   async function handleEmbed() {
     if (!files.length) return;
     setIsEmbedding(true);
@@ -69,13 +65,13 @@ export default function ParsedFilesMenu({
       );
       await refresh();
       showToast(
-        `${files.length} ${pluralize("file", files.length)} embedded successfully`,
+        t("parsedFilesMenu.embedSuccess", { count: files.length }),
         "success",
       );
       tooltipRef?.current?.close();
     } catch (error) {
       console.error("Failed to embed files:", error);
-      showToast("Failed to embed files", "error");
+      showToast(t("parsedFilesMenu.embedFailed"), "error");
     }
     setIsEmbedding(false);
     onEmbeddingChange?.(false);
@@ -86,15 +82,13 @@ export default function ParsedFilesMenu({
     <div className="flex flex-col gap-2 p-2">
       <div className="flex items-center justify-between">
         <div className="text-sm font-medium text-theme-text-primary">
-          Current Context ({files.length} files)
+          {t("parsedFilesMenu.currentContext", { count: files.length })}
         </div>
         <div
-          // If the user cannot see the embed CTA, show a tooltip
           {...(contextWindowLimitExceeded &&
             !canEmbed && {
               "data-tooltip-id": "context-window-limit-exceeded",
-              "data-tooltip-content":
-                "You have exceeded the context window limit. Some files may be truncated or excluded from chat responses. Responses may hallucinate or lack relevant information.",
+              "data-tooltip-content": t("parsedFilesMenu.contextLimitTooltip"),
             })}
           className={`flex items-center gap-x-1 ${contextWindowLimitExceeded && !canEmbed ? "cursor-pointer" : ""}`}
         >
@@ -104,8 +98,10 @@ export default function ParsedFilesMenu({
           <div
             className={`text-xs ${contextWindowLimitExceeded ? "text-orange-600" : "text-theme-text-secondary"}`}
           >
+          {/* eslint-disable i18next/no-literal-string */}
             {nFormatter(currentTokens)} /{" "}
             {contextWindow ? nFormatter(contextWindow) : "--"} tokens
+          {/* eslint-enable i18next/no-literal-string */}
           </div>
         </div>
       </div>
@@ -117,9 +113,7 @@ export default function ParsedFilesMenu({
               size={16}
             />
             <div className="text-xs text-theme-text-primary">
-              Your context window is getting full. Some files may be truncated
-              or excluded from chat responses. We recommend embedding these
-              files directly into your workspace for better results.
+              {t("parsedFilesMenu.contextFullWarning")}
             </div>
           </div>
           <button
@@ -130,10 +124,10 @@ export default function ParsedFilesMenu({
             {isEmbedding ? (
               <>
                 <CircleNotch size={14} className="animate-spin" />
-                Embedding {embedProgress} of {files.length} files...
+                {t("parsedFilesMenu.embeddingProgress", { current: embedProgress, total: files.length })}
               </>
             ) : (
-              "Embed Files into Workspace"
+              t("parsedFilesMenu.embedFilesButton")
             )}
           </button>
         </div>
@@ -162,12 +156,12 @@ export default function ParsedFilesMenu({
         {isLoading && (
           <div className="flex items-center justify-center gap-2 text-xs text-theme-text-secondary text-center py-2">
             <CircleNotch size={16} className="animate-spin" />
-            Loading...
+            {t("parsedFilesMenu.loading")}
           </div>
         )}
         {!isLoading && files.length === 0 && (
           <div className="text-xs text-theme-text-secondary text-center py-2">
-            No files found
+            {t("parsedFilesMenu.noFilesFound")}
           </div>
         )}
       </div>

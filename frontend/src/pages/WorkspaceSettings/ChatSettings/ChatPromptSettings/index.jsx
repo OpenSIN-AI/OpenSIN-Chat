@@ -110,19 +110,20 @@ export default function ChatPromptSettings({
             {t("chat.prompt.description")}
           </p>
           <p className="text-white text-opacity-60 text-xs font-medium mb-2">
-            You can insert{" "}
+            {t("chatPromptSettings.youCanInsert")}{" "}
             <Link
               to={paths.settings.systemPromptVariables()}
               className="text-primary-button"
             >
-              prompt variables
+              {t("chatPromptSettings.promptVariables")}
             </Link>{" "}
-            like:{" "}
+            {t("chatPromptSettings.like")}:{" "}
             {availableVariables.slice(0, 3).map((v, i) => (
               <Fragment key={v.key}>
                 <span className="bg-theme-settings-input-bg px-1 py-0.5 rounded">
                   {`{${v.key}}`}
                 </span>
+                {/* eslint-disable-next-line i18next/no-literal-string */}
                 {i < availableVariables.length - 1 && ", "}
               </Fragment>
             ))}
@@ -131,7 +132,9 @@ export default function ChatPromptSettings({
                 to={paths.settings.systemPromptVariables()}
                 className="text-primary-button"
               >
-                +{availableVariables.length - 3} more...
+                {t("chatPromptSettings.moreCount", {
+                  count: availableVariables.length - 3,
+                })}
               </Link>
             )}
           </p>
@@ -148,7 +151,9 @@ export default function ChatPromptSettings({
               setShowPromptHistory(!showPromptHistory);
             }}
           >
-            {showPromptHistory ? "Hide History" : "View History"}
+            {showPromptHistory
+              ? t("chatPromptSettings.hideHistory")
+              : t("chatPromptSettings.viewHistory")}
           </button>
           <div className="relative w-full">
             {isEditing ? (
@@ -198,7 +203,7 @@ export default function ChatPromptSettings({
                 onClick={handleRestoreToDefaultSystemPrompt}
                 className="text-theme-text-primary hover:text-white light:hover:text-black text-xs font-medium"
               >
-                Restore to Default
+                {t("chatPromptSettings.restoreToDefault")}
               </button>
             )}
             <PublishPromptCTA
@@ -219,6 +224,7 @@ export default function ChatPromptSettings({
 }
 
 function PublishPromptCTA({ hidden = false, onClick }) {
+  const { t } = useTranslation();
   if (hidden) return null;
   return (
     <button
@@ -226,7 +232,7 @@ function PublishPromptCTA({ hidden = false, onClick }) {
       onClick={onClick}
       className="border-none text-primary-button hover:text-white light:hover:text-black text-xs font-medium"
     >
-      Publish to Community Hub
+      {t("chatPromptSettings.publishToCommunityHub")}
     </button>
   );
 }

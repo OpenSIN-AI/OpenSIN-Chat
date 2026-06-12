@@ -4,11 +4,13 @@ import CTAButton from "@/components/lib/CTAButton";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Introduction({ settings, setSettings, setStep }) {
+  const { t } = useTranslation();
   const [itemId, setItemId] = useState(settings.itemId);
   const handleContinue = () => {
-    if (!itemId) return showToast("Please enter an item ID", "error");
+    if (!itemId) return showToast(t("communityHub.import.intro.itemIdRequired"), "error");
     setSettings((prev) => ({ ...prev, itemId }));
     setStep(CommunityHubImportItemSteps.itemId.next());
   };
@@ -18,32 +20,26 @@ export default function Introduction({ settings, setSettings, setStep }) {
       <div className="bg-theme-bg-secondary rounded-xl flex-1 p-6">
         <div className="w-full flex flex-col gap-y-2 max-w-[700px]">
           <h2 className="text-base text-theme-text-primary font-semibold">
-            Import an item from the community hub
+            {t("communityHub.import.intro.title")}
           </h2>
           <div className="flex flex-col gap-y-[25px] text-theme-text-secondary text-sm">
             <p>
-              The community hub is a place where you can find, share, and import
-              agent-skills, system prompts, slash commands, and more!
+              {t("communityHub.import.intro.description1")}
             </p>
             <p>
-              These items are created by the OpenSIN Chat team and community,
-              and are a great way to get started with OpenSIN Chat as well as
-              extend OpenSIN Chat in a way that is customized to your needs.
+              {t("communityHub.import.intro.description2")}
             </p>
             <p>
-              There are both <b>private</b> and <b>public</b> items in the
-              community hub. Private items are only visible to you, while public
-              items are visible to everyone.
+              {t("communityHub.import.intro.description3Part1")}<b>{t("communityHub.import.intro.private")}</b>{t("communityHub.import.intro.description3Part2")}<b>{t("communityHub.import.intro.public")}</b>{t("communityHub.import.intro.description3Part3")}
             </p>
 
             <p className="p-4 bg-yellow-800/30 light:bg-orange-100 light:text-orange-500 light:border-orange-500 rounded-lg border border-yellow-500 text-yellow-500">
-              If you are pulling in a private item, make sure it is{" "}
-              <b>shared with a team</b> you belong to, and you have added a{" "}
+              {t("communityHub.import.intro.warningBody")}{" "}
               <a
                 href={paths.communityHub.authentication()}
                 className="underline text-yellow-100 light:text-orange-500 font-semibold"
               >
-                Connection Key.
+                {t("communityHub.import.intro.warningLink")}
               </a>
             </p>
           </div>
@@ -52,13 +48,13 @@ export default function Introduction({ settings, setSettings, setStep }) {
             <div className="w-full flex flex-col gap-y-4">
               <div className="flex flex-col w-full">
                 <label className="text-theme-text-primary text-sm font-semibold block mb-3">
-                  Community Hub Item Import ID
+                  {t("communityHub.import.intro.itemIdLabel")}
                 </label>
                 <input
                   type="text"
                   value={itemId}
                   onChange={(e) => setItemId(e.target.value)}
-                  placeholder="allm-community-id:agent-skill:1234567890"
+                  placeholder={t("communityHub.import.intro.itemIdPlaceholder")}
                   className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 />
               </div>
@@ -68,7 +64,7 @@ export default function Introduction({ settings, setSettings, setStep }) {
             className="text-dark-text w-full mt-[18px] h-[34px] hover:bg-accent"
             onClick={handleContinue}
           >
-            Continue with import &rarr;
+            {t("communityHub.import.intro.continueButton")}
           </CTAButton>
         </div>
       </div>
