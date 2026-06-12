@@ -110,8 +110,12 @@ class NvidiaNimLLM {
   promptWindowLimit() {
     const limit =
       process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT || HARDCODED_TOKEN_LIMIT;
-    if (!limit || isNaN(Number(limit)))
-      throw new Error("No NVIDIA NIM token context limit was set.");
+    if (!limit || isNaN(Number(limit))) {
+      this.#log(
+        "Warning: NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT not set or invalid, using default 8192"
+      );
+      return HARDCODED_TOKEN_LIMIT;
+    }
     return Number(limit);
   }
 
@@ -169,63 +173,76 @@ class NvidiaNimLLM {
   }
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
-    if (!this.model)
-      throw new Error(
-        `NVIDIA NIM chat: ${this.model} is not valid or defined model for chat completion!`,
+    if (!this.model) {
+      this.#log(
+        `NVIDIA NIM chat: model not defined, falling back to ${HARDCODED_MODEL_PREF}`,
       );
+      this.model = HARDCODED_MODEL_PREF;
+    }
 
-    const result = await LLMPerformanceMonitor.measureAsyncFunction(
-      this.nvidiaNim.chat.completions
-        .create({
+    try {
+      const result = await LLMPerformanceMonitor.measureAsyncFunction(
+        this.nvidiaNim.chat.completions.create({
           model: this.model,
           messages,
           temperature,
-        })
-        .catch((e) => {
-          throw new Error(e.message);
         }),
-    );
+      );
 
-    if (
-      !result.output.hasOwnProperty("choices") ||
-      result.output.choices.length === 0
-    )
+      if (
+        !result.output ||
+        !result.output.hasOwnProperty("choices") ||
+        result.output.choices.length === 0
+      ) {
+        this.#log("NVIDIA NIM chat: no results in response");
+        return null;
+      }
+
+      return {
+        textResponse: result.output.choices[0].message.content,
+        metrics: {
+          prompt_tokens: result.output?.usage?.prompt_tokens || 0,
+          completion_tokens: result.output?.usage?.completion_tokens || 0,
+          total_tokens: result.output?.usage?.total_tokens || 0,
+          outputTps: result.output?.usage?.completion_tokens / result.duration,
+          duration: result.duration,
+          model: this.model,
+          provider: this.className,
+          timestamp: new Date(),
+        },
+      };
+    } catch (e) {
+      this.#log(`NVIDIA NIM chat error: ${e.message}`);
       return null;
-
-    return {
-      textResponse: result.output.choices[0].message.content,
-      metrics: {
-        prompt_tokens: result.output?.usage?.prompt_tokens || 0,
-        completion_tokens: result.output?.usage?.completion_tokens || 0,
-        total_tokens: result.output?.usage?.total_tokens || 0,
-        outputTps: result.output?.usage?.completion_tokens / result.duration,
-        duration: result.duration,
-        model: this.model,
-        provider: this.className,
-        timestamp: new Date(),
-      },
-    };
+    }
   }
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
-    if (!this.model)
-      throw new Error(
-        `NVIDIA NIM chat: ${this.model} is not valid or defined model for chat completion!`,
+    if (!this.model) {
+      this.#log(
+        `NVIDIA NIM stream: model not defined, falling back to ${HARDCODED_MODEL_PREF}`,
       );
+      this.model = HARDCODED_MODEL_PREF;
+    }
 
-    const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
-      func: this.nvidiaNim.chat.completions.create({
-        model: this.model,
-        stream: true,
+    try {
+      const measuredStreamRequest = await LLMPerformanceMonitor.measureStream({
+        func: this.nvidiaNim.chat.completions.create({
+          model: this.model,
+          stream: true,
+          messages,
+          temperature,
+        }),
         messages,
-        temperature,
-      }),
-      messages,
-      runPromptTokenCalculation: true,
-      modelTag: this.model,
-      provider: this.className,
-    });
-    return measuredStreamRequest;
+        runPromptTokenCalculation: true,
+        modelTag: this.model,
+        provider: this.className,
+      });
+      return measuredStreamRequest;
+    } catch (e) {
+      this.#log(`NVIDIA NIM stream error: ${e.message}`);
+      return null;
+    }
   }
 
   handleStream(response, stream, responseProps) {
