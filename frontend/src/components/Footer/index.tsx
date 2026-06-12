@@ -16,6 +16,7 @@ import {
 import { isMobile } from "react-device-detect";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import useFooterIcons from "@/hooks/useFooterIcons";
 import { useTheme } from "@/hooks/useTheme";
 import SettingsButton from "../SettingsButton";
@@ -84,17 +85,18 @@ type CustomFooterItem = {
 
 function ThemeToggleButton() {
   const { isLight, setTheme } = useTheme();
+  const { t } = useTranslation();
   return (
     <button
       type="button"
       onClick={() => setTheme(isLight ? "dark" : "light")}
       className={ICON_LINK_CLASSES}
       aria-label={
-        isLight ? "Zum dunklen Modus wechseln" : "Zum hellen Modus wechseln"
+        isLight ? t("footer.themeToggleDarkAriaLabel") : t("footer.themeToggleLightAriaLabel")
       }
       data-tooltip-id="footer-item"
       data-tooltip-content={
-        isLight ? "Dunklen Modus aktivieren" : "Hellen Modus aktivieren"
+        isLight ? t("footer.themeToggleDarkTooltip") : t("footer.themeToggleLightTooltip")
       }
     >
       {isLight ? (
@@ -116,6 +118,7 @@ function ThemeToggleButton() {
 
 export default function Footer() {
   const { footerData, isLoading } = useFooterIcons();
+  const { t } = useTranslation();
 
   if (isLoading) return null;
 
@@ -124,7 +127,7 @@ export default function Footer() {
   return (
     <div className="flex justify-center mb-2">
       <nav
-        aria-label="Footer-Links"
+        aria-label={t("footer.ariaLabel")}
         className="flex flex-wrap items-center justify-center gap-3"
       >
         {hasCustomIcons

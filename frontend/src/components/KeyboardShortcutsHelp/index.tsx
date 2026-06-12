@@ -39,7 +39,7 @@ export default function KeyboardShortcutsHelp() {
             type="button"
             onClick={() => setIsOpen(false)}
             className="text-white hover:text-gray-300"
-            aria-label="Close"
+            aria-label={t("keyboardShortcuts.closeButton")}
           >
             <X size={24} />
           </button>
@@ -55,6 +55,7 @@ export default function KeyboardShortcutsHelp() {
                 {t(`keyboard-shortcuts.shortcuts.${shortcut.translationKey}`)}
               </span>
               <kbd className="px-2 py-1 bg-theme-bg-secondary text-white rounded border border-gray-600">
+                {/* eslint-disable-next-line i18next/no-literal-string */}
                 {isMac ? key : key.replace("⌘", "Ctrl")}
               </kbd>
             </div>

@@ -5,12 +5,14 @@ import showToast from "@/utils/toast";
 import { FlowArrow, Gear } from "@phosphor-icons/react";
 import { useNavigate } from "react-router-dom";
 import paths from "@/utils/paths";
+import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
 
 function ManageFlowMenu({ flow, onDelete }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   async function deleteFlow() {
     setOpen(false);
@@ -60,14 +62,14 @@ function ManageFlowMenu({ flow, onDelete }) {
             onClick={() => navigate(paths.agents.editAgent(flow.uuid))}
             className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
-            <span className="text-sm whitespace-nowrap">Edit Flow</span>
+            <span className="text-sm whitespace-nowrap">{t("agentFlows.editFlow")}</span>
           </button>
           <button
             type="button"
             onClick={deleteFlow}
             className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
-            <span className="text-sm whitespace-nowrap">Delete Flow</span>
+            <span className="text-sm whitespace-nowrap">{t("agentFlows.deleteFlow")}</span>
           </button>
         </div>
       )}
@@ -76,6 +78,7 @@ function ManageFlowMenu({ flow, onDelete }) {
 }
 
 export default function FlowPanel({ flow, toggleFlow, enabled, onDelete }) {
+  const { t } = useTranslation();
   const handleToggle = async () => {
     try {
       const { success, error } = await AgentFlows.toggleFlow(
@@ -107,7 +110,7 @@ export default function FlowPanel({ flow, toggleFlow, enabled, onDelete }) {
             </div>
           </div>
           <p className="whitespace-pre-wrap text-white text-opacity-60 text-xs font-medium py-1.5">
-            {flow.description || "No description provided"}
+            {flow.description || t("agentFlows.noDescription")}
           </p>
         </div>
       </div>

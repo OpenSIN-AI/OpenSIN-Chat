@@ -68,7 +68,7 @@ export default function WebsiteDepthOptions() {
                   type="url"
                   name="url"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="https://example.com"
+                  placeholder={t("connectors.website-depth.urlPlaceholder")}
                   required={true}
                   autoComplete="off"
                   spellCheck={false}
@@ -121,7 +121,7 @@ export default function WebsiteDepthOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? "Scraping website..." : "Submit"}
+              {loading ? t("connectors.website-depth.scrapingButton") : t("common.submit")}
             </button>
             {loading && (
               <p className="text-xs text-theme-text-secondary">

@@ -118,7 +118,7 @@ function SearchResults({ searchResults, searchTerm, loading }: any) {
             {t("sidebarSearch.noResultsFound")}
             <br />
             <span className="text-theme-text-primary font-semibold text-sm">
-              "{searchTerm}"
+              {t("sidebarSearch.searchTermQuoted", { searchTerm })}
             </span>
           </p>
         </div>
@@ -181,7 +181,7 @@ function SearchResultItem({ to, name, hint }: any) {
         {name}
         {hint && (
           <span className="text-theme-text-secondary text-xs ml-[4px]">
-            | {hint}
+            {t("sidebarSearch.hintSeparator", { hint })}
           </span>
         )}
       </p>

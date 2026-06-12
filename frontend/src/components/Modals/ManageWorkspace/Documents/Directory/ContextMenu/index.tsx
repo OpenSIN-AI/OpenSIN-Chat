@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ContextMenu({
   contextMenu,
@@ -8,6 +9,7 @@ export default function ContextMenu({
   selectedItems,
   setSelectedItems,
 }: any) {
+  const { t } = useTranslation();
   const contextMenuRef: any = useRef(null);
 
   useEffect(() => {
@@ -63,13 +65,13 @@ export default function ContextMenu({
         onClick={toggleSelectAll}
         className="block w-full text-left px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-file-picker-hover"
       >
-        {isAllSelected() ? "Unselect All" : "Select All"}
+        {isAllSelected() ? t("contextMenu.unselectAll") : t("contextMenu.selectAll")}
       </button>
       <button
         onClick={closeContextMenu}
         className="block w-full text-left px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-file-picker-hover"
       >
-        Cancel
+        {t("contextMenu.cancel")}
       </button>
     </div>
   );

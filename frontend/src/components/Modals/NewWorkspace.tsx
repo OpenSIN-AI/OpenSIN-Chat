@@ -36,7 +36,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
           <button
             type="button"
             onClick={hideModal}
-            aria-label="Close new workspace dialog"
+            aria-label={t("newWorkspaceModal.closeAriaLabel")}
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
             <X
@@ -70,7 +70,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                   />
                 </div>
                 {error && (
-                  <p className="text-red-400 text-sm">Error: {error}</p>
+                  <p className="text-red-400 text-sm">{t("newWorkspaceModal.error", { error })}</p>
                 )}
               </div>
             </div>
@@ -79,7 +79,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                 type="submit"
                 className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
               >
-                Save
+                {t("newWorkspaceModal.save")}
               </button>
             </div>
           </form>

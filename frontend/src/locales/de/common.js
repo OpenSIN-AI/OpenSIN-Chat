@@ -3641,6 +3641,8 @@ const TRANSLATIONS = {
     noResultsFound: "Keine Ergebnisse gefunden für",
     workspaces: "Workspaces",
     threads: "Threads",
+    searchTermQuoted: '"{{searchTerm}}"',
+    hintSeparator: "| {{hint}}",
   },
 
   providerPrivacy: {
@@ -4028,6 +4030,107 @@ const TRANSLATIONS = {
       "Passen Sie die Fähigkeiten des Standard-Agenten an, indem Sie bestimmte Skills aktivieren oder deaktivieren. Diese Einstellungen gelten für alle Arbeitsbereiche.",
     updatingAgent: "Agent wird aktualisiert...",
     updateWorkspaceAgent: "Workspace-Agent aktualisieren",
+  },
+
+  // ── Batch 10 — i18next/no-literal-string fixes ─────────────────────
+  footer: {
+    ariaLabel: "Footer-Links",
+    themeToggleDarkAriaLabel: "Zum dunklen Modus wechseln",
+    themeToggleLightAriaLabel: "Zum hellen Modus wechseln",
+    themeToggleDarkTooltip: "Dunklen Modus aktivieren",
+    themeToggleLightTooltip: "Hellen Modus aktivieren",
+  },
+
+  keyboardShortcuts: {
+    closeButton: "Schließen",
+  },
+
+  contextMenu: {
+    selectAll: "Alles auswählen",
+    unselectAll: "Auswahl aufheben",
+    cancel: "Abbrechen",
+  },
+
+  userIcon: {
+    systemProfilePicture: "Systemprofilbild",
+    userProfilePicture: "Benutzerprofilbild",
+  },
+
+  notFound: {
+    title: "404 - Seite nicht gefunden",
+    description: "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    goHome: "Zur Startseite",
+  },
+
+  modelTable: {
+    availableModels: "Verfügbare Modelle",
+    searchModels: "Modelle suchen",
+    refreshModels: "Modelle aktualisieren",
+  },
+
+  newWorkspaceModal: {
+    closeAriaLabel: "Neuen Workspace-Dialog schließen",
+    error: "Fehler: {{error}}",
+    save: "Speichern",
+  },
+
+  modelSelector: {
+    multiModelNotSupported: "Multi-Modell-Unterstützung wird für diesen Anbieter noch nicht unterstützt.",
+    workspaceWillUse: "Dieser Workspace wird verwenden",
+    systemModelLink: "das für das System festgelegte Modell.",
+  },
+
+  promptReply: {
+    couldNotRespond: "Konnte nicht auf die Nachricht antworten.",
+    reason: "Grund: {{reason}}",
+    unknown: "unbekannt",
+  },
+
+  workspaceChat: {
+    notFoundTitle: "Workspace nicht gefunden",
+    notFoundDescription: "Der gesuchte Workspace ist nicht verfügbar. Er wurde möglicherweise gelöscht oder Sie haben keinen Zugriff darauf.",
+    returnToHomepage: "Zurück zur Startseite",
+  },
+
+  agentBuilder: {
+    blockList: {
+      directOutput: "Direkte Ausgabe",
+      directOutputDescription: "Die Ausgabe dieses Blocks wird direkt in den Chat zurückgegeben. Dadurch werden weitere Tool-Aufrufe verhindert.",
+      configurationComingSoon: "Konfigurationsoptionen folgen in Kürze...",
+    },
+  },
+
+  agentFlows: {
+    editFlow: "Flow bearbeiten",
+    deleteFlow: "Flow löschen",
+    noDescription: "Keine Beschreibung angegeben",
+  },
+
+  directory: {
+    createNewFolderAriaLabel: "Neuen Ordner erstellen",
+    deleteSelectedAriaLabel: "Ausgewählte Dateien und Ordner löschen",
+  },
+
+  connectors: {
+    github: {
+      repoPlaceholder: "https://github.com/organisation/repo",
+      tokenPlaceholder: "github_pat_1234_abcdefg",
+      ignoresPlaceholder: "!*.js, images/*, .DS_Store, bin/*",
+    },
+    gitlab: {
+      repoPlaceholder: "https://gitlab.com/organisation/repo",
+      tokenPlaceholder: "glpat-XXXXXXXXXXXXXXXXXXXX",
+      ignoresPlaceholder: "!*.js, images/*, .DS_Store, bin/*",
+    },
+    "website-depth": {
+      urlPlaceholder: "https://beispiel.de",
+      scrapingButton: "Website wird durchsucht...",
+    },
+    youtube: {
+      urlPlaceholder: "https://youtube.com/watch?v=abc123",
+      collectingButton: "Transkript wird gesammelt...",
+      collectButton: "Transkript sammeln",
+    },
   },
 };
 

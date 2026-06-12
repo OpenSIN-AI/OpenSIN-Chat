@@ -3566,6 +3566,8 @@ const TRANSLATIONS = {
     noResultsFound: "No results found for",
     workspaces: "Workspaces",
     threads: "Threads",
+    searchTermQuoted: '"{{searchTerm}}"',
+    hintSeparator: "| {{hint}}",
   },
 
   providerPrivacy: {
@@ -3952,6 +3954,107 @@ const TRANSLATIONS = {
       "Customize and enhance the default agent's capabilities by enabling or disabling specific skills. These settings will be applied across all workspaces.",
     updatingAgent: "Updating agent...",
     updateWorkspaceAgent: "Update workspace agent",
+  },
+
+  // ── Batch 10 — i18next/no-literal-string fixes ─────────────────────
+  footer: {
+    ariaLabel: "Footer links",
+    themeToggleDarkAriaLabel: "Switch to dark mode",
+    themeToggleLightAriaLabel: "Switch to light mode",
+    themeToggleDarkTooltip: "Activate dark mode",
+    themeToggleLightTooltip: "Activate light mode",
+  },
+
+  keyboardShortcuts: {
+    closeButton: "Close",
+  },
+
+  contextMenu: {
+    selectAll: "Select All",
+    unselectAll: "Unselect All",
+    cancel: "Cancel",
+  },
+
+  userIcon: {
+    systemProfilePicture: "System profile picture",
+    userProfilePicture: "User profile picture",
+  },
+
+  notFound: {
+    title: "404 - Page Not Found",
+    description: "The page you're looking for doesn't exist or has been moved.",
+    goHome: "Go Home",
+  },
+
+  modelTable: {
+    availableModels: "Available Models",
+    searchModels: "Search models",
+    refreshModels: "Refresh Models",
+  },
+
+  newWorkspaceModal: {
+    closeAriaLabel: "Close new workspace dialog",
+    error: "Error: {{error}}",
+    save: "Save",
+  },
+
+  modelSelector: {
+    multiModelNotSupported: "Multi-model support is not supported for this provider yet.",
+    workspaceWillUse: "This workspace will use",
+    systemModelLink: "the model set for the system.",
+  },
+
+  promptReply: {
+    couldNotRespond: "Could not respond to message.",
+    reason: "Reason: {{reason}}",
+    unknown: "unknown",
+  },
+
+  workspaceChat: {
+    notFoundTitle: "Workspace not found",
+    notFoundDescription: "The workspace you're looking for is not available. It may have been deleted or you may not have access to it.",
+    returnToHomepage: "Return to homepage",
+  },
+
+  agentBuilder: {
+    blockList: {
+      directOutput: "Direct Output",
+      directOutputDescription: "The output of this block will be returned directly to the chat. This will prevent any further tool calls from being executed.",
+      configurationComingSoon: "Configuration options coming soon...",
+    },
+  },
+
+  agentFlows: {
+    editFlow: "Edit Flow",
+    deleteFlow: "Delete Flow",
+    noDescription: "No description provided",
+  },
+
+  directory: {
+    createNewFolderAriaLabel: "Create new folder",
+    deleteSelectedAriaLabel: "Delete selected files and folders",
+  },
+
+  connectors: {
+    github: {
+      repoPlaceholder: "https://github.com/organization/repo",
+      tokenPlaceholder: "github_pat_1234_abcdefg",
+      ignoresPlaceholder: "!*.js, images/*, .DS_Store, bin/*",
+    },
+    gitlab: {
+      repoPlaceholder: "https://gitlab.com/organization/repo",
+      tokenPlaceholder: "glpat-XXXXXXXXXXXXXXXXXXXX",
+      ignoresPlaceholder: "!*.js, images/*, .DS_Store, bin/*",
+    },
+    "website-depth": {
+      urlPlaceholder: "https://example.com",
+      scrapingButton: "Scraping website...",
+    },
+    youtube: {
+      urlPlaceholder: "https://youtube.com/watch?v=abc123",
+      collectingButton: "Collecting transcript...",
+      collectButton: "Collect transcript",
+    },
   },
 };
 

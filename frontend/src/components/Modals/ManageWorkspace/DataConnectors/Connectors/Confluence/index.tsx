@@ -143,23 +143,25 @@ export default function ConfluenceOptions() {
                   defaultValue={accessType}
                   onChange={(e) => setAccessType(e.target.value)}
                 >
-                  {[
-                    {
-                      name: t("connectors.confluence.auth_type_username"),
-                      value: "username",
-                    },
-                    {
-                      name: t("connectors.confluence.auth_type_personal"),
-                      value: "personalToken",
-                    },
-                  ].map((type) => {
-                    return (
-                      <option key={type.value} value={type.value}>
-                        {type.name}
-                      </option>
-                    );
-                  })}
-                </select>
+                   {/* eslint-disable i18next/no-literal-string */}
+                   {[
+                     {
+                       name: t("connectors.confluence.auth_type_username"),
+                       value: "username",
+                     },
+                     {
+                       name: t("connectors.confluence.auth_type_personal"),
+                       value: "personalToken",
+                     },
+                   ].map((type) => {
+                     return (
+                       <option key={type.value} value={type.value}>
+                         {type.name}
+                       </option>
+                     );
+                   })}
+                   {/* eslint-enable i18next/no-literal-string */}
+                 </select>
               </div>
               {accessType === "username" && (
                 <>
@@ -209,10 +211,11 @@ export default function ConfluenceOptions() {
                               className="underline"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              {t("connectors.confluence.token_explained_link")}
-                            </a>
-                            .
-                          </p>
+                            {t("connectors.confluence.token_explained_link")}
+                          </a>
+                          {/* eslint-disable-next-line i18next/no-literal-string */}
+                          {"."}
+                        </p>
                         </Tooltip>
                       </label>
                       <p className="text-xs font-normal text-theme-text-secondary">

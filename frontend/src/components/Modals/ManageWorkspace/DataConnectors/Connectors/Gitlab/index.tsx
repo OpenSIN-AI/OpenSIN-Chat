@@ -90,7 +90,7 @@ export default function GitlabOptions() {
                   type="url"
                   name="repo"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="https://gitlab.com/gitlab-org/gitlab"
+                  placeholder={t("connectors.gitlab.repoPlaceholder")}
                   required={true}
                   autoComplete="off"
                   onChange={(e) => setRepo(e.target.value)}
@@ -119,7 +119,7 @@ export default function GitlabOptions() {
                   type="text"
                   name="accessToken"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="glpat-XXXXXXXXXXXXXXXXXXXX"
+                  placeholder={t("connectors.gitlab.tokenPlaceholder")}
                   required={false}
                   autoComplete="off"
                   spellCheck={false}
@@ -174,7 +174,7 @@ export default function GitlabOptions() {
                 value={ignores}
                 onChange={setIgnores}
                 name="ignores"
-                placeholder="!*.js, images/*, .DS_Store, bin/*"
+                placeholder={t("connectors.gitlab.ignoresPlaceholder")}
                 classNames={{
                   tag: "bg-theme-settings-input-bg light:bg-black/10 bg-blue-300/10 text-zinc-800",
                   input:

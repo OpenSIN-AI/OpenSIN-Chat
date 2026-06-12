@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ArrowClockwise,
   CircleNotch,
@@ -13,6 +14,7 @@ export default function ModelTableLayout({
   setSearchQuery = () => {},
   loading = false,
 }) {
+  const { t } = useTranslation();
   const [isRefreshing, setIsRefreshing] = useState(false as any);
   async function refreshModels() {
     setIsRefreshing(true);
@@ -28,7 +30,7 @@ export default function ModelTableLayout({
     <div className="flex flex-col w-full">
       <div className="flex gap-x-2 items-center pb-[8px]">
         <label className="text-theme-text-primary text-base font-semibold">
-          Available Models
+          {t("modelTable.availableModels")}
         </label>
       </div>
       <div className="flex w-full items-center gap-x-[16px]">
@@ -41,7 +43,7 @@ export default function ModelTableLayout({
           />
           <input
             type="search"
-            placeholder="Search models"
+            placeholder={t("modelTable.searchModels")}
             value={searchQuery}
             disabled={loading}
             className="min-h-[32px] border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 pl-[30px] py-2 search-input disabled:opacity-50 disabled:cursor-not-allowed"
@@ -70,7 +72,7 @@ export default function ModelTableLayout({
             <span
               className={`text-sm font-medium ${isRefreshing ? "hidden" : "text-theme-text-secondary"}`}
             >
-              Refresh Models
+              {t("modelTable.refreshModels")}
             </span>
           </button>
         )}

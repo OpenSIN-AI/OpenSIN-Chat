@@ -88,7 +88,7 @@ export default function GithubOptions() {
                   type="url"
                   name="repo"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="https://github.com/Family-Team-Projects/opensin-chat"
+                  placeholder={t("connectors.github.repoPlaceholder")}
                   required={true}
                   autoComplete="off"
                   onChange={(e) => setRepo(e.target.value)}
@@ -117,7 +117,7 @@ export default function GithubOptions() {
                   type="text"
                   name="accessToken"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="github_pat_1234_abcdefg"
+                  placeholder={t("connectors.github.tokenPlaceholder")}
                   required={false}
                   autoComplete="off"
                   spellCheck={false}
@@ -146,7 +146,7 @@ export default function GithubOptions() {
                 value={ignores}
                 onChange={setIgnores}
                 name="ignores"
-                placeholder="!*.js, images/*, .DS_Store, bin/*"
+                placeholder={t("connectors.github.ignoresPlaceholder")}
                 classNames={{
                   tag: "bg-theme-settings-input-bg light:bg-black/10 bg-blue-300/10 text-zinc-800",
                   input:

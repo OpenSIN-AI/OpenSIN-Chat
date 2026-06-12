@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { memo } from "react";
+import { useTranslation } from "react-i18next";
 import usePfp from "../../hooks/usePfp";
 import UserDefaultPfp from "./user.svg";
 import WorkspaceDefaultPfp from "./workspace.svg";
@@ -11,6 +12,7 @@ type UserIconProps = {
 
 const UserIcon = memo(({ role }: UserIconProps) => {
   const { pfp } = usePfp();
+  const { t } = useTranslation();
 
   return (
     <div
@@ -21,7 +23,7 @@ const UserIcon = memo(({ role }: UserIconProps) => {
       {role !== "user" && (
         <img
           src={WorkspaceDefaultPfp}
-          alt="System profile picture"
+          alt={t("userIcon.systemProfilePicture")}
           className="flex items-center justify-center rounded-full border-solid border border-white/40 light:border-theme-sidebar-border light:bg-theme-bg-chat-input"
         />
       )}
@@ -36,11 +38,12 @@ type RenderUserPfpProps = {
 };
 
 function RenderUserPfp({ pfp }: RenderUserPfpProps) {
+  const { t } = useTranslation();
   if (!pfp)
     return (
       <img
         src={UserDefaultPfp}
-        alt="User profile picture"
+        alt={t("userIcon.userProfilePicture")}
         className="rounded-full border-none"
       />
     );
@@ -48,7 +51,7 @@ function RenderUserPfp({ pfp }: RenderUserPfpProps) {
   return (
     <img
       src={pfp}
-      alt="User profile picture"
+      alt={t("userIcon.userProfilePicture")}
       className="absolute top-0 left-0 w-full h-full object-cover rounded-full border-none"
     />
   );

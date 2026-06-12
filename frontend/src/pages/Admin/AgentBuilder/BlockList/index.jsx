@@ -14,6 +14,7 @@ import {
   BracketsCurly,
 } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
+import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
 import StartNode from "../nodes/StartNode";
 import ApiCallNode from "../nodes/ApiCallNode";
@@ -162,6 +163,7 @@ export default function BlockList({
   moveBlock,
   refs,
 }) {
+  const { t } = useTranslation();
   const renderBlockConfig = (block) => {
     const isLastConfigurableBlock = blocks[blocks.length - 2]?.id === block.id;
     const props = {
@@ -181,19 +183,19 @@ export default function BlockList({
         <div className="space-y-4">
           {renderBlockConfigContent(block, props)}
           <div className="pt-4 border-t border-white/10">
-            <Toggle
-              size="md"
-              variant="horizontal"
-              label="Direct Output"
-              description="The output of this block will be returned directly to the chat. This will prevent any further tool calls from being executed."
-              enabled={props.config.directOutput || false}
-              onChange={(checked) =>
-                props.onConfigChange({
-                  ...props.config,
-                  directOutput: checked,
-                })
-              }
-            />
+              <Toggle
+                size="md"
+                variant="horizontal"
+                label={t("agentBuilder.blockList.directOutput")}
+                description={t("agentBuilder.blockList.directOutputDescription")}
+                enabled={props.config.directOutput || false}
+                onChange={(checked) =>
+                  props.onConfigChange({
+                    ...props.config,
+                    directOutput: checked,
+                  })
+                }
+              />
           </div>
         </div>
       );
@@ -223,7 +225,7 @@ export default function BlockList({
       case BLOCK_TYPES.FINISH:
         return <FinishNode />;
       default:
-        return <div>Configuration options coming soon...</div>;
+        return <div>{t("agentBuilder.blockList.configurationComingSoon")}</div>;
     }
   };
 
@@ -245,6 +247,7 @@ export default function BlockList({
                 <div className="flex items-center gap-3">
                   <div className="w-7 h-7 rounded-lg bg-white/10 light:bg-white flex items-center justify-center">
                     {React.cloneElement(info.icon, {
+                      // eslint-disable-next-line i18next/no-literal-string
                       className: "w-4 h-4 text-white",
                     })}
                   </div>

@@ -30,6 +30,7 @@ export default function OpenAiOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
           >
             <optgroup label={t("providerSettings.openAiEmbedding.availableModels")}>
+              {/* eslint-disable i18next/no-literal-string */}
               {[
                 "text-embedding-ada-002",
                 "text-embedding-3-small",
@@ -45,6 +46,7 @@ export default function OpenAiOptions({ settings }: any) {
                   </option>
                 );
               })}
+              {/* eslint-enable i18next/no-literal-string */}
             </optgroup>
           </select>
         </div>

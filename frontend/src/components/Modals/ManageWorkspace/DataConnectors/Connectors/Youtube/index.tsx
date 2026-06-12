@@ -73,7 +73,7 @@ export default function YoutubeOptions() {
                   type="url"
                   name="url"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="https://youtube.com/watch?v=abc123"
+                  placeholder={t("connectors.youtube.urlPlaceholder")}
                   required={true}
                   autoComplete="off"
                   spellCheck={false}
@@ -88,7 +88,7 @@ export default function YoutubeOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? "Collecting transcript..." : "Collect transcript"}
+              {loading ? t("connectors.youtube.collectingButton") : t("connectors.youtube.collectButton")}
             </button>
             {loading && (
               <p className="text-xs text-theme-text-secondary max-w-sm">

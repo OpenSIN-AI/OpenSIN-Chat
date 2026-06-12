@@ -35,6 +35,7 @@ export default function ModelSelector({
   setHasChanges,
   ModelSelectionComponent = ChatModelSelection,
 }: any) {
+  const { t } = useTranslation();
   if (selectedLLM === "openafd-router") {
     return (
       <RouterSelection workspace={workspace} setHasChanges={setHasChanges} />
@@ -46,11 +47,11 @@ export default function ModelSelector({
       return (
         <div className="w-full h-10 justify-center items-center flex mt-4">
           <p className="text-sm font-base text-white text-opacity-60 text-center">
-            Multi-model support is not supported for this provider yet.
+            {t("modelSelector.multiModelNotSupported")}
             <br />
-            This workspace will use{" "}
+            {t("modelSelector.workspaceWillUse")}{" "}
             <Link to={paths.settings.llmPreference()} className="underline">
-              the model set for the system.
+              {t("modelSelector.systemModelLink")}
             </Link>
           </p>
         </div>

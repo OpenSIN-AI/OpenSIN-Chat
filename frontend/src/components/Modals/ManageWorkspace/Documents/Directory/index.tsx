@@ -228,7 +228,7 @@ function Directory({
               type="button"
               className="border-none flex items-center gap-x-2 cursor-pointer px-[14px] py-[7px] -mr-[14px] rounded-lg hover:bg-theme-sidebar-subitem-hover z-20 relative"
               onClick={openFolderModal}
-              aria-label="Create new folder"
+              aria-label={t("directory.createNewFolderAriaLabel")}
             >
               <Plus
                 size={18}
@@ -243,7 +243,7 @@ function Directory({
 
           <div className="relative w-[560px] h-[310px] bg-theme-settings-input-bg rounded-2xl overflow-hidden border border-theme-modal-border">
             <div className="absolute top-0 left-0 right-0 z-10 rounded-t-2xl text-theme-text-primary text-xs grid grid-cols-12 py-2 px-8 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg">
-              <p className="col-span-6">Name</p>
+              <p className="col-span-6">{t("common.name")}</p>
               {totalDocCount > 0 && (
                 <p className="col-span-6 text-right text-theme-text-secondary">
                   {t(`connectors.directory.total-documents`, {
@@ -322,7 +322,7 @@ function Directory({
                     <button
                       type="button"
                       onClick={deleteFiles}
-                      aria-label="Delete selected files and folders"
+                      aria-label={t("directory.deleteSelectedAriaLabel")}
                       className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[32px] w-[32px] rounded-lg text-dark-text hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white flex justify-center items-center"
                     >
                       <Trash size={18} weight="bold" aria-hidden="true" />
