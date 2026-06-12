@@ -14,18 +14,19 @@ PDF_DIR="${STORAGE_DIR}/pdf-analysis"
 JOBS_FILE="${PDF_DIR}/jobs.json"
 FACTS_FILE="${PDF_DIR}/facts.json"
 
-# ── 1) Liveness: HTTP /api/ping muss 200 liefern ─────────────────
-response=$(curl --write-out '%{http_code}' --silent --output /dev/null --max-time 5 http://localhost:3001/api/ping)
+# ── 1) Liveness: HTTP /ping muss 200 liefern ──────────────────────
+response=$(curl --write-out '%{http_code}' --silent --output /dev/null --max-time 5 http://localhost:3001/ping)
 if [ "$response" -ne 200 ]; then
   echo "Server is down (ping HTTP $response)"
   exit 1
 fi
 
-# ── 2) PDF-Storage: Verzeichnis muss existieren + schreibbar sein ──
-# Schlaegt fehl, wenn das Volume nicht gemountet wurde oder Permissions
-# verbogen sind — genau der Fall, in dem der Healthcheck greifen muss.
+# ── 2) PDF-Storage: Verzeichnis anlegen falls fehlend, dann prüfen ──
+# Das Verzeichnis wird vom Server on-demand angelegt (beim ersten PDF-Analysis-Job).
+# Der Healthcheck darf hier nicht scheitern, nur weil noch niemand PDFs analysiert hat.
+mkdir -p "$PDF_DIR"
 if [ ! -d "$PDF_DIR" ]; then
-  echo "PDF-Storage fehlt: $PDF_DIR"
+  echo "PDF-Storage konnte nicht angelegt werden: $PDF_DIR"
   exit 1
 fi
 if [ ! -w "$PDF_DIR" ]; then

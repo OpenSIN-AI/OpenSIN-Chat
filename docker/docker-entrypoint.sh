@@ -16,6 +16,9 @@ if [ -z "$STORAGE_DIR" ]; then
     echo "================================================================"
 fi
 
+# Ensure PDF analysis storage directory exists (healthcheck expects it)
+mkdir -p "${STORAGE_DIR:-/app/server/storage}/pdf-analysis"
+
 {
   cd /app/server/ &&
     # Disable Prisma CLI telemetry (https://www.prisma.io/docs/orm/tools/prisma-cli#how-to-opt-out-of-data-collection)
