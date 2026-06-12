@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import System from "@/models/system";
+import { useTranslation } from "react-i18next";
 
 export default function KokoroTTSOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [endpoint, setEndpoint] = useState(
     settings?.TTSKokoroEndpoint || "http://localhost:8880/v1",
   );
@@ -13,27 +15,27 @@ export default function KokoroTTSOptions({ settings }: any) {
   return (
     <div className="w-full flex flex-col gap-y-7">
       <p className="text-sm font-base text-white text-opacity-60">
-        Connect to a self-hosted{" "}
+        {t("kokoro.intro.part1")}{" "}
         <a
           href="https://github.com/remsky/Kokoro-FastAPI"
           target="_blank"
           rel="noreferrer"
           className="underline"
         >
-          kokoro-fastapi
+          {t("kokoro.intro.linkText")}
         </a>{" "}
-        server. The voice list is pulled live from your server.
+        {t("kokoro.intro.part2")}
       </p>
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-2">
-            Base URL
+            {t("kokoro.baseUrl.label")}
           </label>
           <input
             type="url"
             name="TTSKokoroEndpoint"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="http://localhost:8880/v1"
+            placeholder={t("kokoro.baseUrl.placeholder")}
             defaultValue={settings?.TTSKokoroEndpoint}
             required={true}
             autoComplete="off"
@@ -44,18 +46,18 @@ export default function KokoroTTSOptions({ settings }: any) {
             onBlur={() => setEndpoint(inputEndpoint)}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-            The OpenAI-compatible base URL of your kokoro-fastapi server.
+            {t("kokoro.baseUrl.help", { service: "kokoro-fastapi" })}
           </p>
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-2">
-            API Key
+            {t("kokoro.apiKey.label")}
           </label>
           <input
             type="password"
             name="TTSKokoroKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Optional API Key"
+            placeholder={t("kokoro.apiKey.placeholder")}
             defaultValue={settings?.TTSKokoroKey ? "*".repeat(20) : ""}
             autoComplete="off"
             spellCheck={false}
@@ -65,7 +67,7 @@ export default function KokoroTTSOptions({ settings }: any) {
             onBlur={() => setApiKey(inputApiKey)}
           />
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-            Optional — only required if you front your Kokoro server with auth.
+            {t("kokoro.apiKey.help")}
           </p>
         </div>
       </div>
@@ -81,6 +83,7 @@ export default function KokoroTTSOptions({ settings }: any) {
 }
 
 function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
+  const { t } = useTranslation();
   const [voices, setVoices] = useState([] as any);
   const [loading, setLoading] = useState(true as any);
 
@@ -113,7 +116,7 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Voice Model
+          {t("kokoro.voiceModel.label")}
         </label>
         <select
           name="TTSKokoroVoiceModel"
@@ -121,7 +124,7 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available voices --
+            {t("kokoro.voiceModel.loading")}
           </option>
         </select>
       </div>
@@ -132,21 +135,20 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Voice Model
+          {t("kokoro.voiceModel.label")}
         </label>
         <input
           type="text"
           name="TTSKokoroVoiceModel"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder="af_bella"
+          placeholder={t("kokoro.voiceModel.placeholder")}
           defaultValue={settings?.TTSKokoroVoiceModel ?? "af_bella"}
           required={true}
           autoComplete="off"
           spellCheck={false}
         />
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Could not reach the Kokoro server to load voices. Enter a voice id
-          manually.
+          {t("kokoro.voiceModel.unreachable")}
         </p>
       </div>
     );
@@ -155,7 +157,7 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Voice Model
+        {t("kokoro.voiceModel.label")}
       </label>
       <select
         name="TTSKokoroVoiceModel"

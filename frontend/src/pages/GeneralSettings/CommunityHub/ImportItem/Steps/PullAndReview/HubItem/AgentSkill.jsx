@@ -14,19 +14,24 @@ import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "dompurify";
 import CommunityHub from "@/models/communityHub";
 import { setEventDelegatorForCodeSnippets } from "@/components/WorkspaceChat";
+import { useTranslation } from "react-i18next";
 
 export default function AgentSkill({ item, settings, setStep }) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   async function importAgentSkill() {
     try {
       setLoading(true);
       const { error } = await CommunityHub.importBundleItem(settings.itemId);
       if (error) throw new Error(error);
-      showToast(`Agent skill imported successfully!`, "success");
+      showToast(t("agentSkill.toast.importSuccess"), "success");
       setStep(CommunityHubImportItemSteps.completed.key);
     } catch (e) {
       console.error(e);
-      showToast(`Failed to import agent skill. ${e.message}`, "error");
+      showToast(
+        t("agentSkill.toast.importFailed", { message: e.message }),
+        "error",
+      );
     } finally {
       setLoading(false);
     }
@@ -44,41 +49,38 @@ export default function AgentSkill({ item, settings, setStep }) {
             <Warning size={25} />
             <h1 className="text-lg font-semibold">
               {" "}
-              Only import agent skills you trust{" "}
+              {t("agentSkill.warning.title")}{" "}
             </h1>
           </div>
-          <p className="text-sm">
-            Agent skills can execute code on your OpenSIN Chat instance, so only
-            import agent skills from sources you trust. You should also review
-            the code before importing. If you are unsure about what a skill does
-            - don't import it!
-          </p>
+          <p className="text-sm">{t("agentSkill.warning.body")}</p>
         </div>
       </div>
 
       <div className="flex flex-col gap-y-1">
         <h2 className="text-base text-theme-text-primary font-semibold">
-          Review Agent Skill "{item.name}"
+          {t("agentSkill.reviewTitle", { name: item.name })}
         </h2>
         {item.creatorUsername && (
           <p className="text-white/60 light:text-theme-text-secondary text-xs font-mono">
-            Created by{" "}
+            {t("agentSkill.createdBy") + " "}
             <a
               href={paths.communityHub.profile(item.creatorUsername)}
               target="_blank"
               className="hover:text-blue-500 hover:underline"
               rel="noreferrer"
             >
-              @{item.creatorUsername}
+              {`@${item.creatorUsername}`}
             </a>
           </p>
         )}
         <div className="flex gap-x-1">
           {item.verified ? (
-            <p className="text-green-500 text-xs font-mono">Verified code</p>
+            <p className="text-green-500 text-xs font-mono">
+              {t("agentSkill.verified")}
+            </p>
           ) : (
             <p className="text-red-500 text-xs font-mono">
-              This skill is not verified.
+              {t("agentSkill.notVerified")}
             </p>
           )}
           <a
@@ -87,18 +89,18 @@ export default function AgentSkill({ item, settings, setStep }) {
             className="text-xs font-mono text-blue-500 hover:underline"
             rel="noreferrer"
           >
-            Learn more &rarr;
+            {t("agentSkill.learnMore")}
           </a>
         </div>
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
         <p>
-          Agent skills unlock new capabilities for your OpenSIN Chat workspace
-          via{" "}
+          {t("agentSkill.description.part1")}{" "}
+          {/* eslint-disable-next-line i18next/no-literal-string */}
           <code className="font-mono bg-zinc-900 light:bg-slate-200 px-1 py-0.5 rounded-md text-sm">
             @agent
           </code>{" "}
-          skills that can do specific tasks when invoked.
+          {t("agentSkill.description.part2")}
         </p>
       </div>
       <FileReview item={item} />
@@ -108,13 +110,14 @@ export default function AgentSkill({ item, settings, setStep }) {
         onClick={importAgentSkill}
       >
         {loading ? <CircleNotch size={16} className="animate-spin" /> : null}
-        {loading ? "Importing..." : "Import agent skill"}
+        {loading ? t("common.importing") : t("agentSkill.import")}
       </CTAButton>
     </div>
   );
 }
 
 function FileReview({ item }) {
+  const { t } = useTranslation();
   const files = item.manifest.files || [];
   const [index, setIndex] = useState(0);
   const [file, setFile] = useState(files[index]);
@@ -159,7 +162,11 @@ function FileReview({ item }) {
             <CaretLeft size={16} />
           </button>
           <p className="text-white/60 light:text-theme-text-secondary text-xs font-mono">
-            {file.name} ({index + 1} of {files.length} files)
+            {t("agentSkill.fileCounter", {
+              name: file.name,
+              current: index + 1,
+              total: files.length,
+            })}
           </p>
           <button
             type="button"

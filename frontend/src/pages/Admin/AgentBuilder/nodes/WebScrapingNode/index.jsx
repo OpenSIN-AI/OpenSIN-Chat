@@ -1,16 +1,18 @@
 // SPDX-License-Identifier: MIT
 import Toggle from "@/components/lib/Toggle";
+import { useTranslation } from "react-i18next";
 
 export default function WebScrapingNode({
   config,
   onConfigChange,
   renderVariableSelect,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-theme-text-primary mb-2">
-          URL to Scrape
+          {t("webScrapingNode.urlLabel")}
         </label>
         <input
           type="url"
@@ -22,13 +24,13 @@ export default function WebScrapingNode({
             })
           }
           className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
-          placeholder="https://example.com"
+          placeholder={t("webScrapingNode.urlPlaceholder")}
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-theme-text-primary mb-2">
-          Capture Page Content As
+          {t("webScrapingNode.captureAsLabel")}
         </label>
         <select
           value={config.captureAs}
@@ -37,10 +39,14 @@ export default function WebScrapingNode({
           }
           className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
         >
+          {/* eslint-disable i18next/no-literal-string */}
           {[
-            { label: "Text content only", value: "text" },
-            { label: "Raw HTML", value: "html" },
-            { label: "CSS Query Selector", value: "querySelector" },
+            { label: t("webScrapingNode.captureAs.text"), value: "text" },
+            { label: t("webScrapingNode.captureAs.html"), value: "html" },
+            {
+              label: t("webScrapingNode.captureAs.querySelector"),
+              value: "querySelector",
+            },
           ].map((captureAs) => (
             <option
               key={captureAs.value}
@@ -50,23 +56,24 @@ export default function WebScrapingNode({
               {captureAs.label}
             </option>
           ))}
+          {/* eslint-enable i18next/no-literal-string */}
         </select>
       </div>
 
       {config.captureAs === "querySelector" && (
         <div>
           <label className="block text-sm font-medium text-theme-text-primary mb-2">
-            Query Selector
+            {t("webScrapingNode.querySelectorLabel")}
           </label>
           <p className="text-xs text-theme-text-secondary mb-2">
-            Enter a valid CSS selector to scrape the content of the page.
+            {t("webScrapingNode.querySelectorHelp")}
           </p>
           <input
             value={config.querySelector}
             onChange={(e) =>
               onConfigChange({ ...config, querySelector: e.target.value })
             }
-            placeholder=".article-content, #content, .main-content, etc."
+            placeholder={t("webScrapingNode.querySelectorPlaceholder")}
             className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
           />
         </div>
@@ -75,7 +82,7 @@ export default function WebScrapingNode({
       <Toggle
         size="md"
         variant="horizontal"
-        label="Content Summarization"
+        label={t("webScrapingNode.contentSummarization")}
         hint="content-summarization-tooltip"
         enabled={config.enableSummarization ?? true}
         onChange={(checked) =>
@@ -84,12 +91,12 @@ export default function WebScrapingNode({
       />
       <div>
         <label className="block text-sm font-medium text-theme-text-primary mb-2">
-          Result Variable
+          {t("webScrapingNode.resultVariable")}
         </label>
         {renderVariableSelect(
           config.resultVariable,
           (value) => onConfigChange({ ...config, resultVariable: value }),
-          "Select or create variable",
+          t("webScrapingNode.selectOrCreateVariable"),
           true,
         )}
       </div>

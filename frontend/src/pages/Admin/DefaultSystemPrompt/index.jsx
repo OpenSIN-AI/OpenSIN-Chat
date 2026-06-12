@@ -11,8 +11,10 @@ import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import useDefaultSystemPrompt from "@/hooks/useDefaultSystemPrompt";
 import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";
+import { useTranslation } from "react-i18next";
 
 export default function DefaultSystemPrompt() {
+  const { t } = useTranslation();
   const { prompt, isLoading: promptLoading } = useDefaultSystemPrompt();
   const { variables: availableVariables } = useSystemPromptVariables();
   const [systemPromptForm, setSystemPromptForm] = useState({
@@ -65,7 +67,7 @@ export default function DefaultSystemPrompt() {
           }));
         }
 
-        showToast("Default system prompt updated successfully.", "success");
+        showToast(t("defaultSystemPrompt.toast.success"), "success");
         setSystemPromptForm((prev) => ({
           ...prev,
           default: newSystemPrompt,
@@ -75,7 +77,7 @@ export default function DefaultSystemPrompt() {
       })
       .catch((error) => {
         showToast(
-          `Failed to update default system prompt: ${error.message}`,
+          t("defaultSystemPrompt.toast.failure", { message: error.message }),
           "error",
         );
         setSystemPromptForm((prev) => ({
@@ -96,12 +98,11 @@ export default function DefaultSystemPrompt() {
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">
               <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                Default System Prompt
+                {t("defaultSystemPrompt.title")}
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              This is the default system prompt that will be used for new
-              workspaces.
+              {t("defaultSystemPrompt.subtitle")}
             </p>
           </div>
           <div>
@@ -134,34 +135,35 @@ export default function DefaultSystemPrompt() {
                     htmlFor="default-system-prompt"
                     className=" text-base font-bold text-white"
                   >
-                    System Prompt
+                    {t("defaultSystemPrompt.label")}
                   </label>
                   <div className="space-y-1">
                     <p className="text-white text-opacity-60 text-xs font-medium">
-                      A system prompt provides instructions that shape the AI's
-                      responses and behavior. This prompt will be automatically
-                      applied to all newly created workspaces. To change the
-                      system prompt of a{" "}
-                      <span className="font-bold">specific workspace</span>,
-                      edit the prompt in the{" "}
-                      <span className="font-bold">workspace settings</span>. To
-                      restore the system prompt to our sane default, leave this
-                      field empty and save changes.
+                      {t("defaultSystemPrompt.description.part1")}{" "}
+                      <span className="font-bold">
+                        {t("defaultSystemPrompt.description.specificWorkspace")}
+                      </span>
+                      {t("defaultSystemPrompt.description.part2")}{" "}
+                      <span className="font-bold">
+                        {t("defaultSystemPrompt.description.workspaceSettings")}
+                      </span>
+                      {t("defaultSystemPrompt.description.part3")}
                     </p>
                     <p className="text-white text-opacity-60 text-xs font-medium mb-2">
-                      You can insert{" "}
+                      {t("defaultSystemPrompt.variables.intro")}{" "}
                       <Link
                         to={paths.settings.systemPromptVariables()}
                         className="text-primary-button"
                       >
-                        system prompt variables
+                        {t("defaultSystemPrompt.variables.linkText")}
                       </Link>{" "}
-                      like:{" "}
+                      {t("defaultSystemPrompt.variables.like")}{" "}
                       {availableVariables.slice(0, 3).map((v, i) => (
                         <Fragment key={v.key}>
                           <span className="bg-theme-settings-input-bg px-1 py-0.5 rounded">
                             {`{${v.key}}`}
                           </span>
+                          {/* eslint-disable-next-line i18next/no-literal-string */}
                           {i < availableVariables.length - 1 && ", "}
                         </Fragment>
                       ))}
@@ -170,7 +172,9 @@ export default function DefaultSystemPrompt() {
                           to={paths.settings.systemPromptVariables()}
                           className="text-primary-button"
                         >
-                          +{availableVariables.length - 3} more...
+                          {t("defaultSystemPrompt.variables.more", {
+                            count: availableVariables.length - 3,
+                          })}
                         </Link>
                       )}
                     </p>
@@ -187,7 +191,7 @@ export default function DefaultSystemPrompt() {
                           isEditing: false,
                         }))
                       }
-                      placeholder="You are an AI assistant that can answer questions and help with tasks."
+                      placeholder={t("defaultSystemPrompt.placeholder")}
                       rows={5}
                       className="w-full border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 resize-y overflow-y-scroll min-h-[150px]"
                     />
@@ -220,7 +224,7 @@ export default function DefaultSystemPrompt() {
                     className={`enabled:hover:bg-secondary enabled:hover:text-white rounded-lg bg-primary-button w-fit py-2 px-4 font-semibold text-xs disabled:opacity-20 disabled:cursor-not-allowed`}
                     type="submit"
                   >
-                    Save Changes
+                    {t("common.saveChanges")}
                   </button>
                 </form>
               </div>

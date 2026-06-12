@@ -6,13 +6,15 @@ import {
   WarningCircle,
 } from "@phosphor-icons/react";
 import useProviderKeyStatus from "@/hooks/useProviderKeyStatus";
+import { useTranslation } from "react-i18next";
 
 function StatusBadge({ status }) {
+  const { t } = useTranslation();
   if (status === "key") {
     return (
       <span className="flex items-center gap-x-1 rounded-full bg-theme-bg-primary px-2 py-0.5 text-xs text-theme-text-primary">
         <CheckCircle size={14} weight="fill" className="text-green-500" />
-        Key gesetzt
+        {t("providerKeyStatus.status.keySet")}
       </span>
     );
   }
@@ -20,14 +22,14 @@ function StatusBadge({ status }) {
     return (
       <span className="flex items-center gap-x-1 rounded-full bg-theme-bg-primary px-2 py-0.5 text-xs text-theme-text-primary">
         <WarningCircle size={14} weight="fill" className="text-amber-500" />
-        Fallback aktiv
+        {t("providerKeyStatus.status.fallbackActive")}
       </span>
     );
   }
   return (
     <span className="flex items-center gap-x-1 rounded-full bg-theme-bg-primary px-2 py-0.5 text-xs text-theme-text-secondary">
       <Info size={14} />
-      Nicht konfiguriert
+      {t("providerKeyStatus.status.notConfigured")}
     </span>
   );
 }
@@ -59,6 +61,7 @@ function ProviderRow({ provider }) {
  * configured at all. Includes a storage-path health hint and manual refresh.
  */
 export default function ProviderKeyStatusPanel() {
+  const { t } = useTranslation();
   const { providers, paths, checkedAt, error, isLoading, refresh } =
     useProviderKeyStatus();
 
@@ -68,18 +71,16 @@ export default function ProviderKeyStatusPanel() {
 
   return (
     <section
-      aria-label="Provider API key status"
+      aria-label={t("providerKeyStatus.section.ariaLabel")}
       className="flex w-full flex-col gap-y-3 rounded-xl border border-theme-sidebar-border bg-theme-bg-primary p-4"
     >
       <header className="flex items-center justify-between gap-x-2">
         <div className="flex flex-col">
           <h3 className="text-sm font-semibold text-theme-text-primary">
-            Lokale Provider — API-Key-Status
+            {t("providerKeyStatus.section.title")}
           </h3>
           <p className="text-xs text-theme-text-secondary">
-            {
-              "Fallback aktiv = Provider läuft mit sicherem Platzhalter-Key (kein Crash, aber kein echter Key gesetzt)."
-            }
+            {t("providerKeyStatus.section.subtitle")}
           </p>
         </div>
         <button
@@ -87,13 +88,13 @@ export default function ProviderKeyStatusPanel() {
           onClick={refresh}
           disabled={isLoading}
           className="flex items-center gap-x-1 rounded-lg border border-theme-sidebar-border px-2.5 py-1.5 text-xs text-theme-text-primary hover:bg-theme-bg-secondary disabled:opacity-50"
-          aria-label="Status neu laden"
+          aria-label={t("providerKeyStatus.refresh.ariaLabel")}
         >
           <ArrowsClockwise
             size={14}
             className={isLoading ? "animate-spin" : ""}
           />
-          Aktualisieren
+          {t("providerKeyStatus.refresh.button")}
         </button>
       </header>
 
@@ -102,19 +103,19 @@ export default function ProviderKeyStatusPanel() {
           role="alert"
           className="rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-red-400"
         >
-          {`Status konnte nicht geladen werden: ${error}`}
+          {t("providerKeyStatus.error.loadFailed", { error })}
         </p>
       )}
 
       {!error && isLoading && (
         <p className="px-1 text-xs text-theme-text-secondary">
-          Lade Provider-Status…
+          {t("providerKeyStatus.loading")}
         </p>
       )}
 
       {!error && !isLoading && providers.length === 0 && (
         <p className="rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-theme-text-secondary">
-          Keine lokalen Provider registriert.
+          {t("providerKeyStatus.empty")}
         </p>
       )}
 
@@ -132,13 +133,22 @@ export default function ProviderKeyStatusPanel() {
           className="flex items-start gap-x-1.5 rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-amber-400"
         >
           <WarningCircle size={14} weight="fill" className="mt-0.5 shrink-0" />
-          {`Speicherpfad-Problem erkannt: ${paths.storagePath} (existiert: ${paths.storageExists ? "ja" : "nein"}, beschreibbar: ${paths.storageWritable ? "ja" : "nein"}, Hotdir: ${paths.hotdirExists ? "ok" : "fehlt"}).`}
+          {t("providerKeyStatus.storagePath.problem", {
+            path: paths.storagePath,
+            exists: paths.storageExists ? t("common.yes") : t("common.no"),
+            writable: paths.storageWritable ? t("common.yes") : t("common.no"),
+            hotdir: paths.hotdirExists
+              ? t("providerKeyStatus.storagePath.ok")
+              : t("providerKeyStatus.storagePath.missing"),
+          })}
         </p>
       )}
 
       {checkedAt && (
         <p className="text-right text-[11px] text-theme-text-secondary">
-          {`Zuletzt geprüft: ${new Date(checkedAt).toLocaleTimeString()}`}
+          {t("providerKeyStatus.lastChecked", {
+            time: new Date(checkedAt).toLocaleTimeString(),
+          })}
         </p>
       )}
     </section>

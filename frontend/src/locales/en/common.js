@@ -2312,6 +2312,211 @@ const TRANSLATIONS = {
     continueAnyway: "Continue Anyway",
     embedFile: "Embed {{fileWord}}",
   },
+  providerKeyStatus: {
+    section: {
+      ariaLabel: "Provider API key status",
+      title: "Local providers — API key status",
+      subtitle:
+        "Fallback active = provider runs with a safe placeholder key (no crash, but no real key set).",
+    },
+    refresh: {
+      ariaLabel: "Reload status",
+      button: "Refresh",
+    },
+    status: {
+      keySet: "Key set",
+      fallbackActive: "Fallback active",
+      notConfigured: "Not configured",
+    },
+    error: {
+      loadFailed: "Status could not be loaded: {{error}}",
+    },
+    loading: "Loading provider status…",
+    empty: "No local providers registered.",
+    storagePath: {
+      problem:
+        "Storage path problem detected: {{path}} (exists: {{exists}}, writable: {{writable}}, hotdir: {{hotdir}}).",
+      ok: "ok",
+      missing: "missing",
+    },
+    lastChecked: "Last checked: {{time}}",
+  },
+
+  pgVector: {
+    connectionString: {
+      label: "Postgres Connection String",
+      placeholder: "postgresql://username:password@host:port/database",
+      tooltip: {
+        intro:
+          "This is the connection string for the Postgres database in the format of",
+        permissions:
+          "The user for the database must have the following permissions:",
+        perm1: "Read access to the database",
+        perm2: "Read access to the database schema",
+        perm3: "Create access to the database",
+        extension:
+          "You must have the pgvector extension installed on the database.",
+      },
+    },
+    tableName: {
+      label: "Vector Table Name",
+      placeholder: "vector_table",
+      tooltip: {
+        intro:
+          "This is the name of the table in the Postgres database that will store the vectors.",
+        default: "By default, the table name is",
+        warning:
+          "This table must not already exist on the database - it will be created automatically.",
+      },
+    },
+  },
+
+  defaultSystemPrompt: {
+    title: "Default System Prompt",
+    subtitle:
+      "This is the default system prompt that will be used for new workspaces.",
+    label: "System Prompt",
+    description: {
+      part1:
+        "A system prompt provides instructions that shape the AI's responses and behavior. This prompt will be automatically applied to all newly created workspaces. To change the system prompt of a",
+      specificWorkspace: "specific workspace",
+      part2: ", edit the prompt in the",
+      workspaceSettings: "workspace settings",
+      part3:
+        ". To restore the system prompt to our sane default, leave this field empty and save changes.",
+    },
+    variables: {
+      intro: "You can insert",
+      linkText: "system prompt variables",
+      like: "like:",
+      more: "+{{count}} more...",
+    },
+    placeholder:
+      "You are an AI assistant that can answer questions and help with tasks.",
+    toast: {
+      success: "Default system prompt updated successfully.",
+      failure: "Failed to update default system prompt: {{message}}",
+    },
+  },
+
+  newUserModal: {
+    title: "Add user to instance",
+    username: {
+      label: "Username",
+      placeholder: "User's username",
+    },
+    password: {
+      label: "Password",
+      placeholder: "User's initial password",
+      hint: "Password must be at least 8 characters long",
+    },
+    bio: {
+      label: "Bio",
+      placeholder: "User's bio",
+    },
+    role: {
+      label: "Role",
+      admin: "Administrator",
+    },
+    error: "Error: {{error}}",
+    afterCreate:
+      "After creating a user they will need to login with their initial login to get access.",
+    submit: "Add user",
+  },
+
+  liteLLM: {
+    baseUrl: {
+      label: "Base URL",
+      placeholder: "http://127.0.0.1:4000",
+    },
+    maxChunkLength: {
+      label: "Max embedding chunk length",
+      placeholder: "8192",
+      tooltip: "Maximum length of text chunks, in characters, for embedding.",
+    },
+    apiKey: {
+      label: "API Key",
+      placeholder: "sk-mysecretkey",
+    },
+    modelSelection: {
+      label: "Embedding Model Selection",
+      loadingModels: "-- loading available models --",
+      waitingForUrl: "-- waiting for URL --",
+      yourLoadedModels: "Your loaded models",
+      tooltip: {
+        intro:
+          "Be sure to select a valid embedding model. Chat models are not embedding models. See",
+        linkText: "this page",
+        outro: "for more information.",
+      },
+    },
+  },
+
+  kokoro: {
+    intro: {
+      part1: "Connect to a self-hosted",
+      linkText: "kokoro-fastapi",
+      part2: "server. The voice list is pulled live from your server.",
+    },
+    baseUrl: {
+      label: "Base URL",
+      placeholder: "http://localhost:8880/v1",
+      help: "The OpenAI-compatible base URL of your {{service}} server.",
+    },
+    apiKey: {
+      label: "API Key",
+      placeholder: "Optional API Key",
+      help: "Optional — only required if you front your Kokoro server with auth.",
+    },
+    voiceModel: {
+      label: "Voice Model",
+      loading: "-- loading available voices --",
+      placeholder: "af_bella",
+      unreachable:
+        "Could not reach the Kokoro server to load voices. Enter a voice id manually.",
+    },
+  },
+
+  webScrapingNode: {
+    urlLabel: "URL to Scrape",
+    urlPlaceholder: "https://example.com",
+    captureAsLabel: "Capture Page Content As",
+    captureAs: {
+      text: "Text content only",
+      html: "Raw HTML",
+      querySelector: "CSS Query Selector",
+    },
+    querySelectorLabel: "Query Selector",
+    querySelectorHelp:
+      "Enter a valid CSS selector to scrape the content of the page.",
+    querySelectorPlaceholder: ".article-content, #content, .main-content, etc.",
+    contentSummarization: "Content Summarization",
+    resultVariable: "Result Variable",
+    selectOrCreateVariable: "Select or create variable",
+  },
+
+  agentSkill: {
+    warning: {
+      title: "Only import agent skills you trust",
+      body: "Agent skills can execute code on your OpenSIN Chat instance, so only import agent skills from sources you trust. You should also review the code before importing. If you are unsure about what a skill does - don't import it!",
+    },
+    reviewTitle: 'Review Agent Skill "{{name}}"',
+    createdBy: "Created by",
+    verified: "Verified code",
+    notVerified: "This skill is not verified.",
+    learnMore: "Learn more →",
+    description: {
+      part1:
+        "Agent skills unlock new capabilities for your OpenSIN Chat workspace via",
+      part2: "skills that can do specific tasks when invoked.",
+    },
+    fileCounter: "{{name}} ({{current}} of {{total}} files)",
+    import: "Import agent skill",
+    toast: {
+      importSuccess: "Agent skill imported successfully!",
+      importFailed: "Failed to import agent skill. {{message}}",
+    },
+  },
 };
 
 export default TRANSLATIONS;

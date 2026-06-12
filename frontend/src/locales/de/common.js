@@ -2386,6 +2386,212 @@ const TRANSLATIONS = {
     continueAnyway: "Trotzdem fortfahren",
     embedFile: "{{fileWord}} einbetten",
   },
+  providerKeyStatus: {
+    section: {
+      ariaLabel: "Provider-API-Key-Status",
+      title: "Lokale Provider — API-Key-Status",
+      subtitle:
+        "Fallback aktiv = Provider läuft mit sicherem Platzhalter-Key (kein Crash, aber kein echter Key gesetzt).",
+    },
+    refresh: {
+      ariaLabel: "Status neu laden",
+      button: "Aktualisieren",
+    },
+    status: {
+      keySet: "Key gesetzt",
+      fallbackActive: "Fallback aktiv",
+      notConfigured: "Nicht konfiguriert",
+    },
+    error: {
+      loadFailed: "Status konnte nicht geladen werden: {{error}}",
+    },
+    loading: "Lade Provider-Status…",
+    empty: "Keine lokalen Provider registriert.",
+    storagePath: {
+      problem:
+        "Speicherpfad-Problem erkannt: {{path}} (existiert: {{exists}}, beschreibbar: {{writable}}, Hotdir: {{hotdir}}).",
+      ok: "ok",
+      missing: "fehlt",
+    },
+    lastChecked: "Zuletzt geprüft: {{time}}",
+  },
+
+  pgVector: {
+    connectionString: {
+      label: "Postgres Connection String",
+      placeholder: "postgresql://username:password@host:port/database",
+      tooltip: {
+        intro:
+          "Dies ist die Verbindungszeichenfolge für die Postgres-Datenbank im Format",
+        permissions:
+          "Der Benutzer für die Datenbank muss die folgenden Berechtigungen haben:",
+        perm1: "Lesezugriff auf die Datenbank",
+        perm2: "Lesezugriff auf das Datenbankschema",
+        perm3: "Erstellungszugriff auf die Datenbank",
+        extension:
+          "Sie müssen die pgvector-Erweiterung in der Datenbank installiert haben.",
+      },
+    },
+    tableName: {
+      label: "Vector Table Name",
+      placeholder: "vector_table",
+      tooltip: {
+        intro:
+          "Dies ist der Name der Tabelle in der Postgres-Datenbank, in der die Vektoren gespeichert werden.",
+        default: "Standardmäßig lautet der Tabellenname",
+        warning:
+          "Diese Tabelle darf noch nicht in der Datenbank vorhanden sein - sie wird automatisch erstellt.",
+      },
+    },
+  },
+
+  defaultSystemPrompt: {
+    title: "Default System Prompt",
+    subtitle:
+      "Dies ist der Standard-System-Prompt, der für neue Workspaces verwendet wird.",
+    label: "System Prompt",
+    description: {
+      part1:
+        "Ein System-Prompt enthält Anweisungen, die die Antworten und das Verhalten der KI formen. Dieser Prompt wird automatisch auf alle neu erstellten Workspaces angewendet. Um den System-Prompt eines",
+      specificWorkspace: "bestimmten Workspaces",
+      part2: "zu ändern, bearbeiten Sie den Prompt in den",
+      workspaceSettings: "Workspace-Einstellungen",
+      part3:
+        ". Um den System-Prompt auf unsere sinnvolle Standardeinstellung zurückzusetzen, lassen Sie dieses Feld leer und speichern Sie die Änderungen.",
+    },
+    variables: {
+      intro: "Sie können",
+      linkText: "System-Prompt-Variablen",
+      like: "wie folgt einfügen:",
+      more: "+{{count}} mehr...",
+    },
+    placeholder:
+      "Sie sind ein KI-Assistent, der Fragen beantworten und bei Aufgaben helfen kann.",
+    toast: {
+      success: "Default System Prompt erfolgreich aktualisiert.",
+      failure:
+        "Fehler beim Aktualisieren des Default System Prompts: {{message}}",
+    },
+  },
+
+  newUserModal: {
+    title: "Benutzer zur Instanz hinzufügen",
+    username: {
+      label: "Benutzername",
+      placeholder: "Benutzername des Nutzers",
+    },
+    password: {
+      label: "Passwort",
+      placeholder: "Initiales Passwort des Nutzers",
+      hint: "Das Passwort muss mindestens 8 Zeichen lang sein",
+    },
+    bio: {
+      label: "Bio",
+      placeholder: "Bio des Nutzers",
+    },
+    role: {
+      label: "Rolle",
+      admin: "Administrator",
+    },
+    error: "Fehler: {{error}}",
+    afterCreate:
+      "Nach dem Erstellen eines Benutzers muss sich dieser mit seinem initialen Login anmelden, um Zugriff zu erhalten.",
+    submit: "Benutzer hinzufügen",
+  },
+
+  liteLLM: {
+    baseUrl: {
+      label: "Base URL",
+      placeholder: "http://127.0.0.1:4000",
+    },
+    maxChunkLength: {
+      label: "Maximale Embedding-Chunk-Länge",
+      placeholder: "8192",
+      tooltip: "Maximale Länge von Text-Chunks in Zeichen für das Embedding.",
+    },
+    apiKey: {
+      label: "API Key",
+      placeholder: "sk-mysecretkey",
+    },
+    modelSelection: {
+      label: "Embedding-Modellauswahl",
+      loadingModels: "-- lade verfügbare Modelle --",
+      waitingForUrl: "-- warte auf URL --",
+      yourLoadedModels: "Ihre geladenen Modelle",
+      tooltip: {
+        intro:
+          "Stellen Sie sicher, dass Sie ein gültiges Embedding-Modell auswählen. Chat-Modelle sind keine Embedding-Modelle. Siehe",
+        linkText: "diese Seite",
+        outro: "für weitere Informationen.",
+      },
+    },
+  },
+
+  kokoro: {
+    intro: {
+      part1: "Verbinden Sie sich mit einem selbstgehosteten",
+      linkText: "kokoro-fastapi",
+      part2: "Server. Die Stimmenliste wird live von Ihrem Server abgerufen.",
+    },
+    baseUrl: {
+      label: "Base URL",
+      placeholder: "http://localhost:8880/v1",
+      help: "Die OpenAI-kompatible Basis-URL Ihres {{service}}-Servers.",
+    },
+    apiKey: {
+      label: "API Key",
+      placeholder: "Optionaler API Key",
+      help: "Optional — nur erforderlich, wenn Sie Ihren Kokoro-Server mit Authentifizierung absichern.",
+    },
+    voiceModel: {
+      label: "Stimm-Modell",
+      loading: "-- lade verfügbare Stimmen --",
+      placeholder: "af_bella",
+      unreachable:
+        "Der Kokoro-Server konnte nicht erreicht werden, um Stimmen zu laden. Geben Sie eine Stimmen-ID manuell ein.",
+    },
+  },
+
+  webScrapingNode: {
+    urlLabel: "URL zum Scrapen",
+    urlPlaceholder: "https://example.com",
+    captureAsLabel: "Seiteninhalt erfassen als",
+    captureAs: {
+      text: "Nur Textinhalt",
+      html: "Rohes HTML",
+      querySelector: "CSS Query Selector",
+    },
+    querySelectorLabel: "Query Selector",
+    querySelectorHelp:
+      "Geben Sie einen gültigen CSS-Selector ein, um den Inhalt der Seite zu scrapen.",
+    querySelectorPlaceholder: ".article-content, #content, .main-content, etc.",
+    contentSummarization: "Inhaltszusammenfassung",
+    resultVariable: "Ergebnis-Variable",
+    selectOrCreateVariable: "Variable auswählen oder erstellen",
+  },
+
+  agentSkill: {
+    warning: {
+      title: "Importieren Sie nur Agent-Skills, denen Sie vertrauen",
+      body: "Agent-Skills können Code auf Ihrer OpenSIN Chat-Instanz ausführen, importieren Sie daher nur Agent-Skills aus Quellen, denen Sie vertrauen. Sie sollten den Code auch vor dem Import überprüfen. Wenn Sie sich nicht sicher sind, was ein Skill tut - importieren Sie ihn nicht!",
+    },
+    reviewTitle: 'Agent-Skill "{{name}}" überprüfen',
+    createdBy: "Erstellt von",
+    verified: "Verifizierter Code",
+    notVerified: "Dieser Skill ist nicht verifiziert.",
+    learnMore: "Mehr erfahren →",
+    description: {
+      part1:
+        "Agent-Skills schalten neue Fähigkeiten für Ihren OpenSIN Chat-Workspace frei via",
+      part2: "Skills, die bei Aufruf bestimmte Aufgaben erledigen können.",
+    },
+    fileCounter: "{{name}} ({{current}} von {{total}} Dateien)",
+    import: "Agent-Skill importieren",
+    toast: {
+      importSuccess: "Agent-Skill erfolgreich importiert!",
+      importFailed: "Fehler beim Importieren des Agent-Skills. {{message}}",
+    },
+  },
 };
 
 export default TRANSLATIONS;

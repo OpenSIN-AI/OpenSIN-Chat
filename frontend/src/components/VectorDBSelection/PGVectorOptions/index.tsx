@@ -1,15 +1,17 @@
 // SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
 import { Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
 export default function PGVectorOptions({ settings }: any) {
+  const { t } = useTranslation();
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-96">
           <div className="flex items-center gap-x-1 mb-3">
             <label className="text-white text-sm font-semibold block">
-              Postgres Connection String
+              {t("pgVector.connectionString.label")}
             </label>
             <Info
               size={16}
@@ -24,22 +26,19 @@ export default function PGVectorOptions({ settings }: any) {
               clickable={true}
             >
               <p className="text-md whitespace-pre-line break-words">
-                This is the connection string for the Postgres database in the
-                format of <br />
+                {t("pgVector.connectionString.tooltip.intro")} <br />
+                {/* eslint-disable-next-line i18next/no-literal-string */}
                 <code>postgresql://username:password@host:port/database</code>
                 <br />
                 <br />
-                The user for the database must have the following permissions:
+                {t("pgVector.connectionString.tooltip.permissions")}
                 <ul className="list-disc list-inside">
-                  <li>Read access to the database</li>
-                  <li>Read access to the database schema</li>
-                  <li>Create access to the database</li>
+                  <li>{t("pgVector.connectionString.tooltip.perm1")}</li>
+                  <li>{t("pgVector.connectionString.tooltip.perm2")}</li>
+                  <li>{t("pgVector.connectionString.tooltip.perm3")}</li>
                 </ul>
                 <br />
-                <b>
-                  You must have the pgvector extension installed on the
-                  database.
-                </b>
+                <b>{t("pgVector.connectionString.tooltip.extension")}</b>
               </p>
             </Tooltip>
           </div>
@@ -47,7 +46,7 @@ export default function PGVectorOptions({ settings }: any) {
             type="text"
             name="PGVectorConnectionString"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="postgresql://username:password@host:port/database"
+            placeholder={t("pgVector.connectionString.placeholder")}
             defaultValue={
               settings?.PGVectorConnectionString ? "*".repeat(20) : ""
             }
@@ -60,7 +59,7 @@ export default function PGVectorOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-x-1 mb-3">
             <label className="text-white text-sm font-semibold block">
-              Vector Table Name
+              {t("pgVector.tableName.label")}
             </label>
             <Info
               size={16}
@@ -75,17 +74,15 @@ export default function PGVectorOptions({ settings }: any) {
               clickable={true}
             >
               <p className="text-md whitespace-pre-line break-words">
-                This is the name of the table in the Postgres database that will
-                store the vectors.
+                {t("pgVector.tableName.tooltip.intro")}
                 <br />
                 <br />
-                By default, the table name is <code>openafd_vectors</code>.
+                {t("pgVector.tableName.tooltip.default")}{" "}
+                {/* eslint-disable-next-line i18next/no-literal-string */}
+                <code>openafd_vectors</code>.
                 <br />
                 <br />
-                <b>
-                  This table must not already exist on the database - it will be
-                  created automatically.
-                </b>
+                <b>{t("pgVector.tableName.tooltip.warning")}</b>
               </p>
             </Tooltip>
           </div>
@@ -95,7 +92,7 @@ export default function PGVectorOptions({ settings }: any) {
             autoComplete="off"
             defaultValue={settings?.PGVectorTableName}
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="vector_table"
+            placeholder={t("pgVector.tableName.placeholder")}
           />
         </div>
       </div>
