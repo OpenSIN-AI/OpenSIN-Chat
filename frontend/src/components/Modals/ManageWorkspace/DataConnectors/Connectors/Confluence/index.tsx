@@ -223,7 +223,7 @@ export default function ConfluenceOptions() {
                       type="password"
                       name="accessToken"
                       className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder="abcd1234"
+                      placeholder={t("connectors.confluence.token_placeholder")}
                       required={true}
                       autoComplete="off"
                       spellCheck={false}

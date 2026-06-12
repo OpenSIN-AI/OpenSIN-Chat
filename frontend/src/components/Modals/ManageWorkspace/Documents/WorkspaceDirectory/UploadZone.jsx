@@ -1,7 +1,9 @@
 import PreLoader from "@/components/Preloader";
 import { EmbeddingFileRow } from "./EmbeddingFileRow";
+import { useTranslation } from "react-i18next";
 
 export function UploadZone({
+  const { t } = useTranslation();
   loading,
   loadingMessage,
   workspace,
@@ -23,7 +25,7 @@ export function UploadZone({
           <div className="w-full h-[calc(100%-40px)] flex items-center justify-center flex-col gap-y-5">
             <PreLoader />
             <p className="text-theme-text-primary text-sm font-semibold animate-pulse text-center w-1/3">
-              {loadingMessage}
+              {t("modals.manageWorkspace.documents.workspaceDirectory.uploadZone.loadingMessage")}
             </p>
           </div>
         </div>
@@ -43,10 +45,10 @@ export function UploadZone({
           <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10 rounded-t-2xl">
             <div className="col-span-8 flex items-center gap-x-[4px]">
               <div className="shrink-0 w-3 h-3" />
-              <p className="ml-[7px] text-theme-text-primary">Name</p>
+              <p className="ml-[7px] text-theme-text-primary">{t("modals.manageWorkspace.documents.workspaceDirectory.uploadZone.name")}</p>
             </div>
             <p className="col-span-4 text-right text-theme-text-primary pr-1">
-              Status
+              {t("modals.manageWorkspace.documents.workspaceDirectory.uploadZone.status")}
             </p>
           </div>
           <div className="overflow-y-auto h-[calc(100%-40px)]">
@@ -67,13 +69,13 @@ export function UploadZone({
         {hasChanges && movedItems.length > 0 && (
           <div className="flex items-center justify-between w-[560px] mt-3">
             <p className="text-theme-text-secondary text-sm">
-              {movedItems.length} additional file(s) ready to embed
+              {t("modals.manageWorkspace.documents.workspaceDirectory.uploadZone.additionalFilesReady", { count: movedItems.length })}
             </p>
             <button
               onClick={handleSaveChanges}
               className="border border-slate-200 px-5 py-1.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
             >
-              Add to queue
+              {t("modals.manageWorkspace.documents.workspaceDirectory.uploadZone.addToQueue")}
             </button>
           </div>
         )}

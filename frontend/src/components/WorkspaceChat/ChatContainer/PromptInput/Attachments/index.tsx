@@ -13,6 +13,7 @@ import {
 } from "@phosphor-icons/react";
 import { REMOVE_ATTACHMENT_EVENT } from "../../DnDWrapper";
 import { openImageLightbox } from "@/components/ImageLightbox";
+import { useTranslation } from "react-i18next";
 
 /**
  * @param {{attachments: import("../../DnDWrapper").Attachment[]}}
@@ -48,6 +49,7 @@ export default function AttachmentManager({ attachments }: any) {
  * @param {{attachment: import("../../DnDWrapper").Attachment}}
  */
 function AttachmentItem({ attachment, onImageClick }: any) {
+  const { t } = useTranslation();
   const { uid, file, status, error, document, type, contentString } =
     attachment;
   const { iconBgColor, Icon } = displayFromFile(file);
@@ -75,7 +77,7 @@ function AttachmentItem({ attachment, onImageClick }: any) {
             {file.name}
           </p>
           <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
-            Uploading...
+            {t("attachments.uploading")}
           </p>
         </div>
       </div>
@@ -108,7 +110,7 @@ function AttachmentItem({ attachment, onImageClick }: any) {
             {file.name}
           </p>
           <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium truncate">
-            {error ?? "File not embedded!"}
+            {error ?? t("attachments.fileNotEmbedded")}
           </p>
         </div>
       </div>
@@ -120,7 +122,7 @@ function AttachmentItem({ attachment, onImageClick }: any) {
       return (
         <div
           data-tooltip-id="attachment-status-tooltip"
-          data-tooltip-content={`${file.name} will be attached to this prompt. It will not be embedded into the workspace permanently.`}
+          data-tooltip-content={t("attachments.willBeAttachedPrompt", { name: file.name })}
           className={`relative flex items-center gap-x-1 rounded-lg border-none group`}
         >
           <div className="invisible group-hover:visible absolute -top-[5px] -right-[5px] w-fit h-fit z-[10]">
@@ -138,7 +140,7 @@ function AttachmentItem({ attachment, onImageClick }: any) {
             className="p-0 border-none bg-transparent cursor-pointer"
           >
             <img
-              alt={`Preview of ${file.name}`}
+              alt={t("attachments.previewOf", { name: file.name })}
               src={contentString}
               className={`${iconBgColor} w-[40px] h-[40px] rounded-lg flex items-center justify-center object-cover object-center`}
             />
@@ -150,8 +152,8 @@ function AttachmentItem({ attachment, onImageClick }: any) {
     return (
       <div
         data-tooltip-id="attachment-status-tooltip"
-        data-tooltip-content={`${file.name} will be attached to this prompt. It will not be embedded into the workspace permanently.`}
-        className={`relative flex items-center gap-x-1 rounded-lg bg-theme-attachment-success-bg border-none w-[180px] group`}
+          data-tooltip-content={t("attachments.willBeAttachedPrompt", { name: file.name })}
+          className={`relative flex items-center gap-x-1 rounded-lg bg-theme-attachment-success-bg border-none w-[180px] group`}
       >
         <div className="invisible group-hover:visible absolute -top-[5px] -right-[5px] w-fit h-fit z-[10]">
           <button
@@ -172,7 +174,7 @@ function AttachmentItem({ attachment, onImageClick }: any) {
             {file.name}
           </p>
           <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
-            Image attached!
+            {t("attachments.imageAttached")}
           </p>
         </div>
       </div>
@@ -182,11 +184,11 @@ function AttachmentItem({ attachment, onImageClick }: any) {
   return (
     <div
       data-tooltip-id="attachment-status-tooltip"
-      data-tooltip-content={
-        status === "embedded"
-          ? `${file.name} was uploaded and embedded into this workspace. It will be available for RAG chat now.`
-          : `${file.name} will be used as context for this chat only.`
-      }
+        data-tooltip-content={
+          status === "embedded"
+            ? t("attachments.wasEmbedded", { name: file.name })
+            : t("attachments.willBeUsedAsContext", { name: file.name })
+        }
       className={`relative flex items-center gap-x-1 rounded-lg bg-theme-attachment-bg border-none w-[180px] group`}
     >
       <div className="invisible group-hover:visible absolute -top-[5px] -right-[5px] w-fit h-fit z-[10]">
@@ -206,7 +208,7 @@ function AttachmentItem({ attachment, onImageClick }: any) {
       <div className="flex flex-col w-[125px]">
         <p className="text-white text-xs font-semibold truncate">{file.name}</p>
         <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
-          {status === "embedded" ? "File embedded!" : "Added as context!"}
+          {status === "embedded" ? t("attachments.fileEmbedded") : t("attachments.addedAsContext")}
         </p>
       </div>
     </div>

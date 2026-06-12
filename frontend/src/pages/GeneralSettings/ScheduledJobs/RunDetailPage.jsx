@@ -168,7 +168,7 @@ function RunHeader({
         style: "text-blue-400 light:text-blue-600",
       },
       default: {
-        text: "—",
+        text: t("scheduledJobs.runDetail.sections.dash"),
         style: "text-zinc-400 light:text-slate-600",
       },
     };
@@ -244,10 +244,10 @@ function PromptSection({ t, prompt }) {
   return (
     <div className="border border-zinc-700 light:border-slate-400 rounded-lg p-[18px]">
       <p className="text-sm font-medium text-white light:text-slate-950 uppercase tracking-[1.4px] mb-1">
-        {t("scheduledJobs.runDetail.sections.prompt")}
-      </p>
-      <p className="text-sm text-zinc-400 light:text-slate-600 whitespace-pre-wrap">
-        {prompt || "—"}
+          {t("scheduledJobs.runDetail.sections.prompt")}
+        </p>
+        <p className="text-sm text-zinc-400 light:text-slate-600 whitespace-pre-wrap">
+          {prompt || t("scheduledJobs.runDetail.sections.dash")}
       </p>
     </div>
   );

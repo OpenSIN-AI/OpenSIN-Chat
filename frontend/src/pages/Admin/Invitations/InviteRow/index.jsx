@@ -3,20 +3,22 @@ import { useEffect, useRef, useState } from "react";
 import { titleCase } from "text-case";
 import Admin from "@/models/admin";
 import { Trash } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 
 export default function InviteRow({ invite }) {
+  const { t } = useTranslation();
   const rowRef = useRef(null);
   const [status, setStatus] = useState(invite.status);
   const [copied, setCopied] = useState(false);
   const handleDelete = async () => {
     if (
       !window.confirm(
-        `Are you sure you want to deactivate this invite?\nAfter you do this it will not longer be useable.\n\nThis action is irreversible.`,
+        t("inviteRow.deactivateConfirm"),
       )
     )
       return false;
     if (rowRef?.current && rowRef.current.children.length > 0) {
-      rowRef.current.children[0].innerText = "Disabled";
+      rowRef.current.children[0].innerText = t("inviteRow.disabled");
     }
     setStatus("disabled");
     await Admin.disableInvite(invite.id);
@@ -50,10 +52,10 @@ export default function InviteRow({ invite }) {
         </td>
         <td className="px-6">
           {invite.claimedBy
-            ? invite.claimedBy?.username || "deleted user"
+            ? invite.claimedBy?.username || t("inviteRow.deletedUser")
             : "--"}
         </td>
-        <td className="px-6">{invite.createdBy?.username || "deleted user"}</td>
+          <td className="px-6">{invite.createdBy?.username || t("inviteRow.deletedUser")}</td>
         <td className="px-6">{invite.createdAt}</td>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
           {status === "pending" && (
@@ -63,7 +65,7 @@ export default function InviteRow({ invite }) {
                 disabled={copied}
                 className="text-xs font-medium text-blue-300 rounded-lg hover:text-blue-400 hover:underline"
               >
-                {copied ? "Copied" : "Copy Invite Link"}
+                {copied ? t("inviteRow.copied") : t("inviteRow.copyInviteLink")}
               </button>
               <button
                 onClick={handleDelete}

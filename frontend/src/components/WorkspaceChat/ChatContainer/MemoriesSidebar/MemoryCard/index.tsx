@@ -3,8 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { DotsThreeVertical } from "@phosphor-icons/react";
 import { useMemoriesContext, LIMITS } from "../MemoriesContext";
 import CardMenu from "./CardMenu";
+import { useTranslation } from "react-i18next";
 
 export default function MemoryCard({ memory }: any) {
+  const { t } = useTranslation();
   const {
     activeTab,
     memories,

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 
 const OPEN_EVENT = "open-image-lightbox";
 
@@ -17,6 +18,7 @@ export function openImageLightbox(images: any, initialIndex: any = 0) {
 }
 
 export default function ImageLightbox() {
+  const { t } = useTranslation();
   const [images, setImages] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0 as any);
 
@@ -66,7 +68,7 @@ export default function ImageLightbox() {
         type="button"
         onClick={close}
         className="absolute top-4 right-4 p-2 text-white light:text-white hover:text-white/70 transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
-        aria-label="Close lightbox"
+        aria-label={t("imageLightbox.close")}
       >
         <X size={24} weight="bold" />
       </button>
@@ -80,7 +82,7 @@ export default function ImageLightbox() {
               handlePrevious();
             }}
             className="absolute left-4 p-3 text-white light:text-white hover:text-white/70 transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
-            aria-label="Previous image"
+            aria-label={t("imageLightbox.previous")}
           >
             <CaretLeft size={24} weight="bold" />
           </button>
@@ -91,7 +93,7 @@ export default function ImageLightbox() {
               handleNext();
             }}
             className="absolute right-4 p-3 text-white light:text-white hover:text-white/70 transition-colors rounded-full bg-white/10 hover:bg-white/20 border-none cursor-pointer"
-            aria-label="Next image"
+            aria-label={t("imageLightbox.next")}
           >
             <CaretRight size={24} weight="bold" />
           </button>
@@ -100,7 +102,7 @@ export default function ImageLightbox() {
 
       <img
         src={currentImage.contentString}
-        alt={currentImage.name || "attachment"}
+        alt={currentImage.name || t("imageLightbox.attachment")}
         className="max-w-[90vw] max-h-[90vh] object-contain"
         onClick={(e) => e.stopPropagation()}
       />

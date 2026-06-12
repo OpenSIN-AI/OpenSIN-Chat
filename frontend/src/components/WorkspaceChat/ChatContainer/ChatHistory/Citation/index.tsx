@@ -32,6 +32,11 @@ const CIRCLE_ICONS = {
   paperlessNgx: FileText,
 };
 
+export const CITATION_KEYS = {
+  sources: "chat_window.sources",
+  similarityMatch: "chat_window.similarity_match",
+};
+
 const CIRCLE_IMAGES = {
   gmailThread: GmailLogo,
   gmailAttachment: GmailLogo,
@@ -158,7 +163,7 @@ export default function Citations({ sources = [] }: any) {
       type="button"
     >
       <span className="text-xs text-white light:text-slate-800">
-        {t("chat_window.sources")}
+        {t(CITATION_KEYS.sources)}
       </span>
       <div
         className="relative h-[22px]"
@@ -265,7 +270,7 @@ export function CitationDetailModal({ source, onClose }: any) {
                           <Info size={14} />
                           <p>
                             {toPercentString(score)}{" "}
-                            {t("chat_window.similarity_match")}
+                            {t(CITATION_KEYS.similarityMatch)}
                           </p>
                         </div>
                       </div>

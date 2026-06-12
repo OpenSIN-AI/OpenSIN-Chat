@@ -52,9 +52,9 @@ export default function GeneralLLMPreference() {
     setSaving(true);
 
     if (error) {
-      showToast(`Failed to save LLM settings: ${error}`, "error");
+      showToast(t("llmPreference.saveFailed", { error }), "error");
     } else {
-      showToast("LLM preferences saved successfully.", "success");
+      showToast(t("llmPreference.saveSuccess"), "success");
     }
     setSaving(false);
     setHasChanges(!!error);
@@ -212,7 +212,7 @@ function Header({ hasChanges, saving, handleSubmit, t }) {
             onClick={() => handleSubmit()}
             className="mt-3 mr-0 -mb-14 z-10"
           >
-            {saving ? "Saving..." : "Save changes"}
+            {saving ? t("common.saving") : t("common.save")}
           </CTAButton>
         )}
       </div>
@@ -285,7 +285,7 @@ function SearchMenuOpen({
             type="text"
             name="llm-search"
             autoComplete="off"
-            placeholder="Search all LLM providers"
+            placeholder={t("llmPreference.searchPlaceholder")}
             className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none text-theme-text-primary placeholder:text-theme-text-primary placeholder:font-medium"
             onChange={(e) => setSearchQuery(e.target.value)}
             ref={searchInputRef}
@@ -335,10 +335,10 @@ function SearchMenuClosed({ selectedLLMObject, setSearchMenuOpen }) {
         />
         <div className="flex flex-col text-left">
           <div className="text-sm font-semibold text-white">
-            {selectedLLMObject?.name || "None selected"}
+            {selectedLLMObject?.name || t("llmPreference.noneSelected")}
           </div>
           <div className="mt-1 text-xs text-description">
-            {selectedLLMObject?.description || "You need to select an LLM"}
+            {selectedLLMObject?.description || t("llmPreference.selectLLM")}
           </div>
         </div>
       </div>

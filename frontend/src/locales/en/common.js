@@ -49,6 +49,76 @@ const TRANSLATIONS = {
       thankYou: "Thank you for your feedback!",
     },
   },
+  modals: {
+    manageWorkspace: {
+      documents: {
+        workspaceDirectory: {
+          uploadZone: {
+            loadingMessage: "Loading...",
+            name: "Name",
+            status: "Status",
+            additionalFilesReady: "{{count}} additional file(s) ready to embed",
+            addToQueue: "Add to queue",
+          },
+        },
+      },
+    },
+  },
+  modelSelector: {
+    chatModel: {
+      placeholder: "Enter model name exactly as referenced in the API (e.g., gpt-3.5-turbo)",
+    },
+  },
+  transcriptionSelection: {
+    model: "Model Selection",
+  },
+  providerSettings: {
+    openai: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "OpenAI API Key",
+      whisperModel: "Whisper Model",
+      whisperLarge: "Whisper Large",
+    },
+    astraDb: {
+      endpoint: "Astra DB Endpoint",
+      endpointPlaceholder: "Astra DB API endpoint",
+      applicationToken: "Astra DB Application Token",
+      tokenPlaceholder: "AstraCS:...",
+    },
+    pinecone: {
+      apiKey: "Pinecone DB API Key",
+      apiKeyPlaceholder: "Pinecone API Key",
+      indexName: "Pinecone Index Name",
+      indexNamePlaceholder: "my-index",
+    },
+    qdrant: {
+      apiEndpoint: "QDrant API Endpoint",
+      apiEndpointPlaceholder: "http://localhost:6633",
+      apiKey: "API Key",
+      apiKeyPlaceholder: "wOeqxsYP4....1244sba",
+    },
+    weaviate: {
+      endpoint: "Weaviate Endpoint",
+      endpointPlaceholder: "http://localhost:8080",
+      apiKey: "API Key",
+      apiKeyPlaceholder: "sk-123Abcweaviate",
+    },
+    zilliz: {
+      clusterEndpoint: "Cluster Endpoint",
+      clusterEndpointPlaceholder: "https://sample.api.gcp-us-west1.zillizcloud.com",
+      apiToken: "API Token",
+      apiTokenPlaceholder: "Zilliz cluster API Token",
+    },
+  },
+  chat_window: {
+    sources: "Sources",
+    similarity_match: "Similarity match",
+  },
+  dndWrapper: {
+    addAnything: "Add anything",
+    dropFileOrImage: "Drop a file or image here to attach it to your",
+    workspaceAutoMagically: "workspace auto-magically.",
+  },
   common: {
     "workspaces-name": "Workspace Name",
     selection: "Model Selection",
@@ -2420,6 +2490,13 @@ const TRANSLATIONS = {
         visibility_label: "Visibility",
         submitting: "Publishing...",
         submit: "Publish to Community Hub",
+        flow_steps_label: "Flow Steps",
+        flow_steps_description:
+          "The steps the agent will follow when the flow is triggered.",
+        collapseStep: "Collapse step {{index}}",
+        expandStep: "Expand step {{index}}",
+        noStepsDefined: "No steps defined.",
+        publishFailed: "Failed to publish agent flow: {{error}}",
         privacy_note:
           "Agent flows are always uploaded as private to protect any sensitive data. You can change the visibility in the Community Hub after publishing. Please verify your flow does not contain any sensitive or private information before publishing.",
       },
@@ -2594,6 +2671,7 @@ const TRANSLATIONS = {
         files: "Files ({{count}})",
         response: "Response",
         metrics: "Metrics",
+        dash: "\u2014",
       },
       metrics: {
         promptTokens: "Prompt tokens:",
@@ -3506,9 +3584,23 @@ const TRANSLATIONS = {
   },
 
   consoleSidebar: {
+    logs: "Logs",
+    clear: "Clear",
+    noLogs: "No logs yet",
+    terminal: "Terminal",
+    terminalHint: "Type a command and press Enter to execute.",
     noOutput: "(no output)",
     error: "Error: {{error}}",
     consoleTabs: "Console tabs",
+  },
+
+  console: {
+    title: "Console & Terminal",
+    close: "Close console",
+    tab_logs: "Logs",
+    tab_terminal: "Terminal",
+    terminal_placeholder: "Enter command...",
+    terminal_unavailable: "Terminal unavailable. Make sure the server provides the /api/terminal/exec endpoint.",
   },
 
   agentSidebarLists: {
@@ -3674,6 +3766,107 @@ const TRANSLATIONS = {
         "Scan the QR code with the OpenSIN Chat Mobile app to enable live sync of your workspaces, chats, threads and documents.",
       learnMore: "Learn more",
     },
+  },
+
+  attachments: {
+    uploading: "Uploading...",
+    fileNotEmbedded: "File not embedded!",
+    imageAttached: "Image attached!",
+    fileEmbedded: "File embedded!",
+    addedAsContext: "Added as context!",
+    willBeAttachedPrompt:
+      "{{name}} will be attached to this prompt. It will not be embedded into the workspace permanently.",
+    wasEmbedded:
+      "{{name}} was uploaded and embedded into this workspace. It will be available for RAG chat now.",
+    willBeUsedAsContext:
+      "{{name}} will be used as context for this chat only.",
+    previewOf: "Preview of {{name}}",
+  },
+
+  setupProvider: {
+    saveFailed: "Failed to save {{name}} settings: {{error}}",
+    title: "{{name}} Settings",
+    description:
+      "To use {{name}} as this workspace's LLM you need to set it up first.",
+    cancel: "Cancel",
+    saveSettings: "Save settings",
+  },
+
+  startNode: {
+    variables: "Variables",
+    variableNamePlaceholder: "Variable name",
+    initialValuePlaceholder: "Initial value",
+    deleteVariable: "Delete variable",
+    addVariable: "Add variable",
+  },
+
+  inviteRow: {
+    deactivateConfirm:
+      "Are you sure you want to deactivate this invite?\nAfter you do this it will no longer be usable.\n\nThis action is irreversible.",
+    disabled: "Disabled",
+    deletedUser: "deleted user",
+    copied: "Copied",
+    copyInviteLink: "Copy Invite Link",
+  },
+
+  codeSnippetModal: {
+    title: "Copy your embed code",
+    close: "Close",
+    copiedToClipboard: "Snippet copied to clipboard!",
+    scriptTagLabel: "HTML Script Tag Embed Code",
+    scriptTagDescription:
+      "Have your workspace chat embed function like a help desk chat bottom in the corner of your website.",
+    viewOptions: "View all style and configuration options \u2192",
+  },
+
+  llmPreference: {
+    saveFailed: "Failed to save LLM settings: {{error}}",
+    saveSuccess: "LLM preferences saved successfully.",
+    searchPlaceholder: "Search all LLM providers",
+    noneSelected: "None selected",
+    selectLLM: "You need to select an LLM",
+  },
+
+  deviceRow: {
+    accessGranted: "Device access granted",
+    accessDenied: "Device access denied",
+    by: "by",
+    revoke: "Revoke",
+    approveAccess: "Approve Access",
+    deny: "Deny",
+  },
+
+  agentModelSelection: {
+    multiModelNotSupported:
+      "Multi-model support is not supported for this provider yet.",
+    agentsWillUse: "Agent's will use",
+    workspaceModel: "the model set for the workspace",
+    or: "or",
+    systemModel: "the model set for the system.",
+    generalModels: "General models",
+    customModels: "Custom models",
+  },
+
+  members: {
+    username: "Username",
+    role: "Role",
+    dateAdded: "Date Added",
+    noMembers: "No workspace members",
+    manageUsers: "Manage Users",
+  },
+
+  mistralAiOptions: {
+    apiKey: "API Key",
+    apiKeyPlaceholder: "Mistral AI API Key",
+    modelPreference: "Model Preference",
+    availableModels: "Available embedding models",
+  },
+
+  imageLightbox: {
+    close: "Close lightbox",
+    previous: "Previous image",
+    next: "Next image",
+    attachment: "attachment",
   },
 };
 

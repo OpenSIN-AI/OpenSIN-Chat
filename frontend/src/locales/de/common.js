@@ -50,6 +50,76 @@ const TRANSLATIONS = {
       thankYou: "Vielen Dank für Ihr Feedback!",
     },
   },
+  modals: {
+    manageWorkspace: {
+      documents: {
+        workspaceDirectory: {
+          uploadZone: {
+            loadingMessage: "Lädt...",
+            name: "Name",
+            status: "Status",
+            additionalFilesReady: "{{count}} zusätzliche Datei(en) bereit zum Einbetten",
+            addToQueue: "Zur Warteschlange hinzufügen",
+          },
+        },
+      },
+    },
+  },
+  modelSelector: {
+    chatModel: {
+      placeholder: "Geben Sie den Modellnamen genau so ein, wie er in der API referenziert wird (z. B. gpt-3.5-turbo)",
+    },
+  },
+  transcriptionSelection: {
+    model: "Modellauswahl",
+  },
+  providerSettings: {
+    openai: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "OpenAI API-Schlüssel",
+      whisperModel: "Whisper-Modell",
+      whisperLarge: "Whisper Large",
+    },
+    astraDb: {
+      endpoint: "Astra DB-Endpunkt",
+      endpointPlaceholder: "Astra DB API-Endpunkt",
+      applicationToken: "Astra DB-Anwendungstoken",
+      tokenPlaceholder: "AstraCS:...",
+    },
+    pinecone: {
+      apiKey: "Pinecone DB API-Schlüssel",
+      apiKeyPlaceholder: "Pinecone API-Schlüssel",
+      indexName: "Pinecone Index-Name",
+      indexNamePlaceholder: "mein-index",
+    },
+    qdrant: {
+      apiEndpoint: "QDrant API-Endpunkt",
+      apiEndpointPlaceholder: "http://localhost:6633",
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "wOeqxsYP4....1244sba",
+    },
+    weaviate: {
+      endpoint: "Weaviate-Endpunkt",
+      endpointPlaceholder: "http://localhost:8080",
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "sk-123Abcweaviate",
+    },
+    zilliz: {
+      clusterEndpoint: "Cluster-Endpunkt",
+      clusterEndpointPlaceholder: "https://sample.api.gcp-us-west1.zillizcloud.com",
+      apiToken: "API-Token",
+      apiTokenPlaceholder: "Zilliz-Cluster-API-Token",
+    },
+  },
+  chat_window: {
+    sources: "Quellen",
+    similarity_match: "Ähnlichkeitsabgleich",
+  },
+  dndWrapper: {
+    addAnything: "Fügen Sie etwas hinzu",
+    dropFileOrImage: "Legen Sie eine Datei oder ein Bild hier ab, um es an Ihr",
+    workspaceAutoMagically: "Workspace automatisch anzuhängen.",
+  },
   common: {
     "workspaces-name": "Namen der Workspaces",
     selection: "Modellauswahl",
@@ -1631,6 +1701,13 @@ const TRANSLATIONS = {
         visibility_label: "Sichtbarkeit",
         submitting: "Veröffentlichung...",
         submit: "Veröffentlichen Sie im Community Hub",
+        flow_steps_label: "Flow-Schritte",
+        flow_steps_description:
+          "Die Schritte, die der Agent ausführt, wenn der Flow ausgelöst wird.",
+        collapseStep: "Schritt {{index}} einklappen",
+        expandStep: "Schritt {{index}} ausklappen",
+        noStepsDefined: "Keine Schritte definiert.",
+        publishFailed: "Fehler beim Veröffentlichen des Agent-Flows: {{error}}",
         privacy_note:
           "Agent-Prozesse werden immer privat hochgeladen, um sensible Daten zu schützen. Sie können die Sichtbarkeit im Community Hub nach der Veröffentlichung ändern. Bitte überprüfen Sie, ob Ihr Prozess keine sensiblen oder privaten Informationen enthält, bevor Sie ihn veröffentlichen.",
       },
@@ -2432,6 +2509,7 @@ const TRANSLATIONS = {
         files: "Dateien ({{count}})",
         response: "Antwort",
         metrics: "Kennzahlen",
+        dash: "\u2014",
       },
       metrics: {
         promptTokens: "Auslöse-Token:",
@@ -3581,9 +3659,23 @@ const TRANSLATIONS = {
   },
 
   consoleSidebar: {
+    logs: "Logs",
+    clear: "Löschen",
+    noLogs: "Noch keine Logs",
+    terminal: "Terminal",
+    terminalHint: "Geben Sie einen Befehl ein und drücken Sie Enter zum Ausführen.",
     noOutput: "(kein Output)",
     error: "Fehler: {{error}}",
     consoleTabs: "Konsole-Tabs",
+  },
+
+  console: {
+    title: "Konsole & Terminal",
+    close: "Konsole schließen",
+    tab_logs: "Logs",
+    tab_terminal: "Terminal",
+    terminal_placeholder: "Befehl eingeben...",
+    terminal_unavailable: "Terminal nicht verfügbar. Stellen Sie sicher, dass der Server den /api/terminal/exec-Endpunkt bereitstellt.",
   },
 
   agentSidebarLists: {
@@ -3749,6 +3841,107 @@ const TRANSLATIONS = {
         "Scannen Sie den QR-Code mit der OpenSIN Chat Mobile-App, um die Live-Synchronisierung Ihrer Workspaces, Chats, Threads und Dokumente zu aktivieren.",
       learnMore: "Mehr erfahren",
     },
+  },
+
+  attachments: {
+    uploading: "Hochladen...",
+    fileNotEmbedded: "Datei nicht eingebettet!",
+    imageAttached: "Bild angehängt!",
+    fileEmbedded: "Datei eingebettet!",
+    addedAsContext: "Als Kontext hinzugefügt!",
+    willBeAttachedPrompt:
+      "{{name}} wird an diesen Prompt angehängt. Es wird nicht dauerhaft in den Workspace eingebettet.",
+    wasEmbedded:
+      "{{name}} wurde hochgeladen und in diesen Workspace eingebettet. Es ist jetzt für RAG-Chat verfügbar.",
+    willBeUsedAsContext:
+      "{{name}} wird nur als Kontext für diesen Chat verwendet.",
+    previewOf: "Vorschau von {{name}}",
+  },
+
+  setupProvider: {
+    saveFailed: "Fehler beim Speichern der {{name}} Einstellungen: {{error}}",
+    title: "{{name}} Einstellungen",
+    description:
+      "Um {{name}} als LLM dieses Workspace zu nutzen, müssen Sie es zuerst einrichten.",
+    cancel: "Abbrechen",
+    saveSettings: "Einstellungen speichern",
+  },
+
+  startNode: {
+    variables: "Variablen",
+    variableNamePlaceholder: "Variablenname",
+    initialValuePlaceholder: "Anfangswert",
+    deleteVariable: "Variable löschen",
+    addVariable: "Variable hinzufügen",
+  },
+
+  inviteRow: {
+    deactivateConfirm:
+      "Möchten Sie diese Einladung wirklich deaktivieren?\nDanach kann sie nicht mehr verwendet werden.\n\nDiese Aktion ist unwiderruflich.",
+    disabled: "Deaktiviert",
+    deletedUser: "gelöschter Benutzer",
+    copied: "Kopiert",
+    copyInviteLink: "Einladungslink kopieren",
+  },
+
+  codeSnippetModal: {
+    title: "Einbettungscode kopieren",
+    close: "Schließen",
+    copiedToClipboard: "Snippet in die Zwischenablage kopiert!",
+    scriptTagLabel: "HTML Script-Tag Einbettungscode",
+    scriptTagDescription:
+      "Lassen Sie Ihren Workspace-Chat-Einbettung wie einen Helpdesk-Chat in der Ecke Ihrer Website funktionieren.",
+    viewOptions: "Alle Stil- und Konfigurationsoptionen anzeigen \u2192",
+  },
+
+  llmPreference: {
+    saveFailed: "Fehler beim Speichern der LLM-Einstellungen: {{error}}",
+    saveSuccess: "LLM-Einstellungen erfolgreich gespeichert.",
+    searchPlaceholder: "Alle LLM-Anbieter durchsuchen",
+    noneSelected: "Keiner ausgewählt",
+    selectLLM: "Sie müssen ein LLM auswählen",
+  },
+
+  deviceRow: {
+    accessGranted: "Gerätezugriff gewährt",
+    accessDenied: "Gerätezugriff verweigert",
+    by: "von",
+    revoke: "Widerrufen",
+    approveAccess: "Zugriff genehmigen",
+    deny: "Ablehnen",
+  },
+
+  agentModelSelection: {
+    multiModelNotSupported:
+      "Multi-Modell-Unterstützung wird für diesen Anbieter noch nicht unterstützt.",
+    agentsWillUse: "Agenten verwenden",
+    workspaceModel: "das für den Workspace festgelegte Modell",
+    or: "oder",
+    systemModel: "das für das System festgelegte Modell.",
+    generalModels: "Allgemeine Modelle",
+    customModels: "Benutzerdefinierte Modelle",
+  },
+
+  members: {
+    username: "Benutzername",
+    role: "Rolle",
+    dateAdded: "Hinzugefügt am",
+    noMembers: "Keine Workspace-Mitglieder",
+    manageUsers: "Benutzer verwalten",
+  },
+
+  mistralAiOptions: {
+    apiKey: "API-Schlüssel",
+    apiKeyPlaceholder: "Mistral AI API-Schlüssel",
+    modelPreference: "Modellpräferenz",
+    availableModels: "Verfügbare Embedding-Modelle",
+  },
+
+  imageLightbox: {
+    close: "Lightbox schließen",
+    previous: "Vorheriges Bild",
+    next: "Nächstes Bild",
+    attachment: "Anhang",
   },
 };
 

@@ -45,7 +45,7 @@ export default function AgentFlows({ entity }: any) {
     } catch (error) {
       console.error("Failed to publish agent flow:", error);
       showToast(
-        `Failed to publish agent flow: ${(error as Error).message}`,
+        t("community_hub.publish.agent_flow.publishFailed", { error: (error as Error).message }),
         "error",
         { clear: true },
       );
@@ -193,10 +193,10 @@ export default function AgentFlows({ entity }: any) {
         <div className="w-1/2 p-6 pt-0 flex flex-col gap-y-4">
           <div>
             <label className="block text-sm font-semibold text-theme-text-primary mb-1">
-              Flow Steps
+              {t("community_hub.publish.agent_flow.flow_steps_label")}
             </label>
             <div className="text-xs text-white/60">
-              The steps the agent will follow when the flow is triggered.
+              {t("community_hub.publish.agent_flow.flow_steps_description")}
             </div>
           </div>
           <div className="flex flex-col gap-y-0.5">
@@ -214,8 +214,8 @@ export default function AgentFlows({ entity }: any) {
                       aria-expanded={isExpanded}
                       aria-label={
                         isExpanded
-                          ? `Collapse step ${idx + 1}`
-                          : `Expand step ${idx + 1}`
+                          ? t("community_hub.publish.agent_flow.collapseStep", { index: idx + 1 })
+                          : t("community_hub.publish.agent_flow.expandStep", { index: idx + 1 })
                       }
                       className="flex flex-col bg-theme-bg-secondary rounded-lg px-3 py-2 w-full cursor-pointer group text-left border-none"
                       onClick={() => setExpandedStep(isExpanded ? null : idx)}
@@ -256,7 +256,7 @@ export default function AgentFlows({ entity }: any) {
               })
             ) : (
               <div className="text-theme-text-secondary text-xs">
-                No steps defined.
+                {t("community_hub.publish.agent_flow.noStepsDefined")}
               </div>
             )}
           </div>

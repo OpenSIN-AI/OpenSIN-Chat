@@ -9,6 +9,7 @@ import useDocumentProcessorOnline from "@/hooks/useDocumentProcessorOnline";
 import showToast from "@/utils/toast";
 import FileUploadWarningModal from "./FileUploadWarningModal";
 import pluralize from "pluralize";
+import { useTranslation } from "react-i18next";
 
 export const DndUploaderContext = createContext<any>(undefined);
 export const REMOVE_ATTACHMENT_EVENT = "ATTACHMENT_REMOVE";
@@ -454,10 +455,10 @@ export default function DnDFileUploaderWrapper({ children }: any) {
               height={69}
               alt="Drag and drop icon"
             />
-            <p className="text-white text-[24px] font-semibold">Add anything</p>
+            <p className="text-white text-[24px] font-semibold">{t("dndWrapper.addAnything")}</p>
             <p className="text-white text-[16px] text-center">
-              Drop a file or image here to attach it to your <br />
-              workspace auto-magically.
+              {t("dndWrapper.dropFileOrImage")}<br />
+              {t("dndWrapper.workspaceAutoMagically")}
             </p>
           </div>
         </div>
