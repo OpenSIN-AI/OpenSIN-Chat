@@ -1201,6 +1201,13 @@ const TRANSLATIONS = {
         "Ohne Angabe des <b>GitHub Zugriffstokens</b> kann dieser Datenkonnektor aufgrund der öffentlichen API-Ratenlimits von GitHub nur die <b>Top-Level</b>-Dateien des Repositories sammeln.",
       token_personal:
         "Holen Sie sich hier einen kostenlosen persönlichen Zugriffstoken mit einem GitHub-Konto.",
+      fetching_files:
+        "Alle Dateien des Repositories werden abgerufen – dies kann einen Moment dauern.",
+      files_collected:
+        "{{files}} {{filePlural}} gesammelt aus {{author}}/{{repo}}:{{branch}}. Ausgabeordner ist {{destination}}.",
+      collecting_files: "Dateien werden gesammelt...",
+      submit: "Absenden",
+      branch_label: "Branch",
     },
     gitlab: {
       name: "GitLab Repository",
@@ -1231,6 +1238,11 @@ const TRANSLATIONS = {
         "Ohne Angabe des <b>GitLab Zugriffstokens</b> kann dieser Datenkonnektor aufgrund der öffentlichen API-Ratenlimits von GitLab nur die <b>Top-Level</b>-Dateien des Repositories sammeln.",
       token_personal:
         "Holen Sie sich hier einen kostenlosen persönlichen Zugriffstoken mit einem GitLab-Konto.",
+      settings: "Einstellungen",
+      fetch_wikis: "Wikis als Dokumente abrufen",
+      fetchingFiles: "Alle Dateien für das Repo werden abgerufen — dies kann eine Weile dauern.",
+      filesCollected: "{{files}} {{fileWord}} gesammelt aus {{author}}/{{repo}}:{{branch}}. Ausgabeordner ist {{destination}}.",
+      collectingFiles: "Dateien werden gesammelt...",
     },
     youtube: {
       name: "YouTube Transkript",
@@ -1926,6 +1938,128 @@ const TRANSLATIONS = {
       streamTimeout: "Stream-Timeout (ms)",
       streamTimeoutPlaceholder: "Timeout-Wert zwischen Token-Antworten zum automatischen Beenden des Streams",
     },
+    foundry: {
+      baseUrl: "Basis-URL",
+      baseUrlPlaceholder: "z.B.: http://127.0.0.1:8080",
+      chatModel: "Chat-Modell",
+      loading: "---- Wird geladen ----",
+      selectModel: "-- Modell auswählen --",
+      noModelsFound: "Keine Modelle gefunden",
+      modelContextWindow: "Modell-Kontextfenster",
+      tokenLimitPlaceholder: "4096",
+    },
+    opencodeZen: {
+      baseUrl: "Basis-URL",
+      baseUrlPlaceholder: "https://opencode.ai/zen/v1",
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "OpenCode Zen API-Schlüssel",
+      modelId: "Modell-ID",
+      modelIdPlaceholder: "z.B. nemotron-3-ultra-free",
+      modelContextWindow: "Modell-Kontextfenster",
+      tokenLimitPlaceholder: "Kontextfenster-Limit (z.B.: 1000000)",
+    },
+    privateMode: {
+      proxyUrl: "Privatemode-Proxy-URL",
+      tooltipEnterUrl: "Geben Sie die URL ein, unter der der Privatemode-Proxy läuft.",
+      learnMore: "Mehr erfahren →",
+      baseUrlPlaceholder: "z.B.: http://127.0.0.1:8080",
+      chatModel: "Chat-Modell",
+      loading: "---- Wird geladen ----",
+      selectModel: "-- Modell auswählen --",
+      noModelsFound: "Keine Modelle gefunden",
+    },
+    geminiEmbedding: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "Gemini API-Schlüssel",
+      modelPreference: "Modellpräferenz",
+      availableModels: "Verfügbare Embedding-Modelle",
+      outputDimensions: "Ausgabedimensionen",
+      outputDimensionsTooltip:
+        "Die Anzahl der Dimensionen, die die resultierenden Ausgabe-Embeddings haben sollten, wenn mehrere Dimensionen unterstützt werden.",
+      outputDimensionsTooltip2:
+        "Leer lassen, um die Standarddimensionen für das ausgewählte Modell zu verwenden.",
+      outputDimensionsPlaceholder: "Standarddimensionen annehmen",
+    },
+    giteeAi: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "GiteeAI API-Schlüssel",
+      modelContextWindow: "Modell-Kontextfenster",
+      contextWindowPlaceholder: "Kontextfenster-Limit (z.B.: 8192)",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    groqAi: {
+      apiKey: "Groq API-Schlüssel",
+      apiKeyPlaceholder: "Groq API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      enterApiKeyHint:
+        "Geben Sie einen gültigen API-Schlüssel ein, um alle verfügbaren Modelle für Ihr Konto anzuzeigen.",
+      availableModels: "Verfügbare Modelle",
+      selectModelHint:
+        "Wählen Sie das GroqAI-Modell, das Sie für Ihre Konversationen verwenden möchten.",
+    },
+    moonshotAi: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "Moonshot AI API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      enterApiKey: "-- API-Schlüssel eingeben --",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    nvidiaNim: {
+      baseUrl: "NVIDIA NIM Basis-URL",
+      autoDetect: "Automatisch erkennen",
+      baseUrlPlaceholder: "http://localhost:8000/v1",
+      baseUrlHelp: "Geben Sie die URL ein, unter der NVIDIA NIM läuft.",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    xAi: {
+      apiKey: "xAI API-Schlüssel",
+      apiKeyPlaceholder: "xAI API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      enterApiKeyHint:
+        "Geben Sie einen gültigen API-Schlüssel ein, um alle verfügbaren Modelle für Ihr Konto anzuzeigen.",
+      availableModels: "Verfügbare Modelle",
+      selectModelHint:
+        "Wählen Sie das xAI-Modell, das Sie für Ihre Konversationen verwenden möchten.",
+    },
+    zAi: {
+      apiKey: "Z.AI API-Schlüssel",
+      apiKeyPlaceholder: "Z.AI API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      enterApiKeyHint:
+        "Geben Sie einen gültigen API-Schlüssel ein, um alle verfügbaren Modelle für Ihr Konto anzuzeigen.",
+      availableModels: "Verfügbare Modelle",
+      selectModelHint:
+        "Wählen Sie das Z.AI-Modell, das Sie für Ihre Konversationen verwenden möchten.",
+    },
+    azureAiEmbedding: {
+      serviceEndpoint: "Azure Service-Endpunkt",
+      serviceEndpointPlaceholder: "https://my-azure.openai.azure.com",
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "Azure OpenAI API-Schlüssel",
+      embeddingDeploymentName: "Embedding-Bereitstellungsname",
+      embeddingDeploymentNamePlaceholder:
+        "Azure OpenAI Embedding-Modell-Bereitstellungsname",
+    },
+    openAiEmbedding: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "OpenAI API-Schlüssel",
+      modelPreference: "Modellpräferenz",
+      availableModels: "Verfügbare Embedding-Modelle",
+    },
+  },
+  agentLLMItem: {
+    editSettings: "Einstellungen bearbeiten",
+    settingsTitle: "{{name}} Einstellungen",
+    setupDescription:
+      "Um {{name}} als Agent-LLM dieses Arbeitsbereichs zu verwenden, müssen Sie es zuerst einrichten.",
+    cancel: "Abbrechen",
+    saveSettings: "{{name}} Einstellungen speichern",
+    saveFailed: "Fehler beim Speichern der {{name}} Einstellungen: {{error}}",
   },
 
   pdfAnalysis: {
@@ -2742,6 +2876,17 @@ const TRANSLATIONS = {
       apiKeyHelp: "Sie können Ihren API-Schlüssel von Ihrer",
       apiKeyHelpLink: "OpenSIN Chat Community Hub-Profilseite",
       disconnect: "Verbindung trennen",
+      userItems: {
+        createdByMe: "Von mir erstellt",
+        privateItemsLink: "Warum kann ich meine privaten Elemente nicht sehen?",
+        createdByMeDescription:
+          "Elemente, die Sie erstellt und öffentlich im OpenSIN Chat Community Hub geteilt haben.",
+        noItemsCreated: "Sie haben noch keine Elemente erstellt.",
+        itemsByTeam: "Elemente nach Team",
+        itemsByTeamDescription:
+          "Öffentliche und private Elemente, die mit Teams geteilt wurden, denen Sie angehören.",
+        noItemsShared: "Noch keine Elemente mit diesem Team geteilt.",
+      },
       toast: {
         saveSuccess: "API-Schlüssel erfolgreich gespeichert",
         saveFailed: "Fehler beim Speichern des API-Schlüssels",
@@ -2779,6 +2924,35 @@ const TRANSLATIONS = {
           success: "Agent-Flow erfolgreich importiert!",
           failed: "Fehler beim Importieren des Agent-Flows. {{message}}",
         },
+      },
+      completed: {
+        title: "Community-Hub-Element importiert",
+        successMessage: 'Das „{{name}}" {{itemType}} wurde erfolgreich importiert! Es ist jetzt in Ihrer OpenSIN Chat-Instanz verfügbar.',
+        viewInAgentSkills: '„{{name}}" in Agent-Skills anzeigen',
+        modifyNote: "Alle Änderungen, die Sie an diesem {{itemType}} vornehmen, werden nicht im Community Hub angezeigt. Sie können es jetzt nach Bedarf anpassen.",
+        importAnother: "Weiteres Element importieren",
+      },
+      systemPrompt: {
+        reviewTitle: 'System-Prompt „{{name}}" überprüfen',
+        createdBy: "Erstellt von",
+        description: "System-Prompts werden verwendet, um das Verhalten der KI-Agenten zu steuern und können auf jeden vorhandenen Workspace angewendet werden.",
+        providedPrompt: "Bereitgestellter System-Prompt:",
+        applyToWorkspace: "Auf Workspace anwenden",
+        noWorkspaces: "Keine Workspaces verfügbar. Erstellen Sie zuerst einen Workspace.",
+        applyButton: "System-Prompt auf Workspace anwenden",
+        toastApplying: "System-Prompt wird auf Workspace angewendet...",
+        toastFailed: "Fehler beim Anwenden des System-Prompts. {{error}}",
+        toastApplied: "System-Prompt wurde auf Workspace angewendet.",
+      },
+      slashCommand: {
+        reviewTitle: 'Slash-Befehl „{{name}}" überprüfen',
+        createdBy: "Erstellt von",
+        descriptionPart1: "Slash-Befehle werden verwendet, um Informationen in einen Prompt vorauszufüllen, während Sie mit einem OpenSIN Chat-Workspace chatten.",
+        descriptionPart2: "Der Slash-Befehl steht beim Chatten zur Verfügung, indem Sie ihn einfach aufrufen mit",
+        descriptionPart3: "wie jeden anderen Befehl auch.",
+        importButton: "Slash-Befehl importieren",
+        toastSuccess: "Slash-Befehl {{command}} erfolgreich importiert!",
+        toastFailed: "Fehler beim Importieren des Slash-Befehls. {{error}}",
       },
     },
   },
@@ -3078,6 +3252,207 @@ const TRANSLATIONS = {
       copyApiKey: "API-Schlüssel kopieren",
       apiKeyCopied: "API-Schlüssel kopiert!",
     },
+  },
+
+  footerCustomization: {
+    newIconForm: {
+      urlPlaceholder: "https://example.com",
+      save: "Speichern",
+    },
+  },
+
+  systemHealth: {
+    title: "Systemzustand",
+    description: "Diagnose für lokale LLM-Provider und Speicherpfade: API-Schlüssel-Status, aktive Fallbacks und Erreichbarkeit der konfigurierten Endpunkte.",
+    notConfigured: "Nicht konfiguriert",
+    reachable: "Erreichbar ({{latencyMs}}ms, HTTP {{status}})",
+    notReachable: "Nicht erreichbar",
+    probeFailed: "Verbindungstest fehlgeschlagen: {{error}}",
+    probeComplete: "Verbindungstest abgeschlossen: {{reachable}}/{{configured}} konfigurierte Provider erreichbar.",
+    connectivityTest: "Verbindungstest",
+    connectivityTestDescription: "Prüft aktiv, ob die Basis-URLs der {{count}} konfigurierten Provider antworten (Timeout 4s).",
+    testing: "Teste\u2026",
+    testNow: "Jetzt testen",
+    noTestYet: "Noch kein Test ausgeführt. Klicken Sie auf „Jetzt testen\", um alle konfigurierten Provider zu prüfen.",
+  },
+
+  recoveryCode: {
+    title: "Wiederherstellungscodes",
+    description: "Um Ihr Passwort in Zukunft zurückzusetzen, benötigen Sie diese Wiederherstellungscodes. Laden Sie die Codes herunter oder kopieren Sie sie, um sie zu speichern.",
+    shownOnce: "Diese Wiederherstellungscodes werden nur einmal angezeigt!",
+    copiedToClipboard: "Wiederherstellungscodes in die Zwischenablage kopiert",
+    copyAriaLabel: "Wiederherstellungscodes in die Zwischenablage kopieren",
+    closeAriaLabel: "Wiederherstellungscodes schließen",
+    downloadAriaLabel: "Wiederherstellungscodes herunterladen",
+    close: "Schließen",
+    download: "Herunterladen",
+  },
+
+  newFolderModal: {
+    title: "Neuen Ordner erstellen",
+    closeAriaLabel: "Neuer-Ordner-Dialog schließen",
+    folderNameLabel: "Ordnername",
+    folderNamePlaceholder: "Ordnernamen eingeben",
+    failedToCreate: "Ordner konnte nicht erstellt werden",
+    error: "Fehler: {{error}}",
+    cancelAriaLabel: "Ordnererstellung abbrechen",
+    cancel: "Abbrechen",
+    createFolder: "Ordner erstellen",
+  },
+
+  threadFolderItem: {
+    chatCreateFailed: "Chat konnte nicht erstellt werden: {{error}}",
+    folderNamePrompt: "Ordnername:",
+    folderCreateFailed: "Ordner konnte nicht erstellt werden: {{message}}",
+    quickAddTitle: "Neuen Chat oder Ordner erstellen",
+    newChat: "Neuer Chat",
+    newFolder: "Neuer Ordner",
+    renameFailed: "Umbenennen fehlgeschlagen: {{message}}",
+    deleteConfirm: 'Ordner "{{name}}" löschen? Alle Chats werden in die Hauptliste verschoben.',
+    deleteFailed: "Ordner konnte nicht gelöscht werden.",
+    rename: "Umbenennen",
+    delete: "Löschen",
+    dragHere: "Hierher ziehen",
+  },
+
+  agentBuilder: {
+    headerMenu: {
+      builder: "Builder",
+      untitledFlow: "Unbenannter Flow",
+      newFlow: "Neuer Flow",
+      publish: "Veröffentlichen",
+      save: "Speichern",
+      viewDocumentation: "Dokumentation anzeigen →",
+    },
+    codeNode: {
+      language: "Sprache",
+      javascript: "JavaScript",
+      python: "Python",
+      shell: "Shell",
+      code: "Code",
+      codePlaceholder: "Code eingeben...",
+      storeResultIn: "Ergebnis speichern in",
+      selectOrCreateVariable: "Variable auswählen oder erstellen",
+    },
+    flowInfoNode: {
+      flowName: "Flow-Name",
+      flowNameDescription:
+        "Es ist wichtig, Ihrem Flow einen Namen zu geben, den ein LLM leicht verstehen kann.",
+      flowNameExamples:
+        '"SendMessageToDiscord", "CheckStockPrice", "CheckWeather"',
+      enterFlowName: "Flow-Namen eingeben",
+      description: "Beschreibung",
+      descriptionExplanation:
+        "Es ist ebenso wichtig, Ihrem Flow eine Beschreibung zu geben, die ein LLM leicht verstehen kann. Geben Sie den Zweck des Flows, den Kontext, in dem er verwendet wird, und alle anderen relevanten Informationen an.",
+      enterFlowDescription: "Flow-Beschreibung eingeben",
+    },
+  },
+
+  admin: {
+    invitations: {
+      title: "Einladungen",
+      description: "Erstellen Sie Einladungslinks für Personen in Ihrer Organisation, die diese annehmen und sich anmelden können. Einladungen können nur von einem einzigen Benutzer verwendet werden.",
+      createInviteLink: "Einladungslink erstellen",
+      status: "Status",
+      acceptedBy: "Angenommen von",
+      createdBy: "Erstellt von",
+      created: "Erstellt",
+      noInvitations: "Keine Einladungen gefunden",
+    },
+    workspacesPage: {
+      instanceWorkspaces: "Instanz-Workspaces",
+      description:
+        "Dies sind alle Workspaces, die auf dieser Instanz existieren. Das Entfernen eines Workspaces löscht alle zugehörigen Chats und Einstellungen.",
+      newWorkspace: "Neuer Workspace",
+      name: "Name",
+      link: "Link",
+      users: "Benutzer",
+      createdOn: "Erstellt am",
+    },
+  },
+
+  privacyAndData: {
+    telemetryToggled: "Anonyme Telemetrie wurde {{status}}.",
+    enabled: "aktiviert",
+    disabled: "deaktiviert",
+    eventsNoIp: 'Alle Ereignisse zeichnen keine IP-Adresse auf und enthalten <b>keine identifizierenden</b> Inhalte, Einstellungen, Chats oder andere nicht nutzungsbasierte Informationen. Um die Liste der erfassten Ereignis-Tags einzusehen, können Sie auf <a href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub</a> nachsehen.',
+    respectPrivacy: 'Als Open-Source-Projekt respektieren wir Ihr Recht auf Datenschutz. Wir widmen uns der Entwicklung der besten Lösung für die private und sichere Integration von KI und Dokumenten. Wenn Sie sich entscheiden, die Telemetrie zu deaktivieren, bitten wir Sie nur, uns Feedback und Gedanken zu senden, damit wir OpenSIN Chat für Sie weiter verbessern können. <a href="mailto:team@openafd.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@openafd.com</a>.',
+  },
+
+  invite: {
+    newUser: {
+      createAccount: "Neues Konto erstellen",
+      username: "Benutzername",
+      usernamePlaceholder: "Mein Benutzername",
+      password: "Passwort",
+      passwordPlaceholder: "Ihr Passwort",
+      error: "Fehler: {{error}}",
+      afterCreateHint:
+        "Nach der Erstellung Ihres Kontos können Sie sich mit diesen Anmeldedaten anmelden und Workspaces nutzen.",
+      acceptInvitation: "Einladung annehmen",
+    },
+  },
+
+  manageWorkspace: {
+    closeDialog: "Workspace-Verwaltungsdialog schließen",
+    dismissDialog: "Workspace-Verwaltungsdialog verwerfen",
+    showDocumentsTab: "Dokumente-Tab anzeigen",
+    showDataConnectorsTab: "Datenkonnektoren-Tab anzeigen",
+  },
+
+  multiUserAuth: {
+    resetPassword: {
+      title: "Passwort zurücksetzen",
+      description: "Geben Sie Ihr neues Passwort ein.",
+      newPassword: "Neues Passwort",
+      confirmPassword: "Passwort bestätigen",
+      success: "Passwort erfolgreich zurückgesetzt",
+      invalidToken: "Ungültiges Reset-Token",
+    },
+  },
+
+  threadContainer: {
+    loadingThreads: "Threads werden geladen...",
+    moveError: "Thread konnte nicht verschoben werden.",
+    dropHere: "Hierher ziehen (ohne Ordner)",
+    createError: "Thread konnte nicht erstellt werden - {{error}}",
+    startingChat: "Chat wird gestartet...",
+    newChat: "Neuer Chat",
+    folderNamePrompt: "Ordnername:",
+    folderCreateError: "Ordner konnte nicht erstellt werden: {{message}}",
+    newFolder: "Neuer Ordner",
+    deleteSelected: "Ausgewählte löschen",
+  },
+
+  modelTable: {
+    modelCount: "({{count}} {{plural}})",
+    cpu: "CPU",
+    gpu: "GPU",
+    npu: "NPU",
+    uninstall: "Deinstallieren",
+    installModel: "{{organization}}:{{name}} installieren",
+    active: "Aktiv",
+    installed: "Installiert",
+    notInstalled: "Nicht installiert",
+  },
+
+  errorBoundary: {
+    title: "Ein Fehler ist aufgetreten.",
+    unknownError: "Unbekannter Fehler",
+    noMessage: "Keine Nachricht verfügbar",
+    noStackTrace: "Kein Stack-Trace verfügbar",
+    errorReport: "Fehlerbericht",
+    timestamp: "Zeitstempel",
+    userAgent: "User Agent",
+    error: "Fehler",
+    message: "Nachricht",
+    stackTrace: "Stack-Trace",
+    copiedAria: "Fehlerdetails kopiert",
+    copyAria: "Fehlerdetails kopieren",
+    copied: "Kopiert!",
+    copyDetails: "Details kopieren",
+    reset: "Zurücksetzen",
+    home: "Startseite",
   },
 };
 

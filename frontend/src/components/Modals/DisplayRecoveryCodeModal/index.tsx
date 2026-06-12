@@ -3,6 +3,7 @@ import showToast from "@/utils/toast";
 import { DownloadSimple, Key } from "@phosphor-icons/react";
 import { saveAs } from "file-saver";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import ModalWrapper from "@/components/ModalWrapper";
 
 type RecoveryCodeModalProps = {
@@ -17,6 +18,7 @@ export default function RecoveryCodeModal({
   onClose,
 }: RecoveryCodeModalProps) {
   const [downloadClicked, setDownloadClicked] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const downloadRecoveryCodes = () => {
     const blob = new Blob([recoveryCodes.join("\n")], { type: "text/plain" });
@@ -33,7 +35,7 @@ export default function RecoveryCodeModal({
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(recoveryCodes.join(",\n")).then(() => {
-      showToast("Recovery codes copied to clipboard", "success", {
+      showToast(t("recoveryCode.copiedToClipboard"), "success", {
         clear: true,
       });
     });
@@ -51,17 +53,16 @@ export default function RecoveryCodeModal({
               aria-hidden="true"
             />
             <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-              Recovery Codes
+              {t("recoveryCode.title")}
             </h3>
           </div>
         </div>
         <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <div className="py-7 px-9 space-y-2 flex-col">
             <p className="text-sm text-white flex flex-col">
-              In order to reset your password in the future, you will need these
-              recovery codes. Download or copy your recovery codes to save them.{" "}
+              {t("recoveryCode.description")}{" "}
               <br />
-              <b className="mt-4">These recovery codes are only shown once!</b>
+              <b className="mt-4">{t("recoveryCode.shownOnce")}</b>
             </p>
             <div
               role="button"
@@ -75,7 +76,7 @@ export default function RecoveryCodeModal({
                   handleCopyToClipboard();
                 }
               }}
-              aria-label="Copy recovery codes to clipboard"
+              aria-label={t("recoveryCode.copyAriaLabel")}
             >
               <ul className="space-y-2 md:p-6 p-4">
                 {recoveryCodes.map((code, index) => (
@@ -93,16 +94,16 @@ export default function RecoveryCodeModal({
               onClick={downloadClicked ? handleClose : downloadRecoveryCodes}
               aria-label={
                 downloadClicked
-                  ? "Close recovery codes"
-                  : "Download recovery codes"
+                  ? t("recoveryCode.closeAriaLabel")
+                  : t("recoveryCode.downloadAriaLabel")
               }
             >
               {downloadClicked ? (
-                "Close"
+                t("recoveryCode.close")
               ) : (
                 <>
                   <DownloadSimple weight="bold" size={18} aria-hidden="true" />
-                  <p>Download</p>
+                  <p>{t("recoveryCode.download")}</p>
                 </>
               )}
             </button>

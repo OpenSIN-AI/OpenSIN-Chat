@@ -11,6 +11,7 @@ import {
 } from "@phosphor-icons/react";
 import pluralize from "pluralize";
 import { titleCase } from "text-case";
+import { useTranslation } from "react-i18next";
 import { humanFileSize } from "@/utils/numbers";
 import MonoProviderIcon from "../MonoProviderIcon";
 
@@ -45,6 +46,7 @@ export default function ModelTable({
     showRuntime: true,
   },
 }) {
+  const { t } = useTranslation();
   const [showAll, setShowAll] = useState(
     (models as any).some((model: any) => model.downloaded),
   );
@@ -80,7 +82,7 @@ export default function ModelTable({
           <p className="flex items-center gap-x-1 text-theme-text-primary text-base font-bold">
             {titleCase(alias)}
             <span className="text-theme-text-secondary font-normal text-sm">
-              ({totalModels} {pluralize("Model", totalModels)})
+              {t("modelTable.modelCount", { count: totalModels, plural: pluralize("Model", totalModels) })}
             </span>
           </p>
         </div>
@@ -123,11 +125,12 @@ function DeviceTypeTagWrapper({ text, bgClass, textClass }: any) {
  * @returns {React.ReactNode}
  */
 function DeviceTypeTag({ deviceType }: any) {
+  const { t } = useTranslation();
   switch (deviceType?.toLowerCase()) {
     case "cpu":
       return (
         <DeviceTypeTagWrapper
-          text="CPU"
+          text={t("modelTable.cpu")}
           bgClass="bg-zinc-800 light:bg-zinc-200"
           textClass="text-theme-text-primary"
         />
@@ -135,7 +138,7 @@ function DeviceTypeTag({ deviceType }: any) {
     case "gpu":
       return (
         <DeviceTypeTagWrapper
-          text="GPU"
+          text={t("modelTable.gpu")}
           bgClass="bg-green-800 light:bg-green-200"
           textClass="text-theme-text-primary"
         />
@@ -143,7 +146,7 @@ function DeviceTypeTag({ deviceType }: any) {
     case "npu":
       return (
         <DeviceTypeTagWrapper
-          text="NPU"
+          text={t("modelTable.npu")}
           bgClass="bg-indigo-800 light:bg-indigo-200"
           textClass="text-theme-text-primary"
         />
@@ -151,7 +154,7 @@ function DeviceTypeTag({ deviceType }: any) {
     default:
       return (
         <DeviceTypeTagWrapper
-          text="CPU"
+          text={t("modelTable.cpu")}
           bgClass="bg-zinc-800 light:bg-zinc-200"
           textClass="text-theme-text-primary"
         />
@@ -181,6 +184,7 @@ function ModelRow({
     showRuntime: true,
   },
 }) {
+  const { t } = useTranslation();
   const modelRowRef = useRef(null);
   const [showOptions, setShowOptions] = useState(false as any);
   const [processing, setProcessing] = useState(false as any);
@@ -288,7 +292,7 @@ function ModelRow({
                   onClick={handleUninstallModel}
                 >
                   <p className="text-sm text-theme-text-primary group-hover:underline group-hover:text-theme-text-secondary">
-                    Uninstall
+                    {t("modelTable.uninstall")}
                   </p>
                 </button>
               </div>
@@ -301,7 +305,7 @@ function ModelRow({
             data-tooltip-id="install-model-tooltip"
             data-tooltip-place="top"
             data-tooltip-delay-show={300}
-            data-tooltip-content={`Install ${model.organization}:${model.name}`}
+              data-tooltip-content={t("modelTable.installModel", { organization: model.organization, name: model.name })}
             className="border-none hover:bg-white/20 light:hover:bg-black/5 rounded-lg p-2 flex items-center gap-x-1 cursor-pointer"
             onClick={handleSetActiveModel}
           >
@@ -332,11 +336,12 @@ function ModelRow({
 }
 
 function RenderStatus({ model, isActiveModel }: any) {
+  const { t } = useTranslation();
   if (isActiveModel) {
     return (
       <div className="flex items-center justify-center gap-x-[10px] whitespace-nowrap">
         <Circle size={8} weight="fill" className="text-green-500" />
-        <p className="text-theme-text-primary text-sm">Active</p>
+        <p className="text-theme-text-primary text-sm">{t("modelTable.active")}</p>
       </div>
     );
   }
@@ -344,7 +349,7 @@ function RenderStatus({ model, isActiveModel }: any) {
   if (!isActiveModel && model.downloaded) {
     return (
       <p className="text-theme-text-secondary text-sm italic whitespace-nowrap">
-        Installed
+        {t("modelTable.installed")}
       </p>
     );
   }
@@ -352,7 +357,7 @@ function RenderStatus({ model, isActiveModel }: any) {
   if (!model.downloaded) {
     return (
       <p className="text-theme-text-secondary text-sm italic whitespace-nowrap">
-        Not Installed
+        {t("modelTable.notInstalled")}
       </p>
     );
   }

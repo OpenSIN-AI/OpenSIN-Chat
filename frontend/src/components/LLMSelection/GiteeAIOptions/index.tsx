@@ -1,16 +1,18 @@
 import useProviderModels from "@/hooks/useProviderModels"; // SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
 export default function GiteeAIOptions({ settings }: any) {
+  const { t } = useTranslation();
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          API Key
+          {t("providerSettings.giteeAi.apiKey")}
         </label>
         <input
           type="password"
           name="GiteeAIApiKey"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder="GiteeAI API Key"
+          placeholder={t("providerSettings.giteeAi.apiKeyPlaceholder")}
           defaultValue={settings?.GiteeAIApiKey ? "*".repeat(20) : ""}
           required={true}
           autoComplete="off"
@@ -22,13 +24,13 @@ export default function GiteeAIOptions({ settings }: any) {
           <GiteeAIModelSelection settings={settings} />
           <div className="flex flex-col w-60">
             <label className="text-white text-sm font-semibold block mb-2">
-              Model context window
+              {t("providerSettings.giteeAi.modelContextWindow")}
             </label>
             <input
               type="number"
               name="GiteeAITokenLimit"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder="Content window limit (eg: 8192)"
+              placeholder={t("providerSettings.giteeAi.contextWindowPlaceholder")}
               min={1}
               onScroll={(e) => (e.target as HTMLElement).blur()}
               defaultValue={settings?.GiteeAITokenLimit}
@@ -43,13 +45,14 @@ export default function GiteeAIOptions({ settings }: any) {
 }
 
 function GiteeAIModelSelection({ settings }: any) {
+  const { t } = useTranslation();
   const { customModels: groupedModels, isLoading } =
     useProviderModels("giteeai");
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("providerSettings.giteeAi.modelSelection")}
         </label>
         <select
           name="GiteeAIModelPref"
@@ -57,7 +60,7 @@ function GiteeAIModelSelection({ settings }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("providerSettings.giteeAi.loadingModels")}
           </option>
         </select>
       </div>
@@ -67,7 +70,7 @@ function GiteeAIModelSelection({ settings }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("providerSettings.giteeAi.modelSelection")}
       </label>
       <select
         name="GiteeAIModelPref"

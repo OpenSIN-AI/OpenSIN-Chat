@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+/* eslint-disable i18next/no-literal-string */
 /**
  * Tests for ImageGenerationSkillPanel.
  *

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+/* eslint-disable i18next/no-literal-string */
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ClarifyingQuestionCard from "./index";
@@ -88,6 +89,7 @@ function mockWebSocket() {
   };
 }
 
+{/* eslint-disable i18next/no-literal-string */}
 describe("ClarifyingQuestionCard", () => {
   it("returns null when questions array is empty", () => {
     const { container } = render(
@@ -190,3 +192,4 @@ describe("ClarifyingQuestionCard", () => {
     expect(bar).not.toBeInTheDocument();
   });
 });
+{/* eslint-enable i18next/no-literal-string */}

@@ -30,13 +30,13 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
           <div className="relative p-6 border-b rounded-t border-theme-modal-border">
             <div className="w-full flex gap-x-2 items-center">
               <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {t("connectors.manage.editing")} "{workspace.name}"
+                {t("connectors.manage.editing")} &ldquo;{workspace.name}&rdquo;
               </h3>
             </div>
             <button
               type="button"
               onClick={hideModal}
-              aria-label="Close manage workspace dialog"
+              aria-label={t("manageWorkspace.closeDialog")}
               className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
             >
               <X
@@ -58,7 +58,7 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
             <button
               type="button"
               onClick={hideModal}
-              aria-label="Dismiss manage workspace dialog"
+              aria-label={t("manageWorkspace.dismissDialog")}
               className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
             >
               {t("connectors.manage.dismiss")}
@@ -78,7 +78,7 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
             <button
               type="button"
               onClick={hideModal}
-              aria-label="Close manage workspace dialog"
+              aria-label={t("manageWorkspace.closeDialog")}
               className="z-29 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center bg-sidebar-button hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
             >
               <X
@@ -120,7 +120,7 @@ const ModalTabSwitcher = ({ selectedTab, setSelectedTab }) => {
         <button
           type="button"
           onClick={() => setSelectedTab("documents")}
-          aria-label="Show documents tab"
+          aria-label={t("manageWorkspace.showDocumentsTab")}
           aria-pressed={selectedTab === "documents"}
           className={`border-none px-4 py-2 rounded-[8px] font-semibold hover:bg-theme-modal-border hover:bg-opacity-60 ${
             selectedTab === "documents"
@@ -133,7 +133,7 @@ const ModalTabSwitcher = ({ selectedTab, setSelectedTab }) => {
         <button
           type="button"
           onClick={() => setSelectedTab("dataConnectors")}
-          aria-label="Show data connectors tab"
+          aria-label={t("manageWorkspace.showDataConnectorsTab")}
           aria-pressed={selectedTab === "dataConnectors"}
           className={`border-none px-4 py-2 rounded-[8px] font-semibold hover:bg-theme-modal-border hover:bg-opacity-60 ${
             selectedTab === "dataConnectors"

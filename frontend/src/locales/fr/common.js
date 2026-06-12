@@ -1008,6 +1008,13 @@ const TRANSLATIONS = {
       token_information: "Informations sur le jeton",
       token_personal:
         "Créez un jeton d'accès personnel sur GitHub pour accéder aux dépôts privés.",
+      fetching_files:
+        "Récupération de tous les fichiers du dépôt - cela peut prendre un certain temps.",
+      files_collected:
+        "{{files}} {{filePlural}} collectés depuis {{author}}/{{repo}}:{{branch}}. Le dossier de sortie est {{destination}}.",
+      collecting_files: "Collecte des fichiers...",
+      submit: "Soumettre",
+      branch_label: "Branche",
     },
     gitlab: {
       name: "Dépôt GitLab",
@@ -2013,6 +2020,93 @@ const TRANSLATIONS = {
       "routed-to": "Dirigé vers <route>{{model}}</route>",
       "routed-to-rule":
         "Dirigé vers <route>{{model}}</route> via <rule>{{ruleTitle}}</rule>",
+    },
+  },
+
+  manageWorkspace: {
+    closeDialog: "Fermer le dialogue de gestion de l'espace de travail",
+    dismissDialog: "Rejeter le dialogue de gestion de l'espace de travail",
+    showDocumentsTab: "Afficher l'onglet Documents",
+    showDataConnectorsTab: "Afficher l'onglet Connecteurs de données",
+  },
+
+  multiUserAuth: {
+    resetPassword: {
+      title: "Réinitialiser le mot de passe",
+      description: "Entrez votre nouveau mot de passe.",
+      newPassword: "Nouveau mot de passe",
+      confirmPassword: "Confirmer le mot de passe",
+      success: "Mot de passe réinitialisé avec succès",
+      invalidToken: "Jeton de réinitialisation invalide",
+    },
+  },
+
+  threadContainer: {
+    loadingThreads: "Chargement des fils...",
+    moveError: "Le fil n'a pas pu être déplacé.",
+    dropHere: "Déposer ici (sans dossier)",
+    createError: "Impossible de créer le fil - {{error}}",
+    startingChat: "Démarrage du chat...",
+    newChat: "Nouveau chat",
+    folderNamePrompt: "Nom du dossier :",
+    folderCreateError: "Impossible de créer le dossier : {{message}}",
+    newFolder: "Nouveau dossier",
+    deleteSelected: "Supprimer la sélection",
+  },
+
+  modelTable: {
+    modelCount: "({{count}} {{plural}})",
+    cpu: "CPU",
+    gpu: "GPU",
+    npu: "NPU",
+    uninstall: "Désinstaller",
+    installModel: "Installer {{organization}}:{{name}}",
+    active: "Actif",
+    installed: "Installé",
+    notInstalled: "Non installé",
+  },
+
+  agentBuilder: {
+    flowInfoNode: {
+      flowName: "Nom du flux",
+      flowNameDescription:
+        "Il est important de donner à votre flux un nom qu'un LLM peut facilement comprendre.",
+      flowNameExamples:
+        '"SendMessageToDiscord", "CheckStockPrice", "CheckWeather"',
+      enterFlowName: "Entrez le nom du flux",
+      description: "Description",
+      descriptionExplanation:
+        "Il est tout aussi important de donner à votre flux une description qu'un LLM peut facilement comprendre. Assurez-vous d'inclure le but du flux, le contexte dans lequel il sera utilisé et toute autre information pertinente.",
+      enterFlowDescription: "Entrez la description du flux",
+    },
+  },
+
+  admin: {
+    workspacesPage: {
+      instanceWorkspaces: "Espaces de travail de l'instance",
+      description:
+        "Ce sont tous les espaces de travail qui existent sur cette instance. Supprimer un espace de travail supprimera tous ses chats et paramètres associés.",
+      newWorkspace: "Nouvel espace de travail",
+      name: "Nom",
+      link: "Lien",
+      users: "Utilisateurs",
+      createdOn: "Créé le",
+    },
+  },
+
+  communityHub: {
+    auth: {
+      userItems: {
+        createdByMe: "Créés par moi",
+        privateItemsLink: "Pourquoi ne puis-je pas voir mes éléments privés ?",
+        createdByMeDescription:
+          "Éléments que vous avez créés et partagés publiquement sur le OpenSIN Chat Community Hub.",
+        noItemsCreated: "Vous n'avez pas encore créé d'éléments.",
+        itemsByTeam: "Éléments par équipe",
+        itemsByTeamDescription:
+          "Éléments publics et privés partagés avec les équipes auxquelles vous appartenez.",
+        noItemsShared: "Aucun élément partagé avec cette équipe pour l'instant.",
+      },
     },
   },
 };

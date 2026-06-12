@@ -29,9 +29,9 @@ export default function GitlabOptions() {
 
     try {
       setLoading(true);
-      showToast(
-        "Fetching all files for repo - this may take a while.",
-        "info",
+        showToast(
+          t("connectors.gitlab.fetchingFiles"),
+          "info",
         { clear: true, autoClose: false },
       );
       const { data, error } = await System.dataConnectors.gitlab.collect({
@@ -50,9 +50,14 @@ export default function GitlabOptions() {
       }
 
       showToast(
-        `${data.files} ${pluralize("file", data.files)} collected from ${
-          data.author
-        }/${data.repo}:${data.branch}. Output folder is ${data.destination}.`,
+        t("connectors.gitlab.filesCollected", {
+          files: data.files,
+          fileWord: pluralize("file", data.files),
+          author: data.author,
+          repo: data.repo,
+          branch: data.branch,
+          destination: data.destination,
+        }),
         "success",
         { clear: true },
       );
@@ -125,7 +130,9 @@ export default function GitlabOptions() {
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
                   <label className="text-white font-bold text-sm flex gap-x-2 items-center">
-                    <p className="font-bold text-white">Settings</p>
+                    <p className="font-bold text-white">
+                      {t("connectors.gitlab.settings")}
+                    </p>
                   </label>
                   <p className="text-xs font-normal text-white">
                     {t("connectors.gitlab.token_description")}
@@ -142,7 +149,7 @@ export default function GitlabOptions() {
                   <Toggle
                     name="fetchWikis"
                     size="md"
-                    label="Fetch Wikis as Documents"
+                    label={t("connectors.gitlab.fetch_wikis")}
                   />
                 </div>
               </div>
@@ -184,7 +191,7 @@ export default function GitlabOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? "Collecting files..." : "Submit"}
+              {loading ? t("connectors.gitlab.collectingFiles") : t("common.submit")}
             </button>
             {loading && (
               <p className="text-xs text-white/50">
@@ -235,7 +242,9 @@ function GitLabBranchSelection({ repo, accessToken }: any) {
   return (
     <div className="flex flex-col w-60">
       <div className="flex flex-col gap-y-1 mb-4">
-        <label className="text-white text-sm font-bold">Branch</label>
+        <label className="text-white text-sm font-bold">
+          {t("connectors.gitlab.branch")}
+        </label>
         <p className="text-xs font-normal text-theme-text-secondary">
           {t("connectors.gitlab.branch_explained")}
         </p>

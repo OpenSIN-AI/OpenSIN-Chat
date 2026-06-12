@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+/* eslint-disable i18next/no-literal-string */
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Chartable } from "./index";
@@ -117,6 +118,7 @@ function makeProps(type, dataset = sampleDataset, extra = {}) {
   };
 }
 
+{/* eslint-disable i18next/no-literal-string */}
 describe("Chartable", () => {
   it("returns null when content is null after parse", () => {
     const { container } = render(
@@ -222,3 +224,4 @@ describe("Chartable", () => {
     expect(screen.getByText("Parsed Chart")).toBeInTheDocument();
   });
 });
+{/* eslint-enable i18next/no-literal-string */}

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import ProviderPrivacy from "@/components/ProviderPrivacy";
 import Toggle from "@/components/lib/Toggle";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import DOMPurify from "@/utils/chat/purify";
 
 export default function PrivacyAndDataHandling() {
   const { settings, loading } = useSystemSettings();
@@ -61,7 +62,9 @@ function TelemetryLogs({ settings }) {
     });
     setTelemetry(!telemetry);
     showToast(
-      `Anonymous Telemetry has been ${!telemetry ? "enabled" : "disabled"}.`,
+      t("privacyAndData.telemetryToggled", {
+        status: !telemetry ? t("privacyAndData.enabled") : t("privacyAndData.disabled"),
+      }),
       "info",
       { clear: true },
     );
@@ -85,35 +88,22 @@ function TelemetryLogs({ settings }) {
         </div>
         <div className="flex flex-col items-left space-y-2">
           <p className="text-theme-text-secondary text-xs rounded-lg w-96">
-            All events do not record IP-address and contain{" "}
-            <b>no identifying</b> content, settings, chats, or other non-usage
-            based information. To see the list of event tags collected you can
-            look on{" "}
-            <a
-              href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&type=code"
-              className="underline text-blue-400"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub here
-            </a>
-            .
+            <span
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(
+                  t("privacyAndData.eventsNoIp"),
+                ),
+              }}
+            />
           </p>
           <p className="text-theme-text-secondary text-xs rounded-lg w-96">
-            As an open-source project we respect your right to privacy. We are
-            dedicated to building the best solution for integrating AI and
-            documents privately and securely. If you do decide to turn off
-            telemetry all we ask is to consider sending us feedback and thoughts
-            so that we can continue to improve OpenSIN Chat for you.{" "}
-            <a
-              href="mailto:team@openafd.com"
-              className="underline text-blue-400"
-              target="_blank"
-              rel="noreferrer"
-            >
-              team@openafd.com
-            </a>
-            .
+            <span
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(
+                  t("privacyAndData.respectPrivacy"),
+                ),
+              }}
+            />
           </p>
         </div>
       </div>

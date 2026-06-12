@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+/* eslint-disable i18next/no-literal-string */
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { CanViewChatHistory, CanViewChatHistoryProvider } from "./index";
@@ -18,6 +19,7 @@ vi.mock("@/utils/paths", () => ({
 
 import useCanViewChatHistory from "@/hooks/useCanViewChatHistory";
 
+{/* eslint-disable i18next/no-literal-string */}
 describe("CanViewChatHistory", () => {
   it("renders children when viewable and not loading", () => {
     useCanViewChatHistory.mockReturnValue({
@@ -67,7 +69,9 @@ describe("CanViewChatHistory", () => {
     window.location = originalLocation;
   });
 });
+{/* eslint-enable i18next/no-literal-string */}
 
+{/* eslint-disable i18next/no-literal-string */}
 describe("CanViewChatHistoryProvider", () => {
   it("renders children with viewable prop when not loading", () => {
     useCanViewChatHistory.mockReturnValue({
@@ -112,3 +116,4 @@ describe("CanViewChatHistoryProvider", () => {
     expect(screen.getByTestId("provider-child")).toHaveTextContent("no");
   });
 });
+{/* eslint-enable i18next/no-literal-string */}

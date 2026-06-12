@@ -10,8 +10,10 @@ import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
 import useAdminWorkspaces from "@/hooks/useAdminWorkspaces";
+import { useTranslation } from "react-i18next";
 
 export default function AdminWorkspaces() {
+  const { t } = useTranslation();
   const { isOpen, openModal, closeModal } = useModal();
 
   return (
@@ -25,12 +27,11 @@ export default function AdminWorkspaces() {
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">
               <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                Instance Workspaces
+                {t("admin.workspacesPage.instanceWorkspaces")}
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              These are all the workspaces that exist on this instance. Removing
-              a workspace will delete all of its associated chats and settings.
+              {t("admin.workspacesPage.description")}
             </p>
           </div>
           <div className="w-full justify-end flex">
@@ -38,7 +39,7 @@ export default function AdminWorkspaces() {
               onClick={openModal}
               className="mt-3 mr-0 mb-4 md:-mb-14 z-10"
             >
-              <BookOpen className="h-4 w-4" weight="bold" /> New Workspace
+              <BookOpen className="h-4 w-4" weight="bold" /> {t("admin.workspacesPage.newWorkspace")}
             </CTAButton>
           </div>
           <div className="overflow-x-auto">
@@ -54,6 +55,7 @@ export default function AdminWorkspaces() {
 }
 
 function WorkspacesContainer() {
+  const { t } = useTranslation();
   const { users, workspaces, deletionProtected, isLoading } =
     useAdminWorkspaces();
 
@@ -76,16 +78,16 @@ function WorkspacesContainer() {
       <thead className="text-theme-text-secondary text-xs leading-[18px] font-bold uppercase border-white/10 border-b">
         <tr>
           <th scope="col" className="px-6 py-3 rounded-tl-lg">
-            Name
+            {t("admin.workspacesPage.name")}
           </th>
           <th scope="col" className="px-6 py-3">
-            Link
+            {t("admin.workspacesPage.link")}
           </th>
           <th scope="col" className="px-6 py-3">
-            Users
+            {t("admin.workspacesPage.users")}
           </th>
           <th scope="col" className="px-6 py-3">
-            Created On
+            {t("admin.workspacesPage.createdOn")}
           </th>
           <th scope="col" className="px-6 py-3 rounded-tr-lg">
             {" "}

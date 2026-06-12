@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import paths from "@/utils/paths";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function HeaderMenu({
   agentName,
@@ -16,6 +17,7 @@ export default function HeaderMenu({
   const { flowId = null } = useParams();
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const dropdownRef = useRef(null);
   const hasOtherFlows =
     availableFlows.filter((flow) => flow.uuid !== flowId).length > 0;
@@ -60,7 +62,7 @@ export default function HeaderMenu({
                 className="w-[20px] light:invert"
               />
               <span className="text-theme-text-primary text-sm uppercase tracking-widest">
-                Builder
+                {t("agentBuilder.headerMenu.builder")}
               </span>
             </button>
             <div className="relative">
@@ -81,7 +83,7 @@ export default function HeaderMenu({
                 <span
                   className={`text-sm font-medium truncate ${!!agentName ? "text-theme-text-primary " : "text-theme-text-secondary"}`}
                 >
-                  {agentName || "Untitled Flow"}
+                  {agentName || t("agentBuilder.headerMenu.untitledFlow")}
                 </span>
                 {hasOtherFlows && (
                   <div className="flex flex-col ml-2 shrink-0">
@@ -104,7 +106,7 @@ export default function HeaderMenu({
                         className="border-none w-full text-left px-2 py-1 text-sm text-theme-text-primary hover:bg-theme-action-menu-bg transition-colors duration-300"
                       >
                         <span className="block truncate">
-                          {flow?.name || "Untitled Flow"}
+                          {flow?.name || t("agentBuilder.headerMenu.untitledFlow")}
                         </span>
                       </button>
                     ))}
@@ -121,26 +123,26 @@ export default function HeaderMenu({
               className="flex items-center gap-x-2 text-theme-text-primary text-sm font-medium px-3 py-2 rounded-lg border border-white bg-theme-settings-input-bg hover:bg-theme-action-menu-bg transition-colors duration-300"
             >
               <Plus className="w-4 h-4" />
-              New Flow
+              {t("agentBuilder.headerMenu.newFlow")}
             </button>
             <button
               onClick={onPublishFlow}
               className="px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 border border-white/10 bg-theme-bg-primary text-theme-text-primary hover:bg-theme-action-menu-bg transition-all duration-300"
             >
-              Publish
+              {t("agentBuilder.headerMenu.publish")}
             </button>
             <button
               onClick={onSaveFlow}
               className="border-none bg-primary-button hover:opacity-80 text-black light:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2"
             >
-              Save
+              {t("agentBuilder.headerMenu.save")}
             </button>
           </div>
           <Link
             to="https://docs.opensin.delqhi.com/agent-flows/overview"
             className="text-theme-text-secondary text-sm hover:underline hover:text-cta-button flex items-center gap-x-1 w-fit float-right"
           >
-            view documentation &rarr;
+            {t("agentBuilder.headerMenu.viewDocumentation")}
           </Link>
         </div>
       </div>

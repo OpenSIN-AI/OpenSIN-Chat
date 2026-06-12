@@ -30,7 +30,7 @@ export default function GithubOptions() {
     try {
       setLoading(true);
       showToast(
-        "Fetching all files for repo - this may take a while.",
+        t("connectors.github.fetching_files"),
         "info",
         { clear: true, autoClose: false },
       );
@@ -48,9 +48,14 @@ export default function GithubOptions() {
       }
 
       showToast(
-        `${data.files} ${pluralize("file", data.files)} collected from ${
-          data.author
-        }/${data.repo}:${data.branch}. Output folder is ${data.destination}.`,
+        t("connectors.github.files_collected", {
+          files: data.files,
+          filePlural: pluralize("file", data.files),
+          author: data.author,
+          repo: data.repo,
+          branch: data.branch,
+          destination: data.destination,
+        }),
         "success",
         { clear: true },
       );
@@ -158,7 +163,7 @@ export default function GithubOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? "Collecting files..." : "Submit"}
+              {loading ? t("connectors.github.collecting_files") : t("connectors.github.submit")}
             </button>
             {loading && (
               <p className="text-xs text-white/50">
@@ -186,7 +191,7 @@ function GitHubBranchSelection({ repo, accessToken }: any) {
     return (
       <div className="flex flex-col w-60">
         <div className="flex flex-col gap-y-1 mb-4">
-          <label className="text-white text-sm font-bold">Branch</label>
+          <label className="text-white text-sm font-bold">{t("connectors.github.branch_label")}</label>
           <p className="text-xs font-normal text-theme-text-secondary">
             {t("connectors.github.branch")}
           </p>
@@ -207,7 +212,7 @@ function GitHubBranchSelection({ repo, accessToken }: any) {
   return (
     <div className="flex flex-col w-60">
       <div className="flex flex-col gap-y-1 mb-4">
-        <label className="text-white text-sm font-bold">Branch</label>
+        <label className="text-white text-sm font-bold">{t("connectors.github.branch_label")}</label>
         <p className="text-xs font-normal text-theme-text-secondary">
           {t("connectors.github.branch_explained")}
         </p>

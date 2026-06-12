@@ -3,8 +3,10 @@ import CommunityHubImportItemSteps from "..";
 import CTAButton from "@/components/lib/CTAButton";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import { useTranslation } from "react-i18next";
 
 export default function Completed({ settings, setSettings, setStep }) {
+  const { t } = useTranslation();
   const item = settings?.item;
   if (!item) return null;
 
@@ -13,24 +15,23 @@ export default function Completed({ settings, setSettings, setStep }) {
       <div className="bg-theme-bg-secondary rounded-xl flex-1 p-6">
         <div className="w-full flex flex-col gap-y-2 max-w-[700px]">
           <h2 className="text-base text-theme-text-primary font-semibold">
-            Community Hub Item Imported
+            {t("communityHub.import.completed.title")}
           </h2>
           <div className="flex flex-col gap-y-[25px] text-theme-text-secondary text-sm">
             <p>
-              The "{item.name}" {item.itemType} has been imported successfully!
-              It is now available in your OpenSIN Chat instance.
+              {t("communityHub.import.completed.successMessage", { name: item.name, itemType: item.itemType })}
             </p>
+            {/* eslint-disable-next-line i18next/no-literal-string */}
             {item.itemType === "agent-flow" && (
               <Link
                 to={paths.settings.agentSkills()}
                 className="text-theme-text-primary hover:text-blue-500 hover:underline"
               >
-                View "{item.name}" in Agent Skills
+                {t("communityHub.import.completed.viewInAgentSkills", { name: item.name })}
               </Link>
             )}
             <p>
-              Any changes you make to this {item.itemType} will not be reflected
-              in the community hub. You can now modify as needed.
+              {t("communityHub.import.completed.modifyNote", { itemType: item.itemType })}
             </p>
           </div>
           <CTAButton
@@ -40,7 +41,7 @@ export default function Completed({ settings, setSettings, setStep }) {
               setStep(CommunityHubImportItemSteps.itemId.key);
             }}
           >
-            Import another item
+            {t("communityHub.import.completed.importAnother")}
           </CTAButton>
         </div>
       </div>

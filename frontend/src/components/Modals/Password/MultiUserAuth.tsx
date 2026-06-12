@@ -105,6 +105,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
 };
 
 const ResetPasswordForm = ({ onSubmit }) => {
+  const { t } = useTranslation();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -122,11 +123,11 @@ const ResetPasswordForm = ({ onSubmit }) => {
         <div className="flex items-center flex-col gap-y-[18px] max-w-[300px]">
           <div className="flex gap-x-1">
             <h3 className="text-white light:text-slate-950 text-[38px] leading-[28px] font-medium text-center white-space-nowrap block">
-              Reset Password
+              {t("multiUserAuth.resetPassword.title")}
             </h3>
           </div>
           <p className="text-zinc-400 light:text-zinc-600 text-sm text-center">
-            Enter your new password.
+            {t("multiUserAuth.resetPassword.description")}
           </p>
         </div>
       </div>
@@ -134,7 +135,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
         <div className="w-full flex flex-col gap-y-3">
           <div className="w-full flex flex-col gap-y-2">
             <label className="text-zinc-300 light:text-slate-800 text-sm">
-              New Password
+              {t("multiUserAuth.resetPassword.newPassword")}
             </label>
             <input
               type="password"
@@ -147,7 +148,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
           </div>
           <div className="w-full flex flex-col gap-y-2">
             <label className="text-zinc-300 light:text-slate-800 text-sm">
-              Confirm Password
+              {t("multiUserAuth.resetPassword.confirmPassword")}
             </label>
             <input
               type="password"
@@ -165,7 +166,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
           type="submit"
           className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full"
         >
-          Reset Password
+          {t("multiUserAuth.resetPassword.title")}
         </button>
       </div>
     </form>
@@ -249,12 +250,12 @@ export default function MultiUserAuth() {
       if (success) {
         window.localStorage.removeItem("resetToken");
         setShowResetPasswordForm(false);
-        showToast("Password reset successful", "success", { clear: true });
+        showToast(t("multiUserAuth.resetPassword.success"), "success", { clear: true });
       } else {
         showToast(error, "error", { clear: true });
       }
     } else {
-      showToast("Invalid reset token", "error", { clear: true });
+      showToast(t("multiUserAuth.resetPassword.invalidToken"), "error", { clear: true });
     }
   };
 

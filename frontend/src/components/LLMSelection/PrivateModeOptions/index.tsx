@@ -4,8 +4,10 @@ import { Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import System from "@/models/system";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function PrivateModeOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [models, setModels] = useState([] as any);
   const [loading, setLoading] = useState(!!settings?.PrivateModeBasePath);
   const [basePath, setBasePath] = useState(settings?.PrivateModeBasePath);
@@ -43,7 +45,7 @@ export default function PrivateModeOptions({ settings }: any) {
         <div className="flex flex-col w-60">
           <div className="flex items-center gap-1 mb-2">
             <label className="text-white text-sm font-semibold">
-              Privatemode Proxy URL
+              {t("providerSettings.privateMode.proxyUrl")}
             </label>
             <Info
               size={18}
@@ -57,7 +59,7 @@ export default function PrivateModeOptions({ settings }: any) {
               clickable={true}
               className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
             >
-              Enter the URL where Privatemode Proxy is running.
+              {t("providerSettings.privateMode.tooltipEnterUrl")}
               <br />
               <br />
               <Link
@@ -65,7 +67,7 @@ export default function PrivateModeOptions({ settings }: any) {
                 target="_blank"
                 className="text-blue-500 hover:underline"
               >
-                Learn more &rarr;
+                {t("providerSettings.privateMode.learnMore")}
               </Link>
             </Tooltip>
           </div>
@@ -73,7 +75,7 @@ export default function PrivateModeOptions({ settings }: any) {
             type="url"
             name="PrivateModeBasePath"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="eg: http://127.0.0.1:8080"
+            placeholder={t("providerSettings.privateMode.baseUrlPlaceholder")}
             defaultValue={settings?.PrivateModeBasePath}
             required={true}
             autoComplete="off"
@@ -83,7 +85,7 @@ export default function PrivateModeOptions({ settings }: any) {
         </div>
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-2">
-            Chat Model
+            {t("providerSettings.privateMode.chatModel")}
           </label>
           {loading ? (
             <select
@@ -92,7 +94,7 @@ export default function PrivateModeOptions({ settings }: any) {
               disabled={true}
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             >
-              <option>---- Loading ----</option>
+              <option>{t("providerSettings.privateMode.loading")}</option>
             </select>
           ) : (
             <select
@@ -104,7 +106,7 @@ export default function PrivateModeOptions({ settings }: any) {
             >
               {models.length > 0 ? (
                 <>
-                  <option value="">-- Select a model --</option>
+                  <option value="">{t("providerSettings.privateMode.selectModel")}</option>
                   {(models as any).map((model) => (
                     <option key={model.id} value={model.id}>
                       {model.name}
@@ -113,7 +115,7 @@ export default function PrivateModeOptions({ settings }: any) {
                 </>
               ) : (
                 <option disabled value="">
-                  No models found
+                  {t("providerSettings.privateMode.noModelsFound")}
                 </option>
               )}
             </select>

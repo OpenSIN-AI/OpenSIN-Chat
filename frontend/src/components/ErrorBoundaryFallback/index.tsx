@@ -3,34 +3,36 @@ import { NavLink } from "react-router-dom";
 import { House, ArrowClockwise, Copy, Check } from "@phosphor-icons/react";
 import { useState } from "react";
 import type { FallbackProps } from "react-error-boundary";
+import { useTranslation } from "react-i18next";
 
 export default function ErrorBoundaryFallback({
   error,
   resetErrorBoundary,
 }: FallbackProps) {
   const [copied, setCopied] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const copyErrorDetails = async () => {
     const details = {
       url: window.location.href,
-      error: error?.name || "Unknown Error",
-      message: error?.message || "No message available",
-      stack: error?.stack || "No stack trace available",
+      error: error?.name || t("errorBoundary.unknownError"),
+      message: error?.message || t("errorBoundary.noMessage"),
+      stack: error?.stack || t("errorBoundary.noStackTrace"),
       userAgent: navigator.userAgent,
       timestamp: new Date().toISOString(),
     };
 
     const formattedDetails = `
-Error Report
+${t("errorBoundary.errorReport")}
 ============
-Timestamp: ${details.timestamp}
+${t("errorBoundary.timestamp")}: ${details.timestamp}
 URL: ${details.url}
-User Agent: ${details.userAgent}
+${t("errorBoundary.userAgent")}: ${details.userAgent}
 
-Error: ${details.error}
-Message: ${details.message}
+${t("errorBoundary.error")}: ${details.error}
+${t("errorBoundary.message")}: ${details.message}
 
-Stack Trace:
+${t("errorBoundary.stackTrace")}:
 ${details.stack}
     `.trim();
 
@@ -49,7 +51,7 @@ ${details.stack}
       className="flex flex-col items-center justify-center min-h-screen bg-theme-bg-primary text-theme-text-primary gap-4 p-4 md:p-8 w-full"
     >
       <h1 className="text-xl md:text-2xl font-bold text-center">
-        An error occurred.
+        {t("errorBoundary.title")}
       </h1>
       <p className="text-theme-text-secondary text-center px-4">
         {error?.message}
@@ -62,7 +64,7 @@ ${details.stack}
               onClick={copyErrorDetails}
               className="flex items-center gap-2 px-3 py-1.5 bg-theme-bg-secondary text-theme-text-primary rounded hover:bg-theme-sidebar-item-hover transition-all duration-200 text-xs font-medium"
               aria-label={
-                copied ? "Error details copied" : "Copy error details"
+                copied ? t("errorBoundary.copiedAria") : t("errorBoundary.copyAria")
               }
             >
               {copied ? (
@@ -72,12 +74,12 @@ ${details.stack}
                     weight="bold"
                     aria-hidden="true"
                   />
-                  Copied!
+                  {t("errorBoundary.copied")}
                 </>
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5" aria-hidden="true" />
-                  Copy Details
+                  {t("errorBoundary.copyDetails")}
                 </>
               )}
             </button>
@@ -94,14 +96,14 @@ ${details.stack}
           className="flex items-center justify-center gap-2 px-4 py-2 bg-theme-bg-secondary text-theme-text-primary rounded-lg hover:bg-theme-sidebar-item-hover transition-all duration-300 w-full md:w-auto"
         >
           <ArrowClockwise className="w-4 h-4" aria-hidden="true" />
-          Reset
+          {t("errorBoundary.reset")}
         </button>
         <NavLink
           to="/"
           className="flex items-center justify-center gap-2 px-4 py-2 bg-theme-bg-secondary text-theme-text-primary rounded-lg hover:bg-theme-sidebar-item-hover transition-all duration-300 w-full md:w-auto"
         >
           <House className="w-4 h-4" aria-hidden="true" />
-          Home
+          {t("errorBoundary.home")}
         </NavLink>
       </div>
     </div>

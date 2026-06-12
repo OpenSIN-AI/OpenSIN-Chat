@@ -43,7 +43,7 @@ export default function NewUserModal() {
       <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
         <div className="flex items-start justify-between p-4 border-b rounded-t border-theme-modal-border">
           <h3 className="text-xl font-semibold text-theme-text-primary">
-            Create a new account
+            {t("invite.newUser.createAccount")}
           </h3>
         </div>
         <form onSubmit={handleCreate}>
@@ -54,13 +54,13 @@ export default function NewUserModal() {
                   htmlFor="username"
                   className="block mb-2 text-sm font-medium text-theme-text-primary"
                 >
-                  Username
-                </label>
-                <input
-                  name="username"
-                  type="text"
-                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="My username"
+                  {t("invite.newUser.username")}
+                 </label>
+                 <input
+                   name="username"
+                   type="text"
+                   className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                   placeholder={t("invite.newUser.usernamePlaceholder")}
                   minLength={USERNAME_MIN_LENGTH}
                   maxLength={USERNAME_MAX_LENGTH}
                   pattern={USERNAME_PATTERN}
@@ -76,22 +76,21 @@ export default function NewUserModal() {
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-theme-text-primary"
                 >
-                  Password
-                </label>
-                <input
-                  name="password"
-                  type="password"
-                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="Your password"
+                  {t("invite.newUser.password")}
+                 </label>
+                 <input
+                   name="password"
+                   type="password"
+                   className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                   placeholder={t("invite.newUser.passwordPlaceholder")}
                   required={true}
                   minLength={8}
                   autoComplete="off"
                 />
               </div>
-              {error && <p className="text-red-400 text-sm">Error: {error}</p>}
+              {error && <p className="text-red-400 text-sm">{t("invite.newUser.error", { error })}</p>}
               <p className="text-theme-text-secondary text-xs md:text-sm">
-                After creating your account you will be able to login with these
-                credentials and start using workspaces.
+                {t("invite.newUser.afterCreateHint")}
               </p>
             </div>
           </div>
@@ -100,7 +99,7 @@ export default function NewUserModal() {
               type="submit"
               className="w-full transition-all duration-300 border border-theme-text-primary px-4 py-2 rounded-lg text-theme-text-primary text-sm items-center flex gap-x-2 hover:bg-theme-text-primary hover:text-theme-bg-primary focus:ring-gray-800 text-center justify-center"
             >
-              Accept Invitation
+              {t("invite.newUser.acceptInvitation")}
             </button>
           </div>
         </form>

@@ -7,14 +7,16 @@ import ProviderStatus from "@/models/providerStatus";
 import showToast from "@/utils/toast";
 import { Plugs, PlugsConnected, CircleNotch } from "@phosphor-icons/react";
 import useProviderKeyStatus from "@/hooks/useProviderKeyStatus";
+import { useTranslation } from "react-i18next";
 
 function ConnectivityRow({ result }) {
+  const { t } = useTranslation();
   if (!result.configured) {
     return (
       <li className="flex items-center justify-between gap-x-4 rounded-lg bg-theme-bg-secondary px-3 py-2 opacity-60">
         <span className="text-sm text-theme-text-primary">{result.name}</span>
         <span className="text-xs text-theme-text-secondary">
-          Nicht konfiguriert
+          {t("systemHealth.notConfigured")}
         </span>
       </li>
     );
@@ -32,12 +34,12 @@ function ConnectivityRow({ result }) {
       {result.reachable ? (
         <span className="flex shrink-0 items-center gap-x-1 text-xs text-green-500">
           <PlugsConnected size={14} weight="fill" />
-          {`Erreichbar (${result.latencyMs}ms, HTTP ${result.status})`}
+          {t("systemHealth.reachable", { latencyMs: result.latencyMs, status: result.status })}
         </span>
       ) : (
         <span className="flex shrink-0 items-center gap-x-1 text-xs text-red-400">
           <Plugs size={14} weight="fill" />
-          {result.error || "Nicht erreichbar"}
+          {result.error || t("systemHealth.notReachable")}
         </span>
       )}
     </li>
@@ -45,6 +47,7 @@ function ConnectivityRow({ result }) {
 }
 
 function ConnectivityPanel() {
+  const { t } = useTranslation();
   const [results, setResults] = useState(null);
   const [checking, setChecking] = useState(false);
   const { providers } = useProviderKeyStatus();
@@ -55,14 +58,14 @@ function ConnectivityPanel() {
     const res = await ProviderStatus.connectivity();
     setChecking(false);
     if (res.error) {
-      showToast(`Verbindungstest fehlgeschlagen: ${res.error}`, "error");
+      showToast(t("systemHealth.probeFailed", { error: res.error }), "error");
       return;
     }
     setResults(res.results);
     const reachable = res.results.filter((r) => r.reachable).length;
     const configured = res.results.filter((r) => r.configured).length;
     showToast(
-      `Verbindungstest abgeschlossen: ${reachable}/${configured} konfigurierte Provider erreichbar.`,
+      t("systemHealth.probeComplete", { reachable, configured }),
       reachable === configured ? "success" : "warning",
     );
   };
@@ -75,10 +78,10 @@ function ConnectivityPanel() {
       <header className="flex items-center justify-between gap-x-2">
         <div className="flex flex-col">
           <h3 className="text-sm font-semibold text-theme-text-primary">
-            Verbindungstest
+            {t("systemHealth.connectivityTest")}
           </h3>
           <p className="text-xs text-theme-text-secondary">
-            {`Prüft aktiv, ob die Base-URLs der ${configuredCount} konfigurierten Provider antworten (Timeout 4s).`}
+            {t("systemHealth.connectivityTestDescription", { count: configuredCount })}
           </p>
         </div>
         <button
@@ -92,15 +95,13 @@ function ConnectivityPanel() {
           ) : (
             <PlugsConnected size={14} />
           )}
-          {checking ? "Teste…" : "Jetzt testen"}
+          {checking ? t("systemHealth.testing") : t("systemHealth.testNow")}
         </button>
       </header>
 
       {results === null && !checking && (
         <p className="rounded-lg bg-theme-bg-secondary px-3 py-2 text-xs text-theme-text-secondary">
-          {
-            "Noch kein Test ausgeführt. Klicke auf \u201EJetzt testen\u201C, um alle konfigurierten Provider zu prüfen."
-          }
+          {t("systemHealth.noTestYet")}
         </p>
       )}
 
@@ -116,6 +117,7 @@ function ConnectivityPanel() {
 }
 
 export default function SystemHealth() {
+  const { t } = useTranslation();
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-theme-bg-container">
       <Sidebar />
@@ -126,12 +128,10 @@ export default function SystemHealth() {
         <div className="flex w-full flex-col gap-y-6 p-4 pt-16 md:p-8 md:pt-6">
           <div className="flex flex-col gap-y-1">
             <h1 className="text-lg font-bold leading-6 text-theme-text-primary">
-              System Health
+              {t("systemHealth.title")}
             </h1>
             <p className="text-xs leading-[18px] text-theme-text-secondary text-pretty">
-              Diagnose für lokale LLM-Provider und Speicherpfade:
-              API-Key-Status, aktive Fallbacks und Erreichbarkeit der
-              konfigurierten Endpunkte.
+              {t("systemHealth.description")}
             </p>
           </div>
           <ProviderKeyStatusPanel />

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+/* eslint-disable i18next/no-literal-string */
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import UserMenu from "./index";

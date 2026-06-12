@@ -14,6 +14,7 @@ import {
 } from "@phosphor-icons/react";
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ThreadItem from "../ThreadItem";
 import { useDroppable } from "@dnd-kit/core";
 import paths from "@/utils/paths";
@@ -21,6 +22,7 @@ import paths from "@/utils/paths";
 /** Small + dropdown for Folder rows: creates a new Chat inside the folder or a new sub-folder */
 function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
     setIsOpen(false);
     const { thread, error } = await Workspace.threads.new(workspace.slug);
     if (error) {
-      showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", {
+      showToast(t("threadFolderItem.chatCreateFailed", { error }), "error", {
         clear: true,
       });
       return;
@@ -50,14 +52,14 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
   const handleNewFolder = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsOpen(false);
-    const name = window.prompt("Ordnername:")?.trim();
+    const name = window.prompt(t("threadFolderItem.folderNamePrompt"))?.trim();
     if (!name) return;
     const { folder: newFolder, message } = await Workspace.threads.folders.new(
       workspace.slug,
       name,
     );
     if (message || !newFolder) {
-      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", {
+      showToast(t("threadFolderItem.folderCreateFailed", { message }), "error", {
         clear: true,
       });
       return;
@@ -74,7 +76,7 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
           setIsOpen((p: boolean) => !p);
         }}
         className="p-1 rounded hover:bg-white/10 light:hover:bg-slate-300"
-        title="Neuen Chat oder Ordner erstellen"
+        title={t("threadFolderItem.quickAddTitle")}
       >
         <Plus
           size={12}
@@ -90,7 +92,7 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
             className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
           >
             <ChatCircleText size={14} />
-            Neuer Chat
+            {t("threadFolderItem.newChat")}
           </button>
           <div className="h-px bg-white/10 light:bg-slate-200" />
           <button
@@ -99,7 +101,7 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
             className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
           >
             <FolderSimplePlus size={14} />
-            Neuer Ordner
+            {t("threadFolderItem.newFolder")}
           </button>
         </div>
       )}
@@ -120,6 +122,7 @@ export default function ThreadFolderItem({
   onFolderRenamed,
 }: any) {
   const { threadSlug = null } = useParams();
+  const { t } = useTranslation();
   const containsActiveThread = (threads as any).some(
     (t) => t.slug === threadSlug,
   );
@@ -149,7 +152,7 @@ export default function ThreadFolderItem({
       { name: trimmed },
     );
     if (message || !updated) {
-      showToast(`Umbenennen fehlgeschlagen: ${message}`, "error", {
+      showToast(t("threadFolderItem.renameFailed", { message }), "error", {
         clear: true,
       });
       setName(folder.name);
@@ -163,7 +166,7 @@ export default function ThreadFolderItem({
   async function handleDelete() {
     if (
       !window.confirm(
-        `Ordner "${folder.name}" löschen? Alle Chats werden in die Hauptliste verschoben.`,
+        t("threadFolderItem.deleteConfirm", { name: folder.name }),
       )
     )
       return;
@@ -172,7 +175,7 @@ export default function ThreadFolderItem({
       folder.id,
     );
     if (!ok) {
-      showToast("Ordner konnte nicht gelöscht werden.", "error", {
+      showToast(t("threadFolderItem.deleteFailed"), "error", {
         clear: true,
       });
       return;
@@ -255,7 +258,7 @@ export default function ThreadFolderItem({
                 setEditing(true);
               }}
               className="p-1 rounded hover:bg-white/10 light:hover:bg-slate-300"
-              title="Umbenennen"
+              title={t("threadFolderItem.rename")}
             >
               <PencilSimple
                 size={12}
@@ -269,7 +272,7 @@ export default function ThreadFolderItem({
                 handleDelete();
               }}
               className="p-1 rounded hover:bg-red-500/20"
-              title="Löschen"
+              title={t("threadFolderItem.delete")}
             >
               <Trash
                 size={12}
@@ -285,7 +288,7 @@ export default function ThreadFolderItem({
         <div className="pl-4">
           {threads.length === 0 ? (
             <p className="text-xs text-white/30 light:text-theme-text-secondary italic py-1 px-2">
-              Hierher ziehen
+              {t("threadFolderItem.dragHere")}
             </p>
           ) : (
             (threads as any).map((thread, i) => (

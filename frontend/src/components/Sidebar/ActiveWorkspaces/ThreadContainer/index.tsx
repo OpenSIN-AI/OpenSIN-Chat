@@ -9,6 +9,7 @@ import {
   FolderSimplePlus,
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
 import { useParams } from "react-router-dom";
@@ -29,6 +30,7 @@ export default function ThreadContainer({
   isVirtualThread = false,
 }) {
   const { threadSlug = null } = useParams();
+  const { t } = useTranslation();
   const {
     threads,
     folders,
@@ -210,7 +212,7 @@ export default function ThreadContainer({
       newFolderId,
     );
     if (!ok) {
-      showToast("Thread konnte nicht verschoben werden.", "error", {
+      showToast(t("threadContainer.moveError"), "error", {
         clear: true,
       });
       mutate(
@@ -268,7 +270,7 @@ export default function ThreadContainer({
   if (loading) {
     return (
       <div className="flex flex-col bg-pulse w-full h-10 items-center justify-center">
-        <p className="text-xs text-white animate-pulse">loading threads....</p>
+        <p className="text-xs text-white animate-pulse">{t("threadContainer.loadingThreads")}</p>
       </div>
     );
   }
@@ -387,6 +389,7 @@ export default function ThreadContainer({
 }
 
 function UnfolderedDropZone({ children, isDragging }) {
+  const { t } = useTranslation();
   const { setNodeRef, isOver } = useDroppable({ id: "unfoldered-drop" });
   return (
     <div
@@ -401,7 +404,7 @@ function UnfolderedDropZone({ children, isDragging }) {
     >
       {isDragging && (
         <p className="text-xs text-white/30 light:text-theme-text-secondary italic px-3 py-0.5">
-          Hierher ziehen (ohne Ordner)
+          {t("threadContainer.dropHere")}
         </p>
       )}
       {children}
@@ -410,12 +413,13 @@ function UnfolderedDropZone({ children, isDragging }) {
 }
 
 function NewThreadButton({ workspace, mutate }) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
     setLoading(true);
     const { thread, error } = await Workspace.threads.new(workspace.slug);
     if (!!error) {
-      showToast(`Could not create thread - ${error}`, "error", { clear: true });
+      showToast(t("threadContainer.createError", { error }), "error", { clear: true });
       setLoading(false);
       return;
     }
@@ -448,11 +452,11 @@ function NewThreadButton({ workspace, mutate }) {
         </div>
         {loading ? (
           <p className="text-left text-white light:text-theme-text-primary text-sm">
-            Starte Chat...
+            {t("threadContainer.startingChat")}
           </p>
         ) : (
           <p className="text-left text-white light:text-theme-text-primary text-sm font-semibold">
-            Neuer Chat
+            {t("threadContainer.newChat")}
           </p>
         )}
       </div>
@@ -461,9 +465,10 @@ function NewThreadButton({ workspace, mutate }) {
 }
 
 function NewFolderButton({ workspace, onCreated }) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
-    const name = window.prompt("Ordnername:")?.trim();
+    const name = window.prompt(t("threadContainer.folderNamePrompt"))?.trim();
     if (!name) return;
     setLoading(true);
     const { folder, message } = await Workspace.threads.folders.new(
@@ -472,7 +477,7 @@ function NewFolderButton({ workspace, onCreated }) {
     );
     setLoading(false);
     if (message || !folder) {
-      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", {
+      showToast(t("threadContainer.folderCreateError", { message }), "error", {
         clear: true,
       });
       return;
@@ -502,7 +507,7 @@ function NewFolderButton({ workspace, onCreated }) {
           )}
         </div>
         <p className="text-left text-white light:text-theme-text-primary text-sm font-semibold">
-          New Folder
+          {t("threadContainer.newFolder")}
         </p>
       </div>
     </button>
@@ -510,6 +515,7 @@ function NewFolderButton({ workspace, onCreated }) {
 }
 
 function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }) {
+  const { t } = useTranslation();
   if (!ctrlPressed || threads.filter((t) => t.deleted).length === 0)
     return null;
   return (
@@ -527,7 +533,7 @@ function DeleteAllThreadButton({ ctrlPressed, threads, onDelete }) {
           />
         </div>
         <p className="text-white light:text-theme-text-secondary text-left text-sm group-hover:text-red-400">
-          Delete Selected
+          {t("threadContainer.deleteSelected")}
         </p>
       </div>
     </button>

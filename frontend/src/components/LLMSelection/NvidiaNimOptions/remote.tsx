@@ -3,6 +3,7 @@ import PreLoader from "@/components/Preloader";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import { NVIDIA_NIM_COMMON_URLS } from "@/utils/constants";
 import useProviderModels from "@/hooks/useProviderModels";
+import { useTranslation } from "react-i18next";
 /**
  * This component is used to select a remote NVIDIA NIM model endpoint
  * This is the default component and way to connect to NVIDIA NIM
@@ -19,13 +20,14 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
     initialBasePath: settings?.NvidiaNimLLMBasePath,
     ENDPOINTS: NVIDIA_NIM_COMMON_URLS,
   });
+  const { t } = useTranslation();
 
   return (
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
         <div className="flex justify-between items-center mb-2">
           <label className="text-white text-sm font-semibold">
-            NVIDIA Nim Base URL
+            {t("providerSettings.nvidiaNim.baseUrl")}
           </label>
           {loading ? (
             <PreLoader size="6" />
@@ -36,7 +38,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
                   onClick={handleAutoDetectClick}
                   className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                 >
-                  Auto-Detect
+                  {t("providerSettings.nvidiaNim.autoDetect")}
                 </button>
               )}
             </>
@@ -46,7 +48,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
           type="url"
           name="NvidiaNimLLMBasePath"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder="http://localhost:8000/v1"
+          placeholder={t("providerSettings.nvidiaNim.baseUrlPlaceholder")}
           value={basePathValue.value}
           required={true}
           autoComplete="off"
@@ -55,7 +57,7 @@ export default function RemoteNvidiaNimOptions({ settings }: any) {
           onBlur={basePath.onBlur}
         />
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-          Enter the URL where NVIDIA NIM is running.
+          {t("providerSettings.nvidiaNim.baseUrlHelp")}
         </p>
       </div>
       {!settings?.credentialsOnly && (
@@ -72,6 +74,7 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
     "nvidia-nim",
     basePath,
   );
+  const { t } = useTranslation();
   // Combine API-fetched models with default fallback models
   const allModels = customModels.length > 0 ? customModels : defaultModels;
   // Show dropdown as soon as we have either loaded models OR fall back to defaults
@@ -79,7 +82,7 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("providerSettings.nvidiaNim.modelSelection")}
         </label>
         <select
           name="NvidiaNimLLMModelPref"
@@ -87,7 +90,7 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("providerSettings.nvidiaNim.loadingModels")}
           </option>
         </select>
       </div>
@@ -97,7 +100,7 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("providerSettings.nvidiaNim.modelSelection")}
       </label>
       <select
         name="NvidiaNimLLMModelPref"

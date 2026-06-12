@@ -358,6 +358,128 @@ const TRANSLATIONS = {
       streamTimeout: "Stream Timeout (ms)",
       streamTimeoutPlaceholder: "Timeout value between token responses to auto-timeout the stream",
     },
+    foundry: {
+      baseUrl: "Base URL",
+      baseUrlPlaceholder: "eg: http://127.0.0.1:8080",
+      chatModel: "Chat Model",
+      loading: "---- Loading ----",
+      selectModel: "-- Select a model --",
+      noModelsFound: "No models found",
+      modelContextWindow: "Model context window",
+      tokenLimitPlaceholder: "4096",
+    },
+    opencodeZen: {
+      baseUrl: "Base URL",
+      baseUrlPlaceholder: "https://opencode.ai/zen/v1",
+      apiKey: "API Key",
+      apiKeyPlaceholder: "OpenCode Zen API Key",
+      modelId: "Model ID",
+      modelIdPlaceholder: "e.g. nemotron-3-ultra-free",
+      modelContextWindow: "Model context window",
+      tokenLimitPlaceholder: "Content window limit (eg: 1000000)",
+    },
+    privateMode: {
+      proxyUrl: "Privatemode Proxy URL",
+      tooltipEnterUrl: "Enter the URL where Privatemode Proxy is running.",
+      learnMore: "Learn more →",
+      baseUrlPlaceholder: "eg: http://127.0.0.1:8080",
+      chatModel: "Chat Model",
+      loading: "---- Loading ----",
+      selectModel: "-- Select a model --",
+      noModelsFound: "No models found",
+    },
+    geminiEmbedding: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "Gemini API Key",
+      modelPreference: "Model Preference",
+      availableModels: "Available embedding models",
+      outputDimensions: "Output dimensions",
+      outputDimensionsTooltip:
+        "The number of dimensions the resulting output embeddings should have if it supports multiple dimensions output.",
+      outputDimensionsTooltip2:
+        "Leave blank to use the default dimensions for the selected model.",
+      outputDimensionsPlaceholder: "Assume default dimensions",
+    },
+    giteeAi: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "GiteeAI API Key",
+      modelContextWindow: "Model context window",
+      contextWindowPlaceholder: "Content window limit (eg: 8192)",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+    },
+    groqAi: {
+      apiKey: "Groq API Key",
+      apiKeyPlaceholder: "Groq API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+      enterApiKeyHint:
+        "Enter a valid API key to view all available models for your account.",
+      availableModels: "Available models",
+      selectModelHint:
+        "Select the GroqAI model you want to use for your conversations.",
+    },
+    moonshotAi: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "Moonshot AI API Key",
+      modelSelection: "Chat Model Selection",
+      enterApiKey: "-- Enter API key --",
+      loadingModels: "-- loading available models --",
+    },
+    nvidiaNim: {
+      baseUrl: "NVIDIA Nim Base URL",
+      autoDetect: "Auto-Detect",
+      baseUrlPlaceholder: "http://localhost:8000/v1",
+      baseUrlHelp: "Enter the URL where NVIDIA NIM is running.",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+    },
+    xAi: {
+      apiKey: "xAI API Key",
+      apiKeyPlaceholder: "xAI API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+      enterApiKeyHint:
+        "Enter a valid API key to view all available models for your account.",
+      availableModels: "Available models",
+      selectModelHint:
+        "Select the xAI model you want to use for your conversations.",
+    },
+    zAi: {
+      apiKey: "Z.AI API Key",
+      apiKeyPlaceholder: "Z.AI API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+      enterApiKeyHint:
+        "Enter a valid API key to view all available models for your account.",
+      availableModels: "Available models",
+      selectModelHint:
+        "Select the Z.AI model you want to use for your conversations.",
+    },
+    azureAiEmbedding: {
+      serviceEndpoint: "Azure Service Endpoint",
+      serviceEndpointPlaceholder: "https://my-azure.openai.azure.com",
+      apiKey: "API Key",
+      apiKeyPlaceholder: "Azure OpenAI API Key",
+      embeddingDeploymentName: "Embedding Deployment Name",
+      embeddingDeploymentNamePlaceholder:
+        "Azure OpenAI embedding model deployment name",
+    },
+    openAiEmbedding: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "OpenAI API Key",
+      modelPreference: "Model Preference",
+      availableModels: "Available embedding models",
+    },
+  },
+  agentLLMItem: {
+    editSettings: "Edit Settings",
+    settingsTitle: "{{name}} Settings",
+    setupDescription:
+      "To use {{name}} as this workspace's agent LLM you need to set it up first.",
+    cancel: "Cancel",
+    saveSettings: "Save {{name}} settings",
+    saveFailed: "Failed to save {{name}} settings: {{error}}",
   },
 
   sqlConnection: {
@@ -1779,6 +1901,13 @@ const TRANSLATIONS = {
         "Without filling out the <b>GitHub Access Token</b> this data connector will only be able to collect the <b>top-level</b> files of the repo due to GitHub's public API rate-limits.",
       token_personal:
         "Get a free Personal Access Token with a GitHub account here.",
+      fetching_files:
+        "Fetching all files for repo - this may take a while.",
+      files_collected:
+        "{{files}} {{filePlural}} collected from {{author}}/{{repo}}:{{branch}}. Output folder is {{destination}}.",
+      collecting_files: "Collecting files...",
+      submit: "Submit",
+      branch_label: "Branch",
     },
     gitlab: {
       name: "GitLab Repo",
@@ -1809,6 +1938,11 @@ const TRANSLATIONS = {
         "Without filling out the <b>GitLab Access Token</b> this data connector will only be able to collect the <b>top-level</b> files of the repo due to GitLab's public API rate-limits.",
       token_personal:
         "Get a free Personal Access Token with a GitLab account here.",
+      settings: "Settings",
+      fetch_wikis: "Fetch Wikis as Documents",
+      fetchingFiles: "Fetching all files for repo - this may take a while.",
+      filesCollected: "{{files}} {{fileWord}} collected from {{author}}/{{repo}}:{{branch}}. Output folder is {{destination}}.",
+      collectingFiles: "Collecting files...",
     },
     youtube: {
       name: "YouTube Transcript",
@@ -2667,6 +2801,17 @@ const TRANSLATIONS = {
       apiKeyHelp: "You can get your API key from your",
       apiKeyHelpLink: "OpenSIN Chat Community Hub profile page",
       disconnect: "Disconnect",
+      userItems: {
+        createdByMe: "Created by me",
+        privateItemsLink: "Why can't I see my private items?",
+        createdByMeDescription:
+          "Items you have created and shared publicly on the OpenSIN Chat Community Hub.",
+        noItemsCreated: "You haven't created any items yet.",
+        itemsByTeam: "Items by team",
+        itemsByTeamDescription:
+          "Public and private items shared with teams you belong to.",
+        noItemsShared: "No items shared with this team yet.",
+      },
       toast: {
         saveSuccess: "API key saved successfully",
         saveFailed: "Failed to save API key",
@@ -2704,6 +2849,35 @@ const TRANSLATIONS = {
           success: "Agent flow imported successfully!",
           failed: "Failed to import agent flow. {{message}}",
         },
+      },
+      completed: {
+        title: "Community Hub Item Imported",
+        successMessage: 'The "{{name}}" {{itemType}} has been imported successfully! It is now available in your OpenSIN Chat instance.',
+        viewInAgentSkills: 'View "{{name}}" in Agent Skills',
+        modifyNote: "Any changes you make to this {{itemType}} will not be reflected in the community hub. You can now modify as needed.",
+        importAnother: "Import another item",
+      },
+      systemPrompt: {
+        reviewTitle: 'Review System Prompt "{{name}}"',
+        createdBy: "Created by",
+        description: "System prompts are used to guide the behavior of the AI agents and can be applied to any existing workspace.",
+        providedPrompt: "Provided system prompt:",
+        applyToWorkspace: "Apply to Workspace",
+        noWorkspaces: "No workspaces available. Create a workspace first.",
+        applyButton: "Apply system prompt to workspace",
+        toastApplying: "Applying system prompt to workspace...",
+        toastFailed: "Failed to apply system prompt. {{error}}",
+        toastApplied: "System prompt applied to workspace.",
+      },
+      slashCommand: {
+        reviewTitle: 'Review Slash Command "{{name}}"',
+        createdBy: "Created by",
+        descriptionPart1: "Slash commands are used to prefill information into a prompt while chatting with a OpenSIN Chat workspace.",
+        descriptionPart2: "The slash command will be available during chatting by simply invoking it with",
+        descriptionPart3: "like you would any other command.",
+        importButton: "Import slash command",
+        toastSuccess: "Slash command {{command}} imported successfully!",
+        toastFailed: "Failed to import slash command. {{error}}",
       },
     },
   },
@@ -3003,6 +3177,207 @@ const TRANSLATIONS = {
       copyApiKey: "Copy API Key",
       apiKeyCopied: "API Key Copied!",
     },
+  },
+
+  footerCustomization: {
+    newIconForm: {
+      urlPlaceholder: "https://example.com",
+      save: "Save",
+    },
+  },
+
+  systemHealth: {
+    title: "System Health",
+    description: "Diagnostics for local LLM providers and storage paths: API key status, active fallbacks, and reachability of configured endpoints.",
+    notConfigured: "Not configured",
+    reachable: "Reachable ({{latencyMs}}ms, HTTP {{status}})",
+    notReachable: "Not reachable",
+    probeFailed: "Connectivity test failed: {{error}}",
+    probeComplete: "Connectivity test complete: {{reachable}}/{{configured}} configured providers reachable.",
+    connectivityTest: "Connectivity Test",
+    connectivityTestDescription: "Actively checks whether the base URLs of the {{count}} configured providers respond (4s timeout).",
+    testing: "Testing\u2026",
+    testNow: "Test now",
+    noTestYet: "No test run yet. Click \"Test now\" to check all configured providers.",
+  },
+
+  recoveryCode: {
+    title: "Recovery Codes",
+    description: "In order to reset your password in the future, you will need these recovery codes. Download or copy your recovery codes to save them.",
+    shownOnce: "These recovery codes are only shown once!",
+    copiedToClipboard: "Recovery codes copied to clipboard",
+    copyAriaLabel: "Copy recovery codes to clipboard",
+    closeAriaLabel: "Close recovery codes",
+    downloadAriaLabel: "Download recovery codes",
+    close: "Close",
+    download: "Download",
+  },
+
+  newFolderModal: {
+    title: "Create New Folder",
+    closeAriaLabel: "Close new folder dialog",
+    folderNameLabel: "Folder Name",
+    folderNamePlaceholder: "Enter folder name",
+    failedToCreate: "Failed to create folder",
+    error: "Error: {{error}}",
+    cancelAriaLabel: "Cancel creating folder",
+    cancel: "Cancel",
+    createFolder: "Create Folder",
+  },
+
+  threadFolderItem: {
+    chatCreateFailed: "Could not create chat: {{error}}",
+    folderNamePrompt: "Folder name:",
+    folderCreateFailed: "Could not create folder: {{message}}",
+    quickAddTitle: "Create new chat or folder",
+    newChat: "New Chat",
+    newFolder: "New Folder",
+    renameFailed: "Rename failed: {{message}}",
+    deleteConfirm: 'Delete folder "{{name}}"? All chats will be moved to the main list.',
+    deleteFailed: "Could not delete folder.",
+    rename: "Rename",
+    delete: "Delete",
+    dragHere: "Drag here",
+  },
+
+  agentBuilder: {
+    headerMenu: {
+      builder: "Builder",
+      untitledFlow: "Untitled Flow",
+      newFlow: "New Flow",
+      publish: "Publish",
+      save: "Save",
+      viewDocumentation: "view documentation →",
+    },
+    codeNode: {
+      language: "Language",
+      javascript: "JavaScript",
+      python: "Python",
+      shell: "Shell",
+      code: "Code",
+      codePlaceholder: "Enter code...",
+      storeResultIn: "Store Result In",
+      selectOrCreateVariable: "Select or create variable",
+    },
+    flowInfoNode: {
+      flowName: "Flow Name",
+      flowNameDescription:
+        "It is important to give your flow a name that an LLM can easily understand.",
+      flowNameExamples:
+        '"SendMessageToDiscord", "CheckStockPrice", "CheckWeather"',
+      enterFlowName: "Enter flow name",
+      description: "Description",
+      descriptionExplanation:
+        "It is equally important to give your flow a description that an LLM can easily understand. Be sure to include the purpose of the flow, the context it will be used in, and any other relevant information.",
+      enterFlowDescription: "Enter flow description",
+    },
+  },
+
+  admin: {
+    invitations: {
+      title: "Invitations",
+      description: "Create invitation links for people in your organization to accept and sign up with. Invitations can only be used by a single user.",
+      createInviteLink: "Create Invite Link",
+      status: "Status",
+      acceptedBy: "Accepted By",
+      createdBy: "Created By",
+      created: "Created",
+      noInvitations: "No invitations found",
+    },
+    workspacesPage: {
+      instanceWorkspaces: "Instance Workspaces",
+      description:
+        "These are all the workspaces that exist on this instance. Removing a workspace will delete all of its associated chats and settings.",
+      newWorkspace: "New Workspace",
+      name: "Name",
+      link: "Link",
+      users: "Users",
+      createdOn: "Created On",
+    },
+  },
+
+  privacyAndData: {
+    telemetryToggled: "Anonymous Telemetry has been {{status}}.",
+    enabled: "enabled",
+    disabled: "disabled",
+    eventsNoIp: 'All events do not record IP-address and contain <b>no identifying</b> content, settings, chats, or other non-usage based information. To see the list of event tags collected you can look on <a href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub here</a>.',
+    respectPrivacy: 'As an open-source project we respect your right to privacy. We are dedicated to building the best solution for integrating AI and documents privately and securely. If you do decide to turn off telemetry all we ask is to consider sending us feedback and thoughts so that we can continue to improve OpenSIN Chat for you. <a href="mailto:team@openafd.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@openafd.com</a>.',
+  },
+
+  invite: {
+    newUser: {
+      createAccount: "Create a new account",
+      username: "Username",
+      usernamePlaceholder: "My username",
+      password: "Password",
+      passwordPlaceholder: "Your password",
+      error: "Error: {{error}}",
+      afterCreateHint:
+        "After creating your account you will be able to login with these credentials and start using workspaces.",
+      acceptInvitation: "Accept Invitation",
+    },
+  },
+
+  manageWorkspace: {
+    closeDialog: "Close manage workspace dialog",
+    dismissDialog: "Dismiss manage workspace dialog",
+    showDocumentsTab: "Show documents tab",
+    showDataConnectorsTab: "Show data connectors tab",
+  },
+
+  multiUserAuth: {
+    resetPassword: {
+      title: "Reset Password",
+      description: "Enter your new password.",
+      newPassword: "New Password",
+      confirmPassword: "Confirm Password",
+      success: "Password reset successful",
+      invalidToken: "Invalid reset token",
+    },
+  },
+
+  threadContainer: {
+    loadingThreads: "Loading threads...",
+    moveError: "Thread could not be moved.",
+    dropHere: "Drag here (without folder)",
+    createError: "Could not create thread - {{error}}",
+    startingChat: "Starting chat...",
+    newChat: "New Chat",
+    folderNamePrompt: "Folder name:",
+    folderCreateError: "Could not create folder: {{message}}",
+    newFolder: "New Folder",
+    deleteSelected: "Delete Selected",
+  },
+
+  modelTable: {
+    modelCount: "({{count}} {{plural}})",
+    cpu: "CPU",
+    gpu: "GPU",
+    npu: "NPU",
+    uninstall: "Uninstall",
+    installModel: "Install {{organization}}:{{name}}",
+    active: "Active",
+    installed: "Installed",
+    notInstalled: "Not Installed",
+  },
+
+  errorBoundary: {
+    title: "An error occurred.",
+    unknownError: "Unknown Error",
+    noMessage: "No message available",
+    noStackTrace: "No stack trace available",
+    errorReport: "Error Report",
+    timestamp: "Timestamp",
+    userAgent: "User Agent",
+    error: "Error",
+    message: "Message",
+    stackTrace: "Stack Trace",
+    copiedAria: "Error details copied",
+    copyAria: "Copy error details",
+    copied: "Copied!",
+    copyDetails: "Copy Details",
+    reset: "Reset",
+    home: "Home",
   },
 };
 

@@ -2,8 +2,10 @@
 import { ICON_COMPONENTS } from "@/components/Footer";
 import React, { useEffect, useRef, useState } from "react";
 import { Plus, X } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 
 export default function NewIconForm({ icon, url, onSave, onRemove }) {
+  const { t } = useTranslation();
   const [selectedIcon, setSelectedIcon] = useState(icon || "Plus");
   const [selectedUrl, setSelectedUrl] = useState(url || "");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -89,7 +91,7 @@ export default function NewIconForm({ icon, url, onSave, onRemove }) {
         type="url"
         value={selectedUrl}
         onChange={handleUrlChange}
-        placeholder="https://example.com"
+        placeholder={t("footerCustomization.newIconForm.urlPlaceholder")}
         className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-md p-2.5 w-[300px] h-[32px] focus:outline-primary-button active:outline-primary-button outline-none"
         required
       />
@@ -100,7 +102,7 @@ export default function NewIconForm({ icon, url, onSave, onRemove }) {
               type="submit"
               className="text-sky-400 px-2 py-2 rounded-md text-sm font-bold hover:text-sky-500"
             >
-              Save
+              {t("footerCustomization.newIconForm.save")}
             </button>
           ) : (
             <button

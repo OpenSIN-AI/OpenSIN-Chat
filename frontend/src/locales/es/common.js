@@ -1148,6 +1148,13 @@ const TRANSLATIONS = {
         "Sin completar el <b>Token de acceso de GitHub</b>, este conector de datos solo podrá recopilar los archivos de <b>nivel superior</b> del repositorio debido a los límites de velocidad de la API pública de GitHub.",
       token_personal:
         "Obtén un token de acceso personal gratuito con una cuenta de GitHub aquí.",
+      fetching_files:
+        "Recopilando todos los archivos del repositorio - esto puede tardar un poco.",
+      files_collected:
+        "{{files}} {{filePlural}} recopilados de {{author}}/{{repo}}:{{branch}}. Carpeta de salida es {{destination}}.",
+      collecting_files: "Recopilando archivos...",
+      submit: "Enviar",
+      branch_label: "Rama",
     },
     gitlab: {
       name: "Repositorio de GitLab",
@@ -2034,6 +2041,93 @@ const TRANSLATIONS = {
       "routed-to": "Dirigido a <route>{{model}}</route>",
       "routed-to-rule":
         "Enviado a <route>{{model}}</route> a través de <rule>{{ruleTitle}}</rule>",
+    },
+  },
+
+  manageWorkspace: {
+    closeDialog: "Cerrar diálogo de gestión de espacio de trabajo",
+    dismissDialog: "Descartar diálogo de gestión de espacio de trabajo",
+    showDocumentsTab: "Mostrar pestaña de documentos",
+    showDataConnectorsTab: "Mostrar pestaña de conectores de datos",
+  },
+
+  multiUserAuth: {
+    resetPassword: {
+      title: "Restablecer contraseña",
+      description: "Ingresa tu nueva contraseña.",
+      newPassword: "Nueva contraseña",
+      confirmPassword: "Confirmar contraseña",
+      success: "Contraseña restablecida exitosamente",
+      invalidToken: "Token de restablecimiento no válido",
+    },
+  },
+
+  threadContainer: {
+    loadingThreads: "Cargando hilos...",
+    moveError: "No se pudo mover el hilo.",
+    dropHere: "Arrastrar aquí (sin carpeta)",
+    createError: "No se pudo crear el hilo - {{error}}",
+    startingChat: "Iniciando chat...",
+    newChat: "Nuevo chat",
+    folderNamePrompt: "Nombre de la carpeta:",
+    folderCreateError: "No se pudo crear la carpeta: {{message}}",
+    newFolder: "Nueva carpeta",
+    deleteSelected: "Eliminar seleccionados",
+  },
+
+  modelTable: {
+    modelCount: "({{count}} {{plural}})",
+    cpu: "CPU",
+    gpu: "GPU",
+    npu: "NPU",
+    uninstall: "Desinstalar",
+    installModel: "Instalar {{organization}}:{{name}}",
+    active: "Activo",
+    installed: "Instalado",
+    notInstalled: "No instalado",
+  },
+
+  agentBuilder: {
+    flowInfoNode: {
+      flowName: "Nombre del flujo",
+      flowNameDescription:
+        "Es importante darle a tu flujo un nombre que un LLM pueda entender fácilmente.",
+      flowNameExamples:
+        '"SendMessageToDiscord", "CheckStockPrice", "CheckWeather"',
+      enterFlowName: "Ingresa el nombre del flujo",
+      description: "Descripción",
+      descriptionExplanation:
+        "Es igualmente importante darle a tu flujo una descripción que un LLM pueda entender fácilmente. Asegúrate de incluir el propósito del flujo, el contexto en el que se usará y cualquier otra información relevante.",
+      enterFlowDescription: "Ingresa la descripción del flujo",
+    },
+  },
+
+  admin: {
+    workspacesPage: {
+      instanceWorkspaces: "Espacios de trabajo de la instancia",
+      description:
+        "Estos son todos los espacios de trabajo que existen en esta instancia. Eliminar un espacio de trabajo borrará todos sus chats y configuraciones asociadas.",
+      newWorkspace: "Nuevo espacio de trabajo",
+      name: "Nombre",
+      link: "Enlace",
+      users: "Usuarios",
+      createdOn: "Creado el",
+    },
+  },
+
+  communityHub: {
+    auth: {
+      userItems: {
+        createdByMe: "Creados por mí",
+        privateItemsLink: "¿Por qué no puedo ver mis elementos privados?",
+        createdByMeDescription:
+          "Elementos que has creado y compartido públicamente en el OpenSIN Chat Community Hub.",
+        noItemsCreated: "Aún no has creado ningún elemento.",
+        itemsByTeam: "Elementos por equipo",
+        itemsByTeamDescription:
+          "Elementos públicos y privados compartidos con equipos a los que perteneces.",
+        noItemsShared: "Aún no hay elementos compartidos con este equipo.",
+      },
     },
   },
 };

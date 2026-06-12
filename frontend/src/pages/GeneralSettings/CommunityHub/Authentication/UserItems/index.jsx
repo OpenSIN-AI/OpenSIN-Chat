@@ -4,8 +4,10 @@ import HubItemCard from "../../Trending/HubItems/HubItemCard";
 import { useUserItems } from "../useUserItems";
 import { HubItemCardSkeleton } from "../../Trending/HubItems";
 import { readableType } from "../../utils";
+import { useTranslation } from "react-i18next";
 
 export default function UserItems({ connectionKey }) {
+  const { t } = useTranslation();
   const { loading, userItems } = useUserItems({ connectionKey });
   const { createdByMe = {}, teamItems = [] } = userItems || {};
 
@@ -20,7 +22,7 @@ export default function UserItems({ connectionKey }) {
       <div className="w-full flex flex-col gap-y-1 pb-6 border-white border-b-2 border-opacity-10">
         <div className="flex items-center justify-between">
           <p className="text-lg leading-6 font-bold text-white">
-            Created by me
+            {t("communityHub.auth.userItems.createdByMe")}
           </p>
           <a
             href={paths.communityHub.noPrivateItems()}
@@ -28,12 +30,11 @@ export default function UserItems({ connectionKey }) {
             rel="noreferrer"
             className="text-primary-button hover:text-primary-button/80 text-sm"
           >
-            Why can't I see my private items?
+            {t("communityHub.auth.userItems.privateItemsLink")}
           </a>
         </div>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
-          Items you have created and shared publicly on the OpenSIN Chat
-          Community Hub.
+          {t("communityHub.auth.userItems.createdByMeDescription")}
         </p>
         <div className="flex flex-col gap-4 mt-4">
           {Object.keys(createdByMe).map((type) => {
@@ -53,7 +54,7 @@ export default function UserItems({ connectionKey }) {
           })}
           {!hasItems(createdByMe) && (
             <p className="text-white/60 text-xs text-center mt-4">
-              You haven&apos;t created any items yet.
+              {t("communityHub.auth.userItems.noItemsCreated")}
             </p>
           )}
         </div>
@@ -63,11 +64,11 @@ export default function UserItems({ connectionKey }) {
       <div className="w-full flex flex-col gap-y-1 pb-6 border-white border-b-2 border-opacity-10">
         <div className="items-center">
           <p className="text-lg leading-6 font-bold text-white">
-            Items by team
+            {t("communityHub.auth.userItems.itemsByTeam")}
           </p>
         </div>
         <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
-          Public and private items shared with teams you belong to.
+          {t("communityHub.auth.userItems.itemsByTeamDescription")}
         </p>
         <div className="flex flex-col gap-4 mt-4">
           {teamItems.map((team) => (
@@ -92,7 +93,7 @@ export default function UserItems({ connectionKey }) {
               })}
               {!hasItems(team.items) && (
                 <p className="text-white/60 text-xs text-center mt-4">
-                  No items shared with this team yet.
+                  {t("communityHub.auth.userItems.noItemsShared")}
                 </p>
               )}
             </div>

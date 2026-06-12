@@ -6,8 +6,10 @@ import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
 import CommunityHub from "@/models/communityHub";
+import { useTranslation } from "react-i18next";
 
 export default function SystemPrompt({ item, setStep }) {
+  const { t } = useTranslation();
   const [destinationWorkspaceSlug, setDestinationWorkspaceSlug] =
     useState(null);
   const [workspaces, setWorkspaces] = useState([]);
@@ -23,17 +25,17 @@ export default function SystemPrompt({ item, setStep }) {
   }, []);
 
   async function handleSubmit() {
-    showToast("Applying system prompt to workspace...", "info");
+    showToast(t("communityHub.import.systemPrompt.toastApplying"), "info");
     const { error } = await CommunityHub.applyItem(item.importId, {
       workspaceSlug: destinationWorkspaceSlug,
     });
     if (error) {
-      return showToast(`Failed to apply system prompt. ${error}`, "error", {
+      return showToast(t("communityHub.import.systemPrompt.toastFailed", { error }), "error", {
         clear: true,
       });
     }
 
-    showToast("System prompt applied to workspace.", "success", {
+    showToast(t("communityHub.import.systemPrompt.toastApplied"), "success", {
       clear: true,
     });
     setStep(CommunityHubImportItemSteps.completed.key);
@@ -43,11 +45,11 @@ export default function SystemPrompt({ item, setStep }) {
     <div className="flex flex-col mt-4 gap-y-4">
       <div className="flex flex-col gap-y-1">
         <h2 className="text-base text-theme-text-primary font-semibold">
-          Review System Prompt "{item.name}"
+          {t("communityHub.import.systemPrompt.reviewTitle", { name: item.name })}
         </h2>
         {item.creatorUsername && (
           <p className="text-white/60 light:text-theme-text-secondary text-xs font-mono">
-            Created by{" "}
+            {t("communityHub.import.systemPrompt.createdBy")}{" "}
             <a
               href={paths.communityHub.profile(item.creatorUsername)}
               target="_blank"
@@ -61,13 +63,12 @@ export default function SystemPrompt({ item, setStep }) {
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
         <p>
-          System prompts are used to guide the behavior of the AI agents and can
-          be applied to any existing workspace.
+          {t("communityHub.import.systemPrompt.description")}
         </p>
 
         <div className="flex flex-col gap-y-2">
           <p className="text-white/60 light:text-theme-text-secondary font-semibold">
-            Provided system prompt:
+            {t("communityHub.import.systemPrompt.providedPrompt")}
           </p>
           <div className="w-full text-theme-text-primary text-md flex flex-col max-h-[calc(300px)] overflow-y-auto">
             <p className="text-white/60 light:text-theme-text-secondary font-mono bg-zinc-900 light:bg-slate-200 px-2 py-1 rounded-md text-sm whitespace-pre-line">
@@ -78,11 +79,11 @@ export default function SystemPrompt({ item, setStep }) {
 
         <div className="flex flex-col w-60">
           <label className="text-theme-text-primary text-sm font-semibold block mb-3">
-            Apply to Workspace
+            {t("communityHub.import.systemPrompt.applyToWorkspace")}
           </label>
           {workspaces.length === 0 ? (
             <p className="text-white/50 light:text-theme-text-secondary text-sm">
-              No workspaces available. Create a workspace first.
+              {t("communityHub.import.systemPrompt.noWorkspaces")}
             </p>
           ) : (
             <select
@@ -91,6 +92,7 @@ export default function SystemPrompt({ item, setStep }) {
               onChange={(e) => setDestinationWorkspaceSlug(e.target.value)}
               className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
             >
+              {/* eslint-disable-next-line i18next/no-literal-string */}
               <optgroup label="Available workspaces">
                 {workspaces.map((workspace) => (
                   <option key={workspace.id} value={workspace.slug}>
@@ -107,7 +109,7 @@ export default function SystemPrompt({ item, setStep }) {
           className="text-dark-text w-full mt-[18px] h-[34px] hover:bg-accent"
           onClick={handleSubmit}
         >
-          Apply system prompt to workspace
+          {t("communityHub.import.systemPrompt.applyButton")}
         </CTAButton>
       )}
     </div>
