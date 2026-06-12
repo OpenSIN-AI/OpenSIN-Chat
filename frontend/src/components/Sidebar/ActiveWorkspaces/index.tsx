@@ -24,10 +24,12 @@ import showToast from "@/utils/toast";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { safeJsonParse } from "@/utils/request";
 import { invalidateThreads } from "@/hooks/useThreads";
+import { useTranslation } from "react-i18next";
 
 /** Small + dropdown for Workspace rows: creates a new Chat or a new Folder */
 function WorkspaceQuickAdd({ workspace, isActive }: any) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -85,13 +87,13 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
           setOpen((p) => !p);
         }}
         data-tooltip-id="workspace-quick-add"
-        data-tooltip-content="Neuen Chat oder Ordner erstellen"
+        data-tooltip-content={t("activeWorkspaces.createTooltip")}
         className={`group/plus border-none rounded-md flex items-center justify-center p-[2px] transition-colors ${
           isActive
             ? "hover:bg-zinc-500 light:hover:bg-sky-800/30"
             : "hover:bg-zinc-500 light:hover:bg-slate-400"
         }`}
-        aria-label="Neuen Chat oder Ordner erstellen"
+        aria-label={t("activeWorkspaces.createTooltip")}
       >
         <Plus
           className={`h-[20px] w-[20px] ${
@@ -110,7 +112,7 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
             className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
           >
             <ChatCircleText size={15} />
-            Neuer Chat
+            {t("activeWorkspaces.newChat")}
           </button>
           <div className="h-px bg-white/10 light:bg-slate-200" />
           <button
@@ -119,7 +121,7 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
             className="w-full flex items-center gap-x-2 px-3 py-2 text-sm text-slate-200 light:text-slate-700 hover:bg-zinc-700 light:hover:bg-slate-100 transition-colors"
           >
             <FolderSimplePlus size={15} />
-            Neuer Ordner
+            {t("activeWorkspaces.newFolder")}
           </button>
         </div>
       )}
@@ -172,7 +174,7 @@ export default function ActiveWorkspaces() {
       // triggering a revalidation; the stored preference keeps it stable.
       mutateWorkspaces(reorderedWorkspaces, { revalidate: false });
     } else {
-      showToast("Failed to reorder workspaces", "error");
+      showToast(t("activeWorkspaces.reorderFailed"), "error");
       mutateWorkspaces();
     }
   }

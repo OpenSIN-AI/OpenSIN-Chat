@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function CohereAiOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(settings?.CohereApiKey);
   const [cohereApiKey, setCohereApiKey] = useState(settings?.CohereApiKey);
 
@@ -11,13 +13,13 @@ export default function CohereAiOptions({ settings }: any) {
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Cohere API Key
+            {t("providerSettings.cohereAi.apiKey")}
           </label>
           <input
             type="password"
             name="CohereApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Cohere API Key"
+            placeholder={t("providerSettings.cohereAi.apiKeyPlaceholder")}
             defaultValue={settings?.CohereApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -35,12 +37,13 @@ export default function CohereAiOptions({ settings }: any) {
 }
 
 function CohereModelSelection({ apiKey, settings }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels("cohere", apiKey);
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("providerSettings.cohereAi.modelSelection")}
         </label>
         <select
           name="CohereModelPref"
@@ -48,7 +51,7 @@ function CohereModelSelection({ apiKey, settings }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("providerSettings.cohereAi.loadingModels")}
           </option>
         </select>
       </div>
@@ -58,7 +61,7 @@ function CohereModelSelection({ apiKey, settings }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("providerSettings.cohereAi.modelSelection")}
       </label>
       <select
         name="CohereModelPref"

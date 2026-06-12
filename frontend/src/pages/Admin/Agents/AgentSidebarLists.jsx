@@ -6,6 +6,7 @@ import AgentFlowsList from "./AgentFlows";
 import { MCPServersList, MCPServerHeader } from "./MCPServers";
 import AgentList from "./AgentList";
 import ImportedSkillList from "./Imported/SkillList";
+import { useTranslation } from "react-i18next";
 
 export default function AgentSidebarLists({
   defaultSkills,
@@ -27,11 +28,12 @@ export default function AgentSidebarLists({
   setMcpServers,
   setSelectedMcpServer,
 }) {
+  const { t } = useTranslation();
   return (
     <>
       <div className="text-theme-text-primary flex items-center gap-x-2">
         <Robot size={24} />
-        <p className="text-lg font-medium">Agent Skills</p>
+        <p className="text-lg font-medium">{t("agentSidebarLists.agentSkills")}</p>
       </div>
       <AgentList
         skills={defaultSkills}
@@ -50,7 +52,7 @@ export default function AgentSidebarLists({
 
       <div className="text-theme-text-primary flex items-center gap-x-2 mt-6">
         <Package size={24} />
-        <p className="text-lg font-medium">App Integrations</p>
+        <p className="text-lg font-medium">{t("agentSidebarLists.appIntegrations")}</p>
       </div>
       <AgentList
         skills={appIntegrationSkills}
@@ -61,7 +63,7 @@ export default function AgentSidebarLists({
 
       <div className="text-theme-text-primary flex items-center gap-x-2 mt-4">
         <Plug size={24} />
-        <p className="text-lg font-medium">Custom Skills</p>
+        <p className="text-lg font-medium">{t("agentSidebarLists.customSkills")}</p>
       </div>
       <ImportedSkillList
         skills={importedSkills}
@@ -72,7 +74,7 @@ export default function AgentSidebarLists({
       <div className="text-theme-text-primary flex items-center justify-between gap-x-2 mt-4">
         <div className="flex items-center gap-x-2">
           <FlowArrow size={24} />
-          <p className="text-lg font-medium">Agent Flows</p>
+          <p className="text-lg font-medium">{t("agentSidebarLists.agentFlows")}</p>
         </div>
         {agentFlows.length === 0 ? (
           <Link
@@ -80,7 +82,7 @@ export default function AgentSidebarLists({
             className="text-cta-button flex items-center gap-x-1 hover:underline"
           >
             <Hammer size={16} />
-            <p className="text-sm">Create Flow</p>
+            <p className="text-sm">{t("agentSidebarLists.createFlow")}</p>
           </Link>
         ) : (
           <Link
@@ -88,7 +90,7 @@ export default function AgentSidebarLists({
             className="text-theme-text-secondary hover:text-cta-button flex items-center gap-x-1"
           >
             <Hammer size={16} />
-            <p className="text-sm">Open Builder</p>
+            <p className="text-sm">{t("agentSidebarLists.openBuilder")}</p>
           </Link>
         )}
       </div>

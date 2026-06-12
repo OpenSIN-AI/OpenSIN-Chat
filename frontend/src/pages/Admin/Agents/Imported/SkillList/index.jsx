@@ -1,25 +1,27 @@
 // SPDX-License-Identifier: MIT
 import { CaretRight } from "@phosphor-icons/react";
 import { sentenceCase } from "text-case";
+import { useTranslation } from "react-i18next";
 
 export default function ImportedSkillList({
   skills = [],
   selectedSkill = null,
   handleClick = null,
 }) {
+  const { t } = useTranslation();
   if (skills.length === 0)
     return (
       <div className="text-theme-text-secondary text-center text-xs flex flex-col gap-y-2">
-        <p>No imported skills found</p>
+        <p>{t("importedSkillList.noImportedSkills")}</p>
         <p>
-          Learn about agent skills in the{" "}
+          {t("importedSkillList.learnAboutSkills")}{" "}
           <a
             href="https://docs.opensin.delqhi.com/agent/custom/developer-guide"
             target="_blank"
             className="text-theme-text-secondary underline hover:text-cta-button"
             rel="noreferrer"
           >
-            OpenSIN Chat Agent Docs
+            {t("importedSkillList.agentDocs")}
           </a>
           .
         </p>
@@ -47,7 +49,7 @@ export default function ImportedSkillList({
           <div className="text-sm font-light">{sentenceCase(config.name)}</div>
           <div className="flex items-center gap-x-2">
             <div className="text-sm text-theme-text-secondary font-medium">
-              {config.active ? "On" : "Off"}
+              {config.active ? t("common.on") : t("common.off")}
             </div>
             <CaretRight
               size={14}

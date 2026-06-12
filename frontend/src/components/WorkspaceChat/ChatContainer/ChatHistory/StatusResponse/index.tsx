@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
 import { CaretDown } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 
 import AgentAnimation from "@/media/animations/agent-animation.webm";
 import AgentStatic from "@/media/animations/agent-static.png";
@@ -9,6 +10,7 @@ export default function StatusResponse({
   messages = [],
   isThinking = false,
 }: any) {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false as any);
   const currentThought = messages[messages.length - 1];
   const previousThoughts = messages.slice(0, -1);
@@ -35,19 +37,19 @@ export default function StatusResponse({
                   playsInline
                   className="w-[18px] h-[18px] scale-[165%] transition-opacity duration-200 light:invert light:opacity-50"
                   data-tooltip-id="agent-thinking"
-                  data-tooltip-content="Agent is thinking..."
-                  aria-label="Agent is thinking..."
+                  data-tooltip-content={t("statusResponse.thinking")}
+                  aria-label={t("statusResponse.thinking")}
                 >
                   <source src={AgentAnimation} type="video/webm" />
                 </video>
               ) : (
                 <img
                   src={AgentStatic}
-                  alt="Agent complete"
+                  alt={t("statusResponse.finished")}
                   className="w-[18px] h-[18px] transition-opacity duration-200 light:invert light:opacity-50"
                   data-tooltip-id="agent-thinking"
-                  data-tooltip-content="Agent has finished thinking"
-                  aria-label="Agent has finished thinking"
+                  data-tooltip-content={t("statusResponse.finished")}
+                  aria-label={t("statusResponse.finished")}
                 />
               )}
             </div>
@@ -57,10 +59,14 @@ export default function StatusResponse({
                 className="absolute top-4 right-4 border-none text-zinc-200 light:text-slate-800 transition-colors"
                 data-tooltip-id="expand-cot"
                 data-tooltip-content={
-                  isExpanded ? "Hide thought chain" : "Show thought chain"
+                  isExpanded
+                    ? t("statusResponse.hideThoughtChain")
+                    : t("statusResponse.showThoughtChain")
                 }
                 aria-label={
-                  isExpanded ? "Hide thought chain" : "Show thought chain"
+                  isExpanded
+                    ? t("statusResponse.hideThoughtChain")
+                    : t("statusResponse.showThoughtChain")
                 }
               >
                 <CaretDown

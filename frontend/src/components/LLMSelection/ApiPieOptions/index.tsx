@@ -1,17 +1,20 @@
 import useProviderModels from "@/hooks/useProviderModels"; // SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
+
 export default function ApiPieLLMOptions({ settings }: any) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-y-4 mt-1.5">
       <div className="flex gap-[36px]">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            APIpie API Key
+            {t("providerSettings.apiPie.apiKey")}
           </label>
           <input
             type="password"
             name="ApipieLLMApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="APIpie API Key"
+            placeholder={t("providerSettings.apiPie.apiKeyPlaceholder")}
             defaultValue={settings?.ApipieLLMApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -27,13 +30,14 @@ export default function ApiPieLLMOptions({ settings }: any) {
 }
 
 function APIPieModelSelection({ settings }: any) {
+  const { t } = useTranslation();
   const { customModels: groupedModels, isLoading } =
     useProviderModels("apipie");
   if (isLoading || Object.keys(groupedModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("providerSettings.apiPie.modelSelection")}
         </label>
         <select
           name="ApipieLLMModelPref"
@@ -41,7 +45,7 @@ function APIPieModelSelection({ settings }: any) {
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("providerSettings.apiPie.loadingModels")}
           </option>
         </select>
       </div>
@@ -51,7 +55,7 @@ function APIPieModelSelection({ settings }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("providerSettings.apiPie.modelSelection")}
       </label>
       <select
         name="ApipieLLMModelPref"

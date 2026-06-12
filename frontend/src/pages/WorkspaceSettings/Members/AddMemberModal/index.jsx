@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
 import showToast from "@/utils/toast";
+import { useTranslation } from "react-i18next";
 
 export default function AddMemberModal({ closeModal, workspace, users }) {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUsers, setSelectedUsers] = useState(workspace?.userIds || []);
 
@@ -65,12 +67,14 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="flex items-center justify-between p-6 border-b rounded-t border-theme-modal-border">
           <div className="flex items-center gap-x-4">
-            <h3 className="text-base font-semibold text-white">Users</h3>
+            <h3 className="text-base font-semibold text-white">
+              {t("addMemberModal.users")}
+            </h3>
             <div className="relative">
               <input
                 onChange={handleSearch}
                 className="w-[400px] h-[34px] bg-theme-bg-primary rounded-[100px] text-white placeholder:text-theme-text-secondary text-sm px-10 pl-10"
-                placeholder="Search for a user"
+                placeholder={t("addMemberModal.searchPlaceholder")}
               />
               <MagnifyingGlass
                 size={16}
@@ -114,7 +118,7 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
                 ))
               ) : (
                 <p className="text-theme-text-secondary text-sm font-medium ">
-                  No users found
+                  {t("addMemberModal.noUsersFound")}
                 </p>
               )}
             </table>
@@ -136,7 +140,7 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
                     <div className="w-2 h-2 bg-white rounded-[2px]" />
                   )}
                 </div>
-                <p className="text-white text-sm font-medium">Select All</p>
+                <p className="text-white text-sm font-medium">{t("addMemberModal.selectAll")}</p>
               </button>
               {selectedUsers.length > 0 && (
                 <button
@@ -145,7 +149,7 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
                   className="flex items-center gap-x-2 ml-2"
                 >
                   <p className="text-theme-text-secondary text-sm font-medium hover:text-theme-text-primary">
-                    Unselect
+                    {t("addMemberModal.unselect")}
                   </p>
                 </button>
               )}
@@ -154,7 +158,7 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
               type="submit"
               className="transition-all duration-300 text-xs px-2 py-1 font-semibold rounded-lg bg-primary-button hover:bg-secondary border-2 border-transparent hover:border-primary-button hover:text-white h-[32px] w-[68px] -mr-8 whitespace-nowrap shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
             >
-              Save
+              {t("addMemberModal.save")}
             </button>
           </div>
         </form>

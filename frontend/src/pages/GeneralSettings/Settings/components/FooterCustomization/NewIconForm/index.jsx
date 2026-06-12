@@ -62,11 +62,13 @@ export default function NewIconForm({ icon, url, onSave, onRemove }) {
           className="h-[34px] w-[34px] bg-theme-settings-input-bg rounded-full flex items-center justify-center cursor-pointer hover:outline-primary-button hover:outline"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
+          {/* eslint-disable i18next/no-literal-string */}
           {React.createElement(ICON_COMPONENTS[selectedIcon] || Plus, {
             className: "h-5 w-5",
             weight: selectedIcon === "Plus" ? "bold" : "fill",
             color: "var(--theme-sidebar-footer-icon-fill)",
           })}
+          {/* eslint-enable i18next/no-literal-string */}
         </div>
         {isDropdownOpen && (
           <div className="absolute z-10 grid grid-cols-4 bg-theme-settings-input-bg mt-2 rounded-md w-[150px] h-[78px] overflow-y-auto border border-white/20 shadow-lg">
@@ -77,11 +79,13 @@ export default function NewIconForm({ icon, url, onSave, onRemove }) {
                 className="flex justify-center items-center border border-transparent hover:bg-theme-sidebar-footer-icon-hover hover:border-slate-100 light:hover:border-black/80 rounded-full p-2"
                 onClick={() => handleIconChange(iconName)}
               >
+                {/* eslint-disable i18next/no-literal-string */}
                 {React.createElement(ICON_COMPONENTS[iconName], {
                   className: "h-5 w-5",
                   weight: "fill",
                   color: "var(--theme-sidebar-footer-icon-fill)",
                 })}
+                {/* eslint-enable i18next/no-literal-string */}
               </button>
             ))}
           </div>

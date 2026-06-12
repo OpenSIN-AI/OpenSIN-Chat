@@ -12,6 +12,7 @@ import PiperTTSIcon from "@/media/ttsproviders/piper.png";
 import GenericOpenAiLogo from "@/media/ttsproviders/generic-openai.png";
 import KokoroIcon from "@/media/ttsproviders/kokoro.png";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
+import { useTranslation } from "react-i18next";
 
 import BrowserNative from "@/components/TextToSpeech/BrowserNative";
 import OpenAiTTSOptions from "@/components/TextToSpeech/OpenAiOptions";
@@ -21,62 +22,60 @@ import OpenAiGenericTTSOptions from "@/components/TextToSpeech/OpenAiGenericOpti
 import KokoroTTSOptions from "@/components/TextToSpeech/KokoroOptions";
 import NvidiaNimTTSOptions from "@/components/TextToSpeech/NvidiaNimOptions";
 
-const PROVIDERS = [
+const PROVIDERS = (t) => [
   {
-    name: "System native",
+    name: t("audioPreference.tts.systemNative"),
     value: "native",
     logo: OpenSINChatIcon,
     options: (settings) => <BrowserNative settings={settings} />,
-    description: "Uses your browser's built in TTS service if supported.",
+    description: t("audioPreference.tts.systemNativeDesc"),
   },
   {
-    name: "OpenAI",
+    name: t("audioPreference.tts.openai"),
     value: "openai",
     logo: OpenAiLogo,
     options: (settings) => <OpenAiTTSOptions settings={settings} />,
-    description: "Use OpenAI's text to speech voices.",
+    description: t("audioPreference.tts.openaiDesc"),
   },
   {
-    name: "ElevenLabs",
+    name: t("audioPreference.tts.elevenlabs"),
     value: "elevenlabs",
     logo: ElevenLabsIcon,
     options: (settings) => <ElevenLabsTTSOptions settings={settings} />,
-    description: "Use ElevenLabs's text to speech voices and technology.",
+    description: t("audioPreference.tts.elevenlabsDesc"),
   },
   {
-    name: "PiperTTS",
+    name: t("audioPreference.tts.piper"),
     value: "piper_local",
     logo: PiperTTSIcon,
     options: (settings) => <PiperTTSOptions settings={settings} />,
-    description: "Run TTS models locally in your browser privately.",
+    description: t("audioPreference.tts.piperDesc"),
   },
   {
-    name: "Kokoro",
+    name: t("audioPreference.tts.kokoro"),
     value: "kokoro",
     logo: KokoroIcon,
     options: (settings) => <KokoroTTSOptions settings={settings} />,
-    description:
-      "Connect to a self-hosted kokoro-fastapi server for high-quality open-source voices.",
+    description: t("audioPreference.tts.kokoroDesc"),
   },
   {
-    name: "OpenAI Compatible",
+    name: t("audioPreference.tts.openaiCompatible"),
     value: "generic-openai",
     logo: GenericOpenAiLogo,
     options: (settings) => <OpenAiGenericTTSOptions settings={settings} />,
-    description:
-      "Connect to an OpenAI compatible TTS service running locally or remotely.",
+    description: t("audioPreference.tts.openaiCompatibleDesc"),
   },
   {
-    name: "NVIDIA NIM",
+    name: t("audioPreference.tts.nvidiaNim"),
     value: "nvidia-nim",
     logo: NvidiaNimLogo,
     options: (settings) => <NvidiaNimTTSOptions settings={settings} />,
-    description:
-      "Use NVIDIA NIM's hosted text-to-speech API with high-quality voices.",
+    description: t("audioPreference.tts.nvidiaNimDesc"),
   },
 ];
 
 export default function TextToSpeechProvider({ settings }) {
+  const { t } = useTranslation();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -98,9 +97,9 @@ export default function TextToSpeechProvider({ settings }) {
     setSaving(true);
 
     if (error) {
-      showToast(`Failed to save preferences: ${error}`, "error");
+      showToast(t("audioPreference.tts.saveFailed", { error }), "error");
     } else {
-      showToast("Text-to-speech preferences saved successfully.", "success");
+      showToast(t("audioPreference.tts.saveSuccess"), "success");
     }
     setSaving(false);
     setHasChanges(!!error);
@@ -123,13 +122,13 @@ export default function TextToSpeechProvider({ settings }) {
   };
 
   useEffect(() => {
-    const filtered = PROVIDERS.filter((provider) =>
+    const filtered = PROVIDERS(t).filter((provider) =>
       provider.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     setFilteredProviders(filtered);
   }, [searchQuery, selectedProvider]);
 
-  const selectedProviderObject = PROVIDERS.find(
+  const selectedProviderObject = PROVIDERS(t).find(
     (provider) => provider.value === selectedProvider,
   );
 
@@ -139,24 +138,21 @@ export default function TextToSpeechProvider({ settings }) {
         <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
           <div className="flex gap-x-4 items-center">
             <p className="text-lg leading-6 font-bold text-white">
-              Text-to-speech Preference
+              {t("audioPreference.tts.title")}
             </p>
           </div>
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60">
-            Here you can specify what kind of text-to-speech providers you would
-            want to use in your OpenSIN Chat experience. By default, we use the
-            browser's built in support for these services, but you may want to
-            use others.
+            {t("audioPreference.tts.description")}
           </p>
         </div>
         <div className="w-full justify-end flex">
           {hasChanges && (
             <CTAButton className="mt-3 mr-0 -mb-14 z-10">
-              {saving ? "Saving..." : "Save changes"}
+              {saving ? t("common.saving") : t("common.saveChanges")}
             </CTAButton>
           )}
         </div>
-        <div className="text-base font-bold text-white mt-6 mb-4">Provider</div>
+        <div className="text-base font-bold text-white mt-6 mb-4">{t("common.provider")}</div>
         <div className="relative">
           {searchMenuOpen && (
             <div
@@ -177,7 +173,7 @@ export default function TextToSpeechProvider({ settings }) {
                     type="text"
                     name="tts-provider-search"
                     autoComplete="off"
-                    placeholder="Search text to speech providers"
+                    placeholder={t("audioPreference.tts.searchPlaceholder")}
                     className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none text-theme-text-primary placeholder:text-theme-text-primary placeholder:font-medium"
                     onChange={(e) => setSearchQuery(e.target.value)}
                     ref={searchInputRef}

@@ -93,6 +93,7 @@ function SearchResultWrapper({ children }: any) {
 }
 
 function SearchResults({ searchResults, searchTerm, loading }: any) {
+  const { t } = useTranslation();
   if (!searchTerm || searchTerm.length < 3) return null;
   if (loading)
     return (
@@ -100,7 +101,7 @@ function SearchResults({ searchResults, searchTerm, loading }: any) {
         <div className="flex flex-col gap-y-[8px] h-[200px] justify-center items-center">
           <Preloader size={5} />
           <p className="text-theme-text-secondary text-xs font-semibold text-center">
-            Searching for "{searchTerm}"
+            {t("sidebarSearch.searchingFor", { searchTerm })}
           </p>
         </div>
       </SearchResultWrapper>
@@ -114,7 +115,7 @@ function SearchResults({ searchResults, searchTerm, loading }: any) {
       <SearchResultWrapper>
         <div className="flex flex-col gap-y-[8px] h-[200px] justify-center items-center">
           <p className="text-theme-text-secondary text-xs font-semibold text-center">
-            No results found for
+            {t("sidebarSearch.noResultsFound")}
             <br />
             <span className="text-theme-text-primary font-semibold text-sm">
               "{searchTerm}"
@@ -128,7 +129,7 @@ function SearchResults({ searchResults, searchTerm, loading }: any) {
   return (
     <SearchResultWrapper>
       <SearchResultCategory
-        name="Workspaces"
+        name={t("sidebarSearch.workspaces")}
         items={searchResults.workspaces?.map((workspace) => ({
           id: workspace.slug,
           to: paths.workspace.chat(workspace.slug),
@@ -136,7 +137,7 @@ function SearchResults({ searchResults, searchTerm, loading }: any) {
         }))}
       />
       <SearchResultCategory
-        name="Threads"
+        name={t("sidebarSearch.threads")}
         items={searchResults.threads?.map((thread) => ({
           id: thread.slug,
           to: paths.workspace.thread(thread.workspace.slug, thread.slug),

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function CerebrasLLMOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(settings?.CerebrasApiKey);
   const [apiKey, setApiKey] = useState(settings?.CerebrasApiKey);
 
@@ -10,13 +12,13 @@ export default function CerebrasLLMOptions({ settings }: any) {
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Cerebras API Key
+          {t("providerSettings.cerebras.apiKey")}
         </label>
         <input
           type="password"
           name="CerebrasApiKey"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder="Cerebras API Key"
+          placeholder={t("providerSettings.cerebras.apiKeyPlaceholder")}
           defaultValue={settings?.CerebrasApiKey ? "*".repeat(20) : ""}
           required={true}
           autoComplete="off"
@@ -41,12 +43,13 @@ export default function CerebrasLLMOptions({ settings }: any) {
  * @returns {JSX.Element} The Cerebras model selection component
  */
 function CerebrasModelSelection({ apiKey: _apiKey, settings }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels("cerebras", _apiKey);
   if (isLoading) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("providerSettings.cerebras.modelSelection")}
         </label>
         <select
           name="CerebrasModelPref"
@@ -54,7 +57,7 @@ function CerebrasModelSelection({ apiKey: _apiKey, settings }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("providerSettings.cerebras.loadingModels")}
           </option>
         </select>
       </div>
@@ -64,7 +67,7 @@ function CerebrasModelSelection({ apiKey: _apiKey, settings }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("providerSettings.cerebras.modelSelection")}
       </label>
       <select
         name="CerebrasModelPref"
@@ -72,7 +75,7 @@ function CerebrasModelSelection({ apiKey: _apiKey, settings }: any) {
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
-          <optgroup label="Available models">
+          <optgroup label={t("providerSettings.cerebras.availableModels")}>
             {(customModels as any).map((model) => {
               return (
                 <option

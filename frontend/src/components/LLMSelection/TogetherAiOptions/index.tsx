@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 import useProviderModels from "@/hooks/useProviderModels";
+import { useTranslation } from "react-i18next";
 
 export default function TogetherAiOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(settings?.TogetherAiApiKey);
   const [apiKey, setApiKey] = useState(settings?.TogetherAiApiKey);
 
@@ -10,13 +12,13 @@ export default function TogetherAiOptions({ settings }: any) {
     <div className="flex gap-[36px] mt-1.5">
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Together AI API Key
+          {t("providerSettings.togetherAi.apiKey")}
         </label>
         <input
           type="password"
           name="TogetherAiApiKey"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder="Together AI API Key"
+          placeholder={t("providerSettings.togetherAi.apiKeyPlaceholder")}
           defaultValue={settings?.TogetherAiApiKey ? "*".repeat(20) : ""}
           required={true}
           autoComplete="off"
@@ -33,12 +35,13 @@ export default function TogetherAiOptions({ settings }: any) {
 }
 
 function TogetherAiModelSelection({ settings, apiKey }: any) {
+  const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels("togetherai", apiKey);
   if (isLoading || Object.keys(customModels).length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("providerSettings.togetherAi.modelSelection")}
         </label>
         <select
           name="TogetherAiModelPref"
@@ -46,7 +49,7 @@ function TogetherAiModelSelection({ settings, apiKey }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("providerSettings.togetherAi.loadingModels")}
           </option>
         </select>
       </div>
@@ -56,7 +59,7 @@ function TogetherAiModelSelection({ settings, apiKey }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("providerSettings.togetherAi.modelSelection")}
       </label>
       <select
         name="TogetherAiModelPref"

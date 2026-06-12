@@ -10,8 +10,10 @@ import ConnectionModal from "./ConnectionModal";
 import DeviceRow from "./DeviceRow";
 import { isMobile } from "react-device-detect";
 import useMobileConnections from "@/hooks/useMobileConnections";
+import { useTranslation } from "react-i18next";
 
 export default function MobileDevices() {
+  const { t } = useTranslation();
   const { isOpen, openModal, closeModal } = useModal();
   const { devices, isLoading, mutate } = useMobileConnections();
   const [showedEmpty, setShowedEmpty] = useState(false);
@@ -37,12 +39,11 @@ export default function MobileDevices() {
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
             <div className="items-center flex gap-x-4">
               <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                Connected Mobile Devices
+                {t("mobileConnections.title")}
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary mt-2">
-              These are the devices that are connected to your desktop
-              application to sync chats, workspaces, and more.
+              {t("mobileConnections.description")}
             </p>
           </div>
           <div className="w-full justify-end flex">
@@ -50,7 +51,7 @@ export default function MobileDevices() {
               onClick={openModal}
               className="mt-3 mr-0 mb-4 md:-mb-14 z-10"
             >
-              <QrCode className="h-4 w-4" weight="bold" /> Register New Device
+              <QrCode className="h-4 w-4" weight="bold" /> {t("mobileConnections.registerNewDevice")}
             </CTAButton>
           </div>
           <div className="overflow-x-auto mt-6">
@@ -69,10 +70,10 @@ export default function MobileDevices() {
                 <thead className="text-theme-text-secondary text-xs leading-[18px] font-bold uppercase border-white/10 border-b">
                   <tr>
                     <th scope="col" className="px-6 py-3">
-                      Device Name
+                      {t("mobileConnections.deviceName")}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      Registered
+                      {t("mobileConnections.registered")}
                     </th>
                     <th scope="col" className="px-6 py-3">
                       {" "}
@@ -83,7 +84,7 @@ export default function MobileDevices() {
                   {devices.length === 0 ? (
                     <tr className="bg-transparent text-theme-text-secondary text-sm font-medium">
                       <td colSpan="4" className="px-6 py-4 text-center">
-                        No devices found
+                        {t("mobileConnections.noDevices")}
                       </td>
                     </tr>
                   ) : (

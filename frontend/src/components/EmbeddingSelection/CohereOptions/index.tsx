@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import System from "@/models/system";
 
 export default function CohereEmbeddingOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(settings?.CohereApiKey);
   const [cohereApiKey, setCohereApiKey] = useState(settings?.CohereApiKey);
 
@@ -11,13 +13,13 @@ export default function CohereEmbeddingOptions({ settings }: any) {
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("providerSettings.cohereEmbedding.apiKey")}
           </label>
           <input
             type="password"
             name="CohereApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Cohere API Key"
+            placeholder={t("providerSettings.cohereEmbedding.apiKeyPlaceholder")}
             defaultValue={settings?.CohereApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -33,6 +35,7 @@ export default function CohereEmbeddingOptions({ settings }: any) {
 }
 
 function CohereModelSelection({ apiKey, settings }: any) {
+  const { t } = useTranslation();
   const [models, setModels] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -59,7 +62,7 @@ function CohereModelSelection({ apiKey, settings }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Model Preference
+          {t("providerSettings.cohereEmbedding.modelPreference")}
         </label>
         <select
           name="EmbeddingModelPref"
@@ -67,7 +70,7 @@ function CohereModelSelection({ apiKey, settings }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("providerSettings.cohereEmbedding.loadingModels")}
           </option>
         </select>
       </div>
@@ -77,7 +80,7 @@ function CohereModelSelection({ apiKey, settings }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Model Preference
+        {t("providerSettings.cohereEmbedding.modelPreference")}
       </label>
       <select
         name="EmbeddingModelPref"

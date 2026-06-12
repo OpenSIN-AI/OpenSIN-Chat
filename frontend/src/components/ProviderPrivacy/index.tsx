@@ -6,20 +6,22 @@ import { ArrowSquareOut } from "@phosphor-icons/react";
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import { Link } from "react-router-dom";
 import { titleCase, sentenceCase } from "text-case";
+import { useTranslation } from "react-i18next";
 
-function defaultProvider(providerString) {
+function defaultProvider(providerString, t) {
   return {
     name: providerString
       ? titleCase(sentenceCase(String(providerString)))
-      : "Unknown",
+      : t("providerPrivacy.unknown"),
     description: [
-      `"${providerString}" has no known data handling policy defined in OpenSIN Chat.`,
+      t("providerPrivacy.noPolicyDefined", { provider: providerString }),
     ],
     logo: OpenSINChatIcon,
   };
 }
 
 export default function ProviderPrivacy() {
+  const { t } = useTranslation();
   const { settings, loading } = useSystemSettings();
 
   const providers = useMemo(() => {
@@ -27,13 +29,13 @@ export default function ProviderPrivacy() {
       return { llmProvider: null, embeddingEngine: null, vectorDb: null };
     const providerDefinition =
       PROVIDER_PRIVACY_MAP.llm[settings?.LLMProvider] ||
-      defaultProvider(settings?.LLMProvider);
+      defaultProvider(settings?.LLMProvider, t);
     const embeddingEngineDefinition =
       PROVIDER_PRIVACY_MAP.embeddingEngine[settings?.EmbeddingEngine] ||
-      defaultProvider(settings?.EmbeddingEngine);
+      defaultProvider(settings?.EmbeddingEngine, t);
     const vectorDbDefinition =
       PROVIDER_PRIVACY_MAP.vectorDb[settings?.VectorDB] ||
-      defaultProvider(settings?.VectorDB);
+      defaultProvider(settings?.VectorDB, t);
 
     return {
       llmProvider: providerDefinition,
@@ -46,25 +48,26 @@ export default function ProviderPrivacy() {
   return (
     <div className="flex flex-col gap-8 w-full max-w-2xl">
       <ProviderPrivacyItem
-        title="LLM Provider"
+        title={t("providerPrivacy.llmProvider")}
         provider={providers.llmProvider}
-        altText="LLM Logo"
+        altText={t("providerPrivacy.llmLogo")}
       />
       <ProviderPrivacyItem
-        title="Embedding Preference"
+        title={t("providerPrivacy.embeddingPreference")}
         provider={providers.embeddingEngine}
-        altText="Embedding Logo"
+        altText={t("providerPrivacy.embeddingLogo")}
       />
       <ProviderPrivacyItem
-        title="Vector Database"
+        title={t("providerPrivacy.vectorDatabase")}
         provider={providers.vectorDb}
-        altText="Vector DB Logo"
+        altText={t("providerPrivacy.vectorDbLogo")}
       />
     </div>
   );
 }
 
-function ProviderPrivacyItem({ title, provider, altText }) {
+function ProviderPrivacyItem({ title, provider, altText }: any) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-start gap-y-3 pb-4 border-b border-theme-sidebar-border">
       <div className="text-theme-text-primary text-base font-bold">{title}</div>
@@ -82,14 +85,14 @@ function ProviderPrivacyItem({ title, provider, altText }) {
           </div>
           {provider.policyUrl ? (
             <div className="text-theme-text-secondary text-sm">
-              Your usage, chats, and data are subject to the service&apos;s{" "}
+              {t("providerPrivacy.usageSubjectTo")}{" "}
               <Link
                 className="text-theme-text-secondary hover:text-theme-text-primary text-sm font-medium underline transition-colors inline-flex items-center gap-1"
                 to={provider.policyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                privacy policy
+                {t("providerPrivacy.privacyPolicy")}
                 <ArrowSquareOut size={12} />
               </Link>
               .

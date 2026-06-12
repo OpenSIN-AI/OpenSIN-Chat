@@ -2051,6 +2051,105 @@ const TRANSLATIONS = {
       modelPreference: "Modellpräferenz",
       availableModels: "Verfügbare Embedding-Modelle",
     },
+    huggingFace: {
+      endpointLabel: "HuggingFace Inferenz-Endpunkt",
+      endpointPlaceholder: "https://example.endpoints.huggingface.cloud",
+      accessTokenLabel: "HuggingFace Zugriffstoken",
+      accessTokenPlaceholder: "HuggingFace Zugriffstoken",
+      tokenLimitLabel: "Modell-Token-Limit",
+      tokenLimitPlaceholder: "4096",
+    },
+    mistral: {
+      apiKey: "Mistral API-Schlüssel",
+      apiKeyPlaceholder: "Mistral API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      waitingForApiKey: "-- warte auf API-Schlüssel --",
+      availableModels: "Verfügbare Mistral-Modelle",
+    },
+    textGenWebui: {
+      baseUrl: "Basis-URL",
+      baseUrlPlaceholder: "http://127.0.0.1:5000/v1",
+      modelContextWindow: "Modell-Kontextfenster",
+      contextWindowPlaceholder: "Kontextfenster-Limit (z.B.: 4096)",
+      apiKeyOptional: "API-Schlüssel (Optional)",
+      apiKeyPlaceholder: "TextGen Web UI API-Schlüssel",
+    },
+    apiPie: {
+      apiKey: "APIpie API-Schlüssel",
+      apiKeyPlaceholder: "APIpie API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    cerebras: {
+      apiKey: "Cerebras API-Schlüssel",
+      apiKeyPlaceholder: "Cerebras API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+      availableModels: "Verfügbare Modelle",
+    },
+    cohereAi: {
+      apiKey: "Cohere API-Schlüssel",
+      apiKeyPlaceholder: "Cohere API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    deepSeek: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "DeepSeek API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    fireworksAi: {
+      apiKey: "Fireworks AI API-Schlüssel",
+      apiKeyPlaceholder: "Fireworks AI API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    chromaCloud: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "ck-your-api-key-here",
+      tenantId: "Tenant-ID",
+      tenantIdPlaceholder: "your-tenant-id-here",
+      databaseName: "Datenbankname",
+      databaseNamePlaceholder: "your-database-name",
+    },
+    chromaDb: {
+      endpointLabel: "Chroma-Endpunkt",
+      endpointPlaceholder: "http://localhost:8000",
+      apiHeader: "API-Header",
+      apiHeaderPlaceholder: "X-Api-Key",
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "sk-myApiKeyToAccessMyChromaInstance",
+    },
+    milvusDb: {
+      addressLabel: "Milvus-DB-Adresse",
+      addressPlaceholder: "http://localhost:19530",
+      username: "Milvus-Benutzername",
+      usernamePlaceholder: "Benutzername",
+      password: "Milvus-Passwort",
+      passwordPlaceholder: "Passwort",
+    },
+    cohereEmbedding: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "Cohere API-Schlüssel",
+      modelPreference: "Modellpräferenz",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    nativeEmbedding: {
+      modelPreference: "Modellpräferenz",
+      loadingModels: "--verfügbare Modelle werden geladen--",
+      availableModels: "Verfügbare Embedding-Modelle",
+      trainedOn: "Trainiert auf:",
+      downloadSize: "Download-Größe:",
+      viewModelCard: "Modellkarte auf Hugging Face anzeigen \u2192",
+    },
+    openRouterEmbedding: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "OpenRouter API-Schlüssel",
+      modelPreference: "Modellpräferenz",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
   },
   agentLLMItem: {
     editSettings: "Einstellungen bearbeiten",
@@ -3436,6 +3535,72 @@ const TRANSLATIONS = {
     notInstalled: "Nicht installiert",
   },
 
+  threadItem: {
+    deletedThread: "Gelöschter Thread",
+    threadOptions: "Thread-Optionen",
+    chatCreateFailed: "Chat konnte nicht erstellt werden: {{message}}",
+    linkCopied: "Link in Zwischenablage kopiert!",
+    linkCopyFailed: "Link konnte nicht kopiert werden.",
+    renamePrompt: "Wie möchten Sie diesen Thread umbenennen?",
+    updateFailed: "Thread konnte nicht aktualisiert werden! {{message}}",
+    deleteConfirm: "Sind Sie sicher, dass Sie diesen Thread löschen möchten? Alle Chats werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+    deleteFailed: "Thread konnte nicht gelöscht werden!",
+    deleteSuccess: "Thread erfolgreich gelöscht!",
+    newChat: "Neuer Chat",
+    copyLink: "Link kopieren",
+    deleteThread: "Thread löschen",
+  },
+
+  sidebarSearch: {
+    searchingFor: 'Suche nach "{{searchTerm}}"',
+    noResultsFound: "Keine Ergebnisse gefunden für",
+    workspaces: "Workspaces",
+    threads: "Threads",
+  },
+
+  providerPrivacy: {
+    unknown: "Unbekannt",
+    noPolicyDefined: "\"{{provider}}\" hat keine bekannte Datenschutzrichtlinie in OpenSIN Chat.",
+    llmProvider: "LLM-Anbieter",
+    llmLogo: "LLM-Logo",
+    embeddingPreference: "Embedding-Einstellung",
+    embeddingLogo: "Embedding-Logo",
+    vectorDatabase: "Vektordatenbank",
+    vectorDbLogo: "VektorDB-Logo",
+    usageSubjectTo: "Ihre Nutzung, Chats und Daten unterliegen der",
+    privacyPolicy: "Datenschutzrichtlinie",
+  },
+
+  directoryStates: {
+    name: "Name",
+    status: "Status",
+    additionalFilesReady: "{{count}} zusätzliche Datei(en) bereit zum Einbetten",
+    addToEmbeddingQueue: "Zur Embedding-Warteschlange hinzufügen",
+    addToQueue: "Zur Warteschlange",
+    removeFromEmbeddingQueue: "Aus Embedding-Warteschlange entfernen",
+  },
+
+  consoleSidebar: {
+    noOutput: "(kein Output)",
+    error: "Fehler: {{error}}",
+    consoleTabs: "Konsole-Tabs",
+  },
+
+  agentSidebarLists: {
+    agentSkills: "Agenten-Fähigkeiten",
+    appIntegrations: "App-Integrationen",
+    customSkills: "Benutzerdefinierte Fähigkeiten",
+    agentFlows: "Agenten-Flows",
+    createFlow: "Flow erstellen",
+    openBuilder: "Builder öffnen",
+  },
+
+  importedSkillList: {
+    noImportedSkills: "Keine importierten Fähigkeiten gefunden",
+    learnAboutSkills: "Erfahren Sie mehr über Agenten-Fähigkeiten in der",
+    agentDocs: "OpenSIN Chat Agenten-Dokumentation",
+  },
+
   errorBoundary: {
     title: "Ein Fehler ist aufgetreten.",
     unknownError: "Unbekannter Fehler",
@@ -3453,6 +3618,137 @@ const TRANSLATIONS = {
     copyDetails: "Details kopieren",
     reset: "Zurücksetzen",
     home: "Startseite",
+  },
+
+  admin: {
+    newWorkspaceModal: {
+      title: "Neuen Workspace erstellen",
+      placeholder: "Mein Workspace",
+      error: "Fehler: {{error}}",
+      adminOnlyHint:
+        "Nach dem Erstellen dieses Workspaces können nur Administratoren ihn sehen. Sie können nach der Erstellung Benutzer hinzufügen.",
+      cancel: "Abbrechen",
+      create: "Workspace erstellen",
+    },
+  },
+
+  audioPreference: {
+    stt: {
+      title: "Sprach-zu-Text-Einstellung",
+      description:
+        "Hier können Sie festlegen, welche Spracherkennungs- und Sprachsynthese-Anbieter Sie in Ihrer OpenSIN Chat-Erfahrung nutzen möchten. Standardmäßig verwenden wir die im Browser integrierte Unterstützung für diese Dienste, aber Sie können auch andere verwenden.",
+      searchPlaceholder: "Spracherkennungsanbieter durchsuchen",
+      saveFailed: "Einstellungen konnten nicht gespeichert werden: {{error}}",
+      saveSuccess: "Spracherkennungseinstellungen erfolgreich gespeichert.",
+      systemNative: "Systemeigen",
+      systemNativeDesc: "Verwendet den integrierten STT-Dienst Ihres Browsers, falls unterstützt.",
+      openai: "OpenAI",
+      openaiDesc: "Verwenden Sie OpenAIs Whisper-API zur Spracherkennung.",
+      lemonade: "Lemonade",
+      lemonadeDesc: "Sprache über Ihren lokalen Lemonade-Server transkribieren.",
+      deepgram: "Deepgram",
+      deepgramDesc: "Sprache mit Deepgrams gehosteten Nova-Modellen transkribieren.",
+      genericOpenai: "Generisches OpenAI",
+      genericOpenaiDesc:
+        "Verbinden Sie sich mit einem OpenAI-kompatiblen STT-Dienst über eine benutzerdefinierte Konfiguration.",
+    },
+    tts: {
+      title: "Text-zu-Sprache-Einstellung",
+      description:
+        "Hier können Sie festlegen, welche Text-zu-Sprache-Anbieter Sie in Ihrer OpenSIN Chat-Erfahrung nutzen möchten. Standardmäßig verwenden wir die im Browser integrierte Unterstützung für diese Dienste, aber Sie können auch andere verwenden.",
+      searchPlaceholder: "Text-zu-Sprache-Anbieter durchsuchen",
+      saveFailed: "Einstellungen konnten nicht gespeichert werden: {{error}}",
+      saveSuccess: "Text-zu-Sprache-Einstellungen erfolgreich gespeichert.",
+      systemNative: "Systemeigen",
+      systemNativeDesc: "Verwendet den integrierten TTS-Dienst Ihres Browsers, falls unterstützt.",
+      openai: "OpenAI",
+      openaiDesc: "OpenAIs Text-zu-Sprache-Stimmen verwenden.",
+      elevenlabs: "ElevenLabs",
+      elevenlabsDesc: "ElevenLabs Text-zu-Sprache-Stimmen und Technologie verwenden.",
+      piper: "PiperTTS",
+      piperDesc: "TTS-Modelle lokal und privat in Ihrem Browser ausführen.",
+      kokoro: "Kokoro",
+      kokoroDesc:
+        "Verbinden Sie sich mit einem selbstgehosteten kokoro-fastapi-Server für hochwertige Open-Source-Stimmen.",
+      openaiCompatible: "OpenAI-kompatibel",
+      openaiCompatibleDesc:
+        "Verbinden Sie sich mit einem OpenAI-kompatiblen TTS-Dienst, der lokal oder remote ausgeführt wird.",
+      nvidiaNim: "NVIDIA NIM",
+      nvidiaNimDesc:
+        "Verwenden Sie NVIDIA NIMs gehostete Text-zu-Sprache-API mit hochwertigen Stimmen.",
+    },
+  },
+
+  embedChats: {
+    chatRow: {
+      deleteConfirm:
+        "Sind Sie sicher, dass Sie diesen Chat löschen möchten?\n\nDiese Aktion ist irreversibel.",
+      delete: "Löschen",
+      viewingText: "Text anzeigen",
+      sessionId: "Sitzungs-ID",
+      username: "Benutzername",
+      clientIp: "Client-IP-Adresse",
+      clientHost: "Client-Host-URL",
+    },
+  },
+
+  embedConfigs: {
+    embedRow: {
+      disableConfirm:
+        "Sind Sie sicher, dass Sie diese Einbettung deaktivieren möchten?\nEinmal deaktiviert, wird die Einbettung nicht mehr auf Chat-Anfragen antworten.",
+      toggleStatus: "Einbettung {{status}}.",
+      disabled: "wurde deaktiviert",
+      active: "ist aktiv",
+      deleteConfirm:
+        "Sind Sie sicher, dass Sie diese Einbettung löschen möchten?\nEinmal gelöscht, wird diese Einbettung nicht mehr auf Chats antworten oder aktiv sein.\n\nDiese Aktion ist irreversibel.",
+      deleted: "Einbettung aus dem System gelöscht.",
+      code: "Code",
+      disable: "Deaktivieren",
+      enable: "Aktivieren",
+      delete: "Löschen",
+      all: "alle",
+    },
+  },
+
+  communityHub: {
+    import: {
+      unsupported: {
+        title: "Nicht unterstütztes Element",
+        description:
+          "Wir haben ein Element im Community Hub gefunden, aber wir wissen nicht, was es ist, oder es wird noch nicht für den Import in OpenSIN Chat unterstützt.",
+        itemId: "Die Element-ID lautet:",
+        itemType: "Der Elementtyp lautet:",
+        contactSupport:
+          "Bitte kontaktieren Sie den Support per E-Mail, wenn Sie Hilfe beim Import dieses Elements benötigen.",
+        tryAnother: "Anderes Element versuchen",
+      },
+    },
+    trending: {
+      agentSkill: {
+        skill: "Skill",
+        file: "Datei",
+        found: "gefunden",
+        import: "Importieren →",
+      },
+    },
+  },
+
+  mobileConnections: {
+    title: "Verbundene mobile Geräte",
+    description:
+      "Dies sind die Geräte, die mit Ihrer Desktop-Anwendung verbunden sind, um Chats, Workspaces und mehr zu synchronisieren.",
+    registerNewDevice: "Neues Gerät registrieren",
+    deviceName: "Gerätename",
+    registered: "Registriert",
+    noDevices: "Keine Geräte gefunden",
+    connectionModal: {
+      title: "Geh mobil. Bleib lokal. OpenSIN Chat Mobile.",
+      description:
+        "OpenSIN Chat für Mobilgeräte ermöglicht es Ihnen, sich mit den Chats, Threads, Tools und Dokumenten Ihres Workspaces zu verbinden, um sie unterwegs zu nutzen.\n\nFühren Sie lokale Modelle auf Ihrem Telefon privat aus oder leiten Sie Chats direkt an diese Instanz weiter.",
+      scanHint:
+        "Scannen Sie den QR-Code mit der OpenSIN Chat Mobile-App, um die Live-Synchronisierung Ihrer Workspaces, Chats, Threads und Dokumente zu aktivieren.",
+      learnMore: "Mehr erfahren",
+    },
   },
 };
 

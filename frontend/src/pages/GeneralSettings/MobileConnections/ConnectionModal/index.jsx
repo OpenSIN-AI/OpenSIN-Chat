@@ -10,8 +10,10 @@ import PreLoader from "@/components/Preloader";
 import Logo from "@/media/logo/openafd-icon.svg";
 import paths from "@/utils/paths";
 import GetOnGooglePlay from "./gplay-badge.svg";
+import { useTranslation } from "react-i18next";
 
 export default function MobileConnectModal({ isOpen, onClose }) {
+  const { t } = useTranslation();
   return (
     <ModalWrapper isOpen={isOpen}>
       {/* backgroundImage keeps a style attr: bundler-hashed asset URL only known at build time */}
@@ -31,15 +33,10 @@ export default function MobileConnectModal({ isOpen, onClose }) {
           {/* left column */}
           <div className="flex flex-col w-1/2 gap-y-[16px]">
             <p className="text-[#FFF] text-xl font-bold">
-              Go mobile. Stay local. OpenSIN Chat Mobile.
+              {t("mobileConnections.connectionModal.title")}
             </p>
             <p className="text-[#FFF] text-lg">
-              OpenSIN Chat for mobile allows you to connect to your workspace's
-              chats, threads, tools, and documents for you to use on the go.
-              <br />
-              <br />
-              Run with local models on your phone privately or relay chats
-              directly to this instance seamlessly.
+              {t("mobileConnections.connectionModal.description")}
             </p>
             <Link
               to="https://play.google.com/store/apps/details?id=com.openafd"
@@ -59,14 +56,13 @@ export default function MobileConnectModal({ isOpen, onClose }) {
               <ConnectionQrCode isOpen={isOpen} />
             </div>
             <p className="text-[#FFF] text-sm w-[300px] text-center">
-              Scan the QR code with the OpenSIN Chat Mobile app to enable live
-              sync of your workspaces, chats, threads and documents.
+              {t("mobileConnections.connectionModal.scanHint")}
               <br />
               <Link
                 to={paths.documentation.mobileIntroduction()}
                 className="text-cta-button font-semibold"
               >
-                Learn more
+                {t("mobileConnections.connectionModal.learnMore")}
               </Link>
             </p>
           </div>

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 import useProviderModels from "@/hooks/useProviderModels";
+import { useTranslation } from "react-i18next";
 
 export default function GeminiLLMOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(settings?.GeminiLLMApiKey);
   const [geminiApiKey, setGeminiApiKey] = useState(settings?.GeminiLLMApiKey);
 
@@ -11,13 +13,13 @@ export default function GeminiLLMOptions({ settings }: any) {
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Google AI API Key
+            {t("providerSettings.gemini.apiKey")}
           </label>
           <input
             type="password"
             name="GeminiLLMApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="Google Gemini API Key"
+            placeholder={t("providerSettings.gemini.apiKeyPlaceholder")}
             defaultValue={settings?.GeminiLLMApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -63,6 +65,7 @@ export default function GeminiLLMOptions({ settings }: any) {
 }
 
 function GeminiModelSelection({ apiKey, settings }: any) {
+  const { t } = useTranslation();
   const { customModels: groupedModels, isLoading } = useProviderModels(
     "gemini",
     apiKey,
@@ -71,7 +74,7 @@ function GeminiModelSelection({ apiKey, settings }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Chat Model Selection
+          {t("providerSettings.gemini.modelSelection")}
         </label>
         <select
           name="GeminiLLMModelPref"
@@ -79,7 +82,7 @@ function GeminiModelSelection({ apiKey, settings }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("providerSettings.gemini.loadingModels")}
           </option>
         </select>
       </div>
@@ -89,7 +92,7 @@ function GeminiModelSelection({ apiKey, settings }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Chat Model Selection
+        {t("providerSettings.gemini.modelSelection")}
       </label>
       <select
         name="GeminiLLMModelPref"

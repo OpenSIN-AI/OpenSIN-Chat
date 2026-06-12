@@ -108,7 +108,7 @@ export default function AccountModal({ user, hideModal }: any) {
                   {pfp ? (
                     <img
                       src={pfp}
-                      alt="User profile picture"
+                      alt={t("accountModal.profilePictureAlt")}
                       className="w-48 h-48 rounded-full object-cover bg-white"
                     />
                   ) : (
@@ -146,7 +146,7 @@ export default function AccountModal({ user, hideModal }: any) {
                   name="username"
                   type="text"
                   className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder="User's username"
+                  placeholder={t("accountModal.usernamePlaceholder")}
                   minLength={USERNAME_MIN_LENGTH}
                   maxLength={USERNAME_MAX_LENGTH}
                   pattern={USERNAME_PATTERN}
@@ -169,7 +169,9 @@ export default function AccountModal({ user, hideModal }: any) {
                   name="password"
                   type="text"
                   className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={`${user.username}'s new password`}
+                  placeholder={t("accountModal.passwordPlaceholder", {
+                    username: user.username,
+                  })}
                   minLength={8}
                 />
                 <p className="mt-2 text-xs text-white/60">
@@ -181,12 +183,12 @@ export default function AccountModal({ user, hideModal }: any) {
                   htmlFor="bio"
                   className="block mb-2 text-sm font-medium text-white"
                 >
-                  Bio
+                  {t("accountModal.bio")}
                 </label>
                 <textarea
                   name="bio"
                   className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 min-h-[100px] resize-y"
-                  placeholder="Tell us about yourself..."
+                  placeholder={t("accountModal.bioPlaceholder")}
                   defaultValue={user.bio}
                 />
               </div>

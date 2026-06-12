@@ -47,22 +47,22 @@ function LogsTab() {
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between px-3 py-1.5 border-b border-zinc-800 light:border-slate-200 shrink-0">
         <span className="text-[10px] font-medium uppercase tracking-widest text-zinc-500 light:text-slate-400">
-          {t("console.logs", "Logs")}
+          {t("consoleSidebar.logs")}
         </span>
         <button
           type="button"
           onClick={() => clearConsoleLogs()}
           className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
-          aria-label={t("console.clear", "Leeren")}
+          aria-label={t("consoleSidebar.clear")}
         >
           <Trash size={11} aria-hidden="true" />
-          {t("console.clear", "Leeren")}
+          {t("consoleSidebar.clear")}
         </button>
       </div>
       <div className="flex-1 overflow-y-auto font-mono text-[11px] leading-relaxed p-3 no-scroll">
         {consoleLogs.length === 0 ? (
           <p className="text-zinc-600 light:text-slate-400 text-center mt-8">
-            {t("console.no_logs", "Keine Logs vorhanden.")}
+            {t("consoleSidebar.noLogs")}
           </p>
         ) : (
           consoleLogs.map((log, idx) => (
@@ -123,13 +123,13 @@ function TerminalTab() {
         const data = await res.json();
         setHistory((prev) => [
           ...prev,
-          { type: "output", text: data.output ?? "(kein Output)" },
+          { type: "output", text: data.output ?? t("consoleSidebar.noOutput") },
         ]);
       } else {
         const err = await res.text();
         setHistory((prev) => [
           ...prev,
-          { type: "error", text: `Fehler: ${err}` },
+          { type: "error", text: t("consoleSidebar.error", { error: err }) },
         ]);
       }
     } catch (e) {
@@ -171,24 +171,21 @@ function TerminalTab() {
     >
       <div className="flex items-center justify-between px-3 py-1.5 border-b border-zinc-800 light:border-slate-200 shrink-0">
         <span className="text-[10px] font-medium uppercase tracking-widest text-zinc-500 light:text-slate-400">
-          {t("console.terminal", "Terminal")}
+          {t("consoleSidebar.terminal")}
         </span>
         <button
           type="button"
           onClick={() => setHistory([])}
           className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-300 border-none bg-transparent cursor-pointer transition-colors"
-          aria-label={t("console.clear", "Leeren")}
+          aria-label={t("consoleSidebar.clear")}
         >
           <Trash size={11} aria-hidden="true" />
-          {t("console.clear", "Leeren")}
+          {t("consoleSidebar.clear")}
         </button>
       </div>
       <div className="flex-1 overflow-y-auto font-mono text-[11px] leading-relaxed p-3 no-scroll">
         <p className="text-zinc-600 light:text-slate-400 mb-2">
-          {t(
-            "console.terminal_hint",
-            "OpenSIN Terminal — Befehle werden auf dem Host-System ausgeführt.",
-          )}
+          {t("consoleSidebar.terminalHint")}
         </p>
         {history.map((entry, idx) => (
           <div
@@ -255,7 +252,7 @@ export default function ConsoleSidebar() {
         {/* Tab switcher */}
         <div
           role="tablist"
-          aria-label="Console tabs"
+          aria-label={t("consoleSidebar.consoleTabs")}
           className="flex items-center gap-1 px-4 pt-2 pb-0 shrink-0"
         >
           {TABS.map((tab) => (

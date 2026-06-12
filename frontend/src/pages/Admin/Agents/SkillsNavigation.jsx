@@ -8,8 +8,10 @@ import AgentFlowsList from "./AgentFlows";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import { Hammer, Package, Plug, FlowArrow } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 
 export function SkillsNavigation(props) {
+  const { t } = useTranslation();
   const {
     defaultSkills,
     configurableSkills,
@@ -35,7 +37,7 @@ export function SkillsNavigation(props) {
       <div className="flex-none flex justify-between items-center mb-4">
         <div className="text-theme-text-primary flex items-center gap-x-2">
           <Robot size={24} />
-          <p className="text-lg font-medium">Agent Skills</p>
+          <p className="text-lg font-medium">{t("common.agentSkills")}</p>
         </div>
         <AgentSkillSettings />
       </div>
@@ -59,7 +61,7 @@ export function SkillsNavigation(props) {
 
           <div className="text-theme-text-primary flex items-center gap-x-2 mt-6">
             <Package size={24} />
-            <p className="text-lg font-medium">App Integrations</p>
+            <p className="text-lg font-medium">{t("common.appIntegrations")}</p>
           </div>
           <SkillList
             skills={appIntegrationSkills}
@@ -70,7 +72,7 @@ export function SkillsNavigation(props) {
 
           <div className="text-theme-text-primary flex items-center gap-x-2 mt-4">
             <Plug size={24} />
-            <p className="text-lg font-medium">Custom Skills</p>
+            <p className="text-lg font-medium">{t("common.customSkills")}</p>
           </div>
           <ImportedSkillList
             skills={importedSkills}
@@ -81,7 +83,7 @@ export function SkillsNavigation(props) {
           <div className="text-theme-text-primary flex items-center justify-between gap-x-2 mt-4">
             <div className="flex items-center gap-x-2">
               <FlowArrow size={24} />
-              <p className="text-lg font-medium">Agent Flows</p>
+              <p className="text-lg font-medium">{t("common.agentFlows")}</p>
             </div>
             {agentFlows.length === 0 ? (
               <Link
@@ -89,7 +91,7 @@ export function SkillsNavigation(props) {
                 className="text-cta-button flex items-center gap-x-1 hover:underline"
               >
                 <Hammer size={16} />
-                <p className="text-sm">Create Flow</p>
+                <p className="text-sm">{t("common.createFlow")}</p>
               </Link>
             ) : (
               <Link
@@ -97,7 +99,7 @@ export function SkillsNavigation(props) {
                 className="text-theme-text-secondary hover:text-cta-button flex items-center gap-x-1"
               >
                 <Hammer size={16} />
-                <p className="text-sm">Open Builder</p>
+                <p className="text-sm">{t("common.openBuilder")}</p>
               </Link>
             )}
           </div>

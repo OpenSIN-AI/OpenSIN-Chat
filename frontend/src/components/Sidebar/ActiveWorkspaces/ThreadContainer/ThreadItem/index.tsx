@@ -17,6 +17,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
+import { useTranslation } from "react-i18next";
 
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 export default function ThreadItem({
@@ -33,6 +34,7 @@ export default function ThreadItem({
   folderId = null,
 }: any) {
   const { slug: urlSlug, threadSlug = null } = useParams();
+  const { t } = useTranslation();
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
@@ -103,7 +105,7 @@ export default function ThreadItem({
               <p
                 className={`text-left text-sm text-slate-400/50 light:text-slate-500 italic`}
               >
-                deleted thread
+                {t("threadItem.deletedThread")}
               </p>
             </div>
             {ctrlPressed && (
@@ -161,7 +163,7 @@ export default function ThreadItem({
                   type="button"
                   className="border-none"
                   onClick={() => setShowOptions(!showOptions)}
-                  aria-label="Thread options"
+                  aria-label={t("threadItem.threadOptions")}
                 >
                   <DotsThree
                     className="text-slate-300 light:text-theme-text-secondary hover:text-white hover:light:text-theme-text-primary"
@@ -197,6 +199,7 @@ function OptionsMenu({
 }: any) {
   const menuRef: any = useRef(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Ref menu options
   const outsideClick = (e) => {
@@ -236,7 +239,7 @@ function OptionsMenu({
       workspace.slug,
     );
     if (message || !newThread) {
-      showToast(`Chat konnte nicht erstellt werden: ${message}`, "error", {
+      showToast(t("threadItem.chatCreateFailed", { message }), "error", {
         clear: true,
       });
       return;
@@ -250,12 +253,12 @@ function OptionsMenu({
     navigator.clipboard
       .writeText(link)
       .then(() => {
-        showToast("Link in Zwischenablage kopiert!", "success", {
+        showToast(t("threadItem.linkCopied"), "success", {
           clear: true,
         });
       })
       .catch(() => {
-        showToast("Link konnte nicht kopiert werden.", "error", {
+        showToast(t("threadItem.linkCopyFailed"), "error", {
           clear: true,
         });
       });
@@ -264,7 +267,7 @@ function OptionsMenu({
 
   const renameThread = async () => {
     const name = window
-      .prompt("What would you like to rename this thread to?")
+      .prompt(t("threadItem.renamePrompt"))
       ?.trim();
     if (!name || name.length === 0) {
       close();
@@ -277,7 +280,7 @@ function OptionsMenu({
       { name },
     );
     if (!!message) {
-      showToast(`Thread could not be updated! ${message}`, "error", {
+      showToast(t("threadItem.updateFailed", { message }), "error", {
         clear: true,
       });
       close();
@@ -291,17 +294,17 @@ function OptionsMenu({
   const handleDelete = async () => {
     if (
       !window.confirm(
-        "Are you sure you want to delete this thread? All of its chats will be deleted. You cannot undo this.",
+        t("threadItem.deleteConfirm"),
       )
     )
       return;
     const success = await Workspace.threads.delete(workspace.slug, thread.slug);
     if (!success) {
-      showToast("Thread could not be deleted!", "error", { clear: true });
+      showToast(t("threadItem.deleteFailed"), "error", { clear: true });
       return;
     }
     if (success) {
-      showToast("Thread deleted successfully!", "success", { clear: true });
+      showToast(t("threadItem.deleteSuccess"), "success", { clear: true });
       invalidateThreads(workspace.slug);
       onRemove(thread.id);
       // Redirect if deleting the active thread
@@ -323,7 +326,7 @@ function OptionsMenu({
         className="w-full rounded-md flex items-center p-2 gap-x-2 hover:bg-slate-500/20 text-slate-300 light:text-theme-text-primary"
       >
         <Plus size={18} />
-        <p className="text-sm">Neuer Chat</p>
+        <p className="text-sm">{t("threadItem.newChat")}</p>
       </button>
       <div className="w-full h-px bg-zinc-700 light:bg-slate-200 my-0.5" />
       <button
@@ -332,7 +335,7 @@ function OptionsMenu({
         className="w-full rounded-md flex items-center p-2 gap-x-2 hover:bg-slate-500/20 text-slate-300 light:text-theme-text-primary"
       >
         <LinkIcon size={18} />
-        <p className="text-sm">Link kopieren</p>
+        <p className="text-sm">{t("threadItem.copyLink")}</p>
       </button>
       <button
         onClick={renameThread}
@@ -340,7 +343,7 @@ function OptionsMenu({
         className="w-full rounded-md flex items-center p-2 gap-x-2 hover:bg-slate-500/20 text-slate-300 light:text-theme-text-primary"
       >
         <PencilSimple size={18} />
-        <p className="text-sm">Rename</p>
+        <p className="text-sm">{t("common.rename")}</p>
       </button>
       <button
         onClick={handleDelete}
@@ -348,7 +351,7 @@ function OptionsMenu({
         className="w-full rounded-md flex items-center p-2 gap-x-2 hover:bg-red-500/20 text-slate-300 light:text-theme-text-primary hover:text-red-100"
       >
         <Trash size={18} />
-        <p className="text-sm">Delete Thread</p>
+        <p className="text-sm">{t("threadItem.deleteThread")}</p>
       </button>
     </div>
   );

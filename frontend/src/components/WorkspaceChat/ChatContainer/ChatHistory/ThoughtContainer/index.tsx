@@ -8,6 +8,7 @@ import {
   useContext,
   useCallback,
 } from "react";
+import { useTranslation } from "react-i18next";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "dompurify";
 import ThinkingAnimation from "@/media/animations/thinking-animation.webm";
@@ -93,6 +94,7 @@ function contentIsNotEmpty(content: any = "") {
  */
 export function ThoughtBrainButton({ messageId, content }: any) {
   const { expanded, setExpanded } = useThoughtExpansion(messageId);
+  const { t } = useTranslation();
 
   const isThinking =
     content?.match(THOUGHT_REGEX_OPEN) && !content?.match(THOUGHT_REGEX_CLOSE);
@@ -107,8 +109,16 @@ export function ThoughtBrainButton({ messageId, content }: any) {
     <button
       type="button"
       onClick={() => setExpanded(!expanded)}
-      title={expanded ? "Gedanken ausblenden" : "Gedanken anzeigen"}
-      aria-label={expanded ? "Gedanken ausblenden" : "Gedanken anzeigen"}
+      title={
+        expanded
+          ? t("thoughtContainer.hideThoughts")
+          : t("thoughtContainer.showThoughts")
+      }
+      aria-label={
+        expanded
+          ? t("thoughtContainer.hideThoughts")
+          : t("thoughtContainer.showThoughts")
+      }
       className={`flex-shrink-0 mt-[3px] p-1 rounded-md border-none cursor-pointer transition-colors ${
         expanded
           ? "bg-zinc-700 light:bg-slate-200"
@@ -128,7 +138,7 @@ export function ThoughtBrainButton({ messageId, content }: any) {
       ) : (
         <img
           src={ThinkingStatic}
-          alt="Gedankenkette"
+          alt={t("thoughtContainer.thoughtChain")}
           className="w-[16px] h-[16px] light:invert light:opacity-50"
         />
       )}

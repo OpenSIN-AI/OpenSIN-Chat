@@ -1,17 +1,20 @@
 // SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
+
 export default function ChromaCloudOptions({ settings }: any) {
+  const { t } = useTranslation();
   return (
     <div className="w-full flex flex-col gap-y-7">
       <div className="w-full flex items-center gap-[36px] mt-1.5">
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            API Key
+            {t("providerSettings.chromaCloud.apiKey")}
           </label>
           <input
             type="password"
             name="ChromaCloudApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="ck-your-api-key-here"
+            placeholder={t("providerSettings.chromaCloud.apiKeyPlaceholder")}
             defaultValue={settings?.ChromaCloudApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -21,7 +24,7 @@ export default function ChromaCloudOptions({ settings }: any) {
 
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Tenant ID
+            {t("providerSettings.chromaCloud.tenantId")}
           </label>
           <input
             name="ChromaCloudTenant"
@@ -29,14 +32,14 @@ export default function ChromaCloudOptions({ settings }: any) {
             type="text"
             defaultValue={settings?.ChromaCloudTenant}
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="your-tenant-id-here"
+            placeholder={t("providerSettings.chromaCloud.tenantIdPlaceholder")}
             required={true}
           />
         </div>
 
         <div className="flex flex-col w-60">
           <label className="text-white text-sm font-semibold block mb-3">
-            Database Name
+            {t("providerSettings.chromaCloud.databaseName")}
           </label>
           <input
             name="ChromaCloudDatabase"
@@ -44,7 +47,7 @@ export default function ChromaCloudOptions({ settings }: any) {
             type="text"
             defaultValue={settings?.ChromaCloudDatabase}
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder="your-database-name"
+            placeholder={t("providerSettings.chromaCloud.databaseNamePlaceholder")}
             required={true}
           />
         </div>

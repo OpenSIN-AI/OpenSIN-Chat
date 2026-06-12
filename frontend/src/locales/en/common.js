@@ -471,6 +471,105 @@ const TRANSLATIONS = {
       modelPreference: "Model Preference",
       availableModels: "Available embedding models",
     },
+    huggingFace: {
+      endpointLabel: "HuggingFace Inference Endpoint",
+      endpointPlaceholder: "https://example.endpoints.huggingface.cloud",
+      accessTokenLabel: "HuggingFace Access Token",
+      accessTokenPlaceholder: "HuggingFace Access Token",
+      tokenLimitLabel: "Model Token Limit",
+      tokenLimitPlaceholder: "4096",
+    },
+    mistral: {
+      apiKey: "Mistral API Key",
+      apiKeyPlaceholder: "Mistral API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+      waitingForApiKey: "-- waiting for API key --",
+      availableModels: "Available Mistral Models",
+    },
+    textGenWebui: {
+      baseUrl: "Base URL",
+      baseUrlPlaceholder: "http://127.0.0.1:5000/v1",
+      modelContextWindow: "Model context window",
+      contextWindowPlaceholder: "Content window limit (eg: 4096)",
+      apiKeyOptional: "API Key (Optional)",
+      apiKeyPlaceholder: "TextGen Web UI API Key",
+    },
+    apiPie: {
+      apiKey: "APIpie API Key",
+      apiKeyPlaceholder: "APIpie API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+    },
+    cerebras: {
+      apiKey: "Cerebras API Key",
+      apiKeyPlaceholder: "Cerebras API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+      availableModels: "Available models",
+    },
+    cohereAi: {
+      apiKey: "Cohere API Key",
+      apiKeyPlaceholder: "Cohere API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+    },
+    deepSeek: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "DeepSeek API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+    },
+    fireworksAi: {
+      apiKey: "Fireworks AI API Key",
+      apiKeyPlaceholder: "Fireworks AI API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+    },
+    chromaCloud: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "ck-your-api-key-here",
+      tenantId: "Tenant ID",
+      tenantIdPlaceholder: "your-tenant-id-here",
+      databaseName: "Database Name",
+      databaseNamePlaceholder: "your-database-name",
+    },
+    chromaDb: {
+      endpointLabel: "Chroma Endpoint",
+      endpointPlaceholder: "http://localhost:8000",
+      apiHeader: "API Header",
+      apiHeaderPlaceholder: "X-Api-Key",
+      apiKey: "API Key",
+      apiKeyPlaceholder: "sk-myApiKeyToAccessMyChromaInstance",
+    },
+    milvusDb: {
+      addressLabel: "Milvus DB Address",
+      addressPlaceholder: "http://localhost:19530",
+      username: "Milvus Username",
+      usernamePlaceholder: "username",
+      password: "Milvus Password",
+      passwordPlaceholder: "password",
+    },
+    cohereEmbedding: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "Cohere API Key",
+      modelPreference: "Model Preference",
+      loadingModels: "-- loading available models --",
+    },
+    nativeEmbedding: {
+      modelPreference: "Model Preference",
+      loadingModels: "--loading available models--",
+      availableModels: "Available embedding models",
+      trainedOn: "Trained on:",
+      downloadSize: "Download Size:",
+      viewModelCard: "View model card on Hugging Face \u2192",
+    },
+    openRouterEmbedding: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "OpenRouter API Key",
+      modelPreference: "Model Preference",
+      loadingModels: "-- loading available models --",
+    },
   },
   agentLLMItem: {
     editSettings: "Edit Settings",
@@ -3361,6 +3460,72 @@ const TRANSLATIONS = {
     notInstalled: "Not Installed",
   },
 
+  threadItem: {
+    deletedThread: "deleted thread",
+    threadOptions: "Thread options",
+    chatCreateFailed: "Could not create chat: {{message}}",
+    linkCopied: "Link copied to clipboard!",
+    linkCopyFailed: "Could not copy link.",
+    renamePrompt: "What would you like to rename this thread to?",
+    updateFailed: "Thread could not be updated! {{message}}",
+    deleteConfirm: "Are you sure you want to delete this thread? All of its chats will be deleted. You cannot undo this.",
+    deleteFailed: "Thread could not be deleted!",
+    deleteSuccess: "Thread deleted successfully!",
+    newChat: "New Chat",
+    copyLink: "Copy Link",
+    deleteThread: "Delete Thread",
+  },
+
+  sidebarSearch: {
+    searchingFor: 'Searching for "{{searchTerm}}"',
+    noResultsFound: "No results found for",
+    workspaces: "Workspaces",
+    threads: "Threads",
+  },
+
+  providerPrivacy: {
+    unknown: "Unknown",
+    noPolicyDefined: "\"{{provider}}\" has no known data handling policy defined in OpenSIN Chat.",
+    llmProvider: "LLM Provider",
+    llmLogo: "LLM Logo",
+    embeddingPreference: "Embedding Preference",
+    embeddingLogo: "Embedding Logo",
+    vectorDatabase: "Vector Database",
+    vectorDbLogo: "Vector DB Logo",
+    usageSubjectTo: "Your usage, chats, and data are subject to the service's",
+    privacyPolicy: "privacy policy",
+  },
+
+  directoryStates: {
+    name: "Name",
+    status: "Status",
+    additionalFilesReady: "{{count}} additional file(s) ready to embed",
+    addToEmbeddingQueue: "Add to embedding queue",
+    addToQueue: "Add to queue",
+    removeFromEmbeddingQueue: "Remove from embedding queue",
+  },
+
+  consoleSidebar: {
+    noOutput: "(no output)",
+    error: "Error: {{error}}",
+    consoleTabs: "Console tabs",
+  },
+
+  agentSidebarLists: {
+    agentSkills: "Agent Skills",
+    appIntegrations: "App Integrations",
+    customSkills: "Custom Skills",
+    agentFlows: "Agent Flows",
+    createFlow: "Create Flow",
+    openBuilder: "Open Builder",
+  },
+
+  importedSkillList: {
+    noImportedSkills: "No imported skills found",
+    learnAboutSkills: "Learn about agent skills in the",
+    agentDocs: "OpenSIN Chat Agent Docs",
+  },
+
   errorBoundary: {
     title: "An error occurred.",
     unknownError: "Unknown Error",
@@ -3378,6 +3543,137 @@ const TRANSLATIONS = {
     copyDetails: "Copy Details",
     reset: "Reset",
     home: "Home",
+  },
+
+  admin: {
+    newWorkspaceModal: {
+      title: "Create new workspace",
+      placeholder: "My workspace",
+      error: "Error: {{error}}",
+      adminOnlyHint:
+        "After creating this workspace only admins will be able to see it. You can add users after it has been created.",
+      cancel: "Cancel",
+      create: "Create workspace",
+    },
+  },
+
+  audioPreference: {
+    stt: {
+      title: "Speech-to-text Preference",
+      description:
+        "Here you can specify what kind of text-to-speech and speech-to-text providers you would want to use in your OpenSIN Chat experience. By default, we use the browser's built in support for these services, but you may want to use others.",
+      searchPlaceholder: "Search speech to text providers",
+      saveFailed: "Failed to save preferences: {{error}}",
+      saveSuccess: "Speech-to-text preferences saved successfully.",
+      systemNative: "System native",
+      systemNativeDesc: "Uses your browser's built in STT service if supported.",
+      openai: "OpenAI",
+      openaiDesc: "Use OpenAI's Whisper API to transcribe speech to text.",
+      lemonade: "Lemonade",
+      lemonadeDesc: "Transcribe speech via your local Lemonade server.",
+      deepgram: "Deepgram",
+      deepgramDesc: "Transcribe speech using Deepgram's hosted Nova models.",
+      genericOpenai: "Generic OpenAI",
+      genericOpenaiDesc:
+        "Connect to any OpenAI-compatible STT service via a custom configuration.",
+    },
+    tts: {
+      title: "Text-to-speech Preference",
+      description:
+        "Here you can specify what kind of text-to-speech providers you would want to use in your OpenSIN Chat experience. By default, we use the browser's built in support for these services, but you may want to use others.",
+      searchPlaceholder: "Search text to speech providers",
+      saveFailed: "Failed to save preferences: {{error}}",
+      saveSuccess: "Text-to-speech preferences saved successfully.",
+      systemNative: "System native",
+      systemNativeDesc: "Uses your browser's built in TTS service if supported.",
+      openai: "OpenAI",
+      openaiDesc: "Use OpenAI's text to speech voices.",
+      elevenlabs: "ElevenLabs",
+      elevenlabsDesc: "Use ElevenLabs's text to speech voices and technology.",
+      piper: "PiperTTS",
+      piperDesc: "Run TTS models locally in your browser privately.",
+      kokoro: "Kokoro",
+      kokoroDesc:
+        "Connect to a self-hosted kokoro-fastapi server for high-quality open-source voices.",
+      openaiCompatible: "OpenAI Compatible",
+      openaiCompatibleDesc:
+        "Connect to an OpenAI compatible TTS service running locally or remotely.",
+      nvidiaNim: "NVIDIA NIM",
+      nvidiaNimDesc:
+        "Use NVIDIA NIM's hosted text-to-speech API with high-quality voices.",
+    },
+  },
+
+  embedChats: {
+    chatRow: {
+      deleteConfirm:
+        "Are you sure you want to delete this chat?\n\nThis action is irreversible.",
+      delete: "Delete",
+      viewingText: "Viewing Text",
+      sessionId: "sessionID",
+      username: "username",
+      clientIp: "client ip address",
+      clientHost: "client host URL",
+    },
+  },
+
+  embedConfigs: {
+    embedRow: {
+      disableConfirm:
+        "Are you sure you want to disabled this embed?\nOnce disabled the embed will no longer respond to any chat requests.",
+      toggleStatus: "Embed {{status}}.",
+      disabled: "has been disabled",
+      active: "is active",
+      deleteConfirm:
+        "Are you sure you want to delete this embed?\nOnce deleted this embed will no longer respond to chats or be active.\n\nThis action is irreversible.",
+      deleted: "Embed deleted from system.",
+      code: "Code",
+      disable: "Disable",
+      enable: "Enable",
+      delete: "Delete",
+      all: "all",
+    },
+  },
+
+  communityHub: {
+    import: {
+      unsupported: {
+        title: "Unsupported item",
+        description:
+          "We found an item in the community hub, but we don't know what it is or it is not yet supported for import into OpenSIN Chat.",
+        itemId: "The item ID is:",
+        itemType: "The item type is:",
+        contactSupport:
+          "Please contact support via email if you need help importing this item.",
+        tryAnother: "Try another item",
+      },
+    },
+    trending: {
+      agentSkill: {
+        skill: "Skill",
+        file: "file",
+        found: "found",
+        import: "Import →",
+      },
+    },
+  },
+
+  mobileConnections: {
+    title: "Connected Mobile Devices",
+    description:
+      "These are the devices that are connected to your desktop application to sync chats, workspaces, and more.",
+    registerNewDevice: "Register New Device",
+    deviceName: "Device Name",
+    registered: "Registered",
+    noDevices: "No devices found",
+    connectionModal: {
+      title: "Go mobile. Stay local. OpenSIN Chat Mobile.",
+      description:
+        "OpenSIN Chat for mobile allows you to connect to your workspace's chats, threads, tools, and documents for you to use on the go.\n\nRun with local models on your phone privately or relay chats directly to this instance seamlessly.",
+      scanHint:
+        "Scan the QR code with the OpenSIN Chat Mobile app to enable live sync of your workspaces, chats, threads and documents.",
+      learnMore: "Learn more",
+    },
   },
 };
 

@@ -37,12 +37,14 @@ import { memo, useCallback, useState } from "react";
 import { saveAs } from "file-saver";
 import { useGenerateImage } from "recharts-to-png";
 import { CircleNotch, DownloadSimple } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 
 const dataFormatter: any = (number) => {
   return Intl.NumberFormat("us").format(number).toString();
 };
 
 export function Chartable({ props }: any) {
+  const { t } = useTranslation();
   const [getDivJpeg, { ref }] = useGenerateImage({
     quality: 1,
     type: "image/jpeg",
@@ -382,7 +384,7 @@ export function Chartable({ props }: any) {
           </div>
         );
       default:
-        return <p>Unsupported chart type.</p>;
+        return <p>{t("chartable.unsupported")}</p>;
     }
   };
 
@@ -464,14 +466,14 @@ function DownloadGraph({ onClick }: any) {
           {loading ? (
             <CircleNotch
               className="text-theme-text-primary w-5 h-5 animate-spin"
-              aria-label="Downloading image..."
+              aria-label={t("chartable.downloading")}
             />
           ) : (
             <DownloadSimple
               weight="bold"
               className="text-theme-text-primary w-5 h-5 hover:text-theme-text-primary"
               onClick={handleClick}
-              aria-label="Download graph image"
+              aria-label={t("chartable.downloadGraph")}
             />
           )}
         </div>

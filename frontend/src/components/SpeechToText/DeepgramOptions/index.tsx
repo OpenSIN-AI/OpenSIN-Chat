@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
 import System from "@/models/system";
+import { useTranslation } from "react-i18next";
 
 export default function DeepgramSpeechToTextOptions({ settings }: any) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(settings?.STTDeepgramApiKey);
   const [deepgramApiKey, setDeepgramApiKey] = useState(
     settings?.STTDeepgramApiKey,
@@ -12,13 +14,13 @@ export default function DeepgramSpeechToTextOptions({ settings }: any) {
     <div className="flex gap-x-4">
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          API Key
+          {t("speechToText.deepgram.apiKey")}
         </label>
         <input
           type="password"
           name="STTDeepgramApiKey"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder="Deepgram API Key"
+          placeholder={t("speechToText.deepgram.apiKeyPlaceholder")}
           defaultValue={settings?.STTDeepgramApiKey ? "*".repeat(20) : ""}
           required={true}
           autoComplete="off"
@@ -33,6 +35,7 @@ export default function DeepgramSpeechToTextOptions({ settings }: any) {
 }
 
 function DeepgramSttModelSelection({ apiKey, settings }: any) {
+  const { t } = useTranslation();
   const [models, setModels] = useState([] as any);
   const [loading, setLoading] = useState(true as any);
 
@@ -53,7 +56,7 @@ function DeepgramSttModelSelection({ apiKey, settings }: any) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
-          Transcription Model
+          {t("speechToText.deepgram.modelSelection")}
         </label>
         <select
           name="STTDeepgramModel"
@@ -61,7 +64,7 @@ function DeepgramSttModelSelection({ apiKey, settings }: any) {
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- loading available models --
+            {t("speechToText.deepgram.loadingModels")}
           </option>
         </select>
       </div>
@@ -71,7 +74,7 @@ function DeepgramSttModelSelection({ apiKey, settings }: any) {
   return (
     <div className="flex flex-col w-60">
       <label className="text-white text-sm font-semibold block mb-3">
-        Transcription Model
+        {t("speechToText.deepgram.modelSelection")}
       </label>
       <select
         name="STTDeepgramModel"
