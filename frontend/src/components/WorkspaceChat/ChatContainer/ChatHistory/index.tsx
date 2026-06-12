@@ -6,6 +6,8 @@ import {
   useMemo,
   useCallback,
   forwardRef,
+  lazy,
+  Suspense,
 } from "react";
 import HistoricalMessage from "./HistoricalMessage";
 import PromptReply from "./PromptReply";
@@ -17,7 +19,11 @@ import { useManageWorkspaceModal } from "../../../Modals/ManageWorkspace";
 import ManageWorkspace from "../../../Modals/ManageWorkspace";
 import { ArrowDown } from "@phosphor-icons/react";
 import debounce from "lodash.debounce";
-import Chartable from "./Chartable";
+// Chartable (recharts + @tremor) wird LAZY geladen, um den
+// ESM-Temporal-Dead-Zone-Race im Vite-Build zu vermeiden:
+// die Recharts-Top-Level-Factory ruft s.forwardRef(...) beim Modul-Eval
+// auf, bevor React (aus dem Catch-all-Vendor-Chunk) bereit ist.
+const Chartable = lazy(() => import("./Chartable"));
 import ModelRouteNotification from "./ModelRouteNotification";
 import Workspace from "@/models/workspace";
 import { useParams } from "react-router-dom";
@@ -350,7 +356,18 @@ function buildMessages({
     }
 
     if (props.type === "rechartVisualize" && !!props.content) {
-      acc.push(<Chartable key={props.uuid} props={props} />);
+      acc.push(
+        <Suspense
+          key={props.uuid}
+          fallback={
+            <div className="text-theme-text-secondary text-xs italic">
+              Chart wird geladen…
+            </div>
+          }
+        >
+          <Chartable props={props} />
+        </Suspense>
+      );
     } else if (props.type === "fileDownloadCard" && !!props.content) {
       // #55: Auto-open the preview sidebar only for reports just streamed in
       // by the agent (flagged in utils/chat/agent.js). Reloaded history never
