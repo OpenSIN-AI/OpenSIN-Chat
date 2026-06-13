@@ -175,7 +175,7 @@ export default function AttachItem({
                 bottom: `calc(100vh - ${menuPos.top}px + 8px)`,
                 left: menuPos.left,
               }}
-              className="bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-[1000] p-1"
+              className="bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-[1000] p-0"
               onMouseDown={(e) => e.stopPropagation()}
             >
               <AddSourceMenu

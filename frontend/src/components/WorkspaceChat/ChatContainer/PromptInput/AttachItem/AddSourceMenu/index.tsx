@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  FilePlus,
+  UploadSimple,
   Files,
-  Link as LinkIcon,
+  Globe,
+  GithubLogo,
   CaretRight,
   CircleNotch,
-  Globe,
   FileText,
   X,
 } from "@phosphor-icons/react";
@@ -15,6 +15,25 @@ import Workspace from "@/models/workspace";
 import useDocuments from "@/hooks/useDocuments";
 import showToast from "@/utils/toast";
 import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";
+
+/**
+ * Simple Bitbucket logo SVG used as a stand-in for the official brand icon.
+ * Kept self-contained so we do not add a new dependency.
+ */
+function BitbucketIcon({ size = 16, className = "" }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M.778 1.213a.768.768 0 00-.768.892l3.263 19.81c.084.5.515.868 1.022.873H19.95a.772.772 0 00.77-.646l3.27-20.03a.768.768 0 00-.768-.891zM14.52 15.53H9.522L8.17 8.466h7.561z" />
+    </svg>
+  );
+}
 
 /**
  * Flattens the nested local-files directory tree into a single list of files
@@ -39,11 +58,9 @@ function flattenLocalFiles(localFiles) {
 }
 
 /**
- * The "+" attach menu shown in the chat composer.
- * Provides three actions (ChatGPT-style):
- *  - Add local files
- *  - Pick from existing sources (files/urls uploaded across workspaces)
- *  - Add a source from a URL (website or YouTube video)
+ * The "+" attach menu shown in the chat composer, styled like the v0 prompt
+ * input dropdown. Provides the existing upload/source actions plus v0-style
+ * placeholder rows for future integrations.
  *
  * @param {Object} props
  * @param {string} props.workspaceSlug
@@ -58,11 +75,21 @@ export default function AddSourceMenu({
   const { t } = useTranslation();
   const [view, setView] = useState("root"); // "root" | "sources" | "url"
 
+  function handleGitHub() {
+    showToast(t("chat_window.attach_menu.github_coming_soon"), "info");
+  }
+
+  function handleBitbucket() {
+    showToast(t("chat_window.attach_menu.bitbucket_coming_soon"), "info");
+  }
+
   return (
-    <div className="flex flex-col gap-1 p-1 min-w-[240px]">
+    <div className="flex flex-col gap-1 p-2 min-w-[240px]">
       {view === "root" && (
         <RootView
           t={t}
+          onGitHub={handleGitHub}
+          onBitbucket={handleBitbucket}
           onAddLocalFiles={() => {
             onAddLocalFiles?.();
             onClose?.();
@@ -96,13 +123,13 @@ function MenuRow({ icon: Icon, label, onClick, hasSubmenu = false }) {
     <button
       type="button"
       onClick={onClick}
-      className="border-none bg-transparent w-full flex items-center gap-2.5 px-2.5 py-2 rounded-md cursor-pointer text-left hover:bg-zinc-700 light:hover:bg-slate-200 transition-colors"
+      className="border-none bg-transparent w-full flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer text-left hover:bg-zinc-700/60 light:hover:bg-slate-200 transition-colors duration-200"
     >
       <Icon
         size={16}
-        className="text-zinc-300 light:text-slate-600 flex-shrink-0"
+        className="text-zinc-400 light:text-slate-500 flex-shrink-0"
       />
-      <span className="flex-1 text-sm text-white light:text-slate-800">
+      <span className="flex-1 text-sm font-medium text-zinc-100 light:text-slate-800">
         {label}
       </span>
       {hasSubmenu && (
@@ -116,12 +143,29 @@ function MenuRow({ icon: Icon, label, onClick, hasSubmenu = false }) {
   );
 }
 
-function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
+function RootView({
+  t,
+  onGitHub,
+  onBitbucket,
+  onAddLocalFiles,
+  onOpenSources,
+  onOpenUrl,
+}) {
   return (
     <>
       <MenuRow
-        icon={FilePlus}
-        label={t("chat_window.attach_menu.add_files")}
+        icon={GithubLogo}
+        label={t("chat_window.attach_menu.import_from_github")}
+        onClick={onGitHub}
+      />
+      <MenuRow
+        icon={BitbucketIcon}
+        label={t("chat_window.attach_menu.create_from_bitbucket")}
+        onClick={onBitbucket}
+      />
+      <MenuRow
+        icon={UploadSimple}
+        label={t("chat_window.attach_menu.upload_from_computer")}
         onClick={onAddLocalFiles}
       />
       <MenuRow
@@ -131,7 +175,7 @@ function RootView({ t, onAddLocalFiles, onOpenSources, onOpenUrl }) {
         hasSubmenu
       />
       <MenuRow
-        icon={LinkIcon}
+        icon={Globe}
         label={t("chat_window.attach_menu.add_from_url")}
         onClick={onOpenUrl}
         hasSubmenu

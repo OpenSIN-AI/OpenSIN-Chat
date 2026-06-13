@@ -2387,6 +2387,11 @@ const TRANSLATIONS = {
       add_files: "Add files",
       current_sources: "Current sources",
       add_from_url: "Add from URL",
+      import_from_github: "Import from GitHub",
+      create_from_bitbucket: "Create from Bitbucket",
+      upload_from_computer: "Upload from computer",
+      github_coming_soon: "GitHub integration coming soon",
+      bitbucket_coming_soon: "Bitbucket integration coming soon",
       loading: "Loading...",
       no_sources: "No sources available",
       no_workspace:
