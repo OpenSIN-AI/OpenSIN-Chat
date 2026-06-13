@@ -111,6 +111,8 @@ export default function AttachItem({
           !showTooltip ? t("chat_window.attach_file") : undefined
         }
         aria-label={t("chat_window.attach_file")}
+        aria-expanded={showMenu}
+        data-testid="attach-item-trigger"
         type="button"
         onClick={handleClick}
         onPointerEnter={refresh}
