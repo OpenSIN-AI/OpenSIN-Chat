@@ -35,3 +35,17 @@ services:
       - opensin-chat
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  vane:
+    image: itzcrazykns1337/vane:latest
+    container_name: opensin-vane
+    ports:
+      - "3100:3000"
+    volumes:
+      - vane-data:/home/vane/data
+    restart: unless-stopped
+    networks:
+      - opensin-chat
+
+volumes:
+  vane-data:

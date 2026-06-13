@@ -12,6 +12,7 @@ import TavilySearchIcon from "./icons/tavily.svg";
 import DuckDuckGoIcon from "./icons/duckduckgo.png";
 import ExaIcon from "./icons/exa.png";
 import PerplexitySearchIcon from "./icons/perplexity.png";
+import VaneIcon from "./icons/vane.png";
 import {
   CaretUpDown,
   MagnifyingGlass,
@@ -33,6 +34,7 @@ import {
   DuckDuckGoOptions,
   ExaSearchOptions,
   PerplexitySearchOptions,
+  VaneOptions,
 } from "./SearchProviderOptions";
 
 const SEARCH_PROVIDERS = [
@@ -120,6 +122,14 @@ const SEARCH_PROVIDERS = [
     logo: PerplexitySearchIcon,
     options: (settings) => <PerplexitySearchOptions settings={settings} />,
     description: "AI-powered web search using the Perplexity Search API.",
+  },
+  {
+    name: "Vane (Self-Hosted)",
+    value: "vane",
+    logo: VaneIcon,
+    options: () => <VaneOptions />,
+    description:
+      "Self-hosted AI answering engine with bundled SearxNG. Free, private, no API key — runs as a local sidecar container.",
   },
 ];
 
