@@ -38,6 +38,22 @@ class VaneClient {
    * @returns {Promise<{chatModel: Object, embeddingModel: Object}|null>}
    */
   static async resolveModels() {
+    // Env overrides take precedence (explicit configuration) and bypass discovery.
+    if (process.env.VANE_CHAT_PROVIDER_ID && process.env.VANE_CHAT_MODEL_KEY) {
+      return {
+        chatModel: {
+          providerId: process.env.VANE_CHAT_PROVIDER_ID,
+          key: process.env.VANE_CHAT_MODEL_KEY,
+        },
+        embeddingModel: {
+          providerId:
+            process.env.VANE_EMBED_PROVIDER_ID ||
+            process.env.VANE_CHAT_PROVIDER_ID,
+          key: process.env.VANE_EMBED_MODEL_KEY || "",
+        },
+      };
+    }
+
     const now = Date.now();
     if (
       !VaneClient.#providerCache.data ||
@@ -58,23 +74,7 @@ class VaneClient {
 
     const providers = VaneClient.#providerCache.data?.providers || [];
 
-    // Env overrides take precedence (explicit configuration)
-    if (process.env.VANE_CHAT_PROVIDER_ID && process.env.VANE_CHAT_MODEL_KEY) {
-      return {
-        chatModel: {
-          providerId: process.env.VANE_CHAT_PROVIDER_ID,
-          key: process.env.VANE_CHAT_MODEL_KEY,
-        },
-        embeddingModel: {
-          providerId:
-            process.env.VANE_EMBED_PROVIDER_ID ||
-            process.env.VANE_CHAT_PROVIDER_ID,
-          key: process.env.VANE_EMBED_MODEL_KEY || "",
-        },
-      };
-    }
-
-    // Auto-discovery: first provider that has both chat + embedding models
+    // Auto-discovery: first provider with chat models and first with embedding models
     const chatProvider = providers.find((p) => p.chatModels?.length);
     const embedProvider = providers.find((p) => p.embeddingModels?.length);
     if (!chatProvider || !embedProvider) {

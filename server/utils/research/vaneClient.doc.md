@@ -67,6 +67,10 @@ Vane's **OpenAI provider** only auto-fetches the model list when the base URL is
 - **Not all advertised NVIDIA models are callable with every key.** NVIDIA's `/v1/models` endpoint lists many models, but access depends on your specific API key and entitlements. Test the exact model you intend to use before relying on it in production.
 - **Vane's Groq provider has a model-list parsing bug.** The Groq provider may fail to parse the available model list correctly; prefer explicit `VANE_CHAT_MODEL_KEY` / `VANE_EMBED_MODEL_KEY` overrides if you use Groq.
 
+## Tests
+
+See `server/__tests__/utils/research/vaneClient.test.js` for mocked integration tests covering `isAvailable`, `resolveModels`, `answer`, and `search`.
+
 ## Usage example
 
 From another server file, import the client and call either `answer()` (full cited answer) or `search()` (lightweight result list):
