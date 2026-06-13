@@ -50,6 +50,22 @@ class NvidiaNimLLM {
     console.log(`\x1b[36m[${this.className}]\x1b[0m ${text}`, ...args);
   }
 
+  /**
+   * Sanitize an error before logging so no API key is ever emitted.
+   * The OpenAI SDK normally redacts the key, but we defensively scrub any
+   * configured value (env var or placeholder) just in case.
+   * @param {Error|unknown} error
+   * @returns {string}
+   */
+  #safeError(error) {
+    const key = process.env.NVIDIA_NIM_LLM_API_KEY || HARDCODED_API_KEY;
+    let message = error?.message || String(error);
+    if (key) {
+      message = message.replaceAll(key, "[REDACTED]");
+    }
+    return message;
+  }
+
   #appendContext(contextTexts = []) {
     if (!contextTexts || !contextTexts.length) return "";
     return (
@@ -209,7 +225,7 @@ class NvidiaNimLLM {
         },
       };
     } catch (e) {
-      this.#log(`NVIDIA NIM chat error: ${e.message}`);
+      this.#log(`NVIDIA NIM chat error: ${this.#safeError(e)}`);
       return null;
     }
   }
@@ -237,7 +253,7 @@ class NvidiaNimLLM {
       });
       return measuredStreamRequest;
     } catch (e) {
-      this.#log(`NVIDIA NIM stream error: ${e.message}`);
+      this.#log(`NVIDIA NIM stream error: ${this.#safeError(e)}`);
       return null;
     }
   }

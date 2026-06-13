@@ -19,7 +19,7 @@ Here you can find the scripts and known working process to run OpenSIN Chat outs
 ## Getting started
 
 1. Clone the repo into your server as the user who the application will run as.
-`git clone git@github.com:Family-Team-Projects/opensin-chat.git`
+`git clone git@github.com:OpenSIN-AI/OpenSIN-Chat.git`
 
 2. `cd opensin-chat` and run `yarn setup`. This will install all dependencies to run in production as well as debug the application.
 

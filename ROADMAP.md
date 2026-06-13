@@ -2,7 +2,7 @@
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
 > **Aktueller Stand:** Phase 2 ✅ COMPLETE (inkl. PDF Analysis, Infrastruktur), Phase 3 in PLAN.md  
-> **Repo:** [Family-Team-Projects/OpenSIN-Chat](https://github.com/Family-Team-Projects/OpenSIN-Chat)  
+> **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
 > **Letztes Update:** 2026-06-12  
 > **Aktueller PLAN:** [PLAN.md](PLAN.md) — 5 Prioritäten mit geschätztem Aufwand
 
@@ -255,6 +255,6 @@
 ---
 
 *Next Milestone: i18next 0 Warnings → PDF Hardening → Build Cleanup*  
-*Owner: @Family-Team-Projects*  
+*Owner: @OpenSIN-AI*  
 *Updated: 2026-06-12*  
 *Current PLAN: [PLAN.md](PLAN.md)*

@@ -5,12 +5,12 @@ OpenSIN Chat is an open-source project and we welcome contributions from the com
 ## Reporting Issues
 
 If you encounter a bug or have a feature request, please open an issue on the
-[GitHub issue tracker](https://github.com/Family-Team-Projects/OpenSIN-Chat).
+[GitHub issue tracker](https://github.com/OpenSIN-AI/OpenSIN-Chat).
 
 ## Picking an issue
 
 We track issues on the GitHub issue tracker. If you are looking for something to
-work on, check the [good first issue](https://github.com/Family-Team-Projects/OpenSIN-Chat/contribute) label. These issues are typically the best described and have the smallest scope. There may be issues that are not labeled as good first issue, but are still a good starting point.
+work on, check the [good first issue](https://github.com/OpenSIN-AI/OpenSIN-Chat/contribute) label. These issues are typically the best described and have the smallest scope. There may be issues that are not labeled as good first issue, but are still a good starting point.
 
 If there's an issue you are interested in working on, please leave a comment on the issue. This will help us avoid duplicate work. Additionally, if you have questions about the issue, please ask them in the issue comments. We are happy to provide guidance on how to approach the issue.
 
@@ -42,7 +42,7 @@ cd OpenSIN-Chat
 Then add the main repository as a remote:
 
 ```bash
-git remote add upstream https://github.com/Family-Team-Projects/OpenSIN-Chat.git
+git remote add upstream https://github.com/OpenSIN-AI/OpenSIN-Chat.git
 git fetch upstream
 ```
 
