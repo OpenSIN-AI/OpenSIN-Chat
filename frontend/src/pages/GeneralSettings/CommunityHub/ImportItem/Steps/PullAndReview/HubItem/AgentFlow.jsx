@@ -28,7 +28,10 @@ export default function AgentFlow({ item, setStep }) {
       setStep(CommunityHubImportItemSteps.completed.key);
     } catch (e) {
       console.error(e);
-      showToast(t("communityHub.import.agentFlow.toast.failed", { message: e.message }), "error");
+      showToast(
+        t("communityHub.import.agentFlow.toast.failed", { message: e.message }),
+        "error",
+      );
     } finally {
       setLoading(false);
     }
@@ -49,20 +52,26 @@ export default function AgentFlow({ item, setStep }) {
               className="hover:text-blue-500 hover:underline"
               rel="noreferrer"
             >
-              {/* eslint-disable-next-line i18next/no-literal-string */}
-              @{item.creatorUsername}
+              {`@${item.creatorUsername}`}
             </a>
           </p>
         )}
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
-        <p>
-          {t("communityHub.import.agentFlow.description")}
-        </p>
+        <p>{t("communityHub.import.agentFlow.description")}</p>
         <div className="flex flex-col gap-y-2">
-          <p className="font-semibold">{t("communityHub.import.agentFlow.flowDetails")}</p>
-          <p>{t("communityHub.import.agentFlow.descriptionLabel")} {item.description}</p>
-          <p className="font-semibold">{t("communityHub.import.agentFlow.stepsLabel", { count: flowInfo.steps.length })}</p>
+          <p className="font-semibold">
+            {t("communityHub.import.agentFlow.flowDetails")}
+          </p>
+          <p>
+            {t("communityHub.import.agentFlow.descriptionLabel")}{" "}
+            {item.description}
+          </p>
+          <p className="font-semibold">
+            {t("communityHub.import.agentFlow.stepsLabel", {
+              count: flowInfo.steps.length,
+            })}
+          </p>
           <ul className="list-disc pl-6">
             {flowInfo.steps.map((step, index) => (
               <li key={index}>{step.type}</li>
@@ -76,7 +85,9 @@ export default function AgentFlow({ item, setStep }) {
         onClick={importAgentFlow}
       >
         {loading ? <CircleNotch size={16} className="animate-spin" /> : null}
-        {loading ? t("communityHub.import.agentFlow.importing") : t("communityHub.import.agentFlow.importButton")}
+        {loading
+          ? t("communityHub.import.agentFlow.importing")
+          : t("communityHub.import.agentFlow.importButton")}
       </CTAButton>
     </div>
   );

@@ -7,6 +7,8 @@ import { TagsInput } from "react-tag-input-component";
 import Embed from "@/models/embed";
 import Toggle from "@/components/lib/Toggle";
 
+const SCRIPT_TAG = "<script>";
+
 export function enforceSubmissionSchema(form) {
   const data = {};
   for (var [key, value] of form.entries()) {
@@ -103,9 +105,7 @@ export default function NewEmbedModal({ closeModal }) {
               <p className="text-white text-opacity-60 text-xs md:text-sm">
                 {t("newEmbedModal.afterCreateHintBefore")}
                 <code className="light:bg-stone-300 bg-stone-900 text-white mx-1 px-1 rounded-sm">
-                  {/* eslint-disable i18next/no-literal-string */}
-                  &lt;script&gt;
-                  {/* eslint-enable i18next/no-literal-string */}
+                  {SCRIPT_TAG}
                 </code>
                 {t("newEmbedModal.afterCreateHintAfter")}
               </p>

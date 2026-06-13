@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-/* eslint-disable i18next/no-literal-string */
 import { describe, it, expect } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { afterEach } from "vitest";

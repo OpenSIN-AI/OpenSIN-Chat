@@ -3,6 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PdfAnalysis from "@/models/pdfAnalysis";
 
+const CONFLICTS_SEPARATOR = " — vs. — ";
+const PAGES_SEPARATOR = ", ";
+
 export default function CorpusPanel() {
   const { t } = useTranslation();
   const [jobs, setJobs] = useState([]);
@@ -337,10 +340,11 @@ function CorpusReportModal({ job, onClose }) {
 
                           .map(
                             (p) =>
-                              `${p.document} (S. ${(p.pages || []).join(", ")}): ${p.claim}`,
+                              `${p.document} (S. ${(p.pages || []).join(
+                                PAGES_SEPARATOR,
+                              )}): ${p.claim}`,
                           )
-                          // eslint-disable-next-line i18next/no-literal-string
-                          .join(" — vs. — ")}
+                          .join(CONFLICTS_SEPARATOR)}
                       </li>
                     ))}
                   </ul>

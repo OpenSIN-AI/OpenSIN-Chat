@@ -3061,6 +3061,7 @@ const TRANSLATIONS = {
         description: "System prompts are used to guide the behavior of the AI agents and can be applied to any existing workspace.",
         providedPrompt: "Provided system prompt:",
         applyToWorkspace: "Apply to Workspace",
+        availableWorkspaces: "Available workspaces",
         noWorkspaces: "No workspaces available. Create a workspace first.",
         applyButton: "Apply system prompt to workspace",
         toastApplying: "Applying system prompt to workspace...",
@@ -3077,6 +3078,29 @@ const TRANSLATIONS = {
         toastSuccess: "Slash command {{command}} imported successfully!",
         toastFailed: "Failed to import slash command. {{error}}",
       },
+      unsupported: {
+        title: "Unsupported item",
+        description:
+          "We found an item in the community hub, but we don't know what it is or it is not yet supported for import into OpenSIN Chat.",
+        itemId: "The item ID is:",
+        itemType: "The item type is:",
+        contactSupport:
+          "Please contact support via email if you need help importing this item.",
+        tryAnother: "Try another item",
+      },
+    },
+    trending: {
+      agentSkill: {
+        skill: "Skill",
+        file: "file",
+        found: "found",
+        import: "Import →",
+      },
+    },
+    hubItems: {
+      recentlyAdded: "Recently Added on OpenSIN Chat Community Hub",
+      exploreLatest: "Explore the latest additions to the OpenSIN Chat Community Hub",
+      exploreMore: "Explore More →",
     },
   },
 
@@ -3756,29 +3780,6 @@ const TRANSLATIONS = {
     },
   },
 
-  communityHub: {
-    import: {
-      unsupported: {
-        title: "Unsupported item",
-        description:
-          "We found an item in the community hub, but we don't know what it is or it is not yet supported for import into OpenSIN Chat.",
-        itemId: "The item ID is:",
-        itemType: "The item type is:",
-        contactSupport:
-          "Please contact support via email if you need help importing this item.",
-        tryAnother: "Try another item",
-      },
-    },
-    trending: {
-      agentSkill: {
-        skill: "Skill",
-        file: "file",
-        found: "found",
-        import: "Import →",
-      },
-    },
-  },
-
   mobileConnections: {
     title: "Connected Mobile Devices",
     description:
@@ -4133,22 +4134,6 @@ const TRANSLATIONS = {
     clearChats: "Clear Chats",
     previousPage: "Previous Page",
     nextPage: "Next Page",
-  },
-  communityHub: {
-    agentFlow: {
-      stepsLabel: "Steps ({{count}}):",
-      import: "Import →",
-    },
-    slashCommand: {
-      command: "Command",
-      prompt: "Prompt",
-      import: "Import →",
-    },
-    hubItems: {
-      recentlyAdded: "Recently Added on OpenSIN Chat Community Hub",
-      exploreLatest: "Explore the latest additions to the OpenSIN Chat Community Hub",
-      exploreMore: "Explore More →",
-    },
   },
   telegram: {
     details: {

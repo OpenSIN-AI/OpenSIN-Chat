@@ -30,9 +30,13 @@ export default function SystemPrompt({ item, setStep }) {
       workspaceSlug: destinationWorkspaceSlug,
     });
     if (error) {
-      return showToast(t("communityHub.import.systemPrompt.toastFailed", { error }), "error", {
-        clear: true,
-      });
+      return showToast(
+        t("communityHub.import.systemPrompt.toastFailed", { error }),
+        "error",
+        {
+          clear: true,
+        },
+      );
     }
 
     showToast(t("communityHub.import.systemPrompt.toastApplied"), "success", {
@@ -45,7 +49,9 @@ export default function SystemPrompt({ item, setStep }) {
     <div className="flex flex-col mt-4 gap-y-4">
       <div className="flex flex-col gap-y-1">
         <h2 className="text-base text-theme-text-primary font-semibold">
-          {t("communityHub.import.systemPrompt.reviewTitle", { name: item.name })}
+          {t("communityHub.import.systemPrompt.reviewTitle", {
+            name: item.name,
+          })}
         </h2>
         {item.creatorUsername && (
           <p className="text-white/60 light:text-theme-text-secondary text-xs font-mono">
@@ -56,15 +62,13 @@ export default function SystemPrompt({ item, setStep }) {
               className="hover:text-blue-500 hover:underline"
               rel="noreferrer"
             >
-              @{item.creatorUsername}
+              {`@${item.creatorUsername}`}
             </a>
           </p>
         )}
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
-        <p>
-          {t("communityHub.import.systemPrompt.description")}
-        </p>
+        <p>{t("communityHub.import.systemPrompt.description")}</p>
 
         <div className="flex flex-col gap-y-2">
           <p className="text-white/60 light:text-theme-text-secondary font-semibold">
@@ -92,8 +96,11 @@ export default function SystemPrompt({ item, setStep }) {
               onChange={(e) => setDestinationWorkspaceSlug(e.target.value)}
               className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
             >
-              {/* eslint-disable-next-line i18next/no-literal-string */}
-              <optgroup label="Available workspaces">
+              <optgroup
+                label={t(
+                  "communityHub.import.systemPrompt.availableWorkspaces",
+                )}
+              >
                 {workspaces.map((workspace) => (
                   <option key={workspace.id} value={workspace.slug}>
                     {workspace.name}

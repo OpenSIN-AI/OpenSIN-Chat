@@ -12,6 +12,8 @@ import UserItems from "./UserItems";
 import useCommunityHubSettings from "@/hooks/useCommunityHubSettings";
 import { useTranslation } from "react-i18next";
 
+const PERIOD = ".";
+
 export default function CommunityHubAuthentication() {
   const { t } = useTranslation();
   const { settings, isLoading, mutate } = useCommunityHubSettings();
@@ -67,7 +69,10 @@ export default function CommunityHubAuthentication() {
         hub_api_key: "",
       });
       if (!response.success)
-        return showToast(t("communityHub.auth.toast.disconnectFailed"), "error");
+        return showToast(
+          t("communityHub.auth.toast.disconnectFailed"),
+          "error",
+        );
       setHasChanges(false);
       showToast(t("communityHub.auth.toast.disconnectSuccess"), "success");
       setOriginalConnectionKey("");
@@ -102,7 +107,9 @@ export default function CommunityHubAuthentication() {
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              {t("communityHub.auth.descriptionPart1")}<b>{t("communityHub.auth.private")}</b>{t("communityHub.auth.descriptionPart2")}
+              {t("communityHub.auth.descriptionPart1")}
+              <b>{t("communityHub.auth.private")}</b>
+              {t("communityHub.auth.descriptionPart2")}
             </p>
           </div>
 
@@ -116,12 +123,12 @@ export default function CommunityHubAuthentication() {
                   </h1>
                 </div>
                 <p className="text-sm text-theme-text-secondary">
-                  {t("communityHub.auth.whyConnectBodyPart1")}<b>{t("communityHub.auth.private")}</b>{t("communityHub.auth.whyConnectBodyPart2")}
+                  {t("communityHub.auth.whyConnectBodyPart1")}
+                  <b>{t("communityHub.auth.private")}</b>
+                  {t("communityHub.auth.whyConnectBodyPart2")}
                   <br />
                   <br />
-                  <i>
-                    {t("communityHub.auth.whyConnectNote")}
-                  </i>
+                  <i>{t("communityHub.auth.whyConnectNote")}</i>
                 </p>
               </div>
             </div>
@@ -149,8 +156,7 @@ export default function CommunityHubAuthentication() {
                   >
                     {t("communityHub.auth.apiKeyHelpLink")}
                   </a>
-                  {/* eslint-disable-next-line i18next/no-literal-string */}
-                  .
+                  {PERIOD}
                 </p>
                 {!!originalConnectionKey && (
                   <button

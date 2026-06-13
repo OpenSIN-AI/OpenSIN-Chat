@@ -3,6 +3,8 @@ import { useState, useRef, Fragment } from "react";
 import { getWorkspaceSystemPrompt } from "@/utils/chat";
 import { useTranslation } from "react-i18next";
 import Highlighter from "react-highlight-words";
+
+const VARIABLE_SEPARATOR = ", ";
 import { Link, useSearchParams } from "react-router-dom";
 import paths from "@/utils/paths";
 import ChatPromptHistory from "./ChatPromptHistory";
@@ -123,8 +125,7 @@ export default function ChatPromptSettings({
                 <span className="bg-theme-settings-input-bg px-1 py-0.5 rounded">
                   {`{${v.key}}`}
                 </span>
-                {/* eslint-disable-next-line i18next/no-literal-string */}
-                {i < availableVariables.length - 1 && ", "}
+                {i < availableVariables.length - 1 && VARIABLE_SEPARATOR}
               </Fragment>
             ))}
             {availableVariables.length > 3 && (

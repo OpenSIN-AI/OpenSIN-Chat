@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-/* eslint-disable i18next/no-literal-string */
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Citations, {
@@ -71,7 +70,6 @@ vi.mock("@/utils/numbers", () => ({
 }));
 
 describe("Citation", () => {
-  /* eslint-disable i18next/no-literal-string */
   describe("combineLikeSources", () => {
     it("combines sources with same title", () => {
       const sources = [
@@ -275,5 +273,4 @@ describe("Citation", () => {
       expect(link).toBeInTheDocument();
     });
   });
-  /* eslint-enable i18next/no-literal-string */
 });

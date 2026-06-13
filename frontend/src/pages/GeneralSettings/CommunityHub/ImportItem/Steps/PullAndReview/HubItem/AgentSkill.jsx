@@ -16,6 +16,8 @@ import CommunityHub from "@/models/communityHub";
 import { setEventDelegatorForCodeSnippets } from "@/components/WorkspaceChat";
 import { useTranslation } from "react-i18next";
 
+const AGENT_MENTION = "@agent";
+
 export default function AgentSkill({ item, settings, setStep }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -96,9 +98,8 @@ export default function AgentSkill({ item, settings, setStep }) {
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
         <p>
           {t("agentSkill.description.part1")}{" "}
-          {/* eslint-disable-next-line i18next/no-literal-string */}
           <code className="font-mono bg-zinc-900 light:bg-slate-200 px-1 py-0.5 rounded-md text-sm">
-            @agent
+            {AGENT_MENTION}
           </code>{" "}
           {t("agentSkill.description.part2")}
         </p>

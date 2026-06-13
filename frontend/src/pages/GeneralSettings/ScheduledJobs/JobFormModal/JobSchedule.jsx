@@ -3,6 +3,11 @@ import { useTranslation } from "react-i18next";
 import CronBuilder from "./CronBuilder";
 import { humanizeCron } from "../utils/cron";
 
+const JOB_SCHEDULE_MODES = [
+  { value: "builder", labelKey: "scheduledJobs.modal.modeBuilder" },
+  { value: "custom", labelKey: "scheduledJobs.modal.modeCustom" },
+];
+
 export default function JobSchedule({
   schedule,
   scheduleMode,
@@ -11,6 +16,10 @@ export default function JobSchedule({
   onModeChange,
 }) {
   const { t, i18n } = useTranslation();
+  const modeTabs = JOB_SCHEDULE_MODES.map((mode) => ({
+    value: mode.value,
+    label: t(mode.labelKey),
+  }));
 
   const handleInputChange = (e) => {
     onScheduleChange(e.target.value);
@@ -31,18 +40,7 @@ export default function JobSchedule({
       </label>
 
       <div className="flex gap-1 mb-2 p-1 bg-theme-settings-input-bg rounded-lg w-fit">
-        {[
-          {
-            // eslint-disable-next-line i18next/no-literal-string
-            value: "builder",
-            label: t("scheduledJobs.modal.modeBuilder"),
-          },
-          {
-            // eslint-disable-next-line i18next/no-literal-string
-            value: "custom",
-            label: t("scheduledJobs.modal.modeCustom"),
-          },
-        ].map((tab) => (
+        {modeTabs.map((tab) => (
           <button
             key={tab.value}
             type="button"

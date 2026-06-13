@@ -30,11 +30,9 @@ export default function CustomSiteSettings() {
       meta_page_title: settings.title ?? null,
       meta_page_favicon: settings.faviconUrl ?? null,
     });
-    showToast(
-      t("customSiteSettings.updateSuccess"),
-      "success",
-      { clear: true },
-    );
+    showToast(t("customSiteSettings.updateSuccess"), "success", {
+      clear: true,
+    });
     setHasChanges(false);
     return;
   }
@@ -71,9 +69,7 @@ export default function CustomSiteSettings() {
                 return { ...prev, title: e.target.value };
               });
             }}
-            value={
-              settings.title ?? t("customSiteSettings.titleDefault")
-            }
+            value={settings.title ?? t("customSiteSettings.titleDefault")}
           />
         </div>
       </div>
@@ -90,8 +86,7 @@ export default function CustomSiteSettings() {
             src={settings.faviconUrl ?? "/favicon.png"}
             onError={(e) => (e.target.src = "/favicon.png")}
             className="h-10 w-10 rounded-lg mt-2"
-            // eslint-disable-next-line i18next/no-literal-string
-            alt="Site favicon"
+            alt={t("customSiteSettings.faviconAlt")}
           />
           <input
             name="meta_page_favicon"

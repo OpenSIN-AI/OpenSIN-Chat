@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 
+const AGENT_FLOW_ITEM_TYPE = "agent-flow";
+
 export default function Completed({ settings, setSettings, setStep }) {
   const { t } = useTranslation();
   const item = settings?.item;
@@ -19,19 +21,25 @@ export default function Completed({ settings, setSettings, setStep }) {
           </h2>
           <div className="flex flex-col gap-y-[25px] text-theme-text-secondary text-sm">
             <p>
-              {t("communityHub.import.completed.successMessage", { name: item.name, itemType: item.itemType })}
+              {t("communityHub.import.completed.successMessage", {
+                name: item.name,
+                itemType: item.itemType,
+              })}
             </p>
-            {/* eslint-disable-next-line i18next/no-literal-string */}
-            {item.itemType === "agent-flow" && (
+            {item.itemType === AGENT_FLOW_ITEM_TYPE && (
               <Link
                 to={paths.settings.agentSkills()}
                 className="text-theme-text-primary hover:text-blue-500 hover:underline"
               >
-                {t("communityHub.import.completed.viewInAgentSkills", { name: item.name })}
+                {t("communityHub.import.completed.viewInAgentSkills", {
+                  name: item.name,
+                })}
               </Link>
             )}
             <p>
-              {t("communityHub.import.completed.modifyNote", { itemType: item.itemType })}
+              {t("communityHub.import.completed.modifyNote", {
+                itemType: item.itemType,
+              })}
             </p>
           </div>
           <CTAButton

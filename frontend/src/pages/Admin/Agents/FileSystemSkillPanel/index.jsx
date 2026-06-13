@@ -106,6 +106,11 @@ export const getFileSystemSubSkills = (t) => {
 };
 
 const ARROW = "→";
+const PANEL_ICON_PROPS = {
+  size: 24,
+  color: "var(--theme-text-primary)",
+  weight: "bold",
+};
 
 export default function FileSystemSkillPanel({
   title,
@@ -164,14 +169,7 @@ export default function FileSystemSkillPanel({
       <div className="flex flex-col gap-y-[18px] max-w-[500px]">
         <div className="flex w-full justify-between items-center">
           <div className="flex items-center gap-x-2">
-            {icon &&
-              React.createElement(icon, {
-                size: 24,
-                // eslint-disable-next-line i18next/no-literal-string
-                color: "var(--theme-text-primary)",
-                // eslint-disable-next-line i18next/no-literal-string
-                weight: "bold",
-              })}
+            {icon && React.createElement(icon, PANEL_ICON_PROPS)}
             <label
               htmlFor="name"
               className="text-theme-text-primary text-md font-bold"

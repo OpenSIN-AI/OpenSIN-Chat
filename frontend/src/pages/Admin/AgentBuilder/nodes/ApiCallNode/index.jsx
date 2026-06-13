@@ -4,6 +4,8 @@ import React, { useRef, useState } from "react";
 import { Plus, X, CaretDown } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
+const API_METHODS = ["GET", "POST", "DELETE", "PUT", "PATCH"];
+
 export default function ApiCallNode({
   config,
   onConfigChange,
@@ -108,8 +110,7 @@ export default function ApiCallNode({
           onChange={(e) => onConfigChange({ method: e.target.value })}
           className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
         >
-          {/* eslint-disable i18next/no-literal-string */}
-          {["GET", "POST", "DELETE", "PUT", "PATCH"].map((method) => (
+          {API_METHODS.map((method) => (
             <option
               key={method}
               value={method}
@@ -118,7 +119,6 @@ export default function ApiCallNode({
               {method}
             </option>
           ))}
-          {/* eslint-enable i18next/no-literal-string */}
         </select>
       </div>
 

@@ -4046,6 +4046,7 @@ const TRANSLATIONS = {
     titlePlaceholder: "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
     titleDefault: "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
     faviconPlaceholder: "URL zu Ihrem Bild",
+    faviconAlt: "Website-Favicon",
     save: "Speichern",
   },
 
@@ -4211,6 +4212,11 @@ const TRANSLATIONS = {
     nextPage: "Nächste Seite",
   },
   communityHub: {
+    import: {
+      systemPrompt: {
+        availableWorkspaces: "Verfügbare Workspaces",
+      },
+    },
     agentFlow: {
       stepsLabel: "Schritte ({{count}}):",
       import: "Importieren →",

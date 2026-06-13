@@ -13,13 +13,18 @@ export default function SlashCommand({ item, setStep }) {
       const { error } = await CommunityHub.applyItem(item.importId);
       if (error) throw new Error(error);
       showToast(
-        t("communityHub.import.slashCommand.toastSuccess", { command: item.command }),
+        t("communityHub.import.slashCommand.toastSuccess", {
+          command: item.command,
+        }),
         "success",
       );
       setStep(CommunityHubImportItemSteps.completed.key);
     } catch (e) {
       console.error(e);
-      showToast(t("communityHub.import.slashCommand.toastFailed", { error: e.message }), "error");
+      showToast(
+        t("communityHub.import.slashCommand.toastFailed", { error: e.message }),
+        "error",
+      );
     }
   }
 
@@ -27,7 +32,9 @@ export default function SlashCommand({ item, setStep }) {
     <div className="flex flex-col mt-4 gap-y-4">
       <div className="flex flex-col gap-y-1">
         <h2 className="text-base text-theme-text-primary font-semibold">
-          {t("communityHub.import.slashCommand.reviewTitle", { name: item.name })}
+          {t("communityHub.import.slashCommand.reviewTitle", {
+            name: item.name,
+          })}
         </h2>
         {item.creatorUsername && (
           <p className="text-white/60 text-xs font-mono">
@@ -38,19 +45,17 @@ export default function SlashCommand({ item, setStep }) {
               className="hover:text-blue-500 hover:underline"
               rel="noreferrer"
             >
-              @{item.creatorUsername}
+              {`@${item.creatorUsername}`}
             </a>
           </p>
         )}
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 light:text-theme-text-secondary text-sm">
-        {/* eslint-disable-next-line i18next/no-literal-string */}
         <p>
           {t("communityHub.import.slashCommand.descriptionPart1")}
           <br />
           <br />
           {t("communityHub.import.slashCommand.descriptionPart2")}
-          {/* eslint-disable-next-line i18next/no-literal-string */}
           <code className="font-mono bg-zinc-900 light:bg-slate-200 px-1 py-0.5 rounded-md text-sm">
             {item.command}
           </code>{" "}

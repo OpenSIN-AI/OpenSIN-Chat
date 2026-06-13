@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 import { useRef } from "react";
-import { useTranslation } from "react-i18next";
 import { Trash } from "@phosphor-icons/react";
 import { stripUuidAndJsonFromString } from "@/components/Modals/ManageWorkspace/Documents/Directory/utils";
 import moment from "moment";
 import System from "@/models/system";
 
+const MOMENT_LLL_FORMAT = "lll";
+const wrapRelative = (text) => `(${text})`;
+
 export default function DocumentSyncQueueRow({ queue }) {
-  const { t } = useTranslation();
   const rowRef = useRef(null);
   const handleDelete = async () => {
     rowRef?.current?.remove();
@@ -29,15 +30,13 @@ export default function DocumentSyncQueueRow({ queue }) {
         </td>
         <td className="px-6 py-4">{moment(queue.lastSyncedAt).fromNow()}</td>
         <td className="px-6 py-4">
-          {/* eslint-disable-next-line i18next/no-literal-string */}
-          {moment(queue.nextSyncAt).format("lll")}
-          {/* eslint-disable i18next/no-literal-string */}
-          <i className="text-xs px-2">({moment(queue.nextSyncAt).fromNow()})</i>
-          {/* eslint-enable i18next/no-literal-string */}
+          {moment(queue.nextSyncAt).format(MOMENT_LLL_FORMAT)}
+          <i className="text-xs px-2">
+            {wrapRelative(moment(queue.nextSyncAt).fromNow())}
+          </i>
         </td>
         <td className="px-6 py-4">
-          {/* eslint-disable-next-line i18next/no-literal-string */}
-          {moment(queue.createdAt).format("lll")}
+          {moment(queue.createdAt).format(MOMENT_LLL_FORMAT)}
         </td>
         <td className="px-6 py-4 flex items-center gap-x-6">
           <button

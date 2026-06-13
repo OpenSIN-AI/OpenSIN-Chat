@@ -2,12 +2,25 @@
 import Toggle from "@/components/lib/Toggle";
 import { useTranslation } from "react-i18next";
 
+const CAPTURE_AS_VALUES = [
+  { labelKey: "webScrapingNode.captureAs.text", value: "text" },
+  { labelKey: "webScrapingNode.captureAs.html", value: "html" },
+  {
+    labelKey: "webScrapingNode.captureAs.querySelector",
+    value: "querySelector",
+  },
+];
+
 export default function WebScrapingNode({
   config,
   onConfigChange,
   renderVariableSelect,
 }) {
   const { t } = useTranslation();
+  const captureAsOptions = CAPTURE_AS_VALUES.map((opt) => ({
+    label: t(opt.labelKey),
+    value: opt.value,
+  }));
   return (
     <div className="space-y-4">
       <div>
@@ -39,15 +52,7 @@ export default function WebScrapingNode({
           }
           className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
         >
-          {/* eslint-disable i18next/no-literal-string */}
-          {[
-            { label: t("webScrapingNode.captureAs.text"), value: "text" },
-            { label: t("webScrapingNode.captureAs.html"), value: "html" },
-            {
-              label: t("webScrapingNode.captureAs.querySelector"),
-              value: "querySelector",
-            },
-          ].map((captureAs) => (
+          {captureAsOptions.map((captureAs) => (
             <option
               key={captureAs.value}
               value={captureAs.value}
@@ -56,7 +61,6 @@ export default function WebScrapingNode({
               {captureAs.label}
             </option>
           ))}
-          {/* eslint-enable i18next/no-literal-string */}
         </select>
       </div>
 

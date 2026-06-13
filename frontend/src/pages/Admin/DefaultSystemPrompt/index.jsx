@@ -13,6 +13,8 @@ import useDefaultSystemPrompt from "@/hooks/useDefaultSystemPrompt";
 import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";
 import { useTranslation } from "react-i18next";
 
+const VARIABLE_SEPARATOR = ", ";
+
 export default function DefaultSystemPrompt() {
   const { t } = useTranslation();
   const { prompt, isLoading: promptLoading } = useDefaultSystemPrompt();
@@ -163,8 +165,8 @@ export default function DefaultSystemPrompt() {
                           <span className="bg-theme-settings-input-bg px-1 py-0.5 rounded">
                             {`{${v.key}}`}
                           </span>
-                          {/* eslint-disable-next-line i18next/no-literal-string */}
-                          {i < availableVariables.length - 1 && ", "}
+                          {i < availableVariables.length - 1 &&
+                            VARIABLE_SEPARATOR}
                         </Fragment>
                       ))}
                       {availableVariables.length > 3 && (

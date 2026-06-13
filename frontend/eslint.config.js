@@ -141,6 +141,7 @@ export default [
             exclude: [
               "OpenSIN",
               "PDF", "DOC", "XLS", "CSV", "IMG", "SVG", "PPT",
+              "Outlook",
               "https://api.openai.com",
               "sk-...",
               "dall-e-3",

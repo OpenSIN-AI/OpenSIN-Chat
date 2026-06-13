@@ -26,6 +26,8 @@ import FinishNode from "../nodes/FinishNode";
 import WebScrapingNode from "../nodes/WebScrapingNode";
 import FlowInfoNode from "../nodes/FlowInfoNode";
 
+const BLOCK_ICON_CLASS = "w-4 h-4 text-white";
+
 const BLOCK_TYPES = {
   FLOW_INFO: "flowInfo",
   START: "start",
@@ -183,19 +185,19 @@ export default function BlockList({
         <div className="space-y-4">
           {renderBlockConfigContent(block, props)}
           <div className="pt-4 border-t border-white/10">
-              <Toggle
-                size="md"
-                variant="horizontal"
-                label={t("agentBuilder.blockList.directOutput")}
-                description={t("agentBuilder.blockList.directOutputDescription")}
-                enabled={props.config.directOutput || false}
-                onChange={(checked) =>
-                  props.onConfigChange({
-                    ...props.config,
-                    directOutput: checked,
-                  })
-                }
-              />
+            <Toggle
+              size="md"
+              variant="horizontal"
+              label={t("agentBuilder.blockList.directOutput")}
+              description={t("agentBuilder.blockList.directOutputDescription")}
+              enabled={props.config.directOutput || false}
+              onChange={(checked) =>
+                props.onConfigChange({
+                  ...props.config,
+                  directOutput: checked,
+                })
+              }
+            />
           </div>
         </div>
       );
@@ -247,8 +249,7 @@ export default function BlockList({
                 <div className="flex items-center gap-3">
                   <div className="w-7 h-7 rounded-lg bg-white/10 light:bg-white flex items-center justify-center">
                     {React.cloneElement(info.icon, {
-                      // eslint-disable-next-line i18next/no-literal-string
-                      className: "w-4 h-4 text-white",
+                      className: BLOCK_ICON_CLASS,
                     })}
                   </div>
                   <div className="flex-1 text-left min-w-0 max-w-[115px]">
@@ -275,7 +276,9 @@ export default function BlockList({
                             }}
                             className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
                             data-tooltip-id="block-action"
-                            data-tooltip-content={t("agentBuilder.blockList.moveBlockUp")}
+                            data-tooltip-content={t(
+                              "agentBuilder.blockList.moveBlockUp",
+                            )}
                           >
                             <CaretUp className="w-3.5 h-3.5" />
                           </button>
@@ -288,7 +291,9 @@ export default function BlockList({
                             }}
                             className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
                             data-tooltip-id="block-action"
-                            data-tooltip-content={t("agentBuilder.blockList.moveBlockDown")}
+                            data-tooltip-content={t(
+                              "agentBuilder.blockList.moveBlockDown",
+                            )}
                           >
                             <CaretDown className="w-3.5 h-3.5" />
                           </button>
@@ -300,7 +305,9 @@ export default function BlockList({
                           }}
                           className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-red-400 hover:bg-red-500/10 hover:border-red-500/20 transition-colors duration-300"
                           data-tooltip-id="block-action"
-                            data-tooltip-content={t("agentBuilder.blockList.deleteBlock")}
+                          data-tooltip-content={t(
+                            "agentBuilder.blockList.deleteBlock",
+                          )}
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
