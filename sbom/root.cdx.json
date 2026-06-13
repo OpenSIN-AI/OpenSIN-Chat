@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:b59eb03a-c9bb-4281-b26f-4b1cc093b67a",
+  "serialNumber": "urn:uuid:4a35ef26-1f79-4140-888b-082358a93ec9",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-06-07T10:01:43.182Z",
+    "timestamp": "2026-06-13T21:27:35.124Z",
     "tools": [
       {
         "vendor": "Family-Team-Projects",
@@ -28,6 +28,27 @@
   "components": [
     {
       "type": "library",
+      "name": "@anthropic-ai/sdk",
+      "version": "0.102.0",
+      "purl": "pkg:npm/@anthropic-ai/sdk@0.102.0",
+      "bom-ref": "pkg:npm/@anthropic-ai/sdk@0.102.0"
+    },
+    {
+      "type": "library",
+      "name": "@dnd-kit/core",
+      "version": "6.3.1",
+      "purl": "pkg:npm/@dnd-kit/core@6.3.1",
+      "bom-ref": "pkg:npm/@dnd-kit/core@6.3.1"
+    },
+    {
+      "type": "library",
+      "name": "@dnd-kit/utilities",
+      "version": "3.2.2",
+      "purl": "pkg:npm/@dnd-kit/utilities@3.2.2",
+      "bom-ref": "pkg:npm/@dnd-kit/utilities@3.2.2"
+    },
+    {
+      "type": "library",
       "name": "@elevenlabs/elevenlabs-js",
       "version": "2.51.0",
       "purl": "pkg:npm/@elevenlabs/elevenlabs-js@2.51.0",
@@ -35,10 +56,52 @@
     },
     {
       "type": "library",
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "purl": "pkg:npm/@eslint/js@10.0.1",
+      "bom-ref": "pkg:npm/@eslint/js@10.0.1"
+    },
+    {
+      "type": "library",
       "name": "@hello-pangea/dnd",
       "version": "18.0.1",
       "purl": "pkg:npm/@hello-pangea/dnd@18.0.1",
       "bom-ref": "pkg:npm/@hello-pangea/dnd@18.0.1"
+    },
+    {
+      "type": "library",
+      "name": "@langchain/anthropic",
+      "version": "1.4.0",
+      "purl": "pkg:npm/@langchain/anthropic@1.4.0",
+      "bom-ref": "pkg:npm/@langchain/anthropic@1.4.0"
+    },
+    {
+      "type": "library",
+      "name": "@langchain/cohere",
+      "version": "1.0.5",
+      "purl": "pkg:npm/@langchain/cohere@1.0.5",
+      "bom-ref": "pkg:npm/@langchain/cohere@1.0.5"
+    },
+    {
+      "type": "library",
+      "name": "@langchain/ollama",
+      "version": "1.2.7",
+      "purl": "pkg:npm/@langchain/ollama@1.2.7",
+      "bom-ref": "pkg:npm/@langchain/ollama@1.2.7"
+    },
+    {
+      "type": "library",
+      "name": "@langchain/openai",
+      "version": "1.4.7",
+      "purl": "pkg:npm/@langchain/openai@1.4.7",
+      "bom-ref": "pkg:npm/@langchain/openai@1.4.7"
+    },
+    {
+      "type": "library",
+      "name": "@microsoft/fetch-event-source",
+      "version": "2.0.1",
+      "purl": "pkg:npm/@microsoft/fetch-event-source@2.0.1",
+      "bom-ref": "pkg:npm/@microsoft/fetch-event-source@2.0.1"
     },
     {
       "type": "library",
@@ -56,13 +119,6 @@
     },
     {
       "type": "library",
-      "name": "@prisma/client",
-      "version": "7.8.0",
-      "purl": "pkg:npm/@prisma/client@7.8.0",
-      "bom-ref": "pkg:npm/@prisma/client@7.8.0"
-    },
-    {
-      "type": "library",
       "name": "@testing-library/jest-dom",
       "version": "6.9.1",
       "purl": "pkg:npm/@testing-library/jest-dom@6.9.1",
@@ -77,10 +133,157 @@
     },
     {
       "type": "library",
+      "name": "@testing-library/user-event",
+      "version": "14.6.1",
+      "purl": "pkg:npm/@testing-library/user-event@14.6.1",
+      "bom-ref": "pkg:npm/@testing-library/user-event@14.6.1"
+    },
+    {
+      "type": "library",
       "name": "@vitejs/plugin-react",
       "version": "6.0.2",
       "purl": "pkg:npm/@vitejs/plugin-react@6.0.2",
       "bom-ref": "pkg:npm/@vitejs/plugin-react@6.0.2"
+    },
+    {
+      "type": "library",
+      "name": "bcryptjs",
+      "version": "3.0.3",
+      "purl": "pkg:npm/bcryptjs@3.0.3",
+      "bom-ref": "pkg:npm/bcryptjs@3.0.3"
+    },
+    {
+      "type": "library",
+      "name": "check-disk-space",
+      "version": "3.4.0",
+      "purl": "pkg:npm/check-disk-space@3.4.0",
+      "bom-ref": "pkg:npm/check-disk-space@3.4.0"
+    },
+    {
+      "type": "library",
+      "name": "cohere-ai",
+      "version": "8.0.0",
+      "purl": "pkg:npm/cohere-ai@8.0.0",
+      "bom-ref": "pkg:npm/cohere-ai@8.0.0"
+    },
+    {
+      "type": "library",
+      "name": "dompurify",
+      "version": "3.4.8",
+      "purl": "pkg:npm/dompurify@3.4.8",
+      "bom-ref": "pkg:npm/dompurify@3.4.8"
+    },
+    {
+      "type": "library",
+      "name": "dotenv",
+      "version": "17.4.2",
+      "purl": "pkg:npm/dotenv@17.4.2",
+      "bom-ref": "pkg:npm/dotenv@17.4.2"
+    },
+    {
+      "type": "library",
+      "name": "eslint-config-prettier",
+      "version": "10.1.8",
+      "purl": "pkg:npm/eslint-config-prettier@10.1.8",
+      "bom-ref": "pkg:npm/eslint-config-prettier@10.1.8"
+    },
+    {
+      "type": "library",
+      "name": "eslint-plugin-jsx-a11y",
+      "version": "6.10.2",
+      "purl": "pkg:npm/eslint-plugin-jsx-a11y@6.10.2",
+      "bom-ref": "pkg:npm/eslint-plugin-jsx-a11y@6.10.2"
+    },
+    {
+      "type": "library",
+      "name": "eslint-plugin-prettier",
+      "version": "5.5.6",
+      "purl": "pkg:npm/eslint-plugin-prettier@5.5.6",
+      "bom-ref": "pkg:npm/eslint-plugin-prettier@5.5.6"
+    },
+    {
+      "type": "library",
+      "name": "eslint-plugin-react",
+      "version": "7.37.5",
+      "purl": "pkg:npm/eslint-plugin-react@7.37.5",
+      "bom-ref": "pkg:npm/eslint-plugin-react@7.37.5"
+    },
+    {
+      "type": "library",
+      "name": "eslint-plugin-react-hooks",
+      "version": "7.1.1",
+      "purl": "pkg:npm/eslint-plugin-react-hooks@7.1.1",
+      "bom-ref": "pkg:npm/eslint-plugin-react-hooks@7.1.1"
+    },
+    {
+      "type": "library",
+      "name": "eslint-plugin-unused-imports",
+      "version": "4.4.1",
+      "purl": "pkg:npm/eslint-plugin-unused-imports@4.4.1",
+      "bom-ref": "pkg:npm/eslint-plugin-unused-imports@4.4.1"
+    },
+    {
+      "type": "library",
+      "name": "file-saver",
+      "version": "2.0.5",
+      "purl": "pkg:npm/file-saver@2.0.5",
+      "bom-ref": "pkg:npm/file-saver@2.0.5"
+    },
+    {
+      "type": "library",
+      "name": "globals",
+      "version": "17.6.0",
+      "purl": "pkg:npm/globals@17.6.0",
+      "bom-ref": "pkg:npm/globals@17.6.0"
+    },
+    {
+      "type": "library",
+      "name": "he",
+      "version": "1.2.0",
+      "purl": "pkg:npm/he@1.2.0",
+      "bom-ref": "pkg:npm/he@1.2.0"
+    },
+    {
+      "type": "library",
+      "name": "highlight.js",
+      "version": "11.11.1",
+      "purl": "pkg:npm/highlight.js@11.11.1",
+      "bom-ref": "pkg:npm/highlight.js@11.11.1"
+    },
+    {
+      "type": "library",
+      "name": "lodash.debounce",
+      "version": "4.0.8",
+      "purl": "pkg:npm/lodash.debounce@4.0.8",
+      "bom-ref": "pkg:npm/lodash.debounce@4.0.8"
+    },
+    {
+      "type": "library",
+      "name": "markdown-it",
+      "version": "14.2.0",
+      "purl": "pkg:npm/markdown-it@14.2.0",
+      "bom-ref": "pkg:npm/markdown-it@14.2.0"
+    },
+    {
+      "type": "library",
+      "name": "mime",
+      "version": "4.1.0",
+      "purl": "pkg:npm/mime@4.1.0",
+      "bom-ref": "pkg:npm/mime@4.1.0"
+    },
+    {
+      "type": "library",
+      "name": "openai",
+      "version": "6.42.0",
+      "purl": "pkg:npm/openai@6.42.0",
+      "bom-ref": "pkg:npm/openai@6.42.0"
+    },
+    {
+      "type": "library",
+      "name": "pdf-lib",
+      "version": "1.17.1",
+      "purl": "pkg:npm/pdf-lib@1.17.1",
+      "bom-ref": "pkg:npm/pdf-lib@1.17.1"
     },
     {
       "type": "library",
@@ -91,10 +294,52 @@
     },
     {
       "type": "library",
+      "name": "pluralize",
+      "version": "8.0.0",
+      "purl": "pkg:npm/pluralize@8.0.0",
+      "bom-ref": "pkg:npm/pluralize@8.0.0"
+    },
+    {
+      "type": "library",
+      "name": "qrcode.react",
+      "version": "4.2.0",
+      "purl": "pkg:npm/qrcode.react@4.2.0",
+      "bom-ref": "pkg:npm/qrcode.react@4.2.0"
+    },
+    {
+      "type": "library",
       "name": "react",
       "version": "19.2.7",
       "purl": "pkg:npm/react@19.2.7",
       "bom-ref": "pkg:npm/react@19.2.7"
+    },
+    {
+      "type": "library",
+      "name": "react-device-detect",
+      "version": "2.2.3",
+      "purl": "pkg:npm/react-device-detect@2.2.3",
+      "bom-ref": "pkg:npm/react-device-detect@2.2.3"
+    },
+    {
+      "type": "library",
+      "name": "react-dom",
+      "version": "19.2.7",
+      "purl": "pkg:npm/react-dom@19.2.7",
+      "bom-ref": "pkg:npm/react-dom@19.2.7"
+    },
+    {
+      "type": "library",
+      "name": "react-error-boundary",
+      "version": "6.1.2",
+      "purl": "pkg:npm/react-error-boundary@6.1.2",
+      "bom-ref": "pkg:npm/react-error-boundary@6.1.2"
+    },
+    {
+      "type": "library",
+      "name": "react-highlight-words",
+      "version": "0.21.0",
+      "purl": "pkg:npm/react-highlight-words@0.21.0",
+      "bom-ref": "pkg:npm/react-highlight-words@0.21.0"
     },
     {
       "type": "library",
@@ -119,10 +364,73 @@
     },
     {
       "type": "library",
+      "name": "react-speech-recognition",
+      "version": "4.0.1",
+      "purl": "pkg:npm/react-speech-recognition@4.0.1",
+      "bom-ref": "pkg:npm/react-speech-recognition@4.0.1"
+    },
+    {
+      "type": "library",
+      "name": "react-tag-input-component",
+      "version": "2.0.2",
+      "purl": "pkg:npm/react-tag-input-component@2.0.2",
+      "bom-ref": "pkg:npm/react-tag-input-component@2.0.2"
+    },
+    {
+      "type": "library",
+      "name": "react-toastify",
+      "version": "11.1.0",
+      "purl": "pkg:npm/react-toastify@11.1.0",
+      "bom-ref": "pkg:npm/react-toastify@11.1.0"
+    },
+    {
+      "type": "library",
+      "name": "react-tooltip",
+      "version": "6.0.7",
+      "purl": "pkg:npm/react-tooltip@6.0.7",
+      "bom-ref": "pkg:npm/react-tooltip@6.0.7"
+    },
+    {
+      "type": "library",
+      "name": "regenerator-runtime",
+      "version": "0.14.1",
+      "purl": "pkg:npm/regenerator-runtime@0.14.1",
+      "bom-ref": "pkg:npm/regenerator-runtime@0.14.1"
+    },
+    {
+      "type": "library",
       "name": "rollup-plugin-visualizer",
       "version": "7.0.1",
       "purl": "pkg:npm/rollup-plugin-visualizer@7.0.1",
       "bom-ref": "pkg:npm/rollup-plugin-visualizer@7.0.1"
+    },
+    {
+      "type": "library",
+      "name": "swr",
+      "version": "2.4.1",
+      "purl": "pkg:npm/swr@2.4.1",
+      "bom-ref": "pkg:npm/swr@2.4.1"
+    },
+    {
+      "type": "library",
+      "name": "text-case",
+      "version": "1.2.11",
+      "purl": "pkg:npm/text-case@1.2.11",
+      "bom-ref": "pkg:npm/text-case@1.2.11"
+    },
+    {
+      "type": "library",
+      "name": "truncate",
+      "version": "3.0.0",
+      "purl": "pkg:npm/truncate@3.0.0",
+      "bom-ref": "pkg:npm/truncate@3.0.0"
+    },
+    {
+      "type": "library",
+      "name": "typescript-eslint",
+      "version": "8.60.1",
+      "purl": "pkg:npm/typescript-eslint@8.60.1",
+      "bom-ref": "pkg:npm/typescript-eslint@8.60.1"
     },
     {
       "type": "library",
@@ -148,9 +456,9 @@
     {
       "type": "library",
       "name": "concurrently",
-      "version": "9.1.2",
-      "purl": "pkg:npm/concurrently@9.1.2",
-      "bom-ref": "pkg:npm/concurrently@9.1.2"
+      "version": "10.0.3",
+      "purl": "pkg:npm/concurrently@10.0.3",
+      "bom-ref": "pkg:npm/concurrently@10.0.3"
     },
     {
       "type": "library",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-07T10:01:43.180Z",
+  "generatedAt": "2026-06-13T21:27:35.121Z",
   "specs": {
     "spdx": "SPDX-2.3",
     "cyclonedx": "1.5"
@@ -8,28 +8,28 @@
     {
       "name": "root",
       "source": "package.json",
-      "packageCount": 19,
+      "packageCount": 63,
       "spdx": "sbom/root.spdx.json",
       "cyclonedx": "sbom/root.cdx.json"
     },
     {
       "name": "server",
-      "source": "yarn.lock",
-      "packageCount": 969,
+      "source": "package-lock.json",
+      "packageCount": 1195,
       "spdx": "sbom/server.spdx.json",
       "cyclonedx": "sbom/server.cdx.json"
     },
     {
       "name": "frontend",
-      "source": "yarn.lock",
-      "packageCount": 718,
+      "source": "package-lock.json",
+      "packageCount": 790,
       "spdx": "sbom/frontend.spdx.json",
       "cyclonedx": "sbom/frontend.cdx.json"
     },
     {
       "name": "collector",
-      "source": "yarn.lock",
-      "packageCount": 567,
+      "source": "package-lock.json",
+      "packageCount": 562,
       "spdx": "sbom/collector.spdx.json",
       "cyclonedx": "sbom/collector.cdx.json"
     }

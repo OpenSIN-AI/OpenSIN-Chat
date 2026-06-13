@@ -3,9 +3,9 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "opensin-chat-collector",
-  "documentNamespace": "https://opensin.delqhi.com/sbom/opensin-chat-collector-01178c40-80d4-4490-84fc-90eb6a6526eb",
+  "documentNamespace": "https://opensin.delqhi.com/sbom/opensin-chat-collector-0b7afdf4-8416-41d9-8fe7-e9cff332fd43",
   "creationInfo": {
-    "created": "2026-06-07T10:01:43.204Z",
+    "created": "2026-06-13T21:27:35.160Z",
     "creators": [
       "Tool: openafd-generate-sbom",
       "Organization: Family-Team-Projects"
@@ -142,6 +142,23 @@
       ]
     },
     {
+      "name": "eslint-visitor-keys",
+      "SPDXID": "SPDXRef-Package-eslint-visitor-keys-4.2.1",
+      "versionInfo": "4.2.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/eslint-visitor-keys@4.2.1"
+        }
+      ]
+    },
+    {
       "name": "@eslint-community/regexpp",
       "SPDXID": "SPDXRef-Package--eslint-community-regexpp-4.12.2",
       "versionInfo": "4.12.2",
@@ -172,6 +189,40 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/@eslint/config-array@0.21.1"
+        }
+      ]
+    },
+    {
+      "name": "debug",
+      "SPDXID": "SPDXRef-Package-debug-4.4.3",
+      "versionInfo": "4.4.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/debug@4.4.3"
+        }
+      ]
+    },
+    {
+      "name": "ms",
+      "SPDXID": "SPDXRef-Package-ms-2.1.3",
+      "versionInfo": "2.1.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/ms@2.1.3"
         }
       ]
     },
@@ -223,6 +274,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/@eslint/eslintrc@3.3.4"
+        }
+      ]
+    },
+    {
+      "name": "globals",
+      "SPDXID": "SPDXRef-Package-globals-17.4.0",
+      "versionInfo": "17.4.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/globals@17.4.0"
         }
       ]
     },
@@ -448,23 +516,6 @@
       ]
     },
     {
-      "name": "@img/sharp-libvips-linux-arm64",
-      "SPDXID": "SPDXRef-Package--img-sharp-libvips-linux-arm64-1.0.4",
-      "versionInfo": "1.0.4",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/@img/sharp-libvips-linux-arm64@1.0.4"
-        }
-      ]
-    },
-    {
       "name": "@img/sharp-libvips-linux-arm",
       "SPDXID": "SPDXRef-Package--img-sharp-libvips-linux-arm-1.0.5",
       "versionInfo": "1.0.5",
@@ -478,6 +529,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/@img/sharp-libvips-linux-arm@1.0.5"
+        }
+      ]
+    },
+    {
+      "name": "@img/sharp-libvips-linux-arm64",
+      "SPDXID": "SPDXRef-Package--img-sharp-libvips-linux-arm64-1.0.4",
+      "versionInfo": "1.0.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@img/sharp-libvips-linux-arm64@1.0.4"
         }
       ]
     },
@@ -550,23 +618,6 @@
       ]
     },
     {
-      "name": "@img/sharp-linux-arm64",
-      "SPDXID": "SPDXRef-Package--img-sharp-linux-arm64-0.33.5",
-      "versionInfo": "0.33.5",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/@img/sharp-linux-arm64@0.33.5"
-        }
-      ]
-    },
-    {
       "name": "@img/sharp-linux-arm",
       "SPDXID": "SPDXRef-Package--img-sharp-linux-arm-0.33.5",
       "versionInfo": "0.33.5",
@@ -580,6 +631,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/@img/sharp-linux-arm@0.33.5"
+        }
+      ]
+    },
+    {
+      "name": "@img/sharp-linux-arm64",
+      "SPDXID": "SPDXRef-Package--img-sharp-linux-arm64-0.33.5",
+      "versionInfo": "0.33.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@img/sharp-linux-arm64@0.33.5"
         }
       ]
     },
@@ -721,8 +789,8 @@
     },
     {
       "name": "@langchain/community",
-      "SPDXID": "SPDXRef-Package--langchain-community-0.2.33",
-      "versionInfo": "0.2.33",
+      "SPDXID": "SPDXRef-Package--langchain-community-0.0.57",
+      "versionInfo": "0.0.57",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -732,14 +800,48 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/@langchain/community@0.2.33"
+          "referenceLocator": "pkg:npm/@langchain/community@0.0.57"
+        }
+      ]
+    },
+    {
+      "name": "langchain",
+      "SPDXID": "SPDXRef-Package-langchain-0.1.36",
+      "versionInfo": "0.1.36",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/langchain@0.1.36"
+        }
+      ]
+    },
+    {
+      "name": "uuid",
+      "SPDXID": "SPDXRef-Package-uuid-9.0.1",
+      "versionInfo": "9.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/uuid@9.0.1"
         }
       ]
     },
     {
       "name": "@langchain/core",
-      "SPDXID": "SPDXRef-Package--langchain-core-0.2.36",
-      "versionInfo": "0.2.36",
+      "SPDXID": "SPDXRef-Package--langchain-core-0.1.63",
+      "versionInfo": "0.1.63",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -749,14 +851,14 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/@langchain/core@0.2.36"
+          "referenceLocator": "pkg:npm/@langchain/core@0.1.63"
         }
       ]
     },
     {
       "name": "@langchain/openai",
-      "SPDXID": "SPDXRef-Package--langchain-openai-0.2.11",
-      "versionInfo": "0.2.11",
+      "SPDXID": "SPDXRef-Package--langchain-openai-0.0.34",
+      "versionInfo": "0.0.34",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -766,7 +868,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/@langchain/openai@0.2.11"
+          "referenceLocator": "pkg:npm/@langchain/openai@0.0.34"
         }
       ]
     },
@@ -1060,6 +1162,74 @@
       ]
     },
     {
+      "name": "color",
+      "SPDXID": "SPDXRef-Package-color-4.2.3",
+      "versionInfo": "4.2.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/color@4.2.3"
+        }
+      ]
+    },
+    {
+      "name": "color-convert",
+      "SPDXID": "SPDXRef-Package-color-convert-2.0.1",
+      "versionInfo": "2.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/color-convert@2.0.1"
+        }
+      ]
+    },
+    {
+      "name": "color-name",
+      "SPDXID": "SPDXRef-Package-color-name-1.1.4",
+      "versionInfo": "1.1.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/color-name@1.1.4"
+        }
+      ]
+    },
+    {
+      "name": "color-string",
+      "SPDXID": "SPDXRef-Package-color-string-1.9.1",
+      "versionInfo": "1.9.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/color-string@1.9.1"
+        }
+      ]
+    },
+    {
       "name": "@tokenizer/token",
       "SPDXID": "SPDXRef-Package--tokenizer-token-0.3.0",
       "versionInfo": "0.3.0",
@@ -1162,6 +1332,40 @@
       ]
     },
     {
+      "name": "iconv-lite",
+      "SPDXID": "SPDXRef-Package-iconv-lite-0.7.0",
+      "versionInfo": "0.7.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/iconv-lite@0.7.0"
+        }
+      ]
+    },
+    {
+      "name": "@types/node",
+      "SPDXID": "SPDXRef-Package--types-node-18.19.130",
+      "versionInfo": "18.19.130",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@types/node@18.19.130"
+        }
+      ]
+    },
+    {
       "name": "@types/node-fetch",
       "SPDXID": "SPDXRef-Package--types-node-fetch-2.6.13",
       "versionInfo": "2.6.13",
@@ -1175,23 +1379,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/@types/node-fetch@2.6.13"
-        }
-      ]
-    },
-    {
-      "name": "@types/node",
-      "SPDXID": "SPDXRef-Package--types-node-24.10.1",
-      "versionInfo": "24.10.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/@types/node@24.10.1"
         }
       ]
     },
@@ -1281,6 +1468,23 @@
       ]
     },
     {
+      "name": "sharp",
+      "SPDXID": "SPDXRef-Package-sharp-0.33.5",
+      "versionInfo": "0.33.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/sharp@0.33.5"
+        }
+      ]
+    },
+    {
       "name": "@xmldom/xmldom",
       "SPDXID": "SPDXRef-Package--xmldom-xmldom-0.8.11",
       "versionInfo": "0.8.11",
@@ -1349,23 +1553,6 @@
       ]
     },
     {
-      "name": "acorn-jsx",
-      "SPDXID": "SPDXRef-Package-acorn-jsx-5.3.2",
-      "versionInfo": "5.3.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/acorn-jsx@5.3.2"
-        }
-      ]
-    },
-    {
       "name": "acorn",
       "SPDXID": "SPDXRef-Package-acorn-8.16.0",
       "versionInfo": "8.16.0",
@@ -1379,6 +1566,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/acorn@8.16.0"
+        }
+      ]
+    },
+    {
+      "name": "acorn-jsx",
+      "SPDXID": "SPDXRef-Package-acorn-jsx-5.3.2",
+      "versionInfo": "5.3.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/acorn-jsx@5.3.2"
         }
       ]
     },
@@ -1503,8 +1707,8 @@
     },
     {
       "name": "argparse",
-      "SPDXID": "SPDXRef-Package-argparse-2.0.1",
-      "versionInfo": "2.0.1",
+      "SPDXID": "SPDXRef-Package-argparse-1.0.10",
+      "versionInfo": "1.0.10",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1514,7 +1718,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/argparse@2.0.1"
+          "referenceLocator": "pkg:npm/argparse@1.0.10"
         }
       ]
     },
@@ -1672,91 +1876,6 @@
       ]
     },
     {
-      "name": "bare-fs",
-      "SPDXID": "SPDXRef-Package-bare-fs-4.5.1",
-      "versionInfo": "4.5.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/bare-fs@4.5.1"
-        }
-      ]
-    },
-    {
-      "name": "bare-os",
-      "SPDXID": "SPDXRef-Package-bare-os-3.6.2",
-      "versionInfo": "3.6.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/bare-os@3.6.2"
-        }
-      ]
-    },
-    {
-      "name": "bare-path",
-      "SPDXID": "SPDXRef-Package-bare-path-3.0.0",
-      "versionInfo": "3.0.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/bare-path@3.0.0"
-        }
-      ]
-    },
-    {
-      "name": "bare-stream",
-      "SPDXID": "SPDXRef-Package-bare-stream-2.7.0",
-      "versionInfo": "2.7.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/bare-stream@2.7.0"
-        }
-      ]
-    },
-    {
-      "name": "bare-url",
-      "SPDXID": "SPDXRef-Package-bare-url-2.3.2",
-      "versionInfo": "2.3.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/bare-url@2.3.2"
-        }
-      ]
-    },
-    {
       "name": "base-64",
       "SPDXID": "SPDXRef-Package-base-64-0.1.0",
       "versionInfo": "0.1.0",
@@ -1843,8 +1962,8 @@
     },
     {
       "name": "bl",
-      "SPDXID": "SPDXRef-Package-bl-1.2.3",
-      "versionInfo": "1.2.3",
+      "SPDXID": "SPDXRef-Package-bl-4.1.0",
+      "versionInfo": "4.1.0",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1854,14 +1973,14 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/bl@1.2.3"
+          "referenceLocator": "pkg:npm/bl@4.1.0"
         }
       ]
     },
     {
       "name": "bluebird",
-      "SPDXID": "SPDXRef-Package-bluebird-3.7.2",
-      "versionInfo": "3.7.2",
+      "SPDXID": "SPDXRef-Package-bluebird-3.4.7",
+      "versionInfo": "3.4.7",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1871,7 +1990,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/bluebird@3.7.2"
+          "referenceLocator": "pkg:npm/bluebird@3.4.7"
         }
       ]
     },
@@ -1928,8 +2047,8 @@
     },
     {
       "name": "brace-expansion",
-      "SPDXID": "SPDXRef-Package-brace-expansion-1.1.12",
-      "versionInfo": "1.1.12",
+      "SPDXID": "SPDXRef-Package-brace-expansion-2.0.2",
+      "versionInfo": "2.0.2",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1939,7 +2058,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/brace-expansion@1.1.12"
+          "referenceLocator": "pkg:npm/brace-expansion@2.0.2"
         }
       ]
     },
@@ -1961,9 +2080,9 @@
       ]
     },
     {
-      "name": "buffer-alloc-unsafe",
-      "SPDXID": "SPDXRef-Package-buffer-alloc-unsafe-1.1.0",
-      "versionInfo": "1.1.0",
+      "name": "buffer",
+      "SPDXID": "SPDXRef-Package-buffer-6.0.3",
+      "versionInfo": "6.0.3",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -1973,7 +2092,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/buffer-alloc-unsafe@1.1.0"
+          "referenceLocator": "pkg:npm/buffer@6.0.3"
         }
       ]
     },
@@ -1991,6 +2110,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/buffer-alloc@1.2.0"
+        }
+      ]
+    },
+    {
+      "name": "buffer-alloc-unsafe",
+      "SPDXID": "SPDXRef-Package-buffer-alloc-unsafe-1.1.0",
+      "versionInfo": "1.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/buffer-alloc-unsafe@1.1.0"
         }
       ]
     },
@@ -2029,23 +2165,6 @@
       ]
     },
     {
-      "name": "buffer",
-      "SPDXID": "SPDXRef-Package-buffer-5.7.1",
-      "versionInfo": "5.7.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/buffer@5.7.1"
-        }
-      ]
-    },
-    {
       "name": "bytes",
       "SPDXID": "SPDXRef-Package-bytes-3.1.2",
       "versionInfo": "3.1.2",
@@ -2063,23 +2182,6 @@
       ]
     },
     {
-      "name": "call-bind-apply-helpers",
-      "SPDXID": "SPDXRef-Package-call-bind-apply-helpers-1.0.2",
-      "versionInfo": "1.0.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/call-bind-apply-helpers@1.0.2"
-        }
-      ]
-    },
-    {
       "name": "call-bind",
       "SPDXID": "SPDXRef-Package-call-bind-1.0.8",
       "versionInfo": "1.0.8",
@@ -2093,6 +2195,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/call-bind@1.0.8"
+        }
+      ]
+    },
+    {
+      "name": "call-bind-apply-helpers",
+      "SPDXID": "SPDXRef-Package-call-bind-apply-helpers-1.0.2",
+      "versionInfo": "1.0.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/call-bind-apply-helpers@1.0.2"
         }
       ]
     },
@@ -2199,6 +2318,23 @@
       ]
     },
     {
+      "name": "glob-parent",
+      "SPDXID": "SPDXRef-Package-glob-parent-6.0.2",
+      "versionInfo": "6.0.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/glob-parent@6.0.2"
+        }
+      ]
+    },
+    {
       "name": "chownr",
       "SPDXID": "SPDXRef-Package-chownr-1.1.4",
       "versionInfo": "1.1.4",
@@ -2250,9 +2386,9 @@
       ]
     },
     {
-      "name": "color-convert",
-      "SPDXID": "SPDXRef-Package-color-convert-2.0.1",
-      "versionInfo": "2.0.1",
+      "name": "strip-ansi",
+      "SPDXID": "SPDXRef-Package-strip-ansi-6.0.1",
+      "versionInfo": "6.0.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -2262,58 +2398,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/color-convert@2.0.1"
-        }
-      ]
-    },
-    {
-      "name": "color-name",
-      "SPDXID": "SPDXRef-Package-color-name-1.1.4",
-      "versionInfo": "1.1.4",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/color-name@1.1.4"
-        }
-      ]
-    },
-    {
-      "name": "color-string",
-      "SPDXID": "SPDXRef-Package-color-string-1.9.1",
-      "versionInfo": "1.9.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/color-string@1.9.1"
-        }
-      ]
-    },
-    {
-      "name": "color",
-      "SPDXID": "SPDXRef-Package-color-4.2.3",
-      "versionInfo": "4.2.3",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/color@4.2.3"
+          "referenceLocator": "pkg:npm/strip-ansi@6.0.1"
         }
       ]
     },
@@ -2336,8 +2421,8 @@
     },
     {
       "name": "commander",
-      "SPDXID": "SPDXRef-Package-commander-10.0.1",
-      "versionInfo": "10.0.1",
+      "SPDXID": "SPDXRef-Package-commander-2.20.3",
+      "versionInfo": "2.20.3",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -2347,7 +2432,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/commander@10.0.1"
+          "referenceLocator": "pkg:npm/commander@2.20.3"
         }
       ]
     },
@@ -2403,23 +2488,6 @@
       ]
     },
     {
-      "name": "cookie-signature",
-      "SPDXID": "SPDXRef-Package-cookie-signature-1.0.7",
-      "versionInfo": "1.0.7",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/cookie-signature@1.0.7"
-        }
-      ]
-    },
-    {
       "name": "cookie",
       "SPDXID": "SPDXRef-Package-cookie-0.7.2",
       "versionInfo": "0.7.2",
@@ -2433,6 +2501,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/cookie@0.7.2"
+        }
+      ]
+    },
+    {
+      "name": "cookie-signature",
+      "SPDXID": "SPDXRef-Package-cookie-signature-1.0.7",
+      "versionInfo": "1.0.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/cookie-signature@1.0.7"
         }
       ]
     },
@@ -2624,23 +2709,6 @@
       ]
     },
     {
-      "name": "debug",
-      "SPDXID": "SPDXRef-Package-debug-2.6.9",
-      "versionInfo": "2.6.9",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/debug@2.6.9"
-        }
-      ]
-    },
-    {
       "name": "decamelize",
       "SPDXID": "SPDXRef-Package-decamelize-1.2.0",
       "versionInfo": "1.2.0",
@@ -2654,6 +2722,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/decamelize@1.2.0"
+        }
+      ]
+    },
+    {
+      "name": "decompress",
+      "SPDXID": "SPDXRef-Package-decompress-4.2.1",
+      "versionInfo": "4.2.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/decompress@4.2.1"
         }
       ]
     },
@@ -2688,6 +2773,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/decompress-tar@4.1.1"
+        }
+      ]
+    },
+    {
+      "name": "file-type",
+      "SPDXID": "SPDXRef-Package-file-type-16.5.4",
+      "versionInfo": "16.5.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/file-type@16.5.4"
         }
       ]
     },
@@ -2739,23 +2841,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/decompress-unzip@4.0.1"
-        }
-      ]
-    },
-    {
-      "name": "decompress",
-      "SPDXID": "SPDXRef-Package-decompress-4.2.1",
-      "versionInfo": "4.2.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/decompress@4.2.1"
         }
       ]
     },
@@ -3406,6 +3491,23 @@
       ]
     },
     {
+      "name": "eslint",
+      "SPDXID": "SPDXRef-Package-eslint-9.39.3",
+      "versionInfo": "9.39.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/eslint@9.39.3"
+        }
+      ]
+    },
+    {
       "name": "eslint-config-prettier",
       "SPDXID": "SPDXRef-Package-eslint-config-prettier-9.1.2",
       "versionInfo": "9.1.2",
@@ -3470,40 +3572,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/eslint-scope@8.4.0"
-        }
-      ]
-    },
-    {
-      "name": "eslint-visitor-keys",
-      "SPDXID": "SPDXRef-Package-eslint-visitor-keys-3.4.3",
-      "versionInfo": "3.4.3",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/eslint-visitor-keys@3.4.3"
-        }
-      ]
-    },
-    {
-      "name": "eslint",
-      "SPDXID": "SPDXRef-Package-eslint-9.39.3",
-      "versionInfo": "9.39.3",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/eslint@9.39.3"
         }
       ]
     },
@@ -3661,23 +3729,6 @@
       ]
     },
     {
-      "name": "events-universal",
-      "SPDXID": "SPDXRef-Package-events-universal-1.0.1",
-      "versionInfo": "1.0.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/events-universal@1.0.1"
-        }
-      ]
-    },
-    {
       "name": "events",
       "SPDXID": "SPDXRef-Package-events-3.3.0",
       "versionInfo": "3.3.0",
@@ -3695,6 +3746,23 @@
       ]
     },
     {
+      "name": "events-universal",
+      "SPDXID": "SPDXRef-Package-events-universal-1.0.1",
+      "versionInfo": "1.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/events-universal@1.0.1"
+        }
+      ]
+    },
+    {
       "name": "execa",
       "SPDXID": "SPDXRef-Package-execa-5.1.1",
       "versionInfo": "5.1.1",
@@ -3708,6 +3776,57 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/execa@5.1.1"
+        }
+      ]
+    },
+    {
+      "name": "get-stream",
+      "SPDXID": "SPDXRef-Package-get-stream-2.3.1",
+      "versionInfo": "2.3.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/get-stream@2.3.1"
+        }
+      ]
+    },
+    {
+      "name": "is-stream",
+      "SPDXID": "SPDXRef-Package-is-stream-2.0.1",
+      "versionInfo": "2.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/is-stream@2.0.1"
+        }
+      ]
+    },
+    {
+      "name": "signal-exit",
+      "SPDXID": "SPDXRef-Package-signal-exit-4.1.0",
+      "versionInfo": "4.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/signal-exit@4.1.0"
         }
       ]
     },
@@ -3916,23 +4035,6 @@
       ]
     },
     {
-      "name": "file-type",
-      "SPDXID": "SPDXRef-Package-file-type-16.5.4",
-      "versionInfo": "16.5.4",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/file-type@16.5.4"
-        }
-      ]
-    },
-    {
       "name": "fill-range",
       "SPDXID": "SPDXRef-Package-fill-range-7.1.1",
       "versionInfo": "7.1.1",
@@ -4001,23 +4103,6 @@
       ]
     },
     {
-      "name": "flat-cache",
-      "SPDXID": "SPDXRef-Package-flat-cache-4.0.1",
-      "versionInfo": "4.0.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/flat-cache@4.0.1"
-        }
-      ]
-    },
-    {
       "name": "flat",
       "SPDXID": "SPDXRef-Package-flat-5.0.2",
       "versionInfo": "5.0.2",
@@ -4031,6 +4116,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/flat@5.0.2"
+        }
+      ]
+    },
+    {
+      "name": "flat-cache",
+      "SPDXID": "SPDXRef-Package-flat-cache-4.0.1",
+      "versionInfo": "4.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/flat-cache@4.0.1"
         }
       ]
     },
@@ -4120,23 +4222,6 @@
       ]
     },
     {
-      "name": "form-data-encoder",
-      "SPDXID": "SPDXRef-Package-form-data-encoder-1.7.2",
-      "versionInfo": "1.7.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/form-data-encoder@1.7.2"
-        }
-      ]
-    },
-    {
       "name": "form-data",
       "SPDXID": "SPDXRef-Package-form-data-4.0.5",
       "versionInfo": "4.0.5",
@@ -4154,6 +4239,23 @@
       ]
     },
     {
+      "name": "form-data-encoder",
+      "SPDXID": "SPDXRef-Package-form-data-encoder-1.7.2",
+      "versionInfo": "1.7.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/form-data-encoder@1.7.2"
+        }
+      ]
+    },
+    {
       "name": "formdata-node",
       "SPDXID": "SPDXRef-Package-formdata-node-4.4.1",
       "versionInfo": "4.4.1",
@@ -4167,6 +4269,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/formdata-node@4.4.1"
+        }
+      ]
+    },
+    {
+      "name": "web-streams-polyfill",
+      "SPDXID": "SPDXRef-Package-web-streams-polyfill-3.3.3",
+      "versionInfo": "3.3.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/web-streams-polyfill@3.3.3"
         }
       ]
     },
@@ -4307,23 +4426,6 @@
       ]
     },
     {
-      "name": "get-stream",
-      "SPDXID": "SPDXRef-Package-get-stream-2.3.1",
-      "versionInfo": "2.3.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/get-stream@2.3.1"
-        }
-      ]
-    },
-    {
       "name": "get-uri",
       "SPDXID": "SPDXRef-Package-get-uri-6.0.5",
       "versionInfo": "6.0.5",
@@ -4358,23 +4460,6 @@
       ]
     },
     {
-      "name": "glob-parent",
-      "SPDXID": "SPDXRef-Package-glob-parent-6.0.2",
-      "versionInfo": "6.0.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/glob-parent@6.0.2"
-        }
-      ]
-    },
-    {
       "name": "glob",
       "SPDXID": "SPDXRef-Package-glob-10.5.0",
       "versionInfo": "10.5.0",
@@ -4392,9 +4477,9 @@
       ]
     },
     {
-      "name": "globals",
-      "SPDXID": "SPDXRef-Package-globals-14.0.0",
-      "versionInfo": "14.0.0",
+      "name": "minimatch",
+      "SPDXID": "SPDXRef-Package-minimatch-3.1.5",
+      "versionInfo": "3.1.5",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -4404,7 +4489,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/globals@14.0.0"
+          "referenceLocator": "pkg:npm/minimatch@3.1.5"
         }
       ]
     },
@@ -4698,23 +4783,6 @@
       ]
     },
     {
-      "name": "iconv-lite",
-      "SPDXID": "SPDXRef-Package-iconv-lite-0.6.3",
-      "versionInfo": "0.6.3",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/iconv-lite@0.6.3"
-        }
-      ]
-    },
-    {
       "name": "idb-keyval",
       "SPDXID": "SPDXRef-Package-idb-keyval-6.2.2",
       "versionInfo": "6.2.2",
@@ -4749,23 +4817,6 @@
       ]
     },
     {
-      "name": "ignore-by-default",
-      "SPDXID": "SPDXRef-Package-ignore-by-default-1.0.1",
-      "versionInfo": "1.0.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/ignore-by-default@1.0.1"
-        }
-      ]
-    },
-    {
       "name": "ignore",
       "SPDXID": "SPDXRef-Package-ignore-5.3.2",
       "versionInfo": "5.3.2",
@@ -4779,6 +4830,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/ignore@5.3.2"
+        }
+      ]
+    },
+    {
+      "name": "ignore-by-default",
+      "SPDXID": "SPDXRef-Package-ignore-by-default-1.0.1",
+      "versionInfo": "1.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/ignore-by-default@1.0.1"
         }
       ]
     },
@@ -4920,8 +4988,8 @@
     },
     {
       "name": "is-arrayish",
-      "SPDXID": "SPDXRef-Package-is-arrayish-0.2.1",
-      "versionInfo": "0.2.1",
+      "SPDXID": "SPDXRef-Package-is-arrayish-0.3.4",
+      "versionInfo": "0.3.4",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -4931,7 +4999,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/is-arrayish@0.2.1"
+          "referenceLocator": "pkg:npm/is-arrayish@0.3.4"
         }
       ]
     },
@@ -5068,23 +5136,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/is-number@7.0.0"
-        }
-      ]
-    },
-    {
-      "name": "is-stream",
-      "SPDXID": "SPDXRef-Package-is-stream-1.1.0",
-      "versionInfo": "1.1.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/is-stream@1.1.0"
         }
       ]
     },
@@ -5378,23 +5429,6 @@
       ]
     },
     {
-      "name": "langchain",
-      "SPDXID": "SPDXRef-Package-langchain-0.1.36",
-      "versionInfo": "0.1.36",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/langchain@0.1.36"
-        }
-      ]
-    },
-    {
       "name": "langchainhub",
       "SPDXID": "SPDXRef-Package-langchainhub-0.0.11",
       "versionInfo": "0.0.11",
@@ -5582,23 +5616,6 @@
       ]
     },
     {
-      "name": "lodash.merge",
-      "SPDXID": "SPDXRef-Package-lodash.merge-4.6.2",
-      "versionInfo": "4.6.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/lodash.merge@4.6.2"
-        }
-      ]
-    },
-    {
       "name": "lodash",
       "SPDXID": "SPDXRef-Package-lodash-4.17.21",
       "versionInfo": "4.17.21",
@@ -5612,6 +5629,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/lodash@4.17.21"
+        }
+      ]
+    },
+    {
+      "name": "lodash.merge",
+      "SPDXID": "SPDXRef-Package-lodash.merge-4.6.2",
+      "versionInfo": "4.6.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/lodash.merge@4.6.2"
         }
       ]
     },
@@ -5714,6 +5748,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/make-dir@1.3.0"
+        }
+      ]
+    },
+    {
+      "name": "pify",
+      "SPDXID": "SPDXRef-Package-pify-2.3.0",
+      "versionInfo": "2.3.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/pify@2.3.0"
         }
       ]
     },
@@ -5854,6 +5905,23 @@
       ]
     },
     {
+      "name": "mime",
+      "SPDXID": "SPDXRef-Package-mime-1.6.0",
+      "versionInfo": "1.6.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/mime@1.6.0"
+        }
+      ]
+    },
+    {
       "name": "mime-db",
       "SPDXID": "SPDXRef-Package-mime-db-1.52.0",
       "versionInfo": "1.52.0",
@@ -5888,23 +5956,6 @@
       ]
     },
     {
-      "name": "mime",
-      "SPDXID": "SPDXRef-Package-mime-1.6.0",
-      "versionInfo": "1.6.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/mime@1.6.0"
-        }
-      ]
-    },
-    {
       "name": "mimic-fn",
       "SPDXID": "SPDXRef-Package-mimic-fn-2.1.0",
       "versionInfo": "2.1.0",
@@ -5935,23 +5986,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/mimic-response@3.1.0"
-        }
-      ]
-    },
-    {
-      "name": "minimatch",
-      "SPDXID": "SPDXRef-Package-minimatch-3.1.2",
-      "versionInfo": "3.1.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/minimatch@3.1.2"
         }
       ]
     },
@@ -6058,23 +6092,6 @@
       ]
     },
     {
-      "name": "ml-distance-euclidean",
-      "SPDXID": "SPDXRef-Package-ml-distance-euclidean-2.0.0",
-      "versionInfo": "2.0.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/ml-distance-euclidean@2.0.0"
-        }
-      ]
-    },
-    {
       "name": "ml-distance",
       "SPDXID": "SPDXRef-Package-ml-distance-4.0.1",
       "versionInfo": "4.0.1",
@@ -6088,6 +6105,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/ml-distance@4.0.1"
+        }
+      ]
+    },
+    {
+      "name": "ml-distance-euclidean",
+      "SPDXID": "SPDXRef-Package-ml-distance-euclidean-2.0.0",
+      "versionInfo": "2.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/ml-distance-euclidean@2.0.0"
         }
       ]
     },
@@ -6122,23 +6156,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/moment@2.30.1"
-        }
-      ]
-    },
-    {
-      "name": "ms",
-      "SPDXID": "SPDXRef-Package-ms-2.0.0",
-      "versionInfo": "2.0.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/ms@2.0.0"
         }
       ]
     },
@@ -6377,6 +6394,40 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/nodemon@2.0.22"
+        }
+      ]
+    },
+    {
+      "name": "semver",
+      "SPDXID": "SPDXRef-Package-semver-7.0.0",
+      "versionInfo": "7.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/semver@7.0.0"
+        }
+      ]
+    },
+    {
+      "name": "supports-color",
+      "SPDXID": "SPDXRef-Package-supports-color-7.2.0",
+      "versionInfo": "7.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/supports-color@7.2.0"
         }
       ]
     },
@@ -7163,9 +7214,9 @@
       ]
     },
     {
-      "name": "pify",
-      "SPDXID": "SPDXRef-Package-pify-2.3.0",
-      "versionInfo": "2.3.0",
+      "name": "pinkie",
+      "SPDXID": "SPDXRef-Package-pinkie-2.0.4",
+      "versionInfo": "2.0.4",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -7175,7 +7226,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/pify@2.3.0"
+          "referenceLocator": "pkg:npm/pinkie@2.0.4"
         }
       ]
     },
@@ -7193,23 +7244,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/pinkie-promise@2.0.1"
-        }
-      ]
-    },
-    {
-      "name": "pinkie",
-      "SPDXID": "SPDXRef-Package-pinkie-2.0.4",
-      "versionInfo": "2.0.4",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/pinkie@2.0.4"
         }
       ]
     },
@@ -7265,6 +7299,57 @@
       ]
     },
     {
+      "name": "readable-stream",
+      "SPDXID": "SPDXRef-Package-readable-stream-3.6.2",
+      "versionInfo": "3.6.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/readable-stream@3.6.2"
+        }
+      ]
+    },
+    {
+      "name": "tar-fs",
+      "SPDXID": "SPDXRef-Package-tar-fs-3.0.4",
+      "versionInfo": "3.0.4",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/tar-fs@3.0.4"
+        }
+      ]
+    },
+    {
+      "name": "tar-stream",
+      "SPDXID": "SPDXRef-Package-tar-stream-1.6.2",
+      "versionInfo": "1.6.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/tar-stream@1.6.2"
+        }
+      ]
+    },
+    {
       "name": "prelude-ls",
       "SPDXID": "SPDXRef-Package-prelude-ls-1.2.1",
       "versionInfo": "1.2.1",
@@ -7278,23 +7363,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/prelude-ls@1.2.1"
-        }
-      ]
-    },
-    {
-      "name": "prettier-linter-helpers",
-      "SPDXID": "SPDXRef-Package-prettier-linter-helpers-1.0.1",
-      "versionInfo": "1.0.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/prettier-linter-helpers@1.0.1"
         }
       ]
     },
@@ -7316,9 +7384,9 @@
       ]
     },
     {
-      "name": "process-nextick-args",
-      "SPDXID": "SPDXRef-Package-process-nextick-args-2.0.1",
-      "versionInfo": "2.0.1",
+      "name": "prettier-linter-helpers",
+      "SPDXID": "SPDXRef-Package-prettier-linter-helpers-1.0.1",
+      "versionInfo": "1.0.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -7328,7 +7396,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/process-nextick-args@2.0.1"
+          "referenceLocator": "pkg:npm/prettier-linter-helpers@1.0.1"
         }
       ]
     },
@@ -7346,6 +7414,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/process@0.11.10"
+        }
+      ]
+    },
+    {
+      "name": "process-nextick-args",
+      "SPDXID": "SPDXRef-Package-process-nextick-args-2.0.1",
+      "versionInfo": "2.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/process-nextick-args@2.0.1"
         }
       ]
     },
@@ -7469,23 +7554,6 @@
       ]
     },
     {
-      "name": "punycode.js",
-      "SPDXID": "SPDXRef-Package-punycode.js-2.3.1",
-      "versionInfo": "2.3.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/punycode.js@2.3.1"
-        }
-      ]
-    },
-    {
       "name": "punycode",
       "SPDXID": "SPDXRef-Package-punycode-2.3.1",
       "versionInfo": "2.3.1",
@@ -7503,9 +7571,9 @@
       ]
     },
     {
-      "name": "puppeteer-core",
-      "SPDXID": "SPDXRef-Package-puppeteer-core-21.5.2",
-      "versionInfo": "21.5.2",
+      "name": "punycode.js",
+      "SPDXID": "SPDXRef-Package-punycode.js-2.3.1",
+      "versionInfo": "2.3.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -7515,7 +7583,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/puppeteer-core@21.5.2"
+          "referenceLocator": "pkg:npm/punycode.js@2.3.1"
         }
       ]
     },
@@ -7533,6 +7601,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/puppeteer@21.5.2"
+        }
+      ]
+    },
+    {
+      "name": "puppeteer-core",
+      "SPDXID": "SPDXRef-Package-puppeteer-core-21.5.2",
+      "versionInfo": "21.5.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/puppeteer-core@21.5.2"
         }
       ]
     },
@@ -7605,9 +7690,9 @@
       ]
     },
     {
-      "name": "readable-stream",
-      "SPDXID": "SPDXRef-Package-readable-stream-2.3.8",
-      "versionInfo": "2.3.8",
+      "name": "strip-json-comments",
+      "SPDXID": "SPDXRef-Package-strip-json-comments-3.1.1",
+      "versionInfo": "3.1.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -7617,7 +7702,24 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/readable-stream@2.3.8"
+          "referenceLocator": "pkg:npm/strip-json-comments@3.1.1"
+        }
+      ]
+    },
+    {
+      "name": "safe-buffer",
+      "SPDXID": "SPDXRef-Package-safe-buffer-5.1.2",
+      "versionInfo": "5.1.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/safe-buffer@5.1.2"
         }
       ]
     },
@@ -7635,6 +7737,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/readable-web-to-node-stream@3.0.4"
+        }
+      ]
+    },
+    {
+      "name": "string_decoder",
+      "SPDXID": "SPDXRef-Package-string-decoder-1.1.1",
+      "versionInfo": "1.1.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/string_decoder@1.1.1"
         }
       ]
     },
@@ -7741,23 +7860,6 @@
       ]
     },
     {
-      "name": "safe-buffer",
-      "SPDXID": "SPDXRef-Package-safe-buffer-5.2.1",
-      "versionInfo": "5.2.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/safe-buffer@5.2.1"
-        }
-      ]
-    },
-    {
       "name": "safe-stable-stringify",
       "SPDXID": "SPDXRef-Package-safe-stable-stringify-2.5.0",
       "versionInfo": "2.5.0",
@@ -7843,23 +7945,6 @@
       ]
     },
     {
-      "name": "semver",
-      "SPDXID": "SPDXRef-Package-semver-5.7.2",
-      "versionInfo": "5.7.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/semver@5.7.2"
-        }
-      ]
-    },
-    {
       "name": "send",
       "SPDXID": "SPDXRef-Package-send-0.19.0",
       "versionInfo": "0.19.0",
@@ -7873,6 +7958,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/send@0.19.0"
+        }
+      ]
+    },
+    {
+      "name": "statuses",
+      "SPDXID": "SPDXRef-Package-statuses-2.0.2",
+      "versionInfo": "2.0.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/statuses@2.0.2"
         }
       ]
     },
@@ -7945,23 +8047,6 @@
       ]
     },
     {
-      "name": "sharp",
-      "SPDXID": "SPDXRef-Package-sharp-0.32.6",
-      "versionInfo": "0.32.6",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/sharp@0.32.6"
-        }
-      ]
-    },
-    {
       "name": "shebang-command",
       "SPDXID": "SPDXRef-Package-shebang-command-2.0.0",
       "versionInfo": "2.0.0",
@@ -8030,6 +8115,23 @@
       ]
     },
     {
+      "name": "side-channel",
+      "SPDXID": "SPDXRef-Package-side-channel-1.1.0",
+      "versionInfo": "1.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/side-channel@1.1.0"
+        }
+      ]
+    },
+    {
       "name": "side-channel-list",
       "SPDXID": "SPDXRef-Package-side-channel-list-1.0.0",
       "versionInfo": "1.0.0",
@@ -8077,40 +8179,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/side-channel-weakmap@1.0.2"
-        }
-      ]
-    },
-    {
-      "name": "side-channel",
-      "SPDXID": "SPDXRef-Package-side-channel-1.1.0",
-      "versionInfo": "1.1.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/side-channel@1.1.0"
-        }
-      ]
-    },
-    {
-      "name": "signal-exit",
-      "SPDXID": "SPDXRef-Package-signal-exit-3.0.7",
-      "versionInfo": "3.0.7",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/signal-exit@3.0.7"
         }
       ]
     },
@@ -8217,23 +8285,6 @@
       ]
     },
     {
-      "name": "socks-proxy-agent",
-      "SPDXID": "SPDXRef-Package-socks-proxy-agent-8.0.5",
-      "versionInfo": "8.0.5",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/socks-proxy-agent@8.0.5"
-        }
-      ]
-    },
-    {
       "name": "socks",
       "SPDXID": "SPDXRef-Package-socks-2.8.7",
       "versionInfo": "2.8.7",
@@ -8247,6 +8298,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/socks@2.8.7"
+        }
+      ]
+    },
+    {
+      "name": "socks-proxy-agent",
+      "SPDXID": "SPDXRef-Package-socks-proxy-agent-8.0.5",
+      "versionInfo": "8.0.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/socks-proxy-agent@8.0.5"
         }
       ]
     },
@@ -8302,23 +8370,6 @@
       ]
     },
     {
-      "name": "statuses",
-      "SPDXID": "SPDXRef-Package-statuses-2.0.1",
-      "versionInfo": "2.0.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/statuses@2.0.1"
-        }
-      ]
-    },
-    {
       "name": "streamx",
       "SPDXID": "SPDXRef-Package-streamx-2.23.0",
       "versionInfo": "2.23.0",
@@ -8332,23 +8383,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/streamx@2.23.0"
-        }
-      ]
-    },
-    {
-      "name": "string-width-cjs@npm:string-width",
-      "SPDXID": "SPDXRef-Package-string-width-cjs-npm-string-width-4.2.3",
-      "versionInfo": "4.2.3",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/string-width-cjs%40npm%3Astring-width@4.2.3"
         }
       ]
     },
@@ -8370,9 +8404,9 @@
       ]
     },
     {
-      "name": "string_decoder",
-      "SPDXID": "SPDXRef-Package-string-decoder-1.3.0",
-      "versionInfo": "1.3.0",
+      "name": "string-width-cjs",
+      "SPDXID": "SPDXRef-Package-string-width-cjs-4.2.3",
+      "versionInfo": "4.2.3",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -8382,13 +8416,13 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/string_decoder@1.3.0"
+          "referenceLocator": "pkg:npm/string-width-cjs@4.2.3"
         }
       ]
     },
     {
-      "name": "strip-ansi-cjs@npm:strip-ansi",
-      "SPDXID": "SPDXRef-Package-strip-ansi-cjs-npm-strip-ansi-6.0.1",
+      "name": "strip-ansi-cjs",
+      "SPDXID": "SPDXRef-Package-strip-ansi-cjs-6.0.1",
       "versionInfo": "6.0.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
@@ -8399,24 +8433,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/strip-ansi-cjs%40npm%3Astrip-ansi@6.0.1"
-        }
-      ]
-    },
-    {
-      "name": "strip-ansi",
-      "SPDXID": "SPDXRef-Package-strip-ansi-6.0.1",
-      "versionInfo": "6.0.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/strip-ansi@6.0.1"
+          "referenceLocator": "pkg:npm/strip-ansi-cjs@6.0.1"
         }
       ]
     },
@@ -8455,23 +8472,6 @@
       ]
     },
     {
-      "name": "strip-json-comments",
-      "SPDXID": "SPDXRef-Package-strip-json-comments-3.1.1",
-      "versionInfo": "3.1.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/strip-json-comments@3.1.1"
-        }
-      ]
-    },
-    {
       "name": "strtok3",
       "SPDXID": "SPDXRef-Package-strtok3-6.3.0",
       "versionInfo": "6.3.0",
@@ -8485,23 +8485,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/strtok3@6.3.0"
-        }
-      ]
-    },
-    {
-      "name": "supports-color",
-      "SPDXID": "SPDXRef-Package-supports-color-5.5.0",
-      "versionInfo": "5.5.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/supports-color@5.5.0"
         }
       ]
     },
@@ -8523,9 +8506,9 @@
       ]
     },
     {
-      "name": "tar-fs",
-      "SPDXID": "SPDXRef-Package-tar-fs-3.0.4",
-      "versionInfo": "3.0.4",
+      "name": "tesseract.js",
+      "SPDXID": "SPDXRef-Package-tesseract.js-6.0.1",
+      "versionInfo": "6.0.1",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -8535,24 +8518,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/tar-fs@3.0.4"
-        }
-      ]
-    },
-    {
-      "name": "tar-stream",
-      "SPDXID": "SPDXRef-Package-tar-stream-1.6.2",
-      "versionInfo": "1.6.2",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/tar-stream@1.6.2"
+          "referenceLocator": "pkg:npm/tesseract.js@6.0.1"
         }
       ]
     },
@@ -8570,23 +8536,6 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/tesseract.js-core@6.0.0"
-        }
-      ]
-    },
-    {
-      "name": "tesseract.js",
-      "SPDXID": "SPDXRef-Package-tesseract.js-6.0.1",
-      "versionInfo": "6.0.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/tesseract.js@6.0.1"
         }
       ]
     },
@@ -8999,23 +8948,6 @@
       ]
     },
     {
-      "name": "undici-types",
-      "SPDXID": "SPDXRef-Package-undici-types-5.26.5",
-      "versionInfo": "5.26.5",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/undici-types@5.26.5"
-        }
-      ]
-    },
-    {
       "name": "undici",
       "SPDXID": "SPDXRef-Package-undici-5.29.0",
       "versionInfo": "5.29.0",
@@ -9029,6 +8961,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/undici@5.29.0"
+        }
+      ]
+    },
+    {
+      "name": "undici-types",
+      "SPDXID": "SPDXRef-Package-undici-types-5.26.5",
+      "versionInfo": "5.26.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/undici-types@5.26.5"
         }
       ]
     },
@@ -9135,23 +9084,6 @@
       ]
     },
     {
-      "name": "uuid",
-      "SPDXID": "SPDXRef-Package-uuid-10.0.0",
-      "versionInfo": "10.0.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/uuid@10.0.0"
-        }
-      ]
-    },
-    {
       "name": "vary",
       "SPDXID": "SPDXRef-Package-vary-1.1.2",
       "versionInfo": "1.1.2",
@@ -9203,23 +9135,6 @@
       ]
     },
     {
-      "name": "web-streams-polyfill",
-      "SPDXID": "SPDXRef-Package-web-streams-polyfill-4.0.0-beta.3",
-      "versionInfo": "4.0.0-beta.3",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/web-streams-polyfill@4.0.0-beta.3"
-        }
-      ]
-    },
-    {
       "name": "webidl-conversions",
       "SPDXID": "SPDXRef-Package-webidl-conversions-3.0.1",
       "versionInfo": "3.0.1",
@@ -9254,23 +9169,6 @@
       ]
     },
     {
-      "name": "which-typed-array",
-      "SPDXID": "SPDXRef-Package-which-typed-array-1.1.19",
-      "versionInfo": "1.1.19",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/which-typed-array@1.1.19"
-        }
-      ]
-    },
-    {
       "name": "which",
       "SPDXID": "SPDXRef-Package-which-2.0.2",
       "versionInfo": "2.0.2",
@@ -9288,9 +9186,9 @@
       ]
     },
     {
-      "name": "winston-transport",
-      "SPDXID": "SPDXRef-Package-winston-transport-4.9.0",
-      "versionInfo": "4.9.0",
+      "name": "which-typed-array",
+      "SPDXID": "SPDXRef-Package-which-typed-array-1.1.19",
+      "versionInfo": "1.1.19",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -9300,7 +9198,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/winston-transport@4.9.0"
+          "referenceLocator": "pkg:npm/which-typed-array@1.1.19"
         }
       ]
     },
@@ -9322,6 +9220,23 @@
       ]
     },
     {
+      "name": "winston-transport",
+      "SPDXID": "SPDXRef-Package-winston-transport-4.9.0",
+      "versionInfo": "4.9.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/winston-transport@4.9.0"
+        }
+      ]
+    },
+    {
       "name": "word-wrap",
       "SPDXID": "SPDXRef-Package-word-wrap-1.2.5",
       "versionInfo": "1.2.5",
@@ -9339,23 +9254,6 @@
       ]
     },
     {
-      "name": "wrap-ansi-cjs@npm:wrap-ansi",
-      "SPDXID": "SPDXRef-Package-wrap-ansi-cjs-npm-wrap-ansi-7.0.0",
-      "versionInfo": "7.0.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/wrap-ansi-cjs%40npm%3Awrap-ansi@7.0.0"
-        }
-      ]
-    },
-    {
       "name": "wrap-ansi",
       "SPDXID": "SPDXRef-Package-wrap-ansi-7.0.0",
       "versionInfo": "7.0.0",
@@ -9369,6 +9267,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/wrap-ansi@7.0.0"
+        }
+      ]
+    },
+    {
+      "name": "wrap-ansi-cjs",
+      "SPDXID": "SPDXRef-Package-wrap-ansi-cjs-7.0.0",
+      "versionInfo": "7.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/wrap-ansi-cjs@7.0.0"
         }
       ]
     },
@@ -9509,23 +9424,6 @@
       ]
     },
     {
-      "name": "yargs-parser",
-      "SPDXID": "SPDXRef-Package-yargs-parser-21.1.1",
-      "versionInfo": "21.1.1",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/yargs-parser@21.1.1"
-        }
-      ]
-    },
-    {
       "name": "yargs",
       "SPDXID": "SPDXRef-Package-yargs-17.7.2",
       "versionInfo": "17.7.2",
@@ -9539,6 +9437,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/yargs@17.7.2"
+        }
+      ]
+    },
+    {
+      "name": "yargs-parser",
+      "SPDXID": "SPDXRef-Package-yargs-parser-21.1.1",
+      "versionInfo": "21.1.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/yargs-parser@21.1.1"
         }
       ]
     },
@@ -9628,23 +9543,6 @@
       ]
     },
     {
-      "name": "zod-to-json-schema",
-      "SPDXID": "SPDXRef-Package-zod-to-json-schema-3.25.0",
-      "versionInfo": "3.25.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/zod-to-json-schema@3.25.0"
-        }
-      ]
-    },
-    {
       "name": "zod",
       "SPDXID": "SPDXRef-Package-zod-3.25.76",
       "versionInfo": "3.25.76",
@@ -9658,6 +9556,23 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/zod@3.25.76"
+        }
+      ]
+    },
+    {
+      "name": "zod-to-json-schema",
+      "SPDXID": "SPDXRef-Package-zod-to-json-schema-3.25.0",
+      "versionInfo": "3.25.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/zod-to-json-schema@3.25.0"
         }
       ]
     }
@@ -9706,12 +9621,27 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-eslint-visitor-keys-4.2.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--eslint-community-regexpp-4.12.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--eslint-config-array-0.21.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-debug-4.4.3"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-ms-2.1.3"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -9727,6 +9657,11 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--eslint-eslintrc-3.3.4"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-globals-17.4.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -9796,12 +9731,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--img-sharp-libvips-linux-arm64-1.0.4"
+      "relatedSpdxElement": "SPDXRef-Package--img-sharp-libvips-linux-arm-1.0.5"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--img-sharp-libvips-linux-arm-1.0.5"
+      "relatedSpdxElement": "SPDXRef-Package--img-sharp-libvips-linux-arm64-1.0.4"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -9826,12 +9761,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--img-sharp-linux-arm64-0.33.5"
+      "relatedSpdxElement": "SPDXRef-Package--img-sharp-linux-arm-0.33.5"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--img-sharp-linux-arm-0.33.5"
+      "relatedSpdxElement": "SPDXRef-Package--img-sharp-linux-arm64-0.33.5"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -9876,17 +9811,27 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--langchain-community-0.2.33"
+      "relatedSpdxElement": "SPDXRef-Package--langchain-community-0.0.57"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--langchain-core-0.2.36"
+      "relatedSpdxElement": "SPDXRef-Package-langchain-0.1.36"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--langchain-openai-0.2.11"
+      "relatedSpdxElement": "SPDXRef-Package-uuid-9.0.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--langchain-core-0.1.63"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--langchain-openai-0.0.34"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -9976,6 +9921,26 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-color-4.2.3"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-color-convert-2.0.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-color-name-1.1.4"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-color-string-1.9.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--tokenizer-token-0.3.0"
     },
     {
@@ -10006,12 +9971,17 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--types-node-fetch-2.6.13"
+      "relatedSpdxElement": "SPDXRef-Package-iconv-lite-0.7.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--types-node-24.10.1"
+      "relatedSpdxElement": "SPDXRef-Package--types-node-18.19.130"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--types-node-fetch-2.6.13"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10041,6 +10011,11 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-sharp-0.33.5"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--xmldom-xmldom-0.8.11"
     },
     {
@@ -10061,12 +10036,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-acorn-jsx-5.3.2"
+      "relatedSpdxElement": "SPDXRef-Package-acorn-8.16.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-acorn-8.16.0"
+      "relatedSpdxElement": "SPDXRef-Package-acorn-jsx-5.3.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10106,7 +10081,7 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-argparse-2.0.1"
+      "relatedSpdxElement": "SPDXRef-Package-argparse-1.0.10"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10156,31 +10131,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-bare-fs-4.5.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-bare-os-3.6.2"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-bare-path-3.0.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-bare-stream-2.7.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-bare-url-2.3.2"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-base-64-0.1.0"
     },
     {
@@ -10206,12 +10156,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-bl-1.2.3"
+      "relatedSpdxElement": "SPDXRef-Package-bl-4.1.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-bluebird-3.7.2"
+      "relatedSpdxElement": "SPDXRef-Package-bluebird-3.4.7"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10231,7 +10181,7 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-brace-expansion-1.1.12"
+      "relatedSpdxElement": "SPDXRef-Package-brace-expansion-2.0.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10241,12 +10191,17 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-buffer-alloc-unsafe-1.1.0"
+      "relatedSpdxElement": "SPDXRef-Package-buffer-6.0.3"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-buffer-alloc-1.2.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-buffer-alloc-unsafe-1.1.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10261,22 +10216,17 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-buffer-5.7.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-bytes-3.1.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-call-bind-apply-helpers-1.0.2"
+      "relatedSpdxElement": "SPDXRef-Package-call-bind-1.0.8"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-call-bind-1.0.8"
+      "relatedSpdxElement": "SPDXRef-Package-call-bind-apply-helpers-1.0.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10311,6 +10261,11 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-glob-parent-6.0.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-chownr-1.1.4"
     },
     {
@@ -10326,22 +10281,7 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-color-convert-2.0.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-color-name-1.1.4"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-color-string-1.9.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-color-4.2.3"
+      "relatedSpdxElement": "SPDXRef-Package-strip-ansi-6.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10351,7 +10291,7 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-commander-10.0.1"
+      "relatedSpdxElement": "SPDXRef-Package-commander-2.20.3"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10371,12 +10311,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-cookie-signature-1.0.7"
+      "relatedSpdxElement": "SPDXRef-Package-cookie-0.7.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-cookie-0.7.2"
+      "relatedSpdxElement": "SPDXRef-Package-cookie-signature-1.0.7"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10436,12 +10376,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-debug-2.6.9"
+      "relatedSpdxElement": "SPDXRef-Package-decamelize-1.2.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-decamelize-1.2.0"
+      "relatedSpdxElement": "SPDXRef-Package-decompress-4.2.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10452,6 +10392,11 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-decompress-tar-4.1.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-file-type-16.5.4"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10467,11 +10412,6 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-decompress-unzip-4.0.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-decompress-4.2.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10666,6 +10606,11 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-eslint-9.39.3"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-eslint-config-prettier-9.1.2"
     },
     {
@@ -10682,16 +10627,6 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-eslint-scope-8.4.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-eslint-visitor-keys-3.4.3"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-eslint-9.39.3"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10741,17 +10676,32 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-events-universal-1.0.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-events-3.3.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-events-universal-1.0.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-execa-5.1.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-get-stream-2.3.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-is-stream-2.0.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-signal-exit-4.1.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10816,11 +10766,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-file-type-16.5.4"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-fill-range-7.1.1"
     },
     {
@@ -10841,12 +10786,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-flat-cache-4.0.1"
+      "relatedSpdxElement": "SPDXRef-Package-flat-5.0.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-flat-5.0.2"
+      "relatedSpdxElement": "SPDXRef-Package-flat-cache-4.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10876,17 +10821,22 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-form-data-encoder-1.7.2"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-form-data-4.0.5"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-form-data-encoder-1.7.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-formdata-node-4.4.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-web-streams-polyfill-3.3.3"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -10931,11 +10881,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-get-stream-2.3.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-get-uri-6.0.5"
     },
     {
@@ -10946,17 +10891,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-glob-parent-6.0.2"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-glob-10.5.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-globals-14.0.0"
+      "relatedSpdxElement": "SPDXRef-Package-minimatch-3.1.5"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11046,11 +10986,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-iconv-lite-0.6.3"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-idb-keyval-6.2.2"
     },
     {
@@ -11061,12 +10996,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-ignore-by-default-1.0.1"
+      "relatedSpdxElement": "SPDXRef-Package-ignore-5.3.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-ignore-5.3.2"
+      "relatedSpdxElement": "SPDXRef-Package-ignore-by-default-1.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11111,7 +11046,7 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-is-arrayish-0.2.1"
+      "relatedSpdxElement": "SPDXRef-Package-is-arrayish-0.3.4"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11152,11 +11087,6 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-is-number-7.0.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-is-stream-1.1.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11246,11 +11176,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-langchain-0.1.36"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-langchainhub-0.0.11"
     },
     {
@@ -11306,12 +11231,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-lodash.merge-4.6.2"
+      "relatedSpdxElement": "SPDXRef-Package-lodash-4.17.21"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-lodash-4.17.21"
+      "relatedSpdxElement": "SPDXRef-Package-lodash.merge-4.6.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11342,6 +11267,11 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-make-dir-1.3.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-pify-2.3.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11386,6 +11316,11 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-mime-1.6.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-mime-db-1.52.0"
     },
     {
@@ -11396,22 +11331,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-mime-1.6.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-mimic-fn-2.1.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-mimic-response-3.1.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-minimatch-3.1.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11446,12 +11371,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-ml-distance-euclidean-2.0.0"
+      "relatedSpdxElement": "SPDXRef-Package-ml-distance-4.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-ml-distance-4.0.1"
+      "relatedSpdxElement": "SPDXRef-Package-ml-distance-euclidean-2.0.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11462,11 +11387,6 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-moment-2.30.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-ms-2.0.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11537,6 +11457,16 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-nodemon-2.0.22"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-semver-7.0.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-supports-color-7.2.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11771,17 +11701,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-pify-2.3.0"
+      "relatedSpdxElement": "SPDXRef-Package-pinkie-2.0.4"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-pinkie-promise-2.0.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-pinkie-2.0.4"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11801,12 +11726,22 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-prelude-ls-1.2.1"
+      "relatedSpdxElement": "SPDXRef-Package-readable-stream-3.6.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-prettier-linter-helpers-1.0.1"
+      "relatedSpdxElement": "SPDXRef-Package-tar-fs-3.0.4"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-tar-stream-1.6.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-prelude-ls-1.2.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11816,12 +11751,17 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-process-nextick-args-2.0.1"
+      "relatedSpdxElement": "SPDXRef-Package-prettier-linter-helpers-1.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-process-0.11.10"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-process-nextick-args-2.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11861,22 +11801,22 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-punycode.js-2.3.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-punycode-2.3.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-puppeteer-core-21.5.2"
+      "relatedSpdxElement": "SPDXRef-Package-punycode.js-2.3.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-puppeteer-21.5.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-puppeteer-core-21.5.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11901,12 +11841,22 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-readable-stream-2.3.8"
+      "relatedSpdxElement": "SPDXRef-Package-strip-json-comments-3.1.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-safe-buffer-5.1.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-readable-web-to-node-stream-3.0.4"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-string-decoder-1.1.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -11941,11 +11891,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-safe-buffer-5.2.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-safe-stable-stringify-2.5.0"
     },
     {
@@ -11971,12 +11916,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-semver-5.7.2"
+      "relatedSpdxElement": "SPDXRef-Package-send-0.19.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-send-0.19.0"
+      "relatedSpdxElement": "SPDXRef-Package-statuses-2.0.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12001,11 +11946,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-sharp-0.32.6"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-shebang-command-2.0.0"
     },
     {
@@ -12026,6 +11966,11 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-side-channel-1.1.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-side-channel-list-1.0.0"
     },
     {
@@ -12037,16 +11982,6 @@
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-side-channel-weakmap-1.0.2"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-side-channel-1.1.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-signal-exit-3.0.7"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12081,12 +12016,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-socks-proxy-agent-8.0.5"
+      "relatedSpdxElement": "SPDXRef-Package-socks-2.8.7"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-socks-2.8.7"
+      "relatedSpdxElement": "SPDXRef-Package-socks-proxy-agent-8.0.5"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12106,17 +12041,7 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-statuses-2.0.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-streamx-2.23.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-string-width-cjs-npm-string-width-4.2.3"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12126,17 +12051,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-string-decoder-1.3.0"
+      "relatedSpdxElement": "SPDXRef-Package-string-width-cjs-4.2.3"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-strip-ansi-cjs-npm-strip-ansi-6.0.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-strip-ansi-6.0.1"
+      "relatedSpdxElement": "SPDXRef-Package-strip-ansi-cjs-6.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12151,17 +12071,7 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-strip-json-comments-3.1.1"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-strtok3-6.3.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-supports-color-5.5.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12171,22 +12081,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-tar-fs-3.0.4"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-tar-stream-1.6.2"
+      "relatedSpdxElement": "SPDXRef-Package-tesseract.js-6.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-tesseract.js-core-6.0.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-tesseract.js-6.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12311,12 +12211,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-undici-types-5.26.5"
+      "relatedSpdxElement": "SPDXRef-Package-undici-5.29.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-undici-5.29.0"
+      "relatedSpdxElement": "SPDXRef-Package-undici-types-5.26.5"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12351,11 +12251,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-uuid-10.0.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-vary-1.1.2"
     },
     {
@@ -12371,11 +12266,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-web-streams-polyfill-4.0.0-beta.3"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-webidl-conversions-3.0.1"
     },
     {
@@ -12386,17 +12276,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-which-typed-array-1.1.19"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-which-2.0.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-winston-transport-4.9.0"
+      "relatedSpdxElement": "SPDXRef-Package-which-typed-array-1.1.19"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12406,17 +12291,22 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-winston-transport-4.9.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-word-wrap-1.2.5"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-wrap-ansi-cjs-npm-wrap-ansi-7.0.0"
+      "relatedSpdxElement": "SPDXRef-Package-wrap-ansi-7.0.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-wrap-ansi-7.0.0"
+      "relatedSpdxElement": "SPDXRef-Package-wrap-ansi-cjs-7.0.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12461,12 +12351,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-yargs-parser-21.1.1"
+      "relatedSpdxElement": "SPDXRef-Package-yargs-17.7.2"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-yargs-17.7.2"
+      "relatedSpdxElement": "SPDXRef-Package-yargs-parser-21.1.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
@@ -12496,12 +12386,12 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-zod-to-json-schema-3.25.0"
+      "relatedSpdxElement": "SPDXRef-Package-zod-3.25.76"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-document-collector-1.13.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-zod-3.25.76"
+      "relatedSpdxElement": "SPDXRef-Package-zod-to-json-schema-3.25.0"
     }
   ]
 }

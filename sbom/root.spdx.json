@@ -3,9 +3,9 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "opensin-chat-root",
-  "documentNamespace": "https://opensin.delqhi.com/sbom/opensin-chat-root-1aa73a01-9247-40e7-abd8-3630b6c92516",
+  "documentNamespace": "https://opensin.delqhi.com/sbom/opensin-chat-root-f81f5317-d6f9-4e53-8641-50622becc9b9",
   "creationInfo": {
-    "created": "2026-06-07T10:01:43.182Z",
+    "created": "2026-06-13T21:27:35.123Z",
     "creators": [
       "Tool: openafd-generate-sbom",
       "Organization: Family-Team-Projects"
@@ -21,6 +21,57 @@
       "filesAnalyzed": false,
       "licenseConcluded": "MIT",
       "licenseDeclared": "MIT"
+    },
+    {
+      "name": "@anthropic-ai/sdk",
+      "SPDXID": "SPDXRef-Package--anthropic-ai-sdk-0.102.0",
+      "versionInfo": "0.102.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@anthropic-ai/sdk@0.102.0"
+        }
+      ]
+    },
+    {
+      "name": "@dnd-kit/core",
+      "SPDXID": "SPDXRef-Package--dnd-kit-core-6.3.1",
+      "versionInfo": "6.3.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@dnd-kit/core@6.3.1"
+        }
+      ]
+    },
+    {
+      "name": "@dnd-kit/utilities",
+      "SPDXID": "SPDXRef-Package--dnd-kit-utilities-3.2.2",
+      "versionInfo": "3.2.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@dnd-kit/utilities@3.2.2"
+        }
+      ]
     },
     {
       "name": "@elevenlabs/elevenlabs-js",
@@ -40,6 +91,23 @@
       ]
     },
     {
+      "name": "@eslint/js",
+      "SPDXID": "SPDXRef-Package--eslint-js-10.0.1",
+      "versionInfo": "10.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@eslint/js@10.0.1"
+        }
+      ]
+    },
+    {
       "name": "@hello-pangea/dnd",
       "SPDXID": "SPDXRef-Package--hello-pangea-dnd-18.0.1",
       "versionInfo": "18.0.1",
@@ -53,6 +121,91 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/@hello-pangea/dnd@18.0.1"
+        }
+      ]
+    },
+    {
+      "name": "@langchain/anthropic",
+      "SPDXID": "SPDXRef-Package--langchain-anthropic-1.4.0",
+      "versionInfo": "1.4.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@langchain/anthropic@1.4.0"
+        }
+      ]
+    },
+    {
+      "name": "@langchain/cohere",
+      "SPDXID": "SPDXRef-Package--langchain-cohere-1.0.5",
+      "versionInfo": "1.0.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@langchain/cohere@1.0.5"
+        }
+      ]
+    },
+    {
+      "name": "@langchain/ollama",
+      "SPDXID": "SPDXRef-Package--langchain-ollama-1.2.7",
+      "versionInfo": "1.2.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@langchain/ollama@1.2.7"
+        }
+      ]
+    },
+    {
+      "name": "@langchain/openai",
+      "SPDXID": "SPDXRef-Package--langchain-openai-1.4.7",
+      "versionInfo": "1.4.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@langchain/openai@1.4.7"
+        }
+      ]
+    },
+    {
+      "name": "@microsoft/fetch-event-source",
+      "SPDXID": "SPDXRef-Package--microsoft-fetch-event-source-2.0.1",
+      "versionInfo": "2.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@microsoft/fetch-event-source@2.0.1"
         }
       ]
     },
@@ -91,23 +244,6 @@
       ]
     },
     {
-      "name": "@prisma/client",
-      "SPDXID": "SPDXRef-Package--prisma-client-7.8.0",
-      "versionInfo": "7.8.0",
-      "downloadLocation": "NOASSERTION",
-      "filesAnalyzed": false,
-      "licenseConcluded": "NOASSERTION",
-      "licenseDeclared": "NOASSERTION",
-      "supplier": "NOASSERTION",
-      "externalRefs": [
-        {
-          "referenceCategory": "PACKAGE-MANAGER",
-          "referenceType": "purl",
-          "referenceLocator": "pkg:npm/@prisma/client@7.8.0"
-        }
-      ]
-    },
-    {
       "name": "@testing-library/jest-dom",
       "SPDXID": "SPDXRef-Package--testing-library-jest-dom-6.9.1",
       "versionInfo": "6.9.1",
@@ -142,6 +278,23 @@
       ]
     },
     {
+      "name": "@testing-library/user-event",
+      "SPDXID": "SPDXRef-Package--testing-library-user-event-14.6.1",
+      "versionInfo": "14.6.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/@testing-library/user-event@14.6.1"
+        }
+      ]
+    },
+    {
       "name": "@vitejs/plugin-react",
       "SPDXID": "SPDXRef-Package--vitejs-plugin-react-6.0.2",
       "versionInfo": "6.0.2",
@@ -155,6 +308,346 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/@vitejs/plugin-react@6.0.2"
+        }
+      ]
+    },
+    {
+      "name": "bcryptjs",
+      "SPDXID": "SPDXRef-Package-bcryptjs-3.0.3",
+      "versionInfo": "3.0.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/bcryptjs@3.0.3"
+        }
+      ]
+    },
+    {
+      "name": "check-disk-space",
+      "SPDXID": "SPDXRef-Package-check-disk-space-3.4.0",
+      "versionInfo": "3.4.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/check-disk-space@3.4.0"
+        }
+      ]
+    },
+    {
+      "name": "cohere-ai",
+      "SPDXID": "SPDXRef-Package-cohere-ai-8.0.0",
+      "versionInfo": "8.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/cohere-ai@8.0.0"
+        }
+      ]
+    },
+    {
+      "name": "dompurify",
+      "SPDXID": "SPDXRef-Package-dompurify-3.4.8",
+      "versionInfo": "3.4.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/dompurify@3.4.8"
+        }
+      ]
+    },
+    {
+      "name": "dotenv",
+      "SPDXID": "SPDXRef-Package-dotenv-17.4.2",
+      "versionInfo": "17.4.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/dotenv@17.4.2"
+        }
+      ]
+    },
+    {
+      "name": "eslint-config-prettier",
+      "SPDXID": "SPDXRef-Package-eslint-config-prettier-10.1.8",
+      "versionInfo": "10.1.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/eslint-config-prettier@10.1.8"
+        }
+      ]
+    },
+    {
+      "name": "eslint-plugin-jsx-a11y",
+      "SPDXID": "SPDXRef-Package-eslint-plugin-jsx-a11y-6.10.2",
+      "versionInfo": "6.10.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/eslint-plugin-jsx-a11y@6.10.2"
+        }
+      ]
+    },
+    {
+      "name": "eslint-plugin-prettier",
+      "SPDXID": "SPDXRef-Package-eslint-plugin-prettier-5.5.6",
+      "versionInfo": "5.5.6",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/eslint-plugin-prettier@5.5.6"
+        }
+      ]
+    },
+    {
+      "name": "eslint-plugin-react",
+      "SPDXID": "SPDXRef-Package-eslint-plugin-react-7.37.5",
+      "versionInfo": "7.37.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/eslint-plugin-react@7.37.5"
+        }
+      ]
+    },
+    {
+      "name": "eslint-plugin-react-hooks",
+      "SPDXID": "SPDXRef-Package-eslint-plugin-react-hooks-7.1.1",
+      "versionInfo": "7.1.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/eslint-plugin-react-hooks@7.1.1"
+        }
+      ]
+    },
+    {
+      "name": "eslint-plugin-unused-imports",
+      "SPDXID": "SPDXRef-Package-eslint-plugin-unused-imports-4.4.1",
+      "versionInfo": "4.4.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/eslint-plugin-unused-imports@4.4.1"
+        }
+      ]
+    },
+    {
+      "name": "file-saver",
+      "SPDXID": "SPDXRef-Package-file-saver-2.0.5",
+      "versionInfo": "2.0.5",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/file-saver@2.0.5"
+        }
+      ]
+    },
+    {
+      "name": "globals",
+      "SPDXID": "SPDXRef-Package-globals-17.6.0",
+      "versionInfo": "17.6.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/globals@17.6.0"
+        }
+      ]
+    },
+    {
+      "name": "he",
+      "SPDXID": "SPDXRef-Package-he-1.2.0",
+      "versionInfo": "1.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/he@1.2.0"
+        }
+      ]
+    },
+    {
+      "name": "highlight.js",
+      "SPDXID": "SPDXRef-Package-highlight.js-11.11.1",
+      "versionInfo": "11.11.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/highlight.js@11.11.1"
+        }
+      ]
+    },
+    {
+      "name": "lodash.debounce",
+      "SPDXID": "SPDXRef-Package-lodash.debounce-4.0.8",
+      "versionInfo": "4.0.8",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/lodash.debounce@4.0.8"
+        }
+      ]
+    },
+    {
+      "name": "markdown-it",
+      "SPDXID": "SPDXRef-Package-markdown-it-14.2.0",
+      "versionInfo": "14.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/markdown-it@14.2.0"
+        }
+      ]
+    },
+    {
+      "name": "mime",
+      "SPDXID": "SPDXRef-Package-mime-4.1.0",
+      "versionInfo": "4.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/mime@4.1.0"
+        }
+      ]
+    },
+    {
+      "name": "openai",
+      "SPDXID": "SPDXRef-Package-openai-6.42.0",
+      "versionInfo": "6.42.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/openai@6.42.0"
+        }
+      ]
+    },
+    {
+      "name": "pdf-lib",
+      "SPDXID": "SPDXRef-Package-pdf-lib-1.17.1",
+      "versionInfo": "1.17.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/pdf-lib@1.17.1"
         }
       ]
     },
@@ -176,6 +669,40 @@
       ]
     },
     {
+      "name": "pluralize",
+      "SPDXID": "SPDXRef-Package-pluralize-8.0.0",
+      "versionInfo": "8.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/pluralize@8.0.0"
+        }
+      ]
+    },
+    {
+      "name": "qrcode.react",
+      "SPDXID": "SPDXRef-Package-qrcode.react-4.2.0",
+      "versionInfo": "4.2.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/qrcode.react@4.2.0"
+        }
+      ]
+    },
+    {
       "name": "react",
       "SPDXID": "SPDXRef-Package-react-19.2.7",
       "versionInfo": "19.2.7",
@@ -189,6 +716,74 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/react@19.2.7"
+        }
+      ]
+    },
+    {
+      "name": "react-device-detect",
+      "SPDXID": "SPDXRef-Package-react-device-detect-2.2.3",
+      "versionInfo": "2.2.3",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/react-device-detect@2.2.3"
+        }
+      ]
+    },
+    {
+      "name": "react-dom",
+      "SPDXID": "SPDXRef-Package-react-dom-19.2.7",
+      "versionInfo": "19.2.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/react-dom@19.2.7"
+        }
+      ]
+    },
+    {
+      "name": "react-error-boundary",
+      "SPDXID": "SPDXRef-Package-react-error-boundary-6.1.2",
+      "versionInfo": "6.1.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/react-error-boundary@6.1.2"
+        }
+      ]
+    },
+    {
+      "name": "react-highlight-words",
+      "SPDXID": "SPDXRef-Package-react-highlight-words-0.21.0",
+      "versionInfo": "0.21.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/react-highlight-words@0.21.0"
         }
       ]
     },
@@ -244,6 +839,91 @@
       ]
     },
     {
+      "name": "react-speech-recognition",
+      "SPDXID": "SPDXRef-Package-react-speech-recognition-4.0.1",
+      "versionInfo": "4.0.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/react-speech-recognition@4.0.1"
+        }
+      ]
+    },
+    {
+      "name": "react-tag-input-component",
+      "SPDXID": "SPDXRef-Package-react-tag-input-component-2.0.2",
+      "versionInfo": "2.0.2",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/react-tag-input-component@2.0.2"
+        }
+      ]
+    },
+    {
+      "name": "react-toastify",
+      "SPDXID": "SPDXRef-Package-react-toastify-11.1.0",
+      "versionInfo": "11.1.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/react-toastify@11.1.0"
+        }
+      ]
+    },
+    {
+      "name": "react-tooltip",
+      "SPDXID": "SPDXRef-Package-react-tooltip-6.0.7",
+      "versionInfo": "6.0.7",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/react-tooltip@6.0.7"
+        }
+      ]
+    },
+    {
+      "name": "regenerator-runtime",
+      "SPDXID": "SPDXRef-Package-regenerator-runtime-0.14.1",
+      "versionInfo": "0.14.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/regenerator-runtime@0.14.1"
+        }
+      ]
+    },
+    {
       "name": "rollup-plugin-visualizer",
       "SPDXID": "SPDXRef-Package-rollup-plugin-visualizer-7.0.1",
       "versionInfo": "7.0.1",
@@ -257,6 +937,74 @@
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
           "referenceLocator": "pkg:npm/rollup-plugin-visualizer@7.0.1"
+        }
+      ]
+    },
+    {
+      "name": "swr",
+      "SPDXID": "SPDXRef-Package-swr-2.4.1",
+      "versionInfo": "2.4.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/swr@2.4.1"
+        }
+      ]
+    },
+    {
+      "name": "text-case",
+      "SPDXID": "SPDXRef-Package-text-case-1.2.11",
+      "versionInfo": "1.2.11",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/text-case@1.2.11"
+        }
+      ]
+    },
+    {
+      "name": "truncate",
+      "SPDXID": "SPDXRef-Package-truncate-3.0.0",
+      "versionInfo": "3.0.0",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/truncate@3.0.0"
+        }
+      ]
+    },
+    {
+      "name": "typescript-eslint",
+      "SPDXID": "SPDXRef-Package-typescript-eslint-8.60.1",
+      "versionInfo": "8.60.1",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/typescript-eslint@8.60.1"
         }
       ]
     },
@@ -313,8 +1061,8 @@
     },
     {
       "name": "concurrently",
-      "SPDXID": "SPDXRef-Package-concurrently-9.1.2",
-      "versionInfo": "9.1.2",
+      "SPDXID": "SPDXRef-Package-concurrently-10.0.3",
+      "versionInfo": "10.0.3",
       "downloadLocation": "NOASSERTION",
       "filesAnalyzed": false,
       "licenseConcluded": "NOASSERTION",
@@ -324,7 +1072,7 @@
         {
           "referenceCategory": "PACKAGE-MANAGER",
           "referenceType": "purl",
-          "referenceLocator": "pkg:npm/concurrently@9.1.2"
+          "referenceLocator": "pkg:npm/concurrently@10.0.3"
         }
       ]
     },
@@ -355,12 +1103,57 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--anthropic-ai-sdk-0.102.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--dnd-kit-core-6.3.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--dnd-kit-utilities-3.2.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--elevenlabs-elevenlabs-js-2.51.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--eslint-js-10.0.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--hello-pangea-dnd-18.0.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--langchain-anthropic-1.4.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--langchain-cohere-1.0.5"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--langchain-ollama-1.2.7"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--langchain-openai-1.4.7"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--microsoft-fetch-event-source-2.0.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
@@ -375,11 +1168,6 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package--prisma-client-7.8.0"
-    },
-    {
-      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
-      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--testing-library-jest-dom-6.9.1"
     },
     {
@@ -390,7 +1178,112 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package--testing-library-user-event-14.6.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package--vitejs-plugin-react-6.0.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-bcryptjs-3.0.3"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-check-disk-space-3.4.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-cohere-ai-8.0.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-dompurify-3.4.8"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-dotenv-17.4.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-eslint-config-prettier-10.1.8"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-eslint-plugin-jsx-a11y-6.10.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-eslint-plugin-prettier-5.5.6"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-eslint-plugin-react-7.37.5"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-eslint-plugin-react-hooks-7.1.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-eslint-plugin-unused-imports-4.4.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-file-saver-2.0.5"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-globals-17.6.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-he-1.2.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-highlight.js-11.11.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-lodash.debounce-4.0.8"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-markdown-it-14.2.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-mime-4.1.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-openai-6.42.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-pdf-lib-1.17.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
@@ -400,7 +1293,37 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-pluralize-8.0.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-qrcode.react-4.2.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-react-19.2.7"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-react-device-detect-2.2.3"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-react-dom-19.2.7"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-react-error-boundary-6.1.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-react-highlight-words-0.21.0"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
@@ -420,7 +1343,52 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-react-speech-recognition-4.0.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-react-tag-input-component-2.0.2"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-react-toastify-11.1.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-react-tooltip-6.0.7"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-regenerator-runtime-0.14.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
       "relatedSpdxElement": "SPDXRef-Package-rollup-plugin-visualizer-7.0.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-swr-2.4.1"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-text-case-1.2.11"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-truncate-3.0.0"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-typescript-eslint-8.60.1"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
@@ -440,7 +1408,7 @@
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
       "relationshipType": "DEPENDS_ON",
-      "relatedSpdxElement": "SPDXRef-Package-concurrently-9.1.2"
+      "relatedSpdxElement": "SPDXRef-Package-concurrently-10.0.3"
     },
     {
       "spdxElementId": "SPDXRef-Package-opensin-chat-0.1.0",
