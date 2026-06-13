@@ -1,5 +1,13 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  cloneElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import type { ReactElement } from "react";
 import {
   UploadSimple,
   Files,
@@ -23,6 +31,7 @@ import { ATTACHMENTS_PROCESSED_EVENT } from "../../../DnDWrapper";
 function BitbucketIcon({ size = 16, className = "" }) {
   return (
     <svg
+      data-testid="bitbucket-icon"
       width={size}
       height={size}
       viewBox="0 0 24 24"
@@ -58,22 +67,54 @@ function flattenLocalFiles(localFiles) {
 }
 
 /**
+ * Returns all focusable descendants of a menu container, excluding the
+ * container itself when it has tabindex="-1".
+ */
+function getFocusableMenuItems(container) {
+  if (!container) return [];
+  return Array.from(
+    container.querySelectorAll(
+      'button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    ),
+  );
+}
+
+/**
  * The "+" attach menu shown in the chat composer, styled like the v0 prompt
  * input dropdown. Provides the existing upload/source actions plus v0-style
  * placeholder rows for future integrations.
+ *
+ * The component can be used in two modes:
+ *  - Controlled/open content: when no `trigger` is passed, the menu content is
+ *    rendered directly and the parent handles visibility (this is how AttachItem
+ *    uses it).
+ *  - Self-contained dropdown: pass a `trigger` element and the component manages
+ *    open/close state, keyboard focus, and click-outside dismissal.
  *
  * @param {Object} props
  * @param {string} props.workspaceSlug
  * @param {Function} props.onClose - close the menu
  * @param {Function} props.onAddLocalFiles - trigger the local file uploader
+ * @param {ReactElement} [props.trigger] - element that toggles the menu
+ * @param {boolean} [props.disabled] - disables the trigger when provided
+ * @param {boolean} [props.isOpen] - controlled open state
  */
 export default function AddSourceMenu({
   workspaceSlug,
-  onClose,
+  onClose: onCloseProp,
   onAddLocalFiles,
+  trigger,
+  disabled = false,
+  isOpen: isOpenProp,
+}: {
+  workspaceSlug: string;
+  onClose?: () => void;
+  onAddLocalFiles?: () => void;
+  trigger?: ReactElement;
+  disabled?: boolean;
+  isOpen?: boolean;
 }) {
   const { t } = useTranslation();
-  const [view, setView] = useState("root"); // "root" | "sources" | "url"
 
   function handleGitHub() {
     showToast(t("chat_window.attach_menu.github_coming_soon"), "info");
@@ -83,38 +124,146 @@ export default function AddSourceMenu({
     showToast(t("chat_window.attach_menu.bitbucket_coming_soon"), "info");
   }
 
+  const [view, setView] = useState("root"); // "root" | "sources" | "url"
+  const [open, setOpen] = useState(isOpenProp ?? !trigger);
+  const menuRef = useRef(null);
+
+  const isControlled = isOpenProp !== undefined;
+  const isTriggerMode = !isControlled && !!trigger;
+  const isOpen = isControlled ? isOpenProp : isTriggerMode ? open : true;
+
+  const closeMenu = useCallback(() => {
+    if (isTriggerMode) setOpen(false);
+    onCloseProp?.();
+  }, [isTriggerMode, onCloseProp]);
+
+  useEffect(() => {
+    if (isOpenProp !== undefined) setOpen(isOpenProp);
+  }, [isOpenProp]);
+
+  useEffect(() => {
+    if (!isOpen) setView("root");
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen || !isTriggerMode || !menuRef.current) return;
+    const first = getFocusableMenuItems(menuRef.current)[0];
+    first?.focus();
+  }, [isOpen, isTriggerMode]);
+
+  useEffect(() => {
+    if (!isOpen || !isTriggerMode) return;
+    function handleMouseDown(e) {
+      if (!menuRef.current?.contains(e.target)) {
+        closeMenu();
+      }
+    }
+    document.addEventListener("mousedown", handleMouseDown);
+    return () => document.removeEventListener("mousedown", handleMouseDown);
+  }, [isOpen, isTriggerMode, closeMenu]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleKeyDown(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeMenu();
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, closeMenu]);
+
+  function handleToggle() {
+    if (disabled || !isTriggerMode) return;
+    if (open) {
+      closeMenu();
+    } else {
+      setOpen(true);
+    }
+  }
+
+  function handleMenuKeyDown(e) {
+    if (!menuRef.current) return;
+    const items = getFocusableMenuItems(menuRef.current);
+    if (items.length === 0) return;
+    const index = items.findIndex((el) => el === document.activeElement);
+
+    if (e.key === "ArrowDown" || (e.key === "Tab" && !e.shiftKey)) {
+      e.preventDefault();
+      const nextIndex = index < 0 ? 0 : (index + 1) % items.length;
+      items[nextIndex].focus();
+    } else if (e.key === "ArrowUp" || (e.key === "Tab" && e.shiftKey)) {
+      e.preventDefault();
+      const prevIndex =
+        index < 0
+          ? items.length - 1
+          : (index - 1 + items.length) % items.length;
+      items[prevIndex].focus();
+    }
+  }
+
+  function renderTrigger() {
+    if (!trigger) return null;
+    return cloneElement(trigger, {
+      disabled,
+      onClick: (e) => {
+        handleToggle();
+        trigger.props.onClick?.(e);
+      },
+      onMouseDown: (e) => {
+        e.stopPropagation();
+        trigger.props.onMouseDown?.(e);
+      },
+      "aria-haspopup": "true",
+      "aria-expanded": isOpen,
+    });
+  }
+
+  if (!isOpen) return trigger ? renderTrigger() : null;
+
   return (
-    <div className="flex flex-col gap-1 p-2 min-w-[240px]">
-      {view === "root" && (
-        <RootView
-          t={t}
-          onGitHub={handleGitHub}
-          onBitbucket={handleBitbucket}
-          onAddLocalFiles={() => {
-            onAddLocalFiles?.();
-            onClose?.();
-          }}
-          onOpenSources={() => setView("sources")}
-          onOpenUrl={() => setView("url")}
-        />
-      )}
-      {view === "sources" && (
-        <SourcesView
-          t={t}
-          workspaceSlug={workspaceSlug}
-          onBack={() => setView("root")}
-          onClose={onClose}
-        />
-      )}
-      {view === "url" && (
-        <UrlView
-          t={t}
-          workspaceSlug={workspaceSlug}
-          onBack={() => setView("root")}
-          onClose={onClose}
-        />
-      )}
-    </div>
+    <>
+      {trigger && renderTrigger()}
+      <div
+        ref={menuRef}
+        role="menu"
+        aria-label={t("chat_window.attach_menu.add_files")}
+        tabIndex={-1}
+        className="flex flex-col gap-1 p-2 min-w-[240px]"
+        onKeyDown={handleMenuKeyDown}
+      >
+        {view === "root" && (
+          <RootView
+            t={t}
+            onGitHub={handleGitHub}
+            onBitbucket={handleBitbucket}
+            onAddLocalFiles={() => {
+              onAddLocalFiles?.();
+              closeMenu();
+            }}
+            onOpenSources={() => setView("sources")}
+            onOpenUrl={() => setView("url")}
+          />
+        )}
+        {view === "sources" && (
+          <SourcesView
+            t={t}
+            workspaceSlug={workspaceSlug}
+            onBack={() => setView("root")}
+            onClose={closeMenu}
+          />
+        )}
+        {view === "url" && (
+          <UrlView
+            t={t}
+            workspaceSlug={workspaceSlug}
+            onBack={() => setView("root")}
+            onClose={closeMenu}
+          />
+        )}
+      </div>
+    </>
   );
 }
 
@@ -122,6 +271,8 @@ function MenuRow({ icon: Icon, label, onClick, hasSubmenu = false }) {
   return (
     <button
       type="button"
+      role="menuitem"
+      aria-haspopup={hasSubmenu ? "true" : undefined}
       onClick={onClick}
       className="border-none bg-transparent w-full flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer text-left hover:bg-zinc-700/60 light:hover:bg-slate-200 transition-colors duration-200"
     >
@@ -139,6 +290,27 @@ function MenuRow({ icon: Icon, label, onClick, hasSubmenu = false }) {
           className="text-zinc-400 light:text-slate-500 flex-shrink-0"
         />
       )}
+    </button>
+  );
+}
+
+function BackHeader({ label, onBack, t }) {
+  return (
+    <button
+      type="button"
+      role="menuitem"
+      aria-label={t("common.back")}
+      onClick={onBack}
+      className="border-none bg-transparent w-full flex items-center gap-1.5 px-2 py-1.5 rounded-md cursor-pointer text-left hover:bg-zinc-700 light:hover:bg-slate-200 transition-colors mb-1"
+    >
+      <CaretRight
+        size={13}
+        weight="bold"
+        className="rotate-180 text-zinc-400 light:text-slate-500"
+      />
+      <span className="text-xs font-semibold uppercase tracking-wide text-zinc-400 light:text-slate-500">
+        {label}
+      </span>
     </button>
   );
 }
@@ -184,25 +356,6 @@ function RootView({
   );
 }
 
-function BackHeader({ label, onBack }) {
-  return (
-    <button
-      type="button"
-      onClick={onBack}
-      className="border-none bg-transparent w-full flex items-center gap-1.5 px-2 py-1.5 rounded-md cursor-pointer text-left hover:bg-zinc-700 light:hover:bg-slate-200 transition-colors mb-1"
-    >
-      <CaretRight
-        size={13}
-        weight="bold"
-        className="rotate-180 text-zinc-400 light:text-slate-500"
-      />
-      <span className="text-xs font-semibold uppercase tracking-wide text-zinc-400 light:text-slate-500">
-        {label}
-      </span>
-    </button>
-  );
-}
-
 function SourcesView({ t, workspaceSlug, onBack, onClose }) {
   const {
     documents: localFiles,
@@ -238,6 +391,7 @@ function SourcesView({ t, workspaceSlug, onBack, onClose }) {
       <BackHeader
         label={t("chat_window.attach_menu.current_sources")}
         onBack={onBack}
+        t={t}
       />
       <div className="flex flex-col gap-0.5 max-h-[260px] overflow-y-auto no-scroll">
         {loading ? (
@@ -390,6 +544,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
       <BackHeader
         label={t("chat_window.attach_menu.add_from_url")}
         onBack={onBack}
+        t={t}
       />
       <div className="flex flex-col gap-2 p-1">
         <p className="text-xs text-zinc-400 light:text-slate-500 leading-snug">
