@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: HTTP endpoints for system setup, onboarding, admin settings, and file/logo management.
+// Docs: server/endpoints/system.doc.md
 process.env.NODE_ENV === "development"
   ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
   : require("dotenv").config();
@@ -113,7 +115,22 @@ function systemEndpoints(app) {
     }
   });
 
-  app.post("/onboarding", [validatedRequest], async (_, response) => {
+  // Allow marking onboarding complete without auth while setup is still
+  // in progress (single-user no-password mode has no token yet). Once setup
+  // is finished, require auth before changing the onboarding flag.
+  const requireAuthWhenOnboardingComplete = async (request, response, next) => {
+    try {
+      const isComplete = await SystemSettings.isOnboardingComplete();
+      if (!isComplete) return next();
+      return validatedRequest(request, response, next);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e.message, e);
+      response.sendStatus(500).end();
+    }
+  };
+
+  app.post("/onboarding", [requireAuthWhenOnboardingComplete], async (_, response) => {
     try {
       await SystemSettings.markOnboardingComplete();
       response.sendStatus(200).end();
