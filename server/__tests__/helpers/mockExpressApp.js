@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Minimal Express-compatible test harness for exercising REST endpoint registration without booting a real HTTP server.
+// Docs: server/__tests__/helpers/mockExpressApp.js.doc.md
 /**
  * Minimal Express-compatible test harness for exercising REST endpoint
  * registration functions (e.g. apiResearchEndpoints(app)) without booting a

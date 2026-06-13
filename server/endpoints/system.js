@@ -72,6 +72,9 @@ const { VALID_COMMANDS } = require("../utils/chats");
 const { AgentSkillWhitelist } = require("../models/agentSkillWhitelist");
 const { Memory } = require("../models/memory");
 const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
+const {
+  requireAuthWhenOnboardingComplete,
+} = require("../utils/middleware/requireAuthWhenOnboardingComplete");
 
 function systemEndpoints(app) {
   if (!app) return;
@@ -114,21 +117,6 @@ function systemEndpoints(app) {
       response.sendStatus(500).end();
     }
   });
-
-  // Allow marking onboarding complete without auth while setup is still
-  // in progress (single-user no-password mode has no token yet). Once setup
-  // is finished, require auth before changing the onboarding flag.
-  const requireAuthWhenOnboardingComplete = async (request, response, next) => {
-    try {
-      const isComplete = await SystemSettings.isOnboardingComplete();
-      if (!isComplete) return next();
-      return validatedRequest(request, response, next);
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e.message, e);
-      response.sendStatus(500).end();
-    }
-  };
 
   app.post("/onboarding", [requireAuthWhenOnboardingComplete], async (_, response) => {
     try {
