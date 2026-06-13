@@ -2,10 +2,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Sidebars from "./Sidebars";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key, fallback) => fallback || key }),
-}));
 
 const mockUseChatSidebar = vi.fn();
 

@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
+
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 import AzureAiOptions from "./AzureAiOptions";
 
 describe("AzureAiOptions", () => {

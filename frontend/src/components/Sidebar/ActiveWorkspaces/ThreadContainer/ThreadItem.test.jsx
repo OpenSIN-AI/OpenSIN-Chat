@@ -64,6 +64,11 @@ vi.mock("@/models/workspace", () => ({
   },
 }));
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 import ThreadItem from "@/components/Sidebar/ActiveWorkspaces/ThreadContainer/ThreadItem";
 
 const baseWorkspace = { slug: "my-workspace" };
@@ -181,16 +186,16 @@ describe("ThreadItem", () => {
     renderThreadItem();
     const dotsBtn = screen.getByRole("button", { name: /thread options/i });
     fireEvent.click(dotsBtn);
-    expect(screen.getByText(/neuer chat/i)).toBeInTheDocument();
-    expect(screen.getByText(/link kopieren/i)).toBeInTheDocument();
+    expect(screen.getByText(/new chat/i)).toBeInTheDocument();
+    expect(screen.getByText(/copy link/i)).toBeInTheDocument();
     expect(screen.getByText(/rename/i)).toBeInTheDocument();
     expect(screen.getByText(/delete thread/i)).toBeInTheDocument();
   });
 
-  it("'Neuer Chat' creates a new thread and navigates to it", async () => {
+  it("'New Chat' creates a new thread and navigates to it", async () => {
     renderThreadItem();
     fireEvent.click(screen.getByRole("button", { name: /thread options/i }));
-    fireEvent.click(screen.getByText(/neuer chat/i));
+    fireEvent.click(screen.getByText(/new chat/i));
     await vi.waitFor(() => {
       expect(newThreadMock).toHaveBeenCalledWith("my-workspace");
     });
@@ -200,13 +205,13 @@ describe("ThreadItem", () => {
     );
   });
 
-  it("'Link kopieren' copies the thread link to the clipboard", async () => {
+  it("'Copy Link' copies the thread link to the clipboard", async () => {
     const writeTextSpy = vi
       .spyOn(navigator.clipboard, "writeText")
       .mockResolvedValue();
     renderThreadItem();
     fireEvent.click(screen.getByRole("button", { name: /thread options/i }));
-    fireEvent.click(screen.getByText(/link kopieren/i));
+    fireEvent.click(screen.getByText(/copy link/i));
     await vi.waitFor(() => {
       expect(writeTextSpy).toHaveBeenCalled();
     });

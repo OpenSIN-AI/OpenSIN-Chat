@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
+
 import { Chartable } from "./index";
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 vi.mock("uuid", () => ({ v4: () => "test-uuid-1234" }));
 
 vi.mock("@tremor/react", () => ({

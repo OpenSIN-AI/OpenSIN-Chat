@@ -2,10 +2,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, fireEvent } from "@testing-library/react";
 import RightSidebarIconBar from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key, fallback) => fallback || key }),
-}));
 
 const mockToggleSidebar = vi.fn();
 const mockCloseSidebar = vi.fn();
@@ -35,7 +36,7 @@ describe("RightSidebarIconBar", () => {
   it("calls toggleRightSidebar when the collapse icon is clicked", () => {
     const { container } = render(<RightSidebarIconBar />);
     const collapseButton = container.querySelector(
-      'button[aria-label="Einklappen"]',
+      'button[aria-label="Collapse"]',
     );
     fireEvent.click(collapseButton);
     expect(mockToggleRightSidebar).toHaveBeenCalledTimes(1);
@@ -44,7 +45,7 @@ describe("RightSidebarIconBar", () => {
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {
     const { container } = render(<RightSidebarIconBar />);
     const previewButton = container.querySelector(
-      'button[aria-label="Vorschau"]',
+      'button[aria-label="Preview"]',
     );
     fireEvent.click(previewButton);
     expect(mockToggleSidebar).toHaveBeenCalledWith("preview");
@@ -53,7 +54,7 @@ describe("RightSidebarIconBar", () => {
   it("calls toggleSidebar with 'database' when database icon clicked", () => {
     const { container } = render(<RightSidebarIconBar />);
     const dbButton = container.querySelector(
-      'button[aria-label="Politiker-Datenbank"]',
+      'button[aria-label="Politician database"]',
     );
     fireEvent.click(dbButton);
     expect(mockToggleSidebar).toHaveBeenCalledWith("database");
@@ -70,7 +71,7 @@ describe("RightSidebarIconBar", () => {
   it("has aria-expanded on the toggle button reflecting sidebar state", () => {
     const { container } = render(<RightSidebarIconBar />);
     const toggleButton = container.querySelector(
-      'button[aria-label="Einklappen"]',
+      'button[aria-label="Collapse"]',
     );
     expect(toggleButton).toHaveAttribute("aria-expanded", "true");
   });

@@ -2,17 +2,16 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ConsoleSidebar, { dispatchLog } from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 // jsdom does not implement scrollIntoView
 if (typeof Element !== "undefined" && !Element.prototype.scrollIntoView) {
   Element.prototype.scrollIntoView = function () {};
 }
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key, fallback) => fallback || key,
-  }),
-}));
 
 const mockCloseSidebar = vi.fn();
 const mockClearConsoleLogs = vi.fn();
@@ -60,19 +59,19 @@ describe("ConsoleSidebar", () => {
 
   it("renders the title and close button", () => {
     render(<ConsoleSidebar />);
-    expect(screen.getByText(/Konsole & Terminal/)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Konsole schließen/)).toBeInTheDocument();
+    expect(screen.getByText(/Console & Terminal/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Close console/)).toBeInTheDocument();
   });
 
   it("close button has type=button", () => {
     render(<ConsoleSidebar />);
-    const closeBtn = screen.getByLabelText(/Konsole schließen/);
+    const closeBtn = screen.getByLabelText(/Close console/i);
     expect(closeBtn).toHaveAttribute("type", "button");
   });
 
   it("clicking close button calls closeSidebar", () => {
     render(<ConsoleSidebar />);
-    fireEvent.click(screen.getByLabelText(/Konsole schließen/));
+    fireEvent.click(screen.getByLabelText(/Close console/i));
     expect(mockCloseSidebar).toHaveBeenCalledTimes(1);
   });
 
@@ -103,7 +102,7 @@ describe("ConsoleSidebar", () => {
 
   it("shows no logs message initially", () => {
     render(<ConsoleSidebar />);
-    expect(screen.getByText(/Keine Logs vorhanden/)).toBeInTheDocument();
+    expect(screen.getByText(/No logs yet/)).toBeInTheDocument();
   });
 });
 

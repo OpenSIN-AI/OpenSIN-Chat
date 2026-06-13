@@ -2,6 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@dnd-kit/core", () => ({
   useDroppable: () => ({
@@ -153,7 +157,7 @@ describe("ThreadFolderItem", () => {
 
   it("renders the empty hint when the folder has no threads and is open", () => {
     renderFolderItem({ threads: [] });
-    expect(screen.getByText(/hierher ziehen/i)).toBeInTheDocument();
+    expect(screen.getByText(/drag here/i)).toBeInTheDocument();
   });
 
   it("renders child ThreadItems for the folder's threads", () => {
@@ -168,15 +172,15 @@ describe("ThreadFolderItem", () => {
 
   it("opens the quick-add dropdown when the + button is clicked", () => {
     renderFolderItem();
-    fireEvent.click(screen.getByTitle(/neuen chat oder ordner erstellen/i));
-    expect(screen.getByText(/^neuer chat$/i)).toBeInTheDocument();
-    expect(screen.getByText(/^neuer ordner$/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByTitle(/create new chat or folder/i));
+    expect(screen.getByText(/^new chat$/i)).toBeInTheDocument();
+    expect(screen.getByText(/^new folder$/i)).toBeInTheDocument();
   });
 
   it("'Neuer Chat' (in the quick-add menu) creates a thread and navigates", async () => {
     renderFolderItem();
-    fireEvent.click(screen.getByTitle(/neuen chat oder ordner erstellen/i));
-    fireEvent.click(screen.getByText(/^neuer chat$/i));
+    fireEvent.click(screen.getByTitle(/create new chat or folder/i));
+    fireEvent.click(screen.getByText(/^new chat$/i));
     await vi.waitFor(() => {
       expect(newThreadMock).toHaveBeenCalledWith("my-workspace");
     });
@@ -189,8 +193,8 @@ describe("ThreadFolderItem", () => {
   it("'Neuer Ordner' (in the quick-add menu) creates a new folder", async () => {
     const promptSpy = vi.spyOn(window, "prompt").mockReturnValue("Project");
     renderFolderItem();
-    fireEvent.click(screen.getByTitle(/neuen chat oder ordner erstellen/i));
-    fireEvent.click(screen.getByText(/^neuer ordner$/i));
+    fireEvent.click(screen.getByTitle(/create new chat or folder/i));
+    fireEvent.click(screen.getByText(/^new folder$/i));
     await vi.waitFor(() => {
       expect(newFolderMock).toHaveBeenCalledWith("my-workspace", "Project");
     });
@@ -200,7 +204,7 @@ describe("ThreadFolderItem", () => {
 
   it("enters rename mode when the pencil button is clicked", () => {
     renderFolderItem();
-    fireEvent.click(screen.getByTitle(/umbenennen/i));
+    fireEvent.click(screen.getByTitle(/rename/i));
     const input = document.querySelector("input");
     expect(input).toBeInTheDocument();
     expect(input.value).toBe("My Folder");
@@ -209,7 +213,7 @@ describe("ThreadFolderItem", () => {
   it("commits a rename on Enter and calls folders.update", async () => {
     const onFolderRenamed = vi.fn();
     renderFolderItem({ onFolderRenamed });
-    fireEvent.click(screen.getByTitle(/umbenennen/i));
+    fireEvent.click(screen.getByTitle(/rename/i));
     const input = document.querySelector("input");
     fireEvent.change(input, { target: { value: "  Renamed  " } });
     fireEvent.keyDown(input, { key: "Enter" });
@@ -225,7 +229,7 @@ describe("ThreadFolderItem", () => {
   it("cancels a rename on Escape without calling folders.update", async () => {
     const onFolderRenamed = vi.fn();
     renderFolderItem({ onFolderRenamed });
-    fireEvent.click(screen.getByTitle(/umbenennen/i));
+    fireEvent.click(screen.getByTitle(/rename/i));
     const input = document.querySelector("input");
     fireEvent.change(input, { target: { value: "should not stick" } });
     fireEvent.keyDown(input, { key: "Escape" });
@@ -236,7 +240,7 @@ describe("ThreadFolderItem", () => {
 
   it("does not call folders.update when the rename is empty or unchanged", async () => {
     renderFolderItem();
-    fireEvent.click(screen.getByTitle(/umbenennen/i));
+    fireEvent.click(screen.getByTitle(/rename/i));
     const input = document.querySelector("input");
     fireEvent.change(input, { target: { value: "" } });
     fireEvent.keyDown(input, { key: "Enter" });
@@ -248,7 +252,7 @@ describe("ThreadFolderItem", () => {
     const onFolderDeleted = vi.fn();
     const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(true);
     renderFolderItem({ onFolderDeleted });
-    fireEvent.click(screen.getByTitle(/löschen/i));
+    fireEvent.click(screen.getByTitle(/delete/i));
     await vi.waitFor(() => {
       expect(deleteFolderMock).toHaveBeenCalledWith("my-workspace", 1);
     });
@@ -261,7 +265,7 @@ describe("ThreadFolderItem", () => {
     const onFolderDeleted = vi.fn();
     const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
     renderFolderItem({ onFolderDeleted });
-    fireEvent.click(screen.getByTitle(/löschen/i));
+    fireEvent.click(screen.getByTitle(/delete/i));
     await Promise.resolve();
     expect(deleteFolderMock).not.toHaveBeenCalled();
     expect(onFolderDeleted).not.toHaveBeenCalled();

@@ -2,6 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 // Stub heavy / network-touching dependencies so we can render the desktop
 // Sidebar in isolation. Each stub returns the minimum surface area used by
@@ -52,9 +56,6 @@ vi.mock("./SidebarToggle", () => ({
   ToggleSidebarButton: () => <button data-testid="sidebar-toggle" />,
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key) => key }),
-}));
 
 import Sidebar from "@/components/Sidebar";
 
@@ -76,7 +77,7 @@ describe("Sidebar (desktop)", () => {
   it("renders the navigation landmark", () => {
     renderSidebar();
     expect(
-      screen.getByRole("navigation", { name: /hauptnavigation/i }),
+      screen.getByRole("navigation", { name: /main navigation/i }),
     ).toBeInTheDocument();
   });
 
@@ -101,7 +102,7 @@ describe("Sidebar (desktop)", () => {
   it("renders the resize handle when the sidebar is visible", () => {
     renderSidebar();
     const handle = screen.getByRole("separator", {
-      name: /seitenleiste skalieren/i,
+      name: /resize sidebar/i,
     });
     expect(handle).toBeInTheDocument();
     expect(handle).toHaveAttribute("aria-orientation", "vertical");

@@ -20,6 +20,11 @@ vi.mock("@phosphor-icons/react", () => ({
   Key: (props) => <svg data-testid="key-icon" {...props} />,
 }));
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 describe("RecoveryCodeModal", () => {
   const recoveryCodes = ["code-one-1234", "code-two-5678", "code-three-9012"];
   const onDownloadComplete = vi.fn();

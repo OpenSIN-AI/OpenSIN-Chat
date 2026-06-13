@@ -16,6 +16,11 @@ vi.mock("react-router-dom", () => ({
   useMatch: vi.fn(),
 }));
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 import useUser from "@/hooks/useUser";
 import { useMatch } from "react-router-dom";
 

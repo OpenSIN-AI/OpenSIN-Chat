@@ -2,6 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@phosphor-icons/react", () => ({
   X: ({ size, weight, className, "aria-hidden": ariaHidden }) => (
@@ -15,11 +19,6 @@ vi.mock("@phosphor-icons/react", () => ({
   ),
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) => key,
-  }),
-}));
 
 vi.mock("@/utils/paths", () => ({
   default: {
@@ -58,7 +57,7 @@ describe("UnauthenticatedHubModal", () => {
     );
     expect(screen.getByTestId("modal-wrapper")).toBeInTheDocument();
     expect(
-      screen.getByText("community_hub.publish.generic.unauthenticated.title"),
+      screen.getByText("Authentication Required"),
     ).toBeInTheDocument();
   });
 
@@ -70,7 +69,7 @@ describe("UnauthenticatedHubModal", () => {
     );
     expect(
       screen.getByText(
-        "community_hub.publish.generic.unauthenticated.description",
+        "You need to authenticate with the OpenSIN Chat Community Hub before publishing items.",
       ),
     ).toBeInTheDocument();
   });
@@ -115,7 +114,7 @@ describe("UnauthenticatedHubModal", () => {
       </MemoryRouter>,
     );
     const link = screen.getByText(
-      "community_hub.publish.generic.unauthenticated.button",
+      "Connect to Community Hub",
     );
     expect(link.closest("a")).toHaveAttribute(
       "href",

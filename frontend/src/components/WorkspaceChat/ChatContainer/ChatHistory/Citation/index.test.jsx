@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+
 import Citations, {
   CitationDetailModal,
   SourceTypeCircle,
@@ -10,17 +11,10 @@ import Citations, {
   parseChunkSource,
 } from "./index";
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) => {
-      const map = {
-        "chat_window.sources": "Sources",
-        "chat_window.similarity_match": "similarity match",
-      };
-      return map[key] ?? key;
-    },
-  }),
-}));
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@/components/ModalWrapper", () => ({
   default: ({ isOpen, children }) => (isOpen ? children : null),
@@ -253,7 +247,7 @@ describe("Citation", () => {
 
     it("shows similarity score when score is present", () => {
       render(<CitationDetailModal source={mockSource} onClose={vi.fn()} />);
-      expect(screen.getByText(/similarity match/)).toBeInTheDocument();
+      expect(screen.getByText(/Similarity match/i)).toBeInTheDocument();
     });
 
     it("renders as link when source is a URL type", () => {

@@ -4,6 +4,10 @@ import { render, waitFor } from "@testing-library/react";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, resolve } from "path";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 // Mock System.markOnboardingComplete so the "Weiter" button doesn't hit the
 // real API. We return a resolved promise so navigate() runs in the .finally()
@@ -18,11 +22,6 @@ vi.mock("@/components/ProviderPrivacy", () => ({
   default: () => <div data-testid="provider-privacy-mock" />,
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) => key,
-  }),
-}));
 
 const navigateMock = vi.fn();
 vi.mock("react-router-dom", () => ({

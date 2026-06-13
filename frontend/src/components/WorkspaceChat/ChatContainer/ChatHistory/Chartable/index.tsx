@@ -454,6 +454,7 @@ const customTooltip: any = (props) => {
 };
 
 function DownloadGraph({ onClick }: any) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false as any);
   const handleClick = async () => {
     setLoading(true);

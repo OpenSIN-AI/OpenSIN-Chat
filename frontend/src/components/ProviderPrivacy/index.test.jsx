@@ -23,6 +23,11 @@ vi.mock("react-router-dom", () => ({
   ),
 }));
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 vi.mock("text-case", () => ({
   titleCase: (s) => s,
   sentenceCase: (s) => s,

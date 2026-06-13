@@ -1540,7 +1540,7 @@ const TRANSLATIONS = {
     no_workspace_sources:
       "Keine Workspace-Quellen verfügbar. Füge Dokumente, Links oder APIs in den Workspace-Einstellungen hinzu.",
     document: "Dokument",
-    similarity_match: "Spiel",
+    similarity_match: "Ähnlichkeitsabgleich",
     source_count_one: "{{count}} Referenz",
     source_count_other: "{{count}} Verweise",
     add_new: "Neu hinzufügen",
@@ -1925,6 +1925,116 @@ const TRANSLATIONS = {
     yourLoadedModels: "Ihre geladenen Modelle",
     chooseModelHelp:
       "Wählen Sie das Ollama-Modell aus, das Sie zum Erzeugen von Embeddings verwenden möchten.",
+  },
+
+  genericOpenAiEmbedding: {
+    baseUrlLabel: "Basis-URL",
+    baseUrlPlaceholder: "https://api.openai.com/v1",
+    modelLabel: "Embedding-Modell",
+    modelPlaceholder: "text-embedding-ada-002",
+    maxChunkLengthLabel: "Maximale Embedding-Chunk-Länge",
+    maxChunkLengthTooltip:
+      "Maximale Länge von Text-Chunks in Zeichen für das Embedding.",
+    maxChunkLengthPlaceholder: "8192",
+    apiKeyLabel: "API-Schlüssel",
+    apiKeyPlaceholder: "API-Schlüssel des generischen Dienstes",
+    optional: "Optional",
+    showAdvanced: "Anzeigen",
+    hideAdvanced: "Ausblenden",
+    advancedSettings: "Erweiterte Einstellungen",
+    showAdvancedAria: "Erweiterte Einstellungen anzeigen",
+    hideAdvancedAria: "Erweiterte Einstellungen ausblenden",
+    maxConcurrentChunksLabel: "Maximale parallele Chunks",
+    maxConcurrentChunksPlaceholder: "5",
+  },
+
+  localAiEmbedding: {
+    modelLabel: "LocalAI Embedding-Modell",
+    loadingModels: "-- verfügbare Modelle werden geladen --",
+    waitingUrl: "Geben Sie zuerst die LocalAI-URL ein",
+    apiKeyLabel: "API-Schlüssel",
+    apiKeyTooltip: "API-Schlüssel für die LocalAI-Instanz.",
+    apiKeyPlaceholder: "LocalAI API-Schlüssel",
+    maxChunkLengthLabel: "Maximale Embedding-Chunk-Länge",
+    maxChunkLengthTooltip:
+      "Maximale Länge von Text-Chunks in Zeichen für das Embedding.",
+    maxChunkLengthPlaceholder: "8192",
+    outputDimensionsLabel: "Embedding-Ausgabedimensionen",
+    outputDimensionsTooltip1:
+      "Anzahl der Dimensionen der Embedding-Ausgabe.",
+    outputDimensionsTooltip2:
+      "Leer lassen, um den Standard des Modells zu verwenden.",
+    outputDimensionsPlaceholder: "z. B. 768",
+    showAdvanced: "Anzeigen",
+    hideAdvanced: "Ausblenden",
+    advancedSettings: "Erweiterte Einstellungen",
+    showAdvancedAria: "Erweiterte Einstellungen anzeigen",
+    hideAdvancedAria: "Erweiterte Einstellungen ausblenden",
+    baseUrlLabel: "LocalAI Basis-URL",
+    baseUrlPlaceholder: "http://127.0.0.1:8080",
+    autoDetect: "Automatisch erkennen",
+    autoDetectAria: "LocalAI Basis-URL automatisch erkennen",
+    yourLoadedModels: "Ihre geladenen Modelle",
+  },
+
+  lmStudioEmbedding: {
+    modelLabel: "LM Studio Modell",
+    modelLabelReady: "LM Studio Modell",
+    modelErrorTooltip:
+      "Modelle konnten nicht vom LM Studio-Server geladen werden.",
+    loadingModels: "-- verfügbare Modelle werden geladen --",
+    noModelsFound: "Keine Modelle gefunden",
+    enterUrlFirst: "Geben Sie zuerst die LM Studio-URL ein",
+    yourLoadedModels: "Ihre geladenen Modelle",
+    modelDescription:
+      "Wählen Sie das Modell aus, das Sie für Embeddings verwenden möchten.",
+    maxChunkLengthLabel: "Maximale Embedding-Chunk-Länge",
+    maxChunkLengthTooltip:
+      "Maximale Länge von Text-Chunks in Zeichen für das Embedding.",
+    showManualEndpoint: "Anzeigen",
+    hideManualEndpoint: "Ausblenden",
+    manualEndpointInput: "manuelle Endpunkt-Eingabe",
+    showManualEndpointAria: "Manuelle Endpunkt-Eingabe anzeigen",
+    hideManualEndpointAria: "Manuelle Endpunkt-Eingabe ausblenden",
+    baseUrlLabel: "LM Studio Basis-URL",
+    baseUrlTooltip: "Geben Sie die URL ein, unter der LM Studio läuft.",
+    baseUrlPlaceholder: "http://127.0.0.1:11434",
+    autoDetect: "Automatisch erkennen",
+    autoDetectAria: "LM Studio Basis-URL automatisch erkennen",
+    authTokenLabel: "Auth-Token",
+    authTokenTooltipPart1: "Geben Sie ein",
+    authTokenTooltipBearer: "Bearer",
+    authTokenTooltipPart2:
+      "Auth-Token für die Interaktion mit Ihrem LM Studio-Server ein.",
+    authTokenTooltipPart3:
+      "Wird nur verwendet, wenn LM Studio hinter einem Authentifizierungsserver läuft.",
+    authTokenPlaceholder: "LM Studio Auth-Token",
+  },
+
+  lemonadeEmbedding: {
+    modelLabel: "Lemonade Modell",
+    loadingModels: "-- verfügbare Modelle werden geladen --",
+    enterUrlFirst: "Geben Sie zuerst die Lemonade-URL ein",
+    yourLoadedModels: "Ihre geladenen Modelle",
+    selectModelHelp:
+      "Wählen Sie das Lemonade-Modell aus, das Sie für Embeddings verwenden möchten.",
+    maxChunkLengthLabel: "Maximale Embedding-Chunk-Länge",
+    maxChunkLengthTooltip:
+      "Maximale Länge von Text-Chunks in Zeichen für das Embedding.",
+    maxChunkLengthPlaceholder: "8192",
+    apiKeyLabel: "API-Schlüssel",
+    apiKeyTooltip: "API-Schlüssel für den Lemonade-Server.",
+    showManualEndpoint: "Anzeigen",
+    hideManualEndpoint: "Ausblenden",
+    manualEndpointInput: "manuelle Endpunkt-Eingabe",
+    showManualEndpointAria: "Manuelle Endpunkt-Eingabe anzeigen",
+    hideManualEndpointAria: "Manuelle Endpunkt-Eingabe ausblenden",
+    baseUrlLabel: "Lemonade Basis-URL",
+    baseUrlTooltip:
+      "Geben Sie die URL ein, unter der der Lemonade-Server läuft.",
+    baseUrlPlaceholder: "http://localhost:13305",
+    autoDetect: "Automatisch erkennen",
+    autoDetectAria: "Lemonade Basis-URL automatisch erkennen",
   },
 
   providerSettings: {
@@ -3408,6 +3518,18 @@ const TRANSLATIONS = {
     generalAppearanceSettings: "Allgemeine Erscheinungseinstellungen",
   },
 
+  right_sidebar: {
+    icon_collapse: "Einklappen",
+    icon_expand: "Rechte Seitenleiste",
+    icon_preview: "Vorschau",
+    icon_filesystem: "Verzeichnis",
+    icon_database: "Politiker-Datenbank",
+    icon_political: "Politisches",
+    icon_sources: "Quellen",
+    icon_memories: "Memories",
+    icon_console: "Konsole & Terminal",
+  },
+
   dataConnectors: {
     paperlessNgx: {
       baseUrl: "Basis-URL",
@@ -4338,6 +4460,12 @@ const TRANSLATIONS = {
   workspaceFileRow: {
     pinned: "Angeheftet",
     unpin: "Loslösen",
+  },
+
+  chartable: {
+    unsupported: "Nicht unterstützter Diagrammtyp.",
+    downloading: "Diagramm wird heruntergeladen...",
+    downloadGraph: "Diagramm herunterladen",
   },
 
 };

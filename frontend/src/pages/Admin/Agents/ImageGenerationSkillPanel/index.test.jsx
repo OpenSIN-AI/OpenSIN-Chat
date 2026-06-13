@@ -12,6 +12,10 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ImageGenerationSkillPanel from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@/hooks/useSystemSettings", () => ({
   default: vi.fn(),
@@ -33,35 +37,6 @@ vi.mock("@/components/lib/Toggle", () => ({
 
 vi.mock("@phosphor-icons/react", () => ({
   Image: () => null,
-}));
-
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key, options) => {
-      // Minimal stub matching the keys the panel uses.
-      const map = {
-        "agent.skill.image_generation.title": "Image Generation",
-        "agent.skill.image_generation.description":
-          "Generate images using any OpenAI-compatible image generation API.",
-        "agent.skill.image_generation.base_url.label": "Base URL",
-        "agent.skill.image_generation.base_url.placeholder":
-          "https://api.openai.com",
-        "agent.skill.image_generation.base_url.invalid":
-          "Please enter a valid http:// or https:// URL.",
-        "agent.skill.image_generation.base_url.help": `Base URL for the OpenAI-compatible API (e.g., ${options?.example || "https://api.openai.com"})`,
-        "agent.skill.image_generation.api_key.label": "API Key",
-        "agent.skill.image_generation.api_key.help":
-          "Leave empty to keep the existing key.",
-        "agent.skill.image_generation.api_key.clear":
-          "Remove the stored API key on save",
-        "agent.skill.image_generation.model.label": "Model",
-        "agent.skill.image_generation.model.placeholder": "dall-e-3",
-        "agent.skill.image_generation.model.help":
-          "Model name for image generation.",
-      };
-      return map[key] || key;
-    },
-  }),
 }));
 
 import useSystemSettings from "@/hooks/useSystemSettings";

@@ -2,18 +2,11 @@
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import LanceDBOptions from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) => {
-      const map = {
-        "vector.provider.description":
-          "LanceDB is an embedded vector database.",
-      };
-      return map[key] ?? key;
-    },
-  }),
-}));
 
 describe("LanceDBOptions", () => {
   it("renders without crash", () => {
@@ -24,7 +17,7 @@ describe("LanceDBOptions", () => {
   it("displays the translated provider description", () => {
     render(<LanceDBOptions />);
     expect(
-      screen.getByText("LanceDB is an embedded vector database."),
+      screen.getByText("There is no configuration needed for LanceDB."),
     ).toBeInTheDocument();
   });
 

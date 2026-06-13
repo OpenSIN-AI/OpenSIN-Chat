@@ -2,6 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@phosphor-icons/react", () => ({
   X: ({ size, "aria-hidden": ariaHidden, className }) => (
@@ -17,11 +21,6 @@ vi.mock("@phosphor-icons/react", () => ({
   ),
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) => key,
-  }),
-}));
 
 vi.mock("@/utils/paths", () => ({
   default: {
@@ -120,7 +119,7 @@ describe("PublishEntityModal - wrapper behavior", () => {
       entity: "",
     });
     expect(
-      screen.getByText("community_hub.publish.generic.unauthenticated.title"),
+      screen.getByText("Authentication Required"),
     ).toBeInTheDocument();
   });
 
@@ -192,11 +191,11 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entity: "You are a helpful assistant.",
     });
     expect(
-      screen.getByText("community_hub.publish.system_prompt.modal_title"),
+      screen.getByText("Publish System Prompt"),
     ).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(
-        "community_hub.publish.system_prompt.name_placeholder",
+        "My System Prompt",
       ),
     ).toBeInTheDocument();
   });
@@ -209,7 +208,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entity: "You are a helpful assistant.",
     });
     const tagInput = screen.getByPlaceholderText(
-      "community_hub.publish.system_prompt.tags_placeholder",
+      "Type and press Enter to add tags",
     );
     fireEvent.change(tagInput, { target: { value: "ai" } });
     fireEvent.keyDown(tagInput, { key: "Enter" });
@@ -224,7 +223,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entity: "You are a helpful assistant.",
     });
     const tagInput = screen.getByPlaceholderText(
-      "community_hub.publish.system_prompt.tags_placeholder",
+      "Type and press Enter to add tags",
     );
     fireEvent.change(tagInput, { target: { value: "ai" } });
     fireEvent.keyDown(tagInput, { key: "Enter" });
@@ -241,7 +240,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entity: "You are a helpful assistant.",
     });
     const tagInput = screen.getByPlaceholderText(
-      "community_hub.publish.system_prompt.tags_placeholder",
+      "Type and press Enter to add tags",
     );
     fireEvent.change(tagInput, { target: { value: "x".repeat(21) } });
     fireEvent.keyDown(tagInput, { key: "Enter" });
@@ -256,7 +255,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entity: "You are a helpful assistant.",
     });
     const tagInput = screen.getByPlaceholderText(
-      "community_hub.publish.system_prompt.tags_placeholder",
+      "Type and press Enter to add tags",
     );
     fireEvent.change(tagInput, { target: { value: "ai" } });
     fireEvent.keyDown(tagInput, { key: "Enter" });
@@ -273,7 +272,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entity: "You are a helpful assistant.",
     });
     const tagInput = screen.getByPlaceholderText(
-      "community_hub.publish.system_prompt.tags_placeholder",
+      "Type and press Enter to add tags",
     );
     fireEvent.change(tagInput, { target: { value: "ai" } });
     fireEvent.keyDown(tagInput, { key: "Enter" });
@@ -296,7 +295,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
     });
     fireEvent.change(
       screen.getByPlaceholderText(
-        "community_hub.publish.system_prompt.name_placeholder",
+        "My System Prompt",
       ),
       {
         target: { value: "My Prompt" },
@@ -304,7 +303,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
     );
     fireEvent.change(
       screen.getByPlaceholderText(
-        "community_hub.publish.system_prompt.description_description",
+        "This is the description of your system prompt. Use this to describe the purpose of your system prompt.",
       ),
       {
         target: { value: "A description with enough length." },
@@ -312,21 +311,21 @@ describe("PublishEntityModal - SystemPrompts form", () => {
     );
     fireEvent.change(
       screen.getByPlaceholderText(
-        "community_hub.publish.system_prompt.prompt_placeholder",
+        "Enter your system prompt here...",
       ),
       {
         target: { value: "A prompt with enough length." },
       },
     );
     fireEvent.click(
-      screen.getByText("community_hub.publish.system_prompt.publish_button"),
+      screen.getByText("Publish to Community Hub"),
     );
     await waitFor(() => {
       expect(CommunityHub.createSystemPrompt).toHaveBeenCalled();
     });
     await waitFor(() => {
       expect(
-        screen.getByText("community_hub.publish.system_prompt.success_title"),
+        screen.getByText("Success!"),
       ).toBeInTheDocument();
     });
   });
@@ -345,7 +344,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
     });
     fireEvent.change(
       screen.getByPlaceholderText(
-        "community_hub.publish.system_prompt.name_placeholder",
+        "My System Prompt",
       ),
       {
         target: { value: "My Prompt" },
@@ -353,7 +352,7 @@ describe("PublishEntityModal - SystemPrompts form", () => {
     );
     fireEvent.change(
       screen.getByPlaceholderText(
-        "community_hub.publish.system_prompt.description_description",
+        "This is the description of your system prompt. Use this to describe the purpose of your system prompt.",
       ),
       {
         target: { value: "A description with enough length." },
@@ -361,14 +360,14 @@ describe("PublishEntityModal - SystemPrompts form", () => {
     );
     fireEvent.change(
       screen.getByPlaceholderText(
-        "community_hub.publish.system_prompt.prompt_placeholder",
+        "Enter your system prompt here...",
       ),
       {
         target: { value: "A prompt with enough length." },
       },
     );
     fireEvent.click(
-      screen.getByText("community_hub.publish.system_prompt.publish_button"),
+      screen.getByText("Publish to Community Hub"),
     );
     await waitFor(() => {
       expect(showToast).toHaveBeenCalledWith(
@@ -403,7 +402,7 @@ describe("PublishEntityModal - AgentFlows form", () => {
       entity: sampleEntity,
     });
     expect(
-      screen.getByText("community_hub.publish.agent_flow.modal_title"),
+      screen.getByText("Publish Agent Flow"),
     ).toBeInTheDocument();
     expect(screen.getByText("Text Prompt")).toBeInTheDocument();
   });
@@ -456,7 +455,7 @@ describe("PublishEntityModal - AgentFlows form", () => {
       entity: sampleEntity,
     });
     fireEvent.click(
-      screen.getByText("community_hub.publish.agent_flow.submit"),
+      screen.getByText("Publish to Community Hub"),
     );
     await waitFor(() => {
       expect(CommunityHub.createAgentFlow).toHaveBeenCalled();
@@ -501,7 +500,7 @@ describe("PublishEntityModal - SlashCommands form", () => {
       entity: sampleEntity,
     });
     expect(
-      screen.getByText("community_hub.publish.slash_command.modal_title"),
+      screen.getByText("Publish Slash Command"),
     ).toBeInTheDocument();
     expect(screen.getByText("/test")).toBeInTheDocument();
   });
@@ -519,7 +518,7 @@ describe("PublishEntityModal - SlashCommands form", () => {
       entity: sampleEntity,
     });
     fireEvent.click(
-      screen.getByText("community_hub.publish.slash_command.publish_button"),
+      screen.getByText("Publish to Community Hub"),
     );
     await waitFor(() => {
       expect(CommunityHub.createSlashCommand).toHaveBeenCalledWith(
@@ -543,7 +542,7 @@ describe("PublishEntityModal - SlashCommands form", () => {
       entity: sampleEntity,
     });
     fireEvent.click(
-      screen.getByText("community_hub.publish.slash_command.publish_button"),
+      screen.getByText("Publish to Community Hub"),
     );
     await waitFor(() => {
       expect(showToast).toHaveBeenCalledWith(
@@ -573,7 +572,7 @@ describe("PublishEntityModal - unknown entity type", () => {
     });
     expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
     expect(
-      screen.queryByText("community_hub.publish.system_prompt.modal_title"),
+      screen.queryByText("Publish System Prompt"),
     ).not.toBeInTheDocument();
   });
 });

@@ -2,20 +2,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import TextSizeMenu from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) => {
-      const map = {
-        "chat_window.small": "Small",
-        "chat_window.normal": "Normal",
-        "chat_window.large": "Large",
-        "chat_window.text_size_label": "Text Size",
-      };
-      return map[key] ?? key;
-    },
-  }),
-}));
 
 vi.mock("@/hooks/useLoginMode", () => ({
   default: () => null,

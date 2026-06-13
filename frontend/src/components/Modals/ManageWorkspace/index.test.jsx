@@ -2,14 +2,15 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ManageWorkspaceModal, { useManageWorkspaceModal } from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("react-router-dom", () => ({
   useParams: () => ({ slug: "test-workspace" }),
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key) => key }),
-}));
 
 vi.mock("react-device-detect", () => ({
   isMobileOnly: false,

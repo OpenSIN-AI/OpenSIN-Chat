@@ -2,6 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import KeyboardShortcutsHelp from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@/utils/keyboardShortcuts", () => ({
   SHORTCUTS: {
@@ -12,14 +16,6 @@ vi.mock("@/utils/keyboardShortcuts", () => ({
   KEYBOARD_SHORTCUTS_HELP_EVENT: "keyboard-shortcuts-help",
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) =>
-      key
-        .replace("keyboard-shortcuts.shortcuts.", "")
-        .replace("keyboard-shortcuts.", ""),
-  }),
-}));
 
 describe("KeyboardShortcutsHelp", () => {
   beforeEach(() => {
@@ -36,7 +32,7 @@ describe("KeyboardShortcutsHelp", () => {
     act(() => {
       window.dispatchEvent(new CustomEvent("keyboard-shortcuts-help"));
     });
-    expect(screen.getByText("title")).toBeInTheDocument();
+    expect(screen.getByText("Keyboard Shortcuts")).toBeInTheDocument();
   });
 
   it("shows keyboard shortcuts when open", () => {
@@ -44,8 +40,8 @@ describe("KeyboardShortcutsHelp", () => {
     act(() => {
       window.dispatchEvent(new CustomEvent("keyboard-shortcuts-help"));
     });
-    expect(screen.getByText("settings")).toBeInTheDocument();
-    expect(screen.getByText("home")).toBeInTheDocument();
+    expect(screen.getByText("Open Settings")).toBeInTheDocument();
+    expect(screen.getByText("Go to Home")).toBeInTheDocument();
   });
 
   it("displays shortcut keys in kbd elements", () => {
@@ -62,9 +58,9 @@ describe("KeyboardShortcutsHelp", () => {
     act(() => {
       window.dispatchEvent(new CustomEvent("keyboard-shortcuts-help"));
     });
-    expect(screen.getByText("title")).toBeInTheDocument();
+    expect(screen.getByText("Keyboard Shortcuts")).toBeInTheDocument();
     fireEvent.click(screen.getByLabelText("Close"));
-    expect(screen.queryByText("title")).not.toBeInTheDocument();
+    expect(screen.queryByText("Keyboard Shortcuts")).not.toBeInTheDocument();
   });
 
   it("toggles open/closed on repeated events", () => {
@@ -72,10 +68,10 @@ describe("KeyboardShortcutsHelp", () => {
     act(() => {
       window.dispatchEvent(new CustomEvent("keyboard-shortcuts-help"));
     });
-    expect(screen.getByText("title")).toBeInTheDocument();
+    expect(screen.getByText("Keyboard Shortcuts")).toBeInTheDocument();
     act(() => {
       window.dispatchEvent(new CustomEvent("keyboard-shortcuts-help"));
     });
-    expect(screen.queryByText("title")).not.toBeInTheDocument();
+    expect(screen.queryByText("Keyboard Shortcuts")).not.toBeInTheDocument();
   });
 });

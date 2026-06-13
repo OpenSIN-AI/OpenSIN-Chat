@@ -42,6 +42,11 @@ vi.mock("react-tooltip", () => ({
   Tooltip: () => null,
 }));
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 import OllamaEmbeddingOptions from "./OllamaOptions";
 
 describe("OllamaEmbeddingOptions", () => {

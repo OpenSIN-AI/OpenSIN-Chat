@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 const openSidebar = vi.fn();
 const setMemoriesActiveTab = vi.fn();
@@ -28,18 +32,6 @@ vi.mock("../MemoriesSidebar/MemoriesContext", () => ({
   LIMITS: { workspace: 20, global: 5 },
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key) => {
-      const map = {
-        "chat_window.sources": "Sources",
-        "chat_window.memories.tab_workspace": "Workspace",
-        "chat_window.memories.tab_global": "Global",
-      };
-      return map[key] ?? key;
-    },
-  }),
-}));
 
 // SidebarTabs uses phosphor icons; render placeholders to keep DOM small
 vi.mock("@phosphor-icons/react", () => ({

@@ -2,6 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@/models/workspace", () => ({
   default: {
@@ -15,9 +19,6 @@ vi.mock("@/components/Preloader", () => ({
   default: () => <div data-testid="preloader">Loading...</div>,
 }));
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key) => key }),
-}));
 
 vi.mock("react-tooltip", () => ({
   Tooltip: () => null,

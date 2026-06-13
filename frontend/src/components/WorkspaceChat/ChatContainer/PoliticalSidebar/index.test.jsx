@@ -3,10 +3,11 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "@testing-library/react";
 import { SWRConfig } from "swr";
 import PoliticalSidebar from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key, fallback) => fallback || key }),
-}));
 
 vi.mock("../ChatSidebar", async () => {
   const actual = await vi.importActual("../ChatSidebar");

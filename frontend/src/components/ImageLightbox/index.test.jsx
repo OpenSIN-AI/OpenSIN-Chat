@@ -9,6 +9,11 @@ vi.mock("@phosphor-icons/react", () => ({
   CaretRight: () => <svg data-testid="caret-right-icon" />,
 }));
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 describe("ImageLightbox", () => {
   beforeEach(() => {
     const root = document.createElement("div");

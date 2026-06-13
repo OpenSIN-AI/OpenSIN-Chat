@@ -2,6 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Footer, { ICON_COMPONENTS, MAX_ICONS } from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("@/hooks/useFooterIcons", () => ({
   default: vi.fn(),
@@ -97,7 +101,7 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByRole("navigation")).toHaveAttribute(
       "aria-label",
-      "Footer-Links",
+      "Footer links",
     );
   });
 
@@ -113,7 +117,7 @@ describe("Footer", () => {
   it("renders theme toggle button with Moon icon when in light mode", () => {
     useFooterIcons.mockReturnValue({ footerData: [], isLoading: false });
     render(<Footer />);
-    const themeButton = screen.getByLabelText(/dunklen Modus wechseln/i);
+    const themeButton = screen.getByLabelText(/Switch to dark mode/i);
     expect(themeButton).toBeInTheDocument();
     expect(themeButton).toHaveAttribute("type", "button");
   });

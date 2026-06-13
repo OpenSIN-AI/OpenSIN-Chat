@@ -2,6 +2,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import FileDownloadCard from "./index";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 vi.mock("file-saver", () => ({ saveAs: vi.fn() }));
 vi.mock("@/models/files", () => ({ default: { download: vi.fn() } }));
@@ -14,29 +18,7 @@ vi.mock("@phosphor-icons/react", () => ({
   Eye: () => <svg data-testid="eye-icon" />,
   Image: () => <svg data-testid="image-icon" />,
 }));
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({
-    t: (key, fallback) => {
-      const map = {
-        "preview.generated_image": "Generated image",
-        "preview.loading": "Loading preview...",
-        "preview.load_error": "Preview could not be loaded.",
-        "preview.menu.download": "Download",
-        "preview.menu.open_new_tab": "Open in new tab",
-        "preview.menu.add_to_sources": "Add to sources",
-        "preview.open_externally": "Open in new tab",
-        "preview.iframe_title": "Preview",
-        "preview.empty": "No content to preview.",
-        "preview.title": "Preview",
-        "preview.unknown_file": "Unknown file",
-        "preview.open": "Preview",
-        "preview.download": "Download",
-        "preview.downloading": "Downloading...",
-      };
-      return map[key] || fallback || key;
-    },
-  }),
-}));
+
 
 // Capture the openPreview mock so individual tests can assert against it.
 const openPreviewMock = vi.fn();

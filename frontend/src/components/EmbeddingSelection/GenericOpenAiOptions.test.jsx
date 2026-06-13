@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 // react-tooltip renders a portal and triggers warnings in jsdom; stub the whole module.
 vi.mock("react-tooltip", () => ({

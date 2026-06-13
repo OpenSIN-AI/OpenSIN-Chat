@@ -326,6 +326,111 @@ const TRANSLATIONS = {
       "Choose the Ollama model you want to use for generating embeddings.",
   },
 
+  genericOpenAiEmbedding: {
+    baseUrlLabel: "Base URL",
+    baseUrlPlaceholder: "https://api.openai.com/v1",
+    modelLabel: "Embedding Model",
+    modelPlaceholder: "text-embedding-ada-002",
+    maxChunkLengthLabel: "Max embedding chunk length",
+    maxChunkLengthTooltip:
+      "Maximum length of text chunks, in characters, for embedding.",
+    maxChunkLengthPlaceholder: "8192",
+    apiKeyLabel: "API Key",
+    apiKeyPlaceholder: "Generic service API Key",
+    optional: "Optional",
+    showAdvanced: "Show",
+    hideAdvanced: "Hide",
+    advancedSettings: "Advanced Settings",
+    showAdvancedAria: "Show advanced settings",
+    hideAdvancedAria: "Hide advanced settings",
+    maxConcurrentChunksLabel: "Max concurrent chunks",
+    maxConcurrentChunksPlaceholder: "5",
+  },
+
+  localAiEmbedding: {
+    modelLabel: "LocalAI Embedding Model",
+    loadingModels: "-- loading available models --",
+    waitingUrl: "Enter LocalAI URL first",
+    apiKeyLabel: "API Key",
+    apiKeyTooltip: "API key for the LocalAI instance.",
+    apiKeyPlaceholder: "LocalAI API Key",
+    maxChunkLengthLabel: "Max embedding chunk length",
+    maxChunkLengthTooltip:
+      "Maximum length of text chunks, in characters, for embedding.",
+    maxChunkLengthPlaceholder: "8192",
+    outputDimensionsLabel: "Embedding output dimensions",
+    outputDimensionsTooltip1: "Number of dimensions for the embedding output.",
+    outputDimensionsTooltip2: "Leave blank to use the model default.",
+    outputDimensionsPlaceholder: "e.g. 768",
+    showAdvanced: "Show",
+    hideAdvanced: "Hide",
+    advancedSettings: "Advanced Settings",
+    showAdvancedAria: "Show advanced settings",
+    hideAdvancedAria: "Hide advanced settings",
+    baseUrlLabel: "LocalAI Base URL",
+    baseUrlPlaceholder: "http://127.0.0.1:8080",
+    autoDetect: "Auto-Detect",
+    autoDetectAria: "Auto-detect LocalAI base URL",
+    yourLoadedModels: "Your loaded models",
+  },
+
+  lmStudioEmbedding: {
+    modelLabel: "LM Studio Model",
+    modelLabelReady: "LM Studio Model",
+    modelErrorTooltip: "Could not load models from the LM Studio server.",
+    loadingModels: "-- loading available models --",
+    noModelsFound: "No models found",
+    enterUrlFirst: "Enter LM Studio URL first",
+    yourLoadedModels: "Your loaded models",
+    modelDescription: "Select the model you want to use for embeddings.",
+    maxChunkLengthLabel: "Max embedding chunk length",
+    maxChunkLengthTooltip:
+      "Maximum length of text chunks, in characters, for embedding.",
+    showManualEndpoint: "Show",
+    hideManualEndpoint: "Hide",
+    manualEndpointInput: "manual endpoint input",
+    showManualEndpointAria: "Show manual endpoint input",
+    hideManualEndpointAria: "Hide manual endpoint input",
+    baseUrlLabel: "LM Studio Base URL",
+    baseUrlTooltip: "Enter the URL where LM Studio is running.",
+    baseUrlPlaceholder: "http://127.0.0.1:11434",
+    autoDetect: "Auto-Detect",
+    autoDetectAria: "Auto-detect LM Studio base URL",
+    authTokenLabel: "Auth Token",
+    authTokenTooltipPart1: "Enter a",
+    authTokenTooltipBearer: "Bearer",
+    authTokenTooltipPart2:
+      "Auth Token for interacting with your LM Studio server.",
+    authTokenTooltipPart3:
+      "Used only if running LM Studio behind an authentication server.",
+    authTokenPlaceholder: "LM Studio Auth Token",
+  },
+
+  lemonadeEmbedding: {
+    modelLabel: "Lemonade Model",
+    loadingModels: "-- loading available models --",
+    enterUrlFirst: "Enter Lemonade URL first",
+    yourLoadedModels: "Your loaded models",
+    selectModelHelp:
+      "Select the Lemonade model you want to use for embeddings.",
+    maxChunkLengthLabel: "Max embedding chunk length",
+    maxChunkLengthTooltip:
+      "Maximum length of text chunks, in characters, for embedding.",
+    maxChunkLengthPlaceholder: "8192",
+    apiKeyLabel: "API Key",
+    apiKeyTooltip: "API key for the Lemonade server.",
+    showManualEndpoint: "Show",
+    hideManualEndpoint: "Hide",
+    manualEndpointInput: "manual endpoint input",
+    showManualEndpointAria: "Show manual endpoint input",
+    hideManualEndpointAria: "Hide manual endpoint input",
+    baseUrlLabel: "Lemonade Base URL",
+    baseUrlTooltip: "Enter the URL where the Lemonade server is running.",
+    baseUrlPlaceholder: "http://localhost:13305",
+    autoDetect: "Auto-Detect",
+    autoDetectAria: "Auto-detect Lemonade base URL",
+  },
+
   providerSettings: {
     voyageAi: {
       apiKey: "API Key",
@@ -2306,7 +2411,7 @@ const TRANSLATIONS = {
     source_count_one: "{{count}} reference",
     source_count_other: "{{count}} references",
     document: "Document",
-    similarity_match: "match",
+    similarity_match: "Similarity match",
     fork: "Fork",
     delete: "Delete",
     cancel: "Cancel",
@@ -3357,6 +3462,18 @@ const TRANSLATIONS = {
     generalAppearanceSettings: "General appearance settings",
   },
 
+  right_sidebar: {
+    icon_collapse: "Collapse",
+    icon_expand: "Right sidebar",
+    icon_preview: "Preview",
+    icon_filesystem: "Filesystem",
+    icon_database: "Politician database",
+    icon_political: "Political",
+    icon_sources: "Sources",
+    icon_memories: "Memories",
+    icon_console: "Console & Terminal",
+  },
+
   dataConnectors: {
     paperlessNgx: {
       baseUrl: "Base URL",
@@ -4239,6 +4356,12 @@ const TRANSLATIONS = {
   workspaceFileRow: {
     pinned: "Pinned",
     unpin: "Un-pin",
+  },
+
+  chartable: {
+    unsupported: "Unsupported chart type.",
+    downloading: "Downloading chart...",
+    downloadGraph: "Download graph",
   },
 
 };

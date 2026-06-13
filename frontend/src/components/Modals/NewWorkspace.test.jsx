@@ -2,10 +2,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import NewWorkspaceModal, { useNewWorkspaceModal } from "./NewWorkspace";
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
-vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ t: (key) => key }),
-}));
 
 vi.mock("@/components/ModalWrapper", () => ({
   default: ({ children }) => <div data-testid="modal-wrapper">{children}</div>,
@@ -65,7 +66,7 @@ describe("NewWorkspaceModal", () => {
 
   it("renders the name input with id", () => {
     render(<NewWorkspaceModal hideModal={hideModal} />);
-    const input = screen.getByLabelText("common.workspaces-name");
+    const input = screen.getByLabelText("Workspace Name");
     expect(input).toBeInTheDocument();
     expect(input).toHaveAttribute("type", "text");
   });
