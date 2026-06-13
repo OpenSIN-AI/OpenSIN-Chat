@@ -1,0 +1,175 @@
+// SPDX-License-Identifier: MIT
+// Purpose: Test user endpoints (users)
+// Docs: tests/users.test.js
+
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { createApp } from "../server/app";
+
+vi.mock("../server/utils/helpers", () => ({
+  getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
+}));
+
+vi.mock("../server/utils/helpers/customModels", () => ({
+  getCustomModels: () => ({ models: [], error: null }),
+}));
+
+vi.mock("../server/models/systemSettings", () => ({
+  SystemSettings: {
+    currentSettings: vi.fn(() => Promise.resolve({})),
+    isMultiUserMode: vi.fn(() => Promise.resolve(false)),
+  },
+}));
+
+vi.mock("../server/models/user", () => ({
+  User: {
+    _get: vi.fn(() => Promise.resolve(null)),
+    filterFields: vi.fn((user) => user),
+    whereWithData: vi.fn(() => Promise.resolve([])),
+    count: vi.fn(() => Promise.resolve(0)),
+    create: vi.fn(() => Promise.resolve({ id: 1, username: "test" })),
+    get: vi.fn(() => Promise.resolve({ id: 1, username: "test" })),
+    update: vi.fn(() => Promise.resolve({ id: 1, username: "updated" })),
+    delete: vi.fn(() => Promise.resolve(true)),
+    where: vi.fn(() => Promise.resolve([])),
+  },
+}));
+
+vi.mock("../server/models/eventLogs", () => ({
+  EventLogs: {
+    logEvent: vi.fn(() => Promise.resolve()),
+  },
+}));
+
+vi.mock("../server/models/telemetry", () => ({
+  Telemetry: {
+    sendTelemetry: vi.fn(() => Promise.resolve()),
+  },
+}));
+
+vi.mock("../server/utils/helpers/updateENV", () => ({
+  updateENV: () => ({ newValues: {}, error: null }),
+}));
+
+vi.mock("../server/utils/middleware/multiUserProtected", () => ({
+  flexUserRoleValid: () => (req, res, next) => next(),
+  ROLES: { admin: "admin", manager: "manager", all: "all" },
+  isMultiUserSetup: () => true,
+}));
+
+vi.mock("../server/utils/middleware/validatedRequest", () => ({
+  validatedRequest: (req, res, next) => next(),
+}));
+
+vi.mock("../server/utils/http", () => ({
+  reqBody: (req) => ({}),
+  makeJWT: (payload, expiry) => `token_${payload.id}`,
+  userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
+  multiUserMode: () => false,
+  queryParams: () => ({}),
+}));
+
+vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
+  simpleRateLimit: () => (req, res, next) => next(),
+}));
+
+vi.mock("../server/utils/middleware/chatHistoryViewable", () => ({
+  chatHistoryViewable: () => (req, res, next) => next(),
+}));
+
+vi.mock("../server/utils/collectorApi", () => ({
+  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
+}));
+
+vi.mock("../server/utils/chats", () => ({
+  VALID_COMMANDS: { help: true, clear: true },
+}));
+
+let app;
+
+beforeEach(async () => {
+  vi.clearAllMocks();
+  app = createApp();
+});
+
+const request = async (method, path, body = null, headers = {}) => {
+  const url = `http://localhost:3001${path}`;
+  const options = {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    },
+  };
+
+  if (body) {
+    options.body = JSON.stringify(body);
+  }
+
+  const response = await fetch(url, options);
+  const data = await response.text();
+  return {
+    status: response.status,
+    headers: response.headers,
+    body: data ? JSON.parse(data) : null,
+  };
+};
+
+describe("user endpoints", () => {
+  describe("GET /users", () => {
+    it("should return users", async () => {
+      const response = await request("GET", "/users");
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("users");
+      expect(response.body).toHaveProperty("hasPages");
+      expect(response.body).toHaveProperty("totalUsers");
+    });
+
+    it("should return users with pagination", async () => {
+      const response = await request("GET", "/users?offset=0&limit=10");
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("users");
+    });
+  });
+
+  describe("POST /users", () => {
+    it("should create user", async () => {
+      const response = await request("POST", "/users", {
+        username: "test-user",
+        password: "test-password",
+        role: "user",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("id");
+      expect(response.body).toHaveProperty("username", "test-user");
+    });
+  });
+
+  describe("GET /users/:id", () => {
+    it("should get user by id", async () => {
+      const response = await request("GET", "/users/1");
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("id", 1);
+      expect(response.body).toHaveProperty("username", "test");
+    });
+  });
+
+  describe("PUT /users/:id", () => {
+    it("should update user", async () => {
+      const response = await request("PUT", "/users/1", {
+        username: "updated-user",
+        role: "admin",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("id", 1);
+      expect(response.body).toHaveProperty("username", "updated");
+    });
+  });
+
+  describe("DELETE /users/:id", () => {
+    it("should delete user", async () => {
+      const response = await request("DELETE", "/users/1");
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success", true);
+    });
+  });
+});
