@@ -50,23 +50,18 @@ export default defineConfig({
       ],
       // Thresholds — see docs/COVERAGE-THRESHOLDS.md for context
       // Baseline (2026-06-08): 4.78% lines, 5.65% functions
-      // Issue #85 (vitest coverage) wants 40%, but that's a multi-week effort.
-      // Set progressive thresholds that are realistic to maintain:
-      // - Each test run enforces minimums to prevent regression
-      // - Realistic targets based on what existing test files cover
+      // Current coverage (2026-06-13): ~31.3% lines, ~38.4% branches,
+      // ~30.7% functions, ~31.7% statements.
+      // Issue #110 wants to raise thresholds toward industry-standard 40-70%.
+      // Phase-2 target is 10% (already exceeded). Set thresholds to 20% to
+      // prevent regression while remaining safely below current coverage.
+      // These will be raised incrementally as more tests are added.
       thresholds: {
-        // Lines: enforced at low bar initially, will rise as tests are added
-        lines: 2,
-        // Functions: SWR hooks have high coverage → higher threshold
-        functions: 4,
-        // Branches: harder to cover → lowest
-        branches: 2,
-        // Statements: matches lines
-        statements: 2,
+        lines: 20,
+        branches: 20,
+        functions: 20,
+        statements: 20,
       },
-      // Auto-update thresholds to current coverage if higher (only when not in CI)
-      // This way, adding tests automatically raises the bar
-      autoUpdate: process.env.CI !== "true",
       // Report uncovered files for visibility
       reportOnFailure: true,
     },
