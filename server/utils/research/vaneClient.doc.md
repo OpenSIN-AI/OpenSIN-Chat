@@ -15,7 +15,7 @@ Files that import or depend on this client:
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `VANE_API_URL` | `http://vane:3000` | Base URL of the Vane sidecar. In Docker this is the internal service DNS; externally it is `http://localhost:3101`. |
+| `VANE_API_URL` | `http://vane:8300` | Base URL of the Vane sidecar. In Docker this is the internal service DNS; externally it is `http://localhost:8310`. |
 | `VANE_CHAT_PROVIDER_ID` | *(auto-discovery)* | Override the Vane chat provider ID returned by `/api/providers`. |
 | `VANE_CHAT_MODEL_KEY` | *(auto-discovery)* | Override the Vane chat model key. |
 | `VANE_EMBED_PROVIDER_ID` | falls back to `VANE_CHAT_PROVIDER_ID` | Override the Vane embedding provider ID. |
@@ -31,8 +31,10 @@ Vane is deployed as a separate container in `docker/docker-compose.yml`:
 vane:
   image: itzcrazykns1337/vane:latest
   container_name: opensin-vane
-  ports:
-    - "3101:3000"   # host 3101 -> container 3000
+    ports:
+    - "8310:8300"   # host 8310 -> container 8300
+  environment:
+    - PORT=8300
   volumes:
     - vane-data:/home/vane/data
   restart: unless-stopped
@@ -40,8 +42,8 @@ vane:
     - opensin-chat
 ```
 
-- The container runs on the same `opensin-chat` bridge network as the main `opensin-chat` app, so the app can reach it at `http://vane:3000`.
-- The Vane web UI is available on the host at `http://localhost:3101` for initial setup.
+- The container runs on the same `opensin-chat` bridge network as the main `opensin-chat` app, so the app can reach it at `http://vane:8300`.
+- The Vane web UI is available on the host at `http://localhost:8310` for initial setup.
 - Persistent data is stored in the named Docker volume `vane-data`.
 
 ## Configuring NVIDIA NIM in Vane

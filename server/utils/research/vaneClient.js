@@ -9,7 +9,7 @@
  * Vane: https://github.com/ItzCrazyKns/Vane
  */
 
-const VANE_API_URL = process.env.VANE_API_URL || "http://vane:3000";
+const VANE_API_URL = process.env.VANE_API_URL || "http://vane:8300";
 const PROVIDER_CACHE_TTL_MS = 5 * 60_000;
 
 class VaneClient {

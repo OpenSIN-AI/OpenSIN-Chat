@@ -23,7 +23,9 @@ services:
       - "../collector/outputs/:/app/collector/outputs"
     user: "${UID:-1000}:${GID:-1000}"
     ports:
-      - "3001:3001"
+      # Host 3002 avoids conflict with OpenAfD on host 3001.
+      # Container still listens on 3001 (SERVER_PORT in .env).
+      - "3002:3001"
     env_file:
       - .env
     environment:
@@ -40,7 +42,11 @@ services:
     image: itzcrazykns1337/vane:latest
     container_name: opensin-vane
     ports:
-      - "3101:3000"
+      # Host 8310 → container 8300. Internal 8300 avoids clashing with
+      # common defaults (3000) and keeps OpenSIN ports isolated.
+      - "8310:8300"
+    environment:
+      - PORT=8300
     volumes:
       - vane-data:/home/vane/data
     restart: unless-stopped
