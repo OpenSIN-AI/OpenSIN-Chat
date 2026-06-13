@@ -28,6 +28,10 @@ Extracts unique URLs from base64-encoded image attachments using Tesseract OCR.
 - OCR calls are serialized through an internal queue because the worker is not thread-safe.
 - Results are cached by a SHA-256 hash of the image content to avoid repeated OCR of the same image.
 
+## Tests
+
+See `server/__tests__/utils/chats/extractImageUrls.test.js` for unit tests covering the public API, OCR disable flag, caching, and `buildScreenshotUrlPrompt`.
+
 ## Caveats
 
 - OCR accuracy depends on image quality, resolution, font, and whether the Tesseract language data is installed.
