@@ -56,8 +56,7 @@ function getClient() {
  * Bucket name helpers — read from env with safe defaults.
  */
 const BUCKETS = {
-  documents: () =>
-    process.env.SUPABASE_STORAGE_BUCKET_DOCUMENTS ?? "documents",
+  documents: () => process.env.SUPABASE_STORAGE_BUCKET_DOCUMENTS ?? "documents",
   reports: () => process.env.SUPABASE_STORAGE_BUCKET_REPORTS ?? "reports",
   avatars: () => process.env.SUPABASE_STORAGE_BUCKET_AVATARS ?? "avatars",
   assets: () => process.env.SUPABASE_STORAGE_BUCKET_ASSETS ?? "assets",
@@ -78,7 +77,9 @@ async function ensureBucket(bucketName) {
       fileSizeLimit: 100 * 1024 * 1024, // 100 MB
     });
     if (error && error.message !== "Bucket already exists") {
-      throw new Error(`Failed to create bucket "${bucketName}": ${error.message}`);
+      throw new Error(
+        `Failed to create bucket "${bucketName}": ${error.message}`,
+      );
     }
   }
 }
@@ -98,12 +99,10 @@ async function uploadBuffer({ bucket, objectPath, buffer, contentType }) {
   await ensureBucket(bucketName);
 
   const client = getClient();
-  const { error } = await client
-    .from(bucketName)
-    .upload(objectPath, buffer, {
-      contentType,
-      upsert: true,
-    });
+  const { error } = await client.from(bucketName).upload(objectPath, buffer, {
+    contentType,
+    upsert: true,
+  });
 
   if (error) throw new Error(`Supabase upload failed: ${error.message}`);
 
@@ -131,7 +130,12 @@ async function uploadFile({
   deleteLocal = false,
 }) {
   const buffer = fs.readFileSync(localPath);
-  const result = await uploadBuffer({ bucket, objectPath, buffer, contentType });
+  const result = await uploadBuffer({
+    bucket,
+    objectPath,
+    buffer,
+    contentType,
+  });
 
   if (deleteLocal) {
     try {

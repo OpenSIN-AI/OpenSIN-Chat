@@ -19,14 +19,14 @@ const { describeImage } = require("./visionAgent");
 const { deepScanPage } = require("./deepScan");
 
 const VISION_MIN_IMAGE_AREA = Number(
-  process.env.PDF_ANALYSIS_VISION_MIN_AREA || 0.08 // Bildfläche >= 8% der Seite
+  process.env.PDF_ANALYSIS_VISION_MIN_AREA || 0.08, // Bildfläche >= 8% der Seite
 );
 const VISION_MAX_PAGES_PER_CHUNK = Number(
-  process.env.PDF_ANALYSIS_VISION_MAX_PER_CHUNK || 3 // Kostendeckel pro Chunk
+  process.env.PDF_ANALYSIS_VISION_MAX_PER_CHUNK || 3, // Kostendeckel pro Chunk
 );
 
 const INITIAL_CHUNK_BYTES = Number(
-  process.env.PDF_ANALYSIS_INITIAL_CHUNK_BYTES || 2 * 1024 * 1024 // 2 MB
+  process.env.PDF_ANALYSIS_INITIAL_CHUNK_BYTES || 2 * 1024 * 1024, // 2 MB
 );
 
 let pdfjs = null;
@@ -56,7 +56,7 @@ function buildRangeTransport(lib, fd, fileSize) {
         }
         this.onDataRange(
           begin,
-          new Uint8Array(buffer.buffer, buffer.byteOffset, bytesRead)
+          new Uint8Array(buffer.buffer, buffer.byteOffset, bytesRead),
         );
       });
     }
@@ -67,8 +67,8 @@ function buildRangeTransport(lib, fd, fileSize) {
     new Uint8Array(
       initialBuffer.buffer,
       initialBuffer.byteOffset,
-      initialLength
-    )
+      initialLength,
+    ),
   );
 }
 
@@ -222,7 +222,7 @@ class PdfReader {
       const viewport = page.getViewport({ scale: 1.5 });
       const canvas = createCanvas(
         Math.ceil(viewport.width),
-        Math.ceil(viewport.height)
+        Math.ceil(viewport.height),
       );
       await page.render({
         canvasContext: canvas.getContext("2d"),
@@ -230,7 +230,7 @@ class PdfReader {
       }).promise;
       return await describeImage(
         canvas.toBuffer("image/png"),
-        `Seite ${pageNumber} eines PDF-Dokuments (enthält Grafiken/Diagramme/Fotos)`
+        `Seite ${pageNumber} eines PDF-Dokuments (enthält Grafiken/Diagramme/Fotos)`,
       );
     } finally {
       page.cleanup();

@@ -97,9 +97,7 @@ class AbgeordnetenwatchApi {
       } catch (err) {
         lastError = err;
         if (attempt < this.maxRetries)
-          await new Promise((r) =>
-            setTimeout(r, this.retryDelayMs * attempt),
-          );
+          await new Promise((r) => setTimeout(r, this.retryDelayMs * attempt));
       }
     }
     throw lastError;
@@ -237,9 +235,10 @@ class AbgeordnetenwatchApi {
       ? mandate.fraction_membership
       : [];
     const lastMembership = memberships[memberships.length - 1] || {};
-    const factionLabel = (lastMembership.fraction?.label || "")
-      .replace(/\s*\(Bundestag.*?\)\s*/i, "")
-      .trim() || null;
+    const factionLabel =
+      (lastMembership.fraction?.label || "")
+        .replace(/\s*\(Bundestag.*?\)\s*/i, "")
+        .trim() || null;
 
     const electoral = mandate.electoral_data || {};
     const id = pol.id ?? null;
@@ -298,7 +297,10 @@ class AbgeordnetenwatchApi {
       const normalized = this.#normalizeMandate(mandate);
       if (normalized.id == null) continue;
       const existing = byPolitician.get(normalized.id);
-      if (!existing || (normalized.mandateStart || "") > (existing.mandateStart || ""))
+      if (
+        !existing ||
+        (normalized.mandateStart || "") > (existing.mandateStart || "")
+      )
         byPolitician.set(normalized.id, normalized);
     }
 

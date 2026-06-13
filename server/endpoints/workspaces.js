@@ -177,7 +177,10 @@ function workspaceEndpoints(app) {
         );
 
         if (failedToEmbed.length > 0) {
-          response.status(500).json({ success: false, error: errors?.[0] }).end();
+          response
+            .status(500)
+            .json({ success: false, error: errors?.[0] })
+            .end();
           return;
         }
 
@@ -221,7 +224,8 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const { success, reason, documents } = await Collector.processLink(link);
+        const { success, reason, documents } =
+          await Collector.processLink(link);
         if (!success || documents?.length === 0) {
           response.status(500).json({ success: false, error: reason }).end();
           return;
@@ -245,7 +249,10 @@ function workspaceEndpoints(app) {
         );
 
         if (failedToEmbed.length > 0) {
-          response.status(500).json({ success: false, error: errors?.[0] }).end();
+          response
+            .status(500)
+            .json({ success: false, error: errors?.[0] })
+            .end();
           return;
         }
 
@@ -915,12 +922,12 @@ function workspaceEndpoints(app) {
         // Get threadId we are branching from if that request body is sent
         // and is a valid thread slug.
         const threadId = !!threadSlug
-          ? (
+          ? ((
               await WorkspaceThread.get({
                 slug: String(threadSlug),
                 workspace_id: workspace.id,
               })
-            )?.id ?? null
+            )?.id ?? null)
           : null;
         const chatsToFork = await WorkspaceChats.where(
           {
@@ -1058,7 +1065,11 @@ function workspaceEndpoints(app) {
           response.locals?.user?.id,
         );
 
-        if (!documents?.length) return response.status(400).json({ success: false, error: "No documents were returned from processing." });
+        if (!documents?.length)
+          return response.status(400).json({
+            success: false,
+            error: "No documents were returned from processing.",
+          });
         const document = documents[0];
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           currWorkspace,

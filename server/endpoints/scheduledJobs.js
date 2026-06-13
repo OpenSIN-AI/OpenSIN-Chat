@@ -188,7 +188,9 @@ function scheduledJobEndpoints(app) {
         }
 
         backgroundService.addScheduledJob(job);
-        Telemetry.sendTelemetry("scheduled_job_created").catch((err) => { console.error("Telemetry error:", err.message); });
+        Telemetry.sendTelemetry("scheduled_job_created").catch((err) => {
+          console.error("Telemetry error:", err.message);
+        });
         return response.status(201).json({ job, error: null });
       } catch (e) {
         // eslint-disable-next-line no-console

@@ -62,7 +62,8 @@ class BundestagApi {
   constructor(opts = {}) {
     this.baseUrl = BUNDESTAG_API_BASE;
     this.wahlperiode = opts.wahlperiode || DEFAULT_WAHLPERIODE;
-    this.dipApiKey = opts.dipApiKey || process.env.BUNDESTAG_DIP_API_KEY || null;
+    this.dipApiKey =
+      opts.dipApiKey || process.env.BUNDESTAG_DIP_API_KEY || null;
     this.maxRetries = 3;
     this.retryDelayMs = 1000;
     this.rateLimitDelayMs = 500;
@@ -96,9 +97,7 @@ class BundestagApi {
       } catch (err) {
         lastError = err;
         if (attempt < this.maxRetries)
-          await new Promise((r) =>
-            setTimeout(r, this.retryDelayMs * attempt),
-          );
+          await new Promise((r) => setTimeout(r, this.retryDelayMs * attempt));
       }
     }
     throw lastError;
@@ -154,7 +153,9 @@ class BundestagApi {
    */
   async #fetchFromFormular() {
     const url = `${this.baseUrl}/Abgeordnete${this.wahlperiode}_WP.formular`;
-    this.log(`Fetching members from formular endpoint (WP ${this.wahlperiode})...`);
+    this.log(
+      `Fetching members from formular endpoint (WP ${this.wahlperiode})...`,
+    );
     try {
       const data = await this.#fetchCached(url);
       if (!data || !Array.isArray(data)) return [];
@@ -187,7 +188,9 @@ class BundestagApi {
           apikey: this.dipApiKey,
         });
         if (cursor) params.set("cursor", cursor);
-        const data = await this.#fetchCached(`${DIP_API_BASE}/person?${params.toString()}`);
+        const data = await this.#fetchCached(
+          `${DIP_API_BASE}/person?${params.toString()}`,
+        );
         if (!data) break;
 
         const docs = Array.isArray(data.documents) ? data.documents : [];
@@ -229,7 +232,10 @@ class BundestagApi {
       education: raw.vitaKurz || null,
       photoUrl: raw.bild ? `${BUNDESTAG_BASE_URL}${raw.bild}` : null,
       profileUrl:
-        raw.profilUrl || (raw.id ? `${BUNDESTAG_BASE_URL}/abgeordnete/biografien18/${raw.id}` : null),
+        raw.profilUrl ||
+        (raw.id
+          ? `${BUNDESTAG_BASE_URL}/abgeordnete/biografien18/${raw.id}`
+          : null),
       email: raw.email || null,
       electoralDistrict: raw.wahlkreis || null,
       electoralList: raw.landesliste || null,

@@ -18,18 +18,17 @@ const { validatePdfPath } = require("../security");
 const { analyzeImageUrl, analyzeVideoUrl } = require("./mediaAdapters");
 
 const MAX_FETCH_BYTES = Number(
-  process.env.PDF_ANALYSIS_XCHECK_MAX_FETCH_BYTES || 5 * 1024 * 1024
+  process.env.PDF_ANALYSIS_XCHECK_MAX_FETCH_BYTES || 5 * 1024 * 1024,
 );
 const FETCH_TIMEOUT_MS = Number(
-  process.env.PDF_ANALYSIS_XCHECK_FETCH_TIMEOUT_MS || 20000
+  process.env.PDF_ANALYSIS_XCHECK_FETCH_TIMEOUT_MS || 20000,
 );
 const MAX_SOURCE_CHARS = Number(
-  process.env.PDF_ANALYSIS_XCHECK_MAX_SOURCE_CHARS || 60000
+  process.env.PDF_ANALYSIS_XCHECK_MAX_SOURCE_CHARS || 60000,
 );
 
 function isPrivateIp(ip) {
-  if (net.isIPv6(ip))
-    return /^(::1|fc|fd|fe80)/i.test(ip) || ip === "::";
+  if (net.isIPv6(ip)) return /^(::1|fc|fd|fe80)/i.test(ip) || ip === "::";
   const parts = ip.split(".").map(Number);
   return (
     parts[0] === 10 ||
@@ -112,7 +111,7 @@ function htmlToText(html) {
 
 function extractYoutubeId(url) {
   const m = String(url).match(
-    /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/
+    /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/,
   );
   return m ? m[1] : null;
 }
@@ -122,12 +121,12 @@ async function youtubeTranscript(url) {
   const videoId = extractYoutubeId(url);
   if (!videoId) throw new Error(`Keine YouTube-Video-ID erkennbar: ${url}`);
   const watchHtml = await fetchWithLimits(
-    `https://www.youtube.com/watch?v=${videoId}`
+    `https://www.youtube.com/watch?v=${videoId}`,
   );
   const m = watchHtml.match(/"captionTracks":(\[.*?\])/);
   if (!m)
     throw new Error(
-      "Kein Transkript für dieses Video verfügbar (keine Untertitel)."
+      "Kein Transkript für dieses Video verfügbar (keine Untertitel).",
     );
   const tracks = JSON.parse(m[1]);
   const track =
@@ -189,8 +188,7 @@ async function loadSource(source) {
       const contentType = head?.headers?.get("content-type") || "";
       if (contentType.startsWith("image/"))
         return analyzeImageUrl(source.url, fetchBuffer);
-      if (contentType.startsWith("video/"))
-        return analyzeVideoUrl(source.url);
+      if (contentType.startsWith("video/")) return analyzeVideoUrl(source.url);
       const html = await fetchWithLimits(source.url);
       return { label: source.url, text: htmlToText(html) };
     }
@@ -206,8 +204,7 @@ async function fetchBuffer(url) {
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const buf = Buffer.from(await res.arrayBuffer());
-  if (buf.byteLength > MAX_FETCH_BYTES)
-    return buf.subarray(0, MAX_FETCH_BYTES);
+  if (buf.byteLength > MAX_FETCH_BYTES) return buf.subarray(0, MAX_FETCH_BYTES);
   return buf;
 }
 

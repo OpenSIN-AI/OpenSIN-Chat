@@ -60,14 +60,14 @@ function stripHtml(html) {
 function extractMeta(html, nameOrProp) {
   const re = new RegExp(
     `<meta[^>]+(?:name|property)=["']${nameOrProp}["'][^>]+content=["']([^"']+)["']`,
-    "i"
+    "i",
   );
   const m = html.match(re);
   if (m) return m[1];
 
   const re2 = new RegExp(
     `<meta[^>]+content=["']([^"']+)["'][^>]+(?:name|property)=["']${nameOrProp}["']`,
-    "i"
+    "i",
   );
   const m2 = html.match(re2);
   return m2 ? m2[1] : null;
@@ -157,7 +157,7 @@ async function fetchWithRetry(url) {
       const contentType = res.headers.get("content-type") || "";
       if (!contentType.includes("html") && !contentType.includes("text")) {
         throw new Error(
-          `Unsupported content-type: ${contentType}. Only HTML/text pages are supported.`
+          `Unsupported content-type: ${contentType}. Only HTML/text pages are supported.`,
         );
       }
 
@@ -211,7 +211,10 @@ function truncateToTokenLimit(text) {
   // Rough approximation: 1 token ≈ 4 chars
   const maxChars = MAX_TEXT_TOKENS * 4;
   if (text.length <= maxChars) return text;
-  return text.slice(0, maxChars) + `\n\n[... truncated at ~${MAX_TEXT_TOKENS} tokens]`;
+  return (
+    text.slice(0, maxChars) +
+    `\n\n[... truncated at ~${MAX_TEXT_TOKENS} tokens]`
+  );
 }
 
 // ── Plugin definition ─────────────────────────────────────────────────────────
@@ -271,7 +274,7 @@ const browserVision = {
           handler: async function ({ url, selector }) {
             try {
               this.super.introspect(
-                `${this.caller}: Fetching page text from ${url} ...`
+                `${this.caller}: Fetching page text from ${url} ...`,
               );
 
               const { html, finalUrl } = await fetchHtml(url);
@@ -306,7 +309,7 @@ const browserVision = {
                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
               this.super.introspect(
-                `${this.caller}: Page fetched — ${tokenCount} tokens of content.`
+                `${this.caller}: Page fetched — ${tokenCount} tokens of content.`,
               );
 
               this.super.addCitation?.([
@@ -322,7 +325,7 @@ const browserVision = {
               return truncated;
             } catch (err) {
               this.super.handlerProps?.log(
-                `[browser-vision] fetch-page-text error: ${err.message}`
+                `[browser-vision] fetch-page-text error: ${err.message}`,
               );
               return `Could not fetch the page. Error: ${err.message}`;
             }
@@ -365,12 +368,15 @@ const browserVision = {
           handler: async function ({ url }) {
             try {
               this.super.introspect(
-                `${this.caller}: Fetching page metadata from ${url} ...`
+                `${this.caller}: Fetching page metadata from ${url} ...`,
               );
 
               // Only fetch the first 32 KB of the page to get <head> quickly
               const controller = new AbortController();
-              const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+              const timer = setTimeout(
+                () => controller.abort(),
+                FETCH_TIMEOUT_MS,
+              );
               const res = await fetch(url, {
                 signal: controller.signal,
                 headers: {
@@ -408,7 +414,7 @@ const browserVision = {
                 "(no description)";
               const canonical =
                 html.match(
-                  /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i
+                  /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i,
                 )?.[1] || finalUrl;
               const ogImage = extractMeta(html, "og:image");
               const ogType = extractMeta(html, "og:type");
@@ -437,7 +443,7 @@ const browserVision = {
               return JSON.stringify(meta, null, 2);
             } catch (err) {
               this.super.handlerProps?.log(
-                `[browser-vision] fetch-page-meta error: ${err.message}`
+                `[browser-vision] fetch-page-meta error: ${err.message}`,
               );
               return `Could not fetch page metadata. Error: ${err.message}`;
             }

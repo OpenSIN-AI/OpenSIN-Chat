@@ -23,15 +23,11 @@ const path = require("path");
 const { getStoragePath } = require("../paths");
 const { loadAllJobs } = require("./jobStore");
 
-const UPLOAD_TTL_DAYS = Number(
-  process.env.PDF_ANALYSIS_UPLOAD_TTL_DAYS || 7
-);
-const REPORT_TTL_DAYS = Number(
-  process.env.PDF_ANALYSIS_REPORT_TTL_DAYS || 0
-);
+const UPLOAD_TTL_DAYS = Number(process.env.PDF_ANALYSIS_UPLOAD_TTL_DAYS || 7);
+const REPORT_TTL_DAYS = Number(process.env.PDF_ANALYSIS_REPORT_TTL_DAYS || 0);
 const JOB_TTL_DAYS = Number(process.env.PDF_ANALYSIS_JOB_TTL_DAYS || 30);
 const INTERVAL_MS = Number(
-  process.env.PDF_ANALYSIS_CLEANUP_INTERVAL_MS || 6 * 60 * 60 * 1000
+  process.env.PDF_ANALYSIS_CLEANUP_INTERVAL_MS || 6 * 60 * 60 * 1000,
 );
 
 const UPLOAD_DIR = getStoragePath("pdf-analysis", "uploads");
@@ -71,13 +67,13 @@ function runCleanup() {
   const activePdfPaths = new Set(
     jobs
       .filter((j) => ["pending", "running"].includes(j.status))
-      .map((j) => j.pdfPath)
+      .map((j) => j.pdfPath),
   );
   const knownJobIds = new Set(jobs.map((j) => j.id));
   const finishedJobIds = new Set(
     jobs
       .filter((j) => ["completed", "failed"].includes(j.status))
-      .map((j) => j.id)
+      .map((j) => j.id),
   );
 
   let removed = { uploads: 0, checkpoints: 0, reports: 0, jobs: 0 };
@@ -123,7 +119,7 @@ function runCleanup() {
     console.log(
       `[pdfAnalysis] Cleanup: ${removed.uploads} Uploads, ` +
         `${removed.checkpoints} Checkpoints, ${removed.reports} Reports, ` +
-        `${removed.jobs} Job-Snapshots entfernt.`
+        `${removed.jobs} Job-Snapshots entfernt.`,
     );
   return removed;
 }

@@ -85,16 +85,16 @@ class FactStore {
             verified: f.verified,
             source: f.source,
             createdAt: f.createdAt,
-          }))
+          })),
         );
         console.log(
-          `[pdfAnalysis] ${facts.length} Fakten aus facts.json nach SQLite migriert.`
+          `[pdfAnalysis] ${facts.length} Fakten aus facts.json nach SQLite migriert.`,
         );
       }
       fs.renameSync(LEGACY_JSON, `${LEGACY_JSON}.migrated`);
     } catch (e) {
       console.error(
-        `[pdfAnalysis] Migration von facts.json fehlgeschlagen: ${e.message}`
+        `[pdfAnalysis] Migration von facts.json fehlgeschlagen: ${e.message}`,
       );
     }
   }
@@ -163,13 +163,13 @@ class FactStore {
           page_corrected: f.source.pageCorrected ? 1 : 0,
           job_id: f.source.jobId || null,
           created_at: f.createdAt || new Date().toISOString(),
-        }))
+        })),
     );
   }
 
   get(id) {
     return this._rowToFact(
-      this.db.prepare("SELECT * FROM facts WHERE id = ?").get(id)
+      this.db.prepare("SELECT * FROM facts WHERE id = ?").get(id),
     );
   }
 
@@ -200,7 +200,7 @@ class FactStore {
           `SELECT facts.* FROM facts_fts
            JOIN facts ON facts.rowid = facts_fts.rowid
            WHERE facts_fts MATCH ?
-           ORDER BY bm25(facts_fts) LIMIT ?`
+           ORDER BY bm25(facts_fts) LIMIT ?`,
         )
         .all(ftsQuery, max);
     } else {
@@ -212,13 +212,13 @@ class FactStore {
     if (document) {
       const needle = document.toLowerCase();
       facts = facts.filter((f) =>
-        f.source.documentName.toLowerCase().includes(needle)
+        f.source.documentName.toLowerCase().includes(needle),
       );
     }
     if (tag) {
       const needle = String(tag).toLowerCase();
       facts = facts.filter((f) =>
-        f.tags.some((t) => t.toLowerCase() === needle)
+        f.tags.some((t) => t.toLowerCase() === needle),
       );
     }
     if (page)
@@ -227,7 +227,9 @@ class FactStore {
   }
 
   remove(id) {
-    return this.db.prepare("DELETE FROM facts WHERE id = ?").run(id).changes > 0;
+    return (
+      this.db.prepare("DELETE FROM facts WHERE id = ?").run(id).changes > 0
+    );
   }
 
   stats() {
@@ -235,7 +237,7 @@ class FactStore {
     const byDocument = {};
     for (const row of this.db
       .prepare(
-        "SELECT document_name, COUNT(*) AS n FROM facts GROUP BY document_name"
+        "SELECT document_name, COUNT(*) AS n FROM facts GROUP BY document_name",
       )
       .all())
       byDocument[row.document_name] = row.n;

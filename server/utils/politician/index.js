@@ -146,7 +146,9 @@ class PoliticianDB {
 
     try {
       const ids = [
-        ...new Set(results.map((r) => r.metadata?.politicianId).filter(Boolean)),
+        ...new Set(
+          results.map((r) => r.metadata?.politicianId).filter(Boolean),
+        ),
       ];
       if (!ids.length) return [];
       const allowed = await prisma.politicians.findMany({
@@ -157,7 +159,9 @@ class PoliticianDB {
       return results.filter((r) => allowedSet.has(r.metadata?.politicianId));
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error(`[PoliticianDB] semanticSearchSpeeches source filter error: ${err.message}`);
+      console.error(
+        `[PoliticianDB] semanticSearchSpeeches source filter error: ${err.message}`,
+      );
       return results;
     }
   }

@@ -26,7 +26,7 @@ async function reduceGroup(summaries, task) {
     .join("\n\n");
   const text = await chat(
     REDUCE_SYSTEM,
-    `Analyse-Auftrag: ${task}\n\nVerdichte die folgenden Teilanalysen verlustarm:\n\n${body}`
+    `Analyse-Auftrag: ${task}\n\nVerdichte die folgenden Teilanalysen verlustarm:\n\n${body}`,
   );
   return text;
 }
@@ -76,16 +76,14 @@ async function synthesize(chunkResults, { task, reportType, documentName }) {
       ``,
       `=== EINZELERKENNTNISSE MIT SEITENVERWEISEN ===`,
       findingsBlock,
-    ].join("\n")
+    ].join("\n"),
   );
 
   // "Citations or die": Absätze ohne Seitenverweis deterministisch erkennen
   const PAGE_REF = /\(S\.\s*\d+/;
   const paragraphs = report
     .split(/\n{2,}/)
-    .filter(
-      (p) => p.trim().length > 120 && !p.trim().startsWith("#")
-    );
+    .filter((p) => p.trim().length > 120 && !p.trim().startsWith("#"));
   const uncited = paragraphs.filter((p) => !PAGE_REF.test(p));
   const groundingRatio =
     paragraphs.length === 0

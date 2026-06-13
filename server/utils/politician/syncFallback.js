@@ -100,7 +100,9 @@ async function withFallback(primary, fallback, opts = {}) {
     log(`[syncFallback] ${label}: primary returned empty, trying fallback...`);
   } catch (err) {
     primaryError = err;
-    log(`[syncFallback] ${label}: primary failed (${err.message}), trying fallback...`);
+    log(
+      `[syncFallback] ${label}: primary failed (${err.message}), trying fallback...`,
+    );
   }
 
   try {

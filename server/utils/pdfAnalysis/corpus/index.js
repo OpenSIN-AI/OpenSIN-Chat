@@ -90,7 +90,7 @@ function persistCorpusJob(job) {
       progress: job.progress,
       result: job.result,
       error: job.error,
-    })
+    }),
   );
   fs.renameSync(tmp, file); // atomar
 }
@@ -102,9 +102,7 @@ function loadAllCorpusJobs() {
     if (!entry.endsWith(".json")) continue;
     try {
       out.push(
-        JSON.parse(
-          fs.readFileSync(path.join(CORPUS_JOBS_DIR, entry), "utf8")
-        )
+        JSON.parse(fs.readFileSync(path.join(CORPUS_JOBS_DIR, entry), "utf8")),
       );
     } catch {
       /* korrupt — überspringen */
@@ -127,7 +125,7 @@ class CorpusPipeline {
   }) {
     if (!Array.isArray(pdfPaths) || pdfPaths.length < 2)
       throw new Error(
-        "Korpus-Analyse benötigt mindestens 2 PDF-Pfade (pdfPaths)."
+        "Korpus-Analyse benötigt mindestens 2 PDF-Pfade (pdfPaths).",
       );
     if (!task) throw new Error("task ist erforderlich.");
 
@@ -246,15 +244,14 @@ class CorpusPipeline {
     }
 
     if (job.cancelled) {
-      for (const childId of active.keys())
-        PdfAnalysisPipeline.cancel(childId);
+      for (const childId of active.keys()) PdfAnalysisPipeline.cancel(childId);
       throw new Error("Korpus-Job abgebrochen.");
     }
 
     const usable = docResults.filter((d) => !d.error && d.masterSummary);
     if (usable.length < 2)
       throw new Error(
-        `Zu wenige erfolgreich analysierte Dokumente für einen Vergleich (${usable.length}/2).`
+        `Zu wenige erfolgreich analysierte Dokumente für einen Vergleich (${usable.length}/2).`,
       );
 
     // Phase 3 — Vergleichs-Synthese + konsolidierter Report.

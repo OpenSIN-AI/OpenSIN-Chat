@@ -34,14 +34,14 @@ class BoundedJobStore {
     this._evictExpired();
     if (this._store.size >= this._maxJobs) {
       throw new JobCapacityError(
-        `Job store at capacity (${this._maxJobs}/${this._maxJobs}). Try again later.`
+        `Job store at capacity (${this._maxJobs}/${this._maxJobs}). Try again later.`,
       );
     }
     if (value && (value.status === "pending" || value.status === "running")) {
       const activeCount = this._activeCount();
       if (activeCount >= this._maxActive) {
         throw new JobCapacityError(
-          `Too many active jobs (${activeCount} >= ${this._maxActive}). Wait for some to finish.`
+          `Too many active jobs (${activeCount} >= ${this._maxActive}). Wait for some to finish.`,
         );
       }
     }

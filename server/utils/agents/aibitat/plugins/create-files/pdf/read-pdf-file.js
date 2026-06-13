@@ -48,9 +48,8 @@ module.exports.ReadPdfFile = {
                 storageFilename = `${storageFilename}.pdf`;
               }
 
-              const generatedFile = await createFilesLib.getGeneratedFile(
-                storageFilename,
-              );
+              const generatedFile =
+                await createFilesLib.getGeneratedFile(storageFilename);
               if (!generatedFile) {
                 return `PDF file "${storageFilename}" not found. The file may have been deleted or the filename is incorrect.`;
               }
@@ -82,9 +81,7 @@ module.exports.ReadPdfFile = {
 
               return `Content of "${storageFilename}":\n\n${text}`;
             } catch (e) {
-              this.super.handlerProps.log(
-                `read-pdf-file error: ${e.message}`,
-              );
+              this.super.handlerProps.log(`read-pdf-file error: ${e.message}`);
               this.super.introspect(`Error: ${e.message}`);
               return `Error reading PDF file: ${e.message}`;
             }

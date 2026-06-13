@@ -19,14 +19,11 @@ class NvidiaNimTTS {
         process.env.TTS_NVIDIA_NIM_ENDPOINT || NvidiaNimTTS.DEFAULT_BASE_URL,
     });
 
-    this.model =
-      process.env.TTS_NVIDIA_NIM_MODEL || NvidiaNimTTS.DEFAULT_MODEL;
+    this.model = process.env.TTS_NVIDIA_NIM_MODEL || NvidiaNimTTS.DEFAULT_MODEL;
     this.voice =
       process.env.TTS_NVIDIA_NIM_VOICE_MODEL || NvidiaNimTTS.DEFAULT_VOICE;
 
-    this.#log(
-      `Model: ${this.model}, Voice: ${this.voice}`,
-    );
+    this.#log(`Model: ${this.model}, Voice: ${this.voice}`);
   }
 
   #log(text, ...args) {

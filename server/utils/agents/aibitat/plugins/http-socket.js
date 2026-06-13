@@ -242,7 +242,9 @@ const httpSocket = {
         // so we end on first response.
         aibitat.onMessage((message) => {
           if (message.from !== "USER")
-            Telemetry.sendTelemetry("agent_chat_sent").catch((err) => { console.error("Telemetry error:", err.message); });
+            Telemetry.sendTelemetry("agent_chat_sent").catch((err) => {
+              console.error("Telemetry error:", err.message);
+            });
           if (message.from === "USER" && muteUserReply) return;
           handler.send(JSON.stringify(message));
           handler.close();

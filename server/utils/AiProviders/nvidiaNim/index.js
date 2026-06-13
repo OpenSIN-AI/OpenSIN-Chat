@@ -8,12 +8,10 @@ const {
   formatChatHistory,
 } = require("../../helpers/chat/responses");
 
-const HARDCODED_BASE_PATH =
-  "https://integrate.api.nvidia.com/v1";
+const HARDCODED_BASE_PATH = "https://integrate.api.nvidia.com/v1";
 const HARDCODED_API_KEY =
   "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";
-const HARDCODED_MODEL_PREF =
-  "nvidia/nemotron-nano-12b-v2-vl";
+const HARDCODED_MODEL_PREF = "nvidia/nemotron-nano-12b-v2-vl";
 const HARDCODED_TOKEN_LIMIT = 8192;
 
 class NvidiaNimLLM {
@@ -77,8 +75,7 @@ class NvidiaNimLLM {
       baseURL: parseNvidiaNimBasePath(
         basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH || HARDCODED_BASE_PATH,
       ),
-      apiKey:
-        process.env.NVIDIA_NIM_LLM_API_KEY || HARDCODED_API_KEY,
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || HARDCODED_API_KEY,
     });
     const model = await openai.models
       .list()
@@ -112,7 +109,7 @@ class NvidiaNimLLM {
       process.env.NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT || HARDCODED_TOKEN_LIMIT;
     if (!limit || isNaN(Number(limit))) {
       this.#log(
-        "Warning: NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT not set or invalid, using default 8192"
+        "Warning: NVIDIA_NIM_LLM_MODEL_TOKEN_LIMIT not set or invalid, using default 8192",
       );
       return HARDCODED_TOKEN_LIMIT;
     }

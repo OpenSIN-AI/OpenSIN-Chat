@@ -27,7 +27,10 @@ const deepResearch = {
           examples: [
             {
               prompt: "Research AfD's position on migration policy",
-              call: JSON.stringify({ query: "AfD Migrationspolitik Position Bundestag", depth: "deep" }),
+              call: JSON.stringify({
+                query: "AfD Migrationspolitik Position Bundestag",
+                depth: "deep",
+              }),
             },
           ],
           parameters: {
@@ -40,22 +43,32 @@ const deepResearch = {
               },
               depth: {
                 type: "string",
-                description: "Research depth: 'quick' (1 search) or 'deep' (3+ searches). Default: 'quick'.",
+                description:
+                  "Research depth: 'quick' (1 search) or 'deep' (3+ searches). Default: 'quick'.",
                 enum: ["quick", "deep"],
               },
               sources: {
                 type: "array",
                 items: { type: "string" },
-                description: "Sources to search: 'web', 'politician'. Default: both.",
+                description:
+                  "Sources to search: 'web', 'politician'. Default: both.",
               },
             },
             required: ["query"],
             additionalProperties: false,
           },
-          handler: async function ({ query, depth = "quick", sources = ["web", "politician"] } = {}) {
+          handler: async function ({
+            query,
+            depth = "quick",
+            sources = ["web", "politician"],
+          } = {}) {
             try {
               const pipeline = getResearchPipeline();
-              const result = await pipeline.startResearch({ query, depth, sources });
+              const result = await pipeline.startResearch({
+                query,
+                depth,
+                sources,
+              });
               return `Research started. Job ID: ${result.jobId}. Use get_research_status to check progress.`;
             } catch (error) {
               return `Error starting research: ${error.message}`;

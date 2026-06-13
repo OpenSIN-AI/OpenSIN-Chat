@@ -107,7 +107,9 @@ const Politician = {
         }
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(`[Politician] massUpsert error for ${p.fullName}: ${err.message}`);
+        console.error(
+          `[Politician] massUpsert error for ${p.fullName}: ${err.message}`,
+        );
         errors++;
       }
     }
@@ -315,4 +317,9 @@ const PoliticianMandate = {
   },
 };
 
-module.exports = { Politician, PoliticianVote, PoliticianSpeech, PoliticianMandate };
+module.exports = {
+  Politician,
+  PoliticianVote,
+  PoliticianSpeech,
+  PoliticianMandate,
+};

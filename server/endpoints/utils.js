@@ -107,8 +107,7 @@ function utilEndpoints(app) {
   // AfD RSS feed proxy (Issue #58)
   app.get("/utils/political/rss", async (req, response) => {
     try {
-      const feed =
-        req.query.feed || "https://www.afd.de/feed/";
+      const feed = req.query.feed || "https://www.afd.de/feed/";
       const res = await fetchWithTimeout(feed, {
         headers: { "User-Agent": "OpenSIN-Chat/1.0" },
       });
@@ -120,11 +119,19 @@ function utilEndpoints(app) {
       let m;
       while ((m = itemRe.exec(xml)) !== null && items.length < 8) {
         const block = m[1];
-        const title = (/<title><!\[CDATA\[(.+?)\]\]><\/title>/.exec(block) ||
-          /<title>(.+?)<\/title>/.exec(block) || [])[1] || "";
+        const title =
+          (/<title><!\[CDATA\[(.+?)\]\]><\/title>/.exec(block) ||
+            /<title>(.+?)<\/title>/.exec(block) ||
+            [])[1] || "";
         const link = (/<link>([^<]+)<\/link>/.exec(block) || [])[1] || "";
-        const pubDate = (/<pubDate>(.+?)<\/pubDate>/.exec(block) || [])[1] || "";
-        if (title) items.push({ title: title.trim(), link: link.trim(), pubDate: pubDate.trim() });
+        const pubDate =
+          (/<pubDate>(.+?)<\/pubDate>/.exec(block) || [])[1] || "";
+        if (title)
+          items.push({
+            title: title.trim(),
+            link: link.trim(),
+            pubDate: pubDate.trim(),
+          });
       }
       response.status(200).json({ items });
     } catch (e) {

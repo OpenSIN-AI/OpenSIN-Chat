@@ -21,9 +21,13 @@ const { chat } = require("../llm");
 const { compareAgainstSource, deepWebResearch } = require("./researchAgent");
 
 const XCHECK_CONCURRENCY = Number(
-  process.env.PDF_ANALYSIS_XCHECK_CONCURRENCY || 4
+  process.env.PDF_ANALYSIS_XCHECK_CONCURRENCY || 4,
 );
-const XCHECK_REPORT_DIR = getStoragePath("pdf-analysis", "reports", "crosscheck");
+const XCHECK_REPORT_DIR = getStoragePath(
+  "pdf-analysis",
+  "reports",
+  "crosscheck",
+);
 const XCHECK_JOBS_DIR = getStoragePath("pdf-analysis", "jobs-crosscheck");
 
 const REPORT_SYSTEM = `Du bist ein Senior-Verifikationsanalyst. Erstelle aus Kreuz-Verifikations-Ergebnissen einen professionellen Bericht.
@@ -64,7 +68,7 @@ function loadAllXJobs() {
     if (!entry.endsWith(".json")) continue;
     try {
       out.push(
-        JSON.parse(fs.readFileSync(path.join(XCHECK_JOBS_DIR, entry), "utf8"))
+        JSON.parse(fs.readFileSync(path.join(XCHECK_JOBS_DIR, entry), "utf8")),
       );
     } catch {
       /* korrupte Datei überspringen */
@@ -78,7 +82,7 @@ const jobs = new Map();
 class CrossCheckPipeline {
   static start(
     { claims = [], factIds = [], sources = [], deepWeb = false },
-    factStore
+    factStore,
   ) {
     // Behauptungen aus gespeicherten Fakten auflösen (mit Quellenbezug)
     const resolvedClaims = [
@@ -93,12 +97,10 @@ class CrossCheckPipeline {
         });
     }
     if (!resolvedClaims.length)
-      throw new Error(
-        "Keine Behauptungen angegeben (claims oder factIds)."
-      );
+      throw new Error("Keine Behauptungen angegeben (claims oder factIds).");
     if (!sources.length && !deepWeb)
       throw new Error(
-        "Mindestens eine Vergleichsquelle ODER deepWeb=true angeben."
+        "Mindestens eine Vergleichsquelle ODER deepWeb=true angeben.",
       );
 
     const jobId = uuidv4();
@@ -172,7 +174,7 @@ class CrossCheckPipeline {
           job.progress.tasksDone = done;
           job.progress.tasksTotal = total;
         },
-      }
+      },
     );
 
     // Urteile pro Behauptung aggregieren
@@ -209,8 +211,8 @@ class CrossCheckPipeline {
       `Kreuz-Verifikations-Rohdaten (JSON):\n${JSON.stringify(
         perClaim,
         null,
-        2
-      )}`
+        2,
+      )}`,
     );
     fs.mkdirSync(XCHECK_REPORT_DIR, { recursive: true });
     const reportFile = path.join(XCHECK_REPORT_DIR, `${job.id}.md`);

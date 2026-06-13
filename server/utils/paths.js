@@ -13,8 +13,7 @@ const path = require("path");
  * @returns {string} absolute path
  */
 function getStoragePath(...subdirs) {
-  const base =
-    process.env.STORAGE_DIR || path.resolve(__dirname, "../storage");
+  const base = process.env.STORAGE_DIR || path.resolve(__dirname, "../storage");
   return subdirs.length > 0 ? path.resolve(base, ...subdirs) : base;
 }
 

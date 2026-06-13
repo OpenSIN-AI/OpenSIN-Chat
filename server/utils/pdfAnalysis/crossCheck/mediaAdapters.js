@@ -18,10 +18,9 @@ const { describeImage } = require("../visionAgent");
 
 const MAX_KEYFRAMES = Number(process.env.PDF_ANALYSIS_VIDEO_MAX_FRAMES || 8);
 const MAX_VIDEO_BYTES = Number(
-  process.env.PDF_ANALYSIS_VIDEO_MAX_BYTES || 200 * 1024 * 1024
+  process.env.PDF_ANALYSIS_VIDEO_MAX_BYTES || 200 * 1024 * 1024,
 );
-const SCENE_THRESHOLD =
-  process.env.PDF_ANALYSIS_VIDEO_SCENE_THRESHOLD || "0.3";
+const SCENE_THRESHOLD = process.env.PDF_ANALYSIS_VIDEO_SCENE_THRESHOLD || "0.3";
 
 function ffmpegPath() {
   try {
@@ -33,12 +32,8 @@ function ffmpegPath() {
 
 function run(bin, args, timeoutMs = 120000) {
   return new Promise((resolve, reject) => {
-    execFile(
-      bin,
-      args,
-      { timeout: timeoutMs },
-      (err, stdout, stderr) =>
-        err ? reject(new Error(stderr || err.message)) : resolve(stdout)
+    execFile(bin, args, { timeout: timeoutMs }, (err, stdout, stderr) =>
+      err ? reject(new Error(stderr || err.message)) : resolve(stdout),
     );
   });
 }
@@ -47,7 +42,7 @@ function run(bin, args, timeoutMs = 120000) {
 async function downloadVideo(url) {
   const tmpFile = path.join(
     os.tmpdir(),
-    `xcheck-video-${Date.now()}${path.extname(new URL(url).pathname) || ".mp4"}`
+    `xcheck-video-${Date.now()}${path.extname(new URL(url).pathname) || ".mp4"}`,
   );
   const res = await fetch(url, {
     headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
@@ -75,7 +70,7 @@ async function extractKeyframes(videoFile) {
   const bin = ffmpegPath();
   if (!bin)
     throw new Error(
-      "ffmpeg-static nicht installiert — Video-Analyse nicht verfügbar."
+      "ffmpeg-static nicht installiert — Video-Analyse nicht verfügbar.",
     );
   const outDir = fs.mkdtempSync(path.join(os.tmpdir(), "xcheck-frames-"));
   const pattern = path.join(outDir, "frame-%03d.png");
@@ -129,7 +124,7 @@ async function analyzeImageUrl(url, fetchBuffer) {
   const description = await describeImage(buffer, `Bild von URL: ${url}`, mime);
   if (!description)
     throw new Error(
-      "Vision-Analyse nicht verfügbar (Provider nicht multimodal?)."
+      "Vision-Analyse nicht verfügbar (Provider nicht multimodal?).",
     );
   return { label: `Bild: ${url}`, text: description };
 }
@@ -144,7 +139,7 @@ async function analyzeVideoUrl(url) {
     for (const kf of keyframes) {
       const description = await describeImage(
         fs.readFileSync(kf.file),
-        `${kf.timestamp} des Videos ${url}`
+        `${kf.timestamp} des Videos ${url}`,
       );
       if (description) parts.push(`[${kf.timestamp}]\n${description}`);
       fs.unlinkSync(kf.file);

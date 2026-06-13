@@ -160,7 +160,7 @@ class MetaGenerator {
    */
   #assembleMeta() {
     const output = [];
-    for (const tag of (this.#customConfig ?? this.#defaultMeta())) {
+    for (const tag of this.#customConfig ?? this.#defaultMeta()) {
       let htmlString;
       htmlString = `<${tag.tag} `;
 
@@ -347,8 +347,7 @@ class MetaGenerator {
     const preloadTags = this.#buildPreloadTags(js);
     response
       .status(code)
-      .setHeader("Cache-Control", "no-cache, no-store, must-revalidate")
-      .send(`
+      .setHeader("Cache-Control", "no-cache, no-store, must-revalidate").send(`
        <!DOCTYPE html>
         <html lang="de">
           <head>

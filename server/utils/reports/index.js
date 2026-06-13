@@ -44,7 +44,8 @@ class ReportGenerator {
     extractedContent = [],
     template = "standard",
   }) {
-    if (!fs.existsSync(STORAGE_DIR)) fs.mkdirSync(STORAGE_DIR, { recursive: true });
+    if (!fs.existsSync(STORAGE_DIR))
+      fs.mkdirSync(STORAGE_DIR, { recursive: true });
     enforceReportRetention(STORAGE_DIR);
 
     const markdown = ReportGenerator.#buildMarkdown({
@@ -64,7 +65,9 @@ class ReportGenerator {
 
     const buffer = await pdfDoc.save();
     const reportId = uuidv4().substring(0, 8);
-    const safeTitle = (title || query || "report").replace(/[^a-zA-Z0-9äöüßÄÖÜ]/g, "_").substring(0, 50);
+    const safeTitle = (title || query || "report")
+      .replace(/[^a-zA-Z0-9äöüßÄÖÜ]/g, "_")
+      .substring(0, 50);
     const fileName = `${safeTitle}_${reportId}.pdf`;
     const filePath = path.join(STORAGE_DIR, fileName);
 
@@ -80,13 +83,27 @@ class ReportGenerator {
   /**
    * Build the Markdown content for the report body.
    */
-  static #buildMarkdown({ title, query, summary, searchResults, politicianResults, extractedContent, template }) {
-    const now = new Date().toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" });
+  static #buildMarkdown({
+    title,
+    query,
+    summary,
+    searchResults,
+    politicianResults,
+    extractedContent,
+    template,
+  }) {
+    const now = new Date().toLocaleDateString("de-DE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
     const parts = [];
 
     if (template === "brief") {
       parts.push(`## Kurzgutachten: ${title || query}`);
-      parts.push(`*Erstellt am ${now} durch OpenSIN-Chat Recherche-Assistent*\n`);
+      parts.push(
+        `*Erstellt am ${now} durch OpenSIN-Chat Recherche-Assistent*\n`,
+      );
       parts.push(summary || "Keine Zusammenfassung verfügbar.");
       if (searchResults.length) {
         parts.push("\n### Quellen");
@@ -123,7 +140,7 @@ class ReportGenerator {
         "|------|--------|----------|------------|",
         ...politicianResults.map(
           (p) =>
-            `| ${p.fullName || "—"} | ${p.party || "—"} | ${p.faction || "—"} | ${p.state || "—"} |`
+            `| ${p.fullName || "—"} | ${p.party || "—"} | ${p.faction || "—"} | ${p.state || "—"} |`,
         ),
       ];
       parts.push(tableLines.join("\n"));
@@ -131,22 +148,28 @@ class ReportGenerator {
 
     if (extractedContent.length) {
       parts.push("\n## Auszüge aus Quellen\n");
-      extractedContent.slice(0, template === "full" ? 10 : 3).forEach((c, i) => {
-        parts.push(`### ${i + 1}. ${c.title || c.url}\n`);
-        parts.push(c.content?.substring(0, 1500) || "");
-        parts.push(`*[Quelle: ${c.url}]*\n`);
-      });
+      extractedContent
+        .slice(0, template === "full" ? 10 : 3)
+        .forEach((c, i) => {
+          parts.push(`### ${i + 1}. ${c.title || c.url}\n`);
+          parts.push(c.content?.substring(0, 1500) || "");
+          parts.push(`*[Quelle: ${c.url}]*\n`);
+        });
     }
 
     if (searchResults.length) {
       parts.push("\n## Alle Quellen\n");
       searchResults.forEach((r, i) => {
-        parts.push(`${i + 1}. **${r.title}** — ${r.snippet || ""} [Link](${r.link})`);
+        parts.push(
+          `${i + 1}. **${r.title}** — ${r.snippet || ""} [Link](${r.link})`,
+        );
       });
     }
 
     parts.push("\n---\n");
-    parts.push("*Generiert durch OpenSIN-Chat — Souveräner KI-Arbeitsraum für patriotische Politik*");
+    parts.push(
+      "*Generiert durch OpenSIN-Chat — Souveräner KI-Arbeitsraum für patriotische Politik*",
+    );
 
     return parts.join("\n\n");
   }
@@ -179,7 +202,8 @@ class ReportGenerator {
         opacity: 0.8,
       });
 
-      const footerText = "OpenSIN-Chat | Souveräner KI-Arbeitsraum für patriotische Politik";
+      const footerText =
+        "OpenSIN-Chat | Souveräner KI-Arbeitsraum für patriotische Politik";
       const fontSize = 7;
       const textWidth = font.widthOfTextAtSize(footerText, fontSize);
       page.drawText(footerText, {
@@ -224,8 +248,12 @@ class ReportGenerator {
     const titleSize = 28;
     const maxTitleWidth = width - 80;
     let truncatedTitle = displayTitle;
-    while (boldFont.widthOfTextAtSize(truncatedTitle, titleSize) > maxTitleWidth && truncatedTitle.length > 10) {
-      truncatedTitle = truncatedTitle.substring(0, truncatedTitle.length - 4) + "...";
+    while (
+      boldFont.widthOfTextAtSize(truncatedTitle, titleSize) > maxTitleWidth &&
+      truncatedTitle.length > 10
+    ) {
+      truncatedTitle =
+        truncatedTitle.substring(0, truncatedTitle.length - 4) + "...";
     }
 
     const titleWidth = boldFont.widthOfTextAtSize(truncatedTitle, titleSize);
@@ -237,7 +265,12 @@ class ReportGenerator {
       color: WHITE,
     });
 
-    const subtitle = template === "full" ? "Vollgutachten" : template === "brief" ? "Kurzgutachten" : "Recherche-Bericht";
+    const subtitle =
+      template === "full"
+        ? "Vollgutachten"
+        : template === "brief"
+          ? "Kurzgutachten"
+          : "Recherche-Bericht";
     const subtitleWidth = font.widthOfTextAtSize(subtitle, 14);
     coverPage.drawText(subtitle, {
       x: (width - subtitleWidth) / 2,
@@ -248,7 +281,11 @@ class ReportGenerator {
       opacity: 0.8,
     });
 
-    const dateStr = new Date().toLocaleDateString("de-DE", { year: "numeric", month: "long", day: "numeric" });
+    const dateStr = new Date().toLocaleDateString("de-DE", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
     const dateWidth = font.widthOfTextAtSize(dateStr, 11);
     coverPage.drawText(dateStr, {
       x: (width - dateWidth) / 2,
@@ -272,7 +309,7 @@ class ReportGenerator {
     const claimWidth = font.widthOfTextAtSize(claimLine, 9);
     coverPage.drawText(claimLine, {
       x: (width - claimWidth) / 2,
-      y: height * 0.40,
+      y: height * 0.4,
       size: 9,
       font,
       color: GRAY,

@@ -19,7 +19,7 @@ const { chat, parseJson } = require("./llm");
 const { analyzeChunk } = require("./analysisAgent");
 
 const CRITIC_ENABLED = !/^false$/i.test(
-  process.env.PDF_ANALYSIS_CRITIC || "true"
+  process.env.PDF_ANALYSIS_CRITIC || "true",
 );
 const MIN_SUMMARY_RATIO = 0.004; // Summary-Zeichen pro Input-Zeichen
 
@@ -56,14 +56,20 @@ function deterministicFlags(result, sourceText) {
  */
 async function reviewAndRepair(
   result,
-  { chunk, text, task, factCriteria, documentName }
+  { chunk, text, task, factCriteria, documentName },
 ) {
   if (!CRITIC_ENABLED || result.error)
-    return { ...result, critic: { flagged: false, repaired: false, issues: [] } };
+    return {
+      ...result,
+      critic: { flagged: false, repaired: false, issues: [] },
+    };
 
   const flags = deterministicFlags(result, text);
   if (flags.length === 0)
-    return { ...result, critic: { flagged: false, repaired: false, issues: [] } };
+    return {
+      ...result,
+      critic: { flagged: false, repaired: false, issues: [] },
+    };
 
   // Stufe 2: LLM-Critic nur für Verdachtsfälle
   let verdict = { quality: "insufficient", issues: flags };
@@ -81,9 +87,9 @@ async function reviewAndRepair(
         JSON.stringify(
           { summary: result.summary, findings: result.findings },
           null,
-          2
+          2,
         ),
-      ].join("\n")
+      ].join("\n"),
     );
     verdict = parseJson(raw);
   } catch {
@@ -91,7 +97,10 @@ async function reviewAndRepair(
   }
 
   if (verdict.quality === "sufficient")
-    return { ...result, critic: { flagged: true, repaired: false, issues: [] } };
+    return {
+      ...result,
+      critic: { flagged: true, repaired: false, issues: [] },
+    };
 
   // Repair-Pass: erneute Analyse MIT Critic-Feedback (genau ein Versuch)
   try {

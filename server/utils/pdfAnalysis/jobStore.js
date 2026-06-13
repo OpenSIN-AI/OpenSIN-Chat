@@ -71,7 +71,9 @@ function loadAllJobs() {
   for (const entry of fs.readdirSync(JOBS_DIR)) {
     if (!entry.endsWith(".json")) continue;
     try {
-      jobs.push(JSON.parse(fs.readFileSync(path.join(JOBS_DIR, entry), "utf8")));
+      jobs.push(
+        JSON.parse(fs.readFileSync(path.join(JOBS_DIR, entry), "utf8")),
+      );
     } catch {
       /* korrupte Datei überspringen */
     }
@@ -121,7 +123,9 @@ function cleanupStaleJobs(maxAgeHours = 24) {
       try {
         fs.unlinkSync(file);
         removed += 1;
-      } catch { /* race oder readonly — ignorieren */ }
+      } catch {
+        /* race oder readonly — ignorieren */
+      }
       continue;
     }
     if (!TERMINAL_STATUSES.has(job.status)) continue;
@@ -129,7 +133,9 @@ function cleanupStaleJobs(maxAgeHours = 24) {
     try {
       fs.unlinkSync(file);
       removed += 1;
-    } catch { /* race — ignorieren */ }
+    } catch {
+      /* race — ignorieren */
+    }
   }
   return removed;
 }
@@ -193,7 +199,9 @@ function markStuckJobsAsFailed(timeoutHours = 6) {
     try {
       atomicWriteJson(file, job);
       marked.push(job.id);
-    } catch { /* race — beim nächsten Lauf erneut versuchen */ }
+    } catch {
+      /* race — beim nächsten Lauf erneut versuchen */
+    }
   }
   return marked;
 }

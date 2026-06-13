@@ -48,7 +48,7 @@ async function ocrPage(page) {
   const viewport = page.getViewport({ scale: OCR_SCALE });
   const canvas = createCanvas(
     Math.ceil(viewport.width),
-    Math.ceil(viewport.height)
+    Math.ceil(viewport.height),
   );
   const context = canvas.getContext("2d");
   await page.render({ canvasContext: context, viewport }).promise;

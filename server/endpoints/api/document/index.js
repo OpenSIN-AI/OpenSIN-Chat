@@ -1219,7 +1219,9 @@ function apiDocumentEndpoints(app) {
 
         Telemetry.sendTelemetry("agent_generated_file_downloaded", {
           type: mimeType,
-        }).catch((err) => { console.error("Telemetry error:", err.message); });
+        }).catch((err) => {
+          console.error("Telemetry error:", err.message);
+        });
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(

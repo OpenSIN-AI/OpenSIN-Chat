@@ -19,7 +19,8 @@ module.exports.imageGeneration = {
             "Returns a downloadable image file.",
           examples: [
             {
-              prompt: "Generate an image of a beautiful mountain landscape at sunset",
+              prompt:
+                "Generate an image of a beautiful mountain landscape at sunset",
               call: JSON.stringify({
                 prompt:
                   "A beautiful mountain landscape at sunset with snow-capped peaks and a lake reflecting the golden light, photorealistic style",
@@ -68,7 +69,9 @@ module.exports.imageGeneration = {
                 `Using the image-generation tool with prompt: "${prompt.slice(0, 80)}..."`,
               );
 
-              const hasExtension = /(\.png|\.jpg|\.jpeg|\.webp)$/i.test(filename);
+              const hasExtension = /(\.png|\.jpg|\.jpeg|\.webp)$/i.test(
+                filename,
+              );
               if (!hasExtension) filename = `${filename}.png`;
 
               if (this.super.requestToolApproval) {
@@ -89,7 +92,9 @@ module.exports.imageGeneration = {
                 `${this.caller}: Generating image "${filename}" from prompt`,
               );
 
-              const { SystemSettings } = require("../../../../models/systemSettings");
+              const {
+                SystemSettings,
+              } = require("../../../../models/systemSettings");
               const basePath = (
                 await SystemSettings.getValueOrFallback(
                   { label: "image_generation_base_path" },
@@ -97,9 +102,11 @@ module.exports.imageGeneration = {
                 )
               ).replace(/\/+$/, "");
               const apiKey =
-                (await SystemSettings.get({
-                  label: "image_generation_api_key",
-                }))?.value || "";
+                (
+                  await SystemSettings.get({
+                    label: "image_generation_api_key",
+                  })
+                )?.value || "";
               const model =
                 (await SystemSettings.getValueOrFallback(
                   { label: "image_generation_model" },
@@ -205,7 +212,9 @@ module.exports.imageGeneration = {
 
               return `Successfully generated image "${displayFilename}" (${bufferSizeKB}KB). The image is ready for download.`;
             } catch (e) {
-              this.super.handlerProps.log(`image-generation error: ${e.message}`);
+              this.super.handlerProps.log(
+                `image-generation error: ${e.message}`,
+              );
               this.super.introspect(`Error: ${e.message}`);
               return `Error generating image: ${e.message}`;
             }

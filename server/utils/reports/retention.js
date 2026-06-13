@@ -27,7 +27,10 @@ function enforceReportRetention(storageDir) {
     const maxFiles = parseInt(process.env.REPORTS_MAX_FILES || "100", 10);
     const maxAgeMs =
       parseInt(process.env.REPORTS_MAX_AGE_DAYS || "30", 10) *
-      24 * 60 * 60 * 1000;
+      24 *
+      60 *
+      60 *
+      1000;
     const now = Date.now();
 
     const pdfs = fs

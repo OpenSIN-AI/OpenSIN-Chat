@@ -86,9 +86,10 @@ function terminalExecEndpoint(app) {
         const { command } = reqBody(request);
 
         if (!command || typeof command !== "string" || !command.trim()) {
-          return response
-            .status(400)
-            .json({ error: "command must be a non-empty string.", exitCode: 1 });
+          return response.status(400).json({
+            error: "command must be a non-empty string.",
+            exitCode: 1,
+          });
         }
 
         // Split into tokens — no shell expansion, simple whitespace split
@@ -124,8 +125,8 @@ function terminalExecEndpoint(app) {
             execErr.code === "ETIMEDOUT"
               ? 124
               : typeof execErr.code === "number"
-              ? execErr.code
-              : 1;
+                ? execErr.code
+                : 1;
 
           return response.status(200).json({ output, exitCode });
         }
@@ -136,7 +137,7 @@ function terminalExecEndpoint(app) {
           .status(500)
           .json({ error: "Internal server error.", exitCode: 1 });
       }
-    }
+    },
   );
 }
 

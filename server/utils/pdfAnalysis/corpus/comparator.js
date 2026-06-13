@@ -54,27 +54,27 @@ Sprache: Deutsch. Format: Markdown.`;
 // Per-Dokument-Limit für Findings, die in den Konflikt-Prompt einfließen.
 // Schützt vor extremen Korpus-Größen.
 const MAX_FINDINGS_PER_DOC = Number(
-  process.env.PDF_ANALYSIS_CORPUS_FINDINGS_PER_DOC || 60
+  process.env.PDF_ANALYSIS_CORPUS_FINDINGS_PER_DOC || 60,
 );
 
 // Maximaler Prompt-Umfang (Zeichen) für den Konflikt-LLM-Call.
 // Hard-Cap, damit auch bei n>20 Dokumenten / riesigen Findings das
 // Context-Window nicht gesprengt wird. 200k Zeichen ≈ 50k Tokens.
 const MAX_CONFLICT_PROMPT_CHARS = Number(
-  process.env.PDF_ANALYSIS_CORPUS_MAX_CONFLICT_CHARS || 200000
+  process.env.PDF_ANALYSIS_CORPUS_MAX_CONFLICT_CHARS || 200000,
 );
 
 // Bei mehr als COMPARE_BATCH_SIZE Dokumenten teilen wir die Dokumente in
 // Batches; jeder Batch erzeugt einen eigenen Konflikt-Call, am Ende mergen
 // wir die Ergebnisse. Default 10 — hält den Prompt meist unter dem Char-Cap.
 const COMPARE_BATCH_SIZE = Number(
-  process.env.PDF_ANALYSIS_CORPUS_BATCH_SIZE || 10
+  process.env.PDF_ANALYSIS_CORPUS_BATCH_SIZE || 10,
 );
 
 // Concurrency für die Batch-Konflikt-Calls. Sequential (1) ist sicher und
 // einfach; wer einen kräftigen LLM-Endpoint hat, kann auf 2-3 hochgehen.
 const COMPARE_BATCH_CONCURRENCY = Number(
-  process.env.PDF_ANALYSIS_CORPUS_BATCH_CONCURRENCY || 1
+  process.env.PDF_ANALYSIS_CORPUS_BATCH_CONCURRENCY || 1,
 );
 
 /**
@@ -110,7 +110,7 @@ function buildConflictPrompt(docsSubset, task) {
   const prompt = `Analyse-Auftrag: ${task}\n\n${findingsBlock}`;
   if (prompt.length > MAX_CONFLICT_PROMPT_CHARS) {
     console.warn(
-      `[corpus/comparator] Konflikt-Prompt zu lang (${prompt.length} > ${MAX_CONFLICT_PROMPT_CHARS}) — Batch wird übersprungen.`
+      `[corpus/comparator] Konflikt-Prompt zu lang (${prompt.length} > ${MAX_CONFLICT_PROMPT_CHARS}) — Batch wird übersprungen.`,
     );
     return null;
   }
@@ -141,7 +141,7 @@ async function runConflictBatch(docsSubset, task) {
     };
   } catch (e) {
     console.warn(
-      `[corpus/comparator] Konflikt-Batch fehlgeschlagen (${docsSubset.length} Dokumente): ${e.message}`
+      `[corpus/comparator] Konflikt-Batch fehlgeschlagen (${docsSubset.length} Dokumente): ${e.message}`,
     );
     return { agreements: [], conflicts: [], unique: [] };
   }
@@ -188,7 +188,7 @@ async function compareCorpus(docResults, task) {
   const batchResults = await asyncPool(
     COMPARE_BATCH_CONCURRENCY,
     batches,
-    (batch) => runConflictBatch(batch, task)
+    (batch) => runConflictBatch(batch, task),
   );
   const comparison = mergeComparison(batchResults);
 
@@ -212,7 +212,7 @@ async function compareCorpus(docResults, task) {
       ``,
       `=== STRUKTURIERTER VERGLEICH (JSON) ===`,
       JSON.stringify(comparison, null, 2),
-    ].join("\n")
+    ].join("\n"),
   );
 
   return { report, comparison };

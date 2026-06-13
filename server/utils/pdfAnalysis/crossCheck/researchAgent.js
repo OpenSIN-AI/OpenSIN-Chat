@@ -102,14 +102,14 @@ async function webSearch(query) {
       api_key: process.env.SEARCHAPI_API_KEY,
     });
     const res = await fetch(
-      `https://www.searchapi.io/api/v1/search?${params}`
+      `https://www.searchapi.io/api/v1/search?${params}`,
     ).then((r) => r.json());
     return (res.organic_results || [])
       .slice(0, RESULTS_PER_QUERY)
       .map((r) => ({ title: r.title, url: r.link, snippet: r.snippet || "" }));
   }
   throw new Error(
-    "Kein Such-Provider konfiguriert (SERPER_DEV_API_KEY oder SEARCHAPI_API_KEY setzen)."
+    "Kein Such-Provider konfiguriert (SERPER_DEV_API_KEY oder SEARCHAPI_API_KEY setzen).",
   );
 }
 
@@ -123,7 +123,7 @@ async function deepWebResearch(claim) {
   try {
     const raw = await chat(
       QUERY_SYSTEM,
-      `Behauptung: ${claim}\nGeneriere ${QUERIES_PER_CLAIM} unterschiedliche Suchanfragen (verschiedene Blickwinkel, ggf. Englisch UND Deutsch).`
+      `Behauptung: ${claim}\nGeneriere ${QUERIES_PER_CLAIM} unterschiedliche Suchanfragen (verschiedene Blickwinkel, ggf. Englisch UND Deutsch).`,
     );
     const parsed = parseJson(raw);
     if (Array.isArray(parsed.queries) && parsed.queries.length)
@@ -161,17 +161,15 @@ async function deepWebResearch(claim) {
         const [verdict] = await judgeClaims(
           [claim],
           hit.url,
-          `${hit.title}\n${hit.snippet}`
+          `${hit.title}\n${hit.snippet}`,
         );
         return { ...hit, ...verdict, snippetOnly: true };
       }
-    })
+    }),
   );
 
   const supports = evaluations.filter((e) => e.verdict === "supports");
-  const contradicts = evaluations.filter(
-    (e) => e.verdict === "contradicts"
-  );
+  const contradicts = evaluations.filter((e) => e.verdict === "contradicts");
   return {
     claim,
     queries,

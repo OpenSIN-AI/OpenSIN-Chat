@@ -29,9 +29,9 @@ function enhancePromptEndpoint(app) {
 
         const trimmed = prompt.trim();
         if (trimmed.length > 4000) {
-          return response
-            .status(400)
-            .json({ error: "prompt exceeds maximum length of 4000 characters." });
+          return response.status(400).json({
+            error: "prompt exceeds maximum length of 4000 characters.",
+          });
         }
 
         const LLMConnector = getLLMProvider();
@@ -54,11 +54,13 @@ function enhancePromptEndpoint(app) {
 
         const { textResponse } = await LLMConnector.getChatCompletion(
           messages,
-          { temperature: 0.4 }
+          { temperature: 0.4 },
         );
 
         if (!textResponse) {
-          return response.status(500).json({ error: "LLM returned no response." });
+          return response
+            .status(500)
+            .json({ error: "LLM returned no response." });
         }
 
         return response.status(200).json({ enhanced: textResponse.trim() });
@@ -68,7 +70,7 @@ function enhancePromptEndpoint(app) {
         // Return 200 with error so the frontend can fall back silently
         return response.status(200).json({ error: e.message });
       }
-    }
+    },
   );
 }
 

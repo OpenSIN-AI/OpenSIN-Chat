@@ -13,11 +13,9 @@
  *  4. Ergebnis: { verified, correctedPage } — unverifizierte Fakten werden
  *     je nach STRICT-Modus verworfen oder mit verified:false gespeichert.
  */
-const VERIFY_PAGE_WINDOW = Number(
-  process.env.PDF_ANALYSIS_VERIFY_WINDOW || 1
-);
+const VERIFY_PAGE_WINDOW = Number(process.env.PDF_ANALYSIS_VERIFY_WINDOW || 1);
 const STRICT = /^true$/i.test(
-  process.env.PDF_ANALYSIS_VERIFY_STRICT || "false"
+  process.env.PDF_ANALYSIS_VERIFY_STRICT || "false",
 );
 const MIN_QUOTE_LENGTH = 12; // zu kurze Zitate sind nicht beweiskräftig
 
@@ -90,7 +88,7 @@ async function verifyFacts(facts, reader) {
     const { verified, correctedPage } = await verifyFact(
       fact,
       getPageText,
-      reader.numPages
+      reader.numPages,
     );
     if (!verified && STRICT) continue;
     out.push({

@@ -16,7 +16,7 @@ const { LLM_TEMPERATURE } = require("./config");
 const localVision = require("./localVision");
 
 const VISION_ENABLED = !/^false$/i.test(
-  process.env.PDF_ANALYSIS_VISION || "true"
+  process.env.PDF_ANALYSIS_VISION || "true",
 );
 const VISION_BACKEND = (
   process.env.PDF_ANALYSIS_VISION_BACKEND || "auto"
@@ -62,7 +62,7 @@ async function describeViaCloud(imageBuffer, context, mime) {
             ],
           },
         ],
-        { temperature: LLM_TEMPERATURE }
+        { temperature: LLM_TEMPERATURE },
       );
       const text =
         typeof result === "string" ? result : result?.textResponse || null;
@@ -74,12 +74,12 @@ async function describeViaCloud(imageBuffer, context, mime) {
         return null;
       if (attempt === MAX_RETRIES || !isRetryable(e)) break;
       await sleep(
-        BASE_DELAY_MS * Math.pow(2, attempt) * (0.75 + Math.random() * 0.5)
+        BASE_DELAY_MS * Math.pow(2, attempt) * (0.75 + Math.random() * 0.5),
       );
     }
   }
   console.error(
-    `[pdfAnalysis] Cloud-Vision fehlgeschlagen: ${lastError?.message}`
+    `[pdfAnalysis] Cloud-Vision fehlgeschlagen: ${lastError?.message}`,
   );
   return null;
 }
@@ -89,7 +89,7 @@ async function describeViaLocal(imageBuffer, context) {
   return localVision.generate(
     [imageBuffer],
     VISION_SYSTEM,
-    `Kontext: ${context}\nAnalysiere dieses Bild:`
+    `Kontext: ${context}\nAnalysiere dieses Bild:`,
   );
 }
 
@@ -107,7 +107,7 @@ async function describeImage(imageBuffer, context, mime = "image/png") {
     if (VISION_BACKEND === "ollama") {
       // explizit lokal gewünscht — NICHT in die Cloud ausweichen (Privacy)
       console.error(
-        "[pdfAnalysis] LocalVision nicht verfügbar und Backend=ollama erzwungen — Bild übersprungen."
+        "[pdfAnalysis] LocalVision nicht verfügbar und Backend=ollama erzwungen — Bild übersprungen.",
       );
       return null;
     }
@@ -126,7 +126,7 @@ async function describeImageSequence(imageBuffers, context) {
     imageBuffers,
     VISION_SYSTEM,
     `Kontext: ${context}\nDies ist eine zeitlich geordnete Keyframe-Sequenz eines Videos. ` +
-      `Beschreibe den visuellen Ablauf chronologisch und fasse die Kernaussage zusammen:`
+      `Beschreibe den visuellen Ablauf chronologisch und fasse die Kernaussage zusammen:`,
   );
 }
 

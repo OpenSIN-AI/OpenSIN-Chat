@@ -20,9 +20,7 @@
  */
 const localVision = require("./localVision");
 
-const DEEPSCAN_SCALE = Number(
-  process.env.PDF_ANALYSIS_DEEPSCAN_SCALE || 2.0
-);
+const DEEPSCAN_SCALE = Number(process.env.PDF_ANALYSIS_DEEPSCAN_SCALE || 2.0);
 
 const DEEPSCAN_SYSTEM = `Du bist ein Dokument-Digitalisierungs-Spezialist. Du erhältst das Bild einer kompletten Dokumentseite.
 Gib den GESAMTEN Inhalt strukturiert wieder:
@@ -47,7 +45,7 @@ async function deepScanPage(doc, pageNumber) {
     const viewport = page.getViewport({ scale: DEEPSCAN_SCALE });
     const canvas = createCanvas(
       Math.ceil(viewport.width),
-      Math.ceil(viewport.height)
+      Math.ceil(viewport.height),
     );
     await page.render({
       canvasContext: canvas.getContext("2d"),
@@ -56,7 +54,7 @@ async function deepScanPage(doc, pageNumber) {
     return await localVision.generate(
       [canvas.toBuffer("image/png")],
       DEEPSCAN_SYSTEM,
-      `Seite ${pageNumber}. Digitalisiere diese Seite vollständig:`
+      `Seite ${pageNumber}. Digitalisiere diese Seite vollständig:`,
     );
   } finally {
     page.cleanup();

@@ -34,8 +34,14 @@ const KEY_MAPPING = {
   localai: ["local_ai_model_pref", "LOCAL_AI_MODEL_PREF"],
   koboldcpp: ["koboldcpp_model_pref", "KOBOLD_CPP_MODEL_PREF"],
   litellm: ["lite_llm_model_pref", "LITE_LLM_MODEL_PREF"],
-  "generic-openai": ["generic_open_ai_model_pref", "GENERIC_OPEN_AI_MODEL_PREF"],
-  bedrock: ["aws_bedrock_llm_model_preference", "AWS_BEDROCK_LLM_MODEL_PREFERENCE"],
+  "generic-openai": [
+    "generic_open_ai_model_pref",
+    "GENERIC_OPEN_AI_MODEL_PREF",
+  ],
+  bedrock: [
+    "aws_bedrock_llm_model_preference",
+    "AWS_BEDROCK_LLM_MODEL_PREFERENCE",
+  ],
   deepseek: ["deepseek_model_pref", "DEEPSEEK_MODEL_PREF"],
   xai: ["xai_llm_model_pref", "XAI_LLM_MODEL_PREF"],
   moonshotai: ["moonshot_ai_model_pref", "MOONSHOT_AI_MODEL_PREF"],

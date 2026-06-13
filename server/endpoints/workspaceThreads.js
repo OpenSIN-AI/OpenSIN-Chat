@@ -84,7 +84,7 @@ function workspaceThreadEndpoints(app) {
             user_id: user?.id || null,
           },
           null, // limit
-          { createdAt: "desc" } // <-- ÄNDERUNG: Neueste Threads zuerst!
+          { createdAt: "desc" }, // <-- ÄNDERUNG: Neueste Threads zuerst!
         );
 
         const folders = await WorkspaceThreadFolder.where({

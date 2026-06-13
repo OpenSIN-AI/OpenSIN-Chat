@@ -46,14 +46,14 @@ function validatePdfPath(pdfPath) {
   }
 
   const ok = allowedRoots().some(
-    (root) => resolved === root || resolved.startsWith(root + path.sep)
+    (root) => resolved === root || resolved.startsWith(root + path.sep),
   );
   if (!ok)
     throw Object.assign(
       new Error(
-        "Zugriff verweigert: pdfPath liegt außerhalb der freigegebenen Verzeichnisse."
+        "Zugriff verweigert: pdfPath liegt außerhalb der freigegebenen Verzeichnisse.",
       ),
-      { statusCode: 403 }
+      { statusCode: 403 },
     );
 
   const stat = fs.statSync(resolved);

@@ -466,9 +466,7 @@ class TelegramBotService {
     // Register /history separately so we can pass the message text for argument parsing
     // Ex: /history 25 shows last 25 messages
     this.#bot.onText(/\/history(.*)/, (msg) => {
-      const cmd = BOT_COMMANDS.find(
-        (c) => c.command === "history",
-      );
+      const cmd = BOT_COMMANDS.find((c) => c.command === "history");
       if (!cmd) return;
       const handler = cmd.initHandler();
       guard(msg, () => handler(ctx, msg.chat.id, msg.text));

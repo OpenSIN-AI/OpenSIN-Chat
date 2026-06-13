@@ -3,9 +3,7 @@
  * @pdf-analyze — Agent-Plugin: stößt die autonome Multi-Agenten-PDF-Analyse
  * aus dem Chat an, prüft Status und fragt gespeicherte Fakten ab.
  */
-const {
-  PdfAnalysisPipeline,
-} = require("../../../pdfAnalysis");
+const { PdfAnalysisPipeline } = require("../../../pdfAnalysis");
 const { CrossCheckPipeline } = require("../../../pdfAnalysis/crossCheck");
 const { CorpusPipeline } = require("../../../pdfAnalysis/corpus");
 
@@ -32,7 +30,8 @@ const pdfAnalyze = {
               },
               task: {
                 type: "string",
-                description: "Was soll analysiert werden (Auftrag des Nutzers).",
+                description:
+                  "Was soll analysiert werden (Auftrag des Nutzers).",
               },
               reportType: {
                 type: "string",
@@ -109,7 +108,10 @@ const pdfAnalyze = {
             type: "object",
             properties: {
               q: { type: "string", description: "Freitext-Suchbegriff." },
-              document: { type: "string", description: "Filter: Dokumentname." },
+              document: {
+                type: "string",
+                description: "Filter: Dokumentname.",
+              },
               tag: { type: "string", description: "Filter: Tag." },
             },
             required: [],
@@ -126,7 +128,7 @@ const pdfAnalyze = {
               .map(
                 (f) =>
                   `- ${f.detail}\n  Quelle: ${f.source.documentName}, S. ${f.source.page}` +
-                  (f.quote ? ` — "${f.quote}"` : "")
+                  (f.quote ? ` — "${f.quote}"` : ""),
               )
               .join("\n");
           },
@@ -150,7 +152,8 @@ const pdfAnalyze = {
               factIds: {
                 type: "array",
                 items: { type: "string" },
-                description: "IDs gespeicherter Fakten, die geprüft werden sollen.",
+                description:
+                  "IDs gespeicherter Fakten, die geprüft werden sollen.",
               },
               sources: {
                 type: "array",
@@ -175,7 +178,7 @@ const pdfAnalyze = {
             try {
               const { jobId } = CrossCheckPipeline.start(
                 { claims, factIds, sources, deepWeb },
-                PdfAnalysisPipeline.factStore
+                PdfAnalysisPipeline.factStore,
               );
               return `Kreuz-Verifikation gestartet. Job-ID: ${jobId}. Status via pdf-crosscheck-status abrufbar.`;
             } catch (e) {
@@ -219,7 +222,8 @@ const pdfAnalyze = {
               pdfPaths: {
                 type: "array",
                 items: { type: "string" },
-                description: "Absolute Pfade der zu vergleichenden PDFs (min. 2).",
+                description:
+                  "Absolute Pfade der zu vergleichenden PDFs (min. 2).",
               },
               task: {
                 type: "string",
@@ -236,12 +240,7 @@ const pdfAnalyze = {
             },
             required: ["pdfPaths", "task"],
           },
-          handler: async function ({
-            pdfPaths,
-            task,
-            factCriteria,
-            deepScan,
-          }) {
+          handler: async function ({ pdfPaths, task, factCriteria, deepScan }) {
             try {
               const { jobId } = CorpusPipeline.start({
                 pdfPaths,
@@ -273,7 +272,9 @@ const pdfAnalyze = {
             if (!status) return "Job nicht gefunden.";
             if (status.status !== "completed")
               return JSON.stringify(status, null, 2);
-            return CorpusPipeline.getResult(jobId).report || "Kein Report verfügbar.";
+            return (
+              CorpusPipeline.getResult(jobId).report || "Kein Report verfügbar."
+            );
           },
         });
       },

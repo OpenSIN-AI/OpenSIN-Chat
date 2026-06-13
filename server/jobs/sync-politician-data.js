@@ -19,7 +19,9 @@
 
 const { PrismaClient } = require("@prisma/client");
 const { BundestagApi } = require("../utils/politician/bundestagApi");
-const { AbgeordnetenwatchApi } = require("../utils/politician/abgeordnetenwatchApi");
+const {
+  AbgeordnetenwatchApi,
+} = require("../utils/politician/abgeordnetenwatchApi");
 const { PlenarScraper } = require("../utils/politician/plenarScraper");
 const {
   SYNC_PHASES,
@@ -39,7 +41,7 @@ const plenar = new PlenarScraper();
 /** Current Bundestag electoral term (Wahlperiode). 21. WP since 2021 (#84). */
 const CURRENT_WAHLPERIODE = parseInt(
   process.env.BUNDESTAG_WAHLPERIODE || "21",
-  10
+  10,
 );
 
 /**
@@ -59,7 +61,7 @@ const AW_ENRICH_POLITICIANS =
  */
 const SITTINGS_PER_RUN = parseInt(
   process.env.POLITICIAN_SYNC_SITTINGS_PER_RUN || "5",
-  10
+  10,
 );
 
 /** Retry configuration for individual record upserts. */
@@ -84,7 +86,11 @@ function sleep(ms) {
  * @param {number} [baseDelayMs=500]
  * @returns {Promise<T>}
  */
-async function withRetry(fn, maxAttempts = MAX_RECORD_RETRIES, baseDelayMs = RECORD_RETRY_DELAY_MS) {
+async function withRetry(
+  fn,
+  maxAttempts = MAX_RECORD_RETRIES,
+  baseDelayMs = RECORD_RETRY_DELAY_MS,
+) {
   let lastErr;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
@@ -164,7 +170,9 @@ async function loadDueRetryPhases() {
     });
     return new Set(due.map((r) => r.phase));
   } catch (err) {
-    console.warn(`[sync-politician-data] loadDueRetryPhases failed: ${err.message}`);
+    console.warn(
+      `[sync-politician-data] loadDueRetryPhases failed: ${err.message}`,
+    );
     return new Set();
   }
 }
@@ -302,7 +310,9 @@ async function syncBundestagMembers() {
       try {
         await withRetry(() =>
           prisma.politicians.upsert({
-            where: { externalId: member.externalId || `bundestag-${member.id}` },
+            where: {
+              externalId: member.externalId || `bundestag-${member.id}`,
+            },
             update: {
               title: member.title,
               firstName: member.firstName,
@@ -351,7 +361,7 @@ async function syncBundestagMembers() {
               websiteUrl: member.websiteUrl,
               rawData: member.rawData,
             },
-          })
+          }),
         );
         processed++;
       } catch {
@@ -370,7 +380,10 @@ async function syncAbgeordnetenwatch() {
     // Cross-source fallback: if Abgeordnetenwatch is down or empty, derive the
     // base records from the Bundestag member list instead.
     const { data, usedFallback, error } = await withFallback(
-      () => abgeordnetenwatch.fetchAllPoliticians({ enrich: AW_ENRICH_POLITICIANS }),
+      () =>
+        abgeordnetenwatch.fetchAllPoliticians({
+          enrich: AW_ENRICH_POLITICIANS,
+        }),
       async () => {
         const members = await bundestag.fetchAllMembers();
         // Shape Bundestag members like AW politicians for the upsert below.
@@ -435,7 +448,7 @@ async function syncAbgeordnetenwatch() {
                 electoralDistrict: pol.constituency || null,
                 rawData: JSON.stringify(pol),
               },
-            })
+            }),
           );
         }
         processed++;
@@ -495,7 +508,9 @@ async function determineSittingsToSync(session) {
  */
 async function buildSpeakerNameMap() {
   const politicians = await prisma.politicians
-    .findMany({ select: { id: true, firstName: true, lastName: true, party: true } })
+    .findMany({
+      select: { id: true, firstName: true, lastName: true, party: true },
+    })
     .catch(() => []);
 
   const map = new Map();
@@ -517,12 +532,18 @@ async function syncBundestagSpeeches() {
 
     for (const sitting of sittings) {
       try {
-        const speeches = await plenar.fetchProtocol(CURRENT_WAHLPERIODE, sitting);
+        const speeches = await plenar.fetchProtocol(
+          CURRENT_WAHLPERIODE,
+          sitting,
+        );
         total += speeches.length;
 
         for (const speech of speeches) {
           try {
-            const { politicianId, confidence } = plenar.matchSpeaker(speech, nameMap);
+            const { politicianId, confidence } = plenar.matchSpeaker(
+              speech,
+              nameMap,
+            );
 
             // Only persist speeches where we can identify the speaker with reasonable confidence
             if (confidence < 0.5) continue;
@@ -556,7 +577,7 @@ async function syncBundestagSpeeches() {
                   documentUrl: speech.documentUrl,
                   matchConfidence: confidence,
                 },
-              })
+              }),
             );
             processed++;
           } catch {
@@ -566,7 +587,9 @@ async function syncBundestagSpeeches() {
       } catch (err) {
         // One failed sitting must not abort remaining ones
         failed++;
-        console.error(`[sync-politician-data] Sitting ${sitting} failed: ${err.message}`);
+        console.error(
+          `[sync-politician-data] Sitting ${sitting} failed: ${err.message}`,
+        );
       }
     }
 
@@ -614,14 +637,22 @@ async function main() {
     SYNC_PHASES.abgeordnetenwatch,
     syncAbgeordnetenwatch,
   );
-  results.speeches = await runPhase(SYNC_PHASES.speeches, syncBundestagSpeeches);
+  results.speeches = await runPhase(
+    SYNC_PHASES.speeches,
+    syncBundestagSpeeches,
+  );
 
-  const overallStatus = Object.values(results).some((r) => r.status === "failed")
+  const overallStatus = Object.values(results).some(
+    (r) => r.status === "failed",
+  )
     ? "partial"
     : "completed";
 
   if (typeof process.send === "function") {
-    process.send({ silent: true, politicianSync: { status: overallStatus, ...results } });
+    process.send({
+      silent: true,
+      politicianSync: { status: overallStatus, ...results },
+    });
   }
 
   await prisma.$disconnect();

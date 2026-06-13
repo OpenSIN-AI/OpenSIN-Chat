@@ -137,7 +137,9 @@ function workspaceParsedFilesEndpoints(app) {
     async function (request, response) {
       try {
         if (!request.file) {
-          return response.status(400).json({ success: false, error: "No file uploaded." });
+          return response
+            .status(400)
+            .json({ success: false, error: "No file uploaded." });
         }
 
         const user = await userFromSession(request, response);

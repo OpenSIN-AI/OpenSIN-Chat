@@ -32,7 +32,7 @@ class PdfAnalysisPipeline {
 
   static activeCount() {
     return [...jobs.values()].filter((j) =>
-      ["pending", "running"].includes(j.status)
+      ["pending", "running"].includes(j.status),
     ).length;
   }
 
@@ -53,7 +53,7 @@ class PdfAnalysisPipeline {
           continue;
         }
         console.log(
-          `[pdfAnalysis] Setze unterbrochenen Job fort: ${job.id} (${job.documentName})`
+          `[pdfAnalysis] Setze unterbrochenen Job fort: ${job.id} (${job.documentName})`,
         );
         this._run(job).catch((e) => {
           job.status = "failed";
@@ -78,7 +78,7 @@ class PdfAnalysisPipeline {
     if (this.activeCount() >= config.MAX_ACTIVE_JOBS)
       throw Object.assign(
         new Error("Maximale Anzahl paralleler Analyse-Jobs erreicht."),
-        { statusCode: 429 }
+        { statusCode: 429 },
       );
 
     const jobId = uuidv4();
@@ -125,12 +125,12 @@ class PdfAnalysisPipeline {
       const totalPages = await reader.open();
       if (config.MAX_PAGES > 0 && totalPages > config.MAX_PAGES)
         throw new Error(
-          `Dokument hat ${totalPages} Seiten, Limit ist ${config.MAX_PAGES}.`
+          `Dokument hat ${totalPages} Seiten, Limit ist ${config.MAX_PAGES}.`,
         );
       const chunks = buildChunkPlan(
         totalPages,
         config.PAGES_PER_CHUNK,
-        config.CHUNK_OVERLAP_PAGES
+        config.CHUNK_OVERLAP_PAGES,
       );
       job.progress.totalPages = totalPages;
       job.progress.chunksTotal = chunks.length;
@@ -152,7 +152,7 @@ class PdfAnalysisPipeline {
         async (chunk) => {
           const { text } = await reader.rangeText(
             chunk.pageStart,
-            chunk.pageEnd
+            chunk.pageEnd,
           );
           const ctx = {
             chunk,
@@ -179,10 +179,10 @@ class PdfAnalysisPipeline {
               const msPerChunk = elapsedMs / done;
               const remaining = total - done;
               job.progress.etaSeconds = Math.round(
-                (remaining * msPerChunk) / 1000
+                (remaining * msPerChunk) / 1000,
               );
               job.progress.pagesPerMinute = Math.round(
-                (done * telemetry.pagesPerChunk) / (elapsedMs / 60000)
+                (done * telemetry.pagesPerChunk) / (elapsedMs / 60000),
               );
             }
 
@@ -193,7 +193,7 @@ class PdfAnalysisPipeline {
               lastPersist = Date.now();
             }
           },
-        }
+        },
       );
 
       // Phase 3 — Synthese / Best-Practices-Report
@@ -205,7 +205,7 @@ class PdfAnalysisPipeline {
           task: job.task,
           reportType: job.reportType,
           documentName: job.documentName,
-        }
+        },
       );
 
       const reportDir = getStoragePath("pdf-analysis", "reports");

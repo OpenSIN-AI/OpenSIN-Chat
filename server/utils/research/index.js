@@ -35,7 +35,12 @@ class ResearchPipeline {
    * @param {string} [params.workspaceId] - optional workspace to attach results
    * @returns {Promise<{jobId: string, status: string}>}
    */
-  async startResearch({ query, depth = "quick", sources = ["web", "politician"], workspaceId = null }) {
+  async startResearch({
+    query,
+    depth = "quick",
+    sources = ["web", "politician"],
+    workspaceId = null,
+  }) {
     if (!query || !query.trim()) throw new Error("Query is required");
 
     const jobId = uuidv4();
@@ -100,12 +105,14 @@ class ResearchPipeline {
   getResults(jobId) {
     const job = this.activeJobs.get(jobId);
     if (!job) return null;
-    if (job.status !== "completed") return { status: job.status, progress: job.progress };
+    if (job.status !== "completed")
+      return { status: job.status, progress: job.progress };
     return {
       jobId: job.id,
       query: job.query,
       summary: job.results.summary,
-      sources: job.results.searchResults.length + job.results.politicianResults.length,
+      sources:
+        job.results.searchResults.length + job.results.politicianResults.length,
       searchResults: job.results.searchResults.slice(0, 20),
       politicianResults: job.results.politicianResults.slice(0, 10),
       extractedContent: job.results.extractedContent.slice(0, 10),
@@ -126,7 +133,11 @@ class ResearchPipeline {
       // Step 1: Search
       job.status = "searching";
       job.progress = 10;
-      const searchStep = { name: "search", status: "running", startedAt: new Date() };
+      const searchStep = {
+        name: "search",
+        status: "running",
+        startedAt: new Date(),
+      };
       job.steps.push(searchStep);
 
       // ── Vane fast path: answer engine handles search+extract+summarize ──
@@ -139,7 +150,9 @@ class ResearchPipeline {
 
         // Politician DB still runs — Vane does not know it
         if (job.sources.includes("politician")) {
-          job.results.politicianResults = await this.#politicianSearch(job.query);
+          job.results.politicianResults = await this.#politicianSearch(
+            job.query,
+          );
         }
 
         job.results.summary = vaneResult.summary;
@@ -178,7 +191,11 @@ class ResearchPipeline {
 
       // Step 2: Extract content from top URLs
       job.status = "extracting";
-      const extractStep = { name: "extract", status: "running", startedAt: new Date() };
+      const extractStep = {
+        name: "extract",
+        status: "running",
+        startedAt: new Date(),
+      };
       job.steps.push(extractStep);
 
       const topUrls = allSearchResults
@@ -206,7 +223,11 @@ class ResearchPipeline {
 
       // Step 3: Summarize with LLM
       job.status = "summarizing";
-      const summarizeStep = { name: "summarize", status: "running", startedAt: new Date() };
+      const summarizeStep = {
+        name: "summarize",
+        status: "running",
+        startedAt: new Date(),
+      };
       job.steps.push(summarizeStep);
 
       const summary = await this.#summarize(job);
@@ -217,7 +238,9 @@ class ResearchPipeline {
       job.progress = 100;
       job.status = "completed";
 
-      this.log(`Research completed: ${jobId} — ${job.results.searchResults.length} results, ${job.results.extractedContent.length} extracted`);
+      this.log(
+        `Research completed: ${jobId} — ${job.results.searchResults.length} results, ${job.results.extractedContent.length} extracted`,
+      );
     } catch (err) {
       job.status = "failed";
       job.error = err.message;
@@ -250,10 +273,14 @@ class ResearchPipeline {
    */
   async #webSearch(query) {
     try {
-      const provider = (await SystemSettings.get({ label: "agent_search_provider" }))?.value ?? "unknown";
+      const provider =
+        (await SystemSettings.get({ label: "agent_search_provider" }))?.value ??
+        "unknown";
       const searchEngine = this.#getSearchEngine(provider);
       if (!searchEngine) {
-        this.log(`No search engine configured (provider: ${provider}), using fallback`);
+        this.log(
+          `No search engine configured (provider: ${provider}), using fallback`,
+        );
         return [];
       }
       const results = await searchEngine(query);
@@ -284,7 +311,9 @@ class ResearchPipeline {
    */
   async #vaneFastPath(job) {
     try {
-      const provider = (await SystemSettings.get({ label: "agent_search_provider" }))?.value ?? "unknown";
+      const provider =
+        (await SystemSettings.get({ label: "agent_search_provider" }))?.value ??
+        "unknown";
       if (provider !== "vane") return null;
 
       const { VaneClient } = require("./vaneClient");
@@ -382,14 +411,18 @@ class ResearchPipeline {
     if (job.results.politicianResults.length) {
       parts.push("\n## Politiker-Ergebnisse");
       job.results.politicianResults.slice(0, 5).forEach((p) => {
-        parts.push(`- **${p.fullName}** (${p.party || "?"}) — ${p.faction || ""}, ${p.state || ""}`);
+        parts.push(
+          `- **${p.fullName}** (${p.party || "?"}) — ${p.faction || ""}, ${p.state || ""}`,
+        );
       });
     }
 
     if (job.results.extractedContent.length) {
       parts.push("\n## Extrahierte Inhalte");
       job.results.extractedContent.slice(0, 3).forEach((c) => {
-        parts.push(`### ${c.title || c.url}\n${c.content?.substring(0, 500)}...`);
+        parts.push(
+          `### ${c.title || c.url}\n${c.content?.substring(0, 500)}...`,
+        );
       });
     }
 

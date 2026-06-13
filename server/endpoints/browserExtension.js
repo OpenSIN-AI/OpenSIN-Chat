@@ -116,7 +116,9 @@ function browserExtensionEndpoints(app) {
         );
 
         if (failedToEmbed.length > 0) {
-          response.status(500).json({ success: false, error: errors?.[0] ?? "Unknown error" });
+          response
+            .status(500)
+            .json({ success: false, error: errors?.[0] ?? "Unknown error" });
           return;
         }
 

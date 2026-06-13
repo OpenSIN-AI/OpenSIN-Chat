@@ -50,11 +50,13 @@ const politicianSearch = {
               },
               party: {
                 type: "string",
-                description: "Filter by party (e.g. 'AfD', 'CDU', 'SPD', 'Grüne').",
+                description:
+                  "Filter by party (e.g. 'AfD', 'CDU', 'SPD', 'Grüne').",
               },
               state: {
                 type: "string",
-                description: "Filter by Bundesland (e.g. 'Bayern', 'Nordrhein-Westfalen').",
+                description:
+                  "Filter by Bundesland (e.g. 'Bayern', 'Nordrhein-Westfalen').",
               },
             },
             additionalProperties: false,
@@ -66,7 +68,8 @@ const politicianSearch = {
               if (party) filters.party = party;
               if (state) filters.state = state;
               const results = await db.searchPoliticians(query, filters);
-              if (!results.length) return "No politicians found matching the query.";
+              if (!results.length)
+                return "No politicians found matching the query.";
               return JSON.stringify(results.slice(0, 20));
             } catch (error) {
               return `Error searching politicians: ${error.message}`;
@@ -92,7 +95,8 @@ const politicianSearch = {
             properties: {
               politicianId: {
                 type: "string",
-                description: "The UUID of the politician from a previous search result.",
+                description:
+                  "The UUID of the politician from a previous search result.",
               },
             },
             required: ["politicianId"],
@@ -119,7 +123,10 @@ const politicianSearch = {
           examples: [
             {
               prompt: "How did Höcke vote recently?",
-              call: JSON.stringify({ politicianId: "bundestag-67890", limit: 10 }),
+              call: JSON.stringify({
+                politicianId: "bundestag-67890",
+                limit: 10,
+              }),
             },
           ],
           parameters: {
@@ -142,7 +149,8 @@ const politicianSearch = {
             try {
               const db = getPoliticianDB();
               const votes = await db.getVotingRecord(politicianId, { limit });
-              if (!votes.length) return "No voting records found for this politician.";
+              if (!votes.length)
+                return "No voting records found for this politician.";
               return JSON.stringify(votes);
             } catch (error) {
               return `Error getting votes: ${error.message}`;
@@ -182,7 +190,8 @@ const politicianSearch = {
             try {
               const db = getPoliticianDB();
               const speeches = await db.getSpeeches(politicianId, { limit });
-              if (!speeches.length) return "No speeches found for this politician.";
+              if (!speeches.length)
+                return "No speeches found for this politician.";
               return JSON.stringify(
                 speeches.map((s) => ({
                   id: s.id,
@@ -207,7 +216,10 @@ const politicianSearch = {
           examples: [
             {
               prompt: "Find speeches about migration policy",
-              call: JSON.stringify({ query: "Migrationspolitik Asyl", party: "AfD" }),
+              call: JSON.stringify({
+                query: "Migrationspolitik Asyl",
+                party: "AfD",
+              }),
             },
           ],
           parameters: {

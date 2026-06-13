@@ -114,7 +114,7 @@ function agentFlowEndpoints(app) {
   //       const { variables = {} } = request.body;
 
   //       // TODO: Implement flow execution
-  // eslint-disable-next-line no-console
+
   //       console.log("Running flow with UUID:", uuid);
 
   //       await Telemetry.sendTelemetry("agent_flow_executed", {
@@ -130,7 +130,7 @@ function agentFlowEndpoints(app) {
   //         },
   //       });
   //     } catch (error) {
-  // eslint-disable-next-line no-console
+
   //       console.error("Error running flow:", error);
   //       return response.status(500).json({
   //         success: false,

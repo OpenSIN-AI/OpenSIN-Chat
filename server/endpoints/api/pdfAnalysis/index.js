@@ -59,21 +59,21 @@ function apiPdfAnalysisEndpoints(app) {
         documentName: request.file.originalname,
         sizeBytes: request.file.size,
       });
-    }
+    },
   );
 
   // Analyse starten — Nutzer gibt nur PDF + Auftrag an, Rest läuft autonom
   app.post("/api/pdf-analysis/start", [validApiKey], (request, response) => {
     try {
-    const { pdfPath, task, reportType, factCriteria, deepScan } =
-      request.body || {};
-    const { jobId } = PdfAnalysisPipeline.start({
-      pdfPath,
-      task,
-      reportType,
-      factCriteria,
-      deepScan: !!deepScan,
-    });
+      const { pdfPath, task, reportType, factCriteria, deepScan } =
+        request.body || {};
+      const { jobId } = PdfAnalysisPipeline.start({
+        pdfPath,
+        task,
+        reportType,
+        factCriteria,
+        deepScan: !!deepScan,
+      });
       response.status(200).json({ jobId });
     } catch (e) {
       response.status(e.statusCode || 400).json({ error: e.message });
@@ -103,7 +103,7 @@ function apiPdfAnalysisEndpoints(app) {
     [validApiKey],
     (_request, response) => {
       response.status(200).json(PdfAnalysisPipeline.factStore.stats());
-    }
+    },
   );
 
   app.get(
@@ -114,7 +114,7 @@ function apiPdfAnalysisEndpoints(app) {
       if (!fact)
         return response.status(404).json({ error: "Fakt nicht gefunden." });
       response.status(200).json(fact);
-    }
+    },
   );
 
   app.delete(
@@ -122,10 +122,10 @@ function apiPdfAnalysisEndpoints(app) {
     [validApiKey],
     (request, response) => {
       const removed = PdfAnalysisPipeline.factStore.remove(
-        request.params.factId
+        request.params.factId,
       );
       response.status(removed ? 200 : 404).json({ removed });
-    }
+    },
   );
 
   // ---- Cross-Check (Kreuz-Verifikation) — vor /:id registriert! ----
@@ -142,15 +142,13 @@ function apiPdfAnalysisEndpoints(app) {
             sources: Array.isArray(sources) ? sources : [],
             deepWeb: !!deepWeb,
           },
-          PdfAnalysisPipeline.factStore
+          PdfAnalysisPipeline.factStore,
         );
         response.status(200).json({ jobId });
       } catch (e) {
-        response
-          .status(e.statusCode || 400)
-          .json({ error: e.message });
+        response.status(e.statusCode || 400).json({ error: e.message });
       }
-    }
+    },
   );
 
   app.get(
@@ -158,7 +156,7 @@ function apiPdfAnalysisEndpoints(app) {
     [validApiKey],
     (_req, response) => {
       response.status(200).json({ jobs: CrossCheckPipeline.list() });
-    }
+    },
   );
 
   app.get(
@@ -169,7 +167,7 @@ function apiPdfAnalysisEndpoints(app) {
       if (!status)
         return response.status(404).json({ error: "Job nicht gefunden." });
       response.status(200).json(status);
-    }
+    },
   );
 
   app.get(
@@ -180,7 +178,7 @@ function apiPdfAnalysisEndpoints(app) {
       if (!result)
         return response.status(404).json({ error: "Job nicht gefunden." });
       response.status(200).json(result);
-    }
+    },
   );
 
   app.delete(
@@ -189,7 +187,7 @@ function apiPdfAnalysisEndpoints(app) {
     (request, response) => {
       const ok = CrossCheckPipeline.cancel(request.params.id);
       response.status(ok ? 200 : 404).json({ cancelled: ok });
-    }
+    },
   );
 
   // ---- Report-Downloads (vor /:id registriert) ----
@@ -203,10 +201,10 @@ function apiPdfAnalysisEndpoints(app) {
       response.setHeader("Content-Type", "text/markdown; charset=utf-8");
       response.setHeader(
         "Content-Disposition",
-        `attachment; filename="analysebericht-${request.params.id}.md"`
+        `attachment; filename="analysebericht-${request.params.id}.md"`,
       );
       response.status(200).send(result.report);
-    }
+    },
   );
 
   app.get(
@@ -219,43 +217,33 @@ function apiPdfAnalysisEndpoints(app) {
       response.setHeader("Content-Type", "text/markdown; charset=utf-8");
       response.setHeader(
         "Content-Disposition",
-        `attachment; filename="verifikationsbericht-${request.params.id}.md"`
+        `attachment; filename="verifikationsbericht-${request.params.id}.md"`,
       );
       response.status(200).send(result.report);
-    }
+    },
   );
 
   // ---- Korpus-Analyse (vor /:id registriert!) ----
-  app.post(
-    "/api/pdf-analysis/corpus",
-    [validApiKey],
-    (request, response) => {
-      try {
-        const { pdfPaths, task, reportType, factCriteria, deepScan } =
-          request.body || {};
-        const { jobId } = CorpusPipeline.start({
-          pdfPaths: Array.isArray(pdfPaths) ? pdfPaths : [],
-          task,
-          reportType,
-          factCriteria,
-          deepScan: !!deepScan,
-        });
-        response.status(200).json({ jobId });
-      } catch (e) {
-        response
-          .status(e.statusCode || 400)
-          .json({ error: e.message });
-      }
+  app.post("/api/pdf-analysis/corpus", [validApiKey], (request, response) => {
+    try {
+      const { pdfPaths, task, reportType, factCriteria, deepScan } =
+        request.body || {};
+      const { jobId } = CorpusPipeline.start({
+        pdfPaths: Array.isArray(pdfPaths) ? pdfPaths : [],
+        task,
+        reportType,
+        factCriteria,
+        deepScan: !!deepScan,
+      });
+      response.status(200).json({ jobId });
+    } catch (e) {
+      response.status(e.statusCode || 400).json({ error: e.message });
     }
-  );
+  });
 
-  app.get(
-    "/api/pdf-analysis/corpus/list",
-    [validApiKey],
-    (_req, response) => {
-      response.status(200).json({ jobs: CorpusPipeline.list() });
-    }
-  );
+  app.get("/api/pdf-analysis/corpus/list", [validApiKey], (_req, response) => {
+    response.status(200).json({ jobs: CorpusPipeline.list() });
+  });
 
   app.get(
     "/api/pdf-analysis/corpus/:id",
@@ -265,7 +253,7 @@ function apiPdfAnalysisEndpoints(app) {
       if (!status)
         return response.status(404).json({ error: "Job nicht gefunden." });
       response.status(200).json(status);
-    }
+    },
   );
 
   app.get(
@@ -276,7 +264,7 @@ function apiPdfAnalysisEndpoints(app) {
       if (!result)
         return response.status(404).json({ error: "Job nicht gefunden." });
       response.status(200).json(result);
-    }
+    },
   );
 
   app.delete(
@@ -285,7 +273,7 @@ function apiPdfAnalysisEndpoints(app) {
     (request, response) => {
       const ok = CorpusPipeline.cancel(request.params.id);
       response.status(ok ? 200 : 404).json({ cancelled: ok });
-    }
+    },
   );
 
   // ---- Job-Status / Ergebnis ----
@@ -304,7 +292,7 @@ function apiPdfAnalysisEndpoints(app) {
       if (!result)
         return response.status(404).json({ error: "Job nicht gefunden." });
       response.status(200).json(result);
-    }
+    },
   );
 
   app.delete("/api/pdf-analysis/:id", [validApiKey], (request, response) => {

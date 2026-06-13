@@ -294,19 +294,20 @@ const websocket = {
         };
 
         // aibitat.onStart(() => {
-        // eslint-disable-next-line no-console
+
         //   console.log("🚀 starting chat ...");
         // });
 
         aibitat.onMessage((message) => {
           if (message.from !== "USER")
-            Telemetry.sendTelemetry("agent_chat_sent").catch((err) => { console.error("Telemetry error:", err.message); });
+            Telemetry.sendTelemetry("agent_chat_sent").catch((err) => {
+              console.error("Telemetry error:", err.message);
+            });
           if (message.from === "USER" && muteUserReply) return;
           socket.send(JSON.stringify(message));
         });
 
         aibitat.onTerminate(() => {
-          // eslint-disable-next-line no-console
           // console.log("🚀 chat finished");
           socket.close();
         });
@@ -367,7 +368,7 @@ const websocket = {
           )} as ${chalk.yellow(node.from)}.
            Press enter to skip and use auto-reply, or type 'exit' to end the conversation: \n`);
         };
-        // eslint-disable-next-line no-console
+
         // console.log("🚀 WS plugin is complete.");
       },
     };

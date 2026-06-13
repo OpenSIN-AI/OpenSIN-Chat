@@ -63,13 +63,13 @@ function simpleRateLimit({ bucket, max, windowMs }) {
     response.setHeader("X-RateLimit-Remaining", String(remaining));
     response.setHeader(
       "X-RateLimit-Reset",
-      String(Math.ceil(entry.resetAt / 1000))
+      String(Math.ceil(entry.resetAt / 1000)),
     );
 
     if (entry.count > max) {
       response.setHeader(
         "Retry-After",
-        String(Math.ceil((entry.resetAt - now) / 1000))
+        String(Math.ceil((entry.resetAt - now) / 1000)),
       );
       return response
         .status(429)

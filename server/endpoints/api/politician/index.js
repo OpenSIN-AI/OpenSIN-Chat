@@ -56,30 +56,39 @@ function apiPoliticianEndpoints(app) {
 
       const db = getPoliticianDB();
       const results = await db.searchPoliticians(q || "", filters);
-      response.status(200).json({ politicians: results, total: results.length });
+      response
+        .status(200)
+        .json({ politicians: results, total: results.length });
     } catch (err) {
       logger.error(`[politician] ${err.message}`, err);
       response.status(500).json({ error: "Internal Server Error" });
     }
   });
 
-  app.get("/politician/speech-search", [validApiKey], async (request, response) => {
-    try {
-      const { q, party, topN, source } = request.query;
-      if (!q) return response.status(400).json({ error: "query parameter 'q' is required" });
+  app.get(
+    "/politician/speech-search",
+    [validApiKey],
+    async (request, response) => {
+      try {
+        const { q, party, topN, source } = request.query;
+        if (!q)
+          return response
+            .status(400)
+            .json({ error: "query parameter 'q' is required" });
 
-      const db = getPoliticianDB();
-      const results = await db.semanticSearchSpeeches(q, {
-        party: party || null,
-        topN: clampInt(topN, 10, 1, MAX_TOP_N),
-        source: source || null,
-      });
-      response.status(200).json({ results, total: results.length });
-    } catch (err) {
-      logger.error(`[politician] ${err.message}`, err);
-      response.status(500).json({ error: "Internal Server Error" });
-    }
-  });
+        const db = getPoliticianDB();
+        const results = await db.semanticSearchSpeeches(q, {
+          party: party || null,
+          topN: clampInt(topN, 10, 1, MAX_TOP_N),
+          source: source || null,
+        });
+        response.status(200).json({ results, total: results.length });
+      } catch (err) {
+        logger.error(`[politician] ${err.message}`, err);
+        response.status(500).json({ error: "Internal Server Error" });
+      }
+    },
+  );
 
   app.get("/politician/parties", [validApiKey], async (_, response) => {
     try {
@@ -145,7 +154,8 @@ function apiPoliticianEndpoints(app) {
       const { id } = request.params;
       const db = getPoliticianDB();
       const politician = await db.getPolitician(id);
-      if (!politician) return response.status(404).json({ error: "Politician not found" });
+      if (!politician)
+        return response.status(404).json({ error: "Politician not found" });
       response.status(200).json({ politician });
     } catch (err) {
       logger.error(`[politician] ${err.message}`, err);
@@ -160,7 +170,8 @@ function apiPoliticianEndpoints(app) {
 
       const db = getPoliticianDB();
       const politician = await db.getPolitician(id);
-      if (!politician) return response.status(404).json({ error: "Politician not found" });
+      if (!politician)
+        return response.status(404).json({ error: "Politician not found" });
 
       const votes = await db.getVotingRecord(id, {
         limit: clampInt(limit, 50, 1, MAX_LIMIT),
@@ -173,38 +184,47 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/:id/speeches", [validApiKey], async (request, response) => {
-    try {
-      const { id } = request.params;
-      const { limit, offset, source } = request.query;
+  app.get(
+    "/politician/:id/speeches",
+    [validApiKey],
+    async (request, response) => {
+      try {
+        const { id } = request.params;
+        const { limit, offset, source } = request.query;
 
-      const db = getPoliticianDB();
-      const politician = await db.getPolitician(id);
-      if (!politician) return response.status(404).json({ error: "Politician not found" });
+        const db = getPoliticianDB();
+        const politician = await db.getPolitician(id);
+        if (!politician)
+          return response.status(404).json({ error: "Politician not found" });
 
-      const speeches = await db.getSpeeches(id, {
-        limit: clampInt(limit, 50, 1, MAX_LIMIT),
-        offset: clampInt(offset, 0, 0, Number.MAX_SAFE_INTEGER),
-        source: source || null,
-      });
-      response.status(200).json({ speeches, total: speeches.length });
-    } catch (err) {
-      logger.error(`[politician] ${err.message}`, err);
-      response.status(500).json({ error: "Internal Server Error" });
-    }
-  });
+        const speeches = await db.getSpeeches(id, {
+          limit: clampInt(limit, 50, 1, MAX_LIMIT),
+          offset: clampInt(offset, 0, 0, Number.MAX_SAFE_INTEGER),
+          source: source || null,
+        });
+        response.status(200).json({ speeches, total: speeches.length });
+      } catch (err) {
+        logger.error(`[politician] ${err.message}`, err);
+        response.status(500).json({ error: "Internal Server Error" });
+      }
+    },
+  );
 
-  app.get("/politician/:id/mandates", [validApiKey], async (request, response) => {
-    try {
-      const { id } = request.params;
-      const db = getPoliticianDB();
-      const mandates = await db.getMandates(id);
-      response.status(200).json({ mandates, total: mandates.length });
-    } catch (err) {
-      logger.error(`[politician] ${err.message}`, err);
-      response.status(500).json({ error: "Internal Server Error" });
-    }
-  });
+  app.get(
+    "/politician/:id/mandates",
+    [validApiKey],
+    async (request, response) => {
+      try {
+        const { id } = request.params;
+        const db = getPoliticianDB();
+        const mandates = await db.getMandates(id);
+        response.status(200).json({ mandates, total: mandates.length });
+      } catch (err) {
+        logger.error(`[politician] ${err.message}`, err);
+        response.status(500).json({ error: "Internal Server Error" });
+      }
+    },
+  );
 }
 
 module.exports = { apiPoliticianEndpoints };

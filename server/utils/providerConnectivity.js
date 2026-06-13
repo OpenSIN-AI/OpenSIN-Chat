@@ -82,7 +82,13 @@ async function probeProvider(providerId) {
     };
 
   const result = await probeBaseUrl(baseUrl);
-  return { provider: def.provider, name: def.name, configured: true, baseUrl, ...result };
+  return {
+    provider: def.provider,
+    name: def.name,
+    configured: true,
+    baseUrl,
+    ...result,
+  };
 }
 
 /**

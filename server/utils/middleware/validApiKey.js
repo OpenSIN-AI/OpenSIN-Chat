@@ -44,7 +44,7 @@ function logFailedAuth(request, reason) {
   try {
     // eslint-disable-next-line no-console
     console.warn(
-      `\x1b[33m[AUTH-FAIL]\x1b[0m reason=${reason} ip=${request.ip || "unknown"} ${request.method} ${request.originalUrl || request.path}`
+      `\x1b[33m[AUTH-FAIL]\x1b[0m reason=${reason} ip=${request.ip || "unknown"} ${request.method} ${request.originalUrl || request.path}`,
     );
   } catch {
     /* logging must never break auth flow */

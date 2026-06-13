@@ -163,12 +163,14 @@ if (process.env.NODE_ENV !== "development") {
     express.static(path.resolve(__dirname, "public"), {
       extensions: ["js"],
       setHeaders: (res, path) => {
-
         // Prevent cache issues with Vite chunk hashing on rebuilds
         // HTML always fresh, JS entry points short cache, hashed chunks immutable
         if (path.endsWith(".html") || path.endsWith("_index.html")) {
           res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        } else if (path.includes("vendor-") || path.includes("/assets/index-")) {
+        } else if (
+          path.includes("vendor-") ||
+          path.includes("/assets/index-")
+        ) {
           // Vendor + entry chunks — always fresh so the browser never
           // caches stale chunks after a rebuild.
           res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -216,7 +218,6 @@ if (process.env.NODE_ENV !== "development") {
         const resBody = await VectorDb[command](body);
         response.status(200).json({ ...resBody });
       } catch (e) {
-        // eslint-disable-next-line no-console
         // console.error(e)
         // eslint-disable-next-line no-console
         console.error(JSON.stringify(e));

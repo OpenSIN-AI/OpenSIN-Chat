@@ -38,17 +38,36 @@ class PoliticianVectorStore {
    * @param {string} params.title - TOP / agenda item title
    * @returns {Promise<{success: boolean, chunksIndexed: number, error: string|null}>}
    */
-  async indexSpeech({ speechId, politicianId, politicianName, party, text, date, title }) {
+  async indexSpeech({
+    speechId,
+    politicianId,
+    politicianName,
+    party,
+    text,
+    date,
+    title,
+  }) {
     if (!text || text.trim().length === 0) {
       return { success: false, chunksIndexed: 0, error: "Empty text" };
     }
 
     let connection = null;
     try {
-      const metadata = { speechId, politicianId, politicianName, party, date, title };
+      const metadata = {
+        speechId,
+        politicianId,
+        politicianName,
+        party,
+        date,
+        title,
+      };
       const chunks = await this.embedder.chunkText(text, metadata);
       if (chunks.length === 0) {
-        return { success: false, chunksIndexed: 0, error: "No chunks produced" };
+        return {
+          success: false,
+          chunksIndexed: 0,
+          error: "No chunks produced",
+        };
       }
 
       const chunkTexts = chunks.map((c) => c.text);
@@ -60,7 +79,11 @@ class PoliticianVectorStore {
       // Guard: vectors must align with chunks — clamp to the shorter length
       const numVectors = Math.min(vectors.length, chunks.length);
       if (numVectors === 0) {
-        return { success: false, chunksIndexed: 0, error: "Vectors/chunks length mismatch" };
+        return {
+          success: false,
+          chunksIndexed: 0,
+          error: "Vectors/chunks length mismatch",
+        };
       }
 
       connection = await this.vectorDb.connect();
@@ -102,7 +125,13 @@ class PoliticianVectorStore {
    * @param {string} [params.party] - optionally filter by party
    * @returns {Promise<{results: Array<{text: string, metadata: Object, score: number}>, error: string|null}>}
    */
-  async searchSpeeches({ query, topN = 10, similarityThreshold = 0.25, politicianId = null, party = null }) {
+  async searchSpeeches({
+    query,
+    topN = 10,
+    similarityThreshold = 0.25,
+    politicianId = null,
+    party = null,
+  }) {
     let connection = null;
     try {
       connection = await this.vectorDb.connect();
@@ -124,7 +153,9 @@ class PoliticianVectorStore {
       }));
 
       if (politicianId) {
-        results = results.filter((r) => r.metadata.politicianId === politicianId);
+        results = results.filter(
+          (r) => r.metadata.politicianId === politicianId,
+        );
       }
       if (party) {
         results = results.filter((r) => r.metadata.party === party);

@@ -16,7 +16,7 @@ function intEnv(name, fallback, { min = 1, max = 1024 } = {}) {
   const n = Number(raw);
   if (!Number.isFinite(n) || n < min || n > max) {
     console.warn(
-      `[pdfAnalysis/config] Ungültiger ENV-Wert ${name}=${JSON.stringify(raw)} — Fallback ${fallback} wird verwendet (erlaubt: ${min}..${max}).`
+      `[pdfAnalysis/config] Ungültiger ENV-Wert ${name}=${JSON.stringify(raw)} — Fallback ${fallback} wird verwendet (erlaubt: ${min}..${max}).`,
     );
     return fallback;
   }
@@ -69,7 +69,7 @@ module.exports = {
   // LLM
   LLM_TEMPERATURE: Number(process.env.PDF_ANALYSIS_TEMPERATURE || 0),
   MAX_CHARS_PER_CHUNK: Number(
-    process.env.PDF_ANALYSIS_MAX_CHARS_PER_CHUNK || 24000
+    process.env.PDF_ANALYSIS_MAX_CHARS_PER_CHUNK || 24000,
   ),
 
   // Fakten

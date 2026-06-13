@@ -342,7 +342,6 @@ class FoundryLLM {
 
       try {
         for await (const chunk of stream) {
-          // eslint-disable-next-line no-console
           // console.log(JSON.stringify(chunk, null, 2));
           const message = chunk?.choices?.[0];
           const token = message?.delta?.content;

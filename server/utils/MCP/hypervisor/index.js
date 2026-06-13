@@ -73,10 +73,7 @@ class MCPHypervisor {
             __dirname,
             `../../../storage/plugins/openafd_mcp_servers.json`,
           )
-        : path.resolve(
-            getStoragePath(),
-            `plugins/openafd_mcp_servers.json`,
-          );
+        : path.resolve(getStoragePath(), `plugins/openafd_mcp_servers.json`);
 
     if (!fs.existsSync(this.mcpServerJSONPath)) {
       fs.mkdirSync(path.dirname(this.mcpServerJSONPath), { recursive: true });

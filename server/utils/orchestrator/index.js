@@ -17,7 +17,8 @@ class AgentOrchestrator {
     this.activeWorkflows = new BoundedJobStore({
       maxJobs: parseInt(process.env.ORCHESTRATOR_MAX_WORKFLOWS, 10) || 50,
       maxActive: parseInt(process.env.ORCHESTRATOR_MAX_ACTIVE, 10) || 5,
-      ttlMs: (parseInt(process.env.ORCHESTRATOR_TTL_MINUTES, 10) || 30) * 60_000,
+      ttlMs:
+        (parseInt(process.env.ORCHESTRATOR_TTL_MINUTES, 10) || 30) * 60_000,
     });
   }
 
@@ -35,13 +36,18 @@ class AgentOrchestrator {
    * @param {boolean} [params.autoRun=true] - start the async runner immediately
    * @returns {Promise<{workflowId: string, steps: Array}>}
    */
-  async startWorkflow({ goal, steps: explicitSteps, options = {}, autoRun = true }) {
+  async startWorkflow({
+    goal,
+    steps: explicitSteps,
+    options = {},
+    autoRun = true,
+  }) {
     if (!goal) throw new Error("Goal is required");
 
     const workflowId = uuidv4();
     const steps = explicitSteps || AgentOrchestrator.#inferSteps(goal);
 
-      const workflow = {
+    const workflow = {
       id: workflowId,
       goal,
       query: goal,
@@ -72,7 +78,14 @@ class AgentOrchestrator {
       });
     }
 
-    return { workflowId, steps: workflow.steps.map((s) => ({ id: s.id, type: s.type, label: s.label })) };
+    return {
+      workflowId,
+      steps: workflow.steps.map((s) => ({
+        id: s.id,
+        type: s.type,
+        label: s.label,
+      })),
+    };
   }
 
   /**
@@ -87,7 +100,13 @@ class AgentOrchestrator {
       status: w.status,
       currentStep: w.currentStep,
       totalSteps: w.steps.length,
-      steps: w.steps.map((s) => ({ id: s.id, type: s.type, label: s.label, status: s.status, error: s.error })),
+      steps: w.steps.map((s) => ({
+        id: s.id,
+        type: s.type,
+        label: s.label,
+        status: s.status,
+        error: s.error,
+      })),
       error: w.error || null,
     };
   }
@@ -102,7 +121,14 @@ class AgentOrchestrator {
       workflowId: w.id,
       goal: w.goal,
       status: w.status,
-      steps: w.steps.map((s) => ({ id: s.id, type: s.type, label: s.label, status: s.status, result: s.result, error: s.error })),
+      steps: w.steps.map((s) => ({
+        id: s.id,
+        type: s.type,
+        label: s.label,
+        status: s.status,
+        result: s.result,
+        error: s.error,
+      })),
     };
   }
 
@@ -131,13 +157,20 @@ class AgentOrchestrator {
       step.status = "running";
 
       try {
-        step.result = await this.#executeStep(step.type, { query: w.query, ...step.result }, w.options, w.steps.slice(0, i));
+        step.result = await this.#executeStep(
+          step.type,
+          { query: w.query, ...step.result },
+          w.options,
+          w.steps.slice(0, i),
+        );
         step.status = "completed";
         this.log(`Step ${i + 1}/${w.steps.length} completed: ${step.type}`);
       } catch (err) {
         step.status = "failed";
         step.error = err.message;
-        this.log(`Step ${i + 1}/${w.steps.length} failed: ${step.type} — ${err.message}`);
+        this.log(
+          `Step ${i + 1}/${w.steps.length} failed: ${step.type} — ${err.message}`,
+        );
         w.status = "failed";
         w.error = `Step "${step.label}" failed: ${err.message}`;
         return;
@@ -190,7 +223,8 @@ class AgentOrchestrator {
         const results = pipeline.getResults(jobId);
         return { jobId, ...results };
       }
-      if (status?.status === "failed") throw new Error(status.error || "Research failed");
+      if (status?.status === "failed")
+        throw new Error(status.error || "Research failed");
     }
     throw new Error("Research timed out (120s)");
   }
@@ -198,15 +232,22 @@ class AgentOrchestrator {
   async #stepGenerateReport(data, options, previousSteps) {
     const { ReportGenerator } = require("../reports");
 
-    const researchStep = previousSteps.find((s) => s.type === "deep_research" && s.result?.summary);
-    const politicianStep = previousSteps.find((s) => s.type === "search_politician" && s.result?.politicianResults);
+    const researchStep = previousSteps.find(
+      (s) => s.type === "deep_research" && s.result?.summary,
+    );
+    const politicianStep = previousSteps.find(
+      (s) => s.type === "search_politician" && s.result?.politicianResults,
+    );
 
     const result = await ReportGenerator.generate({
       title: options.reportTitle || data.query || "Recherche-Bericht",
       query: data.query || "",
       summary: researchStep?.result?.summary || "",
       searchResults: researchStep?.result?.searchResults || [],
-      politicianResults: politicianStep?.result?.politicianResults || researchStep?.result?.politicianResults || [],
+      politicianResults:
+        politicianStep?.result?.politicianResults ||
+        researchStep?.result?.politicianResults ||
+        [],
       extractedContent: researchStep?.result?.extractedContent || [],
       template: options.reportTemplate || "standard",
     });
@@ -216,7 +257,9 @@ class AgentOrchestrator {
 
   async #stepExtractUrls(data, options, previousSteps) {
     const { ContentExtractor } = require("../research/contentExtractor");
-    const researchStep = previousSteps.find((s) => s.type === "deep_research" && s.result?.searchResults);
+    const researchStep = previousSteps.find(
+      (s) => s.type === "deep_research" && s.result?.searchResults,
+    );
     const urls = (researchStep?.result?.searchResults || [])
       .filter((r) => r.link)
       .slice(0, options.maxUrls || 5);
@@ -224,7 +267,12 @@ class AgentOrchestrator {
     const extracted = [];
     for (const u of urls) {
       const content = await ContentExtractor.extract(u.link);
-      if (content) extracted.push({ url: u.link, title: u.title, content: content.substring(0, 5000) });
+      if (content)
+        extracted.push({
+          url: u.link,
+          title: u.title,
+          content: content.substring(0, 5000),
+        });
     }
     return { extractedContent: extracted };
   }
@@ -244,19 +292,32 @@ class AgentOrchestrator {
     const steps = [];
     const lower = goal.toLowerCase();
 
-    const needsPoliticians = /politik|abgeordnet|bundestag|fraktion|afd|wahl|mandat|mdb/i.test(lower);
-    const needsResearch = /recherche|research|untersuch|analyse|position|standpunkt|bericht|report|gutachten/i.test(lower);
-    const needsReport = /bericht|report|pdf|dokument|gutachten|print/i.test(lower);
-    const needsExtract = /detail|quelle|text|inhalt|auszug|extract|deep/i.test(lower);
+    const needsPoliticians =
+      /politik|abgeordnet|bundestag|fraktion|afd|wahl|mandat|mdb/i.test(lower);
+    const needsResearch =
+      /recherche|research|untersuch|analyse|position|standpunkt|bericht|report|gutachten/i.test(
+        lower,
+      );
+    const needsReport = /bericht|report|pdf|dokument|gutachten|print/i.test(
+      lower,
+    );
+    const needsExtract = /detail|quelle|text|inhalt|auszug|extract|deep/i.test(
+      lower,
+    );
 
     if (needsPoliticians) {
-      steps.push({ type: "search_politician", label: "Politiker-Datenbank durchsuchen" });
+      steps.push({
+        type: "search_politician",
+        label: "Politiker-Datenbank durchsuchen",
+      });
     }
 
     if (needsResearch) {
       steps.push({
         type: "deep_research",
-        label: needsExtract ? "Tiefenrecherche durchführen" : "Recherche durchführen",
+        label: needsExtract
+          ? "Tiefenrecherche durchführen"
+          : "Recherche durchführen",
       });
     }
 

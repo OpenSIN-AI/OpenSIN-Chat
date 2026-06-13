@@ -17,7 +17,7 @@ const path = require("path");
 const { CHECKPOINT_DIR } = require("./config");
 
 const INCREASE_AFTER_WAVES = Number(
-  process.env.PDF_ANALYSIS_AIMD_INCREASE_AFTER || 3
+  process.env.PDF_ANALYSIS_AIMD_INCREASE_AFTER || 3,
 );
 const COOLDOWN_MS = Number(process.env.PDF_ANALYSIS_AIMD_COOLDOWN_MS || 5000);
 
@@ -114,12 +114,12 @@ async function runPool(chunks, maxConcurrency, workerFn, opts = {}) {
             error: e.message,
           };
         }
-      })
+      }),
     );
 
     // Synchronisationspunkt: in Seitenreihenfolge mergen + Checkpoint
     const rateLimited = waveResults.some(
-      (r) => r.error && isRateLimitError(r.error)
+      (r) => r.error && isRateLimitError(r.error),
     );
     const failedIdx = new Set();
     for (const r of waveResults) {
@@ -138,9 +138,7 @@ async function runPool(chunks, maxConcurrency, workerFn, opts = {}) {
     if (rateLimited) {
       // Fehlgeschlagene Chunks aus dieser Welle wieder einreihen
       // (direkt nach dem aktuellen Cursor, damit sie als nächstes drankommen)
-      const successfulInWave = wave.filter(
-        (c) => !failedIdx.has(c.index)
-      );
+      const successfulInWave = wave.filter((c) => !failedIdx.has(c.index));
       cursor += successfulInWave.length;
       const retry = wave.filter((c) => failedIdx.has(c.index));
       pending.splice(cursor, 0, ...retry);
@@ -153,7 +151,10 @@ async function runPool(chunks, maxConcurrency, workerFn, opts = {}) {
       cursor += wave.length;
       cleanWaveStreak++;
       // Additive Increase nach N sauberen Wellen
-      if (cleanWaveStreak >= INCREASE_AFTER_WAVES && concurrency < maxConcurrency) {
+      if (
+        cleanWaveStreak >= INCREASE_AFTER_WAVES &&
+        concurrency < maxConcurrency
+      ) {
         concurrency++;
         cleanWaveStreak = 0;
       }

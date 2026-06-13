@@ -22,7 +22,11 @@ const generateReport = {
           examples: [
             {
               prompt: "Create a report about my research",
-              call: JSON.stringify({ researchJobId: "abc-123", title: "Migrationspolitik Analyse", template: "standard" }),
+              call: JSON.stringify({
+                researchJobId: "abc-123",
+                title: "Migrationspolitik Analyse",
+                template: "standard",
+              }),
             },
           ],
           parameters: {
@@ -39,22 +43,37 @@ const generateReport = {
               },
               summary: {
                 type: "string",
-                description: "Custom summary markdown (overrides research result).",
+                description:
+                  "Custom summary markdown (overrides research result).",
               },
               template: {
                 type: "string",
-                description: "Report template: 'standard' (full report), 'brief' (short memo), 'full' (comprehensive analysis).",
+                description:
+                  "Report template: 'standard' (full report), 'brief' (short memo), 'full' (comprehensive analysis).",
                 enum: ["standard", "brief", "full"],
               },
             },
             additionalProperties: false,
           },
-          handler: async function ({ title, researchJobId, summary, template = "standard" } = {}) {
+          handler: async function ({
+            title,
+            researchJobId,
+            summary,
+            template = "standard",
+          } = {}) {
             try {
               const { ReportGenerator } = require("../../../reports");
               const { getResearchPipeline } = require("../../../research");
 
-              let reportData = { title: title || "Recherche-Bericht", query: "", summary: summary || "", searchResults: [], politicianResults: [], extractedContent: [], template };
+              let reportData = {
+                title: title || "Recherche-Bericht",
+                query: "",
+                summary: summary || "",
+                searchResults: [],
+                politicianResults: [],
+                extractedContent: [],
+                template,
+              };
 
               if (researchJobId) {
                 const pipeline = getResearchPipeline();
@@ -63,7 +82,8 @@ const generateReport = {
                   reportData.query = results.query || "";
                   reportData.summary = summary || results.summary;
                   reportData.searchResults = results.searchResults || [];
-                  reportData.politicianResults = results.politicianResults || [];
+                  reportData.politicianResults =
+                    results.politicianResults || [];
                   reportData.extractedContent = results.extractedContent || [];
                 }
               }

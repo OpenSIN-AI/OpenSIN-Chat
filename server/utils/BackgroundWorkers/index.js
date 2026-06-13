@@ -321,7 +321,9 @@ class BackgroundService {
         try {
           worker.kill("SIGTERM");
         } catch {
-          this.#log(`worker ${worker.pid} already exited during removeScheduledJob`);
+          this.#log(
+            `worker ${worker.pid} already exited during removeScheduledJob`,
+          );
         }
       }
       this.#scheduledJobWorkers.delete(jobId);

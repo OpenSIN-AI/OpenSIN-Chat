@@ -562,7 +562,10 @@ const KEY_MAPPING = {
     checks: [],
     preUpdate: [
       (_, __, nextValue) => {
-        if (nextValue === "true") Telemetry.sendTelemetry("telemetry_disabled").catch((err) => { console.error("Telemetry error:", err.message); });
+        if (nextValue === "true")
+          Telemetry.sendTelemetry("telemetry_disabled").catch((err) => {
+            console.error("Telemetry error:", err.message);
+          });
       },
     ],
   },
@@ -824,7 +827,9 @@ const KEY_MAPPING = {
     checks: [isValidURL],
     postUpdate: [
       (_, __, nextValue) => {
-        const { parseOpencodeZenBasePath } = require("../AiProviders/opencodeZen");
+        const {
+          parseOpencodeZenBasePath,
+        } = require("../AiProviders/opencodeZen");
         process.env.OPENCODE_ZEN_BASE_PATH =
           parseOpencodeZenBasePath(nextValue);
       },

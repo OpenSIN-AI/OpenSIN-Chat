@@ -174,7 +174,8 @@ class AstraDB extends VectorDatabase {
           const { client } = await this.connect();
           const { chunks } = cacheResult;
           const documentVectors = [];
-          if (!chunks?.length || !chunks[0]?.length) throw new Error("Invalid cached chunks");
+          if (!chunks?.length || !chunks[0]?.length)
+            throw new Error("Invalid cached chunks");
 
           vectorDimension = chunks[0][0].values.length || null;
 

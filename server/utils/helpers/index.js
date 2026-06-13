@@ -588,7 +588,10 @@ async function getProviderModelPreference(provider = null) {
     return env ?? null;
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error(`getProviderModelPreference error for ${provider}:`, e.message);
+    console.error(
+      `getProviderModelPreference error for ${provider}:`,
+      e.message,
+    );
     return env ?? null;
   }
 }

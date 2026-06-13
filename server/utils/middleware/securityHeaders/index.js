@@ -47,8 +47,7 @@ const REPORT_ONLY_CSP = [
  * @returns {import("express").RequestHandler}
  */
 function securityHeaders() {
-  const hstsEnabled =
-    String(process.env.ENABLE_HSTS).toLowerCase() === "true";
+  const hstsEnabled = String(process.env.ENABLE_HSTS).toLowerCase() === "true";
   const cspReportOnly =
     String(process.env.CSP_REPORT_ONLY).toLowerCase() === "true";
 
@@ -62,13 +61,13 @@ function securityHeaders() {
     if (hstsEnabled)
       response.setHeader(
         "Strict-Transport-Security",
-        "max-age=15552000; includeSubDomains" // 180 days, no preload yet
+        "max-age=15552000; includeSubDomains", // 180 days, no preload yet
       );
 
     if (cspReportOnly)
       response.setHeader(
         "Content-Security-Policy-Report-Only",
-        REPORT_ONLY_CSP
+        REPORT_ONLY_CSP,
       );
 
     next();

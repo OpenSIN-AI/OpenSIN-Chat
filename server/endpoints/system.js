@@ -100,11 +100,11 @@ function systemEndpoints(app) {
         return response.sendStatus(200).end();
       // eslint-disable-next-line no-console
       console.warn(
-        `\x1b[33m[ENV-DUMP]\x1b[0m triggered by ip=${request.ip || "unknown"}`
+        `\x1b[33m[ENV-DUMP]\x1b[0m triggered by ip=${request.ip || "unknown"}`,
       );
       dumpENV();
       response.sendStatus(200).end();
-    }
+    },
   );
 
   app.get("/onboarding", async (_, response) => {
@@ -118,16 +118,20 @@ function systemEndpoints(app) {
     }
   });
 
-  app.post("/onboarding", [requireAuthWhenOnboardingComplete], async (_, response) => {
-    try {
-      await SystemSettings.markOnboardingComplete();
-      response.sendStatus(200).end();
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e.message, e);
-      response.sendStatus(500).end();
-    }
-  });
+  app.post(
+    "/onboarding",
+    [requireAuthWhenOnboardingComplete],
+    async (_, response) => {
+      try {
+        await SystemSettings.markOnboardingComplete();
+        response.sendStatus(200).end();
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e.message, e);
+        response.sendStatus(500).end();
+      }
+    },
+  );
 
   app.get("/setup-complete", async (_, response) => {
     try {

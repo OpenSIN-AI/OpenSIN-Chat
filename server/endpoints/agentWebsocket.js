@@ -36,46 +36,51 @@ function agentWebsocket(app, routePrefix = "") {
     return;
   }
 
-  app.ws(`${routePrefix}/agent-invocation/:uuid`, async function (socket, request) {
-    try {
-      const agentHandler = await new AgentHandler({
-        uuid: String(request.params.uuid),
-      }).init();
+  app.ws(
+    `${routePrefix}/agent-invocation/:uuid`,
+    async function (socket, request) {
+      try {
+        const agentHandler = await new AgentHandler({
+          uuid: String(request.params.uuid),
+        }).init();
 
-      if (!agentHandler.invocation) {
-        socket.close();
-        return;
-      }
-
-      socket.on("message", relayToSocket);
-      socket.on("close", () => {
-        agentHandler.closeAlert();
-        WorkspaceAgentInvocation.close(String(request.params.uuid));
-        return;
-      });
-
-      socket.checkBailCommand = (data) => {
-        const content = safeJsonParse(data)?.feedback;
-        if (WEBSOCKET_BAIL_COMMANDS.includes(content)) {
-          agentHandler.log(
-            `User invoked bail command while processing. Closing session now.`,
-          );
-          agentHandler.aibitat.abort();
+        if (!agentHandler.invocation) {
           socket.close();
           return;
         }
-      };
 
-      await Telemetry.sendTelemetry("agent_chat_started");
-      await agentHandler.createAIbitat({ socket });
-      await agentHandler.startAgentCluster();
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e.message, e);
-      socket?.send(JSON.stringify({ type: "wssFailure", content: e.message }));
-      socket?.close();
-    }
-  });
+        socket.on("message", relayToSocket);
+        socket.on("close", () => {
+          agentHandler.closeAlert();
+          WorkspaceAgentInvocation.close(String(request.params.uuid));
+          return;
+        });
+
+        socket.checkBailCommand = (data) => {
+          const content = safeJsonParse(data)?.feedback;
+          if (WEBSOCKET_BAIL_COMMANDS.includes(content)) {
+            agentHandler.log(
+              `User invoked bail command while processing. Closing session now.`,
+            );
+            agentHandler.aibitat.abort();
+            socket.close();
+            return;
+          }
+        };
+
+        await Telemetry.sendTelemetry("agent_chat_started");
+        await agentHandler.createAIbitat({ socket });
+        await agentHandler.startAgentCluster();
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e.message, e);
+        socket?.send(
+          JSON.stringify({ type: "wssFailure", content: e.message }),
+        );
+        socket?.close();
+      }
+    },
+  );
 }
 
 module.exports = { agentWebsocket };

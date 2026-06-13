@@ -41,7 +41,7 @@ async function chat(systemPrompt, userPrompt, { temperature } = {}) {
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
-        { temperature: temperature ?? LLM_TEMPERATURE }
+        { temperature: temperature ?? LLM_TEMPERATURE },
       );
       if (result === null || result === undefined)
         throw new Error("LLM lieferte keine Antwort.");

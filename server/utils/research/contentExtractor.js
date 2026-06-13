@@ -21,19 +21,21 @@ const MAX_RESPONSE_BYTES = 2 * 1024 * 1024; // 2 MB
 
 // RFC 1918 + loopback + link-local + CGNAT + carrier-grade NAT ranges
 const PRIVATE_RANGES = [
-  { net: "10.0.0.0", bits: 8 },        // 10.0.0.0/8
-  { net: "172.16.0.0", bits: 12 },      // 172.16.0.0/12
-  { net: "192.168.0.0", bits: 16 },     // 192.168.0.0/16
-  { net: "127.0.0.0", bits: 8 },        // loopback
-  { net: "169.254.0.0", bits: 16 },     // link-local
-  { net: "0.0.0.0", bits: 8 },          // current network
-  { net: "100.64.0.0", bits: 10 },      // CGNAT (RFC 6598)
-  { net: "198.18.0.0", bits: 15 },      // benchmark (RFC 2544)
+  { net: "10.0.0.0", bits: 8 }, // 10.0.0.0/8
+  { net: "172.16.0.0", bits: 12 }, // 172.16.0.0/12
+  { net: "192.168.0.0", bits: 16 }, // 192.168.0.0/16
+  { net: "127.0.0.0", bits: 8 }, // loopback
+  { net: "169.254.0.0", bits: 16 }, // link-local
+  { net: "0.0.0.0", bits: 8 }, // current network
+  { net: "100.64.0.0", bits: 10 }, // CGNAT (RFC 6598)
+  { net: "198.18.0.0", bits: 15 }, // benchmark (RFC 2544)
 ];
 
 function ipv4ToInt(ip) {
   const octets = ip.split(".").map(Number);
-  return ((octets[0] << 24) | (octets[1] << 16) | (octets[2] << 8) | octets[3]) >>> 0;
+  return (
+    ((octets[0] << 24) | (octets[1] << 16) | (octets[2] << 8) | octets[3]) >>> 0
+  );
 }
 
 function isPrivateIPv4(ip) {
@@ -48,7 +50,11 @@ function isPrivateIPv4(ip) {
 }
 
 function isPrivateHostname(hostname) {
-  return hostname === "localhost" || hostname === "localhost.localdomain" || hostname.endsWith(".local");
+  return (
+    hostname === "localhost" ||
+    hostname === "localhost.localdomain" ||
+    hostname.endsWith(".local")
+  );
 }
 
 function parseUrl(raw) {
@@ -123,12 +129,16 @@ class ContentExtractor {
 
       // Enforce response size limit
       const contentLength = res.headers.get("content-length");
-      if (contentLength && parseInt(contentLength, 10) > MAX_RESPONSE_BYTES) return null;
+      if (contentLength && parseInt(contentLength, 10) > MAX_RESPONSE_BYTES)
+        return null;
 
       const contentType = res.headers.get("content-type") || "";
 
       // Read body with size cap
-      const text = await ContentExtractor.#readWithLimit(res, MAX_RESPONSE_BYTES);
+      const text = await ContentExtractor.#readWithLimit(
+        res,
+        MAX_RESPONSE_BYTES,
+      );
       if (text === null) return null;
 
       if (contentType.includes("application/json")) {

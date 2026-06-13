@@ -77,9 +77,7 @@ class PlenarScraper {
       } catch (err) {
         lastError = err;
         if (attempt < this.maxRetries)
-          await new Promise((r) =>
-            setTimeout(r, this.retryDelayMs * attempt),
-          );
+          await new Promise((r) => setTimeout(r, this.retryDelayMs * attempt));
       }
     }
     throw lastError;
@@ -125,7 +123,9 @@ class PlenarScraper {
         if (speeches.length > 0) return speeches;
       }
     } catch (err) {
-      this.log(`XML protocol fetch failed (${err.message}), falling back to DIP API`);
+      this.log(
+        `XML protocol fetch failed (${err.message}), falling back to DIP API`,
+      );
     }
 
     // Fallback: DIP API (Issue #52) — more robust than scraping dserver.
@@ -136,7 +136,9 @@ class PlenarScraper {
       const speeches = await this.fetchProtocolViaDip(session, sitting);
       if (speeches.length > 0) return speeches;
     } catch (err) {
-      this.log(`DIP API fallback failed for ${session}/${sitting}: ${err.message}`);
+      this.log(
+        `DIP API fallback failed for ${session}/${sitting}: ${err.message}`,
+      );
     }
 
     return [];
@@ -268,8 +270,7 @@ class PlenarScraper {
       // Bundestag DIP XML uses namespaced elements.
       // Extract speaker blocks: <rede> elements contain speaker info and text.
       const speeches = [];
-      const redeRegex =
-        /<rede\b[^>]*>([\s\S]*?)<\/rede>/gi;
+      const redeRegex = /<rede\b[^>]*>([\s\S]*?)<\/rede>/gi;
       let match;
 
       while ((match = redeRegex.exec(xmlText)) !== null) {
@@ -388,7 +389,8 @@ class PlenarScraper {
 
     // Try exact match first
     const key = `${lastName}, ${firstName}`;
-    if (nameMap.has(key)) return { politicianId: nameMap.get(key).id, confidence: 0.9 };
+    if (nameMap.has(key))
+      return { politicianId: nameMap.get(key).id, confidence: 0.9 };
 
     // Fuzzy: match last name only
     for (const [name, { id }] of nameMap.entries()) {

@@ -3,7 +3,9 @@ const OpenAI = require("openai");
 const Provider = require("./ai-provider.js");
 const InheritMultiple = require("./helpers/classes.js");
 const UnTooled = require("./helpers/untooled.js");
-const { parseOpencodeZenBasePath } = require("../../../AiProviders/opencodeZen");
+const {
+  parseOpencodeZenBasePath,
+} = require("../../../AiProviders/opencodeZen");
 
 /**
  * The agent provider for the OpenCode Zen provider.

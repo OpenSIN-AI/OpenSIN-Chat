@@ -19,28 +19,61 @@ class LLMSummarizer {
    * @param {Array} params.politicianResults - politician DB results
    * @returns {Promise<string>}
    */
-  static async summarize({ query, searchResults, extractedContent, politicianResults }) {
-    const context = LLMSummarizer.#buildContext(query, searchResults, extractedContent, politicianResults);
+  static async summarize({
+    query,
+    searchResults,
+    extractedContent,
+    politicianResults,
+  }) {
+    const context = LLMSummarizer.#buildContext(
+      query,
+      searchResults,
+      extractedContent,
+      politicianResults,
+    );
 
     try {
-      const { OpenAiLlm } = require("../../utils/agents/aibitat/providers/openai");
+      const {
+        OpenAiLlm,
+      } = require("../../utils/agents/aibitat/providers/openai");
       const { getLLMProvider } = require("../../utils/agents/defaults");
 
       const LLMProvider = await getLLMProvider();
-      if (!LLMProvider) return LLMSummarizer.#buildFallbackSummary(query, searchResults, politicianResults);
+      if (!LLMProvider)
+        return LLMSummarizer.#buildFallbackSummary(
+          query,
+          searchResults,
+          politicianResults,
+        );
 
       const prompt = LLMSummarizer.#buildPrompt(query, context);
       const response = await LLMProvider.sendPrompt(prompt);
-      return response || LLMSummarizer.#buildFallbackSummary(query, searchResults, politicianResults);
+      return (
+        response ||
+        LLMSummarizer.#buildFallbackSummary(
+          query,
+          searchResults,
+          politicianResults,
+        )
+      );
     } catch (err) {
-      return LLMSummarizer.#buildFallbackSummary(query, searchResults, politicianResults);
+      return LLMSummarizer.#buildFallbackSummary(
+        query,
+        searchResults,
+        politicianResults,
+      );
     }
   }
 
   /**
    * Build the context block for the LLM prompt.
    */
-  static #buildContext(query, searchResults, extractedContent, politicianResults) {
+  static #buildContext(
+    query,
+    searchResults,
+    extractedContent,
+    politicianResults,
+  ) {
     const parts = [];
 
     if (searchResults.length) {
@@ -60,7 +93,9 @@ class LLMSummarizer {
     if (politicianResults.length) {
       parts.push("\n## Politiker-Datenbank");
       politicianResults.forEach((p) => {
-        parts.push(`- **${p.fullName}** (${p.party || "?"}) — ${p.faction || ""}, ${p.state || ""}`);
+        parts.push(
+          `- **${p.fullName}** (${p.party || "?"}) — ${p.faction || ""}, ${p.state || ""}`,
+        );
       });
     }
 
@@ -104,7 +139,9 @@ Antworte auf Deutsch im Markdown-Format.`;
     if (politicianResults.length) {
       parts.push("\n## Politiker-Ergebnisse");
       politicianResults.slice(0, 5).forEach((p) => {
-        parts.push(`- **${p.fullName}** (${p.party || "?"}) — ${p.faction || ""}, ${p.state || ""}`);
+        parts.push(
+          `- **${p.fullName}** (${p.party || "?"}) — ${p.faction || ""}, ${p.state || ""}`,
+        );
       });
     }
 

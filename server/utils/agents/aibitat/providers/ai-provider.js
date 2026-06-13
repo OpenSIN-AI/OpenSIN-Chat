@@ -444,7 +444,8 @@ class Provider {
               process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
             ),
           },
-          apiKey: process.env.DOCKER_MODEL_RUNNER_API_KEY || "docker-model-runner",
+          apiKey:
+            process.env.DOCKER_MODEL_RUNNER_API_KEY || "docker-model-runner",
           ...config,
         });
       case "lemonade":
