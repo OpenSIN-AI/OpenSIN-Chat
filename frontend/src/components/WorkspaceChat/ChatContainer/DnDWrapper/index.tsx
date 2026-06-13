@@ -401,7 +401,7 @@ export function DnDFileUploaderProvider({
     setIsEmbedding(false);
     window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT));
     showToast(
-      `${pendingFiles.length} ${pluralize("file", pendingFiles.length)} embedded successfully`,
+      t("dndWrapper.filesEmbedded", { count: pendingFiles.length }),
       "success",
     );
   };
@@ -453,7 +453,7 @@ export default function DnDFileUploaderWrapper({ children }: any) {
               src={DndIcon}
               width={69}
               height={69}
-              alt="Drag and drop icon"
+              alt={t("dndWrapper.dragAndDropIcon")}
             />
             <p className="text-white text-[24px] font-semibold">{t("dndWrapper.addAnything")}</p>
             <p className="text-white text-[16px] text-center">

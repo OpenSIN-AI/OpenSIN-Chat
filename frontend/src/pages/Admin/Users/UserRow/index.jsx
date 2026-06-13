@@ -23,7 +23,7 @@ export default function UserRow({ currUser, user }) {
   const handleSuspend = async () => {
     if (
       !window.confirm(
-        `Are you sure you want to suspend ${user.username}?\nAfter you do this they will be logged out and unable to log back into this instance of OpenSIN Chat until unsuspended by an admin.`,
+        t("userRow.confirmSuspend", { username: user.username }),
       )
     )
       return false;
@@ -34,7 +34,7 @@ export default function UserRow({ currUser, user }) {
     if (!success) showToast(error, "error", { clear: true });
     if (success) {
       showToast(
-        `User ${!suspended ? "has been suspended" : "is no longer suspended"}.`,
+        !suspended ? t("userRow.suspended") : t("userRow.unsuspended"),
         "success",
         { clear: true },
       );
@@ -44,7 +44,7 @@ export default function UserRow({ currUser, user }) {
   const handleDelete = async () => {
     if (
       !window.confirm(
-        `Are you sure you want to delete ${user.username}?\nAfter you do this they will be logged out and unable to use this instance of OpenSIN Chat.\n\nThis action is irreversible.`,
+        t("userRow.confirmDelete", { username: user.username }),
       )
     )
       return false;
@@ -52,7 +52,7 @@ export default function UserRow({ currUser, user }) {
     if (!success) showToast(error, "error", { clear: true });
     if (success) {
       rowRef?.current?.remove();
-      showToast("User deleted from system.", "success", { clear: true });
+      showToast(t("userRow.deleteSuccess"), "success", { clear: true });
     }
   };
 

@@ -325,7 +325,9 @@ export function Chartable({ props }: any) {
               <RadialBar
                 angleAxisId={15}
                 label={{
+                  // eslint-disable-next-line i18next/no-literal-string
                   position: "insideStart",
+                  // eslint-disable-next-line i18next/no-literal-string
                   fill: getTremorColor(color || "blue"),
                 }}
                 dataKey="value"

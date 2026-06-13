@@ -275,7 +275,7 @@ export default function BlockList({
                             }}
                             className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
                             data-tooltip-id="block-action"
-                            data-tooltip-content="Move block up"
+                            data-tooltip-content={t("agentBuilder.blockList.moveBlockUp")}
                           >
                             <CaretUp className="w-3.5 h-3.5" />
                           </button>
@@ -288,7 +288,7 @@ export default function BlockList({
                             }}
                             className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-white hover:bg-theme-action-menu-item-hover transition-colors duration-300"
                             data-tooltip-id="block-action"
-                            data-tooltip-content="Move block down"
+                            data-tooltip-content={t("agentBuilder.blockList.moveBlockDown")}
                           >
                             <CaretDown className="w-3.5 h-3.5" />
                           </button>
@@ -300,7 +300,7 @@ export default function BlockList({
                           }}
                           className="w-7 h-7 flex items-center justify-center rounded-lg bg-theme-bg-primary border border-white/5 text-red-400 hover:bg-red-500/10 hover:border-red-500/20 transition-colors duration-300"
                           data-tooltip-id="block-action"
-                          data-tooltip-content="Delete block"
+                            data-tooltip-content={t("agentBuilder.blockList.deleteBlock")}
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>

@@ -120,6 +120,9 @@ const TRANSLATIONS = {
     addAnything: "Add anything",
     dropFileOrImage: "Drop a file or image here to attach it to your",
     workspaceAutoMagically: "workspace auto-magically.",
+    filesEmbedded_one: "{{count}} file embedded successfully",
+    filesEmbedded_other: "{{count}} files embedded successfully",
+    dragAndDropIcon: "Drag and drop icon",
   },
   common: {
     "workspaces-name": "Workspace Name",
@@ -3930,6 +3933,11 @@ const TRANSLATIONS = {
     suspend: "Suspend",
     unsuspend: "Unsuspend",
     delete: "Delete",
+    confirmSuspend: "Are you sure you want to suspend {{username}}?\nAfter you do this they will be logged out and unable to log back into this instance of OpenSIN Chat until unsuspended by an admin.",
+    confirmDelete: "Are you sure you want to delete {{username}}?\nAfter you do this they will be logged out and unable to use this instance of OpenSIN Chat.\n\nThis action is irreversible.",
+    suspended: "User has been suspended.",
+    unsuspended: "User is no longer suspended.",
+    deleteSuccess: "User deleted from system.",
   },
 
   pullAndReview: {
@@ -4014,6 +4022,7 @@ const TRANSLATIONS = {
     notFoundTitle: "Workspace not found",
     notFoundDescription: "The workspace you're looking for is not available. It may have been deleted or you may not have access to it.",
     returnToHomepage: "Return to homepage",
+    copied: "Copied!",
   },
 
   agentBuilder: {
@@ -4021,6 +4030,9 @@ const TRANSLATIONS = {
       directOutput: "Direct Output",
       directOutputDescription: "The output of this block will be returned directly to the chat. This will prevent any further tool calls from being executed.",
       configurationComingSoon: "Configuration options coming soon...",
+      moveBlockUp: "Move block up",
+      moveBlockDown: "Move block down",
+      deleteBlock: "Delete block",
     },
   },
 
@@ -4028,6 +4040,10 @@ const TRANSLATIONS = {
     editFlow: "Edit Flow",
     deleteFlow: "Delete Flow",
     noDescription: "No description provided",
+    confirmDelete: "Are you sure you want to delete this flow? This action cannot be undone.",
+    flowDeleted: "Flow deleted successfully.",
+    deleteFailed: "Failed to delete flow.",
+    toggleFailed: "Failed to toggle flow",
   },
 
   directory: {

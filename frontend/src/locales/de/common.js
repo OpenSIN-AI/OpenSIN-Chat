@@ -121,6 +121,9 @@ const TRANSLATIONS = {
     addAnything: "Fügen Sie etwas hinzu",
     dropFileOrImage: "Legen Sie eine Datei oder ein Bild hier ab, um es an Ihr",
     workspaceAutoMagically: "Workspace automatisch anzuhängen.",
+    filesEmbedded_one: "{{count}} Datei erfolgreich eingebettet",
+    filesEmbedded_other: "{{count}} Dateien erfolgreich eingebettet",
+    dragAndDropIcon: "Drag-and-Drop-Symbol",
   },
   common: {
     "workspaces-name": "Namen der Workspaces",
@@ -4005,6 +4008,11 @@ const TRANSLATIONS = {
     suspend: "Sperren",
     unsuspend: "Entsperren",
     delete: "Löschen",
+    confirmSuspend: "Sind Sie sicher, dass Sie {{username}} sperren möchten?\nDanach wird er ausgeloggt und kann sich nicht mehr anmelden, bis ein Admin die Sperre aufhebt.",
+    confirmDelete: "Sind Sie sicher, dass Sie {{username}} löschen möchten?\nDanach wird er ausgeloggt und kann diese Instanz nicht mehr nutzen.\n\nDiese Aktion ist unwiderruflich.",
+    suspended: "Benutzer wurde gesperrt.",
+    unsuspended: "Benutzer ist nicht mehr gesperrt.",
+    deleteSuccess: "Benutzer wurde aus dem System gelöscht.",
   },
 
   pullAndReview: {
@@ -4090,6 +4098,7 @@ const TRANSLATIONS = {
     notFoundTitle: "Workspace nicht gefunden",
     notFoundDescription: "Der gesuchte Workspace ist nicht verfügbar. Er wurde möglicherweise gelöscht oder Sie haben keinen Zugriff darauf.",
     returnToHomepage: "Zurück zur Startseite",
+    copied: "Kopiert!",
   },
 
   agentBuilder: {
@@ -4097,6 +4106,9 @@ const TRANSLATIONS = {
       directOutput: "Direkte Ausgabe",
       directOutputDescription: "Die Ausgabe dieses Blocks wird direkt in den Chat zurückgegeben. Dadurch werden weitere Tool-Aufrufe verhindert.",
       configurationComingSoon: "Konfigurationsoptionen folgen in Kürze...",
+      moveBlockUp: "Block nach oben verschieben",
+      moveBlockDown: "Block nach unten verschieben",
+      deleteBlock: "Block löschen",
     },
   },
 
@@ -4104,6 +4116,10 @@ const TRANSLATIONS = {
     editFlow: "Flow bearbeiten",
     deleteFlow: "Flow löschen",
     noDescription: "Keine Beschreibung angegeben",
+    confirmDelete: "Sind Sie sicher, dass Sie diesen Flow löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    flowDeleted: "Flow erfolgreich gelöscht.",
+    deleteFailed: "Flow konnte nicht gelöscht werden.",
+    toggleFailed: "Flow-Status konnte nicht geändert werden",
   },
 
   directory: {

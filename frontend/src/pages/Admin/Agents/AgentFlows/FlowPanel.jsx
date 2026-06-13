@@ -18,16 +18,16 @@ function ManageFlowMenu({ flow, onDelete }) {
     setOpen(false);
     if (
       !window.confirm(
-        "Are you sure you want to delete this flow? This action cannot be undone.",
+        t("agentFlows.confirmDelete"),
       )
     )
       return;
     const { success, error } = await AgentFlows.deleteFlow(flow.uuid);
     if (success) {
-      showToast("Flow deleted successfully.", "success");
+      showToast(t("agentFlows.flowDeleted"), "success");
       onDelete(flow.uuid);
     } else {
-      showToast(error || "Failed to delete flow.", "error");
+      showToast(error || t("agentFlows.deleteFailed"), "error");
     }
   }
 
@@ -89,7 +89,7 @@ export default function FlowPanel({ flow, toggleFlow, enabled, onDelete }) {
       toggleFlow(flow.uuid);
     } catch (error) {
       console.error("Failed to toggle flow:", error);
-      showToast("Failed to toggle flow", "error", { clear: true });
+      showToast(t("agentFlows.toggleFailed"), "error", { clear: true });
     }
   };
 

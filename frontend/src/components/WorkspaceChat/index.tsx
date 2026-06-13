@@ -128,7 +128,7 @@ function copyCodeSnippet(uuid: any) {
   window.navigator.clipboard.writeText(markdown);
   target.classList.add("text-green-500");
   const originalText = target.innerHTML;
-  target.innerText = "Copied!";
+  target.innerText = t("workspaceChat.copied");
   target.setAttribute("disabled", true);
 
   setTimeout(() => {
