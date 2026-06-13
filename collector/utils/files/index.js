@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: File-system utilities for the collector (documents, uploads, hotdir, tmp cleanup).
+// Docs: collector/utils/files/index.js.doc.md
 const { getStoragePath, getCollectorPath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
@@ -169,7 +171,7 @@ async function wipeCollectorStorage() {
   const cleanTmpDir = new Promise((resolve) => {
     const directory = getStoragePath("tmp");
     fs.readdir(directory, (err, files) => {
-      if (err) resolve();
+      if (err) return resolve();
 
       for (const file of files) {
         if (file === ".placeholder") continue;
