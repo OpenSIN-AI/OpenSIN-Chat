@@ -105,6 +105,8 @@ export const getFileSystemSubSkills = (t) => {
   ];
 };
 
+const ARROW = "→";
+
 export default function FileSystemSkillPanel({
   title,
   skill,
@@ -165,7 +167,9 @@ export default function FileSystemSkillPanel({
             {icon &&
               React.createElement(icon, {
                 size: 24,
+                // eslint-disable-next-line i18next/no-literal-string
                 color: "var(--theme-text-primary)",
+                // eslint-disable-next-line i18next/no-literal-string
                 weight: "bold",
               })}
             <label
@@ -194,7 +198,7 @@ export default function FileSystemSkillPanel({
             target="_blank"
             className="text-sky-400 hover:text-sky-500 text-xs font-medium underline"
           >
-            {t("agent.skill.filesystem.learnMore")} &rarr;
+            {t("agent.skill.filesystem.learnMore")} {ARROW}
           </Link>
         </div>
 

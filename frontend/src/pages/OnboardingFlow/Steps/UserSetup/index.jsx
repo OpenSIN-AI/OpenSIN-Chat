@@ -221,7 +221,7 @@ const JustMe = ({
               name="password"
               type="password"
               className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button outline-none placeholder:text-theme-text-secondary"
-              placeholder="Your admin password"
+              placeholder={t("onboarding.userSetup.placeholder.adminPassword")}
               minLength={6}
               required={true}
               autoComplete="off"
@@ -304,7 +304,9 @@ const MyTeam = ({ setMultiUserLoginValid, myTeamSubmitRef, navigate }) => {
                   name="username"
                   type="text"
                   className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button placeholder:text-theme-text-secondary outline-none"
-                  placeholder="Your admin username"
+                  placeholder={t(
+                    "onboarding.userSetup.placeholder.adminUsername",
+                  )}
                   minLength={USERNAME_MIN_LENGTH}
                   maxLength={USERNAME_MAX_LENGTH}
                   required={true}
@@ -326,7 +328,9 @@ const MyTeam = ({ setMultiUserLoginValid, myTeamSubmitRef, navigate }) => {
                   name="password"
                   type="password"
                   className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg block w-full p-2.5 focus:outline-primary-button active:outline-primary-button placeholder:text-theme-text-secondary outline-none"
-                  placeholder="Your admin password"
+                  placeholder={t(
+                    "onboarding.userSetup.placeholder.adminPassword",
+                  )}
                   minLength={8}
                   required={true}
                   autoComplete="off"

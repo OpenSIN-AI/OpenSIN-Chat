@@ -4056,6 +4056,119 @@ const TRANSLATIONS = {
       collectButton: "Collect transcript",
     },
   },
+
+  // ── Batch 11 — i18next/no-literal-string fixes ─────────────────────
+  skills: {
+    gmail: {
+      alt: "GMail",
+      placeholder: {
+        deploymentId: "AKfycb...",
+        apiKey: "Your API key...",
+      },
+    },
+    googleCalendar: {
+      alt: "Google Calendar",
+      placeholder: {
+        deploymentId: "AKfycb...",
+        apiKey: "Your API key...",
+      },
+    },
+    sqlConnector: {
+      alt: "SQL Agent",
+      connectionsTitle: "Your database connections",
+      newConnection: "New SQL connection",
+    },
+    list: {
+      gmail: { alt: "GMail" },
+      googleCalendar: { alt: "Google Calendar" },
+      outlook: { alt: "Outlook" },
+    },
+  },
+  logging: {
+    logRow: {
+      hide: "hide",
+      show: "show",
+      eventMetadata: "Event Metadata",
+    },
+  },
+  chatEmbedWidgets: {
+    title: "Chat Embed",
+    back: "Back",
+  },
+  chats: {
+    clearChats: "Clear Chats",
+    previousPage: "Previous Page",
+    nextPage: "Next Page",
+  },
+  communityHub: {
+    agentFlow: {
+      stepsLabel: "Steps ({{count}}):",
+      import: "Import →",
+    },
+    slashCommand: {
+      command: "Command",
+      prompt: "Prompt",
+      import: "Import →",
+    },
+    hubItems: {
+      recentlyAdded: "Recently Added on OpenSIN Chat Community Hub",
+      exploreLatest: "Explore the latest additions to the OpenSIN Chat Community Hub",
+      exploreMore: "Explore More →",
+    },
+  },
+  telegram: {
+    details: {
+      title: "Details",
+      thread: "Thread",
+      model: "Model",
+    },
+  },
+  embeddingTextSplitter: {
+    placeholder: {
+      chunkSize: "maximum length of vectorized text",
+      chunkOverlap: "maximum length of vectorized text",
+    },
+  },
+  security: {
+    placeholder: {
+      adminUsername: "Your admin username",
+      adminPassword: "Your admin password",
+      instancePassword: "Your Instance Password",
+    },
+  },
+  settings: {
+    customAppName: {
+      placeholder: "OpenSIN Chat",
+      clear: "Clear",
+      save: "Save",
+    },
+    supportEmail: {
+      placeholder: "support@mycompany.com",
+      clear: "Clear",
+      save: "Save",
+    },
+  },
+  transcription: {
+    saving: "Saving...",
+    saveChanges: "Save changes",
+    placeholder: {
+      searchProviders: "Search audio transcription providers",
+    },
+  },
+  onboarding: {
+    home: {
+      appName: "OpenSIN Chat",
+      darkMode: "Switch to dark mode",
+      lightMode: "Switch to light mode",
+    },
+    userSetup: {
+      placeholder: {
+        adminUsername: "Your admin username",
+        adminPassword: "Your admin password",
+      },
+    },
+  },
+
 };
 
 export default TRANSLATIONS;

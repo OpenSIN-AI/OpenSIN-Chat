@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { safeJsonParse } from "@/utils/request";
 
 export default function LogRow({ log }) {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [metadata, setMetadata] = useState(null);
   const [hasMetadata, setHasMetadata] = useState(false);
@@ -45,14 +47,18 @@ export default function LogRow({ log }) {
                 className={`px-2 gap-x-1 flex items-center justify-center transform transition-transform duration-200`}
               >
                 <CaretUp weight="bold" size={20} />
-                <p className="text-xs text-white/50 w-[20px]">hide</p>
+                <p className="text-xs text-white/50 w-[20px]">
+                  {t("logging.logRow.hide")}
+                </p>
               </td>
             ) : (
               <td
                 className={`px-2 gap-x-1 flex items-center justify-center transform transition-transform duration-200`}
               >
                 <CaretDown weight="bold" size={20} />
-                <p className="text-xs text-white/50 w-[20px]">show</p>
+                <p className="text-xs text-white/50 w-[20px]">
+                  {t("logging.logRow.show")}
+                </p>
               </td>
             )}
           </div>
@@ -64,6 +70,7 @@ export default function LogRow({ log }) {
 }
 
 const EventMetadata = ({ metadata, expanded = false }) => {
+  const { t } = useTranslation();
   if (!metadata || !expanded) return null;
   return (
     <tr className="bg-theme-bg-primary">
@@ -71,7 +78,7 @@ const EventMetadata = ({ metadata, expanded = false }) => {
         colSpan="2"
         className="px-6 py-4 font-medium text-theme-text-primary rounded-l-2xl"
       >
-        Event Metadata
+        {t("logging.logRow.eventMetadata")}
       </td>
       <td colSpan="4" className="px-6 py-4 rounded-r-2xl">
         <div className="w-full rounded-lg bg-theme-bg-secondary p-2 text-white shadow-sm border-white/10 border bg-opacity-10">

@@ -33,10 +33,15 @@ export default function JobSchedule({
       <div className="flex gap-1 mb-2 p-1 bg-theme-settings-input-bg rounded-lg w-fit">
         {[
           {
+            // eslint-disable-next-line i18next/no-literal-string
             value: "builder",
             label: t("scheduledJobs.modal.modeBuilder"),
           },
-          { value: "custom", label: t("scheduledJobs.modal.modeCustom") },
+          {
+            // eslint-disable-next-line i18next/no-literal-string
+            value: "custom",
+            label: t("scheduledJobs.modal.modeCustom"),
+          },
         ].map((tab) => (
           <button
             key={tab.value}
@@ -81,7 +86,7 @@ export default function JobSchedule({
         <code className="text-theme-text-primary">{schedule}</code>
         {schedule && (
           <span className="ml-2">
-            — {humanizeCron(schedule, i18n.language)}
+            {`— ${humanizeCron(schedule, i18n.language)}`}
           </span>
         )}
       </p>

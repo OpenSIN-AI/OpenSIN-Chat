@@ -11,7 +11,7 @@ export default function DetailsSection({ config, onDisconnected }) {
   return (
     <div className="flex flex-col gap-y-[18px]">
       <p className="text-base font-semibold text-white light:text-slate-900">
-        Details
+        {t("telegram.details.title")}
       </p>
       <div className="border border-zinc-700 light:border-slate-200 rounded-xl p-4 w-[700px]">
         <div className="flex flex-col gap-y-4 text-sm">
@@ -19,8 +19,14 @@ export default function DetailsSection({ config, onDisconnected }) {
             label={t("telegram.connected.workspace")}
             value={config.default_workspace}
           />
-          <DetailRow label="Thread" value={config.active_thread_name} />
-          <DetailRow label="Model" value={config.chat_model} />
+          <DetailRow
+            label={t("telegram.details.thread")}
+            value={config.active_thread_name}
+          />
+          <DetailRow
+            label={t("telegram.details.model")}
+            value={config.chat_model}
+          />
           <DetailRow
             label={t("telegram.connected.bot-link")}
             value={

@@ -31,14 +31,18 @@ export default function OnboardingHome() {
 
       <div className="relative z-10 flex justify-center pt-[58px]">
         <p className="text-white/80 light:text-slate-600 text-3xl font-semibold drop-shadow-lg">
-          OpenSIN Chat
+          {t("onboarding.home.appName")}
         </p>
       </div>
 
       <button
         type="button"
         onClick={toggleTheme}
-        aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
+        aria-label={
+          isLight
+            ? t("onboarding.home.darkMode")
+            : t("onboarding.home.lightMode")
+        }
         className="absolute top-6 right-6 z-20 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 light:bg-zinc-900/10 light:hover:bg-zinc-900/20 backdrop-blur-sm text-white light:text-zinc-900 transition-colors duration-200"
       >
         {isLight ? (

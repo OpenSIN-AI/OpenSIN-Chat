@@ -5,17 +5,19 @@ import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { readableType, typeToPath } from "../../utils";
 import useCommunityHubTrending from "@/hooks/useCommunityHubTrending";
+import { useTranslation } from "react-i18next";
 
 export default function HubItems() {
+  const { t } = useTranslation();
   const { exploreItems, isLoading } = useCommunityHubTrending();
   return (
     <div className="w-full flex flex-col gap-y-1 pb-6 pt-6">
       <div className="flex flex-col gap-y-2 mb-4">
         <p className="text-base font-semibold text-theme-text-primary">
-          Recently Added on OpenSIN Chat Community Hub
+          {t("communityHub.hubItems.recentlyAdded")}
         </p>
         <p className="text-xs text-theme-text-secondary">
-          Explore the latest additions to the OpenSIN Chat Community Hub
+          {t("communityHub.hubItems.exploreLatest")}
         </p>
       </div>
       <HubCategory loading={isLoading} exploreItems={exploreItems} />
@@ -24,6 +26,7 @@ export default function HubItems() {
 }
 
 function HubCategory({ loading, exploreItems }) {
+  const { t } = useTranslation();
   if (loading) return <HubItemCardSkeleton />;
   return (
     <div className="flex flex-col gap-4">
@@ -43,7 +46,7 @@ function HubCategory({ loading, exploreItems }) {
                   rel="noopener noreferrer"
                   className="text-primary-button hover:text-primary-button/80 text-sm"
                 >
-                  Explore More →
+                  {t("communityHub.hubItems.exploreMore")}
                 </a>
               )}
             </div>

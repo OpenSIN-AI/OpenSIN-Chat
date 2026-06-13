@@ -4132,6 +4132,119 @@ const TRANSLATIONS = {
       collectButton: "Transkript sammeln",
     },
   },
+
+  // ── Batch 11 — i18next/no-literal-string fixes ─────────────────────
+  skills: {
+    gmail: {
+      alt: "GMail",
+      placeholder: {
+        deploymentId: "AKfycb...",
+        apiKey: "Ihr API-Schlüssel...",
+      },
+    },
+    googleCalendar: {
+      alt: "Google Kalender",
+      placeholder: {
+        deploymentId: "AKfycb...",
+        apiKey: "Ihr API-Schlüssel...",
+      },
+    },
+    sqlConnector: {
+      alt: "SQL-Agent",
+      connectionsTitle: "Ihre Datenbankverbindungen",
+      newConnection: "Neue SQL-Verbindung",
+    },
+    list: {
+      gmail: { alt: "GMail" },
+      googleCalendar: { alt: "Google Kalender" },
+      outlook: { alt: "Outlook" },
+    },
+  },
+  logging: {
+    logRow: {
+      hide: "ausblenden",
+      show: "anzeigen",
+      eventMetadata: "Ereignis-Metadaten",
+    },
+  },
+  chatEmbedWidgets: {
+    title: "Chat-Einbettung",
+    back: "Zurück",
+  },
+  chats: {
+    clearChats: "Chats löschen",
+    previousPage: "Vorherige Seite",
+    nextPage: "Nächste Seite",
+  },
+  communityHub: {
+    agentFlow: {
+      stepsLabel: "Schritte ({{count}}):",
+      import: "Importieren →",
+    },
+    slashCommand: {
+      command: "Befehl",
+      prompt: "Prompt",
+      import: "Importieren →",
+    },
+    hubItems: {
+      recentlyAdded: "Kürzlich hinzugefügt im OpenSIN Chat Community Hub",
+      exploreLatest: "Entdecken Sie die neuesten Ergänzungen im OpenSIN Chat Community Hub",
+      exploreMore: "Mehr erkunden →",
+    },
+  },
+  telegram: {
+    details: {
+      title: "Details",
+      thread: "Thread",
+      model: "Modell",
+    },
+  },
+  embeddingTextSplitter: {
+    placeholder: {
+      chunkSize: "maximale Länge des vektorisierten Textes",
+      chunkOverlap: "maximale Länge des vektorisierten Textes",
+    },
+  },
+  security: {
+    placeholder: {
+      adminUsername: "Ihr Admin-Benutzername",
+      adminPassword: "Ihr Admin-Passwort",
+      instancePassword: "Ihr Instanz-Passwort",
+    },
+  },
+  settings: {
+    customAppName: {
+      placeholder: "OpenSIN Chat",
+      clear: "Löschen",
+      save: "Speichern",
+    },
+    supportEmail: {
+      placeholder: "support@meinefirma.com",
+      clear: "Löschen",
+      save: "Speichern",
+    },
+  },
+  transcription: {
+    saving: "Wird gespeichert...",
+    saveChanges: "Änderungen speichern",
+    placeholder: {
+      searchProviders: "Audio-Transkriptionsanbieter durchsuchen",
+    },
+  },
+  onboarding: {
+    home: {
+      appName: "OpenSIN Chat",
+      darkMode: "Zum dunklen Modus wechseln",
+      lightMode: "Zum hellen Modus wechseln",
+    },
+    userSetup: {
+      placeholder: {
+        adminUsername: "Ihr Admin-Benutzername",
+        adminPassword: "Ihr Admin-Passwort",
+      },
+    },
+  },
+
 };
 
 export default TRANSLATIONS;

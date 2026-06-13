@@ -92,7 +92,7 @@ export default function GoogleCalendarSkillPanel({
           <div className="flex items-center gap-x-2">
             <img
               src={GoogleCalendarIcon}
-              alt="Google Calendar"
+              alt={t("skills.googleCalendar.alt")}
               width={24}
               height={24}
             />
@@ -241,7 +241,7 @@ function ConfigurationSection({
                 setDeploymentId(e.target.value);
                 setHasChanges(true);
               }}
-              placeholder="AKfycb..."
+              placeholder={t("skills.googleCalendar.placeholder.deploymentId")}
               className="w-full px-3 py-2 bg-theme-bg-primary border border-theme-sidebar-border rounded-lg text-theme-text-primary text-sm placeholder:text-theme-text-secondary/50"
             />
           </div>
@@ -272,7 +272,7 @@ function ConfigurationSection({
                 setApiKey(e.target.value);
                 setHasChanges(true);
               }}
-              placeholder="Your API key..."
+              placeholder={t("skills.googleCalendar.placeholder.apiKey")}
               className="w-full px-3 py-2 bg-theme-bg-primary border border-theme-sidebar-border rounded-lg text-theme-text-primary text-sm placeholder:text-theme-text-secondary/50"
             />
           </div>

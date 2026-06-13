@@ -131,7 +131,9 @@ export default function EmbeddingTextSplitterPreference() {
                     max={settings?.max_embed_chunk_size || 1000}
                     onWheel={(e) => e?.currentTarget?.blur()}
                     className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                    placeholder="maximum length of vectorized text"
+                    placeholder={t(
+                      "embeddingTextSplitter.placeholder.chunkSize",
+                    )}
                     defaultValue={
                       isNullOrNaN(settings?.text_splitter_chunk_size)
                         ? 1000
@@ -141,8 +143,7 @@ export default function EmbeddingTextSplitterPreference() {
                     autoComplete="off"
                   />
                   <p className="text-xs text-white/40 mt-2">
-                    {t("text.size.recommend")}{" "}
-                    {numberWithCommas(settings?.max_embed_chunk_size || 1000)}.
+                    {`${t("text.size.recommend")} ${numberWithCommas(settings?.max_embed_chunk_size || 1000)}.`}
                   </p>
                 </div>
               </div>
@@ -163,7 +164,9 @@ export default function EmbeddingTextSplitterPreference() {
                     min={0}
                     onWheel={(e) => e?.currentTarget?.blur()}
                     className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                    placeholder="maximum length of vectorized text"
+                    placeholder={t(
+                      "embeddingTextSplitter.placeholder.chunkOverlap",
+                    )}
                     defaultValue={
                       isNullOrNaN(settings?.text_splitter_chunk_overlap)
                         ? 20

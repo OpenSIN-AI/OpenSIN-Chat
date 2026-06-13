@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import { VisibilityIcon } from "./generic";
 import { safeJsonParse } from "@/utils/request";
+import { useTranslation } from "react-i18next";
 
 export default function AgentFlowHubCard({ item }) {
+  const { t } = useTranslation();
   const flow = safeJsonParse(item.flow, { steps: [] });
   return (
     <Link
@@ -18,7 +20,7 @@ export default function AgentFlowHubCard({ item }) {
       <div className="flex flex-col gap-2 flex-1">
         <p className="text-white/60 text-xs mt-1">{item.description}</p>
         <label className="text-white/60 text-xs font-semibold mt-4">
-          Steps ({flow.steps.length}):
+          {t("communityHub.agentFlow.stepsLabel", { count: flow.steps.length })}
         </label>
         <p className="text-white/60 text-xs bg-zinc-900 light:bg-slate-200 px-2 py-1 rounded-md font-mono border border-slate-800 light:border-slate-300">
           <ul className="list-disc pl-4">
@@ -33,7 +35,7 @@ export default function AgentFlowHubCard({ item }) {
           to={paths.communityHub.importItem(item.importId)}
           className="text-primary-button hover:text-primary-button/80 text-sm font-medium px-3 py-1.5 rounded-md bg-black/30 light:bg-slate-200 group-hover:bg-black/50 light:group-hover:bg-slate-300 transition-all"
         >
-          Import →
+          {t("communityHub.agentFlow.import")}
         </Link>
       </div>
     </Link>

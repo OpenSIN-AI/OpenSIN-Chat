@@ -8,6 +8,7 @@ import { useModal } from "@/hooks/useModal";
 import SQLAgentImage from "@/media/agents/sql-agent.png";
 import Toggle from "@/components/lib/Toggle";
 import { Tooltip } from "react-tooltip";
+import { useTranslation } from "react-i18next";
 
 export default function AgentSQLConnectorSelection({
   skill,
@@ -18,6 +19,7 @@ export default function AgentSQLConnectorSelection({
   setHasChanges,
   hasChanges = false,
 }) {
+  const { t } = useTranslation();
   const { isOpen, openModal, closeModal } = useModal();
   const [connections, setConnections] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -119,7 +121,7 @@ export default function AgentSQLConnectorSelection({
           </div>
           <img
             src={SQLAgentImage}
-            alt="SQL Agent"
+            alt={t("skills.sqlConnector.alt")}
             className="w-full rounded-md"
           />
           <p className="text-theme-text-secondary text-opacity-60 text-xs font-medium py-1.5">
@@ -140,7 +142,7 @@ export default function AgentSQLConnectorSelection({
               />
               <div className="flex flex-col mt-2 gap-y-2">
                 <p className="text-theme-text-primary font-semibold text-sm">
-                  Your database connections
+                  {t("skills.sqlConnector.connectionsTitle")}
                 </p>
                 <div className="flex flex-col gap-y-3">
                   {loading ? (
@@ -178,7 +180,7 @@ export default function AgentSQLConnectorSelection({
                         />
                       </div>
                       <p className="text-left text-theme-text-primary text-sm">
-                        New SQL connection
+                        {t("skills.sqlConnector.newConnection")}
                       </p>
                     </div>
                   </button>
