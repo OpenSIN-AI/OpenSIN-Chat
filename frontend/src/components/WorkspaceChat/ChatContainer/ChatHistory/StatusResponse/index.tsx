@@ -15,8 +15,10 @@ export default function StatusResponse({
   const currentThought = messages[messages.length - 1];
   const previousThoughts = messages.slice(0, -1);
 
+  if (!messages.length && !isThinking) return null;
+
   function handleExpandClick() {
-    if (!previousThoughts.length > 0) return;
+    if (previousThoughts.length === 0) return;
     setIsExpanded(!isExpanded);
   }
 
