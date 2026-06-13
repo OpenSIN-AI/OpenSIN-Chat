@@ -204,7 +204,7 @@ class PoliticianVectorStore {
       const exists = await this.vectorDb.hasNamespace(this.namespace);
       const count = await this.vectorDb.namespaceCount(this.namespace);
       return { exists, count };
-    } catch (err) {
+    } catch {
       return { exists: false, count: 0 };
     }
   }

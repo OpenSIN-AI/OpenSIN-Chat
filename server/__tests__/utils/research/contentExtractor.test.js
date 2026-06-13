@@ -1,13 +1,36 @@
 // SPDX-License-Identifier: MIT
 const { ContentExtractor } = require("../../../utils/research/contentExtractor");
 
-function mockFetchOnce({ ok = true, contentType = "text/html", body = "" }) {
-  return jest.spyOn(global, "fetch").mockResolvedValue({
+function mockFetchResponse({ ok = true, contentType = "text/html", body = "" }) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(body);
+  let chunkIndex = 0;
+  return {
     ok,
-    headers: { get: () => contentType },
-    text: async () => body,
-    json: async () => JSON.parse(body),
-  });
+    headers: {
+      get: (name) => {
+        if (name.toLowerCase() === "content-type") return contentType;
+        return null;
+      },
+    },
+    body: {
+      getReader: () => ({
+        read: async () => {
+          if (chunkIndex === 0) {
+            chunkIndex++;
+            return { done: false, value: data };
+          }
+          return { done: true };
+        },
+        cancel: jest.fn(),
+        releaseLock: jest.fn(),
+      }),
+    },
+  };
+}
+
+function mockFetchOnce({ ok = true, contentType = "text/html", body = "" }) {
+  return jest.spyOn(global, "fetch").mockResolvedValue(mockFetchResponse({ ok, contentType, body }));
 }
 
 describe("ContentExtractor.extract", () => {

@@ -20,6 +20,18 @@ jest.mock("../../../utils/MCP", () => {
 jest.mock("../../../utils/memories", () => ({
   promptWithMemories: jest.fn(({ systemPrompt }) => Promise.resolve(systemPrompt)),
 }));
+jest.mock("../../../utils/agents/aibitat/plugins", () => {
+  const plugins = {
+    memory: { name: "rag-memory" },
+    docSummarizer: { name: "document-summarizer" },
+    webScraping: { name: "web-scraping" },
+    requestUserInput: { name: "request-user-input", plugin: [{ name: "ask-user" }] },
+  };
+  for (const key of Object.keys(plugins)) {
+    plugins[plugins[key].name] = plugins[key];
+  }
+  return plugins;
+});
 
 const Provider = require("../../../utils/agents/aibitat/providers/ai-provider");
 const { WORKSPACE_AGENT } = require("../../../utils/agents/defaults");

@@ -143,7 +143,6 @@ function utilEndpoints(app) {
   app.get("/utils/filesystem", async (_, response) => {
     try {
       const os = require("os");
-      const path = require("path");
       const disk = await getDiskStorage();
       response.status(200).json({
         platform: os.platform(),

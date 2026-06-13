@@ -424,7 +424,7 @@ async function streamChat({
     return;
   }
 
-  responseInterceptor = new PassThrough({});
+  let responseInterceptor = new PassThrough({});
   responseInterceptor.on("data", (chunk) => {
     try {
       const originalData = JSON.parse(chunk.toString().split("data: ")[1]);

@@ -18,7 +18,6 @@
  *   SUPABASE_STORAGE_BUCKET_ASSETS     "assets"
  */
 
-const path = require("path");
 const fs = require("fs");
 
 // Lazy-loaded to avoid crashing when Supabase is not configured.
@@ -140,7 +139,7 @@ async function uploadFile({
   if (deleteLocal) {
     try {
       fs.unlinkSync(localPath);
-    } catch (_) {
+    } catch {
       // Non-fatal: local file may have already been removed.
     }
   }

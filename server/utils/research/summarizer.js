@@ -7,8 +7,6 @@
  * and generates a structured summary using the configured LLM.
  */
 
-const { SystemSettings } = require("../../models/systemSettings");
-
 class LLMSummarizer {
   /**
    * Summarize research results.
@@ -33,9 +31,6 @@ class LLMSummarizer {
     );
 
     try {
-      const {
-        OpenAiLlm,
-      } = require("../../utils/agents/aibitat/providers/openai");
       const { getLLMProvider } = require("../../utils/agents/defaults");
 
       const LLMProvider = await getLLMProvider();
@@ -56,7 +51,7 @@ class LLMSummarizer {
           politicianResults,
         )
       );
-    } catch (err) {
+    } catch {
       return LLMSummarizer.#buildFallbackSummary(
         query,
         searchResults,

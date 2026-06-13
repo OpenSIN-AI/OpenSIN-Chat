@@ -1,3 +1,4 @@
+/* global jest */
 // SPDX-License-Identifier: MIT
 // Mock buffer-equal-constant-time for Node.js 18+ compatibility
 // This package is deprecated and doesn't work with newer Node.js versions

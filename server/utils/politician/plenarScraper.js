@@ -95,17 +95,6 @@ class PlenarScraper {
   }
 
   /**
-   * Build the PDF protocol URL for a given session/sitting.
-   * @param {number} session
-   * @param {number} sitting
-   * @returns {string}
-   */
-  #protocolPdfUrl(session, sitting) {
-    const padded = String(sitting).padStart(5, "0");
-    return `${DIP_BASE}/btp/${session}/${session}${padded}.pdf`;
-  }
-
-  /**
    * Fetch and parse a single plenary protocol by session/sitting number.
    * Prefers XML format (structured) over PDF.
    * @param {number} session - Wahlperiode (e.g. 20)
@@ -358,7 +347,7 @@ class PlenarScraper {
    * @param {number} session - Wahlperiode (e.g. 20)
    * @returns {Promise<Array<{sitting: number, date: string}>>}
    */
-  async fetchSessionIndex(session) {
+  async fetchSessionIndex(_session) {
     const url = `${BUNDESTAG_BASE}/resource/blob/914190/7a7b5a2b73d6a5b7c3a2b7c8a0/20001-data.xml`;
     try {
       const res = await this.#fetch(url);

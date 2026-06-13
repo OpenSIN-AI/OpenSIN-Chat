@@ -12,6 +12,11 @@ function setProvider(provider, apiKey = null) {
     if (label === "agent_search_api_key") return apiKey ? { value: apiKey } : null;
     return null;
   });
+  if (apiKey) {
+    process.env.AGENT_SERPAPI_API_KEY = apiKey;
+  } else {
+    delete process.env.AGENT_SERPAPI_API_KEY;
+  }
 }
 
 describe("WebSearchEngine.search", () => {

@@ -14,7 +14,6 @@
 const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
-const config = require("../config");
 const { getStoragePath } = require("../../paths");
 const { runPool } = require("../agentPool");
 const { chat } = require("../llm");
@@ -247,7 +246,7 @@ class CrossCheckPipeline {
    * Web-Recherche-Zwischenstände sind nicht checkpointfähig, ein Neustart
    * der Verifikation ist günstig und deterministisch nachholbar.
    */
-  static restorePersisted(factStore) {
+  static restorePersisted(_factStore) {
     for (const snapshot of loadAllXJobs()) {
       if (jobs.has(snapshot.id)) continue;
       const job = { ...snapshot, cancelled: false };

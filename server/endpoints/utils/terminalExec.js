@@ -12,20 +12,20 @@ const execFileAsync = promisify(execFile);
  * Each entry maps a command name to its allowed argument patterns (regex per arg).
  */
 const COMMAND_WHITELIST = {
-  ls: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_.\/\-]*$/ },
+  ls: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
   pwd: { maxArgs: 0, argPattern: null },
-  echo: { maxArgs: 5, argPattern: /^[a-zA-Z0-9_.\/\-\s"'=]*$/ },
-  date: { maxArgs: 1, argPattern: /^[+%a-zA-Z0-9_\/\-\s]*$/ },
+  echo: { maxArgs: 5, argPattern: /^[a-zA-Z0-9_.\s"'=/-]*$/ },
+  date: { maxArgs: 1, argPattern: /^[+%a-zA-Z0-9_\s/-]*$/ },
   whoami: { maxArgs: 0, argPattern: null },
   uname: { maxArgs: 1, argPattern: /^-[a-z]+$/ },
   env: { maxArgs: 0, argPattern: null },
   uptime: { maxArgs: 0, argPattern: null },
-  df: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_.\/\-]*$/ },
-  du: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_.\/\-]*$/ },
-  cat: { maxArgs: 1, argPattern: /^[a-zA-Z0-9_.\/\-]*$/ },
-  head: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_.\/\-]*$/ },
-  tail: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_.\/\-]*$/ },
-  wc: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_.\/\-]*$/ },
+  df: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  du: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  cat: { maxArgs: 1, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  head: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  tail: { maxArgs: 3, argPattern: /^[a-zA-Z0-9_./-]*$/ },
+  wc: { maxArgs: 2, argPattern: /^[a-zA-Z0-9_./-]*$/ },
 };
 
 /** Shell metacharacters that must never appear in any argument. */

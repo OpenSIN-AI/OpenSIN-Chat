@@ -206,7 +206,7 @@ class AgentOrchestrator {
     return { query, politicianResults: results.slice(0, 10) };
   }
 
-  async #stepDeepResearch(data, options, previousSteps) {
+  async #stepDeepResearch(data, options, _previousSteps) {
     const { getResearchPipeline } = require("../research");
     const pipeline = getResearchPipeline();
 

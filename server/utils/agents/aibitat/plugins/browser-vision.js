@@ -271,7 +271,7 @@ const browserVision = {
             },
             additionalProperties: false,
           },
-          handler: async function ({ url, selector }) {
+          handler: async function ({ url, selector: _selector }) {
             try {
               this.super.introspect(
                 `${this.caller}: Fetching page text from ${url} ...`,

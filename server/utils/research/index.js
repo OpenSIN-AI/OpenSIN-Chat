@@ -9,7 +9,6 @@
 
 const { v4: uuidv4 } = require("uuid");
 const { SystemSettings } = require("../../models/systemSettings");
-const prisma = require("../prisma");
 const { BoundedJobStore } = require("../boundedJobStore");
 
 class ResearchPipeline {
@@ -297,7 +296,7 @@ class ResearchPipeline {
    * @param {string} provider
    * @returns {Function|null}
    */
-  #getSearchEngine(provider) {
+  #getSearchEngine(_provider) {
     const { WebSearchEngine } = require("./webSearchEngine");
     return WebSearchEngine.search.bind(WebSearchEngine);
   }

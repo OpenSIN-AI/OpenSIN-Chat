@@ -18,7 +18,6 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const Database = require("better-sqlite3");
-const config = require("./config");
 const { getStoragePath } = require("../paths");
 
 const DB_FILE = getStoragePath("pdf-analysis", "facts.sqlite");

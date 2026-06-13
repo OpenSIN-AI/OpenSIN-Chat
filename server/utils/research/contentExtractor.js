@@ -159,7 +159,7 @@ class ContentExtractor {
       }
 
       return null;
-    } catch (err) {
+    } catch {
       return null;
     }
   }

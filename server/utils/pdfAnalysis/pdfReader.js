@@ -99,7 +99,7 @@ class PdfReader {
         disableFontFace: true,
         isEvalSupported: false,
       }).promise;
-    } catch (rangeError) {
+    } catch {
       // Fallback nur für kleine/defekte Dateien (z.B. ohne gültige XRef,
       // linearisierungs-feindliche Generatoren): voller Buffer.
       const data = new Uint8Array(fs.readFileSync(this.pdfPath));
