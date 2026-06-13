@@ -59,9 +59,13 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
       name,
     );
     if (message || !newFolder) {
-      showToast(t("threadFolderItem.folderCreateFailed", { message }), "error", {
-        clear: true,
-      });
+      showToast(
+        t("threadFolderItem.folderCreateFailed", { message }),
+        "error",
+        {
+          clear: true,
+        },
+      );
       return;
     }
     invalidateThreads(workspace.slug);
@@ -234,7 +238,7 @@ export default function ThreadFolderItem({
             <span className="text-sm text-white light:text-theme-text-primary truncate">
               {name}
               <span className="ml-1 text-white/40 light:text-theme-text-secondary text-xs">
-                ({threads.length})
+                {t("threadFolder.folderThreadCount", { count: threads.length })}
               </span>
             </span>
           )}

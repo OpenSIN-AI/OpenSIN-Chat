@@ -74,7 +74,9 @@ export default function AsyncTTSMessage({ slug, chatId }: any) {
             : t("chat_window.tts_speak_message")
         }
         className="border-none text-zinc-300 light:text-slate-500"
-        aria-label={speaking ? "Pause speech" : "Speak message"}
+        aria-label={
+          speaking ? t("common.pauseSpeech") : t("common.speakMessage")
+        }
       >
         {speaking ? (
           <PauseCircle size={18} className="mb-1" />

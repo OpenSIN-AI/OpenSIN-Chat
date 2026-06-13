@@ -83,7 +83,7 @@ export default function SingleUserAuth() {
           <div className="w-full flex flex-col gap-y-3">
             <div className="w-full flex flex-col gap-y-2">
               <label className="text-zinc-300 light:text-slate-800 text-sm">
-                Password
+                {t("login.single-user.password")}
               </label>
               <input
                 name="password"
@@ -93,7 +93,11 @@ export default function SingleUserAuth() {
                 autoComplete="off"
               />
             </div>
-            {error && <p className="text-red-400 text-sm">Error: {error}</p>}
+            {error && (
+              <p className="text-red-400 text-sm">
+                {t("login.multi-user.errorPrefix", { error })}
+              </p>
+            )}
           </div>
         </div>
         <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">

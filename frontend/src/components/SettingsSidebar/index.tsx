@@ -220,7 +220,7 @@ const SidebarOptions = ({ user = null, t }: any) => (
               roles: ["admin"],
             },
             {
-              btnText: "System Health",
+              btnText: t("settingsSidebar.systemHealth"),
               href: paths.settings.systemHealth(),
               flex: true,
               roles: ["admin"],
@@ -291,7 +291,7 @@ const SidebarOptions = ({ user = null, t }: any) => (
               roles: ["admin", "manager"],
             },
             {
-              btnText: "Default System Prompt",
+              btnText: t("settingsSidebar.defaultSystemPrompt"),
               href: paths.settings.defaultSystemPrompt(),
               flex: true,
               roles: ["admin"],
@@ -456,6 +456,7 @@ const SidebarOptions = ({ user = null, t }: any) => (
 );
 
 function HoldToReveal({ children, holdForMs = 3_000 }: any) {
+  const { t } = useTranslation();
   let timeout = null;
   const [showing, setShowing] = useState(
     window.localStorage.getItem(
@@ -468,7 +469,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
       if (!["Control", "Meta"].includes(e.key) || timeout !== null) return;
       timeout = setTimeout(() => {
         setShowing(true);
-        showToast("Experimental feature previews unlocked!");
+        showToast(t("settingsSidebar.experimentalFeaturesUnlocked"));
         window.localStorage.setItem(
           "openafd_experimental_feature_preview_unlocked",
           "enabled",

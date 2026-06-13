@@ -5,6 +5,8 @@ import Admin from "@/models/admin";
 import { Trash } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
+const DASH = "--";
+
 export default function InviteRow({ invite }) {
   const { t } = useTranslation();
   const rowRef = useRef(null);
@@ -53,8 +55,8 @@ export default function InviteRow({ invite }) {
         <td className="px-6">
           {invite.claimedBy
             ? invite.claimedBy?.username || t("inviteRow.deletedUser")
-            : "--"}
-        </td>
+            : DASH}
+         </td>
           <td className="px-6">{invite.createdBy?.username || t("inviteRow.deletedUser")}</td>
         <td className="px-6">{invite.createdAt}</td>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">

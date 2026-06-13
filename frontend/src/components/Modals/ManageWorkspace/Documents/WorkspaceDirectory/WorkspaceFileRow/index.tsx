@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { memo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
   formatDateTimeAsMoment,
   getFileExtension,
@@ -122,6 +123,7 @@ export default function WorkspaceFileRow({
 }
 
 const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
+  const { t } = useTranslation();
   const [pinned, setPinned] = useState(
     item?.pinnedWorkspaces?.includes(workspace.id) || false,
   );
@@ -172,8 +174,12 @@ const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
       {pinned ? (
         <div className="bg-theme-settings-input-active group-hover:bg-red-500/20 rounded-3xl whitespace-nowrap">
           <p className="text-xs px-2 py-0.5 group-hover:text-red-500">
-            <span className="group-hover:hidden">Pinned</span>
-            <span className="hidden group-hover:inline">Un-pin</span>
+            <span className="group-hover:hidden">
+              {t("workspaceFileRow.pinned")}
+            </span>
+            <span className="hidden group-hover:inline">
+              {t("workspaceFileRow.unpin")}
+            </span>
           </p>
         </div>
       ) : (

@@ -250,12 +250,16 @@ export default function MultiUserAuth() {
       if (success) {
         window.localStorage.removeItem("resetToken");
         setShowResetPasswordForm(false);
-        showToast(t("multiUserAuth.resetPassword.success"), "success", { clear: true });
+        showToast(t("multiUserAuth.resetPassword.success"), "success", {
+          clear: true,
+        });
       } else {
         showToast(error, "error", { clear: true });
       }
     } else {
-      showToast(t("multiUserAuth.resetPassword.invalidToken"), "error", { clear: true });
+      showToast(t("multiUserAuth.resetPassword.invalidToken"), "error", {
+        clear: true,
+      });
     }
   };
 
@@ -322,7 +326,11 @@ export default function MultiUserAuth() {
                 autoComplete="off"
               />
             </div>
-            {error && <p className="text-red-400 text-sm">Error: {error}</p>}
+            {error && (
+              <p className="text-red-400 text-sm">
+                {t("login.multi-user.errorPrefix", { error })}
+              </p>
+            )}
           </div>
         </div>
         <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
@@ -340,6 +348,7 @@ export default function MultiUserAuth() {
             className="text-zinc-200 light:text-zinc-600 hover:text-sky-300 light:hover:text-sky-600 hover:underline text-sm flex gap-x-1"
             onClick={handleResetPassword}
           >
+            {/* eslint-disable-next-line i18next/no-literal-string */}
             {t("login.multi-user.forgot-pass")}?
             <b className="font-semibold text-sky-300 light:text-sky-600">
               {t("login.multi-user.reset")}

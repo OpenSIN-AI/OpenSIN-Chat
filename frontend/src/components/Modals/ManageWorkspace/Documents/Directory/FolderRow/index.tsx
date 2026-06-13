@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import FileRow from "../FileRow";
 import { CaretDown, Folder } from "@phosphor-icons/react";
 import { middleTruncate } from "@/utils/directories";
@@ -13,6 +14,7 @@ export default function FolderRow({
   isSelected,
   autoExpanded = false,
 }: any) {
+  const { t } = useTranslation();
   const [expanded, setExpanded] = useState(autoExpanded);
 
   const handleExpandClick: any = (event) => {
@@ -64,7 +66,7 @@ export default function FolderRow({
           </p>
           {totalItems > 0 && (
             <span className="text-theme-text-secondary text-[10px] font-medium ml-1.5 shrink-0">
-              ({totalItems})
+              {t("directory.folderItemCount", { count: totalItems })}
             </span>
           )}
         </div>

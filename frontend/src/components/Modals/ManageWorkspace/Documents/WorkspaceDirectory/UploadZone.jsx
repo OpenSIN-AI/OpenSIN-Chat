@@ -3,7 +3,6 @@ import { EmbeddingFileRow } from "./EmbeddingFileRow";
 import { useTranslation } from "react-i18next";
 
 export function UploadZone({
-  const { t } = useTranslation();
   loading,
   loadingMessage,
   workspace,
@@ -13,6 +12,7 @@ export function UploadZone({
   movedItems,
   handleSaveChanges,
 }) {
+  const { t } = useTranslation();
   if (loading) {
     return (
       <div className="px-8">

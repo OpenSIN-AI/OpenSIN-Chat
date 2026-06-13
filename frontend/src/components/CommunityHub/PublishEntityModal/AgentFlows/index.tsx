@@ -8,6 +8,8 @@ import { X, CaretRight } from "@phosphor-icons/react";
 import { BLOCK_INFO } from "@/pages/Admin/AgentBuilder/BlockList";
 import { Link } from "react-router-dom";
 
+const DOWN_ARROW = "\u2193";
+
 export default function AgentFlows({ entity }: any) {
   const { t } = useTranslation();
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -248,7 +250,7 @@ export default function AgentFlows({ entity }: any) {
                         aria-hidden="true"
                         className="text-theme-text-secondary text-lg my-1"
                       >
-                        ↓
+                        {DOWN_ARROW}
                       </span>
                     )}
                   </div>

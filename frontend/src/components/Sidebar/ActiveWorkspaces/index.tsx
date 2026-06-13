@@ -130,6 +130,7 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
 }
 
 export default function ActiveWorkspaces() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { slug } = useParams();
   const {
@@ -204,7 +205,7 @@ export default function ActiveWorkspaces() {
         {(provided) => (
           <div
             role="list"
-            aria-label="Workspaces"
+            aria-label={t("sidebar.workspacesList")}
             className="flex flex-col gap-y-2"
             ref={provided.innerRef}
             {...provided.droppableProps}
@@ -302,9 +303,13 @@ export default function ActiveWorkspaces() {
                                     );
                                   }}
                                   className={`group/gear rounded-md flex items-center justify-center ml-auto p-[2px] ${isActive ? "hover:bg-zinc-500 light:hover:bg-sky-800/30" : "hover:bg-zinc-500 light:hover:bg-slate-400"}`}
-                                  aria-label="General appearance settings"
+                                  aria-label={t(
+                                    "sidebar.generalAppearanceSettings",
+                                  )}
                                   data-tooltip-id="gear-workspace"
-                                  data-tooltip-content="General appearance settings"
+                                  data-tooltip-content={t(
+                                    "sidebar.generalAppearanceSettings",
+                                  )}
                                 >
                                   <GearSix
                                     color={

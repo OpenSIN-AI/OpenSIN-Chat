@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   CheckCircle,
   XCircle,
@@ -66,6 +67,7 @@ export const STATUS_STYLES = {
 };
 
 export function EmbeddingFileRow({ filename, status: fileStatus, onRemove }) {
+  const { t } = useTranslation();
   const { status, chunksProcessed = 0, totalChunks = 0 } = fileStatus;
   const displayName = getDisplayName(filename);
   const isEmbedding = status === "embedding";
@@ -104,13 +106,13 @@ export function EmbeddingFileRow({ filename, status: fileStatus, onRemove }) {
             <p
               className={`text-xs italic whitespace-nowrap flex gap-2 justify-center items-center ${STATUS_STYLES[status]?.textColor}`}
             >
-              {STATUS_STYLES[status]?.label || "Queued"}
+              {STATUS_STYLES[status]?.label || t("embeddingFileRow.queued")}
             </p>
             {onRemove && (
               <button
                 onClick={onRemove}
                 className="border-none hover:bg-white/10 light:hover:bg-sky-900/10 rounded p-0.5 transition-colors"
-                title="Remove from queue"
+                title={t("embeddingFileRow.removeFromQueue")}
               >
                 <X
                   size={14}

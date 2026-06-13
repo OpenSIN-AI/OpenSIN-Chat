@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 
+const LLL_FORMAT = "lll";
+
 export default function DeviceRow({ device, removeDevice }) {
   const { t } = useTranslation();
   const [status, setStatus] = useState(device.approved);
@@ -48,7 +50,7 @@ export default function DeviceRow({ device, removeDevice }) {
         </td>
         <td className="px-6">
           <div className="flex items-center gap-x-2">
-            {moment(device.createdAt).format("lll")}
+            {moment(device.createdAt).format(LLL_FORMAT)}
             {device.user && (
               <div className="flex items-center gap-x-1">
                  <span className="text-xs text-theme-text-secondary">{t("deviceRow.by")}</span>

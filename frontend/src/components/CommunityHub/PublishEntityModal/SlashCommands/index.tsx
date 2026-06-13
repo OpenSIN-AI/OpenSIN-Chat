@@ -212,13 +212,13 @@ export default function SlashCommands({ entity }: any) {
                   htmlFor="public"
                   className="h-[36px] px-4 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer text-theme-text-primary hover:text-theme-text-secondary peer-checked/public:bg-theme-sidebar-item-hover peer-checked/public:text-theme-primary-button flex items-center justify-center"
                 >
-                  Public
+                  {t("community_hub.publish.visibility.publicLabel")}
                 </label>
                 <label
                   htmlFor="private"
                   className="h-[36px] px-4 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer text-theme-text-primary hover:text-theme-text-secondary peer-checked/private:bg-theme-sidebar-item-hover peer-checked/private:text-theme-primary-button flex items-center justify-center"
                 >
-                  Private
+                  {t("community_hub.publish.visibility.privateLabel")}
                 </label>
               </div>
             </div>

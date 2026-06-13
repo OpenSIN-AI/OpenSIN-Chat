@@ -55,9 +55,9 @@ export default function WorkspaceAgentConfiguration({ workspace }) {
     await System.updateSystem(data.env);
 
     if (!!updatedWorkspace) {
-      showToast("Workspace updated!", "success", { clear: true });
+      showToast(t("agentConfig.workspaceUpdated"), "success", { clear: true });
     } else {
-      showToast(`Error: ${message}`, "error", { clear: true });
+      showToast(t("agentConfig.error", { message }), "error", { clear: true });
     }
 
     setSaving(false);

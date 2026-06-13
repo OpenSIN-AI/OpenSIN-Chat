@@ -249,6 +249,10 @@ const TRANSLATIONS = {
       validating: "Überprüfung...",
       "forgot-pass": "Passwort vergessen",
       reset: "Zurücksetzen",
+      errorPrefix: "Fehler: {{error}}",
+    },
+    "single-user": {
+      password: "Passwort",
     },
     "sign-in": "Melden Sie sich bei Ihrem {{appName}} Konto an.",
     "password-reset": {
@@ -1400,6 +1404,7 @@ const TRANSLATIONS = {
         "Diese Einstellungen können nur auf einem Desktop-Gerät bearbeitet werden. Bitte rufen Sie diese Seite auf Ihrem Desktop auf, um fortzufahren.",
       dismiss: "Schließen",
       editing: "Bearbeite",
+      editingWithName: "Bearbeite \u201C{{name}}\u201D",
     },
     directory: {
       "my-documents": "Meine Dokumente",
@@ -1720,6 +1725,10 @@ const TRANSLATIONS = {
         publishFailed: "Fehler beim Veröffentlichen des Agent-Flows: {{error}}",
         privacy_note:
           "Agent-Prozesse werden immer privat hochgeladen, um sensible Daten zu schützen. Sie können die Sichtbarkeit im Community Hub nach der Veröffentlichung ändern. Bitte überprüfen Sie, ob Ihr Prozess keine sensiblen oder privaten Informationen enthält, bevor Sie ihn veröffentlichen.",
+      },
+      visibility: {
+        publicLabel: "Öffentlich",
+        privateLabel: "Privat",
       },
       generic: {
         unauthenticated: {
@@ -3392,6 +3401,11 @@ const TRANSLATIONS = {
     topNavigationMobile: "Obere Navigation - Mobile",
     openSidebar: "Seitenleiste öffnen",
     mobileNavigation: "Seitenleisten-Navigation - Mobile",
+    settings: "Einstellungen",
+    backToWorkspaces: "Zurück zu Workspaces",
+    openSettings: "Einstellungen öffnen",
+    workspacesList: "Workspaces",
+    generalAppearanceSettings: "Allgemeine Erscheinungseinstellungen",
   },
 
   dataConnectors: {
@@ -3502,6 +3516,7 @@ const TRANSLATIONS = {
     rename: "Umbenennen",
     delete: "Löschen",
     dragHere: "Hierher ziehen",
+    folderThreadCount: "({{count}})",
   },
 
   agentBuilder: {
@@ -4127,6 +4142,7 @@ const TRANSLATIONS = {
   directory: {
     createNewFolderAriaLabel: "Neuen Ordner erstellen",
     deleteSelectedAriaLabel: "Ausgewählte Dateien und Ordner löschen",
+    folderItemCount: "({{count}})",
   },
 
   connectors: {
@@ -4261,6 +4277,61 @@ const TRANSLATIONS = {
         adminPassword: "Ihr Admin-Passwort",
       },
     },
+  },
+
+  settingsSidebar: {
+    systemHealth: "Systemzustand",
+    defaultSystemPrompt: "Standard-Systemprompt",
+    experimentalFeaturesUnlocked:
+      "Experimentelle Funktionsvorschau freigeschaltet!",
+  },
+  importedSkillConfig: {
+    skillActivated: "Fähigkeit aktiviert.",
+    skillDeactivated: "Fähigkeit deaktiviert.",
+    errorRequiredValue: "{{key}} benötigt einen Wert.",
+    errorTypeMismatch: "{{key}} muss vom Typ {{type}} sein.",
+    configUpdated:
+      "Fähigkeitskonfiguration erfolgreich aktualisiert.",
+    confirmDeleteSkill:
+      "Sind Sie sicher, dass Sie diese Fähigkeit löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    skillDeleted: "Fähigkeit erfolgreich gelöscht.",
+    skillDeleteFailed: "Löschen der Fähigkeit fehlgeschlagen.",
+  },
+  agentConfig: {
+    workspaceUpdated: "Workspace aktualisiert!",
+    configureAgentSkills: "Agenten-Fähigkeiten konfigurieren",
+    configureDescription:
+      "Konfigurieren Sie, auf welche Fähigkeiten und Werkzeuge Ihr @agent Zugriff hat.",
+    updatingAgent: "Agent wird aktualisiert...",
+    updateWorkspaceAgent: "Workspace-Agent aktualisieren",
+    error: "Fehler: {{message}}",
+  },
+
+  // ── Batch 14 — i18next/no-literal-string fixes ─────────────────────
+  vectorSearch: {
+    searchPreference: "Suchpräferenz",
+    default: "Standard",
+    accuracyOptimized: "Genauigkeitsoptimiert",
+    defaultDescription:
+      "Dies bietet die schnellste Leistung, kann jedoch zu weniger relevanten Ergebnissen und damit zu Modell-Halluzinationen führen.",
+    accuracyOptimizedDescription:
+      "LLM-Antworten können länger dauern, sind aber genauer und relevanter.",
+  },
+
+  uploadProgress: {
+    uploadingFile: "Datei wird hochgeladen...",
+    failedToUpload: "Diese Datei konnte nicht hochgeladen werden",
+    fileSizeAndTime: "{{size}} | {{time}}",
+  },
+
+  embeddingFileRow: {
+    queued: "In Warteschlange",
+    removeFromQueue: "Aus Warteschlange entfernen",
+  },
+
+  workspaceFileRow: {
+    pinned: "Angeheftet",
+    unpin: "Loslösen",
   },
 
 };

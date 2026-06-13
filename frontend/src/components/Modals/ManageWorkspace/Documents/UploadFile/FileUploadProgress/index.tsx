@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect, useRef, memo } from "react";
+import { useTranslation } from "react-i18next";
 import truncate from "truncate";
 import { CheckCircle, XCircle } from "@phosphor-icons/react";
 import { useDocumentUpload } from "@/hooks/useDocuments";
@@ -18,6 +19,7 @@ function FileUploadProgressComponent({
   setLoading,
   setLoadingMessage,
 }: any) {
+  const { t } = useTranslation();
   const [timerMs, setTimerMs] = useState<number>(10);
   const [status, setStatus] = useState("pending");
   const [error, setError] = useState("");
@@ -41,7 +43,7 @@ function FileUploadProgressComponent({
     mountedRef.current = true;
     async function uploadFile() {
       setLoading(true);
-      setLoadingMessage("Uploading file...");
+      setLoadingMessage(t("uploadProgress.uploadingFile"));
       const start = Number(new Date());
       const formData = new FormData();
       formData.append("file", file, file.name);
@@ -101,7 +103,7 @@ function FileUploadProgressComponent({
             {truncate(file.name, 30)}
           </p>
           <p className="text-red-100 light:text-red-600 text-xs font-medium">
-            {reason || "this file failed to upload"}
+            {reason || t("uploadProgress.failedToUpload")}
           </p>
         </div>
       </div>
@@ -158,7 +160,10 @@ function FileUploadProgressComponent({
           {truncate(file.name, 30)}
         </p>
         <p className="text-white/80 light:text-theme-text-secondary text-xs font-medium">
-          {humanFileSize(file.size)} | {milliToHms(timerMs)}
+          {t("uploadProgress.fileSizeAndTime", {
+            size: humanFileSize(file.size),
+            time: milliToHms(timerMs),
+          })}
         </p>
       </div>
     </div>

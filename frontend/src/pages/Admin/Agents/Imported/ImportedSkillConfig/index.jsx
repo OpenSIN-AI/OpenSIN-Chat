@@ -60,7 +60,9 @@ export default function ImportedSkillConfig({
     );
     setConfig(updatedConfig);
     showToast(
-      `Skill ${updatedConfig.active ? "activated" : "deactivated"}.`,
+      updatedConfig.active
+        ? t("importedSkillConfig.skillActivated")
+        : t("importedSkillConfig.skillDeactivated"),
       "success",
       { clear: true },
     );
@@ -74,11 +76,11 @@ export default function ImportedSkillConfig({
     for (const [key, value] of Object.entries(inputs)) {
       const settings = config.setup_args[key];
       if (settings.required && !value) {
-        errors.push(`${key} is required to have a value.`);
+        errors.push(t("importedSkillConfig.errorRequiredValue", { key }));
         continue;
       }
       if (typeof value !== settings.type) {
-        errors.push(`${key} must be of type ${settings.type}.`);
+        errors.push(t("importedSkillConfig.errorTypeMismatch", { key, type: settings.type }));
         continue;
       }
       updatedConfig.setup_args[key].value = value;
@@ -99,7 +101,7 @@ export default function ImportedSkillConfig({
         skill.hubId === config.hubId ? updatedConfig : skill,
       ),
     );
-    showToast("Skill config updated successfully.", "success");
+    showToast(t("importedSkillConfig.configUpdated"), "success");
     setHasChanges(false);
   }
 
@@ -203,7 +205,7 @@ function ManageSkillMenu({ config, setImportedSkills }) {
   async function deleteSkill() {
     if (
       !window.confirm(
-        "Are you sure you want to delete this skill? This action cannot be undone.",
+        t("importedSkillConfig.confirmDeleteSkill"),
       )
     )
       return;
@@ -212,10 +214,10 @@ function ManageSkillMenu({ config, setImportedSkills }) {
     );
     if (success) {
       setImportedSkills((prev) => prev.filter((s) => s.hubId !== config.hubId));
-      showToast("Skill deleted successfully.", "success");
+      showToast(t("importedSkillConfig.skillDeleted"), "success");
       setOpen(false);
     } else {
-      showToast("Failed to delete skill.", "error");
+      showToast(t("importedSkillConfig.skillDeleteFailed"), "error");
     }
   }
 

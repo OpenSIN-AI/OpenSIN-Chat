@@ -822,6 +822,10 @@ const TRANSLATIONS = {
       validating: "Validating...",
       "forgot-pass": "Forgot password",
       reset: "Reset",
+      errorPrefix: "Error: {{error}}",
+    },
+    "single-user": {
+      password: "Password",
     },
     "sign-in":
       "Enter your username and password to access your {{appName}} instance.",
@@ -2198,6 +2202,7 @@ const TRANSLATIONS = {
         "Editing these settings are only available on a desktop device. Please access this page on your desktop to continue.",
       dismiss: "Dismiss",
       editing: "Editing",
+      editingWithName: "Editing \u201C{{name}}\u201D",
     },
     directory: {
       "my-documents": "My Documents",
@@ -2538,6 +2543,10 @@ const TRANSLATIONS = {
         prompt_description:
           "This is the prompt that will be used when the slash command is triggered.",
         prompt_placeholder: "Enter your prompt here...",
+      },
+      visibility: {
+        publicLabel: "Public",
+        privateLabel: "Private",
       },
       generic: {
         unauthenticated: {
@@ -3317,6 +3326,11 @@ const TRANSLATIONS = {
     topNavigationMobile: "Top navigation - Mobile",
     openSidebar: "Open sidebar",
     mobileNavigation: "Sidebar navigation - Mobile",
+    settings: "Settings",
+    backToWorkspaces: "Back to workspaces",
+    openSettings: "Open settings",
+    workspacesList: "Workspaces",
+    generalAppearanceSettings: "General appearance settings",
   },
 
   dataConnectors: {
@@ -3427,6 +3441,7 @@ const TRANSLATIONS = {
     rename: "Rename",
     delete: "Delete",
     dragHere: "Drag here",
+    folderThreadCount: "({{count}})",
   },
 
   agentBuilder: {
@@ -4051,6 +4066,7 @@ const TRANSLATIONS = {
   directory: {
     createNewFolderAriaLabel: "Create new folder",
     deleteSelectedAriaLabel: "Delete selected files and folders",
+    folderItemCount: "({{count}})",
   },
 
   connectors: {
@@ -4185,6 +4201,59 @@ const TRANSLATIONS = {
         adminPassword: "Your admin password",
       },
     },
+  },
+
+  settingsSidebar: {
+    systemHealth: "System Health",
+    defaultSystemPrompt: "Default System Prompt",
+    experimentalFeaturesUnlocked: "Experimental feature previews unlocked!",
+  },
+  importedSkillConfig: {
+    skillActivated: "Skill activated.",
+    skillDeactivated: "Skill deactivated.",
+    errorRequiredValue: "{{key}} is required to have a value.",
+    errorTypeMismatch: "{{key}} must be of type {{type}}.",
+    configUpdated: "Skill config updated successfully.",
+    confirmDeleteSkill:
+      "Are you sure you want to delete this skill? This action cannot be undone.",
+    skillDeleted: "Skill deleted successfully.",
+    skillDeleteFailed: "Failed to delete skill.",
+  },
+  agentConfig: {
+    workspaceUpdated: "Workspace updated!",
+    configureAgentSkills: "Configure Agent Skills",
+    configureDescription:
+      "Configure what skills and tools your @agent has access to.",
+    updatingAgent: "Updating Agent...",
+    updateWorkspaceAgent: "Update Workspace Agent",
+    error: "Error: {{message}}",
+  },
+
+  // ── Batch 14 — i18next/no-literal-string fixes ─────────────────────
+  vectorSearch: {
+    searchPreference: "Search Preference",
+    default: "Default",
+    accuracyOptimized: "Accuracy Optimized",
+    defaultDescription:
+      "This is the fastest performance, but may not return the most relevant results leading to model hallucinations.",
+    accuracyOptimizedDescription:
+      "LLM responses may take longer to generate, but your responses will be more accurate and relevant.",
+  },
+
+  uploadProgress: {
+    uploadingFile: "Uploading file...",
+    failedToUpload: "this file failed to upload",
+    fileSizeAndTime: "{{size}} | {{time}}",
+  },
+
+  embeddingFileRow: {
+    queued: "Queued",
+    removeFromQueue: "Remove from queue",
+  },
+
+  workspaceFileRow: {
+    pinned: "Pinned",
+    unpin: "Un-pin",
   },
 
 };

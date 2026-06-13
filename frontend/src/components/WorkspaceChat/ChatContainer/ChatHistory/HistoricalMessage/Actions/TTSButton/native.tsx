@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { SpeakerHigh, PauseCircle } from "@phosphor-icons/react";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
 
 export default function NativeTTSMessage({ chatId, message }: any) {
+  const { t } = useTranslation();
   const [speaking, setSpeaking] = useState(false as any);
   const [supported, setSupported] = useState(false as any);
   useEffect(() => {
@@ -44,7 +46,9 @@ export default function NativeTTSMessage({ chatId, message }: any) {
           speaking ? "Pause TTS speech of message" : "TTS Speak message"
         }
         className="border-none text-zinc-300 light:text-slate-500"
-        aria-label={speaking ? "Pause speech" : "Speak message"}
+        aria-label={
+          speaking ? t("common.pauseSpeech") : t("common.speakMessage")
+        }
       >
         {speaking ? <PauseCircle size={20} /> : <SpeakerHigh size={20} />}
       </button>
