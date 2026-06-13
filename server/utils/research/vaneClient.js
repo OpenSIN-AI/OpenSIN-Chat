@@ -79,7 +79,7 @@ class VaneClient {
     const embedProvider = providers.find((p) => p.embeddingModels?.length);
     if (!chatProvider || !embedProvider) {
       VaneClient.log(
-        "No usable provider configured in Vane — open http://localhost:3100 and finish setup."
+        "No usable provider in Vane. Finish setup at http://localhost:3100.",
       );
       return null;
     }
