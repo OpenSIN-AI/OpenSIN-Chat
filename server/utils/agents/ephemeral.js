@@ -43,6 +43,8 @@ class EphemeralAgentHandler extends AgentHandler {
   #funcsToLoad = [];
   /** @type {Array<{name: string, mime: string, contentString: string}>} attachments for multimodal support */
   #attachments = [];
+  /** @type {string|null} extra role instruction for the agent (e.g. screenshot URL prompt) */
+  #urlPrompt = null;
 
   /** @type {AIbitat|null} */
   aibitat = null;
@@ -62,6 +64,7 @@ class EphemeralAgentHandler extends AgentHandler {
    * threadId: import("@prisma/client").workspace_threads["id"]|null,
    * sessionId: string|null,
    * attachments: Array<{name: string, mime: string, contentString: string}>
+   * urlPrompt: string|null
    * }} parameters
    */
   constructor({
@@ -72,6 +75,7 @@ class EphemeralAgentHandler extends AgentHandler {
     threadId = null,
     sessionId = null,
     attachments = [],
+    urlPrompt = null,
   }) {
     super({ uuid });
     this.#invocationUUID = uuid;
@@ -85,6 +89,7 @@ class EphemeralAgentHandler extends AgentHandler {
     this.#threadId = threadId;
     this.#sessionId = sessionId;
     this.#attachments = attachments;
+    this.#urlPrompt = urlPrompt;
   }
 
   log(text, ...args) {
@@ -408,6 +413,7 @@ class EphemeralAgentHandler extends AgentHandler {
         this.#workspace,
         user,
         this.#prompt,
+        this.#urlPrompt,
       ),
     );
 

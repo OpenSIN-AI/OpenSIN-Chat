@@ -15,6 +15,13 @@ const { Workspace } = require("../../models/workspace");
 const invocationAttachmentsCache = new Map();
 
 /**
+ * In-memory cache for extra prompt instructions associated with agent invocations.
+ * Used to pass the screenshot URL prompt from the HTTP handler to the agent handler.
+ * @type {Map<string, string>}
+ */
+const invocationUrlPromptCache = new Map();
+
+/**
  * Store attachments for an invocation UUID
  * @param {string} uuid - The invocation UUID
  * @param {Array} attachments - The attachments array
@@ -36,6 +43,26 @@ function getAndClearInvocationAttachments(uuid) {
   return attachments;
 }
 
+/**
+ * Store a screenshot URL prompt instruction for an invocation UUID.
+ * @param {string} uuid - The invocation UUID
+ * @param {string|null} urlPrompt - The prompt instruction to inject into the agent system prompt
+ */
+function cacheInvocationUrlPrompt(uuid, urlPrompt = null) {
+  if (urlPrompt) invocationUrlPromptCache.set(uuid, urlPrompt);
+}
+
+/**
+ * Retrieve and remove a screenshot URL prompt instruction for an invocation UUID.
+ * @param {string} uuid - The invocation UUID
+ * @returns {string|null} The cached prompt instruction, or null
+ */
+function getAndClearInvocationUrlPrompt(uuid) {
+  const urlPrompt = invocationUrlPromptCache.get(uuid) || null;
+  invocationUrlPromptCache.delete(uuid);
+  return urlPrompt;
+}
+
 async function grepAgents({
   uuid,
   response,
@@ -44,6 +71,7 @@ async function grepAgents({
   user = null,
   thread = null,
   attachments = [],
+  urlPrompt = null,
 }) {
   let nativeToolingEnabled = false;
 
@@ -81,6 +109,8 @@ async function grepAgents({
 
     // Cache attachments for the websocket handler to retrieve later
     cacheInvocationAttachments(newInvocation.uuid, attachments);
+    // Cache any screenshot URL prompt instruction so the agent can ask about it.
+    cacheInvocationUrlPrompt(newInvocation.uuid, urlPrompt);
 
     writeResponseChunk(response, {
       id: uuid,
@@ -109,4 +139,8 @@ async function grepAgents({
   return false;
 }
 
-module.exports = { grepAgents, getAndClearInvocationAttachments };
+module.exports = {
+  grepAgents,
+  getAndClearInvocationAttachments,
+  getAndClearInvocationUrlPrompt,
+};

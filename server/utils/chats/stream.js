@@ -15,6 +15,10 @@ const {
   recentChatHistory,
   sourceIdentifier,
 } = require("./index");
+const {
+  extractImageUrls,
+  buildScreenshotUrlPrompt,
+} = require("./extractImageUrls");
 
 const VALID_CHAT_MODE = ["automatic", "chat", "query"];
 
@@ -28,6 +32,23 @@ async function streamChatWithWorkspace(
   attachments = [],
 ) {
   const uuid = uuidv4();
+
+  // Extract any URLs visible in image attachments so the LLM can ask whether
+  // to analyze them on the web. This is a no-op when there are no images.
+  const imageAttachmentStrings = (attachments || [])
+    .filter(
+      (attachment) =>
+        attachment?.contentString &&
+        attachment?.mime?.toLowerCase().startsWith("image/"),
+    )
+    .map((attachment) => attachment.contentString);
+  const extractedImageUrls = imageAttachmentStrings.length
+    ? await extractImageUrls(imageAttachmentStrings)
+    : [];
+  const imageUrlPrompt = extractedImageUrls.length
+    ? buildScreenshotUrlPrompt(extractedImageUrls)
+    : null;
+
   const updatedMessage = await grepCommand(message, user);
 
   if (Object.keys(VALID_COMMANDS).includes(updatedMessage)) {
@@ -51,6 +72,7 @@ async function streamChatWithWorkspace(
     workspace,
     thread,
     attachments,
+    urlPrompt: imageUrlPrompt,
   });
   if (isAgentChat) return;
 
@@ -259,12 +281,13 @@ async function streamChatWithWorkspace(
   // Compress & Assemble message to ensure prompt passes token limit with room for response
   // and build system messages based on inputs and history.
   // Reuse the system prompt from routing pre-fetch when available.
-  const systemPrompt =
+  let systemPrompt =
     prefetchedContext?.systemPrompt ??
     (await chatPrompt(workspace, user, {
       prompt: updatedMessage,
       rawHistory,
     }));
+  if (imageUrlPrompt) systemPrompt += "\n\n" + imageUrlPrompt;
   const messages = await LLMConnector.compressMessages(
     {
       systemPrompt,

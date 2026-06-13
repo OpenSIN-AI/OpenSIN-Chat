@@ -13,12 +13,16 @@ const { USER_AGENT, WORKSPACE_AGENT } = require("./defaults");
 const ImportedPlugin = require("./imported");
 const { AgentFlows } = require("../agentFlows");
 const MCPCompatibilityLayer = require("../MCP");
-const { getAndClearInvocationAttachments } = require("../chats/agents");
+const {
+  getAndClearInvocationAttachments,
+  getAndClearInvocationUrlPrompt,
+} = require("../chats/agents");
 const { DocumentManager } = require("../DocumentManager");
 
 class AgentHandler {
   #invocationUUID;
   #funcsToLoad = [];
+  #urlPrompt = null;
   invocation = null;
   aibitat = null;
   channel = null;
@@ -703,6 +707,7 @@ class AgentHandler {
       this.invocation.workspace,
       user,
       this.invocation.prompt,
+      this.#urlPrompt,
     );
 
     this.aibitat.agent(USER_AGENT.name, userAgentDef);
@@ -719,6 +724,8 @@ class AgentHandler {
 
     // Retrieve cached attachments (images, etc.) from the HTTP request
     this.attachments = getAndClearInvocationAttachments(this.#invocationUUID);
+    // Retrieve any screenshot URL prompt instruction cached by the HTTP handler.
+    this.#urlPrompt = getAndClearInvocationUrlPrompt(this.#invocationUUID);
 
     return this;
   }

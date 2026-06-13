@@ -11,6 +11,10 @@ const {
   grepAllSlashCommands,
 } = require("./index");
 const {
+  extractImageUrls,
+  buildScreenshotUrlPrompt,
+} = require("./extractImageUrls");
+const {
   EphemeralAgentHandler,
   EphemeralEventListener,
 } = require("../agents/ephemeral");
@@ -159,6 +163,22 @@ async function chatSync({
   const processedMessage = await grepAllSlashCommands(message);
   message = processedMessage;
 
+  // Extract URLs from image attachments so the LLM/agent can ask whether to
+  // analyze them on the web. No-op when there are no images or no URLs.
+  const imageAttachmentStrings = (attachments || [])
+    .filter(
+      (attachment) =>
+        attachment?.contentString &&
+        attachment?.mime?.toLowerCase().startsWith("image/"),
+    )
+    .map((attachment) => attachment.contentString);
+  const extractedImageUrls = imageAttachmentStrings.length
+    ? await extractImageUrls(imageAttachmentStrings)
+    : [];
+  const imageUrlPrompt = extractedImageUrls.length
+    ? buildScreenshotUrlPrompt(extractedImageUrls)
+    : null;
+
   if (
     await EphemeralAgentHandler.isAgentInvocation({
       message,
@@ -178,6 +198,7 @@ async function chatSync({
       threadId: thread?.id || null,
       sessionId,
       attachments,
+      urlPrompt: imageUrlPrompt,
     });
 
     // Establish event listener that emulates websocket calls
@@ -405,10 +426,11 @@ async function chatSync({
 
   // Compress & Assemble message to ensure prompt passes token limit with room for response
   // and build system messages based on inputs and history.
-  const systemPrompt = await chatPrompt(workspace, user, {
+  let systemPrompt = await chatPrompt(workspace, user, {
     prompt: message,
     rawHistory,
   });
+  if (imageUrlPrompt) systemPrompt += "\n\n" + imageUrlPrompt;
   const messages = await LLMConnector.compressMessages(
     {
       systemPrompt,
@@ -525,6 +547,22 @@ async function streamChat({
   const processedMessage = await grepAllSlashCommands(message);
   message = processedMessage;
 
+  // Extract URLs from image attachments so the LLM/agent can ask whether to
+  // analyze them on the web. No-op when there are no images or no URLs.
+  const imageAttachmentStrings = (attachments || [])
+    .filter(
+      (attachment) =>
+        attachment?.contentString &&
+        attachment?.mime?.toLowerCase().startsWith("image/"),
+    )
+    .map((attachment) => attachment.contentString);
+  const extractedImageUrls = imageAttachmentStrings.length
+    ? await extractImageUrls(imageAttachmentStrings)
+    : [];
+  const imageUrlPrompt = extractedImageUrls.length
+    ? buildScreenshotUrlPrompt(extractedImageUrls)
+    : null;
+
   if (
     await EphemeralAgentHandler.isAgentInvocation({
       message,
@@ -544,6 +582,7 @@ async function streamChat({
       threadId: thread?.id || null,
       sessionId,
       attachments,
+      urlPrompt: imageUrlPrompt,
     });
 
     // Establish event listener that emulates websocket calls
@@ -782,10 +821,11 @@ async function streamChat({
 
   // Compress & Assemble message to ensure prompt passes token limit with room for response
   // and build system messages based on inputs and history.
-  const streamSystemPrompt = await chatPrompt(workspace, user, {
+  let streamSystemPrompt = await chatPrompt(workspace, user, {
     prompt: message,
     rawHistory,
   });
+  if (imageUrlPrompt) streamSystemPrompt += "\n\n" + imageUrlPrompt;
   const messages = await LLMConnector.compressMessages(
     {
       systemPrompt: streamSystemPrompt,

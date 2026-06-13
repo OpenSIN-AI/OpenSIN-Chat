@@ -59,6 +59,7 @@ const WORKSPACE_AGENT = {
    * @param {import("@prisma/client").workspaces | null} workspace
    * @param {import("@prisma/client").users | null} user
    * @param {string} [prompt] - Current user message for memory reranking
+   * @param {string} [extraRole] - Additional instruction to append to the system role (e.g. screenshot URL prompt)
    * @returns {Promise<{ role: string, functions: object[] }>}
    */
   getDefinition: async (
@@ -66,6 +67,7 @@ const WORKSPACE_AGENT = {
     workspace = null,
     user = null,
     prompt = "",
+    extraRole = "",
   ) => {
     let [role, clarifyingQuestionsSkills] = await Promise.all([
       Provider.systemPrompt({
@@ -81,6 +83,8 @@ const WORKSPACE_AGENT = {
     if (!!clarifyingQuestionsSkills?.length)
       role +=
         "\n\nWhen you need information from the user (URLs, file paths, preferences, choices, etc.), you MUST use the request-user-input tool. Do not ask questions in your text response - the user cannot reply to text. Only the tool can collect user input.";
+
+    if (extraRole) role += "\n\n" + extraRole;
 
     return {
       role,
