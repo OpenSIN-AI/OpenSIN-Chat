@@ -1,4 +1,4 @@
-name: openafd
+name: opensin
 
 networks:
   opensin-chat:
@@ -6,7 +6,7 @@ networks:
 
 services:
   opensin-chat:
-    container_name: openafd
+    container_name: opensin-app
     restart: always
     build:
       context: ../.
@@ -40,7 +40,7 @@ services:
     image: itzcrazykns1337/vane:latest
     container_name: opensin-vane
     ports:
-      - "3100:3000"
+      - "3101:3000"
     volumes:
       - vane-data:/home/vane/data
     restart: unless-stopped
