@@ -461,3 +461,16 @@ export function PerplexitySearchOptions({ settings }) {
     </>
   );
 }
+
+export function VaneOptions() {
+  const { t } = useTranslation();
+  return (
+    <div className="flex gap-x-4">
+      <div className="flex flex-col">
+        <p className="text-sm text-white/60 my-2">
+          {t("webSearch.vaneNoConfig")}
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -237,6 +237,8 @@ const TRANSLATIONS = {
     exaApiKey: "Exa API Key",
     fromPerplexity: "from Perplexity.",
     perplexityApiKey: "Perplexity API Key",
+    vaneNoConfig:
+      "Vane runs as a local sidecar container and requires no API key. The endpoint is configured via the VANE_API_URL environment variable (default: http://vane:3000). Complete the one-time model setup at the Vane web UI first.",
   },
 
   ollama: {

@@ -96,6 +96,9 @@ const webBrowsing = {
               case "duckduckgo-engine":
                 engine = "_duckDuckGoEngine";
                 break;
+              case "vane":
+                engine = "_vaneEngine";
+                break;
               case "exa-search":
                 engine = "_exaSearch";
                 break;
@@ -1018,6 +1021,33 @@ const webBrowsing = {
             if (data.length === 0) {
               return `No information was found online for the search query.`;
             }
+
+            this.reportSearchResultsCitations(data);
+            const result = JSON.stringify(data);
+            this.super.introspect(
+              `${this.caller}: I found ${data.length} results - reviewing the results now. (~${this.countTokens(result)} tokens)`,
+            );
+            return result;
+          },
+          _vaneEngine: async function (query) {
+            const { VaneClient } = require("../../../research/vaneClient");
+
+            if (!(await VaneClient.isAvailable())) {
+              this.super.introspect(
+                `${this.caller}: I can't use Vane searching because the Vane sidecar is not reachable at ${process.env.VANE_API_URL || "http://vane:3000"}. Check that the container is running.`,
+              );
+              return `Search is disabled and no content was found. The Vane sidecar is not reachable.`;
+            }
+
+            this.super.introspect(
+              `${this.caller}: Using Vane to search for "${
+                query.length > 100 ? `${query.slice(0, 100)}...` : query
+              }"`,
+            );
+
+            const data = await VaneClient.search(query);
+            if (!data || data.length === 0)
+              return `No information was found online for the search query.`;
 
             this.reportSearchResultsCitations(data);
             const result = JSON.stringify(data);

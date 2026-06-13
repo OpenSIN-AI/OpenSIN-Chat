@@ -194,6 +194,7 @@ const SystemSettings = {
             "duckduckgo-engine",
             "exa-search",
             "perplexity-search",
+            "vane",
           ].includes(update)
         )
           throw new Error("Invalid SERP provider.");

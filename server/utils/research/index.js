@@ -129,6 +129,34 @@ class ResearchPipeline {
       const searchStep = { name: "search", status: "running", startedAt: new Date() };
       job.steps.push(searchStep);
 
+      // ── Vane fast path: answer engine handles search+extract+summarize ──
+      const vaneResult = await this.#vaneFastPath(job);
+      if (vaneResult) {
+        job.results.searchResults = vaneResult.searchResults;
+        searchStep.status = "completed";
+        searchStep.completedAt = new Date();
+        job.progress = 60;
+
+        // Politician DB still runs — Vane does not know it
+        if (job.sources.includes("politician")) {
+          job.results.politicianResults = await this.#politicianSearch(job.query);
+        }
+
+        job.results.summary = vaneResult.summary;
+        job.steps.push({
+          name: "vane-answer",
+          status: "completed",
+          startedAt: new Date(),
+          completedAt: new Date(),
+        });
+        job.progress = 100;
+        job.status = "completed";
+        this.log(
+          `Research completed via Vane: ${jobId} — ${job.results.searchResults.length} sources`,
+        );
+        return;
+      }
+
       const searchQueries = this.#expandQuery(job.query, job.depth);
       const allSearchResults = [];
 
@@ -245,6 +273,43 @@ class ResearchPipeline {
   #getSearchEngine(provider) {
     const { WebSearchEngine } = require("./webSearchEngine");
     return WebSearchEngine.search.bind(WebSearchEngine);
+  }
+
+  /**
+   * Fast path: let the Vane sidecar answer directly (search + extract +
+   * summarize in one call). Returns null if Vane is unavailable, so the
+   * classic pipeline runs as fallback.
+   * @param {Object} job
+   * @returns {Promise<{summary: string, searchResults: Array}|null>}
+   */
+  async #vaneFastPath(job) {
+    try {
+      const provider = (await SystemSettings.get({ label: "agent_search_provider" }))?.value ?? "unknown";
+      if (provider !== "vane") return null;
+
+      const { VaneClient } = require("./vaneClient");
+      if (!(await VaneClient.isAvailable())) return null;
+
+      const result = await VaneClient.answer(job.query, {
+        optimizationMode: job.depth === "deep" ? "quality" : "balanced",
+        sources: ["web"],
+      });
+      if (!result || !result.message) return null;
+
+      return {
+        summary: result.message,
+        searchResults: result.sources
+          .filter((s) => s.metadata?.url)
+          .map((s) => ({
+            title: s.metadata.title || s.metadata.url,
+            link: s.metadata.url,
+            snippet: (s.content || "").substring(0, 300),
+          })),
+      };
+    } catch (err) {
+      this.log(`Vane fast path error: ${err.message}`);
+      return null;
+    }
   }
 
   /**
