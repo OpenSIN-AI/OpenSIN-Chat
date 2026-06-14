@@ -6,6 +6,7 @@ import AgentSidebarLists from "./AgentSidebarLists";
 import AgentSkillPanel from "./AgentSkillPanel";
 
 export default function AgentBody({ agents, isMobile }) {
+  const { t } = useTranslation();
   const {
     formEl,
     hasChanges,
@@ -137,7 +138,7 @@ export default function AgentBody({ agents, isMobile }) {
                 >
                   <div className="flex items-center text-sky-400">
                     <CaretLeft size={24} />
-                    <div>Back</div>
+                    <div>{t("common.back")}</div>
                   </div>
                 </button>
               </div>
@@ -184,7 +185,7 @@ export default function AgentBody({ agents, isMobile }) {
         <div className="flex-none flex justify-between items-center mb-4">
           <div className="text-theme-text-primary flex items-center gap-x-2">
             <Robot size={24} />
-            <p className="text-lg font-medium">Agent Skills</p>
+            <p className="text-lg font-medium">{t("common.agentSkills")}</p>
           </div>
           <AgentSkillSettings />
         </div>
