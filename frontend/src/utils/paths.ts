@@ -62,7 +62,8 @@ export default {
     return "https://discord.gg/6UyHPeGZAC";
   },
   docs: (path = "") => {
-    return `https://opensin.delqhi.com/docs${path}`;
+    // In-app developer documentation served at /docs (see pages/Docs).
+    return `/docs${path}`;
   },
   chatModes: () => {
     return "https://opensin.delqhi.com/docs/features/chat-modes";
