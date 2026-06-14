@@ -56,9 +56,9 @@ export default function RuleRow({
         <div className="shrink-0 w-6" />
       )}
       {dragHandleProps && (
-          <p className="shrink-0 text-sm font-semibold text-zinc-400 light:text-slate-500 tabular-nums"> // eslint-disable-line i18next/no-literal-string
-            #{rule.priority}
-          </p>
+        <p className="shrink-0 text-sm font-semibold text-zinc-400 light:text-slate-500 tabular-nums">
+          #{rule.priority} // eslint-disable-line i18next/no-literal-string
+        </p>
       )}
       <div className="flex flex-col flex-1 min-w-0">
         <div className="flex items-center gap-2">

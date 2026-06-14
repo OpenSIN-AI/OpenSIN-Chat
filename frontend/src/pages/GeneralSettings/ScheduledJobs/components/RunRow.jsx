@@ -95,7 +95,10 @@ export default function RunRow({ run, jobId, onKilled }) {
             : "font-medium text-white light:text-slate-950"
         }`}
       >
-        {run.error || "—"} // eslint-disable-line i18next/no-literal-string
+        {
+          // eslint-disable-next-line i18next/no-literal-string
+          run.error || "—"
+        }
       </span>
     </button>
   );
