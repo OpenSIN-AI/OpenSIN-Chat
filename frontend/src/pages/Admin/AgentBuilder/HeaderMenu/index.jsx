@@ -58,7 +58,7 @@ export default function HeaderMenu({
             >
               <img
                 src={AnythingInfinityLogo}
-                alt="logo"
+                alt={t("common.logo")}
                 className="w-[20px] light:invert"
               />
               <span className="text-theme-text-primary text-sm uppercase tracking-widest">

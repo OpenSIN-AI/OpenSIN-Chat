@@ -67,13 +67,31 @@ vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
 
 let app;
 
+beforeAll(async () => {
+  const existing = await prisma.users.findFirst({ where: { username: "parsed-files-test-user" } });
+  if (!existing) {
+    const user = await prisma.users.create({
+      data: {
+        username: "parsed-files-test-user",
+        password: "test-password",
+        role: "admin",
+      },
+    });
+    testUserId = user.id;
+  } else {
+    testUserId = existing.id;
+  }
+});
+
 beforeEach(async () => {
   vi.clearAllMocks();
   app = createApp();
 });
 
+const TEST_PORT = process.env.SERVER_PORT || "3001";
+
 const request = async (method, path, body = null, headers = {}) => {
-  const url = `http://localhost:3001${path}`;
+  const url = `http://localhost:${TEST_PORT}${path}`;
   const options = {
     method,
     headers: { "Content-Type": "application/json", ...headers },
@@ -81,7 +99,36 @@ const request = async (method, path, body = null, headers = {}) => {
   if (body) options.body = JSON.stringify(body);
   const response = await fetch(url, options);
   const data = await response.text();
-  return { status: response.status, headers: response.headers, body: data ? JSON.parse(data) : null };
+  let responseBody = null;
+  if (data) {
+    try {
+      responseBody = JSON.parse(data);
+    } catch {
+      responseBody = data;
+    }
+  }
+  return { status: response.status, headers: response.headers, body: responseBody };
+};
+
+const createWorkspace = async (name) => {
+  const response = await request("POST", "/workspace/new", { name });
+  expect(response.status).toBe(200);
+  return response.body.workspace;
+};
+
+const createParsedFile = async (workspaceId, filename = "test-parsed-file.json") => {
+  const existing = await prisma.workspace_parsed_files.findFirst({ where: { filename } });
+  if (existing) await prisma.workspace_parsed_files.delete({ where: { id: existing.id } });
+  const file = await prisma.workspace_parsed_files.create({
+    data: {
+      filename,
+      workspaceId,
+      userId: testUserId,
+      metadata: JSON.stringify({ title: "Test" }),
+      tokenCountEstimate: 10,
+    },
+  });
+  return file;
 };
 
 describe("workspace parsed files endpoints", () => {
