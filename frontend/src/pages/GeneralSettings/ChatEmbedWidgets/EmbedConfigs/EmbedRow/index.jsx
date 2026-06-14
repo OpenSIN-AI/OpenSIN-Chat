@@ -141,6 +141,7 @@ export default function EmbedRow({ embed }) {
 }
 
 function ActiveDomains({ domainList }) {
+  const { t } = useTranslation();
   const domains = safeJsonParse(domainList, []);
   if (domains.length === 0) return <p>{t("embedConfigs.embedRow.all")}</p>;
   return (
