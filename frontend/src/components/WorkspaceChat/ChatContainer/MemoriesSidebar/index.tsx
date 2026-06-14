@@ -8,7 +8,6 @@ import { MemoriesProvider, useMemoriesContext } from "./MemoriesContext";
 import PersonalizationToggle from "./PersonalizationToggle";
 import MemoryCard from "./MemoryCard";
 import MemoryModal from "./MemoryModal";
-import SidebarTabs from "../ChatSidebar/SidebarTabs";
 import useThreads from "@/hooks/useThreads";
 import paths from "@/utils/paths";
 import { safeJsonParse } from "@/utils/request";
@@ -246,7 +245,6 @@ function SidebarHeaderWithTabs({ workspace }: any) {
       <div className="flex-1 overflow-hidden flex flex-col gap-3 min-h-0">
         {activeTab === "memories" && (
           <>
-            <SidebarTabs />
             <PersonalizationToggle />
             {enabled ? (
               activeMemories.length === 0 ? <EmptyState /> : <MemoryList />
