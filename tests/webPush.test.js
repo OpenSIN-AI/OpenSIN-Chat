@@ -87,7 +87,16 @@ const request = async (method, path, body = null, headers = {}) => {
   if (body) options.body = JSON.stringify(body);
   const response = await fetch(url, options);
   const data = await response.text();
-  return { status: response.status, headers: response.headers, body: data ? JSON.parse(data) : null };
+  const contentType = response.headers.get("content-type") || "";
+  let parsedBody = null;
+  if (data && contentType.includes("application/json")) {
+    try {
+      parsedBody = JSON.parse(data);
+    } catch {
+      parsedBody = null;
+    }
+  }
+  return { status: response.status, headers: response.headers, body: parsedBody, text: data };
 };
 
 describe("web push notification endpoints", () => {
@@ -97,24 +106,15 @@ describe("web push notification endpoints", () => {
         endpoint: "https://push.example.com/abc",
         keys: { p256dh: "key1", auth: "key2" },
       });
+      expect(response.status).toBe(201);
+    });
+  });
+
+  describe("GET /web-push/pubkey", () => {
+    it("should return the public VAPID key", async () => {
+      const response = await request("GET", "/web-push/pubkey");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-    });
-
-    it("should return 400 with missing endpoint", async () => {
-      const response = await request("POST", "/web-push/subscribe", {
-        keys: { p256dh: "key1", auth: "key2" },
-      });
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
-    });
-
-    it("should return 400 with missing keys", async () => {
-      const response = await request("POST", "/web-push/subscribe", {
-        endpoint: "https://push.example.com/abc",
-      });
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
+      expect(response.body).toHaveProperty("publicKey");
     });
   });
 

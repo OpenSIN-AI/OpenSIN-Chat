@@ -171,9 +171,11 @@ describe("workspace parsed files endpoints", () => {
     it("should delete parsed files by id list", async () => {
       const workspace = await createWorkspace("parsed-files-delete-workspace");
       const file = await createParsedFile(workspace.id, "parsed-files-delete-test.json");
+      console.log("DELETE TEST", { workspaceId: workspace.id, fileId: file.id, fileWorkspaceId: file.workspaceId, fileUserId: file.userId });
       const response = await request("DELETE", `/workspace/${workspace.slug}/delete-parsed-files`, {
         fileIds: [file.id],
       });
+      console.log("DELETE RESPONSE", { status: response.status, body: response.body });
       expect(response.status).toBe(200);
     });
 

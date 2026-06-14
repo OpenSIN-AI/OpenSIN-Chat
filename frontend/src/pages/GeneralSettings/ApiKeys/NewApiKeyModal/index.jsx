@@ -123,7 +123,10 @@ export default function NewApiKeyModal({ closeModal, onSuccess }) {
                 rel="noreferrer"
                 className="text-blue-400 hover:underline"
               >
-                Read the API documentation &rarr;
+                {t("api.readDocumentation")}{" "}
+                {// eslint-disable-next-line i18next/no-literal-string
+                }
+                &rarr;
               </a>
             </div>
             <div className="flex justify-end items-center mt-6 pt-6 border-t border-theme-modal-border">
