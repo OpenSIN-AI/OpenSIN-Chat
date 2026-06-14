@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { CaretUpDown } from "@phosphor-icons/react";
 import ProviderList from "./ProviderList";
 
