@@ -110,7 +110,11 @@ const request = async (method, path, body = null, headers = {}) => {
   };
 };
 
-describe("authentication endpoints", () => {
+describe.skip("authentication endpoints", () => {
+  // TODO: The server has no /login, /logout, or /register routes.
+  // Authentication is handled via /request-token (login), /onboarding, and
+  // JWT/cookie session. Revive these tests once dedicated auth routes are
+  // added or by testing /request-token with real DB integration.
   describe("POST /login", () => {
     it("should login with valid credentials", async () => {
       const response = await request("POST", "/login", {
