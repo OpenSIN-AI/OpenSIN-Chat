@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 import CommunityHubImportItemSteps, {
   CommunityHubImportItemLayout,
