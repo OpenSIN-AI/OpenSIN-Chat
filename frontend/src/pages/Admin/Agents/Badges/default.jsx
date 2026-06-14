@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: MIT
+import { useTranslation } from "react-i18next";
+
 export function DefaultBadge({ title: _title }) {
+  const { t } = useTranslation();
   return (
     <>
       <span
