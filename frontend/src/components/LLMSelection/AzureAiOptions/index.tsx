@@ -108,7 +108,7 @@ export default function AzureAiOptions({ settings }: any) {
               delayShow={300}
               className="tooltip !text-xs !opacity-100 !max-w-[250px] !whitespace-normal !break-words"
             />
-            <div
+            <button
               type="button"
               className="text-theme-text-secondary cursor-pointer hover:bg-theme-bg-primary flex items-center justify-center rounded-full"
               data-tooltip-id="azure-openai-model-type"
@@ -118,7 +118,7 @@ export default function AzureAiOptions({ settings }: any) {
               )}
             >
               <Info size={18} className="text-theme-text-secondary" />
-            </div>
+            </button>
           </div>
           <select
             name="AzureOpenAiModelType"

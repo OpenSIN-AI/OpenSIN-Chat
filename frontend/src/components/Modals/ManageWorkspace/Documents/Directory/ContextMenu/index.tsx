@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useRef, useEffect } from "react";
+import type React from "react";
 import { useTranslation } from "react-i18next";
 
 export default function ContextMenu({
@@ -61,7 +62,7 @@ export default function ContextMenu({
       style={{
         "--context-menu-top": `${contextMenu.y}px`,
         "--context-menu-left": `${contextMenu.x}px`,
-      }}
+      } as React.CSSProperties}
       className="fixed z-[1000] bg-theme-bg-secondary border border-theme-modal-border rounded-md shadow-lg top-[var(--context-menu-top)] left-[var(--context-menu-left)]"
     >
       <button

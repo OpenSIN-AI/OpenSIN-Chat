@@ -122,7 +122,7 @@ export default function WorkspaceFileRow({
   );
 }
 
-const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
+const PinItemToWorkspace = memo(function PinItemToWorkspace({ workspace, docPath, item }: { workspace: any; docPath: string; item: any }) {
   const { t } = useTranslation();
   const [pinned, setPinned] = useState(
     item?.pinnedWorkspaces?.includes(workspace.id) || false,
@@ -194,7 +194,7 @@ const PinItemToWorkspace = memo(({ workspace, docPath, item }) => {
   );
 });
 
-const WatchForChanges = memo(({ workspace, docPath, item }) => {
+const WatchForChanges = memo(function WatchForChanges({ workspace, docPath, item }: { workspace: any; docPath: string; item: any }) {
   const [watched, setWatched] = useState(item?.watched || false);
   const watchEvent = new CustomEvent("watch_document_for_changes");
 

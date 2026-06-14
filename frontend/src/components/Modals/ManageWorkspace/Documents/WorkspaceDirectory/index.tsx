@@ -160,6 +160,7 @@ function WorkspaceDirectory({
                       selected={selectedItems[item.id]}
                       toggleSelection={() => handleToggleSelection(item)}
                       disableSelection={hasChanges}
+                      setSelectedItems={setSelectedItems}
                     />
                   ))}
                 </div>

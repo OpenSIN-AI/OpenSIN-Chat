@@ -145,7 +145,7 @@ export default function GithubOptions() {
                 value={ignores}
                 onChange={setIgnores}
                 name="ignores"
-                placeholder={t("connectors.github.ignoresPlaceholder")}
+                placeHolder={t("connectors.github.ignoresPlaceholder")}
                 classNames={{
                   tag: "bg-theme-settings-input-bg light:bg-black/10 bg-blue-300/10 text-zinc-800",
                   input:

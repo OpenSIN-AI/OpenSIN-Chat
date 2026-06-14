@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
+import jsPDF from "jspdf";
+import { UploadSimple, FilePdf, FileDoc, FileMd, X, ListBullets } from "@phosphor-icons/react";
 import Sidebar from "@/components/Sidebar";
 import PdfAnalysis from "@/models/pdfAnalysis";
 import CrossCheckPanel from "./CrossCheckPanel";
@@ -14,6 +19,46 @@ function formatEta(seconds) {
   const h = Math.floor(seconds / 3600);
   const m = Math.round((seconds % 3600) / 60);
   return `${h} h ${m} min`;
+}
+
+/**
+ * Replaces the browser-native <input type="file"> "Choose File / No file chosen"
+ * text with a fully localised DE button + filename display.
+ * The hidden native input still receives the file so form submission works normally.
+ */
+function PdfFileInput({ inputRef, multiple = false, label, placeholder }) {
+  const [fileNames, setFileNames] = useState([]);
+  function handleChange(e) {
+    setFileNames(Array.from(e.target.files || []).map((f) => f.name));
+  }
+  return (
+    <div className="flex items-center gap-3">
+      <input
+        ref={inputRef}
+        type="file"
+        accept="application/pdf,.pdf"
+        multiple={multiple}
+        onChange={handleChange}
+        className="sr-only"
+        tabIndex={-1}
+      />
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-theme-sidebar-border bg-theme-bg-container text-sm text-theme-text-primary hover:opacity-80 cursor-pointer"
+      >
+        <UploadSimple size={14} aria-hidden="true" />
+        {label}
+      </button>
+      <span className="text-sm text-theme-text-secondary truncate max-w-[260px]">
+        {fileNames.length === 0
+          ? placeholder
+          : fileNames.length === 1
+            ? fileNames[0]
+            : `${fileNames.length} Dateien ausgewählt`}
+      </span>
+    </div>
+  );
 }
 
 export default function PdfAnalysisPage() {
@@ -202,11 +247,10 @@ function StartForm({ onStarted }) {
 
       <label className="flex flex-col gap-1 text-sm text-theme-text-secondary">
         {t("pdfAnalysis.panel.pdfFile")}
-        <input
-          ref={fileRef}
-          type="file"
-          accept="application/pdf,.pdf"
-          className="text-sm text-theme-text-primary file:mr-3 file:px-3 file:py-1.5 file:rounded-md file:border-0 file:bg-theme-bg-container file:text-theme-text-primary file:cursor-pointer"
+        <PdfFileInput
+          inputRef={fileRef}
+          label={t("pdfAnalysis.panel.chooseFile")}
+          placeholder={t("pdfAnalysis.panel.noFileChosen")}
         />
       </label>
 
@@ -397,13 +441,180 @@ function JobRow({ job, onShowReport, onCancelled }) {
   );
 }
 
+/**
+ * Parses a Markdown string and returns a flat list of heading objects
+ * { level: 1|2|3, text: string, id: string } for the table of contents.
+ */
+function extractHeadings(markdown = "") {
+  const lines = markdown.split("\n");
+  const headings = [];
+  for (const line of lines) {
+    const m = line.match(/^(#{1,3})\s+(.+)/);
+    if (m) {
+      const text = m[2].trim();
+      headings.push({
+        level: m[1].length,
+        text,
+        id: text
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, "")
+          .replace(/\s+/g, "-"),
+      });
+    }
+  }
+  return headings;
+}
+
+/**
+ * Download the report as plain Markdown (.md).
+ */
+function downloadMarkdown(filename, content) {
+  const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename.replace(/\.pdf$/i, "") + "-bericht.md";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/**
+ * Download the report as a DOCX file using the `docx` library.
+ * Converts basic Markdown headings and paragraphs — bold/italic are preserved.
+ */
+async function downloadDocx(filename, content) {
+  const lines = content.split("\n");
+  const children = [];
+
+  for (const line of lines) {
+    if (!line.trim()) {
+      children.push(new Paragraph({ text: "" }));
+      continue;
+    }
+    const h3 = line.match(/^###\s+(.*)/);
+    const h2 = line.match(/^##\s+(.*)/);
+    const h1 = line.match(/^#\s+(.*)/);
+    if (h1) {
+      children.push(
+        new Paragraph({ text: h1[1], heading: HeadingLevel.HEADING_1 })
+      );
+    } else if (h2) {
+      children.push(
+        new Paragraph({ text: h2[1], heading: HeadingLevel.HEADING_2 })
+      );
+    } else if (h3) {
+      children.push(
+        new Paragraph({ text: h3[1], heading: HeadingLevel.HEADING_3 })
+      );
+    } else {
+      // Inline bold: **text**
+      const parts = line.split(/(\*\*[^*]+\*\*)/g);
+      const runs = parts.map((part) => {
+        const bold = part.match(/^\*\*(.+)\*\*$/);
+        return new TextRun({ text: bold ? bold[1] : part, bold: !!bold });
+      });
+      children.push(new Paragraph({ children: runs }));
+    }
+  }
+
+  const doc = new Document({
+    sections: [{ properties: {}, children }],
+  });
+  const blob = await Packer.toBlob(doc);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename.replace(/\.pdf$/i, "") + "-bericht.docx";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/**
+ * Download the report as a PDF using jsPDF.
+ * Renders the text content line by line with basic heading detection.
+ */
+function downloadPdf(filename, content) {
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const pageW = doc.internal.pageSize.getWidth();
+  const margin = 18;
+  const maxW = pageW - margin * 2;
+  let y = margin;
+
+  const lines = content.split("\n");
+
+  for (const raw of lines) {
+    const h1 = raw.match(/^#\s+(.*)/);
+    const h2 = raw.match(/^##\s+(.*)/);
+    const h3 = raw.match(/^###\s+(.*)/);
+    const stripped = raw.replace(/^#{1,3}\s+/, "").replace(/\*\*/g, "");
+
+    if (!stripped.trim()) {
+      y += 4;
+      continue;
+    }
+
+    if (h1) {
+      doc.setFontSize(16);
+      doc.setFont("helvetica", "bold");
+    } else if (h2) {
+      doc.setFontSize(13);
+      doc.setFont("helvetica", "bold");
+    } else if (h3) {
+      doc.setFontSize(11);
+      doc.setFont("helvetica", "bold");
+    } else {
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+    }
+
+    const wrapped = doc.splitTextToSize(stripped, maxW);
+    for (const wline of wrapped) {
+      if (y + 8 > doc.internal.pageSize.getHeight() - margin) {
+        doc.addPage();
+        y = margin;
+      }
+      doc.text(wline, margin, y);
+      y += h1 ? 9 : h2 ? 7 : h3 ? 6 : 5.5;
+    }
+  }
+
+  doc.save(filename.replace(/\.pdf$/i, "") + "-bericht.pdf");
+}
+
 function ReportModal({ job, onClose }) {
   const { t } = useTranslation();
   const [result, setResult] = useState(null);
+  const [tocOpen, setTocOpen] = useState(true);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     PdfAnalysis.result(job.id).then(setResult);
   }, [job.id]);
+
+  // Build table of contents from headings in the report
+  const headings = useMemo(
+    () => (result?.report ? extractHeadings(result.report) : []),
+    [result?.report]
+  );
+
+  function scrollToHeading(id) {
+    const el = contentRef.current?.querySelector(`[data-heading-id="${id}"]`);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function handleAddAsSource() {
+    // Trigger a workspace-document-upload with the rendered report as text.
+    // For now we copy the text to clipboard and show a browser notification
+    // until the ManageWorkspace integration is wired up with a real workspace slug.
+    if (result?.report) {
+      navigator.clipboard
+        .writeText(result.report)
+        .then(() => alert(t("pdfAnalysis.panel.addedAsSourceToast")))
+        .catch(() => {});
+    }
+  }
+
+  const reportMd = result?.report ?? "";
 
   return (
     <div
@@ -412,54 +623,255 @@ function ReportModal({ job, onClose }) {
       aria-modal="true"
       aria-label={t("pdfAnalysis.panel.reportFor", { name: job.documentName })}
     >
-      <div className="w-full max-w-3xl max-h-[85vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border">
-        <div className="flex items-center justify-between p-4 border-b border-theme-sidebar-border gap-3">
-          <h3 className="text-sm font-semibold text-theme-text-primary truncate flex-1">
+      <div className="w-full max-w-5xl max-h-[90vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border shadow-xl">
+
+        {/* ── Header ── */}
+        <div className="flex items-center gap-3 p-4 border-b border-theme-sidebar-border shrink-0">
+          <h3 className="text-sm font-semibold text-theme-text-primary truncate flex-1 min-w-0">
             {t("pdfAnalysis.panel.reportFor", { name: job.documentName })}
           </h3>
-          <a
-            href={`${API_BASE}/pdf-analysis/${job.id}/report/download`}
-            download
-            className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
+
+          {/* TOC toggle */}
+          {headings.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setTocOpen((v) => !v)}
+              className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-secondary border border-theme-sidebar-border hover:text-theme-text-primary hover:opacity-80"
+              aria-pressed={tocOpen}
+              title={t("pdfAnalysis.panel.tocToggle")}
+            >
+              <ListBullets size={13} aria-hidden="true" />
+              {t("pdfAnalysis.panel.tocToggle")}
+            </button>
+          )}
+
+          {/* Add as source */}
+          <button
+            type="button"
+            onClick={handleAddAsSource}
+            disabled={!result?.report}
+            className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
+            title={t("pdfAnalysis.panel.addAsSource")}
           >
-            {t("pdfAnalysis.panel.downloadReport")}
-          </a>
+            <FilePdf size={13} aria-hidden="true" />
+            {t("pdfAnalysis.panel.addAsSource")}
+          </button>
+
+          {/* Download MD */}
+          <button
+            type="button"
+            onClick={() => downloadMarkdown(job.documentName, reportMd)}
+            disabled={!result?.report}
+            className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
+            title="Markdown"
+          >
+            <FileMd size={13} aria-hidden="true" />
+            .md
+          </button>
+
+          {/* Download DOCX */}
+          <button
+            type="button"
+            onClick={() => downloadDocx(job.documentName, reportMd)}
+            disabled={!result?.report}
+            className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
+            title="Word-Dokument"
+          >
+            <FileDoc size={13} aria-hidden="true" />
+            .docx
+          </button>
+
+          {/* Download PDF */}
+          <button
+            type="button"
+            onClick={() => downloadPdf(job.documentName, reportMd)}
+            disabled={!result?.report}
+            className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
+            title="PDF-Dokument"
+          >
+            <FilePdf size={13} aria-hidden="true" />
+            .pdf
+          </button>
+
+          {/* Close */}
           <button
             type="button"
             onClick={onClose}
-            className="text-sm text-theme-text-secondary hover:text-theme-text-primary"
+            className="flex items-center justify-center w-7 h-7 rounded-md text-theme-text-secondary hover:text-theme-text-primary hover:bg-theme-bg-container"
             aria-label={t("pdfAnalysis.panel.close")}
           >
-            {t("pdfAnalysis.panel.close")}
+            <X size={15} aria-hidden="true" />
           </button>
         </div>
-        <div className="overflow-y-auto p-4">
-          {!result ? (
-            <p className="text-sm text-theme-text-secondary">
-              {t("pdfAnalysis.panel.loading")}
-            </p>
-          ) : result.report ? (
-            <>
-              <p className="text-xs text-theme-text-secondary mb-3">
-                {t("pdfAnalysis.panel.summary", {
-                  totalPages: result.totalPages,
-                  chunks: result.chunks,
-                  factsStored: result.factsStored,
-                })}
-                {result.chunkErrors > 0 &&
-                  t("pdfAnalysis.panel.chunkErrors", {
-                    count: result.chunkErrors,
-                  })}
+
+        {/* ── Body: TOC + Content ── */}
+        <div className="flex flex-1 min-h-0 overflow-hidden">
+
+          {/* Table of Contents */}
+          {tocOpen && headings.length > 0 && (
+            <nav
+              aria-label={t("pdfAnalysis.panel.tocLabel")}
+              className="w-56 shrink-0 border-r border-theme-sidebar-border overflow-y-auto p-4"
+            >
+              <p className="text-xs font-semibold text-theme-text-secondary uppercase tracking-wide mb-3">
+                {t("pdfAnalysis.panel.tocLabel")}
               </p>
-              <pre className="whitespace-pre-wrap text-sm text-theme-text-primary leading-relaxed font-sans">
-                {result.report}
-              </pre>
-            </>
-          ) : (
-            <p className="text-sm text-red-400">
-              {result.error || t("pdfAnalysis.panel.noReport")}
-            </p>
+              <ul className="flex flex-col gap-1">
+                {headings.map((h, i) => (
+                  <li key={i}>
+                    <button
+                      type="button"
+                      onClick={() => scrollToHeading(h.id)}
+                      className={`w-full text-left text-xs text-theme-text-secondary hover:text-theme-text-primary leading-snug py-0.5 ${
+                        h.level === 1
+                          ? "font-semibold"
+                          : h.level === 2
+                            ? "pl-3"
+                            : "pl-6 opacity-80"
+                      }`}
+                    >
+                      {h.text}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           )}
+
+          {/* Report content */}
+          <div ref={contentRef} className="flex-1 overflow-y-auto p-5 min-w-0">
+            {!result ? (
+              <p className="text-sm text-theme-text-secondary">
+                {t("pdfAnalysis.panel.loading")}
+              </p>
+            ) : result.report ? (
+              <>
+                <p className="text-xs text-theme-text-secondary mb-4">
+                  {t("pdfAnalysis.panel.summary", {
+                    totalPages: result.totalPages,
+                    chunks: result.chunks,
+                    factsStored: result.factsStored,
+                  })}
+                  {result.chunkErrors > 0 &&
+                    t("pdfAnalysis.panel.chunkErrors", {
+                      count: result.chunkErrors,
+                    })}
+                </p>
+                {/* Rendered Markdown */}
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({ children, ...p }) => {
+                      const text = String(children);
+                      const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                      return (
+                        <h1
+                          data-heading-id={id}
+                          className="text-lg font-bold text-theme-text-primary mt-6 mb-3 leading-snug"
+                          {...p}
+                        >
+                          {children}
+                        </h1>
+                      );
+                    },
+                    h2: ({ children, ...p }) => {
+                      const text = String(children);
+                      const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                      return (
+                        <h2
+                          data-heading-id={id}
+                          className="text-base font-semibold text-theme-text-primary mt-5 mb-2 leading-snug"
+                          {...p}
+                        >
+                          {children}
+                        </h2>
+                      );
+                    },
+                    h3: ({ children, ...p }) => {
+                      const text = String(children);
+                      const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                      return (
+                        <h3
+                          data-heading-id={id}
+                          className="text-sm font-semibold text-theme-text-primary mt-4 mb-1.5"
+                          {...p}
+                        >
+                          {children}
+                        </h3>
+                      );
+                    },
+                    p: ({ children }) => (
+                      <p className="text-sm text-theme-text-primary leading-relaxed mb-3">
+                        {children}
+                      </p>
+                    ),
+                    strong: ({ children }) => (
+                      <strong className="font-semibold text-theme-text-primary">
+                        {children}
+                      </strong>
+                    ),
+                    em: ({ children }) => (
+                      <em className="italic text-theme-text-secondary">{children}</em>
+                    ),
+                    ul: ({ children }) => (
+                      <ul className="list-disc list-inside text-sm text-theme-text-primary mb-3 flex flex-col gap-1 pl-2">
+                        {children}
+                      </ul>
+                    ),
+                    ol: ({ children }) => (
+                      <ol className="list-decimal list-inside text-sm text-theme-text-primary mb-3 flex flex-col gap-1 pl-2">
+                        {children}
+                      </ol>
+                    ),
+                    li: ({ children }) => (
+                      <li className="leading-relaxed">{children}</li>
+                    ),
+                    hr: () => (
+                      <hr className="border-theme-sidebar-border my-4" />
+                    ),
+                    blockquote: ({ children }) => (
+                      <blockquote className="border-l-2 border-theme-sidebar-border pl-3 text-sm text-theme-text-secondary italic my-3">
+                        {children}
+                      </blockquote>
+                    ),
+                    code: ({ inline, children }) =>
+                      inline ? (
+                        <code className="px-1 py-0.5 rounded bg-theme-bg-container text-xs font-mono text-theme-text-primary">
+                          {children}
+                        </code>
+                      ) : (
+                        <pre className="bg-theme-bg-container rounded-md p-3 text-xs font-mono text-theme-text-primary overflow-x-auto my-3">
+                          <code>{children}</code>
+                        </pre>
+                      ),
+                    table: ({ children }) => (
+                      <div className="overflow-x-auto my-3">
+                        <table className="text-sm w-full border-collapse">
+                          {children}
+                        </table>
+                      </div>
+                    ),
+                    th: ({ children }) => (
+                      <th className="text-left text-xs font-semibold text-theme-text-primary border border-theme-sidebar-border px-2 py-1 bg-theme-bg-container">
+                        {children}
+                      </th>
+                    ),
+                    td: ({ children }) => (
+                      <td className="text-xs text-theme-text-primary border border-theme-sidebar-border px-2 py-1">
+                        {children}
+                      </td>
+                    ),
+                  }}
+                >
+                  {result.report}
+                </ReactMarkdown>
+              </>
+            ) : (
+              <p className="text-sm text-red-400">
+                {result.error || t("pdfAnalysis.panel.noReport")}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>

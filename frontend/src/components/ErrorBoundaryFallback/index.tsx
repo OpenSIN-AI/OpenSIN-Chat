@@ -6,9 +6,12 @@ import type { FallbackProps } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
 
 export default function ErrorBoundaryFallback({
-  error,
+  error: rawError,
   resetErrorBoundary,
 }: FallbackProps) {
+  // FallbackProps types `error` as `unknown`; cast once so the rest of the
+  // component can safely access Error properties.
+  const error = rawError as Error;
   const [copied, setCopied] = useState<boolean>(false);
   const { t } = useTranslation();
 

@@ -2727,6 +2727,8 @@ const TRANSLATIONS = {
       tabCorpus: "Korpus-Vergleich",
       newAnalysis: "Neue Analyse",
       pdfFile: "PDF-Datei",
+      chooseFile: "Datei auswählen",
+      noFileChosen: "Keine Datei ausgewählt",
       taskRequired: "Aufgabe (erforderlich)",
       taskPlaceholder:
         "z.B. Fasse die wichtigsten Aussagen zusammen und prüfe sie auf Belege",
@@ -2759,6 +2761,10 @@ const TRANSLATIONS = {
       cancel: "Abbrechen",
       reportFor: "Bericht für {{name}}",
       downloadReport: "Als Markdown herunterladen",
+      tocToggle: "Inhaltsverzeichnis",
+      tocLabel: "Inhaltsverzeichnis",
+      addAsSource: "Als Quelle hinzufügen",
+      addedAsSourceToast: "Berichtstext wurde in die Zwischenablage kopiert. Fügen Sie ihn als Quelle im Workspace ein.",
       close: "Schließen",
       loading: "Wird geladen…",
       summary:
@@ -2792,6 +2798,8 @@ const TRANSLATIONS = {
       section: "Korpus-Analysen",
       newAnalysis: "Neue Korpus-Analyse",
       pdfFiles: "PDF-Dateien (mindestens 2)",
+      chooseFiles: "Dateien auswählen",
+      noFilesChosen: "Keine Dateien ausgewählt",
       taskRequired: "Aufgabe (erforderlich)",
       taskPlaceholder: "z.B. Vergleiche die Dokumente und finde Widersprüche",
       factCriteria: "Faktenkriterien (optional)",

@@ -37,10 +37,10 @@ import MonoProviderIcon from "../MonoProviderIcon";
  */
 export default function ModelTable({
   alias = "",
-  models = [],
-  downloadModel = null,
-  uninstallModel = null,
-  setActiveModel = () => {},
+  models = [] as any[],
+  downloadModel = null as ((modelId: string, fileSize: any, cb: (p: number) => void) => void) | null,
+  uninstallModel = null as ((modelId: string) => void) | null,
+  setActiveModel = (_id: string) => {},
   selectedModelId = "",
   ui = {
     showRuntime: true,

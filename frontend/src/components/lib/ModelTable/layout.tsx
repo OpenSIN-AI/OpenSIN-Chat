@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ArrowClockwise,
@@ -11,8 +11,15 @@ export default function ModelTableLayout({
   children,
   fetchModels = null,
   searchQuery = "",
-  setSearchQuery = () => {},
+  setSearchQuery = (_q: string) => {},
   loading = false,
+}: {
+  children?: React.ReactNode;
+  fetchModels?: (() => Promise<any>) | null;
+  searchQuery?: string;
+  setSearchQuery?: (q: string) => void;
+  loading?: boolean;
+  isLoading?: boolean;
 }) {
   const { t } = useTranslation();
   const [isRefreshing, setIsRefreshing] = useState(false as any);

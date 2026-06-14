@@ -336,7 +336,7 @@ function DockerModelRunnerModelSelection({
           <ModelTable
             key={alias}
             alias={alias}
-            models={models}
+            models={models as any[]}
             setActiveModel={handleSetActiveModel}
             downloadModel={downloadModel}
             selectedModelId={selectedModelId}

@@ -70,6 +70,8 @@ export default defineConfig({
     ]
   },
   build: {
+    // Top-level await in main.tsx (DEV-only MSW import) requires esnext target.
+    target: "esnext",
     // The SSR setup pins entryFileNames to 'index.js', so the application entry
     // chunk cannot be code-split and is legitimately large. Vendor libraries are
     // split into cacheable chunks via manualChunks below; the limit is raised to

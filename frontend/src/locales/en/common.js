@@ -1052,6 +1052,8 @@ const TRANSLATIONS = {
       tabCorpus: "Corpus comparison",
       newAnalysis: "New analysis",
       pdfFile: "PDF file",
+      chooseFile: "Choose file",
+      noFileChosen: "No file chosen",
       taskRequired: "Task (required)",
       taskPlaceholder:
         "e.g. Summarize the key claims and check them for evidence",
@@ -1083,6 +1085,10 @@ const TRANSLATIONS = {
       cancel: "Cancel",
       reportFor: "Report for {{name}}",
       downloadReport: "Download as Markdown",
+      tocToggle: "Table of contents",
+      tocLabel: "Table of contents",
+      addAsSource: "Add as source",
+      addedAsSourceToast: "Report text copied to clipboard. Paste it as a source in your workspace.",
       close: "Close",
       loading: "Loading…",
       summary:
@@ -1116,6 +1122,8 @@ const TRANSLATIONS = {
       section: "Corpus analyses",
       newAnalysis: "New corpus analysis",
       pdfFiles: "PDF files (at least 2)",
+      chooseFiles: "Choose files",
+      noFilesChosen: "No files chosen",
       taskRequired: "Task (required)",
       taskPlaceholder: "e.g. Compare the documents and find contradictions",
       factCriteria: "Fact criteria (optional)",
