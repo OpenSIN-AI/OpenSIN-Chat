@@ -88,27 +88,23 @@ export function SourceTypeCircle({
 
   return (
     <div
-      className={`${customImage ? "bg-transparent border-none" : "bg-white light:bg-slate-100 border-zinc-800 light:border-white rounded-full"} flex items-center justify-center overflow-hidden`}
+      className={`${customImage ? "bg-transparent border-none" : "bg-white light:bg-slate-100 border-zinc-800 light:border-white rounded-full"} flex items-center justify-center overflow-hidden w-[var(--source-circle-size)] h-[var(--source-circle-size)]`}
       // Dynamic: dimensions passed as props (runtime variable)
-      style={{ width: size, height: size }}
+      style={{ "--source-circle-size": `${size}px` }}
     >
       {faviconUrl && !imgError ? (
         <img
           src={faviconUrl}
           // eslint-disable-next-line i18next/no-literal-string
           alt="favicon"
-          // Dynamic: dimensions passed as props (runtime variable)
-          style={{ width: size, height: size }}
-          className="object-cover"
+          className="object-cover w-full h-full"
           onError={() => setImgError(true)}
         />
       ) : customImage ? (
         <img
           src={customImage}
           alt={type}
-          // Dynamic: dimensions passed as props (runtime variable)
-          style={{ width: size, height: size }}
-          className="object-contain bg-transparent"
+          className="object-contain bg-transparent w-full h-full"
         />
       ) : (
         <Icon size={iconSize} weight="bold" className="text-black" />
@@ -167,8 +163,10 @@ export default function Citations({ sources = [] }: any) {
         {t(CITATION_KEYS.sources)}
       </span>
       <div
-        className="relative h-[22px]"
-        style={{ width: `${visibleSources.length * 17 + 5}px` }}
+        className="relative h-[22px] w-[var(--citation-stack-width)]"
+        style={{
+          "--citation-stack-width": `${visibleSources.length * 17 + 5}px`,
+        }}
       >
         {(visibleSources as any).map((source, idx) => {
           const info = parseChunkSource(source);
@@ -176,8 +174,11 @@ export default function Citations({ sources = [] }: any) {
           return (
             <div
               key={source.title || idx}
-              className={`absolute top-0 size-[22px] rounded-full ${customImage ? "border-none" : "border-2 border-zinc-800 light:border-white"}`}
-              style={{ left: `${idx * 17}px`, zIndex: 3 - idx }}
+              className={`absolute top-0 size-[22px] rounded-full left-[var(--citation-stack-left)] z-[var(--citation-stack-z)] ${customImage ? "border-none" : "border-2 border-zinc-800 light:border-white"}`}
+              style={{
+                "--citation-stack-left": `${idx * 17}px`,
+                "--citation-stack-z": 3 - idx,
+              }}
             >
               <SourceTypeCircle
                 type={info.icon}

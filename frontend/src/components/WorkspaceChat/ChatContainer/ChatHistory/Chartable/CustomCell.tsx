@@ -8,14 +8,15 @@ export default function CustomCell({ ...props }: any) {
         y={y}
         width={width}
         height={height}
+        className="fill-[var(--cell-fill)] stroke-[var(--cell-stroke)] stroke-[var(--cell-stroke-width)] stroke-opacity-[var(--cell-stroke-opacity)]"
         style={{
-          fill:
+          "--cell-fill":
             depth < 2
               ? colors[Math.floor((index / root.children.length) * 6)]
               : "#ffffff00",
-          stroke: "#fff",
-          strokeWidth: 2 / (depth + 1e-10),
-          strokeOpacity: 1 / (depth + 1e-10),
+          "--cell-stroke": "#fff",
+          "--cell-stroke-width": 2 / (depth + 1e-10),
+          "--cell-stroke-opacity": 1 / (depth + 1e-10),
         }}
       />
       {depth === 1 ? (

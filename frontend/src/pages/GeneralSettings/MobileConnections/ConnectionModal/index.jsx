@@ -18,8 +18,8 @@ export default function MobileConnectModal({ isOpen, onClose }) {
     <ModalWrapper isOpen={isOpen}>
       {/* backgroundImage keeps a style attr: bundler-hashed asset URL only known at build time */}
       <div
-        className="relative w-full rounded-lg shadow min-h-[60vh] max-w-[70vw] bg-cover bg-center"
-        style={{ backgroundImage: `url(${BG})` }}
+        className="relative w-full rounded-lg shadow min-h-[60vh] max-w-[70vw] bg-cover bg-center bg-[var(--connection-modal-bg)]"
+        style={{ "--connection-modal-bg": `url(${BG})` }}
       >
         <button
           onClick={onClose}

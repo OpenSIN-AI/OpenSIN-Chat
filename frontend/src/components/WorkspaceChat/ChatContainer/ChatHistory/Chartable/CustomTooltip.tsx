@@ -56,28 +56,18 @@ export default function Tooltip({ legendColor, ...props }: any) {
                 <div
                   key={`id-${idx}`}
                   className="flex items-center justify-between space-x-8"
+                  style={{
+                    "--legend-color": legendColor,
+                    "--legend-text-color": invertColor(legendColor, true),
+                  }}
                 >
                   <div className="flex items-center space-x-2">
-                    <span
-                      className="shrink-0 h-3 w-3 border-theme-bg-primary rounded-md rounded-full border-2 shadow-md"
-                      // Dynamic: color depends on chart legend color (runtime prop)
-                      style={{ backgroundColor: legendColor }}
-                    />
-                    <p
-                      style={{
-                        color: invertColor(legendColor, true),
-                      }}
-                      className="font-medium tabular-nums text-right whitespace-nowrap"
-                    >
+                    <span className="shrink-0 h-3 w-3 border-theme-bg-primary rounded-md rounded-full border-2 shadow-md bg-[var(--legend-color)]" />
+                    <p className="font-medium tabular-nums text-right whitespace-nowrap text-[var(--legend-text-color)]">
                       {value}
                     </p>
                   </div>
-                  <p
-                    style={{
-                      color: invertColor(legendColor, true),
-                    }}
-                    className="whitespace-nowrap font-normal"
-                  >
+                  <p className="whitespace-nowrap font-normal text-[var(--legend-text-color)]">
                     {name}
                   </p>
                 </div>

@@ -81,8 +81,11 @@ export default function SlashCommandRow({
             createPortal(
               <div
                 ref={menuRef}
-                style={{ top: menuPosition.top, left: menuPosition.left }}
-                className="fixed z-[9999] bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg min-w-[120px] flex flex-col overflow-hidden"
+                style={{
+                  "--slash-menu-top": `${menuPosition.top}px`,
+                  "--slash-menu-left": `${menuPosition.left}px`,
+                }}
+                className="fixed z-[9999] bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg min-w-[120px] flex flex-col overflow-hidden top-[var(--slash-menu-top)] left-[var(--slash-menu-left)]"
               >
                 <button
                   type="button"

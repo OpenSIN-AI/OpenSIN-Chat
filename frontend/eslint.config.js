@@ -11,6 +11,47 @@ import tseslint from "typescript-eslint"
 import pluginI18nextModule from "eslint-plugin-i18next"
 const pluginI18next = pluginI18nextModule.default || pluginI18nextModule
 
+// Only allow inline styles when they are used exclusively for CSS custom
+// properties (runtime design tokens). All other layout/color styles should be
+// Tailwind utilities. See docs/INLINE-STYLES-AUDIT.md for exceptions.
+const inlineStylesPlugin = {
+  rules: {
+    "css-vars-only": {
+      meta: {
+        type: "suggestion",
+        docs: {
+          description:
+            "Disallow inline styles unless they only set CSS custom properties.",
+        },
+        messages: {
+          noInlineStyles:
+            "Inline styles are allowed only for CSS custom properties (--*). Use Tailwind utilities or document an exception in docs/INLINE-STYLES-AUDIT.md.",
+        },
+      },
+      create(context) {
+        return {
+          JSXAttribute(node) {
+            if (node.name?.name !== "style") return;
+            const expr = node.value?.expression;
+            if (!expr || expr.type !== "ObjectExpression") return;
+            const hasNonVar = expr.properties.some((prop) => {
+              if (prop.type !== "Property") return true;
+              if (prop.key.type === "Identifier")
+                return !prop.key.name.startsWith("--");
+              if (prop.key.type === "Literal")
+                return !String(prop.key.value).startsWith("--");
+              return true;
+            });
+            if (hasNonVar) {
+              context.report({ node, messageId: "noInlineStyles" });
+            }
+          },
+        };
+      },
+    },
+  },
+};
+
 // Enable the full jsx-a11y recommended set but as warnings, so it surfaces
 // accessibility issues in CI without breaking the build on the existing
 // backlog. Tighten individual rules to "error" as they get fixed.
@@ -49,7 +90,8 @@ export default [
       "jsx-a11y": pluginJsxA11y,
       "unused-imports": unusedImports,
       prettier: pluginPrettier,
-      i18next: pluginI18next
+      i18next: pluginI18next,
+      inlineStyles: inlineStylesPlugin,
     },
     settings: {
       react: { version: "detect" }
@@ -96,35 +138,15 @@ export default [
           argsIgnorePattern: "^_"
         }
       ],
-      // Block new `style={{...}}` inline styles — migrate to Tailwind utilities.
-      // Runtime-computed values (progress %, mouse position, chart sizes) must
-      // use CSS variables or a documented exception in docs/INLINE-STYLES-AUDIT.md
-      // before being allowed back. See Issue #65.
-      "no-restricted-syntax": [
-        "warn",
-        {
-          selector:
-            "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
-          message:
-            "Inline `style={{...}}` is discouraged — use Tailwind utility classes or CSS variables. See docs/INLINE-STYLES-AUDIT.md and Issue #65."
-        }
-      ],
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/explicit-function-return-types": "off",
       "@typescript-eslint/no-require-imports": "off",
 
-      // Prevent new inline styles after #65 migration
-      // Exceptions (Type D runtime values) documented in docs/INLINE-STYLES-AUDIT.md
-      // NOTE: Kept at "warn" because existing inline styles (runtime values) are
-      // grandfathered in and would break the build if set to "error".
-      // Tighten to "error" once the backlog is cleared.
-      "no-restricted-syntax": [
-        "warn",
-        {
-          selector: "JSXAttribute[name.name='style'] > JSXExpressionContainer > ObjectExpression",
-          message: "Inline styles are prohibited. Use Tailwind utilities instead. See docs/INLINE-STYLES-AUDIT.md for runtime exceptions (Type D)."
-        }
-      ],
+      // Prevent new inline styles after #65 migration.
+      // Allowed: style objects that only set CSS custom properties (runtime
+      // design tokens). Everything else should be a Tailwind utility.
+      // Exceptions must be documented in docs/INLINE-STYLES-AUDIT.md.
+      "inlineStyles/css-vars-only": "warn",
       // i18n: forbid hardcoded user-facing strings in JSX — every visible string
       // must go through t(). Set to "warn" so the existing backlog surfaces in CI
       // without breaking the build. Tighten to "error" once the backlog is cleared.

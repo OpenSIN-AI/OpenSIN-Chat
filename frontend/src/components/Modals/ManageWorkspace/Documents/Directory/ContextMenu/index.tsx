@@ -58,14 +58,19 @@ export default function ContextMenu({
     <div
       ref={contextMenuRef}
       // Dynamic: position depends on click coordinates (runtime values)
-      style={{ top: `${contextMenu.y}px`, left: `${contextMenu.x}px` }}
-      className="fixed z-[1000] bg-theme-bg-secondary border border-theme-modal-border rounded-md shadow-lg"
+      style={{
+        "--context-menu-top": `${contextMenu.y}px`,
+        "--context-menu-left": `${contextMenu.x}px`,
+      }}
+      className="fixed z-[1000] bg-theme-bg-secondary border border-theme-modal-border rounded-md shadow-lg top-[var(--context-menu-top)] left-[var(--context-menu-left)]"
     >
       <button
         onClick={toggleSelectAll}
         className="block w-full text-left px-4 py-2 text-sm text-theme-text-primary hover:bg-theme-file-picker-hover"
       >
-        {isAllSelected() ? t("contextMenu.unselectAll") : t("contextMenu.selectAll")}
+        {isAllSelected()
+          ? t("contextMenu.unselectAll")
+          : t("contextMenu.selectAll")}
       </button>
       <button
         onClick={closeContextMenu}

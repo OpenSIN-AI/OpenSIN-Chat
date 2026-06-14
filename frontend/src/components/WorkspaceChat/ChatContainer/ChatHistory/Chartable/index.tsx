@@ -153,9 +153,10 @@ export function Chartable({ props }: any) {
                 tickLine={false}
                 axisLine={false}
                 interval="preserveStartEnd"
-                tick={{ transform: "translate(0, 6)", fill: "white" }}
-                style={{
-                  fontSize: "12px",
+                tick={{
+                  transform: "translate(0, 6)",
+                  fill: "white",
+                  fontSize: 12,
                   fontFamily: "Inter; Helvetica",
                 }}
                 padding={{ left: 10, right: 10 }}
@@ -164,9 +165,10 @@ export function Chartable({ props }: any) {
                 tickLine={false}
                 axisLine={false}
                 type="number"
-                tick={{ transform: "translate(-3, 0)", fill: "white" }}
-                style={{
-                  fontSize: "12px",
+                tick={{
+                  transform: "translate(-3, 0)",
+                  fill: "white",
+                  fontSize: 12,
                   fontFamily: "Inter; Helvetica",
                 }}
               />
@@ -213,9 +215,10 @@ export function Chartable({ props }: any) {
                 tickLine={false}
                 axisLine={false}
                 interval="preserveStartEnd"
-                tick={{ transform: "translate(0, 6)", fill: "white" }}
-                style={{
-                  fontSize: "12px",
+                tick={{
+                  transform: "translate(0, 6)",
+                  fill: "white",
+                  fontSize: 12,
                   fontFamily: "Inter; Helvetica",
                 }}
                 padding={{ left: 10, right: 10 }}
@@ -224,9 +227,10 @@ export function Chartable({ props }: any) {
                 tickLine={false}
                 axisLine={false}
                 type="number"
-                tick={{ transform: "translate(-3, 0)", fill: "white" }}
-                style={{
-                  fontSize: "12px",
+                tick={{
+                  transform: "translate(-3, 0)",
+                  fill: "white",
+                  fontSize: 12,
                   fontFamily: "Inter; Helvetica",
                 }}
               />

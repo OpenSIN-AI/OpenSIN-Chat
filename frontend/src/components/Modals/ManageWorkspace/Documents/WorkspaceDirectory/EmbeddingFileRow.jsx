@@ -94,9 +94,9 @@ export function EmbeddingFileRow({ filename, status: fileStatus, onRemove }) {
           <div className="flex items-center gap-x-2 w-full justify-end">
             <div className="w-20 h-[1.5px] bg-white/10 light:bg-sky-900/10 rounded-full overflow-hidden">
               <div
-                className="h-full bg-white light:bg-sky-400 rounded-full transition-all duration-300"
+                className="h-full bg-white light:bg-sky-400 rounded-full transition-all duration-300 w-[var(--embedding-progress)]"
                 // Dynamic: percentage width depends on runtime state (embedding progress)
-                style={{ width: `${pct}%` }}
+                style={{ "--embedding-progress": `${pct}%` }}
               />
             </div>
             <p className="text-xs whitespace-nowrap w-8 text-right">{pct}%</p>

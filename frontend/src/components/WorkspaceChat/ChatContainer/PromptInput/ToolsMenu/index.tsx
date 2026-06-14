@@ -155,8 +155,8 @@ export default function ToolsMenu({
           if (e.currentTarget.contains(e.target)) e.preventDefault();
         }}
         // Dynamic: maxHeight computed from viewport measurements at runtime
-        style={{ maxHeight }}
-        className={`absolute left-2 right-2 md:left-14 md:right-auto md:w-[400px] z-50 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-lg p-3 flex flex-col gap-2.5 shadow-lg overflow-hidden ${
+        style={{ "--tools-menu-max-height": `${maxHeight}px` }}
+        className={`absolute left-2 right-2 md:left-14 md:right-auto md:w-[400px] z-50 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-lg p-3 flex flex-col gap-2.5 shadow-lg overflow-hidden max-h-[var(--tools-menu-max-height)] ${
           centered ? "top-full mt-2" : "bottom-full mb-2"
         }`}
       >
