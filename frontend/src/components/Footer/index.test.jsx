@@ -1,18 +1,42 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import Footer, { ICON_COMPONENTS, MAX_ICONS } from "./index";
+
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
   return createI18nMock();
 });
 
-vi.mock("@/hooks/useFooterIcons", () => ({
-  default: vi.fn(),
+vi.mock("@/hooks/useUser", () => ({
+  default: () => ({
+    user: { id: 1, username: "OpenAfD", email: null },
+  }),
+}));
+
+vi.mock("@/hooks/usePfp", () => ({
+  default: () => ({ pfp: null, setPfp: vi.fn() }),
+}));
+
+vi.mock("@/hooks/useLoginMode", () => ({
+  default: () => "multi",
 }));
 
 vi.mock("@/hooks/useTheme", () => ({
-  useTheme: () => ({ isLight: true, setTheme: vi.fn() }),
+  useTheme: () => ({ theme: "system", setTheme: vi.fn() }),
+}));
+
+vi.mock("@/hooks/useLanguageOptions", () => ({
+  useLanguageOptions: () => ({
+    currentLanguage: "en",
+    supportedLanguages: ["en", "de"],
+    getLanguageName: (lang) => (lang === "de" ? "Deutsch" : "English"),
+    changeLanguage: vi.fn(),
+  }),
+}));
+
+vi.mock("../UserMenu/AccountModal", () => ({
+  default: () => <div data-testid="account-modal" />,
 }));
 
 vi.mock("react-router-dom", () => ({
@@ -23,28 +47,32 @@ vi.mock("react-router-dom", () => ({
   ),
 }));
 
-vi.mock("react-device-detect", () => ({
-  isMobile: false,
-}));
-
-vi.mock("../SettingsButton", () => ({
-  default: () => <button data-testid="settings-button">Settings</button>,
-}));
-
-vi.mock("@phosphor-icons/react", () => ({
-  BookOpen: () => <svg data-testid="icon-bookopen" />,
-  GithubLogo: () => <svg data-testid="icon-githublogo" />,
-  Envelope: () => <svg data-testid="icon-envelope" />,
-  LinkSimple: () => <svg data-testid="icon-linksimple" />,
-  HouseLine: () => <svg data-testid="icon-houseline" />,
-  Globe: () => <svg data-testid="icon-globe" />,
-  Briefcase: () => <svg data-testid="icon-briefcase" />,
-  Info: () => <svg data-testid="icon-info" />,
-  Sun: () => <svg data-testid="icon-sun" />,
-  Moon: () => <svg data-testid="icon-moon" />,
-}));
-
-import useFooterIcons from "@/hooks/useFooterIcons";
+vi.mock("@phosphor-icons/react", () => {
+  const stub = (name) => {
+    const C = () => <svg data-testid={`icon-${name}`} />;
+    return C;
+  };
+  return {
+    ArrowUpRight: stub("arrowupright"),
+    BookOpen: stub("bookopen"),
+    CaretUpDown: stub("caretupdown"),
+    ChatCircleText: stub("chatcircletext"),
+    Desktop: stub("desktop"),
+    Gear: stub("gear"),
+    GithubLogo: stub("githublogo"),
+    Briefcase: stub("briefcase"),
+    Envelope: stub("envelope"),
+    Globe: stub("globe"),
+    HouseLine: stub("houseline"),
+    Info: stub("info"),
+    LinkSimple: stub("linksimple"),
+    Moon: stub("moon"),
+    SignIn: stub("signin"),
+    SignOut: stub("signout"),
+    Sun: stub("sun"),
+    UserCircle: stub("usercircle"),
+  };
+});
 
 describe("Footer", () => {
   beforeEach(() => {
@@ -62,63 +90,34 @@ describe("Footer", () => {
     expect(MAX_ICONS).toBe(3);
   });
 
-  it("renders nothing while loading", () => {
-    useFooterIcons.mockReturnValue({ footerData: [], isLoading: true });
-    const { container } = render(<Footer />);
-    expect(container).toBeEmptyDOMElement();
+  it("renders the account trigger with name and demo subtitle", () => {
+    render(<Footer />);
+    expect(screen.getByText("OpenAfD")).toBeInTheDocument();
+    expect(screen.getByText("Demo-Konto")).toBeInTheDocument();
   });
 
-  it("renders default footer items when no custom data", () => {
-    useFooterIcons.mockReturnValue({ footerData: [], isLoading: false });
+  it("does not show the menu items until the trigger is clicked", () => {
     render(<Footer />);
-    // Github and docs links should render
-    expect(screen.getByLabelText(/GitHub/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Dokumentation/i)).toBeInTheDocument();
+    expect(screen.queryByText("Profil")).not.toBeInTheDocument();
   });
 
-  it("renders custom footer icons when present", () => {
-    useFooterIcons.mockReturnValue({
-      footerData: [{ icon: "Globe", url: "https://example.com" }],
-      isLoading: false,
-    });
+  it("opens the menu with all entries on click", () => {
     render(<Footer />);
-    const link = screen.getByLabelText("https://example.com");
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", "https://example.com");
+    fireEvent.click(screen.getByRole("button", { expanded: false }));
+    expect(screen.getByText("Profil")).toBeInTheDocument();
+    expect(screen.getByText("Einstellungen")).toBeInTheDocument();
+    expect(screen.getByText("Dokumentation")).toBeInTheDocument();
+    expect(screen.getByText("Feedback")).toBeInTheDocument();
+    expect(screen.getByText("Design")).toBeInTheDocument();
+    expect(screen.getByText("Sprache")).toBeInTheDocument();
+    expect(screen.getByText("Abmelden")).toBeInTheDocument();
   });
 
-  it("falls back to Info icon for unknown icon names", () => {
-    useFooterIcons.mockReturnValue({
-      footerData: [{ icon: "NonExistentIcon", url: "https://fallback.com" }],
-      isLoading: false,
-    });
+  it("links Feedback to the GitHub new issue page", () => {
     render(<Footer />);
-    expect(screen.getByLabelText("https://fallback.com")).toBeInTheDocument();
-  });
-
-  it("renders a nav element with aria-label", () => {
-    useFooterIcons.mockReturnValue({ footerData: [], isLoading: false });
-    render(<Footer />);
-    expect(screen.getByRole("navigation")).toHaveAttribute(
-      "aria-label",
-      "Footer links",
-    );
-  });
-
-  it("renders aria-labels on default footer links", () => {
-    useFooterIcons.mockReturnValue({ footerData: [], isLoading: false });
-    render(<Footer />);
-    const githubLink = screen.getByLabelText("OpenSIN Chat auf GitHub ansehen");
-    const docsLink = screen.getByLabelText("Entwickler-Dokumentation öffnen");
-    expect(githubLink).toBeInTheDocument();
-    expect(docsLink).toBeInTheDocument();
-  });
-
-  it("renders theme toggle button with Moon icon when in light mode", () => {
-    useFooterIcons.mockReturnValue({ footerData: [], isLoading: false });
-    render(<Footer />);
-    const themeButton = screen.getByLabelText(/Switch to dark mode/i);
-    expect(themeButton).toBeInTheDocument();
-    expect(themeButton).toHaveAttribute("type", "button");
+    fireEvent.click(screen.getByRole("button", { expanded: false }));
+    const feedback = screen.getByText("Feedback").closest("a");
+    expect(feedback).toHaveAttribute("href", expect.stringContaining("/issues/new"));
+    expect(feedback).toHaveAttribute("target", "_blank");
   });
 });
