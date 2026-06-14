@@ -10,7 +10,7 @@ export function isPathMatch(href, pathname) {
 }
 
 interface PathOptions {
-  search?: Record<string, string | number | boolean>;
+  search?: Record<string, string | number | boolean> | string;
 }
 
 function applyOptions(path: string, options: PathOptions = {}): string {
@@ -18,10 +18,14 @@ function applyOptions(path: string, options: PathOptions = {}): string {
   if (!options || Object.keys(options).length === 0) return updatedPath;
 
   if (options.search) {
-    const searchParams = new URLSearchParams(
-      Object.entries(options.search).map(([k, v]) => [k, String(v)])
-    );
-    updatedPath += `?${searchParams.toString()}`;
+    if (typeof options.search === "string") {
+      updatedPath += `?${options.search}`;
+    } else {
+      const searchParams = new URLSearchParams(
+        Object.entries(options.search).map(([k, v]) => [k, String(v)])
+      );
+      updatedPath += `?${searchParams.toString()}`;
+    }
   }
   return updatedPath;
 }
