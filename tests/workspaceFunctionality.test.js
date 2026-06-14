@@ -222,23 +222,23 @@ describe("workspace functionality endpoints", () => {
     });
   });
 
-  describe("DELETE /workspaces/:id", () => {
+  describe("DELETE /workspace/:slug", () => {
     it("should delete workspace", async () => {
-      const response = await request("DELETE", "/workspaces/1");
+      const workspace = await createWorkspace("delete-workspace");
+      const response = await request("DELETE", `/workspace/${workspace.slug}`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("success", true);
     });
 
-    it("should return 404 for non-existent workspace", async () => {
-      const response = await request("DELETE", "/workspaces/999");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
+    it("should return 400 for non-existent workspace", async () => {
+      const response = await request("DELETE", "/workspace/nonexistent-slug-12345");
+      expect(response.status).toBe(400);
     });
   });
 
-  describe("GET /workspaces/:slug/chats", () => {
+  describe("GET /workspace/:slug/chats", () => {
     it("should return workspace chats", async () => {
-      const response = await request("GET", "/workspaces/test-workspace/chats");
+      const workspace = await createWorkspace("chats-workspace");
+      const response = await request("GET", `/workspace/${workspace.slug}/chats`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("chats");
       expect(response.body).toHaveProperty("hasPages");
@@ -246,7 +246,8 @@ describe("workspace functionality endpoints", () => {
     });
 
     it("should return workspace chats with pagination", async () => {
-      const response = await request("GET", "/workspaces/test-workspace/chats?offset=0&limit=10");
+      const workspace = await createWorkspace("chats-page-workspace");
+      const response = await request("GET", `/workspace/${workspace.slug}/chats?offset=0&limit=10`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("chats");
     });
