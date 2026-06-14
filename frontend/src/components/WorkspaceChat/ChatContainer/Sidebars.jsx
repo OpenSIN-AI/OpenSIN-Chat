@@ -22,14 +22,14 @@ export default function Sidebars({ workspace }) {
 
   return (
     <div
-      className="h-full flex flex-row flex-shrink-0 transition-all duration-500 overflow-hidden md:ml-[2px]"
+      className="h-full flex flex-row flex-shrink-0 transition-all duration-500 overflow-hidden"
       aria-label={t("common.rightSidebar")}
     >
       {/* Panel area — only when a panel is active */}
       {activeSidebar && (
         <div
           style={{ "--panel-width": `${PANEL_W}px` }}
-          className="w-[var(--panel-width)] h-full overflow-hidden flex-shrink-0 relative bg-zinc-900 light:bg-white"
+          className="w-[var(--panel-width)] h-full flex-shrink-0 relative my-2 rounded-2xl overflow-hidden bg-zinc-900 light:bg-white shadow-lg"
         >
           {activeSidebar === "sources" && (
             <SourcesSidebar workspace={workspace} />

@@ -4,7 +4,7 @@
 // pills never overflow the 360px panel and get hidden behind the icon
 // bar.
 // Docs: SidebarTabs.doc.md
-import { BookOpen, FileText, FolderOpen } from "@phosphor-icons/react";
+import { BookOpen, FolderOpen } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useChatSidebar } from ".";
 import { useMemoriesContext, LIMITS } from "../MemoriesSidebar/MemoriesContext";
@@ -35,7 +35,7 @@ import { useMemoriesContext, LIMITS } from "../MemoriesSidebar/MemoriesContext";
  */
 export default function SidebarTabs() {
   const { t } = useTranslation();
-  const { activeSidebar, sidebarData, openSidebar } = useChatSidebar();
+  const { activeSidebar } = useChatSidebar();
   const {
     activeTab: memoriesActiveTab,
     setActiveTab: setMemoriesActiveTab,
@@ -56,23 +56,7 @@ export default function SidebarTabs() {
   return (
     <div className="flex items-center justify-between shrink-0 gap-2 mb-3 w-full">
       <div className="flex flex-wrap items-center gap-1 min-w-0 flex-1">
-        {/* Quellen Tab */}
-        <button
-          type="button"
-          onClick={() => openSidebar("sources", sidebarData)}
-          className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
-            activeSidebar === "sources"
-              ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
-              : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
-          }`}
-        >
-          <FileText size={12} weight="bold" />
-          <span className="text-zinc-200 light:text-slate-800 truncate">
-            {t("chat_window.sources")}
-          </span>
-        </button>
-
-        {/* Erinnerungen Sub-Tabs (Workspace / Global) */}
+        {/* Arbeitsbereich sub-tab */}
         <button
           type="button"
           onClick={() => selectMemoriesTab("workspace")}
@@ -80,9 +64,7 @@ export default function SidebarTabs() {
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
             isMemoriesActive && memoriesActiveTab === "workspace"
               ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
-              : isMemoriesActive
-                ? "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
-                : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
+              : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
           }`}
         >
           <FolderOpen size={12} weight="bold" />
@@ -96,6 +78,8 @@ export default function SidebarTabs() {
             })}
           </span>
         </button>
+
+        {/* Global sub-tab */}
         <button
           type="button"
           onClick={() => selectMemoriesTab("global")}
