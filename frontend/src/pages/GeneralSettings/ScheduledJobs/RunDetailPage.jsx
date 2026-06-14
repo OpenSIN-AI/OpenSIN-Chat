@@ -127,8 +127,8 @@ function RunDetailLayout({ children }) {
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
       <div
-        style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           {children}
@@ -248,10 +248,10 @@ function PromptSection({ t, prompt }) {
   return (
     <div className="border border-zinc-700 light:border-slate-400 rounded-lg p-[18px]">
       <p className="text-sm font-medium text-white light:text-slate-950 uppercase tracking-[1.4px] mb-1">
-          {t("scheduledJobs.runDetail.sections.prompt")}
-        </p>
-        <p className="text-sm text-zinc-400 light:text-slate-600 whitespace-pre-wrap">
-          {prompt || t("scheduledJobs.runDetail.sections.dash")}
+        {t("scheduledJobs.runDetail.sections.prompt")}
+      </p>
+      <p className="text-sm text-zinc-400 light:text-slate-600 whitespace-pre-wrap">
+        {prompt || t("scheduledJobs.runDetail.sections.dash")}
       </p>
     </div>
   );

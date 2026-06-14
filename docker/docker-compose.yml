@@ -8,7 +8,7 @@ networks:
 
 services:
   opensin-chat:
-    image: opensin-app:v0.56.5
+    image: opensin-app:v0.56.6
     container_name: opensin-app
     restart: always
     build:

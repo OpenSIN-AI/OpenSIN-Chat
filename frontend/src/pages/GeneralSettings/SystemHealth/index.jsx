@@ -34,7 +34,10 @@ function ConnectivityRow({ result }) {
       {result.reachable ? (
         <span className="flex shrink-0 items-center gap-x-1 text-xs text-green-500">
           <PlugsConnected size={14} weight="fill" />
-          {t("systemHealth.reachable", { latencyMs: result.latencyMs, status: result.status })}
+          {t("systemHealth.reachable", {
+            latencyMs: result.latencyMs,
+            status: result.status,
+          })}
         </span>
       ) : (
         <span className="flex shrink-0 items-center gap-x-1 text-xs text-red-400">
@@ -81,7 +84,9 @@ function ConnectivityPanel() {
             {t("systemHealth.connectivityTest")}
           </h3>
           <p className="text-xs text-theme-text-secondary">
-            {t("systemHealth.connectivityTestDescription", { count: configuredCount })}
+            {t("systemHealth.connectivityTestDescription", {
+              count: configuredCount,
+            })}
           </p>
         </div>
         <button
@@ -122,8 +127,8 @@ export default function SystemHealth() {
     <div className="flex h-screen w-screen overflow-hidden bg-theme-bg-container">
       <Sidebar />
       <div
-        style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="relative w-full overflow-y-scroll bg-theme-bg-secondary no-scroll md:my-[16px] md:ml-[2px] md:mr-[16px] md:rounded-[16px]"
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] relative w-full overflow-y-scroll bg-theme-bg-secondary no-scroll md:my-[16px] md:ml-[2px] md:mr-[16px] md:rounded-[16px]"
       >
         <div className="flex w-full flex-col gap-y-6 p-4 pt-16 md:p-8 md:pt-6">
           <div className="flex flex-col gap-y-1">

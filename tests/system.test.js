@@ -80,17 +80,7 @@ vi.mock("../server/utils/middleware/multiUserProtected", () => ({
   isMultiUserSetup: () => true,
 }));
 
-vi.mock("../server/utils/middleware/validatedRequest", () => ({
-  validatedRequest: (req, res, next) => next(),
-}));
 
-vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => req.body || {},
-  makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: () => Promise.resolve(null),
-  multiUserMode: () => false,
-  queryParams: (req) => req.query || {},
-}));
 
 vi.mock("../server/utils/files/logo", () => ({
   getDefaultFilename: () => "logo.png",
