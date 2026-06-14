@@ -128,10 +128,10 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
-  let body = data ? data : null;
+  let responseBody = data ? data : null;
   if (data && response.headers.get("content-type")?.includes("application/json")) {
     try {
-      body = JSON.parse(data);
+      responseBody = JSON.parse(data);
     } catch {
       /* leave as raw text */
     }
@@ -139,7 +139,7 @@ const request = async (method, path, body = null, headers = {}) => {
   return {
     status: response.status,
     headers: response.headers,
-    body,
+    body: responseBody,
   };
 };
 
