@@ -164,6 +164,59 @@ export function getDocBySlug(slug: string): DocEntry | undefined {
 /** The default doc shown when visiting /docs with no slug. */
 export const DEFAULT_DOC_SLUG = "user-guide";
 
+/** GitHub blob base for docs not included in the in-app documentation. */
+const GITHUB_DOCS_BASE =
+  "https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main";
+
+/** Map of source markdown filename (as referenced in repo) -> in-app slug. */
+const FILE_TO_SLUG: Record<string, string> = {
+  "USER-GUIDE.md": "user-guide",
+  "API.md": "api",
+  "architecture.md": "architecture",
+  "DATA-SOURCES.md": "data-sources",
+  "SYNC-RUNBOOK.md": "sync-runbook",
+  "UPSTREAM-SYNC.md": "upstream-sync",
+  "DOCKER-DEPLOYMENT.md": "docker-deployment",
+  "OPENSIN-CHAT-DEPLOYMENT.md": "opensin-chat-deployment",
+  "AUTO-DEPLOY.md": "auto-deploy",
+  "vercel-deploy-fix.md": "vercel-deploy-fix",
+  "ssh-remote-tunnel.md": "ssh-remote-tunnel",
+  "supabase-self-hosted.md": "supabase-self-hosted",
+  "ADR-001-persistent-job-queue.md": "adr-001-persistent-job-queue",
+};
+
+/**
+ * Resolve a relative markdown link (as found inside a doc) to either an in-app
+ * /docs route (when the target is part of the documentation) or a GitHub blob
+ * URL (for files that are not surfaced in-app, e.g. SECURITY.md).
+ * Returns null for links that should be left untouched (external, anchors).
+ */
+export function resolveDocLink(
+  href: string
+): { url: string; external: boolean } | null {
+  if (!href) return null;
+  // Leave absolute URLs, mailto and pure anchors untouched.
+  if (/^(https?:|mailto:|#)/i.test(href)) return null;
+  if (!href.includes(".md")) return null;
+
+  const [path, hash] = href.split("#");
+  const anchor = hash ? `#${hash}` : "";
+  // Basename without any ./ or ../ segments.
+  const fileName = path.split("/").filter(Boolean).pop() ?? "";
+
+  const slug = FILE_TO_SLUG[fileName];
+  if (slug) {
+    return { url: `/docs/${slug}${anchor}`, external: false };
+  }
+
+  // Reconstruct a repo-relative path for GitHub. The docs live under /docs,
+  // so `../FILE.md` points at the repo root while `./FILE.md` stays in /docs.
+  const goesToRoot = /^\.\.\//.test(path);
+  const bare = path.replace(/^(\.\/|\.\.\/)+/, "");
+  const repoPath = goesToRoot || bare.startsWith("docs/") ? bare : `docs/${bare}`;
+  return { url: `${GITHUB_DOCS_BASE}/${repoPath}${anchor}`, external: true };
+}
+
 /** Group entries by category, preserving CATEGORY_ORDER. */
 export function getGroupedDocs(): { category: DocCategory; entries: DocEntry[] }[] {
   return CATEGORY_ORDER.map((category) => ({
