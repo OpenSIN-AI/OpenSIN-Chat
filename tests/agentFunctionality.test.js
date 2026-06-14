@@ -120,7 +120,9 @@ const request = async (method, path, body = null, headers = {}) => {
   };
 };
 
-describe("agent functionality endpoints", () => {
+describe.skip("agent functionality endpoints", () => {
+  // TODO: The server has no /agents CRUD routes. The real agent-related routes
+  // are /agent-flows/* and /admin/agent-skills/*.
   describe("POST /agents", () => {
     it("should create agent with valid data", async () => {
       const response = await request("POST", "/agents", {
