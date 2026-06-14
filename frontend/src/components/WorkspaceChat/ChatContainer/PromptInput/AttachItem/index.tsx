@@ -173,11 +173,10 @@ export default function AttachItem({
             <div
               ref={menuRef}
               style={{
-                position: "fixed",
-                bottom: `calc(100vh - ${menuPos.top}px + 8px)`,
-                left: menuPos.left,
+                "--attach-bottom": `calc(100vh - ${menuPos.top}px + 8px)`,
+                "--attach-left": `${menuPos.left}px`,
               }}
-              className="bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-[1000] p-0"
+              className="fixed bottom-[var(--attach-bottom)] left-[var(--attach-left)] bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-300 rounded-lg shadow-lg z-[1000] p-0"
               onMouseDown={(e) => e.stopPropagation()}
             >
               <AddSourceMenu

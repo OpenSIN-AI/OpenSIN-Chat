@@ -122,7 +122,7 @@ describe("model router endpoints", () => {
   describe("POST /model-routers/new", () => {
     it("should create model router", async () => {
       const response = await request("POST", "/model-routers/new", {
-        name: "test-router",
+        name: `test-router-${Date.now()}`,
         description: "Test router description",
         fallback_provider: "openai",
         fallback_model: "gpt-4",
@@ -146,7 +146,7 @@ describe("model router endpoints", () => {
     it("should update model router", async () => {
       const id = routerId || 1;
       const response = await request("PUT", `/model-routers/${id}`, {
-        name: "updated-router",
+        name: `updated-router-${Date.now()}`,
         fallback_provider: "openai",
         fallback_model: "gpt-4",
       });
@@ -159,7 +159,7 @@ describe("model router endpoints", () => {
     it("should create model router rule", async () => {
       const id = routerId || 1;
       const response = await request("POST", `/model-routers/${id}/rules/new`, {
-        title: "test_rule",
+        title: `test_rule_${Date.now()}`,
         type: "llm",
         description: "Route to gpt4",
         priority: 1,
@@ -177,7 +177,7 @@ describe("model router endpoints", () => {
       const id = routerId || 1;
       const rid = ruleId || 1;
       const response = await request("PUT", `/model-routers/${id}/rules/${rid}`, {
-        title: "updated_rule",
+        title: `updated_rule_${Date.now()}`,
         description: "Updated description",
         priority: 2,
       });

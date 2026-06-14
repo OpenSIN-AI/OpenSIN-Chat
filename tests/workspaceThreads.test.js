@@ -2,8 +2,14 @@
 // Purpose: Test workspace threads endpoints (workspace-threads)
 // Docs: tests/workspaceThreads.test.js
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, beforeAll } from "vitest";
 import { createApp } from "../server/app";
+import prisma from "../server/utils/prisma";
+
+// Mutable user id that the mocked session will report. The real test user is
+// created in beforeAll so that workspace thread foreign-key constraints can be
+// satisfied; this value is then updated to the real primary key.
+let testUserId = 1;
 
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
@@ -57,7 +63,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 vi.mock("../server/utils/http", () => ({
   reqBody: (req) => ({}),
   makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
+  userFromSession: () => Promise.resolve({ id: testUserId, username: "test" }),
   multiUserMode: () => false,
   queryParams: () => ({}),
 }));
@@ -79,6 +85,22 @@ vi.mock("../server/utils/chats", () => ({
 }));
 
 let app;
+
+beforeAll(async () => {
+  const existing = await prisma.users.findFirst({ where: { username: "test-user" } });
+  if (!existing) {
+    const user = await prisma.users.create({
+      data: {
+        username: "test-user",
+        password: "test-password",
+        role: "admin",
+      },
+    });
+    testUserId = user.id;
+  } else {
+    testUserId = existing.id;
+  }
+});
 
 beforeEach(async () => {
   vi.clearAllMocks();
@@ -120,6 +142,7 @@ const request = async (method, path, body = null, headers = {}) => {
 
 const createWorkspace = async (name) => {
   const response = await request("POST", "/workspace/new", { name });
+  console.log("createWorkspace response", { status: response.status, body: response.body });
   expect(response.status).toBe(200);
   return response.body.workspace;
 };

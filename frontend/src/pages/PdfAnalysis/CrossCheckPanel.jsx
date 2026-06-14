@@ -314,8 +314,8 @@ function CrossCheckRow({ job, onShowReport, onCancelled }) {
             aria-valuemax={100}
           >
             <div
-              className="h-full bg-theme-text-secondary transition-all"
-              style={{ width: `${pct}%` }}
+              className="w-[var(--progress-pct)] h-full bg-theme-text-secondary transition-all"
+              style={{ "--progress-pct": `${pct}%` }}
             />
           </div>
           <span className="text-xs text-theme-text-secondary w-24 text-right">

@@ -109,15 +109,16 @@ const request = async (method, path, body = null, headers = {}) => {
   };
 };
 
+const routerName = `Test Router ${Date.now()}`;
 const validRouter = {
-  name: "Test Router",
+  name: routerName,
   description: "Test router description",
   fallback_provider: "openai",
   fallback_model: "gpt-4",
 };
 
 const validRule = {
-  title: "test_rule",
+  title: `test_rule_${Date.now()}`,
   type: "llm",
   description: "Route to gpt4",
   priority: 1,
@@ -145,7 +146,7 @@ describe("model router functionality endpoints", () => {
 
     it("should reject model router with missing fallback provider/model", async () => {
       const response = await request("POST", "/model-routers/new", {
-        name: "Test Router",
+        name: `Test Router Missing Fallback ${Date.now()}`,
       });
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("error");

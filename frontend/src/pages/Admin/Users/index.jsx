@@ -23,8 +23,8 @@ export default function AdminUsers() {
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
       <div
-        style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
       >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white/10 border-b-2">
@@ -42,7 +42,8 @@ export default function AdminUsers() {
               onClick={openModal}
               className="mt-3 mr-0 mb-4 md:-mb-6 z-10"
             >
-              <UserPlus className="h-4 w-4" weight="bold" /> {t("admin.usersPage.addUser")}
+              <UserPlus className="h-4 w-4" weight="bold" />{" "}
+              {t("admin.usersPage.addUser")}
             </CTAButton>
           </div>
           <div className="overflow-x-auto">
@@ -116,17 +117,16 @@ const ROLE_HINT = {
     "admin.usersPage.roleHint.manager2",
     "admin.usersPage.roleHint.manager3",
   ],
-  admin: [
-    "admin.usersPage.roleHint.admin1",
-    "admin.usersPage.roleHint.admin2",
-  ],
+  admin: ["admin.usersPage.roleHint.admin1", "admin.usersPage.roleHint.admin2"],
 };
 
 export function RoleHintDisplay({ role }) {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-y-1 py-1 pb-4">
-      <p className="text-sm font-medium text-theme-text-primary">{t("admin.usersPage.permissions")}</p>
+      <p className="text-sm font-medium text-theme-text-primary">
+        {t("admin.usersPage.permissions")}
+      </p>
       <ul className="flex flex-col gap-y-1 list-disc px-4">
         {ROLE_HINT[role ?? "default"].map((hintKey, i) => {
           return (

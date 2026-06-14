@@ -18,11 +18,8 @@ export default defineConfig({
     ],
     // Reuse the same process to avoid spinning up multiple servers; tests
     // use the createApp() singleton.
+    fileParallelism: false,
     pool: "forks",
-    poolOptions: {
-      forks: {
-        singleFork: true,
-      },
-    },
+    singleFork: true,
   },
 });

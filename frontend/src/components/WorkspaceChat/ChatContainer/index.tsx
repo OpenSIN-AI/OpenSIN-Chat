@@ -34,8 +34,8 @@ export default function ChatContainer({
     <ChatSidebarProvider>
       <ReportPreviewListener />
       <div
-        style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="relative flex md:ml-[2px] md:mr-[16px] md:my-[16px] w-full z-[2]"
+        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+        className="h-[var(--content-height)] relative flex md:ml-[2px] md:mr-[16px] md:my-[16px] w-full z-[2]"
       >
         <ChatHeader workspaceSlug={workspace.slug} isEmpty={isEmpty} />
         <div

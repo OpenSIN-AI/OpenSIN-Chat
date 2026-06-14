@@ -19,15 +19,9 @@ export default function OnboardingHome() {
   return (
     <div className="relative w-screen h-screen flex flex-col overflow-hidden bg-zinc-950 light:bg-slate-50">
       {/* Dark mode background image */}
-      <div
-        className="absolute inset-0 light:hidden bg-no-repeat bg-center bg-cover"
-        style={{ backgroundImage: "url('/onboarding/background-dark.jpeg')" }}
-      />
+      <div className="absolute inset-0 light:hidden bg-no-repeat bg-center bg-cover bg-[url('/onboarding/background-dark.jpeg')]" />
       {/* Light mode background image */}
-      <div
-        className="absolute inset-0 hidden light:block bg-no-repeat bg-center bg-cover"
-        style={{ backgroundImage: "url('/onboarding/background-light.jpeg')" }}
-      />
+      <div className="absolute inset-0 hidden light:block bg-no-repeat bg-center bg-cover bg-[url('/onboarding/background-light.jpeg')]" />
 
       <div className="relative z-10 flex justify-center pt-[58px]">
         <p className="text-white/80 light:text-slate-600 text-3xl font-semibold drop-shadow-lg">

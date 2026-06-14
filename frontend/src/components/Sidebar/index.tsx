@@ -98,7 +98,7 @@ export default function Sidebar() {
     <>
       <nav
         aria-label={t("sidebar.mainNavigation")}
-        style={{ width: showSidebar ? sidebarWidth : 0 }}
+        style={{ "--sidebar-width": showSidebar ? `${sidebarWidth}px` : "0px" }}
         className={`relative transition-all duration-500 ${
           showSidebar ? "pl-0" : "pl-4"
         }`}
@@ -112,8 +112,8 @@ export default function Sidebar() {
         <div className="overflow-hidden h-full">
           <div className="flex shrink-0 w-full justify-start my-[18px] px-[24px]">
             <div
-              className="flex items-center"
-              style={{ width: sidebarWidth - 48 }}
+              className="w-[var(--sidebar-logo-width)] flex items-center"
+              style={{ "--sidebar-logo-width": `${sidebarWidth - 48}px` }}
             >
               <Link
                 to={paths.home()}
@@ -135,14 +135,16 @@ export default function Sidebar() {
           </div>
           <div
             ref={sidebarRef}
-            style={{ width: sidebarWidth - 32 }}
-            className="relative m-[16px] rounded-[16px] bg-theme-bg-sidebar light:bg-slate-200 border-[2px] border-theme-sidebar-border light:border-none p-[10px] h-[calc(100%-76px)]"
+            style={{ "--sidebar-inner-width": `${sidebarWidth - 32}px` }}
+            className="w-[var(--sidebar-inner-width)] relative m-[16px] rounded-[16px] bg-theme-bg-sidebar light:bg-slate-200 border-[2px] border-theme-sidebar-border light:border-none p-[10px] h-[calc(100%-76px)]"
           >
             <div className="flex flex-col h-full overflow-hidden">
               <div className="flex-grow flex flex-col min-h-0">
                 <div
-                  className="relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[10px] overflow-y-scroll no-scroll"
-                  style={{ minWidth: sidebarWidth - 64 }}
+                  className="min-w-[var(--sidebar-scroll-min-width)] relative h-[calc(100%-60px)] flex flex-col w-full justify-between pt-[10px] overflow-y-scroll no-scroll"
+                  style={{
+                    "--sidebar-scroll-min-width": `${sidebarWidth - 64}px`,
+                  }}
                 >
                   <div className="flex flex-col gap-y-[14px]">
                     <SearchBox user={user} showNewWsModal={showNewWsModal} />
