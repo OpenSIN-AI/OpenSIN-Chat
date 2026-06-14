@@ -115,27 +115,18 @@ export default function Docs() {
   const { slug } = useParams();
   const [query, setQuery] = useState("");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-
-  // Redirect /docs to the default doc.
-  if (!slug) {
-    return <Navigate to={paths.appDocs(`/${DEFAULT_DOC_SLUG}`)} replace />;
-  }
-
-  const entry = getDocBySlug(slug);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
+  const entry = slug ? getDocBySlug(slug) : null;
   const content = entry ? getDocContent(entry.file) : null;
 
   // Update page title and meta description based on the selected doc.
   useEffect(() => {
-    if (!slug) return;
+    if (!slug || !entry) return;
     const baseTitle = document.title;
-    const docTitle = entry ? entry.title : t("common.developerDocs");
-    document.title = `${docTitle} — ${t("common.developerDocs")} | OpenSIN Chat`;
+    document.title = `${entry.title} — ${t("common.developerDocs")} | OpenSIN Chat`;
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute(
-        "content",
-        entry ? entry.description : t("common.docsSearchPlaceholder"),
-      );
+      metaDescription.setAttribute("content", entry.description);
     }
     return () => {
       document.title = baseTitle;
@@ -143,7 +134,6 @@ export default function Docs() {
   }, [entry, slug, t]);
 
   // Close mobile navigation with Escape and lock body scroll while open.
-  const mobileNavRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!mobileNavOpen) return;
     const originalOverflow = document.body.style.overflow;
@@ -159,6 +149,11 @@ export default function Docs() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [mobileNavOpen]);
+
+  // Redirect /docs to the default doc.
+  if (!slug) {
+    return <Navigate to={paths.appDocs(`/${DEFAULT_DOC_SLUG}`)} replace />;
+  }
 
   return (
     <div className="flex flex-col h-screen w-screen bg-theme-bg-primary text-theme-text-primary overflow-hidden">
@@ -179,7 +174,10 @@ export default function Docs() {
             )}
           </button>
           <div className="flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-primary-button" aria-hidden="true" />
+            <BookOpen
+              className="w-5 h-5 text-primary-button"
+              aria-hidden="true"
+            />
             <span className="font-semibold">{t("common.developerDocs")}</span>
           </div>
         </div>
@@ -232,7 +230,9 @@ export default function Docs() {
         <main className="flex-1 min-w-0 overflow-y-auto px-4 md:px-10 py-8">
           {!entry || !content ? (
             <div className="max-w-3xl">
-              <h1 className="text-2xl font-bold mb-3">{t("common.docsNotFound")}</h1>
+              <h1 className="text-2xl font-bold mb-3">
+                {t("common.docsNotFound")}
+              </h1>
               <p className="text-theme-text-secondary mb-6">
                 {t("common.docsNotFoundDesc")}
               </p>
