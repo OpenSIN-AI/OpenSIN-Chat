@@ -16,7 +16,7 @@ import { formatDuration } from "@/utils/numbers";
  * @returns {string} The formatted duration.
  */
 function formatRunDuration(run) {
-  if (!run.completedAt || !run.startedAt) return "—";
+  if (!run.completedAt || !run.startedAt) return `—`;
   const duration = moment.duration(
     moment(run.completedAt).diff(moment(run.startedAt)),
   );
@@ -95,10 +95,7 @@ export default function RunRow({ run, jobId, onKilled }) {
             : "font-medium text-white light:text-slate-950"
         }`}
       >
-        {
-          // eslint-disable-next-line i18next/no-literal-string
-          run.error || "—"
-        }
+        {run.error || `—`}
       </span>
     </button>
   );

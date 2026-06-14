@@ -3484,6 +3484,16 @@ const TRANSLATIONS = {
         value: "Wert",
         description: "Beschreibung",
         type: "Typ",
+        types: {
+          system: "System",
+          user: "Benutzer",
+          workspace: "Workspace",
+          static: "Statisch",
+        },
+        deleteConfirm:
+          'Möchten Sie die Variable "{{key}}" wirklich löschen?\nDiese Aktion ist unwiderruflich.',
+        deleteSuccess: "Variable erfolgreich gelöscht",
+        deleteFailed: "Variable konnte nicht gelöscht werden",
       },
     },
     newInvite: {

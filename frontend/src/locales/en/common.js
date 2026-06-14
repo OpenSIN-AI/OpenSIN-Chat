@@ -3428,6 +3428,16 @@ const TRANSLATIONS = {
         value: "Value",
         description: "Description",
         type: "Type",
+        types: {
+          system: "System",
+          user: "User",
+          workspace: "Workspace",
+          static: "Static",
+        },
+        deleteConfirm:
+          'Are you sure you want to delete the variable "{{key}}"?\nThis action is irreversible.',
+        deleteSuccess: "Variable deleted successfully",
+        deleteFailed: "Failed to delete variable",
       },
     },
     newInvite: {

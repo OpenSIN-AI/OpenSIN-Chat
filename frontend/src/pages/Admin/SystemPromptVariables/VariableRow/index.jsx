@@ -25,7 +25,7 @@ export default function VariableRow({ variable, onRefresh }) {
     if (!variable.id) return;
     if (
       !window.confirm(
-        `Are you sure you want to delete the variable "${variable.key}"?\nThis action is irreversible.`,
+        t("systemPromptVariables.page.deleteConfirm", { key: variable.key }),
       )
     )
       return false;
@@ -33,11 +33,19 @@ export default function VariableRow({ variable, onRefresh }) {
     try {
       await System.promptVariables.delete(variable.id);
       rowRef?.current?.remove();
-      showToast("Variable deleted successfully", "success", { clear: true });
+      showToast(
+        t("systemPromptVariables.page.deleteSuccess"),
+        "success",
+        { clear: true },
+      );
       if (onRefresh) onRefresh();
     } catch (error) {
       console.error("Error deleting variable:", error);
-      showToast("Failed to delete variable", "error", { clear: true });
+      showToast(
+        t("systemPromptVariables.page.deleteFailed"),
+        "error",
+        { clear: true },
+      );
     }
   };
 
@@ -80,16 +88,18 @@ export default function VariableRow({ variable, onRefresh }) {
         <td className="px-4 py-2">
           {typeof variable.value === "function"
             ? variable.value()
-            : truncate(variable.value, 50)}
+            : truncate(variable.value || `-`, 50)}
         </td>
         <td className="px-4 py-2">
-          {truncate(variable.description || "-", 50)}
+          {truncate(variable.description || `-`, 50)}
         </td>
         <td className="px-4 py-2">
           <span
             className={`rounded-full ${colorTheme.bg} px-2 py-0.5 text-xs leading-5 font-semibold ${colorTheme.text} shadow-sm`}
           >
-            {titleCase(variable?.type ?? "static")} // eslint-disable-line i18next/no-literal-string
+            {variable?.type
+              ? t(`systemPromptVariables.page.types.${variable.type}`)
+              : t("systemPromptVariables.page.types.static")}
           </span>
         </td>
         <td className="px-4 py-2 flex items-center justify-end gap-x-4">
