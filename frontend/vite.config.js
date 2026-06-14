@@ -24,6 +24,14 @@ export default defineConfig({
     allowedHosts: ["sb-19llfl8xfbze.vercel.run", "localhost", "127.0.0.1"]
   },
 
+  // Only replace the specific process.env values the browser actually needs.
+  // Vite exposes VITE_* variables via import.meta.env; this whitelist exists
+  // for libraries that still check process.env.NODE_ENV. Never expose the
+  // full process.env object here.
+  define: {
+    "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "production")
+  },
+
   css: {
     postcss
   },
