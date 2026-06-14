@@ -64,7 +64,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
   validatedRequest: (req, res, next) => next(),
 }));
 
-vi.mock("../server/utils/http", () => ({
+vi.mock("../server/utils/http/index.js", () => ({
   reqBody: (req) => ({}),
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: (req, res) => {
