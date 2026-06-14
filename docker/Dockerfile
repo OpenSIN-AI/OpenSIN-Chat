@@ -157,6 +157,13 @@ WORKDIR /app
 FROM build AS backend-build
 COPY --chown=opensin:opensin ./server /app/server/
 
+# Explicitly copy the critical paths.js file required by the native embedder
+# (server/utils/EmbeddingEngines/native/index.js). This is a defense-in-depth
+# measure for issue #114: even if the bulk server COPY above is refactored or
+# a build context change silently drops this file, the image will still contain
+# it. The build-time check below fails the image build if the file is missing.
+COPY --chown=opensin:opensin ./server/utils/paths.js /app/server/utils/paths.js
+
 # Verify critical server files made it into the image (issue #114).
 # If paths.js is missing we fail the build loudly so a broken image
 # can never ship. The runtime guard in docker-entrypoint.sh is a

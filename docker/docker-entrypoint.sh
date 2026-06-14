@@ -19,6 +19,18 @@ fi
 # Ensure PDF analysis storage directory exists (healthcheck expects it)
 mkdir -p "${STORAGE_DIR:-/app/server/storage}/pdf-analysis"
 
+# Defense-in-depth runtime guard for issue #114: the native embedder crashes
+# with a cryptic Node module error when /app/server/utils/paths.js is missing.
+# If the file is not present, fail loudly and tell the operator to rebuild.
+if [ ! -f /app/server/utils/paths.js ]; then
+    echo "================================================================"
+    echo "RUNTIME ERROR: /app/server/utils/paths.js is missing!"
+    echo "The native embedder will crash. Please rebuild the image so that"
+    echo "server/utils/paths.js is included in the Docker image."
+    echo "================================================================"
+    exit 1
+fi
+
 {
   cd /app/server/ &&
     # Disable Prisma CLI telemetry (https://www.prisma.io/docs/orm/tools/prisma-cli#how-to-opt-out-of-data-collection)
