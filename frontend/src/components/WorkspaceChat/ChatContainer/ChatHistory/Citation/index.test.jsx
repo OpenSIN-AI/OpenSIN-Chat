@@ -20,12 +20,17 @@ vi.mock("@/components/ModalWrapper", () => ({
   default: ({ isOpen, children }) => (isOpen ? children : null),
 }));
 
+const mockOpenSidebar = vi.fn();
+const mockCloseSidebar = vi.fn();
+let mockSidebarOpen = false;
+let mockSidebarSources = null;
+
 vi.mock("../../ChatSidebar", () => ({
   useSourcesSidebar: () => ({
-    sidebarOpen: false,
-    openSidebar: vi.fn(),
-    closeSidebar: vi.fn(),
-    sources: null,
+    sidebarOpen: mockSidebarOpen,
+    openSidebar: mockOpenSidebar,
+    closeSidebar: mockCloseSidebar,
+    sources: mockSidebarSources,
   }),
 }));
 
@@ -62,6 +67,13 @@ vi.mock("@/pages/Admin/Agents/OutlookSkillPanel/outlook.png", () => ({
 vi.mock("@/utils/numbers", () => ({
   toPercentString: (n) => `${Math.round(n * 100)}%`,
 }));
+
+beforeEach(() => {
+  mockOpenSidebar.mockClear();
+  mockCloseSidebar.mockClear();
+  mockSidebarOpen = false;
+  mockSidebarSources = null;
+});
 
 describe("Citation", () => {
   describe("combineLikeSources", () => {
@@ -150,6 +162,38 @@ describe("Citation", () => {
       });
       expect(result.icon).toBe("gmailThread");
     });
+
+    it("parses confluence:// source correctly", () => {
+      const result = parseChunkSource({
+        title: "Confluence Page",
+        chunks: [{ chunkSource: "confluence://https://wiki.example.com/page" }],
+      });
+      expect(result.icon).toBe("confluence");
+    });
+
+    it("parses drupalwiki:// source correctly", () => {
+      const result = parseChunkSource({
+        title: "Drupal Wiki",
+        chunks: [{ chunkSource: "drupalwiki://https://wiki.example.com/node" }],
+      });
+      expect(result.icon).toBe("drupalwiki");
+    });
+
+    it("parses obsidian:// source correctly", () => {
+      const result = parseChunkSource({
+        title: "Obsidian Note",
+        chunks: [{ chunkSource: "obsidian://https://obsidian.example.com/note" }],
+      });
+      expect(result.icon).toBe("obsidian");
+    });
+
+    it("parses paperless-ngx:// source correctly", () => {
+      const result = parseChunkSource({
+        title: "Paperless Document",
+        chunks: [{ chunkSource: "paperless-ngx://https://paperless.example.com/doc" }],
+      });
+      expect(result.icon).toBe("paperlessNgx");
+    });
   });
 
   describe("getCustomImage", () => {
@@ -184,6 +228,16 @@ describe("Citation", () => {
       expect(img).toBeInTheDocument();
       expect(img.getAttribute("src")).toContain("favicons?domain=example.com");
     });
+
+    it("renders github icon for github type", () => {
+      const { container } = render(<SourceTypeCircle type="github" />);
+      expect(container.querySelector("span")).toHaveTextContent("GH");
+    });
+
+    it("renders youtube icon for youtube type", () => {
+      const { container } = render(<SourceTypeCircle type="youtube" />);
+      expect(container.querySelector("span")).toHaveTextContent("YT");
+    });
   });
 
   describe("Citations", () => {
@@ -216,6 +270,38 @@ describe("Citation", () => {
       }));
       render(<Citations sources={sources} />);
       expect(screen.getByText("+ 2")).toBeInTheDocument();
+    });
+
+    it("opens the sources sidebar when clicked", () => {
+      const sources = [
+        {
+          id: 1,
+          title: "Doc A",
+          text: "text",
+          chunkSource: "",
+          score: null,
+        },
+      ];
+      render(<Citations sources={sources} />);
+      fireEvent.click(screen.getByText("Sources"));
+      expect(mockOpenSidebar).toHaveBeenCalledWith(sources);
+    });
+
+    it("closes the sidebar when already open with the same sources", () => {
+      const sources = [
+        {
+          id: 1,
+          title: "Doc A",
+          text: "text",
+          chunkSource: "",
+          score: null,
+        },
+      ];
+      mockSidebarOpen = true;
+      mockSidebarSources = sources;
+      render(<Citations sources={sources} />);
+      fireEvent.click(screen.getByText("Sources"));
+      expect(mockCloseSidebar).toHaveBeenCalled();
     });
   });
 
@@ -265,6 +351,38 @@ describe("Citation", () => {
       render(<CitationDetailModal source={urlSource} onClose={vi.fn()} />);
       const link = screen.getByRole("link");
       expect(link).toBeInTheDocument();
+    });
+
+    it("renders the hostname as the link text", () => {
+      const urlSource = {
+        title: "Test Page",
+        references: 1,
+        chunks: [
+          {
+            text: "chunk",
+            score: null,
+            chunkSource: "link://https://example.com/path",
+          },
+        ],
+      };
+      render(<CitationDetailModal source={urlSource} onClose={vi.fn()} />);
+      expect(screen.getByText("example.com/path")).toBeInTheDocument();
+    });
+
+    it("strips document metadata from chunk text", () => {
+      const metaSource = {
+        title: "Meta Doc",
+        references: 1,
+        chunks: [
+          {
+            text: "<document_metadata>author</document_metadata>real content",
+            score: null,
+            chunkSource: "",
+          },
+        ],
+      };
+      render(<CitationDetailModal source={metaSource} onClose={vi.fn()} />);
+      expect(screen.getByText("real content")).toBeInTheDocument();
     });
   });
 });

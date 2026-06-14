@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Minimal Playwright configuration for frontend E2E tests.
-// Docs: frontend/tests/e2e/README.doc.md
-import { defineConfig, devices } from "@playwright/test";
+// Docs: frontend/playwright.config.doc.md
+import { defineConfig, devices } from "playwright/test";
 
 /**
  * Minimal Playwright configuration for the OpenSIN-Chat frontend.

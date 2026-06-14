@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent, act } from "@testing-library/react";
+import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolsMenu, { TOOLS_MENU_KEYBOARD_EVENT } from "./index";
 import useUser from "@/hooks/useUser";
@@ -57,6 +57,7 @@ describe("ToolsMenu", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    useUser.mockReturnValue({ user: null });
     highlightedIndexRef.current = -1;
   });
 
@@ -79,10 +80,12 @@ describe("ToolsMenu", () => {
     );
   }
 
-  function dispatchToolsKeyboard(key) {
-    window.dispatchEvent(
-      new CustomEvent(TOOLS_MENU_KEYBOARD_EVENT, { detail: { key } }),
-    );
+  async function dispatchToolsKeyboard(key) {
+    await act(async () => {
+      window.dispatchEvent(
+        new CustomEvent(TOOLS_MENU_KEYBOARD_EVENT, { detail: { key } }),
+      );
+    });
   }
 
   it("renders nothing when not showing", () => {
@@ -108,18 +111,24 @@ describe("ToolsMenu", () => {
     ).toHaveClass("bg-zinc-700");
   });
 
-  it("cycles tabs with ArrowLeft and ArrowRight keyboard events", () => {
+  it("cycles tabs with ArrowLeft and ArrowRight keyboard events", async () => {
     renderMenu();
     expect(screen.getByTestId("slash-commands-tab")).toBeInTheDocument();
 
-    dispatchToolsKeyboard("ArrowRight");
-    expect(screen.getByTestId("agent-skills-tab")).toBeInTheDocument();
+    await dispatchToolsKeyboard("ArrowRight");
+    await waitFor(() =>
+      expect(screen.getByTestId("agent-skills-tab")).toBeInTheDocument(),
+    );
 
-    dispatchToolsKeyboard("ArrowRight");
-    expect(screen.getByTestId("slash-commands-tab")).toBeInTheDocument();
+    await dispatchToolsKeyboard("ArrowRight");
+    await waitFor(() =>
+      expect(screen.getByTestId("slash-commands-tab")).toBeInTheDocument(),
+    );
 
-    dispatchToolsKeyboard("ArrowLeft");
-    expect(screen.getByTestId("agent-skills-tab")).toBeInTheDocument();
+    await dispatchToolsKeyboard("ArrowLeft");
+    await waitFor(() =>
+      expect(screen.getByTestId("agent-skills-tab")).toBeInTheDocument(),
+    );
   });
 
   it("does not render the agent skills tab for non-admin users in multi-user mode", () => {
@@ -147,14 +156,12 @@ describe("ToolsMenu", () => {
     expect(setShowing).not.toHaveBeenCalled();
   });
 
-  it("resets active tab to slash commands when reopened", () => {
+  it("resets active tab to slash commands when reopened", async () => {
     const { rerender } = renderMenu();
-    act(() => {
-      window.dispatchEvent(
-        new CustomEvent(TOOLS_MENU_KEYBOARD_EVENT, { detail: { key: "ArrowRight" } }),
-      );
-    });
-    expect(screen.getByTestId("agent-skills-tab")).toBeInTheDocument();
+    await dispatchToolsKeyboard("ArrowRight");
+    await waitFor(() =>
+      expect(screen.getByTestId("agent-skills-tab")).toBeInTheDocument(),
+    );
 
     rerender(
       <ToolsMenu
@@ -179,39 +186,51 @@ describe("ToolsMenu", () => {
     expect(screen.getByTestId("slash-commands-tab")).toBeInTheDocument();
   });
 
-  it("navigates items with ArrowUp and ArrowDown", () => {
+  it("navigates items with ArrowUp and ArrowDown", async () => {
     renderMenu();
     expect(screen.getByTestId("highlighted-index").textContent).toBe("-1");
 
-    dispatchToolsKeyboard("ArrowDown");
-    expect(screen.getByTestId("highlighted-index").textContent).toBe("0");
+    await dispatchToolsKeyboard("ArrowDown");
+    await waitFor(() =>
+      expect(screen.getByTestId("highlighted-index").textContent).toBe("0"),
+    );
 
-    dispatchToolsKeyboard("ArrowDown");
-    expect(screen.getByTestId("highlighted-index").textContent).toBe("1");
+    await dispatchToolsKeyboard("ArrowDown");
+    await waitFor(() =>
+      expect(screen.getByTestId("highlighted-index").textContent).toBe("1"),
+    );
 
-    dispatchToolsKeyboard("ArrowDown");
+    await dispatchToolsKeyboard("ArrowDown");
     // Wraps back to the first item.
-    expect(screen.getByTestId("highlighted-index").textContent).toBe("0");
+    await waitFor(() =>
+      expect(screen.getByTestId("highlighted-index").textContent).toBe("0"),
+    );
 
-    dispatchToolsKeyboard("ArrowUp");
+    await dispatchToolsKeyboard("ArrowUp");
     // Wraps back to the last item.
-    expect(screen.getByTestId("highlighted-index").textContent).toBe("1");
+    await waitFor(() =>
+      expect(screen.getByTestId("highlighted-index").textContent).toBe("1"),
+    );
   });
 
-  it("syncs highlighted index to the parent ref", () => {
+  it("syncs highlighted index to the parent ref", async () => {
     renderMenu();
-    dispatchToolsKeyboard("ArrowDown");
-    expect(highlightedIndexRef.current).toBe(0);
+    await dispatchToolsKeyboard("ArrowDown");
+    await waitFor(() => expect(highlightedIndexRef.current).toBe(0));
   });
 
-  it("resets highlight when switching tabs", () => {
+  it("resets highlight when switching tabs", async () => {
     renderMenu();
-    dispatchToolsKeyboard("ArrowDown");
-    expect(screen.getByTestId("highlighted-index").textContent).toBe("0");
+    await dispatchToolsKeyboard("ArrowDown");
+    await waitFor(() =>
+      expect(screen.getByTestId("highlighted-index").textContent).toBe("0"),
+    );
 
     fireEvent.click(screen.getByRole("button", { name: "Agent Skills" }));
     // The new tab mock registers count 1, index is reset to -1 by the parent.
-    expect(screen.queryByTestId("highlighted-index")).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.queryByTestId("highlighted-index")).not.toBeInTheDocument(),
+    );
   });
 
   it("forwards sendCommand and setShowing to the active tab", async () => {

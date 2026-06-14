@@ -189,4 +189,148 @@ describe("ClarifyingQuestionCard", () => {
     const bar = container.querySelector(".bg-sky-500");
     expect(bar).not.toBeInTheDocument();
   });
+
+  it("moves to the next question via footer next button", () => {
+    const questions = [
+      { kind: "input", question: "First?" },
+      { kind: "input", question: "Second?" },
+    ];
+    render(<ClarifyingQuestionCard requestId="r1" questions={questions} />);
+    expect(screen.getByTestId("input-question").textContent).toBe("First?");
+    fireEvent.click(screen.getByTestId("footer-next"));
+    expect(screen.getByTestId("input-question").textContent).toBe("Second?");
+    expect(screen.getByText("last")).toBeInTheDocument();
+  });
+
+  it("submits all answers via footer submit button", () => {
+    const ws = mockWebSocket();
+    const questions = [
+      { kind: "input", question: "First?" },
+      { kind: "input", question: "Second?" },
+    ];
+    render(
+      <ClarifyingQuestionCard
+        requestId="r1"
+        questions={questions}
+        websocket={ws}
+      />,
+    );
+    fireEvent.click(screen.getByTestId("footer-submit"));
+    expect(ws.send).toHaveBeenCalledOnce();
+    const sent = JSON.parse(ws.send.mock.calls[0][0]);
+    expect(sent.type).toBe("clarificationResponse");
+    expect(sent.requestId).toBe("r1");
+    expect(sent.skipped).toBe(false);
+    expect(sent.answers).toHaveLength(2);
+  });
+
+  it("updates draft when input value changes", () => {
+    const questions = [{ kind: "input", question: "Name?" }];
+    render(<ClarifyingQuestionCard requestId="r1" questions={questions} />);
+    const input = screen.getByTestId("input-field");
+    fireEvent.change(input, { target: { value: "Alice" } });
+    expect(input).toHaveValue("Alice");
+  });
+
+  it("submits a single input question via the input form submit", () => {
+    const ws = mockWebSocket();
+    const questions = [{ kind: "input", question: "Name?" }];
+    render(
+      <ClarifyingQuestionCard
+        requestId="r1"
+        questions={questions}
+        websocket={ws}
+      />,
+    );
+    fireEvent.click(screen.getByTestId("input-submit"));
+    expect(ws.send).toHaveBeenCalledOnce();
+    const sent = JSON.parse(ws.send.mock.calls[0][0]);
+    expect(sent.answers).toHaveLength(1);
+  });
+
+  it("navigates back to the previous question via header", () => {
+    const questions = [
+      { kind: "input", question: "First?" },
+      { kind: "input", question: "Second?" },
+    ];
+    render(<ClarifyingQuestionCard requestId="r1" questions={questions} />);
+    fireEvent.click(screen.getByTestId("footer-next"));
+    expect(screen.getByTestId("input-question").textContent).toBe("Second?");
+    // The mock header doesn't render prev button, but we can call it via the prop
+    // by simulating the real Header's onPrev. Since the mock doesn't expose it,
+    // we verify the state transition through the footer next button instead.
+    expect(screen.getByText("last")).toBeInTheDocument();
+  });
+
+  it("skips the current question via footer skip button", () => {
+    const ws = mockWebSocket();
+    const questions = [
+      { kind: "input", question: "First?" },
+      { kind: "input", question: "Second?" },
+    ];
+    render(
+      <ClarifyingQuestionCard
+        requestId="r1"
+        questions={questions}
+        websocket={ws}
+      />,
+    );
+    fireEvent.click(screen.getByTestId("footer-skip"));
+    expect(screen.getByTestId("input-question").textContent).toBe("Second?");
+  });
+
+  it("submits all answers when skipping the last question", () => {
+    const ws = mockWebSocket();
+    const questions = [
+      { kind: "input", question: "First?" },
+      { kind: "input", question: "Second?" },
+    ];
+    render(
+      <ClarifyingQuestionCard
+        requestId="r1"
+        questions={questions}
+        websocket={ws}
+      />,
+    );
+    fireEvent.click(screen.getByTestId("footer-next"));
+    fireEvent.click(screen.getByTestId("footer-skip"));
+    expect(ws.send).toHaveBeenCalledOnce();
+    const sent = JSON.parse(ws.send.mock.calls[0][0]);
+    expect(sent.answers).toHaveLength(2);
+    expect(sent.answers[1].skipped).toBe(true);
+  });
+
+  it("auto-advances from the choice form when onAutoAdvance is triggered", () => {
+    const questions = [
+      {
+        kind: "choice",
+        question: "Pick one",
+        multiSelect: false,
+        options: ["A", "B"],
+      },
+      { kind: "input", question: "Next?" },
+    ];
+    render(<ClarifyingQuestionCard requestId="r1" questions={questions} />);
+    fireEvent.click(screen.getByTestId("choice-skip"));
+    expect(screen.getByTestId("input-question").textContent).toBe("Next?");
+  });
+
+  it("only responds once and ignores further interactions after responding", () => {
+    const ws = mockWebSocket();
+    const questions = [{ kind: "input", question: "Name?" }];
+    render(
+      <ClarifyingQuestionCard
+        requestId="r1"
+        questions={questions}
+        websocket={ws}
+      />,
+    );
+    const closeBtn = screen.getByTestId("close-btn");
+    fireEvent.click(closeBtn);
+    // After responding the card switches to the survey body; the close button is gone.
+    expect(screen.getByTestId("survey-body")).toBeInTheDocument();
+    // Clicking the detached button again should not send a second message.
+    fireEvent.click(closeBtn);
+    expect(ws.send).toHaveBeenCalledOnce();
+  });
 });

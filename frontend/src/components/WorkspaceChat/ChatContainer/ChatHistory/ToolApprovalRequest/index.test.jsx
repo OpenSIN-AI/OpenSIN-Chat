@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import ToolApprovalRequest from "./index";
 
 vi.mock("react-i18next", async () => {
@@ -8,8 +8,14 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
+const timeoutCallbacks = [];
 vi.mock("@/hooks/useTimeoutProgress", () => ({
-  default: vi.fn(() => 50),
+  default: vi.fn((timeoutMs, options) => {
+    if (options?.onTimeout) {
+      timeoutCallbacks.push(options.onTimeout);
+    }
+    return 50;
+  }),
 }));
 
 vi.mock("@/models/agentSkillWhitelist", () => ({
@@ -17,6 +23,9 @@ vi.mock("@/models/agentSkillWhitelist", () => ({
     addToWhitelist: vi.fn().mockResolvedValue({}),
   },
 }));
+
+import AgentSkillWhitelist from "@/models/agentSkillWhitelist";
+import useTimeoutProgress from "@/hooks/useTimeoutProgress";
 
 describe("ToolApprovalRequest", () => {
   const request = {
@@ -31,6 +40,7 @@ describe("ToolApprovalRequest", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    timeoutCallbacks.length = 0;
   });
 
   it("renders the skill name and description", () => {
@@ -98,5 +108,67 @@ describe("ToolApprovalRequest", () => {
     expect(
       screen.queryByRole("button", { name: /show details/i }),
     ).not.toBeInTheDocument();
+  });
+
+  it("shows the approved message after approving", () => {
+    render(<ToolApprovalRequest {...request} />);
+    fireEvent.click(screen.getByText("Approve"));
+    expect(
+      screen.getByText("Tool call was approved"),
+    ).toBeInTheDocument();
+  });
+
+  it("shows the rejected message after rejecting", () => {
+    render(<ToolApprovalRequest {...request} />);
+    fireEvent.click(screen.getByText("Reject"));
+    expect(
+      screen.getByText("Tool call was rejected"),
+    ).toBeInTheDocument();
+  });
+
+  it("adds the skill to the whitelist when approved with always allow checked", async () => {
+    render(<ToolApprovalRequest {...request} />);
+    const checkbox = screen.getByRole("checkbox");
+    fireEvent.click(checkbox);
+    expect(checkbox).toBeChecked();
+
+    fireEvent.click(screen.getByText("Approve"));
+    await waitFor(() => {
+      expect(AgentSkillWhitelist.addToWhitelist).toHaveBeenCalledWith("my-skill");
+    });
+  });
+
+  it("does not whitelist the skill when always allow is not checked", () => {
+    render(<ToolApprovalRequest {...request} />);
+    fireEvent.click(screen.getByText("Approve"));
+    expect(AgentSkillWhitelist.addToWhitelist).not.toHaveBeenCalled();
+  });
+
+  it("rejects automatically when the timeout fires", async () => {
+    render(<ToolApprovalRequest {...request} />);
+    expect(timeoutCallbacks).toHaveLength(1);
+    await act(async () => timeoutCallbacks[0]());
+    await waitFor(() =>
+      expect(request.onResponse).toHaveBeenCalledWith(false),
+    );
+    expect(screen.getByText("Tool call was rejected")).toBeInTheDocument();
+  });
+
+  it("hides the response buttons after the timeout fires", async () => {
+    render(<ToolApprovalRequest {...request} />);
+    await act(async () => timeoutCallbacks[0]());
+    await waitFor(() => {
+      expect(screen.queryByText("Approve")).not.toBeInTheDocument();
+      expect(screen.queryByText("Reject")).not.toBeInTheDocument();
+    });
+  });
+
+  it("does not trigger a second response when already timed out", async () => {
+    render(<ToolApprovalRequest {...request} />);
+    await act(async () => timeoutCallbacks[0]());
+    await waitFor(() =>
+      expect(screen.getByText("Tool call was rejected")).toBeInTheDocument(),
+    );
+    expect(request.onResponse).toHaveBeenCalledTimes(1);
   });
 });

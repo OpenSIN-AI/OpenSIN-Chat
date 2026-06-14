@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { Chartable } from "./index";
+import { saveAs } from "file-saver";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -88,21 +90,27 @@ vi.mock("dompurify", () => ({
   default: { sanitize: (s) => s ?? "" },
 }));
 
+const mockGetDivJpeg = vi.fn(async () => "blob");
+
 vi.mock("file-saver", () => ({
   saveAs: vi.fn(),
 }));
 
 vi.mock("recharts-to-png", () => ({
   useGenerateImage: () => [
-    vi.fn(async () => "blob"),
+    mockGetDivJpeg,
     { ref: { current: document.createElement("div") } },
   ],
 }));
 
 vi.mock("@phosphor-icons/react", () => ({
-  CircleNotch: ({ className }) => <span className={className}>Notch</span>,
-  DownloadSimple: ({ onClick, className }) => (
-    <span onClick={onClick} className={className}>
+  CircleNotch: ({ className, "aria-label": ariaLabel }) => (
+    <span className={className} aria-label={ariaLabel}>
+      Notch
+    </span>
+  ),
+  DownloadSimple: ({ onClick, className, "aria-label": ariaLabel }) => (
+    <span onClick={onClick} className={className} aria-label={ariaLabel}>
       Download
     </span>
   ),
@@ -121,6 +129,11 @@ function makeProps(type, dataset = sampleDataset, extra = {}) {
     },
   };
 }
+
+beforeEach(() => {
+  vi.clearAllMocks();
+  mockGetDivJpeg.mockResolvedValue("blob");
+});
 
 describe("Chartable", () => {
   it("returns null when content is null after parse", () => {
@@ -225,5 +238,40 @@ describe("Chartable", () => {
     );
     expect(screen.getByTestId("bar-chart")).toBeInTheDocument();
     expect(screen.getByText("Parsed Chart")).toBeInTheDocument();
+  });
+
+  it("triggers download when the download button is clicked", async () => {
+    const user = userEvent.setup();
+    render(<Chartable {...makeProps("area")} />);
+    await user.click(screen.getByText("Download"));
+    await waitFor(() => expect(mockGetDivJpeg).toHaveBeenCalledTimes(1));
+    expect(saveAs).toHaveBeenCalledWith("blob", expect.stringMatching(/^chart-/));
+  });
+
+  it("renders a loading spinner while downloading", async () => {
+    const user = userEvent.setup();
+    mockGetDivJpeg.mockImplementation(() => new Promise(() => {}));
+    render(<Chartable {...makeProps("area")} />);
+    await user.click(screen.getByText("Download"));
+    await waitFor(() =>
+      expect(screen.getByLabelText("Downloading chart...")).toBeInTheDocument(),
+    );
+  });
+
+  it("renders the caption inside the chat container when chatId is present", () => {
+    const props = {
+      props: {
+        content: {
+          type: "area",
+          dataset: sampleDataset,
+          title: "Chat Chart",
+          caption: "Chat caption",
+        },
+        chatId: "abc-123",
+      },
+    };
+    render(<Chartable {...props} />);
+    expect(screen.getByText("Chat Chart")).toBeInTheDocument();
+    expect(screen.getByText("Chat caption")).toBeInTheDocument();
   });
 });
