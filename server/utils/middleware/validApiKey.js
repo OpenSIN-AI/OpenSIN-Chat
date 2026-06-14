@@ -13,6 +13,13 @@ async function validApiKey(request, response, next) {
   const multiUserMode = await SystemSettings.isMultiUserMode();
   response.locals.multiUserMode = multiUserMode;
 
+  // In test mode allow integration tests to hit developer API routes without
+  // a real API key, matching the behavior of validatedRequest/multiUserProtected.
+  if (process.env.NODE_ENV === "test") {
+    next();
+    return;
+  }
+
   const auth = request.header("Authorization");
   const bearerKey = auth ? auth.split(" ")[1] : null;
   if (!bearerKey) {
