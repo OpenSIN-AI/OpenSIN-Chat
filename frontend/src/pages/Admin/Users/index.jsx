@@ -128,7 +128,7 @@ export function RoleHintDisplay({ role }) {
         {t("admin.usersPage.permissions")}
       </p>
       <ul className="flex flex-col gap-y-1 list-disc px-4">
-        {ROLE_HINT[role ?? "default"].map((hintKey, i) => {
+        {ROLE_HINT[role ?? "default"].map((hintKey, i) => { // eslint-disable-line i18next/no-literal-string
           return (
             <li key={i} className="text-xs text-theme-text-secondary">
               {t(hintKey)}

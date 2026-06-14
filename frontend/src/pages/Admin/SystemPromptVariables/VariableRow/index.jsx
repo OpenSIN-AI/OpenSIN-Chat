@@ -99,7 +99,7 @@ export default function VariableRow({ variable, onRefresh }) {
                 onClick={openModal}
                 className="text-xs font-medium text-white/80 light:text-black/80 rounded-lg hover:text-white hover:light:text-gray-500 px-2 py-1 hover:bg-white hover:bg-opacity-10"
               >
-                Edit
+                {t("common.edit")}
               </button>
               <button
                 onClick={handleDelete}
