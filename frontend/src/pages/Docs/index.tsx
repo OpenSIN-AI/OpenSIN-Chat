@@ -121,6 +121,7 @@ export default function Docs() {
   const entry = getDocBySlug(slug);
   const content = entry ? getDocContent(entry.file) : null;
 
+
   return (
     <div className="flex flex-col h-screen w-screen bg-theme-bg-primary text-theme-text-primary overflow-hidden">
       {/* Top bar */}
