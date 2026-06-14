@@ -2,7 +2,7 @@
 //
 // In-app developer documentation rendered at /docs and /docs/:slug.
 // Content is curated from the repository's docs/ folder (see docsManifest.ts).
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams, Navigate } from "react-router-dom";
 import {
@@ -124,6 +124,41 @@ export default function Docs() {
   const entry = getDocBySlug(slug);
   const content = entry ? getDocContent(entry.file) : null;
 
+  // Update page title and meta description based on the selected doc.
+  useEffect(() => {
+    if (!slug) return;
+    const baseTitle = document.title;
+    const docTitle = entry ? entry.title : t("common.developerDocs");
+    document.title = `${docTitle} — ${t("common.developerDocs")} | OpenSIN Chat`;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        "content",
+        entry ? entry.description : t("common.docsSearchPlaceholder"),
+      );
+    }
+    return () => {
+      document.title = baseTitle;
+    };
+  }, [entry, slug, t]);
+
+  // Close mobile navigation with Escape and lock body scroll while open.
+  const mobileNavRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!mobileNavOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileNavOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    // Focus the sidebar container so screen readers announce the panel.
+    mobileNavRef.current?.focus();
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileNavOpen]);
 
   return (
     <div className="flex flex-col h-screen w-screen bg-theme-bg-primary text-theme-text-primary overflow-hidden">
@@ -176,7 +211,13 @@ export default function Docs() {
               onClick={() => setMobileNavOpen(false)}
               aria-hidden="true"
             />
-            <aside className="relative z-50 w-72 max-w-[80vw] h-full bg-theme-bg-primary border-r border-theme-sidebar-border p-4 overflow-y-auto">
+            <aside
+              ref={mobileNavRef}
+              tabIndex={-1}
+              aria-modal="true"
+              role="dialog"
+              className="relative z-50 w-72 max-w-[80vw] h-full bg-theme-bg-primary border-r border-theme-sidebar-border p-4 overflow-y-auto outline-none"
+            >
               <DocsSidebar
                 activeSlug={slug}
                 query={query}

@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { useTranslation } from "react-i18next";
 import { safeJsonParse } from "@/utils/request";
+import { BookOpen } from "@phosphor-icons/react";
 
 // Pure punctuation and a right-arrow glyph used in the home greeting.
 // These are not translatable; they live in module scope so the linter
@@ -95,6 +96,14 @@ export default function DefaultChatContainer() {
             {RIGHT_ARROW}
           </NavLink>
         )}
+        <NavLink
+          to={paths.appDocs()}
+          className="text-sm mt-3 flex items-center gap-1.5 text-theme-text-secondary hover:text-theme-text-primary transition-colors"
+          aria-label={t("home.readDocs")}
+        >
+          <BookOpen className="w-4 h-4" aria-hidden="true" />
+          {t("home.readDocs")}
+        </NavLink>
       </div>
     </Layout>
   );

@@ -109,7 +109,7 @@ describe("Footer", () => {
     useFooterIcons.mockReturnValue({ footerData: [], isLoading: false });
     render(<Footer />);
     const githubLink = screen.getByLabelText("OpenSIN Chat auf GitHub ansehen");
-    const docsLink = screen.getByLabelText("Dokumentation öffnen");
+    const docsLink = screen.getByLabelText("Entwickler-Dokumentation öffnen");
     expect(githubLink).toBeInTheDocument();
     expect(docsLink).toBeInTheDocument();
   });

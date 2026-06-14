@@ -4,6 +4,7 @@ const TRANSLATIONS = {
     home: {
       welcome: "Welcome",
       getStarted: "Get Started",
+      readDocs: "Documentation",
     },
     llm: {
       title: "LLM Preference",
@@ -929,6 +930,7 @@ const TRANSLATIONS = {
       "You currently aren't assigned to any workspaces.\nPlease contact your administrator to request access to a workspace.",
     goToWorkspace: 'Go to "{{workspace}}"',
     logoAlt: "Logo",
+    readDocs: "Read documentation",
   },
   settings: {
     title: "Instance Settings",
@@ -4222,6 +4224,7 @@ const TRANSLATIONS = {
     title: "404 - Page Not Found",
     description: "The page you're looking for doesn't exist or has been moved.",
     goHome: "Go Home",
+    readDocs: "Read documentation",
   },
 
   modelTable: {

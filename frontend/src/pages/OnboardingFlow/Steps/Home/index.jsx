@@ -2,7 +2,8 @@
 import paths from "@/utils/paths";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Moon, Sun } from "@phosphor-icons/react";
+import { Moon, Sun, BookOpen } from "@phosphor-icons/react";
+import { Link } from "react-router-dom";
 import useRedirectToHomeOnOnboardingComplete from "@/hooks/useOnboardingComplete";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -58,6 +59,14 @@ export default function OnboardingHome() {
         >
           {t("onboarding.home.getStarted")}
         </button>
+        <Link
+          to={paths.appDocs()}
+          className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm text-white/70 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors"
+          aria-label={t("onboarding.home.readDocs")}
+        >
+          <BookOpen className="w-4 h-4" />
+          {t("onboarding.home.readDocs")}
+        </Link>
       </div>
     </div>
   );

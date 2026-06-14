@@ -13,9 +13,14 @@ async function validApiKey(request, response, next) {
   const multiUserMode = await SystemSettings.isMultiUserMode();
   response.locals.multiUserMode = multiUserMode;
 
-  // In test mode allow integration tests to hit developer API routes without
-  // a real API key, matching the behavior of validatedRequest/multiUserProtected.
-  if (process.env.NODE_ENV === "test") {
+  // When running the integration suite in tests/ we allow the developer API
+  // routes to be exercised without a real API key. This is gated by the
+  // INTEGRATION_TEST env var so the unit tests for this middleware in Jest
+  // (which also run in NODE_ENV=test) still validate the real behavior.
+  if (
+    process.env.NODE_ENV === "test" &&
+    process.env.INTEGRATION_TEST === "true"
+  ) {
     next();
     return;
   }

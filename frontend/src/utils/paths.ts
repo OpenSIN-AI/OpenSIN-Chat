@@ -71,16 +71,17 @@ export default {
   discord: () => {
     return "https://discord.gg/6UyHPeGZAC";
   },
-  docs: (path = "") => {
-    // External hosted documentation (feature/agent/channel guides).
-    return `https://opensin.delqhi.com/docs${path}`;
-  },
   // In-app developer documentation served by the SPA at /docs (see pages/Docs).
+  // The external hosted docs at opensin.delqhi.com/docs are no longer available,
+  // so all documentation links now route to the in-app docs.
+  docs: (path = "") => {
+    return `/docs${path}`;
+  },
   appDocs: (path = "") => {
     return `/docs${path}`;
   },
   chatModes: () => {
-    return "https://opensin.delqhi.com/docs/features/chat-modes";
+    return "/docs/user-guide";
   },
   mailToSupport: () => {
     return "mailto:support@opensin.delqhi.com";
@@ -248,16 +249,17 @@ export default {
       return `${this.website()}/me`;
     },
     noPrivateItems: () => {
-      return "https://opensin.delqhi.com/docs/community-hub/faq#no-private-items";
+      // Points to in-app docs because external docs are no longer hosted.
+      return "/docs";
     },
   },
 
   documentation: {
     mobileIntroduction: () => {
-      return "https://opensin.delqhi.com/docs/mobile/overview";
+      return "/docs";
     },
     contextWindows: () => {
-      return "https://opensin.delqhi.com/docs/chatting-with-documents/introduction#you-exceed-the-context-window---what-now";
+      return "/docs";
     },
   },
 

@@ -89,7 +89,7 @@ describe("DefaultChatContainer", () => {
       </MemoryRouter>,
     );
     expect(screen.getByText(/Choose a workspace/i)).toBeInTheDocument();
-    const link = screen.getByRole("link");
+    const link = screen.getByRole("link", { name: /Workspace One/i });
     expect(link).toHaveAttribute("href", "/workspace/ws-1");
   });
 
@@ -108,7 +108,7 @@ describe("DefaultChatContainer", () => {
         <DefaultChatContainer />
       </MemoryRouter>,
     );
-    const link = screen.getByRole("link");
+    const link = screen.getByRole("link", { name: /Workspace Two/i });
     expect(link).toHaveAttribute("href", "/workspace/ws-2");
   });
 });

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { NavLink } from "react-router-dom";
-import { House, MagnifyingGlass } from "@phosphor-icons/react";
+import { House, MagnifyingGlass, BookOpen } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import paths from "@/utils/paths";
 
 export default function NotFound() {
   const { t } = useTranslation();
@@ -21,6 +22,13 @@ export default function NotFound() {
         >
           <House className="w-4 h-4" />
           {t("notFound.goHome")}
+        </NavLink>
+        <NavLink
+          to={paths.appDocs()}
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-theme-bg-secondary text-theme-text-primary rounded-lg hover:bg-theme-sidebar-item-hover transition-all duration-300 w-full md:w-auto"
+        >
+          <BookOpen className="w-4 h-4" />
+          {t("notFound.readDocs")}
         </NavLink>
       </div>
     </div>

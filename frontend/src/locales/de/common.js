@@ -4,6 +4,7 @@ const TRANSLATIONS = {
     home: {
       getStarted: "Jetzt starten",
       welcome: "Herzlich willkommen",
+      readDocs: "Dokumentation",
     },
     llm: {
       title: "LLM-Einstellung",
@@ -2520,6 +2521,7 @@ const TRANSLATIONS = {
       "Sie sind nicht zugewiesen zu einem Arbeitsbereich.\nBitte kontaktieren Sie Ihren Administrator, um Zugriff auf einen Arbeitsbereich zu erhalten.",
     goToWorkspace: 'Zurück zum Arbeitsbereich "{{workspace}}"',
     logoAlt: "Logo",
+    readDocs: "Dokumentation lesen",
   },
   telegram: {
     title: "Telegram-Bot",
@@ -4303,6 +4305,7 @@ const TRANSLATIONS = {
     title: "404 - Seite nicht gefunden",
     description: "Die gesuchte Seite existiert nicht oder wurde verschoben.",
     goHome: "Zur Startseite",
+    readDocs: "Dokumentation lesen",
   },
 
   modelTable: {

@@ -16,6 +16,9 @@ export default defineConfig({
       "tests/e2e/**",
       "frontend/**",
     ],
+    env: {
+      INTEGRATION_TEST: "true",
+    },
     // Reuse the same process to avoid spinning up multiple servers; tests
     // use the createApp() singleton.
     fileParallelism: false,

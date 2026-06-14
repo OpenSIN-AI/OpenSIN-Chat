@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "start": "vite --open",
+    "predev": "npm run sync:docs",
     "dev": "cross-env NODE_ENV=development vite --debug --host=0.0.0.0",
+    "prebuild": "npm run sync:docs",
     "build": "vite build && node scripts/postbuild.js",
+    "sync:docs": "node scripts/sync-docs.js",
     "lint:check": "eslint src",
     "lint": "eslint --fix src",
     "preview": "vite preview",
