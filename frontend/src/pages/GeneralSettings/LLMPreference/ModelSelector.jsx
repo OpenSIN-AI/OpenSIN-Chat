@@ -16,6 +16,7 @@ export default function ModelSelector({
   updateLLMChoice,
   OpenSINChatIcon,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="relative">
       {searchMenuOpen && (
@@ -52,10 +53,10 @@ export default function ModelSelector({
             />
             <div className="flex flex-col text-left">
               <div className="text-sm font-semibold text-white">
-                {selectedLLMObject?.name || "None selected"}
+                {selectedLLMObject?.name || t("common.noneSelected")}
               </div>
               <div className="mt-1 text-xs text-description">
-                {selectedLLMObject?.description || "You need to select an LLM"}
+                {selectedLLMObject?.description || t("common.selectAnLLM")}
               </div>
             </div>
           </div>
