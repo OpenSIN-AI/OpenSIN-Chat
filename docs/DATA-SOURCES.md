@@ -2,7 +2,7 @@
 
 > **Zweck:** Technische Dokumentation der 3 externen Datenquellen für die Politiker-Datenbank, inklusive API-Spezifikationen, Rate-Limits, Filter-Möglichkeiten und bekannten Einschränkungen.
 >
-> **Docs:** `DATA-SOURCES.doc.md` (diese Datei)
+> **Docs:** `docs/DATA-SOURCES.md` (diese Datei)
 > **Related:** `docs/USER-GUIDE.md` §3, `docs/API.md` §2, `server/jobs/sync-politician-data.js`
 
 ---
@@ -180,22 +180,22 @@ curl "https://www.abgeordnetenwatch.de/api/v2/candidacies-mandates?parliament_pe
 
 #### 2.2 Politiker-Suche
 ```
-GET /politicians/?politician[entity.label][cn]={NAME}
+GET /politicians/?search={NAME}
 ```
 
 #### 2.3 Abstimmungen (Votes)
 ```
-GET /politicians/{ID}/votes/?parliament_period={AW_PARLIAMENT_PERIOD}
+GET /votes?politician={ID}&parliament_period={AW_PARLIAMENT_PERIOD}
 ```
 
 #### 2.4 Ausschüsse
 ```
-GET /politicians/{ID}/committees/
+GET /committee-memberships?politician={ID}
 ```
 
 #### 2.5 Mandate
 ```
-GET /politicians/{ID}/mandates/
+GET /candidacies-mandates?politician={ID}
 ```
 
 ### Daten-Schema (Abgeordnetenwatch → intern)
@@ -208,10 +208,10 @@ GET /politicians/{ID}/mandates/
 | `politician.sex` | `gender` | Enum | "male" / "female" |
 | `politician.year_of_birth` | `birthDate` | Int → Date | **#84:** Jahr → `{year}-01-01` |
 | `politician.party.label` | `party` | String | Parteikürzel; akzeptiert auch flachen String |
-| `politician.ext_id_bundestagsverwaltung` | `extIdBundestag` | String | **#84:** verknüpft AW ↔ Bundestag/DIP |
+| `politician.ext_id_bundestagsverwaltung` | `ext_id_bundestagsverwaltung` | String | **#84:** verknüpft AW ↔ Bundestag/DIP (gespeichert im `rawData`-JSON) |
 | `electoral_data.constituency.name` | `electoralDistrict` | String | |
-| (separater Endpoint) | `votes` | Array | `/politicians/{id}/votes/?parliament_period=132` |
-| (separater Endpoint) | `mandates` | Array | `/candidacies-mandates` |
+| (separater Endpoint) | `votes` | Array | `/votes?politician={id}&parliament_period=132` |
+| (separater Endpoint) | `mandates` | Array | `/candidacies-mandates?politician={id}` |
 
 ### Rate-Limits & Einschränkungen
 - **Kein API-Key erforderlich** (für lesenden Zugriff)
@@ -222,7 +222,7 @@ GET /politicians/{ID}/mandates/
 - **Einschränkung:** Nicht alle Bundestagsabgeordnete sind in AW indexiert (besonders Wechsel innerhalb der Wahlperiode)
 
 ### Filter-Möglichkeiten (externe API)
-- `?politician[entity.label][cn]={NAME}` — Suche nach Name
+- `?search={NAME}` — Suche nach Name
 - `?parliament_period=132` — Filter nach Wahlperiode (132 = Bundestag 21. WP,
   733 Mandate) (**#84**)
 - `?range_start=0&range_end=100` — Range-Limitierung der Ergebnisse
@@ -291,40 +291,30 @@ Dieser Endpoint liefert eine Liste verfügbarer Plenarprotokolle mit IDs.
 ## 4. Source-Filtering in der API (aktueller Stand)
 
 ### Datenbank-Schema
-Die Datenbank unterstützt bereits Source-Filtering auf Prisma-Ebene:
+Das `politicians`-Modell hat ein `source`-Feld (`bundestag` | `abgeordnetenwatch`), das die Quelle jeder Zeile kennzeichnet:
 
 ```prisma
 model politicians {
-  source            String    @default("bundestag") // bundestag | abgeordnetenwatch
+  source            String    @default("bundestag")
   // ...
   @@index([source])
-}
-
-model politician_speech {
-  source         String // bundestag | abgeordnetenwatch | plenarprotokolle
-  // ...
 }
 ```
 
 ### Aktuelle API-Filter (vorhanden)
 - `GET /api/politician/search?q=Weidel&party=AfD&state=Baden-Württemberg`
-- `GET /api/politician/speech-search?q=Migration&party=AfD`
-
-### Fehlende Filter (TODO)
-- `?source=bundestag` — nur Bundestag-Daten
-- `?source=abgeordnetenwatch` — nur Abgeordnetenwatch-Daten
-- `?source=plenarprotokolle` — nur Plenarprotokoll-Reden
-- Kombinationen: `?source=bundestag&party=AfD` — AfD-Abgeordnete nur aus Bundestag-Quelle
+- `GET /api/politician/search?q=Weidel&source=abgeordnetenwatch`
+- `GET /api/politician/speech-search?q=Migration&party=AfD&source=abgeordnetenwatch`
+- `GET /api/politician/:id/speeches?source=abgeordnetenwatch`
 
 ### Implementierungshinweis
-Das Prisma-Schema hat bereits `@@index([source])` — die Datenbank-Abfragen sind also performant. Die Erweiterung der API-Endpoints ist ein kleiner Change:
+Das Source-Filter ist in `server/endpoints/api/politician/index.js` aktiv:
 
 ```javascript
-// In server/endpoints/api/politician/index.js
-if (source) filters.source = source; // Hinzufügen zu existing filters
+if (source) filters.source = source;
 ```
 
-**Impact:** Gering — nur Query-Parameter hinzufügen, keine Schema-Änderung.
+**Impact:** Gering — nur Query-Parameter, keine Schema-Änderung.
 
 ---
 
@@ -358,7 +348,10 @@ if (source) filters.source = source; // Hinzufügen zu existing filters
 
 | Env-Var | Default | Beschreibung |
 |---------|---------|-------------|
-| `BUNDESTAG_WAHLPERIODE` | `20` | Aktuelle Wahlperiode |
+| `BUNDESTAG_WAHLPERIODE` | `21` | Aktuelle Wahlperiode (21. Bundestag) |
+| `AW_PARLIAMENT_PERIOD` | `132` | Abgeordnetenwatch-Parlamentsperiode für 21. WP (733 Mandate) |
+| `BUNDESTAG_DIP_API_KEY` | — | API-Key für DIP-API-Fallback (optional) |
+| `AW_ENRICH_POLITICIANS` | `false` | Enrichiert AW-Daten mit `year_of_birth`, Geschlecht, Partei |
 | `POLITICIAN_SYNC_SITTINGS_PER_RUN` | `5` | Wie viele Plenarsitzungen pro Sync-Run |
 
 ### Fehlerbehandlung & Fallback-Strategien (Issue #52)
@@ -422,5 +415,5 @@ if (source) filters.source = source; // Hinzufügen zu existing filters
 
 ---
 
-**Letzte Aktualisierung:** 2026-06-07
-**Version:** 1.0
+**Letzte Aktualisierung:** 2026-06-14
+**Version:** 1.1 (#84 / #102 — 21. WP Migration)
