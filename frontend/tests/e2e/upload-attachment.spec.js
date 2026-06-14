@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: End-to-end test for the chat upload/attachment flow.
 // Docs: frontend/tests/e2e/README.doc.md
-import { test, expect } from "playwright/test";
+import { test, expect } from "@playwright/test";
 import path from "path";
 import { fileURLToPath } from "url";
 
