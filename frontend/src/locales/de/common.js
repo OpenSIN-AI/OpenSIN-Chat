@@ -967,6 +967,9 @@ const TRANSLATIONS = {
       title: "MCP-Servern",
       "loading-from-config":
         "Laden von MCP-Servern aus einer Konfigurationsdatei",
+      "refresh-confirm":
+        "Möchten Sie die Liste der MCP-Server wirklich aktualisieren? Dies startet alle MCP-Server neu und lädt ihre Tools neu.",
+      "refresh-failed": "Aktualisierung der MCP-Server fehlgeschlagen.",
       "learn-more": "Erfahren Sie mehr über MCP-Server.",
       "no-servers-found": "Keine MCP-Server gefunden",
       "tool-warning":

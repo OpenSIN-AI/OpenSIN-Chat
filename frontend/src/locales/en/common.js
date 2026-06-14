@@ -1616,6 +1616,9 @@ const TRANSLATIONS = {
     mcp: {
       title: "MCP Servers",
       "loading-from-config": "Loading MCP Servers from configuration file",
+      "refresh-confirm":
+        "Are you sure you want to refresh the list of MCP servers? This will restart all MCP servers and reload their tools.",
+      "refresh-failed": "Failed to refresh MCP servers.",
       "learn-more": "Learn more about MCP Servers.",
       "no-servers-found": "No MCP servers found",
       "tool-warning":

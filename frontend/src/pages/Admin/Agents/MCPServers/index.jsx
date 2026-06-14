@@ -26,11 +26,7 @@ export function MCPServerHeader({
   }
 
   const refreshMCPServers = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to refresh the list of MCP servers? This will restart all MCP servers and reload their tools.",
-      )
-    ) {
+    if (window.confirm(t("agent.mcp.refresh-confirm"))) {
       setReloading(true);
       MCPServers.forceReload()
         .then(({ servers = [] }) => {
@@ -40,7 +36,7 @@ export function MCPServerHeader({
         })
         .catch((err) => {
           console.error(err);
-          showToast(`Failed to refresh MCP servers.`, "error", { clear: true });
+          showToast(t("agent.mcp.refresh-failed"), "error", { clear: true });
         })
         .finally(() => {
           setReloading(false);
@@ -97,7 +93,7 @@ export function MCPServersList({
   if (isLoading) {
     return (
       <div className="text-theme-text-secondary text-center text-xs flex flex-col gap-y-2">
-        <p>{t("agent.mcp.loading-from-config")}...</p> // eslint-disable-line i18next/no-literal-string
+        <p>{`${t("agent.mcp.loading-from-config")}...`}</p>
         <a
           href="https://docs.opensin.delqhi.com/mcp-compatibility/overview"
           target="_blank"
