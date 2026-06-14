@@ -46,7 +46,10 @@ export default function ApiKeyRow({ apiKey, removeApiKey }) {
           </code>
         </td>
         <td className="px-6 py-3 text-left align-middle">
-          {apiKey.createdBy?.username || "--"} // eslint-disable-line i18next/no-literal-string
+          {
+            // eslint-disable-next-line i18next/no-literal-string
+            apiKey.createdBy?.username || "--"
+          }
         </td>
         <td className="px-6 py-3 whitespace-nowrap align-middle">
           {new Date(apiKey.createdAt).toLocaleString()}
