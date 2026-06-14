@@ -3,7 +3,6 @@
 // Docs: tests/admin.test.js
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
@@ -64,13 +63,10 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
   validatedRequest: (req, res, next) => next(),
 }));
 
-vi.mock("../server/utils/http/index.js", () => ({
+vi.mock("../server/utils/http", () => ({
   reqBody: (req) => ({}),
   makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: (req, res) => {
-    console.log("MOCK userFromSession called", req?.url);
-    return Promise.resolve({ id: 1, username: "test", role: "admin" });
-  },
+  userFromSession: () => Promise.resolve({ id: 1, username: "test", role: "admin" }),
   multiUserMode: () => false,
   queryParams: () => ({}),
 }));
@@ -95,6 +91,7 @@ let app;
 
 beforeEach(async () => {
   vi.clearAllMocks();
+  const { createApp } = await import("../server/app");
   app = createApp();
 });
 

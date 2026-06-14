@@ -4,6 +4,9 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createApp } from "../server/app";
+import jwt from "jsonwebtoken";
+
+let authToken;
 
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
@@ -26,11 +29,11 @@ vi.mock("../server/models/user", () => ({
     filterFields: vi.fn((user) => user),
     whereWithData: vi.fn(() => Promise.resolve([])),
     count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, username: "test" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, username: "test" })),
+    create: vi.fn(() => Promise.resolve({ id: 1, username: "test-user" })),
+    get: vi.fn(() => Promise.resolve({ id: 1, username: "test", role: "admin" })),
     update: vi.fn(() => Promise.resolve({ id: 1, username: "updated" })),
     delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
+    where: vi.fn(() => Promise.resolve([{ id: 99, username: "mocked-user" }])),
   },
 }));
 
@@ -57,13 +60,15 @@ vi.mock("../server/utils/middleware/multiUserProtected", () => ({
   isMultiUserSetup: () => true,
 }));
 
-vi.mock("../server/utils/middleware/validatedRequest", () => ({
-  validatedRequest: (req, res, next) => {
-    res.locals.user = { id: 1, username: "test", role: "admin" };
-    res.locals.multiUserMode = false;
-    next();
-  },
-}));
+vi.mock("../server/utils/middleware/validatedRequest", () => {
+  return {
+    validatedRequest: (req, res, next) => {
+      res.locals.user = { id: 1, username: "test", role: "admin" };
+      res.locals.multiUserMode = false;
+      next();
+    },
+  };
+});
 
 vi.mock("../server/utils/http", () => ({
   reqBody: (req) => req.body || {},
@@ -71,6 +76,10 @@ vi.mock("../server/utils/http", () => ({
   userFromSession: () => Promise.resolve({ id: 1, username: "test", role: "admin" }),
   multiUserMode: () => false,
   queryParams: (req) => req.query || {},
+  safeJsonParse: (jsonString, fallback = null) => {
+    try { return JSON.parse(jsonString); } catch { return fallback; }
+  },
+  decodeJWT: () => ({ id: 1, username: "test", role: "admin" }),
 }));
 
 vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
@@ -94,6 +103,9 @@ let app;
 beforeEach(async () => {
   vi.clearAllMocks();
   app = createApp();
+  authToken = jwt.sign({ id: 1, username: "test" }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
 });
 
 const request = async (method, path, body = null, headers = {}) => {
@@ -102,6 +114,7 @@ const request = async (method, path, body = null, headers = {}) => {
     method,
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`,
       ...headers,
     },
   };

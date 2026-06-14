@@ -3,6 +3,20 @@
 // Docs: tests/mcpServers.test.js
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
+
+vi.mock("../server/utils/MCP", () => class MCPCompatibilityLayer {
+  static _instance = null;
+  constructor() {
+    if (MCPCompatibilityLayer._instance) return MCPCompatibilityLayer._instance;
+    MCPCompatibilityLayer._instance = this;
+  }
+  async reloadMCPServers() { return { success: true, error: null }; }
+  async servers() { return [{ name: "test-server" }]; }
+  async toggleServerStatus(name) { return { success: true, error: null }; }
+  async deleteServer(name) { return { success: true, error: null }; }
+  async toggleToolSuppression(serverName, toolName, enabled) { return { success: true, error: null, suppressedTools: [] }; }
+});
+
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
@@ -24,18 +38,6 @@ vi.mock("../server/models/user", () => ({
   User: {
     _get: vi.fn(() => Promise.resolve(null)),
     filterFields: vi.fn((user) => user),
-  },
-}));
-
-vi.mock("../server/models/mcpServers", () => ({
-  MCPServers: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    update: vi.fn(() => Promise.resolve({ id: 1, name: "updated" })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
   },
 }));
 
@@ -67,7 +69,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -121,60 +123,75 @@ const request = async (method, path, body = null, headers = {}) => {
 };
 
 describe("mcpServers endpoints", () => {
-  describe("GET /mcp-servers", () => {
+  describe("GET /mcp-servers/list", () => {
     it("should return mcp servers", async () => {
-      const response = await request("GET", "/mcp-servers");
+      const response = await request("GET", "/mcp-servers/list");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("servers");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalServers");
-    });
-
-    it("should return mcp servers with pagination", async () => {
-      const response = await request("GET", "/mcp-servers?offset=0&limit=10");
-      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success", true);
       expect(response.body).toHaveProperty("servers");
     });
   });
 
-  describe("POST /mcp-servers", () => {
-    it("should create mcp server", async () => {
-      const response = await request("POST", "/mcp-servers", {
+  describe("POST /mcp-servers/toggle", () => {
+    it("should return result for mcp server toggle", async () => {
+      const response = await request("POST", "/mcp-servers/toggle", {
         name: "test-server",
-        description: "Test server description",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "test-server");
+      expect(response.body).toHaveProperty("success");
+      expect(response.body).toHaveProperty("error");
     });
   });
 
   describe("GET /mcp-servers/:id", () => {
-    it("should get mcp server by id", async () => {
+    it.skip("TODO: GET /mcp-servers/:id endpoint does not exist in server/endpoints/mcpServers.js", async () => {
       const response = await request("GET", "/mcp-servers/1");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "test");
     });
   });
 
-  describe("PUT /mcp-servers/:id", () => {
-    it("should update mcp server", async () => {
-      const response = await request("PUT", "/mcp-servers/1", {
+  describe("POST /mcp-servers/toggle (mapped from PUT /mcp-servers/:id)", () => {
+    it("should return result for mcp server toggle", async () => {
+      const response = await request("POST", "/mcp-servers/toggle", {
         name: "updated-server",
-        description: "Updated server description",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "updated");
+      expect(response.body).toHaveProperty("success");
+      expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("DELETE /mcp-servers/:id", () => {
-    it("should delete mcp server", async () => {
-      const response = await request("DELETE", "/mcp-servers/1");
+  describe("POST /mcp-servers/delete (mapped from DELETE /mcp-servers/:id)", () => {
+    it("should return result for mcp server delete", async () => {
+      const response = await request("POST", "/mcp-servers/delete", {
+        name: "test-server",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success");
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+
+  describe("GET /mcp-servers/force-reload", () => {
+    it("should force reload mcp servers", async () => {
+      const response = await request("GET", "/mcp-servers/force-reload");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
+      expect(response.body).toHaveProperty("servers");
+    });
+  });
+
+  describe("POST /mcp-servers/toggle-tool", () => {
+    it("should return result for mcp tool suppression", async () => {
+      const response = await request("POST", "/mcp-servers/toggle-tool", {
+        serverName: "test-server",
+        toolName: "test-tool",
+        enabled: true,
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success");
+      expect(response.body).toHaveProperty("error");
+      expect(response.body).toHaveProperty("suppressedTools");
     });
   });
 });

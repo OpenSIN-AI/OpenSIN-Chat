@@ -124,10 +124,16 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
+  let responseBody = null;
+  try {
+    responseBody = data ? JSON.parse(data) : null;
+  } catch {
+    responseBody = data || null;
+  }
   return {
     status: response.status,
     headers: response.headers,
-    body: data ? JSON.parse(data) : null,
+    body: responseBody,
   };
 };
 
@@ -162,8 +168,8 @@ describe("embed endpoints", () => {
   describe("POST /embed/update/:embedId", () => {
     it("should update embed", async () => {
       const response = await request("POST", `/embed/update/${testEmbed.id}`, {
-        name: "updated-embed",
-        description: "Updated embed description",
+        enabled: false,
+        chat_mode: "chat",
       });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);

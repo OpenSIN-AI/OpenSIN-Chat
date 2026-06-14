@@ -66,18 +66,7 @@ vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
   simpleRateLimit: () => (req, res, next) => next(),
 }));
 
-vi.mock("../server/models/workspace", () => {
-  console.log("WORKSPACE MOCK FACTORY EXECUTED");
-  return {
-    Workspace: {
-      where: vi.fn(() => Promise.resolve([])),
-      new: vi.fn((name) => { console.log("Workspace.new called with", name); return Promise.resolve({ workspace: { id: 1, name: "test-workspace", slug: "test-workspace" }, message: null }); }),
-      get: vi.fn((clause) => { console.log("Workspace.get called with", clause); return Promise.resolve({ id: 1, name: "test", slug: "test" }); }),
-      update: vi.fn(() => Promise.resolve({ workspace: { id: 1, name: "updated", slug: "test" }, message: null })),
-      delete: vi.fn(() => Promise.resolve(true)),
-    },
-  };
-});
+
 
 vi.mock("../server/utils/middleware/chatHistoryViewable", () => ({
   chatHistoryViewable: () => (req, res, next) => next(),
@@ -96,6 +85,14 @@ let app;
 beforeEach(async () => {
   vi.clearAllMocks();
   app = createApp();
+  const { Workspace } = await import("../server/models/workspace");
+  const cjsWorkspace = require("../server/models/workspace").Workspace;
+  vi.spyOn(cjsWorkspace, "where").mockResolvedValue([]);
+  vi.spyOn(cjsWorkspace, "new").mockResolvedValue({ workspace: { id: 1, name: "test-workspace", slug: "test-workspace" }, message: null });
+  vi.spyOn(cjsWorkspace, "get").mockResolvedValue({ id: 1, name: "test", slug: "test" });
+  vi.spyOn(cjsWorkspace, "getWithUser").mockResolvedValue({ id: 1, name: "test", slug: "test" });
+  vi.spyOn(cjsWorkspace, "update").mockResolvedValue({ workspace: { id: 1, name: "updated", slug: "test" }, message: null });
+  vi.spyOn(cjsWorkspace, "delete").mockResolvedValue(true);
 });
 
 const request = async (method, path, body = null, headers = {}) => {
@@ -141,7 +138,6 @@ describe("workspace endpoints", () => {
       const response = await request("POST", "/workspace/new", {
         name: "test-workspace",
       });
-      console.log("POST /workspace/new response:", response.status, response.body);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("workspace");
       expect(response.body.workspace).toHaveProperty("id");
@@ -152,7 +148,6 @@ describe("workspace endpoints", () => {
   describe("GET /workspace/:slug", () => {
     it("should get workspace by slug", async () => {
       const response = await request("GET", "/workspace/test");
-      console.log("GET /workspace/test response:", response.status, response.body);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("workspace");
       expect(response.body.workspace).toHaveProperty("id", 1);

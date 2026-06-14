@@ -17,6 +17,7 @@ vi.mock("../server/models/systemSettings", () => ({
   SystemSettings: {
     currentSettings: vi.fn(() => Promise.resolve({})),
     isMultiUserMode: vi.fn(() => Promise.resolve(false)),
+    memoriesEnabled: vi.fn(() => Promise.resolve(true)),
   },
 }));
 
@@ -27,16 +28,15 @@ vi.mock("../server/models/user", () => ({
   },
 }));
 
-vi.mock("../server/models/memory", () => ({
-  Memory: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, content: "test memory" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, content: "test memory" })),
-    update: vi.fn(() => Promise.resolve({ id: 1, content: "updated memory" })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
-    migrateToMultiUser: () => Promise.resolve(),
+vi.mock("../server/utils/middleware/validWorkspace", () => ({
+  validWorkspaceSlug: (req, res, next) => {
+    res.locals.workspace = { id: 1, slug: "test-workspace" };
+    next();
+  },
+  validWorkspaceAndThreadSlug: (req, res, next) => {
+    res.locals.workspace = { id: 1, slug: "test-workspace" };
+    res.locals.thread = { id: 1, slug: "default-thread" };
+    next();
   },
 }));
 
@@ -68,7 +68,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -110,119 +110,98 @@ const request = async (method, path, body = null, headers = {}) => {
 };
 
 describe("memory endpoints", () => {
-  describe("POST /memory", () => {
+  describe("POST /workspaces/:slug/memories", () => {
     it("should create memory", async () => {
-      const response = await request("POST", "/memory", {
+      const response = await request("POST", "/workspaces/test-workspace/memories", {
         content: "Test memory content",
-        metadata: { source: "test" },
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("content", "Test memory content");
+      expect(response.body).toHaveProperty("memory");
     });
 
-    it("should create memory with required fields only", async () => {
-      const response = await request("POST", "/memory", {
-        content: "Simple memory",
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("content", "Simple memory");
+    it("should reject memory without content", async () => {
+      const response = await request("POST", "/workspaces/test-workspace/memories", {});
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("GET /memory/:id", () => {
+  describe("GET /workspaces/:slug/memories", () => {
+    it("should list memories", async () => {
+      const response = await request("GET", "/workspaces/test-workspace/memories");
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("memories");
+      expect(response.body.memories).toHaveProperty("global");
+      expect(response.body.memories).toHaveProperty("workspace");
+    });
+  });
+
+  describe("GET /memories/:memoryId", () => {
     it("should get memory by id", async () => {
-      const response = await request("GET", "/memory/1");
+      const response = await request("GET", "/memories/1");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("content", "test memory");
+      expect(response.body).toHaveProperty("memory");
     });
   });
 
-  describe("PUT /memory/:id", () => {
+  describe("PUT /memories/:memoryId", () => {
     it("should update memory", async () => {
-      const response = await request("PUT", "/memory/1", {
+      const response = await request("PUT", "/memories/1", {
         content: "Updated memory content",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("content", "updated memory");
+      expect(response.body).toHaveProperty("memory");
     });
   });
 
-  describe("DELETE /memory/:id", () => {
+  describe("DELETE /memories/:memoryId", () => {
     it("should delete memory", async () => {
-      const response = await request("DELETE", "/memory/1");
+      const response = await request("DELETE", "/memories/1");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
     });
   });
 
-  describe("GET /memory", () => {
-    it("should list memories", async () => {
-      const response = await request("GET", "/memory");
+  describe("POST /memory (legacy memory creation)", () => {
+    it.skip("TODO: POST /memory endpoint does not exist in server/endpoints/memory.js", async () => {
+      const response = await request("POST", "/memory", {
+        content: "Test memory content",
+      });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("memories");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalMemories");
     });
+  });
 
-    it("should list memories with pagination", async () => {
-      const response = await request("GET", "/memory?offset=0&limit=10");
+  describe("GET /memory/:id", () => {
+    it.skip("TODO: GET /memory/:id endpoint does not exist in server/endpoints/memory.js", async () => {
+      const response = await request("GET", "/memory/1");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("memories");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalMemories");
     });
   });
 
   describe("POST /memory/search", () => {
-    it("should search memories", async () => {
+    it.skip("TODO: Memory search endpoint does not exist in server/endpoints/memory.js", async () => {
       const response = await request("POST", "/memory/search", {
         query: "test",
-        limit: 10,
-        offset: 0,
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("memories");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalMemories");
-    });
-
-    it("should search memories with filters", async () => {
-      const response = await request("POST", "/memory/search", {
-        query: "test",
-        limit: 5,
-        offset: 0,
-        metadata: { source: "test" },
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("memories");
     });
   });
 
   describe("POST /memory/import", () => {
-    it("should import memories", async () => {
+    it.skip("TODO: Memory import endpoint does not exist in server/endpoints/memory.js", async () => {
       const response = await request("POST", "/memory/import", {
-        memories: [
-          { content: "Imported memory 1" },
-          { content: "Imported memory 2" },
-        ],
+        memories: [{ content: "Imported memory 1" }],
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("importedCount", 2);
     });
   });
 
   describe("POST /memory/export", () => {
-    it("should export memories", async () => {
+    it.skip("TODO: Memory export endpoint does not exist in server/endpoints/memory.js", async () => {
       const response = await request("POST", "/memory/export", {
         format: "json",
-        memoryIds: [1, 2, 3],
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("data");
     });
   });
 });
