@@ -3,6 +3,7 @@ import Workspace from "@/models/workspace";
 import { castToType } from "@/utils/types";
 import showToast from "@/utils/toast";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import WorkspaceName from "./WorkspaceName";
 import SuggestedChatMessages from "./SuggestedChatMessages";
 import DeleteWorkspace from "./DeleteWorkspace";
@@ -10,6 +11,7 @@ import CTAButton from "@/components/lib/CTAButton";
 import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 
 export default function GeneralInfo({ slug, deletionProtected = false }) {
+  const { t } = useTranslation();
   const { workspace, isLoading: loading, refresh } = useWorkspaceBySlug(slug);
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -26,10 +28,10 @@ export default function GeneralInfo({ slug, deletionProtected = false }) {
       data,
     );
     if (!!updatedWorkspace) {
-      showToast("Workspace updated!", "success", { clear: true });
+      showToast(t("common.workspaceUpdated"), "success", { clear: true });
       refresh();
     } else {
-      showToast(`Error: ${message}`, "error", { clear: true });
+      showToast(t("common.error", { error: message }), "error", { clear: true });
     }
     setSaving(false);
     setHasChanges(false);
@@ -46,7 +48,7 @@ export default function GeneralInfo({ slug, deletionProtected = false }) {
         {hasChanges && (
           <div className="absolute top-0 right-0">
             <CTAButton type="submit">
-              {saving ? "Updating..." : "Update Workspace"}
+              {saving ? t("common.updating") : t("common.updateWorkspace")}
             </CTAButton>
           </div>
         )}

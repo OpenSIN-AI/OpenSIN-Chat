@@ -127,6 +127,7 @@ const TRANSLATIONS = {
   },
   common: {
     "workspaces-name": "Namen der Workspaces",
+    workspaceNamePlaceholder: "Mein Workspace",
     selection: "Modellauswahl",
     saving: "Speichern...",
     save: "Änderungen speichern",

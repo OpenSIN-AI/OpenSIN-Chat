@@ -155,10 +155,10 @@ export default function SuggestedChatMessages({ slug }) {
         <div className="flex flex-col gap-y-4 mr-2 mt-8">
           <div className="w-1/2">
             <label className="text-white text-sm font-semibold block mb-2">
-              Message
+              {t("common.message")}
             </label>
             <input
-              placeholder="Message"
+              placeholder={t("common.message")}
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-white/20 text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block p-2.5 w-full"
               value={newMessage.message}
               name="message"
