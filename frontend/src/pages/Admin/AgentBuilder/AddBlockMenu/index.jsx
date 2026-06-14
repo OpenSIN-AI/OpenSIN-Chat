@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Plus, CaretDown } from "@phosphor-icons/react";
 import { BLOCK_TYPES, BLOCK_INFO } from "../BlockList";
 
@@ -24,6 +25,7 @@ export default function AddBlockMenu({
   setShowBlockMenu,
   addBlock,
 }) {
+  const { t } = useTranslation();
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export default function AddBlockMenu({
         className="transition-all duration-300 w-full p-2.5 bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover border border-white/10 rounded-lg text-white flex items-center justify-center gap-2 text-sm font-medium"
       >
         <Plus className="w-4 h-4" />
-        Add Block
+        {t("common.addBlock")}
         <CaretDown
           className={`w-3.5 h-3.5 transition-transform duration-300 ${showBlockMenu ? "rotate-180" : ""}`}
         />

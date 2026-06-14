@@ -57,6 +57,7 @@ function getWorkspaceSourceType(doc: any) {
 }
 
 function WorkspaceSourceItem({ doc, onClick }: any) {
+  const { t } = useTranslation();
   const { type: _type, icon: Icon, label } = getWorkspaceSourceType(doc);
   const metadata = safeJsonParse(doc.metadata, {});
 
@@ -76,7 +77,9 @@ function WorkspaceSourceItem({ doc, onClick }: any) {
       </div>
       <div className="flex flex-col gap-[2px] pl-[22px] text-[10px] text-zinc-400 light:text-slate-500 leading-[14px]">
         <p>{label}</p>
-        {metadata?.wordCount && <p>{metadata.wordCount} Wörter</p>}
+        {metadata?.wordCount && (
+          <p>{t("common.words", { count: metadata.wordCount })}</p>
+        )}
       </div>
     </button>
   );
