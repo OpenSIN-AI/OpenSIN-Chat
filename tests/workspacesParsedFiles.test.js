@@ -9,7 +9,7 @@ import prisma from "../server/utils/prisma";
 // Mutable user id that the mocked session will report. The real test user is
 // created in beforeAll so that workspace foreign-key constraints can be
 // satisfied; this value is then updated to the real primary key.
-let testUserId = 1;
+globalThis.__parsedFilesTestUserId__ = 1;
 
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),

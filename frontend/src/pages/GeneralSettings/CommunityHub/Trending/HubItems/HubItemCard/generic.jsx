@@ -19,7 +19,7 @@ export default function GenericHubCard({ item }) {
           className="text-primary-button hover:text-primary-button/80 text-xs"
           to={paths.communityHub.importItem(item.importId)}
         >
-          Import →
+          {t("common.importWithArrow")}
         </Link>
       </div>
     </div>
