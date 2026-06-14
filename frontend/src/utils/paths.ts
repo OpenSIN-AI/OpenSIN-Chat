@@ -9,12 +9,18 @@ export function isPathMatch(href, pathname) {
   return pathname === href || pathname.startsWith(href + "/");
 }
 
-function applyOptions(path, options = {}) {
+interface PathOptions {
+  search?: Record<string, string | number | boolean>;
+}
+
+function applyOptions(path: string, options: PathOptions = {}): string {
   let updatedPath = path;
   if (!options || Object.keys(options).length === 0) return updatedPath;
 
   if (options.search) {
-    const searchParams = new URLSearchParams(options.search);
+    const searchParams = new URLSearchParams(
+      Object.entries(options.search).map(([k, v]) => [k, String(v)])
+    );
     updatedPath += `?${searchParams.toString()}`;
   }
   return updatedPath;
