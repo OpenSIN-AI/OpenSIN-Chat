@@ -15,7 +15,7 @@ Both services share a bridge network so the app can reach Vane at `http://vane:8
 
 | Host | Container | Service | Reason |
 |------|-----------|---------|--------|
-| 3002 | 3001 | opensin-chat | Avoids conflict with OpenAfD on host port 3001 |
+| 38471 | 3001 | opensin-chat | Rare high port avoids conflict with OpenAfD on host port 3001 |
 | 8310 | 8300 | vane | Avoids clashing with default 3000 and keeps ports isolated |
 
 ## Volumes

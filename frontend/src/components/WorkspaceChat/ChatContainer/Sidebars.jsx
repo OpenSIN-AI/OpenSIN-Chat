@@ -26,8 +26,8 @@ export default function Sidebars({ workspace }) {
       {/* Panel area — only when a panel is active */}
       {activeSidebar && (
         <div
-          style={{ width: PANEL_W }}
-          className="h-full overflow-hidden flex-shrink-0 relative bg-zinc-900 light:bg-white"
+          style={{ "--panel-width": `${PANEL_W}px` }}
+          className="w-[var(--panel-width)] h-full overflow-hidden flex-shrink-0 relative bg-zinc-900 light:bg-white"
         >
           {activeSidebar === "sources" && (
             <SourcesSidebar workspace={workspace} />

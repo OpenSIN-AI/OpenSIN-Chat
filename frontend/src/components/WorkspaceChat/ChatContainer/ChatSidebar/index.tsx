@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: MIT
+/**
+ * Purpose: React context provider for right sidebar panel state and helpers.
+ * Docs: ChatSidebar/index.doc.md
+ */
 import React, {
   createContext,
   useContext,
