@@ -116,7 +116,7 @@ async function dipFetch(url, apiKey) {
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",
-      "User-Agent": "OpenSIN-Chat/0.1 (+https://opensin.delqhi.com)",
+      "User-Agent": "OpenSIN-Chat/0.1 (+https://sinchat.delqhi.com)",
       Authorization: `apikey ${key}`,
     },
   });

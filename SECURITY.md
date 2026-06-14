@@ -18,7 +18,7 @@ Instead, use one of these private channels:
 
 1. **GitHub Private Vulnerability Reporting** (preferred):
    [Report a vulnerability](https://github.com/OpenSIN-AI/OpenSIN-Chat/security/advisories/new)
-2. **Email:** [support@opensin.delqhi.com](mailto:support@opensin.delqhi.com)
+2. **Email:** [support@sinchat.delqhi.com](mailto:support@sinchat.delqhi.com)
    — please include steps to reproduce, affected endpoint/file, and impact.
 
 We aim to acknowledge reports within **72 hours** and to ship a fix or

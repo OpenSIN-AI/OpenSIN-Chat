@@ -1,9 +1,9 @@
 # Production-Architektur
 
-> **Single source of truth** für „wo läuft opensin.delqhi.com eigentlich?".
+> **Single source of truth** für „wo läuft sinchat.delqhi.com eigentlich?".
 > Wenn du (oder ein Agent) wissen willst, wie die Live-Deployment-Topologie aussieht — lies dieses Doc zuerst.
 
-**Live-URL:** https://opensin.delqhi.com
+**Live-URL:** https://sinchat.delqhi.com
 **Letzte Aktualisierung:** 2026-06-07
 **Owner:** Delqhi (Jeremy Schulze)
 
@@ -34,7 +34,7 @@ Internet → Cloudflare DNS → Cloudflare-Tunnel-Broker
 
 ```mermaid
 flowchart TB
-    User(["👤 Browser<br/>https://opensin.delqhi.com"])
+    User(["👤 Browser<br/>https://sinchat.delqhi.com"])
 
     subgraph Cloudflare["☁️ Cloudflare Edge (DNS + Tunnel-Broker)"]
         DNS["DNS-Records<br/>A / CNAME"]
@@ -76,7 +76,7 @@ flowchart TB
 
 | # | Schicht | Wo | Was |
 |---|---|---|---|
-| 1 | Browser | Welt | HTTPS-Request auf `https://opensin.delqhi.com` |
+| 1 | Browser | Welt | HTTPS-Request auf `https://sinchat.delqhi.com` |
 | 2 | Cloudflare DNS | Cloudflare-Edge | Löst Domain zum Tunnel-Broker auf (siehe `cf-ray` Header) |
 | 3 | Cloudflare-Tunnel-Broker | Cloudflare-Edge | Nimmt HTTPS-Request entgegen, leitet über bestehenden Outbound-Tunnel an `cloudflared` weiter |
 | 4 | `cloudflared` | **Dein Mac** (PID 53989) | Hält persistenten Outbound-Tunnel zum Cloudflare-Broker. **Kein offener Port auf dem Mac nötig!** |
@@ -102,7 +102,7 @@ flowchart TB
 
 **Konfiguration:**
 - Domain: `delqhi.com` (Cloudflare-Account: `gigigigogo-6008` bzw. `laeunduasf-4456` — historisch gewachsen)
-- Subdomain: `opensin.delqhi.com`
+- Subdomain: `sinchat.delqhi.com`
 - DNS-Record: CNAME auf den Tunnel-Broker
 - Tunnel-Name: `opensin-chat`
 - Tunnel-ID: in `~/.cloudflared/config-openafd.yml`
@@ -125,7 +125,7 @@ tunnel: <TUNNEL-UUID>
 credentials-file: /Users/simoneschulze/.cloudflared/<TUNNEL-UUID>.json
 
 ingress:
-  - hostname: opensin.delqhi.com
+  - hostname: sinchat.delqhi.com
     service: http://localhost:3001
   - service: http_status:404
 ```
@@ -266,11 +266,11 @@ server/public/
 ### Domain-Resolution
 
 ```bash
-$ dig +short opensin.delqhi.com
+$ dig +short sinchat.delqhi.com
 188.114.96.3
 188.114.97.3
 
-$ curl -sI https://opensin.delqhi.com
+$ curl -sI https://sinchat.delqhi.com
 HTTP/2 200
 server: cloudflare
 cf-ray: a07f700baa155053-TXL
@@ -296,7 +296,7 @@ curl -sI http://localhost:3001/api/ping
 curl -sI http://localhost:8888/api/ping
 
 # 4. Live-URL erreichbar?
-curl -sI https://opensin.delqhi.com
+curl -sI https://sinchat.delqhi.com
 ```
 
 ### 4.2 Nach Code-Änderungen
@@ -323,7 +323,7 @@ sleep 2 && curl -sI http://localhost:3001/api/ping
 
 ### 4.3 Wenn die App offline ist
 
-**Symptom:** `curl https://opensin.delqhi.com` hängt oder gibt 502/504.
+**Symptom:** `curl https://sinchat.delqhi.com` hängt oder gibt 502/504.
 
 **Debug-Reihenfolge:**
 

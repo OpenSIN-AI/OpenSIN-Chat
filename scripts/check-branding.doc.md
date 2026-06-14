@@ -29,7 +29,7 @@ verfällt die Linter-Semantik.
 | `Mintplex` | Company | `Mintplex Labs Inc.` |
 | `cdn.anythingllm.com` | Telemetry-CDN | **darf nicht mehr im Code sein** |
 | `hub.anythingllm.com` | Community-Hub | externe API, **darf nicht im Frontend** sein |
-| `docs.anythingllm.com` | Doku-CDN | optional, besser durch `opensin.delqhi.com/docs` ersetzen |
+| `docs.anythingllm.com` | Doku-CDN | optional, besser durch `sinchat.delqhi.com/docs` ersetzen |
 | `team@mintplex` | Mail-Adresse | **nur in `THIRD-PARTY.md`** |
 
 ## Usage

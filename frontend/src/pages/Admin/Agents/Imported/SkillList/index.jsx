@@ -16,14 +16,15 @@ export default function ImportedSkillList({
         <p>
           {t("importedSkillList.learnAboutSkills")}{" "}
           <a
-            href="https://docs.opensin.delqhi.com/agent/custom/developer-guide"
+            href="/docs"
             target="_blank"
             className="text-theme-text-secondary underline hover:text-cta-button"
             rel="noreferrer"
           >
             {t("importedSkillList.agentDocs")}
           </a>
-          {// eslint-disable-next-line i18next/no-literal-string
+          {
+            // eslint-disable-next-line i18next/no-literal-string
           }
           .
         </p>
