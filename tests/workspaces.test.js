@@ -85,14 +85,6 @@ let app;
 beforeEach(async () => {
   vi.clearAllMocks();
   app = createApp();
-  const { Workspace } = await import("../server/models/workspace");
-  const cjsWorkspace = require("../server/models/workspace").Workspace;
-  vi.spyOn(cjsWorkspace, "where").mockResolvedValue([]);
-  vi.spyOn(cjsWorkspace, "new").mockResolvedValue({ workspace: { id: 1, name: "test-workspace", slug: "test-workspace" }, message: null });
-  vi.spyOn(cjsWorkspace, "get").mockResolvedValue({ id: 1, name: "test", slug: "test" });
-  vi.spyOn(cjsWorkspace, "getWithUser").mockResolvedValue({ id: 1, name: "test", slug: "test" });
-  vi.spyOn(cjsWorkspace, "update").mockResolvedValue({ workspace: { id: 1, name: "updated", slug: "test" }, message: null });
-  vi.spyOn(cjsWorkspace, "delete").mockResolvedValue(true);
 });
 
 const request = async (method, path, body = null, headers = {}) => {

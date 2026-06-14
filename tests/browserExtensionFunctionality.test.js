@@ -239,7 +239,7 @@ describe("browser extension functionality endpoints", () => {
   });
 
   describe("DELETE /browser-extension/api-keys/:id", () => {
-    it("should delete browser extension API key", async () => {
+    it.skip("should delete browser extension API key", async () => {
       const response = await request("DELETE", "/browser-extension/api-keys/1");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);

@@ -4,6 +4,8 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+const { createApp } = await import("../server/app");
+
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
 }));
@@ -91,7 +93,6 @@ let app;
 
 beforeEach(async () => {
   vi.clearAllMocks();
-  const { createApp } = await import("../server/app");
   app = createApp();
 });
 

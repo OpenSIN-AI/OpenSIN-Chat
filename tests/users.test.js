@@ -4,9 +4,6 @@
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { createApp } from "../server/app";
-import jwt from "jsonwebtoken";
-
-let authToken;
 
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
@@ -114,7 +111,6 @@ const request = async (method, path, body = null, headers = {}) => {
     method,
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${authToken}`,
       ...headers,
     },
   };
