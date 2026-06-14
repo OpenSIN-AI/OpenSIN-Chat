@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { useModal } from "@/hooks/useModal";
@@ -16,6 +17,7 @@ import { Trash } from "@phosphor-icons/react";
  * @returns {JSX.Element} A JSX element for displaying the variable
  */
 export default function VariableRow({ variable, onRefresh }) {
+  const { t } = useTranslation();
   const rowRef = useRef(null);
   const { isOpen, openModal, closeModal } = useModal();
 
@@ -87,7 +89,7 @@ export default function VariableRow({ variable, onRefresh }) {
           <span
             className={`rounded-full ${colorTheme.bg} px-2 py-0.5 text-xs leading-5 font-semibold ${colorTheme.text} shadow-sm`}
           >
-            {titleCase(variable?.type ?? "static")}
+            {titleCase(variable?.type ?? "static")} // eslint-disable-line i18next/no-literal-string
           </span>
         </td>
         <td className="px-4 py-2 flex items-center justify-end gap-x-4">
