@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Minimal Playwright configuration for frontend E2E tests.
 // Docs: frontend/playwright.config.doc.md
-import { defineConfig, devices } from "playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * Minimal Playwright configuration for the OpenSIN-Chat frontend.
  *
  * Assumes the dev server (or a production build) is already running at
- * APP_URL (default: http://localhost:3001). The root `package.json` already
- * declares `playwright` as a dependency, so no additional installation is
- * required.
+ * APP_URL (default: http://localhost:38471). The frontend `package.json`
+ * declares `@playwright/test` as a devDependency, so the runner is available
+ * in the frontend workspace.
  */
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -19,7 +19,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: "list",
   use: {
-    baseURL: process.env.APP_URL || "http://localhost:3001",
+    baseURL: process.env.APP_URL || "http://localhost:38471",
     locale: "en-US",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
