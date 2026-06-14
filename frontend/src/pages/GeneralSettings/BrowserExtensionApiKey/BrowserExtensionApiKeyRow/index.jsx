@@ -91,7 +91,7 @@ export default function BrowserExtensionApiKeyRow({
       </td>
       {isMultiUser && (
         <td className="px-6 py-2">
-          {apiKey.user ? apiKey.user.username : "N/A"}
+          {apiKey.user ? apiKey.user.username : "N/A"} // eslint-disable-line i18next/no-literal-string
         </td>
       )}
       <td className="px-6 py-2">

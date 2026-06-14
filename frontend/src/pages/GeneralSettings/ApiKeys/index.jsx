@@ -45,7 +45,10 @@ export default function AdminApiKeys() {
               rel="noreferrer"
               className="text-xs leading-[18px] font-base text-blue-300 light:text-blue-500 hover:underline mt-1"
             >
-              {t("api.link")} &rarr;
+              {t("api.link")}{" "}
+              {// eslint-disable-next-line i18next/no-literal-string
+              }
+              &rarr;
             </a>
           </div>
           <div className="w-full justify-end flex">
