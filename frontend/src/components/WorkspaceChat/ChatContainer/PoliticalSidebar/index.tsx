@@ -124,7 +124,7 @@ export default function PoliticalSidebar() {
                     className="text-zinc-400 flex-shrink-0 mt-0.5"
                   />
                   <p className="text-xs text-zinc-200 light:text-slate-800 leading-snug line-clamp-2 flex-1">
-                    {d.titel || d.title || "—"} // eslint-disable-line i18next/no-literal-string
+                    {d.titel || d.title || `—`}
                   </p>
                   <ArrowSquareOut
                     size={11}

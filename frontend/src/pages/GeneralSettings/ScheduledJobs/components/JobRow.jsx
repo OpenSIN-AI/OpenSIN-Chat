@@ -49,18 +49,12 @@ export default function JobRow({ job, onTrigger, onToggle, onEdit, onDelete }) {
         {statusText}
       </span>
       <span className="w-[180px] text-sm text-zinc-400 light:text-slate-600 truncate">
-        {
-          // eslint-disable-next-line i18next/no-literal-string
-          job.lastRunAt ? new Date(job.lastRunAt).toLocaleString() : "—"
-        }
+        {job.lastRunAt ? `${new Date(job.lastRunAt).toLocaleString()}` : `—`}
       </span>
       <span className="w-[180px] text-sm text-zinc-400 light:text-slate-600 truncate">
-        {
-          // eslint-disable-next-line i18next/no-literal-string
-          job.enabled && job.nextRunAt
-            ? new Date(job.nextRunAt).toLocaleString()
-            : "—"
-        }
+        {job.enabled && job.nextRunAt
+          ? `${new Date(job.nextRunAt).toLocaleString()}`
+          : `—`}
       </span>
       <div className="w-[140px] flex items-center justify-end gap-1">
         <button

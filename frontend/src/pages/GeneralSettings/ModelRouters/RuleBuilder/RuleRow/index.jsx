@@ -57,7 +57,7 @@ export default function RuleRow({
       )}
       {dragHandleProps && (
         <p className="shrink-0 text-sm font-semibold text-zinc-400 light:text-slate-500 tabular-nums">
-          #{rule.priority} // eslint-disable-line i18next/no-literal-string
+          {`#${rule.priority}`}
         </p>
       )}
       <div className="flex flex-col flex-1 min-w-0">

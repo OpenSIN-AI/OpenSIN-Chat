@@ -12,8 +12,8 @@ function AnswerRow({ question, answer, index, showNumber, skippedLabel }: any) {
   return (
     <div className="flex gap-2">
       {showNumber && (
-        <span className="text-white/50 light:text-slate-500 shrink-0"> // eslint-disable-next-line i18next/no-literal-string
-          {index + 1}.
+        <span className="text-white/50 light:text-slate-500 shrink-0">
+          {`${index + 1}.`}
         </span>
       )}
       <div className="flex flex-col">
