@@ -86,12 +86,6 @@ test.describe("upload attachment flow", () => {
     await seedSession(page, token);
     await mockOnboardingCheck(page);
 
-    // Capture console errors to diagnose frontend crashes.
-    page.on("console", (msg) => {
-      if (msg.type() === "error") console.log("CONSOLE ERROR:", msg.text());
-    });
-    page.on("pageerror", (err) => console.log("PAGE ERROR:", err.message, err.stack));
-
     // Navigate to the chat page for a real workspace.
     await page.goto(`/workspace/${slug}`, { waitUntil: "networkidle" });
 
@@ -124,13 +118,14 @@ test.describe("upload attachment flow", () => {
     await fileInput.setInputFiles(fixturePath);
 
     // Verify the attachment appears in the prompt input area.
-    const attachment = page
-      .locator("[class*='bg-theme-attachment']")
-      .filter({ hasText: /test-image\.png/i })
-      .first();
-    await expect(attachment).toBeVisible({ timeout: 10000 });
+    // Image attachments render as a preview <img> with the file name in the alt
+    // text and as a tooltip on the wrapping element.
+    const imageAttachment = page.locator('img[alt*="test-image.png"]');
+    await expect(imageAttachment).toBeVisible({ timeout: 10000 });
 
-    // Optional: verify the file name is shown in the attachment list.
-    await expect(attachment).toContainText("test-image.png");
+    // Optional: verify the file name is shown in the tooltip / context.
+    await expect(
+      page.locator('[data-tooltip-content*="test-image.png"]'),
+    ).toHaveCount(1);
   });
 });

@@ -24,6 +24,7 @@ sin_goal_mode.db
 
 # Playwright test results
 frontend/test-results/
+test-results/
 
 # Environment variables — never commit real env files
 .env
