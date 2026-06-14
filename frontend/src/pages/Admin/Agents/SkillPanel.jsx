@@ -26,6 +26,7 @@ export function SkillPanel({
   handleMCPToolToggle,
   setImportedSkills,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex-[2] flex flex-col gap-y-[18px] mt-10">
       <div className="bg-theme-bg-secondary text-white rounded-xl flex-1 p-4 overflow-y-scroll overflow-x-visible no-scroll">
@@ -93,7 +94,7 @@ export function SkillPanel({
           <div className="flex flex-col items-center justify-center h-full text-theme-text-secondary">
             <Robot size={40} />
             <p className="font-medium">
-              Select an Agent Skill, Agent Flow, or MCP Server
+              {t("common.selectAgentSkillFlowMcp")}
             </p>
           </div>
         )}
