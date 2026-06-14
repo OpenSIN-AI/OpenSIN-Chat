@@ -7,25 +7,125 @@ on:
     branches: [main]
 
 jobs:
-  frontend:
-    name: Frontend (Vitest)
+  frontend-utils:
+    name: Frontend (Utils)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
       - uses: actions/setup-node@v6
         with:
           node-version: "22"
           cache: "yarn"
           cache-dependency-path: frontend/yarn.lock
-
       - name: Install frontend dependencies
         working-directory: frontend
         run: yarn install --frozen-lockfile --network-timeout 100000
-
-      - name: Run frontend tests
+      - name: Run utils tests
         working-directory: frontend
-        run: yarn test
+        timeout-minutes: 5
+        run: yarn test:utils
+        env:
+          CI: true
+
+  frontend-models:
+    name: Frontend (Models)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile --network-timeout 100000
+      - name: Run models tests
+        working-directory: frontend
+        timeout-minutes: 5
+        run: yarn test:models
+        env:
+          CI: true
+
+  frontend-hooks-1:
+    name: Frontend (Hooks 1/2)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile --network-timeout 100000
+      - name: Run hooks shard 1/2
+        working-directory: frontend
+        timeout-minutes: 5
+        run: yarn test:hooks-1
+        env:
+          CI: true
+
+  frontend-hooks-2:
+    name: Frontend (Hooks 2/2)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile --network-timeout 100000
+      - name: Run hooks shard 2/2
+        working-directory: frontend
+        timeout-minutes: 5
+        run: yarn test:hooks-2
+        env:
+          CI: true
+
+  frontend-components-1:
+    name: Frontend (Components 1/2)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile --network-timeout 100000
+      - name: Run components shard 1/2
+        working-directory: frontend
+        timeout-minutes: 5
+        run: yarn test:components-1
+        env:
+          CI: true
+
+  frontend-components-2:
+    name: Frontend (Components 2/2)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+          cache-dependency-path: frontend/yarn.lock
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: yarn install --frozen-lockfile --network-timeout 100000
+      - name: Run components shard 2/2
+        working-directory: frontend
+        timeout-minutes: 5
+        run: yarn test:components-2
+        env:
+          CI: true
 
   frontend-lint:
     name: Frontend (ESLint)

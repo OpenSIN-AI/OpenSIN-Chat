@@ -30,4 +30,7 @@ is responsible for mocking `react-i18next` itself, usually through the shared
 ## Usage
 
 No manual invocation needed; Vitest loads this file automatically via the
-`setupFiles` entry in `vite.config.js`.
+`setupFiles` entry in `vitest.config.js`.
+
+- `vitest.config.js` caps CI workers to 2 and splits the suite across parallel
+  CI jobs (issue #136) to keep run times under the 5-minute timeout.
