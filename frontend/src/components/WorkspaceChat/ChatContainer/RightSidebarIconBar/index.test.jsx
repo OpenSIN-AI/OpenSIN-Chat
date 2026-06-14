@@ -10,15 +10,12 @@ vi.mock("react-i18next", async () => {
 
 const mockToggleSidebar = vi.fn();
 const mockCloseSidebar = vi.fn();
-const mockToggleRightSidebar = vi.fn();
 
 vi.mock("../ChatSidebar", () => ({
   useChatSidebar: () => ({
     activeSidebar: null,
     toggleSidebar: mockToggleSidebar,
     closeSidebar: mockCloseSidebar,
-    rightSidebarOpen: true,
-    toggleRightSidebar: mockToggleRightSidebar,
   }),
 }));
 
@@ -27,19 +24,10 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all 8 icon buttons (collapse + 7 panels)", () => {
+  it("renders 7 panel icon buttons", () => {
     const { container } = render(<RightSidebarIconBar />);
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(8);
-  });
-
-  it("calls toggleRightSidebar when the collapse icon is clicked", () => {
-    const { container } = render(<RightSidebarIconBar />);
-    const collapseButton = container.querySelector(
-      'button[aria-label="Collapse"]',
-    );
-    fireEvent.click(collapseButton);
-    expect(mockToggleRightSidebar).toHaveBeenCalledTimes(1);
+    expect(buttons.length).toBe(7);
   });
 
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {
@@ -66,22 +54,5 @@ describe("RightSidebarIconBar", () => {
     buttons.forEach((btn) => {
       expect(btn.getAttribute("aria-label")).toBeTruthy();
     });
-  });
-
-  it("has aria-expanded on the toggle button reflecting sidebar state", () => {
-    const { container } = render(<RightSidebarIconBar />);
-    const toggleButton = container.querySelector(
-      'button[aria-label="Collapse"]',
-    );
-    expect(toggleButton).toHaveAttribute("aria-expanded", "true");
-  });
-
-  it("has aria-controls pointing to the sidebar panel", () => {
-    const { container } = render(<RightSidebarIconBar />);
-    const toggleButton = container.querySelector("button[aria-expanded]");
-    expect(toggleButton).toHaveAttribute(
-      "aria-controls",
-      "right-sidebar-panel",
-    );
   });
 });

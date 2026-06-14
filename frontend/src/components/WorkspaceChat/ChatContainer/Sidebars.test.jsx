@@ -44,9 +44,6 @@ vi.mock("./PoliticalSidebar", () => ({
 
 vi.mock("./RightSidebarIconBar", () => ({
   default: () => <div data-testid="right-sidebar-icon-bar" />,
-  RightSidebarToggleButton: () => (
-    <button type="button" data-testid="toggle-button" />
-  ),
 }));
 
 const workspace = { id: 1, name: "Test Workspace" };
@@ -58,7 +55,6 @@ describe("Sidebars", () => {
 
   it("renders the active panel when sidebar is open with activeSidebar", () => {
     mockUseChatSidebar.mockReturnValue({
-      rightSidebarOpen: true,
       activeSidebar: "sources",
     });
     render(<Sidebars workspace={workspace} />);
@@ -68,7 +64,6 @@ describe("Sidebars", () => {
 
   it("renders nothing in panel area when no activeSidebar", () => {
     mockUseChatSidebar.mockReturnValue({
-      rightSidebarOpen: true,
       activeSidebar: null,
     });
     render(<Sidebars workspace={workspace} />);
@@ -82,33 +77,16 @@ describe("Sidebars", () => {
     expect(screen.getByTestId("right-sidebar-icon-bar")).toBeInTheDocument();
   });
 
-  it("renders nothing in panel area when sidebar is closed", () => {
+  it("renders icon bar regardless of activeSidebar", () => {
     mockUseChatSidebar.mockReturnValue({
-      rightSidebarOpen: false,
-      activeSidebar: "sources",
-    });
-    const { container } = render(<Sidebars workspace={workspace} />);
-    expect(screen.queryByTestId("sources-sidebar")).not.toBeInTheDocument();
-    expect(screen.getByTestId("toggle-button")).toBeInTheDocument();
-    const collapsedCol = container.querySelector('[class*="w-\\[44px\\]"]');
-    expect(collapsedCol).toBeInTheDocument();
-  });
-
-  it("renders toggle button in collapsed mode without icon bar", () => {
-    mockUseChatSidebar.mockReturnValue({
-      rightSidebarOpen: false,
       activeSidebar: null,
     });
     render(<Sidebars workspace={workspace} />);
-    expect(screen.getByTestId("toggle-button")).toBeInTheDocument();
-    expect(
-      screen.queryByTestId("right-sidebar-icon-bar"),
-    ).not.toBeInTheDocument();
+    expect(screen.getByTestId("right-sidebar-icon-bar")).toBeInTheDocument();
   });
 
   it("panel width is 360px when shown", () => {
     mockUseChatSidebar.mockReturnValue({
-      rightSidebarOpen: true,
       activeSidebar: "sources",
     });
     const { container } = render(<Sidebars workspace={workspace} />);
@@ -126,7 +104,6 @@ describe("Sidebars", () => {
     ["political", "political-sidebar"],
   ])("renders %s panel when activeSidebar is '%s'", (name, testid) => {
     mockUseChatSidebar.mockReturnValue({
-      rightSidebarOpen: true,
       activeSidebar: name,
     });
     render(<Sidebars workspace={workspace} />);
