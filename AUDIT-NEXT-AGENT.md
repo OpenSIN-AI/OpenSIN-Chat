@@ -240,7 +240,100 @@ Screenshot: `docs/audit-screens/pdf-analysis-BEFORE-raw-keys.png`.
 
 ---
 
-## 9. Screenshots
+## 10. Quick-Reference Befehle
+
+```bash
+# Start der App (mit vollständigem Setup)
+cd /vercel/share/v0-project && npm install --legacy-peer-deps
+cd frontend && npm install --legacy-peer-deps && npm run dev
+
+# Onboarding bypassen
+agent-browser storage local set anythingllm_disable_onboarding true
+
+# Deutsch einstellen
+agent-browser storage local set i18nextLng de
+
+# Zur App navigieren
+agent-browser open http://localhost:3000/
+
+# Screenshots verschiedener Viewports
+agent-browser set viewport 1280 720 && agent-browser screenshot /tmp/desktop.png
+agent-browser set viewport 375 812  && agent-browser screenshot /tmp/mobile.png
+
+# Accessibility-Tree anschauen
+agent-browser snapshot
+
+# i18n-Keys verifizieren (vor PR)
+cd frontend && npm run verify:translations
+
+# Linting und Auto-Format
+./node_modules/.bin/eslint --fix src/locales/de/common.js src/locales/en/common.js
+
+# Git-Status & Commits
+git status
+git log --oneline -10
+git diff HEAD
+```
+
+---
+
+## 11. Behobene Bugs & neue Features (PR-Übersicht)
+
+| PR | Titel | Was | Status |
+|-----|-------|-----|--------|
+| #161 | Audit-Leitfaden + Dev-Onboarding-Bypass | AUDIT-NEXT-AGENT.md + `isOnboardingBypassEnabled()` in `system.js` | ✅ merged main |
+| #162 | PDF-Analyse i18n fix | `pdfAnalysis.panel.*` + `pdfAnalysis.corpus.*` Keys + `deepScan` Forwarding | ✅ merged main |
+| #163 | PDF Analysis icon to right sidebar | FilePdf-Icon in `RightSidebarIconBar` → navigate `/pdf-analysis` | ✅ merged main |
+
+---
+
+## 12. Kommende Audits — worauf der nächste Agent achten sollte
+
+1. **Mit Backend laufen:** Starte `npm run dev` im Root (beide Ports :3000 + :3001)
+   → Admin-Screens, Settings, Workspace-Modal werden erreichbar.
+2. **Docs-Seite konsistenter machen:** `/docs` hat gemischte DE/EN; entweder komplett
+   übersetzen oder auf eine Sprache einigen.
+3. **Logo-Fallback:** Wenn Custom-Logo fehlschlägt, sollte es ein Fallback-SVG
+   zeigen (nicht Alt-Text).
+4. **Web Vitals Baseline:** Mit `npm run build && npm run preview` Production-Metriken
+   erheben (dev-mode verfälscht LCP/INP).
+5. **Dark Mode auf neuen Komponenten:** Bei neuen UI-Elementen `light:` Varianten
+   prüfen (z.B. `light:bg-white`, `light:text-slate-900`).
+6. **i18n-Schlüssel vor Merge:** Immer `npm run verify:translations` laufen lassen —
+   spart Nacharbeit.
+
+---
+
+## 13. Wo finde ich was? (Codebase-Übersicht)
+
+```
+frontend/src/
+├── components/
+│   ├── WorkspaceChat/ChatContainer/RightSidebarIconBar/  ← PDF-Icon hier
+│   ├── PrivateRoute/index.tsx                             ← Onboarding-Gate
+│   └── Modals/ManageWorkspace/Documents/UploadFile/       ← Dokument-Upload
+├── pages/
+│   ├── Main/index.jsx                                     ← Haupt-Chat
+│   └── PdfAnalysis/index.jsx                              ← PDF-Analyse (orphaned bis PR#163)
+├── models/
+│   ├── system.js (AKTIV)                                  ← Onboarding-Check
+│   ├── system.ts (Spiegel)                                ← nicht benutzt
+│   └── pdfAnalysis.js                                     ← PDF-Modell (deepScan-Fix in PR#162)
+├── locales/
+│   ├── de/common.js                                       ← Deutsche Keys
+│   └── en/common.js                                       ← Englische Keys (Template)
+├── utils/
+│   ├── paths.ts                                           ← `paths.pdfAnalysis()`
+│   └── constants.ts                                       ← API_BASE
+└── main.tsx                                               ← Router + Routes
+```
+
+**Wichtigste Dateien zum Auditen:**
+- Übersetzungen: `frontend/src/locales/{de,en}/common.js`
+- Haupt-UI: `frontend/src/components/WorkspaceChat/`
+- PDF: `frontend/src/pages/PdfAnalysis/` + `frontend/src/models/pdfAnalysis.js`
+
+---
 
 Im Repo unter `docs/audit-screens/`:
 - `main-app-de.png` — Haupt-App, Deutsch
