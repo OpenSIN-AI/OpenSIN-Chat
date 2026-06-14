@@ -57,12 +57,12 @@ export default function DatabaseSidebar() {
               {Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 animate-pulse"
+                  className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse"
                 >
-                  <div className="w-8 h-8 rounded-full bg-zinc-700 flex-shrink-0" />
+                  <div className="w-8 h-8 rounded-full bg-zinc-700 light:bg-slate-200 flex-shrink-0" />
                   <div className="flex-1 space-y-1.5">
-                    <div className="h-3 w-28 rounded bg-zinc-700" />
-                    <div className="h-2 w-20 rounded bg-zinc-700" />
+                    <div className="h-3 w-28 rounded bg-zinc-700 light:bg-slate-200" />
+                    <div className="h-2 w-20 rounded bg-zinc-700 light:bg-slate-200" />
                   </div>
                 </div>
               ))}
@@ -137,8 +137,8 @@ export default function DatabaseSidebar() {
             );
           })}
 
-          <div className="mt-3 p-3 rounded-xl bg-zinc-800/50 border border-zinc-700">
-            <p className="text-[10px] text-zinc-500 leading-relaxed">
+          <div className="mt-3 p-3 rounded-xl bg-zinc-800/50 light:bg-slate-100 border border-zinc-700 light:border-slate-200">
+            <p className="text-[10px] text-zinc-500 light:text-slate-500 leading-relaxed">
               {t(
                 "sidebar.database.hint",
                 'Tipp: "@agent Suche AfD Abgeordnete..." im Chat für detaillierte Abfragen.',

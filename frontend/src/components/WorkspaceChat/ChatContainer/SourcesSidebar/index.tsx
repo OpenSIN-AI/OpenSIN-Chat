@@ -7,9 +7,7 @@ import {
   Globe,
   FileText,
   Database,
-  ChatCircleText,
 } from "@phosphor-icons/react";
-import { Link, useParams } from "react-router-dom";
 import {
   combineLikeSources,
   CitationDetailModal,
@@ -19,8 +17,6 @@ import SourceItem from "./SourceItem";
 import ChatSidebar, { useSourcesSidebar, useChatSidebar } from "../ChatSidebar";
 import SidebarTabs from "../ChatSidebar/SidebarTabs";
 import { MemoriesProvider } from "../MemoriesSidebar/MemoriesContext";
-import useThreads from "@/hooks/useThreads";
-import paths from "@/utils/paths";
 import { safeJsonParse } from "@/utils/request";
 
 // Re-export for backward compat with existing imports
@@ -163,7 +159,6 @@ export default function SourcesSidebar({ workspace }: any) {
   const { sources, sidebarOpen, closeSidebar } = useSourcesSidebar();
   const { t } = useTranslation();
   const [selectedSource, setSelectedSource] = useState(null);
-  const [activeTab, setActiveTab] = useState<"sources" | "chats">("sources");
   const { sourceFilter, isDocumentSource, isMediaSource } = useChatSidebar();
 
   const combined = combineLikeSources(sources);
@@ -181,7 +176,7 @@ export default function SourcesSidebar({ workspace }: any) {
   const filteredWorkspaceDocs = (workspaceDocs as any).filter((doc) => {
     const typeInfo = getWorkspaceSourceType(doc);
     if (sourceFilter === "documents") return typeInfo.type === "document";
-    if (sourceFilter === "media") return typeInfo.type === "url"; // URLs are "media" in this context
+    if (sourceFilter === "media") return typeInfo.type === "url";
     return true; // "all"
   });
 
@@ -209,15 +204,14 @@ export default function SourcesSidebar({ workspace }: any) {
   return (
     <MemoriesProvider workspace={workspace}>
       <ChatSidebar isOpen={sidebarOpen}>
-        <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 p-4 flex flex-col gap-4 overflow-hidden">
+        <div className="w-full h-full bg-zinc-900 light:bg-white p-4 flex flex-col gap-4 overflow-hidden">
+          {/* Header */}
           <div className="flex flex-col shrink-0 gap-2">
             <div className="flex items-start justify-between">
               <p className="font-medium text-base leading-6 text-white light:text-slate-900">
-                {activeTab === "chats"
-                  ? t("chat_window.workspace_chats", "Chats")
-                  : isWorkspaceMode
-                    ? t("chat_window.workspace_sources")
-                    : t("chat_window.sources")}
+                {isWorkspaceMode
+                  ? t("chat_window.workspace_sources")
+                  : t("chat_window.sources")}
               </p>
               <button
                 onClick={closeSidebar}
@@ -228,69 +222,38 @@ export default function SourcesSidebar({ workspace }: any) {
               </button>
             </div>
 
-            {/* Chats / Quellen Toggle */}
-            <div className="flex items-center gap-1 shrink-0">
-              <button
-                type="button"
-                onClick={() => setActiveTab("chats")}
-                className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
-                  activeTab === "chats"
-                    ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
-                    : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
-                }`}
-              >
-                <ChatCircleText size={12} weight="bold" />
-                <span>{t("chat_window.chats_tab", "Chats")}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("sources")}
-                className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
-                  activeTab === "sources"
-                    ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
-                    : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
-                }`}
-              >
-                <FileText size={12} weight="bold" />
-                <span>{t("chat_window.sources", "Quellen")}</span>
-              </button>
-            </div>
-
-            {activeTab === "sources" && <SidebarTabs />}
+            {/* Only Arbeitsbereich + Global tabs — no Chats/Quellen toggle */}
+            <SidebarTabs />
           </div>
 
-          {/* Tab-Inhalt */}
-          {activeTab === "chats" ? (
-            <WorkspaceChatsTab workspace={workspace} onClose={closeSidebar} />
-          ) : (
-            <div className="flex flex-col gap-3 overflow-y-auto no-scroll">
-              {displaySources.length === 0 ? (
-                <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-4">
-                  {isWorkspaceMode
-                    ? t("chat_window.no_workspace_sources")
-                    : t("chat_window.no_sources_filter", {
-                        filter: t(`chat_window.source_filter_${sourceFilter}`),
-                      })}
-                </p>
-              ) : (
-                (displaySources as any).map((source, idx) =>
-                  isWorkspaceMode ? (
-                    <WorkspaceSourceItem
-                      key={source.docId || idx}
-                      doc={source}
-                      onClick={() => {}}
-                    />
-                  ) : (
-                    <SourceItem
-                      key={source.title || idx}
-                      source={source}
-                      onClick={() => setSelectedSource(source)}
-                    />
-                  ),
-                )
-              )}
-            </div>
-          )}
+          {/* Sources list */}
+          <div className="flex flex-col gap-3 overflow-y-auto no-scroll">
+            {displaySources.length === 0 ? (
+              <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-4">
+                {isWorkspaceMode
+                  ? t("chat_window.no_workspace_sources")
+                  : t("chat_window.no_sources_filter", {
+                      filter: t(`chat_window.source_filter_${sourceFilter}`),
+                    })}
+              </p>
+            ) : (
+              (displaySources as any).map((source, idx) =>
+                isWorkspaceMode ? (
+                  <WorkspaceSourceItem
+                    key={source.docId || idx}
+                    doc={source}
+                    onClick={() => {}}
+                  />
+                ) : (
+                  <SourceItem
+                    key={source.title || idx}
+                    source={source}
+                    onClick={() => setSelectedSource(source)}
+                  />
+                ),
+              )
+            )}
+          </div>
         </div>
       </ChatSidebar>
       {selectedSource && !isWorkspaceMode && (

@@ -75,7 +75,7 @@ export default function RightSidebarIconBar() {
   ];
 
   return (
-    <div className="flex flex-col items-center gap-1 py-2 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px]">
+    <div className="flex flex-col items-center gap-1 py-2 px-1 bg-zinc-900 light:bg-white h-full flex-shrink-0 w-[44px] my-2 mr-2 rounded-2xl overflow-hidden">
       {/* Panel icons — always visible, no toggle */}
       {(icons as any).map(({ id, icon: Icon, label, action }: any) => {
         const isActive = activeSidebar === id;

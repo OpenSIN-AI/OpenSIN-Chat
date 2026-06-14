@@ -29,7 +29,7 @@ import ChatSettingsMenu from "@/components/WorkspaceChat/ChatContainer/ChatSetti
 import WorkspaceModelPicker from "@/components/WorkspaceChat/ChatContainer/WorkspaceModelPicker";
 import { ChatTooltips } from "@/components/WorkspaceChat/ChatContainer/ChatTooltips";
 import { ChatSidebarProvider } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
-import MemoriesSidebar from "@/components/WorkspaceChat/ChatContainer/MemoriesSidebar";
+import Sidebars from "@/components/WorkspaceChat/ChatContainer/Sidebars";
 
 async function getTargetWorkspace() {
   const lastVisited = safeJsonParse(
@@ -284,7 +284,7 @@ function HomeContent({ workspace, setWorkspace, threadSlug, setThreadSlug }) {
     <ChatSidebarProvider>
       <div
         style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
-        className="h-[var(--content-height)] relative flex md:ml-[2px] md:mr-[16px] md:my-[16px] w-full z-[2]"
+        className="h-[var(--content-height)] relative flex md:ml-[2px] md:mr-[16px] md:my-[16px] flex-1 min-w-0 z-[2]"
       >
         <ChatSettingsMenu />
         <div className="flex-1 min-w-0 transition-all duration-500 relative md:rounded-[16px] bg-zinc-900 light:bg-white w-full h-full overflow-hidden border-none light:border-solid light:border light:border-theme-modal-border">
@@ -321,7 +321,7 @@ function HomeContent({ workspace, setWorkspace, threadSlug, setThreadSlug }) {
           </DnDFileUploaderWrapper>
           <ChatTooltips />
         </div>
-        <MemoriesSidebar workspace={workspace} />
+        <Sidebars workspace={workspace} />
       </div>
     </ChatSidebarProvider>
   );

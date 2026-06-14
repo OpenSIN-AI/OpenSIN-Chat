@@ -21,7 +21,7 @@ function Section({ title, loading, error, onRetry, retryLabel, children }) {
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="h-10 rounded-xl bg-zinc-800 animate-pulse"
+              className="h-10 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse"
             />
           ))}
         </div>
@@ -176,8 +176,8 @@ export default function PoliticalSidebar() {
             )}
           </Section>
 
-          <div className="p-3 rounded-xl bg-zinc-800/50 border border-zinc-700">
-            <p className="text-[10px] text-zinc-500 leading-relaxed">
+          <div className="p-3 rounded-xl bg-zinc-800/50 light:bg-slate-100 border border-zinc-700 light:border-slate-200">
+            <p className="text-[10px] text-zinc-500 light:text-slate-500 leading-relaxed">
               {t(
                 "sidebar.political.hint",
                 'Tipp: "@agent Bundestag Drucksache..." im Chat für detaillierte Abfragen.',
