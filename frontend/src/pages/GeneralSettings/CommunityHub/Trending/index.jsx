@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import Sidebar from "@/components/SettingsSidebar";
+import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 import HubItems from "./HubItems";
 

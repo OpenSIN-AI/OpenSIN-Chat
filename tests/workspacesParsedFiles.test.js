@@ -56,7 +56,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 vi.mock("../server/utils/http", () => ({
   reqBody: (req) => ({}),
   makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: () => Promise.resolve({ id: testUserId, username: "test" }),
+  userFromSession: () => Promise.resolve({ id: globalThis.__parsedFilesTestUserId__, username: "test" }),
   multiUserMode: () => false,
   queryParams: () => ({}),
 }));
