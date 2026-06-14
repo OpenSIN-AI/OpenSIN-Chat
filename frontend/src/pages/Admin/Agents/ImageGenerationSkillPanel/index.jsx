@@ -56,8 +56,8 @@ export default function ImageGenerationSkillPanel({
             {icon &&
               React.createElement(icon, {
                 size: 24,
-                color: "var(--theme-text-primary)",
-                weight: "bold",
+                color: "var(--theme-text-primary)", // eslint-disable-line i18next/no-literal-string
+                weight: "bold", // eslint-disable-line i18next/no-literal-string
               })}
             <label className="text-theme-text-primary text-md font-bold">
               {title}

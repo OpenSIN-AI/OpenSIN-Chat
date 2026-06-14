@@ -174,7 +174,7 @@ describe("workspace parsed files endpoints", () => {
       const response = await request("DELETE", `/workspace/${workspace.slug}/delete-parsed-files`, {
         fileIds: [file.id],
       });
-      expect([200, 403]).toContain(response.status);
+      expect(response.status).toBe(200);
     });
 
     it("should return 400 without file ids", async () => {
