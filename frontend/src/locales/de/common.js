@@ -230,6 +230,7 @@ const TRANSLATIONS = {
     viewDocumentation: "Dokumentation anzeigen",
     webSearch: "Websuche",
     words: "{{count}} Wörter",
+    workspaceUpdated: "Workspace aktualisiert!",
     docs: "Docs",
     developerDocs: "Entwickler-Dokumentation",
     docsNotFound: "Seite nicht gefunden",

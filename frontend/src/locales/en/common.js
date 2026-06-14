@@ -229,6 +229,7 @@ const TRANSLATIONS = {
     viewDocumentation: "View Documentation",
     webSearch: "Web Search",
     words: "{{count}} words",
+    workspaceUpdated: "Workspace updated!",
     docs: "Docs",
     developerDocs: "Developer Documentation",
     docsNotFound: "Page not found",

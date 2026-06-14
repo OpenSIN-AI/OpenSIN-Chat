@@ -14,6 +14,7 @@ import CTAButton from "@/components/lib/CTAButton";
 import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function ChatSettings({ workspace }) {
+  const { t } = useTranslation();
   const { settings, loading: settingsLoading } = useSystemSettings();
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -32,10 +33,10 @@ export default function ChatSettings({ workspace }) {
       data,
     );
     if (updatedWorkspace) {
-      showToast("Workspace updated!", "success", { clear: true });
+      showToast(t("common.workspaceUpdated"), "success", { clear: true });
       setHasChanges(false);
     } else {
-      showToast(`Error: ${message}`, "error", { clear: true });
+      showToast(t("common.error", { error: message }), "error", { clear: true });
       // Keep hasChanges true on error so user can retry
     }
     setSaving(false);
@@ -53,7 +54,7 @@ export default function ChatSettings({ workspace }) {
         {hasChanges && (
           <div className="absolute top-0 right-0">
             <CTAButton type="submit">
-              {saving ? "Updating..." : "Update Workspace"}
+              {saving ? t("common.updating") : t("common.updateWorkspace")}
             </CTAButton>
           </div>
         )}
