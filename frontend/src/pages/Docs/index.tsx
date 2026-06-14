@@ -190,8 +190,7 @@ export default function Docs() {
   useEffect(() => {
     setHeadings([]);
     mainEl?.scrollTo({ top: 0 });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
+  }, [slug, mainEl]);
 
   // Once the heading outline is available, honor any #hash in the URL by
   // scrolling the matching heading into view (deep-linking support).

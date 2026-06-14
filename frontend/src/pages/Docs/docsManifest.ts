@@ -55,7 +55,8 @@ export const DOC_ENTRIES: DocEntry[] = [
   {
     slug: "user-guide",
     title: "Benutzer-Handbuch",
-    description: "Einstieg, Workspaces, Chatten mit Dokumenten und Grundfunktionen.",
+    description:
+      "Einstieg, Workspaces, Chatten mit Dokumenten und Grundfunktionen.",
     category: "getting-started",
     file: "user-guide.md",
     source: "docs/USER-GUIDE.md",
@@ -63,7 +64,8 @@ export const DOC_ENTRIES: DocEntry[] = [
   {
     slug: "api",
     title: "API-Referenz",
-    description: "Vollständige REST-API-Referenz für Entwickler und Integrationen.",
+    description:
+      "Vollständige REST-API-Referenz für Entwickler und Integrationen.",
     category: "api",
     file: "api.md",
     source: "docs/API.md",
@@ -79,7 +81,8 @@ export const DOC_ENTRIES: DocEntry[] = [
   {
     slug: "adr-overview",
     title: "Architecture Decision Records",
-    description: "Überblick über dokumentierte Architekturentscheidungen (ADRs).",
+    description:
+      "Überblick über dokumentierte Architekturentscheidungen (ADRs).",
     category: "architecture",
     file: "adr-overview.md",
     source: "docs/adr/README.md",
@@ -95,7 +98,8 @@ export const DOC_ENTRIES: DocEntry[] = [
   {
     slug: "data-sources",
     title: "Datenquellen & Politiker-Sync",
-    description: "Woher die Daten stammen und wie der Politiker-Sync funktioniert.",
+    description:
+      "Woher die Daten stammen und wie der Politiker-Sync funktioniert.",
     category: "data-sources",
     file: "data-sources.md",
     source: "docs/DATA-SOURCES.md",
@@ -181,8 +185,7 @@ export function getDocBySlug(slug: string): DocEntry | undefined {
 export const DEFAULT_DOC_SLUG = "user-guide";
 
 /** GitHub blob base for docs not included in the in-app documentation. */
-const GITHUB_DOCS_BASE =
-  "https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main";
+const GITHUB_DOCS_BASE = "https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main";
 
 /** Map of source markdown filename (as referenced in repo) -> in-app slug. */
 const FILE_TO_SLUG: Record<string, string> = {
@@ -208,7 +211,7 @@ const FILE_TO_SLUG: Record<string, string> = {
  * Returns null for links that should be left untouched (external, anchors).
  */
 export function resolveDocLink(
-  href: string
+  href: string,
 ): { url: string; external: boolean } | null {
   if (!href) return null;
   // Leave absolute URLs, mailto and pure anchors untouched.
@@ -229,12 +232,16 @@ export function resolveDocLink(
   // so `../FILE.md` points at the repo root while `./FILE.md` stays in /docs.
   const goesToRoot = /^\.\.\//.test(path);
   const bare = path.replace(/^(\.\/|\.\.\/)+/, "");
-  const repoPath = goesToRoot || bare.startsWith("docs/") ? bare : `docs/${bare}`;
+  const repoPath =
+    goesToRoot || bare.startsWith("docs/") ? bare : `docs/${bare}`;
   return { url: `${GITHUB_DOCS_BASE}/${repoPath}${anchor}`, external: true };
 }
 
 /** Group entries by category, preserving CATEGORY_ORDER. */
-export function getGroupedDocs(): { category: DocCategory; entries: DocEntry[] }[] {
+export function getGroupedDocs(): {
+  category: DocCategory;
+  entries: DocEntry[];
+}[] {
   return CATEGORY_ORDER.map((category) => ({
     category,
     entries: DOC_ENTRIES.filter((entry) => entry.category === category),

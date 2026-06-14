@@ -3,7 +3,7 @@
 // Right-hand "On this page" table of contents with scroll-spy. Receives the
 // heading outline extracted by DocsMarkdown and highlights the heading nearest
 // the top of the viewport as the reader scrolls.
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 import type { DocHeading } from "./DocsMarkdown";
 
@@ -47,7 +47,7 @@ export default function DocsToc({
     return () => observer.disconnect();
   }, [headings, scrollRoot]);
 
-  const handleClick = (e: React.MouseEvent, id: string) => {
+  const handleClick = (e: MouseEvent, id: string) => {
     e.preventDefault();
     const el = document.getElementById(id);
     if (el) {

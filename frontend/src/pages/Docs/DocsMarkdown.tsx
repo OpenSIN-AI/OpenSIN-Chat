@@ -9,7 +9,7 @@
 //  - extraction of the heading outline (used by the right-hand "On this page"),
 //  - a header bar with a language label and a copy-to-clipboard button on every
 //    fenced code block (state-of-the-art docs code blocks).
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import MarkdownIt from "markdown-it";
@@ -157,19 +157,19 @@ export default function DocsMarkdown({
     const root = containerRef.current;
     if (!root) return;
     const label = t("common.docsCopyCode");
-    root.querySelectorAll<HTMLButtonElement>("button[data-copy]").forEach(
-      (btn) => {
+    root
+      .querySelectorAll<HTMLButtonElement>("button[data-copy]")
+      .forEach((btn) => {
         btn.setAttribute("aria-label", label);
         btn.setAttribute("title", label);
         const labelEl = btn.querySelector(".docs-code-copy-label");
         if (labelEl && !labelEl.textContent) labelEl.textContent = label;
-      },
-    );
+      });
   }, [html, t]);
 
   // Handle clicks: internal doc links route via React Router, copy buttons
   // write the adjacent code block to the clipboard.
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
 
     const copyBtn = target.closest(
