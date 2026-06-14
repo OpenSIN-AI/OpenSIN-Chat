@@ -39,7 +39,7 @@ export default function ChatTemperatureSettings({
         onWheel={(e) => e.target.blur()}
         defaultValue={workspace?.openAiTemp ?? defaults.temp}
         className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-        placeholder="0.7"
+        placeholder={String(defaults.temp)}
         required={true}
         autoComplete="off"
         onChange={() => setHasChanges(true)}
