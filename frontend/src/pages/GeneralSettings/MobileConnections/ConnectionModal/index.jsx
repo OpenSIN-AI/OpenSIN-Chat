@@ -44,7 +44,7 @@ export default function MobileConnectModal({ isOpen, onClose }) {
             >
               <img
                 src={GetOnGooglePlay}
-                alt="Get on Google Play"
+                alt={t("common.getOnGooglePlay")}
                 className="w-[150px] h-auto"
               />
             </Link>
