@@ -7,6 +7,7 @@ import DatabaseSidebar from "./DatabaseSidebar";
 import PoliticalSidebar from "./PoliticalSidebar";
 import RightSidebarIconBar from "./RightSidebarIconBar";
 import { useChatSidebar } from "./ChatSidebar";
+import { useTranslation } from "react-i18next";
 
 const PANEL_W = 360; // px — default panel content width
 
@@ -16,12 +17,13 @@ const PANEL_W = 360; // px — default panel content width
  * When a panel is active, the full panel (360px) appears to the left of the icon rail.
  */
 export default function Sidebars({ workspace }) {
+  const { t } = useTranslation();
   const { activeSidebar } = useChatSidebar();
 
   return (
     <div
       className="h-full flex flex-row flex-shrink-0 transition-all duration-500 overflow-hidden border-l border-theme-sidebar-border"
-      aria-label="Rechte Seitenleiste"
+      aria-label={t("common.rightSidebar")}
     >
       {/* Panel area — only when a panel is active */}
       {activeSidebar && (

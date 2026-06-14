@@ -65,15 +65,6 @@ vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
   simpleRateLimit: () => (req, res, next) => next(),
 }));
 
-vi.mock("../server/models/workspace", () => ({
-  Workspace: {
-    get: vi.fn(() => Promise.resolve({ id: 1, name: "test-workspace", slug: "test" })),
-    parsedFiles: vi.fn(() => Promise.resolve([])),
-    addParsedFile: vi.fn(() => Promise.resolve({ id: 1, name: "parsed.txt" })),
-    removeParsedFile: vi.fn(() => Promise.resolve(true)),
-  },
-}));
-
 let app;
 
 beforeEach(async () => {

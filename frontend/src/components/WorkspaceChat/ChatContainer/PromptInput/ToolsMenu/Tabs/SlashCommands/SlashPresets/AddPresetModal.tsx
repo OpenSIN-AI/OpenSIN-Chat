@@ -75,7 +75,7 @@ export default function AddPresetModal({ isOpen, onClose, onSave }: any) {
                     htmlFor="prompt"
                     className="block mb-2 text-sm font-medium text-white"
                   >
-                    Prompt
+                    {t("common.prompt")}
                   </label>
                   <textarea
                     name="prompt"
