@@ -3918,6 +3918,7 @@ const TRANSLATIONS = {
     icon_sources: "Quellen",
     icon_memories: "Memories",
     icon_console: "Konsole & Terminal",
+    icon_pdf_analysis: "PDF-Analyse",
   },
   dataConnectors: {
     paperlessNgx: {
