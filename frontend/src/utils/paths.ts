@@ -9,12 +9,18 @@ export function isPathMatch(href, pathname) {
   return pathname === href || pathname.startsWith(href + "/");
 }
 
-function applyOptions(path, options = {}) {
+interface PathOptions {
+  search?: Record<string, string | number | boolean>;
+}
+
+function applyOptions(path: string, options: PathOptions = {}): string {
   let updatedPath = path;
   if (!options || Object.keys(options).length === 0) return updatedPath;
 
   if (options.search) {
-    const searchParams = new URLSearchParams(options.search);
+    const searchParams = new URLSearchParams(
+      Object.entries(options.search).map(([k, v]) => [k, String(v)])
+    );
     updatedPath += `?${searchParams.toString()}`;
   }
   return updatedPath;
@@ -62,7 +68,12 @@ export default {
     return "https://discord.gg/6UyHPeGZAC";
   },
   docs: (path = "") => {
+    // External hosted documentation (feature/agent/channel guides).
     return `https://opensin.delqhi.com/docs${path}`;
+  },
+  // In-app developer documentation served by the SPA at /docs (see pages/Docs).
+  appDocs: (path = "") => {
+    return `/docs${path}`;
   },
   chatModes: () => {
     return "https://opensin.delqhi.com/docs/features/chat-modes";
