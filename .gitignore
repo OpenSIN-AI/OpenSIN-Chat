@@ -17,9 +17,13 @@ node_modules
 
 # SIN-Code tool local state (do not commit)
 .sin/
+.sin-code/
 sin_goal_mode.db
 .sin_evidence/
 *.pack
+
+# Playwright test results
+frontend/test-results/
 
 # Environment variables — never commit real env files
 .env

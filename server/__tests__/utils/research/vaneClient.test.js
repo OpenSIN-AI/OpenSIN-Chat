@@ -44,6 +44,34 @@ describe("VaneClient", () => {
       const available = await VaneClient.isAvailable();
       expect(available).toBe(false);
     });
+
+    it("uses AbortSignal.timeout with 3000ms", async () => {
+      const VaneClient = loadVaneClient();
+      const fakeSignal = { aborted: false };
+      const timeoutSpy = jest.spyOn(AbortSignal, "timeout").mockReturnValue(fakeSignal);
+      const fetchMock = jest.spyOn(global, "fetch").mockResolvedValue({ ok: true });
+      try {
+        await VaneClient.isAvailable();
+        expect(timeoutSpy).toHaveBeenCalledWith(3000);
+        expect(fetchMock).toHaveBeenCalledWith(
+          expect.stringContaining("/api/providers"),
+          expect.objectContaining({ signal: fakeSignal })
+        );
+      } finally {
+        timeoutSpy.mockRestore();
+      }
+    });
+
+    it("uses VANE_API_URL env override", async () => {
+      process.env.VANE_API_URL = "http://custom:9000";
+      const VaneClient = loadVaneClient();
+      const fetchMock = jest.spyOn(global, "fetch").mockResolvedValue({ ok: false });
+      await VaneClient.isAvailable();
+      expect(fetchMock).toHaveBeenCalledWith(
+        "http://custom:9000/api/providers",
+        expect.anything()
+      );
+    });
   });
 
   describe("resolveModels", () => {
@@ -124,6 +152,24 @@ describe("VaneClient", () => {
       await VaneClient.resolveModels();
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
+
+    it("refetches after cache TTL expires", async () => {
+      const VaneClient = loadVaneClient();
+      const fetchMock = jest.spyOn(global, "fetch").mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          providers: [{ id: "p", chatModels: [{ key: "m" }], embeddingModels: [{ key: "e" }] }],
+        }),
+      });
+      await VaneClient.resolveModels();
+      const nowSpy = jest.spyOn(Date, "now").mockReturnValue(Date.now() + 6 * 60 * 1000);
+      try {
+        await VaneClient.resolveModels();
+        expect(fetchMock).toHaveBeenCalledTimes(2);
+      } finally {
+        nowSpy.mockRestore();
+      }
+    });
   });
 
   describe("answer", () => {
@@ -170,6 +216,26 @@ describe("VaneClient", () => {
       const result = await VaneClient.answer("query");
       expect(result).toBeNull();
     });
+
+    it("returns empty sources array when answer has no sources", async () => {
+      const VaneClient = loadVaneClient();
+      jest.spyOn(global, "fetch")
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({
+            providers: [{ id: "p", chatModels: [{ key: "m" }], embeddingModels: [{ key: "e" }] }],
+          }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({
+            message: "Answer",
+            sources: [],
+          }),
+        });
+      const result = await VaneClient.answer("query");
+      expect(result).toEqual({ message: "Answer", sources: [] });
+    });
   });
 
   describe("search", () => {
@@ -202,6 +268,32 @@ describe("VaneClient", () => {
       jest.spyOn(global, "fetch").mockResolvedValue({ ok: false });
       const results = await VaneClient.search("query");
       expect(results).toEqual([]);
+    });
+
+    it("filters out sources without metadata.url", async () => {
+      const VaneClient = loadVaneClient();
+      jest.spyOn(global, "fetch")
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({
+            providers: [{ id: "p", chatModels: [{ key: "m" }], embeddingModels: [{ key: "e" }] }],
+          }),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => ({
+            message: "Answer",
+            sources: [
+              { content: "Has URL", metadata: { url: "https://has.url" } },
+              { content: "No URL", metadata: {} },
+              { content: "No metadata" },
+            ],
+          }),
+        });
+      const results = await VaneClient.search("query");
+      expect(results).toEqual([
+        { title: "https://has.url", link: "https://has.url", snippet: "Has URL" },
+      ]);
     });
   });
 });

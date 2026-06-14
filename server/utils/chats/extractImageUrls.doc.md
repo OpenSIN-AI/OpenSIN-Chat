@@ -7,6 +7,7 @@ Extracts unique URLs from base64-encoded image attachments using Tesseract OCR.
 - Accepts a list of image attachments (raw base64 strings or objects with a `contentString` field).
 - Runs Tesseract OCR on each image to extract text.
 - Matches URLs with the regex `/https?:\/\/[^\s<>"{}|\^`\[\]]+/gi`.
+- Strips trailing punctuation (`.,;!?`) and a closing parenthesis when the URL itself does not contain an opening parenthesis.
 - Returns a de-duplicated list of URLs found across all images.
 
 ## Files that use it
