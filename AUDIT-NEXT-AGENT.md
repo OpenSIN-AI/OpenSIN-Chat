@@ -70,28 +70,31 @@ Jede geschützte Route ist in `<PrivateRoute>` gewrappt. Dieses ruft
 liefert das `false` → **Redirect auf `/onboarding`**. Deshalb sieht man ohne
 Eingriff niemals die echte App.
 
-### 3a. Kanonischer Weg (Produktion / mit Backend) — Datenbank-Setting
+### 3a. Kanonischer Weg (Produktion / mit Backend) — Datenbank-Setting ⭐
 
-Setze in der Datenbank das Setting `onboarding_complete`:
+Um das Onboarding **dauerhaft** zu deaktivieren, muss in der Datenbank der
+Eintrag mit `label = "onboarding_complete"` den Wert `value = "true"` haben.
+Setze den Wert auf `"true"`, dann wird das Onboarding nicht mehr angezeigt:
 
 | Ort | Wert | Bedeutung |
 |-----|------|-----------|
-| DB-Tabelle, `label = "onboarding_complete"` | `"true"`  | Onboarding deaktiviert / abgeschlossen |
-| DB-Tabelle, `label = "onboarding_complete"` | `"false"` oder nicht vorhanden | Onboarding aktiv |
+| DB-Tabelle (Label `onboarding_complete`) | `"true"`  | Onboarding deaktiviert / abgeschlossen |
+| DB-Tabelle (Label `onboarding_complete`) | `"false"` oder nicht vorhanden | Onboarding aktiv |
 
-**Relevante Code-Stellen:**
+**Relevante Code-Stellen** (Zeilennummern verifiziert, Stand 2026-06-14):
 - Backend-Logik: `server/models/systemSettings.js`
-  - `isOnboardingComplete()` prüft `setting?.value === "true"` (≈ Z. 836–845)
-  - `markOnboardingComplete()` schreibt `onboarding_complete: true` (≈ Z. 847–858)
+  - `isOnboardingComplete()` (Z. 836) prüft `setting?.value === "true"` (Z. 838–839)
+  - `markOnboardingComplete()` (Z. 847) schreibt `onboarding_complete: true` (Z. 849)
+  - `onboarding_complete` ist ein **`protectedField`** (Z. 59)
 - API-Endpunkt: `server/endpoints/system.js`
-  - `GET /onboarding` gibt den Status zurück
-  - `POST /onboarding` markiert es als abgeschlossen
+  - `GET /onboarding` (Z. 110) gibt den Status zurück (`{ onboardingComplete }`)
+  - `POST /onboarding` (Z. 122) markiert es als abgeschlossen
 - Boot-Patch: `server/utils/boot/markOnboarded.js`
   - Setzt beim Start automatisch `true`, wenn es eine bereits eingerichtete
-    Legacy-Instanz ist.
+    Legacy-Instanz ist (Migration alter Instanzen ohne explizites Setting).
 
-**Alternative:** Einmal manuell durch das Onboarding klicken — `POST /onboarding`
-setzt den Wert dann automatisch auf `true`.
+**Alternative:** Einfach die App einmal durch das Onboarding klicken — über
+`POST /onboarding` wird der Wert dann automatisch auf `true` gesetzt.
 
 ### 3b. Audit-Weg (nur Frontend, KEIN Backend) — Dev-Bypass
 
