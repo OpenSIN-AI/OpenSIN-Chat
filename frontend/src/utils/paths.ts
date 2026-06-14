@@ -22,7 +22,7 @@ function applyOptions(path: string, options: PathOptions = {}): string {
       updatedPath += `?${options.search}`;
     } else {
       const searchParams = new URLSearchParams(
-        Object.entries(options.search).map(([k, v]) => [k, String(v)])
+        Object.entries(options.search).map(([k, v]) => [k, String(v)]),
       );
       updatedPath += `?${searchParams.toString()}`;
     }
