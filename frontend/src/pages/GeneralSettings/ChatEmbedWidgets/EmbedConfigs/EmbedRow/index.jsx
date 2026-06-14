@@ -92,7 +92,7 @@ export default function EmbedRow({ embed }) {
           {
             // If the embed was created more than a day ago, show the date, otherwise show the time ago
             moment(embed.createdAt).diff(moment(), "days") > 0
-              ? moment(embed.createdAt).format("MMM D, YYYY")
+              ? moment(embed.createdAt).format("MMM D, YYYY") // eslint-disable-line i18next/no-literal-string
               : moment(embed.createdAt).fromNow()
           }
         </th>
