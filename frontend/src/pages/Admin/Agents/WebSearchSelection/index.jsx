@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Admin from "@/models/admin";
 import SerpApiIcon from "./icons/serpapi.png";
 import SearchApiIcon from "./icons/searchapi.png";
@@ -142,6 +143,7 @@ export default function AgentWebSearchSelection({
   enabled = false,
   setHasChanges,
 }) {
+  const { t } = useTranslation();
   const searchInputRef = useRef(null);
   const [filteredResults, setFilteredResults] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState("duckduckgo-engine");
@@ -210,7 +212,7 @@ export default function AgentWebSearchSelection({
         </div>
         <img
           src={WebSearchImage}
-          alt="Web Search"
+          alt={t("common.webSearch")}
           className="w-full rounded-md"
         />
         <p className="text-theme-text-secondary text-opacity-60 text-xs font-medium py-1.5">
@@ -242,7 +244,7 @@ export default function AgentWebSearchSelection({
                       type="text"
                       name="web-provider-search"
                       autoComplete="off"
-                      placeholder="Search available web-search providers"
+                      placeholder={t("common.searchWebSearchProviders")}
                       className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none text-theme-text-primary placeholder:text-theme-text-primary placeholder:font-medium"
                       onChange={(e) => setSearchQuery(e.target.value)}
                       ref={searchInputRef}
