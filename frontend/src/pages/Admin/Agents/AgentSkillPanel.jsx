@@ -71,7 +71,7 @@ export default function AgentSkillPanel({
       <div className="flex flex-col items-center justify-center h-full text-theme-text-secondary">
         <Robot size={40} />
         <p className="font-medium">
-          Select an Agent Skill, Agent Flow, or MCP Server
+          {t("common.selectAgentSkillFlowMcp")}
         </p>
       </div>
     );
