@@ -19,6 +19,22 @@ interface SetupComplete {
   results: SystemKeys;
 }
 
+/**
+ * Dev-only: returns true when the onboarding gate should be bypassed.
+ * Controlled by a localStorage flag or the VITE_DISABLE_ONBOARDING env var.
+ */
+function isOnboardingBypassEnabled(): boolean {
+  try {
+    if (import.meta.env.VITE_DISABLE_ONBOARDING === "true") return true;
+    return (
+      typeof window !== "undefined" &&
+      window.localStorage?.getItem("anythingllm_disable_onboarding") === "true"
+    );
+  } catch {
+    return false;
+  }
+}
+
 const System: any = {
   /**
    * Check if backend is reachable
@@ -51,8 +67,16 @@ const System: any = {
 
   /**
    * Check if onboarding is complete
+   *
+   * Dev/audit bypass: when running a dev build you can skip the backend
+   * onboarding gate (useful for visually auditing the app without a running
+   * server). Enable it either by:
+   *   - localStorage.setItem("anythingllm_disable_onboarding", "true")  // no rebuild
+   *   - building with VITE_DISABLE_ONBOARDING=true
+   * The bypass is ignored entirely in production builds.
    */
   isOnboardingComplete: async function (): Promise<boolean> {
+    if (import.meta.env.DEV && isOnboardingBypassEnabled()) return true;
     try {
       const res = await fetch(`${API_BASE}/onboarding`);
       if (!res.ok) return false;
