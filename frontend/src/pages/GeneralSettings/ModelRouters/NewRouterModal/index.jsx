@@ -145,7 +145,7 @@ export default function NewRouterModal({
 
           {error && (
             <p className="text-xs leading-4 text-red-400 light:text-red-600">
-              Error: {error}
+              {t("common.error", { error })}
             </p>
           )}
 

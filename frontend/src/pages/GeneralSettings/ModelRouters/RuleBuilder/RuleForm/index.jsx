@@ -153,7 +153,7 @@ export default function RuleForm({
                   type="text"
                   name="title"
                   defaultValue={existingRule?.title || ""}
-                  placeholder="e.g. route_code_to_claude"
+                  placeholder="e.g. route_code_to_claude" // eslint-disable-line i18next/no-literal-string
                   className="bg-zinc-800 light:bg-white light:border light:border-slate-300 text-white light:text-slate-700 placeholder:text-zinc-400 light:placeholder:text-slate-400 text-sm rounded-[8px] outline-none block w-full h-8 px-3.5 font-mono"
                   required
                 />
