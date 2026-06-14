@@ -55,8 +55,8 @@ export default function DisconnectedView({
             />
           </div>
           <div className="flex flex-col gap-y-1 ml-1">
-            <p className="text-sm font-semibold text-white light:text-slate-900"> // eslint-disable-line i18next/no-literal-string
-              @{config.bot_username}
+            <p className="text-sm font-semibold text-white light:text-slate-900">
+              @{config.bot_username} // eslint-disable-line i18next/no-literal-string
             </p>
             <p className="text-xs text-red-400 light:text-red-500">
               {t("telegram.connected.status-disconnected")}

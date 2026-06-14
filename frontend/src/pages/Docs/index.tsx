@@ -76,7 +76,7 @@ function DocsSidebar({
       <div className="flex flex-col gap-5 overflow-y-auto pr-1">
         {grouped.length === 0 ? (
           <p className="text-theme-text-secondary text-sm px-1">
-            Keine Treffer für „{query}".
+            {t("common.noResultsForQuery", { query })}
           </p>
         ) : (
           grouped.map((group) => (
@@ -111,6 +111,7 @@ function DocsSidebar({
 }
 
 export default function Docs() {
+  const { t } = useTranslation();
   const { slug } = useParams();
   const [query, setQuery] = useState("");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -133,7 +134,7 @@ export default function Docs() {
             type="button"
             onClick={() => setMobileNavOpen((v) => !v)}
             className="lg:hidden p-2 rounded-md hover:bg-theme-sidebar-item-hover"
-            aria-label="Navigation umschalten"
+            aria-label={t("common.toggleNavigation")}
             aria-expanded={mobileNavOpen}
           >
             {mobileNavOpen ? (
@@ -144,7 +145,7 @@ export default function Docs() {
           </button>
           <div className="flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-primary-button" aria-hidden="true" />
-            <span className="font-semibold">Entwickler-Dokumentation</span>
+            <span className="font-semibold">{t("common.developerDocs")}</span>
           </div>
         </div>
         <Link
@@ -152,7 +153,7 @@ export default function Docs() {
           className="flex items-center gap-2 text-sm text-theme-text-secondary hover:text-theme-text-primary transition-colors"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-          <span className="hidden sm:inline">Zurück zur App</span>
+          <span className="hidden sm:inline">{t("common.backToApp")}</span>
         </Link>
       </header>
 
@@ -190,15 +191,15 @@ export default function Docs() {
         <main className="flex-1 min-w-0 overflow-y-auto px-4 md:px-10 py-8">
           {!entry || !content ? (
             <div className="max-w-3xl">
-              <h1 className="text-2xl font-bold mb-3">Seite nicht gefunden</h1>
+              <h1 className="text-2xl font-bold mb-3">{t("common.docsNotFound")}</h1>
               <p className="text-theme-text-secondary mb-6">
-                Das angeforderte Dokument existiert nicht oder wurde verschoben.
+                {t("common.docsNotFoundDesc")}
               </p>
               <Link
                 to={paths.appDocs(`/${DEFAULT_DOC_SLUG}`)}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-button text-white hover:opacity-90 transition-opacity"
               >
-                Zur Startseite der Docs
+                {t("common.docsHomepage")}
               </Link>
             </div>
           ) : (

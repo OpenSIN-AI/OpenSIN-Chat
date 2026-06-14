@@ -14,8 +14,8 @@ export default function ConnectedBotCard({ config }) {
           <TelegramLogo className="h-5 w-5 !text-white" weight="fill" />
         </div>
         <div className="flex flex-col gap-y-1 ml-1">
-          <p className="text-sm font-semibold text-white light:text-slate-900"> // eslint-disable-line i18next/no-literal-string
-            @{config.bot_username}
+          <p className="text-sm font-semibold text-white light:text-slate-900">
+            @{config.bot_username} // eslint-disable-line i18next/no-literal-string
           </p>
           <p className="text-xs text-zinc-400 light:text-slate-600">
             {t("telegram.connected.status")}
