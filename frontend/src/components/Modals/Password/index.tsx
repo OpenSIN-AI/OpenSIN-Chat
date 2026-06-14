@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import System from "../../../models/system";
 import SingleUserAuth from "./SingleUserAuth";
 import MultiUserAuth from "./MultiUserAuth";
@@ -12,12 +13,13 @@ import useLogo from "../../../hooks/useLogo";
 import useSystemSettings from "../../../hooks/useSystemSettings";
 
 export default function PasswordModal({ mode = "single" }: any) {
+  const { t } = useTranslation();
   const { loginLogo, isCustomLogo } = useLogo();
   return (
     <div className="fixed inset-0 bg-zinc-950 light:bg-slate-50 flex flex-col items-center justify-center overflow-hidden">
       <img
         src={loginLogo}
-        alt="Logo"
+        alt={t("common.logo")}
         className={`max-h-[80px] object-contain ${isCustomLogo ? "rounded-lg" : ""}`}
       />
       {mode === "single" ? <SingleUserAuth /> : <MultiUserAuth />}

@@ -75,7 +75,7 @@ export default function PoliticalSidebar() {
             type="button"
             disabled={loadingDrucksachen || loadingRss}
             className="text-zinc-500 hover:text-white transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
-            aria-label="Aktualisieren"
+            aria-label={t("common.refresh")}
           >
             <ArrowClockwise
               size={13}
@@ -124,7 +124,7 @@ export default function PoliticalSidebar() {
                     className="text-zinc-400 flex-shrink-0 mt-0.5"
                   />
                   <p className="text-xs text-zinc-200 light:text-slate-800 leading-snug line-clamp-2 flex-1">
-                    {d.titel || d.title || "—"}
+                    {d.titel || d.title || "—"} // eslint-disable-line i18next/no-literal-string
                   </p>
                   <ArrowSquareOut
                     size={11}

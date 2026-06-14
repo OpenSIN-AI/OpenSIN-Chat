@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
+import { useTranslation } from "react-i18next";
 import {
   formatDateTimeAsMoment,
   getFileExtension,
@@ -8,6 +9,7 @@ import {
 import { File } from "@phosphor-icons/react";
 
 export default function FileRow({ item, selected, toggleSelection }: any) {
+  const { t } = useTranslation();
   return (
     <tr
       onClick={() => toggleSelection(item)}
@@ -45,7 +47,7 @@ export default function FileRow({ item, selected, toggleSelection }: any) {
       <div className="col-span-2 flex justify-end items-center">
         {item?.cached && (
           <div className="bg-theme-settings-input-active rounded-3xl">
-            <p className="text-xs px-2 py-0.5">Cached</p>
+            <p className="text-xs px-2 py-0.5">{t("common.cached")}</p>
           </div>
         )}
       </div>

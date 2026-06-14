@@ -31,7 +31,7 @@ export default function MistralAiOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
           >
              <optgroup label={t("mistralAiOptions.availableModels")}>
-              {["mistral-embed"].map((model) => {
+              {["mistral-embed"].map((model) => { // eslint-disable-line i18next/no-literal-string
                 return (
                   <option key={model} value={model}>
                     {model}

@@ -189,6 +189,48 @@ const TRANSLATIONS = {
     selectAll: "Alle auswählen",
     rename: "Umbenennen",
     readAccess: "Lesezugriff auf das Datenbankschema",
+
+    // Zusätzliche gemeinsame UI-Strings (i18n-Warnungsbehebungen)
+    addBlock: "Block hinzufügen",
+    cached: "Zwischengespeichert",
+    clearUrl: "URL löschen",
+    close: "Schließen",
+    contactAdministrator: "Bitte wenden Sie sich an den Systemadministrator bezüglich dieses Fehlers.",
+    continue: "Weiter",
+    couldNotRespond: "Konnte nicht auf die Nachricht antworten.",
+    delete: "Löschen",
+    dragToResizeWidth: "Ziehen, um die Breite zu ändern",
+    edit: "Bearbeiten",
+    error: "Fehler: {{error}}",
+    getOnGooglePlay: "Bei Google Play herunterladen",
+    importCommunityItem: "Community-Element importieren",
+    importWithArrow: "Importieren \u2192",
+    llmSelector: "LLM-Auswahl",
+    mcpLogo: "MCP-Logo",
+    message: "Nachricht",
+    moreOptions: "Weitere Optionen",
+    noneSelected: "Keine Auswahl",
+    noConfigurationNeeded: "Für diesen Anbieter ist keine Konfiguration erforderlich.",
+    providerConnectivity: "Anbieter-Konnektivität",
+    prompt: "Prompt",
+    remove: "Entfernen",
+    resizeRightSidebar: "Rechte Seitenleiste skalieren",
+    rightSidebar: "Rechte Seitenleiste",
+    routingToModel: "Modell wird geroutet...",
+    searchEmbeddingProviders: "Alle Einbettungsanbieter durchsuchen",
+    searchLLMProviders: "Alle LLM-Anbieter durchsuchen",
+    searchLLMProvidersAvailable: "Verfügbare LLM-Anbieter durchsuchen",
+    searchVectorDatabaseProviders: "Alle Vektordatenbank-Anbieter durchsuchen",
+    searchWebSearchProviders: "Verfügbare Websuche-Anbieter durchsuchen",
+    selectAgentSkillFlowMcp: "Wählen Sie eine Agenten-Fähigkeit, einen Agenten-Flow oder einen MCP-Server",
+    selectAnLLM: "Sie müssen ein LLM auswählen",
+    stopGenerating: "Generierung stoppen",
+    threads: "Threads",
+    uploadedLogo: "Hochgeladenes Logo",
+    viewDocumentation: "Dokumentation anzeigen",
+    webSearch: "Websuche",
+    words: "{{count}} Wörter",
+
     methods: {
       put: "PUT",
       post: "POST",
@@ -378,6 +420,8 @@ const TRANSLATIONS = {
       "tooltip-title": "Warum sehe ich das?",
       "tooltip-description":
         "Sie befinden sich im Abfragemodus, der nur Informationen aus Ihren Dokumenten verwendet. Wechseln Sie in den Chat-Modus für flexiblere Gespräche oder klicken Sie hier, um unsere Dokumentation zu besuchen und mehr über Chat-Modi zu erfahren.",
+      placeholder:
+        "Der Text, der im Abfragemodus zurückgegeben wird, wenn kein relevanter Kontext für eine Antwort gefunden wurde.",
     },
     temperature: {
       title: "LLM-Temperatur",
@@ -958,6 +1002,14 @@ const TRANSLATIONS = {
       },
     },
   },
+  agentBuilder: {
+    summarizeDescription:
+      "Wenn aktiviert, werden lange Webseiteninhalte automatisch zusammengefasst, um Token-Verbrauch zu reduzieren.",
+    summarizeNote:
+      "Hinweis: Dies kann die Datenqualität beeinflussen und spezifische Details des Originalinhalts entfernen.",
+    finishNodeDescription:
+      "Dies ist das Ende Ihres Agenten-Flows. Alle oben stehenden Schritte werden nacheinander ausgeführt.",
+  },
   recorded: {
     title: "Workspace-Chats",
     description:
@@ -1085,6 +1137,7 @@ const TRANSLATIONS = {
     description:
       "API-Schlüssel ermöglichen es dem Besitzer, programmatisch auf diese OpenSIN Chat-Instanz zuzugreifen und sie zu verwalten.",
     link: "Lesen Sie die API-Dokumentation",
+    readDocumentation: "API-Dokumentation lesen",
     generate: "Neuen API-Schlüssel generieren",
     empty: "Keine API-Schlüssel gefunden",
     actions: "Aktionen",
@@ -1462,6 +1515,13 @@ const TRANSLATIONS = {
         " entscheiden, welche Dokumente du beobachten möchtest.",
       accept: "Alles klar, ich habe es verstanden.",
     },
+  },
+  communityHub: {
+    title: "Community Hub",
+    trendingDescription:
+      "Teilen und kooperieren Sie mit der OpenSIN Chat Community.",
+    importDescription:
+      "Importieren Sie Elemente aus dem OpenSIN Chat Community Hub, um Ihre Instanz mit Community-erstellten Prompts, Fähigkeiten und Befehlen zu erweitern.",
   },
   chat_window: {
     attachments_processing: "Anhänge werden verarbeitet. Bitte warten...",
@@ -2477,6 +2537,8 @@ const TRANSLATIONS = {
           "– Verhinderung der automatisierten Anmeldung von Bots in Gruppen",
         "disable-inline":
           "– Verhindern Sie die Verwendung von Bots in der Inline-Suche",
+        disableGroups: "Gruppen deaktivieren",
+        disableInline: "Inline deaktivieren",
         "obscure-username":
           "Verwenden Sie einen Benutzernamen für den Bot, der nicht offensichtlich ist, um die Auffindbarkeit zu reduzieren.",
       },
@@ -2500,6 +2562,7 @@ const TRANSLATIONS = {
         "Echo (Antworten mit Sprache, wenn der Benutzer Sprache sendet)",
       "voice-always":
         "Bitte immer Sprachnachrichten senden (Audio mit jeder Antwort hinzufügen)",
+      connectedBot: "Verbundener Bot",
       "toast-disconnect-failed":
         "Es konnte nicht erfolgreich die Verbindung zum Bot trennen.",
       "toast-reconnect-failed":

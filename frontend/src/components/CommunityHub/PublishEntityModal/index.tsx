@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { X } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 import useCommunityHubAuth from "@/hooks/useCommunityHubAuth";
 import UnauthenticatedHubModal from "@/components/CommunityHub/UnauthenticatedHubModal";
 import SystemPrompts from "./SystemPrompts";
@@ -13,6 +14,7 @@ export default function PublishEntityModal({
   entityType,
   entity,
 }: any) {
+  const { t } = useTranslation();
   const { isAuthenticated, loading } = useCommunityHubAuth();
   if (!show || loading) return null;
   if (!isAuthenticated)
@@ -38,7 +40,7 @@ export default function PublishEntityModal({
           <button
             onClick={onClose}
             type="button"
-            aria-label="Close"
+            aria-label={t("common.close")}
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
             <X

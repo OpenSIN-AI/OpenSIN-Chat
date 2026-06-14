@@ -70,8 +70,8 @@ const HistoricalMessage = ({
         <div className="py-4 pl-0 pr-4 flex flex-col md:max-w-[80%]">
           <div className="p-2 rounded-lg bg-red-50 text-red-500">
             <span className="inline-block">
-              <Warning className="h-4 w-4 mb-1 inline-block" /> Could not
-              respond to message.
+              <Warning className="h-4 w-4 mb-1 inline-block" />{" "}
+              {t("common.couldNotRespond")}
             </span>
             <p className="text-xs font-mono mt-2 border-l-2 border-red-300 pl-2 bg-red-200 p-2 rounded-sm">
               {error}

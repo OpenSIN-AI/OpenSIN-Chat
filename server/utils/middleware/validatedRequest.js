@@ -24,17 +24,17 @@ async function validatedRequest(request, response, next) {
     // Creating/looking up a stable test user ensures foreign-key constraints
     // in tables like system_prompt_variables are satisfied.
     if (process.env.NODE_ENV === "test") {
-      let testUser = await User.get({ username: "__integration_test_user__" });
+      let testUser = await User.get({ username: "integration.test.user" });
       if (!testUser) {
         try {
           const result = await User.create({
-            username: "__integration_test_user__",
-            password: "test",
+            username: "integration.test.user",
+            password: "integration-test-password",
             role: "admin",
           });
           testUser = result.user;
         } catch (e) {
-          testUser = await User.get({ username: "__integration_test_user__" });
+          testUser = await User.get({ username: "integration.test.user" });
         }
       }
       response.locals.user = {

@@ -87,7 +87,7 @@ export default function ParsedFilesMenu({
         <div
           {...(contextWindowLimitExceeded &&
             !canEmbed && {
-              "data-tooltip-id": "context-window-limit-exceeded",
+              "data-tooltip-id": "context-window-limit-exceeded", // eslint-disable-line i18next/no-literal-string
               "data-tooltip-content": t("parsedFilesMenu.contextLimitTooltip"),
             })}
           className={`flex items-center gap-x-1 ${contextWindowLimitExceeded && !canEmbed ? "cursor-pointer" : ""}`}

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { SpeakerHigh, PauseCircle, CircleNotch } from "@phosphor-icons/react";
 import PiperTTSClient from "@/utils/piperTTS";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
 
 export default function PiperTTS({ chatId, voiceId = null, message }: any) {
+  const { t } = useTranslation();
   const playerRef = useRef(null);
   const [speaking, setSpeaking] = useState(false as any);
   const [loading, setLoading] = useState(false as any);
@@ -78,7 +80,7 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
           speaking ? "Pause TTS speech of message" : "TTS Speak message"
         }
         className="border-none text-[var(--theme-sidebar-footer-icon-fill)]"
-        aria-label={speaking ? "Pause speech" : "Speak message"}
+        aria-label={speaking ? t("common.pauseSpeech") : t("common.speakMessage")}
       >
         {speaking ? (
           <PauseCircle size={18} className="mb-1" />

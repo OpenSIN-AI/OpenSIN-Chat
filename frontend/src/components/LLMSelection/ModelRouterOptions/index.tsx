@@ -29,6 +29,8 @@ export default function ModelRouterOptions({ settings }: any) {
           >
             {t("model-router.router-selection.no-routers-link")}
           </Link>
+          {// eslint-disable-next-line i18next/no-literal-string
+          }
           .
         </p>
       </div>

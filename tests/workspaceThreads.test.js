@@ -142,7 +142,6 @@ const request = async (method, path, body = null, headers = {}) => {
 
 const createWorkspace = async (name) => {
   const response = await request("POST", "/workspace/new", { name });
-  console.log("createWorkspace response", { status: response.status, body: response.body });
   expect(response.status).toBe(200);
   return response.body.workspace;
 };
@@ -200,10 +199,12 @@ describe("workspace threads endpoints", () => {
       const workspace = await createWorkspace("thread-update-workspace");
       const thread = await createThread(workspace.slug);
       const response = await request("POST", `/workspace/${workspace.slug}/thread/${thread.slug}/update`, {
-        title: "Updated thread",
+        name: "Updated thread",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("success", true);
+      expect(response.body).toHaveProperty("thread");
+      expect(response.body).toHaveProperty("message");
+      expect(response.body.thread.name).toBe("Updated thread");
     });
   });
 

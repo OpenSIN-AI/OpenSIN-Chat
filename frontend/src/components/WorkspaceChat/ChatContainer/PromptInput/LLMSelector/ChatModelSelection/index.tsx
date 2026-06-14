@@ -2,6 +2,7 @@
 import useGetProviderModels, {
   DISABLED_PROVIDERS,
 } from "@/hooks/useGetProvidersModels";
+import { useTranslation } from "react-i18next";
 
 export default function ChatModelSelection({
   provider,
@@ -9,6 +10,7 @@ export default function ChatModelSelection({
   selectedLLMModel,
   setSelectedLLMModel,
 }: any) {
+  const { t } = useTranslation();
   const { defaultModels, customModels, loading } =
     useGetProviderModels(provider);
   if (DISABLED_PROVIDERS.includes(provider)) return null;
@@ -21,7 +23,7 @@ export default function ChatModelSelection({
         className="bg-zinc-900 light:bg-white text-white light:text-slate-900 text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-not-allowed"
       >
         <option disabled={true} selected={true}>
-          -- waiting for models --
+          {t("agent.mode.wait")}
         </option>
       </select>
     );

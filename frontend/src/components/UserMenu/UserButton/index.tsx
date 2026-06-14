@@ -111,6 +111,7 @@ export default function UserButton() {
 }
 
 function UserDisplay() {
+  const { t } = useTranslation();
   const { pfp } = usePfp();
   const user = userFromStorage();
 
@@ -119,7 +120,7 @@ function UserDisplay() {
       <div className="w-[35px] h-[35px] rounded-full flex-shrink-0 overflow-hidden transition-all duration-300 bg-gray-100 hover:border-slate-100 hover:border-opacity-50 border-transparent border hover:opacity-60">
         <img
           src={pfp}
-          alt="User profile picture"
+          alt={t("common.userProfilePicture")}
           className="w-full h-full object-cover"
         />
       </div>

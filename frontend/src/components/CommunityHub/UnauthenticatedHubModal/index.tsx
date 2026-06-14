@@ -16,7 +16,7 @@ export default function UnauthenticatedHubModal({ show, onClose }: any) {
           <button
             onClick={onClose}
             type="button"
-            aria-label="Close"
+            aria-label={t("common.close")}
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
             <X

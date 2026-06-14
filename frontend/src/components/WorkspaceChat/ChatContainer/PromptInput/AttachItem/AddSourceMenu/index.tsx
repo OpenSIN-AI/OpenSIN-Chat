@@ -569,7 +569,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
               setLink(e.target.value);
               if (error) setError("");
             }}
-            placeholder="https://..."
+            placeholder="https://..." // eslint-disable-line i18next/no-literal-string
             disabled={submitting}
             aria-invalid={!!error}
             className="flex-1 bg-transparent border-none outline-none text-sm text-white light:text-slate-800 py-2 placeholder:text-zinc-500 light:placeholder:text-slate-400"
@@ -582,7 +582,7 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
                 setError("");
               }}
               className="border-none bg-transparent cursor-pointer text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-800 flex-shrink-0"
-              aria-label="Clear URL"
+              aria-label={t("common.clearUrl")}
             >
               <X size={14} />
             </button>

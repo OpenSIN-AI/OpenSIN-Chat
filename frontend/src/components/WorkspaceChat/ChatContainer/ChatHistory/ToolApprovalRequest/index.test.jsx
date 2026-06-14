@@ -98,7 +98,7 @@ describe("ToolApprovalRequest", () => {
 
   it("expands payload details when expand button is clicked", () => {
     render(<ToolApprovalRequest {...request} />);
-    const expandButton = screen.getByRole("button", { name: /show details/i });
+    const expandButton = screen.getByRole("button", { name: /show/i });
     fireEvent.click(expandButton);
     expect(screen.getByText(/"arg": "value"/)).toBeInTheDocument();
   });
@@ -106,7 +106,7 @@ describe("ToolApprovalRequest", () => {
   it("does not render expand button when payload is empty", () => {
     render(<ToolApprovalRequest {...request} payload={{}} />);
     expect(
-      screen.queryByRole("button", { name: /show details/i }),
+      screen.queryByRole("button", { name: /show/i }),
     ).not.toBeInTheDocument();
   });
 

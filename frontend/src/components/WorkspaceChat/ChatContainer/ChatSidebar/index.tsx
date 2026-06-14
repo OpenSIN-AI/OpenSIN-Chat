@@ -11,6 +11,7 @@ import React, {
   useCallback,
   useRef,
 } from "react";
+import { useTranslation } from "react-i18next";
 
 type LogLevel = "info" | "warn" | "error" | "success" | "debug";
 
@@ -265,6 +266,7 @@ export function usePoliticalSidebar() {
  * @param {React.ReactNode} props.children
  */
 export default function ChatSidebar({ isOpen, children }: any) {
+  const { t } = useTranslation();
   const [width, setWidth] = useState(() => {
     if (typeof window === "undefined") return 366;
     try {
@@ -335,8 +337,8 @@ export default function ChatSidebar({ isOpen, children }: any) {
         onMouseDown={handleResizeStart}
         role="separator"
         aria-orientation="vertical"
-        aria-label="Rechte Seitenleiste skalieren"
-        title="Ziehen um die Breite zu ändern"
+        aria-label={t("common.resizeRightSidebar")}
+        title={t("common.dragToResizeWidth")}
         className="absolute top-0 left-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors"
       >
         <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />

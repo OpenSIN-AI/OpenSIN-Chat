@@ -84,7 +84,7 @@ export default function FilesystemSidebar() {
             type="button"
             disabled={loading}
             className="text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
-            aria-label="Aktualisieren"
+            aria-label={t("common.refresh")}
           >
             <ArrowClockwise
               size={13}

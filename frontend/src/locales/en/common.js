@@ -188,6 +188,48 @@ const TRANSLATIONS = {
     selectAll: "Select All",
     rename: "Rename",
     readAccess: "Read access to the database schema",
+
+    // Additional common UI strings (i18n warning fixes)
+    addBlock: "Add Block",
+    cached: "Cached",
+    clearUrl: "Clear URL",
+    close: "Close",
+    contactAdministrator: "Please contact the system administrator about this error.",
+    continue: "Continue",
+    couldNotRespond: "Could not respond to message.",
+    delete: "Delete",
+    dragToResizeWidth: "Drag to change the width",
+    edit: "Edit",
+    error: "Error: {{error}}",
+    getOnGooglePlay: "Get on Google Play",
+    importCommunityItem: "Import a Community Item",
+    importWithArrow: "Import \u2192",
+    llmSelector: "LLM Selector",
+    mcpLogo: "MCP Logo",
+    message: "Message",
+    moreOptions: "More Options",
+    noneSelected: "None selected",
+    noConfigurationNeeded: "There is no configuration needed for this provider.",
+    providerConnectivity: "Provider connectivity",
+    prompt: "Prompt",
+    remove: "Remove",
+    resizeRightSidebar: "Resize right sidebar",
+    rightSidebar: "Right Sidebar",
+    routingToModel: "Routing to model...",
+    searchEmbeddingProviders: "Search all embedding providers",
+    searchLLMProviders: "Search all LLM providers",
+    searchLLMProvidersAvailable: "Search available LLM providers",
+    searchVectorDatabaseProviders: "Search all vector database providers",
+    searchWebSearchProviders: "Search available web-search providers",
+    selectAgentSkillFlowMcp: "Select an Agent Skill, Agent Flow, or MCP Server",
+    selectAnLLM: "You need to select an LLM",
+    stopGenerating: "Stop generating",
+    threads: "Threads",
+    uploadedLogo: "Uploaded Logo",
+    viewDocumentation: "View Documentation",
+    webSearch: "Web Search",
+    words: "{{count}} words",
+
     methods: {
       put: "PUT",
       post: "POST",
@@ -1057,6 +1099,8 @@ const TRANSLATIONS = {
       "tooltip-title": "Why am I seeing this?",
       "tooltip-description":
         "You are in query mode, which only uses information from your documents. Switch to chat mode for more flexible conversations, or click here to visit our documentation to learn more about chat modes.",
+      placeholder:
+        "The text returned in query mode when there is no relevant context found for a response.",
     },
     temperature: {
       title: "LLM Temperature",
@@ -1606,6 +1650,14 @@ const TRANSLATIONS = {
       },
     },
   },
+  agentBuilder: {
+    summarizeDescription:
+      "When enabled, long webpage content will be automatically summarized to reduce token usage.",
+    summarizeNote:
+      "Note: This may affect data quality and remove specific details from the original content.",
+    finishNodeDescription:
+      "This is the end of your agent flow. All steps above will be executed in sequence.",
+  },
   recorded: {
     title: "Workspace Chats",
     description:
@@ -1731,6 +1783,7 @@ const TRANSLATIONS = {
     description:
       "API keys allow the holder to programmatically access and manage this OpenSIN Chat instance.",
     link: "Read the API documentation",
+    readDocumentation: "Read the API documentation",
     generate: "Generate New API Key",
     empty: "No API keys found",
     actions: "Actions",
@@ -2077,6 +2130,8 @@ const TRANSLATIONS = {
           "For additional security, configure these settings in @BotFather.",
         "disable-groups": "— Prevent adding bot to groups",
         "disable-inline": "— Prevent bot from being used in inline search",
+        disableGroups: "Disable Groups",
+        disableInline: "Disable Inline",
         "obscure-username":
           "Use a non-obvious bot handle username to reduce discoverability",
       },
@@ -2096,6 +2151,7 @@ const TRANSLATIONS = {
       "voice-text-only": "Text only",
       "voice-mirror": "Mirror (reply with voice when user sends voice)",
       "voice-always": "Always voice (send audio with every reply)",
+      connectedBot: "Connected Bot",
       "toast-disconnect-failed": "Failed to disconnect bot.",
       "toast-reconnect-failed": "Failed to reconnect bot.",
       "toast-voice-failed": "Failed to update voice mode.",
@@ -2364,6 +2420,13 @@ const TRANSLATIONS = {
       watch_explained_block3_end: " admin view.",
       accept: "Okay, got it",
     },
+  },
+  communityHub: {
+    title: "Community Hub",
+    trendingDescription:
+      "Share and collaborate with the OpenSIN Chat community.",
+    importDescription:
+      "Import items from the OpenSIN Chat Community Hub to enhance your instance with community-created prompts, skills, and commands.",
   },
   chat_window: {
     attachments_processing: "Attachments are processing. Please wait...",

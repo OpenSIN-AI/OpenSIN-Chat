@@ -4,6 +4,7 @@ import { Brain, CheckCircle } from "@phosphor-icons/react";
 import LLMSelectorModal from "./index";
 import { useTheme } from "@/hooks/useTheme";
 import { useRef, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import useUser from "@/hooks/useUser";
 import { useModal } from "@/hooks/useModal";
@@ -14,6 +15,7 @@ export const SAVE_LLM_SELECTOR_EVENT = "save_llm_selector";
 export const PROVIDER_SETUP_EVENT = "provider_setup_requested";
 
 export default function LLMSelectorAction({ workspaceSlug = null }: any) {
+  const { t } = useTranslation();
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const tooltipRef = useRef(null);
@@ -101,7 +103,7 @@ export default function LLMSelectorAction({ workspaceSlug = null }: any) {
       <div
         id="llm-selector-btn"
         data-tooltip-id="tooltip-llm-selector-btn"
-        aria-label="LLM Selector"
+        aria-label={t("common.llmSelector")}
         className={`border-none relative flex justify-center items-center opacity-60 hover:opacity-100 light:opacity-100 light:hover:opacity-60 cursor-pointer`}
       >
         {saved ? (

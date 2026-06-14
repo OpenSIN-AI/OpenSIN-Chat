@@ -294,7 +294,7 @@ export default function ThreadContainer({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex flex-col" role="list" aria-label="Threads">
+      <div className="flex flex-col" role="list" aria-label={t("common.threads")}>
         {defaultThreadHasChats && (
           <ThreadItem
             idx={0}

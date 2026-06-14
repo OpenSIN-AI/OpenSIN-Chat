@@ -117,7 +117,7 @@ export default function AccountModal({ user, hideModal }: any) {
                       <span className="text-theme-text-secondary text-opacity-80 text-sm font-semibold">
                         {t("profile_settings.profile_picture")}
                       </span>
-                      <span className="text-theme-text-secondary text-opacity-60 text-xs">
+                      <span className="text-theme-text-secondary text-opacity-60 text-xs"> // eslint-disable-next-line i18next/no-literal-string
                         800 x 800
                       </span>
                     </div>

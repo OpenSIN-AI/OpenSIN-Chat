@@ -122,7 +122,7 @@ function ToolApprovalHeader({
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="absolute top-4 right-4 border-none"
-          aria-label={isExpanded ? "Hide details" : "Show details"}
+          aria-label={isExpanded ? t("common.hide") : t("common.show")}
         >
           <CaretDown
             className={`w-4 h-4 transform transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}

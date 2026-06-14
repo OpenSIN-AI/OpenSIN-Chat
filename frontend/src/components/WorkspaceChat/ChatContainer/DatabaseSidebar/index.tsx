@@ -29,7 +29,7 @@ export default function DatabaseSidebar() {
             type="button"
             disabled={loading}
             className="text-zinc-500 hover:text-white transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
-            aria-label="Aktualisieren"
+            aria-label={t("common.refresh")}
           >
             <ArrowClockwise
               size={13}
@@ -95,7 +95,7 @@ export default function DatabaseSidebar() {
             const name =
               `${p.first_name || ""} ${p.last_name || ""}`.trim() ||
               p.label ||
-              "—";
+              "—"; // eslint-disable-line i18next/no-literal-string
             const constituency =
               p.constituency?.label ||
               p.electoral_data?.constituency?.label ||

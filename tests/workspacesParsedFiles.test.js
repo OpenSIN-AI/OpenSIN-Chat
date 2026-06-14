@@ -2,8 +2,14 @@
 // Purpose: Test workspace parsed files endpoints
 // Docs: tests/workspacesParsedFiles.test.js
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, beforeAll } from "vitest";
 import { createApp } from "../server/app";
+import prisma from "../server/utils/prisma";
+
+// Mutable user id that the mocked session will report. The real test user is
+// created in beforeAll so that workspace foreign-key constraints can be
+// satisfied; this value is then updated to the real primary key.
+let testUserId = 1;
 
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
@@ -50,7 +56,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 vi.mock("../server/utils/http", () => ({
   reqBody: (req) => ({}),
   makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
+  userFromSession: () => Promise.resolve({ id: testUserId, username: "test" }),
   multiUserMode: () => false,
   queryParams: () => ({}),
 }));
