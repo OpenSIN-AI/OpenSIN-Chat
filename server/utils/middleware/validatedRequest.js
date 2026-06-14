@@ -19,13 +19,28 @@ async function validatedRequest(request, response, next) {
     !process.env.AUTH_TOKEN ||
     !process.env.JWT_SECRET
   ) {
-    // In test mode, provide a default user context so integration tests can
+    // In test mode, provide a real user context so integration tests can
     // exercise endpoints that call userFromSession without a full auth flow.
+    // Creating/looking up a stable test user ensures foreign-key constraints
+    // in tables like system_prompt_variables are satisfied.
     if (process.env.NODE_ENV === "test") {
+      let testUser = await User.get({ username: "__integration_test_user__" });
+      if (!testUser) {
+        try {
+          const result = await User.create({
+            username: "__integration_test_user__",
+            password: "test",
+            role: "admin",
+          });
+          testUser = result.user;
+        } catch (e) {
+          testUser = await User.get({ username: "__integration_test_user__" });
+        }
+      }
       response.locals.user = {
-        id: 1,
-        username: "test",
-        role: "admin",
+        id: testUser?.id || 1,
+        username: testUser?.username || "test",
+        role: testUser?.role || "admin",
       };
     }
     next();

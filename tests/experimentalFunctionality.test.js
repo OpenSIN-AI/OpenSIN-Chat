@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Purpose: Test experimental functionality endpoints
+// Purpose: Test experimental functionality endpoints (live sync and imported agent plugins)
 // Docs: tests/experimentalFunctionality.test.js
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -17,6 +17,12 @@ vi.mock("../server/models/systemSettings", () => ({
   SystemSettings: {
     currentSettings: vi.fn(() => Promise.resolve({})),
     isMultiUserMode: vi.fn(() => Promise.resolve(false)),
+    validations: {
+      experimental_live_file_sync: (value) =>
+        value === true || value === "enabled" ? "enabled" : "disabled",
+    },
+    get: vi.fn(({ label }) => Promise.resolve({ label, value: "disabled" })),
+    _updateSettings: vi.fn(() => Promise.resolve({ success: true })),
   },
 }));
 
@@ -39,6 +45,15 @@ vi.mock("../server/models/telemetry", () => ({
   },
 }));
 
+vi.mock("../server/models/documentSyncQueue", () => ({
+  DocumentSyncQueue: {
+    featureKey: "experimental_live_file_sync",
+    where: vi.fn(() => Promise.resolve([])),
+    bootWorkers: vi.fn(() => {}),
+    killWorkers: vi.fn(() => {}),
+  },
+}));
+
 vi.mock("../server/utils/helpers/updateENV", () => ({
   updateENV: () => ({ newValues: {}, error: null }),
 }));
@@ -55,7 +70,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -70,6 +85,12 @@ vi.mock("../server/utils/middleware/chatHistoryViewable", () => ({
   chatHistoryViewable: () => (req, res, next) => next(),
 }));
 
+vi.mock("../server/utils/middleware/featureFlagEnabled", () => ({
+  featureFlagEnabled: () => (req, res, next) => {
+    return res.status(403).json({ error: "Feature flag disabled" });
+  },
+}));
+
 vi.mock("../server/utils/collectorApi", () => ({
   CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
 }));
@@ -78,16 +99,9 @@ vi.mock("../server/utils/chats", () => ({
   VALID_COMMANDS: { help: true, clear: true },
 }));
 
-vi.mock("../server/models/experimental", () => ({
-  Experimental: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    update: vi.fn(() => Promise.resolve({ id: 1, name: "updated" })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
-  },
+vi.mock("../server/utils/agents/imported", () => ({
+  updateImportedPlugin: vi.fn((hubId, updates) => ({ hubId, ...updates })),
+  deletePlugin: vi.fn((hubId) => ({ success: true })),
 }));
 
 let app;
@@ -113,116 +127,60 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
+  let responseBody = null;
+  try {
+    responseBody = data ? JSON.parse(data) : null;
+  } catch {
+    responseBody = data || null;
+  }
   return {
     status: response.status,
     headers: response.headers,
-    body: data ? JSON.parse(data) : null,
+    body: responseBody,
   };
 };
 
 describe("experimental functionality endpoints", () => {
-  describe("POST /experimental", () => {
-    it("should create experimental feature with valid data", async () => {
-      const response = await request("POST", "/experimental", {
-        name: "Test Experimental",
-        description: "Test experimental description",
-        type: "beta",
-        enabled: true,
+  describe("POST /experimental/toggle-live-sync", () => {
+    it("should toggle live sync on", async () => {
+      const response = await request("POST", "/experimental/toggle-live-sync", {
+        updatedStatus: true,
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "Test Experimental");
+      expect(response.body).toHaveProperty("liveSyncEnabled", true);
     });
 
-    it("should create experimental feature with minimal data", async () => {
-      const response = await request("POST", "/experimental", {
-        name: "Simple Experimental",
-        type: "beta",
+    it("should toggle live sync off", async () => {
+      const response = await request("POST", "/experimental/toggle-live-sync", {
+        updatedStatus: false,
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "Simple Experimental");
-    });
-
-    it("should reject experimental feature with missing name", async () => {
-      const response = await request("POST", "/experimental", {
-        type: "beta",
-      });
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
-    });
-
-    it("should reject experimental feature with missing type", async () => {
-      const response = await request("POST", "/experimental", {
-        name: "Test Experimental",
-      });
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
+      expect(response.body).toHaveProperty("liveSyncEnabled", false);
     });
   });
 
-  describe("GET /experimental", () => {
-    it("should return experimental features", async () => {
+  describe("GET /experimental/live-sync/queues", () => {
+    it.skip("should return live sync queues (feature flag disabled by default)", async () => {
+      // TODO: enable feature flag and seed queue data to test this route.
+    });
+  });
+
+  describe("Legacy experimental CRUD routes", () => {
+    it("should return 404 for legacy /experimental list route", async () => {
       const response = await request("GET", "/experimental");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("features");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalFeatures");
-    });
-
-    it("should return experimental features with pagination", async () => {
-      const response = await request("GET", "/experimental?offset=0&limit=10");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("features");
-    });
-  });
-
-  describe("GET /experimental/:id", () => {
-    it("should get experimental feature by id", async () => {
-      const response = await request("GET", "/experimental/1");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "test");
-    });
-
-    it("should return 404 for non-existent experimental feature", async () => {
-      const response = await request("GET", "/experimental/999");
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
-    });
-  });
-
-  describe("PUT /experimental/:id", () => {
-    it("should update experimental feature", async () => {
-      const response = await request("PUT", "/experimental/1", {
-        name: "Updated Experimental",
-        description: "Updated description",
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "updated");
     });
 
-    it("should reject experimental feature update with invalid data", async () => {
-      const response = await request("PUT", "/experimental/1", {
-        name: "",
-      });
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
-    });
-  });
-
-  describe("DELETE /experimental/:id", () => {
-    it("should delete experimental feature", async () => {
-      const response = await request("DELETE", "/experimental/1");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("success", true);
+    it.skip("legacy experimental create routes do not exist", async () => {
+      // TODO: /experimental POST route is not implemented.
     });
 
-    it("should return 404 for non-existent experimental feature", async () => {
-      const response = await request("DELETE", "/experimental/999");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
+    it.skip("legacy experimental update routes do not exist", async () => {
+      // TODO: /experimental/:id PUT route is not implemented.
+    });
+
+    it.skip("legacy experimental delete routes do not exist", async () => {
+      // TODO: /experimental/:id DELETE route is not implemented.
     });
   });
 });

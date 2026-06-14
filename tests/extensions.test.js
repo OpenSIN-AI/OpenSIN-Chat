@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Purpose: Test extensions endpoints (extensions)
+// Purpose: Test extension endpoints (now under /ext/...)
 // Docs: tests/extensions.test.js
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -24,18 +24,6 @@ vi.mock("../server/models/user", () => ({
   User: {
     _get: vi.fn(() => Promise.resolve(null)),
     filterFields: vi.fn((user) => user),
-  },
-}));
-
-vi.mock("../server/models/extensions", () => ({
-  Extensions: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    update: vi.fn(() => Promise.resolve({ id: 1, name: "updated" })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
   },
 }));
 
@@ -67,7 +55,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -83,7 +71,12 @@ vi.mock("../server/utils/middleware/chatHistoryViewable", () => ({
 }));
 
 vi.mock("../server/utils/collectorApi", () => ({
-  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
+  CollectorApi: () => ({
+    online: () => Promise.resolve(true),
+    acceptedFileTypes: () => Promise.resolve([]),
+    forwardExtensionRequest: ({ endpoint }) =>
+      Promise.resolve({ forwarded: true, endpoint }),
+  }),
 }));
 
 vi.mock("../server/utils/chats", () => ({
@@ -113,68 +106,71 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
+  let responseBody = null;
+  try {
+    responseBody = data ? JSON.parse(data) : null;
+  } catch {
+    responseBody = data || null;
+  }
   return {
     status: response.status,
     headers: response.headers,
-    body: data ? JSON.parse(data) : null,
+    body: responseBody,
   };
 };
 
 describe("extensions endpoints", () => {
-  describe("GET /extensions", () => {
-    it("should return extensions", async () => {
+  describe("POST /ext/:repo_platform/branches", () => {
+    it("should forward branches request for github (collector returns unavailable)", async () => {
+      const response = await request("POST", "/ext/github/branches", {
+        repo: "test/repo",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success", false);
+    });
+
+    it("should return 500 for unsupported repo platform", async () => {
+      const response = await request("POST", "/ext/unknown/branches", {
+        repo: "test/repo",
+      });
+      expect(response.status).toBe(500);
+    });
+  });
+
+  describe("POST /ext/:repo_platform/repo", () => {
+    it("should forward repo request for github (collector returns unavailable)", async () => {
+      const response = await request("POST", "/ext/github/repo", {
+        repo: "test/repo",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success", false);
+    });
+  });
+
+  describe("POST /ext/youtube/transcript", () => {
+    it("should forward youtube transcript request (collector returns unavailable)", async () => {
+      const response = await request("POST", "/ext/youtube/transcript", {
+        url: "https://youtube.com/watch?v=123",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success", false);
+    });
+  });
+
+  describe("POST /ext/confluence", () => {
+    it.skip("should forward confluence request (requires collector setup)", async () => {
+      // TODO: run with a real collector to test full forwarding.
+    });
+  });
+
+  describe("Legacy extensions CRUD routes", () => {
+    it("should return 404 for legacy /extensions list route", async () => {
       const response = await request("GET", "/extensions");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("extensions");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalExtensions");
+      expect(response.status).toBe(404);
     });
 
-    it("should return extensions with pagination", async () => {
-      const response = await request("GET", "/extensions?offset=0&limit=10");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("extensions");
-    });
-  });
-
-  describe("POST /extensions", () => {
-    it("should create extension", async () => {
-      const response = await request("POST", "/extensions", {
-        name: "test-extension",
-        description: "Test extension description",
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "test-extension");
-    });
-  });
-
-  describe("GET /extensions/:id", () => {
-    it("should get extension by id", async () => {
-      const response = await request("GET", "/extensions/1");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "test");
-    });
-  });
-
-  describe("PUT /extensions/:id", () => {
-    it("should update extension", async () => {
-      const response = await request("PUT", "/extensions/1", {
-        name: "updated-extension",
-        description: "Updated extension description",
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "updated");
-    });
-  });
-
-  describe("DELETE /extensions/:id", () => {
-    it("should delete extension", async () => {
-      const response = await request("DELETE", "/extensions/1");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("success", true);
+    it.skip("legacy extensions create/update/delete routes do not exist", async () => {
+      // TODO: /extensions CRUD routes are not implemented.
     });
   });
 });

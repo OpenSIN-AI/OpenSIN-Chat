@@ -236,20 +236,20 @@ describe("workspace functionality endpoints", () => {
   });
 
   describe("GET /workspace/:slug/chats", () => {
-    it("should return workspace chats", async () => {
+    it("should return workspace chat history", async () => {
       const workspace = await createWorkspace("chats-workspace");
       const response = await request("GET", `/workspace/${workspace.slug}/chats`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("chats");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalChats");
+      expect(response.body).toHaveProperty("history");
+      expect(Array.isArray(response.body.history)).toBe(true);
     });
 
-    it("should return workspace chats with pagination", async () => {
+    it("should return workspace chat history with pagination", async () => {
       const workspace = await createWorkspace("chats-page-workspace");
       const response = await request("GET", `/workspace/${workspace.slug}/chats?offset=0&limit=10`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("chats");
+      expect(response.body).toHaveProperty("history");
+      expect(Array.isArray(response.body.history)).toBe(true);
     });
   });
 });

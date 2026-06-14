@@ -85,11 +85,11 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
+  userFromSession: () => Promise.resolve(null),
   multiUserMode: () => false,
-  queryParams: () => ({}),
+  queryParams: (req) => req.query || {},
 }));
 
 vi.mock("../server/utils/files/logo", () => ({

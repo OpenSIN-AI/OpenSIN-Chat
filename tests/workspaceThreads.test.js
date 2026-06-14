@@ -85,8 +85,10 @@ beforeEach(async () => {
   app = createApp();
 });
 
+const TEST_PORT = process.env.SERVER_PORT || "3001";
+
 const request = async (method, path, body = null, headers = {}) => {
-  const url = `http://localhost:3001${path}`;
+  const url = `http://localhost:${TEST_PORT}${path}`;
   const options = {
     method,
     headers: {
@@ -101,67 +103,94 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
+  let responseBody = null;
+  if (data) {
+    try {
+      responseBody = JSON.parse(data);
+    } catch {
+      responseBody = data;
+    }
+  }
   return {
     status: response.status,
     headers: response.headers,
-    body: data ? JSON.parse(data) : null,
+    body: responseBody,
   };
 };
 
+const createWorkspace = async (name) => {
+  const response = await request("POST", "/workspace/new", { name });
+  expect(response.status).toBe(200);
+  return response.body.workspace;
+};
+
+const createThread = async (workspaceSlug) => {
+  const response = await request("POST", `/workspace/${workspaceSlug}/thread/new`);
+  expect(response.status).toBe(200);
+  return response.body.thread;
+};
+
 describe("workspace threads endpoints", () => {
-  describe("GET /workspace-threads", () => {
+  describe("GET /workspace/:slug/threads", () => {
     it("should return workspace threads", async () => {
-      const response = await request("GET", "/workspace-threads");
+      const workspace = await createWorkspace("thread-list-workspace");
+      const response = await request("GET", `/workspace/${workspace.slug}/threads`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("threads");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalThreads");
+      expect(response.body).toHaveProperty("folders");
+      expect(response.body).toHaveProperty("defaultThreadChatCount");
     });
 
     it("should return workspace threads with pagination", async () => {
-      const response = await request("GET", "/workspace-threads?offset=0&limit=10");
+      const workspace = await createWorkspace("thread-list-page-workspace");
+      const response = await request("GET", `/workspace/${workspace.slug}/threads?offset=0&limit=10`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("threads");
     });
   });
 
-  describe("POST /workspace-threads", () => {
+  describe("POST /workspace/:slug/thread/new", () => {
     it("should create workspace thread", async () => {
-      const response = await request("POST", "/workspace-threads", {
-        workspaceId: 1,
+      const workspace = await createWorkspace("thread-new-workspace");
+      const response = await request("POST", `/workspace/${workspace.slug}/thread/new`, {
         title: "Test thread",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("title", "Test thread");
+      expect(response.body).toHaveProperty("thread");
+      expect(response.body).toHaveProperty("message");
     });
   });
 
-  describe("GET /workspace-threads/:id", () => {
-    it("should get workspace thread by id", async () => {
-      const response = await request("GET", "/workspace-threads/1");
+  describe("GET /workspace/:slug/thread/:threadSlug/chats", () => {
+    it("should get workspace thread chat history", async () => {
+      const workspace = await createWorkspace("thread-chats-workspace");
+      const thread = await createThread(workspace.slug);
+      const response = await request("GET", `/workspace/${workspace.slug}/thread/${thread.slug}/chats`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("title", "test");
+      expect(response.body).toHaveProperty("history");
+      expect(Array.isArray(response.body.history)).toBe(true);
     });
   });
 
-  describe("PUT /workspace-threads/:id", () => {
+  describe("POST /workspace/:slug/thread/:threadSlug/update", () => {
     it("should update workspace thread", async () => {
-      const response = await request("PUT", "/workspace-threads/1", {
+      const workspace = await createWorkspace("thread-update-workspace");
+      const thread = await createThread(workspace.slug);
+      const response = await request("POST", `/workspace/${workspace.slug}/thread/${thread.slug}/update`, {
         title: "Updated thread",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("title", "updated");
+      expect(response.body).toHaveProperty("success", true);
     });
   });
 
-  describe("DELETE /workspace-threads/:id", () => {
+  describe("DELETE /workspace/:slug/thread/:threadSlug", () => {
     it("should delete workspace thread", async () => {
-      const response = await request("DELETE", "/workspace-threads/1");
+      const workspace = await createWorkspace("thread-delete-workspace");
+      const thread = await createThread(workspace.slug);
+      const response = await request("DELETE", `/workspace/${workspace.slug}/thread/${thread.slug}`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("success", true);
+      expect(response.body).toBe("OK");
     });
   });
 });

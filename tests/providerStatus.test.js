@@ -2,7 +2,7 @@
 // Purpose: Test provider status and diagnostics endpoints
 // Docs: tests/providerStatus.test.js
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterAll } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
@@ -51,7 +51,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -62,105 +62,63 @@ vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
   simpleRateLimit: () => (req, res, next) => next(),
 }));
 
-vi.mock("../server/utils/providerKeyStatus", () => ({
-  getProviderKeyStatuses: vi.fn(() => Promise.resolve([
-    { provider: "openai", configured: true, keyPresent: true },
-    { provider: "azure", configured: false, keyPresent: false },
-  ])),
+vi.mock("../server/utils/collectorApi", () => ({
+  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
 }));
 
-vi.mock("../server/utils/providerConnectivity", () => ({
-  probeProvider: vi.fn(() => Promise.resolve({ reachable: true, latency: 150 })),
-  probeAllProviders: vi.fn(() => Promise.resolve([
-    { provider: "openai", reachable: true, latency: 120 },
-    { provider: "anthropic", reachable: false, latency: null },
-  ])),
-}));
-
-vi.mock("../server/utils/paths", () => ({
-  pathsHealth: vi.fn(() => Promise.resolve({ healthy: true, diskSpace: "10GB" })),
+vi.mock("../server/utils/chats", () => ({
+  VALID_COMMANDS: { help: true, clear: true },
 }));
 
 let app;
 
-beforeEach(async () => {
-  vi.clearAllMocks();
+beforeAll(async () => {
   app = createApp();
 });
 
-const request = async (method, path, body = null, headers = {}) => {
+afterAll(async () => {
+  if (app && app.close) await app.close();
+});
+
+const request = async (method, path, body = null) => {
   const url = `http://localhost:3001${path}`;
   const options = {
     method,
-    headers: { "Content-Type": "application/json", ...headers },
+    headers: { "Content-Type": "application/json" },
   };
   if (body) options.body = JSON.stringify(body);
   const response = await fetch(url, options);
   const data = await response.text();
-  return { status: response.status, headers: response.headers, body: data ? JSON.parse(data) : null };
+  return { status: response.status, body: data ? JSON.parse(data) : null };
 };
 
 describe("provider status endpoints", () => {
-  describe("GET /provider/status", () => {
-    it("should return provider key statuses", async () => {
-      const response = await request("GET", "/provider/status");
+  describe("GET /system/provider-key-status", () => {
+    it("should return provider key statuses and path health", async () => {
+      const response = await request("GET", "/system/provider-key-status");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("providers");
       expect(Array.isArray(response.body.providers)).toBe(true);
-    });
-
-    it("should indicate which providers are configured", async () => {
-      const response = await request("GET", "/provider/status");
-      expect(response.status).toBe(200);
-      const openai = response.body.providers.find(p => p.provider === "openai");
-      expect(openai).toBeDefined();
-      expect(openai.configured).toBe(true);
+      expect(response.body).toHaveProperty("paths");
+      expect(response.body).toHaveProperty("checkedAt");
     });
   });
 
-  describe("GET /provider/health", () => {
-    it("should return health check results", async () => {
-      const response = await request("GET", "/provider/health");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("health");
-    });
-
-    it("should include health status for each provider", async () => {
-      const response = await request("GET", "/provider/health");
-      expect(response.body).toHaveProperty("healthy");
-    });
-  });
-
-  describe("GET /provider/probe/:name", () => {
-    it("should probe a specific provider", async () => {
-      const response = await request("GET", "/provider/probe/openai");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("reachable", true);
-      expect(response.body).toHaveProperty("latency", 150);
-    });
-
-    it("should return 404 for unknown provider", async () => {
-      const response = await request("GET", "/provider/probe/unknown");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
-    });
-  });
-
-  describe("GET /provider/probe-all", () => {
-    it("should probe all providers", async () => {
-      const response = await request("GET", "/provider/probe-all");
+  describe("GET /system/provider-connectivity", () => {
+    it("should probe all registered providers", async () => {
+      const response = await request("GET", "/system/provider-connectivity");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("results");
       expect(Array.isArray(response.body.results)).toBe(true);
-    });
-  });
+      expect(response.body).toHaveProperty("checkedAt");
+    }, 20000);
 
-  describe("GET /provider/paths-health", () => {
-    it("should return path health information", async () => {
-      const response = await request("GET", "/provider/paths-health");
+    it("should probe a single provider via query parameter", async () => {
+      const response = await request("GET", "/system/provider-connectivity?provider=unknown");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("healthy", true);
-      expect(response.body).toHaveProperty("diskSpace");
-    });
+      expect(response.body).toHaveProperty("results");
+      expect(response.body.results).toHaveLength(1);
+      expect(response.body.results[0]).toHaveProperty("error", "Unknown provider id");
+    }, 10000);
   });
 });
