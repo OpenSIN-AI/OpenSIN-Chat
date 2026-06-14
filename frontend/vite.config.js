@@ -43,7 +43,19 @@ export default defineConfig({
       gzipSize: true,
       brotliSize: true,
       filename: "bundleinspector.html" // will be saved in project's root
-    })
+    }),
+    // Vite 8/Rolldown no longer supports function aliases in resolve.alias.
+    // Strip the webpack-style `~` prefix from imports so node_modules packages
+    // resolve correctly (e.g. `~@phosphor-icons/react` -> `@phosphor-icons/react`).
+    {
+      name: "strip-tilde-alias",
+      enforce: "pre",
+      resolveId(id) {
+        if (id.startsWith("~")) {
+          return id.slice(1)
+        }
+      }
+    }
   ],
   resolve: {
     alias: [
@@ -51,16 +63,10 @@ export default defineConfig({
         find: "@",
         replacement: fileURLToPath(new URL("./src", import.meta.url))
       },
-      {
-        process: "process/browser",
-        stream: "stream-browserify",
-        zlib: "browserify-zlib",
-        util: "util",
-        find: /^~.+/,
-        replacement: (val) => {
-          return val.replace(/^~/, "")
-        }
-      }
+      { find: "process", replacement: "process/browser" },
+      { find: "stream", replacement: "stream-browserify" },
+      { find: "zlib", replacement: "browserify-zlib" },
+      { find: "util", replacement: "util" },
     ]
   },
   build: {
@@ -134,11 +140,10 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ["@openafd/piper-tts-web"],
-    esbuildOptions: {
+    rolldownOptions: {
       define: {
         global: "globalThis"
-      },
-      plugins: []
+      }
     }
   }
 })

@@ -71,7 +71,7 @@
     "fast-levenshtein": "^3.0.0",
     "fix-path": "^5.0.0",
     "graphql": "^16.14.1",
-    "joi": "^17.13.3",
+    "joi": "^17.13.4",
     "joi-password-complexity": "^5.2.0",
     "js-tiktoken": "^1.0.8",
     "jsdom": "26.1.0",
