@@ -315,7 +315,7 @@ export default function GeneralEmbeddingPreference() {
                           type="text"
                           name="embedder-search"
                           autoComplete="off"
-                          placeholder="Search all embedding providers"
+                          placeholder={t("common.searchEmbeddingProviders")}
                           className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none text-theme-text-primary placeholder:text-theme-text-primary placeholder:font-medium"
                           onChange={(e) => setSearchQuery(e.target.value)}
                           ref={searchInputRef}
