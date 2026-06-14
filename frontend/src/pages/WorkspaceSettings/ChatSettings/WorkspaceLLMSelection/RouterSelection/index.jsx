@@ -29,7 +29,7 @@ export default function RouterSelection({ workspace, setHasChanges }) {
           >
             {t("model-router.router-selection.no-routers-link")}
           </Link>
-          .
+          {"." /* eslint-disable-line i18next/no-literal-string */}
         </p>
       </div>
     );

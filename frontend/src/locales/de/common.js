@@ -378,6 +378,7 @@ const TRANSLATIONS = {
       title: "Workspace-Chat-Modell",
       description:
         "Das spezifische Chat-Modell, das für diesen Workspace verwendet wird. Wenn leer, wird die System-LLM-Präferenz verwendet.",
+      waitingForModels: "-- Modelle werden geladen --",
     },
     mode: {
       title: "Chat-Modus",

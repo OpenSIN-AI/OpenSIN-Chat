@@ -1057,6 +1057,7 @@ const TRANSLATIONS = {
       title: "Workspace Chat model",
       description:
         "The specific chat model that will be used for this workspace. If empty, will use the system LLM preference.",
+      waitingForModels: "-- waiting for models --",
     },
     mode: {
       title: "Chat mode",

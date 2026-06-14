@@ -32,7 +32,7 @@ export default function ChatModelSelection({
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
         >
           <option disabled={true} selected={true}>
-            -- waiting for models --
+            {t("chat.model.waitingForModels")}
           </option>
         </select>
       </div>
