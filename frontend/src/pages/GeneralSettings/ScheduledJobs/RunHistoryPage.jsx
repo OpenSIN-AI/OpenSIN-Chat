@@ -142,7 +142,7 @@ function RunHistoryLayout({ job, children }) {
             </p>
             <p className="text-xs text-zinc-400 light:text-slate-600">
               {t("scheduledJobs.runHistory.schedule")}{" "}
-              <code>{humanizeCron(job?.schedule, i18n.language) || "—"}</code>
+              <code>{humanizeCron(job?.schedule, i18n.language) || "—"}</code> // eslint-disable-line i18next/no-literal-string
             </p>
           </div>
           {children}
