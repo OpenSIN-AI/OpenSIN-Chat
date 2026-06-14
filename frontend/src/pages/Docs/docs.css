@@ -92,16 +92,87 @@
   border-radius: 0.3rem;
 }
 
-.docs-markdown pre {
+/* Code blocks with a header bar (language label + copy button). */
+.docs-markdown .docs-code-block {
   margin: 0 0 1.25rem;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background: #0d1117;
-  overflow-x: auto;
+  border-radius: 0.625rem;
   border: 1px solid var(--theme-sidebar-border);
+  overflow: hidden;
+  background: #0d1117;
 }
 
-.docs-markdown pre code {
+.docs-markdown .docs-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0.4rem 0.4rem 0.9rem;
+  background: #161b22;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.docs-markdown .docs-code-lang {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #8b949e;
+}
+
+.docs-markdown .docs-code-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.4rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #8b949e;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.docs-markdown .docs-code-copy:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e6edf3;
+}
+
+.docs-markdown .docs-code-copy:focus-visible {
+  outline: 2px solid var(--primary-button, #46c8ff);
+  outline-offset: 1px;
+}
+
+.docs-markdown .docs-code-copy-icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Toggle copy vs. check icon based on the .is-copied state. */
+.docs-markdown .docs-code-copy-icon svg:last-child,
+.docs-markdown .is-copied .docs-code-copy-icon svg:first-child {
+  display: none;
+}
+
+.docs-markdown .is-copied .docs-code-copy-icon svg:last-child {
+  display: inline;
+}
+
+.docs-markdown .is-copied .docs-code-copy {
+  color: #3fb950;
+}
+
+.docs-markdown .docs-code-block pre {
+  margin: 0;
+  padding: 1rem;
+  background: transparent;
+  overflow-x: auto;
+  border: 0;
+}
+
+.docs-markdown .docs-code-block pre code {
   background: transparent;
   padding: 0;
   font-size: 0.85rem;

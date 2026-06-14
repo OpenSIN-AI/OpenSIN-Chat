@@ -30,6 +30,8 @@ export type DocEntry = {
   category: DocCategory;
   /** Filename inside ./content */
   file: string;
+  /** Repo-relative source path, used for the "Edit on GitHub" link */
+  source: string;
 };
 
 export const CATEGORY_LABELS: Record<DocCategory, string> = {
@@ -56,6 +58,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Einstieg, Workspaces, Chatten mit Dokumenten und Grundfunktionen.",
     category: "getting-started",
     file: "user-guide.md",
+    source: "docs/USER-GUIDE.md",
   },
   {
     slug: "api",
@@ -63,6 +66,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Vollständige REST-API-Referenz für Entwickler und Integrationen.",
     category: "api",
     file: "api.md",
+    source: "docs/API.md",
   },
   {
     slug: "architecture",
@@ -70,6 +74,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Systemüberblick, Komponenten und Datenfluss der Plattform.",
     category: "architecture",
     file: "architecture.md",
+    source: "docs/architecture.md",
   },
   {
     slug: "adr-overview",
@@ -77,6 +82,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Überblick über dokumentierte Architekturentscheidungen (ADRs).",
     category: "architecture",
     file: "adr-overview.md",
+    source: "docs/adr/README.md",
   },
   {
     slug: "adr-001-persistent-job-queue",
@@ -84,6 +90,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Entscheidung und Begründung zur persistenten Job-Queue.",
     category: "architecture",
     file: "adr-001-persistent-job-queue.md",
+    source: "docs/adr/ADR-001-persistent-job-queue.md",
   },
   {
     slug: "data-sources",
@@ -91,6 +98,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Woher die Daten stammen und wie der Politiker-Sync funktioniert.",
     category: "data-sources",
     file: "data-sources.md",
+    source: "docs/DATA-SOURCES.md",
   },
   {
     slug: "sync-runbook",
@@ -98,6 +106,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Betriebshandbuch für den Sync der Politiker-Datenbank.",
     category: "data-sources",
     file: "sync-runbook.md",
+    source: "docs/SYNC-RUNBOOK.md",
   },
   {
     slug: "upstream-sync",
@@ -105,6 +114,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Strategie zum Synchronisieren mit dem Upstream-Projekt.",
     category: "data-sources",
     file: "upstream-sync.md",
+    source: "docs/UPSTREAM-SYNC.md",
   },
   {
     slug: "docker-deployment",
@@ -112,6 +122,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Deployment der Plattform via Docker, Schritt für Schritt.",
     category: "deployment",
     file: "docker-deployment.md",
+    source: "docs/DOCKER-DEPLOYMENT.md",
   },
   {
     slug: "opensin-chat-deployment",
@@ -119,6 +130,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Deployment-Anleitung für sinchat.delqhi.com.",
     category: "deployment",
     file: "opensin-chat-deployment.md",
+    source: "docs/OPENSIN-CHAT-DEPLOYMENT.md",
   },
   {
     slug: "auto-deploy",
@@ -126,6 +138,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Lokaler Polling-Cron für automatische Deployments.",
     category: "deployment",
     file: "auto-deploy.md",
+    source: "docs/AUTO-DEPLOY.md",
   },
   {
     slug: "vercel-deploy-fix",
@@ -133,6 +146,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Lösung für bekannte Vercel-Build-Probleme.",
     category: "deployment",
     file: "vercel-deploy-fix.md",
+    source: "docs/vercel-deploy-fix.md",
   },
   {
     slug: "ssh-remote-tunnel",
@@ -140,6 +154,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Mac via Cloudflare als SSH Remote Tunnel einrichten.",
     category: "deployment",
     file: "ssh-remote-tunnel.md",
+    source: "docs/ssh-remote-tunnel.md",
   },
   {
     slug: "supabase-self-hosted",
@@ -147,6 +162,7 @@ export const DOC_ENTRIES: DocEntry[] = [
     description: "Setup für eine selbst gehostete Supabase-Instanz.",
     category: "deployment",
     file: "supabase-self-hosted.md",
+    source: "docs/supabase-self-hosted.md",
   },
 ];
 
@@ -223,4 +239,28 @@ export function getGroupedDocs(): { category: DocCategory; entries: DocEntry[] }
     category,
     entries: DOC_ENTRIES.filter((entry) => entry.category === category),
   })).filter((group) => group.entries.length > 0);
+}
+
+/** Flat list of all entries in navigation order (category order, then list). */
+export function getOrderedDocs(): DocEntry[] {
+  return getGroupedDocs().flatMap((group) => group.entries);
+}
+
+/** Resolve the previous/next entry relative to a slug, in navigation order. */
+export function getAdjacentDocs(slug: string): {
+  prev: DocEntry | null;
+  next: DocEntry | null;
+} {
+  const ordered = getOrderedDocs();
+  const index = ordered.findIndex((entry) => entry.slug === slug);
+  if (index === -1) return { prev: null, next: null };
+  return {
+    prev: index > 0 ? ordered[index - 1] : null,
+    next: index < ordered.length - 1 ? ordered[index + 1] : null,
+  };
+}
+
+/** Build the "Edit on GitHub" URL for a given entry. */
+export function getEditUrl(entry: DocEntry): string {
+  return `${GITHUB_DOCS_BASE}/${entry.source}`;
 }

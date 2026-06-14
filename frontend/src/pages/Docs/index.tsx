@@ -2,24 +2,29 @@
 //
 // In-app developer documentation rendered at /docs and /docs/:slug.
 // Content is curated from the repository's docs/ folder (see docsManifest.ts).
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
+  ArrowRight,
   MagnifyingGlass,
   BookOpen,
   List,
   X,
+  GithubLogo,
 } from "@phosphor-icons/react";
 import paths from "@/utils/paths";
-import DocsMarkdown from "./DocsMarkdown";
+import DocsMarkdown, { type DocHeading } from "./DocsMarkdown";
+import DocsToc from "./DocsToc";
+import DocsLanding from "./DocsLanding";
 import {
-  DEFAULT_DOC_SLUG,
   CATEGORY_LABELS,
   getDocBySlug,
   getDocContent,
   getGroupedDocs,
+  getAdjacentDocs,
+  getEditUrl,
   DOC_ENTRIES,
 } from "./docsManifest";
 import "./docs.css";
@@ -110,14 +115,93 @@ function DocsSidebar({
   );
 }
 
+function DocsPagination({ slug }: { slug: string }) {
+  const { t } = useTranslation();
+  const { prev, next } = getAdjacentDocs(slug);
+  if (!prev && !next) return null;
+
+  return (
+    <nav
+      aria-label={t("common.docsNavLabel")}
+      className="mt-12 pt-6 border-t border-theme-sidebar-border grid grid-cols-1 sm:grid-cols-2 gap-4"
+    >
+      {prev ? (
+        <Link
+          to={paths.appDocs(`/${prev.slug}`)}
+          className="group flex items-center gap-3 rounded-lg border border-theme-sidebar-border p-4 transition-colors hover:border-primary-button"
+        >
+          <ArrowLeft
+            className="w-4 h-4 shrink-0 text-theme-text-secondary group-hover:text-primary-button"
+            aria-hidden="true"
+          />
+          <span className="flex flex-col min-w-0">
+            <span className="text-xs text-theme-text-secondary">
+              {t("common.docsPrevious")}
+            </span>
+            <span className="text-sm font-medium text-theme-text-primary truncate">
+              {prev.title}
+            </span>
+          </span>
+        </Link>
+      ) : (
+        <span />
+      )}
+      {next ? (
+        <Link
+          to={paths.appDocs(`/${next.slug}`)}
+          className="group flex items-center justify-end gap-3 rounded-lg border border-theme-sidebar-border p-4 text-right transition-colors hover:border-primary-button"
+        >
+          <span className="flex flex-col min-w-0">
+            <span className="text-xs text-theme-text-secondary">
+              {t("common.docsNext")}
+            </span>
+            <span className="text-sm font-medium text-theme-text-primary truncate">
+              {next.title}
+            </span>
+          </span>
+          <ArrowRight
+            className="w-4 h-4 shrink-0 text-theme-text-secondary group-hover:text-primary-button"
+            aria-hidden="true"
+          />
+        </Link>
+      ) : (
+        <span />
+      )}
+    </nav>
+  );
+}
+
 export default function Docs() {
   const { t } = useTranslation();
   const { slug } = useParams();
   const [query, setQuery] = useState("");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [headings, setHeadings] = useState<DocHeading[]>([]);
+  const [mainEl, setMainEl] = useState<HTMLElement | null>(null);
   const mobileNavRef = useRef<HTMLDivElement>(null);
   const entry = slug ? getDocBySlug(slug) : null;
   const content = entry ? getDocContent(entry.file) : null;
+
+  const handleHeadings = useCallback((next: DocHeading[]) => {
+    setHeadings(next);
+  }, []);
+
+  // Reset outline + scroll position when navigating between docs.
+  useEffect(() => {
+    setHeadings([]);
+    mainEl?.scrollTo({ top: 0 });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug]);
+
+  // Once the heading outline is available, honor any #hash in the URL by
+  // scrolling the matching heading into view (deep-linking support).
+  useEffect(() => {
+    if (headings.length === 0) return;
+    const hash = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    if (!hash) return;
+    const el = document.getElementById(hash);
+    if (el) el.scrollIntoView({ block: "start" });
+  }, [headings]);
 
   // Update page title and meta description based on the selected doc.
   useEffect(() => {
@@ -150,10 +234,7 @@ export default function Docs() {
     };
   }, [mobileNavOpen]);
 
-  // Redirect /docs to the default doc.
-  if (!slug) {
-    return <Navigate to={paths.appDocs(`/${DEFAULT_DOC_SLUG}`)} replace />;
-  }
+  const showToc = Boolean(slug && entry && content);
 
   return (
     <div className="flex flex-col h-screen w-screen bg-theme-bg-primary text-theme-text-primary overflow-hidden">
@@ -173,13 +254,13 @@ export default function Docs() {
               <List className="w-5 h-5" aria-hidden="true" />
             )}
           </button>
-          <div className="flex items-center gap-2">
+          <Link to={paths.appDocs()} className="flex items-center gap-2">
             <BookOpen
               className="w-5 h-5 text-primary-button"
               aria-hidden="true"
             />
             <span className="font-semibold">{t("common.developerDocs")}</span>
-          </div>
+          </Link>
         </div>
         <Link
           to={paths.home()}
@@ -194,7 +275,7 @@ export default function Docs() {
         {/* Desktop sidebar */}
         <aside className="hidden lg:flex flex-col w-72 shrink-0 border-r border-theme-sidebar-border p-4 overflow-y-auto">
           <DocsSidebar
-            activeSlug={slug}
+            activeSlug={slug ?? ""}
             query={query}
             setQuery={setQuery}
             onNavigate={() => {}}
@@ -217,7 +298,7 @@ export default function Docs() {
               className="relative z-50 w-72 max-w-[80vw] h-full bg-theme-bg-primary border-r border-theme-sidebar-border p-4 overflow-y-auto outline-none"
             >
               <DocsSidebar
-                activeSlug={slug}
+                activeSlug={slug ?? ""}
                 query={query}
                 setQuery={setQuery}
                 onNavigate={() => setMobileNavOpen(false)}
@@ -227,8 +308,13 @@ export default function Docs() {
         )}
 
         {/* Main content */}
-        <main className="flex-1 min-w-0 overflow-y-auto px-4 md:px-10 py-8">
-          {!entry || !content ? (
+        <main
+          ref={setMainEl}
+          className="flex-1 min-w-0 overflow-y-auto px-4 md:px-10 py-8"
+        >
+          {!slug ? (
+            <DocsLanding />
+          ) : !entry || !content ? (
             <div className="max-w-3xl">
               <h1 className="text-2xl font-bold mb-3">
                 {t("common.docsNotFound")}
@@ -237,21 +323,42 @@ export default function Docs() {
                 {t("common.docsNotFoundDesc")}
               </p>
               <Link
-                to={paths.appDocs(`/${DEFAULT_DOC_SLUG}`)}
+                to={paths.appDocs()}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-button text-white hover:opacity-90 transition-opacity"
               >
                 {t("common.docsHomepage")}
               </Link>
             </div>
           ) : (
-            <article>
-              <p className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary mb-2">
-                {CATEGORY_LABELS[entry.category]}
-              </p>
-              <DocsMarkdown content={content} />
+            <article className="mx-auto max-w-3xl xl:mx-0">
+              <div className="flex items-center justify-between gap-4 mb-2">
+                <p className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary">
+                  {CATEGORY_LABELS[entry.category]}
+                </p>
+                <a
+                  href={getEditUrl(entry)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 text-xs text-theme-text-secondary hover:text-theme-text-primary transition-colors"
+                >
+                  <GithubLogo className="w-4 h-4" aria-hidden="true" />
+                  <span>{t("common.docsEditOnGithub")}</span>
+                </a>
+              </div>
+              <DocsMarkdown content={content} onHeadings={handleHeadings} />
+              <DocsPagination slug={slug} />
             </article>
           )}
         </main>
+
+        {/* Right-hand table of contents */}
+        {showToc && (
+          <aside className="hidden xl:block w-64 shrink-0 border-l border-theme-sidebar-border p-6 overflow-y-auto">
+            <div className="sticky top-0">
+              <DocsToc headings={headings} scrollRoot={mainEl} />
+            </div>
+          </aside>
+        )}
       </div>
     </div>
   );
