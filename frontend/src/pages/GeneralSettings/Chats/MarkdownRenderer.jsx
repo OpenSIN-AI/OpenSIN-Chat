@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import { CaretDown } from "@phosphor-icons/react";
@@ -22,6 +23,7 @@ const md = new MarkdownIt({
 });
 
 const ThoughtBubble = ({ thought }) => {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
 
   if (!thought) return null;
