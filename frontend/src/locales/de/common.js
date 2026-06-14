@@ -230,6 +230,17 @@ const TRANSLATIONS = {
     viewDocumentation: "Dokumentation anzeigen",
     webSearch: "Websuche",
     words: "{{count}} Wörter",
+    docs: "Docs",
+    developerDocs: "Entwickler-Dokumentation",
+    docsNotFound: "Seite nicht gefunden",
+    docsNotFoundDesc:
+      "Das angeforderte Dokument existiert nicht oder wurde verschoben.",
+    docsHomepage: "Zur Startseite der Docs",
+    docsNavLabel: "Dokumentations-Navigation",
+    docsSearchPlaceholder: "Dokumentation durchsuchen...",
+    docsSearchLabel: "Dokumentation durchsuchen",
+    noResultsForQuery: 'Keine Treffer für „{{query}}".',
+    toggleNavigation: "Navigation umschalten",
 
     methods: {
       put: "PUT",
