@@ -170,7 +170,7 @@ COPY --chown=opensin:opensin ./server/utils/paths.js /app/server/utils/paths.js
 # defense-in-depth backup for already-built images.
 RUN test -f /app/server/utils/paths.js || (echo "BUILD ERROR: /app/server/utils/paths.js missing from server COPY" && exit 1)
 WORKDIR /app/server
-RUN yarn install --production --network-timeout 100000 && yarn cache clean
+RUN yarn install --production --network-timeout 600000 && yarn cache clean
 WORKDIR /app
 
 # Install collector dependencies
@@ -182,7 +182,7 @@ ENV PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testin
 # collector/package.json is pinned to ssh, which crashes yarn install with
 # "ssh: not found". This redirect is non-destructive and only affects this stage.
 RUN git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
-RUN yarn install --production --network-timeout 100000 && yarn cache clean
+RUN yarn install --production --network-timeout 600000 && yarn cache clean
 
 WORKDIR /app
 USER opensin
