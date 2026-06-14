@@ -36,6 +36,21 @@ const router = createBrowserRouter([
         path: "/sso/simple",
         element: <SimpleSSOPassthrough />,
       },
+      // Developer documentation (public)
+      {
+        path: "/docs",
+        lazy: async () => {
+          const { default: Docs } = await import("@/pages/Docs");
+          return { element: <Docs /> };
+        },
+      },
+      {
+        path: "/docs/:slug",
+        lazy: async () => {
+          const { default: Docs } = await import("@/pages/Docs");
+          return { element: <Docs /> };
+        },
+      },
       {
         path: "/workspace/:slug/settings/:tab",
         lazy: async () => {

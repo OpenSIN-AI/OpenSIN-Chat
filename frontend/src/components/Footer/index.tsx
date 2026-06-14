@@ -56,6 +56,7 @@ type FooterItem = {
   url: string;
   ariaLabel: string;
   tooltip: string;
+  external?: boolean;
 };
 
 const DEFAULT_FOOTER_ITEMS: FooterItem[] = [
@@ -65,13 +66,14 @@ const DEFAULT_FOOTER_ITEMS: FooterItem[] = [
     url: paths.github(),
     ariaLabel: "OpenSIN Chat auf GitHub ansehen",
     tooltip: "Quellcode auf GitHub ansehen",
+    external: true,
   },
   {
     key: "docs",
     Icon: BookOpen as IconComponent,
-    url: paths.docs(),
-    ariaLabel: "Dokumentation öffnen",
-    tooltip: "OpenSIN Chat Hilfe-Dokumentation öffnen",
+    url: paths.appDocs(),
+    ariaLabel: "Entwickler-Dokumentation öffnen",
+    tooltip: "Entwickler-Dokumentation öffnen",
   },
 ];
 
@@ -156,12 +158,12 @@ export default function Footer() {
               );
             })
           : DEFAULT_FOOTER_ITEMS.map(
-              ({ key, Icon, url, ariaLabel, tooltip }) => (
+              ({ key, Icon, url, ariaLabel, tooltip, external }) => (
                 <Link
                   key={key}
                   to={url}
-                  target="_blank"
-                  rel="noreferrer"
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noreferrer" : undefined}
                   className={ICON_LINK_CLASSES}
                   aria-label={ariaLabel}
                   data-tooltip-id="footer-item"

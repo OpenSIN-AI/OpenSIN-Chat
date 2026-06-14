@@ -1,84 +1,188 @@
-# Inline-Styles Audit (Issue #65, #93, #111)
+# Inline-Styles Audit
 
-> Stand: Nach Issue #111. **21 verbleibende** `style={{...}}`-Blöcke aus den 12 in #111 gelisteten Dateien wurden auf Tailwind-Utility-Klassen + CSS-Custom-Properties umgestellt.
+> Status after the migration described in this document. All **non-CSS-custom-property** inline styles in `frontend/src/` have been migrated to Tailwind utilities or to CSS custom properties (`--*`).
 
-## Zusammenfassung
+## Summary
 
-| Metrik | Wert |
-|--------|------|
-| Ursprünglich (Agent 1) | 142 |
-| Agent 2 migriert (tooltip, transition, gradient, conditional) | 73 |
-| isMobile-height-Muster migriert (Agents 3-5) | ~48 |
-| In #111 verbleibend | **21** |
-| In #111 konvertiert (Tailwind + CSS-Variablen) | **21** |
-| Davon dynamic-required (nicht als statische Tailwind-Klasse ausdrückbar) | 21 |
-| Davon als `style={{...}}` mit CSS-Variablen umgesetzt | 17 |
-| Davon komplett in 3rd-Party-Props verschoben | 4 |
-| **Verbleibende Inline-Styles in den 12 #111-Dateien** | **0** |
+| Metric | Value |
+|--------|-------|
+| Initial `style={{` occurrences in production source | ~77 |
+| Final `style={{` occurrences in production source | 74 |
+| Of those, only setting CSS custom properties | 74 |
+| Inline styles with non-CSS-var keys | **0** |
+| `inlineStyles/css-vars-only` warnings | **0** |
+| Documented exceptions | **0** |
 
-## Konvertierte Inline-Styles (21)
+The remaining 74 `style={{` blocks are all **CSS custom properties** that drive Tailwind arbitrary-value classes (`w-[var(--x)]`, `h-[var(--x)]`, etc.). They are explicitly allowed by the `inlineStyles/css-vars-only` ESLint rule.
 
-Alle 21 Werte sind **nur zur Laufzeit bekannt** (Mausposition, berechnete Farben, Progress-Prozente, 3rd-Party-Props, Build-time-URLs). Statt direkter Inline-Styles werden sie nun über **CSS-Custom-Properties** (`--*`) an die Elemente gegeben und von Tailwind-Utility-Klassen mit Arbitrary-Values (`[var(--...)]`) konsumiert. Für die vier Recharts-Achsen wurden `fontSize`/`fontFamily` in die `tick`-Props verschoben, sodass kein `style`-Attribut mehr nötig ist.
+## What was migrated
 
-### Kategorie 1: Progress Bars (3)
+### 1. `isMobile` layout height
 
-| # | Datei | Zeile | Alter Wert | Neue Umsetzung | Grund |
-|---|-------|-------|------------|----------------|-------|
-| 1 | `Modals/ManageWorkspace/Documents/WorkspaceDirectory/EmbeddingFileRow.jsx` | 99 | `width: ${pct}%` | `style={{ "--embedding-progress": `${pct}%` }}` + `className="... w-[var(--embedding-progress)]"` | Dynamischer Embedding-Fortschritt |
-| 2 | `WorkspaceChat/ChatContainer/ChatHistory/ToolApprovalRequest/index.tsx` | 92 | `width: ${progressPercent}%` | `style={{ "--approval-progress": `${progressPercent}%` }}` + `className="... w-[var(--approval-progress)]"` | Dynamischer Timeout-Fortschritt |
-| 3 | `WorkspaceChat/ChatContainer/ChatHistory/ClarifyingQuestion/index.tsx` | 16 | `width: ${percent}%` | `style={{ "--timeout-progress": `${percent}%` }}` + `className="... w-[var(--timeout-progress)]"` | Dynamischer Timeout-Fortschritt |
+A shared `height: isMobile ? "100%" : "calc(100% - 32px)"` pattern appeared in many page containers. Each instance was moved to a CSS custom property `--content-height` and consumed with `h-[var(--content-height)]`.
 
-### Kategorie 2: Context-Menu / Dropdown Positioning (3)
+Affected files (42 occurrences):
 
-| # | Datei | Zeile | Alter Wert | Neue Umsetzung | Grund |
-|---|-------|-------|------------|----------------|-------|
-| 4 | `Modals/ManageWorkspace/Documents/Directory/ContextMenu/index.tsx` | 61 | `top: ${contextMenu.y}px, left: ${contextMenu.x}px` | `style={{ "--context-menu-top": ..., "--context-menu-left": ... }}` + `className="... top-[var(--context-menu-top)] left-[var(--context-menu-left)]"` | Mausposition, nur zur Laufzeit bekannt |
-| 5 | `WorkspaceChat/ChatContainer/MemoriesSidebar/MemoryCard/CardMenu/index.tsx` | 40 | `top: pos.top, left: pos.left` | `style={{ "--card-menu-top": ..., "--card-menu-left": ... }}` + `className="... top-[var(--card-menu-top)] left-[var(--card-menu-left)]"` | Aus `getBoundingClientRect()` berechnet |
-| 6 | `WorkspaceChat/ChatContainer/PromptInput/ToolsMenu/Tabs/SlashCommands/SlashCommandRow/index.tsx` | 84 | `top: menuPosition.top, left: menuPosition.left` | `style={{ "--slash-menu-top": ..., "--slash-menu-left": ... }}` + `className="... top-[var(--slash-menu-top)] left-[var(--slash-menu-left)]"` | Aus `getBoundingClientRect()` berechnet |
+- `frontend/src/components/DefaultChat/index.tsx`
+- `frontend/src/components/WorkspaceChat/ChatContainer/index.tsx`
+- `frontend/src/components/WorkspaceChat/LoadingChat/index.tsx`
+- `frontend/src/pages/Admin/Agents/AgentLayout.jsx`
+- `frontend/src/pages/Admin/Agents/index.jsx`
+- `frontend/src/pages/Admin/DefaultSystemPrompt/index.jsx`
+- `frontend/src/pages/Admin/ExperimentalFeatures/Features/LiveSync/manage/index.jsx`
+- `frontend/src/pages/Admin/ExperimentalFeatures/index.jsx`
+- `frontend/src/pages/Admin/Invitations/index.jsx`
+- `frontend/src/pages/Admin/Logging/index.jsx`
+- `frontend/src/pages/Admin/SystemPromptVariables/index.jsx`
+- `frontend/src/pages/Admin/Users/index.jsx`
+- `frontend/src/pages/Admin/Workspaces/index.jsx`
+- `frontend/src/pages/GeneralSettings/ApiKeys/index.jsx`
+- `frontend/src/pages/GeneralSettings/AudioPreference/index.jsx`
+- `frontend/src/pages/GeneralSettings/BrowserExtensionApiKey/index.jsx`
+- `frontend/src/pages/GeneralSettings/ChatEmbedWidgets/index.jsx`
+- `frontend/src/pages/GeneralSettings/Chats/index.jsx`
+- `frontend/src/pages/GeneralSettings/CommunityHub/Authentication/index.jsx`
+- `frontend/src/pages/GeneralSettings/CommunityHub/ImportItem/Steps/index.jsx`
+- `frontend/src/pages/GeneralSettings/CommunityHub/Trending/index.jsx`
+- `frontend/src/pages/GeneralSettings/Connections/TelegramBot/index.jsx`
+- `frontend/src/pages/GeneralSettings/EmbeddingPreference/index.jsx`
+- `frontend/src/pages/GeneralSettings/EmbeddingTextSplitterPreference/index.jsx`
+- `frontend/src/pages/GeneralSettings/LLMPreference/index.jsx`
+- `frontend/src/pages/GeneralSettings/MobileConnections/index.jsx`
+- `frontend/src/pages/GeneralSettings/ModelRouters/RouterRulesPage/index.jsx`
+- `frontend/src/pages/GeneralSettings/ModelRouters/index.jsx`
+- `frontend/src/pages/GeneralSettings/PrivacyAndData/index.jsx`
+- `frontend/src/pages/GeneralSettings/ScheduledJobs/RunDetailPage.jsx`
+- `frontend/src/pages/GeneralSettings/ScheduledJobs/RunHistoryPage.jsx`
+- `frontend/src/pages/GeneralSettings/ScheduledJobs/index.jsx`
+- `frontend/src/pages/GeneralSettings/Security/index.jsx`
+- `frontend/src/pages/GeneralSettings/Settings/Branding/index.jsx`
+- `frontend/src/pages/GeneralSettings/Settings/Chat/index.jsx`
+- `frontend/src/pages/GeneralSettings/Settings/Interface/index.jsx`
+- `frontend/src/pages/GeneralSettings/SystemHealth/index.jsx`
+- `frontend/src/pages/GeneralSettings/TranscriptionPreference/index.jsx`
+- `frontend/src/pages/GeneralSettings/VectorDatabase/index.jsx`
+- `frontend/src/pages/Main/Home/index.jsx`
+- `frontend/src/pages/WorkspaceSettings/index.jsx`
 
-### Kategorie 3: Citation Sizing & Positioning (5)
+Example transformation:
 
-| # | Datei | Zeile | Alter Wert | Neue Umsetzung | Grund |
-|---|-------|-------|------------|----------------|-------|
-| 7 | `WorkspaceChat/ChatContainer/ChatHistory/Citation/index.tsx` | 93 | `width: size, height: size` (Circle) | `style={{ "--source-circle-size": `${size}px` }}` + `className="... w-[var(--source-circle-size)] h-[var(--source-circle-size)]"` | Prop-gesteuerte Icon-Größe |
-| 8 | `Citation/index.tsx` | 93 | `width: size, height: size` (Favicon) | Entfernt; Bilder füllen Parent via `className="w-full h-full"` | Prop-gesteuerte Favicon-Größe |
-| 9 | `Citation/index.tsx` | 93 | `width: size, height: size` (Custom-Image) | Entfernt; Bilder füllen Parent via `className="w-full h-full"` | Prop-gesteuerte Custom-Image-Größe |
-| 10 | `Citation/index.tsx` | 167 | `width: ${visibleSources.length * 17 + 5}px` | `style={{ "--citation-stack-width": ... }}` + `className="... w-[var(--citation-stack-width)]"` | Berechnete Breite aus Array-Länge |
-| 11 | `Citation/index.tsx` | 178 | `left: ${idx * 17}px, zIndex: 3 - idx` | `style={{ "--citation-stack-left": ..., "--citation-stack-z": ... }}` + `className="... left-[var(--citation-stack-left)] z-[var(--citation-stack-z)]"` | Berechnete Position/Stacking |
+```jsx
+// before
+<div
+  style={{ height: isMobile ? "100%" : "calc(100% - 32px)" }}
+  className="relative md:ml-[2px] ..."
+>
 
-### Kategorie 4: Recharts Axis Styles (4)
+// after
+<div
+  style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
+  className="h-[var(--content-height)] relative md:ml-[2px] ..."
+>
+```
 
-| # | Datei | Zeile | Alter Wert | Neue Umsetzung | Grund |
-|---|-------|-------|------------|----------------|-------|
-| 12 | `WorkspaceChat/ChatContainer/ChatHistory/Chartable/index.tsx` | 155 | `fontSize: "12px", fontFamily: "Inter; Helvetica"` | In `tick={{ fontSize: 12, fontFamily: "Inter; Helvetica" }}` verschoben | Recharts `XAxis`/`YAxis` akzeptieren Styling über `tick`-Props |
-| 13 | `Chartable/index.tsx` | 166 | `fontSize: "12px", fontFamily: "Inter; Helvetica"` | In `tick={{ ... }}` verschoben | Recharts `YAxis` |
-| 14 | `Chartable/index.tsx` | 215 | `fontSize: "12px", fontFamily: "Inter; Helvetica"` | In `tick={{ ... }}` verschoben | Recharts `ScatterChart` XAxis |
-| 15 | `Chartable/index.tsx` | 226 | `fontSize: "12px", fontFamily: "Inter; Helvetica"` | In `tick={{ ... }}` verschoben | Recharts `ScatterChart` YAxis |
+### 2. Sidebar dynamic widths
 
-### Kategorie 5: SVG/Chart Dynamic Values (4)
+`frontend/src/components/Sidebar/index.tsx` had four dynamic width/inline styles based on `sidebarWidth`. They were converted to CSS custom properties:
 
-| # | Datei | Zeile | Alter Wert | Neue Umsetzung | Grund |
-|---|-------|-------|------------|----------------|-------|
-| 16 | `WorkspaceChat/ChatContainer/ChatHistory/Chartable/CustomCell.tsx` | 12 | `fill/stroke/strokeWidth/strokeOpacity` | `style={{ "--cell-fill": ..., "--cell-stroke": ..., "--cell-stroke-width": ..., "--cell-stroke-opacity": ... }}` + `className="fill-[var(--cell-fill)] stroke-[var(--cell-stroke)] stroke-[var(--cell-stroke-width)] stroke-opacity-[var(--cell-stroke-opacity)]"` | SVG-Attribute, aus Treemap-Tiefe berechnet |
-| 17 | `WorkspaceChat/ChatContainer/ChatHistory/Chartable/CustomTooltip.tsx` | 59 | `backgroundColor: legendColor` | `style={{ "--legend-color": legendColor, "--legend-text-color": invertColor(...) }}` + `className="... bg-[var(--legend-color)]"` | Dynamische Legenden-Farbe |
-| 18 | `CustomTooltip.tsx` | 59 | `color: invertColor(legendColor, true)` | `text-[var(--legend-text-color)]` | Berechnete Kontrast-Farbe |
-| 19 | `CustomTooltip.tsx` | 59 | `color: invertColor(legendColor, true)` | `text-[var(--legend-text-color)]` | Berechnete Kontrast-Farbe |
+| Old style | New CSS variable | Tailwind class |
+|-----------|------------------|----------------|
+| `width: showSidebar ? sidebarWidth : 0` | `--sidebar-width` | `w-[var(--sidebar-width)]` |
+| `width: sidebarWidth - 48` | `--sidebar-logo-width` | `w-[var(--sidebar-logo-width)]` |
+| `width: sidebarWidth - 32` | `--sidebar-inner-width` | `w-[var(--sidebar-inner-width)]` |
+| `minWidth: sidebarWidth - 64` | `--sidebar-scroll-min-width` | `min-w-[var(--sidebar-scroll-min-width)]` |
 
-### Kategorie 6: Other Dynamic (2)
+### 3. Right sidebar panel width
 
-| # | Datei | Zeile | Alter Wert | Neue Umsetzung | Grund |
-|---|-------|-------|------------|----------------|-------|
-| 20 | `WorkspaceChat/ChatContainer/PromptInput/ToolsMenu/index.tsx` | 158 | `maxHeight` | `style={{ "--tools-menu-max-height": `${maxHeight}px` }}` + `className="... max-h-[var(--tools-menu-max-height)]"` | Berechneter Viewport-Wert |
-| 21 | `pages/GeneralSettings/MobileConnections/ConnectionModal/index.jsx` | 22 | `backgroundImage: url(${BG})` | `style={{ "--connection-modal-bg": `url(${BG})` }}` + `className="... bg-[var(--connection-modal-bg)]"` | Build-time gehashte Asset-URL |
+`frontend/src/components/WorkspaceChat/ChatContainer/Sidebars.jsx` used `style={{ width: PANEL_W }}`. It was moved to a CSS custom property:
 
-## Ergebnis
+```jsx
+style={{ "--panel-width": `${PANEL_W}px` }}
+className="w-[var(--panel-width)] h-full overflow-hidden flex-shrink-0 relative ..."
+```
 
-- **0 verbleibende Inline-Styles** in den 12 in Issue #111 gelisteten Dateien.
-- Alle 21 Werte sind entweder in **Tailwind-Utility-Klassen mit CSS-Custom-Properties** (`[var(--...)]`) überführt oder in 3rd-Party-Component-Props (Recharts `tick`) verschoben worden.
-- Verhalten der Komponenten wurde **nicht verändert**.
-- ESLint-Regel aktualisiert: `inlineStyles/css-vars-only` erlaubt jetzt nur noch `style={{...}}`-Objekte, deren Keys ausschließlich CSS-Custom-Properties (`--*`) sind. Nicht dokumentierte Ausnahmen müssen in `docs/INLINE-STYLES-AUDIT.md` festgehalten werden.
-- Build (`vite build`) und Test-Suite (`vitest run`) laufen erfolgreich durch.
+### 4. Attach-item dropdown positioning
 
-## Hinweis zu weiteren Dateien
+`frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/AttachItem/index.tsx` had a dynamic `position: fixed` block with `bottom` and `left` computed from `menuPos`. The `position: fixed` is now a static Tailwind class, and the dynamic values are CSS custom properties:
 
-Dieses Audit betrachtet ausschließlich die 12 Dateien aus Issue #111. Weitere Inline-Styles in anderen Dateien (z.B. `Sidebar`, `DefaultChat`, `AttachItem`) sind **nicht Teil von Issue #111** und wurden daher nicht angefasst.
+```jsx
+style={{
+  "--attach-bottom": `calc(100vh - ${menuPos.top}px + 8px)`,
+  "--attach-left": `${menuPos.left}px`,
+}}
+className="fixed bottom-[var(--attach-bottom)] left-[var(--attach-left)] ..."
+```
+
+### 5. PDF analysis progress bars
+
+`frontend/src/pages/PdfAnalysis/index.jsx`, `CrossCheckPanel.jsx`, and `CorpusPanel.jsx` used `style={{ width: `${pct}%` }}`. They now use `--progress-pct`:
+
+```jsx
+style={{ "--progress-pct": `${pct}%` }}
+className="w-[var(--progress-pct)] h-full bg-theme-text-secondary transition-all"
+```
+
+### 6. Onboarding background images
+
+`frontend/src/pages/OnboardingFlow/Steps/Home/index.jsx` had two static `backgroundImage` inline styles. They were replaced with Tailwind `bg-[url(...)]` classes:
+
+```jsx
+<div className="absolute inset-0 light:hidden bg-no-repeat bg-center bg-cover bg-[url('/onboarding/background-dark.jpeg')]" />
+<div className="absolute inset-0 hidden light:block bg-no-repeat bg-center bg-cover bg-[url('/onboarding/background-light.jpeg')]" />
+```
+
+These are the only two `style={{` blocks that were completely removed.
+
+## Already CSS-custom-property styles (kept as-is)
+
+The following dynamic inline styles were already using CSS custom properties and are still allowed:
+
+- Progress bars in `EmbeddingFileRow.jsx`, `ToolApprovalRequest/index.tsx`, `ClarifyingQuestion/index.tsx`
+- Context-menu / dropdown positioning in `ContextMenu/index.tsx`, `CardMenu/index.tsx`, `SlashCommandRow/index.tsx`
+- Citation sizing in `Citation/index.tsx`
+- Recharts axis styling in `Chartable/index.tsx`
+- SVG chart dynamic values in `CustomCell.tsx`, `CustomTooltip.tsx`
+- Tools-menu max-height in `ToolsMenu/index.tsx`
+- Connection modal background in `ConnectionModal/index.jsx`
+
+## Result
+
+- **0 undocumented inline-style exceptions**.
+- All remaining `style={{` in production source set only CSS custom properties.
+- Build (`vite build`) succeeds.
+- `inlineStyles/css-vars-only` produces no warnings.
+- The full `eslint src` run still reports pre-existing warnings/errors from other rules, but none of them are related to inline styles.
+
+## Verification
+
+```bash
+# Check for non-CSS-var inline style keys (should be empty)
+python3 - <<'PY'
+import re
+from pathlib import Path
+violations = []
+for f in Path('frontend/src').rglob('*'):
+    if f.is_dir() or '__tests__' in f.parts or '.test.' in f.name:
+        continue
+    if f.suffix not in ('.js','.jsx','.ts','.tsx'):
+        continue
+    text = f.read_text(encoding='utf-8', errors='ignore')
+    for m in re.finditer(r'style=\{\{', text):
+        start = m.start()
+        end = text.find('}}', start)
+        block = text[start+8:end]
+        for prop in re.finditer(r'(?<!\.)\b([a-zA-Z_][\w-]*)\s*:', block):
+            if not prop.group(1).startswith('--'):
+                violations.append((f, text[:start].count('\n')+1, prop.group(1)))
+        for prop in re.finditer(r'["\']([\w-]+)["\']\s*:', block):
+            if not prop.group(1).startswith('--'):
+                violations.append((f, text[:start].count('\n')+1, prop.group(1)))
+print('Violations:', violations or 'none')
+PY
+
+# Build check
+npm run build
+
+# Inline-style rule check
+npx eslint src --rule 'inlineStyles/css-vars-only: warn'
+```
