@@ -44,7 +44,7 @@ export default function SkillList({
               <DefaultBadge title={skill} />
             ) : (
               <div className="text-sm text-theme-text-secondary font-medium">
-                {activeSkills.includes(skill) ? "On" : "Off"}
+                {activeSkills.includes(skill) ? t("common.on") : t("common.off")}
               </div>
             )}
             <CaretRight
