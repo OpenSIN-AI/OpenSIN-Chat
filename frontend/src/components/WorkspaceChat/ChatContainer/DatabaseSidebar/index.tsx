@@ -57,12 +57,12 @@ export default function DatabaseSidebar() {
               {Array.from({ length: 5 }).map((_, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 animate-pulse"
+                  className="flex items-center gap-3 p-2.5 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse"
                 >
-                  <div className="w-8 h-8 rounded-full bg-zinc-700 flex-shrink-0" />
+                  <div className="w-8 h-8 rounded-full bg-zinc-700 light:bg-slate-200 flex-shrink-0" />
                   <div className="flex-1 space-y-1.5">
-                    <div className="h-3 w-28 rounded bg-zinc-700" />
-                    <div className="h-2 w-20 rounded bg-zinc-700" />
+                    <div className="h-3 w-28 rounded bg-zinc-700 light:bg-slate-200" />
+                    <div className="h-2 w-20 rounded bg-zinc-700 light:bg-slate-200" />
                   </div>
                 </div>
               ))}

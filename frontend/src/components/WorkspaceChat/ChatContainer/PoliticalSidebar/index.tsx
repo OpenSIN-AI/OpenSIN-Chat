@@ -21,7 +21,7 @@ function Section({ title, loading, error, onRetry, retryLabel, children }) {
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="h-10 rounded-xl bg-zinc-800 animate-pulse"
+              className="h-10 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse"
             />
           ))}
         </div>

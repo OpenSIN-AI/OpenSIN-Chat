@@ -22,7 +22,7 @@ export default function Sidebars({ workspace }) {
 
   return (
     <div
-      className="h-full flex flex-row flex-shrink-0 transition-all duration-500 overflow-hidden border-l border-theme-sidebar-border"
+      className="h-full flex flex-row flex-shrink-0 transition-all duration-500 overflow-hidden md:ml-[2px]"
       aria-label={t("common.rightSidebar")}
     >
       {/* Panel area — only when a panel is active */}
