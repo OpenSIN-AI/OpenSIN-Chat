@@ -1,6 +1,6 @@
 # OpenSIN-Chat Deployment — sinchat.delqhi.com
 
-**Ziel:** Getrenntes Deployment für OpenSIN-Chat, **unabhängig** vom laufenden `openafd` (opensin.delqhi.com).
+**Ziel:** Getrenntes Deployment für OpenSIN-Chat, **unabhängig** vom laufenden `openafd` (sinchat.delqhi.com).
 
 ---
 
@@ -11,12 +11,12 @@
 | **Container** | `openafd` | `opensin-chat` |
 | **Interner Port** | 3001 | 3001 |
 | **Externer Port (Host)** | 3001 | **43939** |
-| **Domain** | opensin.delqhi.com | **sinchat.delqhi.com** |
+| **Domain** | sinchat.delqhi.com | **sinchat.delqhi.com** |
 | **Cloudflare Tunnel ID** | `32ab3b80-94b4-4911-aff1-fae5a3eae3c6` | `aa6a4715-1a4d-4cf9-a17e-ad27c53fee93` |
 | **Tunnel Config** | `~/.cloudflared/config-openafd.yml` | `~/.cloudflared/config-opensin.yml` |
 | **Storage** | `../server/storage` | `../server/storage-opensin` |
 | **Launchd Label** | `com.sin-solver.cloudflared.plist` | `com.opensin.tunnel.plist` |
-| **Health Endpoint** | `https://opensin.delqhi.com/api/ping` | `https://sinchat.delqhi.com/api/ping` |
+| **Health Endpoint** | `https://sinchat.delqhi.com/api/ping` | `https://sinchat.delqhi.com/api/ping` |
 
 ---
 

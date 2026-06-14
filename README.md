@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-  <a href="https://opensin.delqhi.com">
+  <a href="https://sinchat.delqhi.com">
     <img src="./images/wordmark.png" alt="OpenSIN Chat — Souveräner KI-Arbeitsraum" width="380" />
   </a>
   <br />
@@ -12,7 +12,7 @@ Chatte mit deinen Dokumenten. Automatisiere Recherche. Multi-User, selbst gehost
 
   <br />
 
-[![Cloudflare-Deployment](https://img.shields.io/badge/Cloudflare-deployed-orange?logo=cloudflare)](https://opensin.delqhi.com)
+[![Cloudflare-Deployment](https://img.shields.io/badge/Cloudflare-deployed-orange?logo=cloudflare)](https://sinchat.delqhi.com)
 [![License: MIT](https://img.shields.io/badge/Lizenz-MIT-gr%C3%BCn)](./LICENSE)
 [![Repo: GitHub](https://img.shields.io/badge/Repo-GitHub-black?logo=github)](https://github.com/OpenSIN-AI/OpenSIN-Chat)
 [![DSGVO-konform](https://img.shields.io/badge/DSGVO-konform-blau)]()
@@ -226,7 +226,7 @@ GET  /api/orchestrator/:id/result
 
 ### Live-Demo
 
-👉 **https://opensin.delqhi.com** (Cloudflare-Deployment)
+👉 **https://sinchat.delqhi.com** (Cloudflare-Deployment)
 
 ### Selbst hosten (Docker)
 
@@ -246,11 +246,11 @@ Siehe [`BARE_METAL.md`](./BARE_METAL.md) und [`DEPLOYMENT_GUIDE.md`](./DEPLOYMEN
 
 ## 🏗 Architektur
 
-### Production-Flow (Live unter [opensin.delqhi.com](https://opensin.delqhi.com))
+### Production-Flow (Live unter [sinchat.delqhi.com](https://sinchat.delqhi.com))
 
 ```mermaid
 flowchart TB
-    User(["👤 Browser<br/>https://opensin.delqhi.com"])
+    User(["👤 Browser<br/>https://sinchat.delqhi.com"])
 
     subgraph Cloudflare["☁️ Cloudflare Edge (DNS + Tunnel-Broker)"]
         DNS["DNS-Records<br/>A / CNAME"]
@@ -292,7 +292,7 @@ flowchart TB
 
 | Schicht | Wo | Was |
 |---|---|---|
-| 1. Browser | Welt | HTTPS-Request auf `https://opensin.delqhi.com` |
+| 1. Browser | Welt | HTTPS-Request auf `https://sinchat.delqhi.com` |
 | 2. Cloudflare DNS | Cloudflare-Edge | Löst Domain zu Tunnel-Broker auf (`cf-ray`, `cf-cache-status` Header) |
 | 3. `cloudflared` | **Dein Mac** (PID 53989) | Outbound-Tunnel zurück zum Cloudflare-Broker — **kein offener Port nötig!** |
 | 4. Express | **Dein Mac** (`:3001` / extern `:38471`) | Single-Process: rendert HTML, liefert API, serviert Static |
@@ -320,7 +320,7 @@ OpenSIN-Chat/
 ├── cloud-deployments/   # AWS, GCP, DigitalOcean, K8s, Helm (für Cloud-Self-Hosting)
 ├── tests/         # Vitest-Integrationstests für Server-Endpunkte
 ├── docs/          # Doku
-└── .cloudflared/  # (lokal, nicht im Repo) cloudflared-Config für opensin.delqhi.com-Tunnel
+└── .cloudflared/  # (lokal, nicht im Repo) cloudflared-Config für sinchat.delqhi.com-Tunnel
 ```
 
 ## 🔒 Sicherheit & Datenschutz
@@ -388,7 +388,7 @@ Eine vollständige Liste aller Drittanbieter-Komponenten findest du in [`THIRD-P
 ## Deployment
 
 Die Live-Site läuft als Docker-Container auf einem lokalen Mac, erreichbar über
-Cloudflare Tunnel (`opensin.delqhi.com` → Cloudflare → cloudflared → localhost:38471).
+Cloudflare Tunnel (`sinchat.delqhi.com` → Cloudflare → cloudflared → localhost:38471).
 
 ### Auto-Deploy
 

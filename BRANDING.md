@@ -31,8 +31,8 @@
 ## Externe URLs
 
 - **Repository:** https://github.com/OpenSIN-AI/OpenSIN-Chat
-- **Live-Instanz:** https://opensin.delqhi.com
-- **Support:** support@opensin.delqhi.com
+- **Live-Instanz:** https://sinchat.delqhi.com
+- **Support:** support@sinchat.delqhi.com
 - **Upstream (Sync):** https://github.com/Mintplex-Labs/anything-llm
 
 ## Telemetrie-Policy

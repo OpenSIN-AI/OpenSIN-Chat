@@ -106,7 +106,8 @@ export default function HeaderMenu({
                         className="border-none w-full text-left px-2 py-1 text-sm text-theme-text-primary hover:bg-theme-action-menu-bg transition-colors duration-300"
                       >
                         <span className="block truncate">
-                          {flow?.name || t("agentBuilder.headerMenu.untitledFlow")}
+                          {flow?.name ||
+                            t("agentBuilder.headerMenu.untitledFlow")}
                         </span>
                       </button>
                     ))}
@@ -139,7 +140,7 @@ export default function HeaderMenu({
             </button>
           </div>
           <Link
-            to="https://docs.opensin.delqhi.com/agent-flows/overview"
+            to={paths.appDocs()}
             className="text-theme-text-secondary text-sm hover:underline hover:text-cta-button flex items-center gap-x-1 w-fit float-right"
           >
             {t("agentBuilder.headerMenu.viewDocumentation")}

@@ -72,7 +72,7 @@ export default {
     return "https://discord.gg/6UyHPeGZAC";
   },
   // In-app developer documentation served by the SPA at /docs (see pages/Docs).
-  // The external hosted docs at opensin.delqhi.com/docs are no longer available,
+  // The external hosted docs at docs.opensin.delqhi.com are no longer available,
   // so all documentation links now route to the in-app docs.
   docs: (path = "") => {
     return `/docs${path}`;
@@ -84,7 +84,7 @@ export default {
     return "/docs/user-guide";
   },
   mailToSupport: () => {
-    return "mailto:support@opensin.delqhi.com";
+    return "mailto:support@sinchat.delqhi.com";
   },
   workspace: {
     chat: (slug, options = {}) => {
@@ -227,7 +227,7 @@ export default {
   },
   communityHub: {
     website: () => {
-      return "https://opensin.delqhi.com/hub";
+      return "https://sinchat.delqhi.com/hub";
     },
     viewMoreOfType: function (type: any) {
       return `${this.website()}/list/${type}`;

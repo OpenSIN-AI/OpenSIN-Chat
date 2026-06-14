@@ -20,7 +20,7 @@
   <a href="https://github.com/Family-Team-Projects/opensin-chat/blob/master/LICENSE" target="_blank">
       <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white" alt="ライセンス">
   </a> |
-  <a href="https://docs.opensin.delqhi.com" target="_blank">
+  <a href="https://docs.sinchat.delqhi.com" target="_blank">
     ドキュメント
   </a> |
    <a href="https://my.openafd.com/aio-checkout?product=openafd" target="_blank">

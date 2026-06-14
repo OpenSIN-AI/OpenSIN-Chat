@@ -106,8 +106,8 @@ docker run -v openafd:/app/server/storage -p 3001:3001 openafd/openafd:latest
 ### Important Links
 
 - **GitHub**: https://github.com/Family-Team-Projects/opensin-chat
-- **Docs**: https://docs.opensin.delqhi.com
-- **API Docs**: https://docs.opensin.delqhi.com/api/api-overview
+- **Docs**: https://docs.sinchat.delqhi.com
+- **API Docs**: https://docs.sinchat.delqhi.com/api/api-overview
 
 ### Troubleshooting
 

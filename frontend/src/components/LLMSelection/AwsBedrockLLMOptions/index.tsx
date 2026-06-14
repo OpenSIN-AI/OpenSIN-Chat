@@ -20,7 +20,7 @@ export default function AwsBedrockLLMOptions({ settings }: any) {
               {t("awsBedrock.iamUserInstructions")}
               <br />
               <a
-                href="https://docs.opensin.delqhi.com/setup/llm-configuration/cloud/aws-bedrock"
+                href="/docs"
                 target="_blank"
                 className="underline flex gap-x-1 items-center"
                 rel="noreferrer"

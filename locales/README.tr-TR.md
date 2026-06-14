@@ -20,7 +20,7 @@ Belgelerinizle sohbet edin, yapay zeka ajanlarını kullanın, son derece özell
   <a href="https://github.com/Family-Team-Projects/opensin-chat/blob/master/LICENSE" target="_blank">
       <img src="https://img.shields.io/static/v1?label=license&message=MIT&color=white" alt="License">
   </a> |
-  <a href="https://docs.opensin.delqhi.com" target="_blank">
+  <a href="https://docs.sinchat.delqhi.com" target="_blank">
     Docs
   </a> |
    <a href="https://my.openafd.com/aio-checkout?product=openafd" target="_blank">
@@ -55,8 +55,8 @@ OpenSIN Chat ayrıca birden fazla kullanıcıyı da destekler; burada örneğin 
 
 ## OpenSIN Chat’in Harika Özellikleri
 
-- 🆕 [**Özel Yapay Zeka Ajanları**](https://docs.opensin.delqhi.com/agent/custom/introduction)
-- 🆕 [**Kod yazmadan AI Ajanı oluşturma aracı**](https://docs.opensin.delqhi.com/agent-flows/overview)
+- 🆕 [**Özel Yapay Zeka Ajanları**](https://docs.sinchat.delqhi.com/agent/custom/introduction)
+- 🆕 [**Kod yazmadan AI Ajanı oluşturma aracı**](https://docs.sinchat.delqhi.com/agent-flows/overview)
 - 🖼️ **Çoklu-mod desteği (hem kapalı kaynak hem de açık kaynak LLM'ler!)**
 - 👤 Çok kullanıcılı destek ve yetkilendirme _(Yalnızca Docker sürümünde)_
 - 🦾 Çalışma alanı içinde ajanlar (web'de gezinme vb.)

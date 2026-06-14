@@ -10,7 +10,7 @@
 
 - [2026-06-09T11:57:45.000Z] After any git cherry-pick, rebase, or merge conflict resolution, ALWAYS run `rg '<<<<<<< |=======|>>>>>>> ' frontend/src/ --files-with-matches` BEFORE running `npx vite build` or `docker compose build`. Leftover conflict markers crash the Vite build with "Unexpected <<" and produce no output bundle — the old bundle persists silently. Fix: remove conflict markers (keep HEAD version) and rebuild. (priority: -10)
 
-- [2026-06-09T11:58:00.000Z] The live site opensin.delqhi.com runs via Cloudflare DNS → Cloudflare Tunnel (cloudflared) → localhost:3001 → Docker container. NEVER use force-push on main. NEVER commit secrets/api keys. If the live site shows old content, check: (1) `lsof -i :3001` for rogue node, (2) `ps aux | grep cloudflared` for tunnel, (3) `docker ps` for container health. (priority: -10)
+- [2026-06-09T11:58:00.000Z] The live site sinchat.delqhi.com runs via Cloudflare DNS → Cloudflare Tunnel (cloudflared) → localhost:3001 → Docker container. NEVER use force-push on main. NEVER commit secrets/api keys. If the live site shows old content, check: (1) `lsof -i :3001` for rogue node, (2) `ps aux | grep cloudflared` for tunnel, (3) `docker ps` for container health. (priority: -10)
 
 - [2026-06-09T11:58:15.000Z] For quick frontend-only deploys (no Dockerfile/package.json changes): use `docker cp frontend/dist/. openafd:/app/server/public/` instead of a full image rebuild. Express serves static files directly from disk, so no restart needed. Full `docker compose build --no-cache` is only required when Dockerfile or npm dependencies change. (priority: -5)
 

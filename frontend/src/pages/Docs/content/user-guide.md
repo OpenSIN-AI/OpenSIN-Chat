@@ -1,7 +1,7 @@
 # OpenSIN Chat — Benutzer-Handbuch
 
 > **Zielgruppe:** Endnutzer — Pressestelle, Fraktionsmitarbeiter, Researcher, politische Mitarbeiter
-> **Voraussetzung:** OpenSIN Chat läuft auf `http://localhost:3001` oder `https://opensin.delqhi.com`
+> **Voraussetzung:** OpenSIN Chat läuft auf `http://localhost:3001` oder `https://sinchat.delqhi.com`
 > **Stand:** 2026-06-07
 
 ---
@@ -602,7 +602,7 @@ cd frontend && yarn build
 - **Architektur:** `docs/architecture.md`
 - **Roadmap:** `ROADMAP.md`
 - **Issues:** https://github.com/Family-Team-Projects/OpenSIN-Chat/issues
-- **Live-Demo:** https://opensin.delqhi.com
+- **Live-Demo:** https://sinchat.delqhi.com
 
 ---
 
