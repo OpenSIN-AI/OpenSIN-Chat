@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { Robot } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 import ImportedSkillConfig from "./Imported/ImportedSkillConfig";
 import FlowPanel from "./AgentFlows/FlowPanel";
 import ServerPanel from "./MCPServers/ServerPanel";
@@ -26,6 +27,7 @@ export default function AgentSkillPanel({
   toggleAgentSkill,
   agentSkills,
 }) {
+  const { t } = useTranslation();
   if (selectedMcpServer) {
     return (
       <ServerPanel
