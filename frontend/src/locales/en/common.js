@@ -243,6 +243,18 @@ const TRANSLATIONS = {
     docsSearchLabel: "Search documentation",
     noResultsForQuery: 'No results for "{{query}}".',
     toggleNavigation: "Toggle navigation",
+    backToApp: "Back to App",
+    docsOnThisPage: "On this page",
+    docsCopyCode: "Copy code",
+    docsCodeCopied: "Copied!",
+    docsLandingSubtitle:
+      "Everything you need to understand, operate, and extend OpenSIN Chat.",
+    docsBrowseCategory: "Browse category",
+    docsPrevious: "Previous",
+    docsNext: "Next",
+    docsEditOnGithub: "Edit on GitHub",
+    docsPagesCount_one: "{{count}} page",
+    docsPagesCount_other: "{{count}} pages",
 
     methods: {
       put: "PUT",

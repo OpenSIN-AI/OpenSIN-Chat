@@ -48,8 +48,24 @@ try {
 
   let copied = 0;
 
+  const allFiles = [...CURATED_FILES, ...ADR_FILES];
+  const expected = new Set(allFiles.map(({ dst }) => dst));
+
+  // Remove any stale markdown files that are no longer part of the curated
+  // set. This is critical: leftover files (e.g. uppercase variants like
+  // API.md alongside api.md) collide on case-insensitive filesystems such as
+  // macOS, where Vite's glob registers only one casing and the manifest's
+  // lowercase lookup then resolves to null → "page not found".
+  for (const existing of fs.readdirSync(CONTENT_DEST)) {
+    if (!existing.endsWith(".md")) continue;
+    if (!expected.has(existing)) {
+      fs.rmSync(path.join(CONTENT_DEST, existing));
+      console.log(`[docs-sync] Removed stale ${existing}`);
+    }
+  }
+
   // Copy curated files
-  for (const { src, dst } of [...CURATED_FILES, ...ADR_FILES]) {
+  for (const { src, dst } of allFiles) {
     const srcPath = path.join(DOCS_SOURCE, src);
     const dstPath = path.join(CONTENT_DEST, dst);
 
