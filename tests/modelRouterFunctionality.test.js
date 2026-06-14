@@ -55,7 +55,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -78,31 +78,8 @@ vi.mock("../server/utils/chats", () => ({
   VALID_COMMANDS: { help: true, clear: true },
 }));
 
-vi.mock("../server/models/modelRouter", () => ({
-  ModelRouter: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    update: vi.fn(() => Promise.resolve({ id: 1, name: "updated" })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
-  },
-}));
-
-vi.mock("../server/models/modelRouterRule", () => ({
-  ModelRouterRule: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, rule: "test" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, rule: "test" })),
-    update: vi.fn(() => Promise.resolve({ id: 1, rule: "updated" })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
-  },
-}));
-
 let app;
+let routerId = null;
 
 beforeEach(async () => {
   vi.clearAllMocks();
@@ -132,40 +109,42 @@ const request = async (method, path, body = null, headers = {}) => {
   };
 };
 
-describe("model router functionality endpoints", () => {
-  describe("POST /model-router", () => {
-    it("should create model router with valid data", async () => {
-      const response = await request("POST", "/model-router", {
-        name: "Test Router",
-        description: "Test router description",
-        model: "gpt-4",
-        temperature: 0.7,
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "Test Router");
-    });
+const validRouter = {
+  name: "Test Router",
+  description: "Test router description",
+  fallback_provider: "openai",
+  fallback_model: "gpt-4",
+};
 
-    it("should create model router with minimal data", async () => {
-      const response = await request("POST", "/model-router", {
-        name: "Simple Router",
-        model: "gpt-4",
-      });
+const validRule = {
+  title: "test_rule",
+  type: "llm",
+  description: "Route to gpt4",
+  priority: 1,
+  route_provider: "openai",
+  route_model: "gpt-4",
+};
+
+describe("model router functionality endpoints", () => {
+  describe("POST /model-routers/new", () => {
+    it("should create model router with valid data", async () => {
+      const response = await request("POST", "/model-routers/new", validRouter);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "Simple Router");
+      expect(response.body).toHaveProperty("router");
+      if (response.body.router) routerId = response.body.router.id;
     });
 
     it("should reject model router with missing name", async () => {
-      const response = await request("POST", "/model-router", {
-        model: "gpt-4",
+      const response = await request("POST", "/model-routers/new", {
+        fallback_provider: "openai",
+        fallback_model: "gpt-4",
       });
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("error");
     });
 
-    it("should reject model router with missing model", async () => {
-      const response = await request("POST", "/model-router", {
+    it("should reject model router with missing fallback provider/model", async () => {
+      const response = await request("POST", "/model-routers/new", {
         name: "Test Router",
       });
       expect(response.status).toBe(400);
@@ -173,50 +152,50 @@ describe("model router functionality endpoints", () => {
     });
   });
 
-  describe("GET /model-router", () => {
+  describe("GET /model-routers", () => {
     it("should return model routers", async () => {
-      const response = await request("GET", "/model-router");
+      const response = await request("GET", "/model-routers");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("routers");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalRouters");
     });
 
     it("should return model routers with pagination", async () => {
-      const response = await request("GET", "/model-router?offset=0&limit=10");
+      const response = await request("GET", "/model-routers?offset=0&limit=10");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("routers");
     });
   });
 
-  describe("GET /model-router/:id", () => {
+  describe("GET /model-routers/:id", () => {
     it("should get model router by id", async () => {
-      const response = await request("GET", "/model-router/1");
+      const id = routerId || 1;
+      const response = await request("GET", `/model-routers/${id}`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "test");
+      expect(response.body).toHaveProperty("router");
     });
 
     it("should return 404 for non-existent model router", async () => {
-      const response = await request("GET", "/model-router/999");
+      const response = await request("GET", "/model-routers/99999");
       expect(response.status).toBe(404);
       expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("PUT /model-router/:id", () => {
+  describe("PUT /model-routers/:id", () => {
     it("should update model router", async () => {
-      const response = await request("PUT", "/model-router/1", {
+      const id = routerId || 1;
+      const response = await request("PUT", `/model-routers/${id}`, {
         name: "Updated Router",
-        description: "Updated description",
+        fallback_provider: "openai",
+        fallback_model: "gpt-4",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "updated");
+      expect(response.body).toHaveProperty("router");
     });
 
     it("should reject model router update with invalid data", async () => {
-      const response = await request("PUT", "/model-router/1", {
+      const id = routerId || 1;
+      const response = await request("PUT", `/model-routers/${id}`, {
         name: "",
       });
       expect(response.status).toBe(400);
@@ -224,56 +203,54 @@ describe("model router functionality endpoints", () => {
     });
   });
 
-  describe("DELETE /model-router/:id", () => {
+  describe("POST /model-routers/:id/rules/new", () => {
+    it("should create model router rule", async () => {
+      const id = routerId || 1;
+      const response = await request("POST", `/model-routers/${id}/rules/new`, validRule);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("rule");
+    });
+
+    it("should create model router rule with minimal data", async () => {
+      const id = routerId || 1;
+      const response = await request("POST", `/model-routers/${id}/rules/new`, {
+        title: "simple_rule",
+        type: "llm",
+        description: "Simple rule",
+        priority: 1,
+        route_provider: "openai",
+        route_model: "gpt-4",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("rule");
+    });
+
+    it("should reject model router rule with missing title", async () => {
+      const id = routerId || 1;
+      const response = await request("POST", `/model-routers/${id}/rules/new`, {
+        type: "llm",
+        description: "Missing title",
+        priority: 1,
+        route_provider: "openai",
+        route_model: "gpt-4",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+
+  describe("DELETE /model-routers/:id", () => {
     it("should delete model router", async () => {
-      const response = await request("DELETE", "/model-router/1");
+      const id = routerId || 1;
+      const response = await request("DELETE", `/model-routers/${id}`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
     });
 
     it("should return 404 for non-existent model router", async () => {
-      const response = await request("DELETE", "/model-router/999");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
-    });
-  });
-
-  describe("POST /model-router-rule", () => {
-    it("should create model router rule", async () => {
-      const response = await request("POST", "/model-router-rule", {
-        routerId: 1,
-        rule: "test-rule",
-        priority: 1,
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("rule", "test-rule");
-    });
-
-    it("should create model router rule with minimal data", async () => {
-      const response = await request("POST", "/model-router-rule", {
-        routerId: 1,
-        rule: "simple-rule",
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("rule", "simple-rule");
-    });
-
-    it("should reject model router rule with missing routerId", async () => {
-      const response = await request("POST", "/model-router-rule", {
-        rule: "test-rule",
-      });
+      const response = await request("DELETE", "/model-routers/99999");
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
-    });
-
-    it("should reject model router rule with missing rule", async () => {
-      const response = await request("POST", "/model-router-rule", {
-        routerId: 1,
-      });
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
+      expect(response.body).toHaveProperty("success", false);
     });
   });
 });

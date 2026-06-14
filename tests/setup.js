@@ -7,10 +7,14 @@
 
 const originalFetch = global.fetch;
 
+const TEST_PORT = process.env.SERVER_PORT || "3001";
+const LOCALHOST_URL = `http://localhost:${TEST_PORT}`;
+const LOOPBACK_URL = `http://[::1]:${TEST_PORT}`;
+
 global.fetch = async function patchedFetch(input, init) {
   let url = typeof input === "string" ? input : input.url;
-  if (url.startsWith("http://localhost:3001/") || url === "http://localhost:3001") {
-    url = url.replace("http://localhost:3001", "http://[::1]:3001");
+  if (url.startsWith(`${LOCALHOST_URL}/`) || url === LOCALHOST_URL) {
+    url = url.replace(LOCALHOST_URL, LOOPBACK_URL);
     input = url;
   }
   return originalFetch(input, init);

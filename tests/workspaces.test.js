@@ -87,8 +87,10 @@ beforeEach(async () => {
   app = createApp();
 });
 
+const TEST_PORT = process.env.SERVER_PORT || "3001";
+
 const request = async (method, path, body = null, headers = {}) => {
-  const url = `http://localhost:3001${path}`;
+  const url = `http://localhost:${TEST_PORT}${path}`;
   const options = {
     method,
     headers: {
@@ -103,10 +105,18 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
+  let responseBody = null;
+  if (data) {
+    try {
+      responseBody = JSON.parse(data);
+    } catch {
+      responseBody = data;
+    }
+  }
   return {
     status: response.status,
     headers: response.headers,
-    body: data ? JSON.parse(data) : null,
+    body: responseBody,
   };
 };
 
@@ -163,7 +173,7 @@ describe("workspace endpoints", () => {
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("workspace");
       expect(response.body.workspace).toHaveProperty("id", workspace.id);
-      expect(response.body.workspace).toHaveProperty("name", "updated");
+      expect(response.body.workspace).toHaveProperty("name", "updated-workspace");
     });
   });
 

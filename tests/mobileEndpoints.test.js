@@ -48,7 +48,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -59,13 +59,12 @@ vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
   simpleRateLimit: () => (req, res, next) => next(),
 }));
 
-vi.mock("../server/endpoints/mobile/utils", () => ({
-  authenticateMobileDevice: vi.fn(() => Promise.resolve({ deviceId: "device_1", token: "mobile_token" })),
-  checkMobileVersion: vi.fn(() => Promise.resolve({ current: "2.0.0", minimum: "1.5.0" })),
+vi.mock("../server/utils/collectorApi", () => ({
+  CollectorApi: () => ({ online: () => Promise.resolve(true), acceptedFileTypes: () => Promise.resolve([]) }),
 }));
 
-vi.mock("../server/endpoints/mobile/middleware", () => ({
-  mobileAuthRequired: () => (req, res, next) => next(),
+vi.mock("../server/utils/chats", () => ({
+  VALID_COMMANDS: { help: true, clear: true },
 }));
 
 let app;
@@ -88,66 +87,76 @@ const request = async (method, path, body = null, headers = {}) => {
 };
 
 describe("mobile endpoints", () => {
-  describe("POST /mobile/auth", () => {
-    it("should authenticate mobile device with valid key", async () => {
-      const response = await request("POST", "/mobile/auth", {
-        apiKey: "valid-api-key",
+  describe("POST /mobile/register", () => {
+    it("should reject invalid registration token", async () => {
+      const response = await request("POST", "/mobile/register", {
         deviceName: "iPhone 15",
+        deviceOs: "ios",
+      }, {
+        Authorization: "Bearer invalid-token",
       });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("deviceId");
-      expect(response.body).toHaveProperty("token");
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
     });
 
-    it("should reject with missing api key", async () => {
-      const response = await request("POST", "/mobile/auth", {
+    it("should reject registration without token", async () => {
+      const response = await request("POST", "/mobile/register", {
         deviceName: "iPhone 15",
+        deviceOs: "ios",
       });
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("GET /mobile/version", () => {
-    it("should return mobile version info", async () => {
-      const response = await request("GET", "/mobile/version", null, {
-        "X-Mobile-App-Version": "2.0.0",
+  describe("GET /mobile/auth", () => {
+    it("should reject invalid device token", async () => {
+      const response = await request("GET", "/mobile/auth", null, {
+        "x-openafd-mobile-device-token": "invalid-token",
       });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("current");
-      expect(response.body).toHaveProperty("minimum");
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
     });
 
-    it("should return version without headers", async () => {
-      const response = await request("GET", "/mobile/version");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("current");
-    });
-  });
-
-  describe("GET /mobile/workspaces", () => {
-    it("should return workspaces for mobile", async () => {
-      const response = await request("GET", "/mobile/workspaces", null, {
-        Authorization: "Bearer mobile_token",
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("workspaces");
-    });
-
-    it("should return 401 without auth header", async () => {
-      const response = await request("GET", "/mobile/workspaces");
-      expect(response.status).toBe(401);
+    it("should reject without device token", async () => {
+      const response = await request("GET", "/mobile/auth");
+      expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("GET /mobile/workspace/:slug/chats", () => {
-    it("should return chats for a workspace", async () => {
-      const response = await request("GET", "/mobile/workspace/test/chats", null, {
-        Authorization: "Bearer mobile_token",
+  describe("GET /mobile/version", () => {
+    it.skip("TODO: /mobile/version endpoint does not exist in server/endpoints/mobile/index.js", async () => {
+      const response = await request("GET", "/mobile/version", null, {
+        "X-Mobile-App-Version": "2.0.0",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("chats");
+    });
+  });
+
+  describe("POST /mobile/send/workspaces", () => {
+    it("should reject without device token", async () => {
+      const response = await request("POST", "/mobile/send/workspaces");
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+
+    it("should reject invalid device token", async () => {
+      const response = await request("POST", "/mobile/send/workspaces", {}, {
+        "x-openafd-mobile-device-token": "invalid-token",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+
+  describe("POST /mobile/send/workspace-content", () => {
+    it("should reject without device token", async () => {
+      const response = await request("POST", "/mobile/send/workspace-content", {
+        workspaceSlug: "test",
+      });
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
     });
   });
 });

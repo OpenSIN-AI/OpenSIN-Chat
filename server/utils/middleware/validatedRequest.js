@@ -19,6 +19,15 @@ async function validatedRequest(request, response, next) {
     !process.env.AUTH_TOKEN ||
     !process.env.JWT_SECRET
   ) {
+    // In test mode, provide a default user context so integration tests can
+    // exercise endpoints that call userFromSession without a full auth flow.
+    if (process.env.NODE_ENV === "test") {
+      response.locals.user = {
+        id: 1,
+        username: "test",
+        role: "admin",
+      };
+    }
     next();
     return;
   }

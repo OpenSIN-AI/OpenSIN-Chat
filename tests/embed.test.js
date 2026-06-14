@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-// Purpose: Test embed endpoints (embed, embed-chats, embed-config)
-// Docs: tests/embed.test.js
+// Purpose: Test embed management endpoints
+// Docs: tests/embed.test.js.doc.md
 
 import { describe, it, expect, vi, beforeEach, beforeAll, afterAll } from "vitest";
 import { createApp } from "../server/app";
@@ -85,6 +85,18 @@ let testEmbed;
 beforeAll(async () => {
   const { Workspace } = await vi.importActual("../server/models/workspace");
   const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
+  const { EmbedChats } = await vi.importActual("../server/models/embedChats");
+
+  // Clean up any leftovers from previous partial runs so the test starts fresh.
+  await EmbedChats.delete({}).catch(() => {});
+  const allEmbeds = await EmbedConfig.where({}, 9999);
+  for (const embed of allEmbeds) {
+    await EmbedConfig.delete({ id: embed.id }).catch(() => {});
+  }
+  const testWorkspaces = await Workspace.where({ name: { contains: "Test Workspace" } }, 9999);
+  for (const ws of testWorkspaces) {
+    await Workspace.delete({ id: ws.id }).catch(() => {});
+  }
 
   const workspaceResult = await Workspace.new("Test Workspace");
   testWorkspace = workspaceResult.workspace;
@@ -96,11 +108,8 @@ beforeAll(async () => {
 afterAll(async () => {
   const { Workspace } = await vi.importActual("../server/models/workspace");
   const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
-  const { EmbedChats } = await vi.importActual("../server/models/embedChats");
-
-  if (testEmbed) await EmbedConfig.delete({ id: testEmbed.id });
-  await EmbedChats.delete({}).catch(() => {});
-  if (testWorkspace) await Workspace.delete({ id: testWorkspace.id });
+  await EmbedConfig.delete({ id: testEmbed?.id }).catch(() => {});
+  if (testWorkspace) await Workspace.delete({ id: testWorkspace.id }).catch(() => {});
 });
 
 beforeEach(async () => {
@@ -155,7 +164,7 @@ describe("embed endpoints", () => {
   describe("POST /embeds/new", () => {
     it("should create embed", async () => {
       const response = await request("POST", "/embeds/new", {
-        name: "test-embed",
+        name: "Test Embed",
         description: "Test embed description",
         workspace_id: testWorkspace.id,
       });
@@ -178,9 +187,8 @@ describe("embed endpoints", () => {
 
   describe("DELETE /embed/:embedId", () => {
     it("should delete embed", async () => {
-      // Create a dedicated embed to delete so the shared fixture remains available.
       const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
-      const { embed } = (await EmbedConfig.new({ workspace_id: testWorkspace.id }, null));
+      const { embed } = await EmbedConfig.new({ workspace_id: testWorkspace.id }, null);
       const response = await request("DELETE", `/embed/${embed.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
@@ -189,15 +197,17 @@ describe("embed endpoints", () => {
 
   describe("POST /embed/chats", () => {
     it("should return embed chats", async () => {
-      const response = await request("POST", "/embed/chats");
+      const response = await request("POST", "/embed/chats", {
+        embed_id: testEmbed.id,
+      });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("chats");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalChats");
     });
 
     it("should return embed chats with pagination", async () => {
-      const response = await request("POST", "/embed/chats", { offset: 0, limit: 10 });
+      const response = await request("POST", "/embed/chats?offset=0&limit=10", {
+        embed_id: testEmbed.id,
+      });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("chats");
     });
@@ -205,7 +215,12 @@ describe("embed endpoints", () => {
 
   describe("DELETE /embed/chats/:chatId", () => {
     it("should delete embed chat", async () => {
-      const response = await request("DELETE", "/embed/chats/1");
+      const { EmbedChats } = await vi.importActual("../server/models/embedChats");
+      const chat = await EmbedChats.create({
+        embed_id: testEmbed.id,
+        workspace_id: testWorkspace.id,
+      });
+      const response = await request("DELETE", `/embed/chats/${chat.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
     });

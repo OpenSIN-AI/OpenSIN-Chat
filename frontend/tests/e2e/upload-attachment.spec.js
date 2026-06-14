@@ -86,6 +86,12 @@ test.describe("upload attachment flow", () => {
     await seedSession(page, token);
     await mockOnboardingCheck(page);
 
+    // Capture console errors to diagnose frontend crashes.
+    page.on("console", (msg) => {
+      if (msg.type() === "error") console.log("CONSOLE ERROR:", msg.text());
+    });
+    page.on("pageerror", (err) => console.log("PAGE ERROR:", err.message, err.stack));
+
     // Navigate to the chat page for a real workspace.
     await page.goto(`/workspace/${slug}`, { waitUntil: "networkidle" });
 

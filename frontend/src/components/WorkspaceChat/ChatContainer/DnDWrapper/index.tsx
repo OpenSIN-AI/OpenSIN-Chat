@@ -48,6 +48,7 @@ export function DnDFileUploaderProvider({
   threadSlug = null,
   children,
 }: any) {
+  const { t } = useTranslation();
   const [files, setFiles] = useState([] as any);
   const { isOnline: ready } = useDocumentProcessorOnline();
   const [dragging, setDragging] = useState(false as any);
@@ -427,6 +428,7 @@ export function DnDFileUploaderProvider({
 }
 
 export default function DnDFileUploaderWrapper({ children }: any) {
+  const { t } = useTranslation();
   const { onDrop, ready, dragging, setDragging } =
     useContext(DndUploaderContext);
   const { getRootProps, getInputProps } = useDropzone({

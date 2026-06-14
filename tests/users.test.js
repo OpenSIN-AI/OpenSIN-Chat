@@ -67,7 +67,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => {
   };
 });
 
-vi.mock("../server/utils/http", () => ({
+vi.mock("../server/utils/http/index.js", () => ({
   reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test", role: "admin" }),
@@ -99,7 +99,9 @@ let app;
 
 beforeEach(async () => {
   vi.clearAllMocks();
-  app = createApp();
+  vi.resetModules();
+  const { createApp: freshCreateApp } = await import("../server/app");
+  app = freshCreateApp();
 });
 
 const request = async (method, path, body = null, headers = {}) => {
@@ -142,15 +144,16 @@ describe("user endpoints", () => {
 
   describe("POST /admin/users/new", () => {
     it("should create user", async () => {
+      const username = `test-user-${Date.now()}`;
       const response = await request("POST", "/admin/users/new", {
-        username: "test-user",
+        username,
         password: "test-password",
-        role: "user",
+        role: "default",
       });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("user");
       expect(response.body.user).toHaveProperty("id");
-      expect(response.body.user).toHaveProperty("username", "test-user");
+      expect(response.body.user).toHaveProperty("username", username);
     });
   });
 
@@ -164,8 +167,15 @@ describe("user endpoints", () => {
 
   describe("POST /admin/user/:id", () => {
     it("should update user", async () => {
-      const response = await request("POST", "/admin/user/1", {
-        username: "updated-user",
+      const username = `update-target-${Date.now()}`;
+      const createResponse = await request("POST", "/admin/users/new", {
+        username,
+        password: "test-password",
+        role: "default",
+      });
+      const userId = createResponse.body.user.id;
+      const response = await request("POST", `/admin/user/${userId}`, {
+        username: `updated-user-${Date.now()}`,
         role: "admin",
       });
       expect(response.status).toBe(200);
@@ -175,7 +185,14 @@ describe("user endpoints", () => {
 
   describe("DELETE /admin/user/:id", () => {
     it("should delete user", async () => {
-      const response = await request("DELETE", "/admin/user/1");
+      const username = `delete-target-${Date.now()}`;
+      const createResponse = await request("POST", "/admin/users/new", {
+        username,
+        password: "test-password",
+        role: "default",
+      });
+      const userId = createResponse.body.user.id;
+      const response = await request("DELETE", `/admin/user/${userId}`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
     });

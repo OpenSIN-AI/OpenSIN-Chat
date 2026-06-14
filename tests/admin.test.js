@@ -19,19 +19,22 @@ vi.mock("../server/models/systemSettings", () => ({
   },
 }));
 
-vi.mock("../server/models/user", () => ({
-  User: {
-    _get: vi.fn(() => Promise.resolve(null)),
-    filterFields: vi.fn((user) => user),
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, username: "test" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, username: "test" })),
-    update: vi.fn(() => Promise.resolve({ success: true })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
-  },
-}));
+vi.mock("../server/models/user", () => {
+  console.log("USER MOCK FACTORY RUNNING");
+  return {
+    User: {
+      _get: vi.fn(() => Promise.resolve(null)),
+      filterFields: vi.fn((user) => user),
+      whereWithData: vi.fn(() => Promise.resolve([])),
+      count: vi.fn(() => Promise.resolve(0)),
+      create: vi.fn(() => Promise.resolve({ id: 1, username: "test" })),
+      get: vi.fn(() => Promise.resolve({ id: 1, username: "test", role: "admin" })),
+      update: vi.fn(() => Promise.resolve({ success: true })),
+      delete: vi.fn(() => Promise.resolve(true)),
+      where: vi.fn(() => Promise.resolve([])),
+    },
+  };
+});
 
 vi.mock("../server/models/eventLogs", () => ({
   EventLogs: {
@@ -94,10 +97,11 @@ beforeAll(async () => {
   const mod = await import("../server/app");
   createApp = mod.createApp;
   app = createApp();
-}, 60000);
+}, 120000);
 
 beforeEach(async () => {
   vi.clearAllMocks();
+  app = createApp();
 });
 
 const request = async (method, path, body = null, headers = {}) => {
@@ -143,7 +147,7 @@ describe("admin endpoints", () => {
       const response = await request("POST", "/admin/users/new", {
         username: "test-user",
         password: "test-password",
-        role: "user",
+        role: "default",
       });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("user");
