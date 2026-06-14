@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 import { useTranslation } from "react-i18next";
 
 export default function DeepgramSpeechToTextOptions({ settings }: any) {
@@ -36,21 +36,11 @@ export default function DeepgramSpeechToTextOptions({ settings }: any) {
 
 function DeepgramSttModelSelection({ apiKey, settings }: any) {
   const { t } = useTranslation();
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findModels() {
-      setLoading(true);
-      const { models } = await System.customModels(
-        "deepgram-stt",
-        typeof apiKey === "boolean" ? null : apiKey,
-      );
-      setModels(models || []);
-      setLoading(false);
-    }
-    findModels();
-  }, [apiKey]);
+  const { customModels, isLoading: loading } = useProviderModels(
+    apiKey ? "deepgram-stt" : null,
+    apiKey,
+  );
+  const models = customModels as any[];
 
   if (loading) {
     return (
@@ -82,7 +72,7 @@ function DeepgramSttModelSelection({ apiKey, settings }: any) {
         defaultValue={settings?.STTDeepgramModel ?? "nova-3"}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {(models as any).map((model) => (
+        {models.map((model) => (
           <option key={model.id} value={model.id}>
             {model.name}
           </option>

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import System from "@/models/system";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function CohereEmbeddingOptions({ settings }: any) {
   const { t } = useTranslation();
@@ -19,7 +19,9 @@ export default function CohereEmbeddingOptions({ settings }: any) {
             type="password"
             name="CohereApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.cohereEmbedding.apiKeyPlaceholder")}
+            placeholder={t(
+              "providerSettings.cohereEmbedding.apiKeyPlaceholder",
+            )}
             defaultValue={settings?.CohereApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -36,27 +38,12 @@ export default function CohereEmbeddingOptions({ settings }: any) {
 
 function CohereModelSelection({ apiKey, settings }: any) {
   const { t } = useTranslation();
-  const [models, setModels] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!apiKey) {
-        setModels([]);
-        setLoading(true);
-        return;
-      }
-
-      setLoading(true);
-      const { models } = await System.customModels(
-        "cohere-embedder",
-        typeof apiKey === "boolean" ? null : apiKey,
-      );
-      setModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [apiKey]);
+  const { customModels, isLoading: isLoadingModels } = useProviderModels(
+    apiKey ? "cohere-embedder" : null,
+    apiKey,
+  );
+  const models = customModels as any[];
+  const loading = !apiKey || isLoadingModels;
 
   if (loading) {
     return (
@@ -87,7 +74,7 @@ function CohereModelSelection({ apiKey, settings }: any) {
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {(models as any).map((model) => (
+        {models.map((model) => (
           <option
             key={model.id}
             value={model.id}

@@ -2,42 +2,24 @@
 import { useEffect, useState } from "react";
 import { Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
-import System from "@/models/system";
+import useProviderModels from "@/hooks/useProviderModels";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export default function PrivateModeOptions({ settings }: any) {
   const { t } = useTranslation();
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(!!settings?.PrivateModeBasePath);
   const [basePath, setBasePath] = useState(settings?.PrivateModeBasePath);
   const [model, setModel] = useState(settings?.PrivateModeModelPref || "");
+  const { customModels, isLoading: loading } = useProviderModels(
+    basePath ? "privatemode" : null,
+    null,
+    basePath,
+  );
+  const models = customModels as any[];
 
   useEffect(() => {
     setModel(settings?.PrivateModeModelPref || "");
   }, [settings?.PrivateModeModelPref]);
-
-  useEffect(() => {
-    async function fetchModels() {
-      try {
-        setLoading(true);
-        if (!basePath) throw new Error("Base path is required");
-        const { models, error } = await System.customModels(
-          "privatemode",
-          null,
-          basePath,
-        );
-        if (error) throw new Error(error);
-        setModels(models);
-      } catch (error) {
-        console.error("Error fetching Private Mode models:", error);
-        setModels([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchModels();
-  }, [basePath]);
 
   return (
     <div className="flex flex-col gap-y-7">
@@ -106,7 +88,9 @@ export default function PrivateModeOptions({ settings }: any) {
             >
               {models.length > 0 ? (
                 <>
-                  <option value="">{t("providerSettings.privateMode.selectModel")}</option>
+                  <option value="">
+                    {t("providerSettings.privateMode.selectModel")}
+                  </option>
                   {(models as any).map((model) => (
                     <option key={model.id} value={model.id}>
                       {model.name}

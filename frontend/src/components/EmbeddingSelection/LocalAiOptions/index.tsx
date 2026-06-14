@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
-import System from "@/models/system";
+import useProviderModels from "@/hooks/useProviderModels";
 import PreLoader from "@/components/Preloader";
 import { LOCALAI_COMMON_URLS } from "@/utils/constants";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
@@ -215,29 +215,14 @@ function LocalAIModelSelection({
   basePath = null,
 }: any) {
   const { t } = useTranslation();
-  const [customModels, setCustomModels] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { customModels, isLoading: loading } = useProviderModels(
+    basePath?.includes("/v1") ? "localai" : null,
+    apiKey,
+    basePath,
+  );
+  const models = customModels as any[];
 
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath || !basePath.includes("/v1")) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      const { models } = await System.customModels(
-        "localai",
-        typeof apiKey === "boolean" ? null : apiKey,
-        basePath,
-      );
-      setCustomModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath, apiKey]);
-
-  if (loading || customModels.length == 0) {
+  if (loading || models.length == 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">
@@ -268,9 +253,9 @@ function LocalAIModelSelection({
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {customModels.length > 0 && (
+        {models.length > 0 && (
           <optgroup label={t("localAiEmbedding.yourLoadedModels")}>
-            {(customModels as any).map((model) => {
+            {models.map((model) => {
               return (
                 <option
                   key={model.id}

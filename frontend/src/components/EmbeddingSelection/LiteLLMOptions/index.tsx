@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 import { Warning, Info } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
@@ -104,29 +104,14 @@ function LiteLLMModelSelection({
   apiKey = null,
 }: any) {
   const { t } = useTranslation();
-  const [customModels, setCustomModels] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { customModels, isLoading: loading } = useProviderModels(
+    basePath ? "litellm" : null,
+    apiKey,
+    basePath,
+  );
+  const models = customModels as any[];
 
-  useEffect(() => {
-    async function findCustomModels() {
-      if (!basePath) {
-        setCustomModels([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      const { models } = await System.customModels(
-        "litellm",
-        typeof apiKey === "boolean" ? null : apiKey,
-        basePath,
-      );
-      setCustomModels(models || []);
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [basePath, apiKey]);
-
-  if (loading || customModels.length == 0) {
+  if (loading || models.length == 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">
@@ -160,9 +145,9 @@ function LiteLLMModelSelection({
         required={true}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {customModels.length > 0 && (
+        {models.length > 0 && (
           <optgroup label={t("liteLLM.modelSelection.yourLoadedModels")}>
-            {(customModels as any).map((model) => {
+            {models.map((model) => {
               return (
                 <option
                   key={model.id}

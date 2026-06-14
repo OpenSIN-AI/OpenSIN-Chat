@@ -1,40 +1,22 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState } from "react";
-import System from "@/models/system";
+import useProviderModels from "@/hooks/useProviderModels";
 import { useTranslation } from "react-i18next";
 
 export default function FoundryOptions({ settings }: any) {
   const { t } = useTranslation();
-  const [models, setModels] = useState([] as any);
-  const [loading, setLoading] = useState(!!settings?.FoundryBasePath);
   const [basePath, setBasePath] = useState(settings?.FoundryBasePath);
   const [model, setModel] = useState(settings?.FoundryModelPref || "");
+  const { customModels, isLoading: loading } = useProviderModels(
+    basePath ? "foundry" : null,
+    null,
+    basePath,
+  );
+  const models = customModels as any[];
 
   useEffect(() => {
     setModel(settings?.FoundryModelPref || "");
   }, [settings?.FoundryModelPref]);
-
-  useEffect(() => {
-    async function fetchModels() {
-      try {
-        setLoading(true);
-        if (!basePath) throw new Error("Base path is required");
-        const { models, error } = await System.customModels(
-          "foundry",
-          null,
-          basePath,
-        );
-        if (error) throw new Error(error);
-        setModels(models);
-      } catch (error) {
-        console.error("Error fetching Foundry models:", error);
-        setModels([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchModels();
-  }, [basePath]);
 
   return (
     <div className="flex flex-col gap-y-7">
@@ -78,7 +60,9 @@ export default function FoundryOptions({ settings }: any) {
             >
               {models.length > 0 ? (
                 <>
-                  <option value="">{t("providerSettings.foundry.selectModel")}</option>
+                  <option value="">
+                    {t("providerSettings.foundry.selectModel")}
+                  </option>
                   {(models as any).map((model) => (
                     <option key={model.id} value={model.id}>
                       {model.id}

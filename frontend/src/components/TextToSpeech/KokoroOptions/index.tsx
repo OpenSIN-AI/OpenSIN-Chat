@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
-import System from "@/models/system";
+import { useState } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 import { useTranslation } from "react-i18next";
 
 export default function KokoroTTSOptions({ settings }: any) {
@@ -84,33 +84,12 @@ export default function KokoroTTSOptions({ settings }: any) {
 
 function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
   const { t } = useTranslation();
-  const [voices, setVoices] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findVoices() {
-      if (!endpoint) {
-        setVoices([]);
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-      try {
-        const { models } = await System.customModels(
-          "kokoro-tts",
-          apiKey,
-          endpoint,
-        );
-        setVoices(models || []);
-      } catch (error) {
-        console.error("Failed to fetch Kokoro voices:", error);
-        setVoices([]);
-      } finally {
-        setLoading(false);
-      }
-    }
-    findVoices();
-  }, [endpoint, apiKey]);
+  const { customModels, isLoading: loading } = useProviderModels(
+    endpoint ? "kokoro-tts" : null,
+    apiKey,
+    endpoint,
+  );
+  const voices = customModels as any[];
 
   if (loading) {
     return (
@@ -165,7 +144,7 @@ function KokoroVoiceSelection({ settings, endpoint, apiKey = null }: any) {
         defaultValue={settings?.TTSKokoroVoiceModel ?? "af_bella"}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
-        {(voices as any).map((voice) => (
+        {voices.map((voice) => (
           <option key={voice.id} value={voice.id}>
             {voice.name}
           </option>

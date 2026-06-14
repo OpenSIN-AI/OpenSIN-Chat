@@ -1,23 +1,12 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
-import ModelRouter from "@/models/modelRouter";
+import useModelRouters from "@/hooks/useModelRouters";
 
 export default function ModelRouterOptions({ settings }: any) {
   const { t } = useTranslation();
-  const [routers, setRouters] = useState([] as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function fetchRouters() {
-      const results = await ModelRouter.getAll();
-      setRouters(results);
-      setLoading(false);
-    }
-    fetchRouters();
-  }, []);
+  const { routers, isLoading: loading } = useModelRouters();
 
   if (loading) {
     return (

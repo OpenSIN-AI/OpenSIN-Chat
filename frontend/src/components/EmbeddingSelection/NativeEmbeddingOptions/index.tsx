@@ -2,40 +2,26 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import System from "@/models/system";
+import useProviderModels from "@/hooks/useProviderModels";
 
 export default function NativeEmbeddingOptions({ settings }: any) {
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(true as any);
-  const [availableModels, setAvailableModels] = useState([] as any);
+  const { customModels, isLoading: loading } =
+    useProviderModels("native-embedder");
+  const availableModels = customModels as any[];
   const [selectedModel, setSelectedModel] = useState(
     settings?.EmbeddingModelPref,
   );
-  const [selectedModelInfo, setSelectedModelInfo] = useState<any>(undefined);
+  const selectedModelInfo = availableModels.find(
+    (model: any) => model.id === selectedModel,
+  );
 
+  // Pick the first available model on initial load when no saved preference exists.
   useEffect(() => {
-    System.customModels("native-embedder")
-      .then(({ models }: any) => {
-        if (models?.length > 0) {
-          setAvailableModels(models);
-          const _selectedModel =
-            models.find((model) => model.id === settings?.EmbeddingModelPref) ??
-            models[0];
-          setSelectedModel(_selectedModel.id);
-          setSelectedModelInfo(_selectedModel);
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (!availableModels?.length || !selectedModel) return;
-    setSelectedModelInfo(
-      availableModels.find((model) => model.id === selectedModel),
-    );
-  }, [selectedModel, availableModels]);
+    if (!availableModels?.length || selectedModel) return;
+    const defaultModel = availableModels[0];
+    setSelectedModel(defaultModel.id);
+  }, [availableModels, selectedModel]);
 
   return (
     <div className="w-full flex flex-col gap-y-4">
@@ -62,7 +48,9 @@ export default function NativeEmbeddingOptions({ settings }: any) {
                 {t("providerSettings.nativeEmbedding.loadingModels")}
               </option>
             ) : (
-              <optgroup label={t("providerSettings.nativeEmbedding.availableModels")}>
+              <optgroup
+                label={t("providerSettings.nativeEmbedding.availableModels")}
+              >
                 {(availableModels as any).map((model) => {
                   return (
                     <option
@@ -84,10 +72,12 @@ export default function NativeEmbeddingOptions({ settings }: any) {
               {selectedModelInfo?.description}
             </p>
             <p className="text-theme-text-secondary text-xs font-normal block">
-              {t("providerSettings.nativeEmbedding.trainedOn")} {selectedModelInfo?.lang}
+              {t("providerSettings.nativeEmbedding.trainedOn")}{" "}
+              {selectedModelInfo?.lang}
             </p>
             <p className="text-theme-text-secondary text-xs font-normal block">
-              {t("providerSettings.nativeEmbedding.downloadSize")} {selectedModelInfo?.size}
+              {t("providerSettings.nativeEmbedding.downloadSize")}{" "}
+              {selectedModelInfo?.size}
             </p>
             <Link
               to={selectedModelInfo?.modelCard}

@@ -4,120 +4,72 @@
  * Demonstrates proper typing patterns for React and SWR integration.
  */
 
-import { useCallback, useState, useEffect } from "react";
-import type { Workspace, Thread } from "@/types/workspace";
+import { useCallback, useState } from "react";
+import type { Workspace as WorkspaceType } from "@/types/workspace";
 import Workspace from "@/models/workspace";
 import System from "@/models/system";
 import useChatHistorySWR, {
   chatHistoryKey,
   invalidateChatHistory,
 } from "./useChatHistory";
+import useWorkspaceBySlug, { workspaceKey } from "./useWorkspaceBySlug";
+import useWorkspacesSWR, { WORKSPACES_KEY } from "./useWorkspaces";
+import useThreadsSWR, { threadsKey } from "./useThreads";
+import useSWR from "swr";
+
+export { workspaceKey, WORKSPACES_KEY, threadsKey };
 
 /**
- * Hook for fetching workspace data
+ * Hook for fetching workspace data.
+ * Backed by SWR so the same slug is cached and de-duplicated across components.
+ * The public return shape is preserved for existing consumers.
+ *
  * @param slug - Workspace slug identifier
  * @returns Workspace data or null, plus loading and error states
  */
 export function useWorkspace(slug: string | null): {
-  workspace: Workspace | null;
+  workspace: WorkspaceType | null;
   loading: boolean;
   error: Error | null;
 } {
-  const [workspace, setWorkspace] = useState<Workspace | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    if (!slug) {
-      setWorkspace(null);
-      setLoading(false);
-      return;
-    }
-
-    (async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await Workspace.bySlug(slug);
-        setWorkspace(data);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error(String(err)));
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [slug]);
-
-  return { workspace, loading, error };
+  const { workspace, isLoading: loading, error } = useWorkspaceBySlug(slug);
+  return { workspace, loading, error: error || null };
 }
 
 /**
- * Hook for fetching all workspaces
+ * Hook for fetching all workspaces.
+ * Backed by SWR for caching and de-duplication.
+ * The public return shape is preserved for existing consumers.
  */
 export function useWorkspaces(): {
-  workspaces: Workspace[];
+  workspaces: WorkspaceType[];
   loading: boolean;
   error: Error | null;
   refetch: () => Promise<void>;
 } {
-  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  const fetchWorkspaces = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await Workspace.all();
-      setWorkspaces(data);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error(String(err)));
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchWorkspaces();
-  }, [fetchWorkspaces]);
-
-  return { workspaces, loading, error, refetch: fetchWorkspaces };
+  const { workspaces, isLoading: loading, error, refresh } = useWorkspacesSWR();
+  return {
+    workspaces,
+    loading,
+    error: error || null,
+    refetch: useCallback(async () => {
+      await refresh();
+    }, [refresh]),
+  };
 }
 
 /**
- * Hook for fetching threads in a workspace
+ * Hook for fetching threads in a workspace.
+ * Backed by SWR for caching and de-duplication.
+ * The public return shape is preserved for existing consumers.
  */
 export function useThreads(workspaceSlug: string | null): {
-  threads: Thread[];
+  threads: import("@/types/workspace").Thread[];
   loading: boolean;
   error: Error | null;
 } {
-  const [threads, setThreads] = useState<Thread[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    if (!workspaceSlug) {
-      setThreads([]);
-      setLoading(false);
-      return;
-    }
-
-    (async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await Workspace.threads.all(workspaceSlug);
-        setThreads(data);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error(String(err)));
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [workspaceSlug]);
-
-  return { threads, loading, error };
+  const { threads, isLoading: loading, error } = useThreadsSWR(workspaceSlug);
+  return { threads, loading, error: error || null };
 }
 
 /**
@@ -142,32 +94,31 @@ export function useChatHistory(
 
 export { chatHistoryKey, invalidateChatHistory };
 
+const SYSTEM_CONFIG_KEY = "system/config";
+
 /**
- * Hook for system configuration
+ * Hook for system configuration.
+ * Backed by SWR so the ping/onboarding check is cached and de-duplicated.
+ * The public return shape is preserved for existing consumers.
  */
 export function useSystemConfig(): {
   isOnboarded: boolean;
   isHealthy: boolean;
   loading: boolean;
 } {
-  const [isOnboarded, setIsOnboarded] = useState(false);
-  const [isHealthy, setIsHealthy] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { data, isLoading: loading } = useSWR(SYSTEM_CONFIG_KEY, async () => {
+    const [healthy, onboarded] = await Promise.all([
+      System.ping(),
+      System.isOnboardingComplete(),
+    ]);
+    return { healthy, onboarded };
+  });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const healthy = await System.ping();
-        const onboarded = await System.isOnboardingComplete();
-        setIsHealthy(healthy);
-        setIsOnboarded(onboarded);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
-
-  return { isOnboarded, isHealthy, loading };
+  return {
+    isOnboarded: data?.onboarded ?? false,
+    isHealthy: data?.healthy ?? false,
+    loading,
+  };
 }
 
 /**

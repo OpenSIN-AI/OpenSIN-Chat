@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect } from "react";
-import System from "@/models/system";
+import { useState, useMemo } from "react";
+import useProviderModels from "@/hooks/useProviderModels";
 import { useTranslation } from "react-i18next";
 
 export default function ElevenLabsOptions({ settings }: any) {
@@ -36,32 +36,22 @@ export default function ElevenLabsOptions({ settings }: any) {
   );
 }
 
+function groupByOrganization(models: any[] = []) {
+  return models.reduce((acc, model) => {
+    acc[model.organization] = acc[model.organization] || [];
+    acc[model.organization].push(model);
+    return acc;
+  }, {});
+}
+
 function ElevenLabsModelSelection({ apiKey, settings }: any) {
   const { t } = useTranslation();
-  const [groupedModels, setGroupedModels] = useState({} as any);
-  const [loading, setLoading] = useState(true as any);
-
-  useEffect(() => {
-    async function findCustomModels() {
-      setLoading(true);
-      const { models } = await System.customModels(
-        "elevenlabs-tts",
-        typeof apiKey === "boolean" ? null : apiKey,
-      );
-
-      if (models?.length > 0) {
-        const modelsByOrganization = models.reduce((acc, model) => {
-          acc[model.organization] = acc[model.organization] || [];
-          acc[model.organization].push(model);
-          return acc;
-        }, {});
-        setGroupedModels(modelsByOrganization);
-      }
-
-      setLoading(false);
-    }
-    findCustomModels();
-  }, [apiKey]);
+  const { customModels, isLoading: loading } = useProviderModels(
+    apiKey ? "elevenlabs-tts" : null,
+    apiKey,
+  );
+  const models = customModels as any[];
+  const groupedModels = useMemo(() => groupByOrganization(models), [models]);
 
   if (loading) {
     return (
@@ -96,7 +86,7 @@ function ElevenLabsModelSelection({ apiKey, settings }: any) {
           .sort()
           .map((organization) => (
             <optgroup key={organization} label={organization}>
-              {groupedModels[organization].map((model) => (
+              {groupedModels[organization].map((model: any) => (
                 <option
                   key={model.id}
                   value={model.id}
