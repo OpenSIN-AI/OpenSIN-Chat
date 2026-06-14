@@ -3,6 +3,7 @@ import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
 import { useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import VectorDBIdentifier from "./VectorDBIdentifier";
 import MaxContextSnippets from "./MaxContextSnippets";
 import DocumentSimilarityThreshold from "./DocumentSimilarityThreshold";
@@ -12,6 +13,7 @@ import VectorSearchMode from "./VectorSearchMode";
 import CTAButton from "@/components/lib/CTAButton";
 
 export default function VectorDatabase({ workspace }) {
+  const { t } = useTranslation();
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
   const formEl = useRef(null);
@@ -27,9 +29,9 @@ export default function VectorDatabase({ workspace }) {
       data,
     );
     if (!!updatedWorkspace) {
-      showToast("Workspace updated!", "success", { clear: true });
+      showToast(t("common.workspaceUpdated"), "success", { clear: true });
     } else {
-      showToast(`Error: ${message}`, "error", { clear: true });
+      showToast(t("common.error", { error: message }), "error", { clear: true });
     }
     setSaving(false);
     setHasChanges(false);
@@ -46,7 +48,7 @@ export default function VectorDatabase({ workspace }) {
         {hasChanges && (
           <div className="absolute top-0 right-0">
             <CTAButton type="submit">
-              {saving ? "Updating..." : "Update Workspace"}
+              {saving ? t("common.updating") : t("common.updateWorkspace")}
             </CTAButton>
           </div>
         )}
