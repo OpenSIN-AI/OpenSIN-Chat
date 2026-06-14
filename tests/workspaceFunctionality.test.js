@@ -181,38 +181,44 @@ describe("workspace functionality endpoints", () => {
     });
   });
 
-  describe("GET /workspaces/:id", () => {
-    it("should get workspace by id", async () => {
-      const response = await request("GET", "/workspaces/1");
+  describe("GET /workspace/:slug", () => {
+    it("should get workspace by slug", async () => {
+      const workspace = await createWorkspace("get-workspace");
+      const response = await request("GET", `/workspace/${workspace.slug}`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "test");
+      expect(response.body).toHaveProperty("workspace");
+      expect(response.body.workspace).toHaveProperty("id", workspace.id);
+      expect(response.body.workspace).toHaveProperty("name", "get-workspace");
     });
 
-    it("should return 404 for non-existent workspace", async () => {
-      const response = await request("GET", "/workspaces/999");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
+    it("should return null workspace for non-existent slug", async () => {
+      const response = await request("GET", "/workspace/nonexistent-slug-12345");
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("workspace", null);
     });
   });
 
-  describe("PUT /workspaces/:id", () => {
+  describe("POST /workspace/:slug/update", () => {
     it("should update workspace", async () => {
-      const response = await request("PUT", "/workspaces/1", {
+      const workspace = await createWorkspace("update-workspace");
+      const response = await request("POST", `/workspace/${workspace.slug}/update`, {
         name: "Updated Workspace",
-        description: "Updated description",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "updated");
+      expect(response.body).toHaveProperty("workspace");
+      expect(response.body.workspace).toHaveProperty("id", workspace.id);
+      expect(response.body.workspace).toHaveProperty("name", "Updated Workspace");
     });
 
-    it("should reject workspace update with invalid data", async () => {
-      const response = await request("PUT", "/workspaces/1", {
+    it("should fall back to default name when update name is empty", async () => {
+      const workspace = await createWorkspace("update-empty-name");
+      const response = await request("POST", `/workspace/${workspace.slug}/update`, {
         name: "",
       });
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("workspace");
+      expect(response.body.workspace).toHaveProperty("id", workspace.id);
+      expect(response.body.workspace).toHaveProperty("name", "My Workspace");
     });
   });
 

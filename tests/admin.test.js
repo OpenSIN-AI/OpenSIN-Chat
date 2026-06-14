@@ -66,13 +66,16 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
   validatedRequest: (req, res, next) => next(),
 }));
 
-vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
-  makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: () => Promise.resolve({ id: 1, username: "test", role: "admin" }),
-  multiUserMode: () => false,
-  queryParams: () => ({}),
-}));
+vi.mock("../server/utils/http", () => {
+  console.log("HTTP MOCK FACTORY RUNNING");
+  return {
+    reqBody: (req) => ({}),
+    makeJWT: (payload, expiry) => `token_${payload.id}`,
+    userFromSession: () => Promise.resolve({ id: 1, username: "test", role: "admin" }),
+    multiUserMode: () => false,
+    queryParams: () => ({}),
+  };
+});
 
 vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
   simpleRateLimit: () => (req, res, next) => next(),
