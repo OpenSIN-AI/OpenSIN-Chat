@@ -1,0 +1,226 @@
+// SPDX-License-Identifier: MIT
+//
+// Manifest of curated developer documentation rendered at /docs.
+// Markdown source files live in ./content and are bundled at build time via
+// Vite's `?raw` glob import. To add a new page, drop a markdown file into
+// ./content and add an entry below.
+
+// Eagerly import every markdown file in ./content as a raw string.
+const rawDocs = import.meta.glob("./content/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+export type DocCategory =
+  | "getting-started"
+  | "api"
+  | "architecture"
+  | "deployment"
+  | "data-sources";
+
+export type DocEntry = {
+  /** URL slug used at /docs/:slug */
+  slug: string;
+  /** Human readable title shown in the sidebar and header */
+  title: string;
+  /** Short description used for search and the index cards */
+  description: string;
+  /** Category grouping in the sidebar */
+  category: DocCategory;
+  /** Filename inside ./content */
+  file: string;
+};
+
+export const CATEGORY_LABELS: Record<DocCategory, string> = {
+  "getting-started": "Erste Schritte",
+  api: "API-Referenz",
+  architecture: "Architektur",
+  deployment: "Deployment & Betrieb",
+  "data-sources": "Datenquellen & Sync",
+};
+
+// Order in which categories appear in the navigation.
+export const CATEGORY_ORDER: DocCategory[] = [
+  "getting-started",
+  "api",
+  "architecture",
+  "data-sources",
+  "deployment",
+];
+
+export const DOC_ENTRIES: DocEntry[] = [
+  {
+    slug: "user-guide",
+    title: "Benutzer-Handbuch",
+    description: "Einstieg, Workspaces, Chatten mit Dokumenten und Grundfunktionen.",
+    category: "getting-started",
+    file: "USER-GUIDE.md",
+  },
+  {
+    slug: "api",
+    title: "API-Referenz",
+    description: "Vollständige REST-API-Referenz für Entwickler und Integrationen.",
+    category: "api",
+    file: "API.md",
+  },
+  {
+    slug: "architecture",
+    title: "Produktions-Architektur",
+    description: "Systemüberblick, Komponenten und Datenfluss der Plattform.",
+    category: "architecture",
+    file: "architecture.md",
+  },
+  {
+    slug: "adr-overview",
+    title: "Architecture Decision Records",
+    description: "Überblick über dokumentierte Architekturentscheidungen (ADRs).",
+    category: "architecture",
+    file: "adr-overview.md",
+  },
+  {
+    slug: "adr-001-persistent-job-queue",
+    title: "ADR-001: Persistente Job-Queue",
+    description: "Entscheidung und Begründung zur persistenten Job-Queue.",
+    category: "architecture",
+    file: "adr-001-persistent-job-queue.md",
+  },
+  {
+    slug: "data-sources",
+    title: "Datenquellen & Politiker-Sync",
+    description: "Woher die Daten stammen und wie der Politiker-Sync funktioniert.",
+    category: "data-sources",
+    file: "DATA-SOURCES.md",
+  },
+  {
+    slug: "sync-runbook",
+    title: "Sync Runbook",
+    description: "Betriebshandbuch für den Sync der Politiker-Datenbank.",
+    category: "data-sources",
+    file: "SYNC-RUNBOOK.md",
+  },
+  {
+    slug: "upstream-sync",
+    title: "Upstream-Sync-Strategie",
+    description: "Strategie zum Synchronisieren mit dem Upstream-Projekt.",
+    category: "data-sources",
+    file: "UPSTREAM-SYNC.md",
+  },
+  {
+    slug: "docker-deployment",
+    title: "Docker Deployment",
+    description: "Deployment der Plattform via Docker, Schritt für Schritt.",
+    category: "deployment",
+    file: "DOCKER-DEPLOYMENT.md",
+  },
+  {
+    slug: "opensin-chat-deployment",
+    title: "OpenSIN Chat Deployment",
+    description: "Deployment-Anleitung für sinchat.delqhi.com.",
+    category: "deployment",
+    file: "OPENSIN-CHAT-DEPLOYMENT.md",
+  },
+  {
+    slug: "auto-deploy",
+    title: "Auto-Deploy",
+    description: "Lokaler Polling-Cron für automatische Deployments.",
+    category: "deployment",
+    file: "AUTO-DEPLOY.md",
+  },
+  {
+    slug: "vercel-deploy-fix",
+    title: "Vercel Build Fix",
+    description: "Lösung für bekannte Vercel-Build-Probleme.",
+    category: "deployment",
+    file: "vercel-deploy-fix.md",
+  },
+  {
+    slug: "ssh-remote-tunnel",
+    title: "SSH Remote Tunnel",
+    description: "Mac via Cloudflare als SSH Remote Tunnel einrichten.",
+    category: "deployment",
+    file: "ssh-remote-tunnel.md",
+  },
+  {
+    slug: "supabase-self-hosted",
+    title: "Supabase Self-Hosted",
+    description: "Setup für eine selbst gehostete Supabase-Instanz.",
+    category: "deployment",
+    file: "supabase-self-hosted.md",
+  },
+];
+
+/** Resolve the raw markdown content for a given content filename. */
+export function getDocContent(file: string): string | null {
+  const key = `./content/${file}`;
+  return rawDocs[key] ?? null;
+}
+
+/** Find a doc entry by its slug. */
+export function getDocBySlug(slug: string): DocEntry | undefined {
+  return DOC_ENTRIES.find((entry) => entry.slug === slug);
+}
+
+/** The default doc shown when visiting /docs with no slug. */
+export const DEFAULT_DOC_SLUG = "user-guide";
+
+/** GitHub blob base for docs not included in the in-app documentation. */
+const GITHUB_DOCS_BASE =
+  "https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main";
+
+/** Map of source markdown filename (as referenced in repo) -> in-app slug. */
+const FILE_TO_SLUG: Record<string, string> = {
+  "USER-GUIDE.md": "user-guide",
+  "API.md": "api",
+  "architecture.md": "architecture",
+  "DATA-SOURCES.md": "data-sources",
+  "SYNC-RUNBOOK.md": "sync-runbook",
+  "UPSTREAM-SYNC.md": "upstream-sync",
+  "DOCKER-DEPLOYMENT.md": "docker-deployment",
+  "OPENSIN-CHAT-DEPLOYMENT.md": "opensin-chat-deployment",
+  "AUTO-DEPLOY.md": "auto-deploy",
+  "vercel-deploy-fix.md": "vercel-deploy-fix",
+  "ssh-remote-tunnel.md": "ssh-remote-tunnel",
+  "supabase-self-hosted.md": "supabase-self-hosted",
+  "ADR-001-persistent-job-queue.md": "adr-001-persistent-job-queue",
+};
+
+/**
+ * Resolve a relative markdown link (as found inside a doc) to either an in-app
+ * /docs route (when the target is part of the documentation) or a GitHub blob
+ * URL (for files that are not surfaced in-app, e.g. SECURITY.md).
+ * Returns null for links that should be left untouched (external, anchors).
+ */
+export function resolveDocLink(
+  href: string
+): { url: string; external: boolean } | null {
+  if (!href) return null;
+  // Leave absolute URLs, mailto and pure anchors untouched.
+  if (/^(https?:|mailto:|#)/i.test(href)) return null;
+  if (!href.includes(".md")) return null;
+
+  const [path, hash] = href.split("#");
+  const anchor = hash ? `#${hash}` : "";
+  // Basename without any ./ or ../ segments.
+  const fileName = path.split("/").filter(Boolean).pop() ?? "";
+
+  const slug = FILE_TO_SLUG[fileName];
+  if (slug) {
+    return { url: `/docs/${slug}${anchor}`, external: false };
+  }
+
+  // Reconstruct a repo-relative path for GitHub. The docs live under /docs,
+  // so `../FILE.md` points at the repo root while `./FILE.md` stays in /docs.
+  const goesToRoot = /^\.\.\//.test(path);
+  const bare = path.replace(/^(\.\/|\.\.\/)+/, "");
+  const repoPath = goesToRoot || bare.startsWith("docs/") ? bare : `docs/${bare}`;
+  return { url: `${GITHUB_DOCS_BASE}/${repoPath}${anchor}`, external: true };
+}
+
+/** Group entries by category, preserving CATEGORY_ORDER. */
+export function getGroupedDocs(): { category: DocCategory; entries: DocEntry[] }[] {
+  return CATEGORY_ORDER.map((category) => ({
+    category,
+    entries: DOC_ENTRIES.filter((entry) => entry.category === category),
+  })).filter((group) => group.entries.length > 0);
+}
