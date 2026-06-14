@@ -337,6 +337,12 @@ Mehr in [`SECURITY.md`](./SECURITY.md).
 
 Beiträge sind willkommen — siehe [`CONTRIBUTING.md`](./CONTRIBUTING.md). Code-Conventions, Branching-Strategie, Commit-Format sind dort beschrieben.
 
+## 📚 Dokumentation
+
+- **In-App-Entwicklerdoku:** Im laufenden Frontend unter `/docs` erreichbar (Benutzer-Handbuch, API-Referenz, Architektur, Deployment-Runbooks). Der Content wird automatisch aus dem [`docs/`](./docs/)-Ordner bei `npm run dev`/`npm run build` synchronisiert.
+- **Quell-Dokumentation:** Alle Markdown-Dateien im [`docs/`](./docs/)-Ordner sind die Single-Source-of-Truth für die In-App-Doku.
+- **Architektur-Entscheidungen:** ADRs liegen unter [`docs/adr/`](./docs/adr/).
+
 ## 📜 Lizenz
 
 **MIT** — siehe [`LICENSE`](./LICENSE). Du kannst das Projekt frei nutzen, verändern und weitergeben, solange der Lizenztext erhalten bleibt.
