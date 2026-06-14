@@ -159,10 +159,14 @@ export default function AccountMenu() {
       const el = triggerRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
+      // Keep the popup at a consistent, comfortable width regardless of how
+      // wide the user has resized the sidebar, and keep it on-screen.
+      const width = Math.min(300, Math.max(rect.width, 248));
+      const left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8));
       setPos({
-        left: rect.left,
+        left,
         bottom: window.innerHeight - rect.top + 8,
-        width: rect.width,
+        width,
       });
     }
     reposition();
@@ -197,7 +201,7 @@ export default function AccountMenu() {
   }, [open]);
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full px-2 pt-2 border-t border-white/10 light:border-slate-300/70">
       {/* Trigger */}
       <button
         ref={triggerRef}
