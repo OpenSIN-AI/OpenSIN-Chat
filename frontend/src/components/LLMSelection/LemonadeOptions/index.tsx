@@ -376,7 +376,7 @@ function LemonadeModelSelection({
           <ModelTable
             key={alias}
             alias={alias}
-            customModels={customModels}
+            models={customModels as any[]}
             setActiveModel={handleSetActiveModel}
             downloadModel={downloadModel}
             selectedModelId={selectedModelId}

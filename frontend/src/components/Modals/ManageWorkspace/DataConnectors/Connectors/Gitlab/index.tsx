@@ -173,7 +173,7 @@ export default function GitlabOptions() {
                 value={ignores}
                 onChange={setIgnores}
                 name="ignores"
-                placeholder={t("connectors.gitlab.ignoresPlaceholder")}
+                placeHolder={t("connectors.gitlab.ignoresPlaceholder")}
                 classNames={{
                   tag: "bg-theme-settings-input-bg light:bg-black/10 bg-blue-300/10 text-zinc-800",
                   input:

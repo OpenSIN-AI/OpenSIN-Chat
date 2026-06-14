@@ -130,7 +130,7 @@ export default function ObsidianOptions() {
                     <FolderOpen size={20} />
                     <input
                       type="file"
-                      webkitdirectory=""
+                      {...({ webkitdirectory: "" } as any)}
                       onChange={handleFolderPick}
                       className="hidden"
                     />

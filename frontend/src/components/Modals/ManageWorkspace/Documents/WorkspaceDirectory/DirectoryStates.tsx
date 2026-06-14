@@ -52,18 +52,21 @@ export function EmbeddingProgressState({
           </p>
         </div>
         <div className="overflow-y-auto h-[calc(100%-40px)]">
-          {Object.entries(embeddingProgress).map(([filename, fileStatus]) => (
-            <EmbeddingFileRow
-              key={filename}
-              filename={filename}
-              status={fileStatus}
-              onRemove={
-                fileStatus.status === "pending"
-                  ? () => removeQueuedFile(workspace.slug, filename)
-                  : null
-              }
-            />
-          ))}
+          {Object.entries(embeddingProgress).map(([filename, fileStatus]) => {
+            const fs = fileStatus as { status: string; [key: string]: any };
+            return (
+              <EmbeddingFileRow
+                key={filename}
+                filename={filename}
+                status={fs}
+                onRemove={
+                  fs.status === "pending"
+                    ? () => removeQueuedFile(workspace.slug, filename)
+                    : null
+                }
+              />
+            );
+          })}
         </div>
       </div>
       {hasChanges && movedItems.length > 0 && (
