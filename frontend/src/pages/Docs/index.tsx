@@ -2,7 +2,7 @@
 //
 // In-app developer documentation rendered at /docs and /docs/:slug.
 // Content is curated from the repository's docs/ folder (see docsManifest.ts).
-import { useMemo, useState, useEffect, useRef } from "react";
+import { useMemo, useState } from "react";
 import { Link, useParams, Navigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -112,52 +112,6 @@ export default function Docs() {
   const { slug } = useParams();
   const [query, setQuery] = useState("");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
-  const toggleButtonRef = useRef<HTMLButtonElement>(null);
-  const asideRef = useRef<HTMLAsideElement>(null);
-
-  // Set document.title for the current documentation page.
-  useEffect(() => {
-    const entry = getDocBySlug(slug || DEFAULT_DOC_SLUG);
-    if (entry) {
-      document.title = `${entry.title} · OpenSIN Docs`;
-    }
-    // Reset title when leaving /docs
-    return () => {
-      document.title = "OpenSIN Chat";
-    };
-  }, [slug]);
-
-  // Handle mobile nav: Escape closes it, body scroll is locked when open, focus management.
-  useEffect(() => {
-    if (!mobileNavOpen) return;
-
-    // Lock body scroll
-    const scrollLockClass = "overflow-hidden";
-    document.documentElement.classList.add(scrollLockClass);
-
-    // Handle Escape key
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMobileNavOpen(false);
-      }
-    };
-
-    // Set focus to the first link in the aside when it opens
-    setTimeout(() => {
-      const firstLink = asideRef.current?.querySelector("a");
-      firstLink?.focus();
-    }, 0);
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      // Unlock body scroll
-      document.documentElement.classList.remove(scrollLockClass);
-      window.removeEventListener("keydown", handleKeyDown);
-      // Return focus to toggle button
-      toggleButtonRef.current?.focus();
-    };
-  }, [mobileNavOpen]);
 
   // Redirect /docs to the default doc.
   if (!slug) {
@@ -167,13 +121,13 @@ export default function Docs() {
   const entry = getDocBySlug(slug);
   const content = entry ? getDocContent(entry.file) : null;
 
+
   return (
     <div className="flex flex-col h-screen w-screen bg-theme-bg-primary text-theme-text-primary overflow-hidden">
       {/* Top bar */}
       <header className="flex items-center justify-between gap-4 px-4 md:px-6 h-14 border-b border-theme-sidebar-border shrink-0">
         <div className="flex items-center gap-3">
           <button
-            ref={toggleButtonRef}
             type="button"
             onClick={() => setMobileNavOpen((v) => !v)}
             className="lg:hidden p-2 rounded-md hover:bg-theme-sidebar-item-hover"
@@ -219,10 +173,7 @@ export default function Docs() {
               onClick={() => setMobileNavOpen(false)}
               aria-hidden="true"
             />
-            <aside
-              ref={asideRef}
-              className="relative z-50 w-72 max-w-[80vw] h-full bg-theme-bg-primary border-r border-theme-sidebar-border p-4 overflow-y-auto"
-            >
+            <aside className="relative z-50 w-72 max-w-[80vw] h-full bg-theme-bg-primary border-r border-theme-sidebar-border p-4 overflow-y-auto">
               <DocsSidebar
                 activeSlug={slug}
                 query={query}

@@ -26,6 +26,3 @@ bundleinspector.html
 .env.production
 flow-typed
 coverage/
-
-# Auto-generated documentation content (synced from ../docs/)
-src/pages/Docs/content/

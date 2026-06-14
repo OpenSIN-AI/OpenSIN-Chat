@@ -12,7 +12,6 @@ import {
   LinkSimple,
   Moon,
   Sun,
-  Question,
 } from "@phosphor-icons/react";
 import { isMobile } from "react-device-detect";
 import { Tooltip } from "react-tooltip";
@@ -31,8 +30,7 @@ type FooterIconName =
   | "HouseLine"
   | "Globe"
   | "Briefcase"
-  | "Info"
-  | "Question";
+  | "Info";
 
 type IconComponent = React.ComponentType<{
   weight?: string;
@@ -50,7 +48,6 @@ export const ICON_COMPONENTS: Record<FooterIconName, IconComponent> = {
   Globe: Globe as IconComponent,
   Briefcase: Briefcase as IconComponent,
   Info: Info as IconComponent,
-  Question: Question as IconComponent,
 };
 
 type FooterItem = {
@@ -180,20 +177,6 @@ export default function Footer() {
                 </Link>
               ),
             )}
-        <Link
-          to={paths.appDocs()}
-          className={ICON_LINK_CLASSES}
-          aria-label="Hilfe und Dokumentation öffnen"
-          data-tooltip-id="footer-item"
-          data-tooltip-content="Hilfe und Dokumentation"
-          title="Hilfe und Dokumentation"
-        >
-          <Question
-            weight="fill"
-            className="h-5 w-5 text-white light:text-slate-800"
-            aria-hidden="true"
-          />
-        </Link>
         <ThemeToggleButton />
         {!isMobile && <SettingsButton />}
       </nav>
