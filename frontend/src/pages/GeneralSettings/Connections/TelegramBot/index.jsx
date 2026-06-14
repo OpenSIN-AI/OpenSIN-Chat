@@ -81,7 +81,7 @@ function ConnectionsLayout({ children, fullPage = false }) {
                 rel="noreferrer"
                 className="text-xs leading-4 text-white light:text-slate-900 underline w-fit"
               >
-                View Documentation
+                {t("common.viewDocumentation")}
               </a>
             </div>
             {children}
