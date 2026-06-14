@@ -123,7 +123,7 @@ const createParsedFile = async (workspaceId, filename = "test-parsed-file.json")
     data: {
       filename,
       workspaceId,
-      userId: testUserId,
+      userId: globalThis.__parsedFilesTestUserId__,
       metadata: JSON.stringify({ title: "Test" }),
       tokenCountEstimate: 10,
     },

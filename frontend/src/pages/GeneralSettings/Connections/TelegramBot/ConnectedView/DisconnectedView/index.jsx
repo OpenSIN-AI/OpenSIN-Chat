@@ -45,7 +45,7 @@ export default function DisconnectedView({
     <div className="flex flex-col gap-y-8 mt-8">
       <div className="flex flex-col gap-y-[18px]">
         <p className="text-base font-semibold text-white light:text-slate-900">
-          Connected Bot
+          {t("telegram.connected.connectedBot")}
         </p>
         <div className="flex items-start gap-x-1 border border-red-500/30 light:border-red-300 rounded-xl p-3 w-[700px]">
           <div className="flex items-center justify-center w-9 h-9 rounded-full bg-red-500/20 shrink-0">
@@ -55,7 +55,7 @@ export default function DisconnectedView({
             />
           </div>
           <div className="flex flex-col gap-y-1 ml-1">
-            <p className="text-sm font-semibold text-white light:text-slate-900">
+            <p className="text-sm font-semibold text-white light:text-slate-900"> // eslint-disable-line i18next/no-literal-string
               @{config.bot_username}
             </p>
             <p className="text-xs text-red-400 light:text-red-500">

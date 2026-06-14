@@ -92,8 +92,14 @@ function SecurityTips() {
         {t("telegram.setup.security.description")}
       </p>
       <ul className="text-sm text-zinc-400 light:text-slate-600 list-disc list-inside space-y-0.5">
-        <li>Disable Groups {t("telegram.setup.security.disable-groups")}</li>
-        <li>Disable Inline {t("telegram.setup.security.disable-inline")}</li>
+        <li>
+          {t("telegram.setup.security.disableGroups")}{" "}
+          {t("telegram.setup.security.disable-groups")}
+        </li>
+        <li>
+          {t("telegram.setup.security.disableInline")}{" "}
+          {t("telegram.setup.security.disable-inline")}
+        </li>
         <li>{t("telegram.setup.security.obscure-username")}</li>
       </ul>
     </div>

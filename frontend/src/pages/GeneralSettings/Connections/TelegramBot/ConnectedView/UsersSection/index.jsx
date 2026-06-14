@@ -55,7 +55,7 @@ export default function UsersSection({
     <div className="flex flex-col gap-y-[18px] w-[700px]">
       <div className="flex flex-col gap-y-2">
         <p className="text-base font-semibold text-white light:text-slate-900">
-          Users
+          {t("common.users")}
         </p>
         <p className="text-xs text-zinc-400 light:text-slate-600">
           {t("telegram.users.pending-description")}
@@ -138,7 +138,7 @@ function UserRow({ user, isPending = false, onApprove, onDeny, onRevoke }) {
               onClick={() => onRevoke(chatId)}
               className="text-sm text-white/80 light:text-slate-500 hover:text-white light:hover:text-slate-700 transition-colors"
             >
-              Remove
+              {t("common.remove")}
             </button>
           )}
         </div>
