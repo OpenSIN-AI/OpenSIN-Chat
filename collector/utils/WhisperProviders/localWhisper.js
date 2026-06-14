@@ -65,7 +65,7 @@ class LocalWhisper {
       const wavefile = require("wavefile");
       const { FFMPEGWrapper } = require("./ffmpeg");
       const ffmpeg = new FFMPEGWrapper();
-      const outFolder = path.resolve(__dirname, `../../storage/tmp`);
+      const outFolder = getStoragePath("tmp");
       if (!fs.existsSync(outFolder))
         fs.mkdirSync(outFolder, { recursive: true });
 

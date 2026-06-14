@@ -5,6 +5,7 @@ process.env.NODE_ENV === "development"
 
 const { default: slugify } = require("slugify");
 const { isValidUrl, safeJsonParse } = require("../utils/http");
+const { getStoragePath } = require("../utils/paths");
 const prisma = require("../utils/prisma");
 const { MetaGenerator } = require("../utils/boot/MetaGenerator");
 const { PGVector } = require("../utils/vectorDbProviders/pgvector");
@@ -535,7 +536,7 @@ const SystemSettings = {
       RequiresAuth: !!process.env.AUTH_TOKEN,
       AuthToken: !!process.env.AUTH_TOKEN,
       JWTSecret: !!process.env.JWT_SECRET,
-      StorageDir: process.env.STORAGE_DIR,
+      StorageDir: getStoragePath(),
       MultiUserMode: await this.isMultiUserMode(),
       MemoryEnabled: await this.memoriesEnabled(),
       MemoryAutoExtraction: await this.memoryAutoExtractionSetting(),

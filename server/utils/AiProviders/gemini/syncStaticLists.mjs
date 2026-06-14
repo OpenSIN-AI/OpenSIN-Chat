@@ -10,9 +10,13 @@
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const { getStoragePath } = require("../../paths.js");
 
 dotenv.config({ path: `../../../.env.development` });
-const existingCachePath = path.resolve('../../../storage/models/gemini')
+const existingCachePath = getStoragePath("models", "gemini");
 
 // This will fetch all of the models from the Gemini API as well as post-process them
 // to remove any models that are deprecated or experimental.

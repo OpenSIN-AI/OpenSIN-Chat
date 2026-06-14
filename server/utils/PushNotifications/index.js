@@ -74,9 +74,7 @@ class PushNotifications {
   }
 
   get storagePath() {
-    return process.env.NODE_ENV === "development"
-      ? path.resolve(__dirname, `../../storage`, "push-notifications")
-      : getStoragePath("push-notifications");
+    return getStoragePath("push-notifications");
   }
 
   get primarySubscriptionPath() {

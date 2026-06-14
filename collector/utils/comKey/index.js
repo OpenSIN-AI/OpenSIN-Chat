@@ -3,13 +3,7 @@ const { getStoragePath } = require("../paths");
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
-const keyPath =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, `../../../server/storage/comkey`)
-    : path.resolve(
-        getStoragePath(),
-        `comkey`
-      );
+const keyPath = getStoragePath("comkey");
 
 class CommunicationKey {
   #pubKeyName = "ipc-pub.pem";
@@ -26,8 +20,8 @@ class CommunicationKey {
     return fs.readFileSync(path.resolve(this.#storageLoc, this.#pubKeyName));
   }
 
-  // Given a signed payload from private key from /app/server/ this signature should
-  // decode to match the textData provided. This class does verification only in collector.
+  // Given a signed payload from the server's private key (stored in the configured
+  // storage comkey directory) this signature should decode to match the textData provided.
   // Note: The textData is typically the JSON stringified body sent to the document processor API.
   verify(signature = "", textData = "") {
     try {

@@ -171,10 +171,7 @@ function utilEndpoints(app) {
       const path = require("path");
       const fs = require("fs");
       const fileName = path.basename(req.params.fileName); // prevent ../../../etc/passwd
-      const reportsDir =
-        process.env.NODE_ENV === "development"
-          ? path.resolve(__dirname, "../storage/generated-reports")
-          : getStoragePath("generated-reports");
+      const reportsDir = getStoragePath("generated-reports");
       const filePath = path.join(reportsDir, fileName);
 
       // Verify resolved path is still under generated-reports/ (security check)

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 /* eslint-env jest, node */
 const path = require("path");
-const { getStoragePath } = require("../../utils/paths");
+const { getStoragePath, getCollectorPath } = require("../../utils/paths");
 
 describe("getStoragePath", () => {
   const originalStorageDir = process.env.STORAGE_DIR;
@@ -44,5 +44,42 @@ describe("getStoragePath", () => {
     const before = process.env.STORAGE_DIR;
     getStoragePath();
     expect(process.env.STORAGE_DIR).toBe(before);
+  });
+});
+
+describe("getCollectorPath", () => {
+  const originalStorageDir = process.env.STORAGE_DIR;
+  const REPO_ROOT = path.resolve(__dirname, "../../..");
+
+  afterEach(() => {
+    if (originalStorageDir !== undefined) {
+      process.env.STORAGE_DIR = originalStorageDir;
+    } else {
+      delete process.env.STORAGE_DIR;
+    }
+  });
+
+  it("derives collector dir from STORAGE_DIR (Docker layout)", () => {
+    process.env.STORAGE_DIR = "/app/server/storage";
+    expect(getCollectorPath()).toBe(path.resolve("/app/collector"));
+  });
+
+  it("resolves the hotdir inside the collector (Docker layout)", () => {
+    process.env.STORAGE_DIR = "/app/server/storage";
+    expect(getCollectorPath("hotdir")).toBe(
+      path.resolve("/app/collector", "hotdir"),
+    );
+  });
+
+  it("falls back to <repo>/collector when STORAGE_DIR is unset", () => {
+    delete process.env.STORAGE_DIR;
+    expect(getCollectorPath()).toBe(path.join(REPO_ROOT, "collector"));
+  });
+
+  it("fallback hotdir matches the repo-relative collector/hotdir", () => {
+    delete process.env.STORAGE_DIR;
+    expect(getCollectorPath("hotdir")).toBe(
+      path.join(REPO_ROOT, "collector", "hotdir"),
+    );
   });
 });

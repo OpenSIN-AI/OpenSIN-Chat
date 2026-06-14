@@ -2,7 +2,6 @@
 const { getStoragePath } = require("../../paths");
 const RepoLoader = require("./RepoLoader");
 const fs = require("fs");
-const path = require("path");
 const { default: slugify } = require("slugify");
 const { v4 } = require("uuid");
 const { sanitizeFileName, writeToServerDocuments } = require("../../../files");
@@ -42,14 +41,7 @@ async function loadGitlabRepo(args, response) {
     `${repo.author}-${repo.project}-${repo.branch}-${v4().slice(0, 4)}`
   ).toLowerCase();
 
-  const outFolderPath =
-    process.env.NODE_ENV === "development"
-      ? path.resolve(
-          __dirname,
-          `../../../../../server/storage/documents/${outFolder}`
-        )
-      : getStoragePath("documents", outFolder);
-
+  const outFolderPath = getStoragePath("documents", outFolder);
   if (!fs.existsSync(outFolderPath))
     fs.mkdirSync(outFolderPath, { recursive: true });
 

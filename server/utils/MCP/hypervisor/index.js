@@ -67,13 +67,10 @@ class MCPHypervisor {
    * Will create the file/directory if it doesn't exist already in storage/plugins with blank options
    */
   #setupConfigFile() {
-    this.mcpServerJSONPath =
-      process.env.NODE_ENV === "development"
-        ? path.resolve(
-            __dirname,
-            `../../../storage/plugins/openafd_mcp_servers.json`,
-          )
-        : path.resolve(getStoragePath(), `plugins/openafd_mcp_servers.json`);
+    this.mcpServerJSONPath = getStoragePath(
+      "plugins",
+      "openafd_mcp_servers.json",
+    );
 
     if (!fs.existsSync(this.mcpServerJSONPath)) {
       fs.mkdirSync(path.dirname(this.mcpServerJSONPath), { recursive: true });

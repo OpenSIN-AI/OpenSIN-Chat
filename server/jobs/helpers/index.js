@@ -10,10 +10,7 @@ require("../../utils/boot/patchSlowBuffer")();
 const path = require("node:path");
 const fs = require("node:fs");
 const { parentPort } = require("node:worker_threads");
-const documentsPath =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, `../../storage/documents`)
-    : getStoragePath("documents");
+const documentsPath = getStoragePath("documents");
 
 function log(stringContent = "") {
   if (parentPort)

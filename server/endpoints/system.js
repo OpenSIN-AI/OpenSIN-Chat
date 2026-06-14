@@ -36,6 +36,7 @@ const {
   LOGO_FILENAME,
   isDefaultFilename,
 } = require("../utils/files/logo");
+const { getStoragePath } = require("../utils/paths");
 const { Telemetry } = require("../models/telemetry");
 const { ApiKey } = require("../models/apiKeys");
 const { getCustomModels } = require("../utils/helpers/customModels");
@@ -859,7 +860,7 @@ function systemEndpoints(app) {
         const userRecord = await User.get({ id: user.id });
         const oldPfpFilename = userRecord.pfpFilename;
         if (oldPfpFilename) {
-          const storagePath = path.join(__dirname, "../storage/assets/pfp");
+          const storagePath = getStoragePath("assets", "pfp");
           const oldPfpPath = path.join(
             storagePath,
             normalizePath(userRecord.pfpFilename),
@@ -949,7 +950,7 @@ function systemEndpoints(app) {
         const oldPfpFilename = userRecord.pfpFilename;
 
         if (oldPfpFilename) {
-          const storagePath = path.join(__dirname, "../storage/assets/pfp");
+          const storagePath = getStoragePath("assets", "pfp");
           const oldPfpPath = path.join(
             storagePath,
             normalizePath(oldPfpFilename),

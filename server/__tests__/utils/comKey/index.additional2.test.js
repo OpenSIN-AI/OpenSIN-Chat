@@ -6,10 +6,10 @@ const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 
-// Force the module to use a __dirname-relative storage path.
-process.env.NODE_ENV = "development";
+const { getStoragePath } = require("../../../utils/paths");
 
-const realStoragePath = path.resolve(__dirname, "../../../storage/comkey");
+// getStoragePath("comkey") resolves to <repo>/server/storage/comkey in dev.
+const realStoragePath = getStoragePath("comkey");
 if (fs.existsSync(realStoragePath)) {
   fs.rmSync(realStoragePath, { recursive: true, force: true });
 }

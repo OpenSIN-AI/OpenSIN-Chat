@@ -336,7 +336,7 @@ class PDFSharp {
             .png();
 
           // For debugging purposes
-          // await image.toFile(path.resolve(__dirname, `../../storage/`, `pg${page.pageNumber}.png`));
+          // await image.toFile(getStoragePath(`pg${page.pageNumber}.png`));
           return await image.toBuffer();
         } catch (error) {
           this.log(`Iteration error: ${error.message}`, error.stack);

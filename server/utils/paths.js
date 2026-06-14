@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Centralized path helpers for the server with STORAGE_DIR fallback.
+// Docs: server/utils/paths.js.doc.md
 const fs = require("fs");
 const path = require("path");
 

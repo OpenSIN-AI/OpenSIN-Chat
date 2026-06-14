@@ -6,22 +6,10 @@ const { v5: uuidv5 } = require("uuid");
 const { Document } = require("../../models/documents");
 const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
 
-const documentsPath =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, `../../storage/documents`)
-    : getStoragePath("documents");
-const directUploadsPath =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, `../../storage/direct-uploads`)
-    : getStoragePath("direct-uploads");
-const vectorCachePath =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, `../../storage/vector-cache`)
-    : getStoragePath("vector-cache");
-const hotdirPath =
-  process.env.NODE_ENV === "development"
-    ? path.resolve(__dirname, `../../../collector/hotdir`)
-    : getCollectorPath("hotdir");
+const documentsPath = getStoragePath("documents");
+const directUploadsPath = getStoragePath("direct-uploads");
+const vectorCachePath = getStoragePath("vector-cache");
+const hotdirPath = getCollectorPath("hotdir");
 
 // Should take in a folder that is a subfolder of documents
 // eg: youtube-subject/video-123.json

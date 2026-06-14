@@ -35,8 +35,8 @@ else
   pass "LoadingChat height handled via style prop"
 fi
 
-echo "== 4. #104 — no raw STORAGE_DIR usage outside paths.js =="
-RAW=$(grep -rln "process.env.STORAGE_DIR" server/utils/ collector/utils/ 2>/dev/null | grep -v "paths.js" || true)
+echo "== 4. #104/#106 — no raw STORAGE_DIR usage outside paths.js =="
+RAW=$(grep -rln "process.env.STORAGE_DIR" server/ collector/ 2>/dev/null | grep -v "paths.js" | grep -v "__tests__/" | grep -v "\.env\." || true)
 if [ -n "$RAW" ]; then
   fail "raw STORAGE_DIR usage found in: $RAW"
 else
