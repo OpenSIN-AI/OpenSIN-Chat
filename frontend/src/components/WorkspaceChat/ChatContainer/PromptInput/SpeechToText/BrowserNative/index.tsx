@@ -88,7 +88,12 @@ export default function BrowserNativeSTT({ sendCommand }: any) {
   useEffect(() => {
     return () => {
       clearTimeout(timeout);
-      SpeechRecognition.stopListening();
+      // Guard against environments (headless browsers, unsupported platforms)
+      // where the Web Speech API polyfill does not expose stopListening,
+      // which would throw a TypeError and crash the ErrorBoundary on unmount.
+      if (typeof SpeechRecognition.stopListening === "function") {
+        SpeechRecognition.stopListening();
+      }
     };
   }, []);
 

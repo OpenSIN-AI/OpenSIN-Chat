@@ -231,12 +231,66 @@ Screenshot: `docs/audit-screens/pdf-analysis-BEFORE-raw-keys.png`.
 **Verifiziert:** Screenshots `pdf-analysis-AFTER-fixed.png`,
 `pdf-corpus-AFTER-fixed.png`; `npm run verify:translations` ✅; eslint ✅.
 
-### Offene, echte To-Dos für den nächsten Agenten
+### Behobener Bug: SpeechToText unmount crash bei Navigation zu `/settings/interface`
+
+**Symptom:** Navigation von `/` nach `/settings/interface` crashte mit
+`TypeError: SpeechRecognition.stopListening is not a function` und warf eine
+Weiß-Bildschirm-ErrorBoundary.
+
+**Ursache:** Der `useEffect`-Cleanup in `BrowserNative/index.tsx` rief
+`SpeechRecognition.stopListening()` bedingungslos auf. In Headless-Browsern
+und unsupportierten Umgebungen ist `SpeechRecognition` ein Polyfill-Mock ohne
+diese Methode.
+
+**Fix:** Guard `typeof SpeechRecognition.stopListening === "function"` vor dem Aufruf.
+Datei: `frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/SpeechToText/BrowserNative/index.tsx`.
+
+**Verifiziert:** Screenshot `docs/audit-screens/stt-fix-settings-interface.png` —
+`/settings/interface` lädt vollständig auf Deutsch ohne Crash.
+
+---
+
+### Neu: PDF-Upload DEV-Mock (MSW)
+
+Für Audits und UI-Tests ohne Backend wurde ein vollständiger
+**Mock Service Worker**-Layer eingebaut:
+
+**Dateien:**
+- `frontend/src/mocks/pdfAnalysisHandlers.ts` — MSW-Handler für alle
+  `/api/pdf-analysis/*`-Endpunkte (upload, start, list, status, result,
+  cancel, facts, crosscheck, corpus).
+- `frontend/src/mocks/browser.ts` — MSW-Worker-Setup.
+- `frontend/public/mockServiceWorker.js` — Service Worker (via `npx msw init`).
+- `frontend/src/main.tsx` — DEV-Guard: lädt Mock wenn
+  `localStorage.getItem("anythingllm_pdf_mock") === "true"`.
+
+**Aktivieren:**
+```bash
+agent-browser storage local set anythingllm_pdf_mock true
+agent-browser reload
+```
+
+**Getestete States (alle mit Screenshot belegt in `docs/audit-screens/`):**
+1. Leer-State: Formular bereit, "Noch keine Analyse gestartet."
+2. Formular ausgefüllt: Datei `test-audit.pdf` + Aufgabe sichtbar im Input.
+3. Job-Start: Status "Initialisierung", 0/12 Abschnitte, "Abbrechen"-Button.
+4. Job abgeschlossen: Status "Abgeschlossen" (grün), "Bericht anzeigen"-Button.
+5. Bericht-Modal: Markdown-Inhalt, "Als Markdown herunterladen", "Schließen".
+6. Fakten-Speicher: Suchformular auf Deutsch; "Keine Fakten gefunden"
+   (In-Memory-Mock hat keinen Persist über Tab-Wechsel).
+7. Fehler-State: Roter Hinweistext "Bitte wählen Sie eine PDF-Datei und geben
+   Sie eine Aufgabe an." wenn Pflichtfelder fehlen.
+
+**Hinweis für nächsten Agenten:** Der MSW-Store lebt nur im aktuellen
+Service-Worker-Kontext. Fakten sind nach Seiten-Reload weg — das ist
+kein Bug, sondern ein Artefakt des DEV-Mocks.
 1. Docs-Seite (`/docs`) auf gemischte DE/EN-Inhalte prüfen und vereinheitlichen.
 2. Mit laufendem Backend die Admin-/Settings-Screens optisch auditieren
    (in dieser Umgebung nicht erreichbar).
 3. Web-Vitals-Baseline mit Production-Build erheben (Dev verfälscht Timings).
 4. Logo-Fallback prüfen: sinnvolles Fallback statt roher Alt-Text bei Ladefehler.
+5. Mobile-Sidebar-Überlagerung: Bei 375px Breite schiebt sich die Sidebar über den
+   Chat-Content ohne ihn auszublenden — `Sidebar`-Komponente braucht ein Overlay-Muster.
 
 ---
 
@@ -284,6 +338,8 @@ git diff HEAD
 | #161 | Audit-Leitfaden + Dev-Onboarding-Bypass | AUDIT-NEXT-AGENT.md + `isOnboardingBypassEnabled()` in `system.js` | ✅ merged main |
 | #162 | PDF-Analyse i18n fix | `pdfAnalysis.panel.*` + `pdfAnalysis.corpus.*` Keys + `deepScan` Forwarding | ✅ merged main |
 | #163 | PDF Analysis icon to right sidebar | FilePdf-Icon in `RightSidebarIconBar` → navigate `/pdf-analysis` | ✅ merged main |
+| — | SpeechToText unmount crash fix | Guard in `BrowserNative/index.tsx`: `typeof SpeechRecognition.stopListening === "function"` vor dem Aufruf | ✅ |
+| — | PDF-Upload DEV-Mock (MSW) | `frontend/src/mocks/pdfAnalysisHandlers.ts` + `browser.ts`; MSW Service Worker in `public/`; `main.tsx` lädt Mock wenn `anythingllm_pdf_mock=true` | ✅ |
 
 ---
 
