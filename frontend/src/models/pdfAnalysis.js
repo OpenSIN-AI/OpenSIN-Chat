@@ -15,11 +15,23 @@ const PdfAnalysis = {
       .catch((e) => ({ error: e.message }));
   },
 
-  start: async function ({ pdfPath, task, reportType, factCriteria }) {
+  start: async function ({
+    pdfPath,
+    task,
+    reportType,
+    factCriteria,
+    deepScan,
+  }) {
     return await fetch(`${API_BASE}/pdf-analysis/start`, {
       method: "POST",
       headers: { ...baseHeaders(), "Content-Type": "application/json" },
-      body: JSON.stringify({ pdfPath, task, reportType, factCriteria }),
+      body: JSON.stringify({
+        pdfPath,
+        task,
+        reportType,
+        factCriteria,
+        deepScan,
+      }),
     })
       .then((res) => res.json())
       .catch((e) => ({ error: e.message }));
