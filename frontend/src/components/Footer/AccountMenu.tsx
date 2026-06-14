@@ -60,7 +60,7 @@ function Avatar({ pfp, initials }: { pfp?: string | null; initials: string }) {
   return (
     <div
       aria-hidden="true"
-      className="h-8 w-8 rounded-full shrink-0 flex items-center justify-center bg-theme-sidebar-footer-icon text-white light:text-slate-700 text-xs font-semibold uppercase"
+      className="h-8 w-8 rounded-full shrink-0 flex items-center justify-center bg-primary-button text-slate-900 text-xs font-semibold uppercase"
     >
       {initials}
     </div>
