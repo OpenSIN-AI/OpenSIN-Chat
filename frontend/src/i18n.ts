@@ -10,6 +10,18 @@ i18next
   .use(LanguageDetector)
   .init({
     fallbackLng: "en",
+    // Normalize region-specific locales (e.g. "en-US" -> "en") so they
+    // resolve against the registered base-language resources instead of
+    // falling through to raw translation keys.
+    load: "languageOnly",
+    supportedLngs: Object.keys(resources),
+    nonExplicitSupportedLngs: true,
+    // `load: "languageOnly"` is not reliably honored by the language
+    // detector (see i18next/i18next#2222), so we explicitly strip the
+    // region subtag from the detected language here as a safeguard.
+    detection: {
+      convertDetectedLanguage: (lng: string) => lng.split("-")[0],
+    },
     debug: import.meta.env.DEV,
     defaultNS,
     resources,
