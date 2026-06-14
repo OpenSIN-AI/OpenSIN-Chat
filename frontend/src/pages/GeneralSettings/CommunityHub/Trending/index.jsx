@@ -5,6 +5,7 @@ import { isMobile } from "react-device-detect";
 import HubItems from "./HubItems";
 
 export default function CommunityHub() {
+  const { t } = useTranslation();
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
       <Sidebar />
@@ -16,11 +17,11 @@ export default function CommunityHub() {
           <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
             <div className="items-center">
               <p className="text-lg leading-6 font-bold text-theme-text-primary">
-                Community Hub
+                {t("common.communityHub")}
               </p>
             </div>
             <p className="text-xs leading-[18px] font-base text-theme-text-secondary">
-              Share and collaborate with the OpenSIN Chat community.
+              {t("communityHub.trendingDescription")}
             </p>
           </div>
           <HubItems />

@@ -77,9 +77,9 @@ beforeAll(async () => {
         role: "admin",
       },
     });
-    testUserId = user.id;
+    globalThis.__parsedFilesTestUserId__ = user.id;
   } else {
-    testUserId = existing.id;
+    globalThis.__parsedFilesTestUserId__ = existing.id;
   }
 });
 
