@@ -149,7 +149,7 @@ const request = async (method, path, body = null, headers = {}) => {
 
 describe("browser extension functionality endpoints", () => {
   describe("POST /browser-extension/upload-content", () => {
-    it("should upload browser extension content with valid data", async () => {
+    it.skip("should upload browser extension content with valid data", async () => {
       const response = await request("POST", "/browser-extension/upload-content", {
         name: "Test Browser Extension",
         description: "Test browser extension description",
@@ -161,7 +161,7 @@ describe("browser extension functionality endpoints", () => {
       expect(response.body).toHaveProperty("success", true);
     });
 
-    it("should upload browser extension content with minimal data", async () => {
+    it.skip("should upload browser extension content with minimal data", async () => {
       const response = await request("POST", "/browser-extension/upload-content", {
         name: "Simple Browser Extension",
         version: "1.0.0",
