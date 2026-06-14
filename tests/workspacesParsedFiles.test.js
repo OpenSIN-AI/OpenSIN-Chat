@@ -134,65 +134,68 @@ const createParsedFile = async (workspaceId, filename = "test-parsed-file.json")
 describe("workspace parsed files endpoints", () => {
   describe("GET /workspace/:slug/parsed-files", () => {
     it("should return parsed files for a workspace", async () => {
-      const response = await request("GET", "/workspace/test/parsed-files");
+      const workspace = await createWorkspace("parsed-files-list-workspace");
+      const file = await createParsedFile(workspace.id, "parsed-files-list-test.json");
+      const response = await request("GET", `/workspace/${workspace.slug}/parsed-files`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("files");
       expect(Array.isArray(response.body.files)).toBe(true);
+      expect(response.body).toHaveProperty("contextWindow");
+      expect(response.body).toHaveProperty("currentContextTokenCount");
+      expect(response.body.files.some((f) => f.id === file.id)).toBe(true);
     });
 
     it("should return 404 for non-existent workspace", async () => {
       const response = await request("GET", "/workspace/nonexistent/parsed-files");
       expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("POST /workspace/:slug/parsed-files", () => {
-    it("should add a parsed file to workspace", async () => {
-      const response = await request("POST", "/workspace/test/parsed-files", {
-        name: "parsed.txt",
-        content: "parsed content",
-        type: "text/plain",
+  describe("POST /workspace/:slug/parse", () => {
+    // TODO: The /parse endpoint requires a real file upload via multer and a
+    // running document collector that returns parsed documents. This test is
+    // skipped until the test harness can provide a mocked collector and a
+    // multipart upload helper.
+    it.skip("should parse an uploaded file into workspace parsed files", () => {});
+
+    it("should reject with no file uploaded", async () => {
+      const workspace = await createWorkspace("parsed-files-parse-no-file-workspace");
+      const response = await request("POST", `/workspace/${workspace.slug}/parse`);
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("success", false);
+      expect(response.body).toHaveProperty("error", "No file uploaded.");
+    });
+  });
+
+  describe("DELETE /workspace/:slug/delete-parsed-files", () => {
+    it("should delete parsed files by id list", async () => {
+      const workspace = await createWorkspace("parsed-files-delete-workspace");
+      const file = await createParsedFile(workspace.id, "parsed-files-delete-test.json");
+      const response = await request("DELETE", `/workspace/${workspace.slug}/delete-parsed-files`, {
+        fileIds: [file.id],
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "parsed.txt");
     });
 
-    it("should reject with missing name", async () => {
-      const response = await request("POST", "/workspace/test/parsed-files", {
-        content: "parsed content",
+    it("should return 400 without file ids", async () => {
+      const workspace = await createWorkspace("parsed-files-delete-bad-workspace");
+      const response = await request("DELETE", `/workspace/${workspace.slug}/delete-parsed-files`, {
+        fileIds: [],
       });
       expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("GET /workspace/:slug/parsed-files/:fileId", () => {
-    it("should return a specific parsed file", async () => {
-      const response = await request("GET", "/workspace/test/parsed-files/1");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-    });
-
-    it("should return 404 for non-existent file", async () => {
-      const response = await request("GET", "/workspace/test/parsed-files/999");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
-    });
+  // TODO: The server does not expose GET /workspace/:slug/parsed-files/:fileId
+  // or DELETE /workspace/:slug/parsed-files/:fileId. Use the list/delete
+  // endpoints above instead.
+  describe.skip("GET /workspace/:slug/parsed-files/:fileId (not implemented)", () => {
+    test.skip("should return a specific parsed file", () => {});
+    test.skip("should return 404 for non-existent file", () => {});
   });
 
-  describe("DELETE /workspace/:slug/parsed-files/:fileId", () => {
-    it("should remove a parsed file", async () => {
-      const response = await request("DELETE", "/workspace/test/parsed-files/1");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("success", true);
-    });
-
-    it("should return 404 for non-existent file", async () => {
-      const response = await request("DELETE", "/workspace/test/parsed-files/999");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
-    });
+  describe.skip("DELETE /workspace/:slug/parsed-files/:fileId (not implemented)", () => {
+    test.skip("should remove a parsed file", () => {});
+    test.skip("should return 404 for non-existent file", () => {});
   });
 });

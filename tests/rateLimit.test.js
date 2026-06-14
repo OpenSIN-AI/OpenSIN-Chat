@@ -110,10 +110,20 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
+  const contentType = response.headers.get("content-type") || "";
+  let parsedBody = null;
+  if (data && contentType.includes("application/json")) {
+    try {
+      parsedBody = JSON.parse(data);
+    } catch {
+      parsedBody = null;
+    }
+  }
   return {
     status: response.status,
     headers: response.headers,
-    body: data ? JSON.parse(data) : null,
+    body: parsedBody,
+    text: data,
   };
 };
 

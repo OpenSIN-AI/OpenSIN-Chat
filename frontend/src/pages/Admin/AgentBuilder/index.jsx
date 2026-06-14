@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
@@ -39,6 +40,7 @@ const DEFAULT_BLOCKS = [
 ];
 
 export default function AgentBuilder() {
+  const { t } = useTranslation();
   const { flowId } = useParams();
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -377,12 +379,10 @@ export default function AgentBuilder() {
         className="tooltip !text-xs z-99"
       >
         <p className="text-sm">
-          When enabled, long webpage content will be automatically summarized to
-          reduce token usage.
+          {t("agentBuilder.summarizeDescription")}
           <br />
           <br />
-          Note: This may affect data quality and remove specific details from
-          the original content.
+          {t("agentBuilder.summarizeNote")}
         </p>
       </Tooltip>
     </div>
