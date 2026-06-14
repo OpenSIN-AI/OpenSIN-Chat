@@ -56,7 +56,6 @@ vi.mock("./SidebarToggle", () => ({
   ToggleSidebarButton: () => <button data-testid="sidebar-toggle" />,
 }));
 
-
 import Sidebar from "@/components/Sidebar";
 
 function renderSidebar({ initialPath = "/" } = {}) {

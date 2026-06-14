@@ -59,7 +59,11 @@ export default function GenericOpenAiSpeechToTextOptions({ settings }: any) {
           />
           {/* eslint-disable i18next/no-literal-string */}
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-            {t("speechToText.genericOpenAi.modelDescriptionPart1")}<code>model</code>{t("speechToText.genericOpenAi.modelDescriptionPart2")}<code>whisper-1</code>{t("speechToText.genericOpenAi.modelDescriptionPart3")}
+            {t("speechToText.genericOpenAi.modelDescriptionPart1")}
+            <code>model</code>
+            {t("speechToText.genericOpenAi.modelDescriptionPart2")}
+            <code>whisper-1</code>
+            {t("speechToText.genericOpenAi.modelDescriptionPart3")}
           </p>
           {/* eslint-enable i18next/no-literal-string */}
         </div>

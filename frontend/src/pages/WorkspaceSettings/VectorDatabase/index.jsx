@@ -31,7 +31,9 @@ export default function VectorDatabase({ workspace }) {
     if (!!updatedWorkspace) {
       showToast(t("common.workspaceUpdated"), "success", { clear: true });
     } else {
-      showToast(t("common.error", { error: message }), "error", { clear: true });
+      showToast(t("common.error", { error: message }), "error", {
+        clear: true,
+      });
     }
     setSaving(false);
     setHasChanges(false);

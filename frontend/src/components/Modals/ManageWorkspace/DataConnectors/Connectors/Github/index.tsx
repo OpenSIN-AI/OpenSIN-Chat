@@ -29,11 +29,10 @@ export default function GithubOptions() {
 
     try {
       setLoading(true);
-      showToast(
-        t("connectors.github.fetching_files"),
-        "info",
-        { clear: true, autoClose: false },
-      );
+      showToast(t("connectors.github.fetching_files"), "info", {
+        clear: true,
+        autoClose: false,
+      });
       const { data, error } = await System.dataConnectors.github.collect({
         repo: form.get("repo"),
         accessToken: form.get("accessToken"),
@@ -163,7 +162,9 @@ export default function GithubOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? t("connectors.github.collecting_files") : t("connectors.github.submit")}
+              {loading
+                ? t("connectors.github.collecting_files")
+                : t("connectors.github.submit")}
             </button>
             {loading && (
               <p className="text-xs text-white/50">
@@ -191,7 +192,9 @@ function GitHubBranchSelection({ repo, accessToken }: any) {
     return (
       <div className="flex flex-col w-60">
         <div className="flex flex-col gap-y-1 mb-4">
-          <label className="text-white text-sm font-bold">{t("connectors.github.branch_label")}</label>
+          <label className="text-white text-sm font-bold">
+            {t("connectors.github.branch_label")}
+          </label>
           <p className="text-xs font-normal text-theme-text-secondary">
             {t("connectors.github.branch")}
           </p>
@@ -212,7 +215,9 @@ function GitHubBranchSelection({ repo, accessToken }: any) {
   return (
     <div className="flex flex-col w-60">
       <div className="flex flex-col gap-y-1 mb-4">
-        <label className="text-white text-sm font-bold">{t("connectors.github.branch_label")}</label>
+        <label className="text-white text-sm font-bold">
+          {t("connectors.github.branch_label")}
+        </label>
         <p className="text-xs font-normal text-theme-text-secondary">
           {t("connectors.github.branch_explained")}
         </p>

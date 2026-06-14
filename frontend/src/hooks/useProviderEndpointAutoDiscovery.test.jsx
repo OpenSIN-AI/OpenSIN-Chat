@@ -69,7 +69,9 @@ describe("useProviderEndpointAutoDiscovery", () => {
     );
     await waitFor(() => expect(result.current.autoDetecting).toBe(false));
 
-    act(() => result.current.handleAutoDetectClick({ preventDefault: vi.fn() }));
+    act(() =>
+      result.current.handleAutoDetectClick({ preventDefault: vi.fn() }),
+    );
     await waitFor(() => expect(result.current.autoDetecting).toBe(false));
     expect(result.current.basePath.value).toBe("http://a");
   });

@@ -80,7 +80,9 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
           speaking ? "Pause TTS speech of message" : "TTS Speak message"
         }
         className="border-none text-[var(--theme-sidebar-footer-icon-fill)]"
-        aria-label={speaking ? t("common.pauseSpeech") : t("common.speakMessage")}
+        aria-label={
+          speaking ? t("common.pauseSpeech") : t("common.speakMessage")
+        }
       >
         {speaking ? (
           <PauseCircle size={18} className="mb-1" />

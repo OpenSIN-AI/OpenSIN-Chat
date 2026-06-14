@@ -17,7 +17,9 @@ export default function AzureAiOptions({ settings }: any) {
             type="url"
             name="AzureOpenAiEndpoint"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("llm.providers.azure_openai.azure_service_endpoint_placeholder")}
+            placeholder={t(
+              "llm.providers.azure_openai.azure_service_endpoint_placeholder",
+            )}
             defaultValue={settings?.AzureOpenAiEndpoint}
             required={true}
             autoComplete="off"
@@ -49,7 +51,9 @@ export default function AzureAiOptions({ settings }: any) {
             type="text"
             name="AzureOpenAiModelPref"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("llm.providers.azure_openai.chat_deployment_name_placeholder")}
+            placeholder={t(
+              "llm.providers.azure_openai.chat_deployment_name_placeholder",
+            )}
             defaultValue={settings?.AzureOpenAiModelPref}
             required={true}
             autoComplete="off"
@@ -69,15 +73,27 @@ export default function AzureAiOptions({ settings }: any) {
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
             required={true}
           >
-            <option value={4096}>{t("llm.providers.azure_openai.token_limit.4096")}</option>
-            <option value={16384}>{t("llm.providers.azure_openai.token_limit.16384")}</option>
-            <option value={8192}>{t("llm.providers.azure_openai.token_limit.8192")}</option>
-            <option value={32768}>{t("llm.providers.azure_openai.token_limit.32768")}</option>
+            <option value={4096}>
+              {t("llm.providers.azure_openai.token_limit.4096")}
+            </option>
+            <option value={16384}>
+              {t("llm.providers.azure_openai.token_limit.16384")}
+            </option>
+            <option value={8192}>
+              {t("llm.providers.azure_openai.token_limit.8192")}
+            </option>
+            <option value={32768}>
+              {t("llm.providers.azure_openai.token_limit.32768")}
+            </option>
             <option value={128000}>
               {t("llm.providers.azure_openai.token_limit.128000")}
             </option>
-            <option value={200000}>{t("llm.providers.azure_openai.token_limit.200000")}</option>
-            <option value={1047576}>{t("llm.providers.azure_openai.token_limit.1047576")}</option>
+            <option value={200000}>
+              {t("llm.providers.azure_openai.token_limit.200000")}
+            </option>
+            <option value={1047576}>
+              {t("llm.providers.azure_openai.token_limit.1047576")}
+            </option>
           </select>
         </div>
 

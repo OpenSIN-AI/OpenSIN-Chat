@@ -121,7 +121,9 @@ export default function WebsiteDepthOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? t("connectors.website-depth.scrapingButton") : t("common.submit")}
+              {loading
+                ? t("connectors.website-depth.scrapingButton")
+                : t("common.submit")}
             </button>
             {loading && (
               <p className="text-xs text-theme-text-secondary">

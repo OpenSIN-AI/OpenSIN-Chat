@@ -4,7 +4,6 @@ import { X, CircleNotch, Warning } from "@phosphor-icons/react";
 import Workspace from "@/models/workspace";
 import { nFormatter } from "@/utils/numbers";
 import showToast from "@/utils/toast";
-import pluralize from "pluralize";
 import { PARSED_FILE_ATTACHMENT_REMOVED_EVENT } from "../../../DnDWrapper";
 import useUser from "@/hooks/useUser";
 import { useTranslation } from "react-i18next";
@@ -98,10 +97,10 @@ export default function ParsedFilesMenu({
           <div
             className={`text-xs ${contextWindowLimitExceeded ? "text-orange-600" : "text-theme-text-secondary"}`}
           >
-          {/* eslint-disable i18next/no-literal-string */}
+            {/* eslint-disable i18next/no-literal-string */}
             {nFormatter(currentTokens)} /{" "}
             {contextWindow ? nFormatter(contextWindow) : "--"} tokens
-          {/* eslint-enable i18next/no-literal-string */}
+            {/* eslint-enable i18next/no-literal-string */}
           </div>
         </div>
       </div>
@@ -124,7 +123,10 @@ export default function ParsedFilesMenu({
             {isEmbedding ? (
               <>
                 <CircleNotch size={14} className="animate-spin" />
-                {t("parsedFilesMenu.embeddingProgress", { current: embedProgress, total: files.length })}
+                {t("parsedFilesMenu.embeddingProgress", {
+                  current: embedProgress,
+                  total: files.length,
+                })}
               </>
             ) : (
               t("parsedFilesMenu.embedFilesButton")

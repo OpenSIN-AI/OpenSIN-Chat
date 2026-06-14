@@ -85,7 +85,9 @@ const TextPreview = ({ text, closeModal }) => {
     <div className="relative w-full md:max-w-2xl max-h-full">
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="flex items-center justify-between p-6 border-b rounded-t border-theme-modal-border">
-          <h3 className="text-xl font-semibold text-white">{t("common.viewingText")}</h3>
+          <h3 className="text-xl font-semibold text-white">
+            {t("common.viewingText")}
+          </h3>
           <button
             onClick={closeModal}
             type="button"

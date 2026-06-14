@@ -36,7 +36,9 @@ export default function ChatSettings({ workspace }) {
       showToast(t("common.workspaceUpdated"), "success", { clear: true });
       setHasChanges(false);
     } else {
-      showToast(t("common.error", { error: message }), "error", { clear: true });
+      showToast(t("common.error", { error: message }), "error", {
+        clear: true,
+      });
       // Keep hasChanges true on error so user can retry
     }
     setSaving(false);

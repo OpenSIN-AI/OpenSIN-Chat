@@ -16,7 +16,9 @@ export default function OpenRouterOptions({ settings }: any) {
             type="password"
             name="OpenRouterApiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.openRouterEmbedding.apiKeyPlaceholder")}
+            placeholder={t(
+              "providerSettings.openRouterEmbedding.apiKeyPlaceholder",
+            )}
             defaultValue={settings?.OpenRouterApiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"

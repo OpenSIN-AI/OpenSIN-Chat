@@ -88,7 +88,9 @@ export default function YoutubeOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? t("connectors.youtube.collectingButton") : t("connectors.youtube.collectButton")}
+              {loading
+                ? t("connectors.youtube.collectingButton")
+                : t("connectors.youtube.collectButton")}
             </button>
             {loading && (
               <p className="text-xs text-theme-text-secondary max-w-sm">

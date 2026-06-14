@@ -16,7 +16,6 @@ vi.mock("@/utils/keyboardShortcuts", () => ({
   KEYBOARD_SHORTCUTS_HELP_EVENT: "keyboard-shortcuts-help",
 }));
 
-
 describe("KeyboardShortcutsHelp", () => {
   beforeEach(() => {
     vi.clearAllMocks();

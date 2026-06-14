@@ -81,7 +81,9 @@ export default function EditPresetModal({
                     <input
                       type="text"
                       name="command"
-                      placeholder={t("slashPresets.editPreset.commandPlaceholder")}
+                      placeholder={t(
+                        "slashPresets.editPreset.commandPlaceholder",
+                      )}
                       value={command}
                       onChange={handleCommandChange}
                       required={true}
@@ -115,7 +117,9 @@ export default function EditPresetModal({
                     type="text"
                     name="description"
                     defaultValue={preset.description}
-                    placeholder={t("slashPresets.editPreset.descriptionPlaceholder")}
+                    placeholder={t(
+                      "slashPresets.editPreset.descriptionPlaceholder",
+                    )}
                     required={true}
                     className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   />
@@ -129,7 +133,9 @@ export default function EditPresetModal({
                 type="button"
                 className="border-none transition-all duration-300 bg-transparent text-red-500 hover:bg-red-500/25 px-4 py-2 rounded-lg text-sm disabled:opacity-50"
               >
-                {deleting ? t("slashPresets.editPreset.deleting") : t("slashPresets.editPreset.deletePreset")}
+                {deleting
+                  ? t("slashPresets.editPreset.deleting")
+                  : t("slashPresets.editPreset.deletePreset")}
               </button>
               <div className="flex space-x-2">
                 <button

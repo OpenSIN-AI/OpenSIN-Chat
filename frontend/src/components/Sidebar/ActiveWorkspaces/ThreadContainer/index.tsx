@@ -270,7 +270,9 @@ export default function ThreadContainer({
   if (loading) {
     return (
       <div className="flex flex-col bg-pulse w-full h-10 items-center justify-center">
-        <p className="text-xs text-white animate-pulse">{t("threadContainer.loadingThreads")}</p>
+        <p className="text-xs text-white animate-pulse">
+          {t("threadContainer.loadingThreads")}
+        </p>
       </div>
     );
   }
@@ -294,7 +296,11 @@ export default function ThreadContainer({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex flex-col" role="list" aria-label={t("common.threads")}>
+      <div
+        className="flex flex-col"
+        role="list"
+        aria-label={t("common.threads")}
+      >
         {defaultThreadHasChats && (
           <ThreadItem
             idx={0}
@@ -419,7 +425,9 @@ function NewThreadButton({ workspace, mutate }) {
     setLoading(true);
     const { thread, error } = await Workspace.threads.new(workspace.slug);
     if (!!error) {
-      showToast(t("threadContainer.createError", { error }), "error", { clear: true });
+      showToast(t("threadContainer.createError", { error }), "error", {
+        clear: true,
+      });
       setLoading(false);
       return;
     }

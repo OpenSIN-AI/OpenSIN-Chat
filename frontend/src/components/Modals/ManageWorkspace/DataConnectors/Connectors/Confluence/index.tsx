@@ -19,14 +19,10 @@ export default function ConfluenceOptions() {
 
     try {
       setLoading(true);
-      showToast(
-        t("connectors.confluence.fetching_pages"),
-        "info",
-        {
-          clear: true,
-          autoClose: false,
-        },
-      );
+      showToast(t("connectors.confluence.fetching_pages"), "info", {
+        clear: true,
+        autoClose: false,
+      });
       const { data, error } = await System.dataConnectors.confluence.collect({
         baseUrl: form.get("baseUrl"),
         spaceKey: form.get("spaceKey"),
@@ -44,7 +40,10 @@ export default function ConfluenceOptions() {
       }
 
       showToast(
-        t("connectors.confluence.pages_collected", { spaceKey: data.spaceKey, destination: data.destination }),
+        t("connectors.confluence.pages_collected", {
+          spaceKey: data.spaceKey,
+          destination: data.destination,
+        }),
         "success",
         { clear: true },
       );
@@ -83,8 +82,12 @@ export default function ConfluenceOptions() {
                   defaultValue="true"
                   onChange={(e) => setIsCloud(e.target.value === "true")}
                 >
-                  <option value="true">{t("connectors.confluence.atlassian_cloud")}</option>
-                  <option value="false">{t("connectors.confluence.self_hosted")}</option>
+                  <option value="true">
+                    {t("connectors.confluence.atlassian_cloud")}
+                  </option>
+                  <option value="false">
+                    {t("connectors.confluence.self_hosted")}
+                  </option>
                 </select>
               </div>
 
@@ -143,25 +146,25 @@ export default function ConfluenceOptions() {
                   defaultValue={accessType}
                   onChange={(e) => setAccessType(e.target.value)}
                 >
-                   {/* eslint-disable i18next/no-literal-string */}
-                   {[
-                     {
-                       name: t("connectors.confluence.auth_type_username"),
-                       value: "username",
-                     },
-                     {
-                       name: t("connectors.confluence.auth_type_personal"),
-                       value: "personalToken",
-                     },
-                   ].map((type) => {
-                     return (
-                       <option key={type.value} value={type.value}>
-                         {type.name}
-                       </option>
-                     );
-                   })}
-                   {/* eslint-enable i18next/no-literal-string */}
-                 </select>
+                  {/* eslint-disable i18next/no-literal-string */}
+                  {[
+                    {
+                      name: t("connectors.confluence.auth_type_username"),
+                      value: "username",
+                    },
+                    {
+                      name: t("connectors.confluence.auth_type_personal"),
+                      value: "personalToken",
+                    },
+                  ].map((type) => {
+                    return (
+                      <option key={type.value} value={type.value}>
+                        {type.name}
+                      </option>
+                    );
+                  })}
+                  {/* eslint-enable i18next/no-literal-string */}
+                </select>
               </div>
               {accessType === "username" && (
                 <>
@@ -178,7 +181,9 @@ export default function ConfluenceOptions() {
                       type="text"
                       name="username"
                       className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder={t("connectors.confluence.username_placeholder")}
+                      placeholder={t(
+                        "connectors.confluence.username_placeholder",
+                      )}
                       required={true}
                       autoComplete="off"
                       spellCheck={false}
@@ -211,11 +216,11 @@ export default function ConfluenceOptions() {
                               className="underline"
                               onClick={(e) => e.stopPropagation()}
                             >
-                            {t("connectors.confluence.token_explained_link")}
-                          </a>
-                          {/* eslint-disable-next-line i18next/no-literal-string */}
-                          {"."}
-                        </p>
+                              {t("connectors.confluence.token_explained_link")}
+                            </a>
+                            {/* eslint-disable-next-line i18next/no-literal-string */}
+                            {"."}
+                          </p>
                         </Tooltip>
                       </label>
                       <p className="text-xs font-normal text-theme-text-secondary">
@@ -284,7 +289,9 @@ export default function ConfluenceOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? t("connectors.confluence.collecting_pages") : t("connectors.confluence.submit")}
+              {loading
+                ? t("connectors.confluence.collecting_pages")
+                : t("connectors.confluence.submit")}
             </button>
             {loading && (
               <p className="text-xs text-theme-text-secondary">

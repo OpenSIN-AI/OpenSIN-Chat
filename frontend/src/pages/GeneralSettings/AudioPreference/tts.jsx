@@ -152,7 +152,9 @@ export default function TextToSpeechProvider({ settings }) {
             </CTAButton>
           )}
         </div>
-        <div className="text-base font-bold text-white mt-6 mb-4">{t("common.provider")}</div>
+        <div className="text-base font-bold text-white mt-6 mb-4">
+          {t("common.provider")}
+        </div>
         <div className="relative">
           {searchMenuOpen && (
             <div

@@ -171,6 +171,7 @@ function SearchResultCategory({ items, name }: any) {
 }
 
 function SearchResultItem({ to, name, hint }: any) {
+  const { t } = useTranslation();
   return (
     <Link
       to={to}

@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  act,
+  waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ToolsMenu, { TOOLS_MENU_KEYBOARD_EVENT } from "./index";
 import useUser from "@/hooks/useUser";
@@ -96,9 +102,9 @@ describe("ToolsMenu", () => {
   it("renders the slash commands tab by default", () => {
     renderMenu();
     expect(screen.getByTestId("slash-commands-tab")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Slash Commands" }),
-    ).toHaveClass("bg-zinc-700");
+    expect(screen.getByRole("button", { name: "Slash Commands" })).toHaveClass(
+      "bg-zinc-700",
+    );
   });
 
   it("switches to the agent skills tab when clicked", async () => {
@@ -106,9 +112,9 @@ describe("ToolsMenu", () => {
     renderMenu();
     await user.click(screen.getByRole("button", { name: "Agent Skills" }));
     expect(screen.getByTestId("agent-skills-tab")).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "Agent Skills" }),
-    ).toHaveClass("bg-zinc-700");
+    expect(screen.getByRole("button", { name: "Agent Skills" })).toHaveClass(
+      "bg-zinc-700",
+    );
   });
 
   it("cycles tabs with ArrowLeft and ArrowRight keyboard events", async () => {
@@ -237,7 +243,10 @@ describe("ToolsMenu", () => {
     const user = userEvent.setup();
     renderMenu();
     await user.click(screen.getByTestId("slash-use"));
-    expect(sendCommand).toHaveBeenCalledWith({ text: "/reset", autoSubmit: true });
+    expect(sendCommand).toHaveBeenCalledWith({
+      text: "/reset",
+      autoSubmit: true,
+    });
     expect(setShowing).toHaveBeenCalledWith(false);
   });
 

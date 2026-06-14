@@ -30,7 +30,9 @@ describe("useTimeoutProgress", () => {
 
   it("does not run when timeout is null", () => {
     const onTimeout = vi.fn();
-    const { result } = renderHook(() => useTimeoutProgress(null, { onTimeout }));
+    const { result } = renderHook(() =>
+      useTimeoutProgress(null, { onTimeout }),
+    );
     expect(result.current).toBe(100);
     act(() => vi.advanceTimersByTime(1000));
     expect(onTimeout).not.toHaveBeenCalled();

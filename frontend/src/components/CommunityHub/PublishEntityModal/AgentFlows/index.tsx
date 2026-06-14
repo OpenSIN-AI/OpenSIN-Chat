@@ -47,7 +47,9 @@ export default function AgentFlows({ entity }: any) {
     } catch (error) {
       console.error("Failed to publish agent flow:", error);
       showToast(
-        t("community_hub.publish.agent_flow.publishFailed", { error: (error as Error).message }),
+        t("community_hub.publish.agent_flow.publishFailed", {
+          error: (error as Error).message,
+        }),
         "error",
         { clear: true },
       );
@@ -216,8 +218,12 @@ export default function AgentFlows({ entity }: any) {
                       aria-expanded={isExpanded}
                       aria-label={
                         isExpanded
-                          ? t("community_hub.publish.agent_flow.collapseStep", { index: idx + 1 })
-                          : t("community_hub.publish.agent_flow.expandStep", { index: idx + 1 })
+                          ? t("community_hub.publish.agent_flow.collapseStep", {
+                              index: idx + 1,
+                            })
+                          : t("community_hub.publish.agent_flow.expandStep", {
+                              index: idx + 1,
+                            })
                       }
                       className="flex flex-col bg-theme-bg-secondary rounded-lg px-3 py-2 w-full cursor-pointer group text-left border-none"
                       onClick={() => setExpandedStep(isExpanded ? null : idx)}

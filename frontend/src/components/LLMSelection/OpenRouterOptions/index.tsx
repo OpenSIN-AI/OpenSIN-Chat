@@ -46,7 +46,10 @@ function AdvancedControls({ settings }: any) {
         onClick={() => setShowAdvancedControls(!showAdvancedControls)}
         className="border-none text-white hover:text-white/70 flex items-center text-sm"
       >
-        {showAdvancedControls ? t("providerSettings.openRouter.hide") : t("providerSettings.openRouter.show")} {t("providerSettings.openRouter.advancedControls")}
+        {showAdvancedControls
+          ? t("providerSettings.openRouter.hide")
+          : t("providerSettings.openRouter.show")}{" "}
+        {t("providerSettings.openRouter.advancedControls")}
         {showAdvancedControls ? (
           <CaretUp size={14} className="ml-1" />
         ) : (
@@ -62,7 +65,9 @@ function AdvancedControls({ settings }: any) {
             type="number"
             name="OpenRouterTimeout"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.openRouter.streamTimeoutPlaceholder")}
+            placeholder={t(
+              "providerSettings.openRouter.streamTimeoutPlaceholder",
+            )}
             defaultValue={settings?.OpenRouterTimeout ?? 3_000}
             autoComplete="off"
             onScroll={(e) => (e.target as HTMLElement).blur()}

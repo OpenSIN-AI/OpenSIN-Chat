@@ -15,11 +15,10 @@ export default function PaperlessNgxOptions() {
 
     try {
       setLoading(true);
-      showToast(
-        t("dataConnectors.paperlessNgx.fetchingDocuments"),
-        "info",
-        { clear: true, autoClose: false },
-      );
+      showToast(t("dataConnectors.paperlessNgx.fetchingDocuments"), "info", {
+        clear: true,
+        autoClose: false,
+      });
 
       const { data, error } = await System.dataConnectors.paperlessNgx.collect({
         baseUrl: form.get("baseUrl"),
@@ -33,7 +32,10 @@ export default function PaperlessNgxOptions() {
       }
 
       showToast(
-        t("dataConnectors.paperlessNgx.successImport", { files: data.files, destination: data.destination }),
+        t("dataConnectors.paperlessNgx.successImport", {
+          files: data.files,
+          destination: data.destination,
+        }),
         "success",
         { clear: true },
       );
@@ -65,7 +67,9 @@ export default function PaperlessNgxOptions() {
                   type="url"
                   name="baseUrl"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("dataConnectors.paperlessNgx.baseUrlPlaceholder")}
+                  placeholder={t(
+                    "dataConnectors.paperlessNgx.baseUrlPlaceholder",
+                  )}
                   required={true}
                   autoComplete="off"
                   spellCheck={false}
@@ -75,7 +79,9 @@ export default function PaperlessNgxOptions() {
               <div className="flex flex-col pr-10">
                 <div className="flex flex-col gap-y-1 mb-4">
                   <label className="text-white text-sm font-bold flex gap-x-2 items-center">
-                    <p className="font-bold text-white">{t("dataConnectors.paperlessNgx.apiToken")}</p>
+                    <p className="font-bold text-white">
+                      {t("dataConnectors.paperlessNgx.apiToken")}
+                    </p>
                   </label>
                   <p className="text-xs font-normal text-theme-text-secondary">
                     {t("dataConnectors.paperlessNgx.apiTokenHelp")}
@@ -85,7 +91,9 @@ export default function PaperlessNgxOptions() {
                   type="password"
                   name="apiToken"
                   className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("dataConnectors.paperlessNgx.apiTokenPlaceholder")}
+                  placeholder={t(
+                    "dataConnectors.paperlessNgx.apiTokenPlaceholder",
+                  )}
                   required={true}
                   autoComplete="off"
                   spellCheck={false}
@@ -108,7 +116,9 @@ export default function PaperlessNgxOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? t("dataConnectors.paperlessNgx.importingDocuments") : t("dataConnectors.paperlessNgx.submit")}
+              {loading
+                ? t("dataConnectors.paperlessNgx.importingDocuments")
+                : t("dataConnectors.paperlessNgx.submit")}
             </button>
             {loading && (
               <p className="text-xs text-white/50">

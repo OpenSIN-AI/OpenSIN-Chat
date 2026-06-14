@@ -81,7 +81,9 @@ const ScriptTag = ({ embed }) => {
     setTimeout(() => {
       setCopied(false);
     }, 2500);
-    showToast(t("codeSnippetModal.copiedToClipboard"), "success", { clear: true });
+    showToast(t("codeSnippetModal.copiedToClipboard"), "success", {
+      clear: true,
+    });
   };
 
   return (

@@ -19,7 +19,6 @@ vi.mock("@phosphor-icons/react", () => ({
   Image: () => <svg data-testid="image-icon" />,
 }));
 
-
 // Capture the openPreview mock so individual tests can assert against it.
 const openPreviewMock = vi.fn();
 vi.mock("../../ChatSidebar", () => ({

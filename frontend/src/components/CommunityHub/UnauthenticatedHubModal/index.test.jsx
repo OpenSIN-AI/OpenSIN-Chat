@@ -19,7 +19,6 @@ vi.mock("@phosphor-icons/react", () => ({
   ),
 }));
 
-
 vi.mock("@/utils/paths", () => ({
   default: {
     communityHub: {
@@ -56,9 +55,7 @@ describe("UnauthenticatedHubModal", () => {
       </MemoryRouter>,
     );
     expect(screen.getByTestId("modal-wrapper")).toBeInTheDocument();
-    expect(
-      screen.getByText("Authentication Required"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Authentication Required")).toBeInTheDocument();
   });
 
   it("renders the description text", () => {
@@ -113,9 +110,7 @@ describe("UnauthenticatedHubModal", () => {
         <UnauthenticatedHubModal show={true} onClose={vi.fn()} />
       </MemoryRouter>,
     );
-    const link = screen.getByText(
-      "Connect to Community Hub",
-    );
+    const link = screen.getByText("Connect to Community Hub");
     expect(link.closest("a")).toHaveAttribute(
       "href",
       "/settings/community-hub/authentication",

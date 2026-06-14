@@ -28,7 +28,9 @@ describe("useWorkspaceBySlug", () => {
 
   it("fetches workspace by slug", async () => {
     Workspace.bySlug.mockResolvedValue({ slug: "slug", name: "WS" });
-    const { result } = renderHook(() => useWorkspaceBySlug("slug"), { wrapper });
+    const { result } = renderHook(() => useWorkspaceBySlug("slug"), {
+      wrapper,
+    });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.workspace).toEqual({ slug: "slug", name: "WS" });
     expect(Workspace.bySlug).toHaveBeenCalledWith("slug");

@@ -53,7 +53,11 @@ export default function NewWorkspaceModal({ closeModal }) {
                   autoComplete="off"
                 />
               </div>
-              {error && <p className="text-red-400 text-sm">{t("admin.newWorkspaceModal.error", { error })}</p>}
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("admin.newWorkspaceModal.error", { error })}
+                </p>
+              )}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
                 {t("admin.newWorkspaceModal.adminOnlyHint")}
               </p>

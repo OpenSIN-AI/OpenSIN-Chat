@@ -93,9 +93,7 @@ export function SkillPanel({
         ) : (
           <div className="flex flex-col items-center justify-center h-full text-theme-text-secondary">
             <Robot size={40} />
-            <p className="font-medium">
-              {t("common.selectAgentSkillFlowMcp")}
-            </p>
+            <p className="font-medium">{t("common.selectAgentSkillFlowMcp")}</p>
           </div>
         )}
       </div>

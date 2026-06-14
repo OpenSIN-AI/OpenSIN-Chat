@@ -30,7 +30,9 @@ export default function GiteeAIOptions({ settings }: any) {
               type="number"
               name="GiteeAITokenLimit"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder={t("providerSettings.giteeAi.contextWindowPlaceholder")}
+              placeholder={t(
+                "providerSettings.giteeAi.contextWindowPlaceholder",
+              )}
               min={1}
               onScroll={(e) => (e.target as HTMLElement).blur()}
               defaultValue={settings?.GiteeAITokenLimit}

@@ -182,7 +182,9 @@ describe("Citation", () => {
     it("parses obsidian:// source correctly", () => {
       const result = parseChunkSource({
         title: "Obsidian Note",
-        chunks: [{ chunkSource: "obsidian://https://obsidian.example.com/note" }],
+        chunks: [
+          { chunkSource: "obsidian://https://obsidian.example.com/note" },
+        ],
       });
       expect(result.icon).toBe("obsidian");
     });
@@ -190,7 +192,9 @@ describe("Citation", () => {
     it("parses paperless-ngx:// source correctly", () => {
       const result = parseChunkSource({
         title: "Paperless Document",
-        chunks: [{ chunkSource: "paperless-ngx://https://paperless.example.com/doc" }],
+        chunks: [
+          { chunkSource: "paperless-ngx://https://paperless.example.com/doc" },
+        ],
       });
       expect(result.icon).toBe("paperlessNgx");
     });

@@ -16,12 +16,7 @@ function ManageFlowMenu({ flow, onDelete }) {
 
   async function deleteFlow() {
     setOpen(false);
-    if (
-      !window.confirm(
-        t("agentFlows.confirmDelete"),
-      )
-    )
-      return;
+    if (!window.confirm(t("agentFlows.confirmDelete"))) return;
     const { success, error } = await AgentFlows.deleteFlow(flow.uuid);
     if (success) {
       showToast(t("agentFlows.flowDeleted"), "success");
@@ -62,14 +57,18 @@ function ManageFlowMenu({ flow, onDelete }) {
             onClick={() => navigate(paths.agents.editAgent(flow.uuid))}
             className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
-            <span className="text-sm whitespace-nowrap">{t("agentFlows.editFlow")}</span>
+            <span className="text-sm whitespace-nowrap">
+              {t("agentFlows.editFlow")}
+            </span>
           </button>
           <button
             type="button"
             onClick={deleteFlow}
             className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
-            <span className="text-sm whitespace-nowrap">{t("agentFlows.deleteFlow")}</span>
+            <span className="text-sm whitespace-nowrap">
+              {t("agentFlows.deleteFlow")}
+            </span>
           </button>
         </div>
       )}

@@ -104,7 +104,9 @@ export default function EditUserModal({ currentUser, user, closeModal }) {
                   name="password"
                   type="text"
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("admin.editUser.passwordPlaceholder", { username: user.username })}
+                  placeholder={t("admin.editUser.passwordPlaceholder", {
+                    username: user.username,
+                  })}
                   autoComplete="off"
                   minLength={8}
                 />
@@ -142,10 +144,16 @@ export default function EditUserModal({ currentUser, user, closeModal }) {
                   onChange={(e) => setRole(e.target.value)}
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                 >
-                  <option value="default">{t("admin.editUser.roleDefault")}</option>
-                  <option value="manager">{t("admin.editUser.roleManager")}</option>
+                  <option value="default">
+                    {t("admin.editUser.roleDefault")}
+                  </option>
+                  <option value="manager">
+                    {t("admin.editUser.roleManager")}
+                  </option>
                   {currentUser?.role === "admin" && (
-                    <option value="admin">{t("admin.editUser.roleAdmin")}</option>
+                    <option value="admin">
+                      {t("admin.editUser.roleAdmin")}
+                    </option>
                   )}
                 </select>
                 <RoleHintDisplay role={role} />
@@ -156,13 +164,17 @@ export default function EditUserModal({ currentUser, user, closeModal }) {
                 limit={messageLimit.limit}
                 updateState={setMessageLimit}
               />
-              {error && <p className="text-red-400 text-sm">{t("admin.editUser.error", { error })}</p>}
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("admin.editUser.error", { error })}
+                </p>
+              )}
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
               <button
                 onClick={closeModal}
                 type="button"
-                  className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
+                className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
               >
                 {t("admin.editUser.cancel")}
               </button>

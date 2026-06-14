@@ -35,7 +35,7 @@ export default function NewInviteModal({ closeModal, onSuccess }) {
       `${window.location.origin}/accept-invite/${invite.code}`,
     );
     setCopied(true);
-      showToast(t("admin.newInvite.copiedToClipboard"), "success", {
+    showToast(t("admin.newInvite.copiedToClipboard"), "success", {
       clear: true,
     });
   };
@@ -88,7 +88,11 @@ export default function NewInviteModal({ closeModal, onSuccess }) {
         <div className="p-6">
           <form onSubmit={handleCreate}>
             <div className="space-y-4">
-              {error && <p className="text-red-400 text-sm">{t("admin.newInvite.error")}: {error}</p>}
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("admin.newInvite.error")}: {error}
+                </p>
+              )}
               {invite && (
                 <div className="relative">
                   <input

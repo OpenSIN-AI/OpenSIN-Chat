@@ -47,20 +47,20 @@ export default function AgentModelSelection({
   if (DISABLED_PROVIDERS.includes(provider)) {
     return (
       <div className="w-full h-10 justify-center items-center flex">
-          <p className="text-sm font-base text-white text-opacity-60 text-center">
+        <p className="text-sm font-base text-white text-opacity-60 text-center">
           {t("agentModelSelection.multiModelNotSupported")}
-            <br />
-            {t("agentModelSelection.agentsWillUse")}{" "}
-            <Link
-              to={paths.workspace.settings.chatSettings(slug)}
-              className="underline"
-            >
-              {t("agentModelSelection.workspaceModel")}
-            </Link>{" "}
-            {t("agentModelSelection.or")}{" "}
-            <Link to={paths.settings.llmPreference()} className="underline">
-              {t("agentModelSelection.systemModel")}
-            </Link>
+          <br />
+          {t("agentModelSelection.agentsWillUse")}{" "}
+          <Link
+            to={paths.workspace.settings.chatSettings(slug)}
+            className="underline"
+          >
+            {t("agentModelSelection.workspaceModel")}
+          </Link>{" "}
+          {t("agentModelSelection.or")}{" "}
+          <Link to={paths.settings.llmPreference()} className="underline">
+            {t("agentModelSelection.systemModel")}
+          </Link>
         </p>
       </div>
     );
@@ -111,7 +111,7 @@ export default function AgentModelSelection({
         className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
       >
         {defaultModels.length > 0 && (
-           <optgroup label={t("agentModelSelection.generalModels")}>
+          <optgroup label={t("agentModelSelection.generalModels")}>
             {defaultModels.map((model) => {
               if (!supportedModel(provider, model)) return null;
               return (
@@ -127,7 +127,7 @@ export default function AgentModelSelection({
           </optgroup>
         )}
         {Array.isArray(customModels) && customModels.length > 0 && (
-           <optgroup label={t("agentModelSelection.customModels")}>
+          <optgroup label={t("agentModelSelection.customModels")}>
             {customModels.map((model) => {
               if (!supportedModel(provider, model.id)) return null;
 

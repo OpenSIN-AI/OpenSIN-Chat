@@ -126,7 +126,10 @@ function SetupProvider({
     for (var [key, value] of form.entries()) data[key] = value;
     const { error } = await System.updateSystem(data);
     if (error) {
-      showToast(t("agentLLMItem.saveFailed", { name: LLMOption.name, error }), "error");
+      showToast(
+        t("agentLLMItem.saveFailed", { name: LLMOption.name, error }),
+        "error",
+      );
       return;
     }
 

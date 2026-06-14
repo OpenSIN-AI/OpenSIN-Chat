@@ -2,9 +2,12 @@
 import { describe, it, expect, vi } from "vitest";
 import { renderHook, waitFor, act } from "@testing-library/react";
 
-vi.mock("@/components/WorkspaceChat/ChatContainer/ChatHistory/ThoughtContainer", () => ({
-  THOUGHT_REGEX_COMPLETE: /<thinking>[\s\S]*?<\/thinking>/,
-}));
+vi.mock(
+  "@/components/WorkspaceChat/ChatContainer/ChatHistory/ThoughtContainer",
+  () => ({
+    THOUGHT_REGEX_COMPLETE: /<thinking>[\s\S]*?<\/thinking>/,
+  }),
+);
 
 vi.mock("@/utils/clipboard", () => ({
   copyMarkdownAsRichText: vi.fn(() => Promise.resolve()),

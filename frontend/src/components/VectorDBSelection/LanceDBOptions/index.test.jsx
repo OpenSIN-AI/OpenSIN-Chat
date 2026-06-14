@@ -7,7 +7,6 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-
 describe("LanceDBOptions", () => {
   it("renders without crash", () => {
     const { container } = render(<LanceDBOptions />);

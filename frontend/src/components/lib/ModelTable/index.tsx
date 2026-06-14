@@ -82,7 +82,10 @@ export default function ModelTable({
           <p className="flex items-center gap-x-1 text-theme-text-primary text-base font-bold">
             {titleCase(alias)}
             <span className="text-theme-text-secondary font-normal text-sm">
-              {t("modelTable.modelCount", { count: totalModels, plural: pluralize("Model", totalModels) })}
+              {t("modelTable.modelCount", {
+                count: totalModels,
+                plural: pluralize("Model", totalModels),
+              })}
             </span>
           </p>
         </div>
@@ -305,7 +308,10 @@ function ModelRow({
             data-tooltip-id="install-model-tooltip"
             data-tooltip-place="top"
             data-tooltip-delay-show={300}
-              data-tooltip-content={t("modelTable.installModel", { organization: model.organization, name: model.name })}
+            data-tooltip-content={t("modelTable.installModel", {
+              organization: model.organization,
+              name: model.name,
+            })}
             className="border-none hover:bg-white/20 light:hover:bg-black/5 rounded-lg p-2 flex items-center gap-x-1 cursor-pointer"
             onClick={handleSetActiveModel}
           >
@@ -341,7 +347,9 @@ function RenderStatus({ model, isActiveModel }: any) {
     return (
       <div className="flex items-center justify-center gap-x-[10px] whitespace-nowrap">
         <Circle size={8} weight="fill" className="text-green-500" />
-        <p className="text-theme-text-primary text-sm">{t("modelTable.active")}</p>
+        <p className="text-theme-text-primary text-sm">
+          {t("modelTable.active")}
+        </p>
       </div>
     );
   }

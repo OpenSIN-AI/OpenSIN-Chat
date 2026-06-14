@@ -69,7 +69,8 @@ const TRANSLATIONS = {
   },
   modelSelector: {
     chatModel: {
-      placeholder: "Enter model name exactly as referenced in the API (e.g., gpt-3.5-turbo)",
+      placeholder:
+        "Enter model name exactly as referenced in the API (e.g., gpt-3.5-turbo)",
     },
   },
   transcriptionSelection: {
@@ -108,7 +109,8 @@ const TRANSLATIONS = {
     },
     zilliz: {
       clusterEndpoint: "Cluster Endpoint",
-      clusterEndpointPlaceholder: "https://sample.api.gcp-us-west1.zillizcloud.com",
+      clusterEndpointPlaceholder:
+        "https://sample.api.gcp-us-west1.zillizcloud.com",
       apiToken: "API Token",
       apiTokenPlaceholder: "Zilliz cluster API Token",
     },
@@ -196,7 +198,8 @@ const TRANSLATIONS = {
     cached: "Cached",
     clearUrl: "Clear URL",
     close: "Close",
-    contactAdministrator: "Please contact the system administrator about this error.",
+    contactAdministrator:
+      "Please contact the system administrator about this error.",
     continue: "Continue",
     couldNotRespond: "Could not respond to message.",
     delete: "Delete",
@@ -211,7 +214,8 @@ const TRANSLATIONS = {
     message: "Message",
     moreOptions: "More Options",
     noneSelected: "None selected",
-    noConfigurationNeeded: "There is no configuration needed for this provider.",
+    noConfigurationNeeded:
+      "There is no configuration needed for this provider.",
     providerConnectivity: "Provider connectivity",
     prompt: "Prompt",
     remove: "Remove",
@@ -606,7 +610,8 @@ const TRANSLATIONS = {
       hide: "Hide",
       advancedControls: "advanced controls",
       streamTimeout: "Stream Timeout (ms)",
-      streamTimeoutPlaceholder: "Timeout value between token responses to auto-timeout the stream",
+      streamTimeoutPlaceholder:
+        "Timeout value between token responses to auto-timeout the stream",
     },
     foundry: {
       baseUrl: "Base URL",
@@ -1861,21 +1866,22 @@ const TRANSLATIONS = {
         api_key: "API Key",
         api_key_placeholder: "Azure OpenAI API Key",
         chat_deployment_name: "Chat Deployment Name",
-        chat_deployment_name_placeholder: "Azure OpenAI chat model deployment name",
+        chat_deployment_name_placeholder:
+          "Azure OpenAI chat model deployment name",
         chat_model_token_limit: "Chat Model Token Limit",
         model_type: "Model Type",
         model_type_tooltip:
-          "If your deployment uses a reasoning model (o1, o1-mini, o3-mini, etc.), set this to \"Reasoning\". Otherwise, your chat requests may fail.",
+          'If your deployment uses a reasoning model (o1, o1-mini, o3-mini, etc.), set this to "Reasoning". Otherwise, your chat requests may fail.',
         default: "Default",
         reasoning: "Reasoning",
         token_limit: {
-          "4096": "4,096 (gpt-3.5-turbo)",
-          "16384": "16,384 (gpt-3.5-16k)",
-          "8192": "8,192 (gpt-4)",
-          "32768": "32,768 (gpt-4-32k)",
-          "128000": "128,000 (gpt-4-turbo,gpt-4o,gpt-4o-mini,o1-mini)",
-          "200000": "200,000 (o1,o1-pro,o3-mini)",
-          "1047576": "1,047,576 (gpt-4.1)",
+          4096: "4,096 (gpt-3.5-turbo)",
+          16384: "16,384 (gpt-3.5-16k)",
+          8192: "8,192 (gpt-4)",
+          32768: "32,768 (gpt-4-32k)",
+          128000: "128,000 (gpt-4-turbo,gpt-4o,gpt-4o-mini,o1-mini)",
+          200000: "200,000 (o1,o1-pro,o3-mini)",
+          1047576: "1,047,576 (gpt-4.1)",
         },
       },
     },
@@ -2277,8 +2283,7 @@ const TRANSLATIONS = {
         "Without filling out the <b>GitHub Access Token</b> this data connector will only be able to collect the <b>top-level</b> files of the repo due to GitHub's public API rate-limits.",
       token_personal:
         "Get a free Personal Access Token with a GitHub account here.",
-      fetching_files:
-        "Fetching all files for repo - this may take a while.",
+      fetching_files: "Fetching all files for repo - this may take a while.",
       files_collected:
         "{{files}} {{filePlural}} collected from {{author}}/{{repo}}:{{branch}}. Output folder is {{destination}}.",
       collecting_files: "Collecting files...",
@@ -2317,7 +2322,8 @@ const TRANSLATIONS = {
       settings: "Settings",
       fetch_wikis: "Fetch Wikis as Documents",
       fetchingFiles: "Fetching all files for repo - this may take a while.",
-      filesCollected: "{{files}} {{fileWord}} collected from {{author}}/{{repo}}:{{branch}}. Output folder is {{destination}}.",
+      filesCollected:
+        "{{files}} {{fileWord}} collected from {{author}}/{{repo}}:{{branch}}. Output folder is {{destination}}.",
       collectingFiles: "Collecting files...",
     },
     youtube: {
@@ -2375,11 +2381,14 @@ const TRANSLATIONS = {
         "Enable this option to bypass SSL certificate validation for self-hosted confluence instances with self-signed certificate",
       task_explained:
         "Once complete, the page content will be available for embedding into workspaces in the document picker.",
-      fetching_pages: "Fetching all pages for Confluence space - this may take a while.",
-      pages_collected: "Pages collected from Confluence space {{spaceKey}}. Output folder is {{destination}}.",
+      fetching_pages:
+        "Fetching all pages for Confluence space - this may take a while.",
+      pages_collected:
+        "Pages collected from Confluence space {{spaceKey}}. Output folder is {{destination}}.",
       atlassian_cloud: "Atlassian Cloud",
       self_hosted: "Self-hosted",
-      base_url_placeholder: "eg: https://example.atlassian.net, http://localhost:8211, etc...",
+      base_url_placeholder:
+        "eg: https://example.atlassian.net, http://localhost:8211, etc...",
       space_key_placeholder: "eg: ~7120208c08555d52224113949698b933a3bb56",
       username_placeholder: "jdoe@example.com",
       token_placeholder: "abcd1234",
@@ -3191,13 +3200,18 @@ const TRANSLATIONS = {
   communityHub: {
     auth: {
       title: "Your OpenSIN Chat Community Hub Account",
-      descriptionPart1: "Connecting your OpenSIN Chat Community Hub account allows you to access your ",
+      descriptionPart1:
+        "Connecting your OpenSIN Chat Community Hub account allows you to access your ",
       private: "private",
-      descriptionPart2: " OpenSIN Chat Community Hub items as well as upload your own items to the OpenSIN Chat Community Hub.",
+      descriptionPart2:
+        " OpenSIN Chat Community Hub items as well as upload your own items to the OpenSIN Chat Community Hub.",
       whyConnectTitle: "Why connect my OpenSIN Chat Community Hub account?",
-      whyConnectBodyPart1: "Connecting your OpenSIN Chat Community Hub account allows you to pull in your ",
-      whyConnectBodyPart2: " items from the OpenSIN Chat Community Hub as well as upload your own items to the OpenSIN Chat Community Hub.",
-      whyConnectNote: "You do not need to connect your OpenSIN Chat Community Hub account to pull in public items from the OpenSIN Chat Community Hub.",
+      whyConnectBodyPart1:
+        "Connecting your OpenSIN Chat Community Hub account allows you to pull in your ",
+      whyConnectBodyPart2:
+        " items from the OpenSIN Chat Community Hub as well as upload your own items to the OpenSIN Chat Community Hub.",
+      whyConnectNote:
+        "You do not need to connect your OpenSIN Chat Community Hub account to pull in public items from the OpenSIN Chat Community Hub.",
       apiKeyLabel: "OpenSIN Chat Hub API Key",
       apiKeyPlaceholder: "Enter your OpenSIN Chat Hub API key",
       apiKeyHelp: "You can get your API key from your",
@@ -3224,14 +3238,18 @@ const TRANSLATIONS = {
     import: {
       intro: {
         title: "Import an item from the community hub",
-        description1: "The community hub is a place where you can find, share, and import agent-skills, system prompts, slash commands, and more!",
-        description2: "These items are created by the OpenSIN Chat team and community, and are a great way to get started with OpenSIN Chat as well as extend OpenSIN Chat in a way that is customized to your needs.",
+        description1:
+          "The community hub is a place where you can find, share, and import agent-skills, system prompts, slash commands, and more!",
+        description2:
+          "These items are created by the OpenSIN Chat team and community, and are a great way to get started with OpenSIN Chat as well as extend OpenSIN Chat in a way that is customized to your needs.",
         description3Part1: "There are both ",
         private: "private",
         description3Part2: " and ",
         public: "public",
-        description3Part3: " items in the community hub. Private items are only visible to you, while public items are visible to everyone.",
-        warningBody: "If you are pulling in a private item, make sure it is shared with a team you belong to, and you have added a",
+        description3Part3:
+          " items in the community hub. Private items are only visible to you, while public items are visible to everyone.",
+        warningBody:
+          "If you are pulling in a private item, make sure it is shared with a team you belong to, and you have added a",
         warningLink: "Connection Key.",
         itemIdRequired: "Please enter an item ID",
         itemIdLabel: "Community Hub Item Import ID",
@@ -3241,7 +3259,8 @@ const TRANSLATIONS = {
       agentFlow: {
         title: 'Import Agent Flow "{{name}}"',
         createdBy: "Created by",
-        description: "Agent flows allow you to create reusable sequences of actions that can be triggered by your agent.",
+        description:
+          "Agent flows allow you to create reusable sequences of actions that can be triggered by your agent.",
         flowDetails: "Flow Details:",
         descriptionLabel: "Description:",
         stepsLabel: "Steps ({{count}}):",
@@ -3254,15 +3273,18 @@ const TRANSLATIONS = {
       },
       completed: {
         title: "Community Hub Item Imported",
-        successMessage: 'The "{{name}}" {{itemType}} has been imported successfully! It is now available in your OpenSIN Chat instance.',
+        successMessage:
+          'The "{{name}}" {{itemType}} has been imported successfully! It is now available in your OpenSIN Chat instance.',
         viewInAgentSkills: 'View "{{name}}" in Agent Skills',
-        modifyNote: "Any changes you make to this {{itemType}} will not be reflected in the community hub. You can now modify as needed.",
+        modifyNote:
+          "Any changes you make to this {{itemType}} will not be reflected in the community hub. You can now modify as needed.",
         importAnother: "Import another item",
       },
       systemPrompt: {
         reviewTitle: 'Review System Prompt "{{name}}"',
         createdBy: "Created by",
-        description: "System prompts are used to guide the behavior of the AI agents and can be applied to any existing workspace.",
+        description:
+          "System prompts are used to guide the behavior of the AI agents and can be applied to any existing workspace.",
         providedPrompt: "Provided system prompt:",
         applyToWorkspace: "Apply to Workspace",
         availableWorkspaces: "Available workspaces",
@@ -3275,8 +3297,10 @@ const TRANSLATIONS = {
       slashCommand: {
         reviewTitle: 'Review Slash Command "{{name}}"',
         createdBy: "Created by",
-        descriptionPart1: "Slash commands are used to prefill information into a prompt while chatting with a OpenSIN Chat workspace.",
-        descriptionPart2: "The slash command will be available during chatting by simply invoking it with",
+        descriptionPart1:
+          "Slash commands are used to prefill information into a prompt while chatting with a OpenSIN Chat workspace.",
+        descriptionPart2:
+          "The slash command will be available during chatting by simply invoking it with",
         descriptionPart3: "like you would any other command.",
         importButton: "Import slash command",
         toastSuccess: "Slash command {{command}} imported successfully!",
@@ -3303,7 +3327,8 @@ const TRANSLATIONS = {
     },
     hubItems: {
       recentlyAdded: "Recently Added on OpenSIN Chat Community Hub",
-      exploreLatest: "Explore the latest additions to the OpenSIN Chat Community Hub",
+      exploreLatest:
+        "Explore the latest additions to the OpenSIN Chat Community Hub",
       exploreMore: "Explore More →",
     },
   },
@@ -3312,17 +3337,22 @@ const TRANSLATIONS = {
     openAiGeneric: {
       baseUrl: "Base URL",
       baseUrlPlaceholder: "http://localhost:7851/v1",
-      baseUrlDescription: "This should be the base URL of the OpenAI compatible TTS service you will generate TTS responses from.",
+      baseUrlDescription:
+        "This should be the base URL of the OpenAI compatible TTS service you will generate TTS responses from.",
       apiKey: "API Key",
       apiKeyPlaceholder: "API Key",
-      apiKeyDescription: "Some TTS services require an API key to generate TTS responses - this is optional if your service does not require one.",
+      apiKeyDescription:
+        "Some TTS services require an API key to generate TTS responses - this is optional if your service does not require one.",
       ttsModel: "TTS Model",
       ttsModelPlaceholder: "Your TTS model identifier",
-      ttsModelDescriptionPart1: "Most TTS services will have several models available. This is the ",
-      ttsModelDescriptionPart2: " parameter you will use to select the model you want to use. Note: This is not the same as the voice model.",
+      ttsModelDescriptionPart1:
+        "Most TTS services will have several models available. This is the ",
+      ttsModelDescriptionPart2:
+        " parameter you will use to select the model you want to use. Note: This is not the same as the voice model.",
       voiceModel: "Voice Model",
       voiceModelPlaceholder: "Your voice model identifier",
-      voiceModelDescription: "Most TTS services will have several voice models available, this is the identifier for the voice model you want to use.",
+      voiceModelDescription:
+        "Most TTS services will have several voice models available, this is the identifier for the voice model you want to use.",
     },
     openAi: {
       apiKey: "API Key",
@@ -3338,10 +3368,12 @@ const TRANSLATIONS = {
       },
     },
     piper: {
-      description: "All PiperTTS models will run in your browser locally. This can be resource intensive on lower-end devices.",
+      description:
+        "All PiperTTS models will run in your browser locally. This can be resource intensive on lower-end devices.",
       voiceModelSelection: "Voice Model Selection",
       loadingModels: "-- loading available models --",
-      storedIndicator: "The \"✔\" indicates this model is already stored locally and does not need to be downloaded when run.",
+      storedIndicator:
+        'The "✔" indicates this model is already stored locally and does not need to be downloaded when run.',
       flushVoiceCache: "Flush voice cache",
       flushSuccess: "All voices flushed from browser storage",
       stopDemo: "Stop demo",
@@ -3355,14 +3387,17 @@ const TRANSLATIONS = {
     genericOpenAi: {
       baseUrl: "Base URL",
       baseUrlPlaceholder: "http://localhost:8000/v1",
-      baseUrlDescription: "This should be the base URL of the OpenAI compatible STT service you will transcribe audio with.",
+      baseUrlDescription:
+        "This should be the base URL of the OpenAI compatible STT service you will transcribe audio with.",
       apiKey: "API Key",
       apiKeyPlaceholder: "API Key",
-      apiKeyDescription: "Some STT services require an API key to transcribe audio - this is optional if your service does not require one.",
+      apiKeyDescription:
+        "Some STT services require an API key to transcribe audio - this is optional if your service does not require one.",
       transcriptionModel: "Transcription Model",
       modelPlaceholder: "Your STT model identifier",
       modelDescriptionPart1: "The ",
-      modelDescriptionPart2: " parameter passed to the transcription endpoint (e.g. ",
+      modelDescriptionPart2:
+        " parameter passed to the transcription endpoint (e.g. ",
       modelDescriptionPart3: ").",
     },
     lemonade: {
@@ -3371,19 +3406,23 @@ const TRANSLATIONS = {
       baseUrlTooltip: "Enter the URL where your Lemonade server is running.",
       baseUrlPlaceholder: "http://localhost:13305",
       apiKeyOptional: "API Key (optional)",
-      apiKeyTooltip: "The API key for your Lemonade server. Shared with the Lemonade LLM and embedder settings.",
+      apiKeyTooltip:
+        "The API key for your Lemonade server. Shared with the Lemonade LLM and embedder settings.",
       transcriptionModel: "Transcription Model",
       noModelsFound: "-- no transcription models found --",
       enterUrlFirst: "Enter Lemonade URL first",
-      modelHelp: "Load a Whisper or transcription model into your Lemonade server, then it will appear here.",
+      modelHelp:
+        "Load a Whisper or transcription model into your Lemonade server, then it will appear here.",
       loadedModels: "Your loaded models",
     },
   },
 
   parsedFilesMenu: {
     currentContext: "Current Context ({{count}} files)",
-    contextLimitTooltip: "You have exceeded the context window limit. Some files may be truncated or excluded from chat responses. Responses may hallucinate or lack relevant information.",
-    contextFullWarning: "Your context window is getting full. Some files may be truncated or excluded from chat responses. We recommend embedding these files directly into your workspace for better results.",
+    contextLimitTooltip:
+      "You have exceeded the context window limit. Some files may be truncated or excluded from chat responses. Responses may hallucinate or lack relevant information.",
+    contextFullWarning:
+      "Your context window is getting full. Some files may be truncated or excluded from chat responses. We recommend embedding these files directly into your workspace for better results.",
     embedFilesButton: "Embed Files into Workspace",
     embeddingProgress: "Embedding {{current}} of {{total}} files...",
     embedSuccess: "{{count}} file(s) embedded successfully",
@@ -3415,7 +3454,8 @@ const TRANSLATIONS = {
         title: "Add New Variable",
         key: "Key",
         keyPlaceholder: "e.g., company_name",
-        keyHelp: "Key must be unique and will be used in prompts as {key}. Only letters, numbers and underscores are allowed.",
+        keyHelp:
+          "Key must be unique and will be used in prompts as {key}. Only letters, numbers and underscores are allowed.",
         value: "Value",
         valuePlaceholder: "e.g., Acme Corp",
         description: "Description",
@@ -3435,7 +3475,8 @@ const TRANSLATIONS = {
       },
       page: {
         title: "System Prompt Variables",
-        description: "System prompt variables are used to store configuration values that can be referenced in your system prompt to enable dynamic content in your prompts.",
+        description:
+          "System prompt variables are used to store configuration values that can be referenced in your system prompt to enable dynamic content in your prompts.",
         addVariable: "Add Variable",
         noVariablesFound: "No variables found",
         key: "Key",
@@ -3457,9 +3498,11 @@ const TRANSLATIONS = {
     newInvite: {
       createInviteTitle: "Create new invite",
       error: "Error",
-      afterCreationHint: "After creation you will be able to copy the invite and send it to a new user where they can create an account as the default role and automatically be added to workspaces selected.",
+      afterCreationHint:
+        "After creation you will be able to copy the invite and send it to a new user where they can create an account as the default role and automatically be added to workspaces selected.",
       autoAddToWorkspaces: "Auto-add invitee to workspaces",
-      workspaceSelectionHint: "You can optionally automatically assign the user to the workspaces below by selecting them. By default, the user will not have any workspaces visible. You can assign workspaces later post-invite acceptance.",
+      workspaceSelectionHint:
+        "You can optionally automatically assign the user to the workspaces below by selecting them. By default, the user will not have any workspaces visible. You can assign workspaces later post-invite acceptance.",
       cancel: "Cancel",
       createInvite: "Create Invite",
       close: "Close",
@@ -3467,21 +3510,26 @@ const TRANSLATIONS = {
     },
     usersPage: {
       title: "Users",
-      description: "These are all the accounts which have an account on this instance. Removing an account will instantly remove their access to this instance.",
+      description:
+        "These are all the accounts which have an account on this instance. Removing an account will instantly remove their access to this instance.",
       addUser: "Add user",
       username: "Username",
       role: "Role",
       dateAdded: "Date Added",
       permissions: "Permissions",
       limitMessagesPerDay: "Limit messages per day",
-      limitMessagesDescription: "Restrict this user to a number of successful queries or chats within a 24 hour window.",
+      limitMessagesDescription:
+        "Restrict this user to a number of successful queries or chats within a 24 hour window.",
       messageLimitPerDay: "Message limit per day",
       roleHint: {
-        default1: "Can only send chats with workspaces they are added to by admin or managers.",
+        default1:
+          "Can only send chats with workspaces they are added to by admin or managers.",
         default2: "Cannot modify any settings at all.",
-        manager1: "Can view, create, and delete any workspaces and modify workspace-specific settings.",
+        manager1:
+          "Can view, create, and delete any workspaces and modify workspace-specific settings.",
         manager2: "Can create, update and invite new users to the instance.",
-        manager3: "Cannot modify LLM, vectorDB, embedding, or other connections.",
+        manager3:
+          "Cannot modify LLM, vectorDB, embedding, or other connections.",
         admin1: "Highest user level privilege.",
         admin2: "Can see and do everything across the system.",
       },
@@ -3493,19 +3541,26 @@ const TRANSLATIONS = {
       title: "Update embed #{{id}}",
       updateSuccess: "Embed updated successfully.",
       maxChatsPerDay: "Max chats per day",
-      maxChatsPerDayHint: "Limit the amount of chats this embedded chat can process in a 24 hour period. Zero is unlimited.",
+      maxChatsPerDayHint:
+        "Limit the amount of chats this embedded chat can process in a 24 hour period. Zero is unlimited.",
       maxChatsPerSession: "Max chats per session",
-      maxChatsPerSessionHint: "Limit the amount of chats a session user can send with this embed in a 24 hour period. Zero is unlimited.",
+      maxChatsPerSessionHint:
+        "Limit the amount of chats a session user can send with this embed in a 24 hour period. Zero is unlimited.",
       messageHistoryLimit: "Message History Limit",
-      messageHistoryLimitHint: "The number of previous messages to include in the chat context. Default is 20.",
+      messageHistoryLimitHint:
+        "The number of previous messages to include in the chat context. Default is 20.",
       enableDynamicModel: "Enable dynamic model use",
-      enableDynamicModelHint: "Allow setting of the preferred LLM model to override the workspace default.",
+      enableDynamicModelHint:
+        "Allow setting of the preferred LLM model to override the workspace default.",
       enableDynamicTemperature: "Enable dynamic LLM temperature",
-      enableDynamicTemperatureHint: "Allow setting of the LLM temperature to override the workspace default.",
+      enableDynamicTemperatureHint:
+        "Allow setting of the LLM temperature to override the workspace default.",
       enablePromptOverride: "Enable Prompt Override",
-      enablePromptOverrideHint: "Allow setting of the system prompt to override the workspace default.",
+      enablePromptOverrideHint:
+        "Allow setting of the system prompt to override the workspace default.",
       error: "Error: {{error}}",
-      scriptTagNotice: "After creating an embed you will be provided a link that you can publish on your website with a simple <script> tag.",
+      scriptTagNotice:
+        "After creating an embed you will be provided a link that you can publish on your website with a simple <script> tag.",
       cancel: "Cancel",
       updateEmbed: "Update embed",
     },
@@ -3517,7 +3572,8 @@ const TRANSLATIONS = {
       command: "Command",
       commandPlaceholder: "your-command",
       prompt: "Prompt",
-      promptPlaceholder: "This is a test prompt. Please respond with a poem about LLMs.",
+      promptPlaceholder:
+        "This is a test prompt. Please respond with a poem about LLMs.",
       description: "Description",
       descriptionPlaceholder: "Responds with a poem about LLMs.",
       deleteConfirm: "Are you sure you want to delete this preset?",
@@ -3586,17 +3642,23 @@ const TRANSLATIONS = {
   dataConnectors: {
     paperlessNgx: {
       baseUrl: "Base URL",
-      baseUrlHelp: "The URL where your Paperless-ngx instance is running (e.g., http://localhost:8000)",
+      baseUrlHelp:
+        "The URL where your Paperless-ngx instance is running (e.g., http://localhost:8000)",
       baseUrlPlaceholder: "http://localhost:8000",
       apiToken: "API Token",
-      apiTokenHelp: "Your Paperless-ngx API token. You can find this under 'My Profile' and then 'API Auth Token'.",
+      apiTokenHelp:
+        "Your Paperless-ngx API token. You can find this under 'My Profile' and then 'API Auth Token'.",
       apiTokenPlaceholder: "Enter your API token",
-      instanceRunningInfo: "Make sure your Paperless-ngx instance is running and accessible from this machine.",
+      instanceRunningInfo:
+        "Make sure your Paperless-ngx instance is running and accessible from this machine.",
       importingDocuments: "Importing documents...",
       submit: "Submit",
-      completeHint: "Once complete, all documents will be available for embedding into workspaces.",
-      fetchingDocuments: "Fetching documents from Paperless-ngx - this may take a while.",
-      successImport: "Successfully imported {{files}} documents from Paperless-ngx. Output folder is {{destination}}.",
+      completeHint:
+        "Once complete, all documents will be available for embedding into workspaces.",
+      fetchingDocuments:
+        "Fetching documents from Paperless-ngx - this may take a while.",
+      successImport:
+        "Successfully imported {{files}} documents from Paperless-ngx. Output folder is {{destination}}.",
     },
   },
   chatPromptSettings: {
@@ -3611,7 +3673,8 @@ const TRANSLATIONS = {
   },
   browserExtensionApiKey: {
     title: "Browser Extension API Keys",
-    description: "Manage API keys for browser extensions connecting to your OpenSIN Chat instance.",
+    description:
+      "Manage API keys for browser extensions connecting to your OpenSIN Chat instance.",
     generateNewApiKey: "Generate New API Key",
     error: "Error: {{error}}",
     connectionString: "Extension Connection String",
@@ -3622,9 +3685,12 @@ const TRANSLATIONS = {
     newKey: {
       title: "New Browser Extension API Key",
       error: "Error: {{error}}",
-      multiUserWarning: "Warning: You are in multi-user mode, this API key will allow access to all workspaces associated with your account. Please share it cautiously.",
-      autoConnectInfo: "After clicking \"Create API Key\", OpenSIN Chat will attempt to connect to your browser extension automatically.",
-      manualConnectInfo: "If you see \"Connected to OpenSIN Chat\" in the extension, the connection was successful. If not, please copy the connection string and paste it into the extension manually.",
+      multiUserWarning:
+        "Warning: You are in multi-user mode, this API key will allow access to all workspaces associated with your account. Please share it cautiously.",
+      autoConnectInfo:
+        'After clicking "Create API Key", OpenSIN Chat will attempt to connect to your browser extension automatically.',
+      manualConnectInfo:
+        'If you see "Connected to OpenSIN Chat" in the extension, the connection was successful. If not, please copy the connection string and paste it into the extension manually.',
       cancel: "Cancel",
       createApiKey: "Create API Key",
       copyApiKey: "Copy API Key",
@@ -3641,22 +3707,27 @@ const TRANSLATIONS = {
 
   systemHealth: {
     title: "System Health",
-    description: "Diagnostics for local LLM providers and storage paths: API key status, active fallbacks, and reachability of configured endpoints.",
+    description:
+      "Diagnostics for local LLM providers and storage paths: API key status, active fallbacks, and reachability of configured endpoints.",
     notConfigured: "Not configured",
     reachable: "Reachable ({{latencyMs}}ms, HTTP {{status}})",
     notReachable: "Not reachable",
     probeFailed: "Connectivity test failed: {{error}}",
-    probeComplete: "Connectivity test complete: {{reachable}}/{{configured}} configured providers reachable.",
+    probeComplete:
+      "Connectivity test complete: {{reachable}}/{{configured}} configured providers reachable.",
     connectivityTest: "Connectivity Test",
-    connectivityTestDescription: "Actively checks whether the base URLs of the {{count}} configured providers respond (4s timeout).",
+    connectivityTestDescription:
+      "Actively checks whether the base URLs of the {{count}} configured providers respond (4s timeout).",
     testing: "Testing\u2026",
     testNow: "Test now",
-    noTestYet: "No test run yet. Click \"Test now\" to check all configured providers.",
+    noTestYet:
+      'No test run yet. Click "Test now" to check all configured providers.',
   },
 
   recoveryCode: {
     title: "Recovery Codes",
-    description: "In order to reset your password in the future, you will need these recovery codes. Download or copy your recovery codes to save them.",
+    description:
+      "In order to reset your password in the future, you will need these recovery codes. Download or copy your recovery codes to save them.",
     shownOnce: "These recovery codes are only shown once!",
     copiedToClipboard: "Recovery codes copied to clipboard",
     copyAriaLabel: "Copy recovery codes to clipboard",
@@ -3686,7 +3757,8 @@ const TRANSLATIONS = {
     newChat: "New Chat",
     newFolder: "New Folder",
     renameFailed: "Rename failed: {{message}}",
-    deleteConfirm: 'Delete folder "{{name}}"? All chats will be moved to the main list.',
+    deleteConfirm:
+      'Delete folder "{{name}}"? All chats will be moved to the main list.',
     deleteFailed: "Could not delete folder.",
     rename: "Rename",
     delete: "Delete",
@@ -3730,7 +3802,8 @@ const TRANSLATIONS = {
   admin: {
     invitations: {
       title: "Invitations",
-      description: "Create invitation links for people in your organization to accept and sign up with. Invitations can only be used by a single user.",
+      description:
+        "Create invitation links for people in your organization to accept and sign up with. Invitations can only be used by a single user.",
       createInviteLink: "Create Invite Link",
       status: "Status",
       acceptedBy: "Accepted By",
@@ -3754,8 +3827,10 @@ const TRANSLATIONS = {
     telemetryToggled: "Anonymous Telemetry has been {{status}}.",
     enabled: "enabled",
     disabled: "disabled",
-    eventsNoIp: 'All events do not record IP-address and contain <b>no identifying</b> content, settings, chats, or other non-usage based information. To see the list of event tags collected you can look on <a href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub here</a>.',
-    respectPrivacy: 'As an open-source project we respect your right to privacy. We are dedicated to building the best solution for integrating AI and documents privately and securely. If you do decide to turn off telemetry all we ask is to consider sending us feedback and thoughts so that we can continue to improve OpenSIN Chat for you. <a href="mailto:team@openafd.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@openafd.com</a>.',
+    eventsNoIp:
+      'All events do not record IP-address and contain <b>no identifying</b> content, settings, chats, or other non-usage based information. To see the list of event tags collected you can look on <a href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub here</a>.',
+    respectPrivacy:
+      'As an open-source project we respect your right to privacy. We are dedicated to building the best solution for integrating AI and documents privately and securely. If you do decide to turn off telemetry all we ask is to consider sending us feedback and thoughts so that we can continue to improve OpenSIN Chat for you. <a href="mailto:team@openafd.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@openafd.com</a>.',
   },
 
   invite: {
@@ -3823,7 +3898,8 @@ const TRANSLATIONS = {
     linkCopyFailed: "Could not copy link.",
     renamePrompt: "What would you like to rename this thread to?",
     updateFailed: "Thread could not be updated! {{message}}",
-    deleteConfirm: "Are you sure you want to delete this thread? All of its chats will be deleted. You cannot undo this.",
+    deleteConfirm:
+      "Are you sure you want to delete this thread? All of its chats will be deleted. You cannot undo this.",
     deleteFailed: "Thread could not be deleted!",
     deleteSuccess: "Thread deleted successfully!",
     newChat: "New Chat",
@@ -3842,7 +3918,8 @@ const TRANSLATIONS = {
 
   providerPrivacy: {
     unknown: "Unknown",
-    noPolicyDefined: "\"{{provider}}\" has no known data handling policy defined in OpenSIN Chat.",
+    noPolicyDefined:
+      '"{{provider}}" has no known data handling policy defined in OpenSIN Chat.',
     llmProvider: "LLM Provider",
     llmLogo: "LLM Logo",
     embeddingPreference: "Embedding Preference",
@@ -3879,7 +3956,8 @@ const TRANSLATIONS = {
     tab_logs: "Logs",
     tab_terminal: "Terminal",
     terminal_placeholder: "Enter command...",
-    terminal_unavailable: "Terminal unavailable. Make sure the server provides the /api/terminal/exec endpoint.",
+    terminal_unavailable:
+      "Terminal unavailable. Make sure the server provides the /api/terminal/exec endpoint.",
   },
 
   agentSidebarLists: {
@@ -3937,7 +4015,8 @@ const TRANSLATIONS = {
       saveFailed: "Failed to save preferences: {{error}}",
       saveSuccess: "Speech-to-text preferences saved successfully.",
       systemNative: "System native",
-      systemNativeDesc: "Uses your browser's built in STT service if supported.",
+      systemNativeDesc:
+        "Uses your browser's built in STT service if supported.",
       openai: "OpenAI",
       openaiDesc: "Use OpenAI's Whisper API to transcribe speech to text.",
       lemonade: "Lemonade",
@@ -3956,7 +4035,8 @@ const TRANSLATIONS = {
       saveFailed: "Failed to save preferences: {{error}}",
       saveSuccess: "Text-to-speech preferences saved successfully.",
       systemNative: "System native",
-      systemNativeDesc: "Uses your browser's built in TTS service if supported.",
+      systemNativeDesc:
+        "Uses your browser's built in TTS service if supported.",
       openai: "OpenAI",
       openaiDesc: "Use OpenAI's text to speech voices.",
       elevenlabs: "ElevenLabs",
@@ -4034,8 +4114,7 @@ const TRANSLATIONS = {
       "{{name}} will be attached to this prompt. It will not be embedded into the workspace permanently.",
     wasEmbedded:
       "{{name}} was uploaded and embedded into this workspace. It will be available for RAG chat now.",
-    willBeUsedAsContext:
-      "{{name}} will be used as context for this chat only.",
+    willBeUsedAsContext: "{{name}} will be used as context for this chat only.",
     previewOf: "Preview of {{name}}",
   },
 
@@ -4177,8 +4256,10 @@ const TRANSLATIONS = {
     suspend: "Suspend",
     unsuspend: "Unsuspend",
     delete: "Delete",
-    confirmSuspend: "Are you sure you want to suspend {{username}}?\nAfter you do this they will be logged out and unable to log back into this instance of OpenSIN Chat until unsuspended by an admin.",
-    confirmDelete: "Are you sure you want to delete {{username}}?\nAfter you do this they will be logged out and unable to use this instance of OpenSIN Chat.\n\nThis action is irreversible.",
+    confirmSuspend:
+      "Are you sure you want to suspend {{username}}?\nAfter you do this they will be logged out and unable to log back into this instance of OpenSIN Chat until unsuspended by an admin.",
+    confirmDelete:
+      "Are you sure you want to delete {{username}}?\nAfter you do this they will be logged out and unable to use this instance of OpenSIN Chat.\n\nThis action is irreversible.",
     suspended: "User has been suspended.",
     unsuspended: "User is no longer suspended.",
     deleteSuccess: "User deleted from system.",
@@ -4252,7 +4333,8 @@ const TRANSLATIONS = {
   },
 
   modelSelector: {
-    multiModelNotSupported: "Multi-model support is not supported for this provider yet.",
+    multiModelNotSupported:
+      "Multi-model support is not supported for this provider yet.",
     workspaceWillUse: "This workspace will use",
     systemModelLink: "the model set for the system.",
   },
@@ -4265,7 +4347,8 @@ const TRANSLATIONS = {
 
   workspaceChat: {
     notFoundTitle: "Workspace not found",
-    notFoundDescription: "The workspace you're looking for is not available. It may have been deleted or you may not have access to it.",
+    notFoundDescription:
+      "The workspace you're looking for is not available. It may have been deleted or you may not have access to it.",
     returnToHomepage: "Return to homepage",
     copied: "Copied!",
   },
@@ -4273,7 +4356,8 @@ const TRANSLATIONS = {
   agentBuilder: {
     blockList: {
       directOutput: "Direct Output",
-      directOutputDescription: "The output of this block will be returned directly to the chat. This will prevent any further tool calls from being executed.",
+      directOutputDescription:
+        "The output of this block will be returned directly to the chat. This will prevent any further tool calls from being executed.",
       configurationComingSoon: "Configuration options coming soon...",
       moveBlockUp: "Move block up",
       moveBlockDown: "Move block down",
@@ -4285,7 +4369,8 @@ const TRANSLATIONS = {
     editFlow: "Edit Flow",
     deleteFlow: "Delete Flow",
     noDescription: "No description provided",
-    confirmDelete: "Are you sure you want to delete this flow? This action cannot be undone.",
+    confirmDelete:
+      "Are you sure you want to delete this flow? This action cannot be undone.",
     flowDeleted: "Flow deleted successfully.",
     deleteFailed: "Failed to delete flow.",
     toggleFailed: "Failed to toggle flow",
@@ -4473,7 +4558,6 @@ const TRANSLATIONS = {
     downloading: "Downloading chart...",
     downloadGraph: "Download graph",
   },
-
 };
 
 export default TRANSLATIONS;

@@ -47,7 +47,9 @@ export default function ChromaCloudOptions({ settings }: any) {
             type="text"
             defaultValue={settings?.ChromaCloudDatabase}
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.chromaCloud.databaseNamePlaceholder")}
+            placeholder={t(
+              "providerSettings.chromaCloud.databaseNamePlaceholder",
+            )}
             required={true}
           />
         </div>

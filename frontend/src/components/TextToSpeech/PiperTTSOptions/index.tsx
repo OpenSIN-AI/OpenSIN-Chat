@@ -192,19 +192,25 @@ function DemoVoiceSample({ voiceId }: any) {
       {speaking ? (
         <>
           <PauseCircle size={20} className="flex-shrink-0" />
-          <p className="text-sm flex-shrink-0">{t("textToSpeech.piper.stopDemo")}</p>
+          <p className="text-sm flex-shrink-0">
+            {t("textToSpeech.piper.stopDemo")}
+          </p>
         </>
       ) : (
         <>
           {loading ? (
             <>
               <CircleNotch size={20} className="animate-spin flex-shrink-0" />
-              <p className="text-sm flex-shrink-0">{t("textToSpeech.piper.loadingVoice")}</p>
+              <p className="text-sm flex-shrink-0">
+                {t("textToSpeech.piper.loadingVoice")}
+              </p>
             </>
           ) : (
             <>
               <PlayCircle size={20} className="flex-shrink-0 text-white" />
-              <p className="text-white text-sm flex-shrink-0">{t("textToSpeech.piper.playSample")}</p>
+              <p className="text-white text-sm flex-shrink-0">
+                {t("textToSpeech.piper.playSample")}
+              </p>
             </>
           )}
         </>

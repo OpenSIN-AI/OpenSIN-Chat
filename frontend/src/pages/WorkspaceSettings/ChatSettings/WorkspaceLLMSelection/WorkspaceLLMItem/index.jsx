@@ -173,20 +173,20 @@ function SetupProvider({
               </div>
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border px-7 pb-6">
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
-                >
-                  {t("workspaceLLMItem.cancel")}
-                </button>
-                <button
-                  type="submit"
-                  form="provider-form"
-                  className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
-                >
-                  {t("workspaceLLMItem.saveSettings")}
-                </button>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
+              >
+                {t("workspaceLLMItem.cancel")}
+              </button>
+              <button
+                type="submit"
+                form="provider-form"
+                className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
+              >
+                {t("workspaceLLMItem.saveSettings")}
+              </button>
             </div>
           </form>
         </div>

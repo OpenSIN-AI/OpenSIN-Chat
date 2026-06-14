@@ -122,7 +122,9 @@ function AttachmentItem({ attachment, onImageClick }: any) {
       return (
         <div
           data-tooltip-id="attachment-status-tooltip"
-          data-tooltip-content={t("attachments.willBeAttachedPrompt", { name: file.name })}
+          data-tooltip-content={t("attachments.willBeAttachedPrompt", {
+            name: file.name,
+          })}
           className={`relative flex items-center gap-x-1 rounded-lg border-none group`}
         >
           <div className="invisible group-hover:visible absolute -top-[5px] -right-[5px] w-fit h-fit z-[10]">
@@ -152,8 +154,10 @@ function AttachmentItem({ attachment, onImageClick }: any) {
     return (
       <div
         data-tooltip-id="attachment-status-tooltip"
-          data-tooltip-content={t("attachments.willBeAttachedPrompt", { name: file.name })}
-          className={`relative flex items-center gap-x-1 rounded-lg bg-theme-attachment-success-bg border-none w-[180px] group`}
+        data-tooltip-content={t("attachments.willBeAttachedPrompt", {
+          name: file.name,
+        })}
+        className={`relative flex items-center gap-x-1 rounded-lg bg-theme-attachment-success-bg border-none w-[180px] group`}
       >
         <div className="invisible group-hover:visible absolute -top-[5px] -right-[5px] w-fit h-fit z-[10]">
           <button
@@ -184,11 +188,11 @@ function AttachmentItem({ attachment, onImageClick }: any) {
   return (
     <div
       data-tooltip-id="attachment-status-tooltip"
-        data-tooltip-content={
-          status === "embedded"
-            ? t("attachments.wasEmbedded", { name: file.name })
-            : t("attachments.willBeUsedAsContext", { name: file.name })
-        }
+      data-tooltip-content={
+        status === "embedded"
+          ? t("attachments.wasEmbedded", { name: file.name })
+          : t("attachments.willBeUsedAsContext", { name: file.name })
+      }
       className={`relative flex items-center gap-x-1 rounded-lg bg-theme-attachment-bg border-none w-[180px] group`}
     >
       <div className="invisible group-hover:visible absolute -top-[5px] -right-[5px] w-fit h-fit z-[10]">
@@ -208,7 +212,9 @@ function AttachmentItem({ attachment, onImageClick }: any) {
       <div className="flex flex-col w-[125px]">
         <p className="text-white text-xs font-semibold truncate">{file.name}</p>
         <p className="text-theme-attachment-text-secondary text-[10px] leading-[14px] font-medium">
-          {status === "embedded" ? t("attachments.fileEmbedded") : t("attachments.addedAsContext")}
+          {status === "embedded"
+            ? t("attachments.fileEmbedded")
+            : t("attachments.addedAsContext")}
         </p>
       </div>
     </div>

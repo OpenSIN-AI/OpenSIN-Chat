@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  act,
+} from "@testing-library/react";
 import ToolApprovalRequest from "./index";
 
 vi.mock("react-i18next", async () => {
@@ -25,7 +31,6 @@ vi.mock("@/models/agentSkillWhitelist", () => ({
 }));
 
 import AgentSkillWhitelist from "@/models/agentSkillWhitelist";
-import useTimeoutProgress from "@/hooks/useTimeoutProgress";
 
 describe("ToolApprovalRequest", () => {
   const request = {
@@ -113,17 +118,13 @@ describe("ToolApprovalRequest", () => {
   it("shows the approved message after approving", () => {
     render(<ToolApprovalRequest {...request} />);
     fireEvent.click(screen.getByText("Approve"));
-    expect(
-      screen.getByText("Tool call was approved"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Tool call was approved")).toBeInTheDocument();
   });
 
   it("shows the rejected message after rejecting", () => {
     render(<ToolApprovalRequest {...request} />);
     fireEvent.click(screen.getByText("Reject"));
-    expect(
-      screen.getByText("Tool call was rejected"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Tool call was rejected")).toBeInTheDocument();
   });
 
   it("adds the skill to the whitelist when approved with always allow checked", async () => {
@@ -134,7 +135,9 @@ describe("ToolApprovalRequest", () => {
 
     fireEvent.click(screen.getByText("Approve"));
     await waitFor(() => {
-      expect(AgentSkillWhitelist.addToWhitelist).toHaveBeenCalledWith("my-skill");
+      expect(AgentSkillWhitelist.addToWhitelist).toHaveBeenCalledWith(
+        "my-skill",
+      );
     });
   });
 
@@ -148,9 +151,7 @@ describe("ToolApprovalRequest", () => {
     render(<ToolApprovalRequest {...request} />);
     expect(timeoutCallbacks).toHaveLength(1);
     await act(async () => timeoutCallbacks[0]());
-    await waitFor(() =>
-      expect(request.onResponse).toHaveBeenCalledWith(false),
-    );
+    await waitFor(() => expect(request.onResponse).toHaveBeenCalledWith(false));
     expect(screen.getByText("Tool call was rejected")).toBeInTheDocument();
   });
 

@@ -75,7 +75,11 @@ export default function NewFolderModal({ closeModal, files, setFiles }: any) {
                   onChange={(e) => setFolderName(e.target.value)}
                 />
               </div>
-              {error && <p className="text-red-400 text-sm">{t("newFolderModal.error", { error })}</p>}
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("newFolderModal.error", { error })}
+                </p>
+              )}
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
               <button

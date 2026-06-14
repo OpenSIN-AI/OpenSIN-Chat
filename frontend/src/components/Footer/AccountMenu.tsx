@@ -162,7 +162,10 @@ export default function AccountMenu() {
       // Keep the popup at a consistent, comfortable width regardless of how
       // wide the user has resized the sidebar, and keep it on-screen.
       const width = Math.min(300, Math.max(rect.width, 248));
-      const left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8));
+      const left = Math.max(
+        8,
+        Math.min(rect.left, window.innerWidth - width - 8),
+      );
       setPos({
         left,
         bottom: window.innerHeight - rect.top + 8,
@@ -346,7 +349,10 @@ export default function AccountMenu() {
         )}
 
       {user && showAccountModal && (
-        <AccountModal user={user} hideModal={() => setShowAccountModal(false)} />
+        <AccountModal
+          user={user}
+          hideModal={() => setShowAccountModal(false)}
+        />
       )}
     </div>
   );

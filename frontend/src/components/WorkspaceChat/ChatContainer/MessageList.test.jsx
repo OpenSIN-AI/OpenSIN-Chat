@@ -11,12 +11,11 @@ vi.mock("./PromptInput", () => ({
   default: vi.fn(() => <div data-testid="prompt-input" />),
 }));
 
-vi.mock(
-  "./ChatHistory/HistoricalMessage/Actions/RenderMetrics",
-  () => ({
-    MetricsProvider: ({ children }) => <div data-testid="metrics">{children}</div>,
-  }),
-);
+vi.mock("./ChatHistory/HistoricalMessage/Actions/RenderMetrics", () => ({
+  MetricsProvider: ({ children }) => (
+    <div data-testid="metrics">{children}</div>
+  ),
+}));
 
 describe("MessageList", () => {
   it("renders ChatHistory and PromptInput", () => {

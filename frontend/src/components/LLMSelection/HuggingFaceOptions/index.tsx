@@ -29,7 +29,9 @@ export default function HuggingFaceOptions({ settings }: any) {
             type="password"
             name="HuggingFaceLLMAccessToken"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.huggingFace.accessTokenPlaceholder")}
+            placeholder={t(
+              "providerSettings.huggingFace.accessTokenPlaceholder",
+            )}
             defaultValue={
               settings?.HuggingFaceLLMAccessToken ? "*".repeat(20) : ""
             }
@@ -46,7 +48,9 @@ export default function HuggingFaceOptions({ settings }: any) {
             type="number"
             name="HuggingFaceLLMTokenLimit"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.huggingFace.tokenLimitPlaceholder")}
+            placeholder={t(
+              "providerSettings.huggingFace.tokenLimitPlaceholder",
+            )}
             min={1}
             onScroll={(e) => (e.target as HTMLElement).blur()}
             defaultValue={settings?.HuggingFaceLLMTokenLimit}

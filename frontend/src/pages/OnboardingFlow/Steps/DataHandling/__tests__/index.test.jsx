@@ -22,7 +22,6 @@ vi.mock("@/components/ProviderPrivacy", () => ({
   default: () => <div data-testid="provider-privacy-mock" />,
 }));
 
-
 const navigateMock = vi.fn();
 vi.mock("react-router-dom", () => ({
   useNavigate: () => navigateMock,

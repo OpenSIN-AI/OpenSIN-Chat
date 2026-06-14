@@ -117,7 +117,10 @@ describe("Footer", () => {
     render(<Footer />);
     fireEvent.click(screen.getByRole("button", { expanded: false }));
     const feedback = screen.getByText("Feedback").closest("a");
-    expect(feedback).toHaveAttribute("href", expect.stringContaining("/issues/new"));
+    expect(feedback).toHaveAttribute(
+      "href",
+      expect.stringContaining("/issues/new"),
+    );
     expect(feedback).toHaveAttribute("target", "_blank");
   });
 });

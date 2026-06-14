@@ -8,7 +8,6 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-
 vi.mock("../ChatSidebar", async () => {
   const actual = await vi.importActual("../ChatSidebar");
   return {

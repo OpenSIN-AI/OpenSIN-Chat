@@ -22,9 +22,7 @@ export default function UserRow({ currUser, user }) {
   const { isOpen, openModal, closeModal } = useModal();
   const handleSuspend = async () => {
     if (
-      !window.confirm(
-        t("userRow.confirmSuspend", { username: user.username }),
-      )
+      !window.confirm(t("userRow.confirmSuspend", { username: user.username }))
     )
       return false;
 
@@ -43,9 +41,7 @@ export default function UserRow({ currUser, user }) {
   };
   const handleDelete = async () => {
     if (
-      !window.confirm(
-        t("userRow.confirmDelete", { username: user.username }),
-      )
+      !window.confirm(t("userRow.confirmDelete", { username: user.username }))
     )
       return false;
     const { success, error } = await Admin.deleteUser(user.id);
@@ -82,9 +78,7 @@ export default function UserRow({ currUser, user }) {
                 onClick={handleSuspend}
                 className="text-xs font-medium text-white/80 light:text-black/80 hover:light:text-orange-500 hover:text-orange-300 rounded-lg px-2 py-1 hover:bg-white hover:light:bg-orange-50 hover:bg-opacity-10"
               >
-                {suspended
-                  ? t("userRow.unsuspend")
-                  : t("userRow.suspend")}
+                {suspended ? t("userRow.unsuspend") : t("userRow.suspend")}
               </button>
               <button
                 onClick={handleDelete}

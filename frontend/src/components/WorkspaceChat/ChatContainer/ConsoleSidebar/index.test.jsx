@@ -12,7 +12,6 @@ if (typeof Element !== "undefined" && !Element.prototype.scrollIntoView) {
   Element.prototype.scrollIntoView = function () {};
 }
 
-
 const mockCloseSidebar = vi.fn();
 const mockClearConsoleLogs = vi.fn();
 const mockUseConsoleSidebar = vi.fn();

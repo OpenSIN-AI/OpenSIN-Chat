@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import AttachmentList from "./AttachmentList";
 import { openImageLightbox } from "@/components/ImageLightbox";
@@ -20,14 +20,16 @@ vi.mock("@phosphor-icons/react", () => ({
   FilePdf: () => <span>PdfIcon</span>,
   FileText: () => <span>TextIcon</span>,
   WarningOctagon: () => <span>Warning</span>,
-  X: ({ size }) => <span data-testid="remove-icon" data-size={size}>X</span>,
+  X: ({ size }) => (
+    <span data-testid="remove-icon" data-size={size}>
+      X
+    </span>
+  ),
 }));
 
 vi.mock("@/components/ImageLightbox", () => ({
   openImageLightbox: vi.fn(),
 }));
-
-
 
 describe("AttachmentList", () => {
   beforeEach(() => {

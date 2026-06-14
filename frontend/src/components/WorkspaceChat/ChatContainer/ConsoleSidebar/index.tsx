@@ -208,8 +208,7 @@ function TerminalTab() {
       {/* Input line */}
       <div className="flex items-center gap-1 px-3 py-2 border-t border-zinc-800 light:border-slate-200 shrink-0">
         <span className="text-zinc-500 font-mono text-[11px]">
-          {/* eslint-disable i18next/no-literal-string */}
-          $
+          {/* eslint-disable i18next/no-literal-string */}$
           {/* eslint-enable i18next/no-literal-string */}
         </span>
         <input

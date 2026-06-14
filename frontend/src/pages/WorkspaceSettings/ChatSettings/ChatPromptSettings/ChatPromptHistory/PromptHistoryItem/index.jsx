@@ -57,7 +57,9 @@ export default function PromptHistoryItem({
           {user && (
             <>
               <span className="text-primary-button">{user.username}</span>{" "}
-              <span className="mx-1 text-white">{"•" /* eslint-disable-line i18next/no-literal-string */}</span>
+              <span className="mx-1 text-white">
+                {"•" /* eslint-disable-line i18next/no-literal-string */}
+              </span>
             </>
           )}
           <span className="text-white opacity-50 light:opacity-100">

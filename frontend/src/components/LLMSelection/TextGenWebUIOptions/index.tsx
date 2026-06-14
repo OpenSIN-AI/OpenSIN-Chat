@@ -28,7 +28,9 @@ export default function TextGenWebUIOptions({ settings }: any) {
           type="number"
           name="TextGenWebUITokenLimit"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder={t("providerSettings.textGenWebui.contextWindowPlaceholder")}
+          placeholder={t(
+            "providerSettings.textGenWebui.contextWindowPlaceholder",
+          )}
           min={1}
           onScroll={(e) => (e.target as HTMLElement).blur()}
           defaultValue={settings?.TextGenWebUITokenLimit}

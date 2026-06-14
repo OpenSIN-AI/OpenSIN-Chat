@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import { DnDFileUploaderProvider } from "./ChatContainer/DnDWrapper";
 import { WarningCircle } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 import {
   TTSProvider,
   useWatchForAutoPlayAssistantTTSResponse,
@@ -69,23 +70,23 @@ export default function WorkspaceChat({ loading, workspace }: any) {
                     className="text-red-500 w-6 h-6"
                     weight="fill"
                   />
-              <h3 className="text-xl font-semibold text-red-500 overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {t("workspaceChat.notFoundTitle")}
-              </h3>
-            </div>
-          </div>
-          <div className="py-7 px-9 space-y-2 flex-col">
-            <p className="text-white text-sm">
-              {t("workspaceChat.notFoundDescription")}
-            </p>
-          </div>
-          <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
-            <a
-              href={paths.home()}
-              className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
-            >
-              {t("workspaceChat.returnToHomepage")}
-            </a>
+                  <h3 className="text-xl font-semibold text-red-500 overflow-hidden overflow-ellipsis whitespace-nowrap">
+                    {t("workspaceChat.notFoundTitle")}
+                  </h3>
+                </div>
+              </div>
+              <div className="py-7 px-9 space-y-2 flex-col">
+                <p className="text-white text-sm">
+                  {t("workspaceChat.notFoundDescription")}
+                </p>
+              </div>
+              <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
+                <a
+                  href={paths.home()}
+                  className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
+                >
+                  {t("workspaceChat.returnToHomepage")}
+                </a>
               </div>
             </div>
           </ModalWrapper>
@@ -128,7 +129,7 @@ function copyCodeSnippet(uuid: any) {
   window.navigator.clipboard.writeText(markdown);
   target.classList.add("text-green-500");
   const originalText = target.innerHTML;
-  target.innerText = t("workspaceChat.copied");
+  target.innerText = i18n.t("workspaceChat.copied");
   target.setAttribute("disabled", true);
 
   setTimeout(() => {

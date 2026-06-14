@@ -16,12 +16,20 @@ describe("useChatContainerQuickScroll", () => {
     };
 
     window.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "ArrowUp", metaKey: true, ctrlKey: true }),
+      new KeyboardEvent("keydown", {
+        key: "ArrowUp",
+        metaKey: true,
+        ctrlKey: true,
+      }),
     );
     expect(scrollToTop).toHaveBeenCalledTimes(1);
 
     window.dispatchEvent(
-      new KeyboardEvent("keydown", { key: "ArrowDown", metaKey: true, ctrlKey: true }),
+      new KeyboardEvent("keydown", {
+        key: "ArrowDown",
+        metaKey: true,
+        ctrlKey: true,
+      }),
     );
     expect(scrollToBottom).toHaveBeenCalledTimes(1);
   });
@@ -29,7 +37,10 @@ describe("useChatContainerQuickScroll", () => {
   it("ignores arrow keys when an input is focused", () => {
     const scrollToTop = vi.fn();
     const { result } = renderHook(() => useChatContainerQuickScroll());
-    result.current.chatHistoryRef.current = { scrollToTop, scrollToBottom: vi.fn() };
+    result.current.chatHistoryRef.current = {
+      scrollToTop,
+      scrollToBottom: vi.fn(),
+    };
 
     const input = document.createElement("input");
     document.body.appendChild(input);

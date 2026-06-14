@@ -26,7 +26,9 @@ describe("useTextSize", () => {
   it("updates when textSizeChange event fires", async () => {
     const { result } = renderHook(() => useTextSize());
     act(() => {
-      window.dispatchEvent(new CustomEvent("textSizeChange", { detail: "small" }));
+      window.dispatchEvent(
+        new CustomEvent("textSizeChange", { detail: "small" }),
+      );
     });
     await waitFor(() => expect(result.current.textSize).toBe("small"));
     expect(result.current.textSizeClass).toBe("text-[12px]");

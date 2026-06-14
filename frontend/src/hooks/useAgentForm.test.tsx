@@ -76,9 +76,7 @@ describe("useAgentForm", () => {
     expect(result.current.activeFlowIds).not.toContain("1");
 
     act(() =>
-      result.current.setMcpServers([
-        { name: "server", running: false },
-      ]),
+      result.current.setMcpServers([{ name: "server", running: false }]),
     );
     act(() => result.current.toggleMCP("server"));
     expect(result.current.mcpServers[0].running).toBe(true);

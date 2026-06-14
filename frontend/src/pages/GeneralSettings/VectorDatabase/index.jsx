@@ -266,7 +266,9 @@ export default function GeneralVectorDatabase() {
                           type="text"
                           name="vdb-search"
                           autoComplete="off"
-                          placeholder={t("common.searchVectorDatabaseProviders")}
+                          placeholder={t(
+                            "common.searchVectorDatabaseProviders",
+                          )}
                           className="border-none -ml-4 my-2 bg-transparent z-20 pl-12 h-[38px] w-full px-4 py-1 text-sm outline-none text-theme-text-primary placeholder:text-theme-text-primary placeholder:font-medium"
                           onChange={(e) => setSearchQuery(e.target.value)}
                           ref={searchInputRef}

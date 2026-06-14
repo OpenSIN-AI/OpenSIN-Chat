@@ -61,7 +61,8 @@ const TRANSLATIONS = {
             loadingMessage: "Lädt...",
             name: "Name",
             status: "Status",
-            additionalFilesReady: "{{count}} zusätzliche Datei(en) bereit zum Einbetten",
+            additionalFilesReady:
+              "{{count}} zusätzliche Datei(en) bereit zum Einbetten",
             addToQueue: "Zur Warteschlange hinzufügen",
           },
         },
@@ -70,7 +71,8 @@ const TRANSLATIONS = {
   },
   modelSelector: {
     chatModel: {
-      placeholder: "Geben Sie den Modellnamen genau so ein, wie er in der API referenziert wird (z. B. gpt-3.5-turbo)",
+      placeholder:
+        "Geben Sie den Modellnamen genau so ein, wie er in der API referenziert wird (z. B. gpt-3.5-turbo)",
     },
   },
   transcriptionSelection: {
@@ -109,7 +111,8 @@ const TRANSLATIONS = {
     },
     zilliz: {
       clusterEndpoint: "Cluster-Endpunkt",
-      clusterEndpointPlaceholder: "https://sample.api.gcp-us-west1.zillizcloud.com",
+      clusterEndpointPlaceholder:
+        "https://sample.api.gcp-us-west1.zillizcloud.com",
       apiToken: "API-Token",
       apiTokenPlaceholder: "Zilliz-Cluster-API-Token",
     },
@@ -197,7 +200,8 @@ const TRANSLATIONS = {
     cached: "Zwischengespeichert",
     clearUrl: "URL löschen",
     close: "Schließen",
-    contactAdministrator: "Bitte wenden Sie sich an den Systemadministrator bezüglich dieses Fehlers.",
+    contactAdministrator:
+      "Bitte wenden Sie sich an den Systemadministrator bezüglich dieses Fehlers.",
     continue: "Weiter",
     couldNotRespond: "Konnte nicht auf die Nachricht antworten.",
     delete: "Löschen",
@@ -212,7 +216,8 @@ const TRANSLATIONS = {
     message: "Nachricht",
     moreOptions: "Weitere Optionen",
     noneSelected: "Keine Auswahl",
-    noConfigurationNeeded: "Für diesen Anbieter ist keine Konfiguration erforderlich.",
+    noConfigurationNeeded:
+      "Für diesen Anbieter ist keine Konfiguration erforderlich.",
     providerConnectivity: "Anbieter-Konnektivität",
     prompt: "Prompt",
     remove: "Entfernen",
@@ -224,7 +229,8 @@ const TRANSLATIONS = {
     searchLLMProvidersAvailable: "Verfügbare LLM-Anbieter durchsuchen",
     searchVectorDatabaseProviders: "Alle Vektordatenbank-Anbieter durchsuchen",
     searchWebSearchProviders: "Verfügbare Websuche-Anbieter durchsuchen",
-    selectAgentSkillFlowMcp: "Wählen Sie eine Agenten-Fähigkeit, einen Agenten-Flow oder einen MCP-Server",
+    selectAgentSkillFlowMcp:
+      "Wählen Sie eine Agenten-Fähigkeit, einen Agenten-Flow oder einen MCP-Server",
     selectAnLLM: "Sie müssen ein LLM auswählen",
     stopGenerating: "Generierung stoppen",
     threads: "Threads",
@@ -1214,7 +1220,8 @@ const TRANSLATIONS = {
         api_key: "API-Schlüssel",
         api_key_placeholder: "Azure OpenAI API-Schlüssel",
         chat_deployment_name: "Name der Chat-Deployment",
-        chat_deployment_name_placeholder: "Azure OpenAI Chat-Modell-Deployment-Name",
+        chat_deployment_name_placeholder:
+          "Azure OpenAI Chat-Modell-Deployment-Name",
         chat_model_token_limit: "Chat-Modell Token-Begrenzung",
         model_type: "Art des Modells",
         default: "Standard",
@@ -1222,13 +1229,13 @@ const TRANSLATIONS = {
         model_type_tooltip:
           'Wenn Ihre Bereitstellung ein Reasoning-Modell verwendet (z. B. o1, o1-mini, o3-mini usw.), setzen Sie dies auf "Reasoning". Andernfalls können Ihre Chat-Anfragen fehlschlagen.',
         token_limit: {
-          "4096": "4.096 (gpt-3.5-turbo)",
-          "16384": "16.384 (gpt-3.5-16k)",
-          "8192": "8.192 (gpt-4)",
-          "32768": "32.768 (gpt-4-32k)",
-          "128000": "128.000 (gpt-4-turbo,gpt-4o,gpt-4o-mini,o1-mini)",
-          "200000": "200.000 (o1,o1-pro,o3-mini)",
-          "1047576": "1.047.576 (gpt-4.1)",
+          4096: "4.096 (gpt-3.5-turbo)",
+          16384: "16.384 (gpt-3.5-16k)",
+          8192: "8.192 (gpt-4)",
+          32768: "32.768 (gpt-4-32k)",
+          128000: "128.000 (gpt-4-turbo,gpt-4o,gpt-4o-mini,o1-mini)",
+          200000: "200.000 (o1,o1-pro,o3-mini)",
+          1047576: "1.047.576 (gpt-4.1)",
         },
       },
     },
@@ -1406,8 +1413,10 @@ const TRANSLATIONS = {
         "Holen Sie sich hier einen kostenlosen persönlichen Zugriffstoken mit einem GitLab-Konto.",
       settings: "Einstellungen",
       fetch_wikis: "Wikis als Dokumente abrufen",
-      fetchingFiles: "Alle Dateien für das Repo werden abgerufen — dies kann eine Weile dauern.",
-      filesCollected: "{{files}} {{fileWord}} gesammelt aus {{author}}/{{repo}}:{{branch}}. Ausgabeordner ist {{destination}}.",
+      fetchingFiles:
+        "Alle Dateien für das Repo werden abgerufen — dies kann eine Weile dauern.",
+      filesCollected:
+        "{{files}} {{fileWord}} gesammelt aus {{author}}/{{repo}}:{{branch}}. Ausgabeordner ist {{destination}}.",
       collectingFiles: "Dateien werden gesammelt...",
     },
     youtube: {
@@ -1468,11 +1477,14 @@ const TRANSLATIONS = {
       bypass_ssl: "SSL-Zertifikatsvalidierung umgehen",
       bypass_ssl_explained:
         "Aktivieren Sie diese Option, um die SSL-Zertifikatsvalidierung für selbst gehostete Confluence-Instanzen mit selbstsignierten Zertifikaten zu umgehen.",
-      fetching_pages: "Seiten für Confluence-Space werden abgerufen — dies kann eine Weile dauern.",
-      pages_collected: "Seiten aus Confluence-Space {{spaceKey}} gesammelt. Ausgabeordner ist {{destination}}.",
+      fetching_pages:
+        "Seiten für Confluence-Space werden abgerufen — dies kann eine Weile dauern.",
+      pages_collected:
+        "Seiten aus Confluence-Space {{spaceKey}} gesammelt. Ausgabeordner ist {{destination}}.",
       atlassian_cloud: "Atlassian Cloud",
       self_hosted: "Selbst gehostet",
-      base_url_placeholder: "z.B.: https://example.atlassian.net, http://localhost:8211, usw.",
+      base_url_placeholder:
+        "z.B.: https://example.atlassian.net, http://localhost:8211, usw.",
       space_key_placeholder: "z.B.: ~7120208c08555d52224113949698b933a3bb56",
       username_placeholder: "jdoe@example.com",
       token_placeholder: "abcd1234",
@@ -2055,8 +2067,7 @@ const TRANSLATIONS = {
       "Maximale Länge von Text-Chunks in Zeichen für das Embedding.",
     maxChunkLengthPlaceholder: "8192",
     outputDimensionsLabel: "Embedding-Ausgabedimensionen",
-    outputDimensionsTooltip1:
-      "Anzahl der Dimensionen der Embedding-Ausgabe.",
+    outputDimensionsTooltip1: "Anzahl der Dimensionen der Embedding-Ausgabe.",
     outputDimensionsTooltip2:
       "Leer lassen, um den Standard des Modells zu verwenden.",
     outputDimensionsPlaceholder: "z. B. 768",
@@ -2239,7 +2250,8 @@ const TRANSLATIONS = {
       hide: "Ausblenden",
       advancedControls: "erweiterte Steuerung",
       streamTimeout: "Stream-Timeout (ms)",
-      streamTimeoutPlaceholder: "Timeout-Wert zwischen Token-Antworten zum automatischen Beenden des Streams",
+      streamTimeoutPlaceholder:
+        "Timeout-Wert zwischen Token-Antworten zum automatischen Beenden des Streams",
     },
     foundry: {
       baseUrl: "Basis-URL",
@@ -2263,7 +2275,8 @@ const TRANSLATIONS = {
     },
     privateMode: {
       proxyUrl: "Privatemode-Proxy-URL",
-      tooltipEnterUrl: "Geben Sie die URL ein, unter der der Privatemode-Proxy läuft.",
+      tooltipEnterUrl:
+        "Geben Sie die URL ein, unter der der Privatemode-Proxy läuft.",
       learnMore: "Mehr erfahren →",
       baseUrlPlaceholder: "z.B.: http://127.0.0.1:8080",
       chatModel: "Chat-Modell",
@@ -3271,13 +3284,19 @@ const TRANSLATIONS = {
   communityHub: {
     auth: {
       title: "Ihr OpenSIN Chat Community Hub-Konto",
-      descriptionPart1: "Wenn Sie Ihr OpenSIN Chat Community Hub-Konto verknüpfen, können Sie auf Ihre ",
+      descriptionPart1:
+        "Wenn Sie Ihr OpenSIN Chat Community Hub-Konto verknüpfen, können Sie auf Ihre ",
       private: "privaten",
-      descriptionPart2: " OpenSIN Chat Community Hub-Elemente zugreifen und eigene Elemente in den OpenSIN Chat Community Hub hochladen.",
-      whyConnectTitle: "Warum sollte ich mein OpenSIN Chat Community Hub-Konto verknüpfen?",
-      whyConnectBodyPart1: "Wenn Sie Ihr OpenSIN Chat Community Hub-Konto verknüpfen, können Sie Ihre ",
-      whyConnectBodyPart2: " Elemente aus dem OpenSIN Chat Community Hub abrufen und eigene Elemente in den OpenSIN Chat Community Hub hochladen.",
-      whyConnectNote: "Sie müssen Ihr OpenSIN Chat Community Hub-Konto nicht verknüpfen, um öffentliche Elemente aus dem OpenSIN Chat Community Hub abzurufen.",
+      descriptionPart2:
+        " OpenSIN Chat Community Hub-Elemente zugreifen und eigene Elemente in den OpenSIN Chat Community Hub hochladen.",
+      whyConnectTitle:
+        "Warum sollte ich mein OpenSIN Chat Community Hub-Konto verknüpfen?",
+      whyConnectBodyPart1:
+        "Wenn Sie Ihr OpenSIN Chat Community Hub-Konto verknüpfen, können Sie Ihre ",
+      whyConnectBodyPart2:
+        " Elemente aus dem OpenSIN Chat Community Hub abrufen und eigene Elemente in den OpenSIN Chat Community Hub hochladen.",
+      whyConnectNote:
+        "Sie müssen Ihr OpenSIN Chat Community Hub-Konto nicht verknüpfen, um öffentliche Elemente aus dem OpenSIN Chat Community Hub abzurufen.",
       apiKeyLabel: "OpenSIN Chat Hub API-Schlüssel",
       apiKeyPlaceholder: "Geben Sie Ihren OpenSIN Chat Hub API-Schlüssel ein",
       apiKeyHelp: "Sie können Ihren API-Schlüssel von Ihrer",
@@ -3304,14 +3323,18 @@ const TRANSLATIONS = {
     import: {
       intro: {
         title: "Ein Element aus dem Community Hub importieren",
-        description1: "Der Community Hub ist ein Ort, an dem Sie Agent-Skills, System-Prompts, Slash-Befehle und mehr finden, teilen und importieren können!",
-        description2: "Diese Elemente werden vom OpenSIN Chat-Team und der Community erstellt und sind eine großartige Möglichkeit, mit OpenSIN Chat zu beginnen und OpenSIN Chat an Ihre Bedürfnisse anzupassen.",
+        description1:
+          "Der Community Hub ist ein Ort, an dem Sie Agent-Skills, System-Prompts, Slash-Befehle und mehr finden, teilen und importieren können!",
+        description2:
+          "Diese Elemente werden vom OpenSIN Chat-Team und der Community erstellt und sind eine großartige Möglichkeit, mit OpenSIN Chat zu beginnen und OpenSIN Chat an Ihre Bedürfnisse anzupassen.",
         description3Part1: "Es gibt sowohl ",
         private: "private",
         description3Part2: " als auch ",
         public: "öffentliche",
-        description3Part3: " Elemente im Community Hub. Private Elemente sind nur für Sie sichtbar, während öffentliche Elemente für alle sichtbar sind.",
-        warningBody: "Wenn Sie ein privates Element abrufen, stellen Sie sicher, dass es mit einem Team geteilt wird, dem Sie angehören, und dass Sie einen",
+        description3Part3:
+          " Elemente im Community Hub. Private Elemente sind nur für Sie sichtbar, während öffentliche Elemente für alle sichtbar sind.",
+        warningBody:
+          "Wenn Sie ein privates Element abrufen, stellen Sie sicher, dass es mit einem Team geteilt wird, dem Sie angehören, und dass Sie einen",
         warningLink: "Verbindungsschlüssel hinzugefügt haben.",
         itemIdRequired: "Bitte geben Sie eine Element-ID ein",
         itemIdLabel: "Community Hub Element-Import-ID",
@@ -3321,7 +3344,8 @@ const TRANSLATIONS = {
       agentFlow: {
         title: 'Agent-Flow "{{name}}" importieren',
         createdBy: "Erstellt von",
-        description: "Agent-Flows ermöglichen es Ihnen, wiederverwendbare Aktionssequenzen zu erstellen, die von Ihrem Agenten ausgelöst werden können.",
+        description:
+          "Agent-Flows ermöglichen es Ihnen, wiederverwendbare Aktionssequenzen zu erstellen, die von Ihrem Agenten ausgelöst werden können.",
         flowDetails: "Flow-Details:",
         descriptionLabel: "Beschreibung:",
         stepsLabel: "Schritte ({{count}}):",
@@ -3334,18 +3358,22 @@ const TRANSLATIONS = {
       },
       completed: {
         title: "Community-Hub-Element importiert",
-        successMessage: 'Das „{{name}}" {{itemType}} wurde erfolgreich importiert! Es ist jetzt in Ihrer OpenSIN Chat-Instanz verfügbar.',
+        successMessage:
+          'Das „{{name}}" {{itemType}} wurde erfolgreich importiert! Es ist jetzt in Ihrer OpenSIN Chat-Instanz verfügbar.',
         viewInAgentSkills: '„{{name}}" in Agent-Skills anzeigen',
-        modifyNote: "Alle Änderungen, die Sie an diesem {{itemType}} vornehmen, werden nicht im Community Hub angezeigt. Sie können es jetzt nach Bedarf anpassen.",
+        modifyNote:
+          "Alle Änderungen, die Sie an diesem {{itemType}} vornehmen, werden nicht im Community Hub angezeigt. Sie können es jetzt nach Bedarf anpassen.",
         importAnother: "Weiteres Element importieren",
       },
       systemPrompt: {
         reviewTitle: 'System-Prompt „{{name}}" überprüfen',
         createdBy: "Erstellt von",
-        description: "System-Prompts werden verwendet, um das Verhalten der KI-Agenten zu steuern und können auf jeden vorhandenen Workspace angewendet werden.",
+        description:
+          "System-Prompts werden verwendet, um das Verhalten der KI-Agenten zu steuern und können auf jeden vorhandenen Workspace angewendet werden.",
         providedPrompt: "Bereitgestellter System-Prompt:",
         applyToWorkspace: "Auf Workspace anwenden",
-        noWorkspaces: "Keine Workspaces verfügbar. Erstellen Sie zuerst einen Workspace.",
+        noWorkspaces:
+          "Keine Workspaces verfügbar. Erstellen Sie zuerst einen Workspace.",
         applyButton: "System-Prompt auf Workspace anwenden",
         toastApplying: "System-Prompt wird auf Workspace angewendet...",
         toastFailed: "Fehler beim Anwenden des System-Prompts. {{error}}",
@@ -3354,8 +3382,10 @@ const TRANSLATIONS = {
       slashCommand: {
         reviewTitle: 'Slash-Befehl „{{name}}" überprüfen',
         createdBy: "Erstellt von",
-        descriptionPart1: "Slash-Befehle werden verwendet, um Informationen in einen Prompt vorauszufüllen, während Sie mit einem OpenSIN Chat-Workspace chatten.",
-        descriptionPart2: "Der Slash-Befehl steht beim Chatten zur Verfügung, indem Sie ihn einfach aufrufen mit",
+        descriptionPart1:
+          "Slash-Befehle werden verwendet, um Informationen in einen Prompt vorauszufüllen, während Sie mit einem OpenSIN Chat-Workspace chatten.",
+        descriptionPart2:
+          "Der Slash-Befehl steht beim Chatten zur Verfügung, indem Sie ihn einfach aufrufen mit",
         descriptionPart3: "wie jeden anderen Befehl auch.",
         importButton: "Slash-Befehl importieren",
         toastSuccess: "Slash-Befehl {{command}} erfolgreich importiert!",
@@ -3368,17 +3398,22 @@ const TRANSLATIONS = {
     openAiGeneric: {
       baseUrl: "Basis-URL",
       baseUrlPlaceholder: "http://localhost:7851/v1",
-      baseUrlDescription: "Dies sollte die Basis-URL des OpenAI-kompatiblen TTS-Dienstes sein, von dem Sie TTS-Antworten generieren.",
+      baseUrlDescription:
+        "Dies sollte die Basis-URL des OpenAI-kompatiblen TTS-Dienstes sein, von dem Sie TTS-Antworten generieren.",
       apiKey: "API-Schlüssel",
       apiKeyPlaceholder: "API-Schlüssel",
-      apiKeyDescription: "Einige TTS-Dienste erfordern einen API-Schlüssel zur Generierung von TTS-Antworten — dies ist optional, wenn Ihr Dienst keinen benötigt.",
+      apiKeyDescription:
+        "Einige TTS-Dienste erfordern einen API-Schlüssel zur Generierung von TTS-Antworten — dies ist optional, wenn Ihr Dienst keinen benötigt.",
       ttsModel: "TTS-Modell",
       ttsModelPlaceholder: "Ihr TTS-Modell-Bezeichner",
-      ttsModelDescriptionPart1: "Die meisten TTS-Dienste haben mehrere Modelle verfügbar. Dies ist der ",
-      ttsModelDescriptionPart2: "-Parameter, den Sie verwenden, um das gewünschte Modell auszuwählen. Hinweis: Dies ist nicht dasselbe wie das Stimmmodell.",
+      ttsModelDescriptionPart1:
+        "Die meisten TTS-Dienste haben mehrere Modelle verfügbar. Dies ist der ",
+      ttsModelDescriptionPart2:
+        "-Parameter, den Sie verwenden, um das gewünschte Modell auszuwählen. Hinweis: Dies ist nicht dasselbe wie das Stimmmodell.",
       voiceModel: "Stimmmodell",
       voiceModelPlaceholder: "Ihr Stimmmodell-Bezeichner",
-      voiceModelDescription: "Die meisten TTS-Dienste haben mehrere Stimmmodelle verfügbar. Dies ist der Bezeichner für das Stimmmodell, das Sie verwenden möchten.",
+      voiceModelDescription:
+        "Die meisten TTS-Dienste haben mehrere Stimmmodelle verfügbar. Dies ist der Bezeichner für das Stimmmodell, das Sie verwenden möchten.",
     },
     openAi: {
       apiKey: "API-Schlüssel",
@@ -3394,10 +3429,12 @@ const TRANSLATIONS = {
       },
     },
     piper: {
-      description: "Alle PiperTTS-Modelle werden lokal in Ihrem Browser ausgeführt. Dies kann auf leistungsschwächeren Geräten ressourcenintensiv sein.",
+      description:
+        "Alle PiperTTS-Modelle werden lokal in Ihrem Browser ausgeführt. Dies kann auf leistungsschwächeren Geräten ressourcenintensiv sein.",
       voiceModelSelection: "Stimmmodellauswahl",
       loadingModels: "-- verfügbare Modelle werden geladen --",
-      storedIndicator: "Das \"✔\" zeigt an, dass dieses Modell bereits lokal gespeichert ist und nicht heruntergeladen werden muss.",
+      storedIndicator:
+        'Das "✔" zeigt an, dass dieses Modell bereits lokal gespeichert ist und nicht heruntergeladen werden muss.',
       flushVoiceCache: "Stimmen-Cache leeren",
       flushSuccess: "Alle Stimmen aus dem Browser-Speicher entfernt",
       stopDemo: "Demo stoppen",
@@ -3411,35 +3448,43 @@ const TRANSLATIONS = {
     genericOpenAi: {
       baseUrl: "Basis-URL",
       baseUrlPlaceholder: "http://localhost:8000/v1",
-      baseUrlDescription: "Dies sollte die Basis-URL des OpenAI-kompatiblen STT-Dienstes sein, mit dem Sie Audio transkribieren.",
+      baseUrlDescription:
+        "Dies sollte die Basis-URL des OpenAI-kompatiblen STT-Dienstes sein, mit dem Sie Audio transkribieren.",
       apiKey: "API-Schlüssel",
       apiKeyPlaceholder: "API-Schlüssel",
-      apiKeyDescription: "Einige STT-Dienste erfordern einen API-Schlüssel zur Transkription — dies ist optional, wenn Ihr Dienst keinen benötigt.",
+      apiKeyDescription:
+        "Einige STT-Dienste erfordern einen API-Schlüssel zur Transkription — dies ist optional, wenn Ihr Dienst keinen benötigt.",
       transcriptionModel: "Transkriptionsmodell",
       modelPlaceholder: "Ihr STT-Modell-Bezeichner",
       modelDescriptionPart1: "Der ",
-      modelDescriptionPart2: "-Parameter, der an den Transkriptions-Endpunkt übergeben wird (z.B. ",
+      modelDescriptionPart2:
+        "-Parameter, der an den Transkriptions-Endpunkt übergeben wird (z.B. ",
       modelDescriptionPart3: ").",
     },
     lemonade: {
       baseUrl: "Basis-URL",
       autoDetect: "Auto-Erkennung",
-      baseUrlTooltip: "Geben Sie die URL ein, unter der Ihr Lemonade-Server läuft.",
+      baseUrlTooltip:
+        "Geben Sie die URL ein, unter der Ihr Lemonade-Server läuft.",
       baseUrlPlaceholder: "http://localhost:13305",
       apiKeyOptional: "API-Schlüssel (optional)",
-      apiKeyTooltip: "Der API-Schlüssel für Ihren Lemonade-Server. Wird mit den Lemonade LLM- und Embedder-Einstellungen geteilt.",
+      apiKeyTooltip:
+        "Der API-Schlüssel für Ihren Lemonade-Server. Wird mit den Lemonade LLM- und Embedder-Einstellungen geteilt.",
       transcriptionModel: "Transkriptionsmodell",
       noModelsFound: "-- keine Transkriptionsmodelle gefunden --",
       enterUrlFirst: "Zuerst Lemonade-URL eingeben",
-      modelHelp: "Laden Sie ein Whisper- oder Transkriptionsmodell auf Ihren Lemonade-Server, dann erscheint es hier.",
+      modelHelp:
+        "Laden Sie ein Whisper- oder Transkriptionsmodell auf Ihren Lemonade-Server, dann erscheint es hier.",
       loadedModels: "Ihre geladenen Modelle",
     },
   },
 
   parsedFilesMenu: {
     currentContext: "Aktueller Kontext ({{count}} Dateien)",
-    contextLimitTooltip: "Sie haben das Kontextfenster-Limit überschritten. Einige Dateien werden möglicherweise abgeschnitten oder von Chat-Antworten ausgeschlossen. Antworten können halluzinieren oder relevante Informationen fehlen.",
-    contextFullWarning: "Ihr Kontextfenster wird voll. Einige Dateien werden möglicherweise abgeschnitten oder von Chat-Antworten ausgeschlossen. Wir empfehlen, diese Dateien direkt in Ihren Workspace einzubetten, für bessere Ergebnisse.",
+    contextLimitTooltip:
+      "Sie haben das Kontextfenster-Limit überschritten. Einige Dateien werden möglicherweise abgeschnitten oder von Chat-Antworten ausgeschlossen. Antworten können halluzinieren oder relevante Informationen fehlen.",
+    contextFullWarning:
+      "Ihr Kontextfenster wird voll. Einige Dateien werden möglicherweise abgeschnitten oder von Chat-Antworten ausgeschlossen. Wir empfehlen, diese Dateien direkt in Ihren Workspace einzubetten, für bessere Ergebnisse.",
     embedFilesButton: "Dateien in Workspace einbetten",
     embeddingProgress: "Einbetten {{current}} von {{total}} Dateien...",
     embedSuccess: "{{count}} Datei(en) erfolgreich eingebettet",
@@ -3471,7 +3516,8 @@ const TRANSLATIONS = {
         title: "Neue Variable hinzufügen",
         key: "Schlüssel",
         keyPlaceholder: "z.B., firmenname",
-        keyHelp: "Der Schlüssel muss eindeutig sein und wird in Prompts als {key} verwendet. Nur Buchstaben, Zahlen und Unterstriche sind erlaubt.",
+        keyHelp:
+          "Der Schlüssel muss eindeutig sein und wird in Prompts als {key} verwendet. Nur Buchstaben, Zahlen und Unterstriche sind erlaubt.",
         value: "Wert",
         valuePlaceholder: "z.B., Acme GmbH",
         description: "Beschreibung",
@@ -3491,7 +3537,8 @@ const TRANSLATIONS = {
       },
       page: {
         title: "System-Prompt-Variablen",
-        description: "System-Prompt-Variablen werden verwendet, um Konfigurationswerte zu speichern, die in Ihrem System-Prompt referenziert werden können, um dynamische Inhalte in Ihren Prompts zu aktivieren.",
+        description:
+          "System-Prompt-Variablen werden verwendet, um Konfigurationswerte zu speichern, die in Ihrem System-Prompt referenziert werden können, um dynamische Inhalte in Ihren Prompts zu aktivieren.",
         addVariable: "Variable hinzufügen",
         noVariablesFound: "Keine Variablen gefunden",
         key: "Schlüssel",
@@ -3513,9 +3560,11 @@ const TRANSLATIONS = {
     newInvite: {
       createInviteTitle: "Neue Einladung erstellen",
       error: "Fehler",
-      afterCreationHint: "Nach der Erstellung können Sie die Einladung kopieren und an einen neuen Benutzer senden, der ein Konto mit der Standardrolle erstellen und automatisch den ausgewählten Workspaces hinzugefügt werden kann.",
+      afterCreationHint:
+        "Nach der Erstellung können Sie die Einladung kopieren und an einen neuen Benutzer senden, der ein Konto mit der Standardrolle erstellen und automatisch den ausgewählten Workspaces hinzugefügt werden kann.",
       autoAddToWorkspaces: "Eingeladenen automatisch zu Workspaces hinzufügen",
-      workspaceSelectionHint: "Sie können den Benutzer optional automatisch den untenstehenden Workspaces zuweisen, indem Sie diese auswählen. Standardmäßig hat der Benutzer keine sichtbaren Workspaces. Sie können Workspaces auch nach der Annahme der Einladung zuweisen.",
+      workspaceSelectionHint:
+        "Sie können den Benutzer optional automatisch den untenstehenden Workspaces zuweisen, indem Sie diese auswählen. Standardmäßig hat der Benutzer keine sichtbaren Workspaces. Sie können Workspaces auch nach der Annahme der Einladung zuweisen.",
       cancel: "Abbrechen",
       createInvite: "Einladung erstellen",
       close: "Schließen",
@@ -3523,21 +3572,27 @@ const TRANSLATIONS = {
     },
     usersPage: {
       title: "Benutzer",
-      description: "Dies sind alle Konten, die auf dieser Instanz registriert sind. Das Entfernen eines Kontos entfernt sofort den Zugriff auf diese Instanz.",
+      description:
+        "Dies sind alle Konten, die auf dieser Instanz registriert sind. Das Entfernen eines Kontos entfernt sofort den Zugriff auf diese Instanz.",
       addUser: "Benutzer hinzufügen",
       username: "Benutzername",
       role: "Rolle",
       dateAdded: "Hinzugefügt am",
       permissions: "Berechtigungen",
       limitMessagesPerDay: "Nachrichten pro Tag begrenzen",
-      limitMessagesDescription: "Beschränken Sie diesen Benutzer auf eine Anzahl erfolgreicher Abfragen oder Chats innerhalb eines 24-Stunden-Fensters.",
+      limitMessagesDescription:
+        "Beschränken Sie diesen Benutzer auf eine Anzahl erfolgreicher Abfragen oder Chats innerhalb eines 24-Stunden-Fensters.",
       messageLimitPerDay: "Nachrichtenlimit pro Tag",
       roleHint: {
-        default1: "Kann nur Chats mit Workspaces senden, zu denen sie von Admins oder Managern hinzugefügt wurden.",
+        default1:
+          "Kann nur Chats mit Workspaces senden, zu denen sie von Admins oder Managern hinzugefügt wurden.",
         default2: "Kann keine Einstellungen ändern.",
-        manager1: "Kann alle Workspaces anzeigen, erstellen und löschen sowie workspace-spezifische Einstellungen ändern.",
-        manager2: "Kann neue Benutzer erstellen, aktualisieren und zur Instanz einladen.",
-        manager3: "Kann keine LLM-, VektorDB-, Embedding- oder andere Verbindungen ändern.",
+        manager1:
+          "Kann alle Workspaces anzeigen, erstellen und löschen sowie workspace-spezifische Einstellungen ändern.",
+        manager2:
+          "Kann neue Benutzer erstellen, aktualisieren und zur Instanz einladen.",
+        manager3:
+          "Kann keine LLM-, VektorDB-, Embedding- oder andere Verbindungen ändern.",
         admin1: "Höchste Benutzerberechtigung.",
         admin2: "Kann alles im System sehen und tun.",
       },
@@ -3549,19 +3604,26 @@ const TRANSLATIONS = {
       title: "Embed #{{id}} aktualisieren",
       updateSuccess: "Embed erfolgreich aktualisiert.",
       maxChatsPerDay: "Max. Chats pro Tag",
-      maxChatsPerDayHint: "Begrenzen Sie die Anzahl der Chats, die dieser eingebettete Chat in 24 Stunden verarbeiten kann. Null bedeutet unbegrenzt.",
+      maxChatsPerDayHint:
+        "Begrenzen Sie die Anzahl der Chats, die dieser eingebettete Chat in 24 Stunden verarbeiten kann. Null bedeutet unbegrenzt.",
       maxChatsPerSession: "Max. Chats pro Sitzung",
-      maxChatsPerSessionHint: "Begrenzen Sie die Anzahl der Chats, die ein Sitzungsbenutzer mit diesem Embed in 24 Stunden senden kann. Null bedeutet unbegrenzt.",
+      maxChatsPerSessionHint:
+        "Begrenzen Sie die Anzahl der Chats, die ein Sitzungsbenutzer mit diesem Embed in 24 Stunden senden kann. Null bedeutet unbegrenzt.",
       messageHistoryLimit: "Nachrichtenverlaufslimit",
-      messageHistoryLimitHint: "Die Anzahl der vorherigen Nachrichten, die im Chat-Kontext enthalten sein sollen. Standard ist 20.",
+      messageHistoryLimitHint:
+        "Die Anzahl der vorherigen Nachrichten, die im Chat-Kontext enthalten sein sollen. Standard ist 20.",
       enableDynamicModel: "Dynamische Modellauswahl aktivieren",
-      enableDynamicModelHint: "Ermöglicht das Festlegen des bevorzugten LLM-Modells zur Übersteuerung des Workspace-Standards.",
+      enableDynamicModelHint:
+        "Ermöglicht das Festlegen des bevorzugten LLM-Modells zur Übersteuerung des Workspace-Standards.",
       enableDynamicTemperature: "Dynamische LLM-Temperatur aktivieren",
-      enableDynamicTemperatureHint: "Ermöglicht das Festlegen der LLM-Temperatur zur Übersteuerung des Workspace-Standards.",
+      enableDynamicTemperatureHint:
+        "Ermöglicht das Festlegen der LLM-Temperatur zur Übersteuerung des Workspace-Standards.",
       enablePromptOverride: "Prompt-Übersteuerung aktivieren",
-      enablePromptOverrideHint: "Ermöglicht das Festlegen des System-Prompts zur Übersteuerung des Workspace-Standards.",
+      enablePromptOverrideHint:
+        "Ermöglicht das Festlegen des System-Prompts zur Übersteuerung des Workspace-Standards.",
       error: "Fehler: {{error}}",
-      scriptTagNotice: "Nach dem Erstellen eines Embeds erhalten Sie einen Link, den Sie mit einem einfachen <script>-Tag auf Ihrer Website veröffentlichen können.",
+      scriptTagNotice:
+        "Nach dem Erstellen eines Embeds erhalten Sie einen Link, den Sie mit einem einfachen <script>-Tag auf Ihrer Website veröffentlichen können.",
       cancel: "Abbrechen",
       updateEmbed: "Embed aktualisieren",
     },
@@ -3573,7 +3635,8 @@ const TRANSLATIONS = {
       command: "Befehl",
       commandPlaceholder: "ihr-befehl",
       prompt: "Prompt",
-      promptPlaceholder: "Dies ist ein Test-Prompt. Bitte antworten Sie mit einem Gedicht über LLMs.",
+      promptPlaceholder:
+        "Dies ist ein Test-Prompt. Bitte antworten Sie mit einem Gedicht über LLMs.",
       description: "Beschreibung",
       descriptionPlaceholder: "Antwortet mit einem Gedicht über LLMs.",
       deleteConfirm: "Sind Sie sicher, dass Sie dieses Preset löschen möchten?",
@@ -3642,17 +3705,23 @@ const TRANSLATIONS = {
   dataConnectors: {
     paperlessNgx: {
       baseUrl: "Basis-URL",
-      baseUrlHelp: "Die URL, unter der Ihre Paperless-ngx-Instanz läuft (z.B., http://localhost:8000)",
+      baseUrlHelp:
+        "Die URL, unter der Ihre Paperless-ngx-Instanz läuft (z.B., http://localhost:8000)",
       baseUrlPlaceholder: "http://localhost:8000",
       apiToken: "API-Token",
-      apiTokenHelp: "Ihr Paperless-ngx-API-Token. Sie finden dies unter 'Mein Profil' und dann 'API Auth Token'.",
+      apiTokenHelp:
+        "Ihr Paperless-ngx-API-Token. Sie finden dies unter 'Mein Profil' und dann 'API Auth Token'.",
       apiTokenPlaceholder: "Geben Sie Ihren API-Token ein",
-      instanceRunningInfo: "Stellen Sie sicher, dass Ihre Paperless-ngx-Instanz läuft und von diesem Computer aus erreichbar ist.",
+      instanceRunningInfo:
+        "Stellen Sie sicher, dass Ihre Paperless-ngx-Instanz läuft und von diesem Computer aus erreichbar ist.",
       importingDocuments: "Dokumente werden importiert...",
       submit: "Absenden",
-      completeHint: "Nach Abschluss stehen alle Dokumente zur Einbettung in Workspaces zur Verfügung.",
-      fetchingDocuments: "Dokumente werden von Paperless-ngx abgerufen - dies kann eine Weile dauern.",
-      successImport: "Erfolgreich {{files}} Dokumente von Paperless-ngx importiert. Ausgabeordner ist {{destination}}.",
+      completeHint:
+        "Nach Abschluss stehen alle Dokumente zur Einbettung in Workspaces zur Verfügung.",
+      fetchingDocuments:
+        "Dokumente werden von Paperless-ngx abgerufen - dies kann eine Weile dauern.",
+      successImport:
+        "Erfolgreich {{files}} Dokumente von Paperless-ngx importiert. Ausgabeordner ist {{destination}}.",
     },
   },
   chatPromptSettings: {
@@ -3667,7 +3736,8 @@ const TRANSLATIONS = {
   },
   browserExtensionApiKey: {
     title: "Browser-Erweiterungs-API-Schlüssel",
-    description: "Verwalten Sie API-Schlüssel für Browser-Erweiterungen, die sich mit Ihrer OpenSIN Chat-Instanz verbinden.",
+    description:
+      "Verwalten Sie API-Schlüssel für Browser-Erweiterungen, die sich mit Ihrer OpenSIN Chat-Instanz verbinden.",
     generateNewApiKey: "Neuen API-Schlüssel generieren",
     error: "Fehler: {{error}}",
     connectionString: "Erweiterungsverbindungszeichenfolge",
@@ -3678,9 +3748,12 @@ const TRANSLATIONS = {
     newKey: {
       title: "Neuer Browser-Erweiterungs-API-Schlüssel",
       error: "Fehler: {{error}}",
-      multiUserWarning: "Warnung: Sie befinden sich im Mehrbenutzermodus. Dieser API-Schlüssel ermöglicht den Zugriff auf alle Workspaces Ihres Kontos. Bitte teilen Sie ihn nur mit Vorsicht.",
-      autoConnectInfo: "Nach dem Klicken auf „API-Schlüssel erstellen\" versucht OpenSIN Chat, sich automatisch mit Ihrer Browser-Erweiterung zu verbinden.",
-      manualConnectInfo: "Wenn Sie in der Erweiterung „Verbunden mit OpenSIN Chat\" sehen, war die Verbindung erfolgreich. Andernfalls kopieren Sie bitte die Verbindungszeichenfolge und fügen Sie sie manuell in die Erweiterung ein.",
+      multiUserWarning:
+        "Warnung: Sie befinden sich im Mehrbenutzermodus. Dieser API-Schlüssel ermöglicht den Zugriff auf alle Workspaces Ihres Kontos. Bitte teilen Sie ihn nur mit Vorsicht.",
+      autoConnectInfo:
+        'Nach dem Klicken auf „API-Schlüssel erstellen" versucht OpenSIN Chat, sich automatisch mit Ihrer Browser-Erweiterung zu verbinden.',
+      manualConnectInfo:
+        'Wenn Sie in der Erweiterung „Verbunden mit OpenSIN Chat" sehen, war die Verbindung erfolgreich. Andernfalls kopieren Sie bitte die Verbindungszeichenfolge und fügen Sie sie manuell in die Erweiterung ein.',
       cancel: "Abbrechen",
       createApiKey: "API-Schlüssel erstellen",
       copyApiKey: "API-Schlüssel kopieren",
@@ -3697,22 +3770,27 @@ const TRANSLATIONS = {
 
   systemHealth: {
     title: "Systemzustand",
-    description: "Diagnose für lokale LLM-Provider und Speicherpfade: API-Schlüssel-Status, aktive Fallbacks und Erreichbarkeit der konfigurierten Endpunkte.",
+    description:
+      "Diagnose für lokale LLM-Provider und Speicherpfade: API-Schlüssel-Status, aktive Fallbacks und Erreichbarkeit der konfigurierten Endpunkte.",
     notConfigured: "Nicht konfiguriert",
     reachable: "Erreichbar ({{latencyMs}}ms, HTTP {{status}})",
     notReachable: "Nicht erreichbar",
     probeFailed: "Verbindungstest fehlgeschlagen: {{error}}",
-    probeComplete: "Verbindungstest abgeschlossen: {{reachable}}/{{configured}} konfigurierte Provider erreichbar.",
+    probeComplete:
+      "Verbindungstest abgeschlossen: {{reachable}}/{{configured}} konfigurierte Provider erreichbar.",
     connectivityTest: "Verbindungstest",
-    connectivityTestDescription: "Prüft aktiv, ob die Basis-URLs der {{count}} konfigurierten Provider antworten (Timeout 4s).",
+    connectivityTestDescription:
+      "Prüft aktiv, ob die Basis-URLs der {{count}} konfigurierten Provider antworten (Timeout 4s).",
     testing: "Teste\u2026",
     testNow: "Jetzt testen",
-    noTestYet: "Noch kein Test ausgeführt. Klicken Sie auf „Jetzt testen\", um alle konfigurierten Provider zu prüfen.",
+    noTestYet:
+      'Noch kein Test ausgeführt. Klicken Sie auf „Jetzt testen", um alle konfigurierten Provider zu prüfen.',
   },
 
   recoveryCode: {
     title: "Wiederherstellungscodes",
-    description: "Um Ihr Passwort in Zukunft zurückzusetzen, benötigen Sie diese Wiederherstellungscodes. Laden Sie die Codes herunter oder kopieren Sie sie, um sie zu speichern.",
+    description:
+      "Um Ihr Passwort in Zukunft zurückzusetzen, benötigen Sie diese Wiederherstellungscodes. Laden Sie die Codes herunter oder kopieren Sie sie, um sie zu speichern.",
     shownOnce: "Diese Wiederherstellungscodes werden nur einmal angezeigt!",
     copiedToClipboard: "Wiederherstellungscodes in die Zwischenablage kopiert",
     copyAriaLabel: "Wiederherstellungscodes in die Zwischenablage kopieren",
@@ -3742,7 +3820,8 @@ const TRANSLATIONS = {
     newChat: "Neuer Chat",
     newFolder: "Neuer Ordner",
     renameFailed: "Umbenennen fehlgeschlagen: {{message}}",
-    deleteConfirm: 'Ordner "{{name}}" löschen? Alle Chats werden in die Hauptliste verschoben.',
+    deleteConfirm:
+      'Ordner "{{name}}" löschen? Alle Chats werden in die Hauptliste verschoben.',
     deleteFailed: "Ordner konnte nicht gelöscht werden.",
     rename: "Umbenennen",
     delete: "Löschen",
@@ -3786,7 +3865,8 @@ const TRANSLATIONS = {
   admin: {
     invitations: {
       title: "Einladungen",
-      description: "Erstellen Sie Einladungslinks für Personen in Ihrer Organisation, die diese annehmen und sich anmelden können. Einladungen können nur von einem einzigen Benutzer verwendet werden.",
+      description:
+        "Erstellen Sie Einladungslinks für Personen in Ihrer Organisation, die diese annehmen und sich anmelden können. Einladungen können nur von einem einzigen Benutzer verwendet werden.",
       createInviteLink: "Einladungslink erstellen",
       status: "Status",
       acceptedBy: "Angenommen von",
@@ -3810,8 +3890,10 @@ const TRANSLATIONS = {
     telemetryToggled: "Anonyme Telemetrie wurde {{status}}.",
     enabled: "aktiviert",
     disabled: "deaktiviert",
-    eventsNoIp: 'Alle Ereignisse zeichnen keine IP-Adresse auf und enthalten <b>keine identifizierenden</b> Inhalte, Einstellungen, Chats oder andere nicht nutzungsbasierte Informationen. Um die Liste der erfassten Ereignis-Tags einzusehen, können Sie auf <a href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub</a> nachsehen.',
-    respectPrivacy: 'Als Open-Source-Projekt respektieren wir Ihr Recht auf Datenschutz. Wir widmen uns der Entwicklung der besten Lösung für die private und sichere Integration von KI und Dokumenten. Wenn Sie sich entscheiden, die Telemetrie zu deaktivieren, bitten wir Sie nur, uns Feedback und Gedanken zu senden, damit wir OpenSIN Chat für Sie weiter verbessern können. <a href="mailto:team@openafd.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@openafd.com</a>.',
+    eventsNoIp:
+      'Alle Ereignisse zeichnen keine IP-Adresse auf und enthalten <b>keine identifizierenden</b> Inhalte, Einstellungen, Chats oder andere nicht nutzungsbasierte Informationen. Um die Liste der erfassten Ereignis-Tags einzusehen, können Sie auf <a href="https://github.com/search?q=repo%3AFamily-Team-Projects%2Fopensin-chat%20.sendTelemetry(&amp;type=code" class="underline text-blue-400" target="_blank" rel="noreferrer">GitHub</a> nachsehen.',
+    respectPrivacy:
+      'Als Open-Source-Projekt respektieren wir Ihr Recht auf Datenschutz. Wir widmen uns der Entwicklung der besten Lösung für die private und sichere Integration von KI und Dokumenten. Wenn Sie sich entscheiden, die Telemetrie zu deaktivieren, bitten wir Sie nur, uns Feedback und Gedanken zu senden, damit wir OpenSIN Chat für Sie weiter verbessern können. <a href="mailto:team@openafd.com" class="underline text-blue-400" target="_blank" rel="noreferrer">team@openafd.com</a>.',
   },
 
   invite: {
@@ -3879,7 +3961,8 @@ const TRANSLATIONS = {
     linkCopyFailed: "Link konnte nicht kopiert werden.",
     renamePrompt: "Wie möchten Sie diesen Thread umbenennen?",
     updateFailed: "Thread konnte nicht aktualisiert werden! {{message}}",
-    deleteConfirm: "Sind Sie sicher, dass Sie diesen Thread löschen möchten? Alle Chats werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+    deleteConfirm:
+      "Sind Sie sicher, dass Sie diesen Thread löschen möchten? Alle Chats werden gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
     deleteFailed: "Thread konnte nicht gelöscht werden!",
     deleteSuccess: "Thread erfolgreich gelöscht!",
     newChat: "Neuer Chat",
@@ -3898,7 +3981,8 @@ const TRANSLATIONS = {
 
   providerPrivacy: {
     unknown: "Unbekannt",
-    noPolicyDefined: "\"{{provider}}\" hat keine bekannte Datenschutzrichtlinie in OpenSIN Chat.",
+    noPolicyDefined:
+      '"{{provider}}" hat keine bekannte Datenschutzrichtlinie in OpenSIN Chat.',
     llmProvider: "LLM-Anbieter",
     llmLogo: "LLM-Logo",
     embeddingPreference: "Embedding-Einstellung",
@@ -3912,7 +3996,8 @@ const TRANSLATIONS = {
   directoryStates: {
     name: "Name",
     status: "Status",
-    additionalFilesReady: "{{count}} zusätzliche Datei(en) bereit zum Einbetten",
+    additionalFilesReady:
+      "{{count}} zusätzliche Datei(en) bereit zum Einbetten",
     addToEmbeddingQueue: "Zur Embedding-Warteschlange hinzufügen",
     addToQueue: "Zur Warteschlange",
     removeFromEmbeddingQueue: "Aus Embedding-Warteschlange entfernen",
@@ -3923,7 +4008,8 @@ const TRANSLATIONS = {
     clear: "Löschen",
     noLogs: "Noch keine Logs",
     terminal: "Terminal",
-    terminalHint: "Geben Sie einen Befehl ein und drücken Sie Enter zum Ausführen.",
+    terminalHint:
+      "Geben Sie einen Befehl ein und drücken Sie Enter zum Ausführen.",
     noOutput: "(kein Output)",
     error: "Fehler: {{error}}",
     consoleTabs: "Konsole-Tabs",
@@ -3935,7 +4021,8 @@ const TRANSLATIONS = {
     tab_logs: "Logs",
     tab_terminal: "Terminal",
     terminal_placeholder: "Befehl eingeben...",
-    terminal_unavailable: "Terminal nicht verfügbar. Stellen Sie sicher, dass der Server den /api/terminal/exec-Endpunkt bereitstellt.",
+    terminal_unavailable:
+      "Terminal nicht verfügbar. Stellen Sie sicher, dass der Server den /api/terminal/exec-Endpunkt bereitstellt.",
   },
 
   agentSidebarLists: {
@@ -3993,13 +4080,16 @@ const TRANSLATIONS = {
       saveFailed: "Einstellungen konnten nicht gespeichert werden: {{error}}",
       saveSuccess: "Spracherkennungseinstellungen erfolgreich gespeichert.",
       systemNative: "Systemeigen",
-      systemNativeDesc: "Verwendet den integrierten STT-Dienst Ihres Browsers, falls unterstützt.",
+      systemNativeDesc:
+        "Verwendet den integrierten STT-Dienst Ihres Browsers, falls unterstützt.",
       openai: "OpenAI",
       openaiDesc: "Verwenden Sie OpenAIs Whisper-API zur Spracherkennung.",
       lemonade: "Lemonade",
-      lemonadeDesc: "Sprache über Ihren lokalen Lemonade-Server transkribieren.",
+      lemonadeDesc:
+        "Sprache über Ihren lokalen Lemonade-Server transkribieren.",
       deepgram: "Deepgram",
-      deepgramDesc: "Sprache mit Deepgrams gehosteten Nova-Modellen transkribieren.",
+      deepgramDesc:
+        "Sprache mit Deepgrams gehosteten Nova-Modellen transkribieren.",
       genericOpenai: "Generisches OpenAI",
       genericOpenaiDesc:
         "Verbinden Sie sich mit einem OpenAI-kompatiblen STT-Dienst über eine benutzerdefinierte Konfiguration.",
@@ -4012,11 +4102,13 @@ const TRANSLATIONS = {
       saveFailed: "Einstellungen konnten nicht gespeichert werden: {{error}}",
       saveSuccess: "Text-zu-Sprache-Einstellungen erfolgreich gespeichert.",
       systemNative: "Systemeigen",
-      systemNativeDesc: "Verwendet den integrierten TTS-Dienst Ihres Browsers, falls unterstützt.",
+      systemNativeDesc:
+        "Verwendet den integrierten TTS-Dienst Ihres Browsers, falls unterstützt.",
       openai: "OpenAI",
       openaiDesc: "OpenAIs Text-zu-Sprache-Stimmen verwenden.",
       elevenlabs: "ElevenLabs",
-      elevenlabsDesc: "ElevenLabs Text-zu-Sprache-Stimmen und Technologie verwenden.",
+      elevenlabsDesc:
+        "ElevenLabs Text-zu-Sprache-Stimmen und Technologie verwenden.",
       piper: "PiperTTS",
       piperDesc: "TTS-Modelle lokal und privat in Ihrem Browser ausführen.",
       kokoro: "Kokoro",
@@ -4256,8 +4348,10 @@ const TRANSLATIONS = {
     suspend: "Sperren",
     unsuspend: "Entsperren",
     delete: "Löschen",
-    confirmSuspend: "Sind Sie sicher, dass Sie {{username}} sperren möchten?\nDanach wird er ausgeloggt und kann sich nicht mehr anmelden, bis ein Admin die Sperre aufhebt.",
-    confirmDelete: "Sind Sie sicher, dass Sie {{username}} löschen möchten?\nDanach wird er ausgeloggt und kann diese Instanz nicht mehr nutzen.\n\nDiese Aktion ist unwiderruflich.",
+    confirmSuspend:
+      "Sind Sie sicher, dass Sie {{username}} sperren möchten?\nDanach wird er ausgeloggt und kann sich nicht mehr anmelden, bis ein Admin die Sperre aufhebt.",
+    confirmDelete:
+      "Sind Sie sicher, dass Sie {{username}} löschen möchten?\nDanach wird er ausgeloggt und kann diese Instanz nicht mehr nutzen.\n\nDiese Aktion ist unwiderruflich.",
     suspended: "Benutzer wurde gesperrt.",
     unsuspended: "Benutzer ist nicht mehr gesperrt.",
     deleteSuccess: "Benutzer wurde aus dem System gelöscht.",
@@ -4274,7 +4368,8 @@ const TRANSLATIONS = {
   customSiteSettings: {
     updateSuccess:
       "Seiteneinstellungen aktualisiert! Sie werden beim Neuladen der Seite wirksam.",
-    titlePlaceholder: "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
+    titlePlaceholder:
+      "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
     titleDefault: "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
     faviconPlaceholder: "URL zu Ihrem Bild",
     faviconAlt: "Website-Favicon",
@@ -4333,7 +4428,8 @@ const TRANSLATIONS = {
   },
 
   modelSelector: {
-    multiModelNotSupported: "Multi-Modell-Unterstützung wird für diesen Anbieter noch nicht unterstützt.",
+    multiModelNotSupported:
+      "Multi-Modell-Unterstützung wird für diesen Anbieter noch nicht unterstützt.",
     workspaceWillUse: "Dieser Workspace wird verwenden",
     systemModelLink: "das für das System festgelegte Modell.",
   },
@@ -4346,7 +4442,8 @@ const TRANSLATIONS = {
 
   workspaceChat: {
     notFoundTitle: "Workspace nicht gefunden",
-    notFoundDescription: "Der gesuchte Workspace ist nicht verfügbar. Er wurde möglicherweise gelöscht oder Sie haben keinen Zugriff darauf.",
+    notFoundDescription:
+      "Der gesuchte Workspace ist nicht verfügbar. Er wurde möglicherweise gelöscht oder Sie haben keinen Zugriff darauf.",
     returnToHomepage: "Zurück zur Startseite",
     copied: "Kopiert!",
   },
@@ -4354,7 +4451,8 @@ const TRANSLATIONS = {
   agentBuilder: {
     blockList: {
       directOutput: "Direkte Ausgabe",
-      directOutputDescription: "Die Ausgabe dieses Blocks wird direkt in den Chat zurückgegeben. Dadurch werden weitere Tool-Aufrufe verhindert.",
+      directOutputDescription:
+        "Die Ausgabe dieses Blocks wird direkt in den Chat zurückgegeben. Dadurch werden weitere Tool-Aufrufe verhindert.",
       configurationComingSoon: "Konfigurationsoptionen folgen in Kürze...",
       moveBlockUp: "Block nach oben verschieben",
       moveBlockDown: "Block nach unten verschieben",
@@ -4366,7 +4464,8 @@ const TRANSLATIONS = {
     editFlow: "Flow bearbeiten",
     deleteFlow: "Flow löschen",
     noDescription: "Keine Beschreibung angegeben",
-    confirmDelete: "Sind Sie sicher, dass Sie diesen Flow löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    confirmDelete:
+      "Sind Sie sicher, dass Sie diesen Flow löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
     flowDeleted: "Flow erfolgreich gelöscht.",
     deleteFailed: "Flow konnte nicht gelöscht werden.",
     toggleFailed: "Flow-Status konnte nicht geändert werden",
@@ -4460,7 +4559,8 @@ const TRANSLATIONS = {
     },
     hubItems: {
       recentlyAdded: "Kürzlich hinzugefügt im OpenSIN Chat Community Hub",
-      exploreLatest: "Entdecken Sie die neuesten Ergänzungen im OpenSIN Chat Community Hub",
+      exploreLatest:
+        "Entdecken Sie die neuesten Ergänzungen im OpenSIN Chat Community Hub",
       exploreMore: "Mehr erkunden →",
     },
   },
@@ -4528,8 +4628,7 @@ const TRANSLATIONS = {
     skillDeactivated: "Fähigkeit deaktiviert.",
     errorRequiredValue: "{{key}} benötigt einen Wert.",
     errorTypeMismatch: "{{key}} muss vom Typ {{type}} sein.",
-    configUpdated:
-      "Fähigkeitskonfiguration erfolgreich aktualisiert.",
+    configUpdated: "Fähigkeitskonfiguration erfolgreich aktualisiert.",
     confirmDeleteSkill:
       "Sind Sie sicher, dass Sie diese Fähigkeit löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
     skillDeleted: "Fähigkeit erfolgreich gelöscht.",
@@ -4577,7 +4676,6 @@ const TRANSLATIONS = {
     downloading: "Diagramm wird heruntergeladen...",
     downloadGraph: "Diagramm herunterladen",
   },
-
 };
 
 export default TRANSLATIONS;

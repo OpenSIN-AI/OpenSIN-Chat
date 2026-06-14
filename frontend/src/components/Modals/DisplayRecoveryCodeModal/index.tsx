@@ -60,8 +60,7 @@ export default function RecoveryCodeModal({
         <div className="h-full w-full overflow-y-auto max-h-[calc(100vh-200px)]">
           <div className="py-7 px-9 space-y-2 flex-col">
             <p className="text-sm text-white flex flex-col">
-              {t("recoveryCode.description")}{" "}
-              <br />
+              {t("recoveryCode.description")} <br />
               <b className="mt-4">{t("recoveryCode.shownOnce")}</b>
             </p>
             <div

@@ -24,7 +24,11 @@ export default function AddVariableModal({ closeModal, onRefresh }) {
 
     try {
       await System.promptVariables.create(newVariable);
-      showToast(t("admin.systemPromptVariables.addVariable.createSuccess"), "success", { clear: true });
+      showToast(
+        t("admin.systemPromptVariables.addVariable.createSuccess"),
+        "success",
+        { clear: true },
+      );
       if (onRefresh) onRefresh();
       closeModal();
     } catch (error) {
@@ -66,7 +70,9 @@ export default function AddVariableModal({ closeModal, onRefresh }) {
                   minLength={3}
                   maxLength={255}
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("admin.systemPromptVariables.addVariable.keyPlaceholder")}
+                  placeholder={t(
+                    "admin.systemPromptVariables.addVariable.keyPlaceholder",
+                  )}
                   required={true}
                   autoComplete="off"
                   pattern="^[a-zA-Z0-9_]+$"
@@ -86,7 +92,9 @@ export default function AddVariableModal({ closeModal, onRefresh }) {
                   name="value"
                   type="text"
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("admin.systemPromptVariables.addVariable.valuePlaceholder")}
+                  placeholder={t(
+                    "admin.systemPromptVariables.addVariable.valuePlaceholder",
+                  )}
                   required={true}
                   autoComplete="off"
                 />
@@ -102,11 +110,19 @@ export default function AddVariableModal({ closeModal, onRefresh }) {
                   name="description"
                   type="text"
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("admin.systemPromptVariables.addVariable.descriptionPlaceholder")}
+                  placeholder={t(
+                    "admin.systemPromptVariables.addVariable.descriptionPlaceholder",
+                  )}
                   autoComplete="off"
                 />
               </div>
-              {error && <p className="text-red-400 text-sm">{t("admin.systemPromptVariables.addVariable.error", { error })}</p>}
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("admin.systemPromptVariables.addVariable.error", {
+                    error,
+                  })}
+                </p>
+              )}
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
               <button

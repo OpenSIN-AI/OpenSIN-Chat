@@ -6,7 +6,6 @@ import showToast from "@/utils/toast";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import EditVariableModal from "./EditVariableModal";
-import { titleCase } from "text-case";
 import truncate from "truncate";
 import { Trash } from "@phosphor-icons/react";
 
@@ -33,19 +32,15 @@ export default function VariableRow({ variable, onRefresh }) {
     try {
       await System.promptVariables.delete(variable.id);
       rowRef?.current?.remove();
-      showToast(
-        t("systemPromptVariables.page.deleteSuccess"),
-        "success",
-        { clear: true },
-      );
+      showToast(t("systemPromptVariables.page.deleteSuccess"), "success", {
+        clear: true,
+      });
       if (onRefresh) onRefresh();
     } catch (error) {
       console.error("Error deleting variable:", error);
-      showToast(
-        t("systemPromptVariables.page.deleteFailed"),
-        "error",
-        { clear: true },
-      );
+      showToast(t("systemPromptVariables.page.deleteFailed"), "error", {
+        clear: true,
+      });
     }
   };
 

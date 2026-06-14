@@ -31,7 +31,9 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
             <div className="w-full flex gap-x-2 items-center">
               {}
               <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {t("connectors.manage.editingWithName", { name: workspace.name })}
+                {t("connectors.manage.editingWithName", {
+                  name: workspace.name,
+                })}
               </h3>
             </div>
             <button

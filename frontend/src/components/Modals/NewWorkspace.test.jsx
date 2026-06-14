@@ -7,7 +7,6 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-
 vi.mock("@/components/ModalWrapper", () => ({
   default: ({ children }) => <div data-testid="modal-wrapper">{children}</div>,
 }));

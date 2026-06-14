@@ -21,7 +21,6 @@ vi.mock("@phosphor-icons/react", () => ({
   ),
 }));
 
-
 vi.mock("@/utils/paths", () => ({
   default: {
     communityHub: {
@@ -118,9 +117,7 @@ describe("PublishEntityModal - wrapper behavior", () => {
       entityType: "system-prompt",
       entity: "",
     });
-    expect(
-      screen.getByText("Authentication Required"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Authentication Required")).toBeInTheDocument();
   });
 
   it("renders close button with type=button and aria-label", () => {
@@ -190,14 +187,8 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entityType: "system-prompt",
       entity: "You are a helpful assistant.",
     });
-    expect(
-      screen.getByText("Publish System Prompt"),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByPlaceholderText(
-        "My System Prompt",
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Publish System Prompt")).toBeInTheDocument();
+    expect(screen.getByPlaceholderText("My System Prompt")).toBeInTheDocument();
   });
 
   it("adds a tag when Enter is pressed", () => {
@@ -293,14 +284,9 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entityType: "system-prompt",
       entity: "You are a helpful assistant.",
     });
-    fireEvent.change(
-      screen.getByPlaceholderText(
-        "My System Prompt",
-      ),
-      {
-        target: { value: "My Prompt" },
-      },
-    );
+    fireEvent.change(screen.getByPlaceholderText("My System Prompt"), {
+      target: { value: "My Prompt" },
+    });
     fireEvent.change(
       screen.getByPlaceholderText(
         "This is the description of your system prompt. Use this to describe the purpose of your system prompt.",
@@ -310,23 +296,17 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       },
     );
     fireEvent.change(
-      screen.getByPlaceholderText(
-        "Enter your system prompt here...",
-      ),
+      screen.getByPlaceholderText("Enter your system prompt here..."),
       {
         target: { value: "A prompt with enough length." },
       },
     );
-    fireEvent.click(
-      screen.getByText("Publish to Community Hub"),
-    );
+    fireEvent.click(screen.getByText("Publish to Community Hub"));
     await waitFor(() => {
       expect(CommunityHub.createSystemPrompt).toHaveBeenCalled();
     });
     await waitFor(() => {
-      expect(
-        screen.getByText("Success!"),
-      ).toBeInTheDocument();
+      expect(screen.getByText("Success!")).toBeInTheDocument();
     });
   });
 
@@ -342,14 +322,9 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       entityType: "system-prompt",
       entity: "You are a helpful assistant.",
     });
-    fireEvent.change(
-      screen.getByPlaceholderText(
-        "My System Prompt",
-      ),
-      {
-        target: { value: "My Prompt" },
-      },
-    );
+    fireEvent.change(screen.getByPlaceholderText("My System Prompt"), {
+      target: { value: "My Prompt" },
+    });
     fireEvent.change(
       screen.getByPlaceholderText(
         "This is the description of your system prompt. Use this to describe the purpose of your system prompt.",
@@ -359,16 +334,12 @@ describe("PublishEntityModal - SystemPrompts form", () => {
       },
     );
     fireEvent.change(
-      screen.getByPlaceholderText(
-        "Enter your system prompt here...",
-      ),
+      screen.getByPlaceholderText("Enter your system prompt here..."),
       {
         target: { value: "A prompt with enough length." },
       },
     );
-    fireEvent.click(
-      screen.getByText("Publish to Community Hub"),
-    );
+    fireEvent.click(screen.getByText("Publish to Community Hub"));
     await waitFor(() => {
       expect(showToast).toHaveBeenCalledWith(
         expect.stringContaining("Server error"),
@@ -401,9 +372,7 @@ describe("PublishEntityModal - AgentFlows form", () => {
       entityType: "agent-flow",
       entity: sampleEntity,
     });
-    expect(
-      screen.getByText("Publish Agent Flow"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Publish Agent Flow")).toBeInTheDocument();
     expect(screen.getByText("Text Prompt")).toBeInTheDocument();
   });
 
@@ -454,9 +423,7 @@ describe("PublishEntityModal - AgentFlows form", () => {
       entityType: "agent-flow",
       entity: sampleEntity,
     });
-    fireEvent.click(
-      screen.getByText("Publish to Community Hub"),
-    );
+    fireEvent.click(screen.getByText("Publish to Community Hub"));
     await waitFor(() => {
       expect(CommunityHub.createAgentFlow).toHaveBeenCalled();
     });
@@ -499,9 +466,7 @@ describe("PublishEntityModal - SlashCommands form", () => {
       entityType: "slash-command",
       entity: sampleEntity,
     });
-    expect(
-      screen.getByText("Publish Slash Command"),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Publish Slash Command")).toBeInTheDocument();
     expect(screen.getByText("/test")).toBeInTheDocument();
   });
 
@@ -517,9 +482,7 @@ describe("PublishEntityModal - SlashCommands form", () => {
       entityType: "slash-command",
       entity: sampleEntity,
     });
-    fireEvent.click(
-      screen.getByText("Publish to Community Hub"),
-    );
+    fireEvent.click(screen.getByText("Publish to Community Hub"));
     await waitFor(() => {
       expect(CommunityHub.createSlashCommand).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -541,9 +504,7 @@ describe("PublishEntityModal - SlashCommands form", () => {
       entityType: "slash-command",
       entity: sampleEntity,
     });
-    fireEvent.click(
-      screen.getByText("Publish to Community Hub"),
-    );
+    fireEvent.click(screen.getByText("Publish to Community Hub"));
     await waitFor(() => {
       expect(showToast).toHaveBeenCalledWith(
         expect.stringContaining("Bad command"),
@@ -571,8 +532,6 @@ describe("PublishEntityModal - unknown entity type", () => {
       entity: {},
     });
     expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
-    expect(
-      screen.queryByText("Publish System Prompt"),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText("Publish System Prompt")).not.toBeInTheDocument();
   });
 });

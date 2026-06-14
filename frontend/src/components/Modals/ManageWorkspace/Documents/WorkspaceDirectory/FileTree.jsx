@@ -58,7 +58,9 @@ export function FileTree({
               ) : (
                 <div className="shrink-0 w-3 h-3" />
               )}
-              <p className="ml-[7px] text-theme-text-primary">{t("common.name")}</p>
+              <p className="ml-[7px] text-theme-text-primary">
+                {t("common.name")}
+              </p>
             </div>
             {embeddedDocCount > 0 && (
               <p className="col-span-2 text-right text-theme-text-secondary pr-2">

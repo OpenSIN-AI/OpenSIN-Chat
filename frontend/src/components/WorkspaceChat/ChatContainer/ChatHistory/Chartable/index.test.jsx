@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { Chartable } from "./index";
@@ -245,7 +245,10 @@ describe("Chartable", () => {
     render(<Chartable {...makeProps("area")} />);
     await user.click(screen.getByText("Download"));
     await waitFor(() => expect(mockGetDivJpeg).toHaveBeenCalledTimes(1));
-    expect(saveAs).toHaveBeenCalledWith("blob", expect.stringMatching(/^chart-/));
+    expect(saveAs).toHaveBeenCalledWith(
+      "blob",
+      expect.stringMatching(/^chart-/),
+    );
   });
 
   it("renders a loading spinner while downloading", async () => {

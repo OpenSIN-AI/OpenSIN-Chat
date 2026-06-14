@@ -52,7 +52,9 @@ export default function AgentList({
                 <DefaultBadge title={skill} />
               ) : (
                 <div className="text-sm text-theme-text-secondary font-medium">
-                  {activeSkills.includes(skill) ? t("common.on") : t("common.off")}
+                  {activeSkills.includes(skill)
+                    ? t("common.on")
+                    : t("common.off")}
                 </div>
               )}
               <CaretRight

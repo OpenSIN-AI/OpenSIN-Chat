@@ -25,7 +25,9 @@ export default function EditEmbedModal({ embed, closeModal }) {
     const data = enforceSubmissionSchema(form);
     const { success, error } = await Embed.updateEmbed(embed.id, data);
     if (success) {
-      showToast(t("chatEmbedWidgets.editEmbed.updateSuccess"), "success", { clear: true });
+      showToast(t("chatEmbedWidgets.editEmbed.updateSuccess"), "success", {
+        clear: true,
+      });
       setTimeout(() => {
         window.location.reload();
       }, 800);
@@ -87,7 +89,9 @@ export default function EditEmbedModal({ embed, closeModal }) {
               <BooleanInput
                 name="allow_temperature_override"
                 title={t("chatEmbedWidgets.editEmbed.enableDynamicTemperature")}
-                hint={t("chatEmbedWidgets.editEmbed.enableDynamicTemperatureHint")}
+                hint={t(
+                  "chatEmbedWidgets.editEmbed.enableDynamicTemperatureHint",
+                )}
                 defaultValue={embed.allow_temperature_override}
               />
               <BooleanInput
@@ -97,7 +101,11 @@ export default function EditEmbedModal({ embed, closeModal }) {
                 defaultValue={embed.allow_prompt_override}
               />
 
-              {error && <p className="text-red-400 text-sm">{t("chatEmbedWidgets.editEmbed.error", { error })}</p>}
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("chatEmbedWidgets.editEmbed.error", { error })}
+                </p>
+              )}
               <p className="text-white text-opacity-60 text-xs md:text-sm">
                 {t("chatEmbedWidgets.editEmbed.scriptTagNotice")}
               </p>

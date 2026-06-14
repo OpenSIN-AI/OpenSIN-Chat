@@ -32,7 +32,6 @@ vi.mock("../MemoriesSidebar/MemoriesContext", () => ({
   LIMITS: { workspace: 20, global: 5 },
 }));
 
-
 // SidebarTabs uses phosphor icons; render placeholders to keep DOM small
 vi.mock("@phosphor-icons/react", () => ({
   FileText: () => <span data-testid="icon-sources" />,

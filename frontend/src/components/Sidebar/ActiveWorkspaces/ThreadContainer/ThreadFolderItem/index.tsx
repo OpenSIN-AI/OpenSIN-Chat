@@ -238,7 +238,9 @@ export default function ThreadFolderItem({
             <span className="text-sm text-white light:text-theme-text-primary truncate">
               {name}
               <span className="ml-1 text-white/40 light:text-theme-text-secondary text-xs">
-                {t("threadFolderItem.folderThreadCount", { count: threads.length })}
+                {t("threadFolderItem.folderThreadCount", {
+                  count: threads.length,
+                })}
               </span>
             </span>
           )}

@@ -43,11 +43,13 @@ export function EmbeddingProgressState({
         <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10 rounded-t-2xl">
           <div className="col-span-8 flex items-center gap-x-[4px]">
             <div className="shrink-0 w-3 h-3" />
-            <p className="ml-[7px] text-theme-text-primary">{t("directoryStates.name")}</p>
-           </div>
-           <p className="col-span-4 text-right text-theme-text-primary pr-1">
-             {t("directoryStates.status")}
-           </p>
+            <p className="ml-[7px] text-theme-text-primary">
+              {t("directoryStates.name")}
+            </p>
+          </div>
+          <p className="col-span-4 text-right text-theme-text-primary pr-1">
+            {t("directoryStates.status")}
+          </p>
         </div>
         <div className="overflow-y-auto h-[calc(100%-40px)]">
           {Object.entries(embeddingProgress).map(([filename, fileStatus]) => (
@@ -67,7 +69,9 @@ export function EmbeddingProgressState({
       {hasChanges && movedItems.length > 0 && (
         <div className="flex items-center justify-between w-[560px] mt-3">
           <p className="text-theme-text-secondary text-sm">
-            {t("directoryStates.additionalFilesReady", { count: movedItems.length })}
+            {t("directoryStates.additionalFilesReady", {
+              count: movedItems.length,
+            })}
           </p>
           <button
             type="button"

@@ -15,17 +15,13 @@ export default function UnknownItem({ item, setSettings, setStep }) {
         </h2>
       </div>
       <div className="flex flex-col gap-y-[25px] text-white/80 text-sm">
-        <p>
-          {t("communityHub.import.unsupported.description")}
-        </p>
+        <p>{t("communityHub.import.unsupported.description")}</p>
         <p>
           {t("communityHub.import.unsupported.itemId")} <b>{item.id}</b>
           <br />
           {t("communityHub.import.unsupported.itemType")} <b>{item.itemType}</b>
         </p>
-        <p>
-          {t("communityHub.import.unsupported.contactSupport")}
-        </p>
+        <p>{t("communityHub.import.unsupported.contactSupport")}</p>
       </div>
       <CTAButton
         className="text-dark-text w-full mt-[18px] h-[34px] hover:bg-accent"

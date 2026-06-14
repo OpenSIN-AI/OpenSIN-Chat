@@ -80,7 +80,12 @@ export default function ImportedSkillConfig({
         continue;
       }
       if (typeof value !== settings.type) {
-        errors.push(t("importedSkillConfig.errorTypeMismatch", { key, type: settings.type }));
+        errors.push(
+          t("importedSkillConfig.errorTypeMismatch", {
+            key,
+            type: settings.type,
+          }),
+        );
         continue;
       }
       updatedConfig.setup_args[key].value = value;
@@ -138,8 +143,7 @@ export default function ImportedSkillConfig({
           <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
             {t("importedSkillConfig.descriptionByAuthor", {
               description: config.description,
-            })}
-            {" "}
+            })}{" "}
             <a
               href={config.author_url}
               target="_blank"
@@ -203,12 +207,7 @@ function ManageSkillMenu({ config, setImportedSkills }) {
   const menuRef = useRef(null);
 
   async function deleteSkill() {
-    if (
-      !window.confirm(
-        t("importedSkillConfig.confirmDeleteSkill"),
-      )
-    )
-      return;
+    if (!window.confirm(t("importedSkillConfig.confirmDeleteSkill"))) return;
     const success = await System.experimentalFeatures.agentPlugins.deletePlugin(
       config.hubId,
     );
@@ -251,7 +250,9 @@ function ManageSkillMenu({ config, setImportedSkills }) {
             onClick={deleteSkill}
             className="border-none flex items-center rounded-lg gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
-            <span className="text-sm">{t("importedSkillConfig.deleteSkill")}</span>
+            <span className="text-sm">
+              {t("importedSkillConfig.deleteSkill")}
+            </span>
           </button>
         </div>
       )}

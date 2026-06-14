@@ -9,7 +9,9 @@ export default function OpenAiGenericTextToSpeechOptions({ settings }: any) {
       <div className="flex gap-x-4">
         <div className="flex flex-col w-60">
           <div className="flex justify-between items-start mb-2">
-            <label className="text-white text-sm font-semibold">{t("textToSpeech.openAiGeneric.baseUrl")}</label>
+            <label className="text-white text-sm font-semibold">
+              {t("textToSpeech.openAiGeneric.baseUrl")}
+            </label>
           </div>
           <input
             type="url"
@@ -62,7 +64,9 @@ export default function OpenAiGenericTextToSpeechOptions({ settings }: any) {
           />
           {/* eslint-disable i18next/no-literal-string */}
           <p className="text-xs leading-[18px] font-base text-white text-opacity-60 mt-2">
-            {t("textToSpeech.openAiGeneric.ttsModelDescriptionPart1")}<code>model</code>{t("textToSpeech.openAiGeneric.ttsModelDescriptionPart2")}
+            {t("textToSpeech.openAiGeneric.ttsModelDescriptionPart1")}
+            <code>model</code>
+            {t("textToSpeech.openAiGeneric.ttsModelDescriptionPart2")}
           </p>
           {/* eslint-enable i18next/no-literal-string */}
         </div>

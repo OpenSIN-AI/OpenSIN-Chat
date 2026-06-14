@@ -266,9 +266,7 @@ function OptionsMenu({
   };
 
   const renameThread = async () => {
-    const name = window
-      .prompt(t("threadItem.renamePrompt"))
-      ?.trim();
+    const name = window.prompt(t("threadItem.renamePrompt"))?.trim();
     if (!name || name.length === 0) {
       close();
       return;
@@ -292,12 +290,7 @@ function OptionsMenu({
   };
 
   const handleDelete = async () => {
-    if (
-      !window.confirm(
-        t("threadItem.deleteConfirm"),
-      )
-    )
-      return;
+    if (!window.confirm(t("threadItem.deleteConfirm"))) return;
     const success = await Workspace.threads.delete(workspace.slug, thread.slug);
     if (!success) {
       showToast(t("threadItem.deleteFailed"), "error", { clear: true });

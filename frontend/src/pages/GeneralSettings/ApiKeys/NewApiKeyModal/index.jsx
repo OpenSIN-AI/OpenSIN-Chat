@@ -124,7 +124,8 @@ export default function NewApiKeyModal({ closeModal, onSuccess }) {
                 className="text-blue-400 hover:underline"
               >
                 {t("api.readDocumentation")}{" "}
-                {// eslint-disable-next-line i18next/no-literal-string
+                {
+                  // eslint-disable-next-line i18next/no-literal-string
                 }
                 &rarr;
               </a>

@@ -5,7 +5,11 @@ import ModelTableLoadingSkeleton from "./loading";
 
 vi.mock("react-loading-skeleton", () => ({
   default: ({ count, containerClassName }) => (
-    <div data-testid="skeleton" data-count={count} className={containerClassName} />
+    <div
+      data-testid="skeleton"
+      data-count={count}
+      className={containerClassName}
+    />
   ),
 }));
 

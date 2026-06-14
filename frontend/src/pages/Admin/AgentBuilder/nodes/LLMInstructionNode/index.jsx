@@ -24,7 +24,9 @@ export default function LLMInstructionNode({
           }
           className="w-full border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5"
           rows={3}
-          placeholder={t("agentBuilder.nodes.llmInstruction.instructionPlaceholder")}
+          placeholder={t(
+            "agentBuilder.nodes.llmInstruction.instructionPlaceholder",
+          )}
         />
       </div>
 

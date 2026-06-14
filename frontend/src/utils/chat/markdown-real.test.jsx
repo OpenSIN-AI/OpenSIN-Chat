@@ -11,7 +11,9 @@ vi.mock("uuid", () => ({ v4: () => "test-uuid" }));
 vi.mock("highlight.js", () => {
   const hljs = {
     registerLanguage: vi.fn(),
-    getLanguage: vi.fn((lang) => (lang === "svelte" || lang === "js" ? {} : null)),
+    getLanguage: vi.fn((lang) =>
+      lang === "svelte" || lang === "js" ? {} : null,
+    ),
     highlight: (code, opts) => ({
       value: `<span class="hljs">${code}</span>`,
       language: opts?.language,

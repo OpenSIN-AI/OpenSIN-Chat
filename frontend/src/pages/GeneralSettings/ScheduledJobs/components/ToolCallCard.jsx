@@ -71,12 +71,8 @@ export default function ToolCallCard({ toolCall }) {
 
 function ToolCallTimestamp({ toolCall }) {
   if (!toolCall.timestamp) return null;
-  const formatted = moment(toolCall.timestamp).format("LTS"); // eslint-disable-line i18next/no-literal-string
-  return (
-    <span className="text-xs text-theme-text-secondary">
-      {formatted}
-    </span>
-  );
+  const formatted = moment(toolCall.timestamp).format("LTS");
+  return <span className="text-xs text-theme-text-secondary">{formatted}</span>;
 }
 
 function ToolCallArguments({ toolCall }) {

@@ -17,7 +17,10 @@ describe("usePromptInputStorage", () => {
       <MemoryRouter initialEntries={["/workspace/ws/thread/t1"]}>
         <Routes>
           <Route path="/workspace/:slug" element={children} />
-          <Route path="/workspace/:slug/thread/:threadSlug" element={children} />
+          <Route
+            path="/workspace/:slug/thread/:threadSlug"
+            element={children}
+          />
         </Routes>
       </MemoryRouter>
     );

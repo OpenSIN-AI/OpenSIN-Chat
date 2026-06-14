@@ -25,7 +25,11 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
 
     try {
       await System.promptVariables.update(variable.id, updatedVariable);
-      showToast(t("admin.systemPromptVariables.editVariable.updateSuccess"), "success", { clear: true });
+      showToast(
+        t("admin.systemPromptVariables.editVariable.updateSuccess"),
+        "success",
+        { clear: true },
+      );
       if (onRefresh) onRefresh();
       closeModal();
     } catch (error) {
@@ -40,7 +44,9 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
             <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-              {t("admin.systemPromptVariables.editVariable.title", { key: variable.key })}
+              {t("admin.systemPromptVariables.editVariable.title", {
+                key: variable.key,
+              })}
             </h3>
           </div>
           <button
@@ -67,7 +73,9 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
                   maxLength={255}
                   type="text"
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("admin.systemPromptVariables.addVariable.keyPlaceholder")}
+                  placeholder={t(
+                    "admin.systemPromptVariables.addVariable.keyPlaceholder",
+                  )}
                   defaultValue={variable.key}
                   required={true}
                   autoComplete="off"
@@ -88,7 +96,9 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
                   name="value"
                   type="text"
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("admin.systemPromptVariables.addVariable.valuePlaceholder")}
+                  placeholder={t(
+                    "admin.systemPromptVariables.addVariable.valuePlaceholder",
+                  )}
                   defaultValue={variable.value}
                   required={true}
                   autoComplete="off"
@@ -105,12 +115,20 @@ export default function EditVariableModal({ variable, closeModal, onRefresh }) {
                   name="description"
                   type="text"
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("admin.systemPromptVariables.addVariable.descriptionPlaceholder")}
+                  placeholder={t(
+                    "admin.systemPromptVariables.addVariable.descriptionPlaceholder",
+                  )}
                   defaultValue={variable.description}
                   autoComplete="off"
                 />
               </div>
-              {error && <p className="text-red-400 text-sm">{t("admin.systemPromptVariables.addVariable.error", { error })}</p>}
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("admin.systemPromptVariables.addVariable.error", {
+                    error,
+                  })}
+                </p>
+              )}
             </div>
             <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
               <button

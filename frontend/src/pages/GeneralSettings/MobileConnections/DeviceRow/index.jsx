@@ -53,7 +53,9 @@ export default function DeviceRow({ device, removeDevice }) {
             {moment(device.createdAt).format(LLL_FORMAT)}
             {device.user && (
               <div className="flex items-center gap-x-1">
-                 <span className="text-xs text-theme-text-secondary">{t("deviceRow.by")}</span>
+                <span className="text-xs text-theme-text-secondary">
+                  {t("deviceRow.by")}
+                </span>
                 <Link
                   to={paths.settings.users()}
                   className="text-xs text-theme-text-secondary hover:underline hover:text-cta-button"
@@ -70,7 +72,7 @@ export default function DeviceRow({ device, removeDevice }) {
               onClick={handleDeny}
               className={`border-none flex items-center justify-center text-xs font-medium text-white/80 light:text-black/80 rounded-lg p-1 hover:bg-white hover:light:bg-red-50 hover:bg-opacity-10`}
             >
-               {t("deviceRow.revoke")}
+              {t("deviceRow.revoke")}
             </button>
           ) : (
             <>

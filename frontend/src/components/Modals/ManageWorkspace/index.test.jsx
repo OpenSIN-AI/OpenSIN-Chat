@@ -11,7 +11,6 @@ vi.mock("react-router-dom", () => ({
   useParams: () => ({ slug: "test-workspace" }),
 }));
 
-
 vi.mock("react-device-detect", () => ({
   isMobileOnly: false,
 }));

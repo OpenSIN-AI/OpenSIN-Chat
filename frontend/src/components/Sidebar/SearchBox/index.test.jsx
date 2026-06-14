@@ -19,7 +19,6 @@ vi.mock("@/components/Preloader", () => ({
   default: () => <div data-testid="preloader">Loading...</div>,
 }));
 
-
 vi.mock("react-tooltip", () => ({
   Tooltip: () => null,
 }));

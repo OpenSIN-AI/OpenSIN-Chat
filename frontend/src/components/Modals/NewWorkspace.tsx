@@ -70,7 +70,9 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
                   />
                 </div>
                 {error && (
-                  <p className="text-red-400 text-sm">{t("newWorkspaceModal.error", { error })}</p>
+                  <p className="text-red-400 text-sm">
+                    {t("newWorkspaceModal.error", { error })}
+                  </p>
                 )}
               </div>
             </div>

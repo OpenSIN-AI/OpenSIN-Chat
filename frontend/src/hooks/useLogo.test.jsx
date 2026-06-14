@@ -7,7 +7,12 @@ import useLogo from "./useLogo";
 function wrapper({ children }) {
   return (
     <LogoContext.Provider
-      value={{ logo: "logo.png", setLogo: () => {}, loginLogo: "login.png", isCustomLogo: true }}
+      value={{
+        logo: "logo.png",
+        setLogo: () => {},
+        loginLogo: "login.png",
+        isCustomLogo: true,
+      }}
     >
       {children}
     </LogoContext.Provider>

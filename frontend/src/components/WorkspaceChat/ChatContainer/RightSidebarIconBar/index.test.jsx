@@ -7,7 +7,6 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-
 const mockToggleSidebar = vi.fn();
 const mockCloseSidebar = vi.fn();
 

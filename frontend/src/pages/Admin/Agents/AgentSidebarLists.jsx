@@ -33,7 +33,9 @@ export default function AgentSidebarLists({
     <>
       <div className="text-theme-text-primary flex items-center gap-x-2">
         <Robot size={24} />
-        <p className="text-lg font-medium">{t("agentSidebarLists.agentSkills")}</p>
+        <p className="text-lg font-medium">
+          {t("agentSidebarLists.agentSkills")}
+        </p>
       </div>
       <AgentList
         skills={defaultSkills}
@@ -52,7 +54,9 @@ export default function AgentSidebarLists({
 
       <div className="text-theme-text-primary flex items-center gap-x-2 mt-6">
         <Package size={24} />
-        <p className="text-lg font-medium">{t("agentSidebarLists.appIntegrations")}</p>
+        <p className="text-lg font-medium">
+          {t("agentSidebarLists.appIntegrations")}
+        </p>
       </div>
       <AgentList
         skills={appIntegrationSkills}
@@ -63,7 +67,9 @@ export default function AgentSidebarLists({
 
       <div className="text-theme-text-primary flex items-center gap-x-2 mt-4">
         <Plug size={24} />
-        <p className="text-lg font-medium">{t("agentSidebarLists.customSkills")}</p>
+        <p className="text-lg font-medium">
+          {t("agentSidebarLists.customSkills")}
+        </p>
       </div>
       <ImportedSkillList
         skills={importedSkills}
@@ -74,7 +80,9 @@ export default function AgentSidebarLists({
       <div className="text-theme-text-primary flex items-center justify-between gap-x-2 mt-4">
         <div className="flex items-center gap-x-2">
           <FlowArrow size={24} />
-          <p className="text-lg font-medium">{t("agentSidebarLists.agentFlows")}</p>
+          <p className="text-lg font-medium">
+            {t("agentSidebarLists.agentFlows")}
+          </p>
         </div>
         {agentFlows.length === 0 ? (
           <Link

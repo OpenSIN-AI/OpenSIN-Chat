@@ -7,7 +7,6 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-
 vi.mock("@/hooks/useLoginMode", () => ({
   default: () => null,
 }));

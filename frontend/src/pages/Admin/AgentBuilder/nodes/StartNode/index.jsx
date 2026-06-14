@@ -18,7 +18,9 @@ export default function StartNode({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-medium text-theme-text-primary">{t("startNode.variables")}</h3>
+      <h3 className="text-sm font-medium text-theme-text-primary">
+        {t("startNode.variables")}
+      </h3>
       {config.variables.map((variable, index) => (
         <div key={index} className="flex gap-2">
           <input

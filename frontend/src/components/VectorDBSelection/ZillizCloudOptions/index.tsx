@@ -14,7 +14,9 @@ export default function ZillizCloudOptions({ settings }: any) {
             type="text"
             name="ZillizEndpoint"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.zilliz.clusterEndpointPlaceholder")}
+            placeholder={t(
+              "providerSettings.zilliz.clusterEndpointPlaceholder",
+            )}
             defaultValue={settings?.ZillizEndpoint}
             required={true}
             autoComplete="off"

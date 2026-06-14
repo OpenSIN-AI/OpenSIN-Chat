@@ -29,9 +29,7 @@ export default function EmbedRow({ embed }) {
   } = useModal();
 
   const handleSuspend = async () => {
-    if (
-      !window.confirm(t("embedConfigs.embedRow.disableConfirm"))
-    )
+    if (!window.confirm(t("embedConfigs.embedRow.disableConfirm")))
       return false;
 
     const { success, error } = await Embed.updateEmbed(embed.id, {
@@ -40,7 +38,11 @@ export default function EmbedRow({ embed }) {
     if (!success) showToast(error, "error", { clear: true });
     if (success) {
       showToast(
-        t("embedConfigs.embedRow.toggleStatus", { status: enabled ? t("embedConfigs.embedRow.disabled") : t("embedConfigs.embedRow.active") }),
+        t("embedConfigs.embedRow.toggleStatus", {
+          status: enabled
+            ? t("embedConfigs.embedRow.disabled")
+            : t("embedConfigs.embedRow.active"),
+        }),
         "success",
         { clear: true },
       );
@@ -48,10 +50,7 @@ export default function EmbedRow({ embed }) {
     }
   };
   const handleDelete = async () => {
-    if (
-      !window.confirm(t("embedConfigs.embedRow.deleteConfirm"))
-    )
-      return false;
+    if (!window.confirm(t("embedConfigs.embedRow.deleteConfirm"))) return false;
     const { success, error } = await Embed.deleteEmbed(embed.id);
     if (!success) showToast(error, "error", { clear: true });
     if (success) {
@@ -110,7 +109,9 @@ export default function EmbedRow({ embed }) {
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-disable-hover-bg"
           >
             <span className="group-hover:text-theme-button-disable-hover-text">
-              {enabled ? t("embedConfigs.embedRow.disable") : t("embedConfigs.embedRow.enable")}
+              {enabled
+                ? t("embedConfigs.embedRow.disable")
+                : t("embedConfigs.embedRow.enable")}
             </span>
           </button>
           <button

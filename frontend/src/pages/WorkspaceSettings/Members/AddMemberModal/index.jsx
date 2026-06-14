@@ -140,7 +140,9 @@ export default function AddMemberModal({ closeModal, workspace, users }) {
                     <div className="w-2 h-2 bg-white rounded-[2px]" />
                   )}
                 </div>
-                <p className="text-white text-sm font-medium">{t("addMemberModal.selectAll")}</p>
+                <p className="text-white text-sm font-medium">
+                  {t("addMemberModal.selectAll")}
+                </p>
               </button>
               {selectedUsers.length > 0 && (
                 <button

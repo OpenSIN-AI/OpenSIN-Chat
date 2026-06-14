@@ -13,12 +13,7 @@ export default function InviteRow({ invite }) {
   const [status, setStatus] = useState(invite.status);
   const [copied, setCopied] = useState(false);
   const handleDelete = async () => {
-    if (
-      !window.confirm(
-        t("inviteRow.deactivateConfirm"),
-      )
-    )
-      return false;
+    if (!window.confirm(t("inviteRow.deactivateConfirm"))) return false;
     if (rowRef?.current && rowRef.current.children.length > 0) {
       rowRef.current.children[0].innerText = t("inviteRow.disabled");
     }
@@ -56,8 +51,10 @@ export default function InviteRow({ invite }) {
           {invite.claimedBy
             ? invite.claimedBy?.username || t("inviteRow.deletedUser")
             : DASH}
-         </td>
-          <td className="px-6">{invite.createdBy?.username || t("inviteRow.deletedUser")}</td>
+        </td>
+        <td className="px-6">
+          {invite.createdBy?.username || t("inviteRow.deletedUser")}
+        </td>
         <td className="px-6">{invite.createdAt}</td>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
           {status === "pending" && (

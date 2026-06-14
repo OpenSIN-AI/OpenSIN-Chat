@@ -48,7 +48,11 @@ describe("useSlashCommand", () => {
       }),
     );
 
-    expect(result.current.handleSlashCommand({ key: "/", ctrlKey: true })).toBe(false);
-    expect(result.current.handleSlashCommand({ key: "/", metaKey: true })).toBe(false);
+    expect(result.current.handleSlashCommand({ key: "/", ctrlKey: true })).toBe(
+      false,
+    );
+    expect(result.current.handleSlashCommand({ key: "/", metaKey: true })).toBe(
+      false,
+    );
   });
 });

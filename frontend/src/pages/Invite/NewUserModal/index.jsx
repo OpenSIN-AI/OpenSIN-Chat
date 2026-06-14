@@ -55,12 +55,12 @@ export default function NewUserModal() {
                   className="block mb-2 text-sm font-medium text-theme-text-primary"
                 >
                   {t("invite.newUser.username")}
-                 </label>
-                 <input
-                   name="username"
-                   type="text"
-                   className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                   placeholder={t("invite.newUser.usernamePlaceholder")}
+                </label>
+                <input
+                  name="username"
+                  type="text"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("invite.newUser.usernamePlaceholder")}
                   minLength={USERNAME_MIN_LENGTH}
                   maxLength={USERNAME_MAX_LENGTH}
                   pattern={USERNAME_PATTERN}
@@ -77,18 +77,22 @@ export default function NewUserModal() {
                   className="block mb-2 text-sm font-medium text-theme-text-primary"
                 >
                   {t("invite.newUser.password")}
-                 </label>
-                 <input
-                   name="password"
-                   type="password"
-                   className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                   placeholder={t("invite.newUser.passwordPlaceholder")}
+                </label>
+                <input
+                  name="password"
+                  type="password"
+                  className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("invite.newUser.passwordPlaceholder")}
                   required={true}
                   minLength={8}
                   autoComplete="off"
                 />
               </div>
-              {error && <p className="text-red-400 text-sm">{t("invite.newUser.error", { error })}</p>}
+              {error && (
+                <p className="text-red-400 text-sm">
+                  {t("invite.newUser.error", { error })}
+                </p>
+              )}
               <p className="text-theme-text-secondary text-xs md:text-sm">
                 {t("invite.newUser.afterCreateHint")}
               </p>

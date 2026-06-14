@@ -13,7 +13,9 @@ export default function AzureAiOptions({ settings }: any) {
             type="url"
             name="AzureOpenAiEndpoint"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.azureAiEmbedding.serviceEndpointPlaceholder")}
+            placeholder={t(
+              "providerSettings.azureAiEmbedding.serviceEndpointPlaceholder",
+            )}
             defaultValue={settings?.AzureOpenAiEndpoint}
             required={true}
             autoComplete="off"
@@ -29,7 +31,9 @@ export default function AzureAiOptions({ settings }: any) {
             type="password"
             name="AzureOpenAiKey"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.azureAiEmbedding.apiKeyPlaceholder")}
+            placeholder={t(
+              "providerSettings.azureAiEmbedding.apiKeyPlaceholder",
+            )}
             defaultValue={settings?.AzureOpenAiKey ? "*".repeat(20) : ""}
             required={true}
             autoComplete="off"
@@ -45,7 +49,9 @@ export default function AzureAiOptions({ settings }: any) {
             type="text"
             name="AzureOpenAiEmbeddingModelPref"
             className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-            placeholder={t("providerSettings.azureAiEmbedding.embeddingDeploymentNamePlaceholder")}
+            placeholder={t(
+              "providerSettings.azureAiEmbedding.embeddingDeploymentNamePlaceholder",
+            )}
             defaultValue={settings?.AzureOpenAiEmbeddingModelPref}
             required={true}
             autoComplete="off"

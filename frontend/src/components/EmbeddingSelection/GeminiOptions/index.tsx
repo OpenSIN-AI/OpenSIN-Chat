@@ -24,7 +24,9 @@ export default function GeminiOptions({ settings }: any) {
               type="password"
               name="GeminiEmbeddingApiKey"
               className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-              placeholder={t("providerSettings.geminiEmbedding.apiKeyPlaceholder")}
+              placeholder={t(
+                "providerSettings.geminiEmbedding.apiKeyPlaceholder",
+              )}
               defaultValue={
                 settings?.GeminiEmbeddingApiKey ? "*".repeat(20) : ""
               }
@@ -42,7 +44,9 @@ export default function GeminiOptions({ settings }: any) {
               required={true}
               className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
             >
-              <optgroup label={t("providerSettings.geminiEmbedding.availableModels")}>
+              <optgroup
+                label={t("providerSettings.geminiEmbedding.availableModels")}
+              >
                 {(DEFAULT_MODELS as any).map((model) => {
                   return (
                     <option
@@ -79,14 +83,17 @@ export default function GeminiOptions({ settings }: any) {
           >
             {t("providerSettings.geminiEmbedding.outputDimensionsTooltip")}
             <br />
-            <br /> {t("providerSettings.geminiEmbedding.outputDimensionsTooltip2")}
+            <br />{" "}
+            {t("providerSettings.geminiEmbedding.outputDimensionsTooltip2")}
           </Tooltip>
         </div>
         <input
           type="number"
           name="EmbeddingOutputDimensions"
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-          placeholder={t("providerSettings.geminiEmbedding.outputDimensionsPlaceholder")}
+          placeholder={t(
+            "providerSettings.geminiEmbedding.outputDimensionsPlaceholder",
+          )}
           min={1}
           onScroll={(e) => (e.target as HTMLElement).blur()}
           defaultValue={settings?.EmbeddingOutputDimensions}

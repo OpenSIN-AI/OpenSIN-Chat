@@ -8,7 +8,6 @@ import useDocument from "@/hooks/useDocument";
 import useDocumentProcessorOnline from "@/hooks/useDocumentProcessorOnline";
 import showToast from "@/utils/toast";
 import FileUploadWarningModal from "./FileUploadWarningModal";
-import pluralize from "pluralize";
 import { useTranslation } from "react-i18next";
 
 export const DndUploaderContext = createContext<any>(undefined);
@@ -457,9 +456,12 @@ export default function DnDFileUploaderWrapper({ children }: any) {
               height={69}
               alt={t("dndWrapper.dragAndDropIcon")}
             />
-            <p className="text-white text-[24px] font-semibold">{t("dndWrapper.addAnything")}</p>
+            <p className="text-white text-[24px] font-semibold">
+              {t("dndWrapper.addAnything")}
+            </p>
             <p className="text-white text-[16px] text-center">
-              {t("dndWrapper.dropFileOrImage")}<br />
+              {t("dndWrapper.dropFileOrImage")}
+              <br />
               {t("dndWrapper.workspaceAutoMagically")}
             </p>
           </div>

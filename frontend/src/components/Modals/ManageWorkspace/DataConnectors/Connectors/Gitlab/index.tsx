@@ -29,11 +29,10 @@ export default function GitlabOptions() {
 
     try {
       setLoading(true);
-        showToast(
-          t("connectors.gitlab.fetchingFiles"),
-          "info",
-        { clear: true, autoClose: false },
-      );
+      showToast(t("connectors.gitlab.fetchingFiles"), "info", {
+        clear: true,
+        autoClose: false,
+      });
       const { data, error } = await System.dataConnectors.gitlab.collect({
         repo: form.get("repo"),
         accessToken: form.get("accessToken"),
@@ -191,7 +190,9 @@ export default function GitlabOptions() {
               disabled={loading}
               className="mt-2 w-full justify-center border-none px-4 py-2 rounded-lg text-dark-text light:text-white text-sm font-bold items-center flex gap-x-2 bg-theme-home-button-primary hover:bg-theme-home-button-primary-hover disabled:bg-theme-home-button-primary-hover disabled:cursor-not-allowed"
             >
-              {loading ? t("connectors.gitlab.collectingFiles") : t("common.submit")}
+              {loading
+                ? t("connectors.gitlab.collectingFiles")
+                : t("common.submit")}
             </button>
             {loading && (
               <p className="text-xs text-white/50">

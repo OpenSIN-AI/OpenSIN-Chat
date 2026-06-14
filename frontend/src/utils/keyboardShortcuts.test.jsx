@@ -37,7 +37,9 @@ describe("keyboardShortcuts", () => {
     const cleanup = initKeyboardShortcuts();
     const handler = vi.fn();
     window.addEventListener("keyboard-shortcuts-help", handler);
-    window.dispatchEvent(new KeyboardEvent("keydown", { key: "z", metaKey: true }));
+    window.dispatchEvent(
+      new KeyboardEvent("keydown", { key: "z", metaKey: true }),
+    );
     expect(handler).not.toHaveBeenCalled();
     window.removeEventListener("keyboard-shortcuts-help", handler);
     cleanup();
@@ -60,6 +62,8 @@ describe("keyboardShortcuts", () => {
         <div data-testid="child">child</div>
       </KeyboardShortcutWrapper>,
     );
-    expect(container.querySelector('[data-testid="child"]')).toBeInTheDocument();
+    expect(
+      container.querySelector('[data-testid="child"]'),
+    ).toBeInTheDocument();
   });
 });

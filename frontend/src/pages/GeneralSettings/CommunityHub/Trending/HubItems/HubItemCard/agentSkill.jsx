@@ -31,7 +31,11 @@ export default function AgentSkillHubCard({ item }) {
           </p>
           <p className="font-mono text-xs mt-1 text-white/60">
             {item.manifest.files?.length || 0}{" "}
-            {pluralize(t("communityHub.trending.agentSkill.file"), item.manifest.files?.length || 0)} {t("communityHub.trending.agentSkill.found")}
+            {pluralize(
+              t("communityHub.trending.agentSkill.file"),
+              item.manifest.files?.length || 0,
+            )}{" "}
+            {t("communityHub.trending.agentSkill.found")}
           </p>
         </div>
         <div className="flex justify-end mt-2">

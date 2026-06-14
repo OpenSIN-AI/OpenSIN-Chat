@@ -39,8 +39,13 @@ const PromptReply: any = ({
       <div className="flex justify-start w-full">
         <div className="py-4 pl-0 pr-4 flex flex-col md:max-w-[80%]">
           <span className="inline-block p-2 rounded-lg bg-red-50 text-red-500">
-            <Warning className="h-4 w-4 mb-1 inline-block" /> {t("promptReply.couldNotRespond")}
-            <span className="text-xs">{t("promptReply.reason", { reason: error || t("promptReply.unknown") })}</span>
+            <Warning className="h-4 w-4 mb-1 inline-block" />{" "}
+            {t("promptReply.couldNotRespond")}
+            <span className="text-xs">
+              {t("promptReply.reason", {
+                reason: error || t("promptReply.unknown"),
+              })}
+            </span>
           </span>
         </div>
       </div>

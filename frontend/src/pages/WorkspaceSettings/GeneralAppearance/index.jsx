@@ -31,7 +31,9 @@ export default function GeneralInfo({ slug, deletionProtected = false }) {
       showToast(t("common.workspaceUpdated"), "success", { clear: true });
       refresh();
     } else {
-      showToast(t("common.error", { error: message }), "error", { clear: true });
+      showToast(t("common.error", { error: message }), "error", {
+        clear: true,
+      });
     }
     setSaving(false);
     setHasChanges(false);

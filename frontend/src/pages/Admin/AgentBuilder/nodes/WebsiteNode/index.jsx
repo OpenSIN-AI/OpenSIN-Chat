@@ -11,7 +11,9 @@ export default function WebsiteNode({
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-white mb-2">{t("agentBuilder.websiteNode.url")}</label>
+        <label className="block text-sm font-medium text-white mb-2">
+          {t("agentBuilder.websiteNode.url")}
+        </label>
         <input
           type="text"
           placeholder={t("agentBuilder.websiteNode.urlPlaceholder")}

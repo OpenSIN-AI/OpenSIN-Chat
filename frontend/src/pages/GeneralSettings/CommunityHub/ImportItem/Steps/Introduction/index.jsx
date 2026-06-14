@@ -10,7 +10,8 @@ export default function Introduction({ settings, setSettings, setStep }) {
   const { t } = useTranslation();
   const [itemId, setItemId] = useState(settings.itemId);
   const handleContinue = () => {
-    if (!itemId) return showToast(t("communityHub.import.intro.itemIdRequired"), "error");
+    if (!itemId)
+      return showToast(t("communityHub.import.intro.itemIdRequired"), "error");
     setSettings((prev) => ({ ...prev, itemId }));
     setStep(CommunityHubImportItemSteps.itemId.next());
   };
@@ -23,14 +24,14 @@ export default function Introduction({ settings, setSettings, setStep }) {
             {t("communityHub.import.intro.title")}
           </h2>
           <div className="flex flex-col gap-y-[25px] text-theme-text-secondary text-sm">
+            <p>{t("communityHub.import.intro.description1")}</p>
+            <p>{t("communityHub.import.intro.description2")}</p>
             <p>
-              {t("communityHub.import.intro.description1")}
-            </p>
-            <p>
-              {t("communityHub.import.intro.description2")}
-            </p>
-            <p>
-              {t("communityHub.import.intro.description3Part1")}<b>{t("communityHub.import.intro.private")}</b>{t("communityHub.import.intro.description3Part2")}<b>{t("communityHub.import.intro.public")}</b>{t("communityHub.import.intro.description3Part3")}
+              {t("communityHub.import.intro.description3Part1")}
+              <b>{t("communityHub.import.intro.private")}</b>
+              {t("communityHub.import.intro.description3Part2")}
+              <b>{t("communityHub.import.intro.public")}</b>
+              {t("communityHub.import.intro.description3Part3")}
             </p>
 
             <p className="p-4 bg-yellow-800/30 light:bg-orange-100 light:text-orange-500 light:border-orange-500 rounded-lg border border-yellow-500 text-yellow-500">

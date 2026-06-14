@@ -57,9 +57,7 @@ export default function PullAndReview({ settings, setSettings, setStep }) {
           {!loading && error && (
             <>
               <div className="flex flex-col gap-y-2 mt-8">
-                <p className="text-red-500">
-                  {t("pullAndReview.error")}
-                </p>
+                <p className="text-red-500">{t("pullAndReview.error")}</p>
                 <p className="text-red-500/80 text-sm font-mono">{error}</p>
               </div>
               <CTAButton

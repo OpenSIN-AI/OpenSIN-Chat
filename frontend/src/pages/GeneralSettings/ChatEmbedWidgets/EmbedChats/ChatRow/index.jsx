@@ -28,10 +28,7 @@ export default function ChatRow({ chat, onDelete }) {
   } = useModal();
 
   const handleDelete = async () => {
-    if (
-      !window.confirm(t("embedChats.chatRow.deleteConfirm"))
-    )
-      return false;
+    if (!window.confirm(t("embedChats.chatRow.deleteConfirm"))) return false;
     await Embed.deleteChat(chat.id);
     onDelete(chat.id);
   };
@@ -75,9 +72,9 @@ export default function ChatRow({ chat, onDelete }) {
             onClick={handleDelete}
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-delete-hover-bg"
           >
-              <span className="group-hover:text-theme-button-delete-hover-text">
-                {t("embedChats.chatRow.delete")}
-              </span>
+            <span className="group-hover:text-theme-button-delete-hover-text">
+              {t("embedChats.chatRow.delete")}
+            </span>
           </button>
         </td>
       </tr>
@@ -111,11 +108,14 @@ export default function ChatRow({ chat, onDelete }) {
 }
 
 const TextPreview = ({ text, closeModal }) => {
+  const { t } = useTranslation();
   return (
     <div className="relative w-full md:max-w-2xl max-h-full">
       <div className="w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border overflow-hidden">
         <div className="flex items-center justify-between p-6 border-b rounded-t border-theme-modal-border">
-          <h3 className="text-xl font-semibold text-white">{t("embedChats.chatRow.viewingText")}</h3>
+          <h3 className="text-xl font-semibold text-white">
+            {t("embedChats.chatRow.viewingText")}
+          </h3>
           <button
             onClick={closeModal}
             type="button"
@@ -139,29 +139,30 @@ const ConnectionDetails = ({
   verbose = false,
   connection_information,
 }) => {
+  const { t } = useTranslation();
   const details = safeJsonParse(connection_information, {});
   if (Object.keys(details).length === 0) return null;
 
   if (verbose) {
     return (
       <>
+        <p className="text-xs text-theme-text-secondary">
+          {t("embedChats.chatRow.sessionId")}: {sessionId}
+        </p>
+        {details.username && (
           <p className="text-xs text-theme-text-secondary">
-            {t("embedChats.chatRow.sessionId")}: {sessionId}
+            {t("embedChats.chatRow.username")}: {details.username}
           </p>
-          {details.username && (
-            <p className="text-xs text-theme-text-secondary">
-              {t("embedChats.chatRow.username")}: {details.username}
-            </p>
-          )}
-          {details.ip && (
-            <p className="text-xs text-theme-text-secondary">
-              {t("embedChats.chatRow.clientIp")}: {details.ip}
-            </p>
-          )}
-          {details.host && (
-            <p className="text-xs text-theme-text-secondary">
-              {t("embedChats.chatRow.clientHost")}: {details.host}
-            </p>
+        )}
+        {details.ip && (
+          <p className="text-xs text-theme-text-secondary">
+            {t("embedChats.chatRow.clientIp")}: {details.ip}
+          </p>
+        )}
+        {details.host && (
+          <p className="text-xs text-theme-text-secondary">
+            {t("embedChats.chatRow.clientHost")}: {details.host}
+          </p>
         )}
       </>
     );
