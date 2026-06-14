@@ -25,7 +25,7 @@ Chatte mit deinen Dokumenten. Automatisiere Recherche. Multi-User, selbst gehost
 
 ## 🎯 Was ist OpenSIN Chat?
 
-OpenSIN Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, Recherche und Wissensmanagement. Sie wurde auf Basis von [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) (MIT) als souveräne, markenfreie Variante für den deutschsprachigen politischen Raum weiterentwickelt.
+OpenSIN Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, Recherche und Wissensmanagement. Sie wurde auf Basis von [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) (MIT) als souveräne, eigenständige Variante unter dem [OpenSIN-AI](https://github.com/OpenSIN-AI)-Brand für den deutschsprachigen politischen Raum weiterentwickelt.
 
 **Im Kern:** Du lädst deine Dokumente hoch (Bundestags-Drucksachen, Pressemitteilungen, Gesetzesentwürfe, interne Papiere) — und die KI beantwortet Fragen **nur aus diesen Quellen**, mit nachvollziehbaren Zitaten. Keine Halluzinationen aus dem Nichts, keine Cloud-Pflicht, keine Telemetrie.
 
@@ -40,20 +40,23 @@ OpenSIN Chat ist eine **selbstgehostete KI-Plattform** für politische Arbeit, R
 - 🔌 **MCP-Kompatibilität** — binde beliebige externe Tools ein
 - 👥 **Multi-User** — Berechtigungen, Workspaces, Audit-Logs (Docker-Version)
 - 🌐 **Mehrsprachig** — Deutsch, Englisch, weitere Sprachen
-- 🇩🇪 **AfD-Branding** — blaues Farbschema, eigene Logo-Platzhalter, deutschsprachiger System-Prompt
+- 🎨 **OpenSIN-AI-Branding** — Brand-Blau `#009ee0`, eigene Logo-Platzhalter, deutschsprachiger System-Prompt
 - 🚫 **Keine Telemetrie** — Null Datenverkehr zu Dritten (kein PostHog, kein CDN-Tracking)
 
-### AfD-spezifisch (neu in OpenSIN Chat)
+### OpenSIN-AI-spezifisch (neu in OpenSIN Chat)
 
 - 🏛 **Politiker-Datenbank** — Bundestag-API + Abgeordnetenwatch als strukturierte Quellen (Stammdaten, Mandate, Votes, Reden) — direkt abfragbar, kein Crawling nötig
 - 📜 **Plenarprotokoll-Suche** — semantische Volltextsuche über Bundestags-Reden mit Vektor-Index (LanceDB); Antworten mit Rede-Kontext und Quellenverweis
 - 🔍 **Deep-Research-Pipeline** — automatisierte Web-Recherche (Search → Extract → Summarize) mit Quellen-Tracking; asynchron via Job-IDs, polling-fähig
-- 📄 **AfD-PDF-Reports** — gebrandete Berichte (Cover, Header, Footer in AfD-Blau `#009ee0`) mit Inhaltsverzeichnis, Quellenliste und Politiker-Bezügen — direkt aus Research-Jobs generierbar
-- 🤖 **4 Agent-Plugins** — `@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator` — direkt im Chat-Workflow aufrufbar (Slash-Commands / Agent-Skill-Whitelist)
+- 📄 **OpenSIN-PDF-Reports** — gebrandete Berichte (Cover, Header, Footer in Brand-Blau `#009ee0`) mit Inhaltsverzeichnis, Quellenliste und Politiker-Bezügen — direkt aus Research-Jobs generierbar
+- 🤖 **Agent-Plugins** — `@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`, `@pdf-analyze`, `@browser-vision`, `@image-generation`, `@create-files` — direkt im Chat-Workflow aufrufbar (Slash-Commands / Agent-Skill-Whitelist)
+- 🧪 **Umfassende Testabdeckung** — 1.335+ Frontend-Tests, 1.756+ Server-Tests, 500+ Integrationstests; Vitest-Coverage-Thresholds bei 20 % und steigend
+- ⚡ **CI-Optimierung** — Vitest-Tests in 6 parallele Shards aufgeteilt, Jest mit `--experimental-vm-modules`, zentraler `getStoragePath()`-Helper
+- 🔄 **SWR-Datenlayer** — Migration manueller `useEffect`-Fetches zu SWR-Hooks für bessere Caching- und Ladeverhalten
 
-## 🇩🇪 AfD-spezifische Features im Detail
+## 🇩🇪 OpenSIN-AI-spezifische Features im Detail
 
-OpenSIN Chat erweitert AnythingLLM um vier politisch zugeschnittene Module. Sie sind als eigenständige Server-Utilities unter `server/utils/` implementiert und über geschützte REST-Endpunkte (`validApiKey`-Middleware) ansprechbar.
+OpenSIN Chat erweitert AnythingLLM um politisch zugeschnittene Module. Sie sind als eigenständige Server-Utilities unter `server/utils/` implementiert und über geschützte REST-Endpunkte (`validApiKey`-Middleware) ansprechbar.
 
 ### 🏛 Modul 1 — Politiker-Datenbank
 
@@ -130,15 +133,15 @@ GET  /api/research/:id/result  ← Vollständige Ergebnisse (Summary + Quellen +
 
 ---
 
-### 📄 Modul 3 — AfD-PDF-Reports
+### 📄 Modul 3 — OpenSIN-PDF-Reports
 
 **Code:** [`server/utils/reports/`](./server/utils/reports/)
 
-Generiert aus Research-Ergebnissen oder manuellen Daten ein druckfertiges PDF im AfD-Corporate-Design.
+Generiert aus Research-Ergebnissen oder manuellen Daten ein druckfertiges PDF im OpenSIN-Corporate-Design.
 
 | Datei | Aufgabe |
 |---|---|
-| `index.js` | `ReportGenerator` Klasse (PDFKit-basiert) mit Cover-Page, Inhaltsverzeichnis, mehreren Inhalts-Sektionen, Quellenliste, Header/Footer in AfD-Blau |
+| `index.js` | `ReportGenerator` Klasse (PDFKit-basiert) mit Cover-Page, Inhaltsverzeichnis, mehreren Inhalts-Sektionen, Quellenliste, Header/Footer in OpenSIN-Blau |
 
 **REST-Endpoints:** `/api/reports/*`
 
@@ -150,7 +153,7 @@ GET  /api/reports/:fileName  ← Download
 
 **Design-Tokens:**
 
-- Primärfarbe: `#009ee0` (AfD-Blau) — Header, Footer, Akzente
+- Primärfarbe: `#009ee0` (OpenSIN-Blau) — Header, Footer, Akzente
 - Schrift: DejaVu Sans (vollständiger UTF-8- und Umlaut-Support)
 - Layout: A4, 25 mm Margins, automatisches Inhaltsverzeichnis
 - Output: `server/storage/generated-reports/*.pdf`
@@ -164,11 +167,11 @@ GET  /api/reports/:fileName  ← Download
 
 ---
 
-### 🤖 Modul 4 — Agent-Plugins (4 Stück)
+### 🤖 Modul 4 — Agent-Plugins
 
 **Code:** [`server/utils/agents/`](./server/utils/agents/) und [`server/utils/agentFlows/`](./server/utils/agentFlows/) (Flow-Ausführung), [`server/utils/orchestrator/`](./server/utils/orchestrator/) (Workflow-Engine)
 
-Die vier Plugins sind die **Schnittstelle zwischen Chat und den drei Modulen oben**. Sie werden im Agent-Framework registriert und sind in jedem Workspace-Chat als Slash-Command verfügbar.
+Die Agent-Plugins sind die **Schnittstelle zwischen Chat und den Modulen oben**. Sie werden im Agent-Framework registriert und sind in jedem Workspace-Chat als Slash-Command verfügbar.
 
 | Plugin | Zweck | Ruft auf |
 |---|---|---|
@@ -176,6 +179,10 @@ Die vier Plugins sind die **Schnittstelle zwischen Chat und den drei Modulen obe
 | `@deep-research` | Startet eine asynchrone Research-Pipeline | Modul 2 (Research) |
 | `@generate-report` | Erzeugt PDF aus Research-Job | Modul 3 (Reports) |
 | `@orchestrator` | Verkettet mehrere Agents zu einem Workflow (z. B. Search → Research → Report) | Module 1–3 + Agent-Flows |
+| `@pdf-analyze` | Analysiert PDF-Dokumente mit KI | PDF-Analyse-Pipeline |
+| `@browser-vision` | Lässt Agenten Webseiten visuell analysieren | Browser-Tool |
+| `@image-generation` | Erzeugt Bilder via konfigurierten Provider | Image-Generation-API |
+| `@create-files` | Erstellt Dateien (DOCX, PDF) aus Chat heraus | Datei-Generator |
 
 **REST-Endpoints:** `/api/orchestrator/*`
 
@@ -211,7 +218,7 @@ GET  /api/orchestrator/:id/result
               │              │              │
               ▼              ▼              ▼
         Bundestag-API   SerpAPI/        PDFKit
-        Abgeordneten-   Readability/    AfD-Blau
+        Abgeordneten-   Readability/    OpenSIN-Blau
         watch-API       LLM             #009ee0
 ```
 
@@ -227,10 +234,11 @@ GET  /api/orchestrator/:id/result
 git clone https://github.com/OpenSIN-AI/OpenSIN-Chat.git
 cd OpenSIN-Chat/docker
 cp .env.example .env
+# Optional: .env anpassen (SERVER_PORT, JWT_SECRET, SIG_KEY/SIG_SALT, LLM-Keys)
 docker compose up -d
 ```
 
-Dann `http://localhost:3001` öffnen.
+Der Container mapped den Host-Port `38471` auf den internen Server-Port `3001`. Öffne danach `http://localhost:38471`.
 
 ### Bare-Metal / Development
 
@@ -251,7 +259,7 @@ flowchart TB
 
     subgraph Mac["🍎 Mac (Produktions-Host)"]
         Cloudflared["cloudflared<br/>(Tunnel-Client)<br/>PID 53989"]
-        Express["Express-Server<br/>server/index.js :3001<br/>x-powered-by: Express"]
+        Express["Express-Server<br/>server/index.js :3001 (extern :38471)<br/>x-powered-by: Express"]
         Collector["Collector<br/>:8888<br/>(Document-Parsing, OCR)"]
         Frontend["frontend/dist/<br/>(statische Files<br/>nach server/public/ kopiert)"]
     end
@@ -264,7 +272,7 @@ flowchart TB
     User -->|HTTPS| DNS
     DNS --> Tunnel
     Tunnel <-->|Outbound-Tunnel<br/>kein offener Port!| Cloudflared
-    Cloudflared -->|localhost:3001| Express
+    Cloudflared -->|localhost:38471| Express
     Express -->|"/api/*"| Express
     Express -->|"/"| IndexPage["IndexPage.generate()<br/>(HTML serverseitig)"]
     Express -->|"express.static()"| Frontend
@@ -287,7 +295,7 @@ flowchart TB
 | 1. Browser | Welt | HTTPS-Request auf `https://opensin.delqhi.com` |
 | 2. Cloudflare DNS | Cloudflare-Edge | Löst Domain zu Tunnel-Broker auf (`cf-ray`, `cf-cache-status` Header) |
 | 3. `cloudflared` | **Dein Mac** (PID 53989) | Outbound-Tunnel zurück zum Cloudflare-Broker — **kein offener Port nötig!** |
-| 4. Express | **Dein Mac** (`:3001`) | Single-Process: rendert HTML, liefert API, serviert Static |
+| 4. Express | **Dein Mac** (`:3001` / extern `:38471`) | Single-Process: rendert HTML, liefert API, serviert Static |
 | 5. Frontend-Bundle | `server/public/` | Output von `cd frontend && yarn build`, vor Server-Start kopiert |
 | 6. Collector | **Dein Mac** (`:8888`) | Separater Prozess für PDF-Parsing, OCR, Document-Ingestion |
 | 7. Persistenz | `server/storage/` | SQLite + Vektor-Indizes + User-Uploads (alles lokal) |
@@ -303,13 +311,14 @@ OpenSIN-Chat/
 │   └── utils/
 │       ├── politician/   # 🆕 Modul 1 — Politiker-DB (Bundestag + Abgeordnetenwatch)
 │       ├── research/     # 🆕 Modul 2 — Deep-Research-Pipeline
-│       ├── reports/      # 🆕 Modul 3 — AfD-PDF-Reports
+│       ├── reports/      # 🆕 Modul 3 — OpenSIN-PDF-Reports
 │       ├── orchestrator/ # 🆕 Modul 4a — Workflow-Engine für Agent-Plugins
 │       ├── agents/       # 🆕 Modul 4b — Agent-Definitionen (@politician-search, …)
 │       └── agentFlows/   # 🆕 Modul 4c — Agent-Flow-Ausführung
 ├── collector/     # Node.js Express (Document-Parsing, OCR)
 ├── docker/        # Dockerfiles, docker-compose (für Self-Hosting)
 ├── cloud-deployments/   # AWS, GCP, DigitalOcean, K8s, Helm (für Cloud-Self-Hosting)
+├── tests/         # Vitest-Integrationstests für Server-Endpunkte
 ├── docs/          # Doku
 └── .cloudflared/  # (lokal, nicht im Repo) cloudflared-Config für opensin.delqhi.com-Tunnel
 ```
@@ -350,15 +359,16 @@ Ohne die hervorragende Arbeit von **Timothy Carambat** und dem gesamten Mintplex
 
 **Was OpenSIN Chat draufsetzt:**
 
-- Komplettes Rebranding (AfD-Blau, deutsche Sprache, eigenes Logo)
+- Komplettes Rebranding (OpenSIN-Blau, deutsche Sprache, eigenes Logo)
 - Telemetrie **komplett** entfernt (statt nur abschaltbar)
 - DSGVO-affine Defaults (kein Phone-Home, kein CDN-Tracking)
 - Branding-Strategie auf einen deutschsprachigen politischen Use-Case
 - 🆕 **Politiker-Datenbank** mit Anbindung an Bundestag-API und Abgeordnetenwatch inkl. semantischer Plenarprotokoll-Suche (Modul 1)
 - 🆕 **Deep-Research-Pipeline** für automatisierte Web-Recherche mit Quellen-Tracking (Modul 2)
-- 🆕 **AfD-PDF-Reports** — gebrandete, druckfertige Berichte aus Research-Jobs (Modul 3)
-- 🆕 **4 Agent-Plugins** (`@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`) — direkter Zugriff auf die Module aus dem Chat-Workflow (Modul 4)
+- 🆕 **OpenSIN-PDF-Reports** — gebrandete, druckfertige Berichte aus Research-Jobs (Modul 3)
+- 🆕 **Agent-Plugins** (`@politician-search`, `@deep-research`, `@generate-report`, `@orchestrator`, `@pdf-analyze`, `@browser-vision`, `@image-generation`, `@create-files`) — direkter Zugriff auf die Module aus dem Chat-Workflow (Modul 4)
 - 🆕 **REST-API** unter `/api/politician/*`, `/api/research/*`, `/api/reports/*`, `/api/orchestrator/*` — alle Module sind auch programmatisch nutzbar
+- 🆕 **Test- & CI-Infrastruktur** — Frontend-Sharding, Server-Jest mit VM-Modules, zentraler `getStoragePath()`-Helper
 
 **Upstream synchronisieren:** Wir empfehlen, das Original-Repo als Git-Remote hinzuzufügen, um Sicherheits-Patches mitzuziehen:
 
@@ -372,18 +382,17 @@ Eine vollständige Liste aller Drittanbieter-Komponenten findest du in [`THIRD-P
 ## Deployment
 
 Die Live-Site läuft als Docker-Container auf einem lokalen Mac, erreichbar über
-Cloudflare Tunnel (`opensin.delqhi.com` → Cloudflare → cloudflared → localhost:3001).
+Cloudflare Tunnel (`opensin.delqhi.com` → Cloudflare → cloudflared → localhost:38471).
 
 ### Auto-Deploy
 
-Seit v0.3.0 gibt es ein Auto-Deploy-Skript, das `origin/main` pollt und bei
-Änderung automatisch neu baut. Einrichtung in [`docs/AUTO-DEPLOY.md`](./docs/AUTO-DEPLOY.md).
+Ein Auto-Deploy-Skript pollt `origin/main` und baut bei Änderung automatisch neu. Einrichtung in [`docs/AUTO-DEPLOY.md`](./docs/AUTO-DEPLOY.md).
 
 ### Schnelles Frontend-Update (ohne Image-Rebuild)
 
 ```bash
 cd frontend && npx vite build
-docker cp frontend/dist/. openafd:/app/server/public/
+docker cp frontend/dist/. opensin-chat:/app/server/public/
 ```
 
 Nur nötig bei Dockerfile- oder Dependency-Änderungen:
@@ -394,7 +403,7 @@ cd docker && docker compose build --no-cache && docker compose down && docker co
 ### Wichtige Regeln
 
 - **Immer `--no-cache`** beim Docker-Build, sonst bleibt altes Frontend-Bundle im Image.
-- **Vor jedem Deploy:** `lsof -i :3001 -P -n` prüfen — kein rogue `node`-Prozess darf Port 3001 blockieren.
+- **Vor jedem Deploy:** `lsof -i :38471 -P -n` prüfen — kein rogue `node`-Prozess darf den externen Port blockieren.
 - **Nach Merge-Konflikten:** `rg '<<<<<' frontend/src/` laufen lassen, sonst bricht der Build.
 
 ### Security-Hinweise für Betreiber

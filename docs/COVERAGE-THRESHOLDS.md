@@ -1,57 +1,43 @@
 # Coverage Thresholds — Vitest Strategy
 
-> **Purpose:** Document the rationale behind vitest coverage thresholds, why 40% is not the immediate target, and how `autoUpdate` enforces a continuously-rising bar.
+> **Purpose:** Document the current vitest coverage thresholds and the path to higher coverage.
 >
 > **Docs:** `COVERAGE-THRESHOLDS.doc.md` (this file)
-> **Related:** Issue #63, Issue #83, Issue #85
+> **Related:** Issue #82, Issue #101 (geschlossen), Issue #110 (geschlossen)
 
 ---
 
-## Current State (2026-06-08)
+## Current State (2026-06-14)
 
-| Metric | Current | Target | Path |
-|--------|---------|--------|------|
-| Statements | 13.97% | 40% | Progressive |
-| Branches | 20.91% | 40% | Progressive |
-| Functions | 16.69% | 40% | Progressive |
-| Lines | 14.73% | 40% | Progressive |
+| Metric | Current | Threshold | Status |
+|--------|---------|-----------|--------|
+| Statements | 52.09% | 20% | ✅ |
+| Branches | 52.29% | 20% | ✅ |
+| Functions | 51.36% | 20% | ✅ |
+| Lines | 52.52% | 20% | ✅ |
 
-**Tests:** 204 passing in 57 suites, 74 test files
+**Tests:** 1.335+ passing in 187 frontend test files; 1.756+ passing in 104 server test suites; zusätzliche Vitest-Integrationstests in `tests/`.
 
 ---
 
-## Why 40% is not the immediate target
+## Strategy: Feste Thresholds, keine `autoUpdate`
 
-Issue #63/#83 ask for 40% coverage. However:
+Die Thresholds in `frontend/vitest.config.js` sind auf **20%** gesetzt und `autoUpdate` wurde entfernt. Damit:
 
-1. **Test infrastructure is in place** (74 test files, 204 tests, vitest + jsdom)
-2. **Coverage is a lagging indicator** — adding tests takes weeks
-3. **Many components are integration-heavy** (need full app context to test)
-4. **Auto-update** is the right strategy: enforce floor, raise over time
+- Jeder PR, der die Coverage unter 20% drückt, failt in CI.
+- Neue Tests müssen die 20%-Marke weiterhin erfüllen, aber nicht automatisch neue, höhere Mindestwerte erzwingen.
+- Thresholds werden bewusst per PR angehoben, sobald die Coverage nachhaltig steigt.
 
-## Strategy: Progressive Thresholds + `autoUpdate`
+### Thresholds (in `frontend/vitest.config.js`)
 
-### Thresholds (in `vitest.config.js`)
 ```js
 thresholds: {
-  lines: 2,       // Floor — prevents regression
-  functions: 4,   // SWR hooks have high coverage → higher floor
-  branches: 2,
-  statements: 2,
+  lines: 20,
+  branches: 20,
+  functions: 20,
+  statements: 20,
 }
-autoUpdate: process.env.CI !== "true",  // Only auto-update locally
 ```
-
-### How `autoUpdate` works
-
-- **Locally:** If you add a test and coverage goes UP → thresholds auto-raise
-- **In CI:** Thresholds are enforced strictly (no auto-update)
-- **New tests = higher bar** → continuous improvement
-
-This means:
-1. New PR that adds tests → coverage goes up → threshold rises
-2. New PR that breaks tests → CI fails (threshold not met)
-3. Refactor without test change → no impact (coverage unchanged)
 
 ---
 
@@ -59,16 +45,16 @@ This means:
 
 ```js
 include: [
-  "src/utils/**",                    // Pure functions, easy to test
-  "src/hooks/**",                    // Small, focused, high-value
+  "src/utils/**",                    // Pure functions
+  "src/hooks/**",                    // SWR hooks
   "src/components/**/*.{jsx,tsx}",   // UI components
 ]
 ```
 
 ### Excluded
 - `**/*.test.{js,jsx,ts,tsx}` — test files themselves
-- `**/index.{js,ts}` — Re-exports only (no logic)
-- `**/*.stories.{js,jsx,ts,tsx}` — Storybook (not unit tests)
+- `**/index.{js,ts}` — Re-exports only
+- `**/*.stories.{js,jsx,ts,tsx}` — Storybook
 - `**/node_modules/**` — Vendor code
 
 ### Out of scope (no coverage tracked)
@@ -76,39 +62,25 @@ include: [
 - `src/models/**` — Data models, often just types
 - `src/locales/**` — Translation files
 - `src/media/**` — Static assets
+- CSS-/Theme-Dateien
 
 ---
 
-## Path to 40% (realistic)
+## Path to higher coverage
 
-### Phase 1: Foundation (current, 14-21%)
-- 74 test files, mostly SWR hooks
-- Critical utilities: `numbers.test.ts`, `swrFetcher.test.ts`, `username.test.ts`
-- Critical components: `ChatBubble`, `ModalWrapper`, sidebar components
+### Phase 1: 20%-Thresholds gesichert (aktuell)
+- 187 Frontend-Test-Dateien, 1.335 Tests
+- 104 Server-Test-Suites, 1.756 Tests
+- Alle Metriken liegen deutlich über 20%
 
-### Phase 2: Hooks & Utils (target 30%)
-Add tests for:
-- Remaining SWR hooks (e.g. `useFilesystem`, `useSystemAuth`)
-- Utility functions in `src/utils/`
-- Form validation logic
+### Phase 2: 40% (Issue #82)
+- Weitere Tests für Auth, Workspace-Management, Chat-History, Page-Komponenten
+- SWR-Layer weiter ausbauen
+- Server-Integrationstests in `tests/` stabilisieren
 
-**Effort:** 2-3h, ~20 new test files
-
-### Phase 3: Critical UI (target 40%)
-Add tests for:
-- `Login/Auth` flows
-- `Workspace` create/delete
-- `Chat` send/receive
-- `Agent` execution
-
-**Effort:** 1-2 days, ~30 new test files
-
-### Phase 4: Pages (target 60%+)
-Add tests for:
-- Page components (with mocked providers)
-- Integration tests with `MemoryRouter` + `Provider`
-
-**Effort:** 1-2 weeks, ~50 new test files
+### Phase 3: 60%+
+- Page-Komponenten mit gemockten Providern testen
+- E2E-Tests mit Playwright ausbauen
 
 ---
 
@@ -119,26 +91,23 @@ cd frontend
 
 # Run with coverage report
 npm run test:coverage
-# or
-npx vitest run --coverage
 
 # View HTML report
 open coverage/index.html
 
 # CI mode (strict thresholds)
 CI=true npx vitest run --coverage
-# Will fail if current coverage < thresholds
 ```
 
 ---
 
 ## CI integration
 
-`/home/runner/work/_temp/.github/workflows/ceo-audit.yml` runs `npm run test:coverage` with `CI=true`. This means:
+`.github/workflows/tests.yml` und `.github/workflows/ceo-audit.yml` laufen `npm run test:coverage` mit `CI=true`. Das bedeutet:
 
-1. Any PR that reduces coverage below thresholds → CI fails
-2. PRs adding tests → thresholds rise, future PRs must maintain
-3. Coverage trends visible in artifacts
+1. Jeder PR, der die Coverage unter 20% drückt → CI fails.
+2. Neue Tests müssen die Thresholds einhalten.
+3. Coverage-Trends sind in den Artefakten sichtbar.
 
 ---
 
@@ -147,38 +116,18 @@ CI=true npx vitest run --coverage
 1. **Create test file:** `src/utils/yourFile.test.js`
 2. **Run locally:** `npx vitest run src/utils/yourFile.test.js`
 3. **Run with coverage:** `npx vitest run --coverage src/utils/yourFile.test.js`
-4. **Verify thresholds updated:** `git diff vitest.config.js` (if autoUpdate ran)
-5. **Commit:** `test(frontend): add coverage for yourFile`
-6. **PR:** CI runs, threshold check passes (or fails if regression)
-
----
-
-## Common pitfalls
-
-### 1. Coverage goes DOWN after refactor
-**Cause:** You refactored shared code into a new file that doesn't have tests yet.
-**Fix:** Either:
-- Add tests for the new file
-- Exclude the new file from coverage until tests are written
-- Mark the refactor as breaking and update thresholds via PR review
-
-### 2. Tests pass but coverage check fails
-**Cause:** Tests use mocked code, not the real implementation.
-**Fix:** Use real implementations where possible, mocks only for external dependencies.
-
-### 3. Threshold is unrealistic for new code
-**Cause:** `autoUpdate` only raises thresholds, never lowers.
-**Fix:** Manually update `vitest.config.js` with a comment explaining why.
+4. **Commit:** `test(frontend): add coverage for yourFile`
+5. **PR:** CI runs, threshold check passes
 
 ---
 
 ## Related Issues
 
-- **#63** — Main coverage issue (Test Coverage 40%)
-- **#83** — Parallel issue (created by Agent 3, should be merged with #63)
-- **#85** — Originally created as vitest coverage threshold issue (Agent 3 plan)
+- **#82** — Expand test coverage to 40% (offen)
+- **#101** — 40% coverage target (geschlossen, da >40% erreicht)
+- **#110** — Raise coverage thresholds (geschlossen, thresholds auf 20% gesetzt)
 
 ---
 
-**Last updated:** 2026-06-08
-**Version:** 1.0
+**Last updated:** 2026-06-14
+**Version:** 1.1
