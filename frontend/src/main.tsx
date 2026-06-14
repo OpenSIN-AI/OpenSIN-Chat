@@ -20,7 +20,11 @@ const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
 // DEV-ONLY: Start the MSW mock worker when the PDF mock flag is set.
 // This intercepts /api/pdf-analysis/* requests so the PDF-Analyse page
 // can be fully tested without a running backend.
-if (isDev && localStorage.getItem("anythingllm_pdf_mock") === "true") {
+if (
+  isDev &&
+  (localStorage.getItem("anythingllm_pdf_mock") === "true" ||
+    localStorage.getItem("anythingllm_ws_mock") === "true")
+) {
   const { startMockWorker } = await import("@/mocks/browser");
   await startMockWorker();
 }
