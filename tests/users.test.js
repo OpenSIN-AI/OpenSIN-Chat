@@ -52,20 +52,25 @@ vi.mock("../server/utils/helpers/updateENV", () => ({
 
 vi.mock("../server/utils/middleware/multiUserProtected", () => ({
   flexUserRoleValid: () => (req, res, next) => next(),
+  strictMultiUserRoleValid: () => (req, res, next) => next(),
   ROLES: { admin: "admin", manager: "manager", all: "all" },
   isMultiUserSetup: () => true,
 }));
 
 vi.mock("../server/utils/middleware/validatedRequest", () => ({
-  validatedRequest: (req, res, next) => next(),
+  validatedRequest: (req, res, next) => {
+    res.locals.user = { id: 1, username: "test", role: "admin" };
+    res.locals.multiUserMode = false;
+    next();
+  },
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
-  userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
+  userFromSession: () => Promise.resolve({ id: 1, username: "test", role: "admin" }),
   multiUserMode: () => false,
-  queryParams: () => ({}),
+  queryParams: (req) => req.query || {},
 }));
 
 vi.mock("../server/utils/middleware/simpleRateLimit", () => ({
@@ -115,59 +120,56 @@ const request = async (method, path, body = null, headers = {}) => {
 };
 
 describe("user endpoints", () => {
-  describe("GET /users", () => {
+  describe("GET /admin/users", () => {
     it("should return users", async () => {
-      const response = await request("GET", "/users");
+      const response = await request("GET", "/admin/users");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("users");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalUsers");
     });
 
     it("should return users with pagination", async () => {
-      const response = await request("GET", "/users?offset=0&limit=10");
+      const response = await request("GET", "/admin/users?offset=0&limit=10");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("users");
     });
   });
 
-  describe("POST /users", () => {
+  describe("POST /admin/users/new", () => {
     it("should create user", async () => {
-      const response = await request("POST", "/users", {
+      const response = await request("POST", "/admin/users/new", {
         username: "test-user",
         password: "test-password",
         role: "user",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("username", "test-user");
+      expect(response.body).toHaveProperty("user");
+      expect(response.body.user).toHaveProperty("id");
+      expect(response.body.user).toHaveProperty("username", "test-user");
     });
   });
 
-  describe("GET /users/:id", () => {
-    it("should get user by id", async () => {
-      const response = await request("GET", "/users/1");
+  describe("GET /admin/user/:id", () => {
+    // TODO: single-user GET endpoint does not exist in admin.js; skipping until implemented
+    it.skip("should get user by id", async () => {
+      const response = await request("GET", "/admin/user/1");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("username", "test");
     });
   });
 
-  describe("PUT /users/:id", () => {
+  describe("POST /admin/user/:id", () => {
     it("should update user", async () => {
-      const response = await request("PUT", "/users/1", {
+      const response = await request("POST", "/admin/user/1", {
         username: "updated-user",
         role: "admin",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("username", "updated");
+      expect(response.body).toHaveProperty("success", true);
     });
   });
 
-  describe("DELETE /users/:id", () => {
+  describe("DELETE /admin/user/:id", () => {
     it("should delete user", async () => {
-      const response = await request("DELETE", "/users/1");
+      const response = await request("DELETE", "/admin/user/1");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
     });

@@ -20,14 +20,6 @@ vi.mock("../server/models/systemSettings", () => ({
   },
 }));
 
-vi.mock("../server/models/user", () => ({
-  User: {
-    _get: vi.fn(() => Promise.resolve(null)),
-    filterFields: vi.fn((user) => user),
-    create: vi.fn(() => Promise.resolve({ id: 1, username: "test" })),
-  },
-}));
-
 vi.mock("../server/models/eventLogs", () => ({
   EventLogs: {
     logEvent: vi.fn(() => Promise.resolve()),
@@ -46,6 +38,7 @@ vi.mock("../server/utils/helpers/updateENV", () => ({
 
 vi.mock("../server/utils/middleware/multiUserProtected", () => ({
   flexUserRoleValid: () => (req, res, next) => next(),
+  strictMultiUserRoleValid: () => (req, res, next) => next(),
   ROLES: { admin: "admin", manager: "manager", all: "all" },
   isMultiUserSetup: () => true,
 }));
@@ -55,7 +48,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -109,72 +102,65 @@ const request = async (method, path, body = null, headers = {}) => {
 };
 
 describe("invite endpoints", () => {
-  describe("POST /invite", () => {
-    it("should create invite", async () => {
-      const response = await request("POST", "/invite", {
-        email: "test@example.com",
-        role: "user",
-      });
+  describe("GET /invite/:code", () => {
+    it("should return invite status by code", async () => {
+      const response = await request("GET", "/invite/invite-code");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("email", "test@example.com");
-    });
-
-    it("should create invite with all parameters", async () => {
-      const response = await request("POST", "/invite", {
-        email: "test@example.com",
-        role: "user",
-        expiresIn: 7,
-        message: "Test invite message",
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("email", "test@example.com");
+      expect(response.body).toHaveProperty("invite");
+      expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("GET /invite", () => {
-    it("should return invites", async () => {
+  describe("POST /invite/:code", () => {
+    it("should accept invite with username and password", async () => {
+      const response = await request("POST", "/invite/invite-code", {
+        username: "newuser",
+        password: "password123",
+      });
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success");
+      expect(response.body).toHaveProperty("error");
+    });
+  });
+
+  describe("POST /invite (legacy invite creation)", () => {
+    it.skip("TODO: Invite creation endpoint does not exist in server/endpoints/invite.js", async () => {
+      const response = await request("POST", "/invite", {
+        email: "test@example.com",
+        role: "user",
+      });
+      expect(response.status).toBe(200);
+    });
+  });
+
+  describe("GET /invite list", () => {
+    it.skip("TODO: Invite listing endpoint does not exist in server/endpoints/invite.js", async () => {
       const response = await request("GET", "/invite");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("invites");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalInvites");
-    });
-
-    it("should return invites with pagination", async () => {
-      const response = await request("GET", "/invite?offset=0&limit=10");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("invites");
     });
   });
 
   describe("GET /invite/:id", () => {
-    it("should get invite by id", async () => {
+    it.skip("TODO: Invite by id endpoint does not exist in server/endpoints/invite.js", async () => {
       const response = await request("GET", "/invite/1");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("email", "test@example.com");
     });
   });
 
   describe("PUT /invite/:id", () => {
-    it("should update invite", async () => {
+    it.skip("TODO: Invite update endpoint does not exist in server/endpoints/invite.js", async () => {
       const response = await request("PUT", "/invite/1", {
         email: "updated@example.com",
         role: "admin",
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("email", "updated@example.com");
     });
   });
 
   describe("DELETE /invite/:id", () => {
-    it("should delete invite", async () => {
+    it.skip("TODO: Invite delete endpoint does not exist in server/endpoints/invite.js", async () => {
       const response = await request("DELETE", "/invite/1");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("success", true);
     });
   });
 });

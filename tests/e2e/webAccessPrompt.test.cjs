@@ -6,12 +6,30 @@
 // prefix (workspace prompt teaches it so), and the @agent flow itself must
 // remain functional.
 //
-// Run inside the OpenSIN container (where the running server + Prisma live):
+// Run locally (the Prisma client path is resolved automatically):
+//   node tests/e2e/webAccessPrompt.test.cjs
+//
+// Or run inside the OpenSIN container (legacy path):
 //   docker cp tests/e2e/webAccessPrompt.test.cjs openafd:/tmp/test.cjs
 //   docker exec openafd sh -c 'cd /app/server && node /tmp/test.cjs'
 
 const http = require("http");
-const { PrismaClient } = require("/app/server/node_modules/@prisma/client");
+const path = require("path");
+const { existsSync } = require("fs");
+
+// Resolve the Prisma client location without hardcoding the Docker /app/ path.
+// Priority: 1) PRISMA_CLIENT_PATH env var, 2) local repo checkout relative to this test,
+// 3) legacy Docker path so the old documented container command still works.
+const PRISMA_CLIENT_PATH = (() => {
+  if (process.env.PRISMA_CLIENT_PATH) return process.env.PRISMA_CLIENT_PATH;
+
+  const localPath = path.resolve(__dirname, "../../server/node_modules/@prisma/client");
+  if (existsSync(localPath)) return localPath;
+
+  return "/app/server/node_modules/@prisma/client";
+})();
+
+const { PrismaClient } = require(PRISMA_CLIENT_PATH);
 
 const API_KEY = "pol-test-key-001";
 const WORKSPACE_SLUG = "test";

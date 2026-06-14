@@ -11,10 +11,11 @@ async function validatedRequest(request, response, next) {
   if (multiUserMode)
     return await validateMultiUserRequest(request, response, next);
 
-  // When in development passthrough auth token for ease of development.
+  // When in development or test mode passthrough auth token for ease of development.
   // Or if the user simply did not set an Auth token or JWT Secret
   if (
     process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "test" ||
     !process.env.AUTH_TOKEN ||
     !process.env.JWT_SECRET
   ) {

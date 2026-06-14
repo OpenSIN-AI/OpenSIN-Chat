@@ -13,13 +13,26 @@ tools. The fix adds a rule to the default system prompt and this test pins
 both the prompt and the runtime behaviour.
 
 ## How to run
+
+Local (repository checkout):
+```bash
+node tests/e2e/webAccessPrompt.test.cjs
+```
+
+Inside the OpenSIN container (legacy path):
 ```bash
 docker cp tests/e2e/webAccessPrompt.test.cjs openafd:/tmp/test.cjs
 docker exec openafd sh -c 'cd /app/server && node /tmp/test.cjs'
 ```
 
+The Prisma client path is resolved automatically (local repo first, then Docker
+fallback). Override it with:
+```bash
+PRISMA_CLIENT_PATH=/custom/path/to/@prisma/client node tests/e2e/webAccessPrompt.test.cjs
+```
+
 ## Caveats
-- Runs against the live container — depends on the `pol-test-key-001` API
+- Runs against the live server — depends on the `pol-test-key-001` API
   key and the `test` workspace existing.
-- Strip `<think>...</think>` blocks from the response before matching,
+- Strip `<think>...\boxed{}</think>` blocks from the response before matching,
   because the default Nemotron reasoning model emits chain-of-thought.

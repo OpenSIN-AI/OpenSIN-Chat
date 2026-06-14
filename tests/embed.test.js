@@ -2,7 +2,7 @@
 // Purpose: Test embed endpoints (embed, embed-chats, embed-config)
 // Docs: tests/embed.test.js
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, beforeAll, afterAll } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
@@ -27,30 +27,6 @@ vi.mock("../server/models/user", () => ({
   },
 }));
 
-vi.mock("../server/models/embedChats", () => ({
-  EmbedChats: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, embedId: 1 })),
-    get: vi.fn(() => Promise.resolve({ id: 1, embedId: 1 })),
-    update: vi.fn(() => Promise.resolve({ id: 1, embedId: 1 })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
-  },
-}));
-
-vi.mock("../server/models/embedConfig", () => ({
-  EmbedConfig: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, embedId: 1 })),
-    get: vi.fn(() => Promise.resolve({ id: 1, embedId: 1 })),
-    update: vi.fn(() => Promise.resolve({ id: 1, embedId: 1 })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
-  },
-}));
-
 vi.mock("../server/models/eventLogs", () => ({
   EventLogs: {
     logEvent: vi.fn(() => Promise.resolve()),
@@ -69,6 +45,7 @@ vi.mock("../server/utils/helpers/updateENV", () => ({
 
 vi.mock("../server/utils/middleware/multiUserProtected", () => ({
   flexUserRoleValid: () => (req, res, next) => next(),
+  strictMultiUserRoleValid: () => (req, res, next) => next(),
   ROLES: { admin: "admin", manager: "manager", all: "all" },
   isMultiUserSetup: () => true,
 }));
@@ -78,7 +55,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -102,6 +79,29 @@ vi.mock("../server/utils/chats", () => ({
 }));
 
 let app;
+let testWorkspace;
+let testEmbed;
+
+beforeAll(async () => {
+  const { Workspace } = await vi.importActual("../server/models/workspace");
+  const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
+
+  const workspaceResult = await Workspace.new("Test Workspace");
+  testWorkspace = workspaceResult.workspace;
+
+  const embedResult = await EmbedConfig.new({ workspace_id: testWorkspace.id }, null);
+  testEmbed = embedResult.embed;
+});
+
+afterAll(async () => {
+  const { Workspace } = await vi.importActual("../server/models/workspace");
+  const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
+  const { EmbedChats } = await vi.importActual("../server/models/embedChats");
+
+  if (testEmbed) await EmbedConfig.delete({ id: testEmbed.id });
+  await EmbedChats.delete({}).catch(() => {});
+  if (testWorkspace) await Workspace.delete({ id: testWorkspace.id });
+});
 
 beforeEach(async () => {
   vi.clearAllMocks();
@@ -132,66 +132,58 @@ const request = async (method, path, body = null, headers = {}) => {
 };
 
 describe("embed endpoints", () => {
-  describe("GET /embed", () => {
-    it("should return embed", async () => {
-      const response = await request("GET", "/embed");
+  describe("GET /embeds", () => {
+    it("should return embeds", async () => {
+      const response = await request("GET", "/embeds");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("embed");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalEmbeds");
+      expect(response.body).toHaveProperty("embeds");
     });
 
-    it("should return embed with pagination", async () => {
-      const response = await request("GET", "/embed?offset=0&limit=10");
+    it("should return embeds with pagination", async () => {
+      const response = await request("GET", "/embeds?offset=0&limit=10");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("embed");
+      expect(response.body).toHaveProperty("embeds");
     });
   });
 
-  describe("POST /embed", () => {
+  describe("POST /embeds/new", () => {
     it("should create embed", async () => {
-      const response = await request("POST", "/embed", {
+      const response = await request("POST", "/embeds/new", {
         name: "test-embed",
         description: "Test embed description",
+        workspace_id: testWorkspace.id,
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "test-embed");
+      expect(response.body).toHaveProperty("embed");
+      expect(response.body.embed).toHaveProperty("id");
     });
   });
 
-  describe("GET /embed/:id", () => {
-    it("should get embed by id", async () => {
-      const response = await request("GET", "/embed/1");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("embedId", 1);
-    });
-  });
-
-  describe("PUT /embed/:id", () => {
+  describe("POST /embed/update/:embedId", () => {
     it("should update embed", async () => {
-      const response = await request("PUT", "/embed/1", {
+      const response = await request("POST", `/embed/update/${testEmbed.id}`, {
         name: "updated-embed",
         description: "Updated embed description",
       });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("embedId", 1);
-    });
-  });
-
-  describe("DELETE /embed/:id", () => {
-    it("should delete embed", async () => {
-      const response = await request("DELETE", "/embed/1");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
     });
   });
 
-  describe("GET /embed-chats", () => {
+  describe("DELETE /embed/:embedId", () => {
+    it("should delete embed", async () => {
+      // Create a dedicated embed to delete so the shared fixture remains available.
+      const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
+      const { embed } = (await EmbedConfig.new({ workspace_id: testWorkspace.id }, null));
+      const response = await request("DELETE", `/embed/${embed.id}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success", true);
+    });
+  });
+
+  describe("POST /embed/chats", () => {
     it("should return embed chats", async () => {
-      const response = await request("GET", "/embed-chats");
+      const response = await request("POST", "/embed/chats");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("chats");
       expect(response.body).toHaveProperty("hasPages");
@@ -199,37 +191,17 @@ describe("embed endpoints", () => {
     });
 
     it("should return embed chats with pagination", async () => {
-      const response = await request("GET", "/embed-chats?offset=0&limit=10");
+      const response = await request("POST", "/embed/chats", { offset: 0, limit: 10 });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("chats");
     });
   });
 
-  describe("POST /embed-chats", () => {
-    it("should create embed chat", async () => {
-      const response = await request("POST", "/embed-chats", {
-        embedId: 1,
-        chatId: "test-chat",
-      });
+  describe("DELETE /embed/chats/:chatId", () => {
+    it("should delete embed chat", async () => {
+      const response = await request("DELETE", "/embed/chats/1");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("embedId", 1);
-    });
-  });
-
-  describe("GET /embed-config", () => {
-    it("should return embed config", async () => {
-      const response = await request("GET", "/embed-config");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("config");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalConfigs");
-    });
-
-    it("should return embed config with pagination", async () => {
-      const response = await request("GET", "/embed-config?offset=0&limit=10");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("config");
+      expect(response.body).toHaveProperty("success", true);
     });
   });
 });

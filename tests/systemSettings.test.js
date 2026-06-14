@@ -48,6 +48,7 @@ vi.mock("../server/utils/helpers/updateENV", () => ({
 
 vi.mock("../server/utils/middleware/multiUserProtected", () => ({
   flexUserRoleValid: () => (req, res, next) => next(),
+  strictMultiUserRoleValid: () => (req, res, next) => next(),
   ROLES: { admin: "admin", manager: "manager", all: "all" },
   isMultiUserSetup: () => true,
 }));
