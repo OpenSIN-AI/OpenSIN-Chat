@@ -110,6 +110,12 @@ const request = async (method, path, body = null, headers = {}) => {
   };
 };
 
+const createWorkspace = async (name) => {
+  const response = await request("POST", "/workspace/new", { name });
+  expect(response.status).toBe(200);
+  return response.body.workspace;
+};
+
 describe("workspace endpoints", () => {
   describe("GET /workspaces", () => {
     it("should return workspaces", async () => {
