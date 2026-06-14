@@ -2,9 +2,7 @@
 // Purpose: Test admin endpoints (admin)
 // Docs: tests/admin.test.js
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
-
-const { createApp } = await import("../server/app");
+import { describe, it, expect, vi, beforeEach, beforeAll } from "vitest";
 
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
@@ -90,10 +88,16 @@ vi.mock("../server/utils/chats", () => ({
 }));
 
 let app;
+let createApp;
+
+beforeAll(async () => {
+  const mod = await import("../server/app");
+  createApp = mod.createApp;
+  app = createApp();
+}, 60000);
 
 beforeEach(async () => {
   vi.clearAllMocks();
-  app = createApp();
 });
 
 const request = async (method, path, body = null, headers = {}) => {
