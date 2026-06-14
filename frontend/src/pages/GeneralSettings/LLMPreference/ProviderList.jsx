@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 
@@ -15,6 +16,7 @@ export default function ProviderList({
   updateLLMChoice,
   OpenSINChatIcon,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="absolute top-0 left-0 w-full max-w-[640px] max-h-[310px] min-h-[64px] bg-theme-settings-input-bg rounded-lg flex flex-col justify-between cursor-pointer border-2 border-primary-button z-20">
       <div className="w-full flex flex-col gap-y-1">
