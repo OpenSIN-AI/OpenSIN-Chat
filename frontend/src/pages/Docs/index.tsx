@@ -3,6 +3,7 @@
 // In-app developer documentation rendered at /docs and /docs/:slug.
 // Content is curated from the repository's docs/ folder (see docsManifest.ts).
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link, useParams, Navigate } from "react-router-dom";
 import {
   ArrowLeft,
@@ -34,6 +35,7 @@ function DocsSidebar({
   setQuery: (v: string) => void;
   onNavigate: () => void;
 }) {
+  const { t } = useTranslation();
   const normalizedQuery = query.trim().toLowerCase();
 
   const grouped = useMemo(() => {
@@ -53,7 +55,7 @@ function DocsSidebar({
 
   return (
     <nav
-      aria-label="Dokumentations-Navigation"
+      aria-label={t("common.docsNavLabel")}
       className="flex flex-col gap-4 h-full"
     >
       <div className="relative">
@@ -65,8 +67,8 @@ function DocsSidebar({
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Dokumentation durchsuchen…"
-          aria-label="Dokumentation durchsuchen"
+          placeholder={t("common.docsSearchPlaceholder")}
+          aria-label={t("common.docsSearchLabel")
           className="w-full pl-9 pr-3 py-2 rounded-lg bg-theme-bg-secondary text-theme-text-primary placeholder:text-theme-text-secondary border border-theme-sidebar-border focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-button text-sm"
         />
       </div>
