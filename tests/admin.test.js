@@ -160,6 +160,10 @@ describe("admin endpoints", () => {
 
   describe("POST /admin/users/new", () => {
     it("should create user", async () => {
+<<<<<<< Updated upstream
+=======
+      const { User: RealUser } = await vi.importActual("../server/models/user");
+>>>>>>> Stashed changes
       const username = `admin-test-${Date.now()}`;
       const response = await request("POST", "/admin/users/new", {
         username,
@@ -171,7 +175,11 @@ describe("admin endpoints", () => {
       expect(response.body.user).toHaveProperty("id");
       expect(response.body.user).toHaveProperty("username", username);
       // Clean up the created user so later runs stay deterministic.
+<<<<<<< Updated upstream
       await User.delete({ username });
+=======
+      await RealUser.delete({ username });
+>>>>>>> Stashed changes
     });
   });
 
@@ -185,8 +193,14 @@ describe("admin endpoints", () => {
 
   describe("POST /admin/user/:id", () => {
     it("should update user", async () => {
+<<<<<<< Updated upstream
       const username = `admin-update-${Date.now()}`;
       const { user } = await User.create({
+=======
+      const { User: RealUser } = await vi.importActual("../server/models/user");
+      const username = `admin-update-${Date.now()}`;
+      const { user } = await RealUser.create({
+>>>>>>> Stashed changes
         username,
         password: "test-password",
         role: "default",
@@ -195,16 +209,27 @@ describe("admin endpoints", () => {
         username: `${username}-updated`,
         role: "admin",
       });
+      console.error("Update response body:", response.body);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
+<<<<<<< Updated upstream
       await User.delete({ id: user.id });
+=======
+      await RealUser.delete({ id: user.id });
+>>>>>>> Stashed changes
     });
   });
 
   describe("DELETE /admin/user/:id", () => {
     it("should delete user", async () => {
+<<<<<<< Updated upstream
       const username = `admin-delete-${Date.now()}`;
       const { user } = await User.create({
+=======
+      const { User: RealUser } = await vi.importActual("../server/models/user");
+      const username = `admin-delete-${Date.now()}`;
+      const { user } = await RealUser.create({
+>>>>>>> Stashed changes
         username,
         password: "test-password",
         role: "default",
