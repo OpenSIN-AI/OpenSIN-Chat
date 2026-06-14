@@ -120,7 +120,7 @@ export default function CustomLogo() {
           <div className="group w-80 h-[130px] mt-3 overflow-hidden">
             <img
               src={logo}
-              alt="Uploaded Logo"
+              alt={t("common.uploadedLogo")}
               className="w-full h-full object-cover border-2 border-theme-text-secondary border-opacity-60 p-1 rounded-2xl"
             />
 
