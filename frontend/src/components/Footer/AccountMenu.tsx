@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
   BookOpen,
@@ -14,6 +14,7 @@ import {
   UserCircle,
 } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
+import { createPortal } from "react-dom";
 import paths from "@/utils/paths";
 import useUser from "@/hooks/useUser";
 import usePfp from "@/hooks/usePfp";
@@ -71,7 +72,7 @@ function ThemeSegment() {
   const options: {
     key: "system" | "light" | "dark";
     label: string;
-    Icon: React.ComponentType<{ className?: string; weight?: string }>;
+    Icon: React.ComponentType<{ className?: string; weight?: any }>;
   }[] = [
     { key: "system", label: "System", Icon: Desktop },
     { key: "light", label: "Hell", Icon: Sun },
@@ -94,7 +95,7 @@ function ThemeSegment() {
               title={label}
               className={`flex items-center justify-center h-6 w-7 rounded-md transition-colors duration-150 ${
                 active
-                  ? "bg-white text-slate-900 light:bg-white"
+                  ? "bg-white text-slate-900"
                   : "text-white/70 light:text-slate-500 hover:text-white light:hover:text-slate-800"
               }`}
             >
@@ -108,8 +109,12 @@ function ThemeSegment() {
 }
 
 function LanguageRow() {
-  const { currentLanguage, supportedLanguages, getLanguageName, changeLanguage } =
-    useLanguageOptions();
+  const {
+    currentLanguage,
+    supportedLanguages,
+    getLanguageName,
+    changeLanguage,
+  } = useLanguageOptions();
   return (
     <div className="flex items-center justify-between px-2.5 py-1.5">
       <span className="text-sm text-white light:text-slate-700">Sprache</span>
@@ -129,24 +134,56 @@ function LanguageRow() {
   );
 }
 
+type PopupPosition = { left: number; bottom: number; width: number };
+
 export default function AccountMenu() {
   const { user } = useUser();
   const { pfp } = usePfp();
   const mode = useLoginMode();
   const [open, setOpen] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<PopupPosition | null>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
 
   const displayName = user?.username || "OpenAfD";
   const subtitle = user?.email || "Demo-Konto";
   const initials = displayName.slice(0, 2).toUpperCase();
   const isLoggedIn = mode !== null;
 
+  // Position the portal popup directly above the trigger so it is never
+  // clipped by the sidebar's overflow-hidden container.
+  useLayoutEffect(() => {
+    if (!open) return;
+    function reposition() {
+      const el = triggerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      setPos({
+        left: rect.left,
+        bottom: window.innerHeight - rect.top + 8,
+        width: rect.width,
+      });
+    }
+    reposition();
+    window.addEventListener("resize", reposition);
+    window.addEventListener("scroll", reposition, true);
+    return () => {
+      window.removeEventListener("resize", reposition);
+      window.removeEventListener("scroll", reposition, true);
+    };
+  }, [open]);
+
   useEffect(() => {
     if (!open) return;
     function onPointer(e: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node))
-        setOpen(false);
+      const target = e.target as Node;
+      if (
+        triggerRef.current?.contains(target) ||
+        popupRef.current?.contains(target)
+      )
+        return;
+      setOpen(false);
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setOpen(false);
@@ -160,9 +197,10 @@ export default function AccountMenu() {
   }, [open]);
 
   return (
-    <div ref={wrapperRef} className="relative w-full px-2">
+    <div className="w-full px-2">
       {/* Trigger */}
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="menu"
@@ -184,120 +222,127 @@ export default function AccountMenu() {
         />
       </button>
 
-      {/* Popup (opens upward) */}
-      {open && (
-        <div
-          role="menu"
-          className="absolute bottom-[calc(100%+8px)] left-2 right-2 z-50 rounded-xl border border-theme-sidebar-border light:border-slate-200 bg-theme-action-menu-bg shadow-xl shadow-black/30 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
-        >
-          {/* Identity header */}
-          <div className="flex items-center gap-x-2.5 px-2.5 py-2">
-            <Avatar pfp={pfp} initials={initials} />
-            <div className="flex flex-col min-w-0">
-              <span className="text-sm font-semibold text-white light:text-slate-800 truncate">
-                {displayName}
-              </span>
-              <span className="text-xs text-white/55 light:text-slate-500 truncate">
-                {subtitle}
-              </span>
+      {/* Popup (portaled, opens upward, never clipped) */}
+      {open &&
+        pos &&
+        createPortal(
+          <div
+            ref={popupRef}
+            role="menu"
+            style={{
+              position: "fixed",
+              left: pos.left,
+              bottom: pos.bottom,
+              width: pos.width,
+            }}
+            className="z-[60] rounded-xl border border-theme-sidebar-border light:border-slate-200 bg-theme-action-menu-bg shadow-xl shadow-black/30 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
+          >
+            {/* Identity header */}
+            <div className="flex items-center gap-x-2.5 px-2.5 py-2">
+              <Avatar pfp={pfp} initials={initials} />
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm font-semibold text-white light:text-slate-800 truncate">
+                  {displayName}
+                </span>
+                <span className="text-xs text-white/55 light:text-slate-500 truncate">
+                  {subtitle}
+                </span>
+              </div>
             </div>
-          </div>
 
-          <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
+            <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
 
-          {/* Navigation items */}
-          {!!user && (
-            <button
-              type="button"
-              role="menuitem"
-              onClick={() => {
-                setShowAccountModal(true);
-                setOpen(false);
-              }}
-              className={ITEM_CLASSES}
-            >
-              <UserCircle className={ICON_CLASSES} />
-              <span className="flex-grow">Profil</span>
-            </button>
-          )}
+            {/* Navigation items */}
+            {!!user && (
+              <button
+                type="button"
+                role="menuitem"
+                onClick={() => {
+                  setShowAccountModal(true);
+                  setOpen(false);
+                }}
+                className={ITEM_CLASSES}
+              >
+                <UserCircle className={ICON_CLASSES} />
+                <span className="flex-grow">Profil</span>
+              </button>
+            )}
 
-          <Link
-            to={paths.settings.interface()}
-            role="menuitem"
-            onClick={() => setOpen(false)}
-            className={ITEM_CLASSES}
-          >
-            <Gear className={ICON_CLASSES} />
-            <span className="flex-grow">Einstellungen</span>
-          </Link>
-
-          <Link
-            to={paths.appDocs()}
-            role="menuitem"
-            onClick={() => setOpen(false)}
-            className={ITEM_CLASSES}
-          >
-            <BookOpen className={ICON_CLASSES} />
-            <span className="flex-grow">Dokumentation</span>
-          </Link>
-
-          <a
-            href={FEEDBACK_URL}
-            target="_blank"
-            rel="noreferrer"
-            role="menuitem"
-            onClick={() => setOpen(false)}
-            className={ITEM_CLASSES}
-          >
-            <ChatCircleText className={ICON_CLASSES} />
-            <span className="flex-grow">Feedback</span>
-            <ArrowUpRight
-              className="h-4 w-4 text-white/45 light:text-slate-400"
-              aria-hidden="true"
-            />
-          </a>
-
-          <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
-
-          {/* Preferences */}
-          <p className="px-2.5 pt-1 pb-0.5 text-[11px] font-medium uppercase tracking-wide text-white/40 light:text-slate-400">
-            Einstellungen
-          </p>
-          <ThemeSegment />
-          <LanguageRow />
-
-          <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
-
-          {/* Auth */}
-          {isLoggedIn ? (
-            <button
-              type="button"
-              role="menuitem"
-              onClick={handleSignOut}
-              className={ITEM_CLASSES}
-            >
-              <SignOut className={ICON_CLASSES} />
-              <span className="flex-grow">Abmelden</span>
-            </button>
-          ) : (
             <Link
-              to={paths.login()}
+              to={paths.settings.interface()}
               role="menuitem"
               onClick={() => setOpen(false)}
               className={ITEM_CLASSES}
             >
-              <SignIn className={ICON_CLASSES} />
-              <span className="flex-grow">Anmelden</span>
+              <Gear className={ICON_CLASSES} />
+              <span className="flex-grow">Einstellungen</span>
             </Link>
-          )}
-        </div>
-      )}
+
+            <Link
+              to={paths.appDocs()}
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className={ITEM_CLASSES}
+            >
+              <BookOpen className={ICON_CLASSES} />
+              <span className="flex-grow">Dokumentation</span>
+            </Link>
+
+            <a
+              href={FEEDBACK_URL}
+              target="_blank"
+              rel="noreferrer"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className={ITEM_CLASSES}
+            >
+              <ChatCircleText className={ICON_CLASSES} />
+              <span className="flex-grow">Feedback</span>
+              <ArrowUpRight
+                className="h-4 w-4 text-white/45 light:text-slate-400"
+                aria-hidden="true"
+              />
+            </a>
+
+            <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
+
+            {/* Preferences */}
+            <p className="px-2.5 pt-1 pb-0.5 text-[11px] font-medium uppercase tracking-wide text-white/40 light:text-slate-400">
+              Einstellungen
+            </p>
+            <ThemeSegment />
+            <LanguageRow />
+
+            <div className="my-1 h-px bg-white/10 light:bg-slate-200" />
+
+            {/* Auth */}
+            {isLoggedIn ? (
+              <button
+                type="button"
+                role="menuitem"
+                onClick={handleSignOut}
+                className={ITEM_CLASSES}
+              >
+                <SignOut className={ICON_CLASSES} />
+                <span className="flex-grow">Abmelden</span>
+              </button>
+            ) : (
+              <Link
+                to={paths.login()}
+                role="menuitem"
+                onClick={() => setOpen(false)}
+                className={ITEM_CLASSES}
+              >
+                <SignIn className={ICON_CLASSES} />
+                <span className="flex-grow">Anmelden</span>
+              </Link>
+            )}
+          </div>,
+          document.body,
+        )}
 
       {user && showAccountModal && (
-        <AccountModal
-          user={user}
-          hideModal={() => setShowAccountModal(false)}
-        />
+        <AccountModal user={user} hideModal={() => setShowAccountModal(false)} />
       )}
     </div>
   );
