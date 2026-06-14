@@ -52,7 +52,7 @@ export function MCPServerHeader({
     <>
       <div className="text-theme-text-primary flex items-center justify-between gap-x-2 mt-4">
         <div className="flex items-center gap-x-2">
-          <img src={MCPLogo} className="w-6 h-6 light:invert" alt="MCP Logo" />
+          <img src={MCPLogo} className="w-6 h-6 light:invert" alt={t("common.mcpLogo")} />
           <p className="text-lg font-medium">{t("agent.mcp.title")}</p>
         </div>
         <div className="flex items-center gap-x-3">

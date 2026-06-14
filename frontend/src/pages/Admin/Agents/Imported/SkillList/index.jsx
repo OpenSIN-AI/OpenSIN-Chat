@@ -23,6 +23,8 @@ export default function ImportedSkillList({
           >
             {t("importedSkillList.agentDocs")}
           </a>
+          {// eslint-disable-next-line i18next/no-literal-string
+          }
           .
         </p>
       </div>
