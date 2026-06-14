@@ -205,9 +205,31 @@ Mit echten Screenshots (`docs/audit-screens/`) belegt:
 | 404-Seite | ✅ | DE-Übersetzung vorhanden (`notFound.title: "404 - Seite nicht gefunden"`) |
 | Sidebar / Account-Menü | ✅ | „OpenAfD / Demo-Konto", Suche, Workspaces |
 | Logo | ⚠️ Artefakt | Bricht ohne Backend (blob) — kein Prod-Bug |
+| **PDF-Analyse (`/pdf-analysis`)** | ✅ **behoben** | War **echter Bug**: rohe i18n-Keys statt Text — siehe unten |
 
 > Ein früherer „Audit-Bericht" mit Scores war **nicht verifiziert**. Künftig
 > gilt: jeder Befund muss durch Screenshot/Snapshot/Code belegt sein.
+
+### Behobener Bug: PDF-Upload/Analyse zeigte rohe i18n-Keys (2026-06-14)
+
+**Symptom (optisch belegt):** Die Seite `/pdf-analysis` rendert in den Tabs
+*Analysen*, *Fakten-Speicher* und *Korpus-Vergleich* statt Labels die rohen
+Übersetzungsschlüssel („pdfAnalysis.panel.title", „PDFANALYSIS.PANEL.NEWANALYSIS",
+„pdfAnalysis.panel.pdfFile" …). Das PDF-Upload-Formular war faktisch unbeschriftet.
+Screenshot: `docs/audit-screens/pdf-analysis-BEFORE-raw-keys.png`.
+
+**Ursache:** Die Namespaces `pdfAnalysis.panel.*` (~66 Keys) und
+`pdfAnalysis.corpus.*` (~28 Keys) fehlten **komplett** in `de/common.js` **und**
+`en/common.js`; vorhanden waren nur `crossCheck`, `sourceTypes`, `verdicts`.
+
+**Fix:**
+1. `panel`- und `corpus`-Blöcke in beiden Locales ergänzt (DE + EN).
+2. Bonus-Bug: `models/pdfAnalysis.js` → `start()` verwarf `deepScan`, obwohl
+   Formular & Backend (`server/endpoints/pdfAnalysis.js`) es unterstützen — die
+   „Tiefen-Scan"-Checkbox war ohne Wirkung. Jetzt korrekt weitergereicht.
+
+**Verifiziert:** Screenshots `pdf-analysis-AFTER-fixed.png`,
+`pdf-corpus-AFTER-fixed.png`; `npm run verify:translations` ✅; eslint ✅.
 
 ### Offene, echte To-Dos für den nächsten Agenten
 1. Docs-Seite (`/docs`) auf gemischte DE/EN-Inhalte prüfen und vereinheitlichen.
@@ -226,3 +248,6 @@ Im Repo unter `docs/audit-screens/`:
 - `onboarding-llm-preference.png` — Onboarding-Schritt
 - `404-en.png` — 404-Seite
 - `docs-page.png` — Entwickler-Doku-Seite
+- `pdf-analysis-BEFORE-raw-keys.png` — PDF-Analyse mit rohen i18n-Keys (Bug)
+- `pdf-analysis-AFTER-fixed.png` — PDF-Analyse nach Fix (DE)
+- `pdf-corpus-AFTER-fixed.png` — Korpus-Vergleich-Tab nach Fix (DE)
