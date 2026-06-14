@@ -75,7 +75,7 @@ function ConnectivityPanel() {
 
   return (
     <section
-      aria-label="Provider connectivity"
+      aria-label={t("common.providerConnectivity")}
       className="flex w-full flex-col gap-y-3 rounded-xl border border-theme-sidebar-border bg-theme-bg-primary p-4"
     >
       <header className="flex items-center justify-between gap-x-2">
