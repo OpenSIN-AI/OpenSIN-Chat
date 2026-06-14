@@ -87,7 +87,7 @@ function DocsSidebar({
                 return (
                   <Link
                     key={entry.slug}
-                    to={paths.docs(`/${entry.slug}`)}
+                    to={paths.appDocs(`/${entry.slug}`)}
                     onClick={onNavigate}
                     aria-current={isActive ? "page" : undefined}
                     className={`text-sm px-2 py-1.5 rounded-md transition-colors ${
@@ -115,7 +115,7 @@ export default function Docs() {
 
   // Redirect /docs to the default doc.
   if (!slug) {
-    return <Navigate to={paths.docs(`/${DEFAULT_DOC_SLUG}`)} replace />;
+    return <Navigate to={paths.appDocs(`/${DEFAULT_DOC_SLUG}`)} replace />;
   }
 
   const entry = getDocBySlug(slug);
@@ -192,7 +192,7 @@ export default function Docs() {
                 Das angeforderte Dokument existiert nicht oder wurde verschoben.
               </p>
               <Link
-                to={paths.docs(`/${DEFAULT_DOC_SLUG}`)}
+                to={paths.appDocs(`/${DEFAULT_DOC_SLUG}`)}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-button text-white hover:opacity-90 transition-opacity"
               >
                 Zur Startseite der Docs

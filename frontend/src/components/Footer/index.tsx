@@ -71,7 +71,7 @@ const DEFAULT_FOOTER_ITEMS: FooterItem[] = [
   {
     key: "docs",
     Icon: BookOpen as IconComponent,
-    url: paths.docs(),
+    url: paths.appDocs(),
     ariaLabel: "Entwickler-Dokumentation öffnen",
     tooltip: "Entwickler-Dokumentation öffnen",
   },
