@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
 import { CaretRight } from "@phosphor-icons/react";
 import { DefaultBadge } from "./Badges/default";
 
@@ -9,6 +10,7 @@ export default function SkillList({
   handleClick = null,
   activeSkills = [],
 }) {
+  const { t } = useTranslation();
   if (Object.keys(skills).length === 0) return null;
 
   return (

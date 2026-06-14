@@ -97,7 +97,7 @@ export function MCPServersList({
   if (isLoading) {
     return (
       <div className="text-theme-text-secondary text-center text-xs flex flex-col gap-y-2">
-        <p>{t("agent.mcp.loading-from-config")}...</p>
+        <p>{t("agent.mcp.loading-from-config")}...</p> // eslint-disable-line i18next/no-literal-string
         <a
           href="https://docs.opensin.delqhi.com/mcp-compatibility/overview"
           target="_blank"
