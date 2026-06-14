@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Central data-access layer for application-wide system settings.
+// Docs: server/models/systemSettings.doc.md
 process.env.NODE_ENV === "development"
   ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
   : require("dotenv").config();
