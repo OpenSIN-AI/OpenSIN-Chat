@@ -68,7 +68,7 @@ function DocsSidebar({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t("common.docsSearchPlaceholder")}
-          aria-label={t("common.docsSearchLabel")
+          aria-label={t("common.docsSearchLabel")}
           className="w-full pl-9 pr-3 py-2 rounded-lg bg-theme-bg-secondary text-theme-text-primary placeholder:text-theme-text-secondary border border-theme-sidebar-border focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-button text-sm"
         />
       </div>
