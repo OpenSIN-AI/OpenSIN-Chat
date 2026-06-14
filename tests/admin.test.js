@@ -128,10 +128,18 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
+  let body = data ? data : null;
+  if (data && response.headers.get("content-type")?.includes("application/json")) {
+    try {
+      body = JSON.parse(data);
+    } catch {
+      /* leave as raw text */
+    }
+  }
   return {
     status: response.status,
     headers: response.headers,
-    body: data ? JSON.parse(data) : null,
+    body,
   };
 };
 
@@ -152,15 +160,18 @@ describe("admin endpoints", () => {
 
   describe("POST /admin/users/new", () => {
     it("should create user", async () => {
+      const username = `admin-test-${Date.now()}`;
       const response = await request("POST", "/admin/users/new", {
-        username: "test-user",
+        username,
         password: "test-password",
         role: "default",
       });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("user");
       expect(response.body.user).toHaveProperty("id");
-      expect(response.body.user).toHaveProperty("username", "test");
+      expect(response.body.user).toHaveProperty("username", username);
+      // Clean up the created user so later runs stay deterministic.
+      await User.delete({ username });
     });
   });
 
@@ -174,18 +185,31 @@ describe("admin endpoints", () => {
 
   describe("POST /admin/user/:id", () => {
     it("should update user", async () => {
-      const response = await request("POST", "/admin/user/1", {
-        username: "updated-user",
+      const username = `admin-update-${Date.now()}`;
+      const { user } = await User.create({
+        username,
+        password: "test-password",
+        role: "default",
+      });
+      const response = await request("POST", `/admin/user/${user.id}`, {
+        username: `${username}-updated`,
         role: "admin",
       });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
+      await User.delete({ id: user.id });
     });
   });
 
   describe("DELETE /admin/user/:id", () => {
     it("should delete user", async () => {
-      const response = await request("DELETE", "/admin/user/1");
+      const username = `admin-delete-${Date.now()}`;
+      const { user } = await User.create({
+        username,
+        password: "test-password",
+        role: "default",
+      });
+      const response = await request("DELETE", `/admin/user/${user.id}`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
     });
