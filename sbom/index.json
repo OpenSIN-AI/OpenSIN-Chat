@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-13T21:27:35.121Z",
+  "generatedAt": "2026-06-14T11:33:01.265Z",
   "specs": {
     "spdx": "SPDX-2.3",
     "cyclonedx": "1.5"
@@ -7,8 +7,8 @@
   "workspaces": [
     {
       "name": "root",
-      "source": "package.json",
-      "packageCount": 63,
+      "source": "package-lock.json",
+      "packageCount": 738,
       "spdx": "sbom/root.spdx.json",
       "cyclonedx": "sbom/root.cdx.json"
     },

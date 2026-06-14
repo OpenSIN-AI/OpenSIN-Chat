@@ -3,9 +3,9 @@
   "dataLicense": "CC0-1.0",
   "SPDXID": "SPDXRef-DOCUMENT",
   "name": "opensin-chat-server",
-  "documentNamespace": "https://opensin.delqhi.com/sbom/opensin-chat-server-63b92323-d1d1-49b6-b4f2-ed09f80c66a6",
+  "documentNamespace": "https://opensin.delqhi.com/sbom/opensin-chat-server-1d1e70fd-327b-4a7b-8a99-4399b5741880",
   "creationInfo": {
-    "created": "2026-06-13T21:27:35.139Z",
+    "created": "2026-06-14T11:33:01.501Z",
     "creators": [
       "Tool: openafd-generate-sbom",
       "Organization: Family-Team-Projects"

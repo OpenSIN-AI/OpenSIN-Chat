@@ -3,6 +3,10 @@
 // Docs: tests/admin.test.js
 
 import { describe, it, expect, vi, beforeEach, beforeAll } from "vitest";
+console.log("TOP LEVEL ADMIN TEST");
+
+import { User } from "../server/models/user";
+import { reqBody } from "../server/utils/http";
 
 vi.mock("../server/utils/helpers", () => ({
   getVectorDbClass: () => ({ namespaceCount: vi.fn(() => Promise.resolve(0)), totalVectors: vi.fn(() => Promise.resolve(0)) }),
@@ -97,6 +101,7 @@ let app;
 let createApp;
 
 beforeAll(async () => {
+  vi.resetModules();
   const mod = await import("../server/app");
   createApp = mod.createApp;
   app = createApp();

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-// Purpose: Test embed management endpoints (embed-management)
-// Docs: tests/embedManagement.test.js
+// Purpose: Test embed management endpoints (now served under /embeds)
+// Docs: tests/embedManagement.test.js.doc.md
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, beforeAll, afterAll } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
@@ -24,18 +24,6 @@ vi.mock("../server/models/user", () => ({
   User: {
     _get: vi.fn(() => Promise.resolve(null)),
     filterFields: vi.fn((user) => user),
-  },
-}));
-
-vi.mock("../server/models/embedManagement", () => ({
-  EmbedManagement: {
-    whereWithData: vi.fn(() => Promise.resolve([])),
-    count: vi.fn(() => Promise.resolve(0)),
-    create: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    get: vi.fn(() => Promise.resolve({ id: 1, name: "test" })),
-    update: vi.fn(() => Promise.resolve({ id: 1, name: "updated" })),
-    delete: vi.fn(() => Promise.resolve(true)),
-    where: vi.fn(() => Promise.resolve([])),
   },
 }));
 
@@ -67,7 +55,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -91,6 +79,26 @@ vi.mock("../server/utils/chats", () => ({
 }));
 
 let app;
+let testWorkspace;
+let testEmbed;
+
+beforeAll(async () => {
+  const { Workspace } = await vi.importActual("../server/models/workspace");
+  const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
+
+  const workspaceResult = await Workspace.new("Test Workspace");
+  testWorkspace = workspaceResult.workspace;
+
+  const embedResult = await EmbedConfig.new({ workspace_id: testWorkspace.id }, null);
+  testEmbed = embedResult.embed;
+});
+
+afterAll(async () => {
+  const { Workspace } = await vi.importActual("../server/models/workspace");
+  const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
+  await EmbedConfig.delete({ id: testEmbed?.id }).catch(() => {});
+  if (testWorkspace) await Workspace.delete({ id: testWorkspace.id }).catch(() => {});
+});
 
 beforeEach(async () => {
   vi.clearAllMocks();
@@ -113,68 +121,73 @@ const request = async (method, path, body = null, headers = {}) => {
 
   const response = await fetch(url, options);
   const data = await response.text();
+  let responseBody = null;
+  try {
+    responseBody = data ? JSON.parse(data) : null;
+  } catch {
+    responseBody = data || null;
+  }
   return {
     status: response.status,
     headers: response.headers,
-    body: data ? JSON.parse(data) : null,
+    body: responseBody,
   };
 };
 
 describe("embed management endpoints", () => {
-  describe("GET /embed-management", () => {
-    it("should return embed management", async () => {
-      const response = await request("GET", "/embed-management");
+  describe("GET /embeds", () => {
+    it("should return embeds", async () => {
+      const response = await request("GET", "/embeds");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("management");
-      expect(response.body).toHaveProperty("hasPages");
-      expect(response.body).toHaveProperty("totalManagementItems");
+      expect(response.body).toHaveProperty("embeds");
     });
 
-    it("should return embed management with pagination", async () => {
-      const response = await request("GET", "/embed-management?offset=0&limit=10");
+    it("should return embeds with pagination", async () => {
+      const response = await request("GET", "/embeds?offset=0&limit=10");
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("management");
+      expect(response.body).toHaveProperty("embeds");
     });
   });
 
-  describe("POST /embed-management", () => {
-    it("should create embed management", async () => {
-      const response = await request("POST", "/embed-management", {
-        name: "test-management",
-        description: "Test management description",
+  describe("POST /embeds/new", () => {
+    it("should create embed", async () => {
+      const response = await request("POST", "/embeds/new", {
+        name: "Test Embed",
+        description: "Test embed description",
+        workspace_id: testWorkspace.id,
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "test-management");
+      expect(response.body).toHaveProperty("embed");
+      expect(response.body.embed).toHaveProperty("id");
     });
   });
 
-  describe("GET /embed-management/:id", () => {
-    it("should get embed management by id", async () => {
-      const response = await request("GET", "/embed-management/1");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "test");
-    });
-  });
-
-  describe("PUT /embed-management/:id", () => {
-    it("should update embed management", async () => {
-      const response = await request("PUT", "/embed-management/1", {
-        name: "updated-management",
-        description: "Updated management description",
+  describe("POST /embed/update/:embedId", () => {
+    it("should update embed", async () => {
+      const response = await request("POST", `/embed/update/${testEmbed.id}`, {
+        enabled: false,
+        chat_mode: "chat",
       });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
-      expect(response.body).toHaveProperty("name", "updated");
-    });
-  });
-
-  describe("DELETE /embed-management/:id", () => {
-    it("should delete embed management", async () => {
-      const response = await request("DELETE", "/embed-management/1");
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
+    });
+  });
+
+  describe("DELETE /embed/:embedId", () => {
+    it("should delete embed", async () => {
+      const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
+      const { embed } = await EmbedConfig.new({ workspace_id: testWorkspace.id }, null);
+      const response = await request("DELETE", `/embed/${embed.id}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success", true);
+    });
+  });
+
+  describe("POST /embed/chats", () => {
+    it("should return embed chats", async () => {
+      const response = await request("POST", "/embed/chats");
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("chats");
     });
   });
 });

@@ -85,18 +85,6 @@ let testEmbed;
 beforeAll(async () => {
   const { Workspace } = await vi.importActual("../server/models/workspace");
   const { EmbedConfig } = await vi.importActual("../server/models/embedConfig");
-  const { EmbedChats } = await vi.importActual("../server/models/embedChats");
-
-  // Clean up any leftovers from previous partial runs so the test starts fresh.
-  await EmbedChats.delete({}).catch(() => {});
-  const allEmbeds = await EmbedConfig.where({}, 9999);
-  for (const embed of allEmbeds) {
-    await EmbedConfig.delete({ id: embed.id }).catch(() => {});
-  }
-  const testWorkspaces = await Workspace.where({ name: { contains: "Test Workspace" } }, 9999);
-  for (const ws of testWorkspaces) {
-    await Workspace.delete({ id: ws.id }).catch(() => {});
-  }
 
   const workspaceResult = await Workspace.new("Test Workspace");
   testWorkspace = workspaceResult.workspace;
@@ -216,9 +204,10 @@ describe("embed endpoints", () => {
   describe("DELETE /embed/chats/:chatId", () => {
     it("should delete embed chat", async () => {
       const { EmbedChats } = await vi.importActual("../server/models/embedChats");
-      const chat = await EmbedChats.create({
-        embed_id: testEmbed.id,
-        workspace_id: testWorkspace.id,
+      const { chat } = await EmbedChats.new({
+        embedId: testEmbed.id,
+        sessionId: "test-session",
+        prompt: "hello",
       });
       const response = await request("DELETE", `/embed/chats/${chat.id}`);
       expect(response.status).toBe(200);

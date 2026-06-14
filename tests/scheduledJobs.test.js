@@ -97,43 +97,43 @@ describe("scheduled jobs endpoints", () => {
     });
   });
 
-  describe("POST /scheduled-jobs", () => {
+  describe("POST /scheduled-jobs/new", () => {
     it("should create a scheduled job with valid data", async () => {
-      const response = await request("POST", "/scheduled-jobs", {
-        name: "Daily Backup",
+      const response = await request("POST", "/scheduled-jobs/new", {
+        name: `Daily Backup ${Date.now()}`,
+        prompt: "Run a backup",
         schedule: "0 0 * * *",
-        type: "backup",
-        enabled: true,
       });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
-      expect(response.body).toHaveProperty("name", "Daily Backup");
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("job");
+      expect(response.body.job).toHaveProperty("id");
     });
 
     it("should create a scheduled job with minimal data", async () => {
-      const response = await request("POST", "/scheduled-jobs", {
-        name: "Weekly Report",
+      const response = await request("POST", "/scheduled-jobs/new", {
+        name: `Weekly Report ${Date.now()}`,
+        prompt: "Run a report",
         schedule: "0 0 * * 0",
-        type: "report",
       });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id");
+      expect(response.status).toBe(201);
+      expect(response.body).toHaveProperty("job");
+      expect(response.body.job).toHaveProperty("id");
     });
 
     it("should reject job with missing name", async () => {
-      const response = await request("POST", "/scheduled-jobs", {
+      const response = await request("POST", "/scheduled-jobs/new", {
+        prompt: "Run a backup",
         schedule: "0 0 * * *",
-        type: "backup",
       });
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("error");
     });
 
     it("should reject job with invalid schedule", async () => {
-      const response = await request("POST", "/scheduled-jobs", {
-        name: "Bad Job",
+      const response = await request("POST", "/scheduled-jobs/new", {
+        name: `Bad Job ${Date.now()}`,
+        prompt: "Run a backup",
         schedule: "not-a-cron",
-        type: "backup",
       });
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("error");
@@ -142,13 +142,20 @@ describe("scheduled jobs endpoints", () => {
 
   describe("GET /scheduled-jobs/:id", () => {
     it("should get scheduled job by id", async () => {
-      const response = await request("GET", "/scheduled-jobs/1");
+      const createResponse = await request("POST", "/scheduled-jobs/new", {
+        name: `Get Job ${Date.now()}`,
+        prompt: "Run a job",
+        schedule: "0 0 * * *",
+      });
+      const jobId = createResponse.body.job.id;
+      const response = await request("GET", `/scheduled-jobs/${jobId}`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
+      expect(response.body).toHaveProperty("job");
+      expect(response.body.job).toHaveProperty("id", jobId);
     });
 
     it("should return 404 for non-existent job", async () => {
-      const response = await request("GET", "/scheduled-jobs/999");
+      const response = await request("GET", "/scheduled-jobs/999999");
       expect(response.status).toBe(404);
       expect(response.body).toHaveProperty("error");
     });
@@ -156,16 +163,29 @@ describe("scheduled jobs endpoints", () => {
 
   describe("PUT /scheduled-jobs/:id", () => {
     it("should update a scheduled job", async () => {
-      const response = await request("PUT", "/scheduled-jobs/1", {
-        name: "Updated Job",
+      const createResponse = await request("POST", "/scheduled-jobs/new", {
+        name: `Update Job ${Date.now()}`,
+        prompt: "Run a job",
+        schedule: "0 0 * * *",
+      });
+      const jobId = createResponse.body.job.id;
+      const response = await request("PUT", `/scheduled-jobs/${jobId}`, {
+        name: `Updated Job ${Date.now()}`,
         enabled: false,
       });
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("id", 1);
+      expect(response.body).toHaveProperty("job");
+      expect(response.body.job).toHaveProperty("id", jobId);
     });
 
     it("should reject update with invalid data", async () => {
-      const response = await request("PUT", "/scheduled-jobs/1", {
+      const createResponse = await request("POST", "/scheduled-jobs/new", {
+        name: `Invalid Update Job ${Date.now()}`,
+        prompt: "Run a job",
+        schedule: "0 0 * * *",
+      });
+      const jobId = createResponse.body.job.id;
+      const response = await request("PUT", `/scheduled-jobs/${jobId}`, {
         schedule: "invalid",
       });
       expect(response.status).toBe(400);
@@ -175,44 +195,50 @@ describe("scheduled jobs endpoints", () => {
 
   describe("DELETE /scheduled-jobs/:id", () => {
     it("should delete a scheduled job", async () => {
-      const response = await request("DELETE", "/scheduled-jobs/1");
+      const createResponse = await request("POST", "/scheduled-jobs/new", {
+        name: `Delete Job ${Date.now()}`,
+        prompt: "Run a job",
+        schedule: "0 0 * * *",
+      });
+      const jobId = createResponse.body.job.id;
+      const response = await request("DELETE", `/scheduled-jobs/${jobId}`);
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty("success", true);
+    });
+  });
+
+  describe("POST /scheduled-jobs/:id/trigger", () => {
+    it("should trigger immediate job execution", async () => {
+      const createResponse = await request("POST", "/scheduled-jobs/new", {
+        name: `Trigger Job ${Date.now()}`,
+        prompt: "Run a job",
+        schedule: "0 0 * * *",
+      });
+      const jobId = createResponse.body.job.id;
+      const response = await request("POST", `/scheduled-jobs/${jobId}/trigger`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("success", true);
     });
 
     it("should return 404 for non-existent job", async () => {
-      const response = await request("DELETE", "/scheduled-jobs/999");
+      const response = await request("POST", "/scheduled-jobs/999999/trigger");
       expect(response.status).toBe(404);
       expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("POST /scheduled-jobs/:id/run", () => {
-    it("should trigger immediate job execution", async () => {
-      const response = await request("POST", "/scheduled-jobs/1/run");
+  describe("GET /scheduled-jobs/:id/runs", () => {
+    it("should return job execution runs", async () => {
+      const createResponse = await request("POST", "/scheduled-jobs/new", {
+        name: `Runs Job ${Date.now()}`,
+        prompt: "Run a job",
+        schedule: "0 0 * * *",
+      });
+      const jobId = createResponse.body.job.id;
+      const response = await request("GET", `/scheduled-jobs/${jobId}/runs`);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("executionId");
-    });
-
-    it("should return 404 for non-existent job", async () => {
-      const response = await request("POST", "/scheduled-jobs/999/run");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
-    });
-  });
-
-  describe("GET /scheduled-jobs/:id/history", () => {
-    it("should return job execution history", async () => {
-      const response = await request("GET", "/scheduled-jobs/1/history");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("history");
-      expect(Array.isArray(response.body.history)).toBe(true);
-    });
-
-    it("should return 404 for non-existent job", async () => {
-      const response = await request("GET", "/scheduled-jobs/999/history");
-      expect(response.status).toBe(404);
-      expect(response.body).toHaveProperty("error");
+      expect(response.body).toHaveProperty("runs");
+      expect(Array.isArray(response.body.runs)).toBe(true);
     });
   });
 });

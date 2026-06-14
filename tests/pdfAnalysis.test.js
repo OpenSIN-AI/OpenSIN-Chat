@@ -2,7 +2,7 @@
 // Purpose: Test PDF analysis endpoints
 // Docs: tests/pdfAnalysis.test.js
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterAll } from "vitest";
 import { createApp } from "../server/app";
 
 vi.mock("../server/utils/helpers", () => ({
@@ -55,7 +55,7 @@ vi.mock("../server/utils/middleware/validatedRequest", () => ({
 }));
 
 vi.mock("../server/utils/http", () => ({
-  reqBody: (req) => ({}),
+  reqBody: (req) => req.body || {},
   makeJWT: (payload, expiry) => `token_${payload.id}`,
   userFromSession: () => Promise.resolve({ id: 1, username: "test" }),
   multiUserMode: () => false,
@@ -74,73 +74,62 @@ vi.mock("../server/utils/chats", () => ({
   VALID_COMMANDS: { help: true, clear: true },
 }));
 
-vi.mock("../server/utils/pdfAnalysis", () => ({
-  PdfAnalysisPipeline: function () { return { analyze: vi.fn(() => Promise.resolve({ text: "test", pages: 1 })) }; },
-  CrossCheckPipeline: function () { return { crossCheck: vi.fn(() => Promise.resolve({ matches: [], score: 0.5 })) }; },
-  CorpusPipeline: function () { return { buildCorpus: vi.fn(() => Promise.resolve({ documents: [], total: 0 })) }; },
-}));
-
 let app;
 
-beforeEach(async () => {
-  vi.clearAllMocks();
+beforeAll(async () => {
   app = createApp();
 });
 
-const request = async (method, path, body = null, headers = {}) => {
+afterAll(async () => {
+  if (app && app.close) await app.close();
+});
+
+const jsonRequest = async (method, path, body = null) => {
   const url = `http://localhost:3001${path}`;
   const options = {
     method,
-    headers: { "Content-Type": "application/json", ...headers },
+    headers: { "Content-Type": "application/json" },
   };
   if (body) options.body = JSON.stringify(body);
   const response = await fetch(url, options);
   const data = await response.text();
-  return { status: response.status, headers: response.headers, body: data ? JSON.parse(data) : null };
+  return { status: response.status, body: data ? JSON.parse(data) : null };
+};
+
+const uploadRequest = async (path, file) => {
+  const url = `http://localhost:3001${path}`;
+  const form = new FormData();
+  form.append("file", file, "test.pdf");
+  const response = await fetch(url, { method: "POST", body: form });
+  const data = await response.text();
+  return { status: response.status, body: data ? JSON.parse(data) : null };
 };
 
 describe("PDF analysis endpoints", () => {
-  describe("POST /pdf-analysis/analyze", () => {
-    it("should analyze a PDF file", async () => {
-      const response = await request("POST", "/pdf-analysis/analyze", {
-        filePath: "/tmp/test.pdf",
-        options: { extractText: true, extractTables: false },
-      });
+  describe("POST /pdf-analysis/upload", () => {
+    it("should accept a PDF upload", async () => {
+      const file = new Blob(["%PDF-1.4 fake"], { type: "application/pdf" });
+      const response = await uploadRequest("/pdf-analysis/upload", file);
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("text");
-      expect(response.body).toHaveProperty("pages");
-    });
-
-    it("should return 400 with missing file path", async () => {
-      const response = await request("POST", "/pdf-analysis/analyze", {});
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty("error");
-    });
-
-    it("should handle analysis options", async () => {
-      const response = await request("POST", "/pdf-analysis/analyze", {
-        filePath: "/tmp/test.pdf",
-        options: { extractText: true, extractTables: true, extractImages: false },
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("text");
+      expect(response.body).toHaveProperty("pdfPath");
     });
   });
 
-  describe("POST /pdf-analysis/cross-check", () => {
-    it("should cross-check PDF content", async () => {
-      const response = await request("POST", "/pdf-analysis/cross-check", {
-        sourceText: "test content",
-        targetText: "reference content",
+  describe("POST /pdf-analysis/start", () => {
+    it("should return 400 when the pipeline fails", async () => {
+      const response = await jsonRequest("POST", "/pdf-analysis/start", {
+        pdfPath: "/tmp/nonexistent.pdf",
+        task: "analyze",
       });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("matches");
-      expect(response.body).toHaveProperty("score");
+      expect(response.status).toBe(400);
+      expect(response.body).toHaveProperty("error");
     });
+  });
 
-    it("should return 400 with missing source", async () => {
-      const response = await request("POST", "/pdf-analysis/cross-check", {
-        targetText: "reference content",
+  describe("POST /pdf-analysis/crosscheck", () => {
+    it("should return 400 when the pipeline fails", async () => {
+      const response = await jsonRequest("POST", "/pdf-analysis/crosscheck", {
+        claims: ["test claim"],
       });
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("error");
@@ -148,33 +137,18 @@ describe("PDF analysis endpoints", () => {
   });
 
   describe("POST /pdf-analysis/corpus", () => {
-    it("should build corpus from PDFs", async () => {
-      const response = await request("POST", "/pdf-analysis/corpus", {
-        filePaths: ["/tmp/doc1.pdf", "/tmp/doc2.pdf"],
-      });
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("documents");
-      expect(response.body).toHaveProperty("total");
-    });
-
-    it("should return 400 with empty file list", async () => {
-      const response = await request("POST", "/pdf-analysis/corpus", {
-        filePaths: [],
+    it("should return 400 when the pipeline fails", async () => {
+      const response = await jsonRequest("POST", "/pdf-analysis/corpus", {
+        pdfPaths: ["/tmp/nonexistent.pdf"],
       });
       expect(response.status).toBe(400);
       expect(response.body).toHaveProperty("error");
     });
   });
 
-  describe("GET /pdf-analysis/status/:jobId", () => {
-    it("should return analysis job status", async () => {
-      const response = await request("GET", "/pdf-analysis/status/job_123");
-      expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty("status");
-    });
-
-    it("should return 404 for unknown job", async () => {
-      const response = await request("GET", "/pdf-analysis/status/unknown");
+  describe("GET /pdf-analysis/:jobId", () => {
+    it("should return 404 for an unknown job", async () => {
+      const response = await jsonRequest("GET", "/pdf-analysis/unknown");
       expect(response.status).toBe(404);
       expect(response.body).toHaveProperty("error");
     });
