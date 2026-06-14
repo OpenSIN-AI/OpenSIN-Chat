@@ -145,29 +145,32 @@ describe("workspace endpoints", () => {
 
   describe("GET /workspace/:slug", () => {
     it("should get workspace by slug", async () => {
-      const response = await request("GET", "/workspace/test");
+      const workspace = await createWorkspace("test-workspace");
+      const response = await request("GET", `/workspace/${workspace.slug}`);
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("workspace");
-      expect(response.body.workspace).toHaveProperty("id", 1);
-      expect(response.body.workspace).toHaveProperty("name", "test");
+      expect(response.body.workspace).toHaveProperty("id", workspace.id);
+      expect(response.body.workspace).toHaveProperty("name", "test-workspace");
     });
   });
 
   describe("POST /workspace/:slug/update", () => {
     it("should update workspace", async () => {
-      const response = await request("POST", "/workspace/test/update", {
+      const workspace = await createWorkspace("original-workspace");
+      const response = await request("POST", `/workspace/${workspace.slug}/update`, {
         name: "updated-workspace",
       });
       expect(response.status).toBe(200);
       expect(response.body).toHaveProperty("workspace");
-      expect(response.body.workspace).toHaveProperty("id", 1);
+      expect(response.body.workspace).toHaveProperty("id", workspace.id);
       expect(response.body.workspace).toHaveProperty("name", "updated");
     });
   });
 
   describe("DELETE /workspace/:slug", () => {
     it("should delete workspace", async () => {
-      const response = await request("DELETE", "/workspace/test");
+      const workspace = await createWorkspace("delete-workspace");
+      const response = await request("DELETE", `/workspace/${workspace.slug}`);
       expect(response.status).toBe(200);
     });
   });

@@ -100,9 +100,6 @@ let app;
 beforeEach(async () => {
   vi.clearAllMocks();
   app = createApp();
-  authToken = jwt.sign({ id: 1, username: "test" }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
-  });
 });
 
 const request = async (method, path, body = null, headers = {}) => {
