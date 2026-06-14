@@ -19,24 +19,27 @@ function loadExtractImageUrls() {
 }
 
 describe("extractImageUrls", () => {
-  const originalEnv = process.env.CHAT_IMAGE_OCR_ENABLED;
+  const originalEnv = {
+    CHAT_IMAGE_OCR_ENABLED: process.env.CHAT_IMAGE_OCR_ENABLED,
+    CHAT_IMAGE_OCR_CACHE_SIZE: process.env.CHAT_IMAGE_OCR_CACHE_SIZE,
+    CHAT_IMAGE_OCR_LANGS: process.env.CHAT_IMAGE_OCR_LANGS,
+  };
+
+  function resetEnv() {
+    for (const [key, value] of Object.entries(originalEnv)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
 
   beforeEach(() => {
     mockRecognize.mockReset();
     mockCreateWorker.mockClear();
-    if (originalEnv === undefined) {
-      delete process.env.CHAT_IMAGE_OCR_ENABLED;
-    } else {
-      process.env.CHAT_IMAGE_OCR_ENABLED = originalEnv;
-    }
+    resetEnv();
   });
 
   afterEach(() => {
-    if (originalEnv === undefined) {
-      delete process.env.CHAT_IMAGE_OCR_ENABLED;
-    } else {
-      process.env.CHAT_IMAGE_OCR_ENABLED = originalEnv;
-    }
+    resetEnv();
   });
 
   it("returns an empty array for empty input", async () => {
@@ -121,6 +124,124 @@ describe("extractImageUrls", () => {
       { contentString: null },
     ]);
     expect(urls).toEqual(["https://valid.com"]);
+  });
+
+  // URL regex edge cases
+
+  it("strips trailing punctuation from URLs", async () => {
+    mockRecognize.mockResolvedValue({
+      data: {
+        text: "Visit https://example.com, https://test.com! or https://other.com; now.",
+      },
+    });
+    const extractImageUrls = loadExtractImageUrls();
+    const urls = await extractImageUrls(["base64-punct"]);
+    expect(urls).toEqual([
+      "https://example.com",
+      "https://test.com",
+      "https://other.com",
+    ]);
+  });
+
+  it("extracts URLs surrounded by parentheses", async () => {
+    mockRecognize.mockResolvedValue({
+      data: { text: "See (https://example.com) for more info." },
+    });
+    const extractImageUrls = loadExtractImageUrls();
+    const urls = await extractImageUrls(["base64-parens"]);
+    expect(urls).toEqual(["https://example.com"]);
+  });
+
+  it("extracts multiple URLs from one OCR text", async () => {
+    mockRecognize.mockResolvedValue({
+      data: {
+        text: "Links: https://one.com, https://two.com, and https://three.com.",
+      },
+    });
+    const extractImageUrls = loadExtractImageUrls();
+    const urls = await extractImageUrls(["base64-multi"]);
+    expect(urls).toEqual([
+      "https://one.com",
+      "https://two.com",
+      "https://three.com",
+    ]);
+  });
+
+  // Data-URI variations
+
+  it("handles data-URI with and without prefix", async () => {
+    mockRecognize
+      .mockResolvedValueOnce({ data: { text: "https://with-prefix.com" } })
+      .mockResolvedValueOnce({ data: { text: "https://without-prefix.com" } });
+    const extractImageUrls = loadExtractImageUrls();
+    const urls = await extractImageUrls([
+      "data:image/png;base64,abc123",
+      "xyz789",
+    ]);
+    expect(urls).toEqual(["https://with-prefix.com", "https://without-prefix.com"]);
+    expect(mockRecognize).toHaveBeenCalledTimes(2);
+  });
+
+  it("returns empty array for invalid base64 content", async () => {
+    mockRecognize.mockRejectedValue(new Error("Invalid buffer"));
+    const extractImageUrls = loadExtractImageUrls();
+    const urls = await extractImageUrls(["!!!not-base64!!!"]);
+    expect(urls).toEqual([]);
+  });
+
+  // Cache eviction
+
+  it("evicts oldest cache entry when MAX_CACHE_SIZE is exceeded", async () => {
+    process.env.CHAT_IMAGE_OCR_CACHE_SIZE = "2";
+    mockRecognize
+      .mockResolvedValueOnce({ data: { text: "https://first.com" } })
+      .mockResolvedValueOnce({ data: { text: "https://second.com" } })
+      .mockResolvedValueOnce({ data: { text: "https://third.com" } });
+    const extractImageUrls = loadExtractImageUrls();
+
+    await extractImageUrls(["base64-first"]);
+    await extractImageUrls(["base64-second"]);
+    await extractImageUrls(["base64-third"]);
+    expect(mockRecognize).toHaveBeenCalledTimes(3);
+
+    // First entry should have been evicted, so reprocessing it triggers OCR again.
+    mockRecognize.mockResolvedValueOnce({ data: { text: "https://first.com" } });
+    await extractImageUrls(["base64-first"]);
+    expect(mockRecognize).toHaveBeenCalledTimes(4);
+  });
+
+  // CHAT_IMAGE_OCR_LANGS env behavior
+
+  it("honors CHAT_IMAGE_OCR_LANGS when creating the worker", async () => {
+    process.env.CHAT_IMAGE_OCR_LANGS = "eng";
+    mockRecognize.mockResolvedValue({ data: { text: "https://lang.com" } });
+    const extractImageUrls = loadExtractImageUrls();
+    await extractImageUrls(["base64-lang"]);
+    expect(mockCreateWorker).toHaveBeenCalledWith("eng");
+  });
+
+  // Parallel processing
+
+  it("processes multiple images in parallel", async () => {
+    let callCount = 0;
+    mockRecognize.mockImplementation(async () => {
+      callCount += 1;
+      if (callCount === 1) return { data: { text: "https://parallel-a.com" } };
+      if (callCount === 2) return { data: { text: "https://parallel-b.com" } };
+      return { data: { text: "https://shared.com" } };
+    });
+    const extractImageUrls = loadExtractImageUrls();
+    const urls = await extractImageUrls([
+      "base64-a",
+      "base64-b",
+      "base64-shared",
+    ]);
+    expect(urls).toEqual([
+      "https://parallel-a.com",
+      "https://parallel-b.com",
+      "https://shared.com",
+    ]);
+    expect(mockRecognize).toHaveBeenCalledTimes(3);
   });
 });
 

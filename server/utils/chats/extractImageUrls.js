@@ -76,7 +76,10 @@ function findUrls(text) {
   const seen = new Set();
   const urls = [];
   for (const match of matches) {
-    const url = match.trim().replace(/[.,;!?]+$/, "");
+    let url = match.trim().replace(/[.,;!?]+$/, "");
+    // Strip a trailing closing parenthesis only when the URL itself does not
+    // contain an opening parenthesis, so balanced URLs like /path(1) survive.
+    if (url.endsWith(")") && !url.includes("(")) url = url.slice(0, -1);
     if (!url || seen.has(url)) continue;
     seen.add(url);
     urls.push(url);
@@ -89,9 +92,10 @@ function findUrls(text) {
  * Evicts the oldest entry when the limit is exceeded.
  */
 function trimCache() {
-  if (ocrCache.size <= MAX_CACHE_SIZE) return;
-  const oldest = ocrCache.keys().next().value;
-  if (oldest) ocrCache.delete(oldest);
+  while (ocrCache.size > MAX_CACHE_SIZE) {
+    const oldest = ocrCache.keys().next().value;
+    if (oldest) ocrCache.delete(oldest);
+  }
 }
 
 /**
@@ -118,8 +122,8 @@ async function extractUrlsFromImage(content) {
         data: { text },
       } = await worker.recognize(Buffer.from(base64, "base64"));
       const urls = findUrls(text);
-      trimCache();
       ocrCache.set(hash, { urls, text: (text || "").trim() });
+      trimCache();
       return urls;
     } catch (error) {
       // eslint-disable-next-line no-console
