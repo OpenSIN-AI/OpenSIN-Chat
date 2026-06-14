@@ -23,7 +23,7 @@ export default function ChatHistorySettings({ workspace, setHasChanges }) {
         onWheel={(e) => e.target.blur()}
         defaultValue={workspace?.openAiHistory ?? 20}
         className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-        placeholder="20"
+        placeholder={String(20)}
         required={true}
         autoComplete="off"
         onChange={() => setHasChanges(true)}

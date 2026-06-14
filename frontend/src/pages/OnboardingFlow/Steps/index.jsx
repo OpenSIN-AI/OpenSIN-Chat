@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 import useRedirectToHomeOnOnboardingComplete from "@/hooks/useOnboardingComplete";
 import Home from "./Home";
@@ -19,6 +20,7 @@ export default OnboardingSteps;
 
 export function OnboardingLayout({ children }) {
   useRedirectToHomeOnOnboardingComplete();
+  const { t } = useTranslation();
   const [header, setHeader] = useState({
     title: "",
     description: "",
@@ -99,7 +101,7 @@ export function OnboardingLayout({ children }) {
             disabled={backBtn.disabled}
             onClick={backBtn.onClick}
             className="group p-2 rounded-lg border-2 border-theme-sidebar-border h-fit w-fit disabled:cursor-not-allowed hover:bg-theme-bg-secondary disabled:hover:bg-transparent"
-            aria-label="Back"
+            aria-label={t("common.back")}
           >
             <ArrowLeft
               className="text-theme-text-secondary group-hover:text-theme-text-primary group-disabled:text-gray-500"
@@ -127,7 +129,7 @@ export function OnboardingLayout({ children }) {
             disabled={forwardBtn.disabled}
             onClick={forwardBtn.onClick}
             className="group p-2 rounded-lg border-2 border-theme-sidebar-border h-fit w-fit disabled:cursor-not-allowed hover:bg-teal disabled:hover:bg-transparent"
-            aria-label="Continue"
+            aria-label={t("common.continue")}
           >
             <ArrowRight
               className="text-theme-text-secondary group-hover:text-white group-disabled:text-gray-500"
