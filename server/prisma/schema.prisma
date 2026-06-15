@@ -543,24 +543,30 @@ model politician_votes {
 }
 
 model politician_speeches {
-  id           String    @id @default(uuid())
-  politicianId String
-  session      Int? // Wahlperiode
-  sitting      Int? // Sitzungsnummer
-  speechTitle  String? // TOP description
-  speechText   String // full speech text
-  speechDate   DateTime?
-  documentUrl  String? // Link to Plenarprotokoll
-  pageNumbers  String? // e.g. "1234-1236"
-  rawData      String? // JSON blob
-  vectorized   Boolean   @default(false)
-  createdAt    DateTime  @default(now())
+  id              String    @id @default(uuid())
+  dedupeKey      String?   @unique // session/sitting/speaker/text hash for idempotent sync
+  politicianId   String
+  speakerName    String?   // extracted from Plenarprotokoll
+  speakerParty   String?   // faction/party at time of speech
+  session        Int? // Wahlperiode
+  sitting        Int? // Sitzungsnummer
+  speechTitle    String? // TOP description
+  speechText     String // full speech text
+  speechDate     DateTime?
+  documentUrl    String? // Link to Plenarprotokoll
+  pageNumbers    String? // e.g. "1234-1236"
+  rawData        String? // JSON blob
+  matchConfidence Float?   // 0..1 speaker matching confidence
+  vectorized     Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime? @updatedAt
 
   politician politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
 
   @@index([politicianId])
   @@index([speechDate])
   @@index([vectorized])
+  @@index([dedupeKey])
 }
 
 model politician_committees {

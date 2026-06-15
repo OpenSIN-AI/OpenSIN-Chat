@@ -152,3 +152,44 @@ describe("sync-politician-data: buildDedupeKey", () => {
     expect(buildDedupeKey(a)).toBe(buildDedupeKey(b));
   });
 });
+
+// ── Regression: Prisma model shape matches sync job expectations ───────────────
+
+describe("sync-politician-data: Prisma model mapping", () => {
+  test("politician_speeches model has the fields required by the sync job", () => {
+    const { PrismaClient } = require("@prisma/client");
+    const prisma = new PrismaClient();
+    // Regression for Issue #172: code used prisma.politician_speech (singular)
+    // which does not exist; the generated model is politician_speeches (plural).
+    expect(prisma.politician_speeches).toBeDefined();
+    expect(typeof prisma.politician_speeches.findFirst).toBe("function");
+    expect(typeof prisma.politician_speeches.upsert).toBe("function");
+    // Fields the sync job writes during upsert
+    const expectedFields = [
+      "dedupeKey",
+      "politicianId",
+      "speakerName",
+      "speakerParty",
+      "speechText",
+      "speechTitle",
+      "speechDate",
+      "session",
+      "sitting",
+      "pageNumbers",
+      "documentUrl",
+      "matchConfidence",
+      "updatedAt",
+    ];
+    for (const field of expectedFields) {
+      expect(prisma.politician_speeches.fields).toHaveProperty(field);
+    }
+    prisma.$disconnect();
+  });
+
+  test("politician_speech (singular) is NOT a valid model", () => {
+    const { PrismaClient } = require("@prisma/client");
+    const prisma = new PrismaClient();
+    expect(prisma.politician_speech).toBeUndefined();
+    prisma.$disconnect();
+  });
+});

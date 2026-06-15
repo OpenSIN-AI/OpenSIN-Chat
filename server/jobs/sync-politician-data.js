@@ -474,7 +474,7 @@ async function syncAbgeordnetenwatch() {
  */
 async function determineSittingsToSync(session) {
   // Find the last synced sitting for this session
-  const lastSpeech = await prisma.politician_speech
+  const lastSpeech = await prisma.politician_speeches
     .findFirst({
       where: { session },
       orderBy: { sitting: "desc" },
@@ -552,12 +552,12 @@ async function syncBundestagSpeeches() {
             const dedupeKey = `${speech.session}-${speech.sitting}-${speech.speakerName}-${speech.text.slice(0, 100)}`;
 
             await withRetry(() =>
-              prisma.politician_speech.upsert({
+              prisma.politician_speeches.upsert({
                 where: { dedupeKey },
                 update: {
-                  text: speech.text,
-                  top: speech.top,
-                  date: speech.date ? new Date(speech.date) : null,
+                  speechText: speech.text,
+                  speechTitle: speech.top,
+                  speechDate: speech.date ? new Date(speech.date) : null,
                   documentUrl: speech.documentUrl,
                   speakerParty: speech.speakerParty,
                   matchConfidence: confidence,
@@ -568,14 +568,15 @@ async function syncBundestagSpeeches() {
                   politicianId,
                   speakerName: speech.speakerName,
                   speakerParty: speech.speakerParty,
-                  text: speech.text,
-                  top: speech.top,
-                  date: speech.date ? new Date(speech.date) : null,
+                  speechText: speech.text,
+                  speechTitle: speech.top,
+                  speechDate: speech.date ? new Date(speech.date) : null,
                   session: speech.session,
                   sitting: speech.sitting,
                   pageNumbers: speech.pageNumbers,
                   documentUrl: speech.documentUrl,
                   matchConfidence: confidence,
+                  updatedAt: new Date(),
                 },
               }),
             );
