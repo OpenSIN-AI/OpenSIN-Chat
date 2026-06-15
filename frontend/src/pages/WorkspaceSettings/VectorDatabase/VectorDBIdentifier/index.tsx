@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
 
-export default function VectorDBIdentifier({ workspace }) {
+interface VectorDBIdentifierProps {
+  workspace: { slug: string };
+}
+
+export default function VectorDBIdentifier({ workspace }: VectorDBIdentifierProps) {
   const { t } = useTranslation();
   return (
     <div>

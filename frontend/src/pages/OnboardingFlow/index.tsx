@@ -10,7 +10,7 @@ export default function OnboardingFlow() {
 
   return (
     <OnboardingLayout>
-      {(setHeader, setBackBtn, setForwardBtn) => (
+      {(setHeader: any, setBackBtn: any, setForwardBtn: any) => (
         <StepPage
           setHeader={setHeader}
           setBackBtn={setBackBtn}

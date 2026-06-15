@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
 
-export default function LLMDescriptionField({ existingRule }) {
+interface LLMDescriptionFieldProps {
+  existingRule?: { description?: string };
+}
+
+export default function LLMDescriptionField({ existingRule }: LLMDescriptionFieldProps) {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-y-1.5">
