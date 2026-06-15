@@ -2,16 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { X, Copy, Check } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
-import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
+import useWorkspaces from "@/hooks/useWorkspaces";
 
 export default function NewInviteModal({ closeModal, onSuccess }) {
   const { t } = useTranslation();
   const [invite, setInvite] = useState(null);
   const [error, setError] = useState(null);
   const [copied, setCopied] = useState(false);
-  const [workspaces, setWorkspaces] = useState([]);
+  const { workspaces } = useWorkspaces();
   const [selectedWorkspaceIds, setSelectedWorkspaceIds] = useState([]);
 
   const handleCreate = async (e) => {
@@ -58,15 +58,6 @@ export default function NewInviteModal({ closeModal, onSuccess }) {
     }
     resetStatus();
   }, [copied]);
-
-  useEffect(() => {
-    async function fetchWorkspaces() {
-      Workspace.all()
-        .then((workspaces) => setWorkspaces(workspaces))
-        .catch(() => setWorkspaces([]));
-    }
-    fetchWorkspaces();
-  }, []);
 
   return (
     <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center">

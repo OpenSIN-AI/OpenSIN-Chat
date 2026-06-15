@@ -1,17 +1,19 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CircleNotch } from "@phosphor-icons/react";
 import debounce from "lodash.debounce";
 import Toggle from "@/components/lib/Toggle";
-import System from "@/models/system";
 import Admin from "@/models/admin";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function AgentClarifyingQuestions() {
   const { t } = useTranslation();
-  const [enabled, setEnabled] = useState(false);
-  const [maxPerTurn, setMaxPerTurn] = useState(3);
-  const [loading, setLoading] = useState(true);
+  const { settings, loading } = useSystemSettings();
+  const enabled = !!settings.AgentClarifyingQuestionsEnabled;
+  const [maxPerTurn, setMaxPerTurn] = useState(
+    () => parseInt(settings.AgentClarifyingQuestionsMaxPerTurn) || 3,
+  );
 
   const debouncedUpdateMaxPerTurn = useMemo(
     () =>
@@ -23,23 +25,7 @@ export default function AgentClarifyingQuestions() {
     [],
   );
 
-  useEffect(() => {
-    System.keys()
-      .then((res) => {
-        setEnabled(!!res.AgentClarifyingQuestionsEnabled);
-        setMaxPerTurn(parseInt(res.AgentClarifyingQuestionsMaxPerTurn) || 3);
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      debouncedUpdateMaxPerTurn.cancel();
-    };
-  }, [debouncedUpdateMaxPerTurn]);
-
   async function toggleEnabled(next) {
-    setEnabled(next);
     await Admin.updateSystemPreferences({
       agent_clarifying_questions_enabled: String(next),
     });

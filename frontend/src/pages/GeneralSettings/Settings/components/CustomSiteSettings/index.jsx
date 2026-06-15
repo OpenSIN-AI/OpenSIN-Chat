@@ -1,34 +1,29 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Admin from "@/models/admin";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
+import useCustomSiteSettings from "@/hooks/useCustomSiteSettings";
 
 export default function CustomSiteSettings() {
   const { t } = useTranslation();
+  const { title: remoteTitle, faviconUrl: remoteFavicon } =
+    useCustomSiteSettings();
   const [hasChanges, setHasChanges] = useState(false);
   const [settings, setSettings] = useState({
     title: null,
     faviconUrl: null,
   });
 
-  useEffect(() => {
-    Admin.systemPreferencesByFields([
-      "meta_page_title",
-      "meta_page_favicon",
-    ]).then(({ settings }) => {
-      setSettings({
-        title: settings?.meta_page_title,
-        faviconUrl: settings?.meta_page_favicon,
-      });
-    });
-  }, []);
+  // Keep local state in sync with SWR data on first load
+  const title = settings.title ?? remoteTitle;
+  const faviconUrl = settings.faviconUrl ?? remoteFavicon;
 
-  async function handleSiteSettingUpdate(e) {
+    async function handleSiteSettingUpdate(e) {
     e.preventDefault();
     await Admin.updateSystemPreferences({
-      meta_page_title: settings.title ?? null,
-      meta_page_favicon: settings.faviconUrl ?? null,
+      meta_page_title: title ?? null,
+      meta_page_favicon: faviconUrl ?? null,
     });
     showToast(t("customSiteSettings.updateSuccess"), "success", {
       clear: true,
@@ -64,12 +59,10 @@ export default function CustomSiteSettings() {
             className="border-none bg-theme-settings-input-bg mt-2 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
             placeholder={t("customSiteSettings.titlePlaceholder")}
             autoComplete="off"
-            onChange={(e) => {
-              setSettings((prev) => {
-                return { ...prev, title: e.target.value };
-              });
-            }}
-            value={settings.title ?? t("customSiteSettings.titleDefault")}
+            onChange={(e) =>
+              setSettings((prev) => ({ ...prev, title: e.target.value }))
+            }
+            value={title ?? t("customSiteSettings.titleDefault")}
           />
         </div>
       </div>
@@ -83,7 +76,7 @@ export default function CustomSiteSettings() {
         </p>
         <div className="flex items-center gap-x-2">
           <img
-            src={settings.faviconUrl ?? "/favicon.png"}
+            src={faviconUrl ?? "/favicon.png"}
             onError={(e) => (e.target.src = "/favicon.png")}
             className="h-10 w-10 rounded-lg mt-2"
             alt={t("customSiteSettings.faviconAlt")}
@@ -93,13 +86,11 @@ export default function CustomSiteSettings() {
             type="url"
             className="border-none bg-theme-settings-input-bg mt-2 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-fit py-2 px-4"
             placeholder={t("customSiteSettings.faviconPlaceholder")}
-            onChange={(e) => {
-              setSettings((prev) => {
-                return { ...prev, faviconUrl: e.target.value };
-              });
-            }}
+            onChange={(e) =>
+              setSettings((prev) => ({ ...prev, faviconUrl: e.target.value }))
+            }
             autoComplete="off"
-            value={settings.faviconUrl ?? ""}
+            value={faviconUrl ?? ""}
           />
         </div>
       </div>

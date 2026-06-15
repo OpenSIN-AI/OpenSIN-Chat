@@ -7,6 +7,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import { X } from "@phosphor-icons/react";
 import showToast from "@/utils/toast";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 // Providers that can't be routing targets
 const EXCLUDED_PROVIDERS = ["openafd-router"];
@@ -20,11 +21,11 @@ export default function LLMProviderModelPicker({
   defaultModel = "",
 }) {
   const { t } = useTranslation();
+  const { settings, refresh: refreshSettings } = useSystemSettings();
   const [selectedProvider, setSelectedProvider] = useState(defaultProvider);
   const [selectedModel, setSelectedModel] = useState(defaultModel);
   const [models, setModels] = useState([]);
   const [loadingModels, setLoadingModels] = useState(false);
-  const [settings, setSettings] = useState(null);
   const { isOpen, openModal, closeModal } = useModal();
 
   useEffect(() => {
@@ -39,14 +40,6 @@ export default function LLMProviderModelPicker({
   const availableProviders = AVAILABLE_LLM_PROVIDERS.filter(
     (llm) => !EXCLUDED_PROVIDERS.includes(llm.value),
   );
-
-  useEffect(() => {
-    async function fetchSettings() {
-      const _settings = await System.keys();
-      setSettings(_settings ?? {});
-    }
-    fetchSettings();
-  }, []);
 
   function isConfigured(providerValue) {
     if (!settings) return true;
@@ -103,8 +96,7 @@ export default function LLMProviderModelPicker({
       );
       return;
     }
-    const _settings = await System.keys();
-    setSettings(_settings ?? {});
+    await refreshSettings();
     closeModal();
   }
 

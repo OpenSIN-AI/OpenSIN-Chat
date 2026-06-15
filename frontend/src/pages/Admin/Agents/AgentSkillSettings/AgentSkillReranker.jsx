@@ -1,16 +1,19 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CircleNotch } from "@phosphor-icons/react";
 import debounce from "lodash.debounce";
 import Toggle from "@/components/lib/Toggle";
 import System from "@/models/system";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function AgentSkillReranker() {
   const { t } = useTranslation();
-  const [enabled, setEnabled] = useState(false);
-  const [maxTools, setMaxTools] = useState(15);
-  const [loading, setLoading] = useState(true);
+  const { settings, loading } = useSystemSettings();
+  const enabled = !!settings.AgentSkillRerankerEnabled;
+  const [maxTools, setMaxTools] = useState(
+    () => parseInt(settings.AgentSkillRerankerTopN) || 15,
+  );
 
   const debouncedUpdateMaxTools = useMemo(
     () =>
@@ -22,25 +25,9 @@ export default function AgentSkillReranker() {
     [],
   );
 
-  useEffect(() => {
-    System.keys()
-      .then((res) => {
-        setEnabled(res.AgentSkillRerankerEnabled);
-        setMaxTools(parseInt(res.AgentSkillRerankerTopN));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
-    return () => debouncedUpdateMaxTools.cancel();
-  }, [debouncedUpdateMaxTools]);
-
-  async function toggleEnabled(enabled) {
-    setEnabled(enabled);
+  async function toggleEnabled(next) {
     await System.updateSystem({
-      AgentSkillRerankerEnabled: String(enabled),
+      AgentSkillRerankerEnabled: String(next),
     });
   }
 

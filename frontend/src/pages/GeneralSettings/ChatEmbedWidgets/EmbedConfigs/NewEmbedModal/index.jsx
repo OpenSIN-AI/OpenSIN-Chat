@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react";
-import Workspace from "@/models/workspace";
 import { TagsInput } from "react-tag-input-component";
 import Embed from "@/models/embed";
 import Toggle from "@/components/lib/Toggle";
+import useWorkspaces from "@/hooks/useWorkspaces";
 
 const SCRIPT_TAG = "<script>";
 
@@ -134,14 +134,7 @@ export default function NewEmbedModal({ closeModal }) {
 
 export const WorkspaceSelection = ({ defaultValue = null }) => {
   const { t } = useTranslation();
-  const [workspaces, setWorkspaces] = useState([]);
-  useEffect(() => {
-    async function fetchWorkspaces() {
-      const _workspaces = await Workspace.all();
-      setWorkspaces(_workspaces);
-    }
-    fetchWorkspaces();
-  }, []);
+  const { workspaces } = useWorkspaces();
 
   return (
     <div>
