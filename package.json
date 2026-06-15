@@ -55,7 +55,7 @@
     "prisma:migrate": "cd server && npx prisma migrate dev --name init",
     "prisma:seed": "cd server && npx prisma db seed",
     "prisma:setup": "yarn prisma:generate && yarn prisma:migrate && yarn prisma:seed",
-    "prisma:reset": "truncate -s 0 server/storage/openafd.db && yarn prisma:migrate",
+    "prisma:reset": "truncate -s 0 server/storage/opensin.db && yarn prisma:migrate",
     "prod:server": "cd server && yarn start",
     "prod:frontend": "cd frontend && yarn build",
     "generate:cloudformation": "node cloud-deployments/aws/cloudformation/generate.mjs",

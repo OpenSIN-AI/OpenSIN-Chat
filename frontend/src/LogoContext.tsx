@@ -42,9 +42,17 @@ export function LogoProvider({ children }) {
           isCustomLogo,
         };
       }
-      return { logo: fallbackLogo, loginLogo: defaultLoginLogo, isCustomLogo: false };
+      return {
+        logo: fallbackLogo,
+        loginLogo: defaultLoginLogo,
+        isCustomLogo: false,
+      };
     } catch {
-      return { logo: fallbackLogo, loginLogo: defaultLoginLogo, isCustomLogo: false };
+      return {
+        logo: fallbackLogo,
+        loginLogo: defaultLoginLogo,
+        isCustomLogo: false,
+      };
     }
   }
 
@@ -78,7 +86,8 @@ export function LogoProvider({ children }) {
     <LogoContext.Provider
       value={{
         logo: data!.logo,
-        setLogo: (logo: string) => mutate((prev) => ({ ...prev!, logo }), false),
+        setLogo: (logo: string) =>
+          mutate((prev) => ({ ...prev!, logo }), false),
         loginLogo: data!.loginLogo,
         isCustomLogo: data!.isCustomLogo,
       }}

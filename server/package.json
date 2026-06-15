@@ -3,7 +3,7 @@
   "version": "1.13.0",
   "description": "Server endpoints to process or create content for chatting",
   "main": "index.js",
-  "author": "Timothy Carambat (Family Team Projects)",
+  "author": "OpenSIN-AI",
   "license": "MIT",
   "private": false,
   "engines": {

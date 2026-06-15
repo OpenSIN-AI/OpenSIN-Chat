@@ -37,7 +37,7 @@ vi.mock("@/hooks/useLanguageOptions", () => ({
   useLanguageOptions: () => ({
     currentLanguage: "de",
     supportedLanguages: ["de", "en"],
-    getLanguageName: (l) => ({ de: "Deutsch", en: "English" }[l] || l),
+    getLanguageName: (l) => ({ de: "Deutsch", en: "English" })[l] || l,
     changeLanguage,
   }),
 }));

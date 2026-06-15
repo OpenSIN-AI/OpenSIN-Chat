@@ -265,7 +265,7 @@ flowchart TB
     end
 
     subgraph Data["💾 Persistenz (lokal auf Mac)"]
-        SQLite[("server/storage/<br/>openafd.db<br/>(Prisma + SQLite)")]
+        SQLite[("server/storage/<br/>opensin.db<br/>(Prisma + SQLite)")]
         Files[("server/storage/<br/>uploads/, vectors/")]
     end
 
