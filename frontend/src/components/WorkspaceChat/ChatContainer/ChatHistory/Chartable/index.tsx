@@ -32,7 +32,7 @@ import CustomCell from "./CustomCell.jsx";
 import Tooltip from "./CustomTooltip.jsx";
 import { safeJsonParse } from "@/utils/request.js";
 import renderMarkdown from "@/utils/chat/markdown.js";
-import DOMPurify from "dompurify";
+import DOMPurify from "@/utils/chat/purify";
 import { memo, useCallback, useState } from "react";
 import { saveAs } from "file-saver";
 import { useGenerateImage } from "recharts-to-png";

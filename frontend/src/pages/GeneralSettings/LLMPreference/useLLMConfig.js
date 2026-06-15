@@ -1,19 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export const LLM_PREFERENCE_CHANGED_EVENT = "llm-preference-changed";
 
 export default function useLLMConfig(availableProviders) {
+  const { settings, loading } = useSystemSettings();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
-  const [settings, setSettings] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredLLMs, setFilteredLLMs] = useState([]);
-  const [selectedLLM, setSelectedLLM] = useState(null);
+  const [selectedLLM, setSelectedLLM] = useState(
+    () => settings?.LLMProvider ?? null,
+  );
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef(null);
+
+  // Sync selectedLLM once settings arrive from SWR
+  useEffect(() => {
+    if (!loading && settings?.LLMProvider && selectedLLM === null) {
+      setSelectedLLM(settings.LLMProvider);
+    }
+  }, [loading, settings?.LLMProvider]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,16 +58,6 @@ export default function useLLMConfig(availableProviders) {
       setSearchMenuOpen(!searchMenuOpen);
     }
   };
-
-  useEffect(() => {
-    async function fetchKeys() {
-      const _settings = await System.keys();
-      setSettings(_settings);
-      setSelectedLLM(_settings?.LLMProvider);
-      setLoading(false);
-    }
-    fetchKeys();
-  }, []);
 
   useEffect(() => {
     function updateHasChanges() {

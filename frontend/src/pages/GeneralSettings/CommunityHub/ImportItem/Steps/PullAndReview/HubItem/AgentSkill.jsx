@@ -11,7 +11,7 @@ import {
 } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import renderMarkdown from "@/utils/chat/markdown";
-import DOMPurify from "dompurify";
+import DOMPurify from "@/utils/chat/purify";
 import CommunityHub from "@/models/communityHub";
 import { setEventDelegatorForCodeSnippets } from "@/components/WorkspaceChat";
 import { useTranslation } from "react-i18next";

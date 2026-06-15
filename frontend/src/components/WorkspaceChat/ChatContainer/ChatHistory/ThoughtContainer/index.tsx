@@ -10,7 +10,7 @@ import {
 } from "react";
 import { useTranslation } from "react-i18next";
 import renderMarkdown from "@/utils/chat/markdown";
-import DOMPurify from "dompurify";
+import DOMPurify from "@/utils/chat/purify";
 import ThinkingAnimation from "@/media/animations/thinking-animation.webm";
 import ThinkingStatic from "@/media/animations/thinking-static.png";
 

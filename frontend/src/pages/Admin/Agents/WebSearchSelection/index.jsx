@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import Admin from "@/models/admin";
+import useAgentSearchProvider from "@/hooks/useAgentSearchProvider";
 import SerpApiIcon from "./icons/serpapi.png";
 import SearchApiIcon from "./icons/searchapi.png";
 import SerperDotDevIcon from "./icons/serper.png";
@@ -145,8 +145,11 @@ export default function AgentWebSearchSelection({
 }) {
   const { t } = useTranslation();
   const searchInputRef = useRef(null);
+  const { provider: initialProvider } = useAgentSearchProvider();
   const [filteredResults, setFilteredResults] = useState([]);
-  const [selectedProvider, setSelectedProvider] = useState("duckduckgo-engine");
+  const [selectedProvider, setSelectedProvider] = useState(
+    () => initialProvider,
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
 
@@ -172,16 +175,6 @@ export default function AgentWebSearchSelection({
     );
     setFilteredResults(filtered);
   }, [searchQuery, selectedProvider]);
-
-  useEffect(() => {
-    Admin.systemPreferencesByFields(["agent_search_provider"])
-      .then((res) =>
-        setSelectedProvider(
-          res?.settings?.agent_search_provider ?? "duckduckgo-engine",
-        ),
-      )
-      .catch(() => setSelectedProvider("duckduckgo-engine"));
-  }, []);
 
   const selectedSearchProviderObject =
     SEARCH_PROVIDERS.find((provider) => provider.value === selectedProvider) ??
