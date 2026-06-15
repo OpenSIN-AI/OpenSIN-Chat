@@ -12,6 +12,7 @@
     "sync:docs": "node scripts/sync-docs.js",
     "lint:check": "eslint src",
     "lint": "eslint --fix src",
+    "audit": "npm audit --audit-level=moderate",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
