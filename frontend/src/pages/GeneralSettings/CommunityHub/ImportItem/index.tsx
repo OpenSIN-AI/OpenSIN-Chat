@@ -17,7 +17,10 @@ type SideBarSelectionProps = {
   currentStep: string;
 };
 
-function SideBarSelection({ setStep, currentStep }: SideBarSelectionProps): JSX.Element {
+function SideBarSelection({
+  setStep,
+  currentStep,
+}: SideBarSelectionProps): JSX.Element {
   const currentIndex = Object.keys(CommunityHubImportItemSteps).indexOf(
     currentStep,
   );
@@ -27,55 +30,55 @@ function SideBarSelection({ setStep, currentStep }: SideBarSelectionProps): JSX.
         isMobile ? "w-full" : "min-w-[360px] w-fit"
       }`}
     >
-      {Object.entries(CommunityHubImportItemSteps as Record<string, StepDef>).map(
-        ([stepKey, props], index) => {
-          const isSelected = currentStep === stepKey;
-          const isLast =
-            index === Object.keys(CommunityHubImportItemSteps).length - 1;
-          const isDone =
-            currentIndex ===
-              Object.keys(CommunityHubImportItemSteps).length - 1 ||
-            index < currentIndex;
-          return (
-            <div
-              key={stepKey}
-              className={[
-                "py-3 flex items-center justify-between transition-all duration-300",
-                isSelected ? "rounded-t-xl" : "",
-                isLast
-                  ? ""
-                  : "border-b border-white/10 light:border-[#026AA2]/10",
-              ].join(" ")}
-            >
-              {isDone || isSelected ? (
-                <button
-                  onClick={() => setStep(stepKey)}
-                  className="border-none hover:underline text-sm font-medium text-theme-text-primary"
-                >
-                  {props.name}
-                </button>
-              ) : (
-                <div className="text-sm text-theme-text-secondary font-medium">
-                  {props.name}
-                </div>
-              )}
-              <div className="flex items-center gap-x-2">
-                {isDone ? (
-                  <div className="w-[14px] h-[14px] rounded-full border border-[#32D583] flex items-center justify-center">
-                    <div className="w-[5.6px] h-[5.6px] rounded-full bg-[#6CE9A6]"></div>
-                  </div>
-                ) : (
-                  <div
-                    className={`w-[14px] h-[14px] rounded-full border border-theme-text-primary ${
-                      isSelected ? "animate-pulse" : "opacity-50"
-                    }`}
-                  />
-                )}
+      {Object.entries(
+        CommunityHubImportItemSteps as Record<string, StepDef>,
+      ).map(([stepKey, props], index) => {
+        const isSelected = currentStep === stepKey;
+        const isLast =
+          index === Object.keys(CommunityHubImportItemSteps).length - 1;
+        const isDone =
+          currentIndex ===
+            Object.keys(CommunityHubImportItemSteps).length - 1 ||
+          index < currentIndex;
+        return (
+          <div
+            key={stepKey}
+            className={[
+              "py-3 flex items-center justify-between transition-all duration-300",
+              isSelected ? "rounded-t-xl" : "",
+              isLast
+                ? ""
+                : "border-b border-white/10 light:border-[#026AA2]/10",
+            ].join(" ")}
+          >
+            {isDone || isSelected ? (
+              <button
+                onClick={() => setStep(stepKey)}
+                className="border-none hover:underline text-sm font-medium text-theme-text-primary"
+              >
+                {props.name}
+              </button>
+            ) : (
+              <div className="text-sm text-theme-text-secondary font-medium">
+                {props.name}
               </div>
+            )}
+            <div className="flex items-center gap-x-2">
+              {isDone ? (
+                <div className="w-[14px] h-[14px] rounded-full border border-[#32D583] flex items-center justify-center">
+                  <div className="w-[5.6px] h-[5.6px] rounded-full bg-[#6CE9A6]"></div>
+                </div>
+              ) : (
+                <div
+                  className={`w-[14px] h-[14px] rounded-full border border-theme-text-primary ${
+                    isSelected ? "animate-pulse" : "opacity-50"
+                  }`}
+                />
+              )}
             </div>
-          );
-        },
-      )}
+          </div>
+        );
+      })}
     </div>
   );
 }

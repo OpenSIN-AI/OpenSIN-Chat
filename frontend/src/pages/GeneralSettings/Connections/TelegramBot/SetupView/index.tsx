@@ -16,7 +16,9 @@ type SetupViewProps = {
   onConnected: (config?: any) => void;
 };
 
-export default function SetupView({ onConnected }: SetupViewProps): JSX.Element {
+export default function SetupView({
+  onConnected,
+}: SetupViewProps): JSX.Element {
   const { t } = useTranslation();
   const [botToken, setBotToken] = useState("");
   const [connecting, setConnecting] = useState(false);
@@ -79,7 +81,10 @@ type BotTokenInputProps = {
   setBotToken: (token: string) => void;
 };
 
-function BotTokenInput({ botToken, setBotToken }: BotTokenInputProps): JSX.Element {
+function BotTokenInput({
+  botToken,
+  setBotToken,
+}: BotTokenInputProps): JSX.Element {
   const { t } = useTranslation();
   const [showToken, setShowToken] = useState(false);
   const Icon = showToken ? Eye : EyeSlash;

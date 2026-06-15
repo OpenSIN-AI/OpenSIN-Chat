@@ -5,7 +5,9 @@ interface VectorDBIdentifierProps {
   workspace: { slug: string };
 }
 
-export default function VectorDBIdentifier({ workspace }: VectorDBIdentifierProps) {
+export default function VectorDBIdentifier({
+  workspace,
+}: VectorDBIdentifierProps) {
   const { t } = useTranslation();
   return (
     <div>

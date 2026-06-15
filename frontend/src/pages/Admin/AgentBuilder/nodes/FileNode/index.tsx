@@ -7,9 +7,19 @@ export default function FileNode({
   onConfigChange,
   renderVariableSelect,
 }: {
-  config: { operation?: string; path?: string; content?: string; resultVariable?: string };
+  config: {
+    operation?: string;
+    path?: string;
+    content?: string;
+    resultVariable?: string;
+  };
   onConfigChange: (c: any) => void;
-  renderVariableSelect: (value: any, onChange: (v: any) => void, placeholder: string, required: boolean) => React.ReactNode;
+  renderVariableSelect: (
+    value: any,
+    onChange: (v: any) => void,
+    placeholder: string,
+    required: boolean,
+  ) => React.ReactNode;
 }) {
   const { t } = useTranslation();
   return (

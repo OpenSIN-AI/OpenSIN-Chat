@@ -26,7 +26,10 @@ export default function MobileDevices(): JSX.Element {
   }
 
   const removeDevice = (id: string) => {
-    mutate((prev) => (prev || []).filter((device: any) => device.id !== id), false);
+    mutate(
+      (prev) => (prev || []).filter((device: any) => device.id !== id),
+      false,
+    );
   };
 
   return (

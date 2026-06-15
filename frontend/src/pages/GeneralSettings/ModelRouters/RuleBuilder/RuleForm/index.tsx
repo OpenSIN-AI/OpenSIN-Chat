@@ -90,7 +90,8 @@ export default function RuleForm({
 
     if (ruleType === "calculated") {
       const incomplete = conditions.findIndex(
-        (c: any) => !c.property || !c.comparator || !String(c.value ?? "").trim(),
+        (c: any) =>
+          !c.property || !c.comparator || !String(c.value ?? "").trim(),
       );
       if (incomplete !== -1) {
         showToast(
@@ -183,7 +184,10 @@ export default function RuleForm({
                   ))}
                 </select>
                 <p className="text-xs leading-4 text-zinc-400 light:text-slate-600">
-                  {ruleTypes.find((rt: any) => rt.value === ruleType)?.description}
+                  {
+                    ruleTypes.find((rt: any) => rt.value === ruleType)
+                      ?.description
+                  }
                 </p>
               </div>
             </div>

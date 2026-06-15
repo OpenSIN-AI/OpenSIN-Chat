@@ -39,26 +39,28 @@ export default function ExperimentalFeatures() {
             </p>
           </div>
           <div className="bg-theme-bg-secondary text-white rounded-xl min-w-[360px] w-fit">
-            {Object.values(configurableFeatures).map((feature: any, index: number) => {
-              const isFirst = index === 0;
-              const isLast =
-                index === Object.values(configurableFeatures).length - 1;
-              return (
-                <FeatureItem
-                  key={feature.key}
-                  feature={feature}
-                  isSelected={selectedFeature === feature.key}
-                  isActive={featureFlags[feature.key]}
-                  handleClick={setSelectedFeature}
-                  borderClass={[
-                    ...(isFirst ? ["rounded-t-xl"] : []),
-                    ...(isLast
-                      ? ["rounded-b-xl"]
-                      : ["border-b border-white/10"]),
-                  ].join(" ")}
-                />
-              );
-            })}
+            {Object.values(configurableFeatures).map(
+              (feature: any, index: number) => {
+                const isFirst = index === 0;
+                const isLast =
+                  index === Object.values(configurableFeatures).length - 1;
+                return (
+                  <FeatureItem
+                    key={feature.key}
+                    feature={feature}
+                    isSelected={selectedFeature === feature.key}
+                    isActive={featureFlags[feature.key]}
+                    handleClick={setSelectedFeature}
+                    borderClass={[
+                      ...(isFirst ? ["rounded-t-xl"] : []),
+                      ...(isLast
+                        ? ["rounded-b-xl"]
+                        : ["border-b border-white/10"]),
+                    ].join(" ")}
+                  />
+                );
+              },
+            )}
           </div>
         </div>
 

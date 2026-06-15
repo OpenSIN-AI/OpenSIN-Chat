@@ -5,7 +5,9 @@ interface FileTreeProps {
   files: any;
   movedItems: any[];
   selectedItems: Record<string, boolean>;
-  setSelectedItems: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  setSelectedItems: React.Dispatch<
+    React.SetStateAction<Record<string, boolean>>
+  >;
   toggleSelection: (item: any) => void;
   toggleSelectAll: () => void;
   removeSelectedItems: () => void;

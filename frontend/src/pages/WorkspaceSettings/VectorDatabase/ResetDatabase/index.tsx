@@ -4,7 +4,11 @@ import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 
-export default function ResetDatabase({ workspace }: { workspace: { slug: string } }) {
+export default function ResetDatabase({
+  workspace,
+}: {
+  workspace: { slug: string };
+}) {
   const [deleting, setDeleting] = useState(false);
   const { t } = useTranslation();
   const resetVectorDatabase = async () => {

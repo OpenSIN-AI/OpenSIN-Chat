@@ -20,7 +20,9 @@ export default function NewInviteModal({
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const { workspaces } = useWorkspaces();
-  const [selectedWorkspaceIds, setSelectedWorkspaceIds] = useState<string[]>([]);
+  const [selectedWorkspaceIds, setSelectedWorkspaceIds] = useState<string[]>(
+    [],
+  );
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     setError(null);

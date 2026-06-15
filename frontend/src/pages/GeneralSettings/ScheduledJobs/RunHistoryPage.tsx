@@ -126,7 +126,10 @@ type RunHistoryLayoutProps = {
   children: ReactNode;
 };
 
-function RunHistoryLayout({ job, children }: RunHistoryLayoutProps): JSX.Element {
+function RunHistoryLayout({
+  job,
+  children,
+}: RunHistoryLayoutProps): JSX.Element {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 

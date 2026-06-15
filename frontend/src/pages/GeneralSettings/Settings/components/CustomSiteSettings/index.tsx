@@ -81,7 +81,9 @@ export default function CustomSiteSettings(): JSX.Element {
         <div className="flex items-center gap-x-2">
           <img
             src={faviconUrl ?? "/favicon.png"}
-            onError={(e) => ((e.target as HTMLImageElement).src = "/favicon.png")}
+            onError={(e) =>
+              ((e.target as HTMLImageElement).src = "/favicon.png")
+            }
             className="h-10 w-10 rounded-lg mt-2"
             alt={t("customSiteSettings.faviconAlt")}
           />

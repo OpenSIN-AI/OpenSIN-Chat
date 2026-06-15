@@ -47,7 +47,9 @@ export default function EmbeddingTextSplitterPreference() {
     setSaving(true);
     try {
       const form = new FormData(
-        document.getElementById("text-splitter-chunking-form") as HTMLFormElement,
+        document.getElementById(
+          "text-splitter-chunking-form",
+        ) as HTMLFormElement,
       );
       await Admin.updateSystemPreferences({
         text_splitter_chunk_size: isNullOrNaN(

@@ -28,7 +28,10 @@ type VariableRowProps = {
 /**
  * A row component for displaying a system prompt variable.
  */
-export default function VariableRow({ variable, onRefresh }: VariableRowProps): JSX.Element {
+export default function VariableRow({
+  variable,
+  onRefresh,
+}: VariableRowProps): JSX.Element {
   const { t } = useTranslation();
   const rowRef = useRef<HTMLTableRowElement>(null);
   const { isOpen, openModal, closeModal } = useModal();

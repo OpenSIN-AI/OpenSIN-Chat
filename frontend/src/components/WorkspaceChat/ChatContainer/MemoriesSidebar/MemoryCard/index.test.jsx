@@ -24,9 +24,15 @@ vi.mock("../MemoriesContext", () => ({
 vi.mock("./CardMenu", () => ({
   default: ({ onEdit, onDelete, onMove, menuRef }) => (
     <div data-testid="card-menu" ref={menuRef}>
-      <button data-testid="menu-edit" onClick={onEdit}>Edit</button>
-      <button data-testid="menu-delete" onClick={onDelete}>Delete</button>
-      <button data-testid="menu-move" onClick={onMove}>Move</button>
+      <button data-testid="menu-edit" onClick={onEdit}>
+        Edit
+      </button>
+      <button data-testid="menu-delete" onClick={onDelete}>
+        Delete
+      </button>
+      <button data-testid="menu-move" onClick={onMove}>
+        Move
+      </button>
     </div>
   ),
 }));
@@ -64,7 +70,9 @@ describe("MemoryCard", () => {
   it("renders memory content", () => {
     useMemoriesContext.mockReturnValue(makeContextValue());
     render(<MemoryCard memory={workspaceMemory} />, { wrapper: Wrapper });
-    expect(screen.getByText("Remember to greet users by name")).toBeInTheDocument();
+    expect(
+      screen.getByText("Remember to greet users by name"),
+    ).toBeInTheDocument();
   });
 
   it("renders formatted creation date", () => {
@@ -111,7 +119,7 @@ describe("MemoryCard", () => {
   it("calls handlePromote when move is clicked on workspace tab", () => {
     const handlePromote = vi.fn();
     useMemoriesContext.mockReturnValue(
-      makeContextValue({ activeTab: "workspace", handlePromote })
+      makeContextValue({ activeTab: "workspace", handlePromote }),
     );
     render(<MemoryCard memory={workspaceMemory} />, { wrapper: Wrapper });
 
@@ -127,7 +135,7 @@ describe("MemoryCard", () => {
         activeTab: "global",
         memories: { workspace: [], global: [globalMemory] },
         handleDemote,
-      })
+      }),
     );
     render(<MemoryCard memory={globalMemory} />, { wrapper: Wrapper });
 

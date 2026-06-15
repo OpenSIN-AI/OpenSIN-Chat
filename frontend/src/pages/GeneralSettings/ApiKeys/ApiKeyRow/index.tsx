@@ -10,7 +10,13 @@ export default function ApiKeyRow({
   apiKey,
   removeApiKey,
 }: {
-  apiKey: { id: number; name?: string; secret: string; createdBy?: { username?: string }; createdAt: string };
+  apiKey: {
+    id: number;
+    name?: string;
+    secret: string;
+    createdBy?: { username?: string };
+    createdAt: string;
+  };
   removeApiKey: (id: number) => void;
 }) {
   const { t } = useTranslation();

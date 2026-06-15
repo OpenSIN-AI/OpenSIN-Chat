@@ -99,5 +99,4 @@ describe("usePoliticianSync", () => {
 
     vi.unstubAllGlobals();
   });
-
 });

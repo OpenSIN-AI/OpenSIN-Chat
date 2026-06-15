@@ -168,15 +168,17 @@ export default function DefaultSystemPrompt() {
                         {t("defaultSystemPrompt.variables.linkText")}
                       </Link>{" "}
                       {t("defaultSystemPrompt.variables.like")}{" "}
-                      {availableVariables.slice(0, 3).map((v: any, i: number) => (
-                        <Fragment key={v.key}>
-                          <span className="bg-theme-settings-input-bg px-1 py-0.5 rounded">
-                            {`{${v.key}}`}
-                          </span>
-                          {i < availableVariables.length - 1 &&
-                            VARIABLE_SEPARATOR}
-                        </Fragment>
-                      ))}
+                      {availableVariables
+                        .slice(0, 3)
+                        .map((v: any, i: number) => (
+                          <Fragment key={v.key}>
+                            <span className="bg-theme-settings-input-bg px-1 py-0.5 rounded">
+                              {`{${v.key}}`}
+                            </span>
+                            {i < availableVariables.length - 1 &&
+                              VARIABLE_SEPARATOR}
+                          </Fragment>
+                        ))}
                       {availableVariables.length > 3 && (
                         <Link
                           to={paths.settings.systemPromptVariables()}

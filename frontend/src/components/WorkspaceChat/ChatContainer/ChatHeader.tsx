@@ -14,7 +14,10 @@ interface ChatHeaderProps {
   isEmpty: boolean;
 }
 
-export default function ChatHeader({ workspaceSlug, isEmpty }: ChatHeaderProps) {
+export default function ChatHeader({
+  workspaceSlug,
+  isEmpty,
+}: ChatHeaderProps) {
   return (
     <>
       {isMobile && <SidebarMobileHeader />}

@@ -23,7 +23,8 @@ export default function VectorDatabase({ workspace }: { workspace: any }) {
     e.preventDefault();
     const data: Record<string, any> = {};
     const form = new FormData(formEl.current!);
-    for (var [key, value] of form.entries()) data[key] = castToType(key, value);
+    for (const [key, value] of form.entries())
+      data[key] = castToType(key, value);
     const { workspace: updatedWorkspace, message } = await Workspace.update(
       workspace.slug,
       data,

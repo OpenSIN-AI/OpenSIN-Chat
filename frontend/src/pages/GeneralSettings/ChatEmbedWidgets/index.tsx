@@ -130,7 +130,10 @@ type WidgetListProps = {
   handleClick: (view: string) => void;
 };
 
-function WidgetList({ selectedView, handleClick }: WidgetListProps): JSX.Element {
+function WidgetList({
+  selectedView,
+  handleClick,
+}: WidgetListProps): JSX.Element {
   const views: Record<string, { title: string }> = {
     configs: {
       title: "Widgets",

@@ -26,7 +26,11 @@ export default function GenericHubCard({ item }: { item: any }) {
   );
 }
 
-export function VisibilityIcon({ visibility = "public" }: { visibility?: string }) {
+export function VisibilityIcon({
+  visibility = "public",
+}: {
+  visibility?: string;
+}) {
   const Icon = visibility === "private" ? LockSimple : Eye;
 
   return (

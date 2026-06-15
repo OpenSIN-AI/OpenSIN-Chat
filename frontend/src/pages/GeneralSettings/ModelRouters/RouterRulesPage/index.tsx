@@ -41,7 +41,13 @@ export default function RouterRulesPage() {
   );
 }
 
-function Layout({ t, children }: { t: (key: string) => string; children: React.ReactNode }) {
+function Layout({
+  t,
+  children,
+}: {
+  t: (key: string) => string;
+  children: React.ReactNode;
+}) {
   const navigate = useNavigate();
 
   return (

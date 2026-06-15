@@ -11,7 +11,9 @@ type UserItemsProps = {
   connectionKey: string;
 };
 
-export default function UserItems({ connectionKey }: UserItemsProps): JSX.Element {
+export default function UserItems({
+  connectionKey,
+}: UserItemsProps): JSX.Element {
   const { t } = useTranslation();
   const { loading, userItems } = useUserItems({ connectionKey });
   const { createdByMe = {}, teamItems = [] } = userItems || {};

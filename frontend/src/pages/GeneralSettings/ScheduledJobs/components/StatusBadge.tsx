@@ -47,6 +47,7 @@ function getStatusesMap(t: (key: string) => string) {
 export default function StatusBadge({ status }: { status: string }) {
   const { t } = useTranslation();
   const statusesMap = getStatusesMap(t);
-  const { text, style } = statusesMap[status as keyof typeof statusesMap] || statusesMap.default;
+  const { text, style } =
+    statusesMap[status as keyof typeof statusesMap] || statusesMap.default;
   return <span className={`text-sm ${style}`}>{text}</span>;
 }

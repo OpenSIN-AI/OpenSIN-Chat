@@ -22,9 +22,14 @@ export default function SuggestedChatMessages({
 }: SuggestedChatMessagesProps): JSX.Element {
   const { suggestedMessages: initialMessages, isLoading } =
     useSuggestedMessages(slug);
-  const [suggestedMessages, setSuggestedMessages] = useState<SuggestedMessage[]>([]);
+  const [suggestedMessages, setSuggestedMessages] = useState<
+    SuggestedMessage[]
+  >([]);
   const [editingIndex, setEditingIndex] = useState(-1);
-  const [newMessage, setNewMessage] = useState<SuggestedMessage>({ heading: "", message: "" });
+  const [newMessage, setNewMessage] = useState<SuggestedMessage>({
+    heading: "",
+    message: "",
+  });
   const [hasChanges, setHasChanges] = useState(false);
   const { t } = useTranslation();
 

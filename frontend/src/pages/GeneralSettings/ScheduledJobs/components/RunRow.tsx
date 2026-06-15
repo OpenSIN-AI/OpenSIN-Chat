@@ -41,7 +41,11 @@ type RunRowProps = {
  * One row of the run history table. The whole row is clickable and
  * navigates to the run detail page.
  */
-export default function RunRow({ run, jobId, onKilled }: RunRowProps): JSX.Element {
+export default function RunRow({
+  run,
+  jobId,
+  onKilled,
+}: RunRowProps): JSX.Element {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [killing, setKilling] = useState(false);

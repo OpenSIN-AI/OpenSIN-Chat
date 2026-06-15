@@ -195,5 +195,17 @@ export default [
     rules: {
       "i18next/no-literal-string": "off"
     }
-  }
+  },
+
+  // TypeScript files: disable no-undef because TypeScript itself performs this
+  // check at compile time and understands ambient types from @types/* (e.g.
+  // EventListener from lib.dom.d.ts, JSX from @types/react). ESLint's no-undef
+  // only knows about runtime globals and produces false positives on valid TS.
+  // This block must appear last so it takes precedence over the main block above.
+  {
+    files: ["src/**/*.{ts,tsx}"],
+    rules: {
+      "no-undef": "off",
+    },
+  },
 ]

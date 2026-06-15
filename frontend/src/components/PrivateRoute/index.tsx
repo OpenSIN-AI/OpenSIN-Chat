@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { FullScreenLoader } from "../Preloader";
 import validateSessionTokenForUser from "@/utils/session";
@@ -60,32 +59,50 @@ function useIsAuthenticated() {
   );
 
   const loading =
-    settingsLoading ||
-    onboardingLoading ||
-    (needsTokenCheck && sessionLoading);
+    settingsLoading || onboardingLoading || (needsTokenCheck && sessionLoading);
 
   if (loading || onboardingComplete === undefined) {
-    return { isAuthd: null, shouldRedirectToOnboarding: false, multiUserMode: !!MultiUserMode };
+    return {
+      isAuthd: null,
+      shouldRedirectToOnboarding: false,
+      multiUserMode: !!MultiUserMode,
+    };
   }
 
   // Onboarding is incomplete — redirect
   if (onboardingComplete === false) {
-    return { isAuthd: true, shouldRedirectToOnboarding: true, multiUserMode: !!MultiUserMode };
+    return {
+      isAuthd: true,
+      shouldRedirectToOnboarding: true,
+      multiUserMode: !!MultiUserMode,
+    };
   }
 
   // Single-user mode, no password required
   if (!MultiUserMode && !RequiresAuth) {
-    return { isAuthd: true, shouldRedirectToOnboarding: false, multiUserMode: false };
+    return {
+      isAuthd: true,
+      shouldRedirectToOnboarding: false,
+      multiUserMode: false,
+    };
   }
 
   // Auth is required but we have no token
   if (!localAuthToken) {
-    return { isAuthd: false, shouldRedirectToOnboarding: false, multiUserMode: !!MultiUserMode };
+    return {
+      isAuthd: false,
+      shouldRedirectToOnboarding: false,
+      multiUserMode: !!MultiUserMode,
+    };
   }
 
   // Multi-user mode also requires a stored user record
   if (MultiUserMode && !localUser) {
-    return { isAuthd: false, shouldRedirectToOnboarding: false, multiUserMode: true };
+    return {
+      isAuthd: false,
+      shouldRedirectToOnboarding: false,
+      multiUserMode: true,
+    };
   }
 
   // Session token was invalid — clean up storage
@@ -93,7 +110,11 @@ function useIsAuthenticated() {
     localStorage.removeItem(AUTH_USER);
     localStorage.removeItem(AUTH_TOKEN);
     localStorage.removeItem(AUTH_TIMESTAMP);
-    return { isAuthd: false, shouldRedirectToOnboarding: false, multiUserMode: !!MultiUserMode };
+    return {
+      isAuthd: false,
+      shouldRedirectToOnboarding: false,
+      multiUserMode: !!MultiUserMode,
+    };
   }
 
   return {

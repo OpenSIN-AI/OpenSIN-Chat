@@ -15,10 +15,15 @@ interface PullAndReviewSettings {
 
 interface UseGetCommunityHubItemProps {
   importId: string | null;
-  updateSettings: (updater: (prev: PullAndReviewSettings) => PullAndReviewSettings) => void;
+  updateSettings: (
+    updater: (prev: PullAndReviewSettings) => PullAndReviewSettings,
+  ) => void;
 }
 
-function useGetCommunityHubItem({ importId, updateSettings }: UseGetCommunityHubItemProps) {
+function useGetCommunityHubItem({
+  importId,
+  updateSettings,
+}: UseGetCommunityHubItemProps) {
   const [item, setItem] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +33,8 @@ function useGetCommunityHubItem({ importId, updateSettings }: UseGetCommunityHub
       if (!importId) return;
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      const { error: fetchError, item: fetchedItem } = await CommunityHub.getItemFromImportId(importId);
+      const { error: fetchError, item: fetchedItem } =
+        await CommunityHub.getItemFromImportId(importId);
       if (fetchError) setError(fetchError);
       setItem(fetchedItem);
       updateSettings((prev) => ({ ...prev, item: fetchedItem }));
@@ -42,7 +48,9 @@ function useGetCommunityHubItem({ importId, updateSettings }: UseGetCommunityHub
 
 interface PullAndReviewProps {
   settings: PullAndReviewSettings;
-  setSettings: (updater: (prev: PullAndReviewSettings) => PullAndReviewSettings) => void;
+  setSettings: (
+    updater: (prev: PullAndReviewSettings) => PullAndReviewSettings,
+  ) => void;
   setStep: (step: string) => void;
 }
 

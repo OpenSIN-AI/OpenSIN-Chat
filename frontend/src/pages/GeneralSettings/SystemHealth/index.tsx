@@ -81,8 +81,12 @@ function ConnectivityPanel(): JSX.Element {
       return;
     }
     setResults(res.results);
-    const reachable = res.results.filter((r: ConnectivityResult) => r.reachable).length;
-    const configured = res.results.filter((r: ConnectivityResult) => r.configured).length;
+    const reachable = res.results.filter(
+      (r: ConnectivityResult) => r.reachable,
+    ).length;
+    const configured = res.results.filter(
+      (r: ConnectivityResult) => r.configured,
+    ).length;
     showToast(
       t("systemHealth.probeComplete", { reachable, configured }),
       reachable === configured ? "success" : "warning",

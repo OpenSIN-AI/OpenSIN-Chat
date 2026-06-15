@@ -105,7 +105,11 @@ const PdfAnalysis = {
       .catch((e) => ({ error: e.message }));
   },
 
-  searchFacts: async function ({ q = "", document = "", tag = "" }: SearchFactsParams = {}): Promise<any[]> {
+  searchFacts: async function ({
+    q = "",
+    document = "",
+    tag = "",
+  }: SearchFactsParams = {}): Promise<any[]> {
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (document) params.set("document", document);

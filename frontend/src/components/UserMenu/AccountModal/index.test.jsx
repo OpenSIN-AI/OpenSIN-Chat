@@ -53,7 +53,11 @@ vi.mock("@/utils/toast", () => ({
 
 vi.mock("@/utils/request.ts", () => ({
   safeJsonParse: (str, fallback) => {
-    try { return JSON.parse(str); } catch { return fallback; }
+    try {
+      return JSON.parse(str);
+    } catch {
+      return fallback;
+    }
   },
 }));
 
@@ -114,7 +118,7 @@ describe("AccountModal", () => {
 
     const { container } = render(
       <AccountModal user={defaultUser} hideModal={hideModal} />,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
 
     const form = container.querySelector("form");
@@ -144,12 +148,12 @@ describe("AccountModal", () => {
   it("calls System.removePfp when remove button is clicked", async () => {
     const System = (await import("@/models/system")).default;
 
-    render(
-      <AccountModal user={{ ...defaultUser }} hideModal={vi.fn()} />,
-      { wrapper: Wrapper }
-    );
+    render(<AccountModal user={{ ...defaultUser }} hideModal={vi.fn()} />, {
+      wrapper: Wrapper,
+    });
 
-    const removeBtn = screen.queryByTestId("remove-pfp-btn") ??
+    const removeBtn =
+      screen.queryByTestId("remove-pfp-btn") ??
       screen.queryByRole("button", { name: /remove/i });
 
     if (removeBtn) {

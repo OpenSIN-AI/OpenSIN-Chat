@@ -149,7 +149,7 @@ function SetupProvider({
     e.stopPropagation();
     const data: Record<string, any> = {};
     const form = new FormData(e.currentTarget);
-    for (var [key, value] of form.entries()) data[key] = value;
+    for (const [key, value] of form.entries()) data[key] = value;
     const { error } = await System.updateSystem(data);
     if (error) {
       showToast(

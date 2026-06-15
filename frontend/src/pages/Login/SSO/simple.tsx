@@ -29,7 +29,10 @@ export default function SimpleSSOPassthrough() {
 
           window.localStorage.setItem(AUTH_USER, JSON.stringify(res.user));
           window.localStorage.setItem(AUTH_TOKEN, res.token);
-          window.localStorage.setItem(AUTH_TIMESTAMP, String(Number(new Date())));
+          window.localStorage.setItem(
+            AUTH_TIMESTAMP,
+            String(Number(new Date())),
+          );
           setReady(res.valid);
         })
         .catch((e) => {

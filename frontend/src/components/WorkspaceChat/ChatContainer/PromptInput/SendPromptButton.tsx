@@ -8,7 +8,11 @@ interface SendPromptButtonProps {
   isDisabled: boolean;
 }
 
-export default function SendPromptButton({ formRef, promptInput, isDisabled }: SendPromptButtonProps) {
+export default function SendPromptButton({
+  formRef,
+  promptInput,
+  isDisabled,
+}: SendPromptButtonProps) {
   const { t } = useTranslation();
 
   return (

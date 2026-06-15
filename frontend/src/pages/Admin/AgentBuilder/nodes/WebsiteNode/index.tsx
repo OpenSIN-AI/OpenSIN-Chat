@@ -7,9 +7,19 @@ export default function WebsiteNode({
   onConfigChange,
   renderVariableSelect,
 }: {
-  config: { url?: string; action?: string; selector?: string; resultVariable?: string };
+  config: {
+    url?: string;
+    action?: string;
+    selector?: string;
+    resultVariable?: string;
+  };
   onConfigChange: (c: any) => void;
-  renderVariableSelect: (value: any, onChange: (v: any) => void, placeholder: string, required: boolean) => React.ReactNode;
+  renderVariableSelect: (
+    value: any,
+    onChange: (v: any) => void,
+    placeholder: string,
+    required: boolean,
+  ) => React.ReactNode;
 }) {
   const { t } = useTranslation();
   return (

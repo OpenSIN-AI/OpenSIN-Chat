@@ -278,7 +278,11 @@ function DesktopForm(props: FormProps) {
   );
 }
 
-function HiddenInputs({ agentSkills, disabledAgentSkills, activeFlowIds }: any) {
+function HiddenInputs({
+  agentSkills,
+  disabledAgentSkills,
+  activeFlowIds,
+}: any) {
   return (
     <>
       <input
@@ -308,7 +312,12 @@ interface SkillLayoutProps {
   handleCancel: () => void;
 }
 
-function SkillLayout({ children, hasChanges, handleSubmit, handleCancel }: SkillLayoutProps) {
+function SkillLayout({
+  children,
+  hasChanges,
+  handleSubmit,
+  handleCancel,
+}: SkillLayoutProps) {
   return (
     <div
       id="workspace-agent-settings-container"

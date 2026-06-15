@@ -68,7 +68,9 @@ interface SpeechToTextProviderProps {
   settings: any;
 }
 
-export default function SpeechToTextProvider({ settings }: SpeechToTextProviderProps) {
+export default function SpeechToTextProvider({
+  settings,
+}: SpeechToTextProviderProps) {
   const { t } = useTranslation();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
@@ -86,7 +88,7 @@ export default function SpeechToTextProvider({ settings }: SpeechToTextProviderP
     const data: any = { SpeechToTextProvider: selectedProvider };
     const formData = new FormData(form);
 
-    for (var [key, value] of formData.entries()) data[key] = value;
+    for (const [key, value] of formData.entries()) data[key] = value;
     const { error } = await System.updateSystem(data);
     setSaving(true);
 
@@ -232,9 +234,9 @@ export default function SpeechToTextProvider({ settings }: SpeechToTextProviderP
           className="mt-4 flex flex-col gap-y-1"
         >
           {selectedProvider &&
-            PROVIDERS(t).find(
-              (provider) => provider.value === selectedProvider,
-            )?.options(settings)}
+            PROVIDERS(t)
+              .find((provider) => provider.value === selectedProvider)
+              ?.options(settings)}
         </div>
       </div>
     </form>

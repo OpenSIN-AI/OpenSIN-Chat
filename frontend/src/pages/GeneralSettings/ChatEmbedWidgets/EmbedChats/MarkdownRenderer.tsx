@@ -28,7 +28,9 @@ interface ThoughtBubbleProps {
   thought: string;
 }
 
-const ThoughtBubble = ({ thought }: ThoughtBubbleProps): React.ReactElement | null => {
+const ThoughtBubble = ({
+  thought,
+}: ThoughtBubbleProps): React.ReactElement | null => {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -69,14 +71,17 @@ interface ContentPart {
 function parseContent(content: string): ContentPart[] {
   const parts: ContentPart[] = [];
   let lastIndex = 0;
-  content.replace(/<think>([^]*?)<\/think>/g, (match: string, thinkContent: string, offset: number) => {
-    if (offset > lastIndex) {
-      parts.push({ type: "normal", text: content.slice(lastIndex, offset) });
-    }
-    parts.push({ type: "think", text: thinkContent });
-    lastIndex = offset + match.length;
-    return match;
-  });
+  content.replace(
+    /<think>([^]*?)<\/think>/g,
+    (match: string, thinkContent: string, offset: number) => {
+      if (offset > lastIndex) {
+        parts.push({ type: "normal", text: content.slice(lastIndex, offset) });
+      }
+      parts.push({ type: "think", text: thinkContent });
+      lastIndex = offset + match.length;
+      return match;
+    },
+  );
   if (lastIndex < content.length) {
     parts.push({ type: "normal", text: content.slice(lastIndex) });
   }
