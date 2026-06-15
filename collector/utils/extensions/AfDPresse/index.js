@@ -83,7 +83,8 @@ function extractPressLinksFromList(html) {
   }
   // Fallback: einfachere Suche, falls das Theme anders strukturiert ist
   if (results.length === 0) {
-    const simpleRe = /<a\s+href="(https?:\/\/(?:www\.)?afd\.de\/[^"]+presse[^"]*|[^"]+\/presse[^"]*\/[^"]+)"[^>]*>([^<]{10,200})<\/a>/gi;
+    const simpleRe =
+      /<a\s+href="(https?:\/\/(?:www\.)?afd\.de\/[^"]+presse[^"]*|[^"]+\/presse[^"]*\/[^"]+)"[^>]*>([^<]{10,200})<\/a>/gi;
     while ((match = simpleRe.exec(html)) !== null) {
       results.push({
         url: match[1].trim(),
@@ -103,13 +104,15 @@ function extractPressLinksFromList(html) {
 function extractPressArticle(html) {
   // Titel
   let title = "";
-  const titleRe = /<h\d[^>]*class="[^"]*entry-title[^"]*"[^>]*>([\s\S]*?)<\/h\d>/i;
+  const titleRe =
+    /<h\d[^>]*class="[^"]*entry-title[^"]*"[^>]*>([\s\S]*?)<\/h\d>/i;
   const tm = html.match(titleRe);
   if (tm) title = tm[1].replace(/<[^>]+>/g, "").trim();
 
   // Inhalt — WordPress-typisch: <div class="entry-content"> ... </div>
   let content = "";
-  const contentRe = /<div[^>]*class="[^"]*entry-content[^"]*"[^>]*>([\s\S]*?)<\/div>/i;
+  const contentRe =
+    /<div[^>]*class="[^"]*entry-content[^"]*"[^>]*>([\s\S]*?)<\/div>/i;
   const cm = html.match(contentRe);
   if (cm) {
     content = cm[1]
@@ -144,13 +147,16 @@ function extractPressArticle(html) {
 
   // Autor
   let author = null;
-  const authorRe = /<a[^>]*class="[^"]*author[^"]*"[^>]*>([^<]+)<\/a>|<span[^>]*class="[^"]*author[^"]*"[^>]*>([^<]+)<\/span>/i;
+  const authorRe =
+    /<a[^>]*class="[^"]*author[^"]*"[^>]*>([^<]+)<\/a>|<span[^>]*class="[^"]*author[^"]*"[^>]*>([^<]+)<\/span>/i;
   const am2 = html.match(authorRe);
   if (am2) author = (am2[1] || am2[2] || "").trim();
 
   if (!title && content) {
     // Versuche, erste Zeile als Titel zu verwenden
-    title = content.split("\n").find((l) => l.trim().length > 10) || "AfD Pressemitteilung";
+    title =
+      content.split("\n").find((l) => l.trim().length > 10) ||
+      "AfD Pressemitteilung";
   }
 
   return { title, content, date, author };
@@ -248,7 +254,10 @@ async function afdPresseLatest({ limit = 20, baseUrl = AFD_PRESS_BASE } = {}) {
     const link = selected[i];
     // eslint-disable-next-line no-console
     console.log(
-      `afdPresseLatest: ${i + 1}/${selected.length} — ${link.title.slice(0, 80)}`
+      `afdPresseLatest: ${i + 1}/${selected.length} — ${link.title.slice(
+        0,
+        80
+      )}`
     );
     const doc = await importSinglePress(link.url, outFolder);
     if (doc) results.push(doc);
@@ -275,7 +284,10 @@ async function afdPresseFromUrl({ url } = {}) {
       "afdPresseFromUrl: URL muss auf afd.de zeigen (Sicherheits-Check)"
     );
   }
-  const outFolder = path.resolve(documentsFolder, `afd-presse-${v4().slice(0, 4)}`);
+  const outFolder = path.resolve(
+    documentsFolder,
+    `afd-presse-${v4().slice(0, 4)}`
+  );
   if (!fs.existsSync(outFolder)) fs.mkdirSync(outFolder, { recursive: true });
   return importSinglePress(url, outFolder);
 }

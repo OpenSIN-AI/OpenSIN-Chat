@@ -18,15 +18,15 @@ function extractJsonFromString(str) {
       // Skip quoted strings
       i++;
       while (i < str.length && str[i] !== '"') {
-        if (str[i] === '\\') i++;
+        if (str[i] === "\\") i++;
         i++;
       }
       continue;
     }
-    if (char === '{' || char === '[') {
+    if (char === "{" || char === "[") {
       if (depth === 0) start = i;
       depth++;
-    } else if (char === '}' || char === ']') {
+    } else if (char === "}" || char === "]") {
       depth--;
       if (depth === 0 && start !== -1) {
         try {

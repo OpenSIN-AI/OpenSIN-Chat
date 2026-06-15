@@ -433,10 +433,7 @@ interface CrossCheckReportModalProps {
   onClose: () => void;
 }
 
-function CrossCheckReportModal({
-  job,
-  onClose,
-}: CrossCheckReportModalProps) {
+function CrossCheckReportModal({ job, onClose }: CrossCheckReportModalProps) {
   const { t } = useTranslation();
   const [result, setResult] = useState<CrossCheckReport | null>(null);
 

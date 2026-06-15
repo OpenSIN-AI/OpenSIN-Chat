@@ -148,7 +148,11 @@ interface ServerPanelProps {
   server: MCPServerData;
   toggleServer: (serverName: string) => void;
   onDelete: (serverName: string) => void;
-  onToggleTool: (serverName: string, toolName: string, enabled: boolean) => void;
+  onToggleTool: (
+    serverName: string,
+    toolName: string,
+    enabled: boolean,
+  ) => void;
 }
 
 export default function ServerPanel({
@@ -235,7 +239,9 @@ interface RenderServerConfigProps {
   config?: MCPServerConfig | null;
 }
 
-function RenderServerConfig({ config }: RenderServerConfigProps): JSX.Element | null {
+function RenderServerConfig({
+  config,
+}: RenderServerConfigProps): JSX.Element | null {
   const { t } = useTranslation();
   if (!config) return null;
   return (
@@ -261,7 +267,9 @@ interface RenderServerStatusProps {
   server: MCPServerData;
 }
 
-function RenderServerStatus({ server }: RenderServerStatusProps): JSX.Element | null {
+function RenderServerStatus({
+  server,
+}: RenderServerStatusProps): JSX.Element | null {
   const { t } = useTranslation();
   if (server.running || !server.error) return null;
   return (
@@ -280,7 +288,11 @@ interface RenderServerToolsProps {
   serverName: string;
   tools?: MCPServerTool[];
   suppressedTools?: string[];
-  onToggleTool: (serverName: string, toolName: string, enabled: boolean) => void;
+  onToggleTool: (
+    serverName: string,
+    toolName: string,
+    enabled: boolean,
+  ) => void;
 }
 
 function RenderServerTools({

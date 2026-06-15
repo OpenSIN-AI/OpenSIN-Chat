@@ -57,7 +57,7 @@ export default function GeneralLLMPreference() {
     const data: any = { LLMProvider: selectedLLM };
     const formData = new FormData(form);
 
-    for (var [key, value] of formData.entries()) data[key] = value;
+    for (const [key, value] of formData.entries()) data[key] = value;
     const { error } = await System.updateSystem(data);
     setSaving(true);
 
@@ -141,7 +141,11 @@ export default function GeneralLLMPreference() {
 function LoadingState() {
   return (
     <div
-      style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" } as React.CSSProperties}
+      style={
+        {
+          "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+        } as React.CSSProperties
+      }
       className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
     >
       <div className="w-full h-full flex justify-center items-center">
@@ -186,7 +190,11 @@ function ContentArea({
 }) {
   return (
     <div
-      style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" } as React.CSSProperties}
+      style={
+        {
+          "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+        } as React.CSSProperties
+      }
       className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
     >
       <form onSubmit={handleSubmit} className="flex w-full">

@@ -3,7 +3,7 @@
 // Docs: CorpusPanel.doc.md
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import PdfAnalysis, { type PdfAnalysisResult } from "@/models/pdfAnalysis";
+import PdfAnalysis from "@/models/pdfAnalysis";
 
 const CONFLICTS_SEPARATOR = " — vs. — ";
 const PAGES_SEPARATOR = ", ";
@@ -340,7 +340,9 @@ function CorpusReportModal({ job, onClose }: CorpusReportModalProps) {
   const [result, setResult] = useState<CorpusReport | null>(null);
 
   useEffect(() => {
-    PdfAnalysis.corpusResult(job.id).then((res) => setResult(res as CorpusReport));
+    PdfAnalysis.corpusResult(job.id).then((res) =>
+      setResult(res as CorpusReport),
+    );
   }, [job.id]);
 
   const conflicts = result?.comparison?.conflicts || [];

@@ -178,7 +178,7 @@ async function processAsFile({ uri, saveAsDocument = true }) {
     if (!processSingleFileResult?.documents?.length) {
       return returnResult({
         success: false,
-        reason: 'No documents returned from file processing',
+        reason: "No documents returned from file processing",
         documents: [],
         content: null,
         saveAsDocument,

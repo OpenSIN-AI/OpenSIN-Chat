@@ -43,7 +43,7 @@ async function validatedRequest(request, response, next) {
             role: "admin",
           });
           testUser = result.user;
-        } catch (_ignored) {
+        } catch {
           // User.create race condition in parallel test runs — silently fall back to existing user.
           testUser = await User.get({ username: "integration.test.user" });
         }
@@ -90,12 +90,7 @@ async function validatedRequest(request, response, next) {
   // be unsafe. As a consequence, existing JWTs with invalid `p` values that do not match the regex
   // in ln:44 will be marked invalid so they can be logged out and forced to log back in and obtain an encrypted token.
   // This kind of methodology only applies to single-user password mode.
-  if (
-    !bcrypt.compareSync(
-      EncryptionMgr.decrypt(p),
-      getAuthTokenHash(),
-    )
-  ) {
+  if (!bcrypt.compareSync(EncryptionMgr.decrypt(p), getAuthTokenHash())) {
     response.status(401).json({
       error: "Invalid auth credentials.",
     });

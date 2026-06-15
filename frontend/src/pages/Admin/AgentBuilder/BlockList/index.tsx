@@ -99,7 +99,8 @@ const BLOCK_INFO: Record<BlockType, BlockInfoEntry> = {
     icon: <BracketsCurly className="w-5 h-5 text-theme-text-primary" />,
     description: "Configure agent variables and settings",
     getSummary: (config) => {
-      const varCount = config.variables?.filter((v: any) => v.name)?.length || 0;
+      const varCount =
+        config.variables?.filter((v: any) => v.name)?.length || 0;
       return `${varCount} variable${varCount !== 1 ? "s" : ""} defined`;
     },
   },

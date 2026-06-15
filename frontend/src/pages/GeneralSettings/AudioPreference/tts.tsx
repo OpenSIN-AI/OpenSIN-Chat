@@ -82,11 +82,7 @@ const PROVIDERS = (t: any): TTSProvider[] => [
   },
 ];
 
-export default function TextToSpeechProvider({
-  settings,
-}: {
-  settings: any;
-}) {
+export default function TextToSpeechProvider({ settings }: { settings: any }) {
   const { t } = useTranslation();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
@@ -104,7 +100,7 @@ export default function TextToSpeechProvider({
     const data: any = { TextToSpeechProvider: selectedProvider };
     const formData = new FormData(form);
 
-    for (var [key, value] of formData.entries()) data[key] = value;
+    for (const [key, value] of formData.entries()) data[key] = value;
     const { error } = await System.updateSystem(data);
     setSaving(true);
 

@@ -123,7 +123,10 @@ async function dipFetch(url, apiKey) {
   if (!res.ok) {
     const body = await res.text().catch(() => "");
     throw new Error(
-      `DIP-API ${res.status} ${res.statusText} for ${url}\n${body.slice(0, 500)}`
+      `DIP-API ${res.status} ${res.statusText} for ${url}\n${body.slice(
+        0,
+        500
+      )}`
     );
   }
   return res.json();
@@ -211,10 +214,15 @@ function persistDIPDocument(doc, outFolderPath) {
  */
 async function bundestagDrucksache(params = {}) {
   if (!params.drucksache) {
-    throw new Error("bundestagDrucksache: 'drucksache' parameter required, e.g. '20/12345'");
+    throw new Error(
+      "bundestagDrucksache: 'drucksache' parameter required, e.g. '20/12345'"
+    );
   }
   const url = buildDIPUrl({ endpoint: "drucksache", ...params });
-  const outFolder = path.resolve(documentsFolder, `bundestag-${slugify(params.drucksache)}`);
+  const outFolder = path.resolve(
+    documentsFolder,
+    `bundestag-${slugify(params.drucksache)}`
+  );
   if (!fs.existsSync(outFolder)) fs.mkdirSync(outFolder, { recursive: true });
 
   const data = await dipFetch(url, params.apiKey);

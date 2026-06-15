@@ -50,7 +50,9 @@ class AnthropicLLM {
         this.log(`Model ${this.model} max tokens: ${this.maxTokens}`);
       })
       .catch((err) => {
-        this.log(`Could not fetch max tokens for ${this.model}, using default. ${err.message}`);
+        this.log(
+          `Could not fetch max tokens for ${this.model}, using default. ${err.message}`,
+        );
       });
   }
 

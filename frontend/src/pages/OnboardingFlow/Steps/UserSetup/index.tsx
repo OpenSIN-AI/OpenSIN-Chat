@@ -281,7 +281,11 @@ interface MyTeamProps {
   navigate: NavigateFunction;
 }
 
-const MyTeam = ({ setMultiUserLoginValid, myTeamSubmitRef, navigate }: MyTeamProps) => {
+const MyTeam = ({
+  setMultiUserLoginValid,
+  myTeamSubmitRef,
+  navigate,
+}: MyTeamProps) => {
   const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

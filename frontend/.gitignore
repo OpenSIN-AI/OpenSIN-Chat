@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Generated on-demand by `yarn run audit` for npm audit; yarn.lock is the
+# source of truth, so this transient lockfile must not be committed.
+package-lock.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

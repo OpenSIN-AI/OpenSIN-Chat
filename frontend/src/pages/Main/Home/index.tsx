@@ -159,7 +159,11 @@ export default function Home() {
   if (workspaceLoading) {
     return (
       <div
-        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" } as React.CSSProperties}
+        style={
+          {
+            "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+          } as React.CSSProperties
+        }
         className="h-[var(--content-height)] transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-zinc-900 light:bg-white w-full overflow-hidden"
       />
     );
@@ -278,8 +282,9 @@ function HomeContent({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const currentMessage =
-      (document.getElementById(PROMPT_INPUT_ID) as HTMLInputElement | null)
-        ?.value?.trim() || "";
+      (
+        document.getElementById(PROMPT_INPUT_ID) as HTMLInputElement | null
+      )?.value?.trim() || "";
     await submitMessage(currentMessage, parseAttachments());
   }
 
@@ -313,7 +318,11 @@ function HomeContent({
   return (
     <ChatSidebarProvider>
       <div
-        style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" } as React.CSSProperties}
+        style={
+          {
+            "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+          } as React.CSSProperties
+        }
         className="h-[var(--content-height)] relative flex md:ml-[2px] md:mr-[16px] md:my-[16px] flex-1 min-w-0 z-[2]"
       >
         <ChatSettingsMenu />
@@ -361,7 +370,11 @@ function NoWorkspacesAssigned() {
   const { t } = useTranslation();
   return (
     <div
-      style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" } as React.CSSProperties}
+      style={
+        {
+          "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+        } as React.CSSProperties
+      }
       className="h-[var(--content-height)] transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-zinc-900 light:bg-white w-full overflow-hidden"
     >
       <div className="flex flex-col h-full w-full items-center justify-center">

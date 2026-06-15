@@ -153,14 +153,17 @@ function apiPoliticianEndpoints(app) {
     try {
       const { spawn } = require("child_process");
       const path = require("path");
-      const jobPath = path.resolve(__dirname, "../../../jobs/sync-politician-data.js");
-      
+      const jobPath = path.resolve(
+        __dirname,
+        "../../../jobs/sync-politician-data.js",
+      );
+
       const child = spawn("node", [jobPath], {
         detached: true,
         stdio: "ignore",
       });
       child.unref();
-      
+
       logger.info("[politician] Manual sync triggered via API");
       response.status(202).json({ message: "Sync triggered", pid: child.pid });
     } catch (err) {

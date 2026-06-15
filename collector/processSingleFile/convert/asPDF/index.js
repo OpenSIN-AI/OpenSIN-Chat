@@ -29,7 +29,11 @@ async function asPdf({
   } catch (e) {
     console.error(`[asPDF] Failed to load PDF: ${e.message}`);
     if (!options.absolutePath) trashFile(fullFilePath);
-    return { success: false, reason: `Failed to parse PDF: ${e.message}`, documents: [] };
+    return {
+      success: false,
+      reason: `Failed to parse PDF: ${e.message}`,
+      documents: [],
+    };
   }
 
   if (docs.length === 0) {
