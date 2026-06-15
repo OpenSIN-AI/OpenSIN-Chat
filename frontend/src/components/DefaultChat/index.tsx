@@ -114,7 +114,11 @@ const Layout = ({ children }) => {
   return (
     <div
       // Dynamic: height depends on runtime device detection (isMobile ternary)
-      style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" } as React.CSSProperties}
+      style={
+        {
+          "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+        } as React.CSSProperties
+      }
       className={`relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary light:border-[1px] light:border-theme-sidebar-border w-full overflow-y-scroll ${showScrollbar ? "show-scrollbar" : "no-scroll"}`}
     >
       {children}

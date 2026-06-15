@@ -43,20 +43,18 @@ const workspace = {
 
 export const auditHandlers = [
   // --- Workspace core ---
-  http.get("*/api/workspace/:slug", () =>
-    HttpResponse.json({ workspace })
-  ),
+  http.get("*/api/workspace/:slug", () => HttpResponse.json({ workspace })),
   http.get("*/api/workspace/:slug/suggested-messages", () =>
-    HttpResponse.json({ suggestedMessages: [] })
+    HttpResponse.json({ suggestedMessages: [] }),
   ),
   http.get("*/api/workspace/:slug/is-agent-command-available", () =>
-    HttpResponse.json({ showAgentCommand: true })
+    HttpResponse.json({ showAgentCommand: true }),
   ),
   http.get("*/api/workspace/:slug/chats", () =>
-    HttpResponse.json({ history: [] })
+    HttpResponse.json({ history: [] }),
   ),
   http.get("*/api/workspace/:slug/threads", () =>
-    HttpResponse.json({ threads: [] })
+    HttpResponse.json({ threads: [] }),
   ),
 
   // --- Filesystem panel ---
@@ -71,7 +69,7 @@ export const auditHandlers = [
       uploadPath: "/app/server/storage/documents",
       workDir: "/app/server",
       uptime: 187320,
-    })
+    }),
   ),
 
   // --- Database panel (AfD politicians) ---
@@ -83,24 +81,27 @@ export const auditHandlers = [
           first_name: "Alice",
           last_name: "Weidel",
           constituency: { label: "Bodensee" },
-          abgeordnetenwatch_url: "https://www.abgeordnetenwatch.de/profile/alice-weidel",
+          abgeordnetenwatch_url:
+            "https://www.abgeordnetenwatch.de/profile/alice-weidel",
         },
         {
           id: 2,
           first_name: "Tino",
           last_name: "Chrupalla",
           constituency: { label: "Görlitz" },
-          abgeordnetenwatch_url: "https://www.abgeordnetenwatch.de/profile/tino-chrupalla",
+          abgeordnetenwatch_url:
+            "https://www.abgeordnetenwatch.de/profile/tino-chrupalla",
         },
         {
           id: 3,
           first_name: "Beatrix",
           last_name: "von Storch",
           constituency: { label: "Berlin" },
-          abgeordnetenwatch_url: "https://www.abgeordnetenwatch.de/profile/beatrix-von-storch",
+          abgeordnetenwatch_url:
+            "https://www.abgeordnetenwatch.de/profile/beatrix-von-storch",
         },
       ],
-    })
+    }),
   ),
 
   // --- Political panel (Drucksachen + RSS) ---
@@ -118,7 +119,7 @@ export const auditHandlers = [
           drucksache_url: "https://dip.bundestag.de/drucksache/d2",
         },
       ],
-    })
+    }),
   ),
   http.get("*/api/utils/political/rss", () =>
     HttpResponse.json({
@@ -132,6 +133,6 @@ export const auditHandlers = [
           link: "https://afd.de/pressemitteilung-2",
         },
       ],
-    })
+    }),
   ),
 ];

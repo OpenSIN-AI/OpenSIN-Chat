@@ -30,11 +30,11 @@ function simulateJobProgress(jobId: string) {
 
     const done = Math.min(
       (job.progress.chunksDone || 0) + Math.ceil(Math.random() * 3),
-      total
+      total,
     );
     phaseIdx = Math.min(
       phaseIdx + (done > (job.progress.chunksDone || 0) ? 1 : 0),
-      phases.length - 1
+      phases.length - 1,
     );
 
     JOB_STORE[jobId].status = "running";
@@ -90,12 +90,15 @@ export const pdfAnalysisHandlers = [
     const form = await request.formData();
     const file = form.get("file") as File | null;
     if (!file) {
-      return HttpResponse.json({ error: "Keine Datei übermittelt." }, { status: 400 });
+      return HttpResponse.json(
+        { error: "Keine Datei übermittelt." },
+        { status: 400 },
+      );
     }
     if (!file.name.toLowerCase().endsWith(".pdf")) {
       return HttpResponse.json(
         { error: "Nur PDF-Dateien werden akzeptiert." },
-        { status: 400 }
+        { status: 400 },
       );
     }
     return HttpResponse.json({ pdfPath: `/tmp/uploads/${file.name}` });
@@ -129,7 +132,11 @@ export const pdfAnalysisHandlers = [
   http.get(`${API}/pdf-analysis/:jobId`, async ({ params }) => {
     await delay(80);
     const job = JOB_STORE[params.jobId as string];
-    if (!job) return HttpResponse.json({ error: "Job nicht gefunden." }, { status: 404 });
+    if (!job)
+      return HttpResponse.json(
+        { error: "Job nicht gefunden." },
+        { status: 404 },
+      );
     return HttpResponse.json(job);
   }),
 
@@ -137,7 +144,11 @@ export const pdfAnalysisHandlers = [
   http.get(`${API}/pdf-analysis/:jobId/result`, async ({ params }) => {
     await delay(300);
     const job = JOB_STORE[params.jobId as string];
-    if (!job) return HttpResponse.json({ error: "Job nicht gefunden." }, { status: 404 });
+    if (!job)
+      return HttpResponse.json(
+        { error: "Job nicht gefunden." },
+        { status: 404 },
+      );
     if (job.status !== "completed") {
       return HttpResponse.json({ error: "Analyse noch nicht abgeschlossen." });
     }
@@ -145,7 +156,9 @@ export const pdfAnalysisHandlers = [
       report: `# Analyse-Bericht: ${job.documentName}\n\n## Zusammenfassung\nDas Dokument enthält 42 Seiten mit schwerpunktmäßiger Diskussion der Netzinfrastruktur. Zentrale Befunde:\n\n1. **Infrastrukturelle Risiken:** Die Ausfallrate hat sich 2022–2023 verdoppelt.\n2. **Empfehlung:** Redundanzfaktor ≥ 2,5 (Kapitel 3, S. 28).\n3. **Daten-Qualität:** Stichprobengröße ausreichend (n=1.240).\n\n## Fakten-Extraktion\n${FACT_STORE.filter((f) => f.source.documentName === job.documentName).length} Fakten extrahiert und gespeichert.\n\n## KI-Bewertung\nGlaubwürdigkeit: **Hoch** (0.91). Keine widersprüchlichen Aussagen innerhalb des Dokuments festgestellt.\n\n---\n*Generiert durch OpenSIN PDF-Analyse (DEV-Mock)*`,
       totalPages: 42,
       chunks: 12,
-      factsStored: FACT_STORE.filter((f) => f.source.documentName === job.documentName).length,
+      factsStored: FACT_STORE.filter(
+        (f) => f.source.documentName === job.documentName,
+      ).length,
       chunkErrors: 0,
     });
   }),
@@ -167,8 +180,12 @@ export const pdfAnalysisHandlers = [
     const q = url.searchParams.get("q")?.toLowerCase() ?? "";
     const doc = url.searchParams.get("document")?.toLowerCase() ?? "";
     const filtered = FACT_STORE.filter((f) => {
-      const matchQ = !q || f.detail.toLowerCase().includes(q) || f.quote?.toLowerCase().includes(q);
-      const matchDoc = !doc || f.source.documentName.toLowerCase().includes(doc);
+      const matchQ =
+        !q ||
+        f.detail.toLowerCase().includes(q) ||
+        f.quote?.toLowerCase().includes(q);
+      const matchDoc =
+        !doc || f.source.documentName.toLowerCase().includes(doc);
       return matchQ && matchDoc;
     });
     return HttpResponse.json({ facts: filtered });
@@ -201,21 +218,34 @@ export const pdfAnalysisHandlers = [
   }),
 
   // Cross-check result
-  http.get(`${API}/pdf-analysis/crosscheck/:jobId/result`, async ({ params }) => {
-    await delay(300);
-    const job = CROSS_STORE[params.jobId as string];
-    if (!job) return HttpResponse.json({ error: "Job nicht gefunden." }, { status: 404 });
-    return HttpResponse.json({
-      results: [
-        {
-          claim: job.body?.claims?.[0] ?? "Testbehauptung",
-          verdict: "supported",
-          confidence: 0.89,
-          sources: [{ title: "Mock-Quelle", url: "#", snippet: "Belegt durch interne Dokumente." }],
-        },
-      ],
-    });
-  }),
+  http.get(
+    `${API}/pdf-analysis/crosscheck/:jobId/result`,
+    async ({ params }) => {
+      await delay(300);
+      const job = CROSS_STORE[params.jobId as string];
+      if (!job)
+        return HttpResponse.json(
+          { error: "Job nicht gefunden." },
+          { status: 404 },
+        );
+      return HttpResponse.json({
+        results: [
+          {
+            claim: job.body?.claims?.[0] ?? "Testbehauptung",
+            verdict: "supported",
+            confidence: 0.89,
+            sources: [
+              {
+                title: "Mock-Quelle",
+                url: "#",
+                snippet: "Belegt durch interne Dokumente.",
+              },
+            ],
+          },
+        ],
+      });
+    },
+  ),
 
   // Corpus start
   http.post(`${API}/pdf-analysis/corpus`, async ({ request }) => {
@@ -225,7 +255,9 @@ export const pdfAnalysisHandlers = [
     CORPUS_STORE[jobId] = {
       id: jobId,
       status: "running",
-      documentNames: (body.pdfPaths ?? []).map((p: string) => p.split("/").pop()),
+      documentNames: (body.pdfPaths ?? []).map((p: string) =>
+        p.split("/").pop(),
+      ),
       task: body.task,
     };
     setTimeout(() => {
@@ -244,7 +276,11 @@ export const pdfAnalysisHandlers = [
   http.get(`${API}/pdf-analysis/corpus/:jobId/result`, async ({ params }) => {
     await delay(300);
     const job = CORPUS_STORE[params.jobId as string];
-    if (!job) return HttpResponse.json({ error: "Job nicht gefunden." }, { status: 404 });
+    if (!job)
+      return HttpResponse.json(
+        { error: "Job nicht gefunden." },
+        { status: 404 },
+      );
     return HttpResponse.json({
       report: `# Korpus-Vergleich\n\nDokumente: ${(job.documentNames ?? []).join(", ")}\n\nAufgabe: ${job.task}\n\nErgebnis: Keine wesentlichen Widersprüche zwischen den Dokumenten festgestellt. Übereinstimmung in 87 % der Kernaussagen.\n\n---\n*DEV-Mock*`,
     });

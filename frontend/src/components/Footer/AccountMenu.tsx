@@ -315,7 +315,7 @@ export default function AccountMenu() {
 
             {/* Preferences */}
             <p className="px-2.5 pt-1 pb-0.5 text-[11px] font-medium uppercase tracking-wide text-white/40 light:text-slate-400">
-              Einstellungen
+              Präferenzen
             </p>
             <ThemeSegment />
             <LanguageRow />

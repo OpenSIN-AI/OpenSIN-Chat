@@ -2,12 +2,7 @@
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
-import {
-  X,
-  Globe,
-  FileText,
-  Database,
-} from "@phosphor-icons/react";
+import { X, Globe, FileText, Database } from "@phosphor-icons/react";
 import {
   combineLikeSources,
   CitationDetailModal,

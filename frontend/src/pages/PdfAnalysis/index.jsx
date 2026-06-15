@@ -1,16 +1,28 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
 import jsPDF from "jspdf";
-import { UploadSimple, FilePdf, FileDoc, FileMd, X, ListBullets } from "@phosphor-icons/react";
+import {
+  UploadSimple,
+  FilePdf,
+  FileDoc,
+  FileMd,
+  X,
+  ListBullets,
+} from "@phosphor-icons/react";
 import Sidebar from "@/components/Sidebar";
 import PdfAnalysis from "@/models/pdfAnalysis";
 import CrossCheckPanel from "./CrossCheckPanel";
 import CorpusPanel from "./CorpusPanel";
-import { API_BASE } from "@/utils/constants";
 
 function formatEta(seconds) {
   if (seconds == null) return null;
@@ -496,15 +508,15 @@ async function downloadDocx(filename, content) {
     const h1 = line.match(/^#\s+(.*)/);
     if (h1) {
       children.push(
-        new Paragraph({ text: h1[1], heading: HeadingLevel.HEADING_1 })
+        new Paragraph({ text: h1[1], heading: HeadingLevel.HEADING_1 }),
       );
     } else if (h2) {
       children.push(
-        new Paragraph({ text: h2[1], heading: HeadingLevel.HEADING_2 })
+        new Paragraph({ text: h2[1], heading: HeadingLevel.HEADING_2 }),
       );
     } else if (h3) {
       children.push(
-        new Paragraph({ text: h3[1], heading: HeadingLevel.HEADING_3 })
+        new Paragraph({ text: h3[1], heading: HeadingLevel.HEADING_3 }),
       );
     } else {
       // Inline bold: **text**
@@ -594,7 +606,7 @@ function ReportModal({ job, onClose }) {
   // Build table of contents from headings in the report
   const headings = useMemo(
     () => (result?.report ? extractHeadings(result.report) : []),
-    [result?.report]
+    [result?.report],
   );
 
   function scrollToHeading(id) {
@@ -624,7 +636,6 @@ function ReportModal({ job, onClose }) {
       aria-label={t("pdfAnalysis.panel.reportFor", { name: job.documentName })}
     >
       <div className="w-full max-w-5xl max-h-[90vh] flex flex-col rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border shadow-xl">
-
         {/* ── Header ── */}
         <div className="flex items-center gap-3 p-4 border-b border-theme-sidebar-border shrink-0">
           <h3 className="text-sm font-semibold text-theme-text-primary truncate flex-1 min-w-0">
@@ -706,7 +717,6 @@ function ReportModal({ job, onClose }) {
 
         {/* ── Body: TOC + Content ── */}
         <div className="flex flex-1 min-h-0 overflow-hidden">
-
           {/* Table of Contents */}
           {tocOpen && headings.length > 0 && (
             <nav
@@ -763,7 +773,10 @@ function ReportModal({ job, onClose }) {
                   components={{
                     h1: ({ children, ...p }) => {
                       const text = String(children);
-                      const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                      const id = text
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, "")
+                        .replace(/\s+/g, "-");
                       return (
                         <h1
                           data-heading-id={id}
@@ -776,7 +789,10 @@ function ReportModal({ job, onClose }) {
                     },
                     h2: ({ children, ...p }) => {
                       const text = String(children);
-                      const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                      const id = text
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, "")
+                        .replace(/\s+/g, "-");
                       return (
                         <h2
                           data-heading-id={id}
@@ -789,7 +805,10 @@ function ReportModal({ job, onClose }) {
                     },
                     h3: ({ children, ...p }) => {
                       const text = String(children);
-                      const id = text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
+                      const id = text
+                        .toLowerCase()
+                        .replace(/[^\w\s-]/g, "")
+                        .replace(/\s+/g, "-");
                       return (
                         <h3
                           data-heading-id={id}
@@ -811,7 +830,9 @@ function ReportModal({ job, onClose }) {
                       </strong>
                     ),
                     em: ({ children }) => (
-                      <em className="italic text-theme-text-secondary">{children}</em>
+                      <em className="italic text-theme-text-secondary">
+                        {children}
+                      </em>
                     ),
                     ul: ({ children }) => (
                       <ul className="list-disc list-inside text-sm text-theme-text-primary mb-3 flex flex-col gap-1 pl-2">

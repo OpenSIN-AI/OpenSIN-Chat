@@ -14,7 +14,7 @@ const auditEnabled =
 
 export const worker = setupWorker(
   ...pdfAnalysisHandlers,
-  ...(auditEnabled ? auditHandlers : [])
+  ...(auditEnabled ? auditHandlers : []),
 );
 
 export async function startMockWorker() {
