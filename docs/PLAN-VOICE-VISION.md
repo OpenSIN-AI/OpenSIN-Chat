@@ -1,3 +1,10 @@
+<!-- SPDX-License-Identifier: MIT -->
+
+> ⚠️ **DEPRECATED / SUPERSEDED** — Dieser Plan ist nicht mehr aktiv verfolgt.
+> Aktuelle Planung: [`PLAN.md`](../PLAN.md) und [`PLAN-PRODUCTION-READINESS.md`](./PLAN-PRODUCTION-READINESS.md).
+> Stand der Markierung: 2026-06-15.
+> Der Inhalt bleibt als Archiv lesbar, aber wird nicht umgesetzt.
+
 # Plan: Voice (TTS/STT) & Vision
 
 ## Ziel

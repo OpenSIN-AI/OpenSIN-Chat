@@ -1,3 +1,10 @@
+<!-- SPDX-License-Identifier: MIT -->
+
+> ⚠️ **DEPRECATED / SUPERSEDED** — Dieser Plan ist nicht mehr aktiv verfolgt.
+> Aktuelle Planung: [`PLAN.md`](./PLAN.md) und [`docs/PLAN-PRODUCTION-READINESS.md`](./docs/PLAN-PRODUCTION-READINESS.md).
+> Stand der Markierung: 2026-06-15.
+> Der Inhalt bleibt als Archiv lesbar, aber wird nicht umgesetzt.
+
 # Plan: Right Sidebar Icon Bar Always Visible
 
 **Status:** Draft — pending approval before implementation.  
