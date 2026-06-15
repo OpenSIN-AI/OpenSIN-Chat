@@ -2,7 +2,7 @@
 // Purpose: Background health check for politician sync status
 // Docs: syncHealthCheck.doc.md
 const { PrismaClient } = require("@prisma/client");
-const logger = require("./logger")();
+const logger = require("../../utils/logger")();
 
 const prisma = new PrismaClient();
 
