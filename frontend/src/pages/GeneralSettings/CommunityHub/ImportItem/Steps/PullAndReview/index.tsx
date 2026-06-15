@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Pull and review community hub item before import
+// Docs: PullAndReview/index.doc.md
 import CommunityHub from "@/models/communityHub";
 import CommunityHubImportItemSteps from "..";
 import CTAButton from "@/components/lib/CTAButton";
@@ -6,20 +8,30 @@ import { useEffect, useState } from "react";
 import HubItemComponent from "./HubItem";
 import { useTranslation } from "react-i18next";
 
-function useGetCommunityHubItem({ importId, updateSettings }) {
-  const [item, setItem] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+interface PullAndReviewSettings {
+  itemId: string | null;
+  item: any;
+}
+
+interface UseGetCommunityHubItemProps {
+  importId: string | null;
+  updateSettings: (updater: (prev: PullAndReviewSettings) => PullAndReviewSettings) => void;
+}
+
+function useGetCommunityHubItem({ importId, updateSettings }: UseGetCommunityHubItemProps) {
+  const [item, setItem] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchItem() {
       if (!importId) return;
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      const { error, item } = await CommunityHub.getItemFromImportId(importId);
-      if (error) setError(error);
-      setItem(item);
-      updateSettings((prev) => ({ ...prev, item }));
+      const { error: fetchError, item: fetchedItem } = await CommunityHub.getItemFromImportId(importId);
+      if (fetchError) setError(fetchError);
+      setItem(fetchedItem);
+      updateSettings((prev) => ({ ...prev, item: fetchedItem }));
       setLoading(false);
     }
     fetchItem();
@@ -28,7 +40,17 @@ function useGetCommunityHubItem({ importId, updateSettings }) {
   return { item, loading, error };
 }
 
-export default function PullAndReview({ settings, setSettings, setStep }) {
+interface PullAndReviewProps {
+  settings: PullAndReviewSettings;
+  setSettings: (updater: (prev: PullAndReviewSettings) => PullAndReviewSettings) => void;
+  setStep: (step: string) => void;
+}
+
+export default function PullAndReview({
+  settings,
+  setSettings,
+  setStep,
+}: PullAndReviewProps): React.ReactElement {
   const { t } = useTranslation();
   const { item, loading, error } = useGetCommunityHubItem({
     importId: settings.itemId,

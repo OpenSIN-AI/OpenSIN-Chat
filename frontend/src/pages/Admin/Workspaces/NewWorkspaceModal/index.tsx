@@ -1,19 +1,30 @@
 // SPDX-License-Identifier: MIT
-import React, { useState } from "react";
+// Purpose: New workspace creation modal
+// Docs: NewWorkspaceModal/index.doc.md
+import React, { useState, FormEvent } from "react";
 import { X } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
 import { useTranslation } from "react-i18next";
 
-export default function NewWorkspaceModal({ closeModal }) {
-  const [error, setError] = useState(null);
+interface NewWorkspaceModalProps {
+  closeModal: () => void;
+}
+
+export default function NewWorkspaceModal({
+  closeModal,
+}: NewWorkspaceModalProps): React.ReactElement {
+  const [error, setError] = useState<string | null>(null);
   const { t } = useTranslation();
-  const handleCreate = async (e) => {
+
+  const handleCreate = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     setError(null);
     e.preventDefault();
-    const form = new FormData(e.target);
-    const { workspace, error } = await Admin.newWorkspace(form.get("name"));
+    const form = new FormData(e.currentTarget);
+    const { workspace, error: createError } = await Admin.newWorkspace(
+      form.get("name") as string,
+    );
     if (!!workspace) window.location.reload();
-    setError(error);
+    setError(createError);
   };
 
   return (

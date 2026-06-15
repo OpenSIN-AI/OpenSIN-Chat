@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Agent flow import review
+// Docs: AgentFlow.doc.md
 import CTAButton from "@/components/lib/CTAButton";
 import CommunityHubImportItemSteps from "../..";
 import showToast from "@/utils/toast";
@@ -9,12 +11,20 @@ import AgentFlows from "@/models/agentFlows";
 import { safeJsonParse } from "@/utils/request";
 import { useTranslation } from "react-i18next";
 
-export default function AgentFlow({ item, setStep }) {
+interface AgentFlowProps {
+  item: any;
+  setStep: (step: string) => void;
+}
+
+export default function AgentFlow({
+  item,
+  setStep,
+}: AgentFlowProps): React.ReactElement {
   const { t } = useTranslation();
   const flowInfo = safeJsonParse(item.flow, { steps: [] });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  async function importAgentFlow() {
+  async function importAgentFlow(): Promise<void> {
     try {
       setLoading(true);
       const { success, error, flow } = await AgentFlows.saveFlow(
@@ -22,11 +32,11 @@ export default function AgentFlow({ item, setStep }) {
         flowInfo,
       );
       if (!success) throw new Error(error);
-      if (!!flow?.uuid) await AgentFlows.toggleFlow(flow.uuid, true); // Enable the flow automatically after import
+      if (!!flow?.uuid) await AgentFlows.toggleFlow(flow.uuid, true);
 
       showToast(t("communityHub.import.agentFlow.toast.success"), "success");
       setStep(CommunityHubImportItemSteps.completed.key);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
       showToast(
         t("communityHub.import.agentFlow.toast.failed", { message: e.message }),
@@ -73,7 +83,7 @@ export default function AgentFlow({ item, setStep }) {
             })}
           </p>
           <ul className="list-disc pl-6">
-            {flowInfo.steps.map((step, index) => (
+            {flowInfo.steps.map((step: any, index: number) => (
               <li key={index}>{step.type}</li>
             ))}
           </ul>

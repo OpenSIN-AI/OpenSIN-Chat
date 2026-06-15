@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Mobile device row display and management
+// Docs: DeviceRow/index.doc.md
 import showToast from "@/utils/toast";
 import MobileConnection from "@/models/mobile";
 import { useState } from "react";
@@ -10,17 +12,36 @@ import { useTranslation } from "react-i18next";
 
 const LLL_FORMAT = "lll";
 
-export default function DeviceRow({ device, removeDevice }) {
-  const { t } = useTranslation();
-  const [status, setStatus] = useState(device.approved);
+interface Device {
+  id: string;
+  approved: boolean;
+  deviceOs: string;
+  deviceName: string;
+  createdAt: string;
+  user?: {
+    username: string;
+  };
+}
 
-  const handleApprove = async () => {
+interface DeviceRowProps {
+  device: Device;
+  removeDevice: (id: string) => void;
+}
+
+export default function DeviceRow({
+  device,
+  removeDevice,
+}: DeviceRowProps): React.ReactElement {
+  const { t } = useTranslation();
+  const [status, setStatus] = useState<boolean>(device.approved);
+
+  const handleApprove = async (): Promise<void> => {
     await MobileConnection.updateDevice(device.id, { approved: true });
     showToast(t("deviceRow.accessGranted"), "info");
     setStatus(true);
   };
 
-  const handleDeny = async () => {
+  const handleDeny = async (): Promise<void> => {
     await MobileConnection.deleteDevice(device.id);
     showToast(t("deviceRow.accessDenied"), "info");
     setStatus(false);

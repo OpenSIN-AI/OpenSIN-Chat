@@ -1,12 +1,27 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Job schedule configuration component
+// Docs: JobSchedule.doc.md
 import { useTranslation } from "react-i18next";
 import CronBuilder from "./CronBuilder";
 import { humanizeCron } from "../utils/cron";
 
-const JOB_SCHEDULE_MODES = [
+interface JobScheduleMode {
+  value: string;
+  labelKey: string;
+}
+
+const JOB_SCHEDULE_MODES: JobScheduleMode[] = [
   { value: "builder", labelKey: "scheduledJobs.modal.modeBuilder" },
   { value: "custom", labelKey: "scheduledJobs.modal.modeCustom" },
 ];
+
+interface JobScheduleProps {
+  schedule: string;
+  scheduleMode: string;
+  error: boolean;
+  onScheduleChange: (schedule: string) => void;
+  onModeChange: (mode: string) => void;
+}
 
 export default function JobSchedule({
   schedule,
@@ -14,14 +29,14 @@ export default function JobSchedule({
   error,
   onScheduleChange,
   onModeChange,
-}) {
+}: JobScheduleProps): React.ReactElement {
   const { t, i18n } = useTranslation();
   const modeTabs = JOB_SCHEDULE_MODES.map((mode) => ({
     value: mode.value,
     label: t(mode.labelKey),
   }));
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     onScheduleChange(e.target.value);
   };
 

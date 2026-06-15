@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Telegram bot settings page
+// Docs: TelegramBot/index.doc.md
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "@/components/SettingsSidebar";
@@ -11,19 +13,27 @@ import paths from "@/utils/paths";
 import useTelegramBot from "@/hooks/useTelegramBot";
 import useSystemSettings from "@/hooks/useSystemSettings";
 
-export default function TelegramBotSettings() {
+interface TelegramBotConfig {
+  active: boolean;
+  bot_username: string;
+  default_workspace: string;
+  active_thread_name: string;
+  chat_model: string;
+}
+
+export default function TelegramBotSettings(): React.ReactElement {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { config, isLoading } = useTelegramBot();
   const { settings } = useSystemSettings();
-  const [localConfig, setLocalConfig] = useState(null);
+  const [localConfig, setLocalConfig] = useState<TelegramBotConfig | null>(null);
   const currentConfig = localConfig ?? config;
 
   useEffect(() => {
     if (settings.MultiUserMode) navigate(paths.home());
   }, [settings.MultiUserMode, navigate]);
 
-  const handleConnected = (newConfig) => setLocalConfig(newConfig);
+  const handleConnected = (newConfig: TelegramBotConfig) => setLocalConfig(newConfig);
   const handleDisconnected = () => setLocalConfig(null);
 
   if (isLoading) {
@@ -56,7 +66,12 @@ export default function TelegramBotSettings() {
   );
 }
 
-function ConnectionsLayout({ children, fullPage = false }) {
+interface ConnectionsLayoutProps {
+  children: React.ReactNode;
+  fullPage?: boolean;
+}
+
+function ConnectionsLayout({ children, fullPage = false }: ConnectionsLayoutProps): React.ReactElement {
   const { t } = useTranslation();
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex md:mt-0 mt-6">

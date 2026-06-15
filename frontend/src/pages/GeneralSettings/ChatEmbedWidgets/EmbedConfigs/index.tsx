@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Embed widget configurations management
+// Docs: EmbedConfigs/index.doc.md
 import { useTranslation } from "react-i18next";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -10,7 +12,12 @@ import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";
 import useEmbedConfigs from "@/hooks/useEmbedConfigs";
 
-export default function EmbedConfigsView() {
+interface EmbedConfig {
+  id: string;
+  // Add other fields as needed from useEmbedConfigs hook
+}
+
+export default function EmbedConfigsView(): React.ReactElement {
   const { isOpen, openModal, closeModal } = useModal();
   const { t } = useTranslation();
   const { embeds, isLoading } = useEmbedConfigs();
@@ -73,7 +80,7 @@ export default function EmbedConfigsView() {
             </tr>
           </thead>
           <tbody>
-            {embeds.map((embed) => (
+            {embeds.map((embed: EmbedConfig) => (
               <EmbedRow key={embed.id} embed={embed} />
             ))}
           </tbody>

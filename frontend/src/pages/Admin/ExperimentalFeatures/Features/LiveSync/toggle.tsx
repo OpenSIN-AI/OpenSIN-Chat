@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: LiveSync toggle feature flag control
+// Docs: toggle.doc.md
 import { useTranslation } from "react-i18next";
 import System from "@/models/system";
 import paths from "@/utils/paths";
@@ -8,11 +10,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Toggle from "@/components/lib/Toggle";
 
-export default function LiveSyncToggle({ enabled = false, onToggle }) {
-  const { t } = useTranslation();
-  const [status, setStatus] = useState(enabled);
+interface LiveSyncToggleProps {
+  enabled?: boolean;
+  onToggle: () => void;
+}
 
-  async function toggleFeatureFlag() {
+export default function LiveSyncToggle({
+  enabled = false,
+  onToggle,
+}: LiveSyncToggleProps): React.ReactElement {
+  const { t } = useTranslation();
+  const [status, setStatus] = useState<boolean>(enabled);
+
+  async function toggleFeatureFlag(): Promise<boolean> {
     const updated =
       await System.experimentalFeatures.liveSync.toggleFeature(!status);
     if (!updated) {
@@ -31,6 +41,7 @@ export default function LiveSyncToggle({ enabled = false, onToggle }) {
       { clear: true },
     );
     onToggle();
+    return true;
   }
 
   return (
