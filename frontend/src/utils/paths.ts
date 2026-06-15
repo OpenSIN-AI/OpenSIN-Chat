@@ -213,6 +213,9 @@ export default {
     scheduledJobRunDetail: (jobId, runId) => {
       return `/settings/scheduled-jobs/${jobId}/runs/${runId}`;
     },
+    politicianSync: () => {
+      return "/settings/politician-sync";
+    },
   },
   pdfAnalysis: () => {
     return "/pdf-analysis";

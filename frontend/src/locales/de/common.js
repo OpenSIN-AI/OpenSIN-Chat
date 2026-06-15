@@ -4587,8 +4587,33 @@ const TRANSLATIONS = {
   settingsSidebar: {
     systemHealth: "Systemzustand",
     defaultSystemPrompt: "Standard-Systemprompt",
+    politicianSync: "Politiker-Sync",
     experimentalFeaturesUnlocked:
       "Experimentelle Funktionsvorschau freigeschaltet!",
+  },
+  politicianSync: {
+    title: "Politiker-Datenbank-Sync",
+    description: "Überwachen und verwalten Sie die Politiker-Daten-Synchronisierung von externen Quellen.",
+    healthy: "Gesund",
+    unhealthy: "Ungesund",
+    syncNow: "Jetzt synchronisieren",
+    syncTriggered: "Sync erfolgreich gestartet",
+    syncTriggerFailed: "Sync konnte nicht gestartet werden: {{error}}",
+    statPoliticians: "Politiker",
+    statSpeeches: "Reden",
+    statVotes: "Abstimmungen",
+    sourceStatus: "Quellen-Status",
+    lastAttempt: "Letzter Versuch",
+    lastSuccess: "Letzter Erfolg",
+    itemsProcessed: "Verarbeitete Elemente",
+    itemsFailed: "Fehlgeschlagene Elemente",
+    retryQueue: "Wiederholungs-Warteschlange",
+    phase: "Phase",
+    attempts: "Versuche",
+    nextRetry: "Nächste Wiederholung",
+    status: "Status",
+    lastSync: "Letzter Sync",
+    loadError: "Sync-Status konnte nicht geladen werden",
   },
   // ── Batch 14 — i18next/no-literal-string fixes ─────────────────────
   vectorSearch: {

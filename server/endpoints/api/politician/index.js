@@ -149,6 +149,26 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
+  app.post("/politician/sync/trigger", [validApiKey], async (_, response) => {
+    try {
+      const { spawn } = require("child_process");
+      const path = require("path");
+      const jobPath = path.resolve(__dirname, "../../../jobs/sync-politician-data.js");
+      
+      const child = spawn("node", [jobPath], {
+        detached: true,
+        stdio: "ignore",
+      });
+      child.unref();
+      
+      logger.info("[politician] Manual sync triggered via API");
+      response.status(202).json({ message: "Sync triggered", pid: child.pid });
+    } catch (err) {
+      logger.error(`[politician] ${err.message}`, err);
+      response.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
   app.get("/politician/:id", [validApiKey], async (request, response) => {
     try {
       const { id } = request.params;

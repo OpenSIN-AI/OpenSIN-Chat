@@ -316,6 +316,17 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "/settings/politician-sync",
+        lazy: async () => {
+          const { default: PoliticianSync } = await import(
+            "@/pages/Admin/PoliticianSync"
+          );
+          return {
+            element: <AdminRoute Component={PoliticianSync} />,
+          };
+        },
+      },
+      {
         path: "/settings/browser-extension",
         lazy: async () => {
           const { default: GeneralBrowserExtension } = await import(
