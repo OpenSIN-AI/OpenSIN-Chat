@@ -5,7 +5,42 @@ process.env.NODE_ENV === "development"
 const JWT = require("jsonwebtoken");
 const { User } = require("../../models/user");
 const { jsonrepair } = require("jsonrepair");
-const extract = require("extract-json-from-string");
+
+// Replaces extract-json-from-string (abandoned, 8.5y old).
+// Extracts the first JSON object or array from an arbitrary string.
+function extractJsonFromString(str) {
+  const results = [];
+  let depth = 0;
+  let start = -1;
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+    if (char === '"') {
+      // Skip quoted strings
+      i++;
+      while (i < str.length && str[i] !== '"') {
+        if (str[i] === '\\') i++;
+        i++;
+      }
+      continue;
+    }
+    if (char === '{' || char === '[') {
+      if (depth === 0) start = i;
+      depth++;
+    } else if (char === '}' || char === ']') {
+      depth--;
+      if (depth === 0 && start !== -1) {
+        try {
+          const candidate = str.slice(start, i + 1);
+          results.push(JSON.parse(candidate));
+        } catch {
+          // not valid JSON, ignore
+        }
+        start = -1;
+      }
+    }
+  }
+  return results;
+}
 
 function reqBody(request) {
   return typeof request.body === "string"
@@ -97,7 +132,7 @@ function safeJsonParse(jsonString, fallback = null) {
   }
 
   try {
-    return extract(jsonString)?.[0] || fallback;
+    return extractJsonFromString(jsonString)?.[0] || fallback;
   } catch (e) {
     console.debug("safeJsonParse: extract failed:", e.message);
   }
