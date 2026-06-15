@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Admin dashboard for politician sync monitoring
-// Docs: PoliticianSync/index.doc.md
+// Docs: index.doc.md
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";

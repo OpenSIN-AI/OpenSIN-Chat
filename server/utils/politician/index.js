@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 /**
  * Politician Database Module — unified entry point for politician search,
- * retrieval, voting records, speeches, and mandates.
+ * profiles, voting records, speeches, mandates, and sync status.
  *
  * Docs: index.doc.md
- * Purpose: Aggregates data from Bundestag API, Abgeordnetenwatch API, and
- * Plenarprotokolle. Provides search with vector-semantic capabilities.
+ * Purpose: Aggregates politician data from Bundestag, Abgeordnetenwatch, and Plenarprotokolle into a searchable database interface.
  *
  * Public API:
  *   searchPoliticians(query, filters) — search politicians by name/party/state

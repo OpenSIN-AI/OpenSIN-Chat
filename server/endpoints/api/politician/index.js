@@ -3,7 +3,7 @@
  * Politician REST API endpoints.
  *
  * Docs: index.doc.md
- * Purpose: Exposes politician search, detail, votes, and speeches via REST.
+ * Purpose: Exposes politician search, profiles, votes, speeches, sync status, and manual sync trigger via REST.
  *
  * Endpoints:
  *   GET /politician/search  — search politicians (supports ?source=)

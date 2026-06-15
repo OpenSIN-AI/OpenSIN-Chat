@@ -93,39 +93,44 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes("node_modules")) return;
           // KEEP react in the main entry chunk — splitting it causes a race
-          // condition where vendor-ui (TanStack Query / Floating UI) tries
-          // to call React.useLayoutEffect during its top-level evaluation
-          // before vendor-react has finished initializing. Even with
-          // modulepreload links the chunks are evaluated in parallel
-          // and the page goes black with "Cannot read properties of
-          // undefined (reading 'useLayoutEffect')".
+          // condition where UI chunks try to call React.useLayoutEffect before
+          // React has finished initializing. The catch-all vendor chunk below
+          // therefore contains React and closely coupled React libraries.
           if (/[\\/]node_modules[\\/](katex)[\\/]/.test(id)) return "vendor-katex";
-          if (/[\\/]node_modules[\\/]highlight\.js[\\/]/.test(id)) return "vendor-highlight";
-          if (/[\\/]node_modules[\\/](markdown-it|dompurify|@mintplex-labs[\\/]mdpdf|marked|remark|rehype|mdast|micromark)[\\/]/.test(id))
+          if (/[\\/]node_modules[\\/](highlight\.js)[\\/]/.test(id)) return "vendor-highlight";
+          // React-markdown and the full remark/rehype/mdast/micromark ecosystem
+          // are only needed when rendering markdown messages.
+          if (/[\\/]node_modules[\\/](react-markdown|markdown-it|dompurify|@mintplex-labs[\\/]mdpdf|marked|remark[-/]|rehype[-/]|mdast[-/]|micromark[-/]|unist[-/]|hast[-/]|property-information|entities|space-separated-tokens|comma-separated-tokens|vfile)[\\/]/.test(id))
             return "vendor-markdown";
           if (/[\\/]node_modules[\\/](@phosphor-icons|react-icons|lucide-react)[\\/]/.test(id))
             return "vendor-icons";
-          // KEEP recharts / @tremor / d3 in the main entry chunk. The previous
-          // vendor-charts split produced an ESM TDZ race in the browser:
-          // the minified chart bundle did `import{... R as s ...} from "./vendor-..."`
-          // where `s` was the React namespace from the catch-all vendor chunk.
-          // Because Vite emits modulepreload links and the browser evaluates
-          // sibling chunks in parallel, the recharts top-level factory
-          // (e.g. `s.forwardRef(function(...){... "recharts-layer" ...})`)
-          // was reached before the vendor chunk's React binding had finished
-          // initializing, throwing:
-          //   Uncaught ReferenceError: Cannot access 's' before initialization
-          //     at vendor-charts-*.js:9:16948
-          // Keeping the chart libs in the main chunk eliminates the cross-chunk
-          // import and lets React resolve synchronously. See #125.
+          // KEEP recharts / @tremor / d3 in the route chunks. The previous
+          // vendor-charts split produced an ESM TDZ race because recharts reached
+          // the React namespace before it had initialized. Leaving them inside the
+          // lazy-loaded Chartable route chunk keeps the cross-chunk import out.
           if (/[\\/]node_modules[\\/](recharts|d3-|@tremor)[\\/]/.test(id))
             return undefined;
           if (/[\\/]node_modules[\\/](onnxruntime-web|@mintplex-labs[\\/]piper-tts-web|@openafd[\\/]piper-tts-web)[\\/]/.test(id))
             return "vendor-tts";
           if (/[\\/]node_modules[\\/](lodash|moment|date-fns|dayjs)[\\/]/.test(id))
             return "vendor-utils";
-          // vendor-ui chunks MUST come after React in the main bundle, so
-          // we keep them in the main chunk as well to avoid the race.
+          // Heavy PDF / document generation libraries used only in specific routes
+          // (e.g. scheduled jobs file export, PDF analysis). Splitting them out of
+          // the catch-all vendor chunk is the main driver for keeping vendor.js
+          // below the 2000 KB warning limit.
+          if (/[\\/]node_modules[\\/](docx|jspdf|html2canvas|canvg|pako)[\\/]/.test(id))
+            return "vendor-pdf";
+          // Cron expression parsing is only used by the scheduled-jobs UI.
+          if (/[\\/]node_modules[\\/](cronstrue)[\\/]/.test(id))
+            return "vendor-cron";
+          // Speech recognition is only used when the browser STT feature is enabled.
+          if (/[\\/]node_modules[\\/](react-speech-recognition)[\\/]/.test(id))
+            return "vendor-speech";
+          // QR code generation is only used on the mobile connections page.
+          if (/[\\/]node_modules[\\/](qrcode\.react)[\\/]/.test(id))
+            return "vendor-qrcode";
+          // vendor-ui chunks MUST come after React in the main bundle, so keep
+          // them in the main chunk as well to avoid the race.
           if (/[\\/]node_modules[\\/](react-tooltip|@tanstack|@floating-ui)[\\/]/.test(id))
             return undefined;
           return "vendor";
