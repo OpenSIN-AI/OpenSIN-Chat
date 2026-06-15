@@ -10,6 +10,10 @@ export default function ConnectedView({
   config,
   onDisconnected,
   onReconnected,
+}: {
+  config: { connected: boolean; bot_username: string };
+  onDisconnected: () => void;
+  onReconnected: () => void;
 }) {
   const connected = config.connected;
   const [newToken, setNewToken] = useState("");

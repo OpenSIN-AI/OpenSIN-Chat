@@ -9,7 +9,7 @@ export default function ShowScrollbar() {
   const [saving, setSaving] = useState(false);
   const [showScrollbar, setShowScrollbar] = useState(false);
 
-  const handleChange = async (checked) => {
+  const handleChange = async (checked: boolean) => {
     setShowScrollbar(checked);
     setSaving(true);
     try {

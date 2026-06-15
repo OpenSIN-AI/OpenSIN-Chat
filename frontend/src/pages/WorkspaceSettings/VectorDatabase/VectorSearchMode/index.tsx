@@ -6,7 +6,13 @@ import { useTranslation } from "react-i18next";
 // returns information. We need to normalize the response data so Reranker can be used for each provider.
 const supportedVectorDBs = ["lancedb"];
 
-export default function VectorSearchMode({ workspace, setHasChanges }) {
+export default function VectorSearchMode({
+  workspace,
+  setHasChanges,
+}: {
+  workspace?: { vectorDB?: string; vectorSearchMode?: string };
+  setHasChanges: (v: boolean) => void;
+}) {
   const { t } = useTranslation();
   const [selection, setSelection] = useState(
     workspace?.vectorSearchMode ?? "default",

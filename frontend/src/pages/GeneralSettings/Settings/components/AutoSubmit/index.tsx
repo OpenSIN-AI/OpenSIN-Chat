@@ -4,19 +4,19 @@ import Appearance from "@/models/appearance";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
 
-export default function ChatRenderHTML() {
-  const { t } = useTranslation();
+export default function AutoSubmit() {
   const [saving, setSaving] = useState(false);
-  const [renderHTML, setRenderHTML] = useState(false);
+  const [autoSubmitSttInput, setAutoSubmitSttInput] = useState(true);
+  const { t } = useTranslation();
 
-  const handleChange = async (checked) => {
-    setRenderHTML(checked);
+  const handleChange = async (checked: boolean) => {
+    setAutoSubmitSttInput(checked);
     setSaving(true);
     try {
-      Appearance.updateSettings({ renderHTML: checked });
+      Appearance.updateSettings({ autoSubmitSttInput: checked });
     } catch (error) {
       console.error("Failed to update appearance settings:", error);
-      setRenderHTML(!checked);
+      setAutoSubmitSttInput(!checked);
     }
     setSaving(false);
   };
@@ -24,7 +24,7 @@ export default function ChatRenderHTML() {
   useEffect(() => {
     function fetchSettings() {
       const settings = Appearance.getSettings();
-      setRenderHTML(settings.renderHTML);
+      setAutoSubmitSttInput(settings.autoSubmitSttInput ?? true);
     }
     fetchSettings();
   }, []);
@@ -34,11 +34,11 @@ export default function ChatRenderHTML() {
       <Toggle
         size="md"
         variant="horizontal"
-        enabled={renderHTML}
+        enabled={autoSubmitSttInput}
         onChange={handleChange}
         disabled={saving}
-        label={t("customization.items.render-html.title")}
-        description={t("customization.items.render-html.description")}
+        label={t("customization.chat.auto_submit.title")}
+        description={t("customization.chat.auto_submit.description")}
       />
     </div>
   );

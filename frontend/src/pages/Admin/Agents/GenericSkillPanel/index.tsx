@@ -11,6 +11,15 @@ export default function GenericSkillPanel({
   disabled = false,
   image,
   icon,
+}: {
+  title: string;
+  description: string;
+  skill: string;
+  toggleSkill: (skill: string) => void;
+  enabled?: boolean;
+  disabled?: boolean;
+  image: string;
+  icon?: React.ComponentType<{ size: number; color: string; weight: string }>;
 }) {
   return (
     <div className="p-2">

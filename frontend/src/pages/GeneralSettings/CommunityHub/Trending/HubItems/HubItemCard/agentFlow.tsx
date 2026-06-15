@@ -5,7 +5,7 @@ import { VisibilityIcon } from "./generic";
 import { safeJsonParse } from "@/utils/request";
 import { useTranslation } from "react-i18next";
 
-export default function AgentFlowHubCard({ item }) {
+export default function AgentFlowHubCard({ item }: { item: any }) {
   const { t } = useTranslation();
   const flow = safeJsonParse(item.flow, { steps: [] });
   return (
@@ -24,7 +24,7 @@ export default function AgentFlowHubCard({ item }) {
         </label>
         <p className="text-white/60 text-xs bg-zinc-900 light:bg-slate-200 px-2 py-1 rounded-md font-mono border border-slate-800 light:border-slate-300">
           <ul className="list-disc pl-4">
-            {flow.steps.map((step, index) => (
+            {flow.steps.map((step: any, index: number) => (
               <li key={index}>{step.type}</li>
             ))}
           </ul>
