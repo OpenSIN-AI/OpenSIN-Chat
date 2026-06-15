@@ -6,7 +6,13 @@ import { userFromStorage } from "@/utils/request";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
 
-export default function ApiKeyRow({ apiKey, removeApiKey }) {
+export default function ApiKeyRow({
+  apiKey,
+  removeApiKey,
+}: {
+  apiKey: { id: number; name?: string; secret: string; createdBy?: { username?: string }; createdAt: string };
+  removeApiKey: (id: number) => void;
+}) {
   const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const handleDelete = async () => {

@@ -6,6 +6,10 @@ export default function FileNode({
   config,
   onConfigChange,
   renderVariableSelect,
+}: {
+  config: { operation?: string; path?: string; content?: string; resultVariable?: string };
+  onConfigChange: (c: any) => void;
+  renderVariableSelect: (value: any, onChange: (v: any) => void, placeholder: string, required: boolean) => React.ReactNode;
 }) {
   const { t } = useTranslation();
   return (
@@ -68,6 +72,7 @@ export default function FileNode({
           config.resultVariable,
           (value) => onConfigChange({ resultVariable: value }),
           t("agentBuilder.fileNode.selectOrCreateVariable"),
+          false,
         )}
       </div>
     </div>

@@ -12,7 +12,7 @@ const CommunityHubImportItemSteps = {
     key: "itemId",
     name: "1. Paste in Item ID",
     next: () => "validation",
-    component: ({ settings, setSettings, setStep }) => (
+    component: ({ settings, setSettings, setStep }: { settings: any; setSettings: any; setStep: any }) => (
       <Introduction
         settings={settings}
         setSettings={setSettings}
@@ -24,7 +24,7 @@ const CommunityHubImportItemSteps = {
     key: "validation",
     name: "2. Review item",
     next: () => "completed",
-    component: ({ settings, setSettings, setStep }) => (
+    component: ({ settings, setSettings, setStep }: { settings: any; setSettings: any; setStep: any }) => (
       <PullAndReview
         settings={settings}
         setSettings={setSettings}
@@ -35,7 +35,7 @@ const CommunityHubImportItemSteps = {
   completed: {
     key: "completed",
     name: "3. Completed",
-    component: ({ settings, setSettings, setStep }) => (
+    component: ({ settings, setSettings, setStep }: { settings: any; setSettings: any; setStep: any }) => (
       <Completed
         settings={settings}
         setSettings={setSettings}
@@ -45,11 +45,11 @@ const CommunityHubImportItemSteps = {
   },
 };
 
-export function CommunityHubImportItemLayout({ setStep, children }) {
+export function CommunityHubImportItemLayout({ setStep, children }: { setStep: (step: string) => void; children: (settings: any, setSettings: any, setStep: any) => React.ReactNode }) {
   const query = useQuery();
   const [settings, setSettings] = useState({
-    itemId: null,
-    item: null,
+    itemId: null as string | null,
+    item: null as any,
   });
 
   useEffect(() => {

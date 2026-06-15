@@ -7,9 +7,13 @@ export default function StartNode({
   config,
   onConfigChange,
   onDeleteVariable,
+}: {
+  config: { variables: { name: string; value: string }[] };
+  onConfigChange: (c: any) => void;
+  onDeleteVariable: (name: string) => void;
 }) {
   const { t } = useTranslation();
-  const handleDeleteVariable = (index, variableName) => {
+  const handleDeleteVariable = (index: number, variableName: string) => {
     // First clean up references, then delete the variable
     onDeleteVariable(variableName);
     const newVars = config.variables.filter((_, i) => i !== index);

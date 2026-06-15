@@ -12,6 +12,13 @@ export default function AgentList({
   handleClick = null,
   activeSkills = [],
   Icon = null,
+}: {
+  isDefault?: boolean;
+  skills: Record<string, { title: string; Icon?: React.ComponentType<{ size: number }> }>;
+  selectedSkill?: string | null;
+  handleClick?: ((skill: string) => void) | null;
+  activeSkills?: string[];
+  Icon?: React.ComponentType<{ size: number }> | null;
 }) {
   const { t } = useTranslation();
   if (skills.length === 0) return null;
