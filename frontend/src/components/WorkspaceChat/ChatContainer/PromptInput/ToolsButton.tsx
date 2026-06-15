@@ -1,11 +1,18 @@
 import { useTranslation } from "react-i18next";
 
+interface ToolsButtonProps {
+  showTools: boolean;
+  setShowTools: (show: boolean) => void;
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+  autoOpenedToolsRef: React.MutableRefObject<boolean>;
+}
+
 export default function ToolsButton({
   showTools,
   setShowTools,
   textareaRef,
   autoOpenedToolsRef,
-}) {
+}: ToolsButtonProps) {
   const { t } = useTranslation();
 
   return (
