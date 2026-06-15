@@ -1,5 +1,13 @@
+// SPDX-License-Identifier: MIT
+import React from "react";
 import { Tooltip } from "react-tooltip";
 import { safeJsonParse } from "@/utils/request";
+
+interface TooltipData {
+  title: string;
+  date: string;
+  extension: string;
+}
 
 /**
  * Tooltips for the workspace directory components. Renders when the workspace directory is shown
@@ -13,8 +21,8 @@ export function WorkspaceDocumentTooltips() {
         place="bottom"
         delayShow={800}
         className="tooltip invert light:invert-0 z-99 max-w-[200px]"
-        render={({ content }) => {
-          const data = safeJsonParse(content, null);
+        render={({ content }: { content: string }) => {
+          const data = safeJsonParse<TooltipData>(content, null);
           if (!data) return null;
           return (
             <div className="text-xs">

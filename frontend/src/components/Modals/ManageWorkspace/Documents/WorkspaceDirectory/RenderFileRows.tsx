@@ -1,5 +1,40 @@
-export function RenderFileRows({ files, movedItems, children, workspace }) {
-  function sortMovedItemsAndFiles(a, b) {
+// SPDX-License-Identifier: MIT
+import React from "react";
+
+interface File {
+  id: string;
+  pinnedWorkspaces?: string[];
+  [key: string]: any;
+}
+
+interface Folder {
+  items: File[];
+  [key: string]: any;
+}
+
+interface Files {
+  items: Folder[];
+}
+
+interface MovedItem {
+  id: string;
+  [key: string]: any;
+}
+
+interface Workspace {
+  id: string;
+  [key: string]: any;
+}
+
+interface RenderFileRowsProps {
+  files: Files;
+  movedItems: MovedItem[];
+  children: (props: { item: File; folder: Folder }) => React.ReactNode;
+  workspace: Workspace;
+}
+
+export function RenderFileRows({ files, movedItems, children, workspace }: RenderFileRowsProps) {
+  function sortMovedItemsAndFiles(a: File, b: File): number {
     const aIsMovedItem = movedItems.some((movedItem) => movedItem.id === a.id);
     const bIsMovedItem = movedItems.some((movedItem) => movedItem.id === b.id);
     if (aIsMovedItem && !bIsMovedItem) return -1;

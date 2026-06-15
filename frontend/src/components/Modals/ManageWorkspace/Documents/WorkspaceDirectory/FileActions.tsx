@@ -1,4 +1,13 @@
-export function FileActions({ hasChanges, handleSaveChanges, t }) {
+// SPDX-License-Identifier: MIT
+import React from "react";
+
+interface FileActionsProps {
+  hasChanges: boolean;
+  handleSaveChanges: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  t: (key: string) => string;
+}
+
+export function FileActions({ hasChanges, handleSaveChanges, t }: FileActionsProps) {
   if (!hasChanges) return null;
 
   return (
