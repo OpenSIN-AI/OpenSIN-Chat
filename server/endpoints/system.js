@@ -867,7 +867,7 @@ function systemEndpoints(app) {
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
-          if (fs.existsSync(oldPfpPath)) fs.unlinkSync(oldPfpPath);
+          await fs.promises.unlink(oldPfpPath).catch(() => { /* file already gone, safe to ignore */ });
         }
 
         const { success, error } = await User.update(user.id, {
@@ -957,7 +957,7 @@ function systemEndpoints(app) {
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
-          if (fs.existsSync(oldPfpPath)) fs.unlinkSync(oldPfpPath);
+          await fs.promises.unlink(oldPfpPath).catch(() => { /* file already gone, safe to ignore */ });
         }
 
         const { success, error } = await User.update(user.id, {

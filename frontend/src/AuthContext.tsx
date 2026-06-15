@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext } from "react";
+import useSWR from "swr";
 import {
   AUTH_TIMESTAMP,
   AUTH_TOKEN,
@@ -9,8 +10,10 @@ import {
 import System from "./models/system";
 import { useNavigate } from "react-router-dom";
 import { safeJsonParse } from "@/utils/request";
+import { userKey } from "@/hooks/useUser";
 
 export const AuthContext = createContext<any>(null);
+
 export function AuthProvider(props) {
   const localUser = localStorage.getItem(AUTH_USER);
   const localAuthToken = localStorage.getItem(AUTH_TOKEN);
@@ -21,17 +24,47 @@ export function AuthProvider(props) {
 
   const navigate = useNavigate();
 
+  // SWR replaces the useEffect + refreshUser pattern.
+  // Only fires when an authToken is present; the userKey is set to null
+  // otherwise so SWR skips the request entirely.
+  const { mutate } = useSWR(
+    store.authToken ? userKey : null,
+    () => System.refreshUser(),
+    {
+      revalidateOnFocus: true,
+      dedupingInterval: 2000,
+      onSuccess(data) {
+        // Single-user mode (no multi-user): data.user is null but success is
+        // true — nothing to do.
+        if (data.success && data.user === null) return;
+
+        if (!data.success) {
+          localStorage.removeItem(AUTH_USER);
+          localStorage.removeItem(AUTH_TOKEN);
+          localStorage.removeItem(AUTH_TIMESTAMP);
+          localStorage.removeItem(USER_PROMPT_INPUT_MAP);
+          setStore({ user: null, authToken: null });
+          navigate("/login");
+          return;
+        }
+
+        localStorage.setItem(AUTH_USER, JSON.stringify(data.user));
+        setStore((prev) => ({ ...prev, user: data.user }));
+      },
+    },
+  );
+
   /* NOTE:
-   * 1. There's no reason for these helper functions to be stateful. They could
-   * just be regular funcs or methods on a basic object.
-   * 2. These actions are not being invoked anywhere in the
-   * codebase, dead code.
+   * 1. These helper functions are not stateful — they are plain actions.
+   * 2. updateUser / unsetUser also invalidate the SWR user cache so any
+   *    component that calls useUser() immediately sees the new state.
    */
   const [actions] = useState({
     updateUser: (user, authToken = "" as any) => {
       localStorage.setItem(AUTH_USER, JSON.stringify(user));
       localStorage.setItem(AUTH_TOKEN, authToken);
       setStore({ user, authToken });
+      mutate({ success: true, user, message: null }, false);
     },
     unsetUser: () => {
       localStorage.removeItem(AUTH_USER);
@@ -39,38 +72,9 @@ export function AuthProvider(props) {
       localStorage.removeItem(AUTH_TIMESTAMP);
       localStorage.removeItem(USER_PROMPT_INPUT_MAP);
       setStore({ user: null, authToken: null });
+      mutate({ success: false, user: null, message: null }, false);
     },
   });
-
-  /*
-   * On initial mount and whenever the token changes, fetch a new user object
-   * If the user is suspended, (success === false and data === null) logout the user and redirect to the login page
-   * If success is true and data is not null, update the user object in the store (multi-user mode only)
-   * If success is true and data is null, do nothing (single-user mode only) with or without password protection
-   */
-  useEffect(() => {
-    async function refreshUser() {
-      const { success, user: refreshedUser } = await System.refreshUser();
-      if (success && refreshedUser === null) return;
-
-      if (!success) {
-        localStorage.removeItem(AUTH_USER);
-        localStorage.removeItem(AUTH_TOKEN);
-        localStorage.removeItem(AUTH_TIMESTAMP);
-        localStorage.removeItem(USER_PROMPT_INPUT_MAP);
-        setStore({ user: null, authToken: null });
-        navigate("/login");
-        return;
-      }
-
-      localStorage.setItem(AUTH_USER, JSON.stringify(refreshedUser));
-      setStore((prev) => ({
-        ...prev,
-        user: refreshedUser,
-      }));
-    }
-    if (store.authToken) refreshUser();
-  }, [store.authToken]);
 
   return (
     <AuthContext.Provider value={{ store, actions }}>

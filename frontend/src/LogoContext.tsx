@@ -1,24 +1,28 @@
 // SPDX-License-Identifier: MIT
-import { createContext, useEffect, useRef, useState } from "react";
+import React, { createContext, useEffect, useRef } from "react";
+import useSWR from "swr";
 import OpenSINLogo from "./media/logo/opensin-logo.png";
 import OpenSINLogoDark from "./media/logo/opensin-logo-dark.png";
 import DefaultLoginLogo from "./media/logo/opensin-logo.png";
 import System from "./models/system";
 
 export const REFETCH_LOGO_EVENT = "refetch-logo";
+export const LOGO_CACHE_KEY = "system/logo";
 
 export const LogoContext = createContext<any>(undefined);
 
+type LogoData = {
+  logo: string;
+  loginLogo: string;
+  isCustomLogo: boolean;
+};
+
 export function LogoProvider({ children }) {
-  const [logo, setLogo] = useState("");
-  const [loginLogo, setLoginLogo] = useState("");
-  const [isCustomLogo, setIsCustomLogo] = useState(false as any);
   // Tracks the most recently created blob: object URL so it can be revoked
-  // before being replaced (e.g. on theme change / REFETCH_LOGO_EVENT) and on
-  // unmount, preventing object-URL memory leaks.
+  // before being replaced and on unmount, preventing object-URL memory leaks.
   const objectURLRef = useRef<string | null>(null);
 
-  async function fetchInstanceLogo() {
+  async function fetchLogoData(): Promise<LogoData> {
     const isDarkMode =
       (localStorage.getItem("theme") || "default") === "default";
     const fallbackLogo = isDarkMode ? OpenSINLogoDark : OpenSINLogo;
@@ -26,42 +30,59 @@ export function LogoProvider({ children }) {
 
     try {
       const { isCustomLogo, logoURL } = await System.fetchLogo();
-      // Release the previously created blob URL before storing the new one.
       if (objectURLRef.current && objectURLRef.current !== logoURL) {
         URL.revokeObjectURL(objectURLRef.current);
         objectURLRef.current = null;
       }
       if (logoURL) {
         objectURLRef.current = logoURL;
-        setLogo(logoURL);
-        setLoginLogo(isCustomLogo ? logoURL : defaultLoginLogo);
-        setIsCustomLogo(isCustomLogo);
-      } else {
-        setLogo(fallbackLogo);
-        setLoginLogo(defaultLoginLogo);
-        setIsCustomLogo(false);
+        return {
+          logo: logoURL,
+          loginLogo: isCustomLogo ? logoURL : defaultLoginLogo,
+          isCustomLogo,
+        };
       }
+      return { logo: fallbackLogo, loginLogo: defaultLoginLogo, isCustomLogo: false };
     } catch {
-      setLogo(fallbackLogo);
-      setLoginLogo(defaultLoginLogo);
-      setIsCustomLogo(false);
+      return { logo: fallbackLogo, loginLogo: defaultLoginLogo, isCustomLogo: false };
     }
   }
 
+  const { data, mutate } = useSWR<LogoData>(LOGO_CACHE_KEY, fetchLogoData, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    // Provide immediate fallback values so consumers never receive undefined.
+    fallbackData: {
+      logo: OpenSINLogo,
+      loginLogo: DefaultLoginLogo,
+      isCustomLogo: false,
+    },
+  });
+
+  // When a REFETCH_LOGO_EVENT fires (e.g. after a custom logo upload),
+  // tell SWR to re-run the fetcher and broadcast the new value to all
+  // consumers — replaces the direct fetchInstanceLogo() call.
   useEffect(() => {
-    fetchInstanceLogo();
-    window.addEventListener(REFETCH_LOGO_EVENT, fetchInstanceLogo);
+    const handleRefetch = () => mutate();
+    window.addEventListener(REFETCH_LOGO_EVENT, handleRefetch);
     return () => {
-      window.removeEventListener(REFETCH_LOGO_EVENT, fetchInstanceLogo);
+      window.removeEventListener(REFETCH_LOGO_EVENT, handleRefetch);
       if (objectURLRef.current) {
         URL.revokeObjectURL(objectURLRef.current);
         objectURLRef.current = null;
       }
     };
-  }, []);
+  }, [mutate]);
 
   return (
-    <LogoContext.Provider value={{ logo, setLogo, loginLogo, isCustomLogo }}>
+    <LogoContext.Provider
+      value={{
+        logo: data!.logo,
+        setLogo: (logo: string) => mutate((prev) => ({ ...prev!, logo }), false),
+        loginLogo: data!.loginLogo,
+        isCustomLogo: data!.isCustomLogo,
+      }}
+    >
       {children}
     </LogoContext.Provider>
   );
