@@ -216,7 +216,7 @@ app.get("/accepts", function (_, response) {
   response.status(200).json(ACCEPTED_MIMES);
 });
 
-app.all("*", function (_, response) {
+app.all("{*path}", function (_, response) {
   response.sendStatus(200);
 });
 

@@ -108,6 +108,8 @@ export default [
       "react-hooks/exhaustive-deps": "off",
       "react/prop-types": "off",
       "react-hooks/set-state-in-effect": "off",
+      "react-hooks/static-components": "off",
+      "react-hooks/use-memo": "off",
       // refs rule produces false positives on legitimate ref-forwarding patterns
       "react-hooks/refs": "warn",
       "react/jsx-no-target-blank": "error",

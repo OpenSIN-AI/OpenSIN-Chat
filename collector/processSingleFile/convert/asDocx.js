@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
-const { DocxLoader } = require("langchain/document_loaders/fs/docx");
+const { DocxLoader } = require("@langchain/community/document_loaders/fs/docx");
 const {
   createdDate,
   trashFile,

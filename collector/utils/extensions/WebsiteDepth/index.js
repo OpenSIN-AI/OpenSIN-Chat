@@ -2,7 +2,7 @@
 const { v4 } = require("uuid");
 const {
   PuppeteerWebBaseLoader,
-} = require("langchain/document_loaders/web/puppeteer");
+} = require("@langchain/community/document_loaders/web/puppeteer");
 const { default: slugify } = require("slugify");
 const { parse } = require("node-html-parser");
 const { writeToServerDocuments, documentsFolder } = require("../../files");
