@@ -7,22 +7,21 @@ import { CircleNotch } from "@phosphor-icons/react";
 import ConnectedView from "./ConnectedView";
 import SetupView from "./SetupView";
 import { useTranslation } from "react-i18next";
-import System from "@/models/system";
 import paths from "@/utils/paths";
 import useTelegramBot from "@/hooks/useTelegramBot";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function TelegramBotSettings() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { config, isLoading } = useTelegramBot();
+  const { settings } = useSystemSettings();
   const [localConfig, setLocalConfig] = useState(null);
   const currentConfig = localConfig ?? config;
 
   useEffect(() => {
-    System.isMultiUserMode().then((isMultiUserMode) => {
-      if (isMultiUserMode) navigate(paths.home());
-    });
-  }, [navigate]);
+    if (settings.MultiUserMode) navigate(paths.home());
+  }, [settings.MultiUserMode, navigate]);
 
   const handleConnected = (newConfig) => setLocalConfig(newConfig);
   const handleDisconnected = () => setLocalConfig(null);

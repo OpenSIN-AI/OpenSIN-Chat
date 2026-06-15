@@ -1,28 +1,19 @@
 // SPDX-License-Identifier: MIT
 import CTAButton from "@/components/lib/CTAButton";
 import CommunityHubImportItemSteps from "../..";
-import { useEffect, useState } from "react";
-import Workspace from "@/models/workspace";
+import { useState } from "react";
 import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
 import CommunityHub from "@/models/communityHub";
 import { useTranslation } from "react-i18next";
+import useWorkspaces from "@/hooks/useWorkspaces";
 
 export default function SystemPrompt({ item, setStep }) {
   const { t } = useTranslation();
-  const [destinationWorkspaceSlug, setDestinationWorkspaceSlug] =
-    useState(null);
-  const [workspaces, setWorkspaces] = useState([]);
-  useEffect(() => {
-    async function getWorkspaces() {
-      const workspaces = await Workspace.all();
-      setWorkspaces(workspaces);
-      if (workspaces.length > 0) {
-        setDestinationWorkspaceSlug(workspaces[0].slug);
-      }
-    }
-    getWorkspaces();
-  }, []);
+  const { workspaces } = useWorkspaces();
+  const [destinationWorkspaceSlug, setDestinationWorkspaceSlug] = useState(
+    () => workspaces[0]?.slug ?? null,
+  );
 
   async function handleSubmit() {
     showToast(t("communityHub.import.systemPrompt.toastApplying"), "info");

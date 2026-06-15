@@ -1,37 +1,25 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
 import System from "@/models/system";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function MaxToolCallStack() {
   const { t } = useTranslation();
-  const [maxCallStack, setMaxCallStack] = useState(10);
-  const [loading, setLoading] = useState(true);
-
-  const debouncedUpdateMaxCallStack = useMemo(
-    () =>
-      debounce(async (newMaxCallStack) => {
-        await System.updateSystem({
-          AgentSkillMaxToolCalls: newMaxCallStack.toString(),
-        });
-      }, 800),
-    [],
+  const { settings, loading } = useSystemSettings();
+  const [maxCallStack, setMaxCallStack] = useState(
+    () => parseInt(settings.AgentSkillMaxToolCalls) || 10,
   );
 
-  useEffect(() => {
-    System.keys()
-      .then((res) => {
-        setMaxCallStack(parseInt(res.AgentSkillMaxToolCalls));
-      })
-      .finally(() => {
-        setLoading(false);
+  const debouncedUpdateMaxCallStack = useMemo(() => {
+    const fn = debounce(async (newMaxCallStack) => {
+      await System.updateSystem({
+        AgentSkillMaxToolCalls: newMaxCallStack.toString(),
       });
+    }, 800);
+    return fn;
   }, []);
-
-  useEffect(() => {
-    return () => debouncedUpdateMaxCallStack.cancel();
-  }, [debouncedUpdateMaxCallStack]);
 
   return (
     <div className="flex flex-col gap-y-2 mt-4">
