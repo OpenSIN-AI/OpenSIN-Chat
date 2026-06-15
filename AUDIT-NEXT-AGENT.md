@@ -1,19 +1,229 @@
 # AUDIT-NEXT-AGENT
 
-> Onboarding-Leitfaden für den nächsten Agenten, der einen **optischen / UX-Audit**
-> von OpenSIN-Chat durchführt. Enthält alles, was zu Beginn gefehlt hat, um
-> **sofort** loslegen zu können — ohne dieselben Sackgassen erneut zu durchlaufen.
+> Onboarding-Leitfaden für den nächsten Agenten, der an **OpenSIN-Chat** weiterarbeitet.
+> Enthält alles, was zu Beginn gefehlt hat, um sofort loslegen zu können — ohne
+> dieselben Sackgassen erneut zu durchlaufen.
 >
-> Stand: 2026-06-14 · Branch `audit-next-agent`
+> Stand: 2026-06-15 · Aktueller Arbeits-Branch: `v0/naurimans-1224-ae14ea34`
+>
+> **Kapitelübersicht**
+> - §A CI/Lint-Infrastruktur — Stolpersteine + Runbook ← NEU (Issues #178–#186)
+> - §B Dependency-Security-Workflow ← NEU
+> - §C Branch-Strategie & offene Issues ← NEU
+> - §0 TL;DR — 60-Sekunden-Startblock (UX-Audit)
+> - §1–§13 UX-Audit-Leitfaden (unverandert, Stand 2026-06-14)
+
+---
+
+## A. CI / Lint-Infrastruktur — Runbook & bekannte Fallstricke
+
+> Dieses Kapitel deckt die Bugs aus Issues #178–#182 und #185–#186 ab.
+> Wer nur UX-Audit macht, kann direkt zu §0 springen.
+
+### A.1 Projektstruktur (Monorepo, drei unabhängige Workspaces)
+
+```
+OpenSIN-Chat/
+├── frontend/         Vite + React  (yarn, eslint.config.js)
+├── server/           Node/Express  (yarn, eslint.config.mjs)
+├── collector/        Node          (yarn, eslint.config.mjs)
+├── package.json      Root-Tooling  (yarn scripts: lint:ci, test)
+└── docs/LINT-AND-AUDIT.md   detailliertes Runbook (alle Befehle)
+```
+
+Jedes Workspace hat sein **eigenes** `yarn.lock` und `node_modules`.
+`npm install` auf Root-Ebene ist falsch — immer workspace-spezifisch mit `yarn` installieren.
+
+### A.2 Korrekte Install-Befehle
+
+```bash
+# devDependencies MUSS installiert sein (Pflicht vor lint:check!)
+# NICHT --production — dann fehlt eslint -> exit 127
+cd frontend  && yarn install --frozen-lockfile --network-timeout 100000
+cd server    && yarn install --frozen-lockfile --network-timeout 100000
+cd collector && yarn install --frozen-lockfile --network-timeout 100000
+```
+
+**Sonderfall collector:** Die Abhängigkeit `epub2-static` ist als `git+ssh://`-URL
+im `yarn.lock` gecacht. In Sandbox-Umgebungen ohne SSH-Zugang muss vor dem Install
+ein Git-URL-Rewrite gesetzt werden:
+
+```bash
+git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+git config --global --add url."https://github.com/".insteadOf "git@github.com:"
+```
+
+### A.3 Lint-Befehle
+
+```bash
+# Einzel-Workspace (im jeweiligen Verzeichnis):
+yarn lint:check     # CI-Gate — schlägt bei Errors fehl, Warnings erlaubt
+yarn lint           # Auto-Fix (prettier, no-var, import-Sortierung)
+
+# Alle drei Workspaces sequenziell (aus Root):
+yarn lint:ci
+```
+
+Erwartetes Steady-State: **0 Errors** in jedem Workspace.
+`no-console`- und `i18next/no-literal-string`-Warnings sind absichtlich nicht-fehlend.
+
+### A.4 Bekannte ESLint-Crashs und warum sie entstehen
+
+> **Kern-Regel:** Security-Resolutions müssen die gepatchte Version **innerhalb
+> des vom Consumer akzeptierten Ranges** verwenden — nie blind den neuesten Major
+> erzwingen. Ein falscher Major bricht zur Laufzeit mit kryptischen TypeErrors,
+> nicht mit einer hilfreichen Fehlermeldung.
+
+| Symptom | Ursache | Fix |
+|---------|---------|-----|
+| `TypeError: Cannot set properties of undefined (setting 'defaultMeta')` | `"ajv": ">=8.18.0"` in resolutions erzwingt ajv v8, aber `@eslint/eslintrc` (ESLint 9 Legacy-Shim) nutzt ajv **v6** API intern | `"ajv": "^6.14.0"` (wie frontend) |
+| `TypeError: expand is not a function` (in minimatch) | `"brace-expansion": ">=5.0.5"` erzwingt v5 (ESM-only), aber `minimatch@3` (genutzt von `@eslint/config-array`) erwartet v1-CommonJS-Funktion | `"brace-expansion": "^1.1.13"` — CVE-2025-5889 ist ab v1.1.12 gepatcht, v1 bleibt kompatibel |
+| `eslint: command not found` / exit 127 | devDependencies nicht installiert (`--production` oder fehlgeschlagener Install) | `yarn install --frozen-lockfile` ohne `--production` |
+
+Aktuelle Resolutions in allen drei `package.json`-Dateien sind korrekt gesetzt.
+**Nach jeder Resolution-Änderung:** `yarn install && yarn lint:check` lokal verifizieren,
+bevor committed wird.
+
+### A.5 Frontend: `no-undef` false positives auf TypeScript-Dateien
+
+ESLints `no-undef`-Regel kennt keine TypeScript-Ambient-Typen aus `@types/react`
+(`React`, `JSX`) oder `lib.dom.d.ts` (`EventListener`) und erzeugt falsch-positive
+Errors in allen `.tsx`-Dateien. Gelöst in `frontend/eslint.config.js` durch einen
+Override-Block, der **zwingend als letzter Block** platziert sein muss (ESLint Flat
+Config: letzter Block gewinnt):
+
+```js
+// MUSS der letzte Block in eslint.config.js sein!
+{
+  files: ["src/**/*.{ts,tsx}"],
+  rules: { "no-undef": "off" }
+}
+```
+
+TypeScript selbst übernimmt den Undefined-Check zur Compile-Zeit.
+
+### A.6 Collector `yarn.lock` Konflikt (form-data)
+
+Die Resolution `"form-data": ">=4.0.4"` ist absichtlich ein Range-Pin, keine
+Exact-Version. Eine Abhängigkeit im Collector-Tree benötigt `^4.0.5`, was eine
+Exact-Pin `4.0.4` verletzen würde. Der Range-Pin `>=4.0.4` erfüllt beide.
+**Nicht auf eine Exact-Version zurücksetzen.**
+
+### A.7 `package-lock.json` niemals committen
+
+Diese Dateien sind git-ignored in allen Workspaces und im Root. `yarn.lock` ist
+die einzige Quelle der Wahrheit. Das npm-Lockfile existiert nur transient für
+`npm audit`.
+
+**Kritisch:** `npm install` (ohne `--package-lock-only`) im Frontend-Dir
+**überschreibt `yarn.lock`** mit npm-aufgelösten Versionen — danach kehren
+ESLint-Errors zurück. Immer nur `yarn install` oder `npm install --package-lock-only`
+verwenden.
+
+---
+
+## B. Dependency-Security-Workflow
+
+### B.1 Das Problem mit `yarn audit` (Yarn 1.x)
+
+`yarn audit` (Yarn 1.x) schlägt für Scoped-Packages regelmäßig fehl:
+`Unexpected audit response (Missing Metadata): false` — bekannter Yarn-1.x-Bug
+ohne Upstream-Fix. **Nicht für den CI-Gate verwenden.**
+
+### B.2 Korrekte Audit-Befehle
+
+**Frontend** (einziger Workspace mit npm-audit-Skripten — selbst-enthaltend):
+
+```bash
+cd frontend
+
+# Lockfile generieren + Audit auf "moderate" und höher (CI-Gate)
+yarn run audit
+
+# Nur "high" und höher
+yarn run audit:high
+
+# Nur Lockfile neu generieren (ohne Audit)
+yarn run audit:prepare
+```
+
+`yarn run audit` führt intern aus:
+1. `npm install --package-lock-only --legacy-peer-deps` (transientes Lockfile aus yarn.lock)
+2. `npm audit --audit-level=moderate`
+
+**Server / Collector:**
+
+```bash
+cd server    && yarn audit --level moderate
+cd collector && yarn audit --level moderate
+```
+
+### B.3 Resolutions-Regeln
+
+| Regel | Begründung |
+|-------|-----------|
+| Security-Floors als Range (`>=X.Y.Z`), nicht Exact (`X.Y.Z`) | Erlaubt Patch-Updates, verhindert Downgrade |
+| Major niemals erzwingen wenn Consumer älteren Range hat | `brace-expansion ^1.x` ist sicher; `>=5.x` bricht minimatch |
+| `ajv` immer `"^6.14.0"` | ESLint 9.x-Internas nutzen ajv v6 API |
+| Nach jeder Resolution-Änderung: `yarn install && yarn lint:check` | Schnelles Feedback bevor CI scheitert |
+
+---
+
+## C. Branch-Strategie & offene Issues
+
+### C.1 Aktiver Branch
+
+| Branch | Inhalt |
+|--------|--------|
+| `v0/naurimans-1224-ae14ea34` | Alle Fixes #178–#182 + #185–#186 (aktueller Arbeits-Branch) |
+| `main` | Stable baseline |
+
+**Commits über main hinaus (Zusammenfassung):**
+
+```
+fix(collector): sync security resolutions (#178)
+fix(frontend/eslint): eliminate no-undef false positives (#179)
+fix: ajv + brace-expansion resolutions + frontend audit script (#180-182)
+ci: collector/server lint jobs + frontend npm audit gate (#180-182)
+fix(frontend): auto-fix prettier/no-var errors; gitignore package-lock
+fix(server): auto-fix prettier; remove unused catch binding
+fix(collector): auto-fix prettier; fix form-data range; update yarn.lock
+feat(docs): LINT-AND-AUDIT.md runbook; update AUDIT-NEXT-AGENT.md
+```
+
+PR #183 ist offen gegen `main`.
+
+### C.2 Status aller Issues aus der #176-er CEO-Audit-Serie
+
+| Issue | Titel | Status |
+|-------|-------|--------|
+| #178 | Collector: 3 CRITICAL + 54 HIGH vulns | Gefixt, committed |
+| #179 | Frontend: 226 ESLint Errors (no-undef false positives) | Gefixt, committed |
+| #180 | Server ESLint crash (TypeError: ajv defaultMeta) | Gefixt, committed |
+| #181 | Frontend yarn audit fails (Missing Metadata) | Gefixt, committed |
+| #182 | Collector lint not operational (eslint: command not found) | Gefixt, committed |
+| #185 | [P1] Frontend yarn audit "Missing Metadata" | Gefixt (self-contained npm audit script) |
+| #186 | [P0] Restore lint infra: server crash, frontend errors, collector missing | Gefixt (brace-expansion + auto-fix + CI-Jobs) |
+
+### C.3 Nächstes TODO für nächsten Agenten
+
+1. **PR #183 reviewen und mergen** — alle Fixes sind committed.
+2. **`no-console`-Warnings reduzieren** — server: 141, collector: einige.
+   Kein CI-Blocker, aber Tech-Debt. Empfehlung: strukturierten Logger einfühlen.
+3. **Neue Pakete installieren:** immer `yarn install` (nicht `npm install`) im
+   jeweiligen Workspace; danach `yarn lint:check`.
+4. **Neue Security-Resolutions:** Range-Pin statt Exact-Pin; nach Änderung
+   immer `yarn install && yarn lint:check` lokal laufen lassen.
 
 ---
 
 ## 0. TL;DR — In 60 Sekunden startklar
 
 ```bash
-# 1. Dependencies (Monorepo: Root + Frontend getrennt!)
-cd /vercel/share/v0-project        && npm install --legacy-peer-deps
-cd /vercel/share/v0-project/frontend && npm install --legacy-peer-deps
+# 1. Dependencies (Monorepo: drei separate Workspaces — YARN, nicht npm!)
+cd /vercel/share/v0-project/frontend  && yarn install --frozen-lockfile
+cd /vercel/share/v0-project/server    && yarn install --frozen-lockfile
+cd /vercel/share/v0-project/collector && yarn install --frozen-lockfile
 
 # 2. Dev-Server läuft in dieser Umgebung bereits auf Port 3000 (nur Frontend).
 #    Prüfen mit:
@@ -38,13 +248,14 @@ Genau deshalb existiert dieses Dokument:
 
 | # | Problem | Auswirkung | Lösung (siehe §) |
 |---|---------|-----------|------------------|
-| 1 | Zwei separate `npm install` nötig (Root **und** `frontend/`) | `cross-env: not found`, Dev-Server startet nicht | §2 |
-| 2 | Peer-Dependency-Konflikte | `npm install` bricht ab | `--legacy-peer-deps` (§2) |
+| 1 | Drei separate `yarn install` nötig (Root + `frontend/` + `server/` + `collector/`) | `cross-env: not found`, Dev-Server startet nicht | §A.2 |
+| 2 | `npm install` statt `yarn install` → überschreibt `yarn.lock` | ESLint-Errors kehren zurück | §A.7 |
 | 3 | **Onboarding-Gate** leitet jede Route auf `/onboarding` um | Man sieht NUR Onboarding, nie die echte App | §3 |
 | 4 | Kein Backend in dieser Umgebung (nur Frontend auf :3000) | `/api/*`-Calls schlagen fehl → Gate greift, Logo lädt nicht | §3, §5 |
 | 5 | App nutzt **Browser-Sprache** (Fallback `en`) | App wirkt fälschlich „komplett englisch" | §4 |
 | 6 | Zwei System-Models: `system.js` **und** `system.ts` | Vite lädt `.js` zuerst — Edits an `.ts` wirken nicht | §6 |
 | 7 | Falsche Settings-URLs → „404" | Scheinbarer Bug, real nur falscher Pfad | §5 |
+| 8 | ESLint crasht mit TypeError nach Security-Resolution-Änderung | CI/lint:check bricht ohne hilfreiche Meldung ab | §A.4 |
 
 > **Wichtigste Lehre:** Vor jedem „Befund" rigoros verifizieren. Vieles, was nach
 > einem Bug aussieht (englische Texte, kaputtes Logo, 404), ist nur ein Artefakt
@@ -55,8 +266,8 @@ Genau deshalb existiert dieses Dokument:
 ## 2. Setup & Dev-Server
 
 - **Monorepo**: Root-`package.json` (Workspace/Server-Tooling) + `frontend/`
-  (Vite + React, ein AnythingLLM-Fork).
-- Beide Verzeichnisse brauchen `npm install --legacy-peer-deps`.
+  (Vite + React, ein AnythingLLM-Fork) + `server/` + `collector/`.
+- Alle vier Verzeichnisse brauchen `yarn install --frozen-lockfile` (siehe §A.2).
 - Der Frontend-Dev-Server läuft in dieser Umgebung **automatisch auf Port 3000**
   (`$DEV_PORT`). Es gibt **kein laufendes Backend** (normalerweise Port 3001).
 - Startskript bei Bedarf: `npm run dev` (nutzt `cross-env`, daher Install zwingend).
@@ -133,7 +344,7 @@ agent-browser storage local set i18nextLng en   # Englisch
 
 - Verfügbare Sprachen: `frontend/src/locales/{en,de}/common.js`
   (`en` = Ground-Truth für Keys, `de` = Übersetzung).
-- Vor PR mit neuen Keys: `cd frontend && npm run verify:translations`.
+- Vor PR mit neuen Keys: `cd frontend && yarn verify:translations`.
 
 ---
 
@@ -229,7 +440,7 @@ Screenshot: `docs/audit-screens/pdf-analysis-BEFORE-raw-keys.png`.
    „Tiefen-Scan"-Checkbox war ohne Wirkung. Jetzt korrekt weitergereicht.
 
 **Verifiziert:** Screenshots `pdf-analysis-AFTER-fixed.png`,
-`pdf-corpus-AFTER-fixed.png`; `npm run verify:translations` ✅; eslint ✅.
+`pdf-corpus-AFTER-fixed.png`; `yarn verify:translations` ✅; eslint ✅.
 
 ### Behobener Bug: SpeechToText unmount crash bei Navigation zu `/settings/interface`
 
@@ -284,6 +495,11 @@ agent-browser reload
 **Hinweis für nächsten Agenten:** Der MSW-Store lebt nur im aktuellen
 Service-Worker-Kontext. Fakten sind nach Seiten-Reload weg — das ist
 kein Bug, sondern ein Artefakt des DEV-Mocks.
+
+---
+
+## 9. Offene To-Dos (aus früherem Audit-Bericht, noch nicht erledigt)
+
 1. Docs-Seite (`/docs`) auf gemischte DE/EN-Inhalte prüfen und vereinheitlichen.
 2. Mit laufendem Backend die Admin-/Settings-Screens optisch auditieren
    (in dieser Umgebung nicht erreichbar).
@@ -297,9 +513,21 @@ kein Bug, sondern ein Artefakt des DEV-Mocks.
 ## 10. Quick-Reference Befehle
 
 ```bash
-# Start der App (mit vollständigem Setup)
-cd /vercel/share/v0-project && npm install --legacy-peer-deps
-cd frontend && npm install --legacy-peer-deps && npm run dev
+# Dependencies (yarn, nicht npm!)
+cd frontend  && yarn install --frozen-lockfile
+cd server    && yarn install --frozen-lockfile
+cd collector && yarn install --frozen-lockfile
+
+# Lint (aus jeweiligem Workspace-Verzeichnis)
+yarn lint:check     # CI-Gate
+yarn lint           # Auto-Fix
+
+# Lint alle Workspaces (aus Root)
+yarn lint:ci
+
+# Dependency Audit (Frontend — zuverlässig via npm)
+cd frontend && yarn run audit           # moderate+
+cd frontend && yarn run audit:high      # high+
 
 # Onboarding bypassen
 agent-browser storage local set anythingllm_disable_onboarding true
@@ -314,14 +542,11 @@ agent-browser open http://localhost:3000/
 agent-browser set viewport 1280 720 && agent-browser screenshot /tmp/desktop.png
 agent-browser set viewport 375 812  && agent-browser screenshot /tmp/mobile.png
 
-# Accessibility-Tree anschauen
+# Accessibility-Tree
 agent-browser snapshot
 
 # i18n-Keys verifizieren (vor PR)
-cd frontend && npm run verify:translations
-
-# Linting und Auto-Format
-./node_modules/.bin/eslint --fix src/locales/de/common.js src/locales/en/common.js
+cd frontend && yarn verify:translations
 
 # Git-Status & Commits
 git status
@@ -333,30 +558,33 @@ git diff HEAD
 
 ## 11. Behobene Bugs & neue Features (PR-Übersicht)
 
-| PR | Titel | Was | Status |
-|-----|-------|-----|--------|
+| PR / Commit | Titel | Was | Status |
+|-------------|-------|-----|--------|
 | #161 | Audit-Leitfaden + Dev-Onboarding-Bypass | AUDIT-NEXT-AGENT.md + `isOnboardingBypassEnabled()` in `system.js` | ✅ merged main |
 | #162 | PDF-Analyse i18n fix | `pdfAnalysis.panel.*` + `pdfAnalysis.corpus.*` Keys + `deepScan` Forwarding | ✅ merged main |
 | #163 | PDF Analysis icon to right sidebar | FilePdf-Icon in `RightSidebarIconBar` → navigate `/pdf-analysis` | ✅ merged main |
-| — | SpeechToText unmount crash fix | Guard in `BrowserNative/index.tsx`: `typeof SpeechRecognition.stopListening === "function"` vor dem Aufruf | ✅ |
-| — | PDF-Upload DEV-Mock (MSW) | `frontend/src/mocks/pdfAnalysisHandlers.ts` + `browser.ts`; MSW Service Worker in `public/`; `main.tsx` lädt Mock wenn `anythingllm_pdf_mock=true` | ✅ |
+| #183 | Fix #178–#182: vulns, lint crashes, audit failures | ajv/brace-expansion resolutions, no-undef override, npm audit script, CI lint jobs | PR offen |
+| — | SpeechToText unmount crash fix | Guard in `BrowserNative/index.tsx` | ✅ |
+| — | PDF-Upload DEV-Mock (MSW) | MSW-Handler + Service Worker | ✅ |
+| — | #185/#186: frontend audit + lint infra | brace-expansion fix, auto-fix, LINT-AND-AUDIT.md | ✅ committed |
 
 ---
 
 ## 12. Kommende Audits — worauf der nächste Agent achten sollte
 
-1. **Mit Backend laufen:** Starte `npm run dev` im Root (beide Ports :3000 + :3001)
+1. **Mit Backend laufen:** Starte `yarn dev` im Root (beide Ports :3000 + :3001)
    → Admin-Screens, Settings, Workspace-Modal werden erreichbar.
 2. **Docs-Seite konsistenter machen:** `/docs` hat gemischte DE/EN; entweder komplett
    übersetzen oder auf eine Sprache einigen.
 3. **Logo-Fallback:** Wenn Custom-Logo fehlschlägt, sollte es ein Fallback-SVG
    zeigen (nicht Alt-Text).
-4. **Web Vitals Baseline:** Mit `npm run build && npm run preview` Production-Metriken
+4. **Web Vitals Baseline:** Mit `yarn build && yarn preview` Production-Metriken
    erheben (dev-mode verfälscht LCP/INP).
 5. **Dark Mode auf neuen Komponenten:** Bei neuen UI-Elementen `light:` Varianten
    prüfen (z.B. `light:bg-white`, `light:text-slate-900`).
-6. **i18n-Schlüssel vor Merge:** Immer `npm run verify:translations` laufen lassen —
-   spart Nacharbeit.
+6. **i18n-Schlüssel vor Merge:** Immer `yarn verify:translations` laufen lassen.
+7. **Neue Security-Resolutions:** Immer §B.3 befolgen; `yarn lint:check` nach
+   jeder Änderung lokal verifizieren.
 
 ---
 
@@ -365,29 +593,39 @@ git diff HEAD
 ```
 frontend/src/
 ├── components/
-│   ├── WorkspaceChat/ChatContainer/RightSidebarIconBar/  ← PDF-Icon hier
-│   ├── PrivateRoute/index.tsx                             ← Onboarding-Gate
-│   └── Modals/ManageWorkspace/Documents/UploadFile/       ← Dokument-Upload
+│   ├── WorkspaceChat/ChatContainer/RightSidebarIconBar/  <- PDF-Icon hier
+│   ├── PrivateRoute/index.tsx                             <- Onboarding-Gate
+│   └── Modals/ManageWorkspace/Documents/UploadFile/       <- Dokument-Upload
 ├── pages/
-│   ├── Main/index.jsx                                     ← Haupt-Chat
-│   └── PdfAnalysis/index.jsx                              ← PDF-Analyse (orphaned bis PR#163)
+│   ├── Main/index.jsx                                     <- Haupt-Chat
+│   └── PdfAnalysis/index.jsx                              <- PDF-Analyse
 ├── models/
-│   ├── system.js (AKTIV)                                  ← Onboarding-Check
-│   ├── system.ts (Spiegel)                                ← nicht benutzt
-│   └── pdfAnalysis.js                                     ← PDF-Modell (deepScan-Fix in PR#162)
+│   ├── system.js (AKTIV)                                  <- Onboarding-Check
+│   ├── system.ts (Spiegel)                                <- nicht benutzt
+│   └── pdfAnalysis.js                                     <- PDF-Modell
 ├── locales/
-│   ├── de/common.js                                       ← Deutsche Keys
-│   └── en/common.js                                       ← Englische Keys (Template)
+│   ├── de/common.js                                       <- Deutsche Keys
+│   └── en/common.js                                       <- Englische Keys (Template)
 ├── utils/
-│   ├── paths.ts                                           ← `paths.pdfAnalysis()`
-│   └── constants.ts                                       ← API_BASE
-└── main.tsx                                               ← Router + Routes
+│   ├── paths.ts                                           <- paths.pdfAnalysis()
+│   └── constants.ts                                       <- API_BASE
+└── main.tsx                                               <- Router + Routes
+
+eslint.config.js                                           <- no-undef-Override MUSS letzter Block sein!
+
+server/package.json  }
+collector/package.json }  <- ajv: ^6.14.0 + brace-expansion: ^1.1.13 (nie ändern!)
+frontend/package.json }
+
+docs/LINT-AND-AUDIT.md   <- vollständiges Lint/Audit-Runbook
 ```
 
-**Wichtigste Dateien zum Auditen:**
+**Wichtigste Dateien zum Auditieren:**
 - Übersetzungen: `frontend/src/locales/{de,en}/common.js`
 - Haupt-UI: `frontend/src/components/WorkspaceChat/`
 - PDF: `frontend/src/pages/PdfAnalysis/` + `frontend/src/models/pdfAnalysis.js`
+- ESLint: `frontend/eslint.config.js`, `server/eslint.config.mjs`, `collector/eslint.config.mjs`
+- Resolutions: `server/package.json`, `collector/package.json`, `frontend/package.json`
 
 ---
 
