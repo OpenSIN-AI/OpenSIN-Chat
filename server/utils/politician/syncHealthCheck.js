@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Background health check for politician sync status
 // Docs: syncHealthCheck.doc.md
-const { PrismaClient } = require("@prisma/client");
+const prisma = require("../../utils/prisma");
 const logger = require("../../utils/logger")();
-
-const prisma = new PrismaClient();
 
 /**
  * Check if any politician sync source is stale (>24h since last success).
  * Logs warnings and optionally sends alerts via webhook.
+ * @param {import("@prisma/client").PrismaClient} [client] - optional Prisma client for testing
  */
-async function checkSyncHealth() {
+async function checkSyncHealth(client = prisma) {
   try {
-    const logs = await prisma.politician_sync_log.findMany({
+    const logs = await client.politician_sync_log.findMany({
       orderBy: { startedAt: "desc" },
       take: 200,
     });
@@ -77,8 +76,6 @@ async function checkSyncHealth() {
   } catch (err) {
     logger.error(`[SyncHealth] Check failed: ${err.message}`);
     return { healthy: false, staleSources: [], error: err.message };
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -86,8 +83,15 @@ module.exports = { checkSyncHealth };
 
 // Run directly if executed as script
 if (require.main === module) {
-  checkSyncHealth().then((result) => {
-    console.log(JSON.stringify(result, null, 2));
-    process.exit(result.healthy ? 0 : 1);
-  });
+  checkSyncHealth()
+    .then(async (result) => {
+      await prisma.$disconnect();
+      console.log(JSON.stringify(result, null, 2));
+      process.exit(result.healthy ? 0 : 1);
+    })
+    .catch(async (err) => {
+      await prisma.$disconnect();
+      console.error(err);
+      process.exit(1);
+    });
 }
