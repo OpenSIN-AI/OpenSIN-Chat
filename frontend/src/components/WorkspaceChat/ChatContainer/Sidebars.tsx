@@ -16,7 +16,11 @@ const PANEL_W = 360; // px — default panel content width
  * The icon bar is always visible (44px rail).
  * When a panel is active, the full panel (360px) appears to the left of the icon rail.
  */
-export default function Sidebars({ workspace }) {
+interface SidebarsProps {
+  workspace: any;
+}
+
+export default function Sidebars({ workspace }: SidebarsProps) {
   const { t } = useTranslation();
   const { activeSidebar } = useChatSidebar();
 
@@ -28,7 +32,7 @@ export default function Sidebars({ workspace }) {
       {/* Panel area — only when a panel is active */}
       {activeSidebar && (
         <div
-          style={{ "--panel-width": `${PANEL_W}px` }}
+          style={{ "--panel-width": `${PANEL_W}px` } as React.CSSProperties}
           className="w-[var(--panel-width)] h-full flex-shrink-0 relative my-2 rounded-2xl overflow-hidden bg-zinc-900 light:bg-white shadow-lg"
         >
           {activeSidebar === "sources" && (

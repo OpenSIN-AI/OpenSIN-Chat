@@ -11,7 +11,7 @@ import { middleTruncate } from "@/utils/directories";
 /**
  * @param {string} filename
  */
-export const getDisplayName = (filename) => {
+export const getDisplayName = (filename: string) => {
   const base = filename.split("/").pop() || filename;
   return base.replace(
     /-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.json$/,
@@ -19,7 +19,15 @@ export const getDisplayName = (filename) => {
   );
 };
 
-export const STATUS_STYLES = {
+type Status = "pending" | "embedding" | "complete" | "failed";
+
+interface StatusStyle {
+  icon: React.ReactNode;
+  textColor: string;
+  label: string;
+}
+
+export const STATUS_STYLES: Record<Status, StatusStyle> = {
   pending: {
     icon: (
       <Clock
@@ -66,7 +74,19 @@ export const STATUS_STYLES = {
   },
 };
 
-export function EmbeddingFileRow({ filename, status: fileStatus, onRemove }) {
+interface FileStatus {
+  status: Status;
+  chunksProcessed?: number;
+  totalChunks?: number;
+}
+
+interface EmbeddingFileRowProps {
+  filename: string;
+  status: FileStatus;
+  onRemove?: () => void;
+}
+
+export function EmbeddingFileRow({ filename, status: fileStatus, onRemove }: EmbeddingFileRowProps) {
   const { t } = useTranslation();
   const { status, chunksProcessed = 0, totalChunks = 0 } = fileStatus;
   const displayName = getDisplayName(filename);
@@ -96,7 +116,7 @@ export function EmbeddingFileRow({ filename, status: fileStatus, onRemove }) {
               <div
                 className="h-full bg-white light:bg-sky-400 rounded-full transition-all duration-300 w-[var(--embedding-progress)]"
                 // Dynamic: percentage width depends on runtime state (embedding progress)
-                style={{ "--embedding-progress": `${pct}%` }}
+                style={{ "--embedding-progress": `${pct}%` } as React.CSSProperties}
               />
             </div>
             <p className="text-xs whitespace-nowrap w-8 text-right">{pct}%</p>

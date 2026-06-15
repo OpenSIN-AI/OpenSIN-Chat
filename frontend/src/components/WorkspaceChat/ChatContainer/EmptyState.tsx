@@ -7,6 +7,15 @@ import SuggestedMessages from "@/components/lib/SuggestedMessages";
  * Empty state rendering when no chat history exists yet.
  * Accepts: workspace, handleSubmit, sendCommand, loadingResponse, files, t
  */
+interface EmptyStateProps {
+  workspace: any;
+  handleSubmit: (e: React.FormEvent) => void;
+  sendCommand: (cmd: any) => void;
+  loadingResponse: boolean;
+  files: any[];
+  t: (key: string) => string;
+}
+
 export default function EmptyState({
   workspace,
   handleSubmit,
@@ -14,7 +23,7 @@ export default function EmptyState({
   loadingResponse,
   files,
   t,
-}) {
+}: EmptyStateProps) {
   return (
     <div className="flex flex-col h-full w-full items-center justify-center">
       <div className="flex flex-col items-center w-full max-w-[750px]">

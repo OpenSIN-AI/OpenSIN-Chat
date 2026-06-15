@@ -2,6 +2,17 @@ import PreLoader from "@/components/Preloader";
 import { EmbeddingFileRow } from "./EmbeddingFileRow";
 import { useTranslation } from "react-i18next";
 
+interface UploadZoneProps {
+  loading: boolean;
+  loadingMessage: string;
+  workspace: any;
+  embeddingProgress: Record<string, any> | null;
+  removeQueuedFile: (slug: string, filename: string) => void;
+  hasChanges: boolean;
+  movedItems: any[];
+  handleSaveChanges: (e: React.MouseEvent) => void;
+}
+
 export function UploadZone({
   loading,
   loadingMessage,
@@ -11,7 +22,7 @@ export function UploadZone({
   hasChanges,
   movedItems,
   handleSaveChanges,
-}) {
+}: UploadZoneProps) {
   const { t } = useTranslation();
   if (loading) {
     return (
@@ -68,7 +79,7 @@ export function UploadZone({
                 onRemove={
                   fileStatus.status === "pending"
                     ? () => removeQueuedFile(workspace.slug, filename)
-                    : null
+                    : undefined
                 }
               />
             ))}
@@ -84,7 +95,7 @@ export function UploadZone({
             </p>
             <button
               onClick={handleSaveChanges}
-              className="border border-slate-200 px-5 py-1.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
+              className="border border-slate-200 px-5 py-1.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:opacity-80 whitespace-nowrap"
             >
               {t(
                 "modals.manageWorkspace.documents.workspaceDirectory.uploadZone.addToQueue",

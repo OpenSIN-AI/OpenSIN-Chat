@@ -1,6 +1,19 @@
 import Appearance from "@/models/appearance";
 import { PROMPT_INPUT_ID } from "./index";
 
+interface TextAreaProps {
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+  promptInput: string;
+  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  captureEnterOrUndo: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  handlePasteEvent: (e: React.ClipboardEvent<HTMLTextAreaElement>) => void;
+  saveCurrentState: () => void;
+  textSizeClass: string;
+  t: (key: string) => string;
+  setFocused: (focused: boolean) => void;
+  adjustTextArea: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+}
+
 export default function TextArea({
   textareaRef,
   promptInput,
@@ -12,7 +25,7 @@ export default function TextArea({
   t,
   setFocused,
   adjustTextArea,
-}) {
+}: TextAreaProps) {
   return (
     <textarea
       id={PROMPT_INPUT_ID}

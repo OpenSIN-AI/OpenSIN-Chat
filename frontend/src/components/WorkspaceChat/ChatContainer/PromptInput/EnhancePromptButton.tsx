@@ -6,11 +6,17 @@ import { Tooltip } from "react-tooltip";
 /**
  * Enhance Prompt Button — improves the current prompt via the server API.
  */
+interface EnhancePromptButtonProps {
+  promptInput: string;
+  setPromptInput: (input: string) => void;
+  isStreaming: boolean;
+}
+
 export default function EnhancePromptButton({
   promptInput,
   setPromptInput,
   isStreaming,
-}) {
+}: EnhancePromptButtonProps) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 
@@ -44,24 +50,16 @@ export default function EnhancePromptButton({
         onClick={handleEnhance}
         disabled={loading || isStreaming}
         data-tooltip-id="enhance-prompt"
-        data-tooltip-content={t(
-          "chat_window.enhance_prompt",
-          "Prompt verbessern",
-        )}
-        aria-label={t("chat_window.enhance_prompt", "Prompt verbessern")}
-        className={`group border-none flex justify-center items-center rounded-full w-8 h-8 transition-all ${
-          loading || isStreaming
-            ? "cursor-not-allowed opacity-40 bg-transparent"
-            : "cursor-pointer bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200"
-        }`}
+        data-tooltip-content={t("chat_window.enhance_prompt")}
+        aria-label={t("chat_window.enhance_prompt")}
+        className="group border-none relative flex justify-center items-center cursor-pointer w-6 h-6 rounded-full hover:bg-zinc-700 light:hover:bg-slate-200"
       >
         <Sparkle
-          size={17}
-          weight={loading ? "fill" : "regular"}
-          className={`pointer-events-none transition-colors ${
+          size={18}
+          className={`pointer-events-none shrink-0 ${
             loading
-              ? "text-yellow-400 animate-pulse"
-              : "text-zinc-300 light:text-slate-500 group-hover:text-white light:group-hover:text-slate-800"
+              ? "text-yellow-400 animate-spin"
+              : "text-zinc-300 light:text-slate-600 group-hover:text-white light:group-hover:text-slate-800"
           }`}
         />
       </button>
