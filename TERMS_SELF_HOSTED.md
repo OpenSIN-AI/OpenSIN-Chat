@@ -1,6 +1,6 @@
 # OpenSIN Chat Self-Hosted: Data Privacy & Terms of Service
 
-This document outlines the privacy standards, data handling procedures, and licensing terms for the self-hosted version of OpenSIN Chat, developed by Family Team Projects Inc.
+This document outlines the privacy standards, data handling procedures, and licensing terms for the self-hosted version of OpenSIN Chat, developed by OpenSIN-AI.
 
 ## 1. Data Sovereignty & Local-First Architecture
 OpenSIN Chat is designed as a **local-first** application. When utilizing the self-hosted version (Docker, Desktop, or Source):
@@ -33,7 +33,7 @@ _by default, OpenSIN Chat does **everything on-device first** - so you would hav
 * **Liability:** In no event shall the authors or copyright holders be liable for any claim, damages, or other liability arising from the use of the software.
 
 ## 6. Support and Compatibility
-While Family Team Projects prioritizes stability and backward compatibility, the self-hosted version is used at the user's discretion. Formal Service Level Agreements (SLAs) are not provided for the standard self-hosted version unless otherwise negotiated via a separate enterprise agreement.
+While OpenSIN-AI prioritizes stability and backward compatibility, the self-hosted version is used at the user's discretion. Formal Service Level Agreements (SLAs) are not provided for the standard self-hosted version unless otherwise negotiated via a separate enterprise agreement.
 
 ---
 *Last Updated: March 2026*

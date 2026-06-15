@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 async function main() {
   const settings = [
     { label: "multi_user_mode", value: "false" },
-    { label: "logo_filename", value: "openafd-logo.png" },
+    { label: "logo_filename", value: "opensin-logo.png" },
   ];
 
   for (let setting of settings) {

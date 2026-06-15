@@ -1,6 +1,6 @@
 # THIRD-PARTY NOTICES & UPSTREAM-CREDITS
 
-> **OpenAfD Chat ist ein Community-Fork von [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) (MIT).**
+> **OpenSIN Chat ist ein Community-Fork von [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) by [Mintplex Labs Inc.](https://github.com/Mintplex-Labs) (MIT).**
 >
 > Ohne die Arbeit des Mintplex-Teams wäre dieses Projekt nicht möglich. Wir
 > danken **Timothy Carambat** und allen Mitwirkenden ausdrücklich für die
