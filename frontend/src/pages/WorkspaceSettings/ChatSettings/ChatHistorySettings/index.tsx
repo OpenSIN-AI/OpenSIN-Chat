@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
-export default function ChatHistorySettings({ workspace, setHasChanges }) {
+
+export default function ChatHistorySettings({
+  workspace,
+  setHasChanges,
+}: {
+  workspace?: { openAiHistory?: number };
+  setHasChanges: (v: boolean) => void;
+}) {
   const { t } = useTranslation();
   return (
     <div>
@@ -20,7 +27,7 @@ export default function ChatHistorySettings({ workspace, setHasChanges }) {
         min={1}
         max={45}
         step={1}
-        onWheel={(e) => e.target.blur()}
+        onWheel={(e) => (e.target as HTMLInputElement).blur()}
         defaultValue={workspace?.openAiHistory ?? 20}
         className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
         placeholder={String(20)}

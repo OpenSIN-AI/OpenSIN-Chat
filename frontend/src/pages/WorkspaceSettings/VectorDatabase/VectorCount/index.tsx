@@ -3,7 +3,13 @@ import PreLoader from "@/components/Preloader";
 import { useTranslation } from "react-i18next";
 import useVectorCount from "@/hooks/useVectorCount";
 
-export default function VectorCount({ reload, workspace }) {
+export default function VectorCount({
+  reload,
+  workspace,
+}: {
+  reload: boolean;
+  workspace?: { slug: string };
+}) {
   const { t } = useTranslation();
   const { vectorCount, isLoading, mutate } = useVectorCount(workspace?.slug);
 

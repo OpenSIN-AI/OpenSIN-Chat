@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
 
-export default function WorkspaceName({ workspace, setHasChanges }) {
+export default function WorkspaceName({
+  workspace,
+  setHasChanges,
+}: {
+  workspace?: { name: string };
+  setHasChanges: (v: boolean) => void;
+}) {
   const { t } = useTranslation();
   return (
     <div>
