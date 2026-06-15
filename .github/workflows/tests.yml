@@ -147,6 +147,49 @@ jobs:
         working-directory: frontend
         run: yarn lint:check
 
+  collector-lint:
+    name: Collector (ESLint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+          cache-dependency-path: collector/yarn.lock
+
+      - name: Install collector dependencies
+        working-directory: collector
+        # Must install devDependencies so eslint binary is available.
+        # Production-only installs (--production) will omit eslint and cause
+        # "eslint: command not found" (exit 127) — this is the root cause of #182.
+        run: yarn install --frozen-lockfile --network-timeout 100000
+
+      - name: Run ESLint
+        working-directory: collector
+        run: yarn lint:check
+
+  server-lint:
+    name: Server (ESLint)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "yarn"
+          cache-dependency-path: server/yarn.lock
+
+      - name: Install server dependencies
+        working-directory: server
+        run: yarn install --frozen-lockfile --network-timeout 100000
+
+      - name: Run ESLint
+        working-directory: server
+        run: yarn lint:check
+
   server:
     name: Server (Jest)
     runs-on: ubuntu-latest
