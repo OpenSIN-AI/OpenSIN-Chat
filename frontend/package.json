@@ -25,6 +25,7 @@
     "test:hooks": "vitest run src/hooks",
     "test:components": "vitest run src/components src/pages",
     "verify:translations": "node src/locales/verifyTranslations.mjs",
+    "check:bundle": "node scripts/check-bundle.mjs",
     "find:unused-translations": "node src/locales/findUnusedTranslations.mjs",
     "clean:unused-translations": "node src/locales/findUnusedTranslations.mjs --delete",
     "normalize:translations": "node src/locales/normalizeEn.mjs"
@@ -97,6 +98,7 @@
     "autoprefixer": "^10.5.0",
     "buffer": "^6.0.3",
     "cross-env": "^7.0.3",
+    "esbuild": "^0.25.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-ft-flow": "^3.0.0",
