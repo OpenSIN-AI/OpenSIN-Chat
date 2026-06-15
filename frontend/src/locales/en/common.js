@@ -584,6 +584,7 @@ const TRANSLATIONS = {
       empty_cta: "create a new memory",
       tab_workspace: "Workspace",
       tab_global: "Global",
+      tab_sources: "Sources",
       count: "({{current}}/{{max}})",
       toggle: {
         label: "Enable Personalization",

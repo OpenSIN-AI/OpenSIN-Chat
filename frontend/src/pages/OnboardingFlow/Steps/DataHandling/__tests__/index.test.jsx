@@ -61,7 +61,7 @@ describe("DataHandling step (issue #101 regression)", () => {
     // handler called System.markOnboardingComplete() without ever importing
     // System, throwing ReferenceError at click time. If anyone removes the
     // import again, this test fails before the runtime tests even run.
-    const source = readFileSync(resolve(__dirname, "..", "index.jsx"), "utf8");
+    const source = readFileSync(resolve(__dirname, "..", "index.tsx"), "utf8");
     expect(source).toMatch(
       /import\s+System\s+from\s+["']@\/models\/system["']/,
     );

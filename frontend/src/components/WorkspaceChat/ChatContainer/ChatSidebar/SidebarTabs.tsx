@@ -4,7 +4,7 @@
 // pills never overflow the 360px panel and get hidden behind the icon
 // bar.
 // Docs: SidebarTabs.doc.md
-import { BookOpen, FolderOpen } from "@phosphor-icons/react";
+import { BookOpen, FileText, FolderOpen } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useChatSidebar } from ".";
 import { useMemoriesContext, LIMITS } from "../MemoriesSidebar/MemoriesContext";
@@ -35,7 +35,7 @@ import { useMemoriesContext, LIMITS } from "../MemoriesSidebar/MemoriesContext";
  */
 export default function SidebarTabs() {
   const { t } = useTranslation();
-  const { activeSidebar } = useChatSidebar();
+  const { activeSidebar, openSidebar, sidebarData } = useChatSidebar();
   const {
     activeTab: memoriesActiveTab,
     setActiveTab: setMemoriesActiveTab,
@@ -56,6 +56,23 @@ export default function SidebarTabs() {
   return (
     <div className="flex items-center justify-between shrink-0 gap-2 mb-3 w-full">
       <div className="flex flex-wrap items-center gap-1 min-w-0 flex-1">
+        {/* Sources tab */}
+        <button
+          type="button"
+          onClick={() => openSidebar("sources", sidebarData)}
+          aria-pressed={activeSidebar === "sources"}
+          className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium uppercase tracking-[1.2px] whitespace-nowrap transition-colors min-w-0 ${
+            activeSidebar === "sources"
+              ? "bg-zinc-800 light:bg-slate-300 text-white light:text-slate-900"
+              : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-200 text-zinc-300 light:text-slate-700"
+          }`}
+        >
+          <FileText size={12} weight="bold" />
+          <span className="text-zinc-200 light:text-slate-800 truncate">
+            {t("chat_window.memories.tab_sources")}
+          </span>
+        </button>
+
         {/* Arbeitsbereich sub-tab */}
         <button
           type="button"

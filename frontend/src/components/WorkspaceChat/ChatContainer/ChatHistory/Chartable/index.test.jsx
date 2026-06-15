@@ -59,20 +59,20 @@ vi.mock("recharts", () => ({
   Funnel: () => <div>Funnel</div>,
 }));
 
-vi.mock("./chart-utils.js", () => ({
+vi.mock("./chart-utils.ts", () => ({
   Colors: { blue: "#3b82f6" },
   getTremorColor: (c) => "#3b82f6",
 }));
 
-vi.mock("./CustomCell.jsx", () => ({
+vi.mock("./CustomCell.tsx", () => ({
   default: () => <div>CustomCell</div>,
 }));
 
-vi.mock("./CustomTooltip.jsx", () => ({
+vi.mock("./CustomTooltip.tsx", () => ({
   default: (props) => <div>Tooltip</div>,
 }));
 
-vi.mock("@/utils/request.js", () => ({
+vi.mock("@/utils/request.ts", () => ({
   safeJsonParse: (str, fallback) => {
     try {
       return JSON.parse(str);
@@ -82,11 +82,11 @@ vi.mock("@/utils/request.js", () => ({
   },
 }));
 
-vi.mock("@/utils/chat/markdown.js", () => ({
+vi.mock("@/utils/chat/markdown.ts", () => ({
   default: (text) => text ?? "",
 }));
 
-vi.mock("dompurify", () => ({
+vi.mock("@/utils/chat/purify", () => ({
   default: { sanitize: (s) => s ?? "" },
 }));
 
