@@ -4,9 +4,11 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import AccountModal from "./index";
-import createI18nMock from "@/test/i18nMock";
 
-createI18nMock();
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 // ---- module mocks ----
 vi.mock("@/hooks/usePfp", () => ({
@@ -110,11 +112,13 @@ describe("AccountModal", () => {
     const System = (await import("@/models/system")).default;
     const hideModal = vi.fn();
 
-    render(<AccountModal user={defaultUser} hideModal={hideModal} />, {
-      wrapper: Wrapper,
-    });
+    const { container } = render(
+      <AccountModal user={defaultUser} hideModal={hideModal} />,
+      { wrapper: Wrapper }
+    );
 
-    fireEvent.submit(screen.getByRole("form") ?? screen.getByTestId("modal-wrapper").querySelector("form"));
+    const form = container.querySelector("form");
+    if (form) fireEvent.submit(form);
 
     await waitFor(() => {
       expect(System.updateUser).toHaveBeenCalled();

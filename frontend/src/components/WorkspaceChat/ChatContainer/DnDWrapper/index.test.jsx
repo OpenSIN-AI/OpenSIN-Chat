@@ -4,9 +4,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   render,
   screen,
-  fireEvent,
   act,
-  waitFor,
 } from "@testing-library/react";
 import { useContext } from "react";
 import { MemoryRouter } from "react-router-dom";
@@ -15,11 +13,12 @@ import {
   DndUploaderContext,
   REMOVE_ATTACHMENT_EVENT,
   CLEAR_ATTACHMENTS_EVENT,
-  PASTE_ATTACHMENT_EVENT,
 } from "./index";
-import createI18nMock from "@/test/i18nMock";
 
-createI18nMock();
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 // ---- module mocks ----
 vi.mock("react-dropzone", () => ({

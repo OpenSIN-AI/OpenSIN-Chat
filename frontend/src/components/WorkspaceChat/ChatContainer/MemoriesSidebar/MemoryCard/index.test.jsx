@@ -4,12 +4,17 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import MemoryCard from "./index";
-import createI18nMock from "@/test/i18nMock";
 
-createI18nMock();
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 // ---- module mocks ----
-const useMemoriesContext = vi.fn();
+// Use vi.hoisted so the mock factory variable is available before vi.mock is hoisted
+const { useMemoriesContext } = vi.hoisted(() => ({
+  useMemoriesContext: vi.fn(),
+}));
 
 vi.mock("../MemoriesContext", () => ({
   LIMITS: { workspace: 20, global: 5 },

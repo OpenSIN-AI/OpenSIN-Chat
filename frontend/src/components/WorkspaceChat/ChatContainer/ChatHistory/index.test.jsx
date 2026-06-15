@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: MIT
 // Tests for ChatHistory index (the scrollable message list)
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
-import { forwardRef, createRef } from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { createRef } from "react";
 import { MemoryRouter } from "react-router-dom";
-import createI18nMock from "@/test/i18nMock";
 
-createI18nMock();
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
 
 // ---- module mocks ----
 vi.mock("./HistoricalMessage", () => ({
@@ -51,7 +53,18 @@ vi.mock("@/hooks/useTextSize", () => ({
 }));
 
 vi.mock("@/hooks/useChatHistoryScrollHandle", () => ({
-  default: () => ({ chatHistoryRef: { current: null } }),
+  default: () => ({
+    chatHistoryRef: {
+      current: {
+        scrollTop: 0,
+        scrollHeight: 1000,
+        clientHeight: 500,
+        scrollTo: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+      },
+    },
+  }),
 }));
 
 vi.mock("@/hooks/useChatHistory", () => ({
