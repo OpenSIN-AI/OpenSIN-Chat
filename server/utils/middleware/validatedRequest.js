@@ -5,6 +5,16 @@ const { EncryptionManager } = require("../EncryptionManager");
 const { decodeJWT } = require("../http");
 const EncryptionMgr = new EncryptionManager();
 
+// Cache the bcrypt hash of AUTH_TOKEN to avoid CPU-blocking hashSync on every request.
+let _cachedAuthTokenHash = null;
+function getAuthTokenHash() {
+  if (!_cachedAuthTokenHash) {
+    const bcrypt = require("bcryptjs");
+    _cachedAuthTokenHash = bcrypt.hashSync(process.env.AUTH_TOKEN, 10);
+  }
+  return _cachedAuthTokenHash;
+}
+
 async function validatedRequest(request, response, next) {
   const multiUserMode = await SystemSettings.isMultiUserMode();
   response.locals.multiUserMode = multiUserMode;
@@ -33,7 +43,8 @@ async function validatedRequest(request, response, next) {
             role: "admin",
           });
           testUser = result.user;
-        } catch (e) {
+        } catch (_ignored) {
+          // User.create race condition in parallel test runs — silently fall back to existing user.
           testUser = await User.get({ username: "integration.test.user" });
         }
       }
@@ -82,7 +93,7 @@ async function validatedRequest(request, response, next) {
   if (
     !bcrypt.compareSync(
       EncryptionMgr.decrypt(p),
-      bcrypt.hashSync(process.env.AUTH_TOKEN, 10),
+      getAuthTokenHash(),
     )
   ) {
     response.status(401).json({
