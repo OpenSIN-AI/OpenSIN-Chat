@@ -8,6 +8,11 @@ export default function AgentFlowsList({
   selectedFlow,
   handleClick,
   activeFlowIds = [],
+}: {
+  flows: { uuid: string; name: string }[];
+  selectedFlow?: { uuid: string } | null;
+  handleClick?: ((flow: any) => void) | null;
+  activeFlowIds?: string[];
 }) {
   const { t } = useTranslation();
   if (flows.length === 0) {

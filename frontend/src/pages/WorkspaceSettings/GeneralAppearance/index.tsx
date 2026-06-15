@@ -10,18 +10,24 @@ import DeleteWorkspace from "./DeleteWorkspace";
 import CTAButton from "@/components/lib/CTAButton";
 import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
 
-export default function GeneralInfo({ slug, deletionProtected = false }) {
+export default function GeneralInfo({
+  slug,
+  deletionProtected = false,
+}: {
+  slug: string;
+  deletionProtected?: boolean;
+}) {
   const { t } = useTranslation();
   const { workspace, isLoading: loading, refresh } = useWorkspaceBySlug(slug);
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
-  const formEl = useRef(null);
+  const formEl = useRef<HTMLFormElement>(null);
 
-  const handleUpdate = async (e) => {
+  const handleUpdate = async (e: React.FormEvent) => {
     setSaving(true);
     e.preventDefault();
-    const data = {};
-    const form = new FormData(formEl.current);
+    const data: Record<string, any> = {};
+    const form = new FormData(formEl.current!);
     for (var [key, value] of form.entries()) data[key] = castToType(key, value);
     const { workspace: updatedWorkspace, message } = await Workspace.update(
       workspace.slug,

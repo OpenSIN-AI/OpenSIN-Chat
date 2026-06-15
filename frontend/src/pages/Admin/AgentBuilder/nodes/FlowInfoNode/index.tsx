@@ -2,7 +2,10 @@
 import React, { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 
-const FlowInfoNode = forwardRef(({ config, onConfigChange }, refs) => {
+const FlowInfoNode = forwardRef(({ config, onConfigChange }: {
+  config?: { name?: string; description?: string };
+  onConfigChange: (c: any) => void;
+}, refs: any) => {
   const { t } = useTranslation();
   return (
     <div className="space-y-4">

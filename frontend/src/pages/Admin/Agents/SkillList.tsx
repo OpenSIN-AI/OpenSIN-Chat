@@ -9,6 +9,11 @@ export default function SkillList({
   selectedSkill = null,
   handleClick = null,
   activeSkills = [],
+}: {
+  skills: Record<string, { title: string; Icon?: React.ComponentType<{ size: number }> }>;
+  selectedSkill?: string | null;
+  handleClick?: ((skill: string) => void) | null;
+  activeSkills?: string[];
 }) {
   const { t } = useTranslation();
   if (Object.keys(skills).length === 0) return null;

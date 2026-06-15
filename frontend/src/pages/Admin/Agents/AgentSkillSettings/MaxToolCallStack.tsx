@@ -11,7 +11,7 @@ export default function MaxToolCallStack() {
 
   const debouncedUpdateMaxCallStack = useMemo(
     () =>
-      debounce(async (newMaxCallStack) => {
+      debounce(async (newMaxCallStack: number) => {
         await System.updateSystem({
           AgentSkillMaxToolCalls: newMaxCallStack.toString(),
         });
@@ -51,11 +51,11 @@ export default function MaxToolCallStack() {
           value={maxCallStack}
           disabled={loading}
           onChange={(e) => {
-            if (e.target.value < 1) return;
-            debouncedUpdateMaxCallStack(e.target.value);
+            if (Number(e.target.value) < 1) return;
+            debouncedUpdateMaxCallStack(Number(e.target.value));
             setMaxCallStack(parseInt(e.target.value));
           }}
-          onWheel={(e) => e.target.blur()}
+          onWheel={(e) => (e.target as HTMLInputElement).blur()}
           className="border border-white/10 bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"
           placeholder="10" // eslint-disable-line i18next/no-literal-string
           autoComplete="off"
