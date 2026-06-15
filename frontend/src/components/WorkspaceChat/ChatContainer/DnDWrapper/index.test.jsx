@@ -14,6 +14,7 @@ import {
   REMOVE_ATTACHMENT_EVENT,
   CLEAR_ATTACHMENTS_EVENT,
 } from "./index";
+import DnDFileUploaderWrapper from "./index";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -143,13 +144,15 @@ describe("DnDFileUploaderProvider", () => {
   });
 
   it("renders dropzone area", () => {
+    // The dropzone div is rendered by DnDFileUploaderWrapper (not the provider directly)
     render(
       <DnDFileUploaderProvider workspace={workspace}>
-        <ContextConsumer />
+        <DnDFileUploaderWrapper>
+          <span data-testid="wrapped-child">child</span>
+        </DnDFileUploaderWrapper>
       </DnDFileUploaderProvider>,
       { wrapper: Wrapper }
     );
-    // Dropzone is always rendered inside the provider
     expect(screen.getByTestId("dropzone")).toBeInTheDocument();
   });
 

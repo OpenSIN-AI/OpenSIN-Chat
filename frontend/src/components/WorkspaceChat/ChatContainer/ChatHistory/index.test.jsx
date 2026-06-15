@@ -53,18 +53,13 @@ vi.mock("@/hooks/useTextSize", () => ({
 }));
 
 vi.mock("@/hooks/useChatHistoryScrollHandle", () => ({
-  default: () => ({
-    chatHistoryRef: {
-      current: {
-        scrollTop: 0,
-        scrollHeight: 1000,
-        clientHeight: 500,
-        scrollTo: vi.fn(),
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      },
-    },
-  }),
+  default: () => {
+    // Patch scrollTo onto HTMLElement for jsdom — done once is enough
+    if (!HTMLElement.prototype.scrollTo) {
+      HTMLElement.prototype.scrollTo = vi.fn();
+    }
+    return { chatHistoryRef: { current: null } };
+  },
 }));
 
 vi.mock("@/hooks/useChatHistory", () => ({
