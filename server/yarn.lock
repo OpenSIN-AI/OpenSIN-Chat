@@ -3462,10 +3462,10 @@
     readable-stream "^4.5.2"
     utilium "^3.0.0"
 
-"@zilliz/milvus2-sdk-node@^2.6.17":
-  version "2.6.17"
-  resolved "https://registry.npmjs.org/@zilliz/milvus2-sdk-node/-/milvus2-sdk-node-2.6.17.tgz"
-  integrity sha512-Z+fCxhuHLV4kogU1T5SS9hDJqLH3KBEceU5snqDV/WDl6uxgNomqZY9md8TTRkHBISqNzDawEaZsi4MF6Y0oWA==
+"@zilliz/milvus2-sdk-node@3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@zilliz/milvus2-sdk-node/-/milvus2-sdk-node-3.0.3.tgz#70bd9af0df87cdc606e12aece211c7de19bf8012"
+  integrity sha512-7rC+MDmzfctc9wscIfqxkzTJCxWafSdkyFDESMIzEX1G2ndImRQzHfkrzjcPFqPBVgQHQScGnGa3W7edqcThjA==
   dependencies:
     "@grpc/grpc-js" "^1.14.3"
     "@grpc/proto-loader" "^0.8.0"
