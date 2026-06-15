@@ -98,7 +98,7 @@
     "autoprefixer": "^10.5.0",
     "buffer": "^6.0.3",
     "cross-env": "^7.0.3",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.28.1",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-ft-flow": "^3.0.0",
@@ -124,7 +124,7 @@
     "vite": "^8.0.16",
     "vitest": "^4.1.8"
   },
-  "overrides": {
+  "resolutions": {
     "protobufjs": "^7.5.6",
     "@remix-run/router": "^1.23.2",
     "lodash": "^4.18.0",
