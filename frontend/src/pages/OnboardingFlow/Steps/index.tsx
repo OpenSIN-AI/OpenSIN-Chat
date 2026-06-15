@@ -35,7 +35,9 @@ type OnboardingLayoutProps = {
   ) => React.ReactNode;
 };
 
-export function OnboardingLayout({ children }: OnboardingLayoutProps): JSX.Element {
+export function OnboardingLayout({
+  children,
+}: OnboardingLayoutProps): JSX.Element {
   useRedirectToHomeOnOnboardingComplete();
   const { t } = useTranslation();
   const [header, setHeader] = useState({

@@ -4593,7 +4593,8 @@ const TRANSLATIONS = {
   },
   politicianSync: {
     title: "Politiker-Datenbank-Sync",
-    description: "Überwachen und verwalten Sie die Politiker-Daten-Synchronisierung von externen Quellen.",
+    description:
+      "Überwachen und verwalten Sie die Politiker-Daten-Synchronisierung von externen Quellen.",
     healthy: "Gesund",
     unhealthy: "Ungesund",
     syncNow: "Jetzt synchronisieren",

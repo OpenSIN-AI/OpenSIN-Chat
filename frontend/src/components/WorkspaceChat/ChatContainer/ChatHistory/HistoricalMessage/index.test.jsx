@@ -22,7 +22,11 @@ vi.mock("@/utils/chat/markdown.ts", () => ({
 // ---- per-test mock overrides using vi.hoisted ----
 const { editMessageMock, deleteMessageMock } = vi.hoisted(() => ({
   editMessageMock: { isEditing: false },
-  deleteMessageMock: { isDeleted: false, completeDelete: false, onEndAnimation: vi.fn() },
+  deleteMessageMock: {
+    isDeleted: false,
+    completeDelete: false,
+    onEndAnimation: vi.fn(),
+  },
 }));
 
 vi.mock("./Actions/EditMessage", () => ({
@@ -67,7 +71,7 @@ vi.mock(
     useMessageActionsContext: () => ({
       isDeleted: () => false,
     }),
-  })
+  }),
 );
 
 vi.mock("@/utils/paths", () => ({
@@ -124,9 +128,7 @@ const baseUserProps = {
   role: "user",
 };
 
-const Wrapper = ({ children }) => (
-  <MemoryRouter>{children}</MemoryRouter>
-);
+const Wrapper = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
 
 describe("HistoricalMessage", () => {
   beforeEach(() => {
@@ -147,8 +149,12 @@ describe("HistoricalMessage", () => {
     render(<HistoricalMessage {...baseAssistantProps} />, { wrapper: Wrapper });
     expect(screen.getByTestId("actions-bar")).toBeInTheDocument();
 
-    const { unmount } = render(<HistoricalMessage {...baseUserProps} />, { wrapper: Wrapper });
-    expect(screen.getAllByTestId("actions-bar").length).toBeGreaterThanOrEqual(1);
+    const { unmount } = render(<HistoricalMessage {...baseUserProps} />, {
+      wrapper: Wrapper,
+    });
+    expect(screen.getAllByTestId("actions-bar").length).toBeGreaterThanOrEqual(
+      1,
+    );
     unmount();
   });
 
@@ -164,7 +170,7 @@ describe("HistoricalMessage", () => {
     deleteMessageMock.completeDelete = false;
     const { container } = render(
       <HistoricalMessage {...baseAssistantProps} />,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     expect(container.firstChild).toBeInTheDocument();
     deleteMessageMock.isDeleted = false;
@@ -175,7 +181,7 @@ describe("HistoricalMessage", () => {
     deleteMessageMock.completeDelete = true;
     const { container } = render(
       <HistoricalMessage {...baseAssistantProps} />,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     expect(container.firstChild).toBeNull();
     deleteMessageMock.isDeleted = false;
@@ -184,8 +190,11 @@ describe("HistoricalMessage", () => {
 
   it("renders citations when sources are provided", () => {
     render(
-      <HistoricalMessage {...baseAssistantProps} sources={[{ id: 1, title: "Doc A" }]} />,
-      { wrapper: Wrapper }
+      <HistoricalMessage
+        {...baseAssistantProps}
+        sources={[{ id: 1, title: "Doc A" }]}
+      />,
+      { wrapper: Wrapper },
     );
     expect(screen.getByTestId("citations")).toBeInTheDocument();
   });
@@ -194,7 +203,11 @@ describe("HistoricalMessage", () => {
     // Render without MemoryRouter wrapper to avoid double-Router conflict
     // when error=true triggers a different render branch
     const { container } = render(
-      <HistoricalMessage {...baseAssistantProps} error={true} message="Something went wrong" />
+      <HistoricalMessage
+        {...baseAssistantProps}
+        error={true}
+        message="Something went wrong"
+      />,
     );
     expect(container).toBeInTheDocument();
   });
@@ -202,7 +215,7 @@ describe("HistoricalMessage", () => {
   it("preserves a stable uuid across renders (no crash on rerender)", () => {
     // Render without MemoryRouter wrapper to avoid double-Router on rerender
     const { rerender, getByText } = render(
-      <HistoricalMessage {...baseAssistantProps} />
+      <HistoricalMessage {...baseAssistantProps} />,
     );
     rerender(<HistoricalMessage {...baseAssistantProps} />);
     expect(getByText("Hello from assistant")).toBeInTheDocument();
@@ -211,7 +224,7 @@ describe("HistoricalMessage", () => {
   it("renders nothing (null) for assistant when message is null/empty", () => {
     const { container } = render(
       <HistoricalMessage {...baseAssistantProps} message={null} />,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     // Component should either render empty or a placeholder — must not crash
     expect(container).toBeInTheDocument();

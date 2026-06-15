@@ -18,7 +18,10 @@ type FileDisplay = {
 
 // File extension → display badge/colors. Lifted out of RunDetailPage with
 // the file card itself; nothing else uses this map so it lives here.
-const FILE_DISPLAY_MAP: Record<string, Omit<FileDisplay, "type"> & { label: (t: TFunction) => string }> = {
+const FILE_DISPLAY_MAP: Record<
+  string,
+  Omit<FileDisplay, "type"> & { label: (t: TFunction) => string }
+> = {
   pptx: {
     badge: "PPT",
     bg: "bg-orange-100",

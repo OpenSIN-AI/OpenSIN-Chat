@@ -9,7 +9,12 @@ export default function CodeNode({
 }: {
   config: { language?: string; code?: string; resultVariable?: string };
   onConfigChange: (c: any) => void;
-  renderVariableSelect: (value: any, onChange: (v: any) => void, placeholder: string, required: boolean) => React.ReactNode;
+  renderVariableSelect: (
+    value: any,
+    onChange: (v: any) => void,
+    placeholder: string,
+    required: boolean,
+  ) => React.ReactNode;
 }) {
   const { t } = useTranslation();
   return (

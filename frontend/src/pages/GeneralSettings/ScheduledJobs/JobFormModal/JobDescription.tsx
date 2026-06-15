@@ -8,7 +8,9 @@ export default function JobDescription({
 }: {
   form: { name: string; prompt: string };
   errors: { name?: boolean; prompt?: boolean };
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
 }) {
   const { t } = useTranslation();
 

@@ -7,7 +7,9 @@ interface UseSlashCommandParams {
 }
 
 interface UseSlashCommandResult {
-  handleSlashCommand: (event: React.KeyboardEvent<HTMLTextAreaElement>) => boolean;
+  handleSlashCommand: (
+    event: React.KeyboardEvent<HTMLTextAreaElement>,
+  ) => boolean;
 }
 
 export function useSlashCommand({

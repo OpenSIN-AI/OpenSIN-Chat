@@ -35,7 +35,7 @@ export default function EditUserModal({
     e.preventDefault();
     const data: any = {};
     const form = new FormData(e.currentTarget);
-    for (var [key, value] of form.entries()) {
+    for (const [key, value] of form.entries()) {
       if (!value || value === null) continue;
       data[key] = value;
     }

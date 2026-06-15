@@ -26,7 +26,10 @@ type CronBuilderProps = {
   onChange: (cron: string) => void;
 };
 
-export default function CronBuilder({ value, onChange }: CronBuilderProps): JSX.Element {
+export default function CronBuilder({
+  value,
+  onChange,
+}: CronBuilderProps): JSX.Element {
   const { t } = useTranslation();
   const WEEKDAYS = [
     { value: 0, label: t("scheduledJobs.builder.weekdays.sun") },

@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Tests for DnDFileUploaderProvider and DnDFileUploaderWrapper
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import {
-  render,
-  screen,
-  act,
-} from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { useContext } from "react";
 import { MemoryRouter } from "react-router-dom";
 import {
@@ -68,7 +64,9 @@ const ContextConsumer = () => {
   return (
     <div>
       <span data-testid="file-count">{ctx?.files?.length ?? 0}</span>
-      <span data-testid="is-embedding">{String(ctx?.isEmbedding ?? false)}</span>
+      <span data-testid="is-embedding">
+        {String(ctx?.isEmbedding ?? false)}
+      </span>
       <span data-testid="dragging">{String(ctx?.dragging ?? false)}</span>
     </div>
   );
@@ -86,7 +84,7 @@ describe("DnDFileUploaderProvider", () => {
       <DnDFileUploaderProvider workspace={workspace}>
         <div data-testid="child">Hello</div>
       </DnDFileUploaderProvider>,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     expect(screen.getByTestId("child")).toBeInTheDocument();
   });
@@ -96,7 +94,7 @@ describe("DnDFileUploaderProvider", () => {
       <DnDFileUploaderProvider workspace={workspace}>
         <ContextConsumer />
       </DnDFileUploaderProvider>,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     expect(screen.getByTestId("file-count").textContent).toBe("0");
   });
@@ -106,7 +104,7 @@ describe("DnDFileUploaderProvider", () => {
       <DnDFileUploaderProvider workspace={workspace}>
         <ContextConsumer />
       </DnDFileUploaderProvider>,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     expect(screen.getByTestId("is-embedding").textContent).toBe("false");
   });
@@ -116,7 +114,7 @@ describe("DnDFileUploaderProvider", () => {
       <DnDFileUploaderProvider workspace={workspace}>
         <ContextConsumer />
       </DnDFileUploaderProvider>,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
 
     await act(async () => {
@@ -131,12 +129,14 @@ describe("DnDFileUploaderProvider", () => {
       <DnDFileUploaderProvider workspace={workspace}>
         <ContextConsumer />
       </DnDFileUploaderProvider>,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
 
     await act(async () => {
       window.dispatchEvent(
-        new CustomEvent(REMOVE_ATTACHMENT_EVENT, { detail: { uid: "nonexistent" } })
+        new CustomEvent(REMOVE_ATTACHMENT_EVENT, {
+          detail: { uid: "nonexistent" },
+        }),
       );
     });
 
@@ -151,7 +151,7 @@ describe("DnDFileUploaderProvider", () => {
           <span data-testid="wrapped-child">child</span>
         </DnDFileUploaderWrapper>
       </DnDFileUploaderProvider>,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     expect(screen.getByTestId("dropzone")).toBeInTheDocument();
   });
@@ -161,7 +161,7 @@ describe("DnDFileUploaderProvider", () => {
       <DnDFileUploaderProvider workspace={workspace}>
         <span data-testid="inner-child">inner</span>
       </DnDFileUploaderProvider>,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     expect(screen.getByTestId("inner-child")).toBeInTheDocument();
   });
@@ -172,16 +172,16 @@ describe("DnDFileUploaderProvider", () => {
       <DnDFileUploaderProvider workspace={workspace}>
         <div />
       </DnDFileUploaderProvider>,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     unmount();
     expect(removeSpy).toHaveBeenCalledWith(
       REMOVE_ATTACHMENT_EVENT,
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(removeSpy).toHaveBeenCalledWith(
       CLEAR_ATTACHMENTS_EVENT,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 });

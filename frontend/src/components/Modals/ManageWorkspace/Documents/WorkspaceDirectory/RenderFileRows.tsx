@@ -33,7 +33,12 @@ interface RenderFileRowsProps {
   workspace: Workspace;
 }
 
-export function RenderFileRows({ files, movedItems, children, workspace }: RenderFileRowsProps) {
+export function RenderFileRows({
+  files,
+  movedItems,
+  children,
+  workspace,
+}: RenderFileRowsProps) {
   function sortMovedItemsAndFiles(a: File, b: File): number {
     const aIsMovedItem = movedItems.some((movedItem) => movedItem.id === a.id);
     const bIsMovedItem = movedItems.some((movedItem) => movedItem.id === b.id);

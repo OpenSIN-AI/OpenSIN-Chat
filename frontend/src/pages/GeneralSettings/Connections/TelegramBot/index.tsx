@@ -26,14 +26,17 @@ export default function TelegramBotSettings(): React.ReactElement {
   const { t } = useTranslation();
   const { config, isLoading } = useTelegramBot();
   const { settings } = useSystemSettings();
-  const [localConfig, setLocalConfig] = useState<TelegramBotConfig | null>(null);
+  const [localConfig, setLocalConfig] = useState<TelegramBotConfig | null>(
+    null,
+  );
   const currentConfig = localConfig ?? config;
 
   useEffect(() => {
     if (settings?.MultiUserMode) navigate(paths.home());
   }, [settings?.MultiUserMode, navigate]);
 
-  const handleConnected = (newConfig: TelegramBotConfig) => setLocalConfig(newConfig);
+  const handleConnected = (newConfig: TelegramBotConfig) =>
+    setLocalConfig(newConfig);
   const handleDisconnected = () => setLocalConfig(null);
 
   if (isLoading) {
@@ -71,7 +74,10 @@ interface ConnectionsLayoutProps {
   fullPage?: boolean;
 }
 
-function ConnectionsLayout({ children, fullPage = false }: ConnectionsLayoutProps): React.ReactElement {
+function ConnectionsLayout({
+  children,
+  fullPage = false,
+}: ConnectionsLayoutProps): React.ReactElement {
   const { t } = useTranslation();
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex md:mt-0 mt-6">

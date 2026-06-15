@@ -86,7 +86,10 @@ type EventMetadataProps = {
   expanded?: boolean;
 };
 
-const EventMetadata = ({ metadata, expanded = false }: EventMetadataProps): JSX.Element | null => {
+const EventMetadata = ({
+  metadata,
+  expanded = false,
+}: EventMetadataProps): JSX.Element | null => {
   const { t } = useTranslation();
   if (!metadata || !expanded) return null;
   return (

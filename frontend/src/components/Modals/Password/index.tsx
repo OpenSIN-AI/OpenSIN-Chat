@@ -63,7 +63,11 @@ export function usePasswordModal(notry: any = false) {
 
   // Skip the check (valid cached timestamp / notry guard)
   if (!System.needsAuthCheck() && notry === false) {
-    return { loading: false, requiresAuth: false, mode: MultiUserMode ? "multi" : "single" };
+    return {
+      loading: false,
+      requiresAuth: false,
+      mode: MultiUserMode ? "multi" : "single",
+    };
   }
 
   const mode = MultiUserMode ? "multi" : "single";

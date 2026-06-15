@@ -151,7 +151,12 @@ type TabItemProps = {
   visible?: boolean;
 };
 
-function TabItem({ title, icon, to, visible = true }: TabItemProps): JSX.Element | null {
+function TabItem({
+  title,
+  icon,
+  to,
+  visible = true,
+}: TabItemProps): JSX.Element | null {
   if (!visible) return null;
   return (
     <NavLink

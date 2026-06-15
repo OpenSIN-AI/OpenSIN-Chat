@@ -11,7 +11,10 @@ type AgentBodyProps = {
   isMobile: boolean;
 };
 
-export default function AgentBody({ agents, isMobile }: AgentBodyProps): JSX.Element {
+export default function AgentBody({
+  agents,
+  isMobile,
+}: AgentBodyProps): JSX.Element {
   const { t } = useTranslation();
   const {
     formEl,

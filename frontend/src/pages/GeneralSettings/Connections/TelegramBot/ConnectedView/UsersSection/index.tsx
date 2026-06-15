@@ -80,7 +80,7 @@ export default function UsersSection({
       <div className="flex flex-col gap-y-2">
         {pendingUsers.map((user) => (
           <UserRow
-            key={user.chatId || user as any}
+            key={user.chatId || (user as any)}
             user={user}
             isPending
             onApprove={handleApprove}
@@ -89,7 +89,7 @@ export default function UsersSection({
         ))}
         {approvedUsers.map((user) => (
           <UserRow
-            key={user.chatId || user as any}
+            key={user.chatId || (user as any)}
             user={user}
             onRevoke={handleRevoke}
           />

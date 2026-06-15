@@ -52,7 +52,10 @@ const baseProps = {
 describe("ImageGenerationSkillPanel", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    (useSystemSettings as any).mockReturnValue({ settings: null, loading: false });
+    (useSystemSettings as any).mockReturnValue({
+      settings: null,
+      loading: false,
+    });
   });
 
   it("renders the panel title and description (i18n-driven)", () => {

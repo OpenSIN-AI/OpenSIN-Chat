@@ -9,7 +9,13 @@ export default function WorkspaceRow({
   users: _users,
   deletionProtected = false,
 }: {
-  workspace: { id: number; name: string; slug: string; userIds?: number[]; createdAt: string };
+  workspace: {
+    id: number;
+    name: string;
+    slug: string;
+    userIds?: number[];
+    createdAt: string;
+  };
   users?: any;
   deletionProtected?: boolean;
 }) {

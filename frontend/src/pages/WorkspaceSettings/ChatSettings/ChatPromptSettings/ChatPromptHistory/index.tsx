@@ -17,7 +17,13 @@ type ChatPromptHistoryProps = {
 };
 
 export default forwardRef(function ChatPromptHistory(
-  { show, workspaceSlug, onRestore, onClose, onPublishClick }: ChatPromptHistoryProps,
+  {
+    show,
+    workspaceSlug,
+    onRestore,
+    onClose,
+    onPublishClick,
+  }: ChatPromptHistoryProps,
   ref: Ref<HTMLDivElement>,
 ) {
   const { t } = useTranslation();

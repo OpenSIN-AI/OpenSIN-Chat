@@ -78,7 +78,10 @@ type ConfigurableOptions = {
 
 export const getConfigurableSkills = (
   t: TFunction,
-  { fileSystemAgentAvailable = true, createFilesAgentAvailable = true }: ConfigurableOptions = {},
+  {
+    fileSystemAgentAvailable = true,
+    createFilesAgentAvailable = true,
+  }: ConfigurableOptions = {},
 ): SkillsMap => ({
   ...(fileSystemAgentAvailable && {
     "filesystem-agent": {

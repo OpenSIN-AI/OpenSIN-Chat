@@ -5,7 +5,9 @@ interface LLMDescriptionFieldProps {
   existingRule?: { description?: string };
 }
 
-export default function LLMDescriptionField({ existingRule }: LLMDescriptionFieldProps) {
+export default function LLMDescriptionField({
+  existingRule,
+}: LLMDescriptionFieldProps) {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-y-1.5">

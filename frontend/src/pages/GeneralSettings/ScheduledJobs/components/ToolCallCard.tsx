@@ -52,7 +52,9 @@ type ToolCallCardProps = {
  * (on demand) the tool's result. JSON arguments and results are pretty-printed
  * and syntax-highlighted; non-JSON values fall back to plain text.
  */
-export default function ToolCallCard({ toolCall }: ToolCallCardProps): JSX.Element {
+export default function ToolCallCard({
+  toolCall,
+}: ToolCallCardProps): JSX.Element {
   const [showResult, setShowResult] = useState(false);
   return (
     <div className="border border-white/5 rounded-lg p-3 bg-theme-bg-primary/30">
@@ -79,7 +81,9 @@ type ToolCallTimestampProps = {
   toolCall: ToolCall;
 };
 
-function ToolCallTimestamp({ toolCall }: ToolCallTimestampProps): JSX.Element | null {
+function ToolCallTimestamp({
+  toolCall,
+}: ToolCallTimestampProps): JSX.Element | null {
   if (!toolCall.timestamp) return null;
   const formatted = moment(toolCall.timestamp).format("LTS");
   return <span className="text-xs text-theme-text-secondary">{formatted}</span>;
@@ -89,7 +93,9 @@ type ToolCallArgumentsProps = {
   toolCall: ToolCall;
 };
 
-function ToolCallArguments({ toolCall }: ToolCallArgumentsProps): JSX.Element | null {
+function ToolCallArguments({
+  toolCall,
+}: ToolCallArgumentsProps): JSX.Element | null {
   const { t } = useTranslation();
   const { isLight } = useTheme();
   if (!toolCall.arguments) return null;

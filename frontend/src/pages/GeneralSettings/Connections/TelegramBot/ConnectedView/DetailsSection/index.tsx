@@ -84,7 +84,9 @@ interface DisconnectButtonProps {
   onDisconnected: () => void;
 }
 
-function DisconnectButton({ onDisconnected }: DisconnectButtonProps): React.ReactElement {
+function DisconnectButton({
+  onDisconnected,
+}: DisconnectButtonProps): React.ReactElement {
   const { t } = useTranslation();
   const [disconnecting, setDisconnecting] = useState<boolean>(false);
 

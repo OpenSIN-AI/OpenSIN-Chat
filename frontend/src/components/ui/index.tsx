@@ -220,8 +220,9 @@ export interface SelectOption<T = string> {
   value: T;
 }
 
-export interface SelectProps<T = string>
-  extends InputHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps<
+  T = string,
+> extends InputHTMLAttributes<HTMLSelectElement> {
   options: SelectOption<T>[];
   placeholder?: string;
   label?: string;

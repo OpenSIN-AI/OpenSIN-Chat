@@ -99,19 +99,21 @@ export default function ChatModelSelection({
         {!Array.isArray(customModels) &&
           Object.keys(customModels).length > 0 && (
             <>
-              {Object.entries(customModels as Record<string, any[]>).map(([organization, models]) => (
-                <optgroup key={organization} label={organization}>
-                  {models.map((model: any) => (
-                    <option
-                      key={model.id}
-                      value={model.id}
-                      selected={workspace?.chatModel === model.id}
-                    >
-                      {model.name || model.id}
-                    </option>
-                  ))}
-                </optgroup>
-              ))}
+              {Object.entries(customModels as Record<string, any[]>).map(
+                ([organization, models]) => (
+                  <optgroup key={organization} label={organization}>
+                    {models.map((model: any) => (
+                      <option
+                        key={model.id}
+                        value={model.id}
+                        selected={workspace?.chatModel === model.id}
+                      >
+                        {model.name || model.id}
+                      </option>
+                    ))}
+                  </optgroup>
+                ),
+              )}
             </>
           )}
       </select>

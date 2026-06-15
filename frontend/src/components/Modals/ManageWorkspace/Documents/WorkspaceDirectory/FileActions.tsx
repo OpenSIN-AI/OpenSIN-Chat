@@ -7,7 +7,11 @@ interface FileActionsProps {
   t: (key: string) => string;
 }
 
-export function FileActions({ hasChanges, handleSaveChanges, t }: FileActionsProps) {
+export function FileActions({
+  hasChanges,
+  handleSaveChanges,
+  t,
+}: FileActionsProps) {
   if (!hasChanges) return null;
 
   return (

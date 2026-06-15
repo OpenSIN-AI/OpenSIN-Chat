@@ -192,7 +192,12 @@ interface RouterRowProps {
   showDivider: boolean;
 }
 
-function RouterRow({ router, removeRouter, onEdit, showDivider }: RouterRowProps) {
+function RouterRow({
+  router,
+  removeRouter,
+  onEdit,
+  showDivider,
+}: RouterRowProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 

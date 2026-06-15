@@ -10,7 +10,10 @@ export default function SkillList({
   handleClick = null,
   activeSkills = [],
 }: {
-  skills: Record<string, { title: string; Icon?: React.ComponentType<{ size: number }> }>;
+  skills: Record<
+    string,
+    { title: string; Icon?: React.ComponentType<{ size: number }> }
+  >;
   selectedSkill?: string | null;
   handleClick?: ((skill: string) => void) | null;
   activeSkills?: string[];

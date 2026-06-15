@@ -161,30 +161,35 @@ export default function ImportedSkillConfig({
 
           {hasSetupArgs ? (
             <div className="flex flex-col gap-y-2">
-              {Object.entries(config.setup_args).map(([key, props]: [string, any]) => (
-                <div key={key} className="flex flex-col gap-y-1">
-                  <label htmlFor={key} className="text-white text-sm font-bold">
-                    {key}
-                  </label>
-                  <input
-                    type={props?.input?.type || "text"}
-                    required={props?.input?.required}
-                    defaultValue={
-                      props.hasOwnProperty("value")
-                        ? props.value
-                        : props?.input?.default || ""
-                    }
-                    onChange={(e) =>
-                      setInputs({ ...inputs, [key]: e.target.value })
-                    }
-                    placeholder={props?.input?.placeholder || ""}
-                    className="border-solid bg-transparent border border-white light:border-black rounded-md p-2 text-white text-sm"
-                  />
-                  <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
-                    {props?.input?.hint}
-                  </p>
-                </div>
-              ))}
+              {Object.entries(config.setup_args).map(
+                ([key, props]: [string, any]) => (
+                  <div key={key} className="flex flex-col gap-y-1">
+                    <label
+                      htmlFor={key}
+                      className="text-white text-sm font-bold"
+                    >
+                      {key}
+                    </label>
+                    <input
+                      type={props?.input?.type || "text"}
+                      required={props?.input?.required}
+                      defaultValue={
+                        props.hasOwnProperty("value")
+                          ? props.value
+                          : props?.input?.default || ""
+                      }
+                      onChange={(e) =>
+                        setInputs({ ...inputs, [key]: e.target.value })
+                      }
+                      placeholder={props?.input?.placeholder || ""}
+                      className="border-solid bg-transparent border border-white light:border-black rounded-md p-2 text-white text-sm"
+                    />
+                    <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
+                      {props?.input?.hint}
+                    </p>
+                  </div>
+                ),
+              )}
               {hasChanges && (
                 <button
                   onClick={handleSubmit}

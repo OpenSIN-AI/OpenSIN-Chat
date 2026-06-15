@@ -30,7 +30,7 @@ export default function NewUserModal({
     e.preventDefault();
     const data: Record<string, any> = {};
     const form = new FormData(e.currentTarget);
-    for (var [key, value] of form.entries()) data[key] = value;
+    for (const [key, value] of form.entries()) data[key] = value;
     data.dailyMessageLimit = messageLimit.enabled ? messageLimit.limit : null;
 
     const { user, error } = await Admin.newUser(data);

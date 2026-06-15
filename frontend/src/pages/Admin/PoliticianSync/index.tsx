@@ -6,7 +6,13 @@ import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 import SettingsSidebar from "@/components/SettingsSidebar";
 import usePoliticianSync from "@/hooks/usePoliticianSync";
-import { ArrowsClockwise, CheckCircle, WarningCircle, XCircle, TrendUp } from "@phosphor-icons/react";
+import {
+  ArrowsClockwise,
+  CheckCircle,
+  WarningCircle,
+  XCircle,
+  TrendUp,
+} from "@phosphor-icons/react";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CTAButton from "@/components/lib/CTAButton";
@@ -48,7 +54,12 @@ function getStatusIcon(status: string) {
     return <XCircle className="h-5 w-5 text-red-400" weight="fill" />;
   }
   if (status === "running") {
-    return <ArrowsClockwise className="h-5 w-5 text-yellow-400 animate-spin" weight="bold" />;
+    return (
+      <ArrowsClockwise
+        className="h-5 w-5 text-yellow-400 animate-spin"
+        weight="bold"
+      />
+    );
   }
   return <WarningCircle className="h-5 w-5 text-gray-400" weight="fill" />;
 }
@@ -79,7 +90,7 @@ function formatRelativeTime(dateString: string | null) {
   const diffMs = now.getTime() - date.getTime();
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffMinutes = Math.floor(diffMs / (1000 * 60));
-  
+
   if (diffMinutes < 1) return "Just now";
   if (diffMinutes < 60) return `${diffMinutes}m ago`;
   if (diffHours < 24) return `${diffHours}h ago`;
@@ -100,7 +111,10 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
       showToast(t("politicianSync.syncTriggered"), "success");
       mutate();
     } catch (e: any) {
-      showToast(t("politicianSync.syncTriggerFailed", { error: e.message }), "error");
+      showToast(
+        t("politicianSync.syncTriggerFailed", { error: e.message }),
+        "error",
+      );
     }
   };
 
@@ -120,11 +134,13 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
                   {t("politicianSync.title")}
                 </p>
                 {syncStatus && (
-                  <div className={`flex items-center gap-x-1.5 px-2 py-1 rounded-full text-xs font-medium border ${
-                    syncStatus.isHealthy
-                      ? "bg-green-500/10 text-green-400 border-green-500/20"
-                      : "bg-red-500/10 text-red-400 border-red-500/20"
-                  }`}>
+                  <div
+                    className={`flex items-center gap-x-1.5 px-2 py-1 rounded-full text-xs font-medium border ${
+                      syncStatus.isHealthy
+                        ? "bg-green-500/10 text-green-400 border-green-500/20"
+                        : "bg-red-500/10 text-red-400 border-red-500/20"
+                    }`}
+                  >
                     {syncStatus.isHealthy ? (
                       <>
                         <CheckCircle className="h-3.5 w-3.5" weight="fill" />
@@ -139,7 +155,10 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
                   </div>
                 )}
               </div>
-              <CTAButton onClick={handleManualSync} className="text-theme-bg-chat">
+              <CTAButton
+                onClick={handleManualSync}
+                className="text-theme-bg-chat"
+              >
                 <ArrowsClockwise className="h-4 w-4" weight="bold" />
                 {t("politicianSync.syncNow")}
               </CTAButton>
@@ -208,7 +227,9 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
                           {source.source}
                         </span>
                       </div>
-                      <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getStatusBadgeClass(source.status)}`}>
+                      <span
+                        className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getStatusBadgeClass(source.status)}`}
+                      >
                         {source.status}
                       </span>
                     </div>
@@ -262,21 +283,38 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
                   <thead className="text-theme-text-secondary text-xs uppercase border-b border-white/10">
                     <tr>
                       <th className="px-4 py-3">{t("politicianSync.phase")}</th>
-                      <th className="px-4 py-3">{t("politicianSync.attempts")}</th>
-                      <th className="px-4 py-3">{t("politicianSync.nextRetry")}</th>
-                      <th className="px-4 py-3">{t("politicianSync.status")}</th>
+                      <th className="px-4 py-3">
+                        {t("politicianSync.attempts")}
+                      </th>
+                      <th className="px-4 py-3">
+                        {t("politicianSync.nextRetry")}
+                      </th>
+                      <th className="px-4 py-3">
+                        {t("politicianSync.status")}
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     {syncStatus.retryQueue.map((item, index) => (
-                      <tr key={index} className="border-b border-white/5 last:border-0">
-                        <td className="px-4 py-3 text-theme-text-primary capitalize">{item.phase}</td>
-                        <td className="px-4 py-3 text-theme-text-secondary">{item.attempts}</td>
+                      <tr
+                        key={index}
+                        className="border-b border-white/5 last:border-0"
+                      >
+                        <td className="px-4 py-3 text-theme-text-primary capitalize">
+                          {item.phase}
+                        </td>
                         <td className="px-4 py-3 text-theme-text-secondary">
-                          {item.nextRetryAt ? formatRelativeTime(item.nextRetryAt) : "-"}
+                          {item.attempts}
+                        </td>
+                        <td className="px-4 py-3 text-theme-text-secondary">
+                          {item.nextRetryAt
+                            ? formatRelativeTime(item.nextRetryAt)
+                            : "-"}
                         </td>
                         <td className="px-4 py-3">
-                          <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getStatusBadgeClass(item.status)}`}>
+                          <span
+                            className={`text-xs px-2 py-0.5 rounded-full border font-medium ${getStatusBadgeClass(item.status)}`}
+                          >
                             {item.status}
                           </span>
                         </td>
@@ -292,7 +330,8 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
           {syncStatus?.lastSync && (
             <div className="mt-8 text-xs text-theme-text-secondary">
               <p>
-                {t("politicianSync.lastSync")}: {formatDate(syncStatus.lastSync)}
+                {t("politicianSync.lastSync")}:{" "}
+                {formatDate(syncStatus.lastSync)}
               </p>
             </div>
           )}
@@ -309,7 +348,12 @@ interface StatCardProps {
   isLoading: boolean;
 }
 
-function StatCard({ title, value, icon, isLoading }: StatCardProps): React.ReactElement {
+function StatCard({
+  title,
+  value,
+  icon,
+  isLoading,
+}: StatCardProps): React.ReactElement {
   return (
     <div className="bg-theme-bg-primary rounded-xl p-4 border border-white/10">
       <div className="flex items-center justify-between mb-2">

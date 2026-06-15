@@ -34,13 +34,10 @@ vi.mock("react-device-detect", () => ({
 vi.mock("@/utils/paths", () => {
   // Recursive Proxy: any property access or call returns "#"
   function makePathProxy() {
-    return new Proxy(
-      () => "#",
-      {
-        get: (_t, _key) => makePathProxy(),
-        apply: () => "#",
-      }
-    );
+    return new Proxy(() => "#", {
+      get: (_t, _key) => makePathProxy(),
+      apply: () => "#",
+    });
   }
   return { default: makePathProxy() };
 });
@@ -49,8 +46,12 @@ vi.mock("../Footer", () => ({ default: () => null }));
 vi.mock("@/components/CanViewChatHistory", () => ({
   CanViewChatHistoryProvider: ({ children }) => children,
 }));
-vi.mock("@/media/animations/agent-static.png", () => ({ default: "/agent.png" }));
-vi.mock("@/media/illustrations/community-hub.png", () => ({ default: "/hub.png" }));
+vi.mock("@/media/animations/agent-static.png", () => ({
+  default: "/agent.png",
+}));
+vi.mock("@/media/illustrations/community-hub.png", () => ({
+  default: "/hub.png",
+}));
 vi.mock("@/utils/toast", () => ({ default: vi.fn() }));
 
 vi.mock("./MenuOption", () => ({
@@ -87,7 +88,9 @@ describe("SettingsSidebar", () => {
   it("renders sidebar options for admin user", () => {
     const { container } = render(<SettingsSidebar />, { wrapper: Wrapper });
     // Whether or not MenuOption mock intercepts, the sidebar should render nav content
-    const options = container.querySelectorAll('[data-testid="sidebar-option"], nav, aside, [role="navigation"]');
+    const options = container.querySelectorAll(
+      '[data-testid="sidebar-option"], nav, aside, [role="navigation"]',
+    );
     expect(container.firstChild).not.toBeNull();
   });
 
@@ -112,4 +115,3 @@ describe("SettingsSidebar", () => {
     expect(document.body).toBeTruthy();
   });
 });
-

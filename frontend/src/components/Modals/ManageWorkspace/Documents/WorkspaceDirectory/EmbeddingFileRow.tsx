@@ -86,7 +86,11 @@ interface EmbeddingFileRowProps {
   onRemove?: () => void;
 }
 
-export function EmbeddingFileRow({ filename, status: fileStatus, onRemove }: EmbeddingFileRowProps) {
+export function EmbeddingFileRow({
+  filename,
+  status: fileStatus,
+  onRemove,
+}: EmbeddingFileRowProps) {
   const { t } = useTranslation();
   const { status, chunksProcessed = 0, totalChunks = 0 } = fileStatus;
   const displayName = getDisplayName(filename);
@@ -116,7 +120,9 @@ export function EmbeddingFileRow({ filename, status: fileStatus, onRemove }: Emb
               <div
                 className="h-full bg-white light:bg-sky-400 rounded-full transition-all duration-300 w-[var(--embedding-progress)]"
                 // Dynamic: percentage width depends on runtime state (embedding progress)
-                style={{ "--embedding-progress": `${pct}%` } as React.CSSProperties}
+                style={
+                  { "--embedding-progress": `${pct}%` } as React.CSSProperties
+                }
               />
             </div>
             <p className="text-xs whitespace-nowrap w-8 text-right">{pct}%</p>

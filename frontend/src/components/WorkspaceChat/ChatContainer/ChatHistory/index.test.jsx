@@ -105,7 +105,7 @@ describe("ChatHistory", () => {
         updateHistory={vi.fn()}
         regenerateAssistantMessage={vi.fn()}
       />,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
     // No messages rendered
     expect(screen.queryByTestId("msg-user")).toBeNull();
@@ -128,7 +128,7 @@ describe("ChatHistory", () => {
         updateHistory={vi.fn()}
         regenerateAssistantMessage={vi.fn()}
       />,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
 
     await waitFor(() => {
@@ -160,7 +160,7 @@ describe("ChatHistory", () => {
         updateHistory={vi.fn()}
         regenerateAssistantMessage={vi.fn()}
       />,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
 
     await waitFor(() => {
@@ -186,7 +186,7 @@ describe("ChatHistory", () => {
         updateHistory={vi.fn()}
         regenerateAssistantMessage={vi.fn()}
       />,
-      { wrapper: Wrapper }
+      { wrapper: Wrapper },
     );
 
     // Component renders without crashing for a long history

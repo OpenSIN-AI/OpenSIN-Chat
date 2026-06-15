@@ -4495,7 +4495,8 @@ const TRANSLATIONS = {
   },
   politicianSync: {
     title: "Politician Database Sync",
-    description: "Monitor and manage politician data synchronization from external sources.",
+    description:
+      "Monitor and manage politician data synchronization from external sources.",
     healthy: "Healthy",
     unhealthy: "Unhealthy",
     syncNow: "Sync Now",

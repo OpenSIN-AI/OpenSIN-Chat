@@ -2,7 +2,10 @@
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
+import { Link, useParams } from "react-router-dom";
 import { X, Globe, FileText, Database } from "@phosphor-icons/react";
+import paths from "@/utils/paths";
+import useThreads from "@/hooks/useThreads";
 import {
   combineLikeSources,
   CitationDetailModal,

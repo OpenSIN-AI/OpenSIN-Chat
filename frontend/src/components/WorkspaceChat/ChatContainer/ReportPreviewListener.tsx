@@ -36,9 +36,15 @@ export default function ReportPreviewListener() {
         content: null,
       });
     }
-    window.addEventListener(REPORT_PREVIEW_EVENT, onReportPreview as EventListener);
+    window.addEventListener(
+      REPORT_PREVIEW_EVENT,
+      onReportPreview as EventListener,
+    );
     return () =>
-      window.removeEventListener(REPORT_PREVIEW_EVENT, onReportPreview as EventListener);
+      window.removeEventListener(
+        REPORT_PREVIEW_EVENT,
+        onReportPreview as EventListener,
+      );
   }, [openPreview]);
   return null;
 }

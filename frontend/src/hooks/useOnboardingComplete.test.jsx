@@ -20,7 +20,11 @@ import useOnboardingComplete from "./useOnboardingComplete";
 
 // Provide a fresh SWR cache per test to avoid cross-test cache bleed
 const wrapper = ({ children }) =>
-  React.createElement(SWRConfig, { value: { provider: () => new Map() } }, children);
+  React.createElement(
+    SWRConfig,
+    { value: { provider: () => new Map() } },
+    children,
+  );
 
 describe("useOnboardingComplete", () => {
   it("navigates home when onboarding is complete", async () => {
