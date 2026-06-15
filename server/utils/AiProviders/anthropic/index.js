@@ -44,10 +44,14 @@ class AnthropicLLM {
       `Initialized with ${this.model}. Cache ${this.cacheControl ? `enabled (${this.cacheControl.ttl})` : "disabled"}`,
     );
 
-    AnthropicLLM.fetchModelMaxTokens(this.model).then((maxTokens) => {
-      this.maxTokens = maxTokens;
-      this.log(`Model ${this.model} max tokens: ${this.maxTokens}`);
-    });
+    AnthropicLLM.fetchModelMaxTokens(this.model)
+      .then((maxTokens) => {
+        this.maxTokens = maxTokens;
+        this.log(`Model ${this.model} max tokens: ${this.maxTokens}`);
+      })
+      .catch((err) => {
+        this.log(`Could not fetch max tokens for ${this.model}, using default. ${err.message}`);
+      });
   }
 
   log(text, ...args) {

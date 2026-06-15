@@ -64,8 +64,12 @@ export function useWorkspaceEmbeddingProgress(
 const CLEANUP_DELAY_MS = 1_500;
 export function EmbeddingProgressProvider({ children }: any) {
   const [embeddingProgressMap, setEmbeddingProgressMap] = useState({} as any);
-  const abortControllersRef = useRef<Record<string, AbortController | undefined>>({});
-  const cleanupTimeoutsRef = useRef<Record<string, ReturnType<typeof setTimeout> | undefined>>({});
+  const abortControllersRef = useRef<
+    Record<string, AbortController | undefined>
+  >({});
+  const cleanupTimeoutsRef = useRef<
+    Record<string, ReturnType<typeof setTimeout> | undefined>
+  >({});
 
   useEffect(() => {
     return () => {
@@ -147,7 +151,10 @@ export function EmbeddingProgressProvider({ children }: any) {
               const slugMap: Record<string, any> = { ...(prev[slug] ?? {}) };
               for (const [filename, info] of Object.entries(slugMap)) {
                 const fileInfo = info as { status: string; [key: string]: any };
-                if (fileInfo.status === "pending" || fileInfo.status === "embedding") {
+                if (
+                  fileInfo.status === "pending" ||
+                  fileInfo.status === "embedding"
+                ) {
                   slugMap[filename] = {
                     status: "failed",
                     error: data.error,

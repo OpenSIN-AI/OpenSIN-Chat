@@ -180,7 +180,16 @@ export default [
     files: ["src/**/*.{test,spec}.{js,jsx,ts,tsx}", "src/**/__tests__/**"],
     languageOptions: {
       globals: {
-        global: "readonly"
+        global: "readonly",
+        vi: "readonly",
+        describe: "readonly",
+        it: "readonly",
+        test: "readonly",
+        expect: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly"
       }
     },
     rules: {

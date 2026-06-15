@@ -59,10 +59,12 @@ export default function ContextMenu({
     <div
       ref={contextMenuRef}
       // Dynamic: position depends on click coordinates (runtime values)
-      style={{
-        "--context-menu-top": `${contextMenu.y}px`,
-        "--context-menu-left": `${contextMenu.x}px`,
-      } as React.CSSProperties}
+      style={
+        {
+          "--context-menu-top": `${contextMenu.y}px`,
+          "--context-menu-left": `${contextMenu.x}px`,
+        } as React.CSSProperties
+      }
       className="fixed z-[1000] bg-theme-bg-secondary border border-theme-modal-border rounded-md shadow-lg top-[var(--context-menu-top)] left-[var(--context-menu-left)]"
     >
       <button

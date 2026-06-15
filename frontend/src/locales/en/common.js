@@ -1088,7 +1088,8 @@ const TRANSLATIONS = {
       tocToggle: "Table of contents",
       tocLabel: "Table of contents",
       addAsSource: "Add as source",
-      addedAsSourceToast: "Report text copied to clipboard. Paste it as a source in your workspace.",
+      addedAsSourceToast:
+        "Report text copied to clipboard. Paste it as a source in your workspace.",
       close: "Close",
       loading: "Loading…",
       summary:

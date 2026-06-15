@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
-import { X, ChatCircleText, Files, FileText, Globe, Database } from "@phosphor-icons/react";
+import {
+  X,
+  ChatCircleText,
+  Files,
+  FileText,
+  Globe,
+  Database,
+} from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import ChatSidebar from "../ChatSidebar";
@@ -19,9 +26,18 @@ function getDocType(doc: any) {
   const metadata = safeJsonParse(doc.metadata, {});
   const docpath = doc.docpath || "";
   const filename = doc.filename || "";
-  if (metadata?.url || metadata?.sourceUrl || docpath.includes("link") || filename.startsWith("http"))
+  if (
+    metadata?.url ||
+    metadata?.sourceUrl ||
+    docpath.includes("link") ||
+    filename.startsWith("http")
+  )
     return { icon: Globe, label: "URL" };
-  if (docpath.includes("api") || docpath.includes("db") || metadata?.connectionString)
+  if (
+    docpath.includes("api") ||
+    docpath.includes("db") ||
+    metadata?.connectionString
+  )
     return { icon: Database, label: "Datenbank" };
   return { icon: FileText, label: "Dokument" };
 }
@@ -36,14 +52,22 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
     return (
       <div className="flex flex-col gap-2">
         {[...Array(4)].map((_, i) => (
-          <div key={i} className="h-12 rounded-lg bg-zinc-800 light:bg-slate-100 animate-pulse" />
+          <div
+            key={i}
+            className="h-12 rounded-lg bg-zinc-800 light:bg-slate-100 animate-pulse"
+          />
         ))}
       </div>
     );
   }
 
   const allThreads = [
-    { id: "__default__", slug: null, name: workspace?.name || "Default", virtual: true },
+    {
+      id: "__default__",
+      slug: null,
+      name: workspace?.name || "Default",
+      virtual: true,
+    },
     ...threads.filter((th: any) => !th.virtual && !th.deleted),
   ];
 
@@ -61,7 +85,9 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
         const href = thread.slug
           ? paths.workspace.thread(workspace.slug, thread.slug)
           : paths.workspace.chat(workspace.slug);
-        const isActive = thread.slug ? activeThreadSlug === thread.slug : !activeThreadSlug;
+        const isActive = thread.slug
+          ? activeThreadSlug === thread.slug
+          : !activeThreadSlug;
         return (
           <Link
             key={thread.id}
@@ -73,9 +99,13 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
                 : "hover:bg-zinc-800 light:hover:bg-slate-100"
             }`}
           >
-            <span className={`text-sm font-medium truncate ${
-              isActive ? "text-white light:text-slate-900" : "text-zinc-200 light:text-slate-700"
-            }`}>
+            <span
+              className={`text-sm font-medium truncate ${
+                isActive
+                  ? "text-white light:text-slate-900"
+                  : "text-zinc-200 light:text-slate-700"
+              }`}
+            >
               {thread.name}
             </span>
           </Link>
@@ -113,7 +143,9 @@ function WorkspaceFilesTab({ workspace }: any) {
                 <p className="text-sm font-medium text-white light:text-slate-900 truncate leading-[15px]">
                   {metadata?.title || doc.filename || doc.docId}
                 </p>
-                <p className="text-[10px] text-zinc-400 light:text-slate-500 leading-[14px]">{label}</p>
+                <p className="text-[10px] text-zinc-400 light:text-slate-500 leading-[14px]">
+                  {label}
+                </p>
                 {metadata?.wordCount && (
                   <p className="text-[10px] text-zinc-500 light:text-slate-400 leading-[14px]">
                     {t("common.words", { count: metadata.wordCount })}
@@ -162,7 +194,14 @@ function SidebarPanel({ children }: any) {
 }
 
 function MemoryModalWrapper() {
-  const { enabled, modalState, editingMemory, closeModal, handleCreate, handleUpdate } = useMemoriesContext();
+  const {
+    enabled,
+    modalState,
+    editingMemory,
+    closeModal,
+    handleCreate,
+    handleUpdate,
+  } = useMemoriesContext();
   if (!enabled) return null;
   return (
     <MemoryModal
@@ -184,7 +223,9 @@ function MemoryModalWrapper() {
 function SidebarHeaderWithTabs({ workspace }: any) {
   const { t } = useTranslation();
   const { closeSidebar, enabled, activeMemories } = useMemoriesContext();
-  const [activeTab, setActiveTab] = useState<"memories" | "chats" | "files">("memories");
+  const [activeTab, setActiveTab] = useState<"memories" | "chats" | "files">(
+    "memories",
+  );
 
   return (
     <div className="flex flex-col gap-3 h-full overflow-hidden">
@@ -247,16 +288,18 @@ function SidebarHeaderWithTabs({ workspace }: any) {
           <>
             <PersonalizationToggle />
             {enabled ? (
-              activeMemories.length === 0 ? <EmptyState /> : <MemoryList />
+              activeMemories.length === 0 ? (
+                <EmptyState />
+              ) : (
+                <MemoryList />
+              )
             ) : null}
           </>
         )}
         {activeTab === "chats" && (
           <WorkspaceChatsTab workspace={workspace} onClose={closeSidebar} />
         )}
-        {activeTab === "files" && (
-          <WorkspaceFilesTab workspace={workspace} />
-        )}
+        {activeTab === "files" && <WorkspaceFilesTab workspace={workspace} />}
       </div>
     </div>
   );

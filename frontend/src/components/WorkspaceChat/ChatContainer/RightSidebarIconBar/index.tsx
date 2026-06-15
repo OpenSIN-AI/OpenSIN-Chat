@@ -112,7 +112,10 @@ export default function RightSidebarIconBar() {
           type="button"
           onClick={() => navigate(paths.pdfAnalysis())}
           data-tooltip-id="rsib-pdf-analysis"
-          data-tooltip-content={t("right_sidebar.icon_pdf_analysis", "PDF-Analyse")}
+          data-tooltip-content={t(
+            "right_sidebar.icon_pdf_analysis",
+            "PDF-Analyse",
+          )}
           aria-label={t("right_sidebar.icon_pdf_analysis", "PDF-Analyse")}
           className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-white light:hover:text-slate-900"
         >

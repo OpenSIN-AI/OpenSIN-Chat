@@ -38,7 +38,9 @@ import MonoProviderIcon from "../MonoProviderIcon";
 export default function ModelTable({
   alias = "",
   models = [] as any[],
-  downloadModel = null as ((modelId: string, fileSize: any, cb: (p: number) => void) => void) | null,
+  downloadModel = null as
+    | ((modelId: string, fileSize: any, cb: (p: number) => void) => void)
+    | null,
   uninstallModel = null as ((modelId: string) => void) | null,
   setActiveModel = (_id: string) => {},
   selectedModelId = "",

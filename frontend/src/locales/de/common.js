@@ -2764,7 +2764,8 @@ const TRANSLATIONS = {
       tocToggle: "Inhaltsverzeichnis",
       tocLabel: "Inhaltsverzeichnis",
       addAsSource: "Als Quelle hinzufügen",
-      addedAsSourceToast: "Berichtstext wurde in die Zwischenablage kopiert. Fügen Sie ihn als Quelle im Workspace ein.",
+      addedAsSourceToast:
+        "Berichtstext wurde in die Zwischenablage kopiert. Fügen Sie ihn als Quelle im Workspace ein.",
       close: "Schließen",
       loading: "Wird geladen…",
       summary:
