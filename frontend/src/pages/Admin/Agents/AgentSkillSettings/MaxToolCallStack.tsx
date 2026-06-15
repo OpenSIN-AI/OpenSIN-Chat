@@ -7,7 +7,6 @@ import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function MaxToolCallStack() {
   const { t } = useTranslation();
-<<<<<<< HEAD:frontend/src/pages/Admin/Agents/AgentSkillSettings/MaxToolCallStack.tsx
   const { settings, loading } = useSystemSettings();
   const [maxCallStack, setMaxCallStack] = useState<number>(
     () => parseInt(settings?.AgentSkillMaxToolCalls as string) || 10,

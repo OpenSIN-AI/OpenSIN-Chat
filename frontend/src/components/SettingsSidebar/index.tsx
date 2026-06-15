@@ -296,6 +296,12 @@ const SidebarOptions = ({ user = null, t }: any) => (
               flex: true,
               roles: ["admin"],
             },
+            {
+              btnText: t("settingsSidebar.politicianSync"),
+              href: paths.settings.politicianSync(),
+              flex: true,
+              roles: ["admin"],
+            },
           ]}
         />
         <Option
