@@ -10,7 +10,11 @@ class PDFLoader {
   async load() {
     const stat = await fs.stat(this.filePath);
     if (stat.size > 500 * 1024 * 1024) {
-      console.warn(`[PDFLoader] Large file detected (${(stat.size / 1024 / 1024).toFixed(1)}MB). Attempting to load with pdf.js streaming...`);
+      console.warn(
+        `[PDFLoader] Large file detected (${(stat.size / 1024 / 1024).toFixed(
+          1
+        )}MB). Attempting to load with pdf.js streaming...`
+      );
     }
 
     const buffer = await fs.readFile(this.filePath);

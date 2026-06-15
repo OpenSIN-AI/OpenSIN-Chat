@@ -43,7 +43,9 @@ interface FileSystemSkillPanelProps {
   hasChanges?: boolean;
 }
 
-export const getFileSystemSubSkills = (t: (key: string) => string): SubSkill[] => {
+export const getFileSystemSubSkills = (
+  t: (key: string) => string,
+): SubSkill[] => {
   return [
     {
       name: "filesystem-read-text-file",

@@ -276,9 +276,9 @@ export default function ApiCallNode({
                       />
                       <button
                         onClick={() => {
-                          const newFormData = [...(config.formData || [])].filter(
-                            (_, i) => i !== index,
-                          );
+                          const newFormData = [
+                            ...(config.formData || []),
+                          ].filter((_, i) => i !== index);
                           onConfigChange({ formData: newFormData });
                         }}
                         className="p-2.5 rounded-lg bg-theme-bg-primary border border-white/5 text-theme-text-primary hover:text-red-500 hover:border-red-500/20 hover:bg-red-500/10 transition-colors duration-300 light:bg-theme-settings-input-bg light:border-black/10"

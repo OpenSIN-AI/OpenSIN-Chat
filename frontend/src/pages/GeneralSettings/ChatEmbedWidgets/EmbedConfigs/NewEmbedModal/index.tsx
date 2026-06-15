@@ -11,7 +11,7 @@ const SCRIPT_TAG = "<script>";
 
 export function enforceSubmissionSchema(form: FormData) {
   const data: any = {};
-  for (var [key, value] of form.entries()) {
+  for (const [key, value] of form.entries()) {
     if (!value || value === null) continue;
     data[key] = value;
     if (value === "on") data[key] = true;

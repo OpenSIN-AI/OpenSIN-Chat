@@ -2,6 +2,9 @@
 .env.development
 .env.test
 server/.env
+
+# Yarn project — never commit an npm lockfile.
+package-lock.json
 storage/assets/*
 !storage/assets/anything-llm.png
 !storage/assets/anything-llm-invert.png

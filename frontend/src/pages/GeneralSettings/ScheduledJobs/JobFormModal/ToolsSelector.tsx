@@ -92,7 +92,9 @@ export default function ToolsSelector({
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState<"top" | "bottom">("bottom");
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({});
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -170,10 +172,7 @@ export default function ToolsSelector({
     return "indeterminate";
   };
 
-  const toggleCategorySelection = (
-    cat: ToolCategory,
-    e: React.MouseEvent,
-  ) => {
+  const toggleCategorySelection = (cat: ToolCategory, e: React.MouseEvent) => {
     e.stopPropagation();
     const ids = (cat.items || []).map((i) => i.id);
     if (categoryState(cat) === "checked") {
@@ -191,7 +190,8 @@ export default function ToolsSelector({
     );
   };
 
-  const removeTool = (id: string) => onChange(selectedTools.filter((x) => x !== id));
+  const removeTool = (id: string) =>
+    onChange(selectedTools.filter((x) => x !== id));
   const labelFor = (id: string) => toolLookup.get(id)?.name || id;
 
   return (

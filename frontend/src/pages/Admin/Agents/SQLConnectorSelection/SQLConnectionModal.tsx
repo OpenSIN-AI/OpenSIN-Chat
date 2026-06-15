@@ -148,7 +148,9 @@ export default function SQLConnectionModal({
   }, [isOpen, existingConnection]);
 
   // Track original database ID to send to server for updating if in edit mode
-  const originalDatabaseId = isEditMode ? existingConnection?.database_id : null;
+  const originalDatabaseId = isEditMode
+    ? existingConnection?.database_id
+    : null;
 
   if (!isOpen) return null;
 

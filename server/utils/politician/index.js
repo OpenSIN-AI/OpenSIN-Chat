@@ -405,17 +405,20 @@ class PoliticianDB {
         ? logs[0].completedAt || logs[0].startedAt
         : null;
       const retryQueue = await this.getRetryQueue();
-      
+
       // Health check: each source is healthy if lastSuccess < 24h ago
       const now = Date.now();
       const HOURS_24 = 24 * 60 * 60 * 1000;
       const sourcesWithHealth = sources.map((s) => {
-        const lastSuccessTime = s.lastSuccess ? new Date(s.lastSuccess).getTime() : 0;
-        const isHealthy = lastSuccessTime > 0 && (now - lastSuccessTime) < HOURS_24;
+        const lastSuccessTime = s.lastSuccess
+          ? new Date(s.lastSuccess).getTime()
+          : 0;
+        const isHealthy =
+          lastSuccessTime > 0 && now - lastSuccessTime < HOURS_24;
         return { ...s, isHealthy };
       });
       const isHealthy = sourcesWithHealth.every((s) => s.isHealthy);
-      
+
       return { lastSync, isHealthy, sources: sourcesWithHealth, retryQueue };
     } catch (err) {
       // eslint-disable-next-line no-console

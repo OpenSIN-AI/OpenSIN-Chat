@@ -15,7 +15,8 @@ const path = require("path");
  * @returns {string} absolute path
  */
 function getStoragePath(...subdirs) {
-  const base = process.env.STORAGE_DIR || path.resolve(__dirname, "../../server/storage");
+  const base =
+    process.env.STORAGE_DIR || path.resolve(__dirname, "../../server/storage");
   return subdirs.length > 0 ? path.resolve(base, ...subdirs) : base;
 }
 
@@ -46,7 +47,9 @@ function safeStorageJoin(...subdirs) {
   const target = path.resolve(root, ...subdirs.map(String));
   if (target !== root && !target.startsWith(root + path.sep))
     throw new Error(
-      `Path traversal blocked: "${subdirs.join("/")}" escapes the storage directory.`,
+      `Path traversal blocked: "${subdirs.join(
+        "/"
+      )}" escapes the storage directory.`
     );
   return target;
 }
@@ -61,7 +64,9 @@ function safeCollectorJoin(...subdirs) {
   const target = path.resolve(root, ...subdirs.map(String));
   if (target !== root && !target.startsWith(root + path.sep))
     throw new Error(
-      `Path traversal blocked: "${subdirs.join("/")}" escapes the collector directory.`,
+      `Path traversal blocked: "${subdirs.join(
+        "/"
+      )}" escapes the collector directory.`
     );
   return target;
 }

@@ -48,7 +48,9 @@ export default function TranscriptionModelPreference() {
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredProviders, setFilteredProviders] = useState<TranscriptionProvider[]>([]);
+  const [filteredProviders, setFilteredProviders] = useState<
+    TranscriptionProvider[]
+  >([]);
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -74,7 +76,7 @@ export default function TranscriptionModelPreference() {
     const data: any = { WhisperProvider: selectedProvider };
     const formData = new FormData(form);
 
-    for (var [key, value] of formData.entries()) data[key] = value;
+    for (const [key, value] of formData.entries()) data[key] = value;
     const { error } = await System.updateSystem(data);
     setSaving(true);
 
@@ -120,9 +122,11 @@ export default function TranscriptionModelPreference() {
       <Sidebar />
       {loading ? (
         <div
-          style={{
-            "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
-          } as React.CSSProperties}
+          style={
+            {
+              "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+            } as React.CSSProperties
+          }
           className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
         >
           <div className="w-full h-full flex justify-center items-center">
@@ -131,9 +135,11 @@ export default function TranscriptionModelPreference() {
         </div>
       ) : (
         <div
-          style={{
-            "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
-          } as React.CSSProperties}
+          style={
+            {
+              "--content-height": isMobile ? "100%" : "calc(100% - 32px)",
+            } as React.CSSProperties
+          }
           className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
         >
           <form onSubmit={handleSubmit} className="flex w-full">

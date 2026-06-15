@@ -715,7 +715,9 @@ interface HiddenFormInputsProps {
   disabledSkills: string[];
 }
 
-function HiddenFormInputs({ disabledSkills }: HiddenFormInputsProps): JSX.Element {
+function HiddenFormInputs({
+  disabledSkills,
+}: HiddenFormInputsProps): JSX.Element {
   return (
     <input
       name="system::disabled_outlook_skills"

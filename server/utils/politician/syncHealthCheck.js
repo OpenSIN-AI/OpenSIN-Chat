@@ -27,7 +27,10 @@ async function checkSyncHealth(client = prisma) {
         });
       }
       const entry = bySource.get(key);
-      if (!entry.lastSuccess && (log.status === "completed" || log.status === "ok")) {
+      if (
+        !entry.lastSuccess &&
+        (log.status === "completed" || log.status === "ok")
+      ) {
         entry.lastSuccess = log.completedAt || log.startedAt;
       }
     }
@@ -37,21 +40,29 @@ async function checkSyncHealth(client = prisma) {
     const staleSources = [];
 
     for (const [, source] of bySource) {
-      const lastSuccessTime = source.lastSuccess ? new Date(source.lastSuccess).getTime() : 0;
-      const isStale = !lastSuccessTime || (now - lastSuccessTime) > HOURS_24;
+      const lastSuccessTime = source.lastSuccess
+        ? new Date(source.lastSuccess).getTime()
+        : 0;
+      const isStale = !lastSuccessTime || now - lastSuccessTime > HOURS_24;
       if (isStale) {
         staleSources.push({
           source: source.source,
-          hoursSince: lastSuccessTime ? Math.floor((now - lastSuccessTime) / (60 * 60 * 1000)) : Infinity,
+          hoursSince: lastSuccessTime
+            ? Math.floor((now - lastSuccessTime) / (60 * 60 * 1000))
+            : Infinity,
           lastSuccess: source.lastSuccess,
         });
       }
     }
 
     if (staleSources.length > 0) {
-      logger.warn(`[SyncHealth] ${staleSources.length} stale politician sync sources detected`);
+      logger.warn(
+        `[SyncHealth] ${staleSources.length} stale politician sync sources detected`,
+      );
       for (const s of staleSources) {
-        logger.warn(`[SyncHealth] ${s.source} is stale (${s.hoursSince}h since last success)`);
+        logger.warn(
+          `[SyncHealth] ${s.source} is stale (${s.hoursSince}h since last success)`,
+        );
       }
 
       // Optional webhook alert
@@ -67,7 +78,9 @@ async function checkSyncHealth(client = prisma) {
             }),
           });
         } catch (webhookErr) {
-          logger.error(`[SyncHealth] Webhook alert failed: ${webhookErr.message}`);
+          logger.error(
+            `[SyncHealth] Webhook alert failed: ${webhookErr.message}`,
+          );
         }
       }
     }

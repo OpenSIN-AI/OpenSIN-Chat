@@ -200,7 +200,9 @@ export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
     name: "Docker Model Runner",
     value: "docker-model-runner",
     logo: DockerModelRunnerLogo,
-    options: (settings: any) => <DockerModelRunnerOptions settings={settings} />,
+    options: (settings: any) => (
+      <DockerModelRunnerOptions settings={settings} />
+    ),
     description: "Run LLMs using Docker Model Runner.",
     requiredConfig: [
       "DockerModelRunnerBasePath",

@@ -154,7 +154,7 @@ async function bulkScrapePages(links, outFolderPath) {
         },
       });
       const docs = await loader.load();
-    if (!docs?.length) return [];
+      if (!docs?.length) return [];
       const content = docs[0].pageContent;
 
       if (!content.length) {

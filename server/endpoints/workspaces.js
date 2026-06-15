@@ -841,7 +841,9 @@ function workspaceEndpoints(app) {
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
-          await fs.promises.unlink(oldPfpPath).catch(() => { /* file already gone, safe to ignore */ });
+          await fs.promises.unlink(oldPfpPath).catch(() => {
+            /* file already gone, safe to ignore */
+          });
         }
 
         const { workspace, message } = await Workspace._update(
@@ -883,7 +885,9 @@ function workspaceEndpoints(app) {
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
-          await fs.promises.unlink(oldPfpPath).catch(() => { /* file already gone, safe to ignore */ });
+          await fs.promises.unlink(oldPfpPath).catch(() => {
+            /* file already gone, safe to ignore */
+          });
         }
 
         const { workspace, message } = await Workspace._update(

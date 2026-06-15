@@ -138,9 +138,7 @@ export default function Survey({
     await sendQuestionnaire({
       email: String(formData.get("email") || ""),
       useCase: String(formData.get("use_case") || "other"),
-      comment: formData.get("comment")
-        ? String(formData.get("comment"))
-        : null,
+      comment: formData.get("comment") ? String(formData.get("comment")) : null,
     });
 
     navigate(paths.home());
