@@ -7,7 +7,15 @@ import { useTranslation } from "react-i18next";
 
 const AGENT_FLOW_ITEM_TYPE = "agent-flow";
 
-export default function Completed({ settings, setSettings, setStep }) {
+export default function Completed({
+  settings,
+  setSettings,
+  setStep,
+}: {
+  settings: { item?: any };
+  setSettings: (s: any) => void;
+  setStep: (step: string) => void;
+}) {
   const { t } = useTranslation();
   const item = settings?.item;
   if (!item) return null;

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
-import truncate from "truncate";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import pluralize from "pluralize";
 import { VisibilityIcon } from "./generic";
 import { useTranslation } from "react-i18next";
 
-export default function SlashCommandHubCard({ item }) {
+export default function AgentSkillHubCard({ item }: { item: any }) {
   const { t } = useTranslation();
   return (
     <>
@@ -20,18 +20,22 @@ export default function SlashCommandHubCard({ item }) {
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-white/60 text-xs mt-1">{item.description}</p>
-          <label className="text-white/60 text-xs font-semibold mt-4">
-            {t("communityHub.slashCommand.command")}
-          </label>
-          <p className="text-white/60 text-xs bg-zinc-900 light:bg-slate-200 px-2 py-1 rounded-md font-mono border border-slate-800 light:border-slate-300">
-            {item.command}
-          </p>
 
-          <label className="text-white/60 text-xs font-semibold mt-4">
-            {t("communityHub.slashCommand.prompt")}
-          </label>
-          <p className="text-white/60 text-xs bg-zinc-900 light:bg-slate-200 px-2 py-1 rounded-md font-mono border border-slate-800 light:border-slate-300">
-            {truncate(item.prompt, 90)}
+          <p className="font-mono text-xs mt-1 text-white/60">
+            {item.verified ? (
+              <span className="text-green-500">{t("common.verified")}</span>
+            ) : (
+              <span className="text-red-500">{t("common.unverified")}</span>
+            )}{" "}
+            {t("communityHub.trending.agentSkill.skill")}
+          </p>
+          <p className="font-mono text-xs mt-1 text-white/60">
+            {item.manifest.files?.length || 0}{" "}
+            {pluralize(
+              t("communityHub.trending.agentSkill.file"),
+              item.manifest.files?.length || 0,
+            )}{" "}
+            {t("communityHub.trending.agentSkill.found")}
           </p>
         </div>
         <div className="flex justify-end mt-2">
@@ -39,7 +43,7 @@ export default function SlashCommandHubCard({ item }) {
             to={paths.communityHub.importItem(item.importId)}
             className="text-primary-button hover:text-primary-button/80 text-sm font-medium px-3 py-1.5 rounded-md bg-black/30 light:bg-slate-200 group-hover:bg-black/50 light:group-hover:bg-slate-300 transition-all"
           >
-            {t("communityHub.slashCommand.import")}
+            {t("communityHub.trending.agentSkill.import")}
           </Link>
         </div>
       </Link>

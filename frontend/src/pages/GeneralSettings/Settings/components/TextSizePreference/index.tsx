@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-function getTextSizes(t) {
+function getTextSizes(t: (key: string) => string) {
   return [
     { key: "small", label: t("chat_window.small") },
     { key: "normal", label: t("chat_window.normal") },
@@ -17,7 +17,7 @@ export default function TextSizePreference() {
   );
   const textSizes = getTextSizes(t);
 
-  function handleChange(e) {
+  function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const size = e.target.value;
     setSelectedSize(size);
     window.localStorage.setItem("openafd_text_size", size);

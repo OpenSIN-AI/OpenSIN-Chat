@@ -10,7 +10,7 @@ export default function AutoSpeak() {
     useState(false);
   const { t } = useTranslation();
 
-  const handleChange = async (checked) => {
+  const handleChange = async (checked: boolean) => {
     setAutoPlayAssistantTtsResponse(checked);
     setSaving(true);
     try {

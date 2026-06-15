@@ -6,10 +6,10 @@ import moment from "moment";
 import System from "@/models/system";
 
 const MOMENT_LLL_FORMAT = "lll";
-const wrapRelative = (text) => `(${text})`;
+const wrapRelative = (text: string) => `(${text})`;
 
-export default function DocumentSyncQueueRow({ queue }) {
-  const rowRef = useRef(null);
+export default function DocumentSyncQueueRow({ queue }: { queue: any }) {
+  const rowRef = useRef<HTMLTableRowElement>(null);
   const handleDelete = async () => {
     rowRef?.current?.remove();
     await System.experimentalFeatures.liveSync.setWatchStatusForDocument(
