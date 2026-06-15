@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: LiveSync document sync queue manager
+// Docs: manage/index.doc.md
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/Sidebar";
 import { isMobile } from "react-device-detect";
@@ -7,7 +9,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 import DocumentSyncQueueRow from "./DocumentSyncQueueRow";
 import useLiveSync from "@/hooks/useLiveSync";
 
-export default function LiveDocumentSyncManager() {
+interface LiveSyncQueue {
+  id: string;
+  // Add other fields as needed from useLiveSync hook
+}
+
+export default function LiveDocumentSyncManager(): React.ReactElement {
   const { t } = useTranslation();
   return (
     <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
@@ -36,7 +43,7 @@ export default function LiveDocumentSyncManager() {
   );
 }
 
-function WatchedDocumentsContainer() {
+function WatchedDocumentsContainer(): React.ReactElement {
   const { t } = useTranslation();
   const { queues, isLoading } = useLiveSync();
 
@@ -76,7 +83,7 @@ function WatchedDocumentsContainer() {
         </tr>
       </thead>
       <tbody>
-        {queues.map((queue) => (
+        {queues.map((queue: LiveSyncQueue) => (
           <DocumentSyncQueueRow key={queue.id} queue={queue} />
         ))}
       </tbody>

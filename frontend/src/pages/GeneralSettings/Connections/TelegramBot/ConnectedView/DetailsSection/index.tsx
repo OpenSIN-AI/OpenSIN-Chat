@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Telegram bot connection details section
+// Docs: DetailsSection/index.doc.md
 import { useState } from "react";
 import { CircleNotch } from "@phosphor-icons/react";
 import Telegram from "@/models/telegram";
@@ -6,7 +8,22 @@ import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-export default function DetailsSection({ config, onDisconnected }) {
+interface TelegramConfig {
+  default_workspace: string;
+  active_thread_name: string;
+  chat_model: string;
+  bot_username: string;
+}
+
+interface DetailsSectionProps {
+  config: TelegramConfig;
+  onDisconnected: () => void;
+}
+
+export default function DetailsSection({
+  config,
+  onDisconnected,
+}: DetailsSectionProps): React.ReactElement {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-y-[18px]">
@@ -47,7 +64,12 @@ export default function DetailsSection({ config, onDisconnected }) {
   );
 }
 
-function DetailRow({ label, value }) {
+interface DetailRowProps {
+  label: string;
+  value: React.ReactNode;
+}
+
+function DetailRow({ label, value }: DetailRowProps): React.ReactElement {
   return (
     <div className="flex items-start justify-between">
       <span className="font-medium text-white light:text-slate-900">
@@ -58,11 +80,15 @@ function DetailRow({ label, value }) {
   );
 }
 
-function DisconnectButton({ onDisconnected }) {
-  const { t } = useTranslation();
-  const [disconnecting, setDisconnecting] = useState(false);
+interface DisconnectButtonProps {
+  onDisconnected: () => void;
+}
 
-  async function handleDisconnect() {
+function DisconnectButton({ onDisconnected }: DisconnectButtonProps): React.ReactElement {
+  const { t } = useTranslation();
+  const [disconnecting, setDisconnecting] = useState<boolean>(false);
+
+  async function handleDisconnect(): Promise<void> {
     setDisconnecting(true);
     const res = await Telegram.disconnect();
     setDisconnecting(false);

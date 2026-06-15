@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Display slash command import review
+// Docs: SlashCommand.doc.md
 import CTAButton from "@/components/lib/CTAButton";
 import CommunityHubImportItemSteps from "../..";
 import showToast from "@/utils/toast";
@@ -6,9 +8,18 @@ import paths from "@/utils/paths";
 import CommunityHub from "@/models/communityHub";
 import { useTranslation } from "react-i18next";
 
-export default function SlashCommand({ item, setStep }) {
+interface SlashCommandProps {
+  item: any;
+  setStep: (step: string) => void;
+}
+
+export default function SlashCommand({
+  item,
+  setStep,
+}: SlashCommandProps): React.ReactElement {
   const { t } = useTranslation();
-  async function handleSubmit() {
+
+  async function handleSubmit(): Promise<void> {
     try {
       const { error } = await CommunityHub.applyItem(item.importId);
       if (error) throw new Error(error);
@@ -19,7 +30,7 @@ export default function SlashCommand({ item, setStep }) {
         "success",
       );
       setStep(CommunityHubImportItemSteps.completed.key);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
       showToast(
         t("communityHub.import.slashCommand.toastFailed", { error: e.message }),

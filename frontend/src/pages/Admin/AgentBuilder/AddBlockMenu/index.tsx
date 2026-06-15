@@ -1,16 +1,24 @@
 // SPDX-License-Identifier: MIT
-import React, { useRef, useEffect } from "react";
+// Purpose: Add block menu for agent builder
+// Docs: AddBlockMenu/index.doc.md
+import React, { useRef, useEffect, RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { Plus, CaretDown } from "@phosphor-icons/react";
 import { BLOCK_TYPES, BLOCK_INFO } from "../BlockList";
 
+interface Block {
+  id: string;
+  type: string;
+  config?: {
+    directOutput?: boolean;
+  };
+}
+
 /**
  * Check if the last configurable block has direct output disabled or undefined
  * If this property is true then you cannot add a new block after it.
- * @param {Array} blocks - The blocks array
- * @returns {Boolean} True if the last configurable block has direct output disabled, false otherwise
  */
-function checkIfCanAddBlock(blocks) {
+function checkIfCanAddBlock(blocks: Block[]): boolean {
   const lastConfigurableBlock = blocks[blocks.length - 2];
   if (!lastConfigurableBlock) return true;
   return (
@@ -19,18 +27,25 @@ function checkIfCanAddBlock(blocks) {
   );
 }
 
+interface AddBlockMenuProps {
+  blocks: Block[];
+  showBlockMenu: boolean;
+  setShowBlockMenu: (show: boolean) => void;
+  addBlock: (type: string) => void;
+}
+
 export default function AddBlockMenu({
   blocks,
   showBlockMenu,
   setShowBlockMenu,
   addBlock,
-}) {
+}: AddBlockMenuProps): React.ReactElement | null {
   const { t } = useTranslation();
-  const menuRef = useRef(null);
+  const menuRef: RefObject<HTMLDivElement | null> = useRef(null);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setShowBlockMenu(false);
       }
     }

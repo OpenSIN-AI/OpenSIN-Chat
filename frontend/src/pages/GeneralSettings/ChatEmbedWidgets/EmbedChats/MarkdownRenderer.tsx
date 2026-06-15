@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Markdown renderer with thought bubble support
+// Docs: MarkdownRenderer.doc.md
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import MarkdownIt from "markdown-it";
@@ -10,7 +12,7 @@ import DOMPurify from "@/utils/chat/purify";
 const md = new MarkdownIt({
   html: true,
   breaks: true,
-  highlight: function (str, lang) {
+  highlight: function (str: string, lang: string) {
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(str, { language: lang }).value;
@@ -18,13 +20,17 @@ const md = new MarkdownIt({
         console.warn("highlight.js failed:", e);
       }
     }
-    return ""; // use external default escaping
+    return "";
   },
 });
 
-const ThoughtBubble = ({ thought }) => {
+interface ThoughtBubbleProps {
+  thought: string;
+}
+
+const ThoughtBubble = ({ thought }: ThoughtBubbleProps): React.ReactElement | null => {
   const { t } = useTranslation();
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   if (!thought) return null;
 
@@ -55,15 +61,21 @@ const ThoughtBubble = ({ thought }) => {
   );
 };
 
-function parseContent(content) {
-  const parts = [];
+interface ContentPart {
+  type: "normal" | "think";
+  text: string;
+}
+
+function parseContent(content: string): ContentPart[] {
+  const parts: ContentPart[] = [];
   let lastIndex = 0;
-  content.replace(/<think>([^]*?)<\/think>/g, (match, thinkContent, offset) => {
+  content.replace(/<think>([^]*?)<\/think>/g, (match: string, thinkContent: string, offset: number) => {
     if (offset > lastIndex) {
       parts.push({ type: "normal", text: content.slice(lastIndex, offset) });
     }
     parts.push({ type: "think", text: thinkContent });
     lastIndex = offset + match.length;
+    return match;
   });
   if (lastIndex < content.length) {
     parts.push({ type: "normal", text: content.slice(lastIndex) });
@@ -71,7 +83,13 @@ function parseContent(content) {
   return parts;
 }
 
-export default function MarkdownRenderer({ content }) {
+interface MarkdownRendererProps {
+  content: string;
+}
+
+export default function MarkdownRenderer({
+  content,
+}: MarkdownRendererProps): React.ReactElement | null {
   if (!content) return null;
 
   const parts = parseContent(content);

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Workspace chat settings management
+// Docs: ChatSettings/index.doc.md
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
-import { useRef, useState } from "react";
+import { useRef, useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import ChatHistorySettings from "./ChatHistorySettings";
 import ChatPromptSettings from "./ChatPromptSettings";
@@ -13,19 +15,30 @@ import ChatQueryRefusalResponse from "./ChatQueryRefusalResponse";
 import CTAButton from "@/components/lib/CTAButton";
 import useSystemSettings from "@/hooks/useSystemSettings";
 
-export default function ChatSettings({ workspace }) {
+interface Workspace {
+  slug: string;
+  // Add other workspace fields as needed
+}
+
+interface ChatSettingsProps {
+  workspace: Workspace;
+}
+
+export default function ChatSettings({
+  workspace,
+}: ChatSettingsProps): React.ReactElement | null {
   const { t } = useTranslation();
   const { settings, loading: settingsLoading } = useSystemSettings();
-  const [hasChanges, setHasChanges] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const [hasChanges, setHasChanges] = useState<boolean>(false);
+  const [saving, setSaving] = useState<boolean>(false);
 
-  const formEl = useRef(null);
+  const formEl = useRef<HTMLFormElement>(null);
 
-  const handleUpdate = async (e) => {
+  const handleUpdate = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setSaving(true);
-    const data = {};
-    const form = new FormData(formEl.current);
+    const data: Record<string, any> = {};
+    const form = new FormData(formEl.current!);
     for (var [key, value] of form.entries()) data[key] = castToType(key, value);
 
     const { workspace: updatedWorkspace, message } = await Workspace.update(
