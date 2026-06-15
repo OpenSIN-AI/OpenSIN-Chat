@@ -12,7 +12,7 @@ export default function SimpleSSOPassthrough() {
   const query = useQuery();
   const redirectPath = query.get("redirectTo") || paths.home();
   const [ready, setReady] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     try {
@@ -23,19 +23,19 @@ export default function SimpleSSOPassthrough() {
       window.localStorage.removeItem(AUTH_TOKEN);
       window.localStorage.removeItem(AUTH_TIMESTAMP);
 
-      System.simpleSSOLogin(query.get("token")!)
+      System.simpleSSOLogin(query.get("token"))
         .then((res) => {
           if (!res.valid) throw new Error(res.message);
 
           window.localStorage.setItem(AUTH_USER, JSON.stringify(res.user));
           window.localStorage.setItem(AUTH_TOKEN, res.token);
-          window.localStorage.setItem(AUTH_TIMESTAMP, String(Number(new Date())));
+          window.localStorage.setItem(AUTH_TIMESTAMP, Number(new Date()));
           setReady(res.valid);
         })
         .catch((e) => {
           setError(e.message);
         });
-    } catch (e: any) {
+    } catch (e) {
       setError(e.message);
     }
   }, []);

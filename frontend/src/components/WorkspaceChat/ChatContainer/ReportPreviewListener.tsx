@@ -16,29 +16,29 @@ export default function ReportPreviewListener() {
     // from a different origin than the API (VITE_API_BASE is a full URL),
     // rewrite the "/api" prefix to the configured API base so the iframe
     // loads from the API host instead of the frontend origin.
-    function resolveUrl(url: string): string {
+    function resolveUrl(url) {
       if (!url) return url;
       if (API_BASE !== "/api" && url.startsWith("/api/")) {
         return `${API_BASE}${url.slice(4)}`;
       }
       return url;
     }
-    function onReportPreview(e: CustomEvent) {
+    function onReportPreview(e) {
       if (!e.detail) return;
       openPreview({
         title: e.detail.title || "Bericht",
         type: e.detail.type || "pdf",
         downloadUrl: resolveUrl(e.detail.downloadUrl) || null,
-        versions: (e.detail.versions || []).map((v: any) => ({
+        versions: (e.detail.versions || []).map((v) => ({
           ...v,
           downloadUrl: resolveUrl(v.downloadUrl),
         })),
         content: null,
       });
     }
-    window.addEventListener(REPORT_PREVIEW_EVENT, onReportPreview as EventListener);
+    window.addEventListener(REPORT_PREVIEW_EVENT, onReportPreview);
     return () =>
-      window.removeEventListener(REPORT_PREVIEW_EVENT, onReportPreview as EventListener);
+      window.removeEventListener(REPORT_PREVIEW_EVENT, onReportPreview);
   }, [openPreview]);
   return null;
 }

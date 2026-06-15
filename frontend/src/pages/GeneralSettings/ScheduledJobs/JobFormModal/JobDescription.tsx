@@ -1,15 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
 
-export default function JobDescription({
-  form,
-  errors,
-  onChange,
-}: {
-  form: { name: string; prompt: string };
-  errors: { name?: boolean; prompt?: boolean };
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-}) {
+export default function JobDescription({ form, errors, onChange }) {
   const { t } = useTranslation();
 
   return (

@@ -9,12 +9,7 @@ import WorkspaceModelPicker from "./WorkspaceModelPicker";
  * The dropdown menu is only shown on the first page (before chat starts).
  * Once the chat has started, all icons are in the right sidebar.
  */
-interface ChatHeaderProps {
-  workspaceSlug: string;
-  isEmpty: boolean;
-}
-
-export default function ChatHeader({ workspaceSlug, isEmpty }: ChatHeaderProps) {
+export default function ChatHeader({ workspaceSlug, isEmpty }) {
   return (
     <>
       {isMobile && <SidebarMobileHeader />}

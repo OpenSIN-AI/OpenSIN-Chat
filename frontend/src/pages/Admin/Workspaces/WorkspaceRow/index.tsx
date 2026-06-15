@@ -8,12 +8,8 @@ export default function WorkspaceRow({
   workspace,
   users: _users,
   deletionProtected = false,
-}: {
-  workspace: { id: number; name: string; slug: string; userIds?: number[]; createdAt: string };
-  users?: any;
-  deletionProtected?: boolean;
 }) {
-  const rowRef = useRef<HTMLTableRowElement>(null);
+  const rowRef = useRef(null);
   const handleDelete = async () => {
     if (
       !window.confirm(

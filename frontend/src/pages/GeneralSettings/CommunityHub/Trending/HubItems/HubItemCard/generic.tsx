@@ -5,7 +5,7 @@ import { Eye, LockSimple } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
-export default function GenericHubCard({ item }: { item: any }) {
+export default function GenericHubCard({ item }) {
   const { t } = useTranslation();
   return (
     <div
@@ -26,7 +26,7 @@ export default function GenericHubCard({ item }: { item: any }) {
   );
 }
 
-export function VisibilityIcon({ visibility = "public" }: { visibility?: string }) {
+export function VisibilityIcon({ visibility = "public" }) {
   const Icon = visibility === "private" ? LockSimple : Eye;
 
   return (

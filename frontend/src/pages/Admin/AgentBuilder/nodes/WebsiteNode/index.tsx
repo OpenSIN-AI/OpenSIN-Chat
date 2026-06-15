@@ -6,10 +6,6 @@ export default function WebsiteNode({
   config,
   onConfigChange,
   renderVariableSelect,
-}: {
-  config: { url?: string; action?: string; selector?: string; resultVariable?: string };
-  onConfigChange: (c: any) => void;
-  renderVariableSelect: (value: any, onChange: (v: any) => void, placeholder: string, required: boolean) => React.ReactNode;
 }) {
   const { t } = useTranslation();
   return (
@@ -70,7 +66,6 @@ export default function WebsiteNode({
           config.resultVariable,
           (value) => onConfigChange({ resultVariable: value }),
           t("agentBuilder.websiteNode.selectOrCreateVariable"),
-          false,
         )}
       </div>
     </div>

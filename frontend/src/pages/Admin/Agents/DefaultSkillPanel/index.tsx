@@ -12,14 +12,6 @@ export default function DefaultSkillPanel({
   enabled = true,
   toggleSkill,
   skill,
-}: {
-  title: string;
-  description: string;
-  image: string;
-  icon?: React.ComponentType<{ size: number; color: string; weight: string }>;
-  enabled?: boolean;
-  toggleSkill: (skill: string) => void;
-  skill: string;
 }) {
   const { t } = useTranslation();
   return (

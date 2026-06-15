@@ -8,7 +8,7 @@ import CTAButton from "@/components/lib/CTAButton";
 import useWorkspaceMembers from "@/hooks/useWorkspaceMembers";
 import { useTranslation } from "react-i18next";
 
-export default function Members({ workspace }: { workspace: { id: number } }) {
+export default function Members({ workspace }) {
   const { t } = useTranslation();
   const { users, workspaceUsers, adminWorkspace, isLoading } =
     useWorkspaceMembers(workspace.id);
@@ -50,12 +50,12 @@ export default function Members({ workspace }: { workspace: { id: number } }) {
         </thead>
         <tbody>
           {workspaceUsers.length > 0 ? (
-            workspaceUsers.map((user: any, index: number) => (
+            workspaceUsers.map((user, index) => (
               <WorkspaceMemberRow key={index} user={user} />
             ))
           ) : (
             <tr>
-              <td className="text-center py-4 text-white/80" colSpan={4}>
+              <td className="text-center py-4 text-white/80" colSpan="4">
                 {t("members.noMembers")}
               </td>
             </tr>

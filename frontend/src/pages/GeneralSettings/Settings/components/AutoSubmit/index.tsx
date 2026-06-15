@@ -9,7 +9,7 @@ export default function AutoSubmit() {
   const [autoSubmitSttInput, setAutoSubmitSttInput] = useState(true);
   const { t } = useTranslation();
 
-  const handleChange = async (checked: boolean) => {
+  const handleChange = async (checked) => {
     setAutoSubmitSttInput(checked);
     setSaving(true);
     try {

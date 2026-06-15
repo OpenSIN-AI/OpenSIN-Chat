@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import { VisibilityIcon } from "./generic";
 
-export default function SystemPromptHubCard({ item }: { item: any }) {
+export default function SystemPromptHubCard({ item }) {
   const { t } = useTranslation();
   return (
     <>

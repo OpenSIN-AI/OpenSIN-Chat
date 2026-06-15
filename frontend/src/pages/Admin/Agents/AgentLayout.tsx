@@ -8,11 +8,6 @@ export default function AgentLayout({
   hasChanges,
   handleSubmit,
   handleCancel,
-}: {
-  children: React.ReactNode;
-  hasChanges: boolean;
-  handleSubmit: () => void;
-  handleCancel: () => void;
 }) {
   return (
     <div

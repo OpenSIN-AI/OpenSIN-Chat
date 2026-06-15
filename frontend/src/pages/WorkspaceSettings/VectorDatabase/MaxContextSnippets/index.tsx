@@ -1,13 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
 
-export default function MaxContextSnippets({
-  workspace,
-  setHasChanges,
-}: {
-  workspace?: { topN?: number };
-  setHasChanges: (v: boolean) => void;
-}) {
+export default function MaxContextSnippets({ workspace, setHasChanges }) {
   const { t } = useTranslation();
   return (
     <div>
@@ -27,7 +21,7 @@ export default function MaxContextSnippets({
         min={1}
         max={200}
         step={1}
-        onWheel={(e) => (e.target as HTMLInputElement).blur()}
+        onWheel={(e) => e.target.blur()}
         defaultValue={workspace?.topN ?? 4}
         className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 mt-2"
         placeholder={String(workspace?.topN ?? 4)}

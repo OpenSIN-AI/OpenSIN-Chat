@@ -2,13 +2,7 @@
 import { useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
-export default function ChatModeSelection({
-  workspace,
-  setHasChanges,
-}: {
-  workspace?: { chatMode?: string };
-  setHasChanges: (v: boolean) => void;
-}) {
+export default function ChatModeSelection({ workspace, setHasChanges }) {
   const { t } = useTranslation();
   const [chatMode, setChatMode] = useState(workspace?.chatMode || "chat");
 
@@ -68,7 +62,7 @@ export default function ChatModeSelection({
  * @param {'automatic' | 'chat' | 'query'} chatMode - The chat mode to display the explanation for.
  * @returns {JSX.Element} The component to display the explanation for the given chat mode.
  */
-function ChatModeExplanation({ chatMode = "chat" }: { chatMode?: string }) {
+function ChatModeExplanation({ chatMode = "chat" }) {
   const { t } = useTranslation();
   return (
     <p className="text-sm text-white/60">

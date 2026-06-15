@@ -1,11 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { titleCase } from "text-case";
 
-interface WorkspaceMemberRowProps {
-  user: { username: string; role: string; lastUpdatedAt: string };
-}
-
-export default function WorkspaceMemberRow({ user }: WorkspaceMemberRowProps) {
+export default function WorkspaceMemberRow({ user }) {
   return (
     <>
       <tr className="bg-transparent text-theme-text-primary text-sm font-medium">

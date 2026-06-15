@@ -1,13 +1,5 @@
 // SPDX-License-Identifier: MIT
-export default function SearchProviderItem({
-  provider,
-  checked,
-  onClick,
-}: {
-  provider: { name: string; value: string; logo: string; description: string };
-  checked: boolean;
-  onClick: () => void;
-}) {
+export default function SearchProviderItem({ provider, checked, onClick }) {
   const { name, value, logo, description } = provider;
   return (
     <div

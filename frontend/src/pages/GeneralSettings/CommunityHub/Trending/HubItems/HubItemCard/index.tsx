@@ -5,7 +5,7 @@ import SlashCommandHubCard from "./slashCommand";
 import AgentSkillHubCard from "./agentSkill";
 import AgentFlowHubCard from "./agentFlow";
 
-export default function HubItemCard({ type, item }: { type: string; item: any }) {
+export default function HubItemCard({ type, item }) {
   switch (type) {
     case "systemPrompts":
       return <SystemPromptHubCard item={item} />;

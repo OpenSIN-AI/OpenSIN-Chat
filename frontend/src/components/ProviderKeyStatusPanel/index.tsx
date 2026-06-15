@@ -8,9 +8,7 @@ import {
 import useProviderKeyStatus from "@/hooks/useProviderKeyStatus";
 import { useTranslation } from "react-i18next";
 
-type Status = "key" | "fallback" | "unconfigured";
-
-function StatusBadge({ status }: { status: Status }) {
+function StatusBadge({ status }) {
   const { t } = useTranslation();
   if (status === "key") {
     return (
@@ -36,16 +34,8 @@ function StatusBadge({ status }: { status: Status }) {
   );
 }
 
-interface Provider {
-  name: string;
-  envKey: string;
-  configured: boolean;
-  keySet: boolean;
-  provider: string;
-}
-
-function ProviderRow({ provider }: { provider: Provider }) {
-  const status: Status = !provider.configured
+function ProviderRow({ provider }) {
+  const status = !provider.configured
     ? "unconfigured"
     : provider.keySet
       ? "key"
@@ -131,7 +121,7 @@ export default function ProviderKeyStatusPanel() {
 
       {providers.length > 0 && (
         <ul className="flex flex-col gap-y-1.5">
-          {providers.map((p: Provider) => (
+          {providers.map((p) => (
             <ProviderRow key={p.provider} provider={p} />
           ))}
         </ul>

@@ -6,13 +6,7 @@ import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
 
-export default function DeleteWorkspace({
-  workspace,
-  visible = true,
-}: {
-  workspace: { name: string; slug: string };
-  visible?: boolean;
-}) {
+export default function DeleteWorkspace({ workspace, visible = true }) {
   const { slug } = useParams();
   const [deleting, setDeleting] = useState(false);
   const { t } = useTranslation();
@@ -36,7 +30,7 @@ export default function DeleteWorkspace({
     }
 
     if (workspace.slug === slug) {
-      window.location.href = paths.home();
+      window.location = paths.home();
     } else {
       window.location.reload();
     }

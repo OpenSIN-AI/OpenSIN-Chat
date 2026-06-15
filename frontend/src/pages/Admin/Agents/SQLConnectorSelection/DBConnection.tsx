@@ -6,7 +6,7 @@ import { PencilSimple, X } from "@phosphor-icons/react";
 import { useModal } from "@/hooks/useModal";
 import EditSQLConnection from "./SQLConnectionModal";
 
-export const DB_LOGOS: Record<string, string> = {
+export const DB_LOGOS = {
   postgresql: PostgreSQLLogo,
   mysql: MySQLLogo,
   "sql-server": MSSQLLogo,
@@ -18,12 +18,6 @@ export default function DBConnection({
   onUpdate,
   setHasChanges,
   connections = [],
-}: {
-  connection: { database_id: string; engine: string };
-  onRemove: (id: string) => void;
-  onUpdate: (c: any) => void;
-  setHasChanges: (v: boolean) => void;
-  connections?: any[];
 }) {
   const { database_id, engine } = connection;
   const { isOpen, openModal, closeModal } = useModal();

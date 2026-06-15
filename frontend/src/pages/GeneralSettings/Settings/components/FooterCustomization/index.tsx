@@ -25,7 +25,7 @@ export default function FooterCustomization() {
     setSynced(true);
   }
 
-  const updateFooterIcons = async (updatedIcons: any[]) => {
+  const updateFooterIcons = async (updatedIcons) => {
     const { success, error } = await Admin.updateSystemPreferences({
       footer_data: JSON.stringify(updatedIcons.filter((icon) => icon !== null)),
     });
@@ -42,7 +42,7 @@ export default function FooterCustomization() {
     showToast("Successfully updated footer icons.", "success", { clear: true });
   };
 
-  const handleRemoveIcon = (index: number) => {
+  const handleRemoveIcon = (index) => {
     const updatedIcons = [...footerIcons];
     updatedIcons[index] = null;
     updateFooterIcons(updatedIcons);

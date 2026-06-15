@@ -4,13 +4,7 @@ import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import useModelRouters from "@/hooks/useModelRouters";
 
-export default function RouterSelection({
-  workspace,
-  setHasChanges,
-}: {
-  workspace?: { router_id?: string };
-  setHasChanges: (v: boolean) => void;
-}) {
+export default function RouterSelection({ workspace, setHasChanges }) {
   const { t } = useTranslation();
   const { routers, isLoading } = useModelRouters();
 

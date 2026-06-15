@@ -2,11 +2,7 @@
 import { TelegramLogo } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
-interface ConnectedBotCardProps {
-  config: { bot_username: string };
-}
-
-export default function ConnectedBotCard({ config }: ConnectedBotCardProps) {
+export default function ConnectedBotCard({ config }) {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-y-[18px]">

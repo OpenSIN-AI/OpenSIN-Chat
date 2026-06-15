@@ -16,12 +16,6 @@ export default function CollapsibleSection({
   children,
   defaultOpen = false,
   copyableContent = null,
-}: {
-  title: string;
-  icon: React.ComponentType<{ className?: string }>;
-  children: React.ReactNode;
-  defaultOpen?: boolean;
-  copyableContent?: string | null;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
@@ -53,7 +47,7 @@ export default function CollapsibleSection({
   );
 }
 
-function CopyButton({ content }: { content: string }) {
+function CopyButton({ content }) {
   const [copied, setCopied] = useState(false);
   const copyToClipboard = async () => {
     await copyMarkdownAsRichText(content);

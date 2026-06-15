@@ -7,14 +7,13 @@ import useSystemSettings from "@/hooks/useSystemSettings";
 
 export default function MaxToolCallStack() {
   const { t } = useTranslation();
-<<<<<<< HEAD:frontend/src/pages/Admin/Agents/AgentSkillSettings/MaxToolCallStack.tsx
   const { settings, loading } = useSystemSettings();
-  const [maxCallStack, setMaxCallStack] = useState<number>(
-    () => parseInt(settings?.AgentSkillMaxToolCalls as string) || 10,
+  const [maxCallStack, setMaxCallStack] = useState(
+    () => parseInt(settings.AgentSkillMaxToolCalls) || 10,
   );
 
   const debouncedUpdateMaxCallStack = useMemo(() => {
-    const fn = debounce(async (newMaxCallStack: number) => {
+    const fn = debounce(async (newMaxCallStack) => {
       await System.updateSystem({
         AgentSkillMaxToolCalls: newMaxCallStack.toString(),
       });
@@ -40,11 +39,11 @@ export default function MaxToolCallStack() {
           value={maxCallStack}
           disabled={loading}
           onChange={(e) => {
-            if (Number(e.target.value) < 1) return;
-            debouncedUpdateMaxCallStack(Number(e.target.value));
+            if (e.target.value < 1) return;
+            debouncedUpdateMaxCallStack(e.target.value);
             setMaxCallStack(parseInt(e.target.value));
           }}
-          onWheel={(e) => (e.target as HTMLInputElement).blur()}
+          onWheel={(e) => e.target.blur()}
           className="border border-white/10 bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"
           placeholder="10" // eslint-disable-line i18next/no-literal-string
           autoComplete="off"

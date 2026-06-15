@@ -5,7 +5,7 @@ import pluralize from "pluralize";
 import { VisibilityIcon } from "./generic";
 import { useTranslation } from "react-i18next";
 
-export default function AgentSkillHubCard({ item }: { item: any }) {
+export default function AgentSkillHubCard({ item }) {
   const { t } = useTranslation();
   return (
     <>

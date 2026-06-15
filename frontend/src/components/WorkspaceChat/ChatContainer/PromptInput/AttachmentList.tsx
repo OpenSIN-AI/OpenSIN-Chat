@@ -1,9 +1,5 @@
 import AttachmentManager from "./Attachments";
 
-interface AttachmentListProps {
-  attachments: any[];
-}
-
-export default function AttachmentList({ attachments }: AttachmentListProps) {
+export default function AttachmentList({ attachments }) {
   return <AttachmentManager attachments={attachments} />;
 }

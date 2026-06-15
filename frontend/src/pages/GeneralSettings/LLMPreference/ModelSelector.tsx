@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: MIT
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { CaretUpDown } from "@phosphor-icons/react";
@@ -16,18 +15,6 @@ export default function ModelSelector({
   handleXButton,
   updateLLMChoice,
   OpenSINChatIcon,
-}: {
-  searchQuery: string;
-  setSearchQuery: (q: string) => void;
-  filteredLLMs: any[];
-  selectedLLM: string;
-  selectedLLMObject?: any;
-  searchMenuOpen: boolean;
-  setSearchMenuOpen: (v: boolean) => void;
-  searchInputRef: React.RefObject<HTMLInputElement | null>;
-  handleXButton: () => void;
-  updateLLMChoice: (value: string) => void;
-  OpenSINChatIcon: string;
 }) {
   const { t } = useTranslation();
   return (

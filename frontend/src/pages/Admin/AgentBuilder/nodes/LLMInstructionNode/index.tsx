@@ -6,10 +6,6 @@ export default function LLMInstructionNode({
   config,
   onConfigChange,
   renderVariableSelect,
-}: {
-  config?: { instruction?: string; resultVariable?: string };
-  onConfigChange: (c: any) => void;
-  renderVariableSelect: (value: any, onChange: (v: any) => void, placeholder: string, required: boolean) => React.ReactNode;
 }) {
   const { t } = useTranslation();
   return (
@@ -39,7 +35,7 @@ export default function LLMInstructionNode({
           {t("agentBuilder.nodes.llmInstruction.resultVariable")}
         </label>
         {renderVariableSelect(
-          config?.resultVariable,
+          config.resultVariable,
           (value) => onConfigChange({ ...config, resultVariable: value }),
           t("agentBuilder.nodes.llmInstruction.selectOrCreateVariable"),
           true,

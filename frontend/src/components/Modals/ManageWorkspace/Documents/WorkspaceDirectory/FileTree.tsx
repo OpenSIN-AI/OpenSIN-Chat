@@ -1,25 +1,6 @@
 import WorkspaceFileRow from "./WorkspaceFileRow";
 import { RenderFileRows } from "./RenderFileRows";
 
-interface FileTreeProps {
-  files: any;
-  movedItems: any[];
-  selectedItems: Record<string, boolean>;
-  setSelectedItems: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
-  toggleSelection: (item: any) => void;
-  toggleSelectAll: () => void;
-  removeSelectedItems: () => void;
-  hasChanges: boolean;
-  workspace: any;
-  setLoading: (loading: boolean) => void;
-  setLoadingMessage: (msg: string) => void;
-  fetchKeys: (force?: boolean) => Promise<void>;
-  handleSaveChanges: (e: React.MouseEvent) => void;
-  embeddedDocCount: number;
-  t: (key: string) => string;
-  highlightWorkspace: boolean;
-}
-
 export function FileTree({
   files,
   movedItems,
@@ -37,9 +18,9 @@ export function FileTree({
   embeddedDocCount,
   t,
   highlightWorkspace,
-}: FileTreeProps) {
+}) {
   const allCount = files.items.reduce(
-    (sum: number, folder: any) => sum + folder.items.length,
+    (sum, folder) => sum + folder.items.length,
     0,
   );
   const allSelected =
@@ -62,7 +43,7 @@ export function FileTree({
           <div className="text-white/80 text-xs grid grid-cols-12 py-2 px-3.5 border-b border-white/20 light:border-theme-modal-border bg-theme-settings-input-bg sticky top-0 z-10">
             <div className="col-span-10 flex items-center gap-x-[4px]">
               {!hasChanges &&
-              files.items.some((folder: any) => folder.items.length > 0) ? (
+              files.items.some((folder) => folder.items.length > 0) ? (
                 <div
                   className={`shrink-0 w-3 h-3 rounded border-[1px] border-solid border-white text-theme-text-primary light:invert flex justify-center items-center cursor-pointer`}
                   role="checkbox"
@@ -90,7 +71,7 @@ export function FileTree({
             )}
           </div>
           <div className="overflow-y-auto h-[calc(100%-40px)]">
-            {files.items.some((folder: any) => folder.items.length > 0) ||
+            {files.items.some((folder) => folder.items.length > 0) ||
             movedItems.length > 0 ? (
               <RenderFileRows
                 files={files}

@@ -1,14 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { chatQueryRefusalResponse } from "@/utils/chat";
 import { useTranslation } from "react-i18next";
-
-export default function ChatQueryRefusalResponse({
-  workspace,
-  setHasChanges,
-}: {
-  workspace?: any;
-  setHasChanges: (v: boolean) => void;
-}) {
+export default function ChatQueryRefusalResponse({ workspace, setHasChanges }) {
   const { t } = useTranslation();
   return (
     <div>

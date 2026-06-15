@@ -4,15 +4,7 @@ import CommunityHubImportItemSteps from "../..";
 import { Warning } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 
-export default function UnknownItem({
-  item,
-  setSettings,
-  setStep,
-}: {
-  item: { id: string; itemType: string };
-  setSettings: (s: any) => void;
-  setStep: (step: string) => void;
-}) {
+export default function UnknownItem({ item, setSettings, setStep }) {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col mt-4 gap-y-4">

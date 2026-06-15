@@ -11,7 +11,7 @@ export default function SpellCheck() {
     Appearance.get("enableSpellCheck"),
   );
 
-  const handleChange = async (checked: boolean) => {
+  const handleChange = async (checked) => {
     setEnableSpellCheck(checked);
     setSaving(true);
     try {

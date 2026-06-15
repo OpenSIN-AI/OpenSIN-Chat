@@ -6,21 +6,13 @@ import showToast from "@/utils/toast";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export default function Introduction({
-  settings,
-  setSettings,
-  setStep,
-}: {
-  settings: { itemId?: string | null };
-  setSettings: (s: any) => void;
-  setStep: (step: string) => void;
-}) {
+export default function Introduction({ settings, setSettings, setStep }) {
   const { t } = useTranslation();
   const [itemId, setItemId] = useState(settings.itemId);
   const handleContinue = () => {
     if (!itemId)
       return showToast(t("communityHub.import.intro.itemIdRequired"), "error");
-    setSettings((prev: any) => ({ ...prev, itemId }));
+    setSettings((prev) => ({ ...prev, itemId }));
     setStep(CommunityHubImportItemSteps.itemId.next());
   };
 
@@ -61,7 +53,7 @@ export default function Introduction({
                 </label>
                 <input
                   type="text"
-                  value={itemId || ""}
+                  value={itemId}
                   onChange={(e) => setItemId(e.target.value)}
                   placeholder={t("communityHub.import.intro.itemIdPlaceholder")}
                   className="border-none bg-theme-settings-input-bg text-theme-text-primary placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"

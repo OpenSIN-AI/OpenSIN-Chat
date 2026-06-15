@@ -2,13 +2,11 @@
 import useSWR from "swr";
 import ModelRouter from "@/models/modelRouter";
 
-export const MODEL_ROUTERS_KEY = "model-routers";
+export const MODEL_ROUTERS_KEY = "model-routers/all";
 
 export default function useModelRouters() {
-  const { data, error, isLoading, mutate } = useSWR(
-    MODEL_ROUTERS_KEY,
-    () => ModelRouter.getAll(),
-    { revalidateOnFocus: false },
+  const { data, error, isLoading, mutate } = useSWR(MODEL_ROUTERS_KEY, () =>
+    ModelRouter.getAll(),
   );
 
   return {

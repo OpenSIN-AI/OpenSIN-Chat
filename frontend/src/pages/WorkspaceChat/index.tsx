@@ -33,11 +33,11 @@ function ShowWorkspaceChat() {
     showAgentCommand,
     isLoading,
   } = useWorkspaceChats(slug);
-  const [workspace, setWorkspace] = useState<any>(null);
+  const [workspace, setWorkspace] = useState(null);
   // Tracks which workspace `workspace` belongs to. While a new workspace's
   // data is in flight, we keep the previous workspace's chat mounted
   // (Slack/Linear-style transition) instead of flashing a skeleton.
-  const [loadedSlug, setLoadedSlug] = useState<string | null>(null);
+  const [loadedSlug, setLoadedSlug] = useState(null);
 
   useEffect(() => {
     if (isLoading) return;

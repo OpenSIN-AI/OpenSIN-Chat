@@ -6,15 +6,7 @@ import { useTranslation } from "react-i18next";
 import ProviderPrivacy from "@/components/ProviderPrivacy";
 import System from "@/models/system";
 
-export default function DataHandling({
-  setHeader,
-  setForwardBtn,
-  setBackBtn,
-}: {
-  setHeader: (h: any) => void;
-  setForwardBtn: (b: any) => void;
-  setBackBtn: (b: any) => void;
-}) {
+export default function DataHandling({ setHeader, setForwardBtn, setBackBtn }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
 

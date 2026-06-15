@@ -7,9 +7,9 @@ import { useTranslation } from "react-i18next";
 
 const DASH = "--";
 
-export default function InviteRow({ invite }: { invite: any }) {
+export default function InviteRow({ invite }) {
   const { t } = useTranslation();
-  const rowRef = useRef<HTMLTableRowElement>(null);
+  const rowRef = useRef(null);
   const [status, setStatus] = useState(invite.status);
   const [copied, setCopied] = useState(false);
   const handleDelete = async () => {

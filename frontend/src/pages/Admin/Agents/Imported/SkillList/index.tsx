@@ -7,10 +7,6 @@ export default function ImportedSkillList({
   skills = [],
   selectedSkill = null,
   handleClick = null,
-}: {
-  skills: any[];
-  selectedSkill?: string | null;
-  handleClick?: ((config: any) => void) | null;
 }) {
   const { t } = useTranslation();
   if (skills.length === 0)

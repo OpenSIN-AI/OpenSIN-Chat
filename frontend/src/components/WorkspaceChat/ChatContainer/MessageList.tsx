@@ -8,19 +8,6 @@ import { MetricsProvider } from "./ChatHistory/HistoricalMessage/Actions/RenderM
  * Accepts: chatHistoryRef, chatHistory, workspace, sendCommand,
  *          setChatHistory, regenerateAssistantMessage, websocket
  */
-interface MessageListProps {
-  chatHistoryRef: React.RefObject<HTMLDivElement | null>;
-  chatHistory: any[];
-  workspace: any;
-  sendCommand: (cmd: any) => void;
-  setChatHistory: (history: any[]) => void;
-  regenerateAssistantMessage: (idx: number) => void;
-  websocket: any;
-  loadingResponse: boolean;
-  handleSubmit: (e: React.FormEvent) => void;
-  files: any[];
-}
-
 export default function MessageList({
   chatHistoryRef,
   chatHistory,
@@ -32,7 +19,7 @@ export default function MessageList({
   loadingResponse,
   handleSubmit,
   files,
-}: MessageListProps) {
+}) {
   return (
     <div className="flex flex-col h-full w-full pb-20 md:pb-0">
       <div className="contents">

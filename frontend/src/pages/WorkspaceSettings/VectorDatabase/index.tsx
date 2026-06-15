@@ -12,17 +12,17 @@ import VectorCount from "./VectorCount";
 import VectorSearchMode from "./VectorSearchMode";
 import CTAButton from "@/components/lib/CTAButton";
 
-export default function VectorDatabase({ workspace }: { workspace: any }) {
+export default function VectorDatabase({ workspace }) {
   const { t } = useTranslation();
   const [hasChanges, setHasChanges] = useState(false);
   const [saving, setSaving] = useState(false);
-  const formEl = useRef<HTMLFormElement>(null);
+  const formEl = useRef(null);
 
-  const handleUpdate = async (e: React.FormEvent) => {
+  const handleUpdate = async (e) => {
     setSaving(true);
     e.preventDefault();
-    const data: Record<string, any> = {};
-    const form = new FormData(formEl.current!);
+    const data = {};
+    const form = new FormData(formEl.current);
     for (var [key, value] of form.entries()) data[key] = castToType(key, value);
     const { workspace: updatedWorkspace, message } = await Workspace.update(
       workspace.slug,

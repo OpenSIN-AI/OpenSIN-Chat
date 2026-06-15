@@ -5,7 +5,7 @@ import paths from "@/utils/paths";
 import { VisibilityIcon } from "./generic";
 import { useTranslation } from "react-i18next";
 
-export default function SlashCommandHubCard({ item }: { item: any }) {
+export default function SlashCommandHubCard({ item }) {
   const { t } = useTranslation();
   return (
     <>

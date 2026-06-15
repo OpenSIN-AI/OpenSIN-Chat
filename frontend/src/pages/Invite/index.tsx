@@ -10,7 +10,7 @@ export default function InvitePage() {
   const { code } = useParams();
   const [result, setResult] = useState({
     status: "loading",
-    message: null as string | null,
+    message: null,
   });
 
   useEffect(() => {

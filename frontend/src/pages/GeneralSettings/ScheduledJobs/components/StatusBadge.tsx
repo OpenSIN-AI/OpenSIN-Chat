@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
  * @param {string} status - The status of the run.
  * @returns {string} The styled status text.
  */
-function getStatusesMap(t: (key: string) => string) {
+function getStatusesMap(t) {
   return {
     completed: {
       text: t("scheduledJobs.status.completed"),
@@ -44,9 +44,9 @@ function getStatusesMap(t: (key: string) => string) {
  * @param {string} status - The status of the run.
  * @returns {string} The status text.
  */
-export default function StatusBadge({ status }: { status: string }) {
+export default function StatusBadge({ status }) {
   const { t } = useTranslation();
   const statusesMap = getStatusesMap(t);
-  const { text, style } = statusesMap[status as keyof typeof statusesMap] || statusesMap.default;
+  const { text, style } = statusesMap[status] || statusesMap.default;
   return <span className={`text-sm ${style}`}>{text}</span>;
 }

@@ -2,19 +2,12 @@ import { useTranslation } from "react-i18next";
 import { At } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
-interface AgentSessionButtonProps {
-  sendCommand: (cmd: { text: string; writeMode: string }) => void;
-  promptInput: string;
-  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
-  visible?: boolean;
-}
-
 export default function AgentSessionButton({
   sendCommand,
   promptInput,
   textareaRef,
   visible = true,
-}: AgentSessionButtonProps) {
+}) {
   const { t } = useTranslation();
   if (!visible) return null;
 

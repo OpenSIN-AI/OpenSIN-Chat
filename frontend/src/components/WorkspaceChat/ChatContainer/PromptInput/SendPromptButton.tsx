@@ -2,13 +2,7 @@ import { useTranslation } from "react-i18next";
 import { ArrowUp } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 
-interface SendPromptButtonProps {
-  formRef: React.RefObject<HTMLButtonElement | null>;
-  promptInput: string;
-  isDisabled: boolean;
-}
-
-export default function SendPromptButton({ formRef, promptInput, isDisabled }: SendPromptButtonProps) {
+export default function SendPromptButton({ formRef, promptInput, isDisabled }) {
   const { t } = useTranslation();
 
   return (

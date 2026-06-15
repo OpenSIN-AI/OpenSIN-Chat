@@ -9,7 +9,7 @@ export default function ChatRenderHTML() {
   const [saving, setSaving] = useState(false);
   const [renderHTML, setRenderHTML] = useState(false);
 
-  const handleChange = async (checked: boolean) => {
+  const handleChange = async (checked) => {
     setRenderHTML(checked);
     setSaving(true);
     try {

@@ -6,10 +6,6 @@ export default function CodeNode({
   config,
   onConfigChange,
   renderVariableSelect,
-}: {
-  config: { language?: string; code?: string; resultVariable?: string };
-  onConfigChange: (c: any) => void;
-  renderVariableSelect: (value: any, onChange: (v: any) => void, placeholder: string, required: boolean) => React.ReactNode;
 }) {
   const { t } = useTranslation();
   return (
@@ -56,7 +52,6 @@ export default function CodeNode({
           config.resultVariable,
           (value) => onConfigChange({ resultVariable: value }),
           t("agentBuilder.codeNode.selectOrCreateVariable"),
-          false,
         )}
       </div>
     </div>
