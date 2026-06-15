@@ -34,7 +34,7 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders 8 buttons (7 panel icons + 1 PDF-analysis nav)", () => {
+  it("renders all icon buttons (7 panels + PDF-analysis nav)", () => {
     const { container } = renderBar();
     const buttons = container.querySelectorAll("button");
     expect(buttons.length).toBe(8);
@@ -43,7 +43,7 @@ describe("RightSidebarIconBar", () => {
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {
     const { container } = renderBar();
     const previewButton = container.querySelector(
-      'button[aria-label="Vorschau"]',
+      'button[aria-label="Preview"]',
     );
     fireEvent.click(previewButton);
     expect(mockToggleSidebar).toHaveBeenCalledWith("preview");
@@ -52,13 +52,13 @@ describe("RightSidebarIconBar", () => {
   it("calls toggleSidebar with 'database' when database icon clicked", () => {
     const { container } = renderBar();
     const dbButton = container.querySelector(
-      'button[aria-label="Politiker-Datenbank"]',
+      'button[aria-label="Politician database"]',
     );
     fireEvent.click(dbButton);
     expect(mockToggleSidebar).toHaveBeenCalledWith("database");
   });
 
-  it("has accessible labels on every button (a11y)", () => {
+  it("has an accessible label on every button (a11y)", () => {
     const { container } = renderBar();
     const buttons = container.querySelectorAll("button");
     buttons.forEach((btn) => {
