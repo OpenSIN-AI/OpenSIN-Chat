@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import System from "../../../models/system";
 import SingleUserAuth from "./SingleUserAuth";
@@ -11,6 +11,9 @@ import {
 } from "../../../utils/constants";
 import useLogo from "../../../hooks/useLogo";
 import useSystemSettings from "../../../hooks/useSystemSettings";
+import useSWR from "swr";
+
+const AUTH_CHECK_KEY = "system/auth-check";
 
 export default function PasswordModal({ mode = "single" }: any) {
   const { t } = useTranslation();
@@ -28,99 +31,55 @@ export default function PasswordModal({ mode = "single" }: any) {
 }
 
 export function usePasswordModal(notry: any = false) {
-  const [auth, setAuth] = useState({
-    loading: true,
-    requiresAuth: false,
-    mode: "single",
-  } as any);
-
   const { settings, loading: settingsLoading } = useSystemSettings();
+  const { MultiUserMode, RequiresAuth } = settings || {};
 
-  useEffect(() => {
-    if (settingsLoading) return;
-    if (!window) return;
+  const currentToken = window.localStorage.getItem(AUTH_TOKEN);
 
-    // If the last validity check is still valid
-    // we can skip the loading.
-    if (!System.needsAuthCheck() && notry === false) {
-      setAuth({
-        loading: false,
-        requiresAuth: false,
-        mode: "multi",
-      });
-      return;
-    }
+  // Determine if we actually need a token validity check.
+  // Skip when: settings are still loading, notry guard allows skip, or no token exists.
+  const skipCheck =
+    settingsLoading ||
+    (!System.needsAuthCheck() && notry === false) ||
+    (!MultiUserMode && !RequiresAuth);
 
-    if (settings?.MultiUserMode) {
-      const currentToken = window.localStorage.getItem(AUTH_TOKEN);
-      if (!!currentToken) {
-        System.checkAuth(currentToken).then((valid) => {
-          if (!valid) {
-            setAuth({
-              loading: false,
-              requiresAuth: true,
-              mode: "multi",
-            });
-            window.localStorage.removeItem(AUTH_USER);
-            window.localStorage.removeItem(AUTH_TOKEN);
-            window.localStorage.removeItem(AUTH_TIMESTAMP);
-          } else {
-            setAuth({
-              loading: false,
-              requiresAuth: false,
-              mode: "multi",
-            });
-          }
-        });
-      } else {
-        setAuth({
-          loading: false,
-          requiresAuth: true,
-          mode: "multi",
-        });
-      }
-    } else {
-      // Running token check in single user Auth mode.
-      // If Single user Auth is disabled - skip check
-      const requiresAuth = settings?.RequiresAuth || false;
-      if (!requiresAuth) {
-        setAuth({
-          loading: false,
-          requiresAuth: false,
-          mode: "single",
-        });
-        return;
-      }
+  const needsTokenCheck = !skipCheck && !!currentToken;
 
-      const currentToken = window.localStorage.getItem(AUTH_TOKEN);
-      if (!!currentToken) {
-        System.checkAuth(currentToken).then((valid) => {
-          if (!valid) {
-            setAuth({
-              loading: false,
-              requiresAuth: true,
-              mode: "single",
-            });
-            window.localStorage.removeItem(AUTH_TOKEN);
-            window.localStorage.removeItem(AUTH_USER);
-            window.localStorage.removeItem(AUTH_TIMESTAMP);
-          } else {
-            setAuth({
-              loading: false,
-              requiresAuth: false,
-              mode: "single",
-            });
-          }
-        });
-      } else {
-        setAuth({
-          loading: false,
-          requiresAuth: true,
-          mode: "single",
-        });
-      }
-    }
-  }, [settings, settingsLoading, notry]);
+  const { data: tokenValid, isLoading: tokenLoading } = useSWR(
+    needsTokenCheck ? [AUTH_CHECK_KEY, currentToken] : null,
+    () => System.checkAuth(currentToken),
+    { revalidateOnFocus: false, dedupingInterval: 5000 },
+  );
 
-  return auth;
+  // While settings or token check are in-flight, stay in the loading state.
+  if (settingsLoading || (needsTokenCheck && tokenLoading)) {
+    return { loading: true, requiresAuth: false, mode: "single" };
+  }
+
+  // Auth is not required in this environment
+  if (!MultiUserMode && !RequiresAuth) {
+    return { loading: false, requiresAuth: false, mode: "single" };
+  }
+
+  // Skip the check (valid cached timestamp / notry guard)
+  if (!System.needsAuthCheck() && notry === false) {
+    return { loading: false, requiresAuth: false, mode: MultiUserMode ? "multi" : "single" };
+  }
+
+  const mode = MultiUserMode ? "multi" : "single";
+
+  // No token present at all — require login
+  if (!currentToken) {
+    return { loading: false, requiresAuth: true, mode };
+  }
+
+  // Token check returned invalid — clean up storage
+  if (tokenValid === false) {
+    window.localStorage.removeItem(AUTH_USER);
+    window.localStorage.removeItem(AUTH_TOKEN);
+    window.localStorage.removeItem(AUTH_TIMESTAMP);
+    return { loading: false, requiresAuth: true, mode };
+  }
+
+  return { loading: false, requiresAuth: false, mode };
 }

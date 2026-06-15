@@ -1,80 +1,106 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { FullScreenLoader } from "../Preloader";
 import validateSessionTokenForUser from "@/utils/session";
 import paths from "@/utils/paths";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 import { userFromStorage } from "@/utils/request";
-import System from "@/models/system";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import useSWR from "swr";
 import UserMenu from "../UserMenu";
 import { KeyboardShortcutWrapper } from "@/utils/keyboardShortcuts";
 
-// Used only for Multi-user mode only as we permission specific pages based on auth role.
-// When in single user mode we just bypass any authchecks.
+const ONBOARDING_STATUS_KEY = "system/onboarding-status";
+const SESSION_VALID_KEY = "system/session-valid";
+
+/**
+ * Replaces the `useEffect + async validateSession()` pattern with two
+ * composable SWR fetches:
+ *
+ * 1. `ONBOARDING_STATUS_KEY` — whether onboarding has been completed.
+ * 2. `SESSION_VALID_KEY` — whether the current auth token is still valid
+ *    (only fetched when settings are loaded and a token is present).
+ *
+ * Both keys are deduplicated across all four Route components that call
+ * `useIsAuthenticated`, so at most two network requests fire instead of one
+ * per mount regardless of how many Route wrappers are on the page.
+ */
 function useIsAuthenticated() {
-  const [isAuthd, setIsAuthed] = useState(null);
-  const [shouldRedirectToOnboarding, setShouldRedirectToOnboarding] =
-    useState(false);
-  const [multiUserMode, setMultiUserMode] = useState(false);
   const { settings, loading: settingsLoading } = useSystemSettings();
+  const { MultiUserMode, RequiresAuth } = settings || {};
 
-  useEffect(() => {
-    const validateSession = async () => {
-      const onboardingComplete = await System.isOnboardingComplete();
-      const { MultiUserMode, RequiresAuth } = settings || {};
-      setMultiUserMode(MultiUserMode);
+  const localAuthToken = localStorage.getItem(AUTH_TOKEN);
+  const localUser = localStorage.getItem(AUTH_USER);
 
-      // Check for the onboarding redirect condition
-      if (onboardingComplete === false) {
-        setShouldRedirectToOnboarding(true);
-        setIsAuthed(true);
-        return;
-      }
+  // Step 1: check onboarding (always needed)
+  const { data: onboardingComplete, isLoading: onboardingLoading } = useSWR(
+    !settingsLoading ? ONBOARDING_STATUS_KEY : null,
+    () => {
+      // Avoid circular import by using the system model lazily
+      return import("@/models/system").then((m) =>
+        m.default.isOnboardingComplete(),
+      );
+    },
+    { revalidateOnFocus: false, dedupingInterval: 10000 },
+  );
 
-      // Single User mode without password - no auth required
-      if (!MultiUserMode && !RequiresAuth) {
-        setIsAuthed(true);
-        return;
-      }
+  // Step 2: validate the session token (only when auth is actually required)
+  const needsTokenCheck =
+    !settingsLoading &&
+    onboardingComplete !== undefined &&
+    onboardingComplete !== false &&
+    !!localAuthToken &&
+    (MultiUserMode || RequiresAuth);
 
-      // Single User password mode check
-      if (!MultiUserMode && RequiresAuth) {
-        const localAuthToken = localStorage.getItem(AUTH_TOKEN);
-        if (!localAuthToken) {
-          setIsAuthed(false);
-          return;
-        }
+  const { data: sessionValid, isLoading: sessionLoading } = useSWR(
+    needsTokenCheck ? SESSION_VALID_KEY : null,
+    () => validateSessionTokenForUser(),
+    { revalidateOnFocus: false, dedupingInterval: 5000 },
+  );
 
-        const isValid = await validateSessionTokenForUser();
-        setIsAuthed(isValid);
-        return;
-      }
+  const loading =
+    settingsLoading ||
+    onboardingLoading ||
+    (needsTokenCheck && sessionLoading);
 
-      // Multi-user mode checks
-      const localUser = localStorage.getItem(AUTH_USER);
-      const localAuthToken = localStorage.getItem(AUTH_TOKEN);
-      if (!localUser || !localAuthToken) {
-        setIsAuthed(false);
-        return;
-      }
+  if (loading || onboardingComplete === undefined) {
+    return { isAuthd: null, shouldRedirectToOnboarding: false, multiUserMode: !!MultiUserMode };
+  }
 
-      const isValid = await validateSessionTokenForUser();
-      if (!isValid) {
-        localStorage.removeItem(AUTH_USER);
-        localStorage.removeItem(AUTH_TOKEN);
-        localStorage.removeItem(AUTH_TIMESTAMP);
-        setIsAuthed(false);
-        return;
-      }
+  // Onboarding is incomplete — redirect
+  if (onboardingComplete === false) {
+    return { isAuthd: true, shouldRedirectToOnboarding: true, multiUserMode: !!MultiUserMode };
+  }
 
-      setIsAuthed(true);
-    };
-    if (!settingsLoading) validateSession();
-  }, [settings, settingsLoading]);
+  // Single-user mode, no password required
+  if (!MultiUserMode && !RequiresAuth) {
+    return { isAuthd: true, shouldRedirectToOnboarding: false, multiUserMode: false };
+  }
 
-  return { isAuthd, shouldRedirectToOnboarding, multiUserMode };
+  // Auth is required but we have no token
+  if (!localAuthToken) {
+    return { isAuthd: false, shouldRedirectToOnboarding: false, multiUserMode: !!MultiUserMode };
+  }
+
+  // Multi-user mode also requires a stored user record
+  if (MultiUserMode && !localUser) {
+    return { isAuthd: false, shouldRedirectToOnboarding: false, multiUserMode: true };
+  }
+
+  // Session token was invalid — clean up storage
+  if (needsTokenCheck && sessionValid === false) {
+    localStorage.removeItem(AUTH_USER);
+    localStorage.removeItem(AUTH_TOKEN);
+    localStorage.removeItem(AUTH_TIMESTAMP);
+    return { isAuthd: false, shouldRedirectToOnboarding: false, multiUserMode: !!MultiUserMode };
+  }
+
+  return {
+    isAuthd: sessionValid !== false,
+    shouldRedirectToOnboarding: false,
+    multiUserMode: !!MultiUserMode,
+  };
 }
 
 // Allows only admin to access the route and if in single user mode,
