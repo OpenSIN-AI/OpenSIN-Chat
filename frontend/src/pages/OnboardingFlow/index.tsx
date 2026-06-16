@@ -1,22 +1,10 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
-import OnboardingSteps, { OnboardingLayout } from "./Steps";
-import { useParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import paths from "@/utils/paths";
 
+// Onboarding is permanently disabled for this instance. All /onboarding/* routes
+// redirect to home immediately without rendering the onboarding UI.
 export default function OnboardingFlow() {
-  const { step } = useParams();
-  const StepPage = OnboardingSteps[step || "home"];
-  if (step === "home" || !step) return <StepPage />;
-
-  return (
-    <OnboardingLayout>
-      {(setHeader: any, setBackBtn: any, setForwardBtn: any) => (
-        <StepPage
-          setHeader={setHeader}
-          setBackBtn={setBackBtn}
-          setForwardBtn={setForwardBtn}
-        />
-      )}
-    </OnboardingLayout>
-  );
+  return <Navigate to={paths.home()} replace />;
 }
