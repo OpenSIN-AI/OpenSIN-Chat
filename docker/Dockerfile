@@ -4,8 +4,12 @@ FROM ubuntu:noble-20251013 AS base
 # Build arguments
 ARG ARG_UID=1000
 ARG ARG_GID=1000
+# SKIP_CHROMIUM=1 omits the 568 MB ARM64 Chromium download. Only enable if the
+# collector/web-scraping path is not needed in this image.
+ARG SKIP_CHROMIUM=0
 
 FROM base AS build-arm64
+ARG SKIP_CHROMIUM
 RUN echo "Preparing build of OpenSIN Chat image for arm64 architecture"
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -63,10 +67,18 @@ WORKDIR /app
 # Puppeteer does not ship with an ARM86 compatible build for Chromium
 # so web-scraping would be broken in arm docker containers unless we patch it
 # by manually installing a compatible chromedriver.
-RUN echo "Need to patch Puppeteer x Chromium support for ARM86 - installing dep!" && \
-    curl -fSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip -o chrome-linux.zip && \
-    unzip chrome-linux.zip && \
-    rm -rf chrome-linux.zip
+RUN if [ "$SKIP_CHROMIUM" != "1" ]; then \
+        echo "Need to patch Puppeteer x Chromium support for ARM86 - installing dep!" && \
+        curl -fSL https://webassets.anythingllm.com/chromium-1088-linux-arm64.zip -o chrome-linux.zip && \
+        unzip chrome-linux.zip && \
+        rm -rf chrome-linux.zip; \
+    else \
+        echo "SKIP_CHROMIUM=1: omitting ARM64 Chromium download" && \
+        mkdir -p /app/chrome-linux && \
+        echo '#!/bin/sh' > /app/chrome-linux/chrome && \
+        echo 'echo "Chromium skipped by SKIP_CHROMIUM=1" && exit 1' >> /app/chrome-linux/chrome && \
+        chmod +x /app/chrome-linux/chrome; \
+    fi
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV CHROME_PATH=/app/chrome-linux/chrome
