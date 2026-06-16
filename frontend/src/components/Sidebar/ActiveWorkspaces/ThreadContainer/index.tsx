@@ -27,6 +27,7 @@ export const THREAD_RENAME_EVENT = "renameThread";
 
 export default function ThreadContainer({
   workspace,
+  isActive: _isActive = false,
   isVirtualThread = false,
 }) {
   const { threadSlug = null } = useParams();
