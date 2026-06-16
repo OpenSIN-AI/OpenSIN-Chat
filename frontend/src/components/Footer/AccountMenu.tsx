@@ -242,7 +242,7 @@ export default function AccountMenu() {
               bottom: pos.bottom,
               width: pos.width,
             }}
-            className="z-[60] rounded-xl border border-theme-sidebar-border light:border-slate-200 bg-theme-action-menu-bg shadow-xl shadow-black/30 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
+            className="z-[60] rounded-xl border border-theme-sidebar-border light:border-slate-300 bg-theme-action-menu-bg light:bg-white shadow-xl shadow-black/30 p-1.5 max-h-[70vh] overflow-y-auto no-scroll"
           >
             {/* Identity header */}
             <div className="flex items-center gap-x-2.5 px-2.5 py-2">
