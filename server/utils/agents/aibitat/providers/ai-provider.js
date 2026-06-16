@@ -21,9 +21,7 @@ const { parseLMStudioBasePath } = require("../../../AiProviders/lmStudio");
 const {
   parseDockerModelRunnerEndpoint,
 } = require("../../../AiProviders/dockerModelRunner");
-const { parseFoundryBasePath } = require("../../../AiProviders/foundry");
 const { AzureOpenAiLLM } = require("../../../AiProviders/azureOpenAi");
-const { DellProAiStudioLLM } = require("../../../AiProviders/dellProAiStudio");
 const {
   SystemPromptVariables,
 } = require("../../../../models/systemPromptVariables");
@@ -239,22 +237,6 @@ class Provider {
           apiKey: process.env.FIREWORKS_AI_LLM_API_KEY,
           ...config,
         });
-      case "apipie":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://apipie.ai/v1",
-          },
-          apiKey: process.env.APIPIE_LLM_API_KEY ?? null,
-          ...config,
-        });
-      case "deepseek":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.deepseek.com/v1",
-          },
-          apiKey: process.env.DEEPSEEK_API_KEY ?? null,
-          ...config,
-        });
       case "xai":
         return new ChatOpenAI({
           configuration: {
@@ -263,92 +245,12 @@ class Provider {
           apiKey: process.env.XAI_LLM_API_KEY ?? null,
           ...config,
         });
-      case "zai":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.z.ai/api/paas/v4",
-          },
-          apiKey: process.env.ZAI_API_KEY ?? null,
-          ...config,
-        });
-      case "novita":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.novita.ai/v3/openai",
-          },
-          apiKey: process.env.NOVITA_LLM_API_KEY ?? null,
-          ...config,
-        });
-      case "ppio":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.ppinfra.com/v3/openai",
-          },
-          apiKey: process.env.PPIO_API_KEY ?? null,
-          ...config,
-        });
       case "gemini":
         return new ChatOpenAI({
           configuration: {
             baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
           },
           apiKey: process.env.GEMINI_API_KEY ?? null,
-          ...config,
-        });
-      case "moonshotai":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.moonshot.ai/v1",
-          },
-          apiKey: process.env.MOONSHOT_AI_API_KEY ?? null,
-          ...config,
-        });
-      case "cometapi":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.cometapi.com/v1",
-          },
-          apiKey: process.env.COMETAPI_LLM_API_KEY ?? null,
-          ...config,
-        });
-      case "giteeai":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://ai.gitee.com/v1",
-          },
-          apiKey: process.env.GITEE_AI_API_KEY ?? null,
-          ...config,
-        });
-      case "privatemode":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: process.env.PRIVATEMODE_LLM_BASE_PATH,
-          },
-          apiKey: process.env.PRIVATEMODE_LLM_API_KEY || "privatemode",
-          ...config,
-        });
-      case "sambanova":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.sambanova.ai/v1",
-          },
-          apiKey: process.env.SAMBANOVA_LLM_API_KEY ?? null,
-          ...config,
-        });
-      case "minimax":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.minimax.io/v1",
-          },
-          apiKey: process.env.MINIMAX_API_KEY || null,
-          ...config,
-        });
-      case "cerebras":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.cerebras.ai/v1",
-          },
-          apiKey: process.env.CEREBRAS_API_KEY || null,
           ...config,
         });
       // OSS Model Runners
@@ -417,15 +319,6 @@ class Provider {
           apiKey: process.env.OPENCODE_ZEN_API_KEY ?? null,
           ...config,
         });
-      case "foundry": {
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: parseFoundryBasePath(process.env.FOUNDRY_BASE_PATH),
-          },
-          apiKey: process.env.FOUNDRY_API_KEY || "foundry",
-          ...config,
-        });
-      }
       case "docker-model-runner":
         return new ChatOpenAI({
           configuration: {
@@ -435,22 +328,6 @@ class Provider {
           },
           apiKey:
             process.env.DOCKER_MODEL_RUNNER_API_KEY || "docker-model-runner",
-          ...config,
-        });
-      case "lemonade":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: process.env.LEMONADE_LLM_BASE_PATH,
-          },
-          apiKey: process.env.LEMONADE_LLM_API_KEY || "lemonade",
-          ...config,
-        });
-      case "dpais":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: DellProAiStudioLLM.parseBasePath(),
-          },
-          apiKey: "dpais",
           ...config,
         });
       default:

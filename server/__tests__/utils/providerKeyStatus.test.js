@@ -17,12 +17,8 @@ const {
 
 const AGENT_PROVIDER_FILES = [
   "koboldcpp.js",
-  "foundry.js",
-  "privatemode.js",
-  "dellProAiStudio.js",
   "nvidiaNim.js",
   "dockerModelRunner.js",
-  "lemonade.js",
 ];
 
 const AGENT_PROVIDER_DIR = path.resolve(
@@ -41,12 +37,8 @@ describe("providerKeyStatus registry", () => {
     expect(ids).toEqual(
       expect.arrayContaining([
         "koboldcpp",
-        "foundry",
-        "privatemode",
-        "dpais",
         "nvidia-nim",
         "docker-model-runner",
-        "lemonade",
       ]),
     );
   });
@@ -61,9 +53,9 @@ describe("providerKeyStatus registry", () => {
     }
   });
 
-  test("getProviderKeyStatuses reports 7 providers", () => {
+  test("getProviderKeyStatuses reports 3 providers", () => {
     const statuses = getProviderKeyStatuses();
-    expect(statuses).toHaveLength(7);
+    expect(statuses).toHaveLength(3);
   });
 
   test("hasRealKey rejects empty/null/undefined", () => {

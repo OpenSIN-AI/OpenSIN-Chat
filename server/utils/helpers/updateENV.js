@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: MIT
 const { Telemetry } = require("../../models/telemetry");
-const {
-  SUPPORTED_CONNECTION_METHODS,
-} = require("../AiProviders/bedrock/utils");
+const SUPPORTED_CONNECTION_METHODS = [
+  "iam",
+  "iam_role",
+  "sessionToken",
+  "apiKey",
+];
 const { resetAllVectorStores } = require("../vectorStore/resetAllVectorStores");
 
 const KEY_MAPPING = {

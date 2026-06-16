@@ -15,27 +15,6 @@ const LOCAL_PROVIDERS = [
     placeholder: "kobold-cpp",
   },
   {
-    provider: "foundry",
-    name: "Microsoft Foundry Local",
-    envKey: "FOUNDRY_API_KEY",
-    basePathKey: "FOUNDRY_BASE_PATH",
-    placeholder: "foundry",
-  },
-  {
-    provider: "privatemode",
-    name: "Privatemode AI",
-    envKey: "PRIVATEMODE_LLM_API_KEY",
-    basePathKey: "PRIVATEMODE_LLM_BASE_PATH",
-    placeholder: "privatemode",
-  },
-  {
-    provider: "dpais",
-    name: "Dell Pro AI Studio",
-    envKey: "DPAIS_LLM_API_KEY",
-    basePathKey: "DPAIS_LLM_BASE_PATH",
-    placeholder: "dell-pro-ai-studio",
-  },
-  {
     provider: "nvidia-nim",
     name: "NVIDIA NIM",
     envKey: "NVIDIA_NIM_LLM_API_KEY",
@@ -48,13 +27,6 @@ const LOCAL_PROVIDERS = [
     envKey: "DOCKER_MODEL_RUNNER_API_KEY",
     basePathKey: "DOCKER_MODEL_RUNNER_BASE_PATH",
     placeholder: "docker-model-runner",
-  },
-  {
-    provider: "lemonade",
-    name: "Lemonade",
-    envKey: "LEMONADE_LLM_API_KEY",
-    basePathKey: "LEMONADE_LLM_BASE_PATH",
-    placeholder: "lemonade",
   },
 ];
 
