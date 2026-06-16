@@ -63,14 +63,9 @@ const System = {
    * @returns {Promise<boolean>}
    */
   isOnboardingComplete: async function () {
-    if (import.meta.env.DEV && isOnboardingBypassEnabled()) return true;
-    return await fetch(`${API_BASE}/onboarding`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Could not find onboarding information.");
-        return res.json();
-      })
-      .then((res) => res.onboardingComplete)
-      .catch(() => false);
+    // Onboarding is permanently disabled for this instance.
+    // Always return true so the frontend never shows the onboarding flow.
+    return true;
   },
   /**
    * Marks the onboarding as complete.

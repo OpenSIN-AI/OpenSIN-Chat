@@ -76,15 +76,9 @@ const System: any = {
    * The bypass is ignored entirely in production builds.
    */
   isOnboardingComplete: async function (): Promise<boolean> {
-    if (import.meta.env.DEV && isOnboardingBypassEnabled()) return true;
-    try {
-      const res = await fetch(`${API_BASE}/onboarding`);
-      if (!res.ok) return false;
-      const json = (await res.json()) as OnboardingStatus;
-      return json?.onboardingComplete || false;
-    } catch {
-      return false;
-    }
+    // Onboarding is permanently disabled for this instance.
+    // Always return true so the frontend never shows the onboarding flow.
+    return true;
   },
 
   /**

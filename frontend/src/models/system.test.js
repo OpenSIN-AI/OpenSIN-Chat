@@ -91,34 +91,9 @@ describe("System", () => {
   });
 
   describe("isOnboardingComplete", () => {
-    it("returns true when onboardingComplete is true", async () => {
-      global.fetch = vi
-        .fn()
-        .mockResolvedValue(jsonResponse({ onboardingComplete: true }));
+    it("is permanently disabled for this instance", async () => {
       const result = await System.isOnboardingComplete();
       expect(result).toBe(true);
-    });
-
-    it("returns false when onboardingComplete is false", async () => {
-      global.fetch = vi
-        .fn()
-        .mockResolvedValue(jsonResponse({ onboardingComplete: false }));
-      const result = await System.isOnboardingComplete();
-      expect(result).toBe(false);
-    });
-
-    it("returns false when response is not ok", async () => {
-      global.fetch = vi
-        .fn()
-        .mockResolvedValue(new Response(null, { status: 500 }));
-      const result = await System.isOnboardingComplete();
-      expect(result).toBe(false);
-    });
-
-    it("returns false on network error", async () => {
-      global.fetch = vi.fn().mockRejectedValue(new Error("Network error"));
-      const result = await System.isOnboardingComplete();
-      expect(result).toBe(false);
     });
   });
 

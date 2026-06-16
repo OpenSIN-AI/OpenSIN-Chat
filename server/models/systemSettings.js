@@ -836,14 +836,10 @@ const SystemSettings = {
   },
 
   isOnboardingComplete: async function () {
-    try {
-      const setting = await this.get({ label: "onboarding_complete" });
-      return setting?.value === "true";
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
-      return false;
-    }
+    // Onboarding is permanently disabled for this instance.
+    // Hardcoded so the onboarding flow never appears, regardless of the
+    // onboarding_complete DB flag.
+    return true;
   },
 
   markOnboardingComplete: async function () {
