@@ -17,14 +17,40 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
-const Database = require("better-sqlite3");
 const { getStoragePath } = require("../paths");
+
+// better-sqlite3 is a native module. In some environments (missing build
+// toolchain, incompatible prebuilt bindings, restricted sandboxes) it cannot
+// be loaded. Guard the require so that a single optional dependency can never
+// crash the entire server at boot — the PDF-analysis feature degrades to a
+// pure-JS JSON-backed store instead (identical public API).
+let Database = null;
+try {
+  Database = require("better-sqlite3");
+  // require() succeeds even when the native bindings are missing; the failure
+  // only surfaces on instantiation. Probe an in-memory DB so we detect an
+  // unusable engine here and fall back cleanly instead of crashing later.
+  new Database(":memory:").close();
+} catch (e) {
+  Database = null;
+  console.warn(
+    `[pdfAnalysis] better-sqlite3 nicht verfügbar (${e.message.split("\n")[0]}). ` +
+      `FactStore nutzt den JSON-Fallback (keine FTS5-Volltextsuche, langsamer bei sehr großen Korpora).`,
+  );
+}
 
 const DB_FILE = getStoragePath("pdf-analysis", "facts.sqlite");
 const LEGACY_JSON = getStoragePath("pdf-analysis", "facts.json");
+const JSON_FILE = getStoragePath("pdf-analysis", "facts.json");
 
 class FactStore {
   constructor(dbFile = DB_FILE) {
+    // Graceful degradation: if the native SQLite engine is unavailable, hand
+    // back a JSON-backed store with the same API. Returning an object from a
+    // constructor overrides `this`, so `new FactStore()` callers transparently
+    // receive the fallback without any further changes.
+    if (!Database) return new JsonFactStore(JSON_FILE);
+
     fs.mkdirSync(path.dirname(dbFile), { recursive: true });
     this.db = new Database(dbFile);
     this.db.pragma("journal_mode = WAL");
@@ -247,4 +273,137 @@ class FactStore {
   }
 }
 
-module.exports = { FactStore };
+/**
+ * JsonFactStore — reiner JS-Fallback ohne native Abhängigkeiten.
+ *
+ * Implementiert exakt dieselbe öffentliche API wie FactStore
+ * (addFacts, get, updateCrossCheck, _save, search, remove, stats), persistiert
+ * nach facts.json. Ohne FTS5; die Suche ist ein Linear-Scan mit
+ * Teilstring-/Token-Matching. Für typische Dokumentmengen völlig ausreichend,
+ * nur bei sehr großen Korpora langsamer als die SQLite-Variante.
+ */
+class JsonFactStore {
+  constructor(jsonFile = JSON_FILE) {
+    this.jsonFile = jsonFile;
+    this.facts = new Map();
+    fs.mkdirSync(path.dirname(jsonFile), { recursive: true });
+    this._load();
+  }
+
+  _load() {
+    if (!fs.existsSync(this.jsonFile)) return;
+    try {
+      const { facts = [] } = JSON.parse(fs.readFileSync(this.jsonFile, "utf8"));
+      for (const f of facts) if (f && f.id) this.facts.set(f.id, f);
+    } catch (e) {
+      console.error(
+        `[pdfAnalysis] facts.json konnte nicht gelesen werden: ${e.message}`,
+      );
+    }
+  }
+
+  _save() {
+    try {
+      fs.writeFileSync(
+        this.jsonFile,
+        JSON.stringify({ facts: [...this.facts.values()] }, null, 2),
+        "utf8",
+      );
+    } catch (e) {
+      console.error(
+        `[pdfAnalysis] facts.json konnte nicht geschrieben werden: ${e.message}`,
+      );
+    }
+  }
+
+  addFacts(facts) {
+    let added = 0;
+    for (const f of facts) {
+      if (!f.detail || !f.source || !f.source.documentName) continue;
+      const id = FactStore.factId(f);
+      if (this.facts.has(id)) continue;
+      this.facts.set(id, {
+        id,
+        detail: f.detail,
+        quote: f.quote || "",
+        tags: f.tags || [],
+        confidence: f.confidence ?? null,
+        verified:
+          f.verified === undefined || f.verified === null ? null : !!f.verified,
+        crossCheck: undefined,
+        source: {
+          documentName: f.source.documentName,
+          documentPath: f.source.documentPath || null,
+          page: f.source.page,
+          pageCorrected: !!f.source.pageCorrected,
+          jobId: f.source.jobId || null,
+        },
+        createdAt: f.createdAt || new Date().toISOString(),
+      });
+      added += 1;
+    }
+    if (added) this._save();
+    return added;
+  }
+
+  get(id) {
+    return this.facts.get(id) || null;
+  }
+
+  updateCrossCheck(id, crossCheck) {
+    const fact = this.facts.get(id);
+    if (!fact) return false;
+    fact.crossCheck = crossCheck;
+    this._save();
+    return true;
+  }
+
+  search({ q, document, tag, page, limit = 50 } = {}) {
+    const max = Math.min(Number(limit) || 50, 500);
+    let facts = [...this.facts.values()].sort((a, b) =>
+      String(b.createdAt).localeCompare(String(a.createdAt)),
+    );
+    if (q && q.trim()) {
+      const terms = q.trim().toLowerCase().split(/\s+/);
+      facts = facts.filter((f) => {
+        const haystack =
+          `${f.detail} ${f.quote} ${(f.tags || []).join(" ")}`.toLowerCase();
+        return terms.every((t) => haystack.includes(t));
+      });
+    }
+    if (document) {
+      const needle = document.toLowerCase();
+      facts = facts.filter((f) =>
+        f.source.documentName.toLowerCase().includes(needle),
+      );
+    }
+    if (tag) {
+      const needle = String(tag).toLowerCase();
+      facts = facts.filter((f) =>
+        (f.tags || []).some((t) => String(t).toLowerCase() === needle),
+      );
+    }
+    if (page)
+      facts = facts.filter((f) => Number(f.source.page) === Number(page));
+    return facts.slice(0, max);
+  }
+
+  remove(id) {
+    const existed = this.facts.delete(id);
+    if (existed) this._save();
+    return existed;
+  }
+
+  stats() {
+    const byDocument = {};
+    let verified = 0;
+    for (const f of this.facts.values()) {
+      byDocument[f.source.documentName] =
+        (byDocument[f.source.documentName] || 0) + 1;
+      if (f.verified === true) verified += 1;
+    }
+    return { total: this.facts.size, verified, byDocument };
+  }
+}
+
+module.exports = { FactStore, JsonFactStore };
