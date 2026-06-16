@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { REFETCH_LOGO_EVENT } from "@/LogoContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const availableThemes = {
   system: "System",
@@ -43,7 +43,7 @@ export function resolveDarkMode(): boolean {
  * "system" follows the OS preference, "light" and "dark" force that mode.
  * @returns {UseThemeResult}
  */
-export function useTheme() {
+export function useTheme({ broadcastLogoChange = false } = {}) {
   const [theme, _setTheme] = useState(() => {
     const stored = localStorage.getItem("theme");
     if (stored === "default") return "dark"; // migrate legacy value
@@ -55,6 +55,7 @@ export function useTheme() {
       ? "light"
       : "dark",
   );
+  const hasMountedRef = useRef(false);
 
   // Listen for OS level theme changes
   useEffect(() => {
@@ -71,8 +72,14 @@ export function useTheme() {
     document.documentElement.setAttribute("data-theme", resolvedTheme);
     document.body.classList.toggle("light", resolvedTheme === "light");
     localStorage.setItem("theme", theme);
-    window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));
-  }, [resolvedTheme, theme]);
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
+    if (broadcastLogoChange) {
+      window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));
+    }
+  }, [broadcastLogoChange, resolvedTheme, theme]);
 
   // In development, attach keybind combinations to toggle theme
   useEffect(() => {
@@ -94,6 +101,7 @@ export function useTheme() {
    */
   function setTheme(newTheme) {
     _setTheme(newTheme);
+    window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));
   }
 
   return {

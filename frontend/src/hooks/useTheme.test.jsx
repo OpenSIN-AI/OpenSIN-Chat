@@ -14,6 +14,7 @@ describe("useTheme", () => {
     window.localStorage.getItem.mockImplementation(() => null);
     window.localStorage.setItem.mockImplementation(() => {});
     window.matchMedia = vi.fn().mockReturnValue(mqlMock);
+    vi.spyOn(window, "dispatchEvent");
   });
 
   afterEach(() => {
@@ -24,6 +25,7 @@ describe("useTheme", () => {
     const { result } = renderHook(() => useTheme());
     expect(result.current.theme).toBe("system");
     expect(result.current.isLight).toBe(false);
+    expect(window.dispatchEvent).not.toHaveBeenCalled();
   });
 
   it("migrates legacy 'default' theme to dark", () => {
@@ -39,6 +41,7 @@ describe("useTheme", () => {
     act(() => result.current.setTheme("light"));
     expect(result.current.theme).toBe("light");
     expect(result.current.isLight).toBe(true);
+    expect(window.dispatchEvent).toHaveBeenCalledTimes(1);
   });
 
   it("lists available themes", () => {

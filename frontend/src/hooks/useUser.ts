@@ -1,24 +1,22 @@
 // SPDX-License-Identifier: MIT
-import useSWR from "swr";
-import System from "@/models/system";
+import { useContext } from "react";
+import { useSWRConfig } from "swr";
+import { AuthContext, userKey } from "@/AuthContext";
 
 /**
  * SWR cache key for the currently authenticated user. Falsy when not logged
  * in so SWR skips the request entirely.
  *
- * @type {string | null}
+ * @type {string}
  */
-export const userKey = "system/refresh-user";
+export { userKey };
 
 /**
- * Fetches the currently authenticated user with caching, de-duplication
- * and stale-while-revalidate. Replaces the common
- * `useEffect(() => { System.refreshUser().then(...), [authToken])` pattern
- * scattered across the auth flow.
+ * Reads the currently authenticated user from AuthContext.
  *
- * The hook returns the raw `{ success, user, message }` shape that the
- * backend already returns so callers can branch on `success` without losing
- * information.
+ * AuthProvider owns the single `system/refresh-user` SWR request. Keeping this
+ * hook context-only prevents every `useUser()` consumer from mounting its own
+ * auth refresh request while preserving the shared SWR refresh handle.
  *
  * @returns {{
  *   user: object | null,
@@ -31,22 +29,18 @@ export const userKey = "system/refresh-user";
  * }}
  */
 export default function useUser() {
-  const { data, error, isLoading, mutate } = useSWR(
-    userKey,
-    () => System.refreshUser(),
-    {
-      revalidateOnFocus: true,
-      dedupingInterval: 2000,
-    },
-  );
+  const auth = useContext(AuthContext);
+  const { mutate } = useSWRConfig();
+  const store = auth?.store ?? { user: null, authToken: null };
+  const refresh = () => mutate(userKey);
 
   return {
-    user: data?.user ?? null,
-    success: data?.success,
-    message: data?.message,
-    isLoading,
-    error,
-    refresh: mutate,
-    mutate,
+    user: store.user ?? null,
+    success: store.authToken ? true : undefined,
+    message: undefined,
+    isLoading: false,
+    error: undefined,
+    refresh,
+    mutate: refresh,
   };
 }

@@ -5,7 +5,7 @@ import { useTheme } from "./hooks/useTheme";
 const ThemeContext = createContext<any>(undefined);
 
 export function ThemeProvider({ children }) {
-  const themeValue = useTheme();
+  const themeValue = useTheme({ broadcastLogoChange: true });
 
   return (
     <ThemeContext.Provider value={themeValue}>{children}</ThemeContext.Provider>

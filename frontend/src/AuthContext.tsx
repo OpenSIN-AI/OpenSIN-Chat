@@ -10,9 +10,9 @@ import {
 import System from "./models/system";
 import { useNavigate } from "react-router-dom";
 import { safeJsonParse } from "@/utils/request";
-import { userKey } from "@/hooks/useUser";
 
 export const AuthContext = createContext<any>(null);
+export const userKey = "system/refresh-user";
 
 export function AuthProvider(props) {
   const localUser = localStorage.getItem(AUTH_USER);
