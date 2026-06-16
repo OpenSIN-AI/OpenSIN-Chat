@@ -10,6 +10,10 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
+vi.mock("@phosphor-icons/react", () => ({
+  ArrowDown: () => <svg data-testid="arrow-down" />,
+}));
+
 // ---- module mocks ----
 vi.mock("./HistoricalMessage", () => ({
   default: ({ message, role }) => (
