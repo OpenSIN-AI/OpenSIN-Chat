@@ -45,6 +45,12 @@ function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
       });
       return;
     }
+    // Assign the newly created thread to this folder
+    await Workspace.threads.folders.assignThread(
+      workspace.slug,
+      thread.slug,
+      folder.id,
+    );
     invalidateThreads(workspace.slug);
     navigate(paths.workspace.thread(workspace.slug, thread.slug));
   };

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";
 import ThreadFolderItem from "./ThreadFolderItem";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useThreads from "@/hooks/useThreads";
 import {
   DndContext,
@@ -421,6 +421,7 @@ function UnfolderedDropZone({ children, isDragging }) {
 
 function NewThreadButton({ workspace, mutate }) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const onClick = async () => {
     setLoading(true);
@@ -433,9 +434,7 @@ function NewThreadButton({ workspace, mutate }) {
       return;
     }
     mutate();
-    window.location.replace(
-      paths.workspace.thread(workspace.slug, thread.slug),
-    );
+    navigate(paths.workspace.thread(workspace.slug, thread.slug));
   };
 
   return (

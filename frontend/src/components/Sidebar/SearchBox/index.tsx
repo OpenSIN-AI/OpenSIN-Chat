@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Plus, MagnifyingGlass } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const [searchResults, setSearchResults] = useState(DEFAULT_SEARCH_RESULTS);
-  const handleSearch = debounce(handleSearchDebounced, 500);
+  const handleSearch = useCallback(debounce(handleSearchDebounced, 500), []);
 
   async function handleSearchDebounced(e: any) {
     try {

@@ -59,7 +59,7 @@ export function useSidebarToggle() {
     return () => {
       window.removeEventListener("keydown", toggleSidebar);
     };
-  }, []);
+  }, [canToggleSidebar]);
 
   useEffect(() => {
     window.localStorage.setItem(

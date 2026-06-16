@@ -302,7 +302,7 @@ function OptionsMenu({
       onRemove(thread.id);
       // Redirect if deleting the active thread
       if (currentThreadSlug === thread.slug) {
-        window.location.href = paths.workspace.chat(workspace.slug);
+        navigate(paths.workspace.chat(workspace.slug));
       }
       return;
     }
