@@ -125,6 +125,7 @@
     "react-tooltip": "^6.0.7",
     "regenerator-runtime": "^0.14.1",
     "rollup-plugin-visualizer": "^7.0.1",
+    "slugify": "^1.6.9",
     "swr": "^2.4.1",
     "text-case": "^1.2.11",
     "truncate": "^3.0.0",
