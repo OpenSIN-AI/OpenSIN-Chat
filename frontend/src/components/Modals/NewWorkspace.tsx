@@ -4,11 +4,13 @@ import { X } from "@phosphor-icons/react";
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import ModalWrapper from "@/components/ModalWrapper";
 
 const noop = () => false;
 export default function NewWorkspaceModal({ hideModal = noop }: any) {
   const formEl = useRef(null);
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const { t } = useTranslation();
   const handleCreate = async (e) => {
@@ -19,7 +21,7 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
     for (const [key, value] of form.entries()) data[key] = value;
     const { workspace, message } = await Workspace.new(data);
     if (!!workspace) {
-      window.location.href = paths.workspace.chat(workspace.slug);
+      navigate(paths.workspace.chat(workspace.slug));
     }
     setError(message);
   };

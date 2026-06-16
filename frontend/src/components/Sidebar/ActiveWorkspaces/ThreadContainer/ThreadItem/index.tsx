@@ -231,7 +231,7 @@ function OptionsMenu({
 
     setListeners();
     return cleanupListeners;
-  }, []);
+  }, [close, containerRef]);
 
   const handleNewChat = async () => {
     close();

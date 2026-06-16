@@ -34,6 +34,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
     } catch (error) {
       console.error(error);
       setSearchResults(DEFAULT_SEARCH_RESULTS);
+      showToast(t("searchBox.searchFailed"), "error", { clear: true });
     } finally {
       setLoading(false);
     }

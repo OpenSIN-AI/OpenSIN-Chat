@@ -109,7 +109,7 @@ export default function ThreadContainer({
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [mutate]);
+  }, [mutate, ctrlPressed, threads]);
 
   const toggleForDeletion = (id) => {
     mutate(
@@ -134,7 +134,7 @@ export default function ThreadContainer({
 
     // Only redirect if current thread is being deleted
     if (slugs.includes(threadSlug)) {
-      window.location.href = paths.workspace.chat(workspace.slug);
+      navigate(paths.workspace.chat(workspace.slug));
     }
   };
 
