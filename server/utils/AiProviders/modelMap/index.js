@@ -11,16 +11,9 @@ class ContextWindowFinder {
   static trackedProviders = {
     anthropic: "anthropic",
     openai: "openai",
-    cohere: "cohere_chat",
     gemini: "vertex_ai-language-models",
     groq: "groq",
     xai: "xai",
-    deepseek: "deepseek",
-    moonshot: "moonshot",
-    zai: "vercel_ai_gateway",
-    sambanova: "sambanova",
-    minimax: "minimax",
-    cerebras: "cerebras",
   };
   static expiryMs = 1000 * 60 * 60 * 24 * 3;
   static remoteUrl =

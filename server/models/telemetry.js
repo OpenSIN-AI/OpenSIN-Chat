@@ -49,8 +49,10 @@ const Telemetry = {
 
   client: function () {
     if (process.env.DISABLE_TELEMETRY === "true" || this.isDev()) return null;
-    const { PostHog } = require("posthog-node");
-    return new PostHog(this.pubkey);
+    // PostHog dependency removed in Wave-1 prune. The Telemetry model stays
+    // (other callers still use sendTelemetry as a logging hook), but the
+    // outbound analytics client is intentionally not constructed.
+    return null;
   },
 
   runtime: function () {

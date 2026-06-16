@@ -174,18 +174,11 @@ class AgentHandler {
         if (!process.env.GENERIC_OPEN_AI_BASE_PATH)
           throw new Error("API base path must be provided to use agents.");
         break;
-      case "perplexity":
-        if (!process.env.PERPLEXITY_API_KEY)
-          throw new Error("Perplexity API key must be provided to use agents.");
-        break;
       case "textgenwebui":
         if (!process.env.TEXT_GEN_WEB_UI_BASE_PATH)
           throw new Error(
             "TextWebGenUI API base path must be provided to use agents.",
           );
-        break;
-      case "bedrock":
-        // No validations since there are many possible authentication methods
         break;
       case "fireworksai":
         if (!process.env.FIREWORKS_AI_LLM_API_KEY)
@@ -203,11 +196,11 @@ class AgentHandler {
             "LiteLLM API base path and key must be provided to use agents.",
           );
         break;
-      case "apipie":
-        if (!process.env.APIPIE_LLM_API_KEY)
-          throw new Error("ApiPie API Key must be provided to use agents.");
-        break;
       case "xai":
+        if (!process.env.XAI_LLM_API_KEY)
+          throw new Error("xAI API Key must be provided to use agents.");
+        break;
+      case "zai":
         if (!process.env.XAI_LLM_API_KEY)
           throw new Error("xAI API Key must be provided to use agents.");
         break;
@@ -215,53 +208,15 @@ class AgentHandler {
         if (!process.env.ZAI_API_KEY)
           throw new Error("Z.AI API Key must be provided to use agents.");
         break;
-      case "novita":
-        if (!process.env.NOVITA_LLM_API_KEY)
-          throw new Error("Novita API Key must be provided to use agents.");
-        break;
       case "nvidia-nim":
         if (!process.env.NVIDIA_NIM_LLM_BASE_PATH)
           throw new Error(
             "NVIDIA NIM base path must be provided to use agents.",
           );
         break;
-      case "ppio":
-        if (!process.env.PPIO_API_KEY)
-          throw new Error("PPIO API Key must be provided to use agents.");
-        break;
       case "gemini":
         if (!process.env.GEMINI_API_KEY)
           throw new Error("Gemini API key must be provided to use agents.");
-        break;
-      case "dpais":
-        if (!process.env.DPAIS_LLM_BASE_PATH)
-          throw new Error(
-            "Dell Pro AI Studio base path must be provided to use agents.",
-          );
-        if (!process.env.DPAIS_LLM_MODEL_PREF)
-          throw new Error(
-            "Dell Pro AI Studio model must be set to use agents.",
-          );
-        break;
-      case "moonshotai":
-        if (!process.env.MOONSHOT_AI_MODEL_PREF)
-          throw new Error("Moonshot AI model must be set to use agents.");
-        break;
-      case "cometapi":
-        if (!process.env.COMETAPI_LLM_API_KEY)
-          throw new Error("CometAPI API Key must be provided to use agents.");
-        break;
-      case "foundry":
-        if (!process.env.FOUNDRY_BASE_PATH)
-          throw new Error("Foundry base path must be provided to use agents.");
-        break;
-      case "giteeai":
-        if (!process.env.GITEE_AI_API_KEY)
-          throw new Error("GiteeAI API Key must be provided to use agents.");
-        break;
-      case "cohere":
-        if (!process.env.COHERE_API_KEY)
-          throw new Error("Cohere API key must be provided to use agents.");
         break;
       case "docker-model-runner":
         if (!process.env.DOCKER_MODEL_RUNNER_BASE_PATH)
@@ -269,27 +224,9 @@ class AgentHandler {
             "Docker Model Runner base path must be provided to use agents.",
           );
         break;
-      case "privatemode":
-        if (!process.env.PRIVATEMODE_LLM_BASE_PATH)
-          throw new Error(
-            "Privatemode base path must be provided to use agents.",
-          );
-        break;
-      case "sambanova":
-        if (!process.env.SAMBANOVA_LLM_API_KEY)
-          throw new Error("SambaNova API key must be provided to use agents.");
-        break;
-      case "lemonade":
-        if (!process.env.LEMONADE_LLM_BASE_PATH)
-          throw new Error("Lemonade base path must be provided to use agents.");
-        break;
       case "minimax":
         if (!process.env.MINIMAX_API_KEY)
           throw new Error("Minimax API key must be provided to use agents.");
-        break;
-      case "cerebras":
-        if (!process.env.CEREBRAS_API_KEY)
-          throw new Error("Cerebras API key must be provided to use agents.");
         break;
       default:
         throw new Error(
@@ -335,56 +272,26 @@ class AgentHandler {
         return process.env.MISTRAL_MODEL_PREF ?? "mistral-medium";
       case "generic-openai":
         return process.env.GENERIC_OPEN_AI_MODEL_PREF ?? null;
-      case "perplexity":
-        return process.env.PERPLEXITY_MODEL_PREF ?? "sonar-small-online";
       case "textgenwebui":
         return "text-generation-webui";
-      case "bedrock":
-        return process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE ?? null;
       case "fireworksai":
         return process.env.FIREWORKS_AI_LLM_MODEL_PREF ?? null;
       case "deepseek":
         return process.env.DEEPSEEK_MODEL_PREF ?? "deepseek-chat";
       case "litellm":
         return process.env.LITE_LLM_MODEL_PREF ?? null;
-      case "moonshotai":
-        return process.env.MOONSHOT_AI_MODEL_PREF ?? "moonshot-v1-32k";
-      case "apipie":
-        return process.env.APIPIE_LLM_MODEL_PREF ?? null;
       case "xai":
         return process.env.XAI_LLM_MODEL_PREF ?? "grok-beta";
       case "zai":
         return process.env.ZAI_MODEL_PREF ?? "glm-4.5";
-      case "novita":
-        return process.env.NOVITA_LLM_MODEL_PREF ?? "deepseek/deepseek-r1";
       case "nvidia-nim":
         return process.env.NVIDIA_NIM_LLM_MODEL_PREF ?? null;
-      case "ppio":
-        return process.env.PPIO_MODEL_PREF ?? "qwen/qwen2.5-32b-instruct";
       case "gemini":
         return process.env.GEMINI_LLM_MODEL_PREF ?? "gemini-2.0-flash-lite";
-      case "dpais":
-        return process.env.DPAIS_LLM_MODEL_PREF;
-      case "cometapi":
-        return process.env.COMETAPI_LLM_MODEL_PREF ?? "gpt-5-mini";
-      case "foundry":
-        return process.env.FOUNDRY_MODEL_PREF ?? null;
-      case "giteeai":
-        return process.env.GITEE_AI_MODEL_PREF ?? null;
-      case "cohere":
-        return process.env.COHERE_MODEL_PREF ?? "command-r-08-2024";
       case "docker-model-runner":
         return process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF ?? null;
-      case "privatemode":
-        return process.env.PRIVATEMODE_LLM_MODEL_PREF ?? null;
-      case "sambanova":
-        return process.env.SAMBANOVA_LLM_MODEL_PREF ?? null;
-      case "lemonade":
-        return process.env.LEMONADE_LLM_MODEL_PREF ?? null;
       case "minimax":
         return process.env.MINIMAX_MODEL_PREF ?? "MiniMax-M2.7";
-      case "cerebras":
-        return process.env.CEREBRAS_MODEL_PREF ?? "gpt-oss-120b";
       default:
         return null;
     }

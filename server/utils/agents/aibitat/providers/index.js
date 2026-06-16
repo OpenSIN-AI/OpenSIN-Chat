@@ -11,31 +11,16 @@ const LocalAIProvider = require("./localai.js");
 const OpenRouterProvider = require("./openrouter.js");
 const MistralProvider = require("./mistral.js");
 const GenericOpenAiProvider = require("./genericOpenAi.js");
-const PerplexityProvider = require("./perplexity.js");
 const TextWebGenUiProvider = require("./textgenwebui.js");
-const AWSBedrockProvider = require("./bedrock.js");
 const FireworksAIProvider = require("./fireworksai.js");
 const DeepSeekProvider = require("./deepseek.js");
 const LiteLLMProvider = require("./litellm.js");
-const ApiPieProvider = require("./apipie.js");
 const XAIProvider = require("./xai.js");
 const ZAIProvider = require("./zai.js");
-const NovitaProvider = require("./novita.js");
 const NvidiaNimProvider = require("./nvidiaNim.js");
-const PPIOProvider = require("./ppio.js");
 const GeminiProvider = require("./gemini.js");
-const DellProAiStudioProvider = require("./dellProAiStudio.js");
-const MoonshotAiProvider = require("./moonshotAi.js");
-const CometApiProvider = require("./cometapi.js");
-const FoundryProvider = require("./foundry.js");
-const GiteeAIProvider = require("./giteeai.js");
-const CohereProvider = require("./cohere.js");
 const DockerModelRunnerProvider = require("./dockerModelRunner.js");
-const PrivatemodeProvider = require("./privatemode.js");
-const SambaNovaProvider = require("./sambanova.js");
-const LemonadeProvider = require("./lemonade.js");
 const MinimaxProvider = require("./minimax.js");
-const CerebrasProvider = require("./cerebras.js");
 const OpencodeZenProvider = require("./opencodeZen.js");
 
 module.exports = {
@@ -52,29 +37,14 @@ module.exports = {
   MistralProvider,
   GenericOpenAiProvider,
   DeepSeekProvider,
-  PerplexityProvider,
   TextWebGenUiProvider,
-  AWSBedrockProvider,
   FireworksAIProvider,
   LiteLLMProvider,
-  ApiPieProvider,
   XAIProvider,
   ZAIProvider,
-  NovitaProvider,
-  CometApiProvider,
   NvidiaNimProvider,
-  PPIOProvider,
   GeminiProvider,
-  DellProAiStudioProvider,
-  MoonshotAiProvider,
-  FoundryProvider,
-  GiteeAIProvider,
-  CohereProvider,
   DockerModelRunnerProvider,
-  PrivatemodeProvider,
-  SambaNovaProvider,
-  LemonadeProvider,
   MinimaxProvider,
-  CerebrasProvider,
   OpencodeZenProvider,
 };

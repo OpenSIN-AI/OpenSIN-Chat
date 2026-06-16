@@ -14,7 +14,6 @@
 const { v4 } = require("uuid");
 const { ChatOpenAI } = require("@langchain/openai");
 const { ChatAnthropic } = require("@langchain/anthropic");
-const { ChatCohere } = require("@langchain/cohere");
 const { ChatOllama } = require("@langchain/ollama");
 const { toValidNumber, safeJsonParse } = require("../../../http");
 const { getLLMProviderClass } = require("../../../helpers");
@@ -28,9 +27,6 @@ const { DellProAiStudioLLM } = require("../../../AiProviders/dellProAiStudio");
 const {
   SystemPromptVariables,
 } = require("../../../../models/systemPromptVariables");
-const {
-  createBedrockChatClient,
-} = require("../../../AiProviders/bedrock/utils");
 const { OllamaAILLM } = require("../../../AiProviders/ollama");
 
 const DEFAULT_WORKSPACE_PROMPT =
@@ -228,8 +224,6 @@ class Provider {
           ),
           ...config,
         });
-      case "bedrock":
-        return createBedrockChatClient(config);
       case "azure":
         return new ChatOpenAI({
           configuration: {
@@ -323,11 +317,6 @@ class Provider {
             baseURL: "https://ai.gitee.com/v1",
           },
           apiKey: process.env.GITEE_AI_API_KEY ?? null,
-          ...config,
-        });
-      case "cohere":
-        return new ChatCohere({
-          apiKey: process.env.COHERE_API_KEY ?? null,
           ...config,
         });
       case "privatemode":

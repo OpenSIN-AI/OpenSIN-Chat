@@ -5,9 +5,6 @@ function getTTSProvider() {
     case "openai":
       const { OpenAiTTS } = require("./openAi");
       return new OpenAiTTS();
-    case "elevenlabs":
-      const { ElevenLabsTTS } = require("./elevenLabs");
-      return new ElevenLabsTTS();
     case "generic-openai":
       const { GenericOpenAiTTS } = require("./openAiGeneric");
       return new GenericOpenAiTTS();

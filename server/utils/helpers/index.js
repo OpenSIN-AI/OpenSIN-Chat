@@ -167,12 +167,6 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "fireworksai":
       const { FireworksAiLLM } = require("../AiProviders/fireworksAi");
       return new FireworksAiLLM(embedder, model);
-    case "perplexity":
-      const { PerplexityLLM } = require("../AiProviders/perplexity");
-      return new PerplexityLLM(embedder, model);
-    case "openrouter":
-      const { OpenRouterLLM } = require("../AiProviders/openRouter");
-      return new OpenRouterLLM(embedder, model);
     case "mistral":
       const { MistralLLM } = require("../AiProviders/mistral");
       return new MistralLLM(embedder, model);
@@ -188,27 +182,12 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "textgenwebui":
       const { TextGenWebUILLM } = require("../AiProviders/textGenWebUI");
       return new TextGenWebUILLM(embedder, model);
-    case "cohere":
-      const { CohereLLM } = require("../AiProviders/cohere");
-      return new CohereLLM(embedder, model);
     case "litellm":
       const { LiteLLM } = require("../AiProviders/liteLLM");
       return new LiteLLM(embedder, model);
     case "generic-openai":
       const { GenericOpenAiLLM } = require("../AiProviders/genericOpenAi");
       return new GenericOpenAiLLM(embedder, model);
-    case "bedrock":
-      const { AWSBedrockLLM } = require("../AiProviders/bedrock");
-      return new AWSBedrockLLM(embedder, model);
-    case "deepseek":
-      const { DeepSeekLLM } = require("../AiProviders/deepseek");
-      return new DeepSeekLLM(embedder, model);
-    case "apipie":
-      const { ApiPieLLM } = require("../AiProviders/apipie");
-      return new ApiPieLLM(embedder, model);
-    case "novita":
-      const { NovitaLLM } = require("../AiProviders/novita");
-      return new NovitaLLM(embedder, model);
     case "xai":
       const { XAiLLM } = require("../AiProviders/xai");
       return new XAiLLM(embedder, model);
@@ -218,47 +197,11 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "opencode-zen":
       const { OpencodeZenLLM } = require("../AiProviders/opencodeZen");
       return new OpencodeZenLLM(embedder, model);
-    case "ppio":
-      const { PPIOLLM } = require("../AiProviders/ppio");
-      return new PPIOLLM(embedder, model);
-    case "moonshotai":
-      const { MoonshotAiLLM } = require("../AiProviders/moonshotAi");
-      return new MoonshotAiLLM(embedder, model);
-    case "dpais":
-      const { DellProAiStudioLLM } = require("../AiProviders/dellProAiStudio");
-      return new DellProAiStudioLLM(embedder, model);
-    case "cometapi":
-      const { CometApiLLM } = require("../AiProviders/cometapi");
-      return new CometApiLLM(embedder, model);
-    case "foundry":
-      const { FoundryLLM } = require("../AiProviders/foundry");
-      return new FoundryLLM(embedder, model);
-    case "zai":
-      const { ZAiLLM } = require("../AiProviders/zai");
-      return new ZAiLLM(embedder, model);
-    case "giteeai":
-      const { GiteeAILLM } = require("../AiProviders/giteeai");
-      return new GiteeAILLM(embedder, model);
     case "docker-model-runner":
       const {
         DockerModelRunnerLLM,
       } = require("../AiProviders/dockerModelRunner");
       return new DockerModelRunnerLLM(embedder, model);
-    case "privatemode":
-      const { PrivatemodeLLM } = require("../AiProviders/privatemode");
-      return new PrivatemodeLLM(embedder, model);
-    case "sambanova":
-      const { SambaNovaLLM } = require("../AiProviders/sambanova");
-      return new SambaNovaLLM(embedder, model);
-    case "lemonade":
-      const { LemonadeLLM } = require("../AiProviders/lemonade");
-      return new LemonadeLLM(embedder, model);
-    case "minimax":
-      const { MinimaxLLM } = require("../AiProviders/minimax");
-      return new MinimaxLLM(embedder, model);
-    case "cerebras":
-      const { CerebrasLLM } = require("../AiProviders/cerebras");
-      return new CerebrasLLM(embedder, model);
     case "openafd-router":
       // Model router is handled separately in stream.js via OpenSINChatModelRouter.
       // This case should not be hit directly - if it is, throw a descriptive error.
@@ -299,9 +242,6 @@ function getEmbeddingEngineSelection() {
     case "lmstudio":
       const { LMStudioEmbedder } = require("../EmbeddingEngines/lmstudio");
       return new LMStudioEmbedder();
-    case "cohere":
-      const { CohereEmbedder } = require("../EmbeddingEngines/cohere");
-      return new CohereEmbedder();
     case "voyageai":
       const { VoyageAiEmbedder } = require("../EmbeddingEngines/voyageAi");
       return new VoyageAiEmbedder();
@@ -319,12 +259,6 @@ function getEmbeddingEngineSelection() {
     case "gemini":
       const { GeminiEmbedder } = require("../EmbeddingEngines/gemini");
       return new GeminiEmbedder();
-    case "openrouter":
-      const { OpenRouterEmbedder } = require("../EmbeddingEngines/openRouter");
-      return new OpenRouterEmbedder();
-    case "lemonade":
-      const { LemonadeEmbedder } = require("../EmbeddingEngines/lemonade");
-      return new LemonadeEmbedder();
     default:
       return new NativeEmbedder();
   }
@@ -364,12 +298,6 @@ function getLLMProviderClass({ provider = null } = {}) {
     case "fireworksai":
       const { FireworksAiLLM } = require("../AiProviders/fireworksAi");
       return FireworksAiLLM;
-    case "perplexity":
-      const { PerplexityLLM } = require("../AiProviders/perplexity");
-      return PerplexityLLM;
-    case "openrouter":
-      const { OpenRouterLLM } = require("../AiProviders/openRouter");
-      return OpenRouterLLM;
     case "mistral":
       const { MistralLLM } = require("../AiProviders/mistral");
       return MistralLLM;
@@ -386,26 +314,11 @@ function getLLMProviderClass({ provider = null } = {}) {
       const { TextGenWebUILLM } = require("../AiProviders/textGenWebUI");
       return TextGenWebUILLM;
     case "cohere":
-      const { CohereLLM } = require("../AiProviders/cohere");
-      return CohereLLM;
-    case "litellm":
       const { LiteLLM } = require("../AiProviders/liteLLM");
       return LiteLLM;
     case "generic-openai":
       const { GenericOpenAiLLM } = require("../AiProviders/genericOpenAi");
       return GenericOpenAiLLM;
-    case "bedrock":
-      const { AWSBedrockLLM } = require("../AiProviders/bedrock");
-      return AWSBedrockLLM;
-    case "deepseek":
-      const { DeepSeekLLM } = require("../AiProviders/deepseek");
-      return DeepSeekLLM;
-    case "apipie":
-      const { ApiPieLLM } = require("../AiProviders/apipie");
-      return ApiPieLLM;
-    case "novita":
-      const { NovitaLLM } = require("../AiProviders/novita");
-      return NovitaLLM;
     case "xai":
       const { XAiLLM } = require("../AiProviders/xai");
       return XAiLLM;
@@ -415,47 +328,11 @@ function getLLMProviderClass({ provider = null } = {}) {
     case "opencode-zen":
       const { OpencodeZenLLM } = require("../AiProviders/opencodeZen");
       return OpencodeZenLLM;
-    case "ppio":
-      const { PPIOLLM } = require("../AiProviders/ppio");
-      return PPIOLLM;
-    case "dpais":
-      const { DellProAiStudioLLM } = require("../AiProviders/dellProAiStudio");
-      return DellProAiStudioLLM;
-    case "moonshotai":
-      const { MoonshotAiLLM } = require("../AiProviders/moonshotAi");
-      return MoonshotAiLLM;
-    case "cometapi":
-      const { CometApiLLM } = require("../AiProviders/cometapi");
-      return CometApiLLM;
-    case "foundry":
-      const { FoundryLLM } = require("../AiProviders/foundry");
-      return FoundryLLM;
-    case "zai":
-      const { ZAiLLM } = require("../AiProviders/zai");
-      return ZAiLLM;
-    case "giteeai":
-      const { GiteeAILLM } = require("../AiProviders/giteeai");
-      return GiteeAILLM;
     case "docker-model-runner":
       const {
         DockerModelRunnerLLM,
       } = require("../AiProviders/dockerModelRunner");
       return DockerModelRunnerLLM;
-    case "privatemode":
-      const { PrivateModeLLM } = require("../AiProviders/privatemode");
-      return PrivateModeLLM;
-    case "sambanova":
-      const { SambaNovaLLM } = require("../AiProviders/sambanova");
-      return SambaNovaLLM;
-    case "lemonade":
-      const { LemonadeLLM } = require("../AiProviders/lemonade");
-      return LemonadeLLM;
-    case "minimax":
-      const { MinimaxLLM } = require("../AiProviders/minimax");
-      return MinimaxLLM;
-    case "cerebras":
-      const { CerebrasLLM } = require("../AiProviders/cerebras");
-      return CerebrasLLM;
     case "openafd-router":
       const { OpenSINChatModelRouter } = require("../AiProviders/modelRouter");
       return OpenSINChatModelRouter;
@@ -489,10 +366,6 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
       return process.env.TOGETHER_AI_MODEL_PREF;
     case "fireworksai":
       return process.env.FIREWORKS_AI_LLM_MODEL_PREF;
-    case "perplexity":
-      return process.env.PERPLEXITY_MODEL_PREF;
-    case "openrouter":
-      return process.env.OPENROUTER_MODEL_PREF;
     case "mistral":
       return process.env.MISTRAL_MODEL_PREF;
     case "huggingface":
@@ -511,44 +384,14 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
       return process.env.GENERIC_OPEN_AI_MODEL_PREF;
     case "bedrock":
       return process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE;
-    case "deepseek":
-      return process.env.DEEPSEEK_MODEL_PREF;
-    case "apipie":
-      return process.env.APIPIE_LLM_MODEL_PREF;
-    case "novita":
-      return process.env.NOVITA_LLM_MODEL_PREF;
     case "xai":
       return process.env.XAI_LLM_MODEL_PREF;
     case "nvidia-nim":
       return process.env.NVIDIA_NIM_LLM_MODEL_PREF;
     case "opencode-zen":
       return process.env.OPENCODE_ZEN_MODEL_PREF;
-    case "ppio":
-      return process.env.PPIO_MODEL_PREF;
-    case "dpais":
-      return process.env.DPAIS_LLM_MODEL_PREF;
-    case "moonshotai":
-      return process.env.MOONSHOT_AI_MODEL_PREF;
-    case "cometapi":
-      return process.env.COMETAPI_LLM_MODEL_PREF;
-    case "foundry":
-      return process.env.FOUNDRY_MODEL_PREF;
-    case "zai":
-      return process.env.ZAI_MODEL_PREF;
-    case "giteeai":
-      return process.env.GITEE_AI_MODEL_PREF;
     case "docker-model-runner":
       return process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF;
-    case "privatemode":
-      return process.env.PRIVATEMODE_LLM_MODEL_PREF;
-    case "sambanova":
-      return process.env.SAMBANOVA_LLM_MODEL_PREF;
-    case "lemonade":
-      return process.env.LEMONADE_LLM_MODEL_PREF;
-    case "minimax":
-      return process.env.MINIMAX_MODEL_PREF;
-    case "cerebras":
-      return process.env.CEREBRAS_MODEL_PREF;
     default:
       return null;
   }
