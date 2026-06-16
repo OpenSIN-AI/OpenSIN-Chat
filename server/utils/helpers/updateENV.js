@@ -27,36 +27,6 @@ const KEY_MAPPING = {
     envKey: "OPEN_MODEL_PREF",
     checks: [isNotEmpty],
   },
-  // Azure OpenAI Settings
-  AzureOpenAiEndpoint: {
-    envKey: "AZURE_OPENAI_ENDPOINT",
-    checks: [isNotEmpty],
-  },
-  AzureOpenAiTokenLimit: {
-    envKey: "AZURE_OPENAI_TOKEN_LIMIT",
-    checks: [validOpenAiTokenLimit],
-  },
-  AzureOpenAiKey: {
-    envKey: "AZURE_OPENAI_KEY",
-    checks: [isNotEmpty],
-  },
-  AzureOpenAiModelPref: {
-    envKey: "AZURE_OPENAI_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  AzureOpenAiEmbeddingModelPref: {
-    envKey: "EMBEDDING_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  AzureOpenAiModelType: {
-    envKey: "AZURE_OPENAI_MODEL_TYPE",
-    checks: [
-      (input) =>
-        ["default", "reasoning"].includes(input)
-          ? null
-          : "Invalid model type. Must be one of: default, reasoning.",
-    ],
-  },
 
   // Anthropic Settings
   AnthropicApiKey: {
@@ -168,24 +138,6 @@ const KEY_MAPPING = {
   },
   HuggingFaceLLMTokenLimit: {
     envKey: "HUGGING_FACE_LLM_TOKEN_LIMIT",
-    checks: [nonZero],
-  },
-
-  // KoboldCPP Settings
-  KoboldCPPBasePath: {
-    envKey: "KOBOLD_CPP_BASE_PATH",
-    checks: [isNotEmpty, isValidURL],
-  },
-  KoboldCPPModelPref: {
-    envKey: "KOBOLD_CPP_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  KoboldCPPTokenLimit: {
-    envKey: "KOBOLD_CPP_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
-  },
-  KoboldCPPMaxTokens: {
-    envKey: "KOBOLD_CPP_MAX_TOKENS",
     checks: [nonZero],
   },
 
@@ -453,16 +405,6 @@ const KEY_MAPPING = {
     envKey: "PGVECTOR_TABLE_NAME",
     checks: [isNotEmpty],
     preUpdate: [validatePGVectorTableName],
-  },
-
-  // Together Ai Options
-  TogetherAiApiKey: {
-    envKey: "TOGETHER_AI_API_KEY",
-    checks: [isNotEmpty],
-  },
-  TogetherAiModelPref: {
-    envKey: "TOGETHER_AI_MODEL_PREF",
-    checks: [isNotEmpty],
   },
 
   // Fireworks AI Options
@@ -1093,13 +1035,11 @@ function validLocalWhisper(input = "") {
 function supportedLLM(input = "") {
   const validSelection = [
     "openai",
-    "azure",
     "anthropic",
     "gemini",
     "lmstudio",
     "localai",
     "ollama",
-    "togetherai",
     "fireworksai",
     "mistral",
     "huggingface",
@@ -1107,7 +1047,6 @@ function supportedLLM(input = "") {
     "openrouter",
     "novita",
     "groq",
-    "koboldcpp",
     "textgenwebui",
     "cohere",
     "litellm",
@@ -1158,13 +1097,11 @@ function validGeminiSafetySetting(input = "") {
 function supportedEmbeddingModel(input = "") {
   const supported = [
     "openai",
-    "azure",
     "gemini",
     "localai",
     "native",
     "ollama",
     "lmstudio",
-    "cohere",
     "voyageai",
     "litellm",
     "generic-openai",

@@ -9,13 +9,11 @@ import useGetProviderModels, {
 
 vi.mock("@/hooks/useProviderModels", () => ({
   default: vi.fn(),
-  GROUPED_PROVIDERS: ["togetherai", "fireworksai", "openai"],
+  GROUPED_PROVIDERS: ["fireworksai", "openai"],
   PROVIDER_DEFAULT_MODELS: {
     openai: ["gpt-4", "gpt-3.5-turbo"],
     anthropic: ["claude-3"],
     gemini: ["gemini-pro"],
-    azure: [],
-    bedrock: [],
   },
   PROVIDER_MODELS_KEY: "system/custom-models",
 }));
@@ -107,6 +105,6 @@ describe("useGetProviderModels", () => {
   it("re-exports GROUPED_PROVIDERS as DISABLED_PROVIDERS", () => {
     expect(DISABLED_PROVIDERS).toBeDefined();
     expect(Array.isArray(DISABLED_PROVIDERS)).toBe(true);
-    expect(DISABLED_PROVIDERS).toContain("togetherai");
+    expect(DISABLED_PROVIDERS).toContain("fireworksai");
   });
 });

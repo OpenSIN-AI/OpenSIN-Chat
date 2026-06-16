@@ -8,13 +8,6 @@
  */
 const LOCAL_PROVIDERS = [
   {
-    provider: "koboldcpp",
-    name: "KoboldCPP",
-    envKey: "KOBOLD_CPP_API_KEY",
-    basePathKey: "KOBOLD_CPP_BASE_PATH",
-    placeholder: "kobold-cpp",
-  },
-  {
     provider: "nvidia-nim",
     name: "NVIDIA NIM",
     envKey: "NVIDIA_NIM_LLM_API_KEY",

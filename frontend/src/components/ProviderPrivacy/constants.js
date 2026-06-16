@@ -2,11 +2,9 @@
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
-import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
 import AnthropicLogo from "@/media/llmprovider/anthropic.png";
 import GeminiLogo from "@/media/llmprovider/gemini.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
-import TogetherAILogo from "@/media/llmprovider/togetherai.png";
 import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
@@ -18,7 +16,6 @@ import PerplexityLogo from "@/media/llmprovider/perplexity.png";
 import OpenRouterLogo from "@/media/llmprovider/openrouter.jpeg";
 import NovitaLogo from "@/media/llmprovider/novita.png";
 import GroqLogo from "@/media/llmprovider/groq.png";
-import KoboldCPPLogo from "@/media/llmprovider/koboldcpp.png";
 import TextGenWebUILogo from "@/media/llmprovider/text-generation-webui.png";
 import LiteLLMLogo from "@/media/llmprovider/litellm.png";
 import AWSBedrockLogo from "@/media/llmprovider/bedrock.png";
@@ -55,11 +52,6 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     name: "OpenAI",
     policyUrl: "https://openai.com/policies/privacy-policy/",
     logo: OpenAiLogo,
-  },
-  azure: {
-    name: "Azure OpenAI",
-    policyUrl: "https://privacy.microsoft.com/privacystatement",
-    logo: AzureOpenAiLogo,
   },
   anthropic: {
     name: "Anthropic",
@@ -107,11 +99,6 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     ],
     logo: OllamaLogo,
   },
-  togetherai: {
-    name: "TogetherAI",
-    policyUrl: "https://www.together.ai/privacy",
-    logo: TogetherAILogo,
-  },
   fireworksai: {
     name: "FireworksAI",
     policyUrl: "https://fireworks.ai/privacy-policy",
@@ -146,13 +133,6 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     name: "Groq",
     policyUrl: "https://groq.com/privacy-policy/",
     logo: GroqLogo,
-  },
-  koboldcpp: {
-    name: "KoboldCPP",
-    description: [
-      "Your model and chats are only accessible on the server running KoboldCPP",
-    ],
-    logo: KoboldCPPLogo,
   },
   textgenwebui: {
     name: "Oobabooga Web UI",
@@ -351,11 +331,6 @@ const EMBEDDING_ENGINE_PROVIDER_PRIVACY_MAP = {
     name: "OpenAI",
     policyUrl: "https://openai.com/policies/privacy-policy/",
     logo: OpenAiLogo,
-  },
-  azure: {
-    name: "Azure OpenAI",
-    policyUrl: "https://privacy.microsoft.com/privacystatement",
-    logo: AzureOpenAiLogo,
   },
   localai: {
     name: "LocalAI",

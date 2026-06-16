@@ -1372,12 +1372,6 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
         return new Providers.OllamaProvider({ model: config.model });
       case "groq":
         return new Providers.GroqProvider({ model: config.model });
-      case "togetherai":
-        return new Providers.TogetherAIProvider({ model: config.model });
-      case "azure":
-        return new Providers.AzureOpenAiProvider({ model: config.model });
-      case "koboldcpp":
-        return new Providers.KoboldCPPProvider({});
       case "localai":
         return new Providers.LocalAIProvider({ model: config.model });
       case "openrouter":

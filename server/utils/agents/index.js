@@ -140,22 +140,6 @@ class AgentHandler {
         if (!process.env.GROQ_API_KEY)
           throw new Error("Groq API key must be provided to use agents.");
         break;
-      case "togetherai":
-        if (!process.env.TOGETHER_AI_API_KEY)
-          throw new Error("TogetherAI API key must be provided to use agents.");
-        break;
-      case "azure":
-        if (!process.env.AZURE_OPENAI_ENDPOINT || !process.env.AZURE_OPENAI_KEY)
-          throw new Error(
-            "Azure OpenAI API endpoint and key must be provided to use agents.",
-          );
-        break;
-      case "koboldcpp":
-        if (!process.env.KOBOLD_CPP_BASE_PATH)
-          throw new Error(
-            "KoboldCPP must have a valid base path to use for the api.",
-          );
-        break;
       case "localai":
         if (!process.env.LOCAL_AI_BASE_PATH)
           throw new Error(
@@ -253,19 +237,7 @@ class AgentHandler {
         return process.env.OLLAMA_MODEL_PREF ?? "llama3:latest";
       case "groq":
         return process.env.GROQ_MODEL_PREF ?? "llama3-70b-8192";
-      case "togetherai":
-        return (
-          process.env.TOGETHER_AI_MODEL_PREF ??
-          "mistralai/Mixtral-8x7B-Instruct-v0.1"
-        );
-      case "azure":
-        return (
-          process.env.AZURE_OPENAI_MODEL_PREF || process.env.OPEN_MODEL_PREF
-        );
-      case "koboldcpp":
-        return process.env.KOBOLD_CPP_MODEL_PREF ?? null;
       case "localai":
-        return process.env.LOCAL_AI_MODEL_PREF ?? null;
       case "openrouter":
         return process.env.OPENROUTER_MODEL_PREF ?? "openrouter/auto";
       case "mistral":

@@ -21,7 +21,6 @@ const { parseLMStudioBasePath } = require("../../../AiProviders/lmStudio");
 const {
   parseDockerModelRunnerEndpoint,
 } = require("../../../AiProviders/dockerModelRunner");
-const { AzureOpenAiLLM } = require("../../../AiProviders/azureOpenAi");
 const {
   SystemPromptVariables,
 } = require("../../../../models/systemPromptVariables");
@@ -220,16 +219,6 @@ class Provider {
             process.env.GENERIC_OPEN_AI_MAX_TOKENS,
             1024,
           ),
-          ...config,
-        });
-      case "azure":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: AzureOpenAiLLM.formatBaseUrl(
-              process.env.AZURE_OPENAI_ENDPOINT,
-            ),
-          },
-          apiKey: process.env.AZURE_OPENAI_KEY,
           ...config,
         });
       case "fireworksai":

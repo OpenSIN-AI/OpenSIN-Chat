@@ -11,12 +11,10 @@ const SUPPORT_CUSTOM_MODELS = [
   "anthropic",
   "localai",
   "ollama",
-  "togetherai",
   "fireworksai",
   "nvidia-nim",
   "mistral",
   "lmstudio",
-  "koboldcpp",
   "litellm",
   "groq",
   "xai",
@@ -48,16 +46,12 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
       return await localAIModels(basePath, apiKey);
     case "ollama":
       return await ollamaAIModels(basePath, apiKey);
-    case "togetherai":
-      return await getTogetherAiModels(apiKey);
     case "fireworksai":
       return await getFireworksAiModels(apiKey);
     case "mistral":
       return await getMistralModels(apiKey);
     case "lmstudio":
       return await getLMStudioModels(basePath, apiKey);
-    case "koboldcpp":
-      return await getKoboldCPPModels(basePath);
     case "litellm":
       return await liteLLMModels(basePath, apiKey);
     case "groq":
@@ -366,30 +360,6 @@ async function getLMStudioModels(basePath = null, _apiKey = null) {
   }
 }
 
-async function getKoboldCPPModels(basePath = null) {
-  try {
-    const { OpenAI: OpenAIApi } = require("openai");
-    const openai = new OpenAIApi({
-      baseURL: basePath || process.env.KOBOLD_CPP_BASE_PATH,
-      apiKey: null,
-    });
-    const models = await openai.models
-      .list()
-      .then((results) => results.data)
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.error(`KoboldCPP:listModels`, e.message);
-        return [];
-      });
-
-    return { models, error: null };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(`KoboldCPP:getKoboldCPPModels`, e.message);
-    return { models: [], error: "Could not fetch KoboldCPP Models" };
-  }
-}
-
 async function ollamaAIModels(basePath = null, _authToken = null) {
   let url;
   try {
@@ -426,24 +396,6 @@ async function ollamaAIModels(basePath = null, _authToken = null) {
   if (models.length > 0 && !!authToken)
     process.env.OLLAMA_AUTH_TOKEN = authToken;
   return { models, error: null };
-}
-
-async function getTogetherAiModels(apiKey = null) {
-  const _apiKey =
-    apiKey === true
-      ? process.env.TOGETHER_AI_API_KEY
-      : apiKey || process.env.TOGETHER_AI_API_KEY || null;
-  try {
-    const { togetherAiModels } = require("../AiProviders/togetherAi");
-    const models = await togetherAiModels(_apiKey);
-    if (models.length > 0 && !!_apiKey)
-      process.env.TOGETHER_AI_API_KEY = _apiKey;
-    return { models, error: null };
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error("Error in getTogetherAiModels:", error);
-    return { models: [], error: "Failed to fetch Together AI models" };
-  }
 }
 
 async function getFireworksAiModels(apiKey = null) {

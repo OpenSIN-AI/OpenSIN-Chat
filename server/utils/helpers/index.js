@@ -143,9 +143,6 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "openai":
       const { OpenAiLLM } = require("../AiProviders/openAi");
       return new OpenAiLLM(embedder, model);
-    case "azure":
-      const { AzureOpenAiLLM } = require("../AiProviders/azureOpenAi");
-      return new AzureOpenAiLLM(embedder, model);
     case "anthropic":
       const { AnthropicLLM } = require("../AiProviders/anthropic");
       return new AnthropicLLM(embedder, model);
@@ -161,9 +158,6 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "ollama":
       const { OllamaAILLM } = require("../AiProviders/ollama");
       return new OllamaAILLM(embedder, model);
-    case "togetherai":
-      const { TogetherAiLLM } = require("../AiProviders/togetherAi");
-      return new TogetherAiLLM(embedder, model);
     case "fireworksai":
       const { FireworksAiLLM } = require("../AiProviders/fireworksAi");
       return new FireworksAiLLM(embedder, model);
@@ -176,9 +170,6 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "groq":
       const { GroqLLM } = require("../AiProviders/groq");
       return new GroqLLM(embedder, model);
-    case "koboldcpp":
-      const { KoboldCPPLLM } = require("../AiProviders/koboldCPP");
-      return new KoboldCPPLLM(embedder, model);
     case "textgenwebui":
       const { TextGenWebUILLM } = require("../AiProviders/textGenWebUI");
       return new TextGenWebUILLM(embedder, model);
@@ -274,9 +265,6 @@ function getLLMProviderClass({ provider = null } = {}) {
     case "openai":
       const { OpenAiLLM } = require("../AiProviders/openAi");
       return OpenAiLLM;
-    case "azure":
-      const { AzureOpenAiLLM } = require("../AiProviders/azureOpenAi");
-      return AzureOpenAiLLM;
     case "anthropic":
       const { AnthropicLLM } = require("../AiProviders/anthropic");
       return AnthropicLLM;
@@ -292,9 +280,6 @@ function getLLMProviderClass({ provider = null } = {}) {
     case "ollama":
       const { OllamaAILLM } = require("../AiProviders/ollama");
       return OllamaAILLM;
-    case "togetherai":
-      const { TogetherAiLLM } = require("../AiProviders/togetherAi");
-      return TogetherAiLLM;
     case "fireworksai":
       const { FireworksAiLLM } = require("../AiProviders/fireworksAi");
       return FireworksAiLLM;
@@ -307,9 +292,6 @@ function getLLMProviderClass({ provider = null } = {}) {
     case "groq":
       const { GroqLLM } = require("../AiProviders/groq");
       return GroqLLM;
-    case "koboldcpp":
-      const { KoboldCPPLLM } = require("../AiProviders/koboldCPP");
-      return KoboldCPPLLM;
     case "textgenwebui":
       const { TextGenWebUILLM } = require("../AiProviders/textGenWebUI");
       return TextGenWebUILLM;

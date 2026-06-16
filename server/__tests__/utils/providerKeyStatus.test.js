@@ -16,7 +16,6 @@ const {
 } = require("../../utils/providerKeyStatus");
 
 const AGENT_PROVIDER_FILES = [
-  "koboldcpp.js",
   "nvidiaNim.js",
   "dockerModelRunner.js",
 ];
@@ -36,7 +35,6 @@ describe("providerKeyStatus registry", () => {
     const ids = LOCAL_PROVIDERS.map((p) => p.provider);
     expect(ids).toEqual(
       expect.arrayContaining([
-        "koboldcpp",
         "nvidia-nim",
         "docker-model-runner",
       ]),
@@ -53,9 +51,9 @@ describe("providerKeyStatus registry", () => {
     }
   });
 
-  test("getProviderKeyStatuses reports 3 providers", () => {
+  test("getProviderKeyStatuses reports 2 providers", () => {
     const statuses = getProviderKeyStatuses();
-    expect(statuses).toHaveLength(3);
+    expect(statuses).toHaveLength(2);
   });
 
   test("hasRealKey rejects empty/null/undefined", () => {

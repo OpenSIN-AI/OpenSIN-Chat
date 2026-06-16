@@ -6,7 +6,6 @@ import System from "@/models/system";
 import showToast from "@/utils/toast";
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
-import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
 import GeminiAiLogo from "@/media/llmprovider/gemini.png";
 import LocalAiLogo from "@/media/llmprovider/localai.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
@@ -22,7 +21,6 @@ import LemonadeLogo from "@/media/llmprovider/lemonade.png";
 import PreLoader from "@/components/Preloader";
 import ChangeWarningModal from "@/components/ChangeWarning";
 import OpenAiOptions from "@/components/EmbeddingSelection/OpenAiOptions";
-import AzureAiOptions from "@/components/EmbeddingSelection/AzureAiOptions";
 import GeminiOptions from "@/components/EmbeddingSelection/GeminiOptions";
 import LocalAiOptions from "@/components/EmbeddingSelection/LocalAiOptions";
 import NativeEmbeddingOptions from "@/components/EmbeddingSelection/NativeEmbeddingOptions";
@@ -67,13 +65,6 @@ const EMBEDDERS: Embedder[] = [
     logo: OpenAiLogo,
     options: (settings: any) => <OpenAiOptions settings={settings} />,
     description: "The standard option for most non-commercial use.",
-  },
-  {
-    name: "Azure OpenAI",
-    value: "azure",
-    logo: AzureOpenAiLogo,
-    options: (settings: any) => <AzureAiOptions settings={settings} />,
-    description: "The enterprise option of OpenAI hosted on Azure services.",
   },
   {
     name: "Gemini",

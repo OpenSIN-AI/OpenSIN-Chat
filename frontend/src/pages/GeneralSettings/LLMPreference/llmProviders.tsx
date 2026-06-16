@@ -2,21 +2,18 @@
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
-import AzureOpenAiLogo from "@/media/llmprovider/azure.png";
 import AnthropicLogo from "@/media/llmprovider/anthropic.png";
 import GeminiLogo from "@/media/llmprovider/gemini.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
 import NovitaLogo from "@/media/llmprovider/novita.png";
 import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
 import LocalAiLogo from "@/media/llmprovider/localai.png";
-import TogetherAILogo from "@/media/llmprovider/togetherai.png";
 import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import MistralLogo from "@/media/llmprovider/mistral.jpeg";
 import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
 import PerplexityLogo from "@/media/llmprovider/perplexity.png";
 import OpenRouterLogo from "@/media/llmprovider/openrouter.jpeg";
 import GroqLogo from "@/media/llmprovider/groq.png";
-import KoboldCPPLogo from "@/media/llmprovider/koboldcpp.png";
 import TextGenWebUILogo from "@/media/llmprovider/text-generation-webui.png";
 import CohereLogo from "@/media/llmprovider/cohere.png";
 import LiteLLMLogo from "@/media/llmprovider/litellm.png";
@@ -44,7 +41,6 @@ import CerebrasLogo from "@/media/llmprovider/cerebras.png";
 import ModelRouterOptions from "@/components/LLMSelection/ModelRouterOptions";
 import OpenAiOptions from "@/components/LLMSelection/OpenAiOptions";
 import GenericOpenAiOptions from "@/components/LLMSelection/GenericOpenAiOptions";
-import AzureAiOptions from "@/components/LLMSelection/AzureAiOptions";
 import AnthropicAiOptions from "@/components/LLMSelection/AnthropicAiOptions";
 import LMStudioOptions from "@/components/LLMSelection/LMStudioOptions";
 import LocalAiOptions from "@/components/LLMSelection/LocalAiOptions";
@@ -52,7 +48,6 @@ import GeminiLLMOptions from "@/components/LLMSelection/GeminiLLMOptions";
 import OllamaLLMOptions from "@/components/LLMSelection/OllamaLLMOptions";
 import NovitaLLMOptions from "@/components/LLMSelection/NovitaLLMOptions";
 import CometApiLLMOptions from "@/components/LLMSelection/CometApiLLMOptions";
-import TogetherAiOptions from "@/components/LLMSelection/TogetherAiOptions";
 import FireworksAiOptions from "@/components/LLMSelection/FireworksAiOptions";
 import MistralOptions from "@/components/LLMSelection/MistralOptions";
 import HuggingFaceOptions from "@/components/LLMSelection/HuggingFaceOptions";
@@ -60,7 +55,6 @@ import PerplexityOptions from "@/components/LLMSelection/PerplexityOptions";
 import OpenRouterOptions from "@/components/LLMSelection/OpenRouterOptions";
 import GroqAiOptions from "@/components/LLMSelection/GroqAiOptions";
 import CohereAiOptions from "@/components/LLMSelection/CohereAiOptions";
-import KoboldCPPOptions from "@/components/LLMSelection/KoboldCPPOptions";
 import TextGenWebUIOptions from "@/components/LLMSelection/TextGenWebUIOptions";
 import LiteLLMOptions from "@/components/LLMSelection/LiteLLMOptions";
 import AWSBedrockLLMOptions from "@/components/LLMSelection/AwsBedrockLLMOptions";
@@ -110,14 +104,6 @@ export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
     options: (settings: any) => <OpenAiOptions settings={settings} />,
     description: "The standard option for most non-commercial use.",
     requiredConfig: ["OpenAiKey"],
-  },
-  {
-    name: "Azure OpenAI",
-    value: "azure",
-    logo: AzureOpenAiLogo,
-    options: (settings: any) => <AzureAiOptions settings={settings} />,
-    description: "The enterprise option of OpenAI hosted on Azure services.",
-    requiredConfig: ["AzureOpenAiEndpoint"],
   },
   {
     name: "Anthropic",
@@ -236,14 +222,6 @@ export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
     requiredConfig: ["LocalAiApiKey", "LocalAiBasePath", "LocalAiTokenLimit"],
   },
   {
-    name: "Together AI",
-    value: "togetherai",
-    logo: TogetherAILogo,
-    options: (settings: any) => <TogetherAiOptions settings={settings} />,
-    description: "Run open source models from Together AI.",
-    requiredConfig: ["TogetherAiApiKey"],
-  },
-  {
     name: "Fireworks AI",
     value: "fireworksai",
     logo: FireworksAILogo,
@@ -285,18 +263,6 @@ export const AVAILABLE_LLM_PROVIDERS: LLMProvider[] = [
     description:
       "The fastest LLM inferencing available for real-time AI applications.",
     requiredConfig: ["GroqApiKey"],
-  },
-  {
-    name: "KoboldCPP",
-    value: "koboldcpp",
-    logo: KoboldCPPLogo,
-    options: (settings: any) => <KoboldCPPOptions settings={settings} />,
-    description: "Run local LLMs using koboldcpp.",
-    requiredConfig: [
-      "KoboldCPPModelPref",
-      "KoboldCPPBasePath",
-      "KoboldCPPTokenLimit",
-    ],
   },
   {
     name: "Oobabooga Web UI",

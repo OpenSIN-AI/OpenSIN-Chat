@@ -23,7 +23,6 @@ const {
   APPEARANCE_SETTINGS,
   OLLAMA_COMMON_URLS,
   LMSTUDIO_COMMON_URLS,
-  KOBOLDCPP_COMMON_URLS,
   LOCALAI_COMMON_URLS,
   DPAIS_COMMON_URLS,
   NVIDIA_NIM_COMMON_URLS,
@@ -71,10 +70,6 @@ describe("constants – provider URL arrays", () => {
   it("LMSTUDIO_COMMON_URLS contains expected localhost entries", () => {
     expect(LMSTUDIO_COMMON_URLS).toContain("http://localhost:1234/v1");
     expect(LMSTUDIO_COMMON_URLS).toContain("http://127.0.0.1:1234/v1");
-  });
-
-  it("KOBOLDCPP_COMMON_URLS contains expected entries", () => {
-    expect(KOBOLDCPP_COMMON_URLS).toContain("http://127.0.0.1:5000/v1");
   });
 
   it("LOCALAI_COMMON_URLS contains expected entries", () => {

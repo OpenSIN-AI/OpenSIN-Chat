@@ -13,7 +13,6 @@ function groupModels(models: any[]) {
 }
 
 const GROUPED_PROVIDERS = [
-  "togetherai",
   "fireworksai",
   "openai",
   "novita",
@@ -27,11 +26,9 @@ const PROVIDER_DEFAULT_MODELS: Record<string, string[]> = {
   openai: [],
   gemini: [],
   anthropic: [],
-  azure: [],
   lmstudio: [],
   localai: [],
   ollama: [],
-  togetherai: [],
   fireworksai: [],
   "nvidia-nim": [
     "nvidia/nemotron-3-ultra-550b-a55b",

@@ -6,7 +6,7 @@ import paths from "@/utils/paths";
 import ChatModelSelection from "@/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/ChatModelSelection";
 import RouterSelection from "@/pages/WorkspaceSettings/ChatSettings/WorkspaceLLMSelection/RouterSelection";
 
-const FREE_FORM_LLM_SELECTION = ["bedrock", "azure"];
+const FREE_FORM_LLM_SELECTION = ["bedrock"];
 const NO_MODEL_SELECTION = ["default", "huggingface", "openafd-router"];
 
 function FreeFormLLMInput({ workspace, setHasChanges }: any) {
