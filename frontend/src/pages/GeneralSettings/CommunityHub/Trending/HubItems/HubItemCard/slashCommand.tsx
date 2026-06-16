@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import { VisibilityIcon } from "./generic";

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";

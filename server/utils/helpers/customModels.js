@@ -1,22 +1,10 @@
 // SPDX-License-Identifier: MIT
-const { fetchOpenRouterModels } = require("../AiProviders/openRouter");
-const {
-  fetchOpenRouterEmbeddingModels,
-} = require("../EmbeddingEngines/openRouter");
-const { fetchApiPieModels } = require("../AiProviders/apipie");
-const { perplexityModels } = require("../AiProviders/perplexity");
 const { fireworksAiModels } = require("../AiProviders/fireworksAi");
-const { ElevenLabsTTS } = require("../TextToSpeech/elevenLabs");
-const { fetchNovitaModels } = require("../AiProviders/novita");
 const { parseLMStudioBasePath } = require("../AiProviders/lmStudio");
 const { parseNvidiaNimBasePath } = require("../AiProviders/nvidiaNim");
 const { parseOpencodeZenBasePath } = require("../AiProviders/opencodeZen");
-const { fetchPPIOModels } = require("../AiProviders/ppio");
 const { GeminiLLM } = require("../AiProviders/gemini");
-const { fetchCometApiModels } = require("../AiProviders/cometapi");
-const { parseFoundryBasePath } = require("../AiProviders/foundry");
 const { getDockerModels } = require("../AiProviders/dockerModelRunner");
-const { getAllLemonadeModels } = require("../AiProviders/lemonade");
 
 const SUPPORT_CUSTOM_MODELS = [
   "openai",
@@ -27,43 +15,20 @@ const SUPPORT_CUSTOM_MODELS = [
   "fireworksai",
   "nvidia-nim",
   "mistral",
-  "perplexity",
-  "openrouter",
   "lmstudio",
   "koboldcpp",
   "litellm",
-  "elevenlabs-tts",
   "groq",
-  "deepseek",
-  "apipie",
-  "novita",
-  "cometapi",
   "xai",
   "gemini",
-  "ppio",
-  "dpais",
-  "moonshotai",
-  "foundry",
-  "cohere",
-  "zai",
-  "giteeai",
   "docker-model-runner",
-  "privatemode",
-  "sambanova",
-  "lemonade",
-  "minimax",
-  "cerebras",
   "opencode-zen",
   "generic-openai",
   // Embedding Engines
   "native-embedder",
-  "cohere-embedder",
-  "openrouter-embedder",
-  "lemonade-embedder",
   // STT Engines
   "openai-stt",
   "deepgram-stt",
-  "lemonade-stt",
   // TTS Engines
   "kokoro-tts",
 ];
@@ -89,70 +54,24 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
       return await getFireworksAiModels(apiKey);
     case "mistral":
       return await getMistralModels(apiKey);
-    case "perplexity":
-      return await getPerplexityModels();
-    case "openrouter":
-      return await getOpenRouterModels();
     case "lmstudio":
       return await getLMStudioModels(basePath, apiKey);
     case "koboldcpp":
       return await getKoboldCPPModels(basePath);
     case "litellm":
       return await liteLLMModels(basePath, apiKey);
-    case "elevenlabs-tts":
-      return await getElevenLabsModels(apiKey);
     case "groq":
       return await getGroqAiModels(apiKey);
-    case "deepseek":
-      return await getDeepSeekModels(apiKey);
-    case "apipie":
-      return await getAPIPieModels(apiKey);
-    case "novita":
-      return await getNovitaModels();
-    case "cometapi":
-      return await getCometApiModels();
     case "xai":
       return await getXAIModels(apiKey);
     case "nvidia-nim":
       return await getNvidiaNimModels(basePath);
     case "gemini":
       return await getGeminiModels(apiKey);
-    case "ppio":
-      return await getPPIOModels(apiKey);
-    case "dpais":
-      return await getDellProAiStudioModels(basePath);
-    case "moonshotai":
-      return await getMoonshotAiModels(apiKey);
-    case "foundry":
-      return await getFoundryModels(basePath);
-    case "cohere":
-      return await getCohereModels(apiKey, "chat");
-    case "zai":
-      return await getZAiModels(apiKey);
     case "native-embedder":
       return await getNativeEmbedderModels();
-    case "cohere-embedder":
-      return await getCohereModels(apiKey, "embed");
-    case "openrouter-embedder":
-      return await getOpenRouterEmbeddingModels();
-    case "giteeai":
-      return await getGiteeAIModels(apiKey);
     case "docker-model-runner":
       return await getDockerModelRunnerModels(basePath);
-    case "privatemode":
-      return await getPrivatemodeModels(basePath, "generate");
-    case "sambanova":
-      return await getSambaNovaModels(apiKey);
-    case "lemonade":
-      return await getLemonadeModels(basePath);
-    case "lemonade-stt":
-      return await getLemonadeSTTModels(basePath);
-    case "lemonade-embedder":
-      return await getLemonadeModels(basePath, "embedding");
-    case "minimax":
-      return await getMinimaxModels(apiKey);
-    case "cerebras":
-      return await getCerebrasModels();
     case "opencode-zen":
       return await getOpencodeZenModels();
     case "generic-openai":

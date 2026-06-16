@@ -7,7 +7,7 @@ import showToast from "@/utils/toast";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import EditVariableModal from "./EditVariableModal";
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import { Trash } from "@phosphor-icons/react";
 
 type VariableType = "system" | "user" | "workspace" | "static";

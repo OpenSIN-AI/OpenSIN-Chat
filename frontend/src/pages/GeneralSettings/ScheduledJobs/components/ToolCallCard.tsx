@@ -7,7 +7,7 @@ import hljs from "highlight.js";
 import { safeJsonParse } from "@/utils/request";
 import { useTheme } from "@/hooks/useTheme";
 import DOMPurify from "@/utils/chat/purify";
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import moment from "moment";
 
 const MAX_RESULT_LENGTH = 5000;

@@ -3,7 +3,7 @@
 import { Trans, useTranslation } from "react-i18next";
 import { Trash, PencilSimple, DotsSixVertical } from "@phosphor-icons/react";
 import { SimpleToggleSwitch } from "@/components/lib/Toggle";
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import type { TFunction } from "i18next";
 
 type ComparatorKey = "gt" | "gte" | "lt" | "lte" | "eq" | "neq";

@@ -34,7 +34,6 @@ describe("SUPPORT_CUSTOM_MODELS", () => {
 
   test("includes embedding engines", () => {
     expect(SUPPORT_CUSTOM_MODELS).toContain("native-embedder");
-    expect(SUPPORT_CUSTOM_MODELS).toContain("cohere-embedder");
   });
 
   test("includes STT engines", () => {
@@ -44,7 +43,6 @@ describe("SUPPORT_CUSTOM_MODELS", () => {
 
   test("includes TTS engines", () => {
     expect(SUPPORT_CUSTOM_MODELS).toContain("kokoro-tts");
-    expect(SUPPORT_CUSTOM_MODELS).toContain("elevenlabs-tts");
   });
 
   test("has no duplicate providers", () => {

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React, { Suspense } from "react";
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import { useTranslation } from "react-i18next";
 import { X, Trash } from "@phosphor-icons/react";
 import System from "@/models/system";

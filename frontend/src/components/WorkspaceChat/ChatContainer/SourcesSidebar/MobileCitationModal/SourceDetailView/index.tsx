@@ -2,7 +2,7 @@
 import { Fragment } from "react";
 import { CaretLeft, Info, X } from "@phosphor-icons/react";
 import { decode as HTMLDecode } from "he";
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import { useTranslation } from "react-i18next";
 import { omitChunkHeader } from "../../../ChatHistory/Citation";
 import { toPercentString } from "@/utils/numbers";

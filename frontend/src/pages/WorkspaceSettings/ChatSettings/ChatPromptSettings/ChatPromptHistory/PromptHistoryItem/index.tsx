@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import PromptHistory from "@/models/promptHistory";
 import { useTranslation } from "react-i18next";
 import moment from "moment";
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 
 const MAX_PROMPT_LENGTH = 200; // chars
 

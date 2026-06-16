@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect, useRef, memo } from "react";
 import { useTranslation } from "react-i18next";
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import { CheckCircle, XCircle } from "@phosphor-icons/react";
 import { useDocumentUpload } from "@/hooks/useDocuments";
 import { humanFileSize, milliToHms } from "../../../../../../utils/numbers";

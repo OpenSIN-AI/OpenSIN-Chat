@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React, { Suspense } from "react";
-import truncate from "truncate";
+import { truncate } from "@/utils/strings";
 import { X } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
