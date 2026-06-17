@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.7
 # Setup base image
 FROM ubuntu:noble-20251013 AS base
 
@@ -158,8 +159,10 @@ WORKDIR /app
 # The output (static HTML/CSS/JS) is platform-independent.
 FROM --platform=$BUILDPLATFORM node:22-slim AS frontend-build
 WORKDIR /app/frontend
+ENV YARN_CACHE_FOLDER=/yarn-cache
 COPY ./frontend/package.json ./frontend/yarn.lock ./
-RUN yarn install --network-timeout 100000 && yarn cache clean
+RUN --mount=type=cache,id=yarn-cache,target=/yarn-cache,uid=1000,gid=1000 \
+    yarn install --network-timeout 100000
 COPY ./frontend/ ./
 RUN yarn build
 WORKDIR /app
@@ -167,7 +170,15 @@ WORKDIR /app
 # Install server layer
 # Also pull and build collector deps (chromium issues prevent bad bindings)
 FROM build AS backend-build
-COPY --chown=opensin:opensin ./server /app/server/
+ENV YARN_CACHE_FOLDER=/yarn-cache
+
+COPY --chown=opensin:opensin ./server/package.json ./server/yarn.lock /app/server/
+WORKDIR /app/server
+RUN --mount=type=cache,id=yarn-cache,target=/yarn-cache,uid=1000,gid=1000 \
+    yarn install --production --network-timeout 600000
+
+WORKDIR /app
+COPY --chown=opensin:opensin ./server/ /app/server/
 
 # Explicitly copy the critical paths.js file required by the native embedder
 # (server/utils/EmbeddingEngines/native/index.js). This is a defense-in-depth
@@ -181,12 +192,9 @@ COPY --chown=opensin:opensin ./server/utils/paths.js /app/server/utils/paths.js
 # can never ship. The runtime guard in docker-entrypoint.sh is a
 # defense-in-depth backup for already-built images.
 RUN test -f /app/server/utils/paths.js || (echo "BUILD ERROR: /app/server/utils/paths.js missing from server COPY" && exit 1)
-WORKDIR /app/server
-RUN yarn install --production --network-timeout 600000 && yarn cache clean
-WORKDIR /app
 
 # Install collector dependencies
-COPY --chown=opensin:opensin ./collector/ ./collector/
+COPY --chown=opensin:opensin ./collector/package.json ./collector/yarn.lock /app/collector/
 WORKDIR /app/collector
 ENV PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public
 # WORKAROUND: force git to resolve github ssh://git@github.com/... over https.
@@ -194,8 +202,10 @@ ENV PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testin
 # collector/package.json is pinned to ssh, which crashes yarn install with
 # "ssh: not found". This redirect is non-destructive and only affects this stage.
 RUN git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
-RUN yarn install --production --network-timeout 600000 && yarn cache clean
+RUN --mount=type=cache,id=yarn-cache,target=/yarn-cache,uid=1000,gid=1000 \
+    yarn install --production --network-timeout 600000
 
+COPY --chown=opensin:opensin ./collector/ /app/collector/
 WORKDIR /app
 USER opensin
 
