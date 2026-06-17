@@ -46,8 +46,9 @@ The OCI VM that fronts sinchat is known as **`sin-blackbox`** in `~/.ssh/config`
 | Canonical host alias | `sin-blackbox` |
 | Public IP | **92.5.116.158** |
 | SSH user | `ubuntu` |
-| Primary key | `~/.ssh/id_ed25519` (ed25519) |
-| Backup key | `~/.ssh/oci-vm3` (RSA, comment `oci-api-recovery-20251228`) |
+| Primary SSH key | `~/.ssh/id_ed25519` (ed25519) |
+| OCI SDK API key (NOT an SSH key) | `~/.ssh/oci-vm3` (RSA, comment `oci-api-recovery-20251228`) — used by `oci compute` SDK to start/stop/list instances, NOT for SSH-ing into any VM |
+| Aura-Call VM SSH key | `~/.ssh/aura-call-vm-key` |
 | Cloudflared cert | `~/.cloudflared/cert.pem` |
 | Latest tunnel creds | `ls -t ~/.cloudflared/*.json \| head -1` (one is currently `daa59c37-b503-4a35-8b6d-60fbf2a755e4.json`) |
 | Infisical workspace | `fa7758b4-f84c-4297-966e-710056d531ef` @ `https://eu.infisical.com/api` |
