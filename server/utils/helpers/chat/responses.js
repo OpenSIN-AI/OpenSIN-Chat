@@ -96,7 +96,6 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
           fullText += reasoningText;
           reasoningText = "";
         }
-        }
 
         if (token) {
           fullText += token;
