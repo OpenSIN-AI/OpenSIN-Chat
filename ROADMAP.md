@@ -170,7 +170,6 @@
 | Blocker | Status | Resolution |
 |---------|--------|------------|
 | **User Browser Cache** | ✅ | Cache-Control Header gesetzt + alte vendor-charts gelöscht |
-| **Vercel Pool Credits** | 🔴 | `insufficient_funds` – Credits nachladen (bleibt) |
 | **Politician DB leer** | ✅ | Sync-Job ausgeführt (`804b6388`): 733 Politiker, 7382 Reden in der DB |
 | **npm audit (44 vulns)** | 🟡 | `--force` nötig, aber upstream transitive deps (bleibt) |
 | **AIbitat `opencode-zen` Case** | ✅ | Gefixt in `3690f5ed` |
