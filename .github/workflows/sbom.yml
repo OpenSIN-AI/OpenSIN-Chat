@@ -1,0 +1,62 @@
+# SPDX-License-Identifier: MIT
+name: SBOM
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "package.json"
+      - "frontend/package.json"
+      - "server/package.json"
+      - "collector/package.json"
+      - "**/yarn.lock"
+      - "scripts/generate-sbom.cjs"
+      - ".github/workflows/sbom.yml"
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate-sbom:
+    name: Generate SBOM (SPDX 2.3 + CycloneDX 1.5)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Generate SBOM
+        run: node scripts/generate-sbom.cjs
+
+      - name: Validate SBOM
+        run: node scripts/generate-sbom.cjs --check
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-${{ github.run_number }}
+          path: |
+            sbom/
+            !sbom/index.json
+          retention-days: 90
+
+      - name: Attach SBOM to GitHub Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            sbom/opensin-chat-spdx.json
+            sbom/opensin-chat-cyclonedx.json
+            sbom/root.spdx.json
+            sbom/root.cdx.json
+            sbom/server.spdx.json
+            sbom/server.cdx.json
+            sbom/frontend.spdx.json
+            sbom/frontend.cdx.json
+            sbom/collector.spdx.json
+            sbom/collector.cdx.json

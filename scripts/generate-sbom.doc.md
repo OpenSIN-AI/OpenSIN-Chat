@@ -24,16 +24,32 @@ network-free in CI, this script parses lockfiles directly:
 
 ## Output (`sbom/`)
 
+### Per-workspace
+
 | File | Format |
 | ---- | ------ |
 | `<workspace>.spdx.json` | SPDX 2.3 |
 | `<workspace>.cdx.json`  | CycloneDX 1.5 |
-| `index.json`            | Manifest: per-workspace source + package counts |
+
+### Consolidated (project-level, deduplicated across all workspaces)
+
+| File | Format |
+| ---- | ------ |
+| `opensin-chat-spdx.json`      | SPDX 2.3 |
+| `opensin-chat-cyclonedx.json` | CycloneDX 1.5 |
+
+### Manifest
+
+| File | Format |
+| ---- | ------ |
+| `index.json` | Summary: per-workspace source + package counts + consolidated refs |
 
 Each package carries a [PURL](https://github.com/package-url/purl-spec)
 (`pkg:npm/...`) identifier for downstream vulnerability scanning.
 
 ## CI
 
-Run in `.github/workflows/ceo-audit.yml` via `--check` to ensure SBOMs are
-committed and valid on every push.
+- `.github/workflows/sbom.yml` — dedicated workflow: generates, validates,
+  uploads as artifact, and attaches to GitHub releases.
+- `.github/workflows/ceo-audit.yml` — runs `--check` to ensure committed SBOMs
+  are present and valid on every push.

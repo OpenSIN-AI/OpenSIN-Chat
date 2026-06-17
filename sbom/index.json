@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-14T11:33:01.265Z",
+  "generatedAt": "2026-06-17T18:50:58.174Z",
   "specs": {
     "spdx": "SPDX-2.3",
     "cyclonedx": "1.5"
@@ -7,31 +7,36 @@
   "workspaces": [
     {
       "name": "root",
-      "source": "package-lock.json",
-      "packageCount": 738,
+      "source": "package.json",
+      "packageCount": 70,
       "spdx": "sbom/root.spdx.json",
       "cyclonedx": "sbom/root.cdx.json"
     },
     {
       "name": "server",
-      "source": "package-lock.json",
-      "packageCount": 1195,
+      "source": "yarn.lock",
+      "packageCount": 1134,
       "spdx": "sbom/server.spdx.json",
       "cyclonedx": "sbom/server.cdx.json"
     },
     {
       "name": "frontend",
-      "source": "package-lock.json",
-      "packageCount": 790,
+      "source": "yarn.lock",
+      "packageCount": 917,
       "spdx": "sbom/frontend.spdx.json",
       "cyclonedx": "sbom/frontend.cdx.json"
     },
     {
       "name": "collector",
-      "source": "package-lock.json",
-      "packageCount": 562,
+      "source": "yarn.lock",
+      "packageCount": 572,
       "spdx": "sbom/collector.spdx.json",
       "cyclonedx": "sbom/collector.cdx.json"
     }
-  ]
+  ],
+  "consolidated": {
+    "packageCount": 1905,
+    "spdx": "sbom/opensin-chat-spdx.json",
+    "cyclonedx": "sbom/opensin-chat-cyclonedx.json"
+  }
 }

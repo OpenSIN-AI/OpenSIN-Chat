@@ -120,9 +120,8 @@ function purl(name, version) {
   return `pkg:npm/${encoded}@${version}`;
 }
 
-function buildSpdx(wsName, pkgMeta, deps) {
+function buildSpdx(docName, pkgMeta, deps) {
   const now = new Date().toISOString();
-  const docName = `opensin-chat-${wsName}`;
   const packages = deps.map((d) => ({
     name: d.name,
     SPDXID: spdxId(d.name, d.version),
@@ -175,7 +174,7 @@ function buildSpdx(wsName, pkgMeta, deps) {
   };
 }
 
-function buildCycloneDx(wsName, pkgMeta, deps) {
+function buildCycloneDx(docName, pkgMeta, deps) {
   return {
     bomFormat: "CycloneDX",
     specVersion: "1.5",
@@ -186,7 +185,7 @@ function buildCycloneDx(wsName, pkgMeta, deps) {
       tools: [{ vendor: "Family-Team-Projects", name: "openafd-generate-sbom", version: "1.0.0" }],
       component: {
         type: "application",
-        name: pkgMeta.name || `opensin-chat-${wsName}`,
+        name: pkgMeta.name || docName,
         version: pkgMeta.version || "0.0.0",
         licenses: [{ license: { id: pkgMeta.license || "MIT" } }],
       },
@@ -205,18 +204,29 @@ function generate() {
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
   const manifest = { generatedAt: new Date().toISOString(), specs: { spdx: "SPDX-2.3", cyclonedx: "1.5" }, workspaces: [] };
 
+  // Accumulator for the consolidated (project-level) SBOM.
+  const consolidatedDeps = new Map(); // key: name@version -> { name, version }
+  let rootPkgMeta = null;
+
   for (const ws of WORKSPACES) {
     const pkgPath = path.join(ws.dir, "package.json");
     if (!fs.existsSync(pkgPath)) continue;
     const pkgMeta = readJSON(pkgPath);
+    if (ws.name === "root") rootPkgMeta = pkgMeta;
     const { source, deps } = resolveDeps(ws.dir);
 
-    const spdx = buildSpdx(ws.name, pkgMeta, deps);
-    const cdx = buildCycloneDx(ws.name, pkgMeta, deps);
+    const wsLabel = `opensin-chat-${ws.name}`;
+    const spdx = buildSpdx(wsLabel, pkgMeta, deps);
+    const cdx = buildCycloneDx(wsLabel, pkgMeta, deps);
     const spdxFile = path.join(OUT_DIR, `${ws.name}.spdx.json`);
     const cdxFile = path.join(OUT_DIR, `${ws.name}.cdx.json`);
     fs.writeFileSync(spdxFile, JSON.stringify(spdx, null, 2));
     fs.writeFileSync(cdxFile, JSON.stringify(cdx, null, 2));
+
+    for (const d of deps) {
+      const key = `${d.name}@${d.version}`;
+      if (!consolidatedDeps.has(key)) consolidatedDeps.set(key, d);
+    }
 
     manifest.workspaces.push({
       name: ws.name,
@@ -227,6 +237,22 @@ function generate() {
     });
     console.log(`[sbom] ${ws.name}: ${deps.length} packages (from ${source})`);
   }
+
+  // Consolidated project-level SBOM (all workspaces merged, deduplicated).
+  const allDeps = [...consolidatedDeps.values()];
+  const appMeta = rootPkgMeta || { name: "opensin-chat", version: "0.1.0", license: "MIT" };
+  const cSpdx = buildSpdx("opensin-chat", appMeta, allDeps);
+  const cCdx = buildCycloneDx("opensin-chat", appMeta, allDeps);
+  const cSpdxFile = path.join(OUT_DIR, "opensin-chat-spdx.json");
+  const cCdxFile = path.join(OUT_DIR, "opensin-chat-cyclonedx.json");
+  fs.writeFileSync(cSpdxFile, JSON.stringify(cSpdx, null, 2));
+  fs.writeFileSync(cCdxFile, JSON.stringify(cCdx, null, 2));
+  manifest.consolidated = {
+    packageCount: allDeps.length,
+    spdx: path.relative(ROOT, cSpdxFile),
+    cyclonedx: path.relative(ROOT, cCdxFile),
+  };
+  console.log(`[sbom] consolidated: ${allDeps.length} unique packages -> opensin-chat-spdx.json, opensin-chat-cyclonedx.json`);
 
   fs.writeFileSync(path.join(OUT_DIR, "index.json"), JSON.stringify(manifest, null, 2));
   console.log(`[sbom] wrote manifest -> ${path.relative(ROOT, path.join(OUT_DIR, "index.json"))}`);
@@ -250,7 +276,7 @@ function check() {
         console.error(`[sbom] ${f}: unexpected spdxVersion`);
         bad++;
       }
-      if (f.endsWith(".cdx.json") && doc.bomFormat !== "CycloneDX") {
+      if ((f.endsWith(".cdx.json") || f.endsWith("-cyclonedx.json")) && doc.bomFormat !== "CycloneDX") {
         console.error(`[sbom] ${f}: not a CycloneDX document`);
         bad++;
       }
