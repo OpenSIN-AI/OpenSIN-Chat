@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Purpose: Docker HEALTHCHECK — prüft ob der AnythingLLM-Server (Port 3001)
+# Purpose: Docker HEALTHCHECK — prüft ob der OpenSIN-Chat-Server (Port 3001)
 #          antwortet UND ob die PDF-Analyse-Subsysteme (Storage, Job-Store)
 #          lesbar/beschreibbar sind.
 # Docs:    (kein .doc.md noetig — reines Bash-Glue, Logik trivial)

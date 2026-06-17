@@ -15,12 +15,14 @@ cd "$REPO_ROOT"
 # Add a comment next to each entry explaining WHY the exception exists.
 ALLOWED_FILES=(
   # ── Intentional upstream credit ───────────────────────────
-  "THIRD-PARTY.md"                     # canonical credit doc
+  "THIRD-PARTY.md"                     # canonical credit doc (hyphen variant)
+  "THIRD_PARTY.md"                     # canonical credit doc (underscore variant)
   "BRANDING.md"                        # branding policy references upstream
   "README.md"                          # "Stand auf Schultern von Riesen" section
-  "PROJECT_SUMMARY.md"                 # project meta-doc
   "TERMS_SELF_HOSTED.md"               # §2 references AnythingLLM telemetry
   "TERMS.md"                           # generic terms
+  "docs/changelog-recent.md"           # recent changelog entries referencing upstream
+  "docs/abandoned-packages-audit.md"   # audit doc referencing upstream git deps
 
   # ── License / package metadata ───────────────────────────
   "LICENSE"
@@ -147,6 +149,40 @@ ALLOWED_FILES=(
   #    JSDoc type refs to @mintplex-labs/piper-tts-web and @mintplex-labs/piper-web-tts.
   "frontend/src/utils/piperTTS/index.ts"
   "frontend/src/utils/piperTTS/worker.ts"
+
+  # ── server/app.js — mintplex NPM dep ────────────────
+  #    require('@mintplex-labs/express-ws') in non-HTTPS, non-test mode.
+  "server/app.js"
+
+  # ── Functional backward-compat: localStorage keys ───
+  #    Frontend reads legacy "anythingllm_disable_onboarding" and mock flags
+  #    ("anythingllm_pdf_mock", "anythingllm_ws_mock") from localStorage so
+  #    existing user browsers keep working after the rebrand.
+  "frontend/src/models/system.ts"
+  "frontend/src/models/system.js"
+  "frontend/src/main.tsx"
+  "frontend/src/mocks/browser.ts"
+  "frontend/src/mocks/pdfAnalysisHandlers.ts"
+  "frontend/src/mocks/auditHandlers.ts"
+
+  # ── Project identity & policy docs ──────────────────
+  #    Reference the upstream AnythingLLM / Mintplex Labs origin for context.
+  "AGENTS.md"
+  "SECURITY.md"
+  "CHANGELOG.md"
+  "AUDIT-NEXT-AGENT.md"
+
+  # ── Audit & feature docs (upstream context) ─────────
+  "docs/ceo-audit-final.md"
+  "docs/CEO-AUDIT-REPORT.md"
+  "docs/admin/onboarding.md"
+  "server/PDF_ANALYSIS.md"
+  "server/app.doc.md"
+  "scripts/skill-oci-oracle-cloud-SKILL.md"
+
+  # ── In-app documentation pages (upstream context) ───
+  #    frontend/src/pages/Docs/content/ mirrors docs/ for the in-app docs viewer.
+  "frontend/src/pages/Docs/content/"
 )
 
 # Build ripgrep exclude-from-file

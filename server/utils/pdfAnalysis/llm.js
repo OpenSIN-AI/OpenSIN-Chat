@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 /**
- * Dünner Wrapper um den AnythingLLM/OpenSIN LLM-Provider-Layer.
+ * Dünner Wrapper um den OpenSIN LLM-Provider-Layer.
  *
  * Neu: Retry mit exponentiellem Backoff + Jitter. Bei AGENT_CONCURRENCY
  * parallelen Agenten sind transiente Fehler (429/5xx/Timeouts) erwartbar —
