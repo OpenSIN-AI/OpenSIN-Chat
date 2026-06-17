@@ -167,7 +167,6 @@ WORKDIR /app
 # Install server layer
 # Also pull and build collector deps (chromium issues prevent bad bindings)
 FROM build AS backend-build
-ENV YARN_CACHE_FOLDER=/yarn-cache
 
 COPY --chown=opensin:opensin ./server/package.json ./server/yarn.lock /app/server/
 WORKDIR /app/server
