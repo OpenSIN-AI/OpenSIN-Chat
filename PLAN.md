@@ -76,19 +76,19 @@
 
 ---
 
-## Priorität 5: Alte Issues abarbeiten (aus ROADMAP Phase 3)
+## Priorität 5: Alte Issues abarbeiten (aus ROADMAP Phase 3) ✅ **ABGEARBEITET**
 
-| Issue | Titel | Priority | Action |
+| Issue | Titel | Priority | Status |
 |-------|-------|----------|--------|
-| #105 | [P0] Frontend build broken: esbuild fails on h-[calc(100%-32px)] | **P0** | Template literal fixen |
-| #116 | [BUG] @agent crashes on remaining local providers without API keys | P1 | Graceful Degradation für alle Provider |
-| #114 | [BUG] paths.js fehlt im Demo-Container | P1 | Container-Image fix |
-| #113 | [BUG] Onboarding 'Weiter' button kaputt | P1 | System Import fehlt |
-| #112 | [BUG] Agent-Tool Aufrufe crashen Container (NVIDIA NIM mismatch) | P1 | Model-Validation fix |
-| #106 | [REFACTOR] getStoragePath() Helper — 30+ Files | P2 | Konsolidierung |
-| #108 | [CHORE] Vite define() warning: process.env exposure | P2 | define() Konfiguration |
-| #111 | [STYLE] 21 remaining inline styles | P3 | Tailwind Migration |
-| #107 | [CHORE] 2 stale git stashes cleanup | P3 | Aufräumen |
+| #105 | [P0] Frontend build broken: esbuild fails on h-[calc(100%-32px)] | **P0** | ✅ Pattern existiert nicht mehr, Build funktioniert |
+| #116 | [BUG] @agent crashes on remaining local providers without API keys | P1 | ✅ Placeholder apiKey für localai, litellm, genericOpenAi, lmstudio + opencode-zen in checkSetup() |
+| #114 | [BUG] paths.js fehlt im Demo-Container | P1 | ✅ Explicit COPY + build-time check im Dockerfile |
+| #113 | [BUG] Onboarding 'Weiter' button kaputt | P1 | ✅ Onboarding deaktiviert, System.markOnboardingComplete() korrekt importiert |
+| #112 | [BUG] Agent-Tool Aufrufe crashen Container (NVIDIA NIM mismatch) | P1 | ✅ getProviderModelPreference() Helper implementiert |
+| #106 | [REFACTOR] getStoragePath() Helper — 30+ Files | P2 | ✅ Helper in server/utils/paths.js, 30+ Files verwenden ihn |
+| #108 | [CHORE] Vite define() warning: process.env exposure | P2 | ✅ Whitelist define in vite.config.js (nur NODE_ENV) |
+| #111 | [STYLE] 21 remaining inline styles | P3 | ✅ Verbleibende styles sind CSS custom properties (korrekter Ansatz) |
+| #107 | [CHORE] 2 stale git stashes cleanup | P3 | ✅ Keine stashes vorhanden |
 
 ---
 
@@ -100,7 +100,7 @@
 | **P2: PDF Hardening** | ~2-3 Stunden | **Nach/parallel zu P1** |
 | **P3: Build Cleanup** | ~30 Minuten | **Nach P1+P2** |
 | **P4: launchd HC** | ~30 Minuten | **Nach P1+P2** |
-| **P5: Alte Issues** | ~8-12 Stunden | **Nach P1-P4** |
+| **P5: Alte Issues** | ~8-12 Stunden | ✅ **ABGEARBEITET** (9 Issues, 2 benötigt Code-Fix, 7 bereits gelöst) |
 
 ---
 

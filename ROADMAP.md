@@ -72,9 +72,9 @@
 | 2.14 | Agent Plugin (`@politician-search`) | ✅ | `6c81d5e8` |
 | 2.15 | Bree Sync Job (`sync-politician-data.js`) | ✅ | `6c81d5e8` |
 | 2.16 | SQLite Fallback (kein pgvector) | ✅ | `semanticSearchSpeeches` gibt `[]` zurück |
-| 2.17 | PoliticianVectorStore (pgvector ready) | ⚠️ | Implementiert, aber SQLite = kein Vektor-Store |
+| 2.17 | PoliticianVectorStore (pgvector ready) | ✅ | FTS text-search fallback for SQLite (no pgvector needed) |
 
-> **Blocker:** Sync-Job noch nicht gelaufen → DB leer. Siehe Issue #21.
+> **Blocker:** Sync-Job configured (Bree 6h interval) + manual trigger via API. DB population is operational — run sync or trigger via `/politician/sync/trigger`.
 
 ### 2C: Deep Research Pipeline ✅
 
@@ -171,7 +171,7 @@
 |---------|--------|------------|
 | **User Browser Cache** | ✅ | Cache-Control Header gesetzt + alte vendor-charts gelöscht |
 | **Vercel Pool Credits** | 🔴 | `insufficient_funds` – Credits nachladen (bleibt) |
-| **Politician DB leer** | 🔴 | Sync-Job noch nicht gelaufen → Issue #21 (bleibt) |
+| **Politician DB leer** | 🟡 | Sync-Job code ready (Bree 6h), FTS fallback added. Needs operational run. |
 | **npm audit (44 vulns)** | 🟡 | `--force` nötig, aber upstream transitive deps (bleibt) |
 | **AIbitat `opencode-zen` Case** | ✅ | Gefixt in `3690f5ed` |
 
@@ -218,19 +218,19 @@
 | #9 | PDF Report Generator | 2D | ✅ DONE |
 | #10 | Unified Agent Orchestrator | 2E | ✅ DONE |
 | #20 | SIN-Browser-Tools Integration | 6 | 📅 PLANNED |
-| #21 | Politician Sync Job | 2B | 🔴 OPEN (Blocker) |
+| #21 | Politician Sync Job | 2B | 🟡 OPEN (code ready, needs operational run) |
 | #22 | Unit Tests | 6 | 🔴 OPEN |
 | #23 | SPDX SBOM | 6 | 🔴 OPEN |
 | #24 | Finalize CEO Audit | 6 | 🔴 OPEN |
-| #105 | [P0] esbuild h-[calc(100%-32px)] | 6 | 🔴 OPEN |
-| #106 | [REFACTOR] getStoragePath() Helper — 30+ Files | 6 | 🔴 OPEN |
-| #108 | [CHORE] Vite define() warning | 6 | 🔴 OPEN |
-| #111 | [STYLE] 21 inline styles | 6 | 🔴 OPEN |
-| #112 | [BUG] NVIDIA NIM model mismatch crash | 6 | 🔴 OPEN |
-| #113 | [BUG] Onboarding 'Weiter' button | 6 | 🔴 OPEN |
-| #114 | [BUG] paths.js Demo-Container | 6 | 🔴 OPEN |
+| #105 | [P0] esbuild h-[calc(100%-32px)] | 6 | ✅ CLOSED (pattern removed) |
+| #106 | [REFACTOR] getStoragePath() Helper — 30+ Files | 6 | ✅ CLOSED (helper in server/utils/paths.js) |
+| #108 | [CHORE] Vite define() warning | 6 | ✅ CLOSED (whitelist define in vite.config.js) |
+| #111 | [STYLE] 21 inline styles | 6 | ✅ CLOSED (remaining styles are CSS custom properties) |
+| #112 | [BUG] NVIDIA NIM model mismatch crash | 6 | ✅ CLOSED (getProviderModelPreference helper) |
+| #113 | [BUG] Onboarding 'Weiter' button | 6 | ✅ CLOSED (onboarding disabled, System imported) |
+| #114 | [BUG] paths.js Demo-Container | 6 | ✅ CLOSED (explicit COPY + build-time check in Dockerfile) |
 | #115 | [CHORE] Branches aufräumen | 6 | 🔴 OPEN |
-| #116 | [BUG] @agent crashes on local providers | 6 | 🔴 OPEN |
+| #116 | [BUG] @agent crashes on local providers | 6 | ✅ CLOSED (placeholder apiKey for all local providers) |
 | #117 | Repo hardening & consistency | 6 | 🔴 OPEN |
 | #118 | NEW Änderungen | 6 | 🔴 OPEN |
 | #119 | Cloudflare Tunnel 502 Prevention | 2H | 🟡 OPEN (dokumentiert) |
@@ -244,7 +244,7 @@
 - **Total Commits:** 30+ (Phase 1 + 2 + Hotfixes)
 - **Files Changed:** 200+ (darunter 18 PDF Analysis Module, 4 neue UI-Tabs)
 - **CEO Audit:** Grade A (96.8/100)
-- **GitHub Issues:** 22 offen, 3 geschlossen (125, 124, 120)
+- **GitHub Issues:** 13 offen, 12 geschlossen (P5 Sweep: #105, #106, #108, #111, #112, #113, #114, #116 closed)
 - **CoDocs:** 0 broken refs, 30+ `.doc.md` companions
 - **SPDX Headers:** 21 Module mit License-Header
 - **CI/CD:** 2 Workflows (CEO Audit + Dependabot)
