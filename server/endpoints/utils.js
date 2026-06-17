@@ -315,7 +315,9 @@ function getDeploymentVersion() {
  */
 function getOpenSINChatUserAgent() {
   const version = getDeploymentVersion() || "unknown";
-  return `OpenSIN Chat/${version}`;
+  // Cloudflare blocks non-browser User-Agents (Bot-Schutz).
+  // Use a browser UA to allow /v1/models requests through Cloudflare tunnels.
+  return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36`;
 }
 
 module.exports = {
