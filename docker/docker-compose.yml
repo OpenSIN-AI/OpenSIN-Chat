@@ -36,6 +36,14 @@ services:
       # persist data, even if it is missing from .env. Must match the mounted
       # volume target (../server/storage -> /app/server/storage).
       - STORAGE_DIR=/app/server/storage
+      - JWT_SECRET=${JWT_SECRET}
+      - SIG_KEY=${SIG_KEY}
+      - SIG_SALT=${SIG_SALT}
+      - LLM_PROVIDER=${LLM_PROVIDER:-generic-openai}
+      - GENERIC_OPEN_AI_BASE_PATH=${GENERIC_OPEN_AI_BASE_PATH}
+      - GENERIC_OPEN_AI_API_KEY=${GENERIC_OPEN_AI_API_KEY}
+      - GENERIC_OPEN_AI_MODEL_PREF=${GENERIC_OPEN_AI_MODEL_PREF}
+      - GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT=${GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT:-202752}
     networks:
       - opensin-chat
     extra_hosts:
