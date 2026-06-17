@@ -31,7 +31,8 @@ export function useSidebarToggle() {
       const isVisible =
         currentPath === paths.home() ||
         /^\/workspace\/[^\/]+$/.test(currentPath) ||
-        /^\/workspace\/[^\/]+\/t\/[^\/]+$/.test(currentPath);
+        /^\/workspace\/[^\/]+\/t\/[^\/]+$/.test(currentPath) ||
+        currentPath === paths.pdfAnalysis();
       setCanToggleSidebar(isVisible);
     }
     checkPath();
