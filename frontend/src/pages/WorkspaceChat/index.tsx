@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { default as WorkspaceChatContainer } from "@/components/WorkspaceChat";
 import Sidebar from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
+import { SidebarToggleProvider } from "@/components/Sidebar/SidebarToggle";
 import { useParams } from "react-router-dom";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { isMobile } from "react-device-detect";
@@ -19,11 +20,13 @@ export default function WorkspaceChat() {
   }
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
-      {!isMobile && <Sidebar />}
-      {!isMobile && <LeftSidebarIconBar />}
-      <ShowWorkspaceChat />
-    </div>
+    <SidebarToggleProvider>
+      <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
+        {!isMobile && <Sidebar />}
+        {!isMobile && <LeftSidebarIconBar />}
+        <ShowWorkspaceChat />
+      </div>
+    </SidebarToggleProvider>
   );
 }
 

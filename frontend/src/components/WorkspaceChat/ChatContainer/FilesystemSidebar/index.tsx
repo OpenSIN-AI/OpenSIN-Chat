@@ -343,7 +343,7 @@ export default function FilesystemSidebar() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleSelectDirectory}
-                  disabled={!currentPath || currentPath === "/"}
+                  disabled={!currentPath || currentPath === "/" || currentPath === ""}
                   type="button"
                   className="flex items-center gap-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-40 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors flex-1"
                 >

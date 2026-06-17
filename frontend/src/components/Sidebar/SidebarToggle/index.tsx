@@ -1,26 +1,38 @@
 // SPDX-License-Identifier: MIT
-import React, { useEffect, useState } from "react";
-import { SidebarSimple } from "@phosphor-icons/react";
-import paths from "@/utils/paths";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { useLocation } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
+import { SidebarSimple } from "@phosphor-icons/react";
+import paths from "@/utils/paths";
+
 const SIDEBAR_TOGGLE_STORAGE_KEY = "openafd_sidebar_toggle";
 export const SIDEBAR_TOGGLE_EVENT = "sidebar-toggle";
 
-/**
- * Returns the previous state of the sidebar from localStorage.
- * If the sidebar was closed, returns false.
- * If the sidebar was open, returns true.
- * If the sidebar state is not set, returns true.
- * @returns {boolean}
- */
 function previousSidebarState() {
   const previousState = window.localStorage.getItem(SIDEBAR_TOGGLE_STORAGE_KEY);
   if (previousState === "closed") return false;
   return true;
 }
 
-export function useSidebarToggle() {
+interface SidebarToggleContextValue {
+  showSidebar: boolean;
+  setShowSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+  canToggleSidebar: boolean;
+}
+
+const SidebarToggleContext = createContext<SidebarToggleContextValue>({
+  showSidebar: true,
+  setShowSidebar: () => {},
+  canToggleSidebar: true,
+});
+
+export function SidebarToggleProvider({ children }: { children: React.ReactNode }) {
   const [showSidebar, setShowSidebar] = useState(previousSidebarState());
   const [canToggleSidebar, setCanToggleSidebar] = useState(true);
   const { pathname } = useLocation();
@@ -74,7 +86,17 @@ export function useSidebarToggle() {
     );
   }, [showSidebar]);
 
-  return { showSidebar, setShowSidebar, canToggleSidebar };
+  return (
+    <SidebarToggleContext.Provider
+      value={{ showSidebar, setShowSidebar, canToggleSidebar }}
+    >
+      {children}
+    </SidebarToggleContext.Provider>
+  );
+}
+
+export function useSidebarToggle() {
+  return useContext(SidebarToggleContext);
 }
 
 export function ToggleSidebarButton({ showSidebar, setShowSidebar }: any) {
@@ -86,7 +108,7 @@ export function ToggleSidebarButton({ showSidebar, setShowSidebar }: any) {
       <button
         type="button"
         className={`hidden md:block border-none bg-transparent outline-none ring-0 absolute transition-all duration-500 z-10 ${showSidebar ? "top-[18px] left-[248px]" : "top-[20px] left-[30px]"}`}
-        onClick={() => setShowSidebar((prev) => !prev)}
+        onClick={() => setShowSidebar((prev: boolean) => !prev)}
         data-tooltip-id="sidebar-toggle"
         data-tooltip-content={
           showSidebar

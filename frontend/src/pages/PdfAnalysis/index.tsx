@@ -23,6 +23,7 @@ import {
 } from "@phosphor-icons/react";
 import Sidebar from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
+import { SidebarToggleProvider } from "@/components/Sidebar/SidebarToggle";
 import PdfAnalysis from "@/models/pdfAnalysis";
 import { ChatSidebarProvider } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
 import Sidebars from "@/components/WorkspaceChat/ChatContainer/Sidebars";
@@ -106,10 +107,11 @@ export default function PdfAnalysisPage() {
   };
 
   return (
-    <ChatSidebarProvider>
-      <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
-        <Sidebar />
-        <LeftSidebarIconBar />
+    <SidebarToggleProvider>
+      <ChatSidebarProvider>
+        <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
+          <Sidebar />
+          <LeftSidebarIconBar />
         <main className="flex-1 overflow-y-auto p-6">
           <header className="flex flex-col gap-2 mb-6">
             <h1 className="text-xl font-semibold text-theme-text-primary text-balance">
@@ -162,7 +164,8 @@ export default function PdfAnalysisPage() {
         </main>
         <Sidebars workspace={null} />
       </div>
-    </ChatSidebarProvider>
+      </ChatSidebarProvider>
+    </SidebarToggleProvider>
   );
 }
 

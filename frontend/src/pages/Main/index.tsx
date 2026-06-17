@@ -6,6 +6,7 @@ import Home from "./Home";
 import { isMobile } from "react-device-detect";
 import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
+import { SidebarToggleProvider } from "@/components/Sidebar/SidebarToggle";
 
 export default function Main() {
   const { loading, requiresAuth, mode } = usePasswordModal();
@@ -15,10 +16,12 @@ export default function Main() {
     return <>{requiresAuth !== null && <PasswordModal mode={mode} />}</>;
 
   return (
-    <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
-      {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
-      {!isMobile && <LeftSidebarIconBar />}
-      <Home />
-    </div>
+    <SidebarToggleProvider>
+      <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
+        {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
+        {!isMobile && <LeftSidebarIconBar />}
+        <Home />
+      </div>
+    </SidebarToggleProvider>
   );
 }
