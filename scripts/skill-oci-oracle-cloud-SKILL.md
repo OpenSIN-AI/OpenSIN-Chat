@@ -1248,3 +1248,191 @@ Die globale AGENTS.md-Regel Priority-20 besagt: "Agent environment cannot SSH, d
 | Container-Agent mit explizit `sanitize-network` | JA — assume enforced |
 
 **Regel für zukünftige Agenten:** Probe einmal mit `ssh -o ConnectTimeout=3 -o BatchMode=yes <alias> 'echo ok'` bevor du annimmst, dass SSH nicht funktioniert.
+
+
+### 21.15 Watchdog / Healthcheck / Monitor — Installation (autonom)
+
+Diese 3 systemd-Timer sind auf `sin-supabase` installiert und verhindern künftige Ausfälle automatisch:
+
+| Timer | Intervall | Funktion |
+|---|---|---|
+| `cloudflared-watchdog.timer` | 60s | Restartet `cloudflared-opensin-chat` wenn down |
+| `sinchat-healthcheck.timer` | 120s | Checkt `localhost:38471`, restartet Container bei Failure |
+| `sinchat-external-monitor.timer` | 300s | Checkt `https://sinchat.delqhi.com` öffentlich, triggert `emergency-recover.sh` |
+
+#### Installation (falls VM neu aufgesetzt wird)
+
+```bash
+# === 1. Cloudflared Watchdog ===
+ssh sin-supabase 'bash -s' << 'EOF'
+sudo tee /usr/local/bin/cloudflared-watchdog.sh > /dev/null << "WD"
+#!/usr/bin/env bash
+set -euo pipefail
+SERVICE="${1:-cloudflared-opensin-chat}"
+MAX_RESTARTS=10
+WINDOW_SEC=600
+STATE_FILE="/var/lib/cloudflared-watchdog/restart-state"
+mkdir -p /var/lib/cloudflared-watchdog
+is_active() { systemctl is-active --quiet "$SERVICE"; }
+count_restarts() {
+  local cutoff=$((EPOCHSECONDS - WINDOW_SEC))
+  awk -v c="$cutoff" '$1 > c' "$STATE_FILE" 2>/dev/null | wc -l
+}
+if is_active; then exit 0; fi
+RESTARTS=$(count_restarts)
+if [ "$RESTARTS" -ge "$MAX_RESTARTS" ]; then
+  echo "FATAL: $RESTARTS restarts in $WINDOW_SEC sec" >&2
+  touch /var/lib/cloudflared-watchdog/emergency
+  exit 1
+fi
+sudo systemctl restart "$SERVICE"
+echo "$EPOCHSECONDS" >> "$STATE_FILE"
+sleep 3
+is_active && echo "OK" && exit 0 || exit 1
+WD
+sudo chmod +x /usr/local/bin/cloudflared-watchdog.sh
+
+sudo tee /etc/systemd/system/cloudflared-watchdog.service > /dev/null << "SVC"
+[Unit]
+Description=Cloudflared Watchdog
+After=network.target
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/cloudflared-watchdog.sh cloudflared-opensin-chat
+User=root
+SVC
+
+sudo tee /etc/systemd/system/cloudflared-watchdog.timer > /dev/null << "TMR"
+[Unit]
+Description=Run cloudflared-watchdog every 60s
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=60s
+AccuracySec=5s
+[Install]
+WantedBy=timers.target
+TMR
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now cloudflared-watchdog.timer
+EOF
+
+# === 2. sinchat-healthcheck ===
+ssh sin-supabase 'bash -s' << 'EOF'
+sudo tee /usr/local/bin/sinchat-healthcheck.sh > /dev/null << "HC"
+#!/usr/bin/env bash
+set -euo pipefail
+URL="http://localhost:38471"
+R=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 "$URL" 2>/dev/null || echo 000)
+if echo "$R" | grep -qE '^(200|302|307)$'; then exit 0; fi
+echo "HEALTH FAIL: HTTP $R"
+cd /home/ubuntu/OpenSIN-Chat/docker
+docker compose -p opensin restart opensin-chat 2>/dev/null || true
+sleep 5
+R2=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 "$URL" 2>/dev/null || echo 000)
+if echo "$R2" | grep -qE '^(200|302|307)$'; then echo "RECOVERED"; exit 0; fi
+echo "FATAL: still down (HTTP $R2)"; exit 1
+HC
+sudo chmod +x /usr/local/bin/sinchat-healthcheck.sh
+
+sudo tee /etc/systemd/system/sinchat-healthcheck.service > /dev/null << "SVC"
+[Unit]
+Description=sinchat.delqhi.com healthcheck
+After=network.target docker.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sinchat-healthcheck.sh
+User=root
+SVC
+
+sudo tee /etc/systemd/system/sinchat-healthcheck.timer > /dev/null << "TMR"
+[Unit]
+Description=Run sinchat healthcheck every 120s
+[Timer]
+OnBootSec=60s
+OnUnitActiveSec=120s
+AccuracySec=10s
+[Install]
+WantedBy=timers.target
+TMR
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now sinchat-healthcheck.timer
+EOF
+
+# === 3. sinchat-external-monitor ===
+ssh sin-supabase 'bash -s' << 'EOF'
+sudo tee /usr/local/bin/sinchat-external-monitor.sh > /dev/null << "MON"
+#!/usr/bin/env bash
+set -euo pipefail
+URL="https://sinchat.delqhi.com"
+R=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 15 "$URL" 2>/dev/null || echo 000)
+TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+LOG="/var/log/sinchat-monitor.log"
+if echo "$R" | grep -qE '^(200|302|307)$'; then
+  echo "$TS OK HTTP $R" >> "$LOG"
+  exit 0
+fi
+echo "$TS FAIL HTTP $R — triggering emergency-recover" >> "$LOG"
+/usr/local/bin/emergency-recover.sh >> "$LOG" 2>&1 || true
+exit 1
+MON
+sudo chmod +x /usr/local/bin/sinchat-external-monitor.sh
+sudo touch /var/log/sinchat-monitor.log
+sudo chmod 644 /var/log/sinchat-monitor.log
+
+sudo tee /etc/systemd/system/sinchat-external-monitor.service > /dev/null << "SVC"
+[Unit]
+Description=sinchat.delqhi.com external URL monitor
+After=network.target
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sinchat-external-monitor.sh
+User=root
+SVC
+
+sudo tee /etc/systemd/system/sinchat-external-monitor.timer > /dev/null << "TMR"
+[Unit]
+Description=Monitor sinchat.delqhi.com every 300s
+[Timer]
+OnBootSec=120s
+OnUnitActiveSec=300s
+AccuracySec=15s
+[Install]
+WantedBy=timers.target
+TMR
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now sinchat-external-monitor.timer
+EOF
+
+# === 4. emergency-recover.sh on VM ===
+ssh sin-supabase 'bash -s' << 'EOF'
+sudo tee /usr/local/bin/emergency-recover.sh > /dev/null << "REC"
+#!/usr/bin/env bash
+set -euo pipefail
+echo "=== Emergency Recovery for sinchat.delqhi.com on sin-supabase ==="
+echo "1. Restart OpenSIN-Chat container..."
+cd /home/ubuntu/OpenSIN-Chat/docker
+docker compose -p opensin restart opensin-chat
+sleep 10
+echo "2. Restart cloudflared-opensin-chat..."
+sudo systemctl restart cloudflared-opensin-chat
+sleep 5
+echo "3. Verify..."
+LOCAL=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:38471)
+echo "  localhost:38471 -> HTTP $LOCAL"
+PUBLIC=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 https://sinchat.delqhi.com)
+echo "  sinchat.delqhi.com -> HTTP $PUBLIC"
+if echo "$PUBLIC" | grep -qE '^(200|302|307)$'; then echo "RECOVERED"; exit 0; else echo "STILL DOWN"; exit 1; fi
+REC
+sudo chmod +x /usr/local/bin/emergency-recover.sh
+EOF
+```
+
+#### Verify installation
+
+```bash
+ssh sin-supabase 'systemctl list-timers --all --no-pager | grep -E "cloudflared-watchdog|sinchat-healthcheck|sinchat-external"'
+# Expected: 3 active timers
+```
