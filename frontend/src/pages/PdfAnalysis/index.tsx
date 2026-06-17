@@ -112,7 +112,7 @@ export default function PdfAnalysisPage() {
         <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
           <LeftSidebarIconBar />
           <Sidebar />
-        <main className="flex-1 overflow-y-auto p-6">
+          <main className="flex-1 overflow-y-auto p-6">
           <header className="flex flex-col gap-2 mb-6">
             <h1 className="text-xl font-semibold text-theme-text-primary text-balance">
               {t("pdfAnalysis.panel.title")}
