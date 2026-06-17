@@ -803,3 +803,152 @@ Canonical Runbook. Always-edit-first Quelle der Recovery-Chains. Wenn Details hi
 ---
 
 **END SKILL `skill-oci-oracle-cloud`** — wenn hier was fehlt: TODO-Liste in §1 / §6 / §7; vollständiger Audit alle 30 Tage oder bei jedem OCI-Change.
+
+---
+
+## 20. OCI Best Practices & Daily-Drive Reference
+
+> **Provenance note 2026-06-17**: An attempted web-fetch of the canonical
+> Oracle docs-pages (docs.oracle.com/iaas/.../bestpractices.htm and
+> variants) returned 404 / network-timeout from this environment. This
+> section is therefore a knowledge-base refresh from training, plus the
+> shared /Users/jeremy/dev/Infra-SIN-Dev-Setup/OCI-dev-setup.md (already
+> in §5). Whenever a future agent has web access, run
+> `webfetch https://docs.oracle.com/iaas/Content/<X>` and reconcile with
+> any drift.
+
+### 20.1 Identity & Access Management (IAM)
+
+- **Compartments** = logical groupings for resources. Always nest (root → app → env).
+  Apply IAM policies at compartment level, NEVER tenancy-wide.
+- **Group memberships** = least privilege. Humans in one group; compute agents
+  in another, each granted only the verbs they need (e.g. `inspect`,
+  `use`, `manage`).
+- **API keys**: 2048/4096 RSA, uploaded via OCI Console "User Settings → API Keys".
+  Fingerprints land in `~/.oci/config`. **Rotate every 90 days** — synced with
+  the Infisical Service Token §11 rotation policy.
+- **Instance-principal auth**: when compute itself calls OCI (e.g. a watchdog
+  restarts a peer VM), don't store `oci_api_key.pem` on the VM — let compute
+  use its dynamic group. Saves rotation debt AND avoids leaking keys via SSH.
+
+### 20.2 Networking (VCN / Subnet / Security Lists / NSGs)
+
+- **VCN sizing**: typical /16. Don't oversize.
+- **Subnets**: prefer regional subnets (work across ADs).
+- **Two firewall layers** (already in §5): OCI Security List + iptables on VM.
+- **Security Lists** = subnet-wide; **NSGs** = vNIC-level. Use NSGs for fine-grained.
+- **Service Gateway** for Object Storage without traversing internet.
+- **NAT Gateway** for private subnet egress.
+
+### 20.3 Compute (Always-Free A1.Flex focus)
+
+- **Shape**: `VM.Standard.A1.Flex` (ARM Ampere), 4 OCPU + 24 GB RAM.
+- **Image**: Ubuntu 22.04 LTS or 24.04 LTS — canonical.
+- **Boot volume**: up to 50 GB Always-Free.
+- **Stop vs Terminate**: `Stop` preserves volume + private IP (cost-saving).
+  `Terminate` deletes — irreversible.
+- **Live migration**: OCI live-migrates VMs for host maintenance. Don't assume
+  shared local state survives.
+
+### 20.4 Object Storage
+
+- **Tiers**: Standard / Infrequent Access / Archive. Lifecycle rules
+  auto-migrate cold data to archive (cheapest).
+- **Pre-Authenticated Requests (PAR)**: scoped URLs with expiry. NEVER embed
+  long-lived secrets in URLs.
+- **Versioning**: enable on production buckets (e.g. secrets backup).
+- **Replication**: cross-region for DR.
+
+### 20.5 Monitoring & Observability
+
+- **OCI Monitoring service**: alarms (CPU > 80%, free-tier doesn't ship memory
+  metric — workaround: ship custom metric from VM via `cron` + `oci monitoring
+  metric post`).
+- **OCI Notifications + Email**: alarm action.
+- **OCI Logging service**: centralized. Free-tier limit applies.
+
+### 20.6 Cost management
+
+- **Budget alerts** ALWAYS at $5 (already in §5.3).
+- **Stop-when-idle** pattern: cron + `oci compute instance action --action STOP`
+  during off-hours for non-prod VMs.
+- **Quota awareness**: `oci limits quota list --compartment-id <X>` shows
+  current vs max for the tenancy.
+
+### 20.7 High-availability (caveat: Always-Free = no SLA)
+
+- Single-instance Always-Free deployments have NO SLA.
+- For HA, escalate to PAYGO ~$0.01/hr VM.Standard.E2.1.Micro (essentially free
+  at low usage; budget alert catches drift).
+
+### 20.8 OCI CLI daily-driver cheatsheet
+
+```bash
+# Compute
+oci compute instance list --compartment-id <X> --output table
+oci compute instance action --instance-id <X> --action {STOP|START|RESTART|SOFTRESET}
+oci compute instance get --instance-id <X>
+oci compute vnic-attachment list --compartment-id <X> --instance-id <X>
+
+# Networking (VCN / SL / NSG)
+oci network vcn list --compartment-id <X> --output table
+oci network subnet list --compartment-id <X> --vcn-id <X>
+oci network security-list list --compartment-id <X> --vcn-id <X>
+oci network nsg list --compartment-id <X> --vcn-id <X>
+oci network public-ip list --compartment-id <X> --scope REGIONAL --output table
+oci network public-ip assign --public-ip-id <OCID> --reserved-entity-id <INSTANCE_OCID> --reserved-entity-type Compute
+
+# IAM (identity / policies / users / groups / dynamic-groups)
+oci iam compartment list --compartment-id-in-subtree true --all
+oci iam policy list --compartment-id <X>
+oci iam user list --compartment-id <X>
+oci iam dynamic-group list --compartment-id <X>
+oci iam api-key list --user-id <USER_OCID>
+
+# Object Storage
+oci os bucket list --compartment-id <X> --output table
+oci os object put --bucket-name <B> --name <K> --file <LOCAL_PATH>
+oci os object get --bucket-name <B> --name <K> --file <LOCAL_PATH>
+
+# Limits & quotas
+oci limits quota list --compartment-id <X> --service-name compute
+
+# Monitoring
+oci monitoring alarm list --compartment-id <X> --output table
+
+# Setup
+oci --version                                  # ≥ 3.x
+oci setup bootstrap                            # interactive
+oci setup repair-file-permissions              # if ~/.oci/config mode != 0600
+
+# Auth patterns
+oci --auth instance-principal ...              # when running ON the VM, dynamic-group auth (no key)
+oci --config-file <ALT_CONFIG> ...             # override config location
+```
+
+### 20.9 Anti-patterns to avoid
+
+- ❌ **Putting `oci_api_key.pem` directly on the VM** — use instance-principal.
+- ❌ **One root compartment for everything** — compartments scale & policy.
+- ❌ **Outbound ingress 0.0.0.0/0** — narrow as much as possible.
+- ❌ **No budget alert** — Always-Free tier pays real money after capacity overflow.
+- ❌ **Secrets in PAR URLs** — every URL is logged; embed nothing sensitive.
+- ❌ **Assuming Always-Free has SLA** — it doesn't. Document everywhere.
+- ❌ **Storing `~/.ssh/*` keys without `chmod 600`** — `oci compute instance
+  launch` and `ssh-agent` will refuse on some setups.
+
+### 20.10 Daily-driver decision tree (for an Agent deciding what to run)
+
+```
+IF user says "OCI" / "Oracle" / "92.5.*" / "sinchat" / "cloudflared" → load skill-oci-oracle-cloud
+
+ELSE IF user says "spin up a new VM" → §5 (Always-Free provision)
+ELSE IF user says "VM down" / "1033" / "recovery" → §10.x recovery playbook + scripts
+
+ELSE IF user asks for SDK call → §4 daily-driver; prefer instance-principal
+ELSE IF user asks for secrets → §11 Service-Token auto-detect (no prompt)
+ELSE IF user asks "what's running?" → vm1-runtime-dump.sh on Operator Mac
+
+ELSE IF user says "audit" / "compliance" / "ce0-audit" → load ceo-audit skill (47 gates)
+```
+
