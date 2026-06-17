@@ -342,7 +342,6 @@ class GenericOpenAiLLM {
             fullText += reasoningText;
             reasoningText = "";
           }
-          }
 
           if (token) {
             fullText += token;
