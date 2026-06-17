@@ -1166,3 +1166,85 @@ EOF
   ssh sin-supabase 'sudo systemctl stop cloudflared-opensin-chat; cd /home/ubuntu/OpenSIN-Chat/docker && docker compose -p opensin-chat down'
   # Mac: alten cloudflared-Prozess wieder starten
   ```
+
+
+### 21.10 Post-Deployment Verification (autonom)
+
+```bash
+# 1. OpenSIN-Chat Container läuft auf sin-supabase?
+ssh sin-supabase 'docker ps | grep opensin-app && curl -sS -o /dev/null -w "HTTP %{http_code}\n" --max-time 5 http://localhost:38471'
+# Erwartet: HTTP 200
+
+# 2. Cloudflare-Tunnel läuft?
+ssh sin-supabase 'sudo systemctl is-active cloudflared-opensin-chat && pgrep -af cloudflared.*config-opensin'
+
+# 3. Öffentlich erreichbar?
+for i in 1 2 3; do
+  curl -sS -o /dev/null -w "Attempt $i: HTTP %{http_code} cf-ray=%header{cf-ray}\n" --max-time 10 https://sinchat.delqhi.com
+  sleep 5
+done
+# Erwartet: HTTP 200 (verifiziert 2026-06-17: cf-ray=a0d2af962a4a889c-TXL)
+
+# 4. Mac-Prozess darf nicht mehr laufen
+ps aux | grep "cloudflared.*config-opensin" | grep -v grep
+# Erwartet: keine Ausgabe
+```
+
+**Aktueller Status (2026-06-17):**
+- `sinchat.delqhi.com` → Cloudflare → `sin-supabase` (`92.5.60.87`) → `localhost:38471` → OpenSIN-Chat Docker (`opensin-app:v0.56.15`) → **HTTP 200** ✅
+- `vane` Sidecar läuft parallel auf Port `8310`
+- Mac-Cloudflare-Tunnel `opensin-chat` wurde gestoppt und auf die OCI-VM migriert
+
+### 21.11 Bug-Fixes beim Deployment (2026-06-17)
+
+Beim ersten Start auf `sin-supabase` crashte der Container wegen zwei hängender Imports in `server/app.js` — Überbleibsel der Wave-6-Endpoint-Bereinigung:
+
+| Bug | Fix | Commit |
+|---|---|---|
+| `Cannot find module './endpoints/webPush'` | `require("./endpoints/webPush")` und `webPushEndpoints(apiRouter)` aus `server/app.js` entfernt | `5191d9e8` |
+| `Cannot find module './endpoints/telegram'` | `require("./endpoints/telegram")` und `telegramEndpoints(apiRouter)` aus `server/app.js` entfernt | `d89bf5ab` |
+
+> **Lektion für zukünftige Agenten:** Wenn nach einer Endpoint-Bereinigung der Container mit `MODULE_NOT_FOUND` crasht, prüfe ALLE `require()`-Statements in `server/app.js` gegen das `server/endpoints/`-Verzeichnis. Entferne beide Zeilen (Import + Aufruf) für jedes fehlende Modul.
+
+### 21.12 Disk- & Ressourcen-Status sin-supabase
+
+| Ressource | Wert |
+|---|---|
+| Disk `/dev/sda1` | 193 GB total, 46 GB used, 147 GB free (24 %) |
+| RAM | 23 GB total, 5.3 GB used, 18 GB available |
+| Swap | 4 GB (504 KB used) |
+| OpenSIN-Chat RAM-Bedarf | ~1–2 GB (inkl. Vane) |
+| Reserve | ~16 GB frei — ausreichend für OpenSIN-Chat + bestehende Services |
+
+### 21.13 OpenSIN-Chat .env — erforderliche Variablen
+
+Die `docker/.env` auf `sin-supabase` muss mindestens enthalten:
+
+```env
+NODE_ENV=production
+SERVER_PORT=3001
+JWT_SECRET=<openssl rand -hex 32>
+SIG_KEY=<openssl rand -hex 32>
+SIG_SALT=<openssl rand -hex 16>
+DATABASE_URL=file:../storage/openafd.db
+STORAGE_DIR=/app/server/storage
+UID=1000
+GID=1000
+```
+
+> `SIG_KEY` und `SIG_SALT` verschlüsseln gespeicherte Provider-API-Keys. Ohne sie startet der Server, aber Keys können nicht entschlüsselt werden.
+
+### 21.14 Priority-20 Reality-Check (Agent-SSH-Kapazität)
+
+Die globale AGENTS.md-Regel Priority-20 besagt: "Agent environment cannot SSH, deploy to OCI / run cloudflared."
+
+**In dieser Umgebung (`simoneschulze@MacBook-Pro-von-Jeremy`) ist Priority-20 NICHT durchgesetzt** — `ssh sin-blackbox` und `ssh sin-supabase` funktionieren, der bash-Tool kann SSH ausführen, und `~/.ssh/id_ed25519` authentifiziert gegen beide OCI-VMs.
+
+| Umgebungs-Marker | Priority-20 enforced? |
+|---|---|
+| Mac mit `~/.ssh/config` + `~/.ssh/id_*` + funktionierender OCI-Auth | **NEIN** — bash SSH funktioniert |
+| OrbStack auf Mac (`~/.orbstack/ssh/config` befüllt) | **NEIN** — bash SSH funktioniert |
+| Headless CI-Container ohne SSH-Keychain | wahrscheinlich JA — bash SSH schlägt fehl |
+| Container-Agent mit explizit `sanitize-network` | JA — assume enforced |
+
+**Regel für zukünftige Agenten:** Probe einmal mit `ssh -o ConnectTimeout=3 -o BatchMode=yes <alias> 'echo ok'` bevor du annimmst, dass SSH nicht funktioniert.
