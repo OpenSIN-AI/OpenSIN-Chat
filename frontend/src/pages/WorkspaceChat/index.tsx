@@ -22,8 +22,8 @@ export default function WorkspaceChat() {
   return (
     <SidebarToggleProvider>
       <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
-        {!isMobile && <Sidebar />}
         {!isMobile && <LeftSidebarIconBar />}
+        {!isMobile && <Sidebar />}
         <ShowWorkspaceChat />
       </div>
     </SidebarToggleProvider>
