@@ -90,8 +90,8 @@ class PlenarScraper {
    * @returns {string}
    */
   #protocolXmlUrl(session, sitting) {
-    const padded = String(sitting).padStart(5, "0");
-    return `${DIP_BASE}/btp/${session}/${session}${padded}.pdf.xml`;
+    const padded = String(sitting).padStart(3, "0");
+    return `${DIP_BASE}/btp/${session}/${session}${padded}.xml`;
   }
 
   /**
@@ -256,6 +256,16 @@ class PlenarScraper {
       const res = await this.#fetch(url);
       const xmlText = await res.text();
 
+      // Extract the document date from the root <datum date="DD.MM.YYYY"> element.
+      // This sits outside <rede> blocks, so we parse it once and pass it through.
+      let docDate = null;
+      const dateAttrMatch = xmlText.match(
+        /<datum[^>]*\bdate="(\d{2})\.(\d{2})\.(\d{4})"/i,
+      );
+      if (dateAttrMatch) {
+        docDate = `${dateAttrMatch[3]}-${dateAttrMatch[2]}-${dateAttrMatch[1]}`;
+      }
+
       // Bundestag DIP XML uses namespaced elements.
       // Extract speaker blocks: <rede> elements contain speaker info and text.
       const speeches = [];
@@ -264,7 +274,13 @@ class PlenarScraper {
 
       while ((match = redeRegex.exec(xmlText)) !== null) {
         const block = match[1];
-        const speech = this.#parseRedeBlock(block, session, sitting, url);
+        const speech = this.#parseRedeBlock(
+          block,
+          session,
+          sitting,
+          url,
+          docDate,
+        );
         if (speech && speech.text.trim()) speeches.push(speech);
       }
 
@@ -286,11 +302,11 @@ class PlenarScraper {
    * @param {string} protocolUrl
    * @returns {PlenarSpeech|null}
    */
-  #parseRedeBlock(block, session, sitting, protocolUrl) {
+  #parseRedeBlock(block, session, sitting, protocolUrl, docDate) {
     try {
       const getName = () => {
         const nMatch = block.match(
-          /<redner>[\s\S]*?<name>[\s\S]*?<vorname>([^<]*)<\/vorname>[\s\S]*?<nachname>([^<]*)<\/nachname>/i,
+          /<redner[^>]*>[\s\S]*?<name>[\s\S]*?<vorname>([^<]*)<\/vorname>[\s\S]*?<nachname>([^<]*)<\/nachname>/i,
         );
         if (nMatch) {
           return { first: nMatch[1].trim(), last: nMatch[2].trim() };
@@ -298,13 +314,23 @@ class PlenarScraper {
         return null;
       };
 
+      const getParty = () => {
+        const pMatch = block.match(/<fraktion>([^<]*)<\/fraktion>/i);
+        return pMatch ? pMatch[1].trim() : null;
+      };
+
       const getText = () => {
-        // Collect all <p> elements within the rede block
+        // Collect all <p> elements within the rede block, excluding the
+        // speaker-introduction paragraph (<p klasse="redner">) which contains
+        // the <redner> metadata and "Name (Fraktion):" label, not speech text.
         const paragraphs = [];
         const pRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
         let pm;
-        while ((pm = pRegex.exec(block)) !== null)
+        while ((pm = pRegex.exec(block)) !== null) {
+          const pTag = pm[0].slice(0, pm[0].indexOf(">") + 1);
+          if (/klasse="redner"/i.test(pTag)) continue;
           paragraphs.push(pm[1].replace(/<[^>]+>/g, "").trim());
+        }
         return paragraphs.join("\n\n");
       };
 
@@ -327,10 +353,10 @@ class PlenarScraper {
 
       return {
         speakerName: `${name.first} ${name.last}`.trim(),
-        speakerParty: null, // party info is in a separate element, extracted during normalization
+        speakerParty: getParty(),
         text: getText(),
         top: getTop() || `Sitzung ${sitting}`,
-        date: getDate() || new Date().toISOString().slice(0, 10),
+        date: getDate() || docDate || new Date().toISOString().slice(0, 10),
         session,
         sitting,
         pageNumbers: null,
@@ -347,17 +373,44 @@ class PlenarScraper {
    * @param {number} session - Wahlperiode (e.g. 20)
    * @returns {Promise<Array<{sitting: number, date: string}>>}
    */
-  async fetchSessionIndex(_session) {
-    const url = `${BUNDESTAG_BASE}/resource/blob/914190/7a7b5a2b73d6a5b7c3a2b7c8a0/20001-data.xml`;
-    try {
-      const res = await this.#fetch(url);
-      const text = await res.text();
-      const sittings = [];
-      const sitzungRegex = /<sitzung[^>]*nr="(\d+)"[^>]*datum="([^"]*)"/gi;
-      let match;
-      while ((match = sitzungRegex.exec(text)) !== null) {
-        sittings.push({ sitting: parseInt(match[1]), date: match[2] });
+  async fetchSessionIndex(session) {
+    // Probe the dserver for available sittings using binary search.
+    // The old hardcoded bundestag.de blob URL is dead; the dserver XML files
+    // follow the pattern /btp/{wp}/{wp}{NNN}.xml with 3-digit padding.
+    const checkSitting = async (s) => {
+      const padded = String(s).padStart(3, "0");
+      const url = `${DIP_BASE}/btp/${session}/${session}${padded}.xml`;
+      try {
+        const res = await this.#fetch(url, { method: "HEAD" });
+        return res.ok;
+      } catch {
+        return false;
       }
+    };
+
+    try {
+      if (!(await checkSitting(1))) return [];
+
+      // Binary search for the highest available sitting (cap at 300).
+      let lo = 1;
+      let hi = 300;
+      let highest = 1;
+      while (lo <= hi) {
+        const mid = Math.floor((lo + hi) / 2);
+        if (await checkSitting(mid)) {
+          highest = mid;
+          lo = mid + 1;
+        } else {
+          hi = mid - 1;
+        }
+      }
+
+      const sittings = [];
+      for (let i = 1; i <= highest; i++)
+        sittings.push({ sitting: i, date: null });
+      this.log(
+        `Session index: ${highest} sittings discovered for WP ${session}`,
+      );
       return sittings;
     } catch (err) {
       this.log(`Error fetching session index: ${err.message}`);

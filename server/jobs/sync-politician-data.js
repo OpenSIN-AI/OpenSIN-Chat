@@ -498,7 +498,7 @@ async function determineSittingsToSync(session) {
   }
 
   // Fallback: try a sliding window of sitting numbers around the last known one
-  const base = lastSitting > 0 ? lastSitting + 1 : 180; // WP20 starts around sitting 1
+  const base = lastSitting > 0 ? lastSitting + 1 : 1;
   return Array.from({ length: SITTINGS_PER_RUN }, (_, i) => base + i);
 }
 
