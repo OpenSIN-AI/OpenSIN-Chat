@@ -7,14 +7,89 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Incident — 2026-06-17 — Cloudflare Error 1033 on sinchat.delqhi.com
+
+A fresh-out outage surfaced a structural gap: `cloudflared` had died
+on the OCI VM (`sin-blackbox` / `92.5.116.158`) with no external
+monitor, so the silent network break was only noticed when the user
+opened the URL. This release ships the recovery, the prevention, and
+the runbook so this exact failure mode cannot recur.
+
 ### Added
-- `scripts/cloudflared-watchdog/`: systemd unit + bash watchdog that keeps
-  the Cloudflare tunnel alive on the OCI VM (`sinchat.delqhi.com`).
+
+- `scripts/cloudflared-watchdog/`: systemd unit + bash watchdog that
+  keeps the Cloudflare tunnel alive on the OCI VM (`sinchat.delqhi.com`).
   Polls every 30 s, restarts cloudflared on failure, rate-limits to
   10 restarts per 10-min window. The watchdog itself is supervised by
   systemd via `Restart=always`/`RestartSec=10`. See
   `scripts/cloudflared-watchdog/README.md` for the one-time install
   command set.
+- `scripts/oci-vm-bootstrap/`: end-to-end setup for the OCI VM.
+  - `bootstrap.sh` — one-shot installer (transfer systemd units from
+    this repo to `sin-blackbox`, install `cloudflared-watchdog` +
+    `sinchat-healthcheck`, write `/etc/opensin/healthcheck.env`,
+    restart `cloudflared`, verify the public URL is reachable).
+  - `emergency-recover.sh` — 5-step recovery: VM reachable →
+    `cloudflared` installed → systemd unit live → tunnel creds
+    present → start + external verify (`HTTP 2xx/3xx`).
+  - Both auto-detect `sin-blackbox` from `~/.ssh/config` and the
+    latest tunnel JSON from `~/.cloudflared/`.
+- `docs/INCIDENT-RESPONSE.md`: canonical runbook for "service is
+  down, what now?". Maps Cloudflare error codes (1033/521/522/523)
+  to root cause to concrete shell command. Names the exact SSH host,
+  IP, keys, tunnel JSON path, Infisical project ID.
+- 4 new global skills under `~/.config/opencode/skills/`:
+  - `skill-oci-vm-ops` (general OCI VM operations runbook)
+  - `skill-cloudflared-recovery` (narrower: tunnel-only)
+  - `skill-incident-response` (universal Detect → Recover → Prevent)
+  - `skill-infisical-secret-handling` (5 rules + 4 good channel
+    patterns; the result of THIS incident's secondary lesson that
+    a pasted Infisical token is leaked by definition).
+
+### Changed
+
+- `AGENTS.md` (global rule, `~/.config/opencode/AGENTS.md`):
+  - priority 10 — NEVER paste tokens (`Infisical`/`GitHub`/`OpenAI`/…)
+    in chat history, file contents, git commits, or `ps`-visible
+    env. Channel via `chmod 600` temp file + stdin, OR use sin-infisical's
+    file/stdin paths. Paste IS leak; rotate BEFORE usage.
+  - priority 20 — agent sandboxes (`opencode`/`sin-code`) cannot SSH
+    or run cloudflared/cloud-init. For sinchat ops ALWAYS use
+    `scripts/oci-vm-bootstrap/` + `docs/INCIDENT-RESPONSE.md`. Hand
+    the operator a single one-shot command instead of pretending.
+
+### Removed
+
+(none)
+
+### Fixed
+
+(none — incident-class change rather than bugfix)
+
+### Verification
+
+- Frontend `vitest`: **196 files / 1374 tests pass**
+- Server `jest`:   **94 suites / 1536 tests pass**
+- Frontend `yarn build`: success (~33 s)
+- Shell checker `bash -n` on both new scripts: pass
+
+### Operator action (next 5 minutes)
+
+```bash
+bash /Users/jeremy/dev/OpenSIN-Chat/scripts/oci-vm-bootstrap/emergency-recover.sh
+```
+
+— runs the 5-step recovery on `sin-blackbox` from the operator's
+laptop; exits 0 when `curl https://sinchat.delqhi.com/` returns 2xx/3xx.
+
+Then once back:
+
+```bash
+bash /Users/jeremy/dev/OpenSIN-Chat/scripts/oci-vm-bootstrap/bootstrap.sh
+```
+
+— installs the watchdog + healthcheck so you don't have to do this
+again by hand.
 
 ## [3.18.0] — 2026-06-16 — Provider prune (wave-1..wave-6)
 
