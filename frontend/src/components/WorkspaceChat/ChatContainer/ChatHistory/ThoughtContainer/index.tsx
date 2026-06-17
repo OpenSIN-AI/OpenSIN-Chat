@@ -57,8 +57,8 @@ export function useThoughtExpansion(messageId: any) {
   };
 }
 
-const THOUGHT_KEYWORDS = ["thought", "thinking", "think", "thought_chain"];
-const CLOSING_TAGS = [...THOUGHT_KEYWORDS, "response", "answer"];
+const THOUGHT_KEYWORDS = ["thought", "thinking", "think", "thought_chain", "arg_value"];
+const CLOSING_TAGS = [...THOUGHT_KEYWORDS, "response", "answer", "arg_value"];
 export const THOUGHT_REGEX_OPEN = new RegExp(
   (THOUGHT_KEYWORDS as any)
     .map((keyword) => `<${keyword}\\s*(?:[^>]*?)?\\s*>`)
