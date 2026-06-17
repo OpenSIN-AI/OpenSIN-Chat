@@ -181,34 +181,6 @@ class Provider {
           apiKey: process.env.MISTRAL_API_KEY ?? null,
           ...config,
         });
-      case "openrouter":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://openrouter.ai/api/v1",
-            defaultHeaders: {
-              "HTTP-Referer": "https://openafd.com",
-              "X-Title": "OpenSIN Chat",
-            },
-          },
-          apiKey: process.env.OPENROUTER_API_KEY ?? null,
-          ...config,
-        });
-      case "perplexity":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.perplexity.ai",
-          },
-          apiKey: process.env.PERPLEXITY_API_KEY ?? null,
-          ...config,
-        });
-      case "togetherai":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: "https://api.together.xyz/v1",
-          },
-          apiKey: process.env.TOGETHER_AI_API_KEY ?? null,
-          ...config,
-        });
       case "generic-openai":
         return new ChatOpenAI({
           configuration: {
@@ -260,28 +232,12 @@ class Provider {
           ...config,
         });
       }
-      case "koboldcpp":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: process.env.KOBOLD_CPP_BASE_PATH,
-          },
-          apiKey: "not-used",
-          ...config,
-        });
       case "localai":
         return new ChatOpenAI({
           configuration: {
             baseURL: process.env.LOCAL_AI_BASE_PATH,
           },
           apiKey: process.env.LOCAL_AI_API_KEY ?? "not-used",
-          ...config,
-        });
-      case "textgenwebui":
-        return new ChatOpenAI({
-          configuration: {
-            baseURL: process.env.TEXT_GEN_WEB_UI_BASE_PATH,
-          },
-          apiKey: process.env.TEXT_GEN_WEB_UI_API_KEY ?? "not-used",
           ...config,
         });
       case "litellm":

@@ -71,6 +71,7 @@ vi.mock("@/models/workspace", () => ({
         new: (...args) => newFolderMock(...args),
         update: (...args) => updateFolderMock(...args),
         delete: (...args) => deleteFolderMock(...args),
+        assignThread: vi.fn(() => Promise.resolve(true)),
       },
     },
   },
@@ -184,7 +185,9 @@ describe("ThreadFolderItem", () => {
     await vi.waitFor(() => {
       expect(newThreadMock).toHaveBeenCalledWith("my-workspace");
     });
-    expect(invalidateThreadsMock).toHaveBeenCalledWith("my-workspace");
+    await vi.waitFor(() => {
+      expect(invalidateThreadsMock).toHaveBeenCalledWith("my-workspace");
+    });
     expect(navigateMock).toHaveBeenCalledWith(
       "/workspace/my-workspace/t/fresh-thread",
     );

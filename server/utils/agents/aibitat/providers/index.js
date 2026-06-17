@@ -7,7 +7,6 @@ const GroqProvider = require("./groq.js");
 const LocalAIProvider = require("./localai.js");
 const MistralProvider = require("./mistral.js");
 const GenericOpenAiProvider = require("./genericOpenAi.js");
-const TextWebGenUiProvider = require("./textgenwebui.js");
 const FireworksAIProvider = require("./fireworksai.js");
 const LiteLLMProvider = require("./litellm.js");
 const XAIProvider = require("./xai.js");
@@ -25,7 +24,6 @@ module.exports = {
   LocalAIProvider,
   MistralProvider,
   GenericOpenAiProvider,
-  TextWebGenUiProvider,
   FireworksAIProvider,
   LiteLLMProvider,
   XAIProvider,

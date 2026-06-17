@@ -10,13 +10,10 @@ import GeminiAiLogo from "@/media/llmprovider/gemini.png";
 import LocalAiLogo from "@/media/llmprovider/localai.png";
 import OllamaLogo from "@/media/llmprovider/ollama.png";
 import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
-import CohereLogo from "@/media/llmprovider/cohere.png";
 import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
 import LiteLLMLogo from "@/media/llmprovider/litellm.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import MistralAiLogo from "@/media/llmprovider/mistral.jpeg";
-import OpenRouterLogo from "@/media/llmprovider/openrouter.jpeg";
-import LemonadeLogo from "@/media/llmprovider/lemonade.png";
 
 import PreLoader from "@/components/Preloader";
 import ChangeWarningModal from "@/components/ChangeWarning";
@@ -26,13 +23,10 @@ import LocalAiOptions from "@/components/EmbeddingSelection/LocalAiOptions";
 import NativeEmbeddingOptions from "@/components/EmbeddingSelection/NativeEmbeddingOptions";
 import OllamaEmbeddingOptions from "@/components/EmbeddingSelection/OllamaOptions";
 import LMStudioEmbeddingOptions from "@/components/EmbeddingSelection/LMStudioOptions";
-import CohereEmbeddingOptions from "@/components/EmbeddingSelection/CohereOptions";
 import VoyageAiOptions from "@/components/EmbeddingSelection/VoyageAiOptions";
 import LiteLLMOptions from "@/components/EmbeddingSelection/LiteLLMOptions";
 import GenericOpenAiEmbeddingOptions from "@/components/EmbeddingSelection/GenericOpenAiOptions";
-import OpenRouterOptions from "@/components/EmbeddingSelection/OpenRouterOptions";
 import MistralAiOptions from "@/components/EmbeddingSelection/MistralAiOptions";
-import LemonadeOptions from "@/components/EmbeddingSelection/LemonadeOptions";
 
 import EmbedderItem from "@/components/EmbeddingSelection/EmbedderItem";
 import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
@@ -98,33 +92,11 @@ const EMBEDDERS: Embedder[] = [
       "Discover, download, and run thousands of cutting edge LLMs in a few clicks.",
   },
   {
-    name: "Lemonade",
-    value: "lemonade",
-    logo: LemonadeLogo,
-    options: (settings: any) => <LemonadeOptions settings={settings} />,
-    description:
-      "Run embedding models locally on your own machine using Lemonade.",
-  },
-  {
-    name: "OpenRouter",
-    value: "openrouter",
-    logo: OpenRouterLogo,
-    options: (settings: any) => <OpenRouterOptions settings={settings} />,
-    description: "Run embedding models from OpenRouter.",
-  },
-  {
     name: "LiteLLM",
     value: "litellm",
     logo: LiteLLMLogo,
     options: (settings: any) => <LiteLLMOptions settings={settings} />,
     description: "Run powerful embedding models from LiteLLM.",
-  },
-  {
-    name: "Cohere",
-    value: "cohere",
-    logo: CohereLogo,
-    options: (settings: any) => <CohereEmbeddingOptions settings={settings} />,
-    description: "Run powerful embedding models from Cohere.",
   },
   {
     name: "Voyage AI",

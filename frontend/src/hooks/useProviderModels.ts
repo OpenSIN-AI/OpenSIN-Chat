@@ -15,11 +15,7 @@ function groupModels(models: any[]) {
 const GROUPED_PROVIDERS = [
   "fireworksai",
   "openai",
-  "novita",
-  "openrouter",
-  "ppio",
   "docker-model-runner",
-  "sambanova",
 ];
 
 const PROVIDER_DEFAULT_MODELS: Record<string, string[]> = {
@@ -65,17 +61,7 @@ const PROVIDER_DEFAULT_MODELS: Record<string, string[]> = {
     "kimi-k2.6",
   ],
   groq: [],
-  cohere: [
-    "command-r",
-    "command-r-plus",
-    "command",
-    "command-light",
-    "command-nightly",
-    "command-light-nightly",
-  ],
-  textgenwebui: [],
   "generic-openai": [],
-  bedrock: [],
   xai: ["grok-beta"],
 };
 

@@ -170,9 +170,6 @@ function getLLMProvider({ provider = null, model = null } = {}) {
     case "groq":
       const { GroqLLM } = require("../AiProviders/groq");
       return new GroqLLM(embedder, model);
-    case "textgenwebui":
-      const { TextGenWebUILLM } = require("../AiProviders/textGenWebUI");
-      return new TextGenWebUILLM(embedder, model);
     case "litellm":
       const { LiteLLM } = require("../AiProviders/liteLLM");
       return new LiteLLM(embedder, model);
@@ -292,12 +289,6 @@ function getLLMProviderClass({ provider = null } = {}) {
     case "groq":
       const { GroqLLM } = require("../AiProviders/groq");
       return GroqLLM;
-    case "textgenwebui":
-      const { TextGenWebUILLM } = require("../AiProviders/textGenWebUI");
-      return TextGenWebUILLM;
-    case "cohere":
-      const { LiteLLM } = require("../AiProviders/liteLLM");
-      return LiteLLM;
     case "generic-openai":
       const { GenericOpenAiLLM } = require("../AiProviders/genericOpenAi");
       return GenericOpenAiLLM;
@@ -332,8 +323,6 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
   switch (provider) {
     case "openai":
       return process.env.OPEN_MODEL_PREF;
-    case "azure":
-      return process.env.AZURE_OPENAI_MODEL_PREF || process.env.OPEN_MODEL_PREF;
     case "anthropic":
       return process.env.ANTHROPIC_MODEL_PREF;
     case "gemini":
@@ -344,8 +333,6 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
       return process.env.LOCAL_AI_MODEL_PREF;
     case "ollama":
       return process.env.OLLAMA_MODEL_PREF;
-    case "togetherai":
-      return process.env.TOGETHER_AI_MODEL_PREF;
     case "fireworksai":
       return process.env.FIREWORKS_AI_LLM_MODEL_PREF;
     case "mistral":
@@ -354,18 +341,10 @@ function getBaseLLMProviderModel({ provider = null } = {}) {
       return null;
     case "groq":
       return process.env.GROQ_MODEL_PREF;
-    case "koboldcpp":
-      return process.env.KOBOLD_CPP_MODEL_PREF;
-    case "textgenwebui":
-      return null;
-    case "cohere":
-      return process.env.COHERE_MODEL_PREF;
     case "litellm":
       return process.env.LITE_LLM_MODEL_PREF;
     case "generic-openai":
       return process.env.GENERIC_OPEN_AI_MODEL_PREF;
-    case "bedrock":
-      return process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE;
     case "xai":
       return process.env.XAI_LLM_MODEL_PREF;
     case "nvidia-nim":

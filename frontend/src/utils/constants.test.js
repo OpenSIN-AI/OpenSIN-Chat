@@ -24,10 +24,8 @@ const {
   OLLAMA_COMMON_URLS,
   LMSTUDIO_COMMON_URLS,
   LOCALAI_COMMON_URLS,
-  DPAIS_COMMON_URLS,
   NVIDIA_NIM_COMMON_URLS,
   DOCKER_MODEL_RUNNER_COMMON_URLS,
-  LEMONADE_COMMON_URLS,
   fullApiUrl,
   POPUP_BROWSER_EXTENSION_EVENT,
 } = await import("@/utils/constants");
@@ -76,10 +74,6 @@ describe("constants – provider URL arrays", () => {
     expect(LOCALAI_COMMON_URLS).toContain("http://127.0.0.1:8080/v1");
   });
 
-  it("DPAIS_COMMON_URLS contains expected entries", () => {
-    expect(DPAIS_COMMON_URLS).toContain("http://127.0.0.1:8553/v1/openai");
-  });
-
   it("NVIDIA_NIM_COMMON_URLS contains expected entries", () => {
     expect(NVIDIA_NIM_COMMON_URLS).toContain(
       "http://127.0.0.1:8000/v1/version",
@@ -90,11 +84,6 @@ describe("constants – provider URL arrays", () => {
     expect(DOCKER_MODEL_RUNNER_COMMON_URLS).toContain(
       "http://localhost:12434/engines/llama.cpp/v1",
     );
-  });
-
-  it("LEMONADE_COMMON_URLS contains expected entries", () => {
-    expect(LEMONADE_COMMON_URLS).toContain("http://localhost:8000/live");
-    expect(LEMONADE_COMMON_URLS).toContain("http://localhost:13305/live");
   });
 });
 

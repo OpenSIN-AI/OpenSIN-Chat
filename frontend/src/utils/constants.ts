@@ -33,13 +33,6 @@ export const LOCALAI_COMMON_URLS = [
   "http://172.17.0.1:8080/v1",
 ];
 
-export const DPAIS_COMMON_URLS = [
-  "http://127.0.0.1:8553/v1/openai",
-  "http://0.0.0.0:8553/v1/openai",
-  "http://localhost:8553/v1/openai",
-  "http://host.docker.internal:8553/v1/openai",
-];
-
 export const NVIDIA_NIM_COMMON_URLS = [
   "http://127.0.0.1:8000/v1/version",
   "http://localhost:8000/v1/version",
@@ -53,19 +46,6 @@ export const DOCKER_MODEL_RUNNER_COMMON_URLS = [
   "http://model-runner.docker.internal/engines/llama.cpp/v1",
   "http://host.docker.internal:12434/engines/llama.cpp/v1",
   "http://172.17.0.1:12434/engines/llama.cpp/v1",
-];
-
-export const LEMONADE_COMMON_URLS = [
-  "http://localhost:8000/live",
-  "http://127.0.0.1:8000/live",
-  "http://host.docker.internal:8000/live",
-  "http://172.17.0.1:8000/live",
-
-  // In Lemonade 10.1.0 the base port is 13305
-  "http://localhost:13305/live",
-  "http://127.0.0.1:13305/live",
-  "http://host.docker.internal:13305/live",
-  "http://172.17.0.1:13305/live",
 ];
 
 export function fullApiUrl() {

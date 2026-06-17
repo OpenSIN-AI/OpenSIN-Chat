@@ -13,31 +13,12 @@ import LocalAiLogo from "@/media/llmprovider/localai.png";
 import FireworksAILogo from "@/media/llmprovider/fireworksai.jpeg";
 import MistralLogo from "@/media/llmprovider/mistral.jpeg";
 import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
-import PerplexityLogo from "@/media/llmprovider/perplexity.png";
-import OpenRouterLogo from "@/media/llmprovider/openrouter.jpeg";
 import GroqLogo from "@/media/llmprovider/groq.png";
-import TextGenWebUILogo from "@/media/llmprovider/text-generation-webui.png";
 import LiteLLMLogo from "@/media/llmprovider/litellm.png";
-import AWSBedrockLogo from "@/media/llmprovider/bedrock.png";
-import DeepSeekLogo from "@/media/llmprovider/deepseek.png";
-import APIPieLogo from "@/media/llmprovider/apipie.png";
-import NovitaLogo from "@/media/llmprovider/novita.png";
 import XAILogo from "@/media/llmprovider/xai.png";
-import ZAiLogo from "@/media/llmprovider/zai.png";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 import OpencodeZenLogo from "@/media/llmprovider/opencode-zen.png";
-import CohereLogo from "@/media/llmprovider/cohere.png";
-import PPIOLogo from "@/media/llmprovider/ppio.png";
-import DellProAiStudioLogo from "@/media/llmprovider/dpais.png";
-import MoonshotAiLogo from "@/media/llmprovider/moonshotai.png";
-import CometApiLogo from "@/media/llmprovider/cometapi.png";
-import GiteeAILogo from "@/media/llmprovider/giteeai.png";
 import DockerModelRunnerLogo from "@/media/llmprovider/docker-model-runner.png";
-import PrivateModeLogo from "@/media/llmprovider/privatemode.png";
-import SambaNovaLogo from "@/media/llmprovider/sambanova.png";
-import LemonadeLogo from "@/media/llmprovider/lemonade.png";
-import MinimaxLogo from "@/media/llmprovider/minimax.png";
-import CerebrasLogo from "@/media/llmprovider/cerebras.png";
 
 import OpenAiOptions from "@/components/LLMSelection/OpenAiOptions";
 import GenericOpenAiOptions from "@/components/LLMSelection/GenericOpenAiOptions";
@@ -49,31 +30,12 @@ import OllamaLLMOptions from "@/components/LLMSelection/OllamaLLMOptions";
 import MistralOptions from "@/components/LLMSelection/MistralOptions";
 import HuggingFaceOptions from "@/components/LLMSelection/HuggingFaceOptions";
 import FireworksAiOptions from "@/components/LLMSelection/FireworksAiOptions";
-import PerplexityOptions from "@/components/LLMSelection/PerplexityOptions";
-import OpenRouterOptions from "@/components/LLMSelection/OpenRouterOptions";
 import GroqAiOptions from "@/components/LLMSelection/GroqAiOptions";
-import CohereAiOptions from "@/components/LLMSelection/CohereAiOptions";
-import TextGenWebUIOptions from "@/components/LLMSelection/TextGenWebUIOptions";
 import LiteLLMOptions from "@/components/LLMSelection/LiteLLMOptions";
-import AWSBedrockLLMOptions from "@/components/LLMSelection/AwsBedrockLLMOptions";
-import DeepSeekOptions from "@/components/LLMSelection/DeepSeekOptions";
-import ApiPieLLMOptions from "@/components/LLMSelection/ApiPieOptions";
-import NovitaLLMOptions from "@/components/LLMSelection/NovitaLLMOptions";
 import XAILLMOptions from "@/components/LLMSelection/XAiLLMOptions";
-import ZAiLLMOptions from "@/components/LLMSelection/ZAiLLMOptions";
 import NvidiaNimOptions from "@/components/LLMSelection/NvidiaNimOptions";
 import OpencodeZenOptions from "@/components/LLMSelection/OpencodeZenOptions";
-import PPIOLLMOptions from "@/components/LLMSelection/PPIOLLMOptions";
-import DellProAiStudioOptions from "@/components/LLMSelection/DPAISOptions";
-import MoonshotAiOptions from "@/components/LLMSelection/MoonshotAiOptions";
-import CometApiLLMOptions from "@/components/LLMSelection/CometApiLLMOptions";
-import GiteeAiOptions from "@/components/LLMSelection/GiteeAIOptions";
 import DockerModelRunnerOptions from "@/components/LLMSelection/DockerModelRunnerOptions";
-import PrivateModeOptions from "@/components/LLMSelection/PrivateModeOptions";
-import SambaNovaOptions from "@/components/LLMSelection/SambaNovaOptions";
-import LemonadeOptions from "@/components/LLMSelection/LemonadeOptions";
-import MinimaxOptions from "@/components/LLMSelection/MinimaxOptions";
-import CerebrasLLMOptions from "@/components/LLMSelection/CerebrasLLMOptions";
 
 import LLMItem from "@/components/LLMSelection/LLMItem";
 import System from "@/models/system";
@@ -159,14 +121,6 @@ const LLMS: LLMOption[] = [
     description: "Run LLMs locally on your own machine.",
   },
   {
-    name: "Dell Pro AI Studio",
-    value: "dpais",
-    logo: DellProAiStudioLogo,
-    options: (settings) => <DellProAiStudioOptions settings={settings} />,
-    description:
-      "Run powerful LLMs quickly on NPU powered by Dell Pro AI Studio.",
-  },
-  {
     name: "LM Studio",
     value: "lmstudio",
     logo: LMStudioLogo,
@@ -182,41 +136,11 @@ const LLMS: LLMOption[] = [
     description: "Run LLMs using Docker Model Runner.",
   },
   {
-    name: "Lemonade",
-    value: "lemonade",
-    logo: LemonadeLogo,
-    options: (settings) => <LemonadeOptions settings={settings} />,
-    description:
-      "Run local LLMs, ASR, TTS, and more in a single unified AI runtime.",
-  },
-  {
     name: "Local AI",
     value: "localai",
     logo: LocalAiLogo,
     options: (settings) => <LocalAiOptions settings={settings} />,
     description: "Run LLMs locally on your own machine.",
-  },
-  {
-    name: "SambaNova",
-    value: "sambanova",
-    logo: SambaNovaLogo,
-    options: (settings) => <SambaNovaOptions settings={settings} />,
-    description: "Run open source models from SambaNova.",
-  },
-  {
-    name: "Novita AI",
-    value: "novita",
-    logo: NovitaLogo,
-    options: (settings) => <NovitaLLMOptions settings={settings} />,
-    description:
-      "Reliable, Scalable, and Cost-Effective for LLMs from Novita AI",
-  },
-  {
-    name: "Oobabooga Web UI",
-    value: "textgenwebui",
-    logo: TextGenWebUILogo,
-    options: (settings) => <TextGenWebUIOptions settings={settings} />,
-    description: "Run local LLMs using Oobabooga's Text Generation Web UI.",
   },
   {
     name: "Fireworks AI",
@@ -234,34 +158,12 @@ const LLMS: LLMOption[] = [
     description: "Run open source models from Mistral AI.",
   },
   {
-    name: "Perplexity AI",
-    value: "perplexity",
-    logo: PerplexityLogo,
-    options: (settings) => <PerplexityOptions settings={settings} />,
-    description:
-      "Run powerful and internet-connected models hosted by Perplexity AI.",
-  },
-  {
-    name: "OpenRouter",
-    value: "openrouter",
-    logo: OpenRouterLogo,
-    options: (settings) => <OpenRouterOptions settings={settings} />,
-    description: "A unified interface for LLMs.",
-  },
-  {
     name: "Groq",
     value: "groq",
     logo: GroqLogo,
     options: (settings) => <GroqAiOptions settings={settings} />,
     description:
       "The fastest LLM inferencing available for real-time AI applications.",
-  },
-  {
-    name: "Cohere",
-    value: "cohere",
-    logo: CohereLogo,
-    options: (settings) => <CohereAiOptions settings={settings} />,
-    description: "Run Cohere's powerful Command models.",
   },
   {
     name: "LiteLLM",
@@ -271,26 +173,11 @@ const LLMS: LLMOption[] = [
     description: "Run LiteLLM's OpenAI compatible proxy for various LLMs.",
   },
   {
-    name: "DeepSeek",
-    value: "deepseek",
-    logo: DeepSeekLogo,
-    options: (settings) => <DeepSeekOptions settings={settings} />,
-    description: "Run DeepSeek's powerful LLMs.",
-  },
-  {
-    name: "PPIO",
-    value: "ppio",
-    logo: PPIOLogo,
-    options: (settings) => <PPIOLLMOptions settings={settings} />,
-    description:
-      "Run stable and cost-efficient open-source LLM APIs, such as DeepSeek, Llama, Qwen etc.",
-  },
-  {
-    name: "APIpie",
-    value: "apipie",
-    logo: APIPieLogo,
-    options: (settings) => <ApiPieLLMOptions settings={settings} />,
-    description: "A unified API of AI services from leading providers",
+    name: "xAI",
+    value: "xai",
+    logo: XAILogo,
+    options: (settings) => <XAILLMOptions settings={settings} />,
+    description: "Run xAI's powerful LLMs like Grok-2 and more.",
   },
   {
     name: "Generic OpenAI",
@@ -299,69 +186,6 @@ const LLMS: LLMOption[] = [
     options: (settings) => <GenericOpenAiOptions settings={settings} />,
     description:
       "Connect to any OpenAi-compatible service via a custom configuration",
-  },
-  {
-    name: "AWS Bedrock",
-    value: "bedrock",
-    logo: AWSBedrockLogo,
-    options: (settings) => <AWSBedrockLLMOptions settings={settings} />,
-    description: "Run powerful foundation models privately with AWS Bedrock.",
-  },
-  {
-    name: "Privatemode",
-    value: "privatemode",
-    logo: PrivateModeLogo,
-    options: (settings) => <PrivateModeOptions settings={settings} />,
-    description: "Run LLMs with end-to-end encryption.",
-  },
-  {
-    name: "xAI",
-    value: "xai",
-    logo: XAILogo,
-    options: (settings) => <XAILLMOptions settings={settings} />,
-    description: "Run xAI's powerful LLMs like Grok-2 and more.",
-  },
-  {
-    name: "Z.AI",
-    value: "zai",
-    logo: ZAiLogo,
-    options: (settings) => <ZAiLLMOptions settings={settings} />,
-    description: "Run Z.AI's powerful GLM models.",
-  },
-  {
-    name: "Moonshot AI",
-    value: "moonshotai",
-    logo: MoonshotAiLogo,
-    options: (settings) => <MoonshotAiOptions settings={settings} />,
-    description: "Run Moonshot AI's powerful LLMs.",
-  },
-  {
-    name: "CometAPI",
-    value: "cometapi",
-    logo: CometApiLogo,
-    options: (settings) => <CometApiLLMOptions settings={settings} />,
-    description: "500+ AI Models all in one API.",
-  },
-  {
-    name: "GiteeAI",
-    value: "giteeai",
-    logo: GiteeAILogo,
-    options: (settings) => <GiteeAiOptions settings={settings} />,
-    description: "Run GiteeAI's powerful LLMs.",
-  },
-  {
-    name: "Minimax",
-    value: "minimax",
-    logo: MinimaxLogo,
-    options: (settings) => <MinimaxOptions settings={settings} />,
-    description: "Run Minimax's powerful M2 LLMs.",
-  },
-  {
-    name: "Cerebras",
-    value: "cerebras",
-    logo: CerebrasLogo,
-    options: (settings) => <CerebrasLLMOptions settings={settings} />,
-    description: "Run models at instant speed on Cerebras inference.",
   },
 ];
 

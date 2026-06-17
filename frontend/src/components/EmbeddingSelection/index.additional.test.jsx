@@ -60,8 +60,6 @@ import LocalAiOptions from "./LocalAiOptions";
 import OllamaEmbeddingOptions from "./OllamaOptions";
 import LiteLLMOptions from "./LiteLLMOptions";
 import LMStudioEmbeddingOptions from "./LMStudioOptions";
-import LemonadeEmbeddingOptions from "./LemonadeOptions";
-import CohereEmbeddingOptions from "./CohereOptions";
 import GeminiOptions from "./GeminiOptions";
 
 describe("EmbeddingSelection — icon & a11y regression suite", () => {
@@ -188,39 +186,6 @@ describe("EmbeddingSelection — icon & a11y regression suite", () => {
         "aria-label",
         "Show manual endpoint input",
       );
-    });
-  });
-
-  describe("LemonadeEmbeddingOptions", () => {
-    it("renders the advanced toggle as a type=button with aria-label", () => {
-      render(<LemonadeEmbeddingOptions settings={{}} />);
-      const toggle = screen.getByRole("button", {
-        name: /show manual endpoint input/i,
-      });
-      expect(toggle).toHaveAttribute("type", "button");
-      expect(toggle).toHaveAttribute(
-        "aria-label",
-        "Show manual endpoint input",
-      );
-    });
-  });
-
-  describe("CohereEmbeddingOptions", () => {
-    it("renders the Cohere API key password input", () => {
-      render(<CohereEmbeddingOptions settings={{}} />);
-      const input = document.querySelector('input[name="CohereApiKey"]');
-      expect(input).toBeInTheDocument();
-      expect(input).toHaveAttribute("type", "password");
-      expect(input).toHaveAttribute("placeholder", "Cohere API Key");
-      expect(input).toBeRequired();
-    });
-
-    it("masks the Cohere API key with 20 asterisks when set", () => {
-      render(
-        <CohereEmbeddingOptions settings={{ CohereApiKey: "real-key" }} />,
-      );
-      const input = document.querySelector('input[name="CohereApiKey"]');
-      expect(input.value).toBe("*".repeat(20));
     });
   });
 

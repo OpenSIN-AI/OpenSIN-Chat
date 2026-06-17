@@ -1,11 +1,5 @@
 // SPDX-License-Identifier: MIT
 const { Telemetry } = require("../../models/telemetry");
-const SUPPORTED_CONNECTION_METHODS = [
-  "iam",
-  "iam_role",
-  "sessionToken",
-  "apiKey",
-];
 const { resetAllVectorStores } = require("../vectorStore/resetAllVectorStores");
 
 const KEY_MAPPING = {
@@ -141,20 +135,6 @@ const KEY_MAPPING = {
     checks: [nonZero],
   },
 
-  // Text Generation Web UI Settings
-  TextGenWebUIBasePath: {
-    envKey: "TEXT_GEN_WEB_UI_BASE_PATH",
-    checks: [isValidURL],
-  },
-  TextGenWebUITokenLimit: {
-    envKey: "TEXT_GEN_WEB_UI_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
-  },
-  TextGenWebUIAPIKey: {
-    envKey: "TEXT_GEN_WEB_UI_API_KEY",
-    checks: [],
-  },
-
   // LiteLLM Settings
   LiteLLMModelPref: {
     envKey: "LITE_LLM_MODEL_PREF",
@@ -192,61 +172,6 @@ const KEY_MAPPING = {
   },
   GenericOpenAiMaxTokens: {
     envKey: "GENERIC_OPEN_AI_MAX_TOKENS",
-    checks: [nonZero],
-  },
-
-  // AWS Bedrock LLM InferenceSettings
-  AwsBedrockLLMConnectionMethod: {
-    envKey: "AWS_BEDROCK_LLM_CONNECTION_METHOD",
-    checks: [
-      (input) =>
-        SUPPORTED_CONNECTION_METHODS.includes(input) ? null : "invalid Value",
-    ],
-  },
-  AwsBedrockLLMAccessKeyId: {
-    envKey: "AWS_BEDROCK_LLM_ACCESS_KEY_ID",
-    checks: [],
-  },
-  AwsBedrockLLMAccessKey: {
-    envKey: "AWS_BEDROCK_LLM_ACCESS_KEY",
-    checks: [],
-  },
-  AwsBedrockLLMSessionToken: {
-    envKey: "AWS_BEDROCK_LLM_SESSION_TOKEN",
-    checks: [],
-  },
-  AwsBedrockLLMAPIKey: {
-    envKey: "AWS_BEDROCK_LLM_API_KEY",
-    checks: [],
-  },
-  AwsBedrockLLMRegion: {
-    envKey: "AWS_BEDROCK_LLM_REGION",
-    checks: [isNotEmpty],
-  },
-  AwsBedrockLLMModel: {
-    envKey: "AWS_BEDROCK_LLM_MODEL_PREFERENCE",
-    checks: [isNotEmpty],
-  },
-  AwsBedrockLLMTokenLimit: {
-    envKey: "AWS_BEDROCK_LLM_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
-  },
-  AwsBedrockLLMMaxOutputTokens: {
-    envKey: "AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS",
-    checks: [nonZero],
-  },
-
-  // Dell Pro AI Studio Settings
-  DellProAiStudioBasePath: {
-    envKey: "DPAIS_LLM_BASE_PATH",
-    checks: [isNotEmpty, validDockerizedUrl],
-  },
-  DellProAiStudioModelPref: {
-    envKey: "DPAIS_LLM_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  DellProAiStudioTokenLimit: {
-    envKey: "DPAIS_LLM_MODEL_TOKEN_LIMIT",
     checks: [nonZero],
   },
 
@@ -417,44 +342,6 @@ const KEY_MAPPING = {
     checks: [isNotEmpty],
   },
 
-  // Perplexity Options
-  PerplexityApiKey: {
-    envKey: "PERPLEXITY_API_KEY",
-    checks: [isNotEmpty],
-  },
-  PerplexityModelPref: {
-    envKey: "PERPLEXITY_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // OpenRouter Options
-  OpenRouterApiKey: {
-    envKey: "OPENROUTER_API_KEY",
-    checks: [isNotEmpty],
-  },
-  OpenRouterModelPref: {
-    envKey: "OPENROUTER_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  OpenRouterTimeout: {
-    envKey: "OPENROUTER_TIMEOUT_MS",
-    checks: [],
-  },
-
-  // Novita Options
-  NovitaLLMApiKey: {
-    envKey: "NOVITA_LLM_API_KEY",
-    checks: [isNotEmpty],
-  },
-  NovitaLLMModelPref: {
-    envKey: "NOVITA_LLM_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  NovitaLLMTimeout: {
-    envKey: "NOVITA_LLM_TIMEOUT_MS",
-    checks: [],
-  },
-
   // Groq Options
   GroqApiKey: {
     envKey: "GROQ_API_KEY",
@@ -462,16 +349,6 @@ const KEY_MAPPING = {
   },
   GroqModelPref: {
     envKey: "GROQ_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // Cohere Options
-  CohereApiKey: {
-    envKey: "COHERE_API_KEY",
-    checks: [isNotEmpty],
-  },
-  CohereModelPref: {
-    envKey: "COHERE_MODEL_PREF",
     checks: [isNotEmpty],
   },
 
@@ -659,16 +536,6 @@ const KEY_MAPPING = {
     checks: [],
   },
 
-  // STT Lemonade
-  STTLemonadeBasePath: {
-    envKey: "STT_LEMONADE_BASE_PATH",
-    checks: [isValidURL],
-  },
-  STTLemonadeModelPref: {
-    envKey: "STT_LEMONADE_MODEL_PREF",
-    checks: [],
-  },
-
   // STT Deepgram
   STTDeepgramApiKey: {
     envKey: "STT_DEEPGRAM_API_KEY",
@@ -691,46 +558,6 @@ const KEY_MAPPING = {
   STTOpenAICompatibleEndpoint: {
     envKey: "STT_OPEN_AI_COMPATIBLE_ENDPOINT",
     checks: [isValidURL],
-  },
-
-  // DeepSeek Options
-  DeepSeekApiKey: {
-    envKey: "DEEPSEEK_API_KEY",
-    checks: [isNotEmpty],
-  },
-  DeepSeekModelPref: {
-    envKey: "DEEPSEEK_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // Minimax Options
-  MinimaxApiKey: {
-    envKey: "MINIMAX_API_KEY",
-    checks: [isNotEmpty],
-  },
-  MinimaxModelPref: {
-    envKey: "MINIMAX_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // Cerebras Options
-  CerebrasApiKey: {
-    envKey: "CEREBRAS_API_KEY",
-    checks: [isNotEmpty],
-  },
-  CerebrasModelPref: {
-    envKey: "CEREBRAS_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // APIPie Options
-  ApipieLLMApiKey: {
-    envKey: "APIPIE_LLM_API_KEY",
-    checks: [isNotEmpty],
-  },
-  ApipieLLMModelPref: {
-    envKey: "APIPIE_LLM_MODEL_PREF",
-    checks: [isNotEmpty],
   },
 
   // xAI Options
@@ -795,86 +622,6 @@ const KEY_MAPPING = {
     checks: [isNotEmpty],
   },
 
-  // PPIO Options
-  PPIOApiKey: {
-    envKey: "PPIO_API_KEY",
-    checks: [isNotEmpty],
-  },
-  PPIOModelPref: {
-    envKey: "PPIO_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // Moonshot AI Options
-  MoonshotAiApiKey: {
-    envKey: "MOONSHOT_AI_API_KEY",
-    checks: [isNotEmpty],
-  },
-  MoonshotAiModelPref: {
-    envKey: "MOONSHOT_AI_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // Foundry Options
-  FoundryBasePath: {
-    envKey: "FOUNDRY_BASE_PATH",
-    checks: [isNotEmpty],
-  },
-  FoundryModelPref: {
-    envKey: "FOUNDRY_MODEL_PREF",
-    checks: [isNotEmpty],
-    postUpdate: [
-      // On new model selection, re-cache the context windows
-      async (_, prevValue, __) => {
-        const { FoundryLLM } = require("../AiProviders/foundry");
-        await FoundryLLM.unloadModelFromEngine(prevValue);
-        await FoundryLLM.cacheContextWindows(true);
-      },
-    ],
-  },
-  FoundryModelTokenLimit: {
-    envKey: "FOUNDRY_MODEL_TOKEN_LIMIT",
-    checks: [],
-  },
-
-  // CometAPI Options
-  CometApiLLMApiKey: {
-    envKey: "COMETAPI_LLM_API_KEY",
-    checks: [isNotEmpty],
-  },
-  CometApiLLMModelPref: {
-    envKey: "COMETAPI_LLM_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  CometApiLLMTimeout: {
-    envKey: "COMETAPI_LLM_TIMEOUT_MS",
-    checks: [],
-  },
-
-  // Z.AI Options
-  ZAiApiKey: {
-    envKey: "ZAI_API_KEY",
-    checks: [isNotEmpty],
-  },
-  ZAiModelPref: {
-    envKey: "ZAI_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // GiteeAI Options
-  GiteeAIApiKey: {
-    envKey: "GITEE_AI_API_KEY",
-    checks: [isNotEmpty],
-  },
-  GiteeAIModelPref: {
-    envKey: "GITEE_AI_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  GiteeAITokenLimit: {
-    envKey: "GITEE_AI_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
-  },
-
   // Docker Model Runner Options
   DockerModelRunnerBasePath: {
     envKey: "DOCKER_MODEL_RUNNER_BASE_PATH",
@@ -886,44 +633,6 @@ const KEY_MAPPING = {
   },
   DockerModelRunnerModelTokenLimit: {
     envKey: "DOCKER_MODEL_RUNNER_LLM_MODEL_TOKEN_LIMIT",
-    checks: [nonZero],
-  },
-
-  // Privatemode Options
-  PrivateModeBasePath: {
-    envKey: "PRIVATEMODE_LLM_BASE_PATH",
-    checks: [isValidURL],
-  },
-  PrivateModeModelPref: {
-    envKey: "PRIVATEMODE_LLM_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // SambaNova Options
-  SambaNovaLLMApiKey: {
-    envKey: "SAMBANOVA_LLM_API_KEY",
-    checks: [isNotEmpty],
-  },
-  SambaNovaLLMModelPref: {
-    envKey: "SAMBANOVA_LLM_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-
-  // Lemonade Options
-  LemonadeLLMBasePath: {
-    envKey: "LEMONADE_LLM_BASE_PATH",
-    checks: [isValidURL],
-  },
-  LemonadeLLMApiKey: {
-    envKey: "LEMONADE_LLM_API_KEY",
-    checks: [],
-  },
-  LemonadeLLMModelPref: {
-    envKey: "LEMONADE_LLM_MODEL_PREF",
-    checks: [isNotEmpty],
-  },
-  LemonadeLLMModelTokenLimit: {
-    envKey: "LEMONADE_LLM_MODEL_TOKEN_LIMIT",
     checks: [nonZero],
   },
 
@@ -1015,7 +724,6 @@ function supportedSTTProvider(input = "") {
   const validSelection = [
     "native",
     "openai",
-    "lemonade",
     "deepgram",
     "generic-openai",
   ].includes(input);
@@ -1043,33 +751,13 @@ function supportedLLM(input = "") {
     "fireworksai",
     "mistral",
     "huggingface",
-    "perplexity",
-    "openrouter",
-    "novita",
     "groq",
-    "textgenwebui",
-    "cohere",
     "litellm",
     "generic-openai",
-    "bedrock",
-    "deepseek",
-    "apipie",
     "xai",
     "opencode-zen",
     "nvidia-nim",
-    "ppio",
-    "dpais",
-    "moonshotai",
-    "cometapi",
-    "foundry",
-    "zai",
-    "giteeai",
     "docker-model-runner",
-    "privatemode",
-    "sambanova",
-    "lemonade",
-    "minimax",
-    "cerebras",
     "openafd-router",
   ].includes(input);
   return validSelection ? null : `${input} is not a valid LLM provider.`;
@@ -1106,8 +794,6 @@ function supportedEmbeddingModel(input = "") {
     "litellm",
     "generic-openai",
     "mistral",
-    "openrouter",
-    "lemonade",
   ];
   return supported.includes(input)
     ? null
@@ -1435,9 +1121,6 @@ function dumpENV() {
 
     // Allow disabling of MCP tool cooldown
     "MCP_NO_COOLDOWN",
-
-    // Allow disabling of streaming for AWS Bedrock
-    "AWS_BEDROCK_STREAMING_DISABLED",
 
     // Allow capabilities for specific providers.
     "PROVIDER_SUPPORTS_NATIVE_TOOL_CALLING",

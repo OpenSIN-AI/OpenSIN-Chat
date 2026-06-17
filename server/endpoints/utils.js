@@ -53,9 +53,6 @@ function utilEndpoints(app) {
   } = require("./utils/dockerModelRunnerUtils");
   dockerModelRunnerUtilsEndpoints(app);
 
-  const { lemonadeUtilsEndpoints } = require("./utils/lemonadeUtilsEndpoints");
-  lemonadeUtilsEndpoints(app);
-
   const { enhancePromptEndpoint } = require("./utils/enhancePrompt");
   enhancePromptEndpoint(app);
 
@@ -258,21 +255,8 @@ function getModelTag() {
     case "groq":
       model = process.env.GROQ_MODEL_PREF;
       break;
-    case "togetherai":
-      model = process.env.TOGETHER_AI_MODEL_PREF;
-      break;
-    case "azure":
-      model =
-        process.env.AZURE_OPENAI_MODEL_PREF || process.env.OPEN_MODEL_PREF;
-      break;
-    case "koboldcpp":
-      model = process.env.KOBOLD_CPP_MODEL_PREF;
-      break;
     case "localai":
       model = process.env.LOCAL_AI_MODEL_PREF;
-      break;
-    case "openrouter":
-      model = process.env.OPENROUTER_MODEL_PREF;
       break;
     case "mistral":
       model = process.env.MISTRAL_MODEL_PREF;
@@ -280,71 +264,29 @@ function getModelTag() {
     case "generic-openai":
       model = process.env.GENERIC_OPEN_AI_MODEL_PREF;
       break;
-    case "perplexity":
-      model = process.env.PERPLEXITY_MODEL_PREF;
-      break;
-    case "textgenwebui":
-      model = "textgenwebui-default";
-      break;
-    case "bedrock":
-      model = process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE;
-      break;
     case "fireworksai":
       model = process.env.FIREWORKS_AI_LLM_MODEL_PREF;
-      break;
-    case "deepseek":
-      model = process.env.DEEPSEEK_MODEL_PREF;
       break;
     case "litellm":
       model = process.env.LITE_LLM_MODEL_PREF;
       break;
-    case "apipie":
-      model = process.env.APIPIE_LLM_MODEL_PREF;
-      break;
     case "xai":
       model = process.env.XAI_LLM_MODEL_PREF;
-      break;
-    case "novita":
-      model = process.env.NOVITA_LLM_MODEL_PREF;
       break;
     case "nvidia-nim":
       model = process.env.NVIDIA_NIM_LLM_MODEL_PREF;
       break;
-    case "ppio":
-      model = process.env.PPIO_MODEL_PREF;
-      break;
     case "gemini":
       model = process.env.GEMINI_LLM_MODEL_PREF;
-      break;
-    case "moonshotai":
-      model = process.env.MOONSHOT_AI_MODEL_PREF;
-      break;
-    case "zai":
-      model = process.env.ZAI_MODEL_PREF;
-      break;
-    case "giteeai":
-      model = process.env.GITEE_AI_MODEL_PREF;
-      break;
-    case "cohere":
-      model = process.env.COHERE_MODEL_PREF;
       break;
     case "docker-model-runner":
       model = process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF;
       break;
-    case "privatemode":
-      model = process.env.PRIVATEMODE_LLM_MODEL_PREF;
+    case "opencode-zen":
+      model = process.env.OPENCODE_ZEN_MODEL_PREF;
       break;
-    case "sambanova":
-      model = process.env.SAMBANOVA_LLM_MODEL_PREF;
-      break;
-    case "lemonade":
-      model = process.env.LEMONADE_LLM_MODEL_PREF;
-      break;
-    case "minimax":
-      model = process.env.MINIMAX_MODEL_PREF;
-      break;
-    case "cerebras":
-      model = process.env.CEREBRAS_MODEL_PREF;
+    case "huggingface":
+      model = null;
       break;
     default:
       model = "--";

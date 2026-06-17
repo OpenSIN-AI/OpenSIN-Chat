@@ -630,10 +630,6 @@ const SystemSettings = {
       // STT OpenAI
       STTOpenAIModel: process.env.STT_OPEN_AI_MODEL,
 
-      // STT Lemonade
-      STTLemonadeBasePath: process.env.STT_LEMONADE_BASE_PATH,
-      STTLemonadeModelPref: process.env.STT_LEMONADE_MODEL_PREF,
-
       // STT Deepgram
       STTDeepgramApiKey: !!process.env.STT_DEEPGRAM_API_KEY,
       STTDeepgramModel: process.env.STT_DEEPGRAM_MODEL,
@@ -978,27 +974,9 @@ const SystemSettings = {
       OllamaLLMTokenLimit: process.env.OLLAMA_MODEL_TOKEN_LIMIT || null,
       OllamaLLMKeepAliveSeconds: process.env.OLLAMA_KEEP_ALIVE_TIMEOUT ?? 300,
 
-      // Novita LLM Keys
-      NovitaLLMApiKey: !!process.env.NOVITA_LLM_API_KEY,
-      NovitaLLMModelPref: process.env.NOVITA_LLM_MODEL_PREF,
-      NovitaLLMTimeout: process.env.NOVITA_LLM_TIMEOUT_MS,
-
-      // TogetherAI Keys
-      TogetherAiApiKey: !!process.env.TOGETHER_AI_API_KEY,
-      TogetherAiModelPref: process.env.TOGETHER_AI_MODEL_PREF,
-
       // Fireworks AI API Keys
       FireworksAiLLMApiKey: !!process.env.FIREWORKS_AI_LLM_API_KEY,
       FireworksAiLLMModelPref: process.env.FIREWORKS_AI_LLM_MODEL_PREF,
-
-      // Perplexity AI Keys
-      PerplexityApiKey: !!process.env.PERPLEXITY_API_KEY,
-      PerplexityModelPref: process.env.PERPLEXITY_MODEL_PREF,
-
-      // OpenRouter Keys
-      OpenRouterApiKey: !!process.env.OPENROUTER_API_KEY,
-      OpenRouterModelPref: process.env.OPENROUTER_MODEL_PREF,
-      OpenRouterTimeout: process.env.OPENROUTER_TIMEOUT_MS,
 
       // Mistral AI (API) Keys
       MistralApiKey: !!process.env.MISTRAL_API_KEY,
@@ -1013,27 +991,11 @@ const SystemSettings = {
       HuggingFaceLLMAccessToken: !!process.env.HUGGING_FACE_LLM_API_KEY,
       HuggingFaceLLMTokenLimit: process.env.HUGGING_FACE_LLM_TOKEN_LIMIT,
 
-      // KoboldCPP Keys
-      KoboldCPPModelPref: process.env.KOBOLD_CPP_MODEL_PREF,
-      KoboldCPPBasePath: process.env.KOBOLD_CPP_BASE_PATH,
-      KoboldCPPTokenLimit: process.env.KOBOLD_CPP_MODEL_TOKEN_LIMIT,
-      KoboldCPPMaxTokens: process.env.KOBOLD_CPP_MAX_TOKENS,
-
-      // Text Generation Web UI Keys
-      TextGenWebUIBasePath: process.env.TEXT_GEN_WEB_UI_BASE_PATH,
-      TextGenWebUITokenLimit: process.env.TEXT_GEN_WEB_UI_MODEL_TOKEN_LIMIT,
-      TextGenWebUIAPIKey: !!process.env.TEXT_GEN_WEB_UI_API_KEY,
-
       // LiteLLM Keys
       LiteLLMModelPref: process.env.LITE_LLM_MODEL_PREF,
       LiteLLMTokenLimit: process.env.LITE_LLM_MODEL_TOKEN_LIMIT,
       LiteLLMBasePath: process.env.LITE_LLM_BASE_PATH,
       LiteLLMApiKey: !!process.env.LITE_LLM_API_KEY,
-
-      // Moonshot AI Keys
-      MoonshotAiApiKey: !!process.env.MOONSHOT_AI_API_KEY,
-      MoonshotAiModelPref:
-        process.env.MOONSHOT_AI_MODEL_PREF || "moonshot-v1-32k",
 
       // Generic OpenAI Keys
       GenericOpenAiBasePath: process.env.GENERIC_OPEN_AI_BASE_PATH,
@@ -1041,36 +1003,6 @@ const SystemSettings = {
       GenericOpenAiTokenLimit: process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT,
       GenericOpenAiKey: !!process.env.GENERIC_OPEN_AI_API_KEY,
       GenericOpenAiMaxTokens: process.env.GENERIC_OPEN_AI_MAX_TOKENS,
-
-      // Foundry Keys
-      FoundryBasePath: process.env.FOUNDRY_BASE_PATH,
-      FoundryModelPref: process.env.FOUNDRY_MODEL_PREF,
-      FoundryModelTokenLimit: process.env.FOUNDRY_MODEL_TOKEN_LIMIT,
-
-      AwsBedrockLLMConnectionMethod:
-        process.env.AWS_BEDROCK_LLM_CONNECTION_METHOD || "iam",
-      AwsBedrockLLMAccessKeyId: !!process.env.AWS_BEDROCK_LLM_ACCESS_KEY_ID,
-      AwsBedrockLLMAccessKey: !!process.env.AWS_BEDROCK_LLM_ACCESS_KEY,
-      AwsBedrockLLMSessionToken: !!process.env.AWS_BEDROCK_LLM_SESSION_TOKEN,
-      AwsBedrockLLMAPIKey: !!process.env.AWS_BEDROCK_LLM_API_KEY,
-      AwsBedrockLLMRegion: process.env.AWS_BEDROCK_LLM_REGION,
-      AwsBedrockLLMModel: process.env.AWS_BEDROCK_LLM_MODEL_PREFERENCE,
-      AwsBedrockLLMTokenLimit:
-        process.env.AWS_BEDROCK_LLM_MODEL_TOKEN_LIMIT || 8192,
-      AwsBedrockLLMMaxOutputTokens:
-        process.env.AWS_BEDROCK_LLM_MAX_OUTPUT_TOKENS || 4096,
-
-      // Cohere API Keys
-      CohereApiKey: !!process.env.COHERE_API_KEY,
-      CohereModelPref: process.env.COHERE_MODEL_PREF,
-
-      // DeepSeek API Keys
-      DeepSeekApiKey: !!process.env.DEEPSEEK_API_KEY,
-      DeepSeekModelPref: process.env.DEEPSEEK_MODEL_PREF,
-
-      // APIPie LLM API Keys
-      ApipieLLMApiKey: !!process.env.APIPIE_LLM_API_KEY,
-      ApipieLLMModelPref: process.env.APIPIE_LLM_MODEL_PREF,
 
       // xAI LLM API Keys
       XAIApiKey: !!process.env.XAI_LLM_API_KEY,
@@ -1087,59 +1019,12 @@ const SystemSettings = {
       OpencodeZenTokenLimit: process.env.OPENCODE_ZEN_MODEL_TOKEN_LIMIT,
       OpencodeZenApiKey: !!process.env.OPENCODE_ZEN_API_KEY,
 
-      // PPIO API keys
-      PPIOApiKey: !!process.env.PPIO_API_KEY,
-      PPIOModelPref: process.env.PPIO_MODEL_PREF,
-
-      // Dell Pro AI Studio Keys
-      DellProAiStudioBasePath: process.env.DPAIS_LLM_BASE_PATH,
-      DellProAiStudioModelPref: process.env.DPAIS_LLM_MODEL_PREF,
-      DellProAiStudioTokenLimit:
-        process.env.DPAIS_LLM_MODEL_TOKEN_LIMIT ?? 4096,
-
-      // CometAPI LLM Keys
-      CometApiLLMApiKey: !!process.env.COMETAPI_LLM_API_KEY,
-      CometApiLLMModelPref: process.env.COMETAPI_LLM_MODEL_PREF,
-      CometApiLLMTimeout: process.env.COMETAPI_LLM_TIMEOUT_MS,
-
-      // Z.AI Keys
-      ZAiApiKey: !!process.env.ZAI_API_KEY,
-      ZAiModelPref: process.env.ZAI_MODEL_PREF,
-
-      // GiteeAI API Keys
-      GiteeAIApiKey: !!process.env.GITEE_AI_API_KEY,
-      GiteeAIModelPref: process.env.GITEE_AI_MODEL_PREF,
-      GiteeAITokenLimit: process.env.GITEE_AI_MODEL_TOKEN_LIMIT || 8192,
-
       // Docker Model Runner Keys
       DockerModelRunnerBasePath: process.env.DOCKER_MODEL_RUNNER_BASE_PATH,
       DockerModelRunnerModelPref:
         process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF,
       DockerModelRunnerModelTokenLimit:
         process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_TOKEN_LIMIT || 8192,
-
-      // Privatemode Keys
-      PrivateModeBasePath: process.env.PRIVATEMODE_LLM_BASE_PATH,
-      PrivateModeModelPref: process.env.PRIVATEMODE_LLM_MODEL_PREF,
-
-      // SambaNova Keys
-      SambaNovaLLMApiKey: !!process.env.SAMBANOVA_LLM_API_KEY,
-      SambaNovaLLMModelPref: process.env.SAMBANOVA_LLM_MODEL_PREF,
-
-      // Lemonade Keys
-      LemonadeLLMBasePath: process.env.LEMONADE_LLM_BASE_PATH,
-      LemonadeLLMApiKey: !!process.env.LEMONADE_LLM_API_KEY,
-      LemonadeLLMModelPref: process.env.LEMONADE_LLM_MODEL_PREF,
-      LemonadeLLMModelTokenLimit:
-        process.env.LEMONADE_LLM_MODEL_TOKEN_LIMIT || 8192,
-
-      // Minimax Keys
-      MinimaxApiKey: !!process.env.MINIMAX_API_KEY,
-      MinimaxModelPref: process.env.MINIMAX_MODEL_PREF,
-
-      // Cerebras Keys
-      CerebrasApiKey: !!process.env.CEREBRAS_API_KEY,
-      CerebrasModelPref: process.env.CEREBRAS_MODEL_PREF,
     };
   },
 

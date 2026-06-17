@@ -5,9 +5,6 @@ function getSTTProvider() {
     case "openai":
       const { OpenAiSTT } = require("./openAi");
       return new OpenAiSTT();
-    case "lemonade":
-      const { LemonadeSTT } = require("./lemonade");
-      return new LemonadeSTT();
     case "deepgram":
       const { DeepgramSTT } = require("./deepgram");
       return new DeepgramSTT();

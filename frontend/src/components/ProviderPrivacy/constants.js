@@ -12,18 +12,9 @@ import LMStudioLogo from "@/media/llmprovider/lmstudio.png";
 import LocalAiLogo from "@/media/llmprovider/localai.png";
 import MistralLogo from "@/media/llmprovider/mistral.jpeg";
 import HuggingFaceLogo from "@/media/llmprovider/huggingface.png";
-import PerplexityLogo from "@/media/llmprovider/perplexity.png";
-import OpenRouterLogo from "@/media/llmprovider/openrouter.jpeg";
-import NovitaLogo from "@/media/llmprovider/novita.png";
 import GroqLogo from "@/media/llmprovider/groq.png";
-import TextGenWebUILogo from "@/media/llmprovider/text-generation-webui.png";
 import LiteLLMLogo from "@/media/llmprovider/litellm.png";
-import AWSBedrockLogo from "@/media/llmprovider/bedrock.png";
-import DeepSeekLogo from "@/media/llmprovider/deepseek.png";
-import APIPieLogo from "@/media/llmprovider/apipie.png";
 import XAILogo from "@/media/llmprovider/xai.png";
-import ZAiLogo from "@/media/llmprovider/zai.png";
-import CohereLogo from "@/media/llmprovider/cohere.png";
 import ZillizLogo from "@/media/vectordbs/zilliz.png";
 import AstraDBLogo from "@/media/vectordbs/astraDB.png";
 import ChromaLogo from "@/media/vectordbs/chroma.png";
@@ -33,19 +24,8 @@ import WeaviateLogo from "@/media/vectordbs/weaviate.png";
 import QDrantLogo from "@/media/vectordbs/qdrant.png";
 import MilvusLogo from "@/media/vectordbs/milvus.png";
 import VoyageAiLogo from "@/media/embeddingprovider/voyageai.png";
-import PPIOLogo from "@/media/llmprovider/ppio.png";
 import PGVectorLogo from "@/media/vectordbs/pgvector.png";
-import DPAISLogo from "@/media/llmprovider/dpais.png";
-import MoonshotAiLogo from "@/media/llmprovider/moonshotai.png";
-import CometApiLogo from "@/media/llmprovider/cometapi.png";
-import FoundryLogo from "@/media/llmprovider/foundry-local.png";
-import GiteeAILogo from "@/media/llmprovider/giteeai.png";
 import DockerModelRunnerLogo from "@/media/llmprovider/docker-model-runner.png";
-import PrivateModeLogo from "@/media/llmprovider/privatemode.png";
-import SambaNovaLogo from "@/media/llmprovider/sambanova.png";
-import LemonadeLogo from "@/media/llmprovider/lemonade.png";
-import MinimaxLogo from "@/media/llmprovider/minimax.png";
-import CerebrasLogo from "@/media/llmprovider/cerebras.png";
 
 const LLM_PROVIDER_PRIVACY_MAP = {
   openai: {
@@ -114,32 +94,10 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     policyUrl: "https://huggingface.co/privacy",
     logo: HuggingFaceLogo,
   },
-  perplexity: {
-    name: "Perplexity AI",
-    policyUrl: "https://www.perplexity.ai/privacy",
-    logo: PerplexityLogo,
-  },
-  openrouter: {
-    name: "OpenRouter",
-    policyUrl: "https://openrouter.ai/privacy",
-    logo: OpenRouterLogo,
-  },
-  novita: {
-    name: "Novita AI",
-    policyUrl: "https://novita.ai/legal/privacy-policy",
-    logo: NovitaLogo,
-  },
   groq: {
     name: "Groq",
     policyUrl: "https://groq.com/privacy-policy/",
     logo: GroqLogo,
-  },
-  textgenwebui: {
-    name: "Oobabooga Web UI",
-    description: [
-      "Your model and chats are only accessible on the server running the Oobabooga Text Generation Web UI",
-    ],
-    logo: TextGenWebUILogo,
   },
   "generic-openai": {
     name: "Generic OpenAI compatible service",
@@ -148,11 +106,6 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     ],
     logo: GenericOpenAiLogo,
   },
-  cohere: {
-    name: "Cohere",
-    policyUrl: "https://cohere.com/privacy",
-    logo: CohereLogo,
-  },
   litellm: {
     name: "LiteLLM",
     description: [
@@ -160,65 +113,10 @@ const LLM_PROVIDER_PRIVACY_MAP = {
     ],
     logo: LiteLLMLogo,
   },
-  bedrock: {
-    name: "AWS Bedrock",
-    policyUrl: "https://aws.amazon.com/bedrock/security-compliance/",
-    logo: AWSBedrockLogo,
-  },
-  deepseek: {
-    name: "DeepSeek",
-    policyUrl:
-      "https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html",
-    logo: DeepSeekLogo,
-  },
-  apipie: {
-    name: "APIpie.AI",
-    policyUrl: "https://apipie.ai/docs/Terms/privacy",
-    logo: APIPieLogo,
-  },
   xai: {
     name: "xAI",
     policyUrl: "https://x.ai/legal/privacy-policy",
     logo: XAILogo,
-  },
-  zai: {
-    name: "Z.AI",
-    policyUrl: "https://docs.z.ai/legal-agreement/privacy-policy",
-    logo: ZAiLogo,
-  },
-  ppio: {
-    name: "PPIO",
-    policyUrl: "https://www.pipio.ai/privacy-policy",
-    logo: PPIOLogo,
-  },
-  dpais: {
-    name: "Dell Pro AI Studio",
-    description: [
-      "Your model and chat contents are only accessible on the computer running Dell Pro AI Studio.",
-    ],
-    logo: DPAISLogo,
-  },
-  moonshotai: {
-    name: "Moonshot AI",
-    policyUrl: "https://platform.moonshot.ai/docs/agreement/userprivacy",
-    logo: MoonshotAiLogo,
-  },
-  cometapi: {
-    name: "CometAPI",
-    policyUrl: "https://apidoc.cometapi.com/privacy-policy-873819m0",
-    logo: CometApiLogo,
-  },
-  foundry: {
-    name: "Microsoft Foundry Local",
-    description: [
-      "Your model and chats are only accessible on the machine running Foundry Local.",
-    ],
-    logo: FoundryLogo,
-  },
-  giteeai: {
-    name: "GiteeAI",
-    policyUrl: "https://ai.gitee.com/docs/appendix/privacy",
-    logo: GiteeAILogo,
   },
   "docker-model-runner": {
     name: "Docker Model Runner",
@@ -226,33 +124,6 @@ const LLM_PROVIDER_PRIVACY_MAP = {
       "Your model and chats are only accessible on the machine running Docker Model Runner.",
     ],
     logo: DockerModelRunnerLogo,
-  },
-  privatemode: {
-    name: "Privatemode",
-    policyUrl: "https://docs.privatemode.ai/getting-started/faq#q2",
-    logo: PrivateModeLogo,
-  },
-  sambanova: {
-    name: "SambaNova",
-    policyUrl: "https://sambanova.ai/privacy-policy",
-    logo: SambaNovaLogo,
-  },
-  lemonade: {
-    name: "Lemonade",
-    description: [
-      "Your model and chats are only accessible on the machine running the Lemonade server.",
-    ],
-    logo: LemonadeLogo,
-  },
-  minimax: {
-    name: "Minimax",
-    policyUrl: "https://platform.minimax.io/protocol/privacy-policy",
-    logo: MinimaxLogo,
-  },
-  cerebras: {
-    name: "Cerebras",
-    policyUrl: "https://www.cerebras.ai/privacy-policy",
-    logo: CerebrasLogo,
   },
 };
 
@@ -353,16 +224,6 @@ const EMBEDDING_ENGINE_PROVIDER_PRIVACY_MAP = {
     ],
     logo: LMStudioLogo,
   },
-  openrouter: {
-    name: "OpenRouter",
-    policyUrl: "https://openrouter.ai/privacy",
-    logo: OpenRouterLogo,
-  },
-  cohere: {
-    name: "Cohere",
-    policyUrl: "https://cohere.com/privacy",
-    logo: CohereLogo,
-  },
   voyageai: {
     name: "Voyage AI",
     policyUrl: "https://www.voyageai.com/privacy",
@@ -391,13 +252,6 @@ const EMBEDDING_ENGINE_PROVIDER_PRIVACY_MAP = {
     name: "Google Gemini",
     policyUrl: "https://policies.google.com/privacy",
     logo: GeminiLogo,
-  },
-  lemonade: {
-    name: "Lemonade",
-    description: [
-      "Your document text is embedded privately on the machine running the Lemonade server.",
-    ],
-    logo: LemonadeLogo,
   },
 };
 

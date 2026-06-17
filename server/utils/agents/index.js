@@ -146,10 +146,6 @@ class AgentHandler {
             "LocalAI must have a valid base path to use for the api.",
           );
         break;
-      case "openrouter":
-        if (!process.env.OPENROUTER_API_KEY)
-          throw new Error("OpenRouter API key must be provided to use agents.");
-        break;
       case "mistral":
         if (!process.env.MISTRAL_API_KEY)
           throw new Error("Mistral API key must be provided to use agents.");
@@ -158,21 +154,11 @@ class AgentHandler {
         if (!process.env.GENERIC_OPEN_AI_BASE_PATH)
           throw new Error("API base path must be provided to use agents.");
         break;
-      case "textgenwebui":
-        if (!process.env.TEXT_GEN_WEB_UI_BASE_PATH)
-          throw new Error(
-            "TextWebGenUI API base path must be provided to use agents.",
-          );
-        break;
       case "fireworksai":
         if (!process.env.FIREWORKS_AI_LLM_API_KEY)
           throw new Error(
             "FireworksAI API Key must be provided to use agents.",
           );
-        break;
-      case "deepseek":
-        if (!process.env.DEEPSEEK_API_KEY)
-          throw new Error("DeepSeek API Key must be provided to use agents.");
         break;
       case "litellm":
         if (!process.env.LITE_LLM_BASE_PATH)
@@ -183,14 +169,6 @@ class AgentHandler {
       case "xai":
         if (!process.env.XAI_LLM_API_KEY)
           throw new Error("xAI API Key must be provided to use agents.");
-        break;
-      case "zai":
-        if (!process.env.XAI_LLM_API_KEY)
-          throw new Error("xAI API Key must be provided to use agents.");
-        break;
-      case "zai":
-        if (!process.env.ZAI_API_KEY)
-          throw new Error("Z.AI API Key must be provided to use agents.");
         break;
       case "nvidia-nim":
         if (!process.env.NVIDIA_NIM_LLM_BASE_PATH)
@@ -207,10 +185,6 @@ class AgentHandler {
           throw new Error(
             "Docker Model Runner base path must be provided to use agents.",
           );
-        break;
-      case "minimax":
-        if (!process.env.MINIMAX_API_KEY)
-          throw new Error("Minimax API key must be provided to use agents.");
         break;
       default:
         throw new Error(
@@ -238,32 +212,23 @@ class AgentHandler {
       case "groq":
         return process.env.GROQ_MODEL_PREF ?? "llama3-70b-8192";
       case "localai":
-      case "openrouter":
-        return process.env.OPENROUTER_MODEL_PREF ?? "openrouter/auto";
+        return process.env.LOCAL_AI_MODEL_PREF ?? null;
       case "mistral":
         return process.env.MISTRAL_MODEL_PREF ?? "mistral-medium";
       case "generic-openai":
         return process.env.GENERIC_OPEN_AI_MODEL_PREF ?? null;
-      case "textgenwebui":
-        return "text-generation-webui";
       case "fireworksai":
         return process.env.FIREWORKS_AI_LLM_MODEL_PREF ?? null;
-      case "deepseek":
-        return process.env.DEEPSEEK_MODEL_PREF ?? "deepseek-chat";
       case "litellm":
         return process.env.LITE_LLM_MODEL_PREF ?? null;
       case "xai":
         return process.env.XAI_LLM_MODEL_PREF ?? "grok-beta";
-      case "zai":
-        return process.env.ZAI_MODEL_PREF ?? "glm-4.5";
       case "nvidia-nim":
         return process.env.NVIDIA_NIM_LLM_MODEL_PREF ?? null;
       case "gemini":
         return process.env.GEMINI_LLM_MODEL_PREF ?? "gemini-2.0-flash-lite";
       case "docker-model-runner":
         return process.env.DOCKER_MODEL_RUNNER_LLM_MODEL_PREF ?? null;
-      case "minimax":
-        return process.env.MINIMAX_MODEL_PREF ?? "MiniMax-M2.7";
       default:
         return null;
     }

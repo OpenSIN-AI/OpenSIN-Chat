@@ -8,14 +8,12 @@ import CTAButton from "@/components/lib/CTAButton";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import DeepgramLogo from "@/media/ttsproviders/deepgram.png";
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
-import LemonadeLogo from "@/media/llmprovider/lemonade.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import { useTranslation } from "react-i18next";
 
 import BrowserNative from "@/components/SpeechToText/BrowserNative";
 import OpenAiSTTOptions from "@/components/SpeechToText/OpenAiOptions";
 import DeepgramSTTOptions from "@/components/SpeechToText/DeepgramOptions";
-import LemonadeSTTOptions from "@/components/SpeechToText/LemonadeOptions";
 import GenericOpenAiSTTOptions from "@/components/SpeechToText/GenericOpenAiOptions";
 
 interface Provider {
@@ -40,13 +38,6 @@ const PROVIDERS = (t: any): Provider[] => [
     logo: OpenAiLogo,
     options: (settings) => <OpenAiSTTOptions settings={settings} />,
     description: t("audioPreference.stt.openaiDesc"),
-  },
-  {
-    name: t("audioPreference.stt.lemonade"),
-    value: "lemonade",
-    logo: LemonadeLogo,
-    options: (settings) => <LemonadeSTTOptions settings={settings} />,
-    description: t("audioPreference.stt.lemonadeDesc"),
   },
   {
     name: t("audioPreference.stt.deepgram"),

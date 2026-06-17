@@ -413,85 +413,10 @@ async function getFireworksAiModels(apiKey = null) {
   return { models, error: null };
 }
 
-async function getPerplexityModels() {
-  const knownModels = perplexityModels();
-  if (!Object.keys(knownModels).length === 0)
-    return { models: [], error: null };
 
-  const models = Object.values(knownModels).map((model) => {
-    return {
-      id: model.id,
-      name: model.name,
-    };
-  });
-  return { models, error: null };
-}
 
-async function getOpenRouterModels() {
-  const knownModels = await fetchOpenRouterModels();
-  if (!Object.keys(knownModels).length === 0)
-    return { models: [], error: null };
 
-  const models = Object.values(knownModels).map((model) => {
-    return {
-      id: model.id,
-      organization: model.organization,
-      name: model.name,
-    };
-  });
-  return { models, error: null };
-}
 
-async function getNovitaModels() {
-  const knownModels = await fetchNovitaModels();
-  if (!Object.keys(knownModels).length === 0)
-    return { models: [], error: null };
-  const models = Object.values(knownModels).map((model) => {
-    return {
-      id: model.id,
-      organization: model.organization,
-      name: model.name,
-    };
-  });
-  return { models, error: null };
-}
-
-async function getCometApiModels() {
-  const knownModels = await fetchCometApiModels();
-  if (!Object.keys(knownModels).length === 0)
-    return { models: [], error: null };
-  const models = Object.values(knownModels).map((model) => {
-    return {
-      id: model.id,
-      organization: model.organization,
-      name: model.name,
-    };
-  });
-  return { models, error: null };
-}
-
-async function getAPIPieModels(apiKey = null) {
-  const knownModels = await fetchApiPieModels(apiKey);
-  if (!Object.keys(knownModels).length === 0)
-    return { models: [], error: null };
-
-  const models = Object.values(knownModels)
-    .filter((model) => {
-      // Filter for chat models
-      return (
-        model.subtype &&
-        (model.subtype.includes("chat") || model.subtype.includes("chatx"))
-      );
-    })
-    .map((model) => {
-      return {
-        id: model.id,
-        organization: model.organization,
-        name: model.name,
-      };
-    });
-  return { models, error: null };
-}
 
 async function getMistralModels(apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
@@ -541,123 +466,8 @@ async function getElevenLabsModels(apiKey = null) {
   return { models, error: null };
 }
 
-async function getMinimaxModels(_apiKey = null) {
-  const { OpenAI: OpenAIApi } = require("openai");
-  const apiKey =
-    _apiKey === true
-      ? process.env.MINIMAX_API_KEY
-      : _apiKey || process.env.MINIMAX_API_KEY || null;
-  const openai = new OpenAIApi({
-    baseURL: "https://api.minimax.io/v1",
-    apiKey,
-  });
-  const models = await openai.models
-    .list()
-    .then((results) => results.data)
-    .then((models) =>
-      models.map((model) => ({
-        id: model.id,
-        name: model.id,
-        organization: model.owned_by || "minimax",
-      })),
-    )
-    .catch((e) => {
-      // eslint-disable-next-line no-console
-      console.error(`Minimax:listModels`, e.message);
-      return [
-        {
-          id: "MiniMax-M2.7",
-          name: "MiniMax-M2.7",
-          organization: "minimax",
-        },
-        {
-          id: "MiniMax-M2.7-highspeed",
-          name: "MiniMax-M2.7-highspeed",
-          organization: "minimax",
-        },
-        {
-          id: "MiniMax-M2.5",
-          name: "MiniMax-M2.5",
-          organization: "minimax",
-        },
-        {
-          id: "MiniMax-M2.5-highspeed",
-          name: "MiniMax-M2.5-highspeed",
-          organization: "minimax",
-        },
-        {
-          id: "MiniMax-M2.1",
-          name: "MiniMax-M2.1",
-          organization: "minimax",
-        },
-        {
-          id: "MiniMax-M2.1-highspeed",
-          name: "MiniMax-M2.1-highspeed",
-          organization: "minimax",
-        },
-        {
-          id: "MiniMax-M2",
-          name: "MiniMax-M2",
-          organization: "minimax",
-        },
-      ];
-    });
 
-  // Api Key was successful so lets save it for future uses
-  if (models.length > 0 && !!apiKey) process.env.MINIMAX_API_KEY = apiKey;
-  return { models, error: null };
-}
 
-async function getDeepSeekModels(apiKey = null) {
-  const { OpenAI: OpenAIApi } = require("openai");
-  const openai = new OpenAIApi({
-    apiKey: apiKey || process.env.DEEPSEEK_API_KEY || "deepseek",
-    baseURL: "https://api.deepseek.com/v1",
-  });
-  const models = await openai.models
-    .list()
-    .then((results) => results.data)
-    .then((models) =>
-      models.map((model) => ({
-        id: model.id,
-        name: model.id,
-        organization: model.owned_by,
-      })),
-    )
-    .catch((e) => {
-      // eslint-disable-next-line no-console
-      console.error(`DeepSeek:listModels`, e.message);
-      return [
-        {
-          id: "deepseek-chat",
-          name: "deepseek-chat",
-          organization: "deepseek",
-        },
-        {
-          id: "deepseek-reasoner",
-          name: "deepseek-reasoner",
-          organization: "deepseek",
-        },
-      ];
-    });
-
-  if (models.length > 0 && !!apiKey) process.env.DEEPSEEK_API_KEY = apiKey;
-  return { models, error: null };
-}
-
-async function getGiteeAIModels() {
-  const { giteeAiModels } = require("../AiProviders/giteeai");
-  const modelMap = await giteeAiModels();
-  if (!Object.keys(modelMap).length === 0) return { models: [], error: null };
-  const models = Object.values(modelMap).map((model) => {
-    return {
-      id: model.id,
-      organization: model.organization ?? "GiteeAI",
-      name: model.id,
-    };
-  });
-  return { models, error: null };
-}
 
 async function getXAIModels(_apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
@@ -733,117 +543,14 @@ async function getGeminiModels(_apiKey = null) {
   return { models, error: null };
 }
 
-async function getPPIOModels() {
-  const ppioModels = await fetchPPIOModels();
-  if (!Object.keys(ppioModels).length === 0) return { models: [], error: null };
-  const models = Object.values(ppioModels).map((model) => {
-    return {
-      id: model.id,
-      organization: model.organization,
-      name: model.name,
-    };
-  });
-  return { models, error: null };
-}
 
-async function getDellProAiStudioModels(basePath = null) {
-  const { OpenAI: OpenAIApi } = require("openai");
-  try {
-    const { origin } = new URL(
-      basePath || process.env.DELL_PRO_AI_STUDIO_BASE_PATH,
-    );
-    const openai = new OpenAIApi({
-      baseURL: `${origin}/v1/openai`,
-      apiKey: null,
-    });
-    const models = await openai.models
-      .list()
-      .then((results) => results.data)
-      .then((models) => {
-        return models
-          .filter(
-            (model) => model?.capability?.includes("TextToText"), // Only include text-to-text models for this handler
-          )
-          .map((model) => {
-            return {
-              id: model.id,
-              name: model.name,
-              organization: model.owned_by,
-            };
-          });
-      })
-      .catch((e) => {
-        throw new Error(e.message);
-      });
-    return { models, error: null };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(`getDellProAiStudioModels`, e.message);
-    return {
-      models: [],
-      error: "Could not reach Dell Pro Ai Studio from the provided base path",
-    };
-  }
-}
 
 function getNativeEmbedderModels() {
   const { NativeEmbedder } = require("../EmbeddingEngines/native");
   return { models: NativeEmbedder.availableModels(), error: null };
 }
 
-async function getMoonshotAiModels(_apiKey = null) {
-  const apiKey =
-    _apiKey === true
-      ? process.env.MOONSHOT_AI_API_KEY
-      : _apiKey || process.env.MOONSHOT_AI_API_KEY || null;
 
-  const { OpenAI: OpenAIApi } = require("openai");
-  const openai = new OpenAIApi({
-    baseURL: "https://api.moonshot.ai/v1",
-    apiKey,
-  });
-  const models = await openai.models
-    .list()
-    .then((results) => results.data)
-    .catch((e) => {
-      // eslint-disable-next-line no-console
-      console.error(`MoonshotAi:listModels`, e.message);
-      return [];
-    });
-
-  // Api Key was successful so lets save it for future uses
-  if (models.length > 0) process.env.MOONSHOT_AI_API_KEY = apiKey;
-  return { models, error: null };
-}
-
-async function getFoundryModels(basePath = null) {
-  try {
-    const { OpenAI: OpenAIApi } = require("openai");
-    const openai = new OpenAIApi({
-      baseURL: parseFoundryBasePath(basePath || process.env.FOUNDRY_BASE_PATH),
-      apiKey: null,
-    });
-    const models = await openai.models
-      .list()
-      .then((results) =>
-        results.data.map((model) => ({
-          ...model,
-          name: model.id,
-        })),
-      )
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.error(`Foundry:listModels`, e.message);
-        return [];
-      });
-
-    return { models, error: null };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(`Foundry:getFoundryModels`, e.message);
-    return { models: [], error: "Could not fetch Foundry Models" };
-  }
-}
 
 /**
  * Get Cohere models
@@ -851,72 +558,8 @@ async function getFoundryModels(basePath = null) {
  * @param {'chat' | 'embed'} type - The type of model to get
  * @returns {Promise<{models: Array<{id: string, organization: string, name: string}>, error: string | null}>}
  */
-async function getCohereModels(_apiKey = null, type = "chat") {
-  const apiKey =
-    _apiKey === true
-      ? process.env.COHERE_API_KEY
-      : _apiKey || process.env.COHERE_API_KEY || null;
 
-  const { CohereClient } = require("cohere-ai");
-  const cohere = new CohereClient({
-    token: apiKey,
-  });
-  const models = await cohere.models
-    .list({ pageSize: 1000, endpoint: type })
-    .then((results) => results.models)
-    .then((models) =>
-      models.map((model) => ({
-        id: model.name,
-        name: model.name,
-      })),
-    )
-    .catch((e) => {
-      // eslint-disable-next-line no-console
-      console.error(`Cohere:listModels`, e.message);
-      return [];
-    });
 
-  return { models, error: null };
-}
-
-async function getZAiModels(_apiKey = null) {
-  const { OpenAI: OpenAIApi } = require("openai");
-  const apiKey =
-    _apiKey === true
-      ? process.env.ZAI_API_KEY
-      : _apiKey || process.env.ZAI_API_KEY || null;
-  const openai = new OpenAIApi({
-    baseURL: "https://api.z.ai/api/paas/v4",
-    apiKey,
-  });
-  const models = await openai.models
-    .list()
-    .then((results) => results.data)
-    .catch((e) => {
-      // eslint-disable-next-line no-console
-      console.error(`Z.AI:listModels`, e.message);
-      return [];
-    });
-
-  // Api Key was successful so lets save it for future uses
-  if (models.length > 0 && !!apiKey) process.env.ZAI_API_KEY = apiKey;
-  return { models, error: null };
-}
-
-async function getOpenRouterEmbeddingModels() {
-  const knownModels = await fetchOpenRouterEmbeddingModels();
-  if (!Object.keys(knownModels).length === 0)
-    return { models: [], error: null };
-
-  const models = Object.values(knownModels).map((model) => {
-    return {
-      id: model.id,
-      organization: model.organization,
-      name: model.name,
-    };
-  });
-  return { models, error: null };
-}
 
 async function getDockerModelRunnerModels(basePath = null) {
   try {
@@ -932,27 +575,7 @@ async function getDockerModelRunnerModels(basePath = null) {
   }
 }
 
-async function getLemonadeModels(basePath = null, task = "chat") {
-  try {
-    const models = await getAllLemonadeModels(basePath, task);
-    return { models, error: null };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(`Lemonade:getLemonadeModels`, e.message);
-    return { models: [], error: "Could not fetch Lemonade Models" };
-  }
-}
 
-async function getLemonadeSTTModels(basePath = null) {
-  try {
-    const models = await getAllLemonadeModels(basePath, "transcription");
-    return { models, error: null };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(`Lemonade:getLemonadeSTTModels`, e.message);
-    return { models: [], error: "Could not fetch Lemonade STT Models" };
-  }
-}
 
 /**
  * Get Deepgram STT models from the Management API.
@@ -996,133 +619,6 @@ async function getDeepgramSTTModels(_apiKey = null) {
     // eslint-disable-next-line no-console
     console.error(`Deepgram:getDeepgramSTTModels`, e.message);
     return { models: [], error: "Could not fetch Deepgram STT models" };
-  }
-}
-
-/**
- * Get Privatemode models
- * @param {string} basePath - The base path of the Privatemode endpoint.
- * @param {'any' | 'generate' | 'embed' | 'transcribe'} task - The task to fetch the models for.
- * @returns {Promise<{models: Array<{id: string, organization: string, name: string}>, error: string | null}>}
- */
-async function getPrivatemodeModels(basePath = null, task = "any") {
-  try {
-    const { PrivatemodeLLM } = require("../AiProviders/privatemode");
-    const { OpenAI: OpenAIApi } = require("openai");
-    const openai = new OpenAIApi({
-      baseURL: PrivatemodeLLM.parseBasePath(
-        basePath || process.env.PRIVATEMODE_LLM_BASE_PATH,
-      ),
-      apiKey: null,
-    });
-    const models = await openai.models
-      .list()
-      .then((results) => results.data)
-      .then(
-        (models) =>
-          models
-            .filter((model) => !model.id.includes("/")) // remove legacy prefixed models
-            .filter((model) =>
-              task === "any" ? true : model.tasks.includes(task),
-            ), // filter by task or show all if task is any
-      )
-      .then((models) =>
-        models.map((model) => ({
-          id: model.id,
-          organization: "Privatemode",
-          name: model.id
-            .split("-")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(" "),
-        })),
-      )
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.error(`Privatemode:listModels`, e.message);
-        return [];
-      });
-    return { models, error: null };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(`Privatemode:getPrivatemodeModels`, e.message);
-    return { models: [], error: "Could not fetch Privatemode Models" };
-  }
-}
-
-/**
- * Get SambaNova models
- * @param {string} _apiKey - The API key to use
- * @returns {Promise<{models: Array<{id: string, organization: string, name: string}>, error: string | null}>}
- */
-async function getSambaNovaModels(_apiKey = null) {
-  try {
-    const apiKey =
-      _apiKey === true
-        ? process.env.SAMBANOVA_LLM_API_KEY
-        : _apiKey || process.env.SAMBANOVA_LLM_API_KEY || null;
-    const { OpenAI: OpenAIApi } = require("openai");
-    const openai = new OpenAIApi({
-      baseURL: "https://api.sambanova.ai/v1",
-      apiKey,
-    });
-    const models = await openai.models
-      .list()
-      .then((results) => results.data)
-      .then((models) =>
-        models.filter((model) => !model.id.toLowerCase().startsWith("whisper")),
-      )
-      .then((models) =>
-        models.map((model) => {
-          const organization =
-            model.hasOwnProperty("owned_by") &&
-            model.owned_by !== "no-reply@sambanova.ai"
-              ? model.owned_by
-              : "SambaNova";
-          return {
-            id: model.id,
-            organization,
-            name: model.id,
-          };
-        }),
-      )
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.error(`SambaNova:listModels`, e.message);
-        return [];
-      });
-    return { models, error: null };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(`SambaNova:getSambaNovaModels`, e.message);
-    return { models: [], error: "Could not fetch SambaNova Models" };
-  }
-}
-
-/**
- * Use the Cerebras PUBLIC API to fetch the public models
- * @returns {Promise<{models: Array<{id: string, organization: string, name: string}>, error: string | null}>}
- */
-async function getCerebrasModels() {
-  try {
-    const models = await fetch("https://api.cerebras.ai/public/v1/models")
-      .then((response) => response.json())
-      .then(({ data = [] }) => {
-        return data.map((model) => ({
-          id: model.id,
-          name: model.name,
-          organization: model.owned_by ?? "Cerebras",
-        }));
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error(`Cerebras:listModels`, error.message);
-        return [];
-      });
-    return { models, error: null };
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(`Cerebras:getCerebrasModels`, e.message);
-    return { models: [], error: "Could not fetch Cerebras Models" };
   }
 }
 
