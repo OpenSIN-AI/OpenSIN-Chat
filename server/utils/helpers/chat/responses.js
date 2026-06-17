@@ -50,6 +50,8 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
 
     // Now handle the chunks from the streamed response and append to fullText.
     try {
+      let reasoningMode = true;
+      let reasoningBlockOpen = false;
       for await (const chunk of stream) {
         const message = chunk?.choices?.[0];
         const token = message?.delta?.content;
@@ -97,7 +99,21 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
         }
 
         if (token) {
-          fullText += token;
+          // Filter out reasoning tags from token text
+          let filteredToken = token;
+          if (reasoningMode) {
+            // Strip  tags and their content
+            filteredToken = token.replace(/<\/?arg_value\s*(?:[^>]*?)?>/gi, "");
+            // If we're inside a reasoning block, skip the token entirely
+            if (token.includes("") || (reasoningBlockOpen && !token.includes(""))) {
+              if (token.includes("")) reasoningBlockOpen = true;
+              if (token.includes("")) reasoningBlockOpen = false;
+              continue;
+            }
+            if (reasoningBlockOpen) continue;
+          }
+          
+          fullText += filteredToken;
           // If we never saw a usage metric, we can estimate them by number of completion chunks
           if (!hasUsageMetrics) usage.completion_tokens++;
           writeResponseChunk(response, {

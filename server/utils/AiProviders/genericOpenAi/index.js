@@ -297,6 +297,8 @@ class GenericOpenAiLLM {
     return new Promise(async (resolve) => {
       let fullText = "";
       let reasoningText = "";
+      let reasoningMode = true; // Assume reasoning model by default
+      let reasoningBlockOpen = false;
 
       // Establish listener to early-abort a streaming response
       // in case things go sideways or the user does not like the response.
@@ -343,7 +345,21 @@ class GenericOpenAiLLM {
           }
 
           if (token) {
-            fullText += token;
+            // Filter out reasoning tags from token text
+            let filteredToken = token;
+            if (reasoningMode) {
+              // Strip  tags and their content
+              filteredToken = token.replace(/<\/?arg_value\s*(?:[^>]*?)?>/gi, "");
+              // If we're inside a reasoning block, skip the token entirely
+              if (token.includes("") || (reasoningBlockOpen && !token.includes(""))) {
+                if (token.includes("")) reasoningBlockOpen = true;
+                if (token.includes("")) reasoningBlockOpen = false;
+                continue;
+              }
+              if (reasoningBlockOpen) continue;
+            }
+            
+            fullText += filteredToken;
             // If we never saw a usage metric, we can estimate them by number of completion chunks
             if (!hasUsageMetrics) usage.completion_tokens++;
             writeResponseChunk(response, {
