@@ -26,7 +26,7 @@
 | SSH-Alias | OCI-Name | IP | Shape | Arch | RAM | User | SSH-Key (lokal) | Zweck |
 |---|---|---|---|---|---|---|---|---|
 | `sin-blackbox` | `A2A-SIN-Token-Blackbox` | `92.5.116.158` | (siehe OCI-Details) | x86_64 | 1 GB | `ubuntu` | `~/.ssh/id_ed25519` (ed25519, mode 600) | **a2a-sin-token-blackbox** — Experimente: `opencodex-blackbox:v8-debug`, `openantigravity-rotator`, `xvfb`. KEIN sinchat, KEIN cloudflared. |
-| `sin-supabase` | `sin-supabase` | `92.5.60.87` | A1.Flex (ARM) | aarch64 | 24 GB | `ubuntu` | `~/.ssh/id_ed25519` | **Haupt-Runtime**: Supabase-Stack, n8n, `opensin-neural-bus`, `sin-room13`, `simone-api`/`simone-worker`, `uptime-kuma`, nginx, Cloudflare-Tunnel `simone-api`. |
+| `sin-supabase` | `sin-supabase` | `92.5.60.87` | A1.Flex (ARM) | aarch64 | 24 GB | `ubuntu` | `~/.ssh/id_ed25519` | **Haupt-Runtime**: Supabase-Stack, n8n, `opensin-neural-bus`, `sin-room13`, `simone-api`/`simone-worker`, `uptime-kuma`, nginx, **OpenSIN-Chat** (`sinchat.delqhi.com`), Cloudflare-Tunnel `simone-api` + `opensin-chat`. |
 
 > **WICHTIG:** Es gibt KEINE Aura-Call-VM bei `92.5.30.252` in diesem OCI-Tenancy. Die frühere Annahme war falsch. Die zweite VM ist `sin-supabase` (`92.5.60.87`).
 > **SSH-Key:** Für beide VMs identisch `~/.ssh/id_ed25519`. Füge `sin-supabase` zu `~/.ssh/config` hinzu (siehe §22.1).
@@ -324,9 +324,10 @@ sudo netfilter-persistent save
 | `/home/ubuntu/.cloudflared/config.yml` | `sin-supabase` | `simone-api` | `status.delqhi.com` | uptime-kuma | `3001` | ✅ RUNNING (user service) |
 | `/home/ubuntu/.cloudflared/config.yml` | `sin-supabase` | `simone-api` | `api.delqhi.com` | `simone-api` | `8080` | ✅ RUNNING (user service) |
 | `/home/ubuntu/.cloudflared/config.yml` | `sin-supabase` | `simone-api` | `supabase.delqhi.com` | `http://172.20.0.76:8000` | `8000` | ✅ RUNNING (user service) |
-| *legacy / unbekannt* | *fälschlich `sin-blackbox`* | — | `sinchat.delqhi.com` | OpenSIN-Chat | `43939` | ❌ **DOWN / Ziel-VM existiert nicht** |
+| `/home/ubuntu/.cloudflared/config-opensin.yml` | `sin-supabase` | `opensin-chat` (`aa6a4715-…`) | `sinchat.delqhi.com` | OpenSIN-Chat Docker | `38471` | ✅ RUNNING (seit 2026-06-17) |
+| *legacy* | *Mac (früher)* | — | `sinchat.delqhi.com` | localhost | `38471` | ⏹️ deaktiviert / auf `sin-supabase` migriert |
 
-> **Korrektur:** `sinchat.delqhi.com` ist in **KEINER** aktiven Cloudflare-Tunnel-Config auf `sin-supabase`. `sin-blackbox` (`92.5.116.158`) hat **gar keinen cloudflared** installiert. Der frühere Eintrag `aa6a4715-… → localhost:43939` ist damit falsch zugeordnet oder veraltet.
+> **Korrektur (2026-06-17):** `sinchat.delqhi.com` läuft jetzt über den `opensin-chat`-Tunnel (`aa6a4715-…`) auf **`sin-supabase`** (`92.5.60.87`) → `localhost:38471`. `sin-blackbox` hat weiterhin keinen cloudflared. Der Mac-Tunnel `opensin-chat` wurde gestoppt und migriert.
 
 ### 6.2 Tunnel Diagnostics (autonom ausführbar)
 
@@ -516,9 +517,8 @@ Pattern gleich, aber: ssh -i aufgrund fehlendem Alias.
 **Symptom:** `https://sinchat.delqhi.com/` zeigt "Error 1033 - tunnel down".
 
 **Wichtige Lage:**
-- `sinchat.delqhi.com` ist **nicht** in den aktiven Cloudflare-Tunnel-Configs auf `sin-supabase` (`92.5.60.87`).
+- `sinchat.delqhi.com` ist in der Cloudflare-Tunnel-Config `config-opensin.yml` auf `sin-supabase` (`92.5.60.87`) und zeigt auf `http://localhost:38471` (OpenSIN-Chat Docker).
 - `sin-blackbox` (`92.5.116.158`) hat **keinen cloudflared** und keinen OpenSIN-Chat-Container.
-- Der 1033-Fehler bedeutet: Cloudflare hat einen Tunnel-Eintrag für `sinchat.delqhi.com`, aber der Ziel-Service antwortet nicht.
 
 **Autonome Diagnose:**
 
@@ -545,9 +545,9 @@ ssh sin-supabase 'sudo systemctl is-active cloudflared cloudflared-simone-api'
 ```
 
 **Falls sinchat nicht auf sin-supabase läuft:**
-1. Suche Deployment-Quelle: `gh search code "sinchat.delqhi.com" --owner OpenSIN-AI`.
-2. Prüfe Container-Logs: `docker logs sin-room13`, `docker logs simone-api`, `docker logs n8n-n8n-1`.
-3. Falls OpenSIN-Chat früher auf `sin-blackbox` lief: `ssh sin-blackbox 'docker ps -a | grep -iE "(sinchat|opensin|anythingllm)"'` (kein aktiver Container erwartet).
+1. Prüfe Container: `ssh sin-supabase 'docker ps | grep opensin-app'` und Logs: `docker logs opensin-app`.
+2. Prüfe Cloudflare-Tunnel: `ssh sin-supabase 'sudo systemctl status cloudflared-opensin-chat'`.
+3. Falls nötig, starte neu: `ssh sin-supabase 'cd /home/ubuntu/OpenSIN-Chat/docker && docker compose -p opensin up -d'` und `sudo systemctl restart cloudflared-opensin-chat`.
 
 ### 10.2 Disk voll (BUG-OCI-001 Pattern)
 
@@ -1061,9 +1061,9 @@ for ip in 92.5.116.158 92.5.60.87 92.5.30.252; do echo "=== $ip ==="; nc -z -w3 
 |---|---|
 | Läuft OpenSIN-Chat lokal auf dem Mac? | **Nein** — Docker/OrbStack sind instabil. |
 | Läuft OpenSIN-Chat auf `sin-blackbox` (`92.5.116.158`)? | **Nein** — dort läuft nur `opencodex-blackbox`. |
-| Läuft OpenSIN-Chat auf `sin-supabase` (`92.5.60.87`)? | **Nein** — dort läuft Supabase/n8n/simone-api/sin-room13. |
-| Ist `sinchat.delqhi.com` in einer aktiven Cloudflare-Config? | **Nein** — DNS zeigt auf Cloudflare (188.114.96.3/97.3), aber aktiver Tunnel fehlt oder Origin liefert 502. |
-| Empfohlenes Deployment-Ziel | **`sin-supabase`** (`92.5.60.87`) — 24 GB RAM, ARM, Docker, cloudflared bereits vorhanden. |
+| Läuft OpenSIN-Chat auf `sin-supabase` (`92.5.60.87`)? | **Ja** — Docker-Container `opensin-app:v0.56.15`, Port `38471→3001`. |
+| Ist `sinchat.delqhi.com` in einer aktiven Cloudflare-Config? | **Ja** — Tunnel `aa6a4715-…` auf `sin-supabase` → OpenSIN-Chat Docker auf `localhost:38471`. |
+| Empfohlenes Deployment-Ziel | **`sin-supabase`** (`92.5.60.87`) — 24 GB RAM, ARM, Docker, cloudflared bereits vorhanden. ✅ **Deployment erfolgreich am 2026-06-17.** |
 
 ### 21.7 Deployment-Plan OpenSIN-Chat auf `sin-supabase`
 
