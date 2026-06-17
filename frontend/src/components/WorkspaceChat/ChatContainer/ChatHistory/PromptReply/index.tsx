@@ -27,8 +27,8 @@ const PromptReply: any = ({
   if (pending) {
     return (
       <div className="flex justify-start w-full">
-        <div className="py-4 pl-0 pr-4 flex flex-col md:max-w-[80%]">
-          <div className="mt-3 ml-1 dot-falling light:invert"></div>
+        <div className="py-1.5 pl-0 pr-4 flex flex-col md:max-w-[80%]">
+          <div className="mt-2 ml-1 dot-falling light:invert"></div>
         </div>
       </div>
     );
@@ -37,7 +37,7 @@ const PromptReply: any = ({
   if (error) {
     return (
       <div className="flex justify-start w-full">
-        <div className="py-4 pl-0 pr-4 flex flex-col md:max-w-[80%]">
+        <div className="py-1.5 pl-0 pr-4 flex flex-col md:max-w-[80%]">
           <span className="inline-block p-2 rounded-lg bg-red-50 text-red-500">
             <Warning className="h-4 w-4 mb-1 inline-block" />{" "}
             {t("promptReply.couldNotRespond")}
@@ -54,7 +54,7 @@ const PromptReply: any = ({
 
   return (
     <div key={uuid} className="flex justify-start w-full">
-      <div className="py-4 pl-0 pr-4 flex flex-col w-full">
+      <div className="py-1.5 pl-0 pr-4 flex flex-col w-full">
         <RenderAssistantChatContent
           key={`${uuid}-prompt-reply-content`}
           message={reply}
