@@ -336,10 +336,9 @@ class GenericOpenAiLLM {
             continue;
           }
 
-          // If the reasoning text is not empty, but the reasoning token is empty
-          // and the token text is not empty we need to close the reasoning text and begin sending the token text.
+          // Reasoning text is kept internally but never sent to frontend.
+          // When reasoning ends and token text begins, just reset reasoningText.
           if (!!reasoningText && !reasoningToken && token) {
-            fullText += reasoningText;
             reasoningText = "";
           }
 
