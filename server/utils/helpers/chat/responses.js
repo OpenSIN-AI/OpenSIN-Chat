@@ -84,46 +84,18 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
         }
 
         // Reasoning models will always return the reasoning text before the token text.
+        // We keep it internally but don't send it to the frontend to avoid cluttering the UI.
         if (reasoningToken) {
-          // If the reasoning text is empty (''), we need to initialize it
-          // and send the first chunk of reasoning text.
-          if (reasoningText.length === 0) {
-            writeResponseChunk(response, {
-              uuid,
-              sources: [],
-              type: "textResponseChunk",
-              textResponse: `<think>${reasoningToken}`,
-              close: false,
-              error: false,
-            });
-            reasoningText += `<think>${reasoningToken}`;
-            continue;
-          } else {
-            writeResponseChunk(response, {
-              uuid,
-              sources: [],
-              type: "textResponseChunk",
-              textResponse: reasoningToken,
-              close: false,
-              error: false,
-            });
-            reasoningText += reasoningToken;
-          }
+          reasoningText += reasoningToken;
+          continue;
         }
 
         // If the reasoning text is not empty, but the reasoning token is empty
         // and the token text is not empty we need to close the reasoning text and begin sending the token text.
         if (!!reasoningText && !reasoningToken && token) {
-          writeResponseChunk(response, {
-            uuid,
-            sources: [],
-            type: "textResponseChunk",
-            textResponse: `</think>`,
-            close: false,
-            error: false,
-          });
-          fullText += `${reasoningText}</think>`;
+          fullText += reasoningText;
           reasoningText = "";
+        }
         }
 
         if (token) {

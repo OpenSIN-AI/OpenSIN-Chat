@@ -194,6 +194,96 @@ function workspaceEndpoints(app) {
     },
   );
 
+  // Connect local files to workspace — reads from server filesystem
+  app.post(
+    "/workspace/:slug/connect-files",
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    async (request, response) => {
+      try {
+        const { slug = null } = request.params;
+        const { files: filePaths } = reqBody(request);
+        const currWorkspace = multiUserMode(response)
+          ? await Workspace.get({ slug })
+          : await Workspace.get({ slug });
+
+        if (!currWorkspace) {
+          response.status(400).json({ error: "Workspace not found" }).end();
+          return;
+        }
+
+        if (!filePaths || !Array.isArray(filePaths) || filePaths.length === 0) {
+          response.status(400).json({ error: "No files provided" }).end();
+          return;
+        }
+
+        const storageDir = getStoragePath("documents");
+        const Collector = new CollectorApi();
+        const processingOnline = await Collector.online();
+
+        if (!processingOnline) {
+          response.status(500).json({
+            success: false,
+            error: "Document processing API is not online.",
+          }).end();
+          return;
+        }
+
+        const results = [];
+        for (const filePath of filePaths) {
+          try {
+            const basename = path.basename(filePath);
+            if (!fs.existsSync(filePath)) {
+              results.push({ file: basename, success: false, error: "File not found" });
+              continue;
+            }
+
+            const destPath = path.join(storageDir, basename);
+            fs.copyFileSync(filePath, destPath);
+
+            const { success, reason, documents } = await Collector.processDocument(basename);
+            if (!success || documents?.length === 0) {
+              results.push({ file: basename, success: false, error: reason });
+              continue;
+            }
+
+            const document = documents[0];
+            const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
+              currWorkspace,
+              [document.location],
+              response.locals?.user?.id,
+            );
+
+            if (failedToEmbed.length > 0) {
+              results.push({ file: basename, success: false, error: errors?.[0] });
+            } else {
+              results.push({ file: basename, success: true, document });
+            }
+          } catch (e) {
+            results.push({ file: path.basename(filePath), success: false, error: e.message });
+          }
+        }
+
+        await Telemetry.sendTelemetry("document_uploaded");
+        await EventLogs.logEvent(
+          "document_uploaded",
+          { documentName: `${results.length} files via directory browser` },
+          response.locals?.user?.id,
+        );
+
+        const successCount = results.filter((r) => r.success).length;
+        response.status(200).json({
+          success: successCount > 0,
+          connected: successCount,
+          total: results.length,
+          results,
+        });
+      } catch (e) {
+        console.error("connect-files error", e.message, e);
+        response.status(500).json({ error: e.message }).end();
+      }
+    },
+  );
+
   app.post(
     "/workspace/:slug/upload-link",
     [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],

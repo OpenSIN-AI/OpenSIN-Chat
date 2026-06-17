@@ -80,5 +80,7 @@ markdown.renderer.rules.image = function (tokens, idx: any) {
 markdown.use(markdownItKatexPlugin);
 
 export default function renderMarkdown(text = "") {
-  return markdown.render(text);
+  // Collapse excessive newlines (3+) into 2 to prevent large gaps in output
+  const cleanedText = text.replace(/\n{3,}/g, "\n\n");
+  return markdown.render(cleanedText);
 }

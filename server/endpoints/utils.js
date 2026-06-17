@@ -159,6 +159,59 @@ function utilEndpoints(app) {
     }
   });
 
+  // Directory browser for FileBrowserSidebar — Finder-style local file browsing
+  app.get("/utils/browse-directory", async (req, response) => {
+    try {
+      const path = require("path");
+      const fs = require("fs");
+      const os = require("os");
+
+      const requestedPath = req.query.path || os.homedir();
+      const resolvedPath = path.resolve(requestedPath);
+
+      // Security: prevent path traversal — only allow absolute paths under /
+      if (!path.isAbsolute(resolvedPath)) {
+        return response.status(400).json({ error: "Path must be absolute" });
+      }
+
+      const entries = fs.readdirSync(resolvedPath, { withFileTypes: true });
+      const items = entries
+        .filter((entry) => !entry.name.startsWith("."))
+        .map((entry) => {
+          const fullPath = path.join(resolvedPath, entry.name);
+          let size = 0;
+          let ext = "";
+          try {
+            if (entry.isFile()) {
+              const stat = fs.statSync(fullPath);
+              size = stat.size;
+              ext = path.extname(entry.name).toLowerCase();
+            }
+          } catch {}
+          return {
+            name: entry.name,
+            type: entry.isDirectory() ? "directory" : "file",
+            path: fullPath,
+            size,
+            ext,
+          };
+        })
+        .sort((a, b) => {
+          if (a.type !== b.type) return a.type === "directory" ? -1 : 1;
+          return a.name.localeCompare(b.name);
+        });
+
+      response.status(200).json({
+        path: resolvedPath,
+        parent: path.dirname(resolvedPath) !== resolvedPath ? path.dirname(resolvedPath) : null,
+        items,
+      });
+    } catch (e) {
+      console.error("browse-directory endpoint error", e.message);
+      response.status(500).json({ error: e.message });
+    }
+  });
+
   // Report download for browser (public, no API key needed) — Issue #55
   // Reports are stored in STORAGE_DIR/generated-reports/ by the ReportGenerator
   // (server/utils/reports). This mirrors that exact resolution so the
