@@ -171,7 +171,7 @@
 |---------|--------|------------|
 | **User Browser Cache** | ✅ | Cache-Control Header gesetzt + alte vendor-charts gelöscht |
 | **Politician DB leer** | ✅ | Sync-Job ausgeführt (`804b6388`): 733 Politiker, 7382 Reden in der DB |
-| **npm audit (44 vulns)** | 🟡 | `--force` nötig, aber upstream transitive deps (bleibt) |
+| **npm audit** | 🟡 | Server: 5 vulns (hono via @modelcontextprotocol/sdk — transitive, nicht direkt fixbar). Collector: 0 (officeparser 4→7 Upgrade fixt file-type ASF vuln). Frontend: 0. |
 | **AIbitat `opencode-zen` Case** | ✅ | Gefixt in `3690f5ed` |
 
 ---

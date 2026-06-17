@@ -19,7 +19,9 @@ async function asOfficeMime({
   console.log(`-- Working ${filename} --`);
   let content = "";
   try {
-    content = await officeParser.parseOfficeAsync(fullFilePath);
+    const { parseOffice } = officeParser;
+    const ast = await parseOffice(fullFilePath);
+    content = ast.toText();
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Could not parse office or office-like file`, error);
