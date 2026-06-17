@@ -12,7 +12,7 @@ import SettingsButton from "../SettingsButton";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
-import { useSidebarToggle, ToggleSidebarButton } from "./SidebarToggle";
+import { useSidebarToggle } from "./SidebarToggle";
 import SearchBox from "./SearchBox";
 import { Tooltip } from "react-tooltip";
 import { createPortal } from "react-dom";
@@ -100,15 +100,9 @@ export default function Sidebar() {
         aria-label={t("sidebar.mainNavigation")}
         style={{ "--sidebar-width": showSidebar ? `${sidebarWidth}px` : "0px" }}
         className={`w-[var(--sidebar-width)] relative transition-all duration-500 ${
-          showSidebar ? "pl-0" : "pl-4"
+          showSidebar ? "pl-0" : "pl-0"
         }`}
       >
-        {canToggleSidebar && (
-          <ToggleSidebarButton
-            showSidebar={showSidebar}
-            setShowSidebar={setShowSidebar}
-          />
-        )}
         <div className="overflow-hidden h-full">
           <div className="flex shrink-0 w-full justify-start my-[18px] px-[24px]">
             <div

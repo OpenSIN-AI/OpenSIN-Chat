@@ -16,6 +16,8 @@ import {
   Cpu,
   Info,
   Upload,
+  CloudArrowUp,
+  Plus,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useFilesystem } from "@/hooks/useFilesystem";
@@ -80,6 +82,7 @@ export default function FilesystemSidebar() {
   const [showSysInfo, setShowSysInfo] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const [connectResult, setConnectResult] = useState(null);
+  const [selectedDirectory, setSelectedDirectory] = useState(null);
 
   useEffect(() => {
     if (sidebarOpen && !currentPath) {
@@ -89,25 +92,35 @@ export default function FilesystemSidebar() {
 
   const breadcrumbs = getBreadcrumbs(currentPath);
 
+  const handleSelectDirectory = useCallback(() => {
+    if (currentPath && currentPath !== "/") {
+      setSelectedDirectory(currentPath);
+    }
+  }, [currentPath]);
+
   const handleConnect = useCallback(async () => {
-    if (selectedFiles.length === 0) return;
+    if (selectedFiles.length === 0 && !selectedDirectory) return;
     setConnecting(true);
     setConnectResult(null);
     try {
+      const payload = selectedDirectory
+        ? { directory: selectedDirectory }
+        : { files: selectedFiles.map((f) => f.path) };
       const res = await fetch("/api/workspace/opensin-chat/connect-files", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          files: selectedFiles.map((f) => f.path),
-        }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (res.ok) {
         setConnectResult({
           success: true,
-          message: `${data.connected || 0} von ${data.total} Datei(en) verbunden`,
+          message: selectedDirectory
+            ? `Verzeichnis "${selectedDirectory}" verbunden — KI hat Zugriff auf alle Dateien`
+            : `${data.connected || 0} von ${data.total} Datei(en) verbunden`,
         });
         clearSelection();
+        setSelectedDirectory(null);
       } else {
         setConnectResult({ success: false, message: data.error || "Fehler beim Verbinden" });
       }
@@ -116,7 +129,7 @@ export default function FilesystemSidebar() {
     } finally {
       setConnecting(false);
     }
-  }, [selectedFiles, clearSelection]);
+  }, [selectedFiles, selectedDirectory, clearSelection]);
 
   const sysInfoRows = sysInfo
     ? [
@@ -132,11 +145,10 @@ export default function FilesystemSidebar() {
   return (
     <ChatSidebar isOpen={sidebarOpen}>
       <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
-        {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <FolderOpen size={15} className="text-zinc-400 light:text-slate-500" />
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
-            {t("sidebar.filesystem.title", "Verzeichnis")}
+            {t("sidebar.filesystem.title", "Verzeichnis wählen")}
           </p>
           <button
             onClick={() => setShowSysInfo(!showSysInfo)}
@@ -164,7 +176,6 @@ export default function FilesystemSidebar() {
           </button>
         </div>
 
-        {/* System Info Panel (toggle) */}
         {showSysInfo && (
           <div className="px-4 py-3 border-b border-zinc-800 light:border-slate-200 bg-zinc-950/50 light:bg-slate-50">
             <div className="flex flex-col gap-2">
@@ -179,121 +190,221 @@ export default function FilesystemSidebar() {
           </div>
         )}
 
-        {/* Breadcrumbs */}
-        {currentPath !== null && (
-          <div className="flex items-center gap-1 px-3 py-2 border-b border-zinc-800 light:border-slate-200 overflow-x-auto no-scroll shrink-0">
-            {parentPath !== null && (
+        {selectedDirectory && (
+          <div className="px-4 py-2 border-b border-zinc-800 light:border-slate-200 bg-blue-950/30">
+            <div className="flex items-center gap-2">
+              <CheckCircle size={14} weight="fill" className="text-blue-400 flex-shrink-0" />
+              <span className="text-xs text-blue-300 truncate flex-1">Aktuell: {selectedDirectory}</span>
               <button
-                onClick={navigateUp}
-                type="button"
-                className="text-zinc-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
-                aria-label="Aufwärts"
+                onClick={() => setSelectedDirectory(null)}
+                className="text-xs text-zinc-400 hover:text-white border-none bg-transparent cursor-pointer"
               >
-                <ArrowLeft size={14} weight="bold" />
+                Ändern
               </button>
-            )}
-            {breadcrumbs.map((crumb, i) => (
-              <div key={crumb.path} className="flex items-center gap-1 flex-shrink-0">
-                {i > 0 && <span className="text-zinc-700 text-xs">/</span>}
-                <button
-                  onClick={() => navigateTo(crumb.path)}
-                  type="button"
-                  className={`text-xs border-none bg-transparent cursor-pointer transition-colors ${
-                    i === breadcrumbs.length - 1
-                      ? "text-white light:text-slate-900 font-medium"
-                      : "text-zinc-400 hover:text-white light:hover:text-slate-900"
-                  }`}
-                >
-                  {crumb.name === "/" ? "Root" : crumb.name}
-                </button>
-              </div>
-            ))}
+            </div>
           </div>
         )}
 
-        {/* File List */}
-        <div className="flex-1 overflow-y-auto p-2 no-scroll">
-          {loading && (
-            <div className="flex flex-col gap-1">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="flex items-center gap-3 px-2 py-2 animate-pulse">
-                  <div className="w-5 h-5 rounded bg-zinc-800 light:bg-slate-200 flex-shrink-0" />
-                  <div className="h-3 w-32 rounded bg-zinc-800 light:bg-slate-200" />
-                </div>
-              ))}
+        {!selectedDirectory && (
+          <>
+            <div className="px-3 py-2 border-b border-zinc-800 light:border-slate-200 shrink-0">
+              <p className="text-[10px] text-zinc-500 light:text-slate-400 uppercase tracking-wider mb-1">
+                Verzeichnis für Workspace wählen
+              </p>
+              <p className="text-[11px] text-zinc-400 light:text-slate-500">
+                Navigiere zu einem Ordner und klicke "Als Workspace-Quelle festlegen"
+              </p>
             </div>
-          )}
 
-          {error && (
-            <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400">
-              {t("sidebar.filesystem.error", "Fehler beim Laden:")} {error}
-            </div>
-          )}
-
-          {!loading && !error && items.length === 0 && (
-            <div className="text-center py-8 text-xs text-zinc-500 light:text-slate-400">
-              {t("sidebar.filesystem.empty", "Verzeichnis ist leer")}
-            </div>
-          )}
-
-          {!loading && !error && items.length > 0 && (
-            <div className="flex flex-col gap-0.5">
-              {items.map((item) => {
-                const Icon = item.type === "directory" ? Folder : getFileIcon(item.ext);
-                const isSelected = selectedFiles.some((f) => f.path === item.path);
-                const isSupported = item.type === "file" && SUPPORTED_EXTENSIONS.includes(item.ext);
-
-                return (
-                  <div
-                    key={item.path}
-                    onClick={() => {
-                      if (item.type === "directory") {
-                        navigateTo(item.path);
-                      } else if (isSupported) {
-                        toggleFileSelection(item);
-                      }
-                    }}
-                    className={`flex items-center gap-2.5 px-2 py-1.5 rounded-md cursor-pointer transition-all ${
-                      isSelected
-                        ? "bg-blue-600/20 border border-blue-500/40"
-                        : item.type === "file" && !isSupported
-                          ? "opacity-40"
-                          : "hover:bg-zinc-800 light:hover:bg-slate-100 border border-transparent"
-                    }`}
+            {currentPath !== null && (
+              <div className="flex items-center gap-1 px-3 py-2 border-b border-zinc-800 light:border-slate-200 overflow-x-auto no-scroll shrink-0">
+                {parentPath !== null && (
+                  <button
+                    onClick={navigateUp}
+                    type="button"
+                    className="text-zinc-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
+                    aria-label="Aufwärts"
                   >
-                    <Icon
-                      size={16}
-                      weight={item.type === "directory" ? "fill" : "regular"}
-                      className={`flex-shrink-0 ${
-                        item.type === "directory"
-                          ? "text-blue-400 light:text-blue-600"
-                          : "text-zinc-400 light:text-slate-500"
+                    <ArrowLeft size={14} weight="bold" />
+                  </button>
+                )}
+                {breadcrumbs.map((crumb, i) => (
+                  <div key={crumb.path} className="flex items-center gap-1 flex-shrink-0">
+                    {i > 0 && <span className="text-zinc-700 text-xs">/</span>}
+                    <button
+                      onClick={() => navigateTo(crumb.path)}
+                      type="button"
+                      className={`text-xs border-none bg-transparent cursor-pointer transition-colors ${
+                        i === breadcrumbs.length - 1
+                          ? "text-white light:text-slate-900 font-medium"
+                          : "text-zinc-400 hover:text-white light:hover:text-slate-900"
                       }`}
-                    />
-                    <span className="text-xs text-zinc-200 light:text-slate-800 truncate flex-1">
-                      {item.name}
-                    </span>
-                    {item.type === "file" && (
-                      <span className="text-[10px] text-zinc-600 light:text-slate-400 flex-shrink-0">
-                        {formatSize(item.size)}
-                      </span>
-                    )}
-                    {isSelected && (
-                      <CheckCircle size={14} weight="fill" className="text-blue-400 flex-shrink-0" />
-                    )}
+                    >
+                      {crumb.name === "/" ? "Root" : crumb.name}
+                    </button>
                   </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
+                ))}
+              </div>
+            )}
 
-        {/* Connect to Workspace Bar */}
-        {selectedFiles.length > 0 && (
-          <div className="border-t border-zinc-800 light:border-slate-200 p-3 bg-zinc-950 light:bg-slate-50 shrink-0">
+            <div className="flex-1 overflow-y-auto p-2 no-scroll">
+              {loading && (
+                <div className="flex flex-col gap-1">
+                  {Array.from({ length: 8 }).map((_, i) => (
+                    <div key={i} className="flex items-center gap-3 px-2 py-2 animate-pulse">
+                      <div className="w-5 h-5 rounded bg-zinc-800 light:bg-slate-200 flex-shrink-0" />
+                      <div className="h-3 w-32 rounded bg-zinc-800 light:bg-slate-200" />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {error && (
+                <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400">
+                  {t("sidebar.filesystem.error", "Fehler beim Laden:")} {error}
+                </div>
+              )}
+
+              {!loading && !error && items.length === 0 && (
+                <div className="text-center py-8 text-xs text-zinc-500 light:text-slate-400">
+                  {t("sidebar.filesystem.empty", "Verzeichnis ist leer")}
+                </div>
+              )}
+
+              {!loading && !error && items.length > 0 && (
+                <div className="flex flex-col gap-0.5">
+                  {items.filter((item) => item.type === "directory").map((item) => (
+                    <div
+                      key={item.path}
+                      onClick={() => navigateTo(item.path)}
+                      className="flex items-center gap-2.5 px-2 py-1.5 rounded-md cursor-pointer transition-all hover:bg-zinc-800 light:hover:bg-slate-100 border border-transparent"
+                    >
+                      <Folder
+                        size={16}
+                        weight="fill"
+                        className="text-blue-400 light:text-blue-600 flex-shrink-0"
+                      />
+                      <span className="text-xs text-zinc-200 light:text-slate-800 truncate flex-1">
+                        {item.name}
+                      </span>
+                    </div>
+                  ))}
+                  {items.filter((item) => item.type === "file").length > 0 && (
+                    <div className="my-1 border-t border-zinc-800 light:border-slate-200" />
+                  )}
+                  {items.filter((item) => item.type === "file").map((item) => {
+                    const Icon = getFileIcon(item.ext);
+                    const isSelected = selectedFiles.some((f) => f.path === item.path);
+                    const isSupported = SUPPORTED_EXTENSIONS.includes(item.ext);
+                    return (
+                      <div
+                        key={item.path}
+                        onClick={() => isSupported && toggleFileSelection(item)}
+                        className={`flex items-center gap-2.5 px-2 py-1.5 rounded-md cursor-pointer transition-all ${
+                          isSelected
+                            ? "bg-blue-600/20 border border-blue-500/40"
+                            : isSupported
+                              ? "hover:bg-zinc-800 light:hover:bg-slate-100 border border-transparent"
+                              : "opacity-40 border border-transparent"
+                        }`}
+                      >
+                        <Icon
+                          size={16}
+                          className="text-zinc-400 light:text-slate-500 flex-shrink-0"
+                        />
+                        <span className="text-xs text-zinc-200 light:text-slate-800 truncate flex-1">
+                          {item.name}
+                        </span>
+                        <span className="text-[10px] text-zinc-600 light:text-slate-400 flex-shrink-0">
+                          {formatSize(item.size)}
+                        </span>
+                        {isSelected && (
+                          <CheckCircle size={14} weight="fill" className="text-blue-400 flex-shrink-0" />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            <div className="border-t border-zinc-800 light:border-slate-200 p-3 bg-zinc-950 light:bg-slate-50 shrink-0">
+              {connectResult && (
+                <div
+                  className={`mb-2 text-xs px-2 py-1.5 rounded-md ${
+                    connectResult.success
+                      ? "bg-green-950/40 text-green-400 border border-green-800/50"
+                      : "bg-red-950/40 text-red-400 border border-red-800/50"
+                  }`}
+                >
+                  {connectResult.message}
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleSelectDirectory}
+                  disabled={!currentPath || currentPath === "/"}
+                  type="button"
+                  className="flex items-center gap-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-40 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors flex-1"
+                >
+                  <FolderOpen size={12} weight="bold" />
+                  Verzeichnis festlegen
+                </button>
+                {selectedFiles.length > 0 && (
+                  <button
+                    onClick={handleConnect}
+                    disabled={connecting}
+                    type="button"
+                    className="flex items-center gap-1.5 text-xs font-medium text-white bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors"
+                  >
+                    <Upload size={12} weight="bold" />
+                    {selectedFiles.length} Datei(en)
+                  </button>
+                )}
+              </div>
+              {selectedFiles.length > 0 && (
+                <button
+                  onClick={clearSelection}
+                  className="mt-1 text-[10px] text-zinc-500 hover:text-white border-none bg-transparent cursor-pointer w-full text-center"
+                >
+                  Auswahl aufheben
+                </button>
+              )}
+            </div>
+          </>
+        )}
+
+        {selectedDirectory && (
+          <div className="flex-1 flex flex-col items-center justify-center p-4">
+            <FolderOpen size={48} weight="fill" className="text-blue-400 mb-3" />
+            <p className="text-sm text-white light:text-slate-900 font-medium text-center mb-1">
+              Verzeichnis verbunden
+            </p>
+            <p className="text-xs text-zinc-400 light:text-slate-500 text-center mb-4 font-mono">
+              {selectedDirectory}
+            </p>
+            <p className="text-[11px] text-zinc-500 light:text-slate-400 text-center mb-4">
+ Die KI in diesem Workspace hat Zugriff auf alle Dateien in diesem Verzeichnis.
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setSelectedDirectory(null)}
+                className="text-xs text-zinc-400 hover:text-white border border-zinc-700 hover:border-zinc-600 px-3 py-1.5 rounded-md bg-transparent cursor-pointer transition-colors"
+              >
+                Ändern
+              </button>
+              <button
+                onClick={handleConnect}
+                disabled={connecting}
+                className="flex items-center gap-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors"
+              >
+                <Upload size={12} weight="bold" />
+                {connecting ? "Verbinde..." : "Verbinden"}
+              </button>
+            </div>
             {connectResult && (
               <div
-                className={`mb-2 text-xs px-2 py-1.5 rounded-md ${
+                className={`mt-3 text-xs px-3 py-2 rounded-md w-full text-center ${
                   connectResult.success
                     ? "bg-green-950/40 text-green-400 border border-green-800/50"
                     : "bg-red-950/40 text-red-400 border border-red-800/50"
@@ -302,27 +413,6 @@ export default function FilesystemSidebar() {
                 {connectResult.message}
               </div>
             )}
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-zinc-400 light:text-slate-500 flex-1">
-                {selectedFiles.length} Datei(en) ausgewählt
-              </span>
-              <button
-                onClick={clearSelection}
-                type="button"
-                className="text-xs text-zinc-400 hover:text-white light:hover:text-slate-900 px-2 py-1 rounded border-none bg-transparent cursor-pointer transition-colors"
-              >
-                Abbrechen
-              </button>
-              <button
-                onClick={handleConnect}
-                disabled={connecting}
-                type="button"
-                className="flex items-center gap-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors"
-              >
-                <Upload size={12} weight="bold" />
-                {connecting ? "Verbinde..." : "Verbinden"}
-              </button>
-            </div>
           </div>
         )}
       </div>

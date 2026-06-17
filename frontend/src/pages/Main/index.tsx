@@ -5,6 +5,7 @@ import { FullScreenLoader } from "@/components/Preloader";
 import Home from "./Home";
 import { isMobile } from "react-device-detect";
 import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
+import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 
 export default function Main() {
   const { loading, requiresAuth, mode } = usePasswordModal();
@@ -16,6 +17,7 @@ export default function Main() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
       {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
+      {!isMobile && <LeftSidebarIconBar />}
       <Home />
     </div>
   );
