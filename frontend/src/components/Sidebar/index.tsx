@@ -99,7 +99,7 @@ export default function Sidebar() {
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ "--sidebar-width": showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className={`relative transition-all duration-500 ${
+        className={`w-[var(--sidebar-width)] relative transition-all duration-500 ${
           showSidebar ? "pl-0" : "pl-4"
         }`}
       >
