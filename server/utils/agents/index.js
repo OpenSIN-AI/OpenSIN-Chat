@@ -186,6 +186,12 @@ class AgentHandler {
             "Docker Model Runner base path must be provided to use agents.",
           );
         break;
+      case "opencode-zen":
+        if (!process.env.OPENCODE_ZEN_BASE_PATH)
+          throw new Error(
+            "OpenCode Zen base path must be provided to use agents.",
+          );
+        break;
       default:
         throw new Error(
           "No workspace agent provider set. Please set your agent provider in the workspace's settings",

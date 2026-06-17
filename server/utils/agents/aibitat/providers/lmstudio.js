@@ -29,7 +29,7 @@ class LMStudioProvider extends InheritMultiple([Provider, UnTooled]) {
     const apiKey = process.env.LMSTUDIO_AUTH_TOKEN ?? null;
     const client = new OpenAI({
       baseURL: parseLMStudioBasePath(process.env.LMSTUDIO_BASE_PATH),
-      apiKey,
+      apiKey: apiKey || "not-used",
     });
 
     this._client = client;

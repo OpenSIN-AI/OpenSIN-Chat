@@ -186,7 +186,7 @@ class Provider {
           configuration: {
             baseURL: process.env.GENERIC_OPEN_AI_BASE_PATH,
           },
-          apiKey: process.env.GENERIC_OPEN_AI_API_KEY,
+          apiKey: process.env.GENERIC_OPEN_AI_API_KEY || "not-used",
           maxTokens: toValidNumber(
             process.env.GENERIC_OPEN_AI_MAX_TOKENS,
             1024,
@@ -245,7 +245,7 @@ class Provider {
           configuration: {
             baseURL: process.env.LITE_LLM_BASE_PATH,
           },
-          apiKey: process.env.LITE_LLM_API_KEY ?? null,
+          apiKey: process.env.LITE_LLM_API_KEY || "not-used",
           ...config,
         });
       case "nvidia-nim":
@@ -261,7 +261,7 @@ class Provider {
           configuration: {
             baseURL: process.env.OPENCODE_ZEN_BASE_PATH,
           },
-          apiKey: process.env.OPENCODE_ZEN_API_KEY ?? null,
+          apiKey: process.env.OPENCODE_ZEN_API_KEY || "opencode-zen",
           ...config,
         });
       case "docker-model-runner":

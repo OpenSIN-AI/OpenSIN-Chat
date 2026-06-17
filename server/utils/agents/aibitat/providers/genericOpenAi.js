@@ -23,7 +23,7 @@ class GenericOpenAiProvider extends InheritMultiple([Provider, UnTooled]) {
     const { model = "gpt-3.5-turbo" } = config;
     const client = new OpenAI({
       baseURL: process.env.GENERIC_OPEN_AI_BASE_PATH,
-      apiKey: process.env.GENERIC_OPEN_AI_API_KEY ?? null,
+      apiKey: process.env.GENERIC_OPEN_AI_API_KEY || "not-used",
       defaultHeaders: {
         "User-Agent": getOpenSINChatUserAgent(),
         ...GenericOpenAiLLM.parseCustomHeaders(),

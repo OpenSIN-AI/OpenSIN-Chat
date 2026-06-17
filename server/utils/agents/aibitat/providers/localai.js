@@ -19,7 +19,7 @@ class LocalAiProvider extends InheritMultiple([Provider, UnTooled]) {
     super();
     const client = new OpenAI({
       baseURL: process.env.LOCAL_AI_BASE_PATH,
-      apiKey: process.env.LOCAL_AI_API_KEY ?? null,
+      apiKey: process.env.LOCAL_AI_API_KEY || "not-used",
     });
 
     this._client = client;
