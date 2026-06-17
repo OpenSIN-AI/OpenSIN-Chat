@@ -135,11 +135,10 @@ class PoliticianDB {
       similarityThreshold: 0.25,
       party: filters.party || null,
     });
-    if (error) return [];
+    if (error) {
+      return this._textSearchSpeeches(query, filters);
+    }
 
-    // Speeches are sourced from Plenarprotokolle, so plenarprotokolle/all are
-    // pass-through. For bundestag/abgeordnetenwatch we constrain to speeches
-    // whose owning politician originates from that source.
     const src = filters.source;
     if (!src || src === "all" || src === "plenarprotokolle") return results;
 
@@ -157,11 +156,59 @@ class PoliticianDB {
       const allowedSet = new Set(allowed.map((p) => p.id));
       return results.filter((r) => allowedSet.has(r.metadata?.politicianId));
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error(
         `[PoliticianDB] semanticSearchSpeeches source filter error: ${err.message}`,
       );
       return results;
+    }
+  }
+
+  async _textSearchSpeeches(query, filters = {}) {
+    try {
+      const where = {
+        speechText: { contains: query, mode: "insensitive" },
+      };
+      if (filters.party) {
+        where.speakerParty = { contains: filters.party, mode: "insensitive" };
+      }
+      const src = filters.source;
+      if (src && src !== "all" && src !== "plenarprotokolle") {
+        where.politician = { is: { source: src } };
+      }
+      const speeches = await prisma.politician_speeches.findMany({
+        where,
+        orderBy: { speechDate: "desc" },
+        take: filters.topN || 10,
+        select: {
+          id: true,
+          politicianId: true,
+          speechTitle: true,
+          speechText: true,
+          speechDate: true,
+          documentUrl: true,
+          speakerName: true,
+          speakerParty: true,
+          session: true,
+          sitting: true,
+        },
+      });
+      return speeches.map((s) => ({
+        text: s.speechText,
+        metadata: {
+          speechId: s.id,
+          politicianId: s.politicianId,
+          politicianName: s.speakerName,
+          party: s.speakerParty,
+          date: s.speechDate,
+          title: s.speechTitle,
+        },
+        score: 0,
+      }));
+    } catch (err) {
+      console.error(
+        `[PoliticianDB] _textSearchSpeeches fallback error: ${err.message}`,
+      );
+      return [];
     }
   }
 
