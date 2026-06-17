@@ -120,7 +120,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
             uuid,
             sources: [],
             type: "textResponseChunk",
-            textResponse: token,
+            textResponse: filteredToken,
             close: false,
             error: false,
           });

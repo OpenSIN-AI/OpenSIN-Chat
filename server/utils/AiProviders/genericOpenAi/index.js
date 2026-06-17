@@ -366,7 +366,7 @@ class GenericOpenAiLLM {
               uuid,
               sources: [],
               type: "textResponseChunk",
-              textResponse: token,
+              textResponse: filteredToken,
               close: false,
               error: false,
             });
