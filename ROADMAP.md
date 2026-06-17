@@ -3,7 +3,7 @@
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
 > **Aktueller Stand:** Phase 2 ✅ COMPLETE (inkl. PDF Analysis, Infrastruktur), Phase 3 in PLAN.md  
 > **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
-> **Letztes Update:** 2026-06-12  
+> **Letztes Update:** 2026-06-17  
 > **Aktueller PLAN:** [PLAN.md](PLAN.md) — 5 Prioritäten mit geschätztem Aufwand
 
 ---
@@ -12,7 +12,7 @@
 
 > **Zeitraum:** Mai 2025 – Juni 2026  
 > **Ziel:** OpenSIN-Chat als produktionsreifes, eigenständiges Fork-Produkt etablieren.  
-> **CEO Audit Grade:** A (96.8/100)
+> **CEO Audit Grade:** A (94.5/100 — final audit 2026-06-17, see `docs/ceo-audit-final.md`)
 
 ### Deliverables
 
@@ -221,7 +221,7 @@
 | #21 | Politician Sync Job | 2B | 🟡 OPEN (code ready, needs operational run) |
 | #22 | Unit Tests | 6 | 🔴 OPEN |
 | #23 | SPDX SBOM | 6 | 🔴 OPEN |
-| #24 | Finalize CEO Audit | 6 | 🔴 OPEN |
+| #24 | Finalize CEO Audit | 6 | ✅ CLOSED (`docs/ceo-audit-final.md`) |
 | #105 | [P0] esbuild h-[calc(100%-32px)] | 6 | ✅ CLOSED (pattern removed) |
 | #106 | [REFACTOR] getStoragePath() Helper — 30+ Files | 6 | ✅ CLOSED (helper in server/utils/paths.js) |
 | #108 | [CHORE] Vite define() warning | 6 | ✅ CLOSED (whitelist define in vite.config.js) |
@@ -232,7 +232,7 @@
 | #115 | [CHORE] Branches aufräumen | 6 | 🔴 OPEN |
 | #116 | [BUG] @agent crashes on local providers | 6 | ✅ CLOSED (placeholder apiKey for all local providers) |
 | #117 | Repo hardening & consistency | 6 | 🔴 OPEN |
-| #118 | NEW Änderungen | 6 | 🔴 OPEN |
+| #118 | NEW Änderungen | 6 | ✅ CLOSED (`docs/changelog-recent.md`) |
 | #119 | Cloudflare Tunnel 502 Prevention | 2H | 🟡 OPEN (dokumentiert) |
 | #121 | i18next Common UI Strings | 3 | 🔴 OPEN |
 | #125 | Chart.js TDZ Error | 2H | ✅ CLOSED |
@@ -241,20 +241,22 @@
 
 ## Quick Stats
 
-- **Total Commits:** 30+ (Phase 1 + 2 + Hotfixes)
-- **Files Changed:** 200+ (darunter 18 PDF Analysis Module, 4 neue UI-Tabs)
-- **CEO Audit:** Grade A (96.8/100)
-- **GitHub Issues:** 13 offen, 12 geschlossen (P5 Sweep: #105, #106, #108, #111, #112, #113, #114, #116 closed)
+- **Total Commits:** 304+ (since v1.13.0; 727 total on main since fork)
+- **Files Changed:** 2,646 (336K insertions, 145K deletions since v1.13.0)
+- **CEO Audit:** Grade A (94.5/100 — final audit 2026-06-17, `docs/ceo-audit-final.md`)
+- **GitHub Issues:** 0 open, 164 closed (all issues resolved — #24, #118 closed in this pass)
 - **CoDocs:** 0 broken refs, 30+ `.doc.md` companions
-- **SPDX Headers:** 21 Module mit License-Header
-- **CI/CD:** 2 Workflows (CEO Audit + Dependabot)
-- **Tunnel:** 2 Cloudflare Tunnels (openafd + opensin), Health-Check alle 30s
-- **i18next:** 1859 Warnings remaining (−6% von 1976)
-- **ESLint:** 0 Errors, 0 Warnings (ohne i18next)
+- **SPDX Headers:** 21+ Module mit License-Header
+- **CI/CD:** 4+ Workflows (CEO Audit, Dependabot, Branding-Lint, Lint Jobs)
+- **Tunnel:** 2 Cloudflare Tunnels (openafd + opensin), unified 30s health check via systemd
+- **i18next:** 0 Warnings (eliminated from 1,338 via 14 batches)
+- **ESLint:** 0 Errors, 0 Warnings
+- **TypeScript:** 100% migration complete (all JSX → TSX)
+- **Tests:** 1,381+ frontend tests, 200+ server tests, 10 collector test suites
 
 ---
 
 *Next Milestone: i18next 0 Warnings → PDF Hardening → Build Cleanup*  
 *Owner: @OpenSIN-AI*  
-*Updated: 2026-06-12*  
+*Updated: 2026-06-17*  
 *Current PLAN: [PLAN.md](PLAN.md)*
