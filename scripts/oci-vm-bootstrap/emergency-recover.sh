@@ -1,129 +1,106 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: MIT
 #
-# emergency-recover.sh — when sinchat.delqhi.com throws Cloudflare Error
-# 1033 ("Cloudflare is currently unable to resolve it"), do EXACTLY these
-# steps in order. Designed to be run by the operator (NOT the agent
-# environment) because the agent sandbox cannot SSH.
+# emergency-recover.sh — when sinchat.delqhi.com is down (1033/502/503),
+# do EXACTLY these steps in order.
 #
-# Goal: bring tunnel up in under 60 seconds without nuking state.
+# Target: sin-supabase (92.5.60.87) — OpenSIN-Chat + cloudflared-opensin-chat
+# (Previously targeted sin-blackbox — corrected 2026-06-17)
 #
 # Usage:  bash scripts/oci-vm-bootstrap/emergency-recover.sh
-#         bash scripts/oci-vm-bootstrap/emergency-recover.sh --tunnel daa59c37-b503-4a35-8b6d-60fbf2a755e4
 #
 # Exit codes:
-#   0  tunnel reachable from outside
+#   0  sinchat.delqhi.com reachable from outside (HTTP 2xx/3xx)
 #   1  SSH unreachable (network/DNS/VM down)
-#   2  cloudflared not running after interventions
-#   3  tunnel returned non-2xx from outside (probably config mismatch)
+#   2  OpenSIN-Chat container not running after interventions
+#   3  tunnel returned non-2xx from outside
 
 set -eu
 
-SSH_HOST="${SSH_HOST:-$(grep -E '^Host\s+(sin-blackbox|sin-chatbox|sinchat)' ~/.ssh/config 2>/dev/null | awk '{print $2}' | head -1)}"
-TUNNEL="${1:-}"
+SSH_HOST="${SSH_HOST:-sin-supabase}"
 
-if [ -z "$SSH_HOST" ]; then
-  echo "FATAL: cannot detect SSH host. Pass --ssh-host=sin-blackbox." >&2
-  exit 1
-fi
-echo "[recover] ssh host: $SSH_HOST"
+echo "[recover] ssh host: $SSH_HOST (sin-supabase / 92.5.60.87)"
 
 # ------------------------------------------------------------------
 # Step 1 — is the VM itself reachable?
 # ------------------------------------------------------------------
 echo "[recover] step 1/5: VM reachable?"
-if ! ssh -o ConnectTimeout=10 -o BatchMode=yes "$SSH_HOST" 'echo pong' >/dev/null; then
+if ! ssh -o ConnectTimeout=10 -o BatchMode=yes "$SSH_HOST" 'echo pong' >/dev/null 2>&1; then
   echo "  VM not reachable — escalate to OCI Console (cloud.oracle.com)"
-  echo "   - confirm VM 'sin-blackbox' is RUNNING (not STOPPED)"
+  echo "   - confirm VM 'sin-supabase' is RUNNING (not STOPPED)"
   echo "   - if STOPPED: Start it; the public IP is preserved"
-  echo "   - if TERMINATED: you lost state; re-run oci-vm-bootstrap.sh on a new VM"
+  echo "   - if TERMINATED: re-provision and redeploy OpenSIN-Chat"
   exit 1
 fi
-echo "  ✓ VM reachable"
+echo "  OK: VM reachable"
 
 # ------------------------------------------------------------------
-# Step 2 — is cloudflared installed?
+# Step 2 — is OpenSIN-Chat container running?
 # ------------------------------------------------------------------
-echo "[recover] step 2/5: cloudflared binary"
-if ! ssh "$SSH_HOST" 'command -v cloudflared >/dev/null'; then
-  echo "  cloudflared not installed — installing"
-  ssh "$SSH_HOST" 'set -eux
-    ARCH=$(uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)
-    curl -fsSL "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${ARCH}.deb" -o /tmp/cfd.deb
-    sudo dpkg -i /tmp/cfd.deb
-    cloudflared --version
-  '
+echo "[recover] step 2/5: OpenSIN-Chat container"
+if ! ssh "$SSH_HOST" 'docker ps --format "{{.Names}}" | grep -q opensin-app'; then
+  echo "  Container not running — starting..."
+  ssh "$SSH_HOST" 'cd /home/ubuntu/OpenSIN-Chat/docker && docker compose -p opensin up -d --build opensin-chat'
+  sleep 15
 fi
-
-# ------------------------------------------------------------------
-# Step 3 — does the systemd unit exist?
-# ------------------------------------------------------------------
-echo "[recover] step 3/5: cloudflared systemd unit"
-ssh "$SSH_HOST" 'test -f /etc/systemd/system/cloudflared.service && echo OK || (
-  sudo tee /etc/systemd/system/cloudflared.service >/dev/null <<EOF
-[Unit]
-Description=cloudflared
-After=network.target
-
-[Service]
-Type=simple
-User=ubuntu
-ExecStart=/usr/local/bin/cloudflared --no-autoupdate tunnel run
-Restart=always
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target
-EOF
-  sudo systemctl daemon-reload
-)'
-ssh "$SSH_HOST" 'sudo systemctl enable cloudflared.service'
-
-# ------------------------------------------------------------------
-# Step 4 — is the config + creds file present?
-# ------------------------------------------------------------------
-echo "[recover] step 4/5: /etc/cloudflared/{config.yml,TUNNEL_ID.json}"
-if [ -z "$TUNNEL" ]; then TUNNEL="$(ls -t ~/.cloudflared/*.json 2>/dev/null | grep -v cert.pem | head -1 | xargs basename 2>/dev/null | sed 's/\.json$//')"; fi
-if [ -z "$TUNNEL" ]; then
-  echo "  no tunnel creds found locally. Either:"
-  echo "   - create new tunnel: cloudflared tunnel login && cloudflared tunnel create sinchat"
-  echo "   - or copy from another backup VM"
+if ! ssh "$SSH_HOST" 'docker ps --format "{{.Names}}" | grep -q opensin-app'; then
+  echo "  FAIL: opensin-app still not running after start attempt"
+  echo "  Check logs: ssh $SSH_HOST 'docker logs --tail 50 opensin-app'"
   exit 2
 fi
+echo "  OK: opensin-app running"
 
-if ! ssh "$SSH_HOST" "test -f /etc/cloudflared/${TUNNEL}.json"; then
-  ssh "$SSH_HOST" "sudo mkdir -p /etc/cloudflared"
-  scp "$HOME/.cloudflared/${TUNNEL}.json" "${SSH_HOST}:/etc/cloudflared/${TUNNEL}.json"
-  ssh "$SSH_HOST" "sudo chmod 600 /etc/cloudflared/${TUNNEL}.json"
+# ------------------------------------------------------------------
+# Step 3 — is the container responding on localhost:38471?
+# ------------------------------------------------------------------
+echo "[recover] step 3/5: localhost:38471 health"
+LOCAL_HTTP=$(ssh "$SSH_HOST" 'curl -sS -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:38471 2>/dev/null || echo 000')
+echo "  localhost:38471 -> HTTP $LOCAL_HTTP"
+if [ "$LOCAL_HTTP" = "000" ]; then
+  echo "  Container not responding — restarting..."
+  ssh "$SSH_HOST" 'docker restart opensin-app'
+  sleep 10
+  LOCAL_HTTP=$(ssh "$SSH_HOST" 'curl -sS -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:38471 2>/dev/null || echo 000')
+  echo "  After restart: HTTP $LOCAL_HTTP"
+  if [ "$LOCAL_HTTP" = "000" ]; then
+    echo "  FAIL: container still not responding"
+    exit 2
+  fi
 fi
-
-ssh "$SSH_HOST" "test -f /etc/cloudflared/config.yml || \
-  sudo tee /etc/cloudflared/config.yml >/dev/null <<EOF
-tunnel: ${TUNNEL}
-credentials-file: /etc/cloudflared/${TUNNEL}.json
-ingress:
-  - hostname: sinchat.delqhi.com
-    service: http://localhost:3001
-  - service: http_status:404
-EOF
-"
+echo "  OK: container responding (HTTP $LOCAL_HTTP)"
 
 # ------------------------------------------------------------------
-# Step 5 — start cloudflared, verify external reach
+# Step 4 — is cloudflared-opensin-chat running?
 # ------------------------------------------------------------------
-echo "[recover] step 5/5: start + verify external reach"
-ssh "$SSH_HOST" 'sudo systemctl restart cloudflared || sudo systemctl start cloudflared
-  sleep 6
-  systemctl is-active cloudflared && echo CLOUDFLARED_OK
-'
-echo "  probing https://sinchat.delqhi.com/ from outside..."
-if curl -sS -o /dev/null -w "HTTP %{http_code}\n" -m 15 https://sinchat.delqhi.com/ | grep -q '^[H]TTP 2[0-9][0-9]\|HTTP 3[0-9][0-9]'; then
-  echo "  ✓ tunnel is reachable externally. sinchat.delqhi.com is back."
-  echo "  NEXT: run scripts/oci-vm-bootstrap/bootstrap.sh to install the watchdog"
-  echo "         so we never have to do this by hand again."
+echo "[recover] step 4/5: cloudflared-opensin-chat"
+if ! ssh "$SSH_HOST" 'systemctl is-active --quiet cloudflared-opensin-chat'; then
+  echo "  cloudflared-opensin-chat not active — restarting..."
+  ssh "$SSH_HOST" 'sudo systemctl restart cloudflared-opensin-chat'
+  sleep 5
+fi
+if ! ssh "$SSH_HOST" 'systemctl is-active --quiet cloudflared-opensin-chat'; then
+  echo "  FAIL: cloudflared-opensin-chat still not active"
+  echo "  Check: ssh $SSH_HOST 'journalctl -u cloudflared-opensin-chat -n 50 --no-pager'"
+  exit 2
+fi
+echo "  OK: cloudflared-opensin-chat active"
+
+# ------------------------------------------------------------------
+# Step 5 — verify external reach
+# ------------------------------------------------------------------
+echo "[recover] step 5/5: external reachability"
+echo "  probing https://sinchat.delqhi.com/ ..."
+HTTP_CODE=$(curl -sS -o /dev/null -w "%{http_code}" -m 15 https://sinchat.delqhi.com/ 2>/dev/null || echo 000)
+echo "  sinchat.delqhi.com -> HTTP $HTTP_CODE"
+if echo "$HTTP_CODE" | grep -qE '^(2|3)[0-9][0-9]$'; then
+  echo "  OK: sinchat.delqhi.com is back (HTTP $HTTP_CODE)"
+  echo "  Watchdog + healthcheck timers should auto-recover future outages."
   exit 0
 else
-  echo "  ✗ tunnel not reachable externally."
-  echo "    Try: ssh $SSH_HOST 'journalctl -u cloudflared -n 50 --no-pager'"
+  echo "  FAIL: sinchat.delqhi.com still down (HTTP $HTTP_CODE)"
+  echo "  Manual investigation needed:"
+  echo "    ssh $SSH_HOST 'docker logs --tail 30 opensin-app'"
+  echo "    ssh $SSH_HOST 'sudo journalctl -u cloudflared-opensin-chat -n 30 --no-pager'"
+  echo "    ssh $SSH_HOST 'cat /home/ubuntu/.cloudflared/config-opensin.yml'"
   exit 3
 fi
