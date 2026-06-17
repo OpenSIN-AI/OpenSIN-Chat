@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import Appearance from "@/models/appearance";
 import { PROMPT_INPUT_ID } from "./index";
 

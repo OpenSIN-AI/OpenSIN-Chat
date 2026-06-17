@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import SourcesSidebar from "./SourcesSidebar";
 import MemoriesSidebar from "./MemoriesSidebar";
 import PreviewSidebar from "./PreviewSidebar";

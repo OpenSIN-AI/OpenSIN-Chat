@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 /// <reference types="vite/client" />
 
 // Asset module declarations

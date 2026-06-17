@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import WorkspaceFileRow from "./WorkspaceFileRow";
 import { RenderFileRows } from "./RenderFileRows";
 

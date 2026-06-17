@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
 import { EmbeddingFileRow } from "./EmbeddingFileRow";
 import { useTranslation } from "react-i18next";

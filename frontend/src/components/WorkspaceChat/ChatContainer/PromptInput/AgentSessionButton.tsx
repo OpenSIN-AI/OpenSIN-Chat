@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
 import { At } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";

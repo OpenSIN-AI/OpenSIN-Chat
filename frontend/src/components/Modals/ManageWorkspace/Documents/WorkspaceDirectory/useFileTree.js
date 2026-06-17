@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState } from "react";
 import Workspace from "@/models/workspace";
 

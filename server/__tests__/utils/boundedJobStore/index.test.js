@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Docs: index.test.doc.md
 const { BoundedJobStore, JobCapacityError } = require("../../../utils/boundedJobStore");
 

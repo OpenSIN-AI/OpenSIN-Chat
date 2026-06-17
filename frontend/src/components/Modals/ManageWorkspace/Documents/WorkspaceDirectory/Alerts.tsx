@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PushPin, Eye } from "@phosphor-icons/react";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useCallback } from "react";
 
 interface UseSlashCommandParams {

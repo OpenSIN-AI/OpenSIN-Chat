@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect, useCallback } from "react";
 import debounce from "lodash.debounce";
 import { useSearchParams } from "react-router-dom";

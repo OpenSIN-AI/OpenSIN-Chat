@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 // Docs: contentExtractor.ssrf.test.doc.md
 /**
  * SSRF-hardening tests for ContentExtractor.

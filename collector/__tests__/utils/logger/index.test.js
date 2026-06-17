@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 const setLogger = require("../../../utils/logger");
 
 describe("collector logger", () => {
