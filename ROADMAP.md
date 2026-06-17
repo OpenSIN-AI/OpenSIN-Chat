@@ -1,7 +1,7 @@
 # OpenSIN Chat — ROADMAP (GSD-Style)
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
-> **Aktueller Stand:** Phase 2 ✅ COMPLETE (inkl. PDF Analysis, Infrastruktur), Phase 3 in PLAN.md  
+> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED (i18next by user), Phase 4 ✅, Phase 5 ✅, Phase 6 ✅ — alle Issues abgearbeitet  
 > **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
 > **Letztes Update:** 2026-06-17  
 > **Aktueller PLAN:** [PLAN.md](PLAN.md) — 5 Prioritäten mit geschätztem Aufwand
@@ -102,7 +102,7 @@
 | 2.27 | Orchestrator Agent Plugin (`@orchestrator`) | ✅ | `89f4d4b9` |
 | 2.28 | Plugin Registry (alle 3 neuen Plugins) | ✅ | `89f4d4b9` – `plugins/index.js` |
 
-### 2F: UI/UX Polishing 🔄
+### 2F: UI/UX Polishing ✅
 
 | # | Feature | Status | Commit / Issue |
 |---|---------|--------|---------------|
@@ -115,9 +115,9 @@
 | 2.35 | Translations (de + en) | ✅ | `source_filter_*`, `workspace_sources` etc. |
 | 2.35a | Translations (es, fr, it, pt_BR, zh, zh_TW, ja, ko) | ✅ | i18n-Nachpflege: `workspaceSources.*`, `attach_menu.*` |
 | 2.36 | Frontend Build & Deploy (83 Assets) | ✅ | `8593bcf1` + `8ac62a24` |
-| 2.37 | OpenCode Zen in Provider Picker | ⚠️ | Backend ✅, Browser-Cache Blocker (User) |
-| 2.38 | Document Processor 503 | ⚠️ | Python-Service offline – erwartet, kein Bug |
-| 2.39 | Logo 204 (No Custom Logo) | ⚠️ | Harmless – kein Custom Logo hochgeladen |
+| 2.37 | OpenCode Zen in Provider Picker | ✅ | Backend ✅; Browser-Cache war User-seitig — Cache-Control Header setzen + vendor-charts löschen hat das gelöst |
+| 2.38 | Document Processor 503 | ✅ | Won't-fix — Python-Collector-Service ist erwartungsgemäß offline im Single-User-Modus; kein Bug |
+| 2.39 | Logo 204 (No Custom Logo) | ✅ | Won't-fix — harmlos, kein Custom Logo hochgeladen; Default-Asset verhält sich korrekt |
 
 ### 2G: Multi-Agent PDF Analysis Module ✅
 
@@ -171,37 +171,37 @@
 |---------|--------|------------|
 | **User Browser Cache** | ✅ | Cache-Control Header gesetzt + alte vendor-charts gelöscht |
 | **Vercel Pool Credits** | 🔴 | `insufficient_funds` – Credits nachladen (bleibt) |
-| **Politician DB leer** | 🟡 | Sync-Job code ready (Bree 6h), FTS fallback added. Needs operational run. |
+| **Politician DB leer** | ✅ | Sync-Job ausgeführt (`804b6388`): 733 Politiker, 7382 Reden in der DB |
 | **npm audit (44 vulns)** | 🟡 | `--force` nötig, aber upstream transitive deps (bleibt) |
 | **AIbitat `opencode-zen` Case** | ✅ | Gefixt in `3690f5ed` |
 
 ---
 
-## Phase 3: i18next Elimination & Code Quality 📅 **IN PLAN.md**
+## Phase 3: i18next Elimination & Code Quality ❌ **CANCELLED (by user)**
 
 > **Siehe [PLAN.md](PLAN.md) Priorität 1**  
-> **Ziel:** 1859 i18next Warnings → 0. Geschätzter Aufwand: 4-6h
+> **Status:** User hat entschieden, i18next-Warnings zu ignorieren (Issue #121 cancelled). Warnings sind noise-only und blockieren keine Funktionalität.
 
 ---
 
-## Phase 4: PDF Analysis Hardening 📅 **IN PLAN.md**
+## Phase 4: PDF Analysis Hardening ✅ **COMPLETE**
 
 > **Siehe [PLAN.md](PLAN.md) Priorität 2**  
-> **Ziel:** Concurrency-Tuning, Memory-Limits, Job-Timeout, CoDocs. Geschätzter Aufwand: 2-3h
+> **Status:** Production hardening implementiert — Commit `8c4194a2` (Concurrency-Tuning, Memory-Limits, Job-Timeout, CoDocs, OCR-Fallback, Dark Mode).
 
 ---
 
-## Phase 5: Build Cleanup & Infrastruktur 📅 **IN PLAN.md**
+## Phase 5: Build Cleanup & Infrastruktur ✅ **COMPLETE**
 
 > **Siehe [PLAN.md](PLAN.md) Prioritäten 3+4**  
-> **Ziel:** Build modulepreload-Hints fixen, Tunnel Health-Check via launchd. Geschätzter Aufwand: 1h
+> **Status:** Build cleanup durchgeführt (Commit-Reihe 2026-06-17), Tunnel Health-Check via systemd aktiv (Commit `9e62abc4`, 30s Interval).
 
 ---
 
-## Phase 6: Legacy Issues abarbeiten 📅 **IN PLAN.md**
+## Phase 6: Legacy Issues abarbeiten ✅ **COMPLETE**
 
 > **Siehe [PLAN.md](PLAN.md) Priorität 5**  
-> **Ziel:** P0–P3 Issues aus altem Sprint backlog schließen (#105–#117). Geschätzter Aufwand: 8-12h
+> **Status:** Alle P0–P3 Issues abgearbeitet (#105–#119). Issue #121 (i18next) vom User cancelled. Issue #22 (Unit Tests) partial — 650+ Tests existieren, weiterer Ausbau durch separaten Subagent.
 
 ---
 
@@ -209,18 +209,18 @@
 
 | Issue | Titel | Phase | Status |
 |-------|-------|-------|--------|
-| #3 | Missing license headers (MEDIUM) | 6 | 🔴 OPEN |
-| #4 | Generate SBOM (LOW) | 6 | 🔴 OPEN |
-| #5 | Abandoned packages (MEDIUM) | 6 | 🔴 OPEN |
+| #3 | Missing license headers (MEDIUM) | 6 | ✅ CLOSED (`3e77ed07` — 22 SPDX headers) |
+| #4 | Generate SBOM (LOW) | 6 | ✅ CLOSED (`758ffba1` — SPDX 2.3 + CycloneDX 1.5) |
+| #5 | Abandoned packages (MEDIUM) | 6 | ✅ CLOSED (`7b2b6e7e` — 2 dead deps removed, 185 audited) |
 | #6 | Politiker-Datenbank Module | 2B | ✅ DONE |
 | #7 | Deep Research Pipeline | 2C | ✅ DONE |
-| #8 | Browser Agent Integration | 6 | 📅 PLANNED |
+| #8 | Browser Agent Integration | 6 | ✅ CLOSED (`browser-vision.js` — fetch-page-text + fetch-page-meta) |
 | #9 | PDF Report Generator | 2D | ✅ DONE |
 | #10 | Unified Agent Orchestrator | 2E | ✅ DONE |
-| #20 | SIN-Browser-Tools Integration | 6 | 📅 PLANNED |
-| #21 | Politician Sync Job | 2B | 🟡 OPEN (code ready, needs operational run) |
-| #22 | Unit Tests | 6 | 🔴 OPEN |
-| #23 | SPDX SBOM | 6 | 🔴 OPEN |
+| #20 | SIN-Browser-Tools Integration | 6 | ✅ CLOSED (same as #8 — `browser-vision.js` plugin implemented) |
+| #21 | Politician Sync Job | 2B | ✅ CLOSED (`804b6388` — 733 politicians, 7382 speeches synced) |
+| #22 | Unit Tests | 6 | 🟡 PARTIAL (650+ tests: 197 frontend + 453 server; weiterer Ausbau durch separaten Subagent) |
+| #23 | SPDX SBOM | 6 | ✅ CLOSED (`758ffba1` — same as #4) |
 | #24 | Finalize CEO Audit | 6 | ✅ CLOSED (`docs/ceo-audit-final.md`) |
 | #105 | [P0] esbuild h-[calc(100%-32px)] | 6 | ✅ CLOSED (pattern removed) |
 | #106 | [REFACTOR] getStoragePath() Helper — 30+ Files | 6 | ✅ CLOSED (helper in server/utils/paths.js) |
@@ -229,34 +229,36 @@
 | #112 | [BUG] NVIDIA NIM model mismatch crash | 6 | ✅ CLOSED (getProviderModelPreference helper) |
 | #113 | [BUG] Onboarding 'Weiter' button | 6 | ✅ CLOSED (onboarding disabled, System imported) |
 | #114 | [BUG] paths.js Demo-Container | 6 | ✅ CLOSED (explicit COPY + build-time check in Dockerfile) |
-| #115 | [CHORE] Branches aufräumen | 6 | 🔴 OPEN |
+| #115 | [CHORE] Branches aufräumen | 6 | ✅ CLOSED (only `main` branch exists, no stale branches) |
 | #116 | [BUG] @agent crashes on local providers | 6 | ✅ CLOSED (placeholder apiKey for all local providers) |
-| #117 | Repo hardening & consistency | 6 | 🔴 OPEN |
+| #117 | Repo hardening & consistency | 6 | ✅ CLOSED (`a5950ff0` — branding linter clean, console.log audited) |
 | #118 | NEW Änderungen | 6 | ✅ CLOSED (`docs/changelog-recent.md`) |
-| #119 | Cloudflare Tunnel 502 Prevention | 2H | 🟡 OPEN (dokumentiert) |
-| #121 | i18next Common UI Strings | 3 | 🔴 OPEN |
+| #119 | Cloudflare Tunnel 502 Prevention | 2H | ✅ CLOSED (systemd 30s health-check timer active on VM) |
+| #121 | i18next Common UI Strings | 3 | ❌ CANCELLED (user chose to ignore i18next warnings — noise-only, no functional impact) |
 | #125 | Chart.js TDZ Error | 2H | ✅ CLOSED |
 
 ---
 
 ## Quick Stats
 
-- **Total Commits:** 304+ (since v1.13.0; 727 total on main since fork)
+- **Total Commits:** 304+ (since v1.13.0; 734 total on main since fork)
 - **Files Changed:** 2,646 (336K insertions, 145K deletions since v1.13.0)
 - **CEO Audit:** Grade A (94.5/100 — final audit 2026-06-17, `docs/ceo-audit-final.md`)
-- **GitHub Issues:** 0 open, 164 closed (all issues resolved — #24, #118 closed in this pass)
+- **GitHub Issues:** All closed except #121 (❌ cancelled by user), #22 (🟡 partial — 650+ tests exist, further expansion in progress)
+- **Politician DB:** 733 politicians, 7382 speeches synced (`804b6388`)
+- **SBOM:** SPDX 2.3 + CycloneDX 1.5 generated (`758ffba1`, `sbom/` directory)
 - **CoDocs:** 0 broken refs, 30+ `.doc.md` companions
-- **SPDX Headers:** 21+ Module mit License-Header
+- **SPDX Headers:** 22 modules with license header (`3e77ed07`)
 - **CI/CD:** 4+ Workflows (CEO Audit, Dependabot, Branding-Lint, Lint Jobs)
-- **Tunnel:** 2 Cloudflare Tunnels (openafd + opensin), unified 30s health check via systemd
-- **i18next:** 0 Warnings (eliminated from 1,338 via 14 batches)
+- **Tunnel:** 2 Cloudflare Tunnels (openafd + opensin), unified 30s health check via systemd timer (`9e62abc4`)
+- **i18next:** ❌ CANCELLED — user chose to ignore warnings (noise-only, no functional impact); ~1859 warnings remain
 - **ESLint:** 0 Errors, 0 Warnings
 - **TypeScript:** 100% migration complete (all JSX → TSX)
-- **Tests:** 1,381+ frontend tests, 200+ server tests, 10 collector test suites
+- **Tests:** 650+ existing (197 frontend + 453 server); further expansion by separate subagent
 
 ---
 
-*Next Milestone: i18next 0 Warnings → PDF Hardening → Build Cleanup*  
+*Next Milestone: All planned work complete. Remaining open items: #22 test expansion (separate subagent), #121 i18next (cancelled by user). Production is live at sinchat.delqhi.com.*  
 *Owner: @OpenSIN-AI*  
 *Updated: 2026-06-17*  
 *Current PLAN: [PLAN.md](PLAN.md)*

@@ -6,7 +6,9 @@
 
 ---
 
-## Priorität 1: i18next Warnings eliminieren (1859 → 0)
+## Priorität 1: i18next Warnings eliminieren (1859 → 0) ❌ **CANCELLED (by user)**
+
+**Status:** User hat entschieden, die i18next-Warnings zu ignorieren (Issue #121 cancelled). Die Warnings sind noise-only und blockieren keine Funktionalität. Keine weitere Arbeit geplant.
 
 **Warum:** 1859 `no-literal-string` Warnings verschleiern echte Probleme in der ESLint-Console. Zusätzlich blockieren sie die Migration zu strikterem Linting.
 
@@ -33,7 +35,9 @@
 
 ---
 
-## Priorität 2: PDF Analysis Production Hardening
+## Priorität 2: PDF Analysis Production Hardening ✅ **COMPLETE**
+
+**Status:** Production hardening implementiert — Commit `8c4194a2` (2026-06-17). Alle 8 Schritte abgearbeitet: Concurrency-Tuning, Memory-Limits, Job-Timeout/Cleanup, Fakt-DB Auto-Compact, OCR-Fallback-Logik, 20 CoDocs `.doc.md` companions, Dark-Mode-Fixes.
 
 **Warum:** Das 70+ Schritt-Modul ist funktional, aber Konfiguration und Concurrency müssen auf Produktionslast getunt werden.
 
@@ -50,7 +54,9 @@
 
 ---
 
-## Priorität 3: Build Cleanup & CI
+## Priorität 3: Build Cleanup & CI ✅ **COMPLETE**
+
+**Status:** Schritte 3.1–3.4 abgearbeitet (2026-06-17). Clean rebuild durchgeführt, Dockerfile optimiert, patch/minor-Upgrades angewendet. Major-Upgrades dokumentiert, nicht durchgeführt.
 
 **Warum:** Der Build ist korrekt, aber modulepreload-Hints referenzieren alte Chunk-Namen nach dist-Packing.
 
@@ -86,9 +92,11 @@
 
 ---
 
-## Priorität 4: Infrastruktur — Tunnel Health-Check via launchd
+## Priorität 4: Infrastruktur — Tunnel Health-Check via systemd ✅ **COMPLETE**
 
-**Warum:** Cron erlaubt nur 60s Minimum. launchd `StartInterval` kann auf 30s runter.
+**Status:** systemd 30s health-check timer installiert und aktiv auf der VM — Commit `9e62abc4` (2026-06-17). Ersetzt cron-basierte Checks (60s Minimum) mit einem unified oneshot service (cloudflared process check + URL probe + auto-restart).
+
+**Warum:** Cron erlaubt nur 60s Minimum. launchd `StartInterval` kann auf 30s runter. Gelöst via systemd timer (gleiche Funktionalität, 30s Interval).
 
 | Schritt | Task | Details |
 |---------|------|---------|
@@ -119,12 +127,12 @@
 
 | Priority | Geschätzter Aufwand | Empfohlene Reihenfolge |
 |----------|---------------------|----------------------|
-| **P1: i18next** | ~4-6 Stunden (15 Dateien) | **Parallel zu P2-P4 möglich** |
-| **P2: PDF Hardening** | ~2-3 Stunden | **Nach/parallel zu P1** |
-| **P3: Build Cleanup** | ~30 Minuten | **Nach P1+P2** |
-| **P4: launchd HC** | ~30 Minuten | **Nach P1+P2** |
+| **P1: i18next** | ~4-6 Stunden (15 Dateien) | ❌ **CANCELLED** (user chose to ignore warnings) |
+| **P2: PDF Hardening** | ~2-3 Stunden | ✅ **COMPLETE** (`8c4194a2`) |
+| **P3: Build Cleanup** | ~30 Minuten | ✅ **COMPLETE** (2026-06-17) |
+| **P4: systemd HC** | ~30 Minuten | ✅ **COMPLETE** (`9e62abc4`) |
 | **P5: Alte Issues** | ~8-12 Stunden | ✅ **ABGEARBEITET** (9 Issues, 2 benötigt Code-Fix, 7 bereits gelöst) |
 
 ---
 
-*Generated: 2026-06-12 | Next review: weekly*
+*Generated: 2026-06-12 | Last update: 2026-06-17 | All priorities resolved (P1 cancelled, P2–P5 complete)*
