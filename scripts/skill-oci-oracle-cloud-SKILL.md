@@ -1053,3 +1053,116 @@ gh search code "sinchat.delqhi.com" --owner OpenSIN-AI --limit 50
 gh search code "opensin-app" --owner OpenSIN-AI --limit 30
 for ip in 92.5.116.158 92.5.60.87 92.5.30.252; do echo "=== $ip ==="; nc -z -w3 $ip 22 && echo "SSH OK" || echo "SSH NOK"; done
 ```
+
+
+### 21.6 OpenSIN-Chat — aktueller Status (2026-06-17)
+
+| Frage | Antwort |
+|---|---|
+| Läuft OpenSIN-Chat lokal auf dem Mac? | **Nein** — Docker/OrbStack sind instabil. |
+| Läuft OpenSIN-Chat auf `sin-blackbox` (`92.5.116.158`)? | **Nein** — dort läuft nur `opencodex-blackbox`. |
+| Läuft OpenSIN-Chat auf `sin-supabase` (`92.5.60.87`)? | **Nein** — dort läuft Supabase/n8n/simone-api/sin-room13. |
+| Ist `sinchat.delqhi.com` in einer aktiven Cloudflare-Config? | **Nein** — DNS zeigt auf Cloudflare (188.114.96.3/97.3), aber aktiver Tunnel fehlt oder Origin liefert 502. |
+| Empfohlenes Deployment-Ziel | **`sin-supabase`** (`92.5.60.87`) — 24 GB RAM, ARM, Docker, cloudflared bereits vorhanden. |
+
+### 21.7 Deployment-Plan OpenSIN-Chat auf `sin-supabase`
+
+Schritt-für-Schritt (autonom ausführbar):
+
+```bash
+# 1. Repo auf sin-supabase klonen
+ssh sin-supabase '
+  [ -d /home/ubuntu/OpenSIN-Chat ] || git clone https://github.com/OpenSIN-AI/OpenSIN-Chat.git /home/ubuntu/OpenSIN-Chat
+  cd /home/ubuntu/OpenSIN-Chat && git pull origin main
+'
+
+# 2. .env generieren (minimal für SQLite-Dev-Modus)
+ssh sin-supabase '
+  cd /home/ubuntu/OpenSIN-Chat
+  cp server/.env.example server/.env 2>/dev/null || true
+  echo "JWT_SECRET=$(openssl rand -hex 32)" >> server/.env
+  echo "NODE_ENV=production" >> server/.env
+  echo "SERVER_PORT=3001" >> server/.env
+  # Für SQLite-Dev:
+  echo "DATABASE_URL=file:../../anythingllm.db" >> server/.env
+'
+
+# 3. Docker Compose starten (Port 43939:3001)
+ssh sin-supabase '
+  cd /home/ubuntu/OpenSIN-Chat/docker
+  docker compose -p opensin-chat up -d
+'
+
+# 4. Cloudflare-Tunnel "opensin" auf Mac stoppen, auf sin-supabase starten
+#    (siehe §21.8)
+
+# 5. Verify
+for i in 1 2 3; do
+  sleep 5
+  curl -sS -o /dev/null -w "Attempt $i: HTTP %{http_code}\n" --max-time 5 https://sinchat.delqhi.com
+done
+```
+
+### 21.8 Cloudflare-Tunnel `opensin` von Mac → `sin-supabase` migrieren
+
+**Warum:** der Tunnel `aa6a4715-…` (opensin-chat) läuft aktuell auf diesem Mac (`simoneschulze@MacBook-Pro-von-Jeremy`). Das ist ein Single-Point-of-Failure und braucht lokalen Docker/OrbStack, der abkackt.
+
+**Migration (autonom):**
+
+```bash
+# 1. Credentials und Config kopieren (kein Leak, Files sind bereits lokal)
+scp /Users/jeremy/.cloudflared/aa6a4715-1a4d-4cf9-a17e-ad27c53fee93.json ubuntu@92.5.60.87:/home/ubuntu/.cloudflared/aa6a4715-1a4d-4cf9-a17e-ad27c53fee93.json
+scp /Users/jeremy/.cloudflared/config-opensin.yml ubuntu@92.5.60.87:/home/ubuntu/.cloudflared/config-opensin.yml
+
+# 2. Config anpassen: Ingress muss auf OpenSIN-Chat zeigen
+ssh sin-supabase '
+  cat > /home/ubuntu/.cloudflared/config-opensin.yml <<EOF
+tunnel: aa6a4715-1a4d-4cf9-a17e-ad27c53fee93
+credentials-file: /home/ubuntu/.cloudflared/aa6a4715-1a4d-4cf9-a17e-ad27c53fee93.json
+
+ingress:
+  - hostname: sinchat.delqhi.com
+    service: http://localhost:43939
+  - service: http_status:404
+EOF
+'
+
+# 3. Mac: opensin-chat tunnel stoppen
+launchctl list | grep -i cloudflared  # oder:
+ps aux | grep "cloudflared.*config-opensin" | grep -v grep
+# kill <pid> (nur opensin-chat! andere tunnels nicht anfassen)
+
+# 4. sin-supabase: systemd service für opensin-chat anlegen
+ssh sin-supabase '
+  sudo tee /etc/systemd/system/cloudflared-opensin-chat.service <<EOF
+[Unit]
+Description=Cloudflare Tunnel for OpenSIN-Chat
+After=network.target docker.service
+Wants=docker.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/cloudflared tunnel --config /home/ubuntu/.cloudflared/config-opensin.yml run opensin-chat
+Restart=always
+RestartSec=5
+User=ubuntu
+Environment=HOME=/home/ubuntu
+
+[Install]
+WantedBy=multi-user.target
+EOF
+  sudo systemctl daemon-reload
+  sudo systemctl enable --now cloudflared-opensin-chat
+  sudo systemctl status cloudflared-opensin-chat --no-pager
+'
+```
+
+### 21.9 Risiken & Rollback
+
+- **Risiko:** `sin-supabase` hat bereits viele Container. OpenSIN-Chat braucht ~1–2 GB RAM. Beobachte `free -h`.
+- **Risiko:** Port- oder Netzwerk-Konflikte mit Supabase (Kong, Postgres, n8n). OpenSIN-Chat Docker Compose nutzt eigenes Docker-Netzwerk; Konflikt unwahrscheinlich, falls Ports nicht kollidieren.
+- **Rollback:**
+  ```bash
+  ssh sin-supabase 'sudo systemctl stop cloudflared-opensin-chat; cd /home/ubuntu/OpenSIN-Chat/docker && docker compose -p opensin-chat down'
+  # Mac: alten cloudflared-Prozess wieder starten
+  ```
