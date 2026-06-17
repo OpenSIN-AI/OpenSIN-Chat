@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MIT
+[Unit]
+Description=OpenSIN tunnel unified health check (cloudflared process + URL probe)
+Documentation=https://github.com/OpenSIN-AI/OpenSIN-Chat
+After=network-online.target cloudflared.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/opensin/tunnel-health-check-launchd.sh
+WorkingDirectory=/opt/opensin
+StandardOutput=journal
+StandardError=journal
+EnvironmentFile=-/etc/opensin/tunnel-healthcheck.env
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/opensin-tunnel-health.log /var/run/opensin-tunnel-healthcheck
