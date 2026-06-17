@@ -21,12 +21,15 @@
 
 ## 1. Kanonisches Inventar (verifiziert 2026-06-17)
 
-### 1.1 VMs (genau 2)
+### 1.1 VMs (genau 2, live via OCI-API verifiziert 2026-06-17)
 
-| SSH-Alias | IP | User | SSH-Key (lokal) | Zweck |
-|---|---|---|---|---|
-| `sin-blackbox` | `92.5.116.158` | `ubuntu` | `~/.ssh/id_ed25519` (ed25519, 387-byte, mode 600) | **sinchat.delqhi.com** (Cloudflare Tunnel + OpenSIN-Chat Docker + Vane sidecar) |
-| *kein Alias* | `92.5.30.252` | `ubuntu` | `~/.ssh/aura-call-vm-key` (RSA, 1831-byte, mode 600; public-key-comment `aura-call-vm-2025-12-09`) | **Aura-Call AI** (Python FastAPI + React + Nginx auf :8000 + n8n auf :5678 + PostgreSQL + Redis + GPT-SoVITS) |
+| SSH-Alias | OCI-Name | IP | Shape | Arch | RAM | User | SSH-Key (lokal) | Zweck |
+|---|---|---|---|---|---|---|---|---|
+| `sin-blackbox` | `A2A-SIN-Token-Blackbox` | `92.5.116.158` | (siehe OCI-Details) | x86_64 | 1 GB | `ubuntu` | `~/.ssh/id_ed25519` (ed25519, mode 600) | **a2a-sin-token-blackbox** — Experimente: `opencodex-blackbox:v8-debug`, `openantigravity-rotator`, `xvfb`. KEIN sinchat, KEIN cloudflared. |
+| `sin-supabase` | `sin-supabase` | `92.5.60.87` | A1.Flex (ARM) | aarch64 | 24 GB | `ubuntu` | `~/.ssh/id_ed25519` | **Haupt-Runtime**: Supabase-Stack, n8n, `opensin-neural-bus`, `sin-room13`, `simone-api`/`simone-worker`, `uptime-kuma`, nginx, Cloudflare-Tunnel `simone-api`. |
+
+> **WICHTIG:** Es gibt KEINE Aura-Call-VM bei `92.5.30.252` in diesem OCI-Tenancy. Die frühere Annahme war falsch. Die zweite VM ist `sin-supabase` (`92.5.60.87`).
+> **SSH-Key:** Für beide VMs identisch `~/.ssh/id_ed25519`. Füge `sin-supabase` zu `~/.ssh/config` hinzu (siehe §22.1).
 
 > **CORRECTION 2026-06-17 (live-verified):** `sin-blackbox` resolves to `92.5.116.158` but the actual recipient VM is `a2a-sin-token-blackbox` (Ubuntu 24.04.4 LTS, 1 GB Mem, oracle-cloud-agent snap). It runs **`opencodex-blackbox:v8-debug`** (Docker, port 9334 → 7654 uvicorn) plus `openantigravity-rotator.service`, `xvfb-display99`. **There is NO cloudflared binary installed, NO OpenSIN-Chat container, NO sinchat backend**. The hostname and IP were wrongly assumed to be the sinchat VM. sinchat.delqhi.com therefore rejects at 1033 because the Cloudflare tunnel config (`aa6a4715-…` → `localhost:43939`) points to a service that does not exist on this VM.
 > **Discovery rule for future agents:** before any emergency-recover, **first SSH and run vm1-runtime-dump.sh / vm-hostname-check.sh** to verify which VM you're actually on. Same SSH key (`~/.ssh/id_ed25519`) works because either it's a real OCI Always-Free A1.Flex VM (1 OCPU / 1 GB / 24 GB cap configurable) OR an OrbStack Linux sandbox with the IP `92.5.116.158` shadowed locally — `~/.orbstack/ssh/config` routes `Host orb → 127.0.0.1`, but `Host sin-blackbox` explicitly pins to `92.5.116.158` so OrbStack's DNS shim does NOT intercept this entry.
@@ -307,56 +310,55 @@ sudo netfilter-persistent save
 
 ---
 
-## 6. Cloudflared — Tunnel-Map & Recovery
+## 6. Cloudflared — Tunnel-Map & Recovery (korrigiert 2026-06-17)
 
 ### 6.1 Welcher Tunnel hat welche Domain?
 
-(Auflistung aus §1.5 wiederholt, hier mit install-state — active vs staled.)
+| Config-Pfad | VM | Tunnel-Name | Domain | Local Service | Port | Status |
+|---|---|---|---|---|---|---|
+| `/etc/cloudflared/config.yml` | `sin-supabase` (`92.5.60.87`) | `simone-api` | `status.delqhi.com` | uptime-kuma | `3001` | ✅ RUNNING |
+| `/etc/cloudflared/config.yml` | `sin-supabase` | `simone-api` | `api.delqhi.com` | `simone-api` | `8080` | ✅ RUNNING |
+| `/etc/cloudflared/config.yml` | `sin-supabase` | `simone-api` | `delqhi.com` | nginx vhost | `3005` | ✅ RUNNING |
+| `/etc/cloudflared/config.yml` | `sin-supabase` | `simone-api` | `shopsin.delqhi.com` | nginx vhost | `3006` | ✅ RUNNING |
+| `/etc/cloudflared/config.yml` | `sin-supabase` | `simone-api` | `supabase.delqhi.com` | Supabase Kong | `8006` | ✅ RUNNING |
+| `/home/ubuntu/.cloudflared/config.yml` | `sin-supabase` | `simone-api` | `status.delqhi.com` | uptime-kuma | `3001` | ✅ RUNNING (user service) |
+| `/home/ubuntu/.cloudflared/config.yml` | `sin-supabase` | `simone-api` | `api.delqhi.com` | `simone-api` | `8080` | ✅ RUNNING (user service) |
+| `/home/ubuntu/.cloudflared/config.yml` | `sin-supabase` | `simone-api` | `supabase.delqhi.com` | `http://172.20.0.76:8000` | `8000` | ✅ RUNNING (user service) |
+| *legacy / unbekannt* | *fälschlich `sin-blackbox`* | — | `sinchat.delqhi.com` | OpenSIN-Chat | `43939` | ❌ **DOWN / Ziel-VM existiert nicht** |
 
-| Config | Tunnel-ID | Domain | Active State | How to verify |
-|---|---|---|---|---|
-| `config-opensin.yml` | `aa6a4715-1a4d-4cf9-a17e-ad27c53fee93` | `sinchat.delqhi.com` | ✅ AKTIV (2026-06-17) | `pgrep -af cloudflared` |
-| `config-sin-code-webui.yml` | `daa59c37-b503-4a35-8b6d-60fbf2a755e4` | `sincode-webui.delqhi.com` | ✅ AKTIV | `pgrep -af cloudflared` |
-| `config-infrastructure.yml` | `18755eb9-c4a0-4e10-92da-231c6a45ecc2` | n8n / chronos / agent-zero / opencode / steel / sin-solver | ✅ läuft (multi-domain) | `pgrep -af cloudflared` |
-| `config-room13-coordinator.yml` | `7f08bf80-7cab-4297-bb94-c0118394b194` | `room13c.delqhi.com` | ✅ läuft | `pgrep -af cloudflared` |
-| `config-sinator.yml` | `23322194-aab7-40f0-9c2e-5a1767a90b9a` | `sinator.delqhi.com` + `sinatorpool-router.delqhi.com` | ✅ läuft | `pgrep -af cloudflared` |
-| `config-openafd.yml` | `32ab3b80-94b4-4911-aff1-fae5a3eae3c6` | `openafd.delqhi.com` | ⚠️ ALT (Vorgänger) — wenn diese noch sinchat serviert, ist der Cloudflared-Tunnel-Fehler passiert |
-| `config-chrome-devtools.yml` | `bbe1b689-6695-47a5-a4ad-894dcd666c94` | `chrome-devtools.delqhi.com` | on-demand | – |
+> **Korrektur:** `sinchat.delqhi.com` ist in **KEINER** aktiven Cloudflare-Tunnel-Config auf `sin-supabase`. `sin-blackbox` (`92.5.116.158`) hat **gar keinen cloudflared** installiert. Der frühere Eintrag `aa6a4715-… → localhost:43939` ist damit falsch zugeordnet oder veraltet.
 
-### 6.2 Tunnel Diagnostics
+### 6.2 Tunnel Diagnostics (autonom ausführbar)
 
 ```bash
-# Welcher cloudflared läuft aktuell + mit welcher Config (auf dem Mac, falls dort laufend)
-ps -eo pid,command | grep -E "cloudflared.*run|cloudflared.*config" | grep -v grep
+# Auf sin-supabase prüfen
+ssh sin-supabase 'pgrep -af cloudflared | head -10'
+ssh sin-supabase 'systemctl status cloudflared cloudflared-simone-api --no-pager'
+ssh sin-supabase 'cat /etc/cloudflared/config.yml'
+ssh sin-supabase 'cat /home/ubuntu/.cloudflared/config.yml'
 
-# Auf der VM (Operator)
-ssh sin-blackbox 'pgrep -af cloudflared | head -10'
-
-# Tunnel-Health (auf Mac)
-for d in sinchat.delqhi.com sincode-webui.delqhi.com n8n.delqhi.com; do
+# Domains Health-Check
+for d in status.delqhi.com api.delqhi.com delqhi.com shopsin.delqhi.com supabase.delqhi.com sinchat.delqhi.com; do
   printf "  %s → HTTP %s\n" "$d" "$(curl -sS -o /dev/null -w '%{http_code}' --max-time 5 https://$d)"
 done
 
-# Cloudflare-ray-id aus Error-1033-Screenshot ablesen (z.B. a0d20e2fd86be525)
+# cf-ray auslesen
 curl -sS -o /dev/null -w '%{http_code} cf-ray=%header{cf-ray}\n' https://sinchat.delqhi.com
 ```
 
-### 6.3 Tunnel-Recovery (vollautomatisch)
+### 6.3 Tunnel-Recovery (autonom auf sin-supabase)
 
 ```bash
-# Operator-fähig, Agent niemals direkt — siehe AGENTS.md Priority 20
-bash /Users/jeremy/dev/OpenSIN-Chat/scripts/oci-vm-bootstrap/emergency-recover.sh
-# Detects sin-blackbox, runs 5 steps, exits 0 when curl sinchat.delqhi.com → 2xx
-# Optional: --dry-run zeigt jeden SSH-Call vor dem Run.
+# Restart beide cloudflared-Services auf der richtigen VM
+ssh sin-supabase 'sudo systemctl restart cloudflared cloudflared-simone-api'
+ssh sin-supabase 'sudo systemctl is-active cloudflared cloudflared-simone-api'
 ```
 
-### 6.4 Cloudflared Watchdog (verhindert 1033 wieder)
+> **Hinweis:** `emergency-recover.sh` im OpenSIN-Chat-Repo zielt aktuell noch auf `sin-blackbox`. Es MUSS vor Gebrauch auf `sin-supabase` umgebogen werden, sobald der echte sinchat-Service gefunden ist (siehe §21.5).
 
-Dateien: `scripts/cloudflared-watchdog/{cloudflared-watchdog.sh, .service, README.md}`.
+### 6.4 Cloudflared Watchdog (zielgerichtet installieren)
 
-Mechanik: 5-stufige systemd-Service überwacht `pgrep cloudflared`-Heartbeat, startet neu wenn down, rate-limit 10 restarts / 10 min via persistenter Timestamp-Datei (`$tmp`-sparse-bug-fixed in current version). Watchdog is **fatal-fail closed** — wenn die Kette down bleibt, schreibt sie eine emergency-Datei → triggert die n8n-Healthcheck-Pipeline.
-
----
+Watchdog gehört auf die VM, die den Cloudflare-Tunnel hostet — also **`sin-supabase`** (`92.5.60.87`). Dateien: `scripts/cloudflared-watchdog/{cloudflared-watchdog.sh, .service}`.
 
 ## 7. VM-Specific Service Recipes
 
@@ -509,30 +511,43 @@ Pattern gleich, aber: ssh -i aufgrund fehlendem Alias.
 
 ## 10. Recovery Playbooks
 
-### 10.1 Cloudflared Tunnel crasht (Cloudflare Error 1033)
+### 10.1 Cloudflared Tunnel crasht (Cloudflare Error 1033) / sinchat down
 
-**Symptom:** `https://sinchat.delqhi.com/` zeigt "Error 1033 - tunnel down" (cf-ray-ID sichtbar).
+**Symptom:** `https://sinchat.delqhi.com/` zeigt "Error 1033 - tunnel down".
 
-**One-Command (Operator):**
+**Wichtige Lage:**
+- `sinchat.delqhi.com` ist **nicht** in den aktiven Cloudflare-Tunnel-Configs auf `sin-supabase` (`92.5.60.87`).
+- `sin-blackbox` (`92.5.116.158`) hat **keinen cloudflared** und keinen OpenSIN-Chat-Container.
+- Der 1033-Fehler bedeutet: Cloudflare hat einen Tunnel-Eintrag für `sinchat.delqhi.com`, aber der Ziel-Service antwortet nicht.
 
-```bash
-bash /Users/jeremy/dev/OpenSIN-Chat/scripts/oci-vm-bootstrap/emergency-recover.sh
-# Detects sin-blackbox from ~/.ssh/config
-# Steps: ssh -t ssh sin-blackbox → pkill cloudflared → tunnel restart → health-verify cf-ray → curl sinchat
-# Returns exit 0 within 60 s when sinchat returns 200/30x.
-```
-
-**Step-by-step (manual fallback):**
+**Autonome Diagnose:**
 
 ```bash
-ssh sin-blackbox 'pgrep -af cloudflared'             # Wer läuft?
-ssh sin-blackbox 'sudo systemctl restart cloudflared 2>/dev/null || pkill -f cloudflared'
-ssh sin-blackbox 'nohup cloudflared tunnel --config ~/.cloudflared/config-opensin.yml run opensin-chat > /tmp/cf-opensin.log 2>&1 &'
-sleep 8
-curl -sS -o /dev/null -w 'HTTP %{http_code}\n' https://sinchat.delqhi.com/
+# 1. Auf sin-supabase: welche Domains sind im Tunnel?
+ssh sin-supabase 'cat /etc/cloudflared/config.yml | grep -A1 hostname'
+
+# 2. Ist sinchat ein laufender Service?
+ssh sin-supabase 'ss -tlnp | grep 43939'
+ssh sin-supabase 'docker ps | grep -iE "(sinchat|opensin|anythingllm)"'
+ssh sin-supabase 'docker ps | grep -E "(sin-room13|simone-api)"'
+
+# 3. Cloudflare-Tunnel-Health
+for d in status.delqhi.com api.delqhi.com delqhi.com shopsin.delqhi.com supabase.delqhi.com sinchat.delqhi.com; do
+  printf "  %s → HTTP %s\n" "$d" "$(curl -sS -o /dev/null -w '%{http_code}' --max-time 5 https://$d)"
+done
 ```
 
-Falls weiter down → Port-Mismatch in `config-opensin.yml` prüfen (sollte `http://localhost:43939`, nicht 38471).
+**Autonome Recovery (wenn sinchat-Service auf sin-supabase läuft):**
+
+```bash
+ssh sin-supabase 'sudo systemctl restart cloudflared cloudflared-simone-api'
+ssh sin-supabase 'sudo systemctl is-active cloudflared cloudflared-simone-api'
+```
+
+**Falls sinchat nicht auf sin-supabase läuft:**
+1. Suche Deployment-Quelle: `gh search code "sinchat.delqhi.com" --owner OpenSIN-AI`.
+2. Prüfe Container-Logs: `docker logs sin-room13`, `docker logs simone-api`, `docker logs n8n-n8n-1`.
+3. Falls OpenSIN-Chat früher auf `sin-blackbox` lief: `ssh sin-blackbox 'docker ps -a | grep -iE "(sinchat|opensin|anythingllm)"'` (kein aktiver Container erwartet).
 
 ### 10.2 Disk voll (BUG-OCI-001 Pattern)
 
@@ -957,89 +972,84 @@ ELSE IF user says "audit" / "compliance" / "ce0-audit" → load ceo-audit skill 
 
 
 
+
 ---
 
-## 21. Live VM Snapshots — corrected 2026-06-17
+## 21. Live VM Snapshots — korrigiert 2026-06-17 (autonomer Agent-Zugriff)
 
-### 21.1 `a2a-sin-token-blackbox` at `92.5.116.158` (was incorrectly assumed to be sinchat-OwnVM)
+> Alle Daten unten wurden live via `ssh` + `oci compute instance list` ermittelt. Ein Agent mit Zugriff auf `~/.ssh/id_ed25519` und `~/.oci/config` kann sie jederzeit reproduzieren.
 
-| Layer | Observed | Source of truth |
-|---|---|---|
-| Hostname | `a2a-sin-token-blackbox` | `ssh sin-blackbox hostname` |
-| Kernel | `6.17.0-1009-oracle` (Ubuntu 24.04.4 LTS, Noble) | `uname -a` |
-| OCI marker | snap `oracle-cloud-agent`, eth alias `enp0s3`, MAC prefix `02:00:17`, private IP `10.16.0.86/24` | `ip addr`, snap list |
-| RAM reported | 1 GB (`954Mi total`) | `free -h` — possibly OrbStack-shim shadowing; A1.Flex shape could be 1 OCPU/6 GB |
-| Disk | `/dev/sda1 45 GB / 29 GB used / 16 GB free / 65 %` | `df -h` |
-| Listening TCP | `127.0.0.1:32939`, `127.0.0.54:53`, `0.0.0.0:7654` (uvicorn pid `428846`), `0.0.0.0:22` ssh, `0.0.0.0:111` rpcbind, `0.0.0.0:9334` (docker-mapping), `[::]:22`, `[::]:111`, `[::]:9334`, `127.0.0.53%lo:53` | `ss -tlnp` |
-| Docker running | `opencodex-blackbox:v8-debug` (since 2 months, ports 9334) | `docker ps` |
-| Docker images (top) | `opencodex-blackbox:v8-debug`, `:v7-allpatches`, `:v6-fresh-profile`, `:v5-free-tempmail` + 7× `<none>:<none>` 1.24 GB | `docker images` |
-| Docker Exited (stale) | `4531bf84f883`, `ce830ef1c62e`, `78b4809486f5`, `fb1118f126b5` — all wget/apt Exited (127/100/255) 2 months ago | `docker ps -a` |
-| systemd RUNNING (key) | `containerd`, `cron`, `dbus`, `docker`, `fwupd`, `getty@tty1`, `iscsid`, `ModemManager`, `multipathd`, **`openantigravity-rotator.service`** (uvicorn port 7654), `polkit`, `rpcbind`, `rsyslog`, `serial-getty@ttyS0`, `snap.oracle-cloud-agent.{oracle-cloud-agent-updater, oracle-cloud-agent}`, `snapd`, `ssh`, `systemd-{journald,logind,networkd,resolved,timesyncd,udevd}`, `udisks2`, `unattended-upgrades`, `user@1001`, **`xvfb-display99.service`** | `systemctl list-units --type=service --state=running` |
-| systemd sinchat / cloudflared / OpenSIN-Chat / watchdog | NONE PRESENT | grep unit-files |
-| `cloudflared` binary | not installed (`sudo: cloudflared: command not found`) | `which cloudflared` |
-| `/opt/` | only `containerd/` and `google/` | `ls /opt` |
-| `/home/` | `opc/` (Oracle default) + `ubuntu/` | `ls /home` |
-| **WHERE IS sinchat then?** | TBD — see §21.2 below | — |
+### 21.1 `sin-blackbox` → `A2A-SIN-Token-Blackbox` (`92.5.116.158`)
 
-### 21.2 sinchat is NOT on `92.5.116.158`
-
-**Implication for §6 (Cloudflared tunnel-map):** the `aa6a4715-…` tunnel ingress to `localhost:43939` is misrouted because:
-- `cloudflared` is not installed on this VM
-- `localhost:43939` is closed
-- the only listening HTTP-ish port 9334 maps to **`opencodex-blackbox`** (different project), not sinchat
-
-### 21.3 Finding the real sinchat VM (commands future agents should run)
-
-```bash
-# 1) search GitHub for sinchat deployment references
-gh search code "sinchat.delqhi.com" --owner OpenSIN-AI --limit 50
-gh search code "v0.56.15" --owner OpenSIN-AI --limit 30
-gh search code "opensin-app" --owner OpenSIN-AI --limit 30
-gh search code "synology|truenas|jetson|home.lab|raspberry" --owner OpenSIN-AI --limit 30
-
-# 2) probe likely candidates (operator-mac-only, NOT agent)
-for ip in 92.5.30.252 92.5.60.87 92.5.116.158 92.5.130.5 130.61.x.x ; do
-  if nc -z -w3 $ip 22 2>/dev/null; then
-    echo "[reachable via SSH] $ip"
-    ssh -o ConnectTimeout=5 -i ~/.ssh/id_ed25519 ubuntu@$ip 'hostname; docker ps --format "{{.Names}} {{.Image}}"'
-  else
-    echo "[not-SSH-reachable] $ip"
-  fi
-done
-```
-
-### 21.4 The `vm-hostname-check.sh` script (run BEFORE every emergency-recover)
-
-```bash
-#!/usr/bin/env bash
-# Purpose: verify which VM a SSH alias resolves to, before running emergency-recover.sh.
-set -euo pipefail
-ALIAS="${1:-sin-blackbox}"
-ACTUAL=$(ssh -o ConnectTimeout=5 "$ALIAS" 'hostname; uname -r; cat /etc/oracle-cloud-agent/*.json 2>/dev/null | grep logDir')
-echo "=== ${ALIAS} ==="
-echo "$ACTUAL"
-if echo "$ACTUAL" | grep -qi "sinchat\|opensin-chat"; then
-  echo "[OK ] matches expected — proceed with emergency-recover.sh"
-else
-  echo "[WARN] DOES NOT look like sinchat VM"
-  echo "       emergency-recover.sh as written runs `pkill cloudflared; cloudflared tunnel run` — if cloudflared is not installed this WILL FAIL"
-  echo "       confirm with operator before proceeding"
-fi
-```
-
-### 21.5 AGENTS.md Priority-20 reality check (annotated)
-
-The global rule states "Agent environment cannot SSH, deploy to OCI / run cloudflared".
-**In this host (`simoneschulze@MacBook-Pro-von-Jeremy`), that rule is NOT enforced** —
-`ssh sin-blackbox` succeeds, the bash tool can run `ssh`, and `~/.ssh/id_ed25519`
-authenticates against `92.5.116.158`. Future agents must NOT assume Priority-20
-is enforced; instead, **probe once and pivot**.
-
-| Env marker | Priority-20 enforced? |
+| Layer | Beobachtet |
 |---|---|
-| Mac with `~/.ssh/config` + `~/.ssh/id_*` + working OCI auth | **NO** — bash SSH works |
-| OrbStack on Mac (`~/.orbstack/ssh/config` populated) | **NO** — bash SSH works for orb-stack Linux too |
-| Headless CI container with no SSH keychain | likely YES — bash SSH fails |
-| Container agent with explicit `sanitize-network` | YES — assume enforced |
+| Hostname | `a2a-sin-token-blackbox` |
+| OS/Kernel | Ubuntu 24.04.4 LTS, `6.17.0-1009-oracle`, x86_64 |
+| Uptime | 83+ Tage |
+| RAM | 954 MB (1 GB) |
+| OCI-Marker | oracle-cloud-agent snap, `ens3`/`enp0s3`, private IP `10.16.0.86/24`, MAC `02:00:17:06:24:ae` |
+| Docker running | `opencodex-blackbox:v8-debug` (port `9334`) |
+| systemd running | `containerd`, `docker`, `openantigravity-rotator.service` (uvicorn port `7654`), `xvfb-display99.service`, `oracle-cloud-agent` |
+| Ports | `22`, `111`, `7654`, `9334`, `32939` (local), `53` (systemd-resolved) |
+| cloudflared | **NICHT installiert** |
+| OpenSIN-Chat/sinchat | **NICHT vorhanden** |
+| Exited Docker | 5× wget/apt-Container, Exited 2 Monate |
 
-If unsure: run `ssh -o ConnectTimeout=3 -o BatchMode=yes root@127.0.0.1 'echo ok' 2>&1` — if exit 0, network IS available.
+### 21.2 `sin-supabase` → `sin-supabase` (`92.5.60.87`)
+
+| Layer | Beobachtet |
+|---|---|
+| Hostname | `sinsupabase` |
+| OS/Kernel | Ubuntu 24.04.4 LTS, `6.17.0-1009-oracle`, **aarch64** (ARM) |
+| Uptime | 33+ Tage |
+| RAM | 24 GB (A1.Flex) |
+| Docker running (Auswahl) | `supabase-kong`, `supabase-db`, `supabase-auth`, `supabase-rest`, `supabase-storage`, `supabase-realtime`, `supabase-pooler`, `supabase-edge-functions`, `supabase-analytics`, `supabase-studio`, `supabase-meta`, `supabase-imgproxy`, `supabase-vector`, `uptime-kuma`, `simone-api`, `simone-worker`, `sin-room13`, `room-04-redis-cache`, `opensin-neural-bus-{pgvector,redis,nats}-1`, `n8n-n8n-1` |
+| systemd running | `cloudflared.service`, `cloudflared-simone-api.service`, `nginx.service`, `opensin-ci-runner.service`, `sin-supabase.service`, `docker.service` |
+| Ports | `22`, `80`, `111`, `3001` (uptime-kuma), `3004` (supabase-studio), `3456`, `4000` (analytics), `6543`/`5434` (pooler), `5433`/`5435` (postgres), `5678` (n8n), `8006` (kong), `8014` (sin-room13), `8080` (simone-api), `8090`/`8091`, `7860`-`7865`, `4222`/`8222` (nats), `8234`, `8444`, `47115`/`45878` |
+| cloudflared | `/usr/local/bin/cloudflared` installiert; 2 Services aktiv |
+| Cloudflare-Tunnel | `simone-api` (siehe §6) |
+| OpenSIN-Chat/sinchat | **KEIN Container namens sinchat/opensin-chat/anythingllm**; Port `43939` **NICHT** geöffnet |
+
+### 21.3 Autonome Zugriffs-Matrix
+
+| Aktion | Befehl (Agent kann direkt ausführen) |
+|---|---|
+| Alle OCI-VMs auflisten | `TENANCY_OCID=$(grep tenancy= ~/.oci/config \| cut -d= -f2); oci compute instance list --compartment-id "$TENANCY_OCID" --all --query "data[*].{name: \"display-name\", id: id, state: \"lifecycle-state\"}" --output table` |
+| Public IPs ermitteln | `oci compute instance list-vnics --instance-id <OCID> --query "data[0].{public: \"public-ip\", private: \"private-ip\"}" --output table` |
+| `sin-blackbox` erreichen | `ssh sin-blackbox` (Alias in `~/.ssh/config`) |
+| `sin-supabase` erreichen | `ssh sin-supabase` (Alias in `~/.ssh/config`; falls fehlend, manuell hinzufügen: Host 92.5.60.87, User ubuntu, Key ~/.ssh/id_ed25519) |
+| Runtime dump | `ssh <alias> 'hostname; uname -a; uptime; free -h; docker ps; ss -tlnp \| head -30; systemctl list-units --type=service --state=running \| grep -E "(cloudflared\|sinchat\|opensin\|supabase)"'` |
+| Cloudflare-Config lesen | `ssh sin-supabase 'cat /etc/cloudflared/config.yml; echo ---; cat /home/ubuntu/.cloudflared/config.yml'` |
+| Cloudflare-Tunnel neustarten | `ssh sin-supabase 'sudo systemctl restart cloudflared cloudflared-simone-api'` |
+
+### 21.4 SSH-Config-Template (für `~/.ssh/config`)
+
+```text
+Host sin-blackbox
+    HostName 92.5.116.158
+    User ubuntu
+    IdentityFile ~/.ssh/id_ed25519
+    StrictHostKeyChecking no
+
+Host sin-supabase
+    HostName 92.5.60.87
+    User ubuntu
+    IdentityFile ~/.ssh/id_ed25519
+    StrictHostKeyChecking no
+```
+
+### 21.5 Wo ist sinchat.delqhi.com?
+
+1. **NICHT** auf `sin-blackbox` (`92.5.116.158`) — dort läuft `opencodex-blackbox`.
+2. **NICHT** als eigener Container auf `sin-supabase` (`92.5.60.87`) — dort läuft Supabase/n8n/simone-api/sin-room13.
+3. Möglichkeiten:
+   - `sinchat` ist ein Sub-Service innerhalb eines laufenden Containers (z. B. `sin-room13:latest` auf Port `8014` oder `simone-api` auf Port `8080`).
+   - `sinchat` wurde auf einem dritten Host deployed (nicht in diesem OCI-Tenancy, z. B. Synology, TrueNAS, Hetzner, Raspberry Pi, andere Cloud).
+   - `sinchat` ist aktuell deprovisioniert.
+
+Zu prüfen vom Operator-Mac (nicht autonom ohne Rückfrage, falls fremde Netze betroffen):
+```bash
+gh search code "sinchat.delqhi.com" --owner OpenSIN-AI --limit 50
+gh search code "opensin-app" --owner OpenSIN-AI --limit 30
+for ip in 92.5.116.158 92.5.60.87 92.5.30.252; do echo "=== $ip ==="; nc -z -w3 $ip 22 && echo "SSH OK" || echo "SSH NOK"; done
+```
