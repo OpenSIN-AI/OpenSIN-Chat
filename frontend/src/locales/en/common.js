@@ -131,39 +131,6 @@ const TRANSLATIONS = {
       availableModels: "Available embedding models",
       apiKeyPlaceholder: "Voyage AI API Key",
     },
-    lemonade: {
-      baseUrl: "Base URL",
-      autoDetect: "Auto-Detect",
-      baseUrlTooltip1: "Enter the URL where the Lemonade is running.",
-      baseUrlTooltip2:
-        "You must have enabled the Lemonade TCP support for this to work.",
-      learnMore: "Learn more",
-      baseUrlPlaceholder: "http://localhost:13305",
-      modelContextWindow: "Model context window",
-      modelContextWindowTooltip:
-        "The maximum number of tokens that can be used for a model context window. This must be set to a value that is supported by the model.",
-      apiKeyOptional: "API Key (optional)",
-      apiKeyTooltip: "The API key for your Lemonade server",
-      tokenLimitPlaceholder: "8192",
-      noModelsFound: "No models found!",
-      downloadedModels: "Downloaded Models",
-      uninstallConfirm:
-        "Are you sure you want to uninstall this model? You will need to download it again to use it.",
-      downloadConfirm:
-        "Are you sure you want to download this model? It is {{fileSize}} in size and may take a while to download.",
-    },
-    cometApi: {
-      apiKey: "CometAPI API Key",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-      typeOrSelectModel: "Type or select a model",
-      modelInputHelp:
-        "You can type the model id directly or pick from suggestions.",
-      advancedSettings: "advanced settings",
-      streamTimeout: "Stream Timeout (ms)",
-      timeoutDescription:
-        "Timeout value between token responses to auto-timeout the stream.",
-    },
     genericOpenAi: {
       baseUrl: "Base URL",
       baseUrlPlaceholder: "eg: https://proxy.openai.com",
@@ -188,17 +155,6 @@ const TRANSLATIONS = {
       fiveMinutes: "5 minutes",
       oneHour: "1 hour",
     },
-    dpais: {
-      modelContextWindow: "Model context window",
-      tokenLimitPlaceholder: "4096",
-      advancedSettings: "advanced settings",
-      baseUrl: "Dell Pro AI Studio Base URL",
-      autoDetect: "Auto-Detect",
-      baseUrlPlaceholder: "http://localhost:8553/v1/openai",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-      loadedModels: "Your loaded models",
-    },
     litellm: {
       baseUrl: "Base URL",
       baseUrlPlaceholder: "http://127.0.0.1:4000",
@@ -212,38 +168,6 @@ const TRANSLATIONS = {
       apiKeyPlaceholder: "sk-mysecretkey",
       loadedModels: "Your loaded models",
     },
-    novita: {
-      apiKey: "Novita API Key",
-      apiKeyPlaceholder: "Novita API Key",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-      advancedSettings: "advanced settings",
-      streamTimeout: "Stream Timeout (ms)",
-      timeoutDescription:
-        "Timeout value between token responses to auto-timeout the stream.",
-    },
-    openRouter: {
-      apiKey: "OpenRouter API Key",
-      apiKeyPlaceholder: "OpenRouter API Key",
-      chatModelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-      show: "Show",
-      hide: "Hide",
-      advancedControls: "advanced controls",
-      streamTimeout: "Stream Timeout (ms)",
-      streamTimeoutPlaceholder:
-        "Timeout value between token responses to auto-timeout the stream",
-    },
-    foundry: {
-      baseUrl: "Base URL",
-      baseUrlPlaceholder: "eg: http://127.0.0.1:8080",
-      chatModel: "Chat Model",
-      loading: "---- Loading ----",
-      selectModel: "-- Select a model --",
-      noModelsFound: "No models found",
-      modelContextWindow: "Model context window",
-      tokenLimitPlaceholder: "4096",
-    },
     opencodeZen: {
       baseUrl: "Base URL",
       baseUrlPlaceholder: "https://opencode.ai/zen/v1",
@@ -253,16 +177,6 @@ const TRANSLATIONS = {
       modelIdPlaceholder: "e.g. nemotron-3-ultra-free",
       modelContextWindow: "Model context window",
       tokenLimitPlaceholder: "Content window limit (eg: 1000000)",
-    },
-    privateMode: {
-      proxyUrl: "Privatemode Proxy URL",
-      tooltipEnterUrl: "Enter the URL where Privatemode Proxy is running.",
-      learnMore: "Learn more →",
-      baseUrlPlaceholder: "eg: http://127.0.0.1:8080",
-      chatModel: "Chat Model",
-      loading: "---- Loading ----",
-      selectModel: "-- Select a model --",
-      noModelsFound: "No models found",
     },
     geminiEmbedding: {
       apiKey: "API Key",
@@ -276,14 +190,6 @@ const TRANSLATIONS = {
         "Leave blank to use the default dimensions for the selected model.",
       outputDimensionsPlaceholder: "Assume default dimensions",
     },
-    giteeAi: {
-      apiKey: "API Key",
-      apiKeyPlaceholder: "GiteeAI API Key",
-      modelContextWindow: "Model context window",
-      contextWindowPlaceholder: "Content window limit (eg: 8192)",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-    },
     groqAi: {
       apiKey: "Groq API Key",
       apiKeyPlaceholder: "Groq API Key",
@@ -294,13 +200,6 @@ const TRANSLATIONS = {
       availableModels: "Available models",
       selectModelHint:
         "Select the GroqAI model you want to use for your conversations.",
-    },
-    moonshotAi: {
-      apiKey: "API Key",
-      apiKeyPlaceholder: "Moonshot AI API Key",
-      modelSelection: "Chat Model Selection",
-      enterApiKey: "-- Enter API key --",
-      loadingModels: "-- loading available models --",
     },
     nvidiaNim: {
       baseUrl: "NVIDIA Nim Base URL",
@@ -320,17 +219,6 @@ const TRANSLATIONS = {
       availableModels: "Available models",
       selectModelHint:
         "Select the xAI model you want to use for your conversations.",
-    },
-    zAi: {
-      apiKey: "Z.AI API Key",
-      apiKeyPlaceholder: "Z.AI API Key",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-      enterApiKeyHint:
-        "Enter a valid API key to view all available models for your account.",
-      availableModels: "Available models",
-      selectModelHint:
-        "Select the Z.AI model you want to use for your conversations.",
     },
     azureAiEmbedding: {
       serviceEndpoint: "Azure Service Endpoint",
@@ -363,39 +251,6 @@ const TRANSLATIONS = {
       waitingForApiKey: "-- waiting for API key --",
       availableModels: "Available Mistral Models",
     },
-    textGenWebui: {
-      baseUrl: "Base URL",
-      baseUrlPlaceholder: "http://127.0.0.1:5000/v1",
-      modelContextWindow: "Model context window",
-      contextWindowPlaceholder: "Content window limit (eg: 4096)",
-      apiKeyOptional: "API Key (Optional)",
-      apiKeyPlaceholder: "TextGen Web UI API Key",
-    },
-    apiPie: {
-      apiKey: "APIpie API Key",
-      apiKeyPlaceholder: "APIpie API Key",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-    },
-    cerebras: {
-      apiKey: "Cerebras API Key",
-      apiKeyPlaceholder: "Cerebras API Key",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-      availableModels: "Available models",
-    },
-    cohereAi: {
-      apiKey: "Cohere API Key",
-      apiKeyPlaceholder: "Cohere API Key",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-    },
-    deepSeek: {
-      apiKey: "API Key",
-      apiKeyPlaceholder: "DeepSeek API Key",
-      modelSelection: "Chat Model Selection",
-      loadingModels: "-- loading available models --",
-    },
     fireworksAi: {
       apiKey: "Fireworks AI API Key",
       apiKeyPlaceholder: "Fireworks AI API Key",
@@ -426,12 +281,6 @@ const TRANSLATIONS = {
       password: "Milvus Password",
       passwordPlaceholder: "password",
     },
-    cohereEmbedding: {
-      apiKey: "API Key",
-      apiKeyPlaceholder: "Cohere API Key",
-      modelPreference: "Model Preference",
-      loadingModels: "-- loading available models --",
-    },
     nativeEmbedding: {
       modelPreference: "Model Preference",
       loadingModels: "--loading available models--",
@@ -439,12 +288,6 @@ const TRANSLATIONS = {
       trainedOn: "Trained on:",
       downloadSize: "Download Size:",
       viewModelCard: "View model card on Hugging Face \u2192",
-    },
-    openRouterEmbedding: {
-      apiKey: "API Key",
-      apiKeyPlaceholder: "OpenRouter API Key",
-      modelPreference: "Model Preference",
-      loadingModels: "-- loading available models --",
     },
   },
   chat_window: {
@@ -965,30 +808,6 @@ const TRANSLATIONS = {
     authTokenTooltipPart3:
       "Used only if running LM Studio behind an authentication server.",
     authTokenPlaceholder: "LM Studio Auth Token",
-  },
-  lemonadeEmbedding: {
-    modelLabel: "Lemonade Model",
-    loadingModels: "-- loading available models --",
-    enterUrlFirst: "Enter Lemonade URL first",
-    yourLoadedModels: "Your loaded models",
-    selectModelHelp:
-      "Select the Lemonade model you want to use for embeddings.",
-    maxChunkLengthLabel: "Max embedding chunk length",
-    maxChunkLengthTooltip:
-      "Maximum length of text chunks, in characters, for embedding.",
-    maxChunkLengthPlaceholder: "8192",
-    apiKeyLabel: "API Key",
-    apiKeyTooltip: "API key for the Lemonade server.",
-    showManualEndpoint: "Show",
-    hideManualEndpoint: "Hide",
-    manualEndpointInput: "manual endpoint input",
-    showManualEndpointAria: "Show manual endpoint input",
-    hideManualEndpointAria: "Hide manual endpoint input",
-    baseUrlLabel: "Lemonade Base URL",
-    baseUrlTooltip: "Enter the URL where the Lemonade server is running.",
-    baseUrlPlaceholder: "http://localhost:13305",
-    autoDetect: "Auto-Detect",
-    autoDetectAria: "Auto-detect Lemonade base URL",
   },
   agentLLMItem: {
     editSettings: "Edit Settings",
@@ -3603,21 +3422,6 @@ const TRANSLATIONS = {
         " parameter passed to the transcription endpoint (e.g. ",
       modelDescriptionPart3: ").",
     },
-    lemonade: {
-      baseUrl: "Base URL",
-      autoDetect: "Auto-Detect",
-      baseUrlTooltip: "Enter the URL where your Lemonade server is running.",
-      baseUrlPlaceholder: "http://localhost:13305",
-      apiKeyOptional: "API Key (optional)",
-      apiKeyTooltip:
-        "The API key for your Lemonade server. Shared with the Lemonade LLM and embedder settings.",
-      transcriptionModel: "Transcription Model",
-      noModelsFound: "-- no transcription models found --",
-      enterUrlFirst: "Enter Lemonade URL first",
-      modelHelp:
-        "Load a Whisper or transcription model into your Lemonade server, then it will appear here.",
-      loadedModels: "Your loaded models",
-    },
   },
   parsedFilesMenu: {
     currentContext: "Current Context ({{count}} files)",
@@ -4133,8 +3937,6 @@ const TRANSLATIONS = {
         "Uses your browser's built in STT service if supported.",
       openai: "OpenAI",
       openaiDesc: "Use OpenAI's Whisper API to transcribe speech to text.",
-      lemonade: "Lemonade",
-      lemonadeDesc: "Transcribe speech via your local Lemonade server.",
       deepgram: "Deepgram",
       deepgramDesc: "Transcribe speech using Deepgram's hosted Nova models.",
       genericOpenai: "Generic OpenAI",

@@ -12,11 +12,7 @@ function groupModels(models: any[]) {
   }, {});
 }
 
-const GROUPED_PROVIDERS = [
-  "fireworksai",
-  "openai",
-  "docker-model-runner",
-];
+const GROUPED_PROVIDERS = ["fireworksai", "openai", "docker-model-runner"];
 
 const PROVIDER_DEFAULT_MODELS: Record<string, string[]> = {
   openai: [],

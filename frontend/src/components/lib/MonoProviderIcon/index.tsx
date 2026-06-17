@@ -9,10 +9,8 @@ import Gemini from "@lobehub/icons/es/Gemini/components/Mono";
 import Microsoft from "@lobehub/icons/es/Microsoft/components/Mono";
 import Meta from "@lobehub/icons/es/Meta/components/Mono";
 import Mistral from "@lobehub/icons/es/Mistral/components/Mono";
-import Azure from "@lobehub/icons/es/Azure/components/Mono";
-import AzureAI from "@lobehub/icons/es/AzureAI/components/Mono";
-import DeepSeek from "@lobehub/icons/es/DeepSeek/components/Mono";
 import HuggingFace from "@lobehub/icons/es/HuggingFace/components/Mono";
+import DeepSeek from "@lobehub/icons/es/DeepSeek/components/Mono";
 import Qwen from "@lobehub/icons/es/Qwen/components/Mono";
 import IBM from "@lobehub/icons/es/IBM/components/Mono";
 import Bytedance from "@lobehub/icons/es/ByteDance/components/Mono";
@@ -30,9 +28,6 @@ const providerIcons = {
   gemini: Gemini,
   meta: Meta,
   mistral: Mistral,
-  azure: Azure,
-  azureai: AzureAI,
-  deepseek: DeepSeek,
   huggingface: HuggingFace,
   qwen: Qwen,
   qwq: Qwen,

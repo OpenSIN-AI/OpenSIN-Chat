@@ -133,39 +133,6 @@ const TRANSLATIONS = {
       availableModels: "Verfügbare Embedding-Modelle",
       apiKeyPlaceholder: "Voyage AI API-Schlüssel",
     },
-    lemonade: {
-      baseUrl: "Basis-URL",
-      autoDetect: "Automatisch erkennen",
-      baseUrlTooltip1: "Geben Sie die URL ein, unter der Lemonade läuft.",
-      baseUrlTooltip2:
-        "Sie müssen die Lemonade TCP-Unterstützung aktiviert haben, damit dies funktioniert.",
-      learnMore: "Mehr erfahren",
-      baseUrlPlaceholder: "http://localhost:13305",
-      modelContextWindow: "Modell-Kontextfenster",
-      modelContextWindowTooltip:
-        "Die maximale Anzahl an Token, die für ein Modell-Kontextfenster verwendet werden können. Dies muss auf einen vom Modell unterstützten Wert gesetzt werden.",
-      apiKeyOptional: "API-Schlüssel (optional)",
-      apiKeyTooltip: "Der API-Schlüssel für Ihren Lemonade-Server",
-      tokenLimitPlaceholder: "8192",
-      noModelsFound: "Keine Modelle gefunden!",
-      downloadedModels: "Heruntergeladene Modelle",
-      uninstallConfirm:
-        "Sind Sie sicher, dass Sie dieses Modell deinstallieren möchten? Sie müssen es erneut herunterladen, um es zu verwenden.",
-      downloadConfirm:
-        "Sind Sie sicher, dass Sie dieses Modell herunterladen möchten? Es hat eine Größe von {{fileSize}} und der Download kann eine Weile dauern.",
-    },
-    cometApi: {
-      apiKey: "CometAPI API-Schlüssel",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-      typeOrSelectModel: "Modell eingeben oder auswählen",
-      modelInputHelp:
-        "Sie können die Modell-ID direkt eingeben oder aus Vorschlägen auswählen.",
-      advancedSettings: "erweiterte Einstellungen",
-      streamTimeout: "Stream-Timeout (ms)",
-      timeoutDescription:
-        "Timeout-Wert zwischen Token-Antworten zum automatischen Beenden des Streams.",
-    },
     genericOpenAi: {
       baseUrl: "Basis-URL",
       baseUrlPlaceholder: "z.B.: https://proxy.openai.com",
@@ -190,17 +157,6 @@ const TRANSLATIONS = {
       fiveMinutes: "5 Minuten",
       oneHour: "1 Stunde",
     },
-    dpais: {
-      modelContextWindow: "Modell-Kontextfenster",
-      tokenLimitPlaceholder: "4096",
-      advancedSettings: "erweiterte Einstellungen",
-      baseUrl: "Dell Pro AI Studio Basis-URL",
-      autoDetect: "Automatisch erkennen",
-      baseUrlPlaceholder: "http://localhost:8553/v1/openai",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-      loadedModels: "Ihre geladenen Modelle",
-    },
     litellm: {
       baseUrl: "Basis-URL",
       baseUrlPlaceholder: "http://127.0.0.1:4000",
@@ -214,38 +170,6 @@ const TRANSLATIONS = {
       apiKeyPlaceholder: "sk-meingeheimschlüssel",
       loadedModels: "Ihre geladenen Modelle",
     },
-    novita: {
-      apiKey: "Novita API-Schlüssel",
-      apiKeyPlaceholder: "Novita API-Schlüssel",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-      advancedSettings: "erweiterte Einstellungen",
-      streamTimeout: "Stream-Timeout (ms)",
-      timeoutDescription:
-        "Timeout-Wert zwischen Token-Antworten zum automatischen Beenden des Streams.",
-    },
-    openRouter: {
-      apiKey: "OpenRouter API-Schlüssel",
-      apiKeyPlaceholder: "OpenRouter API-Schlüssel",
-      chatModelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-      show: "Anzeigen",
-      hide: "Ausblenden",
-      advancedControls: "erweiterte Steuerung",
-      streamTimeout: "Stream-Timeout (ms)",
-      streamTimeoutPlaceholder:
-        "Timeout-Wert zwischen Token-Antworten zum automatischen Beenden des Streams",
-    },
-    foundry: {
-      baseUrl: "Basis-URL",
-      baseUrlPlaceholder: "z.B.: http://127.0.0.1:8080",
-      chatModel: "Chat-Modell",
-      loading: "---- Wird geladen ----",
-      selectModel: "-- Modell auswählen --",
-      noModelsFound: "Keine Modelle gefunden",
-      modelContextWindow: "Modell-Kontextfenster",
-      tokenLimitPlaceholder: "4096",
-    },
     opencodeZen: {
       baseUrl: "Basis-URL",
       baseUrlPlaceholder: "https://opencode.ai/zen/v1",
@@ -255,17 +179,6 @@ const TRANSLATIONS = {
       modelIdPlaceholder: "z.B. nemotron-3-ultra-free",
       modelContextWindow: "Modell-Kontextfenster",
       tokenLimitPlaceholder: "Kontextfenster-Limit (z.B.: 1000000)",
-    },
-    privateMode: {
-      proxyUrl: "Privatemode-Proxy-URL",
-      tooltipEnterUrl:
-        "Geben Sie die URL ein, unter der der Privatemode-Proxy läuft.",
-      learnMore: "Mehr erfahren →",
-      baseUrlPlaceholder: "z.B.: http://127.0.0.1:8080",
-      chatModel: "Chat-Modell",
-      loading: "---- Wird geladen ----",
-      selectModel: "-- Modell auswählen --",
-      noModelsFound: "Keine Modelle gefunden",
     },
     geminiEmbedding: {
       apiKey: "API-Schlüssel",
@@ -279,14 +192,6 @@ const TRANSLATIONS = {
         "Leer lassen, um die Standarddimensionen für das ausgewählte Modell zu verwenden.",
       outputDimensionsPlaceholder: "Standarddimensionen annehmen",
     },
-    giteeAi: {
-      apiKey: "API-Schlüssel",
-      apiKeyPlaceholder: "GiteeAI API-Schlüssel",
-      modelContextWindow: "Modell-Kontextfenster",
-      contextWindowPlaceholder: "Kontextfenster-Limit (z.B.: 8192)",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-    },
     groqAi: {
       apiKey: "Groq API-Schlüssel",
       apiKeyPlaceholder: "Groq API-Schlüssel",
@@ -297,13 +202,6 @@ const TRANSLATIONS = {
       availableModels: "Verfügbare Modelle",
       selectModelHint:
         "Wählen Sie das GroqAI-Modell, das Sie für Ihre Konversationen verwenden möchten.",
-    },
-    moonshotAi: {
-      apiKey: "API-Schlüssel",
-      apiKeyPlaceholder: "Moonshot AI API-Schlüssel",
-      modelSelection: "Chat-Modellauswahl",
-      enterApiKey: "-- API-Schlüssel eingeben --",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
     },
     nvidiaNim: {
       baseUrl: "NVIDIA NIM Basis-URL",
@@ -323,17 +221,6 @@ const TRANSLATIONS = {
       availableModels: "Verfügbare Modelle",
       selectModelHint:
         "Wählen Sie das xAI-Modell, das Sie für Ihre Konversationen verwenden möchten.",
-    },
-    zAi: {
-      apiKey: "Z.AI API-Schlüssel",
-      apiKeyPlaceholder: "Z.AI API-Schlüssel",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-      enterApiKeyHint:
-        "Geben Sie einen gültigen API-Schlüssel ein, um alle verfügbaren Modelle für Ihr Konto anzuzeigen.",
-      availableModels: "Verfügbare Modelle",
-      selectModelHint:
-        "Wählen Sie das Z.AI-Modell, das Sie für Ihre Konversationen verwenden möchten.",
     },
     azureAiEmbedding: {
       serviceEndpoint: "Azure Service-Endpunkt",
@@ -366,39 +253,6 @@ const TRANSLATIONS = {
       waitingForApiKey: "-- warte auf API-Schlüssel --",
       availableModels: "Verfügbare Mistral-Modelle",
     },
-    textGenWebui: {
-      baseUrl: "Basis-URL",
-      baseUrlPlaceholder: "http://127.0.0.1:5000/v1",
-      modelContextWindow: "Modell-Kontextfenster",
-      contextWindowPlaceholder: "Kontextfenster-Limit (z.B.: 4096)",
-      apiKeyOptional: "API-Schlüssel (Optional)",
-      apiKeyPlaceholder: "TextGen Web UI API-Schlüssel",
-    },
-    apiPie: {
-      apiKey: "APIpie API-Schlüssel",
-      apiKeyPlaceholder: "APIpie API-Schlüssel",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-    },
-    cerebras: {
-      apiKey: "Cerebras API-Schlüssel",
-      apiKeyPlaceholder: "Cerebras API-Schlüssel",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-      availableModels: "Verfügbare Modelle",
-    },
-    cohereAi: {
-      apiKey: "Cohere API-Schlüssel",
-      apiKeyPlaceholder: "Cohere API-Schlüssel",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-    },
-    deepSeek: {
-      apiKey: "API-Schlüssel",
-      apiKeyPlaceholder: "DeepSeek API-Schlüssel",
-      modelSelection: "Chat-Modellauswahl",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-    },
     fireworksAi: {
       apiKey: "Fireworks AI API-Schlüssel",
       apiKeyPlaceholder: "Fireworks AI API-Schlüssel",
@@ -429,12 +283,6 @@ const TRANSLATIONS = {
       password: "Milvus-Passwort",
       passwordPlaceholder: "Passwort",
     },
-    cohereEmbedding: {
-      apiKey: "API-Schlüssel",
-      apiKeyPlaceholder: "Cohere API-Schlüssel",
-      modelPreference: "Modellpräferenz",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
-    },
     nativeEmbedding: {
       modelPreference: "Modellpräferenz",
       loadingModels: "--verfügbare Modelle werden geladen--",
@@ -442,12 +290,6 @@ const TRANSLATIONS = {
       trainedOn: "Trainiert auf:",
       downloadSize: "Download-Größe:",
       viewModelCard: "Modellkarte auf Hugging Face anzeigen \u2192",
-    },
-    openRouterEmbedding: {
-      apiKey: "API-Schlüssel",
-      apiKeyPlaceholder: "OpenRouter API-Schlüssel",
-      modelPreference: "Modellpräferenz",
-      loadingModels: "-- verfügbare Modelle werden geladen --",
     },
   },
   chat_window: {
@@ -2682,31 +2524,6 @@ const TRANSLATIONS = {
       "Wird nur verwendet, wenn LM Studio hinter einem Authentifizierungsserver läuft.",
     authTokenPlaceholder: "LM Studio Auth-Token",
   },
-  lemonadeEmbedding: {
-    modelLabel: "Lemonade Modell",
-    loadingModels: "-- verfügbare Modelle werden geladen --",
-    enterUrlFirst: "Geben Sie zuerst die Lemonade-URL ein",
-    yourLoadedModels: "Ihre geladenen Modelle",
-    selectModelHelp:
-      "Wählen Sie das Lemonade-Modell aus, das Sie für Embeddings verwenden möchten.",
-    maxChunkLengthLabel: "Maximale Embedding-Chunk-Länge",
-    maxChunkLengthTooltip:
-      "Maximale Länge von Text-Chunks in Zeichen für das Embedding.",
-    maxChunkLengthPlaceholder: "8192",
-    apiKeyLabel: "API-Schlüssel",
-    apiKeyTooltip: "API-Schlüssel für den Lemonade-Server.",
-    showManualEndpoint: "Anzeigen",
-    hideManualEndpoint: "Ausblenden",
-    manualEndpointInput: "manuelle Endpunkt-Eingabe",
-    showManualEndpointAria: "Manuelle Endpunkt-Eingabe anzeigen",
-    hideManualEndpointAria: "Manuelle Endpunkt-Eingabe ausblenden",
-    baseUrlLabel: "Lemonade Basis-URL",
-    baseUrlTooltip:
-      "Geben Sie die URL ein, unter der der Lemonade-Server läuft.",
-    baseUrlPlaceholder: "http://localhost:13305",
-    autoDetect: "Automatisch erkennen",
-    autoDetectAria: "Lemonade Basis-URL automatisch erkennen",
-  },
   agentLLMItem: {
     editSettings: "Einstellungen bearbeiten",
     settingsTitle: "{{name}} Einstellungen",
@@ -3690,22 +3507,6 @@ const TRANSLATIONS = {
         "-Parameter, der an den Transkriptions-Endpunkt übergeben wird (z.B. ",
       modelDescriptionPart3: ").",
     },
-    lemonade: {
-      baseUrl: "Basis-URL",
-      autoDetect: "Auto-Erkennung",
-      baseUrlTooltip:
-        "Geben Sie die URL ein, unter der Ihr Lemonade-Server läuft.",
-      baseUrlPlaceholder: "http://localhost:13305",
-      apiKeyOptional: "API-Schlüssel (optional)",
-      apiKeyTooltip:
-        "Der API-Schlüssel für Ihren Lemonade-Server. Wird mit den Lemonade LLM- und Embedder-Einstellungen geteilt.",
-      transcriptionModel: "Transkriptionsmodell",
-      noModelsFound: "-- keine Transkriptionsmodelle gefunden --",
-      enterUrlFirst: "Zuerst Lemonade-URL eingeben",
-      modelHelp:
-        "Laden Sie ein Whisper- oder Transkriptionsmodell auf Ihren Lemonade-Server, dann erscheint es hier.",
-      loadedModels: "Ihre geladenen Modelle",
-    },
   },
   parsedFilesMenu: {
     currentContext: "Aktueller Kontext ({{count}} Dateien)",
@@ -4224,9 +4025,6 @@ const TRANSLATIONS = {
         "Verwendet den integrierten STT-Dienst Ihres Browsers, falls unterstützt.",
       openai: "OpenAI",
       openaiDesc: "Verwenden Sie OpenAIs Whisper-API zur Spracherkennung.",
-      lemonade: "Lemonade",
-      lemonadeDesc:
-        "Sprache über Ihren lokalen Lemonade-Server transkribieren.",
       deepgram: "Deepgram",
       deepgramDesc:
         "Sprache mit Deepgrams gehosteten Nova-Modellen transkribieren.",
