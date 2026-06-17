@@ -61,6 +61,29 @@
 | 3.3 | Dockerfile Multi-Stage Build optimieren | `COPY --from=frontend-build` hat 2x yarn install |
 | 3.4 | `package.json` outdated deps check | Nach 10 Dependabot PRs → Review + Merge |
 
+**3.1–3.2 Ergebnis (2026-06-17):** Clean rebuild durchgeführt. Keine `vendor-charts`-Referenzen im dist-Output. Alle 17 modulepreload-Hints in `_index.html` resolve korrekt. Keine stale chunks, keine empty chunks, keine fehlenden Referenzen. Vite-Konfiguration ist korrekt — `vendor-charts` ist bewusst nicht gesplittet (ESM TDZ race, siehe `vite.config.js:107-112`).
+
+**3.3 Ergebnis (2026-06-17):** Dockerfile optimiert mit BuildKit cache mounts + layer caching. Siehe Commit `perf(docker): optimize multi-stage build`.
+
+**3.4 Ergebnis (2026-06-17):** Patch/minor-Upgrades angewendet auf frontend (5), server (17), collector (1). Major-Upgrades dokumentiert, nicht durchgeführt:
+
+| Package | Current | Latest | Project | Notes |
+|---------|---------|--------|---------|-------|
+| react / react-dom | 18.3.1 | 19.2.7 | frontend | React 19 upgrade — separate Phase |
+| react-router-dom | 6.30.4 | 7.18.0 | frontend | Router v7 — breaking API changes |
+| react-i18next | 14.1.3 | 17.0.8 | frontend | i18next v26+ required |
+| i18next | 23.16.8 | 26.3.1 | frontend | Major ecosystem upgrade |
+| recharts | 2.15.4 | 3.8.1 | frontend | Chart library v3 |
+| tailwindcss | 3.4.19 | 4.3.1 | frontend | Tailwind v4 — CSS-first config |
+| eslint | 9.39.4 | 10.5.0 | frontend/server | ESLint v10 |
+| @prisma/client / prisma | 5.3.1 | 7.8.0 | server | Prisma v7 — schema migration |
+| @langchain/openai | 0.3.17 | 1.4.7 | server | LangChain provider v1 |
+| @pinecone-database/pinecone | 2.2.2 | 8.0.0 | server | Pinecone v8 |
+| zod | 3.25.76 | 4.4.3 | server | Zod v4 |
+| tesseract.js | 5.1.1 / 6.0.1 | 7.0.0 | server/collector | OCR v7 |
+| puppeteer | 21.5.2 | 25.1.0 | collector | Puppeteer v25 |
+| openai | 6.42.0→6.44.0 | — | root | Root package.json already at ^6.42.0 |
+
 ---
 
 ## Priorität 4: Infrastruktur — Tunnel Health-Check via launchd
