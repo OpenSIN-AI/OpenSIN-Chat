@@ -12,6 +12,9 @@
   --brand-primary-dark: #0079b0;
   --brand-accent: #ffd700;
 
+  /* Native form controls (select, option, file input, scrollbars) */
+  color-scheme: dark;
+
   /* Default theme */
   --theme-loader: #ffffff;
   --theme-bg-primary: #0e0f0f;
@@ -114,6 +117,8 @@
   --brand-primary: #009ee0;
   --brand-primary-dark: #0079b0;
   --brand-accent: #ffd700;
+
+  color-scheme: light;
 
   --theme-loader: #000000;
   --theme-bg-primary: #ffffff;

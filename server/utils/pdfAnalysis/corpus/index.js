@@ -164,7 +164,7 @@ class CorpusPipeline {
     // Phase 1+2 — Einzel-Analysen gestaffelt starten und abwarten.
     //
     // Concurrency-Modell:
-    //   * DOC_CONCURRENCY (aus config.CORPUS_CONCURRENCY, default 3) regelt,
+    //   * DOC_CONCURRENCY (aus config.CORPUS_CONCURRENCY, default 4) regelt,
     //     wie viele PdfAnalysisPipeline-Jobs gleichzeitig aktiv sein dürfen.
     //   * Innerhalb jedes Child-Jobs gilt weiterhin AGENT_CONCURRENCY
     //     (default 6) — die dortige AIMD-Steuerung reagiert auf 429/503.

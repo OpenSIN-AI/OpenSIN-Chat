@@ -16,18 +16,23 @@
  *  Der FactStore (SQLite) wird NIE automatisch bereinigt — gespeicherte
  *  Fakten mit Quellenbezug sind das dauerhafte Gedächtnis des Systems.
  *
- *  Läuft beim Serverstart und danach im Intervall (Default: alle 6 h).
+ *  Läuft beim Serverstart und danach im Intervall (Default: alle 1 h).
+ *  Zusätzlich: stuck-Job-Detection (running > 30 min → failed) und
+ *  Orphan-Detection (PDF-Quelldatei verschwunden → warn).
  */
 const fs = require("fs");
 const path = require("path");
 const { getStoragePath } = require("../paths");
-const { loadAllJobs } = require("./jobStore");
+const { loadAllJobs, cleanupStaleJobs, markStuckJobsAsFailed, getOrphanedJobs } = require("./jobStore");
 
 const UPLOAD_TTL_DAYS = Number(process.env.PDF_ANALYSIS_UPLOAD_TTL_DAYS || 7);
 const REPORT_TTL_DAYS = Number(process.env.PDF_ANALYSIS_REPORT_TTL_DAYS || 0);
 const JOB_TTL_DAYS = Number(process.env.PDF_ANALYSIS_JOB_TTL_DAYS || 30);
 const INTERVAL_MS = Number(
-  process.env.PDF_ANALYSIS_CLEANUP_INTERVAL_MS || 6 * 60 * 60 * 1000,
+  process.env.PDF_ANALYSIS_CLEANUP_INTERVAL_MS || 60 * 60 * 1000,
+);
+const JOB_TIMEOUT_MINUTES = Number(
+  process.env.PDF_ANALYSIS_JOB_TIMEOUT_MINUTES || 30,
 );
 
 const UPLOAD_DIR = getStoragePath("pdf-analysis", "uploads");
@@ -63,6 +68,25 @@ function listFiles(dir) {
 }
 
 function runCleanup() {
+  // 0. Stuck-Jobs markieren (running > JOB_TIMEOUT_MINUTES) und
+  //    verwaiste Jobs (PDF-Datei verschwunden) reporten.
+  const stuck = markStuckJobsAsFailed(JOB_TIMEOUT_MINUTES / 60);
+  if (stuck.length)
+    console.log(
+      `[pdfAnalysis] ${stuck.length} stuck job(s) markiert als failed ` +
+        `(Timeout: ${JOB_TIMEOUT_MINUTES} min).`,
+    );
+
+  const orphans = getOrphanedJobs();
+  if (orphans.length)
+    console.warn(
+      `[pdfAnalysis] ${orphans.length} verwaiste Job(s) gefunden ` +
+        `(PDF-Quelldatei fehlt). IDs: ${orphans.map((o) => o.id).join(", ")}`,
+    );
+
+  // 0b. Stale terminal-state Jobs älter als 24h aufräumen (JobStore).
+  cleanupStaleJobs(24);
+
   const jobs = loadAllJobs();
   const activePdfPaths = new Set(
     jobs

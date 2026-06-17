@@ -55,6 +55,11 @@ class FactStore {
     this.db = new Database(dbFile);
     this.db.pragma("journal_mode = WAL");
     this.db.pragma("synchronous = NORMAL");
+    this.db.pragma("auto_vacuum = INCREMENTAL");
+    this._insertCount = 0;
+    this._vacuumThreshold = Number(
+      process.env.PDF_ANALYSIS_FACT_VACUUM_THRESHOLD || 500,
+    );
     this._migrateSchema();
     this._migrateLegacyJson();
   }
@@ -167,7 +172,7 @@ class FactStore {
       for (const row of rows) added += insert.run(row).changes;
       return added;
     });
-    return tx(
+    const added = tx(
       facts
         .filter((f) => f.detail && f.source && f.source.documentName)
         .map((f) => ({
@@ -190,6 +195,16 @@ class FactStore {
           created_at: f.createdAt || new Date().toISOString(),
         })),
     );
+    this._insertCount += added;
+    if (this._insertCount >= this._vacuumThreshold) {
+      this._insertCount = 0;
+      try {
+        this.db.pragma("incremental_vacuum(500)");
+      } catch {
+        /* non-fatal — next cycle retries */
+      }
+    }
+    return added;
   }
 
   get(id) {
@@ -209,6 +224,16 @@ class FactStore {
 
   /** Shim für Aufrufer der JSON-Variante (SQLite persistiert sofort). */
   _save() {}
+
+  /** Full VACUUM — defragmentiert die gesamte DB. Teuer, nur manuell/periodisch aufrufen. */
+  vacuum() {
+    this.db.exec("VACUUM");
+  }
+
+  /** Incremental VACUUM — räumt freie Pages auf, ohne die DB zu blockieren. */
+  incrementalVacuum(pages = 500) {
+    this.db.pragma(`incremental_vacuum(${pages})`);
+  }
 
   search({ q, document, tag, page, limit = 50 } = {}) {
     const max = Math.min(Number(limit) || 50, 500);

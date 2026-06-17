@@ -17,7 +17,8 @@ CrossCheckPipeline.restorePersisted(PdfAnalysisPipeline.factStore);
 
 require("./utils/pdfAnalysis/corpus").CorpusPipeline.restorePersisted();
 
-// Memory hygiene runs on boot and every 6 hours.
+// Memory hygiene runs on boot and every 1 hour (stuck-job detection, orphan
+// detection, stale-job cleanup, upload/checkpoint/report retention).
 require("./utils/pdfAnalysis/retention").startRetentionSchedule();
 
 // Terminate OCR workers cleanly on process exit.

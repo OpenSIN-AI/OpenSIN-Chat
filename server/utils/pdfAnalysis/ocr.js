@@ -15,17 +15,35 @@
 const OCR_ENABLED = !/^false$/i.test(process.env.PDF_ANALYSIS_OCR || "true");
 const OCR_LANGS = process.env.PDF_ANALYSIS_OCR_LANGS || "deu+eng";
 const OCR_SCALE = Number(process.env.PDF_ANALYSIS_OCR_SCALE || 2.0);
-// Unter dieser Zeichenzahl gilt eine Seite als "ohne Text-Layer"
 const MIN_TEXT_CHARS = Number(process.env.PDF_ANALYSIS_OCR_MIN_CHARS || 16);
 
+const FALLBACK_LANG_CHAIN = OCR_LANGS.includes("+")
+  ? [OCR_LANGS, ...OCR_LANGS.split("+"), "osd"]
+  : [OCR_LANGS, "osd"];
+
 let workerPromise = null;
+let workerLang = null;
 let ocrQueue = Promise.resolve();
 
 async function getWorker() {
   if (!workerPromise) {
     workerPromise = (async () => {
       const { createWorker } = require("tesseract.js");
-      return await createWorker(OCR_LANGS);
+      for (const lang of FALLBACK_LANG_CHAIN) {
+        try {
+          const worker = await createWorker(lang);
+          workerLang = lang;
+          return worker;
+        } catch (e) {
+          console.warn(
+            `[pdfAnalysis] Tesseract worker für "${lang}" fehlgeschlagen: ${e.message}`,
+          );
+        }
+      }
+      throw new Error(
+        `[pdfAnalysis] Tesseract konnte keinen Worker initialisieren ` +
+          `(versucht: ${FALLBACK_LANG_CHAIN.join(" → ")}).`,
+      );
     })();
   }
   return workerPromise;

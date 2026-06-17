@@ -11,8 +11,8 @@ set -u
 
 STORAGE_DIR="${STORAGE_DIR:-/app/server/storage}"
 PDF_DIR="${STORAGE_DIR}/pdf-analysis"
-JOBS_FILE="${PDF_DIR}/jobs.json"
-FACTS_FILE="${PDF_DIR}/facts.json"
+JOBS_DIR="${PDF_DIR}/jobs"
+FACTS_DB="${PDF_DIR}/facts.sqlite"
 
 # ── 1) Liveness: HTTP /ping muss 200 liefern ──────────────────────
 response=$(curl --write-out '%{http_code}' --silent --output /dev/null --max-time 5 http://localhost:3001/ping)
@@ -34,23 +34,24 @@ if [ ! -w "$PDF_DIR" ]; then
   exit 1
 fi
 
-# ── 3) Job-Store: jobs.json muss valides JSON sein (oder fehlen) ──
-# Korrupte jobs.json wuerde resumeInterrupted() beim Serverstart werfen;
-# wir fangen das hier ab, bevor der Container "healthy" gemeldet wird.
-if [ -f "$JOBS_FILE" ]; then
-  if ! python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$JOBS_FILE" 2>/dev/null; then
-    echo "Job-Store korrupt: $JOBS_FILE"
+# ── 3) Job-Store: jobs/ Verzeichnis muss existieren und lesbar sein ──
+# Korrupte Job-JSONs wuerden resumeInterrupted() beim Serverstart werfen;
+# wir pruefen hier, dass das Verzeichnis zugreifbar ist. Einzelne .json-
+# Dateien werden vom JobStore selbst mit try/catch geladen.
+if [ -d "$JOBS_DIR" ]; then
+  if [ ! -r "$JOBS_DIR" ]; then
+    echo "Job-Store nicht lesbar: $JOBS_DIR"
     exit 1
   fi
 fi
 
-# ── 4) Facts-Store: facts.json muss valides JSON sein (oder fehlen) ──
-if [ -f "$FACTS_FILE" ]; then
-  if ! python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$FACTS_FILE" 2>/dev/null; then
-    echo "Facts-Store korrupt: $FACTS_FILE"
+# ── 4) Facts-Store: facts.sqlite muss lesbar sein (oder fehlen) ──
+if [ -f "$FACTS_DB" ]; then
+  if [ ! -r "$FACTS_DB" ]; then
+    echo "Facts-Store nicht lesbar: $FACTS_DB"
     exit 1
   fi
 fi
 
-echo "Server is up; PDF-Storage und Job-Store OK"
+  echo "Server is up; PDF-Storage und Job/Facts-Store OK"
 exit 0

@@ -53,12 +53,12 @@ module.exports = {
   // nicht, weil sie nicht in agentPool laufen. Wir begrenzen die Korpus-
   // Parallelität deshalb hart, damit auch der Vergleich-Endpoint atmen kann.
   //
-  // Default 3 — entspricht "max 3 PDFs * 6 Agents = 18 gleichzeitige LLM-Calls
+  // Default 4 — entspricht "max 4 PDFs * 6 Agents = 24 gleichzeitige LLM-Calls
   // aus EINEM Korpus-Job" zusätzlich zu den 2 MAX_ACTIVE_JOBS * 6 = 12 Calls
   // aus regulären Jobs. Wer einen großzügigen LLM-Provider hat, kann via
   // PDF_ANALYSIS_CORPUS_CONCURRENCY auf 4-5 hochdrehen; 1 bleibt der sichere
   // Fallback für kleine Instanzen.
-  CORPUS_CONCURRENCY: intEnv("PDF_ANALYSIS_CORPUS_CONCURRENCY", 3, {
+  CORPUS_CONCURRENCY: intEnv("PDF_ANALYSIS_CORPUS_CONCURRENCY", 4, {
     min: 1,
     max: 16,
   }),
