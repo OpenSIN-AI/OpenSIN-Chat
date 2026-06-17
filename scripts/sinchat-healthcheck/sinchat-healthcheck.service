@@ -1,0 +1,29 @@
+[Unit]
+# SPDX-License-Identifier: MIT
+# sinchat-healthcheck.service — oneshot run by the matching .timer.
+# Drops a /api/health-style probe every 5 min and alerts via ntfy +
+# healthchecks.io + local log on 3+ consecutive failures.
+
+Description=sinchat.delqhi.com health probe
+Documentation=https://github.com/OpenSIN-AI/OpenSIN-Chat
+After=network-online.target cloudflared.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+
+# Optional: set NTFY_TOPIC, NTFY_TOKEN, HEALTHCHECKS_URL in
+# /etc/opensin/healthcheck.env (EnvironmentFile). Leave empty for log-only mode.
+EnvironmentFile=-/etc/opensin/healthcheck.env
+
+ExecStart=/opt/opensin/sinchat-healthcheck.sh
+WorkingDirectory=/opt/opensin
+StandardOutput=journal
+StandardError=journal
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/sinchat-healthcheck.log /var/run/sinchat-healthcheck

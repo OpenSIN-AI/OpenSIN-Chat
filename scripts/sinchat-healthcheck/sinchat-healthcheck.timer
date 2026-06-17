@@ -1,0 +1,18 @@
+[Unit]
+# SPDX-License-Identifier: MIT
+# sinchat-healthcheck.timer — schedules the health probe every 5 min
+# (with a randomized jitter so multiple VMs don't probe in lockstep).
+
+Description=run sinchat.delqhi.com health probe every 5 minutes
+Documentation=https://github.com/OpenSIN-AI/OpenSIN-Chat
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=30s
+RandomizedDelaySec=30s
+Persistent=true
+Unit=sinchat-healthcheck.service
+
+[Install]
+WantedBy=timers.target

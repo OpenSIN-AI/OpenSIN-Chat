@@ -1,0 +1,29 @@
+[Unit]
+# SPDX-License-Identifier: MIT
+# cloudflared-watchdog.service — supervisor systemd unit for cloudflared.
+# Restarts cloudflared if it dies. If THIS watchdog itself dies,
+# systemd restarts it within 10s. Place in /etc/systemd/system/ on the host.
+
+Description=cloudflared watchdog (keeps tunnel alive)
+Documentation=https://github.com/OpenSIN-AI/OpenSIN-Chat
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/opt/opensin/cloudflared-watchdog.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Hardening (only the bits that don't need CAP_NET_ADMIN for a simple loop)
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/log/cloudflared-watchdog.log
+WorkingDirectory=/opt/opensin
+
+[Install]
+WantedBy=multi-user.target

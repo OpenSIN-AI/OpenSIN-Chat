@@ -1,0 +1,116 @@
+{
+  "name": "sinchat.delqhi.com uptime",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger-id",
+      "name": "Every 5 min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300],
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "url": "https://sinchat.delqhi.com/",
+        "options": {
+          "timeout": 10000,
+          "followRedirect": true,
+          "ignoreHttpResponseErrors": true
+        }
+      },
+      "id": "http-request-id",
+      "name": "GET sinchat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{$node[\"GET sinchat\"].json[\"statusCode\"]}}",
+              "operation": "smallerEqual",
+              "value2": 399
+            }
+          ]
+        }
+      },
+      "id": "if-id",
+      "name": "Status 2xx/3xx?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300],
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "channel": "#ops-alerts",
+        "text": "=:white_check_mark: *sinchat.delqhi.com is UP* — {{$node[\"GET sinchat\"].json[\"statusCode\"]}} in {{$node[\"GET sinchat\"].json[\"responseTime\"]}}ms",
+        "otherOptions": {}
+      },
+      "id": "slack-ok-id",
+      "name": "Slack OK (rate-limited)",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [900, 200],
+      "disabled": false
+    },
+    {
+      "parameters": {
+        "channel": "#ops-alerts",
+        "text": "=:rotating_light: *sinchat.delqhi.com DOWN* — status `{{$node[\"GET sinchat\"].json[\"statusCode\"]}}`, errors:\n```\n{{$node[\"GET sinchat\"].json[\"error\"]}}\n```",
+        "otherOptions": {
+          "link_names": true
+        }
+      },
+      "id": "slack-fail-id",
+      "name": "Slack DOWN alert",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2,
+      "position": [900, 400],
+      "disabled": false
+    }
+  ],
+  "connections": {
+    "Every 5 min": {
+      "main": [[{ "node": "GET sinchat", "type": "main", "index": 0 }]]
+    },
+    "GET sinchat": {
+      "main": [[{ "node": "Status 2xx/3xx?", "type": "main", "index": 0 }]]
+    },
+    "Status 2xx/3xx?": {
+      "main": [
+        [{ "node": "Slack OK (rate-limited)", "type": "main", "index": 0 }],
+        [{ "node": "Slack DOWN alert",   "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveExecutionProgress": true,
+    "saveDataSuccessExecution": "all",
+    "saveDataErrorExecution": "all",
+    "timezone": "Europe/Berlin"
+  },
+  "staticData": {},
+  "tags": [
+    { "name": "uptime" },
+    { "name": "sinchat" }
+  ],
+  "meta": {
+    "description": "Polls https://sinchat.delqhi.com/ every 5 minutes and alerts #ops-alerts on status > 399. Pairs with scripts/sinchat-healthcheck/ on the VM — the VM watchdog and the n8n workflow give you a complete picture even when either side is unreachable.",
+    "instanceId": "sinchat-uptime-template"
+  }
+}
