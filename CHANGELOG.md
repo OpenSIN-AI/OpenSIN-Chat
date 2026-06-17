@@ -243,3 +243,36 @@ See git history. This CHANGELOG focuses on the 2026-06 wave prune.
 
 [3.18.0]: https://github.com/OpenSIN-AI/OpenSIN-Chat/compare/<prev>...eea11c94
 [Unreleased]: https://github.com/OpenSIN-AI/OpenSIN-Chat/compare/3.18.0...HEAD
+
+- `scripts/oci-vm-bootstrap/aura-call-emergency-recover.sh`: parallel
+  recovery script for the second VM `92.5.30.252` (Aura-Call telephony).
+  Operators run on their Mac — agent sandbox cannot SSH (AGENTS.md
+  Priority 20). 7-step mirror of `emergency-recover.sh` covering
+  `systemctl status aura-call`, restart, disk-guard, `/api/docs` probe.
+
+### Skill integration — singleton source-of-truth for OCI / Cloudflare / sinchat / Aura-Call
+
+The knowledge accumulated during the 2026-06-17 incident response —
+canonical VM inventory, Cloudflare tunnel map, OCI-SDK profile, the
+Service-Token zero-touch contract for Infisical, 7 pre-cooked recovery
+playbooks — is now a published skill available to every agent:
+
+| Where | What |
+|---|---|
+| `~/.config/opencode/skills/skill-oci-oracle-cloud/SKILL.md` (805 lines) | primary reference |
+| `~/.config/opencode/skills/skill-oci-oracle-cloud/scripts/` | probe / push / decode / auto-loader shells |
+| `Infra-SIN-OpenCode-Stack/skills/skill-oci-oracle-cloud/` (commit `101aae7`) | bundled + tracked source-of-truth |
+| `Infra-SIN-OpenCode-Stack/skills/catalog.json` slot 2 | catalog entry |
+| `Infra-SIN-OpenCode-Stack/opencode.json` | slash command `sin-cli-oci` |
+| `~/.config/opencode/opencode.json` | baseline + slash command wired |
+| `~/.config/opencode/AGENTS.md` §18 | global policy (Priority 11 Service-Token zero-touch) |
+| `Infra-SIN-OpenCode-Stack/AGENTS.md` §19 | mirror copy + drift fix workflow |
+| `OpenSIN-Code/AGENTS.md` | cross-reference block (commit `c334d38`) |
+| sin-brain rule | priority 11 global |
+| sin-memory entries | (1) 2026-06-17 incident + (2) Infisical contract |
+
+29 OCI secrets all in `~/.infisical/secrets-backup/` (chmod-0600) +
+mirrored to Infisical workspace `fa7758b4-f84c-4297-966e-710056d531ef`
+env `production` via Service Token stored at `~/.infisical/agent-token`
+(chmod-0600). Token auto-detected by every script — operator no longer
+types tokens after the initial WebUI creation + pbpaste.
