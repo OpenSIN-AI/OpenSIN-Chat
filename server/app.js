@@ -46,7 +46,6 @@ const { communityHubEndpoints } = require("./endpoints/communityHub");
 const { agentFlowEndpoints } = require("./endpoints/agentFlows");
 const { mcpServersEndpoints } = require("./endpoints/mcpServers");
 const { mobileEndpoints } = require("./endpoints/mobile");
-const { webPushEndpoints } = require("./endpoints/webPush");
 const { telegramEndpoints } = require("./endpoints/telegram");
 const { scheduledJobEndpoints } = require("./endpoints/scheduledJobs");
 const {
@@ -125,7 +124,6 @@ function buildApp() {
   agentFlowEndpoints(apiRouter);
   mcpServersEndpoints(apiRouter);
   mobileEndpoints(apiRouter);
-  webPushEndpoints(apiRouter);
   telegramEndpoints(apiRouter);
   scheduledJobEndpoints(apiRouter);
   outlookAgentEndpoints(apiRouter);
