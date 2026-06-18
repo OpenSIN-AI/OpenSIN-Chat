@@ -115,6 +115,18 @@ function utilEndpoints(app) {
   app.get("/utils/political/rss", async (req, response) => {
     try {
       const feed = req.query.feed || "https://www.afd.de/feed/";
+      const parsed = new URL(feed);
+      if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+        return response.status(400).json({ error: "Invalid protocol" });
+      }
+      const hostname = parsed.hostname.toLowerCase();
+      if (
+        hostname === "localhost" ||
+        hostname.endsWith(".local") ||
+        /^(10\.|172\.(1[6-9]|2[0-9]|3[01])\.|192\.168\.|127\.|0\.|169\.254\.)/.test(hostname)
+      ) {
+        return response.status(403).json({ error: "Blocked: internal address" });
+      }
       const res = await fetchWithTimeout(feed, {
         headers: { "User-Agent": "OpenSIN-Chat/1.0" },
       });

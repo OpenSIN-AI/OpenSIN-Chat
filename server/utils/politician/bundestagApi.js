@@ -123,7 +123,7 @@ class BundestagApi {
     const res = await this.#fetch(url, headers);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
-      res.text().catch(() => {});
+      res.text?.().catch(() => {});
       return null;
     }
     const data = await res.json();
@@ -322,7 +322,7 @@ class BundestagApi {
     try {
       const res = await this.#fetch(profileUrl, { Accept: "text/html" });
       if (!res.ok) {
-        res.text().catch(() => {});
+        res.text?.().catch(() => {});
         return null;
       }
       return await res.text();
