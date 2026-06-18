@@ -36,20 +36,27 @@ class PaperlessNgxLoader {
         // eslint-disable-next-line no-console
         console.log(`Fetching documents page ${page} from Paperless-ngx`);
         try {
+          const abortController = new AbortController();
+          const timeout = setTimeout(() => abortController.abort(), 30_000);
           const data = await fetch(nextUrl, {
             headers: {
               "Content-Type": "application/json",
               ...this.baseHeaders,
             },
-          }).then((res) => {
-            if (!res.ok)
-              throw new Error(
-                `Failed to fetch documents from Paperless-ngx: ${res.status}`
-              );
-            return res.json();
-          });
+            signal: abortController.signal,
+          })
+            .then((res) => {
+              if (!res.ok)
+                throw new Error(
+                  `Failed to fetch documents from Paperless-ngx: ${res.status}`
+                );
+              return res.json();
+            })
+            .finally(() => clearTimeout(timeout));
 
-          const validResults = data.results.filter((doc) => doc?.id);
+          const validResults = Array.isArray(data.results)
+            ? data.results.filter((doc) => doc?.id)
+            : [];
           if (!validResults.length) break;
 
           documents.push(...validResults);
@@ -96,17 +103,23 @@ class PaperlessNgxLoader {
    */
   async fetchDocumentContent(documentId) {
     try {
+      const abortController = new AbortController();
+      const timeout = setTimeout(() => abortController.abort(), 30_000);
       const response = await fetch(
         `${this.baseUrl}/api/documents/${documentId}/download/`,
         {
           headers: this.baseHeaders,
+          signal: abortController.signal,
         }
-      );
+      ).finally(() => clearTimeout(timeout));
 
       if (!response.ok)
         throw new Error(`Failed to fetch document content: ${response.status}`);
 
-      const contentType = response.headers.get("content-type");
+      const contentType = (response.headers.get("content-type") || "")
+        .toLowerCase()
+        .split(";")[0]
+        .trim();
       switch (contentType) {
         case "text/plain":
           return await response.text();

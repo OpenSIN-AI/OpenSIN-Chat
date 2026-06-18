@@ -69,52 +69,47 @@ export function useWatchForAutoPlayAssistantTTSResponse() {
     "autoPlayAssistantTtsResponse",
   );
 
-  function handleAutoPlayTTSEvent(event: any) {
-    let autoPlayAttempts = 0;
-    const { chatId } = event.detail;
-
-    /**
-     * Attempt to play the TTS response for the given chatId.
-     * This is a recursive function that will attempt to play the TTS response
-     * for the given chatId until it is successful or the maximum number of attempts
-     * is reached.
-     * @returns {boolean} true if the TTS response was played, false otherwise.
-     */
-    function attemptToPlay() {
-      const playBtn = document.querySelector(
-        `[data-auto-play-chat-id="${chatId}"]`,
-      );
-      if (!playBtn) {
-        autoPlayAttempts++;
-        if (autoPlayAttempts > 3) return false;
-        setTimeout(() => {
-          attemptToPlay();
-        }, 1000 * autoPlayAttempts);
-        return false;
-      }
-      playBtn.click();
-      return true;
-    }
-    setTimeout(() => {
-      attemptToPlay();
-    }, 800);
-  }
-
-  // Only bother to listen for these events if the user has autoPlayAssistantTtsResponse
-  // setting enabled.
   useEffect(() => {
-    if (autoPlayAssistantTtsResponse) {
-      window.addEventListener(
+    if (!autoPlayAssistantTtsResponse) return;
+
+    const pendingTimers: ReturnType<typeof setTimeout>[] = [];
+
+    function handleAutoPlayTTSEvent(event: any) {
+      let autoPlayAttempts = 0;
+      const { chatId } = event.detail;
+
+      function attemptToPlay() {
+        const playBtn = document.querySelector(
+          `[data-auto-play-chat-id="${chatId}"]`,
+        );
+        if (!playBtn) {
+          autoPlayAttempts++;
+          if (autoPlayAttempts > 3) return false;
+          const t = setTimeout(() => {
+            attemptToPlay();
+          }, 1000 * autoPlayAttempts);
+          pendingTimers.push(t);
+          return false;
+        }
+        playBtn.click();
+        return true;
+      }
+      const t = setTimeout(() => {
+        attemptToPlay();
+      }, 800);
+      pendingTimers.push(t);
+    }
+
+    window.addEventListener(
+      ASSISTANT_MESSAGE_COMPLETE_EVENT,
+      handleAutoPlayTTSEvent,
+    );
+    return () => {
+      window.removeEventListener(
         ASSISTANT_MESSAGE_COMPLETE_EVENT,
         handleAutoPlayTTSEvent,
       );
-      return () => {
-        window.removeEventListener(
-          ASSISTANT_MESSAGE_COMPLETE_EVENT,
-          handleAutoPlayTTSEvent,
-        );
-      };
-    } else {
-    }
+      pendingTimers.forEach((t) => clearTimeout(t));
+    };
   }, [autoPlayAssistantTtsResponse]);
 }

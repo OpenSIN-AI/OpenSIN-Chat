@@ -8,6 +8,7 @@ const {
   sanitizeFileName,
   documentsFolder,
 } = require("../../files");
+const { tokenizeString } = require("../../tokenizer");
 
 function parseObsidianVaultPath(files = []) {
   const possiblePaths = new Set();
@@ -62,7 +63,7 @@ async function loadObsidianVault({ files = [] }) {
         published: new Date().toLocaleString(),
         wordCount: fullPageContent.split(" ").length,
         pageContent: fullPageContent,
-        token_count_estimate: fullPageContent.length / 4, // rough estimate
+        token_count_estimate: tokenizeString(fullPageContent),
       };
 
       const targetFileName = sanitizeFileName(

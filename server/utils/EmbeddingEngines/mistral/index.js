@@ -4,12 +4,15 @@ class MistralEmbedder {
     if (!process.env.MISTRAL_API_KEY)
       throw new Error("No Mistral API key was set.");
 
+    this.className = "MistralEmbedder";
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
       baseURL: "https://api.mistral.ai/v1",
       apiKey: process.env.MISTRAL_API_KEY ?? null,
     });
     this.model = process.env.EMBEDDING_MODEL_PREF || "mistral-embed";
+    this.maxConcurrentChunks = 50;
+    this.embeddingMaxChunkLength = 8_192;
   }
 
   async embedTextInput(textInput) {

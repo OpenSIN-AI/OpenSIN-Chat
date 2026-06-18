@@ -3,6 +3,7 @@ import { formatDateTimeAsMoment } from "@/utils/directories";
 import { formatDuration, numberWithCommas } from "@/utils/numbers";
 import React, { useEffect, useState, useContext } from "react";
 import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
 const MetricsContext = React.createContext<any>(undefined);
 const SHOW_METRICS_KEY = "openafd_show_chat_metrics";
 const SHOW_METRICS_EVENT = "openafd_show_metrics_change";
@@ -103,6 +104,7 @@ export default function RenderMetrics({ metrics = {} }: any) {
   // Inherit the showMetricsAutomatically state from the MetricsProvider so the state is shared across all chats
   const { showMetricsAutomatically, setShowMetricsAutomatically } =
     useContext(MetricsContext);
+  const { t } = useTranslation();
   if (!metrics?.duration || !metrics?.outputTps || isMobile) return null;
 
   return (
@@ -112,8 +114,8 @@ export default function RenderMetrics({ metrics = {} }: any) {
       data-tooltip-id="metrics-visibility"
       data-tooltip-content={
         showMetricsAutomatically
-          ? "Click to only show metrics when hovering"
-          : "Click to show metrics as soon as they are available"
+          ? t("chat_window.metrics_show_on_hover")
+          : t("chat_window.metrics_show_when_available")
       }
       className={`border-none flex md:justify-end items-center gap-x-[8px] -ml-7 ${showMetricsAutomatically ? "opacity-100" : "opacity-0"} md:group-hover:opacity-100 transition-all duration-300`}
     >

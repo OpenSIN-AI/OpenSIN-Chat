@@ -3,6 +3,7 @@
 // Docs: usePoliticianSync.doc.md
 import useSWR from "swr";
 import { API_BASE } from "@/utils/constants";
+import { baseHeaders } from "@/utils/request";
 
 interface PoliticianStats {
   politicians: number;
@@ -46,7 +47,7 @@ interface UsePoliticianSyncResult {
 
 async function fetcher(url: string): Promise<any> {
   const res = await fetch(`${API_BASE}${url}`, {
-    credentials: "include",
+    headers: baseHeaders(),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
@@ -58,7 +59,7 @@ export default function usePoliticianSync(): UsePoliticianSyncResult {
     error: statsError,
     isLoading: statsLoading,
     mutate: mutateStats,
-  } = useSWR("/api/politician/stats", fetcher, {
+  } = useSWR("/politician/stats", fetcher, {
     refreshInterval: 30000,
     revalidateOnFocus: true,
   });
@@ -68,7 +69,7 @@ export default function usePoliticianSync(): UsePoliticianSyncResult {
     error: syncError,
     isLoading: syncLoading,
     mutate: mutateSync,
-  } = useSWR("/api/politician/sync/status", fetcher, {
+  } = useSWR("/politician/sync/status", fetcher, {
     refreshInterval: 30000,
     revalidateOnFocus: true,
   });

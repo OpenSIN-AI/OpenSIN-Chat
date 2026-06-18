@@ -316,13 +316,14 @@ const Workspace = {
       headers: baseHeaders(),
       body: JSON.stringify({ messages }),
     })
-      .then((res) => {
+      .then(async (res) => {
         if (!res.ok) {
           throw new Error(
             res.statusText || "Error setting suggested messages.",
           );
         }
-        return { success: true, ...res.json() };
+        const json = await res.json();
+        return { success: true, ...json };
       })
       .catch((e) => {
         console.error(e);

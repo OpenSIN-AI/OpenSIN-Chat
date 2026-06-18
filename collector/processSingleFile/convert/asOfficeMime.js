@@ -25,6 +25,12 @@ async function asOfficeMime({
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Could not parse office or office-like file`, error);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `Failed to parse office file: ${error.message}`,
+      documents: [],
+    };
   }
 
   if (!content.length) {

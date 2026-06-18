@@ -32,14 +32,20 @@ function getDocType(doc: any) {
     docpath.includes("link") ||
     filename.startsWith("http")
   )
-    return { icon: Globe, label: "URL" };
+    return { icon: Globe, type: "url" };
   if (
     docpath.includes("api") ||
     docpath.includes("db") ||
     metadata?.connectionString
   )
-    return { icon: Database, label: "Datenbank" };
-  return { icon: FileText, label: "Dokument" };
+    return { icon: Database, type: "db" };
+  return { icon: FileText, type: "document" };
+}
+
+function docTypeLabel(t, type) {
+  if (type === "url") return t("chat_window.source_type_url");
+  if (type === "db") return t("chat_window.source_type_database");
+  return t("chat_window.source_type_document");
 }
 
 // ── Chats tab ─────────────────────────────────────────────────────────────────
@@ -65,7 +71,7 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
     {
       id: "__default__",
       slug: null,
-      name: workspace?.name || "Default",
+      name: workspace?.name || t("chat_window.default_thread"),
       virtual: true,
     },
     ...threads.filter((th: any) => !th.virtual && !th.deleted),
@@ -132,7 +138,8 @@ function WorkspaceFilesTab({ workspace }: any) {
     <div className="flex flex-col gap-2 overflow-y-auto no-scroll">
       {docs.map((doc: any, idx: number) => {
         const metadata = safeJsonParse(doc.metadata, {});
-        const { icon: Icon, label } = getDocType(doc);
+        const { icon: Icon, type } = getDocType(doc);
+        const label = docTypeLabel(t, type);
         return (
           <div key={doc.docId || idx} className="flex flex-col gap-[2px]">
             <div className="flex gap-2 items-start">

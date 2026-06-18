@@ -45,12 +45,18 @@ class OllamaEmbedder {
    * @returns {Promise<boolean>} - A promise that resolves to true if the service is alive, false otherwise.
    */
   async #isAlive() {
-    return await fetch(this.basePath)
-      .then((res) => res.ok)
-      .catch((e) => {
-        this.log(e.message);
-        return false;
-      });
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 5_000);
+    try {
+      return await fetch(this.basePath, { signal: controller.signal })
+        .then((res) => res.ok)
+        .catch((e) => {
+          this.log(e.message);
+          return false;
+        });
+    } finally {
+      clearTimeout(timer);
+    }
   }
 
   async embedTextInput(textInput) {

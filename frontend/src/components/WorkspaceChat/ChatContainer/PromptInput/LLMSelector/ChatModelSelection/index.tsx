@@ -41,7 +41,7 @@ export default function ChatModelSelection({
       className="bg-zinc-900 light:bg-white text-white light:text-slate-900 text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-pointer"
     >
       {defaultModels.length > 0 && (
-        <optgroup label="General models">
+        <optgroup label={t("chat_window.workspace_llm_manager.general_models")}>
           {(defaultModels as any).map((model) => {
             return (
               <option
@@ -56,7 +56,9 @@ export default function ChatModelSelection({
         </optgroup>
       )}
       {Array.isArray(customModels) && customModels.length > 0 && (
-        <optgroup label="Discovered models">
+        <optgroup
+          label={t("chat_window.workspace_llm_manager.discovered_models")}
+        >
           {(customModels as any).map((model) => {
             return (
               <option

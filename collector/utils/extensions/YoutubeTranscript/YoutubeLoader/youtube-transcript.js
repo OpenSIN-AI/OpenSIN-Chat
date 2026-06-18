@@ -119,7 +119,13 @@ class YoutubeTranscript {
     );
 
     const captionsConfig = captionsConfigJson?.[1]
-      ? JSON.parse(captionsConfigJson[1])
+      ? (() => {
+          try {
+            return JSON.parse(captionsConfigJson[1]);
+          } catch {
+            return null;
+          }
+        })()
       : null;
 
     const captionTracks = captionsConfig
@@ -147,10 +153,12 @@ class YoutubeTranscript {
    * @throws {YoutubeTranscriptError} If no suitable caption track is found
    */
   static async #getPreferredCaptionTrack(videoId, preferredLanguages) {
+    const abortController = new AbortController();
+    const timeout = setTimeout(() => abortController.abort(), 15_000);
     const videoResponse = await fetch(
       `https://www.youtube.com/watch?v=${videoId}`,
-      { credentials: "omit" }
-    );
+      { credentials: "omit", signal: abortController.signal }
+    ).finally(() => clearTimeout(timeout));
     const videoBody = await videoResponse.text();
 
     const preferredCaptionTrack = this.#findPreferredCaptionTrack(
@@ -194,6 +202,11 @@ class YoutubeTranscript {
         param2: innerProto,
       });
 
+      const transcriptAbort = new AbortController();
+      const transcriptTimeout = setTimeout(
+        () => transcriptAbort.abort(),
+        15_000
+      );
       const response = await fetch(
         "https://www.youtube.com/youtubei/v1/get_transcript",
         {
@@ -212,8 +225,9 @@ class YoutubeTranscript {
             },
             params,
           }),
+          signal: transcriptAbort.signal,
         }
-      );
+      ).finally(() => clearTimeout(transcriptTimeout));
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

@@ -23,7 +23,7 @@ export default function useScrollActiveItemIntoView({
         block,
       });
     }
-  }, [isActive]);
+  }, [isActive, behavior, block]);
 
   return {
     ref,

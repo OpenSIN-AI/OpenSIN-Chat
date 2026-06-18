@@ -32,7 +32,7 @@ function getWorkspaceSourceType(doc: any) {
     docpath.includes("link") ||
     filename.startsWith("http")
   ) {
-    return { type: "url", icon: Globe, label: "URL" };
+    return { type: "url", icon: Globe, label: null };
   }
 
   // Database/API detection (heuristic based on common patterns)
@@ -43,17 +43,23 @@ function getWorkspaceSourceType(doc: any) {
     metadata?.connectionString ||
     metadata?.apiEndpoint
   ) {
-    return { type: "db", icon: Database, label: "Datenbank" };
+    return { type: "db", icon: Database, label: null };
   }
 
   // Default: document
-  return { type: "document", icon: FileText, label: "Dokument" };
+  return { type: "document", icon: FileText, label: null };
 }
 
 function WorkspaceSourceItem({ doc, onClick }: any) {
   const { t } = useTranslation();
-  const { type: _type, icon: Icon, label } = getWorkspaceSourceType(doc);
+  const { type: sourceType, icon: Icon } = getWorkspaceSourceType(doc);
   const metadata = safeJsonParse(doc.metadata, {});
+  const label =
+    sourceType === "url"
+      ? t("chat_window.source_type_url")
+      : sourceType === "db"
+        ? t("chat_window.source_type_database")
+        : t("chat_window.source_type_document");
 
   return (
     <button
@@ -102,10 +108,10 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
     {
       id: "__default__",
       slug: null,
-      name: workspace?.name || "Default",
+      name: workspace?.name || t("chat_window.default_thread"),
       virtual: true,
     },
-    ...threads.filter((t: any) => !t.virtual && !t.deleted),
+    ...threads.filter((th: any) => !th.virtual && !th.deleted),
   ];
 
   if (allThreads.length === 0) {

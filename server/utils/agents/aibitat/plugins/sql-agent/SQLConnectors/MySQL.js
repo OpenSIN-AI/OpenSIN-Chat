@@ -49,10 +49,10 @@ class MySQLConnector {
       console.error(this.className, err);
       result.error = err.message;
     } finally {
-      // Check client is connected before closing since we use this for validation
-      if (this._client) {
-        await this._client.end();
+      if (this.#connected && this._client) {
+        await this._client.end().catch(() => {});
         this.#connected = false;
+        this._client = null;
       }
     }
     return result;

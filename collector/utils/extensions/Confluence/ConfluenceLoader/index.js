@@ -62,6 +62,7 @@ class ConfluencePagesLoader {
   }
 
   async fetchConfluenceData(url) {
+    const prevTlsSetting = process.env.NODE_TLS_REJECT_UNAUTHORIZED;
     try {
       const initialHeaders = {
         "Content-Type": "application/json",
@@ -70,9 +71,15 @@ class ConfluencePagesLoader {
       const authHeader = this.authorizationHeader;
       if (authHeader) initialHeaders.Authorization = authHeader;
 
-      // If SSL bypass is enabled, set the NODE_TLS_REJECT_UNAUTHORIZED environment variable
       if (this.bypassSSL) process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-      const response = await fetch(url, { headers: initialHeaders });
+
+      const abortController = new AbortController();
+      const timeout = setTimeout(() => abortController.abort(), 30_000);
+
+      const response = await fetch(url, {
+        headers: initialHeaders,
+        signal: abortController.signal,
+      }).finally(() => clearTimeout(timeout));
       if (!response.ok) {
         throw new Error(
           `Failed to fetch ${url} from Confluence: ${response.status}`
@@ -83,7 +90,8 @@ class ConfluencePagesLoader {
       this.log("Error:", error);
       throw new Error(error.message);
     } finally {
-      if (this.bypassSSL) process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1";
+      if (prevTlsSetting === undefined) delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+      else process.env.NODE_TLS_REJECT_UNAUTHORIZED = prevTlsSetting;
     }
   }
 

@@ -18,9 +18,14 @@ function convertToCSV(data) {
       row
         .map((cell) => {
           if (cell === null || cell === undefined) return "";
-          if (typeof cell === "string" && cell.includes(","))
-            return `"${cell}"`;
-          return cell;
+          let str = String(cell);
+          if (str.includes(",") || str.includes('"') || str.includes("\n") || str.includes("\r")) {
+            str = `"${str.replace(/"/g, '""')}"`;
+          }
+          if (/^[=+\-@]/.test(str) && !/^[-+]?\d/.test(str)) {
+            str = `'${str}`;
+          }
+          return str;
         })
         .join(",")
     )

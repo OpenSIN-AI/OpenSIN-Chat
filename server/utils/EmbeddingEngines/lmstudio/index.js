@@ -70,7 +70,6 @@ class LMStudioEmbedder {
           .create({
             model: this.model,
             input: chunk,
-            encoding_format: "base64",
           })
           .then((result) => {
             const embedding = result.data?.[0]?.embedding;

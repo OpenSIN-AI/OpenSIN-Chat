@@ -68,10 +68,12 @@ class YoutubeLoader {
         const { Innertube } = require("youtubei.js");
         const youtube = await Innertube.create();
         const info = (await youtube.getBasicInfo(this.#videoId)).basic_info;
-        metadata.description = info.short_description;
-        metadata.title = info.title;
-        metadata.view_count = info.view_count;
-        metadata.author = info.author;
+        if (info) {
+          metadata.description = info.short_description || "";
+          metadata.title = info.title || "";
+          metadata.view_count = info.view_count || "";
+          metadata.author = info.author || "";
+        }
       }
     } catch (e) {
       throw new Error(

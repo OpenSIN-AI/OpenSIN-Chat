@@ -23,6 +23,12 @@ async function asEPub({
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error("Could not read epub file!", err);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `Failed to parse epub file: ${err.message}`,
+      documents: [],
+    };
   }
 
   if (!content?.length) {

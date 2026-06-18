@@ -129,9 +129,8 @@ const websocket = {
             // eslint-disable-next-line no-console
             console.log(
               chalk.green(
-                userId
-                  ? `User ${userId} - `
-                  : "" + `Skill ${skillName} is whitelisted - auto-approved.`,
+                (userId ? `User ${userId} - ` : "") +
+                  `Skill ${skillName} is whitelisted - auto-approved.`,
               ),
             );
             return {

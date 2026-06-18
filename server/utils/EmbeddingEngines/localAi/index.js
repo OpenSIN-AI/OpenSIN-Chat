@@ -64,7 +64,9 @@ class LocalAiEmbedder {
             .create({
               model: this.model,
               input: chunk,
-              dimensions: this.outputDimensions,
+              ...(this.outputDimensions
+                ? { dimensions: this.outputDimensions }
+                : {}),
             })
             .then((result) => {
               chunksProcessed += chunk.length;

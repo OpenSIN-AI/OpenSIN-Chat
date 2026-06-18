@@ -21,7 +21,11 @@
  */
 
 const { v4 } = require("uuid");
-const { writeToServerDocuments, documentsFolder } = require("../../files");
+const {
+  writeToServerDocuments,
+  sanitizeFileName,
+  documentsFolder,
+} = require("../../files");
 const { tokenizeString } = require("../../tokenizer");
 const { default: slugify } = require("slugify");
 const path = require("path");
@@ -36,21 +40,28 @@ const AFD_PRESS_BASE = "https://www.afd.de/presse/pressemitteilungen/";
  * @returns {Promise<string>} - HTML-Text
  */
 async function fetchHtml(url) {
-  const res = await fetch(url, {
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (compatible; OpenSIN-Chat/0.1; +https://sinchat.delqhi.com)",
-      Accept: "text/html,application/xhtml+xml",
-      "Accept-Language": "de-DE,de;q=0.9,en;q=0.5",
-    },
-  });
-  if (!res.ok) {
-    const body = await res.text().catch(() => "");
-    throw new Error(
-      `afd.de ${res.status} ${res.statusText} for ${url}\n${body.slice(0, 500)}`
-    );
+  const abortController = new AbortController();
+  const timeout = setTimeout(() => abortController.abort(), 15_000);
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (compatible; OpenSIN-Chat/0.1; +https://sinchat.delqhi.com)",
+        Accept: "text/html,application/xhtml+xml",
+        "Accept-Language": "de-DE,de;q=0.9,en;q=0.5",
+      },
+      signal: abortController.signal,
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      throw new Error(
+        `afd.de ${res.status} ${res.statusText} for ${url}\n${body.slice(0, 500)}`
+      );
+    }
+    return await res.text();
+  } finally {
+    clearTimeout(timeout);
   }
-  return res.text();
 }
 
 /**
@@ -209,7 +220,7 @@ async function importSinglePress(url, outFolderPath) {
 
     writeToServerDocuments({
       data,
-      filename: data.title,
+      filename: sanitizeFileName(slugify(data.title)),
       destinationOverride: outFolderPath,
     });
     return data;

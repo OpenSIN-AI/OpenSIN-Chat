@@ -38,6 +38,8 @@ export default function useTimeoutProgress(
       setProgressPercent((remaining / timeoutMs) * 100);
       if (remaining <= 0) {
         clearInterval(intervalId);
+        startTimeRef.current = null;
+        setProgressPercent(0);
         onTimeoutRef.current?.();
       }
     }, intervalMs);

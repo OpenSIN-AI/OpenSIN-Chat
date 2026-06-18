@@ -182,17 +182,19 @@ async function fetchWithRetry(url) {
  */
 async function fetchHtml(url) {
   if (process.env.AGENT_BROWSER_VISION_PLAYWRIGHT === "true") {
+    let browser;
     try {
       const { chromium } = require("playwright");
-      const browser = await chromium.launch({ headless: true });
+      browser = await chromium.launch({ headless: true });
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20_000 });
       const html = await page.content();
       const finalUrl = page.url();
-      await browser.close();
       return { html, finalUrl };
     } catch {
       // Playwright not installed or launch failed — fall through to fetch
+    } finally {
+      if (browser) await browser.close().catch(() => {});
     }
   }
   return fetchWithRetry(url);

@@ -153,7 +153,7 @@ export default function PoliticalSidebar() {
             ) : (
               rssItems.map((item, i) => (
                 <a
-                  key={i}
+                  key={item.guid || item.link || i}
                   href={item.link || "#"}
                   target="_blank"
                   rel="noopener noreferrer"

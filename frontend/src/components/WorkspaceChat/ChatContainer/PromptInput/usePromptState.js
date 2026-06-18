@@ -43,12 +43,17 @@ export default function usePromptState({
    * If the URL has the agent param, open the agent menu for the user
    * automatically when the component mounts.
    */
+  const sendCommandRef = useRef(sendCommand);
+  useEffect(() => {
+    sendCommandRef.current = sendCommand;
+  }, [sendCommand]);
   useEffect(() => {
     if (searchParams.get("action") === "set-agent-chat") {
-      sendCommand({ text: "@agent " });
+      sendCommandRef.current({ text: "@agent " });
       textareaRef.current?.focus();
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   /**
    * To prevent too many re-renders we remotely listen for updates from the parent

@@ -156,7 +156,7 @@ async function wipeCollectorStorage() {
   const cleanHotDir = new Promise((resolve) => {
     const directory = getCollectorPath("hotdir");
     fs.readdir(directory, (err, files) => {
-      if (err) resolve();
+      if (err) return resolve();
 
       for (const file of files) {
         if (file === "__HOTDIR__.md") continue;

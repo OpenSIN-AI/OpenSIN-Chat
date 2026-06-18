@@ -12,12 +12,13 @@ class PostgresSQLConnector {
     this.className = "PostgresSQLConnector";
     this.connectionString = config.connectionString;
     this.schema = config.schema || "public";
-    this._client = new pgSql.Client({
-      connectionString: this.connectionString,
-    });
+    this._client = null;
   }
 
   async connect() {
+    this._client = new pgSql.Client({
+      connectionString: this.connectionString,
+    });
     await this._client.connect();
     this.#connected = true;
     return this._client;
@@ -41,10 +42,10 @@ class PostgresSQLConnector {
       console.error(this.className, err);
       result.error = err.message;
     } finally {
-      // Check client is connected before closing since we use this for validation
-      if (this._client) {
-        await this._client.end();
+      if (this.#connected && this._client) {
+        await this._client.end().catch(() => {});
         this.#connected = false;
+        this._client = null;
       }
     }
     return result;

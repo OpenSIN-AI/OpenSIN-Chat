@@ -582,8 +582,9 @@ const System = {
     timeout = null,
   ) {
     const controller = new AbortController();
+    let timerId = null;
     if (!!timeout) {
-      setTimeout(() => {
+      timerId = setTimeout(() => {
         controller.abort("Request timed out.");
       }, timeout);
     }
@@ -607,6 +608,9 @@ const System = {
       .catch((e) => {
         console.error(e);
         return { models: [], error: e.message };
+      })
+      .finally(() => {
+        if (timerId) clearTimeout(timerId);
       });
   },
   chats: async (offset = 0) => {

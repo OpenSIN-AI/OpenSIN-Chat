@@ -70,6 +70,10 @@ function RenderAssistantChatContent({ message, messageId }: any) {
   const contentRef = useRef("");
   const thoughtChainRef = useRef(null);
 
+  // Guard: when reply is undefined but sources exist, parent falls through
+  // to this component — without a guard, message.match() below throws.
+  if (!message) return null;
+
   useEffect(() => {
     const thinking =
       message.match(THOUGHT_REGEX_OPEN) && !message.match(THOUGHT_REGEX_CLOSE);

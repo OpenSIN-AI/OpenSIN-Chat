@@ -301,7 +301,7 @@ function ChatAttachments({ attachments = [] }: any) {
       {(attachments as any).map((item, index) => (
         <button
           type="button"
-          key={item.name}
+          key={`${item.name}-${index}`}
           onClick={() => openImageLightbox(attachments, index)}
           className="p-0 border-none bg-transparent cursor-pointer hover:opacity-80 transition-opacity"
         >

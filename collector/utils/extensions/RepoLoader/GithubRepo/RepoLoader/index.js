@@ -106,7 +106,11 @@ class GitHubRepoLoader {
     console.log(
       "[GitHub Loader]: Branch not set! Auto-assigning to a default branch."
     );
-    this.branch = this.branches.includes("main") ? "main" : "master";
+    if (this.branches.length === 0) {
+      this.branch = "main";
+    } else {
+      this.branch = this.branches.includes("main") ? "main" : this.branches[0];
+    }
     // eslint-disable-next-line no-console
     console.log(`[GitHub Loader]: Branch auto-assigned to ${this.branch}.`);
     return;
@@ -114,12 +118,15 @@ class GitHubRepoLoader {
 
   async #validateAccessToken() {
     if (!this.accessToken) return;
+    const abortController = new AbortController();
+    const timeout = setTimeout(() => abortController.abort(), 10_000);
     const valid = await fetch("https://api.github.com/octocat", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
         "X-GitHub-Api-Version": "2022-11-28",
       },
+      signal: abortController.signal,
     })
       .then((res) => {
         if (!res.ok) throw new Error(res.statusText);
@@ -132,7 +139,8 @@ class GitHubRepoLoader {
           e.message
         );
         return false;
-      });
+      })
+      .finally(() => clearTimeout(timeout));
 
     if (!valid) this.accessToken = null;
     return;
@@ -205,6 +213,8 @@ class GitHubRepoLoader {
     while (polling) {
       // eslint-disable-next-line no-console
       console.log(`Fetching page ${page} of branches for ${this.project}`);
+      const branchAbort = new AbortController();
+      const branchTimeout = setTimeout(() => branchAbort.abort(), 10_000);
       await fetch(
         `https://api.github.com/repos/${this.author}/${this.project}/branches?per_page=100&page=${page}`,
         {
@@ -215,6 +225,7 @@ class GitHubRepoLoader {
               : {}),
             "X-GitHub-Api-Version": "2022-11-28",
           },
+          signal: branchAbort.signal,
         }
       )
         .then((res) => {
@@ -230,7 +241,8 @@ class GitHubRepoLoader {
           polling = false;
           // eslint-disable-next-line no-console
           console.error(`RepoLoader.branches`, err);
-        });
+        })
+        .finally(() => clearTimeout(branchTimeout));
     }
 
     this.branches = [...new Set(branches.flat())];
@@ -243,8 +255,10 @@ class GitHubRepoLoader {
    * @returns {Promise<string|null>} The content of the file, or null if fetching fails.
    */
   async fetchSingleFile(sourceFilePath) {
+    const fileAbort = new AbortController();
+    const fileTimeout = setTimeout(() => fileAbort.abort(), 15_000);
     try {
-      return fetch(
+      return await fetch(
         `https://api.github.com/repos/${this.author}/${this.project}/contents/${sourceFilePath}?ref=${this.branch}`,
         {
           method: "GET",
@@ -255,6 +269,7 @@ class GitHubRepoLoader {
               ? { Authorization: `Bearer ${this.accessToken}` }
               : {}),
           },
+          signal: fileAbort.signal,
         }
       )
         .then((res) => {
@@ -270,6 +285,8 @@ class GitHubRepoLoader {
       // eslint-disable-next-line no-console
       console.error(`RepoLoader.fetchSingleFile`, e);
       return null;
+    } finally {
+      clearTimeout(fileTimeout);
     }
   }
 }

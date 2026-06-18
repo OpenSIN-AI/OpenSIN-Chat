@@ -15,6 +15,7 @@ class VoyageAiEmbedder {
       // Voyage AI's limit per request is 128 https://docs.voyageai.com/docs/rate-limits#use-larger-batches
       batchSize: 128,
     });
+    this.maxConcurrentChunks = 128;
     this.embeddingMaxChunkLength = this.#getMaxEmbeddingLength();
   }
 
@@ -50,6 +51,7 @@ class VoyageAiEmbedder {
   }
 
   async embedChunks(textChunks = []) {
+    if (textChunks.length === 0) return [];
     try {
       const embeddings = await this.voyage.embedDocuments(textChunks);
       return embeddings;

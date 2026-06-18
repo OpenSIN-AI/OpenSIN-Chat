@@ -246,43 +246,51 @@ class NativeEmbedder {
     const chunks = toChunks(textChunks, this.maxConcurrentChunks);
     const chunkLen = chunks.length;
     const totalChunks = textChunks.length;
+    let wroteAnyData = false;
 
-    for (let [idx, chunk] of chunks.entries()) {
-      if (idx === 0) await this.#writeToTempfile(tmpFilePath, "[");
-      let data;
-      let pipeline = await this.embedderClient();
-      let output = await pipeline(chunk, {
-        pooling: "mean",
-        normalize: true,
-      });
+    try {
+      for (let [idx, chunk] of chunks.entries()) {
+        if (idx === 0) await this.#writeToTempfile(tmpFilePath, "[");
+        let data;
+        let pipeline = await this.embedderClient();
+        let output = await pipeline(chunk, {
+          pooling: "mean",
+          normalize: true,
+        });
 
-      if (output.length === 0) {
+        if (output.length === 0) {
+          pipeline = null;
+          output = null;
+          data = null;
+          if (chunkLen - 1 === idx) await this.#writeToTempfile(tmpFilePath, "]");
+          continue;
+        }
+
+        wroteAnyData = true;
+        data = JSON.stringify(output.tolist());
+        await this.#writeToTempfile(tmpFilePath, data);
+        this.log(`Embedded Chunk Group ${idx + 1} of ${chunkLen}`);
+        if (chunkLen - 1 !== idx) await this.#writeToTempfile(tmpFilePath, ",");
+        if (chunkLen - 1 === idx) await this.#writeToTempfile(tmpFilePath, "]");
+
+        reportEmbeddingProgress(
+          Math.min((idx + 1) * this.maxConcurrentChunks, totalChunks),
+          totalChunks,
+        );
         pipeline = null;
         output = null;
         data = null;
-        continue;
       }
 
-      data = JSON.stringify(output.tolist());
-      await this.#writeToTempfile(tmpFilePath, data);
-      this.log(`Embedded Chunk Group ${idx + 1} of ${chunkLen}`);
-      if (chunkLen - 1 !== idx) await this.#writeToTempfile(tmpFilePath, ",");
-      if (chunkLen - 1 === idx) await this.#writeToTempfile(tmpFilePath, "]");
+      if (!wroteAnyData) return [];
 
-      reportEmbeddingProgress(
-        Math.min((idx + 1) * this.maxConcurrentChunks, totalChunks),
-        totalChunks,
+      const embeddingResults = JSON.parse(
+        fs.readFileSync(tmpFilePath, { encoding: "utf-8" }),
       );
-      pipeline = null;
-      output = null;
-      data = null;
+      return embeddingResults.length > 0 ? embeddingResults.flat() : null;
+    } finally {
+      fs.rmSync(tmpFilePath, { force: true });
     }
-
-    const embeddingResults = JSON.parse(
-      fs.readFileSync(tmpFilePath, { encoding: "utf-8" }),
-    );
-    fs.rmSync(tmpFilePath, { force: true });
-    return embeddingResults.length > 0 ? embeddingResults.flat() : null;
   }
 }
 

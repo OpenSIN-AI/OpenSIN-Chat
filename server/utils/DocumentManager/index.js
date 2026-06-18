@@ -59,7 +59,9 @@ class DocumentManager {
 
         pinnedDocs.push(data);
         tokens += data.token_count_estimate || 0;
-      } catch {}
+      } catch (e) {
+        this.log(`Failed to load pinned document ${docPath}: ${e.message}`);
+      }
     }
 
     this.log(

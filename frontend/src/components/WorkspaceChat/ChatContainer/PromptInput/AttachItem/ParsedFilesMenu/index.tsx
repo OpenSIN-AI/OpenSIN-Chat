@@ -22,14 +22,16 @@ export default function ParsedFilesMenu({
   const { t } = useTranslation();
   const { user } = useUser();
   const canEmbed = !user || user.role !== "default";
-  const initialContextWindowLimitExceeded =
-    contextWindow &&
+  // Derive limit-exceeded state directly from props so it stays in sync when
+  // files are removed/embedded. Previously this was captured once via useState
+  // initial value and never updated, leaving the warning stuck on screen even
+  // after the user dropped below the limit.
+  const contextWindowLimitExceeded =
+    !!contextWindow &&
+    contextWindow !== Infinity &&
     currentTokens >= contextWindow * Workspace.maxContextWindowLimit;
   const [isEmbedding, setIsEmbedding] = useState(false);
   const [embedProgress, setEmbedProgress] = useState(1);
-  const [contextWindowLimitExceeded, setContextWindowLimitExceeded] = useState(
-    initialContextWindowLimitExceeded,
-  );
 
   async function handleRemove(e, file) {
     e.preventDefault();
@@ -138,7 +140,7 @@ export default function ParsedFilesMenu({
         {files.length > 0 &&
           files.map((file, i) => (
             <div
-              key={i}
+              key={file.id || file.title || i}
               className={
                 "flex items-center justify-between gap-2 p-2 text-xs bg-theme-bg-secondary rounded"
               }

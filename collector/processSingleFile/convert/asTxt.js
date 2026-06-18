@@ -21,6 +21,12 @@ async function asTxt({
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error("Could not read file!", err);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `Failed to read file: ${err.message}`,
+      documents: [],
+    };
   }
 
   if (!content?.length) {

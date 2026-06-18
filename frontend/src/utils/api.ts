@@ -6,13 +6,14 @@
 
 import type { ApiResponse } from "@/types/api";
 import { ApiError } from "@/types/api";
+import { baseHeaders } from "@/utils/request";
 
 /**
  * Generic GET request with type safety
  */
 export async function apiGet<T>(url: string): Promise<T> {
   const res = await fetch(url, {
-    credentials: "include",
+    headers: baseHeaders(),
     method: "GET",
   });
 
@@ -29,9 +30,8 @@ export async function apiGet<T>(url: string): Promise<T> {
  */
 export async function apiPost<T>(url: string, data?: any): Promise<T> {
   const res = await fetch(url, {
-    credentials: "include",
+    headers: { ...baseHeaders(), "Content-Type": "application/json" },
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: data ? JSON.stringify(data) : undefined,
   });
 
@@ -48,9 +48,8 @@ export async function apiPost<T>(url: string, data?: any): Promise<T> {
  */
 export async function apiPut<T>(url: string, data?: any): Promise<T> {
   const res = await fetch(url, {
-    credentials: "include",
+    headers: { ...baseHeaders(), "Content-Type": "application/json" },
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
     body: data ? JSON.stringify(data) : undefined,
   });
 
@@ -67,7 +66,7 @@ export async function apiPut<T>(url: string, data?: any): Promise<T> {
  */
 export async function apiDelete<T = void>(url: string): Promise<T> {
   const res = await fetch(url, {
-    credentials: "include",
+    headers: baseHeaders(),
     method: "DELETE",
   });
 

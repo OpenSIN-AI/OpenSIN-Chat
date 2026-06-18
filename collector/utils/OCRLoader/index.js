@@ -112,18 +112,25 @@ class OCRLoader {
     const MAX_EXECUTION_TIME = maxExecutionTime;
     const NUM_WORKERS = maxWorkers ?? Math.min(os.cpus().length, 4);
     const totalPages = pdfDocument.numPages;
-    const workerPool = await Promise.all(
-      Array(NUM_WORKERS)
-        .fill(0)
-        .map(() =>
-          createWorker(this.language, OEM.LSTM_ONLY, {
-            cachePath: this.cacheDir,
-          })
-        )
-    );
-
+    let workerPool = [];
+    let timeoutHandle = null;
+    const savedGlobalImage = global.Image;
     const startTime = Date.now();
     try {
+      const workerResults = await Promise.allSettled(
+        Array(NUM_WORKERS)
+          .fill(0)
+          .map(() =>
+            createWorker(this.language, OEM.LSTM_ONLY, {
+              cachePath: this.cacheDir,
+            })
+          )
+      );
+      workerPool = workerResults
+        .filter((r) => r.status === "fulfilled")
+        .map((r) => r.value);
+      if (workerPool.length === 0) throw new Error("Failed to create any OCR workers");
+
       this.log("Bootstrapping OCR completed successfully!", {
         MAX_EXECUTION_TIME_MS: MAX_EXECUTION_TIME,
         BATCH_SIZE,
@@ -131,7 +138,7 @@ class OCRLoader {
         TOTAL_PAGES: totalPages,
       });
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => {
+        timeoutHandle = setTimeout(() => {
           reject(
             new Error(
               `OCR job took too long to complete (${
@@ -198,7 +205,8 @@ class OCRLoader {
     } catch (e) {
       this.log(`Error: ${e.message}`, e.stack);
     } finally {
-      global.Image = undefined;
+      if (timeoutHandle) clearTimeout(timeoutHandle);
+      global.Image = savedGlobalImage;
       await Promise.all(workerPool.map((worker) => worker.terminate()));
     }
 

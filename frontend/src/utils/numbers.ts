@@ -18,9 +18,11 @@ export function dollarFormat(input) {
 
 export function toPercentString(input = null, decimals = 0) {
   if (isNaN(input) || input === null) return "";
-  const percentage = Math.round(input * 100);
+  const percentage = input * 100;
   return (
-    (decimals > 0 ? percentage.toFixed(decimals) : percentage.toString()) + "%"
+    (decimals > 0
+      ? percentage.toFixed(decimals)
+      : Math.round(percentage).toString()) + "%"
   );
 }
 

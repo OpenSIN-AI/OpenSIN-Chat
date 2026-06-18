@@ -12,7 +12,9 @@ export default function StatusResponse({
 }: any) {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false as any);
-  const currentThought = messages[messages.length - 1];
+  // Guard: when isThinking=true but messages is still empty, currentThought is
+  // undefined — accessing .content further down would throw a TypeError.
+  const currentThought = messages.length ? messages[messages.length - 1] : null;
   const previousThoughts = messages.slice(0, -1);
 
   if (!messages.length && !isThinking) return null;
@@ -82,7 +84,7 @@ export default function StatusResponse({
               <div className="text-zinc-200 light:text-slate-800 font-mono text-sm leading-[18px]">
                 {!isExpanded ? (
                   <span className="block w-full truncate">
-                    {currentThought.content}
+                    {currentThought?.content ?? ""}
                   </span>
                 ) : (
                   <>
@@ -94,7 +96,7 @@ export default function StatusResponse({
                         {thought.content}
                       </div>
                     ))}
-                    <div>{currentThought.content}</div>
+                    <div>{currentThought?.content ?? ""}</div>
                   </>
                 )}
               </div>

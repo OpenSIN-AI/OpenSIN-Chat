@@ -478,16 +478,14 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
     // <-- VERBESSERUNG: Client-seitige URL-Validierung
     // ==========================================
     if (!trimmed.includes(".") && !trimmed.includes("localhost")) {
-      const msg =
-        "Bitte gib eine vollständige Web-Adresse ein (z.B. example.com).";
+      const msg = t("chat_window.attach_menu.url_incomplete");
       setError(msg);
       showToast(msg, "error");
       return;
     }
     const normalizedUrl = isValidUrl(trimmed);
     if (!normalizedUrl) {
-      const msg =
-        "Ungültige URL. Bitte prüfe das Format (z.B. https://example.com).";
+      const msg = t("chat_window.attach_menu.url_invalid");
       setError(msg);
       showToast(msg, "error");
       return;
@@ -513,7 +511,10 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
       const errMsg =
         data?.error ||
         data?.message ||
-        `Server-Fehler beim Laden der URL (${response.status} ${response.statusText})`;
+        t("chat_window.attach_menu.url_server_error", {
+          status: response.status,
+          statusText: response.statusText,
+        });
       setError(errMsg);
       showToast(errMsg, "error", { clear: true });
       return;

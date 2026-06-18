@@ -9,6 +9,9 @@ import { toPercentString } from "@/utils/numbers";
 
 export default function SourceDetailView({ source, onBack, onClose }: any) {
   const { t } = useTranslation();
+  // Guard: source.chunks may be undefined for malformed citations; without
+  // this guard the .map() below throws a TypeError.
+  const chunks = Array.isArray(source?.chunks) ? source.chunks : [];
   return (
     <>
       <div className="flex items-center justify-between">
@@ -20,7 +23,7 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
           <CaretLeft size={20} weight="bold" />
         </button>
         <p className="font-semibold text-base leading-6 text-white light:text-slate-900 truncate px-2">
-          {truncate(source.title, 30)}
+          {truncate(source?.title ?? "", 30)}
         </p>
         <button
           onClick={onClose}
@@ -31,7 +34,7 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
         </button>
       </div>
       <div className="flex flex-col overflow-y-auto no-scroll">
-        {(source.chunks as any).map(({ text, score }, idx) => (
+        {(chunks as any).map(({ text, score }, idx) => (
           <Fragment key={idx}>
             <div className="flex flex-col gap-y-1 py-4">
               <p className="text-sm leading-[20px] text-white light:text-slate-900">
@@ -46,7 +49,7 @@ export default function SourceDetailView({ source, onBack, onClose }: any) {
                 </div>
               )}
             </div>
-            {idx !== source.chunks.length - 1 && (
+            {idx !== chunks.length - 1 && (
               <hr className="border-zinc-700 light:border-slate-300" />
             )}
           </Fragment>
