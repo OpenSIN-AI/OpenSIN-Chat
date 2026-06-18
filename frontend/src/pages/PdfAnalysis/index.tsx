@@ -104,57 +104,60 @@ export default function PdfAnalysisPage() {
           <LeftSidebarIconBar />
           <Sidebar />
           <main className="flex-1 overflow-y-auto p-6">
-          <header className="flex flex-col gap-2 mb-6">
-            <h1 className="text-xl font-semibold text-theme-text-primary text-balance">
-              {t("pdfAnalysis.panel.title")}
-            </h1>
-            <p className="text-sm text-theme-text-secondary leading-relaxed">
-              {t("pdfAnalysis.panel.description")}
-            </p>
-            <nav
-              className="flex gap-2 mt-2"
-              aria-label={t("pdfAnalysis.panel.tabJobs")}
-            >
-              <TabButton active={tab === "jobs"} onClick={() => setTab("jobs")}>
-                {t("pdfAnalysis.panel.tabJobs")}
-              </TabButton>
-              <TabButton
-                active={tab === "facts"}
-                onClick={() => setTab("facts")}
+            <header className="flex flex-col gap-2 mb-6">
+              <h1 className="text-xl font-semibold text-theme-text-primary text-balance">
+                {t("pdfAnalysis.panel.title")}
+              </h1>
+              <p className="text-sm text-theme-text-secondary leading-relaxed">
+                {t("pdfAnalysis.panel.description")}
+              </p>
+              <nav
+                className="flex gap-2 mt-2"
+                aria-label={t("pdfAnalysis.panel.tabJobs")}
               >
-                {t("pdfAnalysis.panel.tabFacts")}
-              </TabButton>
-              <TabButton
-                active={tab === "crosscheck"}
-                onClick={() => setTab("crosscheck")}
-              >
-                {t("pdfAnalysis.panel.tabCrossCheck")}
-              </TabButton>
-              <TabButton
-                active={tab === "corpus"}
-                onClick={() => setTab("corpus")}
-              >
-                {t("pdfAnalysis.panel.tabCorpus")}
-              </TabButton>
-            </nav>
-          </header>
-          {tab === "jobs" ? (
-            <JobsPanel />
-          ) : tab === "facts" ? (
-            <FactsPanel
-              onCrossCheck={(factId) => {
-                setCrossCheckFactIds([factId]);
-                setTab("crosscheck");
-              }}
-            />
-          ) : tab === "crosscheck" ? (
-            <CrossCheckPanel prefillFactIds={crossCheckFactIds} />
-          ) : (
-            <CorpusPanel />
-          )}
-        </main>
-        <Sidebars workspace={null} />
-      </div>
+                <TabButton
+                  active={tab === "jobs"}
+                  onClick={() => setTab("jobs")}
+                >
+                  {t("pdfAnalysis.panel.tabJobs")}
+                </TabButton>
+                <TabButton
+                  active={tab === "facts"}
+                  onClick={() => setTab("facts")}
+                >
+                  {t("pdfAnalysis.panel.tabFacts")}
+                </TabButton>
+                <TabButton
+                  active={tab === "crosscheck"}
+                  onClick={() => setTab("crosscheck")}
+                >
+                  {t("pdfAnalysis.panel.tabCrossCheck")}
+                </TabButton>
+                <TabButton
+                  active={tab === "corpus"}
+                  onClick={() => setTab("corpus")}
+                >
+                  {t("pdfAnalysis.panel.tabCorpus")}
+                </TabButton>
+              </nav>
+            </header>
+            {tab === "jobs" ? (
+              <JobsPanel />
+            ) : tab === "facts" ? (
+              <FactsPanel
+                onCrossCheck={(factId) => {
+                  setCrossCheckFactIds([factId]);
+                  setTab("crosscheck");
+                }}
+              />
+            ) : tab === "crosscheck" ? (
+              <CrossCheckPanel prefillFactIds={crossCheckFactIds} />
+            ) : (
+              <CorpusPanel />
+            )}
+          </main>
+          <Sidebars workspace={null} />
+        </div>
       </ChatSidebarProvider>
     </SidebarToggleProvider>
   );
@@ -385,7 +388,7 @@ interface JobRowProps {
 
 function JobRow({ job, onShowReport, onCancelled }: JobRowProps) {
   const { t } = useTranslation();
-  const { progress = {}, status } = job;
+  const { progress = { chunksTotal: 0, chunksDone: 0 }, status } = job;
   const pct =
     progress.chunksTotal > 0
       ? Math.round((progress.chunksDone / progress.chunksTotal) * 100)
@@ -523,7 +526,8 @@ function nodeToText(node: React.ReactNode): string {
   if (typeof node === "string") return node;
   if (typeof node === "number") return String(node);
   if (Array.isArray(node)) return node.map(nodeToText).join("");
-  if (React.isValidElement(node)) return nodeToText((node.props as any).children);
+  if (React.isValidElement(node))
+    return nodeToText((node.props as any).children);
   return "";
 }
 

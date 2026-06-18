@@ -79,11 +79,11 @@ export default function AgentClarifyingQuestions(): JSX.Element {
               min={1}
               value={maxPerTurn}
               onChange={(e) => {
-                if (e.target.value < 1) return;
+                if (parseInt(e.target.value) < 1) return;
                 debouncedUpdateMaxPerTurn(e.target.value);
                 setMaxPerTurn(parseInt(e.target.value));
               }}
-              onWheel={(e) => e.target.blur()}
+              onWheel={(e) => (e.target as HTMLElement).blur()}
               className="border border-white/10 bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"
               placeholder="3" // eslint-disable-line i18next/no-literal-string
               autoComplete="off"

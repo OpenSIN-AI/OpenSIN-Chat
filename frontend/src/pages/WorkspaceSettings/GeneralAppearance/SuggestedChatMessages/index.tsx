@@ -60,7 +60,7 @@ export default function SuggestedChatMessages({
   const addMessage = () => {
     setEditingIndex(-1);
     if (suggestedMessages.length >= 4) {
-      showToast("Maximum of 4 messages allowed.", "warning");
+      showToast(t("general.message.maxMessages"), "warning");
       return;
     }
     const defaultMessage: SuggestedMessage = {

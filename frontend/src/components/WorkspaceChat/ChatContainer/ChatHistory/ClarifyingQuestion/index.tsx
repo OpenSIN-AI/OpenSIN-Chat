@@ -204,7 +204,7 @@ export default function ClarifyingQuestionCard({
     setIndex(index - 1);
   }
 
-  function handleSubmitAll(pendingPatch: any) {
+  function handleSubmitAll(pendingPatch?: any) {
     const resolved = pendingPatch
       ? (drafts as any).map((d, i) =>
           i === index ? { ...d, ...pendingPatch } : d,

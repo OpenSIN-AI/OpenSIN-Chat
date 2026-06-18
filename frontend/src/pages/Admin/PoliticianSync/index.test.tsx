@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import PoliticianSyncDashboard from "./index";
 
@@ -88,7 +88,7 @@ describe("PoliticianSyncDashboard", () => {
   });
 
   it("renders loading skeletons while data is loading", () => {
-    usePoliticianSync.mockReturnValue({
+    vi.mocked(usePoliticianSync).mockReturnValue({
       stats: null,
       syncStatus: null,
       isLoading: true,
@@ -100,7 +100,7 @@ describe("PoliticianSyncDashboard", () => {
   });
 
   it("renders stats and source status when loaded", () => {
-    usePoliticianSync.mockReturnValue({
+    vi.mocked(usePoliticianSync).mockReturnValue({
       stats: baseStats,
       syncStatus: baseSyncStatus,
       isLoading: false,
@@ -116,7 +116,7 @@ describe("PoliticianSyncDashboard", () => {
   });
 
   it("shows unhealthy badge when sync status is not healthy", () => {
-    usePoliticianSync.mockReturnValue({
+    vi.mocked(usePoliticianSync).mockReturnValue({
       stats: baseStats,
       syncStatus: { ...baseSyncStatus, isHealthy: false },
       isLoading: false,
@@ -128,7 +128,7 @@ describe("PoliticianSyncDashboard", () => {
   });
 
   it("renders error message when loading fails", () => {
-    usePoliticianSync.mockReturnValue({
+    vi.mocked(usePoliticianSync).mockReturnValue({
       stats: null,
       syncStatus: null,
       isLoading: false,
@@ -141,7 +141,7 @@ describe("PoliticianSyncDashboard", () => {
 
   it("triggers manual sync and calls mutate on success", async () => {
     const mutate = vi.fn();
-    usePoliticianSync.mockReturnValue({
+    vi.mocked(usePoliticianSync).mockReturnValue({
       stats: baseStats,
       syncStatus: baseSyncStatus,
       isLoading: false,
@@ -171,7 +171,7 @@ describe("PoliticianSyncDashboard", () => {
       }),
     );
     const mutate = vi.fn();
-    usePoliticianSync.mockReturnValue({
+    vi.mocked(usePoliticianSync).mockReturnValue({
       stats: baseStats,
       syncStatus: baseSyncStatus,
       isLoading: false,

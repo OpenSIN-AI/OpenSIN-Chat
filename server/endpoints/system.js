@@ -91,7 +91,7 @@ function systemEndpoints(app) {
     });
   });
 
-  app.get("/migrate", async (_, response) => {
+  app.get("/migrate", [validatedRequest, flexUserRoleValid([ROLES.admin])], async (_, response) => {
     response.sendStatus(200);
   });
 
@@ -718,7 +718,7 @@ function systemEndpoints(app) {
     },
   );
 
-  app.get("/system/multi-user-mode", async (_, response) => {
+  app.get("/system/multi-user-mode", [validatedRequest], async (_, response) => {
     try {
       const multiUserMode = await SystemSettings.isMultiUserMode();
       response.status(200).json({ multiUserMode });
@@ -804,7 +804,7 @@ function systemEndpoints(app) {
   });
 
   // No middleware protection in order to get this on the login page
-  app.get("/system/custom-app-name", async (_, response) => {
+  app.get("/system/custom-app-name", [validatedRequest], async (_, response) => {
     try {
       const customAppName =
         (
@@ -1025,7 +1025,7 @@ function systemEndpoints(app) {
     },
   );
 
-  app.get("/system/is-default-logo", async (_, response) => {
+  app.get("/system/is-default-logo", [validatedRequest], async (_, response) => {
     try {
       const currentLogoFilename = await SystemSettings.currentLogoFilename();
       const isDefaultLogo =

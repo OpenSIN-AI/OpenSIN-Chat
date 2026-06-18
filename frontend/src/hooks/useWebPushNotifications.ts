@@ -90,7 +90,10 @@ export async function subscribeToPushNotifications(
     const onControllerChange = () => {
       log("Service worker controller changed");
     };
-    navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
+    navigator.serviceWorker.addEventListener(
+      "controllerchange",
+      onControllerChange,
+    );
 
     if (abortSignal) {
       abortSignal.addEventListener(
@@ -106,13 +109,13 @@ export async function subscribeToPushNotifications(
     }
 
     if (swReg.installing) {
-      await new Promise((resolve) => {
+      await new Promise<void>((resolve) => {
         swReg.installing.addEventListener("statechange", () => {
           if (swReg.installing?.state === "activated") resolve();
         });
       });
     } else if (swReg.waiting) {
-      await new Promise((resolve) => {
+      await new Promise<void>((resolve) => {
         swReg.waiting.addEventListener("statechange", () => {
           if (swReg.waiting?.state === "activated") resolve();
         });

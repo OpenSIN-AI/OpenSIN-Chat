@@ -244,10 +244,10 @@ export default {
     authentication: () => {
       return `/settings/community-hub/authentication`;
     },
-    importItem: (importItemId) => {
+    importItem: (importItemId = null) => {
       return `/settings/community-hub/import-item${importItemId ? `?id=${importItemId}` : ""}`;
     },
-    profile: function (username: any) {
+    profile: function (username?: any) {
       if (username) return `${this.website()}/u/${username}`;
       return `${this.website()}/me`;
     },

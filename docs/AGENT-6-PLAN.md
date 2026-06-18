@@ -39,7 +39,7 @@ sed -i "s|# SIG_SALT='salt'|SIG_SALT='${SIG_SALT}'|" /Users/jeremy/dev/OpenSIN-C
       - SIG_KEY=${SIG_KEY}
       - SIG_SALT=${SIG_SALT}
       - SERVER_PORT=3001
-      - ANYTHING_LLM_RUNTIME=docker
+      - OPENSIN_CHAT_RUNTIME=docker
     env_file:
       - .env
 ```

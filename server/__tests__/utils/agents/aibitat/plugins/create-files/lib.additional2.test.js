@@ -9,36 +9,36 @@ const { getStoragePath } = require("../../../../../../utils/paths");
 
 describe("CreateFilesManager.isToolAvailable — additional edge cases", () => {
   const originalNodeEnv = process.env.NODE_ENV;
-  const originalRuntime = process.env.ANYTHING_LLM_RUNTIME;
+  const originalRuntime = process.env.OPENSIN_CHAT_RUNTIME;
 
   afterEach(() => {
     process.env.NODE_ENV = originalNodeEnv;
-    process.env.ANYTHING_LLM_RUNTIME = originalRuntime;
+    process.env.OPENSIN_CHAT_RUNTIME = originalRuntime;
   });
 
   test("returns false in test environment without docker runtime", () => {
     process.env.NODE_ENV = "test";
-    process.env.ANYTHING_LLM_RUNTIME = "";
+    process.env.OPENSIN_CHAT_RUNTIME = "";
     expect(createFilesLib.isToolAvailable()).toBe(false);
   });
 
   test("returns true in test environment when docker runtime is set", () => {
     process.env.NODE_ENV = "test";
-    process.env.ANYTHING_LLM_RUNTIME = "docker";
+    process.env.OPENSIN_CHAT_RUNTIME = "docker";
     expect(createFilesLib.isToolAvailable()).toBe(true);
   });
 
   test("returns false when NODE_ENV is unset and runtime is unset", () => {
     delete process.env.NODE_ENV;
-    process.env.ANYTHING_LLM_RUNTIME = "";
+    process.env.OPENSIN_CHAT_RUNTIME = "";
     // Unset NODE_ENV falls through !== "development" check, so this returns
-    // false unless ANYTHING_LLM_RUNTIME === "docker".
+    // false unless OPENSIN_CHAT_RUNTIME === "docker".
     expect(createFilesLib.isToolAvailable()).toBe(false);
   });
 
   test("returns false when NODE_ENV is 'dev' shorthand (not 'development')", () => {
     process.env.NODE_ENV = "dev";
-    process.env.ANYTHING_LLM_RUNTIME = "";
+    process.env.OPENSIN_CHAT_RUNTIME = "";
     // The check is for exact equality with "development"; "dev" is a no-op.
     expect(createFilesLib.isToolAvailable()).toBe(false);
   });

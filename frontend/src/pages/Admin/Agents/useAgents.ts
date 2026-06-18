@@ -180,7 +180,7 @@ export function useAgents(): UseAgentsReturn {
       ]);
 
       const { flows = [] } = flowsRes as { flows?: AgentFlow[] };
-      setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
+      setSettings({ ..._settings, preferences: _preferences.settings });
       setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
       setDisabledAgentSkills(
         _preferences.settings?.disabled_agent_skills ?? [],
@@ -271,7 +271,7 @@ export function useAgents(): UseAgentsReturn {
         "default_agent_skills",
         "imported_agent_skills",
       ]);
-      setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
+      setSettings({ ..._settings, preferences: _preferences.settings });
       setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
       setDisabledAgentSkills(
         _preferences.settings?.disabled_agent_skills ?? [],
@@ -281,7 +281,9 @@ export function useAgents(): UseAgentsReturn {
         clear: true,
       });
     } else {
-      showToast(t("agentConfig.preferencesSaveFailed"), "error", { clear: true });
+      showToast(t("agentConfig.preferencesSaveFailed"), "error", {
+        clear: true,
+      });
     }
 
     setHasChanges(false);
@@ -340,7 +342,9 @@ export function useAgents(): UseAgentsReturn {
     );
 
     if (!success) {
-      showToast(error || t("agentConfig.toggleToolFailed"), "error", { clear: true });
+      showToast(error || t("agentConfig.toggleToolFailed"), "error", {
+        clear: true,
+      });
       return;
     }
 

@@ -85,8 +85,8 @@ export default class PiperTTSClient {
    * Runs prediction via webworker so we can get an audio blob back.
    * @returns {Promise<{blobURL: string|null, error: string|null}>} objectURL blob: type.
    */
-  async waitForBlobResponse() {
-    return new Promise((resolve) => {
+  async waitForBlobResponse(): Promise<{ blobURL: string | null; error: string | null }> {
+    return new Promise<{ blobURL: string | null; error: string | null }>((resolve) => {
       let timeout: any = null;
       const handleMessage = (event) => {
         if (event.data.type === "error") {

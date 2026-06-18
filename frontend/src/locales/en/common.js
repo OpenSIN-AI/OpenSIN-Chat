@@ -297,6 +297,8 @@ const TRANSLATIONS = {
   },
   chat_window: {
     sources: "Sources",
+    agents: "Agents",
+    enhance_prompt: "Enhance prompt",
     similarity_match: "Similarity match",
     attachments_processing: "Attachments are processing. Please wait...",
     send_message: "Send a message",
@@ -341,7 +343,8 @@ const TRANSLATIONS = {
       url_submitting: "Adding...",
       url_success: "URL added as source",
       url_failed: "Could not add URL",
-      url_invalid: "Invalid URL. Please check the format (e.g. https://example.com).",
+      url_invalid:
+        "Invalid URL. Please check the format (e.g. https://example.com).",
       url_incomplete: "Please enter a full web address (e.g. example.com).",
       url_server_error: "Server error loading URL ({{status}} {{statusText}})",
     },
@@ -1070,6 +1073,8 @@ const TRANSLATIONS = {
     goToWorkspace: 'Go to "{{workspace}}"',
     logoAlt: "Logo",
     readDocs: "Read documentation",
+    createWorkspaceFailed: "Failed to create workspace",
+    sendMessageFailed: "Failed to send message",
   },
   settings: {
     title: "Instance Settings",
@@ -3695,6 +3700,11 @@ const TRANSLATIONS = {
     workspacesList: "Workspaces",
     generalAppearanceSettings: "General appearance settings",
     database: {
+      title: "Politicians",
+      source: "Source: Abgeordnetenwatch API",
+      error: "Error:",
+      empty: "No data loaded.",
+      hint: 'Tip: "@agent search AfD MPs..." in chat for detailed queries.',
       openProfile: "Open profile",
     },
     filesystem: {
@@ -3712,9 +3722,11 @@ const TRANSLATIONS = {
       createFailed: "Failed to create",
       deleteSuccess: "Deleted successfully",
       deleteFailed: "Failed to delete",
-      description: "Create folders and files or upload files. All files added in chat or as sources appear here.",
+      description:
+        "Create folders and files or upload files. All files added in chat or as sources appear here.",
       error: "Error loading:",
       empty: "Directory is empty",
+      goUp: "Go up",
     },
     retry: "Try again",
     political: {
@@ -4530,6 +4542,30 @@ const TRANSLATIONS = {
     cancel: "Cancel",
     saveSettings: "Save {{name}} settings",
     saveFailed: "Failed to save {{name}} settings: {{error}}",
+  },
+  accountModal: {
+    bio: "Bio",
+    bioPlaceholder: "Tell us about yourself...",
+    passwordPlaceholder: "New password (leave blank to keep current)",
+    profilePictureAlt: "Profile picture",
+    usernamePlaceholder: "Username",
+  },
+  changeWarning: {
+    title: "Unsaved changes",
+    proceed: "Proceed without saving",
+    cancel: "Cancel",
+    confirm: "Save and continue",
+  },
+  statusResponse: {
+    thinking: "Thinking...",
+    finished: "Finished",
+    showThoughtChain: "Show thought chain",
+    hideThoughtChain: "Hide thought chain",
+  },
+  thoughtContainer: {
+    thoughtChain: "Thought chain",
+    showThoughts: "Show thoughts",
+    hideThoughts: "Hide thoughts",
   },
 };
 export default TRANSLATIONS;

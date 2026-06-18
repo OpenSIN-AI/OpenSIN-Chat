@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
-import { toast } from "react-toastify";
+import { toast, type ToastOptions } from "react-toastify";
 
 // Additional Configs (opts)
 // You can also pass valid ReactToast params to override the defaults.
 // clear: false, // Will dismiss all visible toasts before rendering next toast
-const showToast: any = (message, type: any = "default", opts = {}) => {
+const showToast: any = (message, type: any = "default", opts: { clear?: boolean; [key: string]: any } = {}) => {
   const theme = localStorage?.getItem("theme") || "default";
-  const options = {
+  const { clear, ...restOpts } = opts;
+  const options: ToastOptions = {
     position: "bottom-center",
     autoClose: 5000,
     hideProgressBar: false,
@@ -14,10 +15,10 @@ const showToast: any = (message, type: any = "default", opts = {}) => {
     pauseOnHover: true,
     draggable: true,
     theme: theme === "default" ? "dark" : "light",
-    ...opts,
+    ...restOpts,
   };
 
-  if (opts?.clear === true) toast.dismiss();
+  if (clear === true) toast.dismiss();
 
   switch (type) {
     case "success":

@@ -15,7 +15,7 @@ export default function InviteRow({ invite }: { invite: any }) {
   const handleDelete = async () => {
     if (!window.confirm(t("inviteRow.deactivateConfirm"))) return false;
     if (rowRef?.current && rowRef.current.children.length > 0) {
-      rowRef.current.children[0].innerText = t("inviteRow.disabled");
+      rowRef.current.children[0].textContent = t("inviteRow.disabled");
     }
     setStatus("disabled");
     await Admin.disableInvite(invite.id);

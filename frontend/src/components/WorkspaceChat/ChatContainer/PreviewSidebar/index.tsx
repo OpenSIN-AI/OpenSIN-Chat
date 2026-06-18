@@ -162,7 +162,7 @@ function ThreeDotsMenu({ previewData, onAddToSources }: any) {
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors"
           >
             <DownloadSimple size={13} />
-            {t("preview.menu.download", "Herunterladen")}
+            {t("preview.menu.download")}
           </button>
           <button
             type="button"
@@ -170,7 +170,7 @@ function ThreeDotsMenu({ previewData, onAddToSources }: any) {
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors"
           >
             <ArrowSquareOut size={13} />
-            {t("preview.menu.open_new_tab", "In neuem Tab öffnen")}
+            {t("preview.menu.open_new_tab")}
           </button>
           <div className="my-1 border-t border-zinc-700 light:border-slate-200" />
           <button
@@ -179,7 +179,7 @@ function ThreeDotsMenu({ previewData, onAddToSources }: any) {
             className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-zinc-300 light:text-slate-600 hover:bg-zinc-700/60 light:hover:bg-slate-50 border-none bg-transparent cursor-pointer transition-colors"
           >
             <Bookmark size={13} />
-            {t("preview.menu.add_to_sources", "Zu Quellen hinzufügen")}
+            {t("preview.menu.add_to_sources")}
           </button>
         </div>
       )}
@@ -394,6 +394,7 @@ export default function PreviewSidebar() {
           <button
             onClick={closeSidebar}
             type="button"
+            aria-label={t("common.close")}
             className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer flex-shrink-0"
           >
             <X size={14} weight="bold" />

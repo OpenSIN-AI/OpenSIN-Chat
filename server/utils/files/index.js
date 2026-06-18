@@ -20,7 +20,13 @@ async function fileData(filePath = null) {
     return null;
 
   const data = fs.readFileSync(fullFilePath, "utf8");
-  return JSON.parse(data);
+  try {
+    return JSON.parse(data);
+  } catch {
+    // eslint-disable-next-line no-console
+    console.error(`[fileData] Failed to parse JSON from ${filePath}`);
+    return null;
+  }
 }
 
 async function viewLocalFiles() {

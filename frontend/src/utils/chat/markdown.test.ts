@@ -62,7 +62,7 @@ import renderMarkdown from "./markdown";
 describe("chat/markdown — renderMarkdown (real markdown-it)", () => {
   beforeEach(() => {
     // Reset localStorage to default (no theme → github-dark).
-    window.localStorage.getItem.mockImplementation(() => null);
+    vi.mocked(window.localStorage.getItem).mockImplementation(() => null);
   });
 
   // ── Newline collapsing ──────────────────────────────────────────────────

@@ -9,16 +9,24 @@ import {
 } from "@testing-library/react";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 function withRouter(initialPath = "/") {
   return function Wrapper({ children }) {
     return (
-      <MemoryRouter initialEntries={[initialPath]}>{children}</MemoryRouter>
+      <MemoryRouter initialEntries={[initialPath]}>
+        <SidebarToggleProvider>{children}</SidebarToggleProvider>
+      </MemoryRouter>
     );
   };
 }
 import {
   useSidebarToggle,
   ToggleSidebarButton,
+  SidebarToggleProvider,
   SIDEBAR_TOGGLE_EVENT,
 } from "./index";
 
@@ -89,7 +97,9 @@ describe("useSidebarToggle", () => {
     }
     render(
       <MemoryRouter initialEntries={["/"]}>
-        <Harness />
+        <SidebarToggleProvider>
+          <Harness />
+        </SidebarToggleProvider>
       </MemoryRouter>,
     );
     expect(screen.getByTestId("can-toggle").getAttribute("data-value")).toBe(
@@ -146,7 +156,7 @@ describe("ToggleSidebarButton", () => {
       />,
     );
     const button = screen.getByRole("button");
-    expect(button.getAttribute("aria-label")).toContain("Hide Sidebar");
+    expect(button.getAttribute("aria-label")).toContain("Hide sidebar");
   });
 
   it("renders button with aria-label for hidden sidebar", () => {
@@ -158,7 +168,7 @@ describe("ToggleSidebarButton", () => {
       />,
     );
     const button = screen.getByRole("button");
-    expect(button.getAttribute("aria-label")).toContain("Show Sidebar");
+    expect(button.getAttribute("aria-label")).toContain("Show sidebar");
   });
 
   it("calls setShowSidebar on click", () => {

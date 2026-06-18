@@ -30,7 +30,7 @@ export default function NewUserModal(): JSX.Element {
       if (valid && !!token && !!user) {
         window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
         window.localStorage.setItem(AUTH_TOKEN, token);
-        window.location = paths.home() as unknown as Location;
+        window.location.href = paths.home();
       } else {
         setError(message);
       }

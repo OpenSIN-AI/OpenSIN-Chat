@@ -279,7 +279,7 @@ export function DnDFileUploaderProvider({
             }
 
             // File is within limits, keep in parsed files
-            const result = { success: true, document: file };
+            const result = { success: true, document: file, error: null as string | null };
             const updates = {
               status: result.success ? "added_context" : "failed",
               error: result.error ?? null,
@@ -482,6 +482,10 @@ async function toBase64(file: any) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
+      if (typeof reader.result !== "string") {
+        reject(new Error("Unexpected result type"));
+        return;
+      }
       const base64String = reader.result.split(",")[1];
       resolve(`data:${file.type};base64,${base64String}`);
     };

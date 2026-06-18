@@ -70,49 +70,57 @@ function utilEndpoints(app) {
   terminalExecEndpoint(app);
 
   // Bundestag DIP API proxy — avoids CORS for the browser (Issue #57)
-  app.get("/utils/bundestag/drucksachen", async (req, response) => {
-    try {
-      const apiKey = process.env.BUNDESTAG_API_KEY || "";
-      const params = new URLSearchParams({
-        f_fraktion: "AfD",
-        format: "json",
-        rows: req.query.rows || "10",
-        ...(apiKey ? { apikey: apiKey } : {}),
-      });
-      const res = await fetchWithTimeout(
-        `https://search.dip.bundestag.de/api/v1/drucksache?${params}`,
-        { headers: { Accept: "application/json" } },
-      );
-      if (!res.ok) throw new Error(`DIP ${res.status}`);
-      const json = await res.json();
-      response.status(200).json(json);
-    } catch (e) {
-      response.status(502).json({ error: e.message });
-    }
-  });
+  app.get(
+    "/utils/bundestag/drucksachen",
+    [validatedRequest],
+    async (req, response) => {
+      try {
+        const apiKey = process.env.BUNDESTAG_API_KEY || "";
+        const params = new URLSearchParams({
+          f_fraktion: "AfD",
+          format: "json",
+          rows: req.query.rows || "10",
+          ...(apiKey ? { apikey: apiKey } : {}),
+        });
+        const res = await fetchWithTimeout(
+          `https://search.dip.bundestag.de/api/v1/drucksache?${params}`,
+          { headers: { Accept: "application/json" } },
+        );
+        if (!res.ok) throw new Error(`DIP ${res.status}`);
+        const json = await res.json();
+        response.status(200).json(json);
+      } catch (e) {
+        response.status(502).json({ error: e.message });
+      }
+    },
+  );
 
   // Abgeordnetenwatch proxy — AfD politicians (Issue #57)
-  app.get("/utils/bundestag/politicians", async (req, response) => {
-    try {
-      const params = new URLSearchParams({
-        "party[label]": "AfD",
-        "legislature[label]": "Bundestag",
-        paginationlimit: req.query.limit || "10",
-      });
-      const res = await fetchWithTimeout(
-        `https://www.abgeordnetenwatch.de/api/v2/politicians?${params}`,
-        { headers: { Accept: "application/json" } },
-      );
-      if (!res.ok) throw new Error(`AW ${res.status}`);
-      const json = await res.json();
-      response.status(200).json(json);
-    } catch (e) {
-      response.status(502).json({ error: e.message });
-    }
-  });
+  app.get(
+    "/utils/bundestag/politicians",
+    [validatedRequest],
+    async (req, response) => {
+      try {
+        const params = new URLSearchParams({
+          "party[label]": "AfD",
+          "legislature[label]": "Bundestag",
+          paginationlimit: req.query.limit || "10",
+        });
+        const res = await fetchWithTimeout(
+          `https://www.abgeordnetenwatch.de/api/v2/politicians?${params}`,
+          { headers: { Accept: "application/json" } },
+        );
+        if (!res.ok) throw new Error(`AW ${res.status}`);
+        const json = await res.json();
+        response.status(200).json(json);
+      } catch (e) {
+        response.status(502).json({ error: e.message });
+      }
+    },
+  );
 
   // AfD RSS feed proxy (Issue #58)
-  app.get("/utils/political/rss", async (req, response) => {
+  app.get("/utils/political/rss", [validatedRequest], async (req, response) => {
     try {
       const feed = req.query.feed || "https://www.afd.de/feed/";
       const parsed = new URL(feed);
@@ -123,9 +131,13 @@ function utilEndpoints(app) {
       if (
         hostname === "localhost" ||
         hostname.endsWith(".local") ||
-        /^(10\.|172\.(1[6-9]|2[0-9]|3[01])\.|192\.168\.|127\.|0\.|169\.254\.)/.test(hostname)
+        /^(10\.|172\.(1[6-9]|2[0-9]|3[01])\.|192\.168\.|127\.|0\.|169\.254\.)/.test(
+          hostname,
+        )
       ) {
-        return response.status(403).json({ error: "Blocked: internal address" });
+        return response
+          .status(403)
+          .json({ error: "Blocked: internal address" });
       }
       const res = await fetchWithTimeout(feed, {
         headers: { "User-Agent": "OpenSIN-Chat/1.0" },
@@ -245,7 +257,7 @@ function utilEndpoints(app) {
     async (req, response) => {
       try {
         const fs = require("fs");
-        const { name, parentPath = "" } = reqBody(request);
+        const { name, parentPath = "" } = reqBody(req);
 
         if (!name || typeof name !== "string") {
           return response.status(400).json({ error: "Name is required" });
@@ -281,7 +293,7 @@ function utilEndpoints(app) {
     async (req, response) => {
       try {
         const fs = require("fs");
-        const { name, parentPath = "", content = "" } = reqBody(request);
+        const { name, parentPath = "", content = "" } = reqBody(req);
 
         if (!name || typeof name !== "string") {
           return response.status(400).json({ error: "Name is required" });
@@ -315,7 +327,7 @@ function utilEndpoints(app) {
     async (req, response) => {
       try {
         const fs = require("fs");
-        const itemPath = reqBody(request).path || req.query.path;
+        const itemPath = reqBody(req).path || req.query.path;
 
         if (!itemPath || typeof itemPath !== "string" || itemPath === "") {
           return response.status(400).json({ error: "Path is required" });
@@ -344,37 +356,45 @@ function utilEndpoints(app) {
   // Reports are stored in STORAGE_DIR/generated-reports/ by the ReportGenerator
   // (server/utils/reports). This mirrors that exact resolution so the
   // PreviewSidebar iframe can load the PDF without an API key.
-  app.get("/utils/reports/:fileName", async (req, response) => {
-    try {
-      const path = require("path");
-      const fs = require("fs");
-      const fileName = path.basename(req.params.fileName); // prevent ../../../etc/passwd
-      const reportsDir = getStoragePath("generated-reports");
-      const filePath = path.join(reportsDir, fileName);
+  app.get(
+    "/utils/reports/:fileName",
+    [validatedRequest],
+    async (req, response) => {
+      try {
+        const path = require("path");
+        const fs = require("fs");
+        const fileName = path.basename(req.params.fileName); // prevent ../../../etc/passwd
+        const reportsDir = getStoragePath("generated-reports");
+        const filePath = path.join(reportsDir, fileName);
 
-      // Verify resolved path is still under generated-reports/ (security check)
-      if (!filePath.startsWith(reportsDir)) {
-        return response.sendStatus(403).end();
+        // Verify resolved path is still under generated-reports/ (security check)
+        if (!filePath.startsWith(reportsDir)) {
+          return response.sendStatus(403).end();
+        }
+
+        if (!fs.existsSync(filePath)) return response.sendStatus(404).end();
+
+        const stat = fs.statSync(filePath);
+        const stream = fs.createReadStream(filePath);
+        response.setHeader("Content-Type", "application/pdf");
+        response.setHeader("Content-Length", stat.size);
+        response.setHeader("Cache-Control", "public, max-age=86400");
+        stream.pipe(response);
+        stream.on("error", () => response.sendStatus(500).end());
+      } catch (e) {
+        console.error("reports download error", e.message);
+        response.sendStatus(500).end();
       }
-
-      if (!fs.existsSync(filePath)) return response.sendStatus(404).end();
-
-      const stat = fs.statSync(filePath);
-      const stream = fs.createReadStream(filePath);
-      response.setHeader("Content-Type", "application/pdf");
-      response.setHeader("Content-Length", stat.size);
-      response.setHeader("Cache-Control", "public, max-age=86400");
-      stream.pipe(response);
-      stream.on("error", () => response.sendStatus(500).end());
-    } catch (e) {
-      console.error("reports download error", e.message);
-      response.sendStatus(500).end();
-    }
-  });
+    },
+  );
 }
 
 function getGitVersion() {
-  if (process.env.ANYTHING_LLM_RUNTIME === "docker") return "--";
+  if (
+    (process.env.OPENSIN_CHAT_RUNTIME || process.env.ANYTHING_LLM_RUNTIME) ===
+    "docker"
+  )
+    return "--";
   try {
     return require("child_process")
       .execSync("git rev-parse HEAD")

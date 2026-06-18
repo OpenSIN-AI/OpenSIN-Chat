@@ -79,7 +79,7 @@ export function useWatchForAutoPlayAssistantTTSResponse() {
       const { chatId } = event.detail;
 
       function attemptToPlay() {
-        const playBtn = document.querySelector(
+        const playBtn = document.querySelector<HTMLElement>(
           `[data-auto-play-chat-id="${chatId}"]`,
         );
         if (!playBtn) {

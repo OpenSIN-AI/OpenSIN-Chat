@@ -56,7 +56,7 @@ export function useAgentForm() {
         ]);
 
         const { flows = [] } = flowsRes;
-        setSettings({ ..._settings, preferences: _preferences.settings } ?? {});
+        setSettings({ ..._settings, preferences: _preferences.settings });
         setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
         setDisabledAgentSkills(
           _preferences.settings?.disabled_agent_skills ?? [],
@@ -161,9 +161,7 @@ export function useAgentForm() {
           "default_agent_skills",
           "imported_agent_skills",
         ]);
-        setSettings(
-          { ..._settings, preferences: _preferences.settings } ?? {},
-        );
+        setSettings({ ..._settings, preferences: _preferences.settings });
         setAgentSkills(_preferences.settings?.default_agent_skills ?? []);
         setDisabledAgentSkills(
           _preferences.settings?.disabled_agent_skills ?? [],

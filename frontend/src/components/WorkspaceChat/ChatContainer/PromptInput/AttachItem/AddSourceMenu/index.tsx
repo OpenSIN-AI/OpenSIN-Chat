@@ -70,10 +70,10 @@ function flattenLocalFiles(localFiles) {
  * Returns all focusable descendants of a menu container, excluding the
  * container itself when it has tabindex="-1".
  */
-function getFocusableMenuItems(container) {
+function getFocusableMenuItems(container: HTMLElement | null): HTMLElement[] {
   if (!container) return [];
   return Array.from(
-    container.querySelectorAll(
+    container.querySelectorAll<HTMLElement>(
       'button:not([disabled]), [href]:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
     ),
   );

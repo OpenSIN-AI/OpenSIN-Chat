@@ -233,7 +233,7 @@ export default function ActiveWorkspaces() {
                       <div className="flex gap-x-2 items-center justify-between">
                         <Link
                           to={paths.workspace.chat(workspace.slug)}
-                          aria-current={isActive ? "page" : ""}
+                          aria-current={isActive ? "page" : undefined}
                           className={`
                             transition-all duration-[200ms]
                             flex flex-grow w-[75%] gap-x-2 py-[6px] pl-[4px] pr-[6px] rounded-[4px] text-white justify-start items-center

@@ -10,6 +10,8 @@ type Skill = {
 };
 
 type SkillCategory = {
+  title: string;
+  icon: any;
   skills: Skill[];
   [key: string]: any;
 };

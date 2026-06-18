@@ -25,8 +25,10 @@ export default function Login() {
   // If simple SSO is enabled and no login is allowed, redirect to the SSO login page.
   if (ssoConfig.enabled && ssoConfig.noLogin) {
     // If a noLoginRedirect is provided and no token is provided, redirect to that webpage.
-    if (!!ssoConfig.noLoginRedirect && !query.has("token"))
-      return window.location.replace(ssoConfig.noLoginRedirect);
+    if (!!ssoConfig.noLoginRedirect && !query.has("token")) {
+      window.location.replace(ssoConfig.noLoginRedirect);
+      return null;
+    }
     // Otherwise, redirect to the SSO login page.
     else return <Navigate to={paths.sso.login()} />;
   }

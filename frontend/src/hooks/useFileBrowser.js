@@ -34,10 +34,7 @@ export function useFileBrowser() {
     }
   }, []);
 
-  const navigateTo = useCallback(
-    (targetPath) => browse(targetPath),
-    [browse],
-  );
+  const navigateTo = useCallback((targetPath) => browse(targetPath), [browse]);
 
   const navigateUp = useCallback(() => {
     if (parentPath) browse(parentPath);

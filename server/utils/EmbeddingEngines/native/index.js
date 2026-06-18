@@ -26,9 +26,9 @@ class NativeEmbedder {
    */
   static supportedModels = SUPPORTED_NATIVE_EMBEDDING_MODELS;
 
-  // This is a folder that Family Team Projects hosts for those who cannot capture the HF model download
+  // This is a folder that OpenSIN-AI hosts for those who cannot capture the HF model download
   // endpoint for various reasons. This endpoint is not guaranteed to be active or maintained
-  // and may go offline at any time at Family Team Projects's discretion.
+  // and may go offline at any time at OpenSIN-AI's discretion.
   #fallbackHost = "https://cdn.openafd.com/support/models/";
 
   constructor() {

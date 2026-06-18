@@ -19,7 +19,7 @@ type AgentSkillPanelProps = {
   toggleFlow?: (flow: any) => void;
   activeFlowIds?: string[];
   handleFlowDelete?: (flow: any) => void;
-  setImportedSkills?: (skills: any[]) => void;
+  setImportedSkills?: React.Dispatch<React.SetStateAction<any[]>>;
   disabledAgentSkills?: string[];
   toggleDefaultSkill?: (skill: any) => void;
   settings?: any;

@@ -210,6 +210,7 @@ RUN chown -R openafd:0 /app && \
 
 # Setup the environment
 ENV NODE_ENV=production
+ENV OPENSIN_CHAT_RUNTIME=docker
 ENV ANYTHING_LLM_RUNTIME=docker
 ENV DEPLOYMENT_VERSION=1.13.0
 ENV HOME=/app

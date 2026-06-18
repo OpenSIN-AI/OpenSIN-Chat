@@ -28,7 +28,7 @@ describe("useSlashCommandPresets", () => {
   });
 
   it("fetches presets from API", async () => {
-    System.getSlashCommandPresets.mockResolvedValue([
+    vi.mocked(System.getSlashCommandPresets).mockResolvedValue([
       { id: 1, command: "/test", prompt: "hello" },
     ]);
     const { result } = renderHook(() => useSlashCommandPresets(), { wrapper });

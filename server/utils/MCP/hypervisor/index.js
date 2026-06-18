@@ -98,7 +98,7 @@ class MCPHypervisor {
       fs.readFileSync(this.mcpServerJSONPath, "utf8"),
       { mcpServers: {} },
     );
-    return Object.entries(servers.mcpServers).map(([name, server]) => ({
+    return Object.entries(servers?.mcpServers || {}).map(([name, server]) => ({
       name,
       server,
     }));
@@ -114,7 +114,7 @@ class MCPHypervisor {
       fs.readFileSync(this.mcpServerJSONPath, "utf8"),
       { mcpServers: {} },
     );
-    if (!servers.mcpServers[name]) return false;
+    if (!servers?.mcpServers?.[name]) return false;
 
     delete servers.mcpServers[name];
     fs.writeFileSync(
@@ -139,7 +139,7 @@ class MCPHypervisor {
       { mcpServers: {} },
     );
 
-    if (!servers.mcpServers[serverName]) {
+    if (!servers?.mcpServers?.[serverName]) {
       return {
         success: false,
         error: `MCP server ${serverName} not found in config file.`,
@@ -310,7 +310,10 @@ class MCPHypervisor {
     };
 
     // Docker-specific environment setup
-    if (process.env.ANYTHING_LLM_RUNTIME === "docker") {
+    if (
+      (process.env.OPENSIN_CHAT_RUNTIME || process.env.ANYTHING_LLM_RUNTIME) ===
+      "docker"
+    ) {
       baseEnv = {
         // Fixed: NODE_PATH should point to modules directory, not node binary
         NODE_PATH: "/usr/local/lib/node_modules",

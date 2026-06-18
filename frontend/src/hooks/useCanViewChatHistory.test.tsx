@@ -29,7 +29,7 @@ describe("useCanViewChatHistory", () => {
   });
 
   it("resolves viewable from API response", async () => {
-    System.fetchCanViewChatHistory.mockResolvedValue({
+    vi.mocked(System.fetchCanViewChatHistory).mockResolvedValue({
       viewable: true,
       error: null,
     });
@@ -40,7 +40,7 @@ describe("useCanViewChatHistory", () => {
   });
 
   it("defaults to viewable=false when API returns no viewable", async () => {
-    System.fetchCanViewChatHistory.mockResolvedValue({
+    vi.mocked(System.fetchCanViewChatHistory).mockResolvedValue({
       viewable: false,
       error: null,
     });

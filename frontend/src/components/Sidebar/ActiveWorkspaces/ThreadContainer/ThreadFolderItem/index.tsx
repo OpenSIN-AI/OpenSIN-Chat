@@ -237,6 +237,7 @@ export default function ThreadFolderItem({
                 }
               }}
               autoFocus
+              aria-label={t("common.rename")}
               className="bg-transparent border-b border-white/40 text-white light:text-theme-text-primary text-sm outline-none w-full min-w-0"
               onClick={(e) => e.stopPropagation()}
             />

@@ -148,7 +148,7 @@ export default function GeneralVectorDatabase() {
     }
   }, [isLoading, systemSettings, vectorDB]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (selectedVDB !== settings?.VectorDB && hasChanges && hasEmbeddings) {
       openModal();

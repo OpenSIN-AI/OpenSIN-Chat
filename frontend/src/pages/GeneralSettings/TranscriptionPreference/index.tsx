@@ -70,7 +70,7 @@ export default function TranscriptionModelPreference() {
     }
   }, [settingsLoading, systemSettings]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const data: any = { WhisperProvider: selectedProvider };

@@ -39,7 +39,7 @@ function getAutoShowMetrics() {
  * @param {metrics: {duration:number, outputTps: number, model?: string, timestamp?: number}} metrics
  * @returns {string}
  */
-function buildMetricsString(metrics = {}) {
+function buildMetricsString(metrics: { model?: string; duration?: number; outputTps?: number; timestamp?: number } = {}) {
   return [
     metrics?.model ? metrics.model : "",
     `${formatDuration(metrics.duration)} (${formatTps(metrics.outputTps)} tok/s)`,
@@ -57,7 +57,7 @@ function buildMetricsString(metrics = {}) {
  */
 function toggleAutoShowMetrics() {
   const currentValue = getAutoShowMetrics() || false;
-  window?.localStorage?.setItem(SHOW_METRICS_KEY, !currentValue);
+  window?.localStorage?.setItem(SHOW_METRICS_KEY, String(!currentValue));
   window.dispatchEvent(
     new CustomEvent(SHOW_METRICS_EVENT, {
       detail: { showMetricsAutomatically: !currentValue },

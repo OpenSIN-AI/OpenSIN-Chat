@@ -65,7 +65,7 @@ SIG_SALT='${SIG_SALT}'
 STORAGE_DIR="/app/server/storage"
 SERVER_PORT=3001
 DISABLE_TELEMETRY=true
-ANYTHING_LLM_RUNTIME=docker
+OPENSIN_CHAT_RUNTIME=docker
 EOF
 
 # 4. Run container
@@ -142,7 +142,7 @@ services:
     environment:                              # ← CRITICAL: these are required
       - STORAGE_DIR=/app/server/storage
       - SERVER_PORT=3001
-      - ANYTHING_LLM_RUNTIME=docker
+      - OPENSIN_CHAT_RUNTIME=docker
       - DISABLE_TELEMETRY=true
     env_file:
       - .env
@@ -182,7 +182,7 @@ JWT_EXPIRY="30d"
 
 # Telemetry
 DISABLE_TELEMETRY=true
-ANYTHING_LLM_RUNTIME=docker
+OPENSIN_CHAT_RUNTIME=docker
 
 # LLM (uncomment one provider)
 # LLM_PROVIDER='openai'

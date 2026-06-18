@@ -123,14 +123,14 @@ function copyCodeSnippet(uuid: any) {
   const markdown =
     target.parentElement?.parentElement?.querySelector(
       "pre:first-of-type",
-    )?.innerText;
+    )?.textContent;
   if (!markdown) return false;
 
   window.navigator.clipboard.writeText(markdown);
   target.classList.add("text-green-500");
   const originalText = target.innerHTML;
-  target.innerText = i18n.t("workspaceChat.copied");
-  target.setAttribute("disabled", true);
+  target.textContent = i18n.t("workspaceChat.copied");
+  target.setAttribute("disabled", "true");
 
   setTimeout(() => {
     target.classList.remove("text-green-500");
@@ -142,7 +142,7 @@ function copyCodeSnippet(uuid: any) {
 // Listens and hunts for all data-code-snippet clicks.
 export function setEventDelegatorForCodeSnippets() {
   document?.addEventListener("click", function (e) {
-    const target = e.target.closest("[data-code-snippet]");
+    const target = (e.target as HTMLElement).closest("[data-code-snippet]");
     const uuidCode = target?.dataset?.code;
     if (!uuidCode) return false;
     copyCodeSnippet(uuidCode);

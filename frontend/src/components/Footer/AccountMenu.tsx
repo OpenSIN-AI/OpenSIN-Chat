@@ -46,11 +46,21 @@ function handleSignOut() {
   window.location.replace(paths.home());
 }
 
-function Avatar({ pfp, initials, size = 32 }: { pfp?: string | null; initials: string; size?: number }) {
+function Avatar({
+  pfp,
+  initials,
+  size = 32,
+}: {
+  pfp?: string | null;
+  initials: string;
+  size?: number;
+}) {
   const cls = `rounded-full object-cover shrink-0`;
   const style = { width: size, height: size };
   if (pfp) {
-    return <img src={pfp} alt="" aria-hidden="true" className={cls} style={style} />;
+    return (
+      <img src={pfp} alt="" aria-hidden="true" className={cls} style={style} />
+    );
   }
   const fontSize = size <= 24 ? "text-[10px]" : "text-xs";
   return (
@@ -133,7 +143,11 @@ function LanguageRow() {
 
 type PopupPosition = { left: number; bottom: number; width: number };
 
-export default function AccountMenu({ compact = false }: { compact?: boolean }) {
+export default function AccountMenu({
+  compact = false,
+}: {
+  compact?: boolean;
+}) {
   const { user } = useUser();
   const { pfp } = usePfp();
   const mode = useLoginMode();
@@ -197,7 +211,13 @@ export default function AccountMenu({ compact = false }: { compact?: boolean }) 
   }, [open]);
 
   return (
-    <div className={compact ? "" : "w-full px-2 pt-2 border-t border-white/10 light:border-slate-300/70"}>
+    <div
+      className={
+        compact
+          ? ""
+          : "w-full px-2 pt-2 border-t border-white/10 light:border-slate-300/70"
+      }
+    >
       <button
         ref={triggerRef}
         type="button"
@@ -213,11 +233,7 @@ export default function AccountMenu({ compact = false }: { compact?: boolean }) 
         }
       >
         {compact ? (
-          <Avatar
-            pfp={pfp}
-            initials={initials}
-            size={28}
-          />
+          <Avatar pfp={pfp} initials={initials} size={28} />
         ) : (
           <>
             <Avatar pfp={pfp} initials={initials} />

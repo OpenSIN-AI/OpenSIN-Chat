@@ -7,7 +7,7 @@ import { Tooltip } from "react-tooltip";
 
 export default function AgentList({
   isDefault = false,
-  skills = [],
+  skills = {},
   selectedSkill = null,
   handleClick = null,
   activeSkills = [],

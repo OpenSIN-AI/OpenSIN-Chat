@@ -16,12 +16,18 @@ import { useEffect, useRef, useState } from "react";
  * @param {number} [options.intervalMs=100] - Tick frequency for progress updates.
  * @returns {number} progressPercent from 100 (full) down to 0 (elapsed).
  */
+interface TimeoutProgressOptions {
+  active?: boolean;
+  onTimeout?: () => void;
+  intervalMs?: number;
+}
+
 export default function useTimeoutProgress(
-  timeoutMs,
-  { active = true, onTimeout, intervalMs = 100 } = {},
+  timeoutMs: number | null,
+  { active = true, onTimeout, intervalMs = 100 }: TimeoutProgressOptions = {},
 ) {
-  const [progressPercent, setProgressPercent] = useState(100 as any);
-  const startTimeRef = useRef(null);
+  const [progressPercent, setProgressPercent] = useState<number>(100);
+  const startTimeRef = useRef<number | null>(null);
   const onTimeoutRef = useRef(onTimeout);
 
   useEffect(() => {

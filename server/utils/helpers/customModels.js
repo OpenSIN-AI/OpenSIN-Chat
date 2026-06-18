@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 const { fireworksAiModels } = require("../AiProviders/fireworksAi");
+const { ElevenLabsTTS } = require("../TextToSpeech/elevenLabs");
 const { parseLMStudioBasePath } = require("../AiProviders/lmStudio");
 const { parseNvidiaNimBasePath } = require("../AiProviders/nvidiaNim");
 const { parseOpencodeZenBasePath } = require("../AiProviders/opencodeZen");

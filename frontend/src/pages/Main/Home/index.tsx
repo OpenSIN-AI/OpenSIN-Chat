@@ -15,6 +15,7 @@ import DnDFileUploaderWrapper, {
   PASTE_ATTACHMENT_EVENT,
 } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
 import { useTranslation } from "react-i18next";
+import i18next from "i18next";
 import {
   LAST_VISITED_WORKSPACE,
   PENDING_HOME_MESSAGE,
@@ -61,7 +62,7 @@ async function createDefaultWorkspace(
     name: workspaceName,
   });
   if (!workspace) {
-    showToast(errorMsg || "Failed to create workspace", "error");
+    showToast(errorMsg || i18next.t("home.createWorkspaceFailed"), "error");
     return null;
   }
   return workspace as HomeWorkspace;
@@ -274,7 +275,7 @@ function HomeContent({
       }
     } catch (error) {
       console.error("Error submitting message:", error);
-      showToast("Failed to send message", "error");
+      showToast(t("home.sendMessageFailed"), "error");
       setLoading(false);
     }
   }

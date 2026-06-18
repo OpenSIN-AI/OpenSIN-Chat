@@ -5,6 +5,8 @@ const { Telemetry } = require("../../models/telemetry");
 function checkColumnTemplate(tablename = null, column = null) {
   if (!tablename || !column)
     throw new Error(`Migration Error`, { tablename, column });
+  if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(tablename) || !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(column))
+    throw new Error(`Invalid table or column name in migration check: ${tablename}.${column}`);
   return `SELECT COUNT(*) AS _exists FROM pragma_table_info('${tablename}') WHERE name='${column}'`;
 }
 
@@ -90,7 +92,7 @@ async function setupTelemetry() {
   if (process.env.DISABLE_TELEMETRY === "true") {
     // eslint-disable-next-line no-console
     console.log(
-      `\x1b[31m[TELEMETRY DISABLED]\x1b[0m Telemetry is marked as disabled - no events will send. Telemetry helps Family Team Projects Inc improve OpenSIN Chat.`,
+      `\x1b[31m[TELEMETRY DISABLED]\x1b[0m Telemetry is marked as disabled - no events will send. Telemetry helps OpenSIN-AI improve OpenSIN Chat.`,
     );
     return true;
   }
@@ -105,7 +107,7 @@ async function setupTelemetry() {
 
   // eslint-disable-next-line no-console
   console.log(
-    `\x1b[32m[TELEMETRY ENABLED]\x1b[0m Anonymous Telemetry enabled. Telemetry helps Family Team Projects Inc improve OpenSIN Chat.`,
+    `\x1b[32m[TELEMETRY ENABLED]\x1b[0m Anonymous Telemetry enabled. Telemetry helps OpenSIN-AI improve OpenSIN Chat.`,
   );
   await Telemetry.findOrCreateId();
   await Telemetry.sendTelemetry("server_boot", {

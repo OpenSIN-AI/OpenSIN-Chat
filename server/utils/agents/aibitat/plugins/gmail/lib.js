@@ -17,7 +17,10 @@ const MAX_TOTAL_ATTACHMENT_SIZE = 20 * 1024 * 1024; // 20MB limit for all attach
  * @returns {{success: boolean, attachment?: object, error?: string, fileInfo?: object}}
  */
 function prepareAttachment(filePath) {
-  if (process.env.ANYTHING_LLM_RUNTIME === "docker") {
+  if (
+    (process.env.OPENSIN_CHAT_RUNTIME || process.env.ANYTHING_LLM_RUNTIME) ===
+    "docker"
+  ) {
     return {
       success: false,
       error: "File attachments are not supported in Docker environments.",

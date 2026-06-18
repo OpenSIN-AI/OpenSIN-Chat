@@ -18,11 +18,9 @@ export function dollarFormat(input) {
 
 export function toPercentString(input = null, decimals = 0) {
   if (isNaN(input) || input === null) return "";
-  const percentage = input * 100;
+  const percentage = Math.round(input * 100);
   return (
-    (decimals > 0
-      ? percentage.toFixed(decimals)
-      : Math.round(percentage).toString()) + "%"
+    (decimals > 0 ? percentage.toFixed(decimals) : percentage.toString()) + "%"
   );
 }
 
@@ -51,10 +49,10 @@ export function humanFileSize(bytes, si = false, dp = 1) {
 }
 
 export function milliToHms(milli = 0) {
-  const d = parseFloat(milli) / 1_000.0;
+  const d = Number(milli) / 1_000.0;
   const h = Math.floor(d / 3600);
   const m = Math.floor((d % 3600) / 60);
-  const s = parseFloat((d % 3600.0) % 60);
+  const s = (d % 3600.0) % 60;
 
   const hDisplay = h >= 1 ? h + "h " : "";
   const mDisplay = m >= 1 ? m + "m " : "";

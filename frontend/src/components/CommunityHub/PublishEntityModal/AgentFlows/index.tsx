@@ -178,6 +178,9 @@ export default function AgentFlows({ entity }: any) {
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleKeyDown}
+                aria-label={t(
+                  "community_hub.publish.agent_flow.tags_placeholder",
+                )}
                 placeholder={t(
                   "community_hub.publish.agent_flow.tags_placeholder",
                 )}

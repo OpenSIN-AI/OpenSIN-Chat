@@ -81,7 +81,10 @@ export function LogoProvider({ children }) {
     window.addEventListener(REFETCH_LOGO_EVENT, handleRefetch);
     return () => {
       window.removeEventListener(REFETCH_LOGO_EVENT, handleRefetch);
-      if (currentLogoRef.current && currentLogoRef.current.startsWith("blob:")) {
+      if (
+        currentLogoRef.current &&
+        currentLogoRef.current.startsWith("blob:")
+      ) {
         URL.revokeObjectURL(currentLogoRef.current);
         currentLogoRef.current = null;
       }

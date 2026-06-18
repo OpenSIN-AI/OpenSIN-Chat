@@ -71,7 +71,12 @@ export default function UserSetup({
       disabled: isDisabled,
       onClick: handleForward,
     });
-  }, [selectedOption, singleUserPasswordValid, multiUserLoginValid, enablePassword]);
+  }, [
+    selectedOption,
+    singleUserPasswordValid,
+    multiUserLoginValid,
+    enablePassword,
+  ]);
 
   useEffect(() => {
     setHeader({ title: TITLE, description: DESCRIPTION });
@@ -155,10 +160,7 @@ const JustMe = ({
     const formData = new FormData(form);
 
     if (!PW_REGEX.test(String(formData.get("password")))) {
-      showToast(
-        t("onboarding.userSetup.passwordRestricted"),
-        "error",
-      );
+      showToast(t("onboarding.userSetup.passwordRestricted"), "error");
       return;
     }
 
@@ -168,7 +170,10 @@ const JustMe = ({
     });
 
     if (error) {
-      showToast(t("onboarding.userSetup.setPasswordFailed", { error }), "error");
+      showToast(
+        t("onboarding.userSetup.setPasswordFailed", { error }),
+        "error",
+      );
       return;
     }
 

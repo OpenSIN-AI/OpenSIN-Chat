@@ -14,6 +14,7 @@ const TRANSLATIONS = {
       title: "LLM-Einstellung",
       description:
         "OpenSIN Chat ist mit vielen LLM-Anbietern kompatibel. Der ausgewählte Dienst wird für die Chats verwendet.",
+      saveFailed: "Fehler beim Speichern der LLM-Einstellungen: {{error}}",
     },
     userSetup: {
       title: "Benutzer Setup",
@@ -35,6 +36,10 @@ const TRANSLATIONS = {
         adminUsername: "Ihr Admin-Benutzername",
         adminPassword: "Ihr Admin-Passwort",
       },
+      passwordRestricted:
+        "Ihr Passwort enthält nicht erlaubte Zeichen. Erlaubte Sonderzeichen sind _,-,!,@,$,%,^,&,*,(,),;",
+      setPasswordFailed: "Fehler beim Festlegen des Passworts: {{error}}",
+      error: "Fehler: {{error}}",
     },
     data: {
       title: "Datenverarbeitung & Datenschutz",
@@ -295,6 +300,8 @@ const TRANSLATIONS = {
   },
   chat_window: {
     sources: "Quellen",
+    agents: "Agenten",
+    enhance_prompt: "Prompt verbessern",
     similarity_match: "Ähnlichkeitsabgleich",
     attachments_processing: "Anhänge werden verarbeitet. Bitte warten...",
     send_message: "Schreibe eine Nachricht",
@@ -371,9 +378,12 @@ const TRANSLATIONS = {
       url_submitting: "Wird hinzugefügt...",
       url_success: "URL als Quelle hinzugefügt",
       url_failed: "URL konnte nicht hinzugefügt werden",
-      url_invalid: "Ungültige URL. Bitte prüfe das Format (z.B. https://example.com).",
-      url_incomplete: "Bitte gib eine vollständige Web-Adresse ein (z.B. example.com).",
-      url_server_error: "Server-Fehler beim Laden der URL ({{status}} {{statusText}})",
+      url_invalid:
+        "Ungültige URL. Bitte prüfe das Format (z.B. https://example.com).",
+      url_incomplete:
+        "Bitte gib eine vollständige Web-Adresse ein (z.B. example.com).",
+      url_server_error:
+        "Server-Fehler beim Laden der URL ({{status}} {{statusText}})",
     },
     source_filter_label: "Quellen-Filter",
     source_filter_all: "Alle",
@@ -445,6 +455,7 @@ const TRANSLATIONS = {
       empty_cta: "erstellen Sie einen neuen Speicher",
       tab_workspace: "Arbeitsbereich",
       tab_global: "Global",
+      tab_sources: "Quellen",
       count: "({{current}}/{{max}})",
       toggle: {
         label: "Personalisierung aktivieren",
@@ -749,6 +760,8 @@ const TRANSLATIONS = {
       save: "Nachrichten speichern",
       heading: "Erkläre mir",
       body: "die Vorteile von OpenSIN Chat",
+      maxMessages: "Maximal 4 Nachrichten erlaubt.",
+      saveFailed: "Fehler beim Aktualisieren der vorgeschlagenen Chat-Nachrichten: {{error}}",
     },
     delete: {
       title: "Workspace löschen",
@@ -774,6 +787,8 @@ const TRANSLATIONS = {
       description:
         "Das spezifische Chat-Modell, das für diesen Workspace verwendet wird. Wenn leer, wird die System-LLM-Präferenz verwendet.",
       waitingForModels: "-- Modelle werden geladen --",
+      generalModels: "Allgemeine Modelle",
+      discoveredModels: "Erkannte Modelle",
     },
     mode: {
       title: "Chat-Modus",
@@ -1419,6 +1434,13 @@ const TRANSLATIONS = {
       "Hinweis: Dies kann die Datenqualität beeinflussen und spezifische Details des Originalinhalts entfernen.",
     finishNodeDescription:
       "Dies ist das Ende Ihres Agenten-Flows. Alle oben stehenden Schritte werden nacheinander ausgeführt.",
+    loadFlowsFailed: "Verfügbare Flows konnten nicht geladen werden",
+    loadFlowFailed: "Flow konnte nicht geladen werden",
+    nameAndDescriptionRequired:
+      "Bitte geben Sie sowohl einen Namen als auch eine Beschreibung für Ihren Flow an",
+    flowSavedSuccess: "Agent-Flow erfolgreich gespeichert!",
+    saveFlowFailed: "Agent-Flow konnte nicht gespeichert werden. {{error}}",
+    selectVariable: "Variable auswählen",
     fileNode: {
       operation: "Operation",
       readFile: "Datei lesen",
@@ -2757,6 +2779,8 @@ const TRANSLATIONS = {
     goToWorkspace: 'Zurück zum Arbeitsbereich "{{workspace}}"',
     logoAlt: "Logo",
     readDocs: "Dokumentation lesen",
+    createWorkspaceFailed: "Arbeitsbereich konnte nicht erstellt werden",
+    sendMessageFailed: "Nachricht konnte nicht gesendet werden",
   },
   telegram: {
     title: "Telegram-Bot",
@@ -3639,7 +3663,8 @@ const TRANSLATIONS = {
       createInvite: "Einladung erstellen",
       close: "Schließen",
       copiedToClipboard: "Einladungslink in die Zwischenablage kopiert",
-      copyFailed: "Fehler beim Kopieren des Einladungslinks in die Zwischenablage",
+      copyFailed:
+        "Fehler beim Kopieren des Einladungslinks in die Zwischenablage",
     },
     usersPage: {
       title: "Benutzer",
@@ -3766,6 +3791,11 @@ const TRANSLATIONS = {
     workspacesList: "Workspaces",
     generalAppearanceSettings: "Allgemeine Erscheinungseinstellungen",
     database: {
+      title: "Abgeordnete",
+      source: "Quelle: Abgeordnetenwatch API",
+      error: "Fehler:",
+      empty: "Keine Daten geladen.",
+      hint: 'Tipp: "@agent Suche AfD Abgeordnete..." im Chat für detaillierte Abfragen.',
       openProfile: "Profil öffnen",
     },
     filesystem: {
@@ -3783,9 +3813,11 @@ const TRANSLATIONS = {
       createFailed: "Erstellung fehlgeschlagen",
       deleteSuccess: "Erfolgreich gelöscht",
       deleteFailed: "Löschen fehlgeschlagen",
-      description: "Ordner und Dateien erstellen oder Dateien hochladen. Alle im Chat oder als Quelle hinzugefügten Dateien erscheinen hier.",
+      description:
+        "Ordner und Dateien erstellen oder Dateien hochladen. Alle im Chat oder als Quelle hinzugefügten Dateien erscheinen hier.",
       error: "Fehler beim Laden:",
       empty: "Verzeichnis ist leer",
+      goUp: "Aufwärts",
     },
     retry: "Erneut versuchen",
     political: {
@@ -3899,7 +3931,8 @@ const TRANSLATIONS = {
       "Um Ihr Passwort in Zukunft zurückzusetzen, benötigen Sie diese Wiederherstellungscodes. Laden Sie die Codes herunter oder kopieren Sie sie, um sie zu speichern.",
     shownOnce: "Diese Wiederherstellungscodes werden nur einmal angezeigt!",
     copiedToClipboard: "Wiederherstellungscodes in die Zwischenablage kopiert",
-    copiedToClipboardFailed: "Fehler beim Kopieren der Wiederherstellungscodes in die Zwischenablage",
+    copiedToClipboardFailed:
+      "Fehler beim Kopieren der Wiederherstellungscodes in die Zwischenablage",
     copyAriaLabel: "Wiederherstellungscodes in die Zwischenablage kopieren",
     closeAriaLabel: "Wiederherstellungscodes schließen",
     downloadAriaLabel: "Wiederherstellungscodes herunterladen",
@@ -3941,7 +3974,8 @@ const TRANSLATIONS = {
     chatCreateFailed: "Chat konnte nicht erstellt werden: {{error}}",
     folderNamePrompt: "Ordnername:",
     folderCreateFailed: "Ordner konnte nicht erstellt werden: {{message}}",
-    uploadDocuments: "Dokumente in diesen Workspace für RAG-Indizierung hochladen",
+    uploadDocuments:
+      "Dokumente in diesen Workspace für RAG-Indizierung hochladen",
   },
   privacyAndData: {
     telemetryToggled: "Anonyme Telemetrie wurde {{status}}.",
@@ -4371,7 +4405,8 @@ const TRANSLATIONS = {
   customSiteSettings: {
     updateSuccess:
       "Seiteneinstellungen aktualisiert! Sie werden beim Neuladen der Seite wirksam.",
-    updateFailed: "Seiteneinstellungen konnten nicht aktualisiert werden: {{error}}",
+    updateFailed:
+      "Seiteneinstellungen konnten nicht aktualisiert werden: {{error}}",
     titlePlaceholder:
       "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
     titleDefault: "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
@@ -4387,6 +4422,9 @@ const TRANSLATIONS = {
     updateWorkspaceAgent: "Workspace-Agent aktualisieren",
     workspaceUpdated: "Workspace aktualisiert!",
     error: "Fehler: {{message}}",
+    preferencesSaved: "Agent-Einstellungen erfolgreich gespeichert.",
+    preferencesSaveFailed: "Agent-Einstellungen konnten nicht gespeichert werden.",
+    toggleToolFailed: "Werkzeug konnte nicht umgeschaltet werden.",
   },
   // ── Batch 10 — i18next/no-literal-string fixes ─────────────────────
   footer: {
@@ -4519,6 +4557,11 @@ const TRANSLATIONS = {
     status: "Status",
     lastSync: "Letzter Sync",
     loadError: "Sync-Status konnte nicht geladen werden",
+    justNow: "Gerade eben",
+    minutesAgo: "vor {{count}} Min.",
+    hoursAgo: "vor {{count}} Std.",
+    daysAgo: "vor {{count}} T.",
+    never: "Nie",
   },
   // ── Batch 14 — i18next/no-literal-string fixes ─────────────────────
   vectorSearch: {
@@ -4550,7 +4593,8 @@ const TRANSLATIONS = {
   },
   experimentalFeatures: {
     title: "Experimentelle Funktionen",
-    selectFeature: "Wählen Sie links eine Funktion aus, um sie zu konfigurieren.",
+    selectFeature:
+      "Wählen Sie links eine Funktion aus, um sie zu konfigurieren.",
     toastEnabled: "Experimentelle Funktionen aktiviert!",
     termsTitle: "Experimentelle Funktionen — Nutzungsbedingungen",
     termsP1:
@@ -4586,8 +4630,7 @@ const TRANSLATIONS = {
     featureDocs: "Funktionsdokumentation",
     manageWatched: "Überwachte Dokumente verwalten",
     watchedDocs: "Überwachte Dokumente",
-    watchedDocsDesc:
-      "Derzeit überwachte Dokumente zur Live-Synchronisation.",
+    watchedDocsDesc: "Derzeit überwachte Dokumente zur Live-Synchronisation.",
     colDocumentName: "Dokumentname",
     colLastSynced: "Zuletzt synchronisiert",
     colNextRefresh: "Nächste Aktualisierung",
@@ -4601,6 +4644,30 @@ const TRANSLATIONS = {
     cancel: "Abbrechen",
     saveSettings: "{{name}} Einstellungen speichern",
     saveFailed: "Fehler beim Speichern der {{name}} Einstellungen: {{error}}",
+  },
+  accountModal: {
+    bio: "Bio",
+    bioPlaceholder: "Erzählen Sie etwas über sich...",
+    passwordPlaceholder: "Neues Passwort (leer lassen, um das aktuelle zu behalten)",
+    profilePictureAlt: "Profilbild",
+    usernamePlaceholder: "Benutzername",
+  },
+  changeWarning: {
+    title: "Ungespeicherte Änderungen",
+    proceed: "Ohne Speichern fortfahren",
+    cancel: "Abbrechen",
+    confirm: "Speichern und fortfahren",
+  },
+  statusResponse: {
+    thinking: "Denke nach...",
+    finished: "Fertig",
+    showThoughtChain: "Gedankenkette anzeigen",
+    hideThoughtChain: "Gedankenkette ausblenden",
+  },
+  thoughtContainer: {
+    thoughtChain: "Gedankenkette",
+    showThoughts: "Gedanken anzeigen",
+    hideThoughts: "Gedanken ausblenden",
   },
 };
 export default TRANSLATIONS;

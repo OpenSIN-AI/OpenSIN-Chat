@@ -80,7 +80,7 @@ export default function useProviderEndpointAutoDiscovery({
   }
 
   useEffect(() => {
-    if (!initialBasePath && !autoDetectAttempted) autoDetect(true);
+    if (!initialBasePath && !autoDetectAttempted) autoDetect();
   }, [initialBasePath, initialAuthToken, autoDetectAttempted]);
 
   return {

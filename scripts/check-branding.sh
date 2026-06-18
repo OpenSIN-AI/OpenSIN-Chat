@@ -232,6 +232,7 @@ PATTERNS=(
   "docs\.anythingllm\.com"
   "mintplexlabs\.com"
   "team@mintplex"
+  "Family Team Projects"
 )
 
 # ── Run ─────────────────────────────────────────────────────────────

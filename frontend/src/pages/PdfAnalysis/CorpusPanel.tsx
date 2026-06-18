@@ -130,7 +130,8 @@ function CorpusForm({ onStarted }: CorpusFormProps) {
       const started = await PdfAnalysis.startCorpus({
         pdfPaths,
         task: task.trim(),
-        factCriteria: factCriteria.trim() || undefined,
+        reportType: "corpus",
+        factCriteria: factCriteria.trim() || "",
         deepScan,
       });
       if (started.error) throw new Error(started.error);
@@ -231,7 +232,7 @@ interface CorpusRowProps {
 
 function CorpusRow({ job, onShowReport, onCancelled }: CorpusRowProps) {
   const { t } = useTranslation();
-  const { progress = {}, status } = job;
+  const { progress = { docsTotal: 0, docsDone: 0 }, status } = job;
   const pct =
     progress.docsTotal > 0
       ? Math.round((progress.docsDone / progress.docsTotal) * 100)

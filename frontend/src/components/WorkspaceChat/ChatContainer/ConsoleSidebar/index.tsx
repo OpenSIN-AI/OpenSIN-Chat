@@ -140,10 +140,7 @@ function TerminalTab() {
         ...prev,
         {
           type: "error",
-          text: t(
-            "console.terminal_unavailable",
-            "Terminal nicht verfügbar. Stelle sicher, dass der Server den /api/terminal/exec-Endpunkt bereitstellt.",
-          ),
+          text: t("console.terminal_unavailable"),
         },
       ]);
     }
@@ -219,7 +216,7 @@ function TerminalTab() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           className="flex-1 bg-transparent border-none outline-none font-mono text-[11px] text-zinc-200 light:text-slate-800 placeholder:text-zinc-600 caret-white"
-          placeholder={t("console.terminal_placeholder", "Befehl eingeben...")}
+          placeholder={t("console.terminal_placeholder")}
           spellCheck={false}
           autoComplete="off"
         />
@@ -244,12 +241,12 @@ export default function ConsoleSidebar() {
             aria-hidden="true"
           />
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
-            {t("console.title", "Konsole & Terminal")}
+            {t("console.title")}
           </p>
           <button
             onClick={closeSidebar}
             type="button"
-            aria-label={t("console.close", "Konsole schließen")}
+            aria-label={t("console.close")}
             className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
           >
             <X size={14} weight="bold" aria-hidden="true" />
@@ -277,12 +274,12 @@ export default function ConsoleSidebar() {
               {tab === "logs" ? (
                 <>
                   <Bug size={11} aria-hidden="true" />
-                  {t("console.tab_logs", "Logs")}
+                  {t("console.tab_logs")}
                 </>
               ) : (
                 <>
                   <Terminal size={11} aria-hidden="true" />
-                  {t("console.tab_terminal", "Terminal")}
+                  {t("console.tab_terminal")}
                 </>
               )}
             </button>

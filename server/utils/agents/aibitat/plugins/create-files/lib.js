@@ -57,7 +57,10 @@ class CreateFilesManager {
    */
   isToolAvailable() {
     if (process.env.NODE_ENV === "development") return true;
-    return process.env.ANYTHING_LLM_RUNTIME === "docker";
+    return (
+      (process.env.OPENSIN_CHAT_RUNTIME || process.env.ANYTHING_LLM_RUNTIME) ===
+      "docker"
+    );
   }
 
   /**

@@ -5,10 +5,11 @@ import { TOOLS_MENU_KEYBOARD_EVENT } from "./";
 /**
  * Shared hook for ToolsMenu tabs that registers the item count
  * for Up/Down navigation and handles Enter to select the highlighted item.
- * @param {Array} items - the list of items rendered in the tab
- * @param {number} highlightedIndex - currently highlighted index from parent
- * @param {function} onSelect - called with the highlighted item on Enter
- * @param {function} registerItemCount - callback to register total item count with parent
+ * @param {Object} params
+ * @param {Array} params.items - the list of items rendered in the tab
+ * @param {number} params.highlightedIndex - currently highlighted index from parent
+ * @param {function} params.onSelect - called with the highlighted item on Enter
+ * @param {function} params.registerItemCount - callback to register total item count with parent
  */
 export default function useToolsMenuItems({
   items,

@@ -41,7 +41,7 @@ export default function SingleUserAuth() {
         openRecoveryCodeModal();
       } else {
         window.localStorage.setItem(AUTH_TOKEN, token);
-        window.location = paths.home();
+        window.location.href = paths.home();
       }
     } else {
       setError(message);
@@ -57,7 +57,7 @@ export default function SingleUserAuth() {
   useEffect(() => {
     if (downloadComplete && token) {
       window.localStorage.setItem(AUTH_TOKEN, token);
-      window.location = paths.home();
+      window.location.href = paths.home();
     }
   }, [downloadComplete, token]);
 
@@ -82,10 +82,11 @@ export default function SingleUserAuth() {
         <div className="w-full px-12">
           <div className="w-full flex flex-col gap-y-3">
             <div className="w-full flex flex-col gap-y-2">
-              <label className="text-zinc-300 light:text-slate-800 text-sm">
+              <label htmlFor="single-user-password" className="text-zinc-300 light:text-slate-800 text-sm">
                 {t("login.single-user.password")}
               </label>
               <input
+                id="single-user-password"
                 name="password"
                 type="password"
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"

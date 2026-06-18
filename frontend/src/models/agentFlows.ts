@@ -20,7 +20,7 @@ const AgentFlows: any = {
       body: JSON.stringify({ name, config, uuid }),
     })
       .then((res) => {
-        if (!res.ok) throw new Error(res.error || "Failed to save flow");
+        if (!res.ok) throw new Error(res.statusText || "Failed to save flow");
         return res;
       })
       .then((res) => res.json())
@@ -59,7 +59,7 @@ const AgentFlows: any = {
       headers: baseHeaders(),
     })
       .then((res) => {
-        if (!res.ok) throw new Error(res.error || "Failed to get flow");
+        if (!res.ok) throw new Error(res.statusText || "Failed to get flow");
         return res;
       })
       .then((res) => res.json())
@@ -108,7 +108,7 @@ const AgentFlows: any = {
       headers: baseHeaders(),
     })
       .then((res) => {
-        if (!res.ok) throw new Error(res.error || "Failed to delete flow");
+        if (!res.ok) throw new Error(res.statusText || "Failed to delete flow");
         return res;
       })
       .then((res) => res.json())
@@ -135,7 +135,7 @@ const AgentFlows: any = {
         body: JSON.stringify({ active }),
       })
         .then((res) => {
-          if (!res.ok) throw new Error(res.error || "Failed to toggle flow");
+          if (!res.ok) throw new Error(res.statusText || "Failed to toggle flow");
           return res;
         })
         .then((res) => res.json());

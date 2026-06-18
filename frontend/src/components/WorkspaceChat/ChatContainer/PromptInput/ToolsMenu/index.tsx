@@ -152,7 +152,7 @@ export default function ToolsMenu({
         onMouseDown={(e) => {
           // Prevents prompt textarea from losing focus when clicking inside the menu.
           // Skip for portaled modals so their inputs can still receive focus.
-          if (e.currentTarget.contains(e.target)) e.preventDefault();
+          if (e.currentTarget.contains(e.target as Node)) e.preventDefault();
         }}
         // Dynamic: maxHeight computed from viewport measurements at runtime
         style={{ "--tools-menu-max-height": `${maxHeight}px` }}

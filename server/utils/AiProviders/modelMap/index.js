@@ -67,9 +67,17 @@ You can fix this by restarting OpenSIN Chat so the model map is re-pulled.
       this.seenStaleCacheWarning = true;
     }
 
-    return JSON.parse(
-      fs.readFileSync(this.cacheFilePath, { encoding: "utf8" }),
-    );
+    try {
+      return JSON.parse(
+        fs.readFileSync(this.cacheFilePath, { encoding: "utf8" }),
+      );
+    } catch {
+      this.log(
+        `\x1b[33m[WARNING] Model map cache file is corrupted — returning null. ` +
+          `Restart OpenSIN Chat to re-pull the model map.\x1b[0m`,
+      );
+      return null;
+    }
   }
 
   async #pullRemoteModelMap() {

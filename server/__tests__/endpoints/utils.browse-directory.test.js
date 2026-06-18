@@ -21,6 +21,8 @@ jest.mock("fs", () => ({
 // Mock dependencies required at module load time by endpoints/utils.js
 jest.mock("../../utils/paths", () => ({
   getStoragePath: jest.fn(() => "/tmp/storage"),
+  safeStorageJoin: jest.fn((_dir, relPath) => relPath || "/tmp/storage/uploads"),
+  ensureStorageDir: jest.fn(() => "/tmp/storage/uploads"),
 }));
 
 jest.mock("../../models/systemSettings", () => ({
@@ -28,6 +30,48 @@ jest.mock("../../models/systemSettings", () => ({
     get: jest.fn(),
     canViewChatHistory: jest.fn(),
   },
+}));
+
+jest.mock("../../models/user", () => ({
+  User: { get: jest.fn(), create: jest.fn() },
+}));
+jest.mock("../../utils/middleware/validatedRequest", () => ({
+  validatedRequest: (_req, _res, next) => next(),
+  invalidateAuthTokenHash: jest.fn(),
+}));
+jest.mock("../../utils/middleware/multiUserProtected", () => ({
+  flexUserRoleValid: () => (_req, _res, next) => next(),
+  ROLES: { admin: "admin", manager: "manager", default: "default", all: "<all>" },
+  isMultiUserSetup: () => (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/validApiKey", () => ({
+  validApiKey: (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/middleware/simpleSSOEnabled", () => ({
+  simpleSSOEnabled: (_req, _res, next) => next(),
+  simpleSSOLoginDisabled: jest.fn(() => false),
+}));
+jest.mock("../../utils/middleware/chatHistoryViewable", () => ({
+  chatHistoryViewable: (_req, _res, next) => next(),
+}));
+jest.mock("../../utils/collectorApi", () => ({
+  CollectorApi: jest.fn().mockImplementation(() => ({
+    online: jest.fn(),
+    acceptedFileTypes: jest.fn(),
+  })),
+}));
+jest.mock("../../utils/helpers", () => ({
+  getVectorDbClass: jest.fn(),
+}));
+jest.mock("../../utils/helpers/customModels", () => ({
+  getCustomModels: jest.fn(),
+}));
+jest.mock("../../utils/http", () => ({
+  reqBody: jest.fn(),
+  userFromSession: jest.fn(),
+  multiUserMode: jest.fn(),
+  safeJsonParse: jest.fn(),
+  decodeJWT: jest.fn(),
 }));
 
 const path = require("path");

@@ -172,6 +172,9 @@ export default function SlashCommands({ entity }: any) {
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleKeyDown}
+                aria-label={t(
+                  "community_hub.publish.slash_command.tags_placeholder",
+                )}
                 placeholder={t(
                   "community_hub.publish.slash_command.tags_placeholder",
                 )}

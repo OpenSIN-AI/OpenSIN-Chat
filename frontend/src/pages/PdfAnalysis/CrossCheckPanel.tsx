@@ -324,7 +324,7 @@ interface CrossCheckRowProps {
 
 function CrossCheckRow({ job, onShowReport, onCancelled }: CrossCheckRowProps) {
   const { t } = useTranslation();
-  const { progress = {}, status } = job;
+  const { progress = { tasksTotal: 0, tasksDone: 0 }, status } = job;
   const pct =
     progress.tasksTotal > 0
       ? Math.round((progress.tasksDone / progress.tasksTotal) * 100)

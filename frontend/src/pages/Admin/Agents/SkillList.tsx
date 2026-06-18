@@ -5,7 +5,7 @@ import { CaretRight } from "@phosphor-icons/react";
 import { DefaultBadge } from "./Badges/default";
 
 export default function SkillList({
-  skills = [],
+  skills = {},
   selectedSkill = null,
   handleClick = null,
   activeSkills = [],

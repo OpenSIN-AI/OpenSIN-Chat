@@ -15,9 +15,9 @@ function invertColor(hex: any, bw: any) {
   if (hex.length !== 6) {
     throw new Error("Invalid HEX color.");
   }
-  let r = parseInt(hex.slice(0, 2), 16),
-    g = parseInt(hex.slice(2, 4), 16),
-    b = parseInt(hex.slice(4, 6), 16);
+  let r: number | string = parseInt(hex.slice(0, 2), 16),
+    g: number | string = parseInt(hex.slice(2, 4), 16),
+    b: number | string = parseInt(hex.slice(4, 6), 16);
   if (bw) {
     // https://stackoverflow.com/a/3943023/112731
     return r * 0.299 + g * 0.587 + b * 0.114 > 186 ? "#FFFFFF" : "#000000";
@@ -31,8 +31,7 @@ function invertColor(hex: any, bw: any) {
   return "#" + padZero(r) + padZero(g) + padZero(b);
 }
 
-function padZero(str: any, len: any) {
-  len = len || 2;
+function padZero(str: any, len = 2) {
   const zeros = new Array(len).join("0");
   return (zeros + str).slice(-len);
 }

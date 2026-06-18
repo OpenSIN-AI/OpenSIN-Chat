@@ -52,7 +52,6 @@ export default function usePromptState({
       sendCommandRef.current({ text: "@agent " });
       textareaRef.current?.focus();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
   /**

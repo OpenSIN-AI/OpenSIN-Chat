@@ -29,7 +29,7 @@ describe("useFooterIcons", () => {
   });
 
   it("resolves footer data from API", async () => {
-    System.fetchCustomFooterIcons.mockResolvedValue({
+    vi.mocked(System.fetchCustomFooterIcons).mockResolvedValue({
       footerData: [{ icon: "GithubLogo", url: "https://github.com" }],
       error: null,
     });

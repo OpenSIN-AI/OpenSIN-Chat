@@ -22,7 +22,7 @@ describe("useAppVersion", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("fetches app version", async () => {
-    System.fetchAppVersion.mockResolvedValue("1.2.3");
+    vi.mocked(System.fetchAppVersion).mockResolvedValue("1.2.3");
     const { result } = renderHook(() => useAppVersion(), { wrapper });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.version).toBe("1.2.3");
@@ -38,7 +38,7 @@ describe("useAppVersion", () => {
   });
 
   it("returns null initially while loading", () => {
-    System.fetchAppVersion.mockResolvedValue("1.0.0");
+    vi.mocked(System.fetchAppVersion).mockResolvedValue("1.0.0");
     const { result } = renderHook(() => useAppVersion(), { wrapper });
     expect(result.current.isLoading).toBe(true);
     expect(result.current.version).toBeNull();

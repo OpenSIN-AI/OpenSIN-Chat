@@ -46,9 +46,7 @@ export default function NewInviteModal({
   const copyInviteLink = () => {
     if (!invite) return false;
     window.navigator.clipboard
-      .writeText(
-        `${window.location.origin}/accept-invite/${invite.code}`,
-      )
+      .writeText(`${window.location.origin}/accept-invite/${invite.code}`)
       .then(() => {
         setCopied(true);
         showToast(t("admin.newInvite.copiedToClipboard"), "success", {

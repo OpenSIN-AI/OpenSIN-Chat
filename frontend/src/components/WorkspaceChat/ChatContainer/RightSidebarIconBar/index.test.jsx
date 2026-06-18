@@ -34,10 +34,10 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all icon buttons (7 panels + PDF-analysis nav)", () => {
+  it("renders all icon buttons (6 panels + PDF-analysis nav)", () => {
     const { container } = renderBar();
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(8);
+    expect(buttons.length).toBe(7);
   });
 
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {

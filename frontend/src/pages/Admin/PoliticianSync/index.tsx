@@ -83,7 +83,10 @@ function formatDate(dateString: string | null, t: (key: string) => string) {
   return date.toLocaleString();
 }
 
-function formatRelativeTime(dateString: string | null, t: (key: string, opts?: any) => string) {
+function formatRelativeTime(
+  dateString: string | null,
+  t: (key: string, opts?: any) => string,
+) {
   if (!dateString) return t("politicianSync.never");
   const date = new Date(dateString);
   const now = new Date();
@@ -92,7 +95,8 @@ function formatRelativeTime(dateString: string | null, t: (key: string, opts?: a
   const diffMinutes = Math.floor(diffMs / (1000 * 60));
 
   if (diffMinutes < 1) return t("politicianSync.justNow");
-  if (diffMinutes < 60) return t("politicianSync.minutesAgo", { count: diffMinutes });
+  if (diffMinutes < 60)
+    return t("politicianSync.minutesAgo", { count: diffMinutes });
   if (diffHours < 24) return t("politicianSync.hoursAgo", { count: diffHours });
   return t("politicianSync.daysAgo", { count: Math.floor(diffHours / 24) });
 }

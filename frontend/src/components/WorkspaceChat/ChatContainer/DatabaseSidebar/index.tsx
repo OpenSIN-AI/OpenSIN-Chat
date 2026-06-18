@@ -22,7 +22,7 @@ export default function DatabaseSidebar() {
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <Database size={15} className="text-zinc-400 light:text-slate-500" />
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
-            {t("sidebar.database.title", "AfD-Abgeordnete")}
+            {t("sidebar.database.title")}
           </p>
           <button
             onClick={refresh}
@@ -40,6 +40,7 @@ export default function DatabaseSidebar() {
           <button
             onClick={closeSidebar}
             type="button"
+            aria-label={t("common.close")}
             className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
           >
             <X size={14} weight="bold" />
@@ -49,7 +50,7 @@ export default function DatabaseSidebar() {
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 no-scroll flex flex-col gap-2">
           <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
-            {t("sidebar.database.source", "Quelle: Abgeordnetenwatch API")}
+            {t("sidebar.database.source")}
           </p>
 
           {loading && politicians.length === 0 && (
@@ -72,7 +73,7 @@ export default function DatabaseSidebar() {
           {error && (
             <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400 flex flex-col gap-2">
               <span>
-                {t("sidebar.database.error", "Fehler:")} {error}
+                {t("sidebar.database.error")} {error}
               </span>
               <button
                 onClick={refresh}
@@ -80,14 +81,14 @@ export default function DatabaseSidebar() {
                 className="self-start flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-red-900/40 hover:bg-red-900/70 text-red-200 border-none cursor-pointer transition-colors"
               >
                 <ArrowClockwise size={11} weight="bold" />
-                {t("sidebar.retry", "Erneut versuchen")}
+                {t("sidebar.retry")}
               </button>
             </div>
           )}
 
           {!loading && !error && politicians.length === 0 && (
             <p className="text-xs text-zinc-500 italic">
-              {t("sidebar.database.empty", "Keine Daten geladen.")}
+              {t("sidebar.database.empty")}
             </p>
           )}
 
@@ -139,10 +140,7 @@ export default function DatabaseSidebar() {
 
           <div className="mt-3 p-3 rounded-xl bg-zinc-800/50 light:bg-slate-100 border border-zinc-700 light:border-slate-200">
             <p className="text-[10px] text-zinc-500 light:text-slate-500 leading-relaxed">
-              {t(
-                "sidebar.database.hint",
-                'Tipp: "@agent Suche AfD Abgeordnete..." im Chat für detaillierte Abfragen.',
-              )}
+              {t("sidebar.database.hint")}
             </p>
           </div>
         </div>

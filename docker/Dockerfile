@@ -212,6 +212,7 @@ COPY --chown=opensin:opensin --from=frontend-build /app/frontend/dist /app/serve
 ARG APP_VERSION=dev
 ARG GIT_SHA=unknown
 ENV NODE_ENV=production
+ENV OPENSIN_CHAT_RUNTIME=docker
 ENV ANYTHING_LLM_RUNTIME=docker
 ENV DEPLOYMENT_VERSION=1.13.0
 ENV APP_VERSION=${APP_VERSION}

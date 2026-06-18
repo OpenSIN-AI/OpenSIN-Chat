@@ -9,7 +9,7 @@ import type { Icon } from "@phosphor-icons/react";
 const FOOTER_ICON_CLASS = "h-5 w-5";
 const FOOTER_ICON_COLOR = "var(--theme-sidebar-footer-icon-fill)";
 
-type IconName = keyof typeof ICON_COMPONENTS;
+type IconName = keyof typeof ICON_COMPONENTS | "Plus";
 
 function getFooterIconProps(iconName: IconName, isSelected = false) {
   return {

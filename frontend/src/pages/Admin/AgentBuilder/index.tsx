@@ -208,13 +208,9 @@ export default function AgentBuilder(): JSX.Element {
       } else if (!description?.trim()) {
         descriptionRef.current?.focus();
       }
-      showToast(
-        t("agentBuilder.nameAndDescriptionRequired"),
-        "error",
-        {
-          clear: true,
-        },
-      );
+      showToast(t("agentBuilder.nameAndDescriptionRequired"), "error", {
+        clear: true,
+      });
       return;
     }
 
@@ -247,9 +243,13 @@ export default function AgentBuilder(): JSX.Element {
       await loadAvailableFlows();
     } catch (error: any) {
       console.error("Save error details:", error);
-      showToast(t("agentBuilder.saveFlowFailed", { error: error.message }), "error", {
-        clear: true,
-      });
+      showToast(
+        t("agentBuilder.saveFlowFailed", { error: error.message }),
+        "error",
+        {
+          clear: true,
+        },
+      );
     }
   };
 

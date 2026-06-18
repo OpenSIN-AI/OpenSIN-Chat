@@ -15,6 +15,7 @@ export async function apiGet<T>(url: string): Promise<T> {
   const res = await fetch(url, {
     headers: baseHeaders(),
     method: "GET",
+    credentials: "include",
   });
 
   if (!res.ok) {
@@ -30,9 +31,10 @@ export async function apiGet<T>(url: string): Promise<T> {
  */
 export async function apiPost<T>(url: string, data?: any): Promise<T> {
   const res = await fetch(url, {
-    headers: { ...baseHeaders(), "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" },
     method: "POST",
     body: data ? JSON.stringify(data) : undefined,
+    credentials: "include",
   });
 
   if (!res.ok) {
@@ -48,9 +50,10 @@ export async function apiPost<T>(url: string, data?: any): Promise<T> {
  */
 export async function apiPut<T>(url: string, data?: any): Promise<T> {
   const res = await fetch(url, {
-    headers: { ...baseHeaders(), "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" },
     method: "PUT",
     body: data ? JSON.stringify(data) : undefined,
+    credentials: "include",
   });
 
   if (!res.ok) {
@@ -68,6 +71,7 @@ export async function apiDelete<T = void>(url: string): Promise<T> {
   const res = await fetch(url, {
     headers: baseHeaders(),
     method: "DELETE",
+    credentials: "include",
   });
 
   if (!res.ok) {

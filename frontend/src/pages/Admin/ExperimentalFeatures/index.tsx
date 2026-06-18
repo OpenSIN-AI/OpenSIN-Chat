@@ -8,6 +8,7 @@ import { CaretRight, Flask } from "@phosphor-icons/react";
 import { configurableFeatures } from "./features";
 import ModalWrapper from "@/components/ModalWrapper";
 import showToast from "@/utils/toast";
+import paths from "@/utils/paths";
 import useExperimentalFeatures from "@/hooks/useExperimentalFeatures";
 
 export default function ExperimentalFeatures() {

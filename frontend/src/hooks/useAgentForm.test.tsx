@@ -32,8 +32,8 @@ import { useAgentForm } from "./useAgentForm";
 describe("useAgentForm", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    System.keys.mockResolvedValue({ MultiUserMode: false });
-    Admin.systemPreferencesByFields.mockResolvedValue({
+    vi.mocked(System.keys).mockResolvedValue({ MultiUserMode: false });
+    vi.mocked(Admin.systemPreferencesByFields).mockResolvedValue({
       settings: {
         default_agent_skills: ["web-search"],
         disabled_agent_skills: [],
@@ -41,11 +41,11 @@ describe("useAgentForm", () => {
         active_agent_flows: [],
       },
     });
-    AgentFlows.listFlows.mockResolvedValue({
+    vi.mocked(AgentFlows.listFlows).mockResolvedValue({
       flows: [{ uuid: "1", active: true }],
     });
-    System.isFileSystemAgentAvailable.mockResolvedValue(false);
-    System.isCreateFilesAgentAvailable.mockResolvedValue(false);
+    vi.mocked(System.isFileSystemAgentAvailable).mockResolvedValue(false);
+    vi.mocked(System.isCreateFilesAgentAvailable).mockResolvedValue(false);
   });
 
   it("loads initial settings", async () => {
@@ -93,8 +93,8 @@ describe("useAgentForm", () => {
     form.appendChild(input);
     result.current.formEl.current = form;
 
-    Admin.updateSystemPreferences.mockResolvedValue({ success: true });
-    System.updateSystem.mockResolvedValue({ success: true });
+    vi.mocked(Admin.updateSystemPreferences).mockResolvedValue({ success: true });
+    vi.mocked(System.updateSystem).mockResolvedValue({ success: true });
 
     await act(async () => {
       await result.current.handleSubmit({ preventDefault: vi.fn() });

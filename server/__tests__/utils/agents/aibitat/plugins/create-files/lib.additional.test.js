@@ -241,34 +241,34 @@ describe("CreateFilesManager.registerOutput", () => {
 
 describe("CreateFilesManager.isToolAvailable", () => {
   const originalNodeEnv = process.env.NODE_ENV;
-  const originalRuntime = process.env.ANYTHING_LLM_RUNTIME;
+  const originalRuntime = process.env.OPENSIN_CHAT_RUNTIME;
 
   afterEach(() => {
     process.env.NODE_ENV = originalNodeEnv;
-    process.env.ANYTHING_LLM_RUNTIME = originalRuntime;
+    process.env.OPENSIN_CHAT_RUNTIME = originalRuntime;
   });
 
   test("returns true in development environment", () => {
     process.env.NODE_ENV = "development";
-    process.env.ANYTHING_LLM_RUNTIME = "";
+    process.env.OPENSIN_CHAT_RUNTIME = "";
     expect(createFilesLib.isToolAvailable()).toBe(true);
   });
 
-  test("returns true when ANYTHING_LLM_RUNTIME is docker", () => {
+  test("returns true when OPENSIN_CHAT_RUNTIME is docker", () => {
     process.env.NODE_ENV = "production";
-    process.env.ANYTHING_LLM_RUNTIME = "docker";
+    process.env.OPENSIN_CHAT_RUNTIME = "docker";
     expect(createFilesLib.isToolAvailable()).toBe(true);
   });
 
   test("returns false in production without docker runtime", () => {
     process.env.NODE_ENV = "production";
-    process.env.ANYTHING_LLM_RUNTIME = "";
+    process.env.OPENSIN_CHAT_RUNTIME = "";
     expect(createFilesLib.isToolAvailable()).toBe(false);
   });
 
   test("returns false in production with non-docker runtime", () => {
     process.env.NODE_ENV = "production";
-    process.env.ANYTHING_LLM_RUNTIME = "local";
+    process.env.OPENSIN_CHAT_RUNTIME = "local";
     expect(createFilesLib.isToolAvailable()).toBe(false);
   });
 });

@@ -93,7 +93,8 @@ describe("ThoughtContainer regex patterns", () => {
     });
 
     it("matches a block with nested-like content", () => {
-      const block = "<thinking>I think <thought>nested</thought> is fine</thinking>";
+      const block =
+        "<thinking>I think <thought>nested</thought> is fine</thinking>";
       expect(block).toMatch(THOUGHT_REGEX_COMPLETE);
     });
 

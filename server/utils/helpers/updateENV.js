@@ -835,7 +835,11 @@ function requiresForceMode(_, forceModeEnabled = false) {
 }
 
 async function validDockerizedUrl(input = "") {
-  if (process.env.ANYTHING_LLM_RUNTIME !== "docker") return null;
+  if (
+    (process.env.OPENSIN_CHAT_RUNTIME || process.env.ANYTHING_LLM_RUNTIME) !==
+    "docker"
+  )
+    return null;
 
   try {
     const { isPortInUse, getLocalHosts } = require("./portAvailabilityChecker");

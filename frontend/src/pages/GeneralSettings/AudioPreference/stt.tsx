@@ -73,7 +73,7 @@ export default function SpeechToTextProvider({
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data: any = { SpeechToTextProvider: selectedProvider };

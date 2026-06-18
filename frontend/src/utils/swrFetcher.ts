@@ -26,7 +26,9 @@ export async function swrFetcher(key) {
 
   const res = await fetch(url, { headers: baseHeaders() });
   if (!res.ok) {
-    const error = new Error(`Request failed with HTTP ${res.status}`);
+    const error = new Error(
+      `Request failed with HTTP ${res.status}`,
+    ) as Error & { status: number; info: any };
     error.status = res.status;
     error.info = await res.json().catch(() => null);
     throw error;

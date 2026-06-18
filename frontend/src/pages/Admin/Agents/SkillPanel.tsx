@@ -25,7 +25,7 @@ type SkillPanelProps = {
   handleFlowDelete: (flow: any) => void;
   handleMCPServerDelete: (server: any) => void;
   handleMCPToolToggle: (server: any, tool: any) => void;
-  setImportedSkills: (skills: any[]) => void;
+  setImportedSkills: React.Dispatch<React.SetStateAction<any[]>>;
 };
 
 export function SkillPanel({

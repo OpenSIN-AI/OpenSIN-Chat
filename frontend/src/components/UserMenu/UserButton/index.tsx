@@ -22,18 +22,19 @@ export default function UserButton() {
   const mode = useLoginMode();
   const { user } = useUser();
   const { email } = useSupportEmail();
-  const menuRef = useRef();
-  const buttonRef = useRef();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [showMenu, setShowMenu] = useState(false);
   const [showAccountSettings, setShowAccountSettings] = useState(false);
 
   const supportEmail = email ? `mailto:${email}` : paths.mailToSupport();
 
-  const handleClose = (event) => {
+  const handleClose = (event: MouseEvent) => {
     if (
       menuRef.current &&
-      !menuRef.current.contains(event.target) &&
-      !buttonRef.current.contains(event.target)
+      !menuRef.current.contains(event.target as Node) &&
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target as Node)
     ) {
       setShowMenu(false);
     }

@@ -474,7 +474,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
     const onPress: any = (e) => {
       if (!["Control", "Meta"].includes(e.key) || timeout !== null) return;
       timeout = setTimeout(() => {
-        setShowing(true);
+        setShowing("enabled");
         showToast(t("settingsSidebar.experimentalFeaturesUnlocked"));
         window.localStorage.setItem(
           "openafd_experimental_feature_preview_unlocked",

@@ -18,8 +18,12 @@ export default function LeftSidebarIconBar() {
           type="button"
           onClick={() => setShowSidebar((prev) => !prev)}
           data-tooltip-id="lsib-toggle"
-          data-tooltip-content={showSidebar ? t("common.hideSidebar") : t("common.showSidebar")}
-          aria-label={showSidebar ? t("common.hideSidebar") : t("common.showSidebar")}
+          data-tooltip-content={
+            showSidebar ? t("common.hideSidebar") : t("common.showSidebar")
+          }
+          aria-label={
+            showSidebar ? t("common.hideSidebar") : t("common.showSidebar")
+          }
           className={`flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all ${
             showSidebar
               ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"

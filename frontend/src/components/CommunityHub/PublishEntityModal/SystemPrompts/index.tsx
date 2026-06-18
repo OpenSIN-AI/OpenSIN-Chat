@@ -168,6 +168,9 @@ export default function SystemPrompts({ entity }: any) {
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyDown={handleKeyDown}
+                aria-label={t(
+                  "community_hub.publish.system_prompt.tags_placeholder",
+                )}
                 placeholder={t(
                   "community_hub.publish.system_prompt.tags_placeholder",
                 )}

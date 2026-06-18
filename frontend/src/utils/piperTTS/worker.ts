@@ -47,7 +47,10 @@ async function main(event) {
   if (event.data.type === "voices") {
     const stored = await TTS.stored();
     const voices = await TTS.voices();
-    voices.forEach((voice) => (voice.is_stored = stored.includes(voice.key)));
+    voices.forEach((voice) => {
+      const v = voice as typeof voice & { is_stored?: boolean };
+      v.is_stored = stored.includes(voice.key);
+    });
 
     self.postMessage({ type: "voices", voices });
     return;

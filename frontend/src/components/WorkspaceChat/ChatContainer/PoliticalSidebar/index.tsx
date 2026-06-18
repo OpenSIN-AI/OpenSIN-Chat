@@ -68,7 +68,7 @@ export default function PoliticalSidebar() {
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <Newspaper size={15} className="text-zinc-400 light:text-slate-500" />
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
-            {t("sidebar.political.title", "Politisches")}
+            {t("sidebar.political.title")}
           </p>
           <button
             onClick={refreshAll}
@@ -86,6 +86,7 @@ export default function PoliticalSidebar() {
           <button
             onClick={closeSidebar}
             type="button"
+            aria-label={t("common.close")}
             className="text-white/60 light:text-slate-400 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer"
           >
             <X size={14} weight="bold" />
@@ -96,18 +97,15 @@ export default function PoliticalSidebar() {
         <div className="flex-1 overflow-y-auto p-4 no-scroll flex flex-col gap-4">
           {/* Drucksachen */}
           <Section
-            title={t(
-              "sidebar.political.drucksachen",
-              "Bundestag-Drucksachen (AfD)",
-            )}
+            title={t("sidebar.political.drucksachen")}
             loading={loadingDrucksachen}
             error={errorDrucksachen}
             onRetry={refreshDrucksachen}
-            retryLabel={t("sidebar.retry", "Erneut versuchen")}
+            retryLabel={t("sidebar.retry")}
           >
             {drucksachen.length === 0 ? (
               <p className="text-xs text-zinc-500 italic">
-                {t("sidebar.political.empty", "Keine Drucksachen gefunden.")}
+                {t("sidebar.political.empty")}
               </p>
             ) : (
               drucksachen.map((d) => (
@@ -137,18 +135,15 @@ export default function PoliticalSidebar() {
 
           {/* RSS */}
           <Section
-            title={t("sidebar.political.news", "AfD Pressemitteilungen")}
+            title={t("sidebar.political.news")}
             loading={loadingRss}
             error={errorRss}
             onRetry={refreshRss}
-            retryLabel={t("sidebar.retry", "Erneut versuchen")}
+            retryLabel={t("sidebar.retry")}
           >
             {rssItems.length === 0 ? (
               <p className="text-xs text-zinc-500 italic">
-                {t(
-                  "sidebar.political.rss_empty",
-                  "Keine Pressemitteilungen gefunden.",
-                )}
+                {t("sidebar.political.rss_empty")}
               </p>
             ) : (
               rssItems.map((item, i) => (
@@ -178,10 +173,7 @@ export default function PoliticalSidebar() {
 
           <div className="p-3 rounded-xl bg-zinc-800/50 light:bg-slate-100 border border-zinc-700 light:border-slate-200">
             <p className="text-[10px] text-zinc-500 light:text-slate-500 leading-relaxed">
-              {t(
-                "sidebar.political.hint",
-                'Tipp: "@agent Bundestag Drucksache..." im Chat für detaillierte Abfragen.',
-              )}
+              {t("sidebar.political.hint")}
             </p>
           </div>
         </div>

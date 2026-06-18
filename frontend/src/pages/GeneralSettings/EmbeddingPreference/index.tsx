@@ -155,7 +155,7 @@ export default function GeneralEmbeddingPreference() {
     return false;
   }
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
       (selectedEmbedder !== settings?.EmbeddingEngine ||

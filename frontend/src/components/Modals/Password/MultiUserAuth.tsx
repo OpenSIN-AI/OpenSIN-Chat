@@ -211,7 +211,7 @@ export default function MultiUserAuth() {
       } else {
         window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
         window.localStorage.setItem(AUTH_TOKEN, token);
-        window.location = paths.home();
+        window.location.href = paths.home();
       }
     } else {
       setError(message);
@@ -267,7 +267,7 @@ export default function MultiUserAuth() {
     if (downloadComplete && user && token) {
       window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
       window.localStorage.setItem(AUTH_TOKEN, token);
-      window.location = paths.home();
+      window.location.href = paths.home();
     }
   }, [downloadComplete, user, token]);
 
