@@ -303,20 +303,26 @@ export function DnDFileUploaderProvider({
     }
 
     // Wait for all promises to resolve in some way before dispatching the event to unlock the send button
-    Promise.all(promises).finally(() =>
-      window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT)),
-    );
+    Promise.all(promises)
+      .catch((e) => console.error("Attachment processing error:", e))
+      .finally(() =>
+        window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT)),
+      );
   }
 
   // Handle modal actions
   const handleCloseModal = async () => {
     if (!pendingFiles.length) return;
 
-    // Delete all files from this batch
-    await Workspace.deleteParsedFiles(
-      workspace.slug,
-      (pendingFiles as any).map((file) => file.parsedFileId),
-    );
+    try {
+      // Delete all files from this batch
+      await Workspace.deleteParsedFiles(
+        workspace.slug,
+        (pendingFiles as any).map((file) => file.parsedFileId),
+      );
+    } catch (e) {
+      console.error("Failed to delete parsed files:", e);
+    }
 
     // Remove all files from this batch from the UI
     setFiles((prev) =>
@@ -365,45 +371,51 @@ export function DnDFileUploaderProvider({
     setIsEmbedding(true);
     setEmbedProgress(0);
 
-    // Embed all pending files
-    let completed = 0;
-    const results = await Promise.all(
-      (pendingFiles as any).map((file) =>
-        Workspace.embedParsedFile(workspace.slug, file.parsedFileId).then(
-          (result) => {
-            completed++;
-            setEmbedProgress(completed);
-            return result;
-          },
+    try {
+      // Embed all pending files
+      let completed = 0;
+      const results = await Promise.all(
+        (pendingFiles as any).map((file) =>
+          Workspace.embedParsedFile(workspace.slug, file.parsedFileId).then(
+            (result) => {
+              completed++;
+              setEmbedProgress(completed);
+              return result;
+            },
+          ),
         ),
-      ),
-    );
+      );
 
-    // Update status for all files
-    const fileUpdates = (pendingFiles as any).map((file, i) => ({
-      uid: file.attachment.uid,
-      updates: {
-        status: results[i].response.ok ? "embedded" : "failed",
-        error: results[i].data?.error ?? null,
-        document: results[i].data?.document,
-      },
-    }));
+      // Update status for all files
+      const fileUpdates = (pendingFiles as any).map((file, i) => ({
+        uid: file.attachment.uid,
+        updates: {
+          status: results[i].response.ok ? "embedded" : "failed",
+          error: results[i].data?.error ?? null,
+          document: results[i].data?.document,
+        },
+      }));
 
-    setFiles((prev) =>
-      (prev as any).map((prevFile) => {
-        const update = fileUpdates.find((f) => f.uid === prevFile.uid);
-        return update ? { ...prevFile, ...update.updates } : prevFile;
-      }),
-    );
-    setShowWarningModal(false);
-    setPendingFiles([]);
-    setTokenCount(0);
-    setIsEmbedding(false);
-    window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT));
-    showToast(
-      t("dndWrapper.filesEmbedded", { count: pendingFiles.length }),
-      "success",
-    );
+      setFiles((prev) =>
+        (prev as any).map((prevFile) => {
+          const update = fileUpdates.find((f) => f.uid === prevFile.uid);
+          return update ? { ...prevFile, ...update.updates } : prevFile;
+        }),
+      );
+      setShowWarningModal(false);
+      setPendingFiles([]);
+      setTokenCount(0);
+      window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT));
+      showToast(
+        t("dndWrapper.filesEmbedded", { count: pendingFiles.length }),
+        "success",
+      );
+    } catch (e) {
+      console.error("Failed to embed files:", e);
+      showToast(t("dndWrapper.embedFailed"), "error");
+    } finally {
+      setIsEmbedding(false);
+    }
   };
 
   return (

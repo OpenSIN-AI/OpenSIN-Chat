@@ -198,7 +198,10 @@ const CommunityHub: any = {
       if (!res.ok)
         throw new Error(response.error || "Failed to create agent flow");
       return { success: true, error: null, itemId: response.item?.id };
-    });
+    }).catch((e) => ({
+      success: false,
+      error: e.message,
+    }));
   },
 
   /**

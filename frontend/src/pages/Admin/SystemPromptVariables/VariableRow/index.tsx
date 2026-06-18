@@ -134,7 +134,7 @@ export default function VariableRow({
       </tr>
       <ModalWrapper isOpen={isOpen}>
         <EditVariableModal
-          variable={variable}
+          variable={variable as any}
           closeModal={closeModal}
           onRefresh={onRefresh}
         />

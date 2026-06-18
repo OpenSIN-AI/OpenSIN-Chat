@@ -48,13 +48,11 @@ export default function NewBrowserExtensionApiKeyModal({
   };
 
   useEffect(() => {
-    function resetStatus() {
-      if (!copied) return false;
-      setTimeout(() => {
-        setCopied(false);
-      }, 3000);
-    }
-    resetStatus();
+    if (!copied) return;
+    const timer = setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+    return () => clearTimeout(timer);
   }, [copied]);
 
   return (

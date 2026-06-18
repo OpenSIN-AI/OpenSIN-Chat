@@ -5,7 +5,7 @@
 import React, { useRef, useState } from "react";
 import { Plus, X, CaretDown } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import type { BlockConfig } from "../BlockList";
+import type { BlockConfig } from "../../BlockList";
 
 interface HeaderItem {
   key: string;

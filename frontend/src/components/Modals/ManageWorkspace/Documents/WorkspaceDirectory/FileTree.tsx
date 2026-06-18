@@ -19,7 +19,7 @@ interface FileTreeProps {
   fetchKeys: (force?: boolean) => Promise<void>;
   handleSaveChanges: (e: React.MouseEvent) => void;
   embeddedDocCount: number;
-  t: (key: string) => string;
+  t: any;
   highlightWorkspace: boolean;
 }
 
@@ -102,19 +102,21 @@ export function FileTree({
               >
                 {({ item, folder }) => (
                   <WorkspaceFileRow
-                    key={item.id}
-                    item={item}
-                    folderName={folder.name}
-                    workspace={workspace}
-                    setLoading={setLoading}
-                    setLoadingMessage={setLoadingMessage}
-                    fetchKeys={fetchKeys}
-                    hasChanges={hasChanges}
-                    movedItems={movedItems}
-                    selected={selectedItems[item.id]}
-                    toggleSelection={() => toggleSelection(item)}
-                    disableSelection={hasChanges}
-                    setSelectedItems={setSelectedItems}
+                    {...({
+                      key: item.id,
+                      item: item,
+                      folderName: folder.name,
+                      workspace: workspace,
+                      setLoading: setLoading,
+                      setLoadingMessage: setLoadingMessage,
+                      fetchKeys: fetchKeys,
+                      hasChanges: hasChanges,
+                      movedItems: movedItems,
+                      selected: selectedItems[item.id],
+                      toggleSelection: () => toggleSelection(item),
+                      disableSelection: hasChanges,
+                      setSelectedItems: setSelectedItems,
+                    } as any)}
                   />
                 )}
               </RenderFileRows>

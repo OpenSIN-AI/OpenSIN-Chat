@@ -262,9 +262,9 @@ export default function BlockList({
   ): React.ReactNode => {
     switch (block.type) {
       case BLOCK_TYPES.FLOW_INFO:
-        return <FlowInfoNode {...props} ref={refs} />;
+        return <FlowInfoNode {...({...props, ref: refs} as any)} />;
       case BLOCK_TYPES.START:
-        return <StartNode {...props} />;
+        return <StartNode {...(props as any)} />;
       case BLOCK_TYPES.API_CALL:
         return <ApiCallNode {...props} />;
       case BLOCK_TYPES.WEBSITE:
@@ -276,7 +276,7 @@ export default function BlockList({
       case BLOCK_TYPES.LLM_INSTRUCTION:
         return <LLMInstructionNode {...props} />;
       case BLOCK_TYPES.WEB_SCRAPING:
-        return <WebScrapingNode {...props} />;
+        return <WebScrapingNode {...(props as any)} />;
       case BLOCK_TYPES.FINISH:
         return <FinishNode />;
       default:

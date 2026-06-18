@@ -24,7 +24,7 @@ export default function AgentList({
   Icon?: React.ComponentType<{ size: number }> | null;
 }) {
   const { t } = useTranslation();
-  if (skills.length === 0) return null;
+  if (Object.keys(skills).length === 0) return null;
 
   return (
     <>

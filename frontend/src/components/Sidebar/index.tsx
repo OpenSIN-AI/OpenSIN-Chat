@@ -206,16 +206,14 @@ export function SidebarMobileHeader() {
   useEffect(() => {
     // Darkens the rest of the screen
     // when sidebar is open.
-    function handleBg() {
-      if (showSidebar) {
-        setTimeout(() => {
-          setShowBgOverlay(true);
-        }, 300);
-      } else {
-        setShowBgOverlay(false);
-      }
+    if (showSidebar) {
+      const timer = setTimeout(() => {
+        setShowBgOverlay(true);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setShowBgOverlay(false);
     }
-    handleBg();
   }, [showSidebar]);
 
   return (

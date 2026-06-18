@@ -403,8 +403,12 @@ function CrossCheckRow({ job, onShowReport, onCancelled }: CrossCheckRowProps) {
           <button
             type="button"
             onClick={async () => {
-              await PdfAnalysis.cancelCrossCheck(job.id);
-              onCancelled?.();
+              try {
+                await PdfAnalysis.cancelCrossCheck(job.id);
+                onCancelled?.();
+              } catch (e) {
+                console.error(e);
+              }
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
           >
@@ -427,9 +431,13 @@ function CrossCheckReportModal({ job, onClose }: CrossCheckReportModalProps) {
 
   useEffect(() => {
     let cancelled = false;
-    PdfAnalysis.crossCheckResult(job.id).then((res) => {
-      if (!cancelled) setResult(res as CrossCheckReport);
-    });
+    PdfAnalysis.crossCheckResult(job.id)
+      .then((res) => {
+        if (!cancelled) setResult(res as CrossCheckReport);
+      })
+      .catch((e) => {
+        if (!cancelled) console.error(e);
+      });
     return () => {
       cancelled = true;
     };

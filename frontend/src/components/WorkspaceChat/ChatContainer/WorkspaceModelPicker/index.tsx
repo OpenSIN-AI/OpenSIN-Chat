@@ -70,14 +70,17 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   }, [slug, workspace, systemSettings]);
 
   useEffect(() => {
+    let timer;
     function handleProviderSetup(e) {
       const { provider, settings } = e.detail;
       setConfig({ settings, provider });
-      setTimeout(() => openSetupProviderModal(), 300);
+      timer = setTimeout(() => openSetupProviderModal(), 300);
     }
     window.addEventListener(PROVIDER_SETUP_EVENT, handleProviderSetup);
-    return () =>
+    return () => {
       window.removeEventListener(PROVIDER_SETUP_EVENT, handleProviderSetup);
+      if (timer) clearTimeout(timer);
+    };
   }, []);
 
   if (!!user && user.role !== "admin") return null;

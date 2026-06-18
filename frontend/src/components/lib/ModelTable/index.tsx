@@ -234,10 +234,11 @@ function ModelRow({
     if (selectedModelId === model.id) {
       setIsActiveModel(true);
       modelRowRef.current.classList.add("!bg-gray-200/10");
-      setTimeout(
+      const timer = setTimeout(
         () => modelRowRef.current.classList.remove("!bg-gray-200/10"),
         800,
       );
+      return () => clearTimeout(timer);
     } else {
       setIsActiveModel(false);
     }

@@ -3,6 +3,8 @@ const { SystemSettings } = require("../../../../models/systemSettings");
 const { TokenManager } = require("../../../helpers/tiktoken");
 const tiktoken = new TokenManager();
 
+const WEB_FETCH_TIMEOUT_MS = 30_000;
+
 const webBrowsing = {
   name: "web-browsing",
   startupConfig: {
@@ -185,6 +187,7 @@ const webBrowsing = {
             const { response, error } = await fetch(url, {
               method: "GET",
               headers: {},
+              signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
             })
               .then((res) => {
                 if (res.ok) return res.json();
@@ -445,6 +448,7 @@ const webBrowsing = {
                 "Content-Type": "application/json",
                 "X-SearchApi-Source": "OpenSIN Chat",
               },
+              signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
             })
               .then((res) => {
                 if (res.ok) return res.json();
@@ -515,6 +519,7 @@ const webBrowsing = {
                 },
                 body: JSON.stringify({ q: query }),
                 redirect: "follow",
+                signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
               },
             )
               .then((res) => {
@@ -579,6 +584,7 @@ const webBrowsing = {
                 "Ocp-Apim-Subscription-Key":
                   process.env.AGENT_BING_SEARCH_API_KEY,
               },
+              signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
             })
               .then((res) => {
                 if (res.ok) return res.json();
@@ -638,6 +644,7 @@ const webBrowsing = {
                   messages: [{ role: "user", content: query }],
                   resource_type_filter: [{ type: "web", top_k: 10 }],
                 }),
+                signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
               },
             )
               .then(async (res) => {
@@ -761,6 +768,7 @@ const webBrowsing = {
                 "X-Proxy-Location": proxy_location,
                 "X-User-Agent": device_type,
               },
+              signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
             })
               .then((res) => {
                 if (res.ok) return res.json();
@@ -836,6 +844,7 @@ const webBrowsing = {
                 "Content-Type": "application/json",
                 "User-Agent": "opensin-chat",
               },
+              signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
             })
               .then((res) => {
                 if (res.ok) return res.json();
@@ -900,6 +909,7 @@ const webBrowsing = {
                 api_key: process.env.AGENT_TAVILY_API_KEY,
                 query: query,
               }),
+              signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
             })
               .then((res) => {
                 if (res.ok) return res.json();
@@ -970,7 +980,9 @@ const webBrowsing = {
             const searchURL = new URL("https://html.duckduckgo.com/html");
             searchURL.searchParams.append("q", query);
 
-            const response = await fetch(searchURL.toString())
+            const response = await fetch(searchURL.toString(), {
+              signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
+            })
               .then((res) => {
                 if (res.ok) return res.text();
                 throw new Error(
@@ -1085,6 +1097,7 @@ const webBrowsing = {
                   text: true,
                 },
               }),
+              signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
             })
               .then((res) => {
                 if (res.ok) return res.json();
@@ -1152,6 +1165,7 @@ const webBrowsing = {
                   max_results: 5,
                   max_tokens_per_page: 2048,
                 }),
+                signal: AbortSignal.timeout(WEB_FETCH_TIMEOUT_MS),
               },
             )
               .then((res) => {

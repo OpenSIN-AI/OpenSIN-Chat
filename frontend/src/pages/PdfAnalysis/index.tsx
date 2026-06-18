@@ -497,8 +497,12 @@ function JobRow({ job, onShowReport, onCancelled }: JobRowProps) {
           <button
             type="button"
             onClick={async () => {
-              await PdfAnalysis.cancel(job.id);
-              onCancelled?.();
+              try {
+                await PdfAnalysis.cancel(job.id);
+                onCancelled?.();
+              } catch (e) {
+                console.error(e);
+              }
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
           >
@@ -694,9 +698,13 @@ function ReportModal({ job, onClose }: ReportModalProps) {
 
   useEffect(() => {
     let cancelled = false;
-    PdfAnalysis.result(job.id).then((res) => {
-      if (!cancelled) setResult(res as ReportResult);
-    });
+    PdfAnalysis.result(job.id)
+      .then((res) => {
+        if (!cancelled) setResult(res as ReportResult);
+      })
+      .catch((e) => {
+        if (!cancelled) console.error(e);
+      });
     return () => {
       cancelled = true;
     };
@@ -1058,6 +1066,9 @@ function FactsPanel({ onCrossCheck }: FactsPanelProps) {
         if (cancelled) return;
         setFacts(res as Fact[]);
       })
+      .catch((e) => {
+        if (!cancelled) console.error(e);
+      })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
@@ -1192,8 +1203,12 @@ function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                 <button
                   type="button"
                   onClick={async () => {
-                    await PdfAnalysis.deleteFact(fact.id);
-                    search();
+                    try {
+                      await PdfAnalysis.deleteFact(fact.id);
+                      search();
+                    } catch (e) {
+                      console.error(e);
+                    }
                   }}
                   className="text-xs text-red-400 hover:opacity-80"
                   aria-label={t("pdfAnalysis.panel.deleteFactAria", {

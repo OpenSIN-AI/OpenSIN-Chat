@@ -88,7 +88,9 @@ class WebSearchEngine {
     if (!apiKey) return [];
     try {
       const url = `https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${encodeURIComponent(apiKey)}&hl=de&gl=de&num=10`;
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        signal: AbortSignal.timeout(15_000),
+      });
       if (!res.ok) return [];
       const data = await res.json();
       return (data.organic_results || []).map((r) => ({
@@ -105,7 +107,9 @@ class WebSearchEngine {
   static async #duckDuckGo(query) {
     try {
       const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`;
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        signal: AbortSignal.timeout(10_000),
+      });
       if (!res.ok) return [];
       const data = await res.json();
       const results = [];

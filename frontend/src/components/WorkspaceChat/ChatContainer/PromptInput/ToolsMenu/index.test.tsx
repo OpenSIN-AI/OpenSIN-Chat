@@ -63,7 +63,7 @@ describe("ToolsMenu", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useUser).mockReturnValue({ user: null });
+    vi.mocked(useUser).mockReturnValue({ user: null } as any);
     highlightedIndexRef.current = -1;
   });
 
@@ -138,7 +138,7 @@ describe("ToolsMenu", () => {
   });
 
   it("does not render the agent skills tab for non-admin users in multi-user mode", () => {
-    vi.mocked(useUser).mockReturnValue({ user: { role: "user" } });
+    vi.mocked(useUser).mockReturnValue({ user: { role: "user" } } as any);
     renderMenu();
     expect(
       screen.queryByRole("button", { name: "Agent Skills" }),

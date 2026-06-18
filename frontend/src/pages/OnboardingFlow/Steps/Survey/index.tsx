@@ -48,7 +48,7 @@ async function sendQuestionnaire({
   });
 
   if (!navigator.sendBeacon) {
-    fetch(paths.survey(), {
+    fetch(paths.onboarding.survey(), {
       method: "POST",
       body: data,
     })

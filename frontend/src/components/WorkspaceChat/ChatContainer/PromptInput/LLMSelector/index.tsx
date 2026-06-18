@@ -22,11 +22,11 @@ import Workspace from "@/models/workspace";
 export default function LLMSelectorModal({
   workspaceSlug = null,
   initialProvider = null,
-}) {
+}: any) {
   const { slug: urlSlug } = useParams();
   const slug = urlSlug ?? workspaceSlug;
   const { t } = useTranslation();
-  const { workspace, loading: workspaceLoading } = useWorkspace(slug);
+  const { workspace, isLoading: workspaceLoading } = useWorkspace(slug);
   const { settings: systemSettings, loading: settingsLoading } =
     useSystemSettings();
   const [settings, setSettings] = useState(null);
@@ -76,7 +76,8 @@ export default function LLMSelectorModal({
     setSelectedLLMProvider(provider);
     setAvailableProviders(WORKSPACE_LLM_PROVIDERS);
     autoScrollToSelectedLLMProvider(provider, 50);
-    document.getElementById("llm-search-input").value = "";
+    (document.getElementById("llm-search-input") as HTMLInputElement).value =
+      "";
     setHasChanges(true);
     setMissingCredentials(hasMissingCredentials(settings, provider));
   }

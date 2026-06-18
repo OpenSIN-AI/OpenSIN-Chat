@@ -335,34 +335,33 @@ describe("CommunityHub", () => {
       expect(result).toEqual({ success: true, error: null, itemId: "af-1" });
     });
 
-    it("throws on !res.ok (no .catch handler in source)", async () => {
+    it("returns error when !res.ok", async () => {
       vi.spyOn(globalThis, "fetch").mockResolvedValue({
         ok: false,
         json: () => Promise.resolve({ error: "bad flow" }),
       });
 
-      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow(
-        "bad flow",
-      );
+      const result = await CommunityHub.createAgentFlow({});
+      expect(result).toEqual({ success: false, error: "bad flow" });
     });
 
-    it("throws generic error when response has no error field and !res.ok", async () => {
+    it("returns generic error when response has no error field", async () => {
       vi.spyOn(globalThis, "fetch").mockResolvedValue({
         ok: false,
         json: () => Promise.resolve({}),
       });
 
-      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow(
-        "Failed to create agent flow",
-      );
+      const result = await CommunityHub.createAgentFlow({});
+      expect(result).toEqual({
+        success: false,
+        error: "Failed to create agent flow",
+      });
     });
 
-    it("throws on fetch rejection (no .catch handler)", async () => {
-      vi.spyOn(globalThis, "fetch").mockRejectedValue(new Error("flow fail"));
-
-      await expect(CommunityHub.createAgentFlow({})).rejects.toThrow(
-        "flow fail",
-      );
+    it("returns error on fetch rejection", async () => {
+      mockFetchError("flow fail");
+      const result = await CommunityHub.createAgentFlow({});
+      expect(result).toEqual({ success: false, error: "flow fail" });
     });
   });
 

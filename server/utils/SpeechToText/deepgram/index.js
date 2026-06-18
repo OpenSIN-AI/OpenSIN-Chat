@@ -56,6 +56,7 @@ class DeepgramSTT {
         "Content-Type": this.#contentTypeFromFilename(filename),
       },
       body: audioBuffer,
+      signal: AbortSignal.timeout(120_000),
     })
       .then(async (response) => {
         if (!response.ok) {

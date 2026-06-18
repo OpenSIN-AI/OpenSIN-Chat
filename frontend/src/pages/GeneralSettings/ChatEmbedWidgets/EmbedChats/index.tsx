@@ -106,6 +106,7 @@ export default function EmbedChatsView() {
           setChats(_chats);
           setCanNext(hasPages);
         })
+        .catch((e) => console.error(e))
         .finally(() => {
           setLoading(false);
         });

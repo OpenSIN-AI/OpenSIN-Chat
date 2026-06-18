@@ -102,7 +102,7 @@ export default function PromptInput({
                   textareaRef={textareaRef}
                   promptInput={promptInput}
                   handleChange={handleChange}
-                  captureEnterOrUndo={captureEnterOrUndo}
+                  captureEnterOrUndo={captureEnterOrUndo as any}
                   handlePasteEvent={handlePasteEvent}
                   saveCurrentState={saveCurrentState}
                   textSizeClass={textSizeClass}
@@ -122,7 +122,7 @@ export default function PromptInput({
                       sendCommand={sendCommand}
                       promptInput={promptInput}
                       textareaRef={textareaRef}
-                      visible={!agentSessionActive & showAgentCommand}
+                      visible={!agentSessionActive && showAgentCommand}
                     />
                   </div>
                   <ToolsButton

@@ -127,7 +127,7 @@ export default function LLMSelectorAction({ workspaceSlug = null }: any) {
         }
         className="z-99 !w-[500px] !bg-theme-bg-primary !px-[5px] !rounded-lg !pointer-events-auto light:border-2 light:border-theme-modal-border"
       >
-        <LLMSelectorModal tooltipRef={tooltipRef} workspaceSlug={slug} />
+        <LLMSelectorModal {...({ tooltipRef, workspaceSlug: slug } as any)} />
       </Tooltip>
       <SetupProvider
         isOpen={isSetupProviderOpen}

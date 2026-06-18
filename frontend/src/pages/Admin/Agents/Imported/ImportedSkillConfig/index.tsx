@@ -192,7 +192,7 @@ export default function ImportedSkillConfig({
               )}
               {hasChanges && (
                 <button
-                  onClick={handleSubmit}
+                  onClick={handleSubmit as any}
                   type="button"
                   className="bg-blue-500 text-white light:text-white rounded-md p-2"
                 >

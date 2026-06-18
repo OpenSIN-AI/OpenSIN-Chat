@@ -64,8 +64,8 @@ export default function AccountModal({ user, hideModal }: any) {
     if (success) {
       const storedUser = safeJsonParse(localStorage.getItem(AUTH_USER), null);
       if (storedUser) {
-        storedUser.username = data.username;
-        storedUser.bio = data.bio;
+        (storedUser as any).username = data.username;
+        (storedUser as any).bio = data.bio;
         localStorage.setItem(AUTH_USER, JSON.stringify(storedUser));
       }
       showToast(t("profile_settings.profile_updated"), "success", {

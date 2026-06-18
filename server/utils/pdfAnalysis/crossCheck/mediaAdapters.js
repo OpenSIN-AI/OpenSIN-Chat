@@ -60,6 +60,15 @@ async function downloadVideo(url) {
   }
   const reader = res.body.getReader();
   const stream = fs.createWriteStream(tmpFile);
+  let streamError = null;
+  stream.on("error", (err) => {
+    streamError = err;
+    try {
+      fs.unlinkSync(tmpFile);
+    } catch {
+      /* ignore cleanup errors */
+    }
+  });
   let received = 0;
   try {
     while (true) {
@@ -71,12 +80,18 @@ async function downloadVideo(url) {
         break;
       }
       stream.write(Buffer.from(value));
+      if (streamError) throw streamError;
     }
   } finally {
     clearTimeout(timer);
     reader.closed.catch(() => {});
   }
-  await new Promise((r) => stream.end(r));
+  await new Promise((r, reject) => {
+    stream.end((err) => {
+      if (streamError || err) reject(streamError || err);
+      else r();
+    });
+  });
   return tmpFile;
 }
 

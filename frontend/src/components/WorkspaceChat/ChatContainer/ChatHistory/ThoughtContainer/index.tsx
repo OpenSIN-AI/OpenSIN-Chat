@@ -157,7 +157,7 @@ export function ThoughtBrainButton({ messageId, content }: any) {
  * Only visible when the expansion state is true (toggled via ThoughtBrainButton).
  */
 export const ThoughtChainComponent = forwardRef(
-  ({ content: initialContent, messageId }, ref) => {
+  ({ content: initialContent, messageId }: any, ref) => {
     const [content, setContent] = useState(initialContent);
     const [hasReadableContent, setHasReadableContent] = useState(
       contentIsNotEmpty(initialContent),

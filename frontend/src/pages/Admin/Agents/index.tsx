@@ -271,7 +271,7 @@ function DesktopForm(props: FormProps) {
     >
       <HiddenInputs {...props} />
       <SkillsNavigation {...props} />
-      <SkillPanel SelectedSkillComponent={SelectedSkillComponent} {...props} />
+      <SkillPanel {...({ SelectedSkillComponent, ...props } as any)} />
     </form>
   );
 }

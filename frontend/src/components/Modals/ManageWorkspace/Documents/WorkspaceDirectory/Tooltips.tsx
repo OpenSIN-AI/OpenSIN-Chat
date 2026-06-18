@@ -22,7 +22,7 @@ export function WorkspaceDocumentTooltips() {
         delayShow={800}
         className="tooltip invert light:invert-0 z-99 max-w-[200px]"
         render={({ content }: { content: string }) => {
-          const data = safeJsonParse<TooltipData>(content, null);
+          const data = safeJsonParse(content, null) as TooltipData | null;
           if (!data) return null;
           return (
             <div className="text-xs">

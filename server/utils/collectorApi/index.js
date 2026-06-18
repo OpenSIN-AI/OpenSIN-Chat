@@ -2,6 +2,9 @@
 const { EncryptionManager } = require("../EncryptionManager");
 const { Agent } = require("undici");
 
+const COLLECTOR_HEALTH_TIMEOUT_MS = 5_000;
+const COLLECTOR_PROCESS_TIMEOUT_MS = 120_000;
+
 /**
  * @typedef {Object} CollectorOptions
  * @property {string} whisperProvider - The provider to use for whisper, defaults to "local"
@@ -78,13 +81,17 @@ class CollectorApi {
   }
 
   async online() {
-    return await fetch(`${this.endpoint}/accepts`)
+    return await fetch(`${this.endpoint}/accepts`, {
+      signal: AbortSignal.timeout(COLLECTOR_HEALTH_TIMEOUT_MS),
+    })
       .then((res) => res.ok)
       .catch(() => false);
   }
 
   async acceptedFileTypes() {
-    return await fetch(`${this.endpoint}/accepts`)
+    return await fetch(`${this.endpoint}/accepts`, {
+      signal: AbortSignal.timeout(COLLECTOR_HEALTH_TIMEOUT_MS),
+    })
       .then((res) => {
         if (!res.ok) throw new Error("failed to GET /accepts");
         return res.json();
@@ -163,6 +170,7 @@ class CollectorApi {
         ),
       },
       body: data,
+      signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Response could not be completed");
@@ -198,6 +206,7 @@ class CollectorApi {
         ),
       },
       body: data,
+      signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Response could not be completed");
@@ -236,6 +245,7 @@ class CollectorApi {
         ),
       },
       body: data,
+      signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Response could not be completed");
@@ -303,6 +313,7 @@ class CollectorApi {
         ),
       },
       body: data,
+      signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Response could not be completed");
@@ -344,6 +355,7 @@ class CollectorApi {
         ),
       },
       body: data,
+      signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Response could not be completed");

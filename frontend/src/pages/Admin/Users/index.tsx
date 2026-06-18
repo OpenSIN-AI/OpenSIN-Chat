@@ -53,8 +53,10 @@ export default function AdminUsers(): JSX.Element {
         </div>
         <ModalWrapper isOpen={isOpen}>
           <NewUserModal
-            closeModal={closeModal}
-            onSuccess={() => mutate(USERS_KEY)}
+            {...({
+              closeModal,
+              onSuccess: () => mutate(USERS_KEY),
+            } as any)}
           />
         </ModalWrapper>
       </div>

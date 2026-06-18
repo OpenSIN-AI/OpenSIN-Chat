@@ -19,7 +19,7 @@ export default function AdminApiKeys(): JSX.Element {
   const { t } = useTranslation();
   const { apiKeys, isLoading, refresh } = useApiKeys();
 
-  const removeApiKey = (_id: string) => {
+  const removeApiKey = (_id: any) => {
     refresh();
   };
 

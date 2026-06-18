@@ -44,7 +44,7 @@ export default forwardRef(function (
     updateHistory,
     regenerateAssistantMessage,
     websocket = null,
-  },
+  }: any,
   ref,
 ) {
   const lastScrollTopRef = useRef(0);
@@ -199,6 +199,7 @@ export default forwardRef(function (
         saveEditedMessage,
         forkThread,
         websocket,
+        t,
       }),
     [
       workspace,
@@ -295,6 +296,7 @@ function buildMessages({
   saveEditedMessage,
   forkThread,
   websocket,
+  t,
 }: any) {
   return history.reduce((acc, props, index) => {
     const isLastBotReply =

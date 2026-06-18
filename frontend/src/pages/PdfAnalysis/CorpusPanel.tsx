@@ -312,8 +312,12 @@ function CorpusRow({ job, onShowReport, onCancelled }: CorpusRowProps) {
           <button
             type="button"
             onClick={async () => {
-              await PdfAnalysis.cancelCorpus(job.id);
-              onCancelled?.();
+              try {
+                await PdfAnalysis.cancelCorpus(job.id);
+                onCancelled?.();
+              } catch (e) {
+                console.error(e);
+              }
             }}
             className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
           >
@@ -336,9 +340,13 @@ function CorpusReportModal({ job, onClose }: CorpusReportModalProps) {
 
   useEffect(() => {
     let cancelled = false;
-    PdfAnalysis.corpusResult(job.id).then((res) => {
-      if (!cancelled) setResult(res as CorpusReport);
-    });
+    PdfAnalysis.corpusResult(job.id)
+      .then((res) => {
+        if (!cancelled) setResult(res as CorpusReport);
+      })
+      .catch((e) => {
+        if (!cancelled) console.error(e);
+      });
     return () => {
       cancelled = true;
     };

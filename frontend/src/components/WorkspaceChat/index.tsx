@@ -143,7 +143,7 @@ function copyCodeSnippet(uuid: any) {
 export function setEventDelegatorForCodeSnippets() {
   document?.addEventListener("click", function (e) {
     const target = (e.target as HTMLElement).closest("[data-code-snippet]");
-    const uuidCode = target?.dataset?.code;
+    const uuidCode = (target as HTMLElement | null)?.dataset?.code;
     if (!uuidCode) return false;
     copyCodeSnippet(uuidCode);
   });

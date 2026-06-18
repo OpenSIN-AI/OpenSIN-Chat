@@ -76,6 +76,9 @@ export function EmbeddingProgressProvider({ children }: any) {
       Object.values(abortControllersRef.current).forEach((ctrl) =>
         ctrl?.abort(),
       );
+      Object.values(cleanupTimeoutsRef.current).forEach((t) => {
+        if (t) clearTimeout(t);
+      });
     };
   }, []);
 

@@ -35,16 +35,14 @@ export default function SettingsSidebar() {
   const [showBgOverlay, setShowBgOverlay] = useState(false as any);
 
   useEffect(() => {
-    function handleBg() {
-      if (showSidebar) {
-        setTimeout(() => {
-          setShowBgOverlay(true);
-        }, 300);
-      } else {
-        setShowBgOverlay(false);
-      }
+    if (showSidebar) {
+      const timer = setTimeout(() => {
+        setShowBgOverlay(true);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      setShowBgOverlay(false);
     }
-    handleBg();
   }, [showSidebar]);
 
   if (isMobile) {

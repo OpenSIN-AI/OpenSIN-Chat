@@ -158,11 +158,11 @@ export default function AgentSQLConnectorSelection({
                       .map((connection) => (
                         <DBConnection
                           key={connection.database_id}
-                          connection={connection}
+                          connection={connection as any}
                           onRemove={handleRemoveConnection}
                           onUpdate={handleUpdateConnection}
                           setHasChanges={setHasChanges}
-                          connections={connections}
+                          connections={connections as any}
                         />
                       ))
                   )}
@@ -195,7 +195,7 @@ export default function AgentSQLConnectorSelection({
         closeModal={closeModal}
         setHasChanges={setHasChanges}
         onSubmit={handleAddConnection}
-        connections={connections}
+        connections={connections as any}
       />
       <Tooltip
         id="edit-sql-connection-tooltip"

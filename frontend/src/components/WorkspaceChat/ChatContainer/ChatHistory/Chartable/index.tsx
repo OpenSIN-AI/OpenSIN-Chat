@@ -51,7 +51,7 @@ export function Chartable({ props }: any) {
     options: {
       backgroundColor: "#393d43",
       padding: 20,
-    },
+    } as any,
   });
   const handleDownload = useCallback(async () => {
     const jpeg = await getDivJpeg();

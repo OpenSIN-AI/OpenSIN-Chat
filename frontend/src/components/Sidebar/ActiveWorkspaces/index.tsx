@@ -228,7 +228,7 @@ export default function ActiveWorkspaces() {
                       className={`flex flex-col w-full group ${
                         snapshot.isDragging ? "opacity-50" : ""
                       }`}
-                      role="listitem"
+                      {...({ role: "listitem" } as any)}
                     >
                       <div className="flex gap-x-2 items-center justify-between">
                         <Link

@@ -87,10 +87,12 @@ export default function ChatPromptSettings({
   };
 
   const handleRestoreToDefaultSystemPrompt = () => {
-    System.fetchDefaultSystemPrompt().then(({ defaultSystemPrompt }: any) => {
-      setPrompt(defaultSystemPrompt);
-      setHasChanges(true);
-    });
+    System.fetchDefaultSystemPrompt()
+      .then(({ defaultSystemPrompt }: any) => {
+        setPrompt(defaultSystemPrompt);
+        setHasChanges(true);
+      })
+      .catch((e) => console.error(e));
   };
 
   return (

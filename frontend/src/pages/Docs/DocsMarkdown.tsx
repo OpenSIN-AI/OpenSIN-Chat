@@ -189,7 +189,7 @@ export default function DocsMarkdown({
           block?.classList.remove("is-copied");
           if (labelEl) labelEl.textContent = t("common.docsCopyCode");
         }, 2000);
-      });
+      }).catch(() => {});
       return;
     }
 

@@ -111,7 +111,7 @@ function PiperTTSModelSelection({ settings }: any) {
           {t("textToSpeech.piper.storedIndicator")}
         </p>
       </div>
-      {!!voices.find((voice) => voice.is_stored) && (
+      {!!(voices as any[]).find((voice) => voice.is_stored) && (
         <button
           type="button"
           onClick={flushVoices}

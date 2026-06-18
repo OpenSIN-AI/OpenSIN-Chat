@@ -26,7 +26,7 @@ export default function ApiKeyRow({
 
     const user = userFromStorage();
     const Model = !!user ? Admin : System;
-    await Model.deleteApiKey(apiKey.id);
+    await Model.deleteApiKey(apiKey.id as any);
     removeApiKey(apiKey.id);
   };
 
@@ -37,13 +37,11 @@ export default function ApiKeyRow({
   };
 
   useEffect(() => {
-    function resetStatus() {
-      if (!copied) return false;
-      setTimeout(() => {
-        setCopied(false);
-      }, 3000);
-    }
-    resetStatus();
+    if (!copied) return;
+    const timer = setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+    return () => clearTimeout(timer);
   }, [copied]);
 
   return (

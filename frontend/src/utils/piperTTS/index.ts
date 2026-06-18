@@ -107,6 +107,8 @@ export default class PiperTTSClient {
       };
 
       timeout = setTimeout(() => {
+        this.worker.removeEventListener("message", handleMessage);
+        if (timeout) clearTimeout(timeout);
         resolve({ blobURL: null, error: "PiperTTSWorker Worker timed out." });
       }, 30_000);
       this.worker.addEventListener("message", handleMessage);

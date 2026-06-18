@@ -7,7 +7,7 @@ import { Globe, FileText, Database, Plus } from "@phosphor-icons/react";
  * Mirrors the heuristic used in the SourcesSidebar.
  */
 function getSourceType(doc: any) {
-  let metadata = {};
+  let metadata: any = {};
   try {
     metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
   } catch {
@@ -42,7 +42,7 @@ function getSourceType(doc: any) {
 }
 
 function getTitle(doc: any) {
-  let metadata = {};
+  let metadata: any = {};
   try {
     metadata = doc.metadata ? JSON.parse(doc.metadata) : {};
   } catch {

@@ -138,4 +138,4 @@ function RegenerateMessage({ regenerateMessage, chatId }: any) {
   );
 }
 
-export default memo(Actions);
+export default memo(Actions) as any;

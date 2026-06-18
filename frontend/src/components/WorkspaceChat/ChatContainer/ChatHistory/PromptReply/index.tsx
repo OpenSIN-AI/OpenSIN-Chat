@@ -144,4 +144,4 @@ function RenderAssistantChatContent({ message, messageId }: any) {
   );
 }
 
-export default memo(PromptReply);
+export default memo(PromptReply) as any;

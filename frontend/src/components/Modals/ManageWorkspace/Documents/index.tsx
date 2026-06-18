@@ -123,7 +123,7 @@ export default function DocumentSettings({ workspace }) {
   );
 
   const fetchKeys = useCallback(
-    async (refetchWorkspace = false, options = {}) => {
+    async (refetchWorkspace = false, options: any = {}) => {
       const { autoSelectNew: shouldAutoSelect = false } = options;
       if (shouldAutoSelect) setAutoSelectNew(true);
       const promises = [mutateDocuments()];
@@ -242,20 +242,22 @@ export default function DocumentSettings({ workspace }) {
   return (
     <div className="flex upload-modal -mt-6 z-10 relative">
       <Directory
-        files={visibleAvailableDocs}
-        setFiles={setAvailableDocs}
-        loading={loading || docsLoading || wsLoading}
-        loadingMessage={loadingMessage}
-        setLoading={setLoading}
-        workspace={workspace}
-        fetchKeys={fetchKeys}
-        selectedItems={selectedItems}
-        setSelectedItems={setSelectedItems}
-        updateWorkspace={updateWorkspace}
-        highlightWorkspace={highlightWorkspace}
-        setHighlightWorkspace={setHighlightWorkspace}
-        moveToWorkspace={moveSelectedItemsToWorkspace}
-        setLoadingMessage={setLoadingMessage}
+        {...({
+          files: visibleAvailableDocs,
+          setFiles: setAvailableDocs,
+          loading: loading || docsLoading || wsLoading,
+          loadingMessage: loadingMessage,
+          setLoading: setLoading,
+          workspace: workspace,
+          fetchKeys: fetchKeys,
+          selectedItems: selectedItems,
+          setSelectedItems: setSelectedItems,
+          updateWorkspace: updateWorkspace,
+          highlightWorkspace: highlightWorkspace,
+          setHighlightWorkspace: setHighlightWorkspace,
+          moveToWorkspace: moveSelectedItemsToWorkspace,
+          setLoadingMessage: setLoadingMessage,
+        } as any)}
       />
       <div className="upload-modal-arrow">
         <ArrowsDownUp className="text-white text-base font-bold rotate-90 w-11 h-11" />

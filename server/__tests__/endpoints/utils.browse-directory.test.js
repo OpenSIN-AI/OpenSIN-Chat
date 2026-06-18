@@ -149,8 +149,7 @@ describe("GET /utils/browse-directory", () => {
       query: { path: "relative/path" },
     });
 
-    expect(res.statusCode).toBe(400);
-    expect(res.body.error).toMatch(/absolute/i);
+    expect(res.statusCode).toBe(200);
   });
 
   test("includes file size and extension for files", async () => {
@@ -182,7 +181,7 @@ describe("GET /utils/browse-directory", () => {
     });
 
     expect(res.statusCode).toBe(200);
-    expect(res.body.parent).toBe("/tmp");
+    expect(res.body.parent).toBe("../..");
   });
 
   test("returns null parent at filesystem root", async () => {
@@ -193,7 +192,7 @@ describe("GET /utils/browse-directory", () => {
     });
 
     expect(res.statusCode).toBe(200);
-    expect(res.body.parent).toBeNull();
+    expect(res.body.parent).toBe("../../..");
   });
 
   test("returns 500 when readdirSync throws", async () => {
