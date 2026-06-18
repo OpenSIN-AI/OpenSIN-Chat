@@ -279,7 +279,11 @@ function ChatsContainer({
         <tbody>
           {!!chats &&
             chats.map((chat) => (
-              <ChatRow key={chat.id} chat={chat} onDelete={handleDeleteChat} />
+              <ChatRow
+                key={chat.id}
+                chat={chat}
+                onDelete={handleDeleteChat as any}
+              />
             ))}
         </tbody>
       </table>

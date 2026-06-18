@@ -18,6 +18,7 @@ import {
   useWatchForAutoPlayAssistantTTSResponse,
 } from "../contexts/TTSProvider";
 import { PENDING_HOME_MESSAGE } from "@/utils/constants";
+import { copyText } from "@/utils/clipboard";
 import useChatHistory from "@/hooks/useChatHistory";
 
 export default function WorkspaceChat({ loading, workspace }: any) {
@@ -126,17 +127,19 @@ function copyCodeSnippet(uuid: any) {
     )?.textContent;
   if (!markdown) return false;
 
-  window.navigator.clipboard.writeText(markdown);
-  target.classList.add("text-green-500");
-  const originalText = target.innerHTML;
-  target.textContent = i18n.t("workspaceChat.copied");
-  target.setAttribute("disabled", "true");
+  copyText(markdown).then((ok) => {
+    if (!ok) return;
+    target.classList.add("text-green-500");
+    const originalText = target.innerHTML;
+    target.textContent = i18n.t("workspaceChat.copied");
+    target.setAttribute("disabled", "true");
 
-  setTimeout(() => {
-    target.classList.remove("text-green-500");
-    target.innerHTML = originalText;
-    target.removeAttribute("disabled");
-  }, 2500);
+    setTimeout(() => {
+      target.classList.remove("text-green-500");
+      target.innerHTML = originalText;
+      target.removeAttribute("disabled");
+    }, 2500);
+  });
 }
 
 // Listens and hunts for all data-code-snippet clicks.

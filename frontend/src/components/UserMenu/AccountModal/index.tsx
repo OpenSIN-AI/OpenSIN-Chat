@@ -53,7 +53,7 @@ export default function AccountModal({ user, hideModal }: any) {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    const data = {};
+    const data: any = {};
     const form = new FormData(e.target);
     for (const [key, value] of form.entries()) {
       if (!value || value === null) continue;

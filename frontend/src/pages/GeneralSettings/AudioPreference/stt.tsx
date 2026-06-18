@@ -29,7 +29,7 @@ const PROVIDERS = (t: any): Provider[] => [
     name: t("audioPreference.stt.systemNative"),
     value: "native",
     logo: OpenSINChatIcon,
-    options: (settings) => <BrowserNative settings={settings} />,
+    options: (settings) => <BrowserNative {...({ settings } as any)} />,
     description: t("audioPreference.stt.systemNativeDesc"),
   },
   {

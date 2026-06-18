@@ -40,6 +40,7 @@ describe("useAgentForm", () => {
         imported_agent_skills: [],
         active_agent_flows: [],
       },
+      error: "",
     });
     vi.mocked(AgentFlows.listFlows).mockResolvedValue({
       flows: [{ uuid: "1", active: true }],

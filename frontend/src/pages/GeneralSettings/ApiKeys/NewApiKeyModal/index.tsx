@@ -7,6 +7,7 @@ import paths from "@/utils/paths";
 import { userFromStorage } from "@/utils/request";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
+import { copyText } from "@/utils/clipboard";
 
 type ApiKey = {
   secret: string;
@@ -45,8 +46,9 @@ export default function NewApiKeyModal({
 
   const copyApiKey = () => {
     if (!apiKey) return false;
-    window.navigator.clipboard.writeText(apiKey.secret);
-    setCopied(true);
+    copyText(apiKey.secret).then((ok) => {
+      if (ok) setCopied(true);
+    });
   };
 
   useEffect(() => {

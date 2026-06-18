@@ -28,7 +28,7 @@ const LLM_DEFAULT: LLMProvider = {
   requiredConfig: [],
 };
 
-const LLMS = [LLM_DEFAULT, ...ALL_LLM_PROVIDERS].filter(
+const LLMS = [LLM_DEFAULT, ...(ALL_LLM_PROVIDERS as any[])].filter(
   (llm) => !DISABLED_PROVIDERS.includes(llm.value),
 );
 

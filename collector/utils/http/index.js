@@ -5,9 +5,14 @@ process.env.NODE_ENV === "development"
 const DEFAULT_COLLECTOR_PORT = 8888;
 
 function reqBody(request) {
-  return typeof request.body === "string"
-    ? JSON.parse(request.body)
-    : request.body;
+  if (typeof request.body === "string") {
+    try {
+      return JSON.parse(request.body);
+    } catch {
+      return {};
+    }
+  }
+  return request.body;
 }
 
 function queryParams(request) {

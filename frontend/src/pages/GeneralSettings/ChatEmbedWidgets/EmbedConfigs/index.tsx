@@ -81,7 +81,7 @@ export default function EmbedConfigsView(): React.ReactElement {
           </thead>
           <tbody>
             {embeds.map((embed: EmbedConfig) => (
-              <EmbedRow key={embed.id} embed={embed} />
+              <EmbedRow key={embed.id} embed={embed as any} />
             ))}
           </tbody>
         </table>

@@ -22,7 +22,9 @@ describe("useCanViewChatHistory", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("returns viewable=false and loading=true initially", () => {
-    System.fetchCanViewChatHistory.mockReturnValue(new Promise(() => {}));
+    vi.mocked(System.fetchCanViewChatHistory).mockReturnValue(
+      new Promise(() => {}),
+    );
     const { result } = renderHook(() => useCanViewChatHistory(), { wrapper });
     expect(result.current.loading).toBe(true);
     expect(result.current.viewable).toBe(false);

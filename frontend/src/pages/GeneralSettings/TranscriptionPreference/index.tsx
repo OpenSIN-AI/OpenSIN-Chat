@@ -55,11 +55,10 @@ export default function TranscriptionModelPreference() {
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
-  const {
-    settings: systemSettings,
-    loading: settingsLoading,
-    mutate,
-  } = useSystemSettings();
+  const systemSettingsHook = useSystemSettings() as any;
+  const { settings: systemSettings, loading: settingsLoading } =
+    systemSettingsHook;
+  const mutate = systemSettingsHook.mutate;
 
   // Sync local state from SWR when loaded
   useEffect(() => {

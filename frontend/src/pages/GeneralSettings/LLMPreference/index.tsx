@@ -253,7 +253,7 @@ function Header({
       <div className="w-full justify-end flex">
         {hasChanges && (
           <CTAButton
-            onClick={() => handleSubmit()}
+            onClick={() => (handleSubmit as any)()}
             className="mt-3 mr-0 -mb-14 z-10"
           >
             {saving ? t("common.saving") : t("common.save")}

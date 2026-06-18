@@ -18,6 +18,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { useTranslation } from "react-i18next";
+import { copyText } from "@/utils/clipboard";
 
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 export default function ThreadItem({
@@ -250,18 +251,17 @@ function OptionsMenu({
 
   const handleCopyLink = () => {
     const link = `${window.location.origin}${paths.workspace.thread(workspace.slug, thread.slug)}`;
-    navigator.clipboard
-      .writeText(link)
-      .then(() => {
+    copyText(link).then((ok) => {
+      if (ok) {
         showToast(t("threadItem.linkCopied"), "success", {
           clear: true,
         });
-      })
-      .catch(() => {
+      } else {
         showToast(t("threadItem.linkCopyFailed"), "error", {
           clear: true,
         });
-      });
+      }
+    });
     close();
   };
 

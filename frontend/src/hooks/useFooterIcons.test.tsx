@@ -22,7 +22,9 @@ describe("useFooterIcons", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("returns empty array while loading", () => {
-    System.fetchCustomFooterIcons.mockReturnValue(new Promise(() => {}));
+    vi.mocked(System.fetchCustomFooterIcons).mockReturnValue(
+      new Promise(() => {}),
+    );
     const { result } = renderHook(() => useFooterIcons(), { wrapper });
     expect(result.current.isLoading).toBe(true);
     expect(result.current.footerData).toEqual([]);

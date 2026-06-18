@@ -113,13 +113,16 @@ async function dipFetch(url, apiKey) {
         "BUNDESTAG_DIP_API_KEY in der .env oder übergebe ihn als Parameter."
     );
   }
+  const abortController = new AbortController();
+  const timeout = setTimeout(() => abortController.abort(), 30_000);
   const res = await fetch(url, {
     headers: {
       Accept: "application/json",
       "User-Agent": "OpenSIN-Chat/0.1 (+https://sinchat.delqhi.com)",
       Authorization: `apikey ${key}`,
     },
-  });
+    signal: abortController.signal,
+  }).finally(() => clearTimeout(timeout));
   if (!res.ok) {
     const body = await res.text().catch(() => "");
     throw new Error(

@@ -5,6 +5,7 @@ import { X } from "@phosphor-icons/react";
 import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
 import { fullApiUrl, POPUP_BROWSER_EXTENSION_EVENT } from "@/utils/constants";
 import { useTranslation } from "react-i18next";
+import { copyText } from "@/utils/clipboard";
 
 type NewBrowserExtensionApiKeyModalProps = {
   closeModal: () => void;
@@ -43,8 +44,9 @@ export default function NewBrowserExtensionApiKeyModal({
 
   const copyApiKey = () => {
     if (!apiKey) return false;
-    window.navigator.clipboard.writeText(apiKey);
-    setCopied(true);
+    copyText(apiKey).then((ok) => {
+      if (ok) setCopied(true);
+    });
   };
 
   useEffect(() => {

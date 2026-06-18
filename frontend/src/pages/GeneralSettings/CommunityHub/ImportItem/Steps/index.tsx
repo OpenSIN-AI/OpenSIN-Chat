@@ -85,7 +85,7 @@ export function CommunityHubImportItemLayout({
   useEffect(() => {
     function autoForward() {
       if (query.get("id")) {
-        setSettings({ itemId: query.get("id") });
+        setSettings({ itemId: query.get("id"), item: null });
         setStep(CommunityHubImportItemSteps.itemId.next());
       }
     }

@@ -372,7 +372,11 @@ function GeneratedFilesSection({ t, result }: { t: any; result: RunResult }) {
     >
       <div className="space-y-2">
         {outputs.map((output, i) => (
-          <GeneratedFileCard key={i} file={output.payload} type={output.type} />
+          <GeneratedFileCard
+            key={i}
+            file={output.payload}
+            {...({ type: output.type } as any)}
+          />
         ))}
       </div>
     </CollapsibleSection>

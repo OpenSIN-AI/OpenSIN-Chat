@@ -4,7 +4,6 @@ import { ICON_COMPONENTS } from "@/components/Footer";
 import React, { useEffect, useRef, useState } from "react";
 import { Plus, X } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
-import type { Icon } from "@phosphor-icons/react";
 
 const FOOTER_ICON_CLASS = "h-5 w-5";
 const FOOTER_ICON_COLOR = "var(--theme-sidebar-footer-icon-fill)";
@@ -94,7 +93,7 @@ export default function NewIconForm({
           className="h-[34px] w-[34px] bg-theme-settings-input-bg rounded-full flex items-center justify-center cursor-pointer hover:outline-primary-button hover:outline"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
-          {React.createElement(IconComponent as Icon, {
+          {React.createElement(IconComponent as any, {
             ...getFooterIconProps(selectedIcon, true),
           })}
         </div>
@@ -108,7 +107,7 @@ export default function NewIconForm({
                 onClick={() => handleIconChange(iconName as IconName)}
               >
                 {React.createElement(
-                  ICON_COMPONENTS[iconName as IconName] as Icon,
+                  ICON_COMPONENTS[iconName as IconName] as any,
                   getFooterIconProps(iconName as IconName),
                 )}
               </button>

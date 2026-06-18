@@ -24,3 +24,46 @@ export async function copyMarkdownAsRichText(markdownString) {
     console.error("Failed to copy markdown as rich text: ", error);
   }
 }
+
+/**
+ * Safely copies plain text to the clipboard, working in both secure and
+ * non-secure contexts. The async Clipboard API (`navigator.clipboard`) is
+ * only available in secure contexts (HTTPS or localhost); in HTTP or older
+ * browsers `navigator.clipboard` is undefined and accessing `.writeText`
+ * throws a synchronous TypeError that escapes any chained `.catch()`.
+ *
+ * This helper prefers the async API when available and falls back to the
+ * deprecated `document.execCommand("copy")` flow with a hidden textarea
+ * otherwise. Callers receive a boolean so they can update UI state only
+ * when the copy actually succeeded.
+ * @param {string} text - The text to copy.
+ * @returns {Promise<boolean>} true if the copy succeeded, false otherwise.
+ */
+export async function copyText(text) {
+  if (typeof text !== "string" || text.length === 0) return false;
+
+  if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fall through to the legacy path (permission denied, lost focus, …).
+    }
+  }
+
+  try {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.top = "-1000px";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(textarea);
+    return ok;
+  } catch {
+    return false;
+  }
+}

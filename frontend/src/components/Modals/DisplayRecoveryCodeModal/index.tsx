@@ -5,6 +5,7 @@ import { saveAs } from "file-saver";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import ModalWrapper from "@/components/ModalWrapper";
+import { copyText } from "@/utils/clipboard";
 
 type RecoveryCodeModalProps = {
   recoveryCodes: string[];
@@ -34,16 +35,15 @@ export default function RecoveryCodeModal({
   };
 
   const handleCopyToClipboard = () => {
-    navigator.clipboard
-      .writeText(recoveryCodes.join(",\n"))
-      .then(() => {
+    copyText(recoveryCodes.join(",\n")).then((ok) => {
+      if (ok) {
         showToast(t("recoveryCode.copiedToClipboard"), "success", {
           clear: true,
         });
-      })
-      .catch(() => {
+      } else {
         showToast(t("recoveryCode.copiedToClipboardFailed"), "error");
-      });
+      }
+    });
   };
 
   return (

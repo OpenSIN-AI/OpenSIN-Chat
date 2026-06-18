@@ -35,7 +35,7 @@ const PROVIDERS = (t: any): TTSProvider[] => [
     name: t("audioPreference.tts.systemNative"),
     value: "native",
     logo: OpenSINChatIcon,
-    options: (settings: any) => <BrowserNative settings={settings} />,
+    options: (settings: any) => <BrowserNative {...({ settings } as any)} />,
     description: t("audioPreference.tts.systemNativeDesc"),
   },
   {
@@ -243,9 +243,9 @@ export default function TextToSpeechProvider({ settings }: { settings: any }) {
           className="mt-4 flex flex-col gap-y-1"
         >
           {selectedProvider &&
-            PROVIDERS.find(
-              (provider) => provider.value === selectedProvider,
-            )?.options(settings)}
+            PROVIDERS(t)
+              .find((provider) => provider.value === selectedProvider)
+              ?.options(settings)}
         </div>
       </div>
     </form>

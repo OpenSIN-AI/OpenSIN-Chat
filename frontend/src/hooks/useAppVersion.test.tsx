@@ -30,7 +30,9 @@ describe("useAppVersion", () => {
   });
 
   it("returns null on error", async () => {
-    System.fetchAppVersion.mockRejectedValue(new Error("Network error"));
+    vi.mocked(System.fetchAppVersion).mockRejectedValue(
+      new Error("Network error"),
+    );
     const { result } = renderHook(() => useAppVersion(), { wrapper });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.version).toBeNull();

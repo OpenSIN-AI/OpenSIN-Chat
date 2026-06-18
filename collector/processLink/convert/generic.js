@@ -228,6 +228,8 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
   }
 
   try {
+    const abortController = new AbortController();
+    const timeout = setTimeout(() => abortController.abort(), 15_000);
     const pageText = await fetch(link, {
       method: "GET",
       headers: {
@@ -236,7 +238,10 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
         ...validatedHeaders(headers),
       },
-    }).then((res) => res.text());
+      signal: abortController.signal,
+    })
+      .then((res) => res.text())
+      .finally(() => clearTimeout(timeout));
     return htmlToMarkdown(pageText, link);
   } catch (error) {
     // eslint-disable-next-line no-console

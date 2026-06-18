@@ -37,7 +37,7 @@ export default function ConnectedView({
   return (
     <div className="flex flex-col gap-y-8 mt-8">
       <ConnectedBotCard config={config} />
-      <DetailsSection config={config} onDisconnected={onDisconnected} />
+      <DetailsSection config={config as any} onDisconnected={onDisconnected} />
       <UsersSection
         pendingUsers={pendingUsers}
         approvedUsers={approvedUsers}

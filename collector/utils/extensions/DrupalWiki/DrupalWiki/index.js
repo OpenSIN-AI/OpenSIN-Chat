@@ -238,9 +238,12 @@ class DrupalWiki {
   }
 
   async _doFetch(url) {
+    const abortController = new AbortController();
+    const timeout = setTimeout(() => abortController.abort(), 30_000);
     const response = await fetch(url, {
       headers: this.#getHeaders(),
-    });
+      signal: abortController.signal,
+    }).finally(() => clearTimeout(timeout));
     if (!response.ok) {
       throw new Error(`Failed to fetch ${url}: ${response.status}`);
     }
@@ -310,9 +313,12 @@ class DrupalWiki {
         }
 
         const downloadUrl = `${this.baseUrl}/api/rest/scope/api/attachment/${attachId}/download`;
+        const attachAbort = new AbortController();
+        const attachTimeout = setTimeout(() => attachAbort.abort(), 30_000);
         const attachmentResponse = await fetch(downloadUrl, {
           headers: this.#getHeaders(),
-        });
+          signal: attachAbort.signal,
+        }).finally(() => clearTimeout(attachTimeout));
         if (!attachmentResponse.ok) {
           // eslint-disable-next-line no-console
           console.log(`Skipping attachment: ${fileName} - Download failed`);

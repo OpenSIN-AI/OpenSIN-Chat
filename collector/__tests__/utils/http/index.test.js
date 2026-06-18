@@ -25,8 +25,8 @@ describe("HTTP utilities", () => {
       expect(reqBody({ body: null })).toBeNull();
     });
 
-    it("throws on invalid JSON string", () => {
-      expect(() => reqBody({ body: "{invalid" })).toThrow();
+    it("returns empty object on invalid JSON string", () => {
+      expect(reqBody({ body: "{invalid" })).toEqual({});
     });
   });
 

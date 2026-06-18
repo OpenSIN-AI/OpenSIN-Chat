@@ -71,7 +71,7 @@ function RulesList({
                           className={snapshot.isDragging ? "opacity-60" : ""}
                         >
                           <RuleRow
-                            rule={rule}
+                            rule={rule as any}
                             isEditing={editingRule?.id === rule.id}
                             onEdit={() => onEdit(rule)}
                             onDelete={() => onDelete(rule)}
@@ -99,7 +99,7 @@ function RulesList({
             {llmRules.map((rule) => (
               <RuleRow
                 key={rule.id}
-                rule={rule}
+                rule={rule as any}
                 isEditing={editingRule?.id === rule.id}
                 onEdit={() => onEdit(rule)}
                 onDelete={() => onDelete(rule)}

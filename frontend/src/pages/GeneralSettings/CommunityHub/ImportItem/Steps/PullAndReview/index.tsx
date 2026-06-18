@@ -93,7 +93,7 @@ export default function PullAndReview({
               <CTAButton
                 className="text-dark-text w-full mt-[18px] h-[34px] hover:bg-accent"
                 onClick={() => {
-                  setSettings({ itemId: null, item: null });
+                  setSettings({ itemId: null, item: null } as any);
                   setStep(CommunityHubImportItemSteps.itemId.key);
                 }}
               >

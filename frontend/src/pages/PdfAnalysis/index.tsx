@@ -28,6 +28,7 @@ import PdfAnalysis from "@/models/pdfAnalysis";
 import { ChatSidebarProvider } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
 import Sidebars from "@/components/WorkspaceChat/ChatContainer/Sidebars";
 import CrossCheckPanel from "./CrossCheckPanel";
+import { copyText } from "@/utils/clipboard";
 import CorpusPanel from "./CorpusPanel";
 
 function formatEta(seconds: number | null): string | null {
@@ -726,10 +727,9 @@ function ReportModal({ job, onClose }: ReportModalProps) {
     // For now we copy the text to clipboard and show a browser notification
     // until the ManageWorkspace integration is wired up with a real workspace slug.
     if (result?.report) {
-      navigator.clipboard
-        .writeText(result.report)
-        .then(() => alert(t("pdfAnalysis.panel.addedAsSourceToast")))
-        .catch(() => {});
+      copyText(result.report).then((ok) => {
+        if (ok) alert(t("pdfAnalysis.panel.addedAsSourceToast"));
+      });
     }
   }
 
@@ -1177,9 +1177,11 @@ function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                           : "text-yellow-400 border-yellow-400/40"
                     }`}
                     title={t("pdfAnalysis.panel.checkedAt", {
-                      date: new Date(fact.crossCheck.checkedAt).toLocaleString(
-                        "de-DE",
-                      ),
+                      date: fact.crossCheck.checkedAt
+                        ? new Date(fact.crossCheck.checkedAt).toLocaleString(
+                            "de-DE",
+                          )
+                        : "—",
                     })}
                   >
                     {t("pdfAnalysis.panel.crossChecked")}{" "}

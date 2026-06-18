@@ -93,10 +93,15 @@ class GitLabRepoLoader {
   async #validateAccessToken() {
     if (!this.accessToken) return;
     try {
+      const abortController = new AbortController();
+      const timeout = setTimeout(() => abortController.abort(), 10_000);
       const valid = await fetch(`${this.apiBase}/api/v4/user`, {
         method: "GET",
         headers: this.accessToken ? { "PRIVATE-TOKEN": this.accessToken } : {},
-      }).then((res) => res.ok);
+        signal: abortController.signal,
+      })
+        .then((res) => res.ok)
+        .finally(() => clearTimeout(timeout));
       if (!valid) {
         // eslint-disable-next-line no-console
         console.error(
@@ -359,10 +364,13 @@ ${body}`
       }/repository/files/${encodeURIComponent(sourceFilePath)}/raw?ref=${
         this.branch
       }`;
+      const abortController = new AbortController();
+      const timeout = setTimeout(() => abortController.abort(), 15_000);
       const response = await fetch(url, {
         method: "GET",
         headers: this.accessToken ? { "PRIVATE-TOKEN": this.accessToken } : {},
-      });
+        signal: abortController.signal,
+      }).finally(() => clearTimeout(timeout));
 
       if (response.status === 429) {
         if (retries >= MAX_RETRIES) {
@@ -410,10 +418,13 @@ ${body}`
       });
       const url = `${this.apiBase}${endpoint}?${params.toString()}`;
 
+      const abortController = new AbortController();
+      const timeout = setTimeout(() => abortController.abort(), 30_000);
       const response = await fetch(url, {
         method: "GET",
         headers: this.accessToken ? { "PRIVATE-TOKEN": this.accessToken } : {},
-      });
+        signal: abortController.signal,
+      }).finally(() => clearTimeout(timeout));
 
       if (response.status === 429) {
         if (retries >= MAX_RETRIES) {

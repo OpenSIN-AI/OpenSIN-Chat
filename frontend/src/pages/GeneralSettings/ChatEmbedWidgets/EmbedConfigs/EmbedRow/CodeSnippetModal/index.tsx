@@ -8,6 +8,7 @@ import DOMPurify from "@/utils/chat/purify";
 import "@/utils/chat/themes/github-dark.css";
 import "@/utils/chat/themes/github.css";
 import { useTranslation } from "react-i18next";
+import { copyText } from "@/utils/clipboard";
 
 type Embed = {
   uuid: string;
@@ -97,13 +98,15 @@ const ScriptTag = ({ embed }: ScriptTagProps): JSX.Element => {
     window.localStorage.getItem("theme") === "light" ? "github" : "github-dark";
 
   const handleClick = () => {
-    window.navigator.clipboard.writeText(snippet);
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 2500);
-    showToast(t("codeSnippetModal.copiedToClipboard"), "success", {
-      clear: true,
+    copyText(snippet).then((ok) => {
+      if (!ok) return;
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 2500);
+      showToast(t("codeSnippetModal.copiedToClipboard"), "success", {
+        clear: true,
+      });
     });
   };
 

@@ -5,6 +5,7 @@ import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
 import showToast from "@/utils/toast";
 import { Trash, Copy, Check, Plug } from "@phosphor-icons/react";
 import { POPUP_BROWSER_EXTENSION_EVENT } from "@/utils/constants";
+import { copyText } from "@/utils/clipboard";
 
 type ApiKey = {
   id: string;
@@ -50,12 +51,14 @@ export default function BrowserExtensionApiKeyRow({
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(connectionString);
-    showToast("Connection string copied to clipboard", "success", {
-      clear: true,
+    copyText(connectionString).then((ok) => {
+      if (!ok) return;
+      showToast("Connection string copied to clipboard", "success", {
+        clear: true,
+      });
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     });
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   const handleConnect = () => {

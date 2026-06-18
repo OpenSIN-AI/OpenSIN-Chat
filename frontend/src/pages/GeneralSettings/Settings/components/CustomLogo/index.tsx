@@ -99,7 +99,7 @@ export default function CustomLogo(): JSX.Element {
               />
               <div
                 className="w-80 py-4 bg-theme-settings-input-bg rounded-2xl border-2 border-dashed border-theme-text-secondary border-opacity-60 justify-center items-center inline-flex cursor-pointer"
-                htmlFor="logo-upload"
+                {...({ htmlFor: "logo-upload" } as any)}
               >
                 <div className="flex flex-col items-center justify-center">
                   <div className="rounded-full bg-white/40">

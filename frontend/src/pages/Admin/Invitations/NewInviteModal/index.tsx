@@ -5,6 +5,7 @@ import Admin from "@/models/admin";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";
 import useWorkspaces from "@/hooks/useWorkspaces";
+import { copyText } from "@/utils/clipboard";
 
 interface NewInviteModalProps {
   closeModal: () => void;
@@ -45,17 +46,18 @@ export default function NewInviteModal({
 
   const copyInviteLink = () => {
     if (!invite) return false;
-    window.navigator.clipboard
-      .writeText(`${window.location.origin}/accept-invite/${invite.code}`)
-      .then(() => {
-        setCopied(true);
-        showToast(t("admin.newInvite.copiedToClipboard"), "success", {
-          clear: true,
-        });
-      })
-      .catch(() => {
-        showToast(t("admin.newInvite.copyFailed"), "error");
-      });
+    copyText(`${window.location.origin}/accept-invite/${invite.code}`).then(
+      (ok) => {
+        if (ok) {
+          setCopied(true);
+          showToast(t("admin.newInvite.copiedToClipboard"), "success", {
+            clear: true,
+          });
+        } else {
+          showToast(t("admin.newInvite.copyFailed"), "error");
+        }
+      },
+    );
   };
 
   const handleWorkspaceSelection = (workspaceId: string) => {

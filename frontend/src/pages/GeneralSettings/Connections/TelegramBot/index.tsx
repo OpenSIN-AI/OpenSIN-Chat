@@ -63,7 +63,7 @@ export default function TelegramBotSettings(): React.ReactElement {
       <ConnectedView
         config={currentConfig}
         onDisconnected={handleDisconnected}
-        onReconnected={handleConnected}
+        onReconnected={handleConnected as any}
       />
     </ConnectionsLayout>
   );

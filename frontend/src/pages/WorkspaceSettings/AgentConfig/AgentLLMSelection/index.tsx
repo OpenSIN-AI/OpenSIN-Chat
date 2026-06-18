@@ -56,7 +56,7 @@ const LLM_DEFAULT: LLMProvider = {
 const LLMS = [
   LLM_DEFAULT,
   ...ALL_LLM_PROVIDERS.filter((llm) => ENABLED_PROVIDERS.includes(llm.value)),
-];
+] as any[];
 
 type AgentLLMSelectionProps = {
   settings: any;

@@ -22,7 +22,9 @@ describe("useSlashCommandPresets", () => {
   beforeEach(() => vi.clearAllMocks());
 
   it("returns empty array initially", () => {
-    System.getSlashCommandPresets.mockReturnValue(new Promise(() => {}));
+    vi.mocked(System.getSlashCommandPresets).mockReturnValue(
+      new Promise(() => {}),
+    );
     const { result } = renderHook(() => useSlashCommandPresets(), { wrapper });
     expect(result.current.presets).toEqual([]);
   });

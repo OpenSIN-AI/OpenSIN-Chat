@@ -80,11 +80,11 @@ export default function ChatSettings({
           setHasChanges={setHasChanges}
         />
         <ChatModeSelection
-          workspace={workspace}
+          workspace={workspace as any}
           setHasChanges={setHasChanges}
         />
         <ChatHistorySettings
-          workspace={workspace}
+          workspace={workspace as any}
           setHasChanges={setHasChanges}
         />
         <ChatPromptSettings
@@ -98,7 +98,7 @@ export default function ChatSettings({
         />
         <ChatTemperatureSettings
           settings={settings}
-          workspace={workspace}
+          workspace={workspace as any}
           setHasChanges={setHasChanges}
         />
       </form>

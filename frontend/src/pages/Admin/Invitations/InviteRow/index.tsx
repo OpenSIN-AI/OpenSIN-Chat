@@ -4,6 +4,7 @@ import { titleCase } from "text-case";
 import Admin from "@/models/admin";
 import { Trash } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
+import { copyText } from "@/utils/clipboard";
 
 const DASH = "--";
 
@@ -22,10 +23,11 @@ export default function InviteRow({ invite }: { invite: any }) {
   };
   const copyInviteLink = () => {
     if (!invite) return false;
-    window.navigator.clipboard.writeText(
-      `${window.location.origin}/accept-invite/${invite.code}`,
+    copyText(`${window.location.origin}/accept-invite/${invite.code}`).then(
+      (ok) => {
+        if (ok) setCopied(true);
+      },
     );
-    setCopied(true);
   };
 
   useEffect(() => {
