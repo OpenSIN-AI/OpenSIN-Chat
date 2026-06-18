@@ -339,15 +339,20 @@ const websocket = {
             return new Promise(function (resolve) {
               let socketTimeout = null;
               socket.handleFeedback = (message) => {
-                const data = JSON.parse(message);
-                if (data.type !== "awaitingFeedback") return;
-                delete socket.handleFeedback;
-                clearTimeout(socketTimeout);
-                resolve({
-                  feedback: data.feedback,
-                  attachments: data.attachments || [],
-                });
-                return;
+                try {
+                  const data = JSON.parse(message);
+                  if (data.type !== "awaitingFeedback") return;
+                  delete socket.handleFeedback;
+                  clearTimeout(socketTimeout);
+                  resolve({
+                    feedback: data.feedback,
+                    attachments: data.attachments || [],
+                  });
+                  return;
+                } catch (e) {
+                  // eslint-disable-next-line no-console
+                  console.error("Error handling feedback response:", e);
+                }
               };
 
               socketTimeout = setTimeout(() => {

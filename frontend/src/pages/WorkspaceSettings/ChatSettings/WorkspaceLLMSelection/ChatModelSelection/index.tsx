@@ -66,7 +66,7 @@ export default function ChatModelSelection({
         className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
       >
         {defaultModels.length > 0 && (
-          <optgroup label="General models">
+          <optgroup label={t("chat.model.generalModels")}>
             {defaultModels.map((model: string) => {
               return (
                 <option
@@ -81,7 +81,7 @@ export default function ChatModelSelection({
           </optgroup>
         )}
         {Array.isArray(customModels) && customModels.length > 0 && (
-          <optgroup label="Discovered models">
+          <optgroup label={t("chat.model.discoveredModels")}>
             {customModels.map((model: any) => {
               return (
                 <option

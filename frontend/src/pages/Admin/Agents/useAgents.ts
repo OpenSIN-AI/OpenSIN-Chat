@@ -277,11 +277,11 @@ export function useAgents(): UseAgentsReturn {
         _preferences.settings?.disabled_agent_skills ?? [],
       );
       setImportedSkills(_preferences.settings?.imported_agent_skills ?? []);
-      showToast(`Agent preferences saved successfully.`, "success", {
+      showToast(t("agentConfig.preferencesSaved"), "success", {
         clear: true,
       });
     } else {
-      showToast(`Agent preferences failed to save.`, "error", { clear: true });
+      showToast(t("agentConfig.preferencesSaveFailed"), "error", { clear: true });
     }
 
     setHasChanges(false);
@@ -340,7 +340,7 @@ export function useAgents(): UseAgentsReturn {
     );
 
     if (!success) {
-      showToast(error || "Failed to toggle tool.", "error", { clear: true });
+      showToast(error || t("agentConfig.toggleToolFailed"), "error", { clear: true });
       return;
     }
 

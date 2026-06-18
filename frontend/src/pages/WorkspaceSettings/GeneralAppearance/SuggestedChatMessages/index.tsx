@@ -49,7 +49,7 @@ export default function SuggestedChatMessages({
       validMessages,
     );
     if (!success) {
-      showToast(`Failed to update suggested chat messages: ${error}`, "error");
+      showToast(t("general.message.saveFailed", { error }), "error");
       return;
     }
     setSuggestedMessages(validMessages);

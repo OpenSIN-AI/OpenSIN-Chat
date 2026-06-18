@@ -1034,23 +1034,38 @@ const SystemSettings = {
     });
     if (!setting) return [];
 
-    const connections = safeJsonParse(setting.value, []).map((conn) => {
-      let scheme = conn.engine;
-      if (scheme === "sql-server") scheme = "mssql";
-      if (scheme === "postgresql") scheme = "postgres";
-      const parser = new ConnectionStringParser({ scheme });
+    const parsedList = safeJsonParse(setting.value, []);
+    if (!Array.isArray(parsedList)) return [];
 
-      const parsed = parser.parse(conn.connectionString);
-      return {
-        ...conn,
-        username: parsed.username,
-        password: parsed.password,
-        host: parsed.hosts?.[0]?.host,
-        port: parsed.hosts?.[0]?.port,
-        database: parsed.endpoint,
-        scheme: parsed.scheme,
-      };
-    });
+    const connections = parsedList
+      .map((conn) => {
+        if (!conn || typeof conn !== "object" || !conn.engine) return null;
+        try {
+          let scheme = conn.engine;
+          if (scheme === "sql-server") scheme = "mssql";
+          if (scheme === "postgresql") scheme = "postgres";
+          const parser = new ConnectionStringParser({ scheme });
+
+          const parsedConn = parser.parse(conn.connectionString);
+          return {
+            ...conn,
+            username: parsedConn.username,
+            password: parsedConn.password,
+            host: parsedConn.hosts?.[0]?.host,
+            port: parsedConn.hosts?.[0]?.port,
+            database: parsedConn.endpoint,
+            scheme: parsedConn.scheme,
+          };
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error(
+            `Failed to parse SQL connection "${conn.database_id ?? conn.engine}":`,
+            e.message,
+          );
+          return null;
+        }
+      })
+      .filter((c) => c !== null);
 
     return connections;
   },

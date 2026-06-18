@@ -91,6 +91,7 @@ const pdfAnalyze = {
             if (status.status !== "completed")
               return JSON.stringify(status, null, 2);
             const result = PdfAnalysisPipeline.getResult(jobId);
+            if (!result) return "Job nicht gefunden.";
             return [
               `Analyse abgeschlossen (${result.totalPages} Seiten, ${result.chunks} Chunks, ${result.factsStored} Fakten gespeichert).`,
               ``,
@@ -205,6 +206,7 @@ const pdfAnalyze = {
             if (status.status !== "completed")
               return JSON.stringify(status, null, 2);
             const result = CrossCheckPipeline.getResult(jobId);
+            if (!result) return "Job nicht gefunden.";
             return result.report || "Kein Bericht verfügbar.";
           },
         });
@@ -272,9 +274,9 @@ const pdfAnalyze = {
             if (!status) return "Job nicht gefunden.";
             if (status.status !== "completed")
               return JSON.stringify(status, null, 2);
-            return (
-              CorpusPipeline.getResult(jobId).report || "Kein Report verfügbar."
-            );
+            const result = CorpusPipeline.getResult(jobId);
+            if (!result) return "Job nicht gefunden.";
+            return result.report || "Kein Report verfügbar.";
           },
         });
       },

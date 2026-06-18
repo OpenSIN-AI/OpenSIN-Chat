@@ -13,6 +13,7 @@ const TRANSLATIONS = {
       title: "LLM Preference",
       description:
         "OpenSIN Chat can work with many LLM providers. This will be the service which handles chatting.",
+      saveFailed: "Failed to save LLM settings: {{error}}",
     },
     userSetup: {
       title: "User Setup",
@@ -34,6 +35,10 @@ const TRANSLATIONS = {
         adminUsername: "Your admin username",
         adminPassword: "Your admin password",
       },
+      passwordRestricted:
+        "Your password has restricted characters in it. Allowed symbols are _,-,!,@,$,%,^,&,*,(,),;",
+      setPasswordFailed: "Failed to set password: {{error}}",
+      error: "Error: {{error}}",
     },
     data: {
       title: "Data Handling & Privacy",
@@ -1167,6 +1172,8 @@ const TRANSLATIONS = {
       save: "Save Messages",
       heading: "Explain to me",
       body: "the benefits of OpenSIN Chat",
+      saveFailed: "Failed to update suggested chat messages: {{error}}",
+      maxMessages: "Maximum of 4 messages allowed.",
     },
     delete: {
       title: "Delete Workspace",
@@ -1192,6 +1199,8 @@ const TRANSLATIONS = {
       description:
         "The specific chat model that will be used for this workspace. If empty, will use the system LLM preference.",
       waitingForModels: "-- waiting for models --",
+      generalModels: "General models",
+      discoveredModels: "Discovered models",
     },
     mode: {
       title: "Chat mode",
@@ -1806,6 +1815,13 @@ const TRANSLATIONS = {
       "Note: This may affect data quality and remove specific details from the original content.",
     finishNodeDescription:
       "This is the end of your agent flow. All steps above will be executed in sequence.",
+    loadFlowsFailed: "Failed to load available flows",
+    loadFlowFailed: "Failed to load flow",
+    nameAndDescriptionRequired:
+      "Please provide both a name and description for your flow",
+    flowSavedSuccess: "Agent flow saved successfully!",
+    saveFlowFailed: "Failed to save agent flow. {{error}}",
+    selectVariable: "Select variable",
     fileNode: {
       operation: "Operation",
       readFile: "Read File",
@@ -4247,6 +4263,9 @@ const TRANSLATIONS = {
     updateWorkspaceAgent: "Update workspace agent",
     workspaceUpdated: "Workspace updated!",
     error: "Error: {{message}}",
+    preferencesSaved: "Agent preferences saved successfully.",
+    preferencesSaveFailed: "Agent preferences failed to save.",
+    toggleToolFailed: "Failed to toggle tool.",
   },
   // ── Batch 10 — i18next/no-literal-string fixes ─────────────────────
   footer: {
@@ -4378,6 +4397,11 @@ const TRANSLATIONS = {
     status: "Status",
     lastSync: "Last Sync",
     loadError: "Failed to load sync status",
+    never: "Never",
+    justNow: "Just now",
+    minutesAgo: "{{count}}m ago",
+    hoursAgo: "{{count}}h ago",
+    daysAgo: "{{count}}d ago",
   },
   // ── Batch 14 — i18next/no-literal-string fixes ─────────────────────
   vectorSearch: {

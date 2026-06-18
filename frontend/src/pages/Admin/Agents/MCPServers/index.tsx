@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useEffect } from "react";
 import { titleCase } from "text-case";
 import { BookOpenText, ArrowClockwise, Warning } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
@@ -38,10 +38,12 @@ export function MCPServerHeader({
   const [initialLoaded, setInitialLoaded] = useState(false);
   const [reloading, setReloading] = useState(false);
 
-  if (!initialLoaded && !isLoading) {
-    setMcpServers(servers);
-    setInitialLoaded(true);
-  }
+  useEffect(() => {
+    if (!initialLoaded && !isLoading) {
+      setMcpServers(servers);
+      setInitialLoaded(true);
+    }
+  }, [initialLoaded, isLoading, servers, setMcpServers]);
 
   const refreshMCPServers = () => {
     if (window.confirm(t("agent.mcp.refresh-confirm"))) {

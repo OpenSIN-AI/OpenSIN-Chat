@@ -243,7 +243,7 @@ export default function LLMPreference({
 
     const { error } = await System.updateSystem(data);
     if (error) {
-      showToast(`Failed to save LLM settings: ${error}`, "error");
+      showToast(t("onboarding.llm.saveFailed", { error }), "error");
       return;
     }
     navigate(paths.onboarding.userSetup());

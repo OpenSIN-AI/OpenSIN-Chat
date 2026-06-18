@@ -981,9 +981,12 @@ async function updateENV(newENVs = {}, force = false, userId = null) {
   let error = "";
   const runAfterAll = [];
   const validKeys = Object.keys(KEY_MAPPING);
-  const ENV_KEYS = Object.keys(newENVs).filter(
-    (key) => validKeys.includes(key) && !newENVs[key].includes("******"), // strip out answers where the value is all asterisks
-  );
+  const ENV_KEYS = Object.keys(newENVs).filter((key) => {
+    if (!validKeys.includes(key)) return false;
+    const value = newENVs[key];
+    if (value === null || value === undefined) return true;
+    return !String(value).includes("******"); // strip out answers where the value is all asterisks
+  });
   const newValues = {};
 
   for (const key of ENV_KEYS) {

@@ -128,7 +128,7 @@ export default function AdminAgents() {
     );
 
     if (!success) {
-      showToast(error || "Failed to toggle tool.", "error", { clear: true });
+      showToast(error || t("agentConfig.toggleToolFailed"), "error", { clear: true });
       return;
     }
 
@@ -227,8 +227,7 @@ function MobileForm(props: FormProps) {
       onSubmit={props.handleSubmit}
       onChange={() =>
         !props.selectedFlow &&
-        props.setImportedSkills &&
-        props.toggleAgentSkill("")
+        props.setHasChanges(true)
       }
       ref={props.formEl}
       className="flex flex-col w-full p-4 mt-10"

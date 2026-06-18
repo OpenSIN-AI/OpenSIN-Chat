@@ -71,7 +71,7 @@ export default function UserSetup({
       disabled: isDisabled,
       onClick: handleForward,
     });
-  }, [selectedOption, singleUserPasswordValid, multiUserLoginValid]);
+  }, [selectedOption, singleUserPasswordValid, multiUserLoginValid, enablePassword]);
 
   useEffect(() => {
     setHeader({ title: TITLE, description: DESCRIPTION });
@@ -156,7 +156,7 @@ const JustMe = ({
 
     if (!PW_REGEX.test(String(formData.get("password")))) {
       showToast(
-        `Your password has restricted characters in it. Allowed symbols are _,-,!,@,$,%,^,&,*,(,),;`,
+        t("onboarding.userSetup.passwordRestricted"),
         "error",
       );
       return;
@@ -168,7 +168,7 @@ const JustMe = ({
     });
 
     if (error) {
-      showToast(`Failed to set password: ${error}`, "error");
+      showToast(t("onboarding.userSetup.setPasswordFailed", { error }), "error");
       return;
     }
 
@@ -206,7 +206,7 @@ const JustMe = ({
     } else {
       setSingleUserPasswordValid(false);
     }
-  });
+  }, [enablePassword, itemSelected, password, setSingleUserPasswordValid]);
   return (
     <div className="w-full flex items-center justify-center flex-col gap-y-6">
       <div className="flex flex-col border rounded-lg border-white/20 light:border-theme-sidebar-border p-8 items-center gap-y-4 w-full max-w-[600px]">
@@ -300,7 +300,7 @@ const MyTeam = ({
     };
     const { success, error } = await System.setupMultiUser(data);
     if (!success) {
-      showToast(`Error: ${error}`, "error");
+      showToast(t("onboarding.userSetup.error", { error }), "error");
       return;
     }
 

@@ -101,8 +101,10 @@ class LLMPerformanceMonitor {
 
       stream.metrics.total_tokens =
         stream.metrics.prompt_tokens + (stream.metrics.completion_tokens || 0);
+      const safeDuration =
+        stream.metrics.duration > 0 ? stream.metrics.duration : 1;
       stream.metrics.outputTps =
-        stream.metrics.completion_tokens / stream.metrics.duration;
+        stream.metrics.completion_tokens / safeDuration;
       return stream.metrics;
     };
     return stream;

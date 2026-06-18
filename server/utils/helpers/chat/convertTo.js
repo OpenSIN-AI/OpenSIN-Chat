@@ -78,10 +78,12 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
           ? {
               attachments:
                 responseJson.attachments?.length > 0
-                  ? responseJson.attachments.map((attachment) => ({
-                      type: "image",
-                      image: attachmentToDataUrl(attachment),
-                    }))
+                  ? responseJson.attachments
+                      .map((attachment) => ({
+                        type: "image",
+                        image: attachmentToDataUrl(attachment),
+                      }))
+                      .filter((a) => a.image !== null)
                   : [],
             }
           : {}),
@@ -166,10 +168,12 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
             text: prompt,
           },
           ...(attachments?.length > 0
-            ? attachments.map((attachment) => ({
-                type: "image",
-                image: attachmentToDataUrl(attachment),
-              }))
+            ? attachments
+                .map((attachment) => ({
+                  type: "image",
+                  image: attachmentToDataUrl(attachment),
+                }))
+                .filter((a) => a.image !== null)
             : []),
         ],
       },
@@ -246,9 +250,10 @@ function buildSystemPrompt(chat, prompt = null) {
  * @returns {string} The properly formatted data URL
  */
 function attachmentToDataUrl(attachment) {
+  if (!attachment || !attachment.contentString) return null;
   return attachment.contentString.startsWith("data:")
     ? attachment.contentString
-    : `data:${attachment.mime};base64,${attachment.contentString}`;
+    : `data:${attachment.mime || "application/octet-stream"};base64,${attachment.contentString}`;
 }
 
 module.exports = {

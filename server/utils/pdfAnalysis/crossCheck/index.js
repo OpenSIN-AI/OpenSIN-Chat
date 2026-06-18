@@ -281,9 +281,10 @@ class CrossCheckPipeline {
     if (!job) return null;
     if (job.status !== "completed")
       return { status: job.status, error: job.error };
-    const report = fs.existsSync(job.result.reportFile)
-      ? fs.readFileSync(job.result.reportFile, "utf8")
-      : null;
+    const report =
+      job.result?.reportFile && fs.existsSync(job.result.reportFile)
+        ? fs.readFileSync(job.result.reportFile, "utf8")
+        : null;
     return { status: "completed", ...job.result, report };
   }
 

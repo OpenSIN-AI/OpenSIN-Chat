@@ -2,6 +2,7 @@
 import PreLoader from "@/components/Preloader";
 import { useTranslation } from "react-i18next";
 import useVectorCount from "@/hooks/useVectorCount";
+import { useEffect } from "react";
 
 export default function VectorCount({
   reload,
@@ -14,7 +15,9 @@ export default function VectorCount({
   const { vectorCount, isLoading, mutate } = useVectorCount(workspace?.slug);
 
   // Re-fetch when reload prop changes
-  if (reload) mutate();
+  useEffect(() => {
+    if (reload) mutate();
+  }, [reload, mutate]);
 
   if (isLoading || vectorCount === null)
     return (

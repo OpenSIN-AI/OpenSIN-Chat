@@ -248,6 +248,17 @@ class ImportedPlugin {
           );
           const zipFile = fs.createWriteStream(zipFilePath);
           const request = httpLib.get(url, function (response) {
+            if (response.statusCode !== 200) {
+              // eslint-disable-next-line no-console
+              console.error(
+                "ImportedPlugin.importCommunityItemFromUrl - HTTP",
+                response.statusCode,
+                "downloading zip file",
+              );
+              zipFile.destroy();
+              resolve(false);
+              return;
+            }
             response.pipe(zipFile);
             zipFile.on("finish", () => {
               // eslint-disable-next-line no-console
@@ -255,6 +266,14 @@ class ImportedPlugin {
                 "ImportedPlugin.importCommunityItemFromUrl - downloaded zip file",
               );
               resolve(true);
+            });
+            zipFile.on("error", (error) => {
+              // eslint-disable-next-line no-console
+              console.error(
+                "ImportedPlugin.importCommunityItemFromUrl - zipFile stream error: ",
+                error,
+              );
+              resolve(false);
             });
           });
 

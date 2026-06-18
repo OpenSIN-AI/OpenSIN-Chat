@@ -77,24 +77,24 @@ function getStatusBadgeClass(status: string) {
   return "bg-gray-500/10 text-gray-400 border-gray-500/20";
 }
 
-function formatDate(dateString: string | null) {
-  if (!dateString) return "Never";
+function formatDate(dateString: string | null, t: (key: string) => string) {
+  if (!dateString) return t("politicianSync.never");
   const date = new Date(dateString);
   return date.toLocaleString();
 }
 
-function formatRelativeTime(dateString: string | null) {
-  if (!dateString) return "Never";
+function formatRelativeTime(dateString: string | null, t: (key: string, opts?: any) => string) {
+  if (!dateString) return t("politicianSync.never");
   const date = new Date(dateString);
   const now = new Date();
   const diffMs = now.getTime() - date.getTime();
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffMinutes = Math.floor(diffMs / (1000 * 60));
 
-  if (diffMinutes < 1) return "Just now";
-  if (diffMinutes < 60) return `${diffMinutes}m ago`;
-  if (diffHours < 24) return `${diffHours}h ago`;
-  return `${Math.floor(diffHours / 24)}d ago`;
+  if (diffMinutes < 1) return t("politicianSync.justNow");
+  if (diffMinutes < 60) return t("politicianSync.minutesAgo", { count: diffMinutes });
+  if (diffHours < 24) return t("politicianSync.hoursAgo", { count: diffHours });
+  return t("politicianSync.daysAgo", { count: Math.floor(diffHours / 24) });
 }
 
 export default function PoliticianSyncDashboard(): React.ReactElement {
@@ -237,13 +237,13 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
                       <div className="flex justify-between text-theme-text-secondary">
                         <span>{t("politicianSync.lastAttempt")}</span>
                         <span className="text-theme-text-primary">
-                          {formatRelativeTime(source.lastAttempt)}
+                          {formatRelativeTime(source.lastAttempt, t)}
                         </span>
                       </div>
                       <div className="flex justify-between text-theme-text-secondary">
                         <span>{t("politicianSync.lastSuccess")}</span>
                         <span className="text-theme-text-primary">
-                          {formatRelativeTime(source.lastSuccess)}
+                          {formatRelativeTime(source.lastSuccess, t)}
                         </span>
                       </div>
                       <div className="flex justify-between text-theme-text-secondary">
@@ -308,7 +308,7 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
                         </td>
                         <td className="px-4 py-3 text-theme-text-secondary">
                           {item.nextRetryAt
-                            ? formatRelativeTime(item.nextRetryAt)
+                            ? formatRelativeTime(item.nextRetryAt, t)
                             : "-"}
                         </td>
                         <td className="px-4 py-3">
@@ -331,7 +331,7 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
             <div className="mt-8 text-xs text-theme-text-secondary">
               <p>
                 {t("politicianSync.lastSync")}:{" "}
-                {formatDate(syncStatus.lastSync)}
+                {formatDate(syncStatus.lastSync, t)}
               </p>
             </div>
           )}

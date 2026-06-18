@@ -101,7 +101,7 @@ export default function AgentBuilder(): JSX.Element {
       setAvailableFlows(flows);
     } catch (error) {
       console.error(error);
-      showToast("Failed to load available flows", "error", { clear: true });
+      showToast(t("agentBuilder.loadFlowsFailed"), "error", { clear: true });
     }
   };
 
@@ -146,7 +146,7 @@ export default function AgentBuilder(): JSX.Element {
       setBlocks(flowBlocks);
     } catch (error) {
       console.error(error);
-      showToast("Failed to load flow", "error", { clear: true });
+      showToast(t("agentBuilder.loadFlowFailed"), "error", { clear: true });
     }
   };
 
@@ -209,7 +209,7 @@ export default function AgentBuilder(): JSX.Element {
         descriptionRef.current?.focus();
       }
       showToast(
-        "Please provide both a name and description for your flow",
+        t("agentBuilder.nameAndDescriptionRequired"),
         "error",
         {
           clear: true,
@@ -243,11 +243,11 @@ export default function AgentBuilder(): JSX.Element {
       if (!success) throw new Error(error);
 
       setCurrentFlowUuid(flow.uuid);
-      showToast("Agent flow saved successfully!", "success", { clear: true });
+      showToast(t("agentBuilder.flowSavedSuccess"), "success", { clear: true });
       await loadAvailableFlows();
     } catch (error: any) {
       console.error("Save error details:", error);
-      showToast(`Failed to save agent flow. ${error.message}`, "error", {
+      showToast(t("agentBuilder.saveFlowFailed", { error: error.message }), "error", {
         clear: true,
       });
     }
@@ -272,7 +272,7 @@ export default function AgentBuilder(): JSX.Element {
   const renderVariableSelect = (
     value: any,
     onChange: (value: string) => void,
-    placeholder = "Select variable",
+    placeholder = t("agentBuilder.selectVariable"),
   ) => (
     <select
       value={value || ""}

@@ -58,7 +58,7 @@ module.exports.SqlAgentQuery = {
             },
             additionalProperties: false,
           },
-          required: ["database_id", "table_name"],
+          required: ["database_id", "sql_query"],
           handler: async function ({ database_id = "", sql_query = "" }) {
             this.super.handlerProps.log(`Using the sql-query tool.`);
             try {

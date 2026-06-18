@@ -59,6 +59,28 @@ async function messageArrayCompressor(llm, messages = [], rawHistory = []) {
 
   const system = messages.shift();
   const user = messages.pop();
+  if (!user || !system) {
+    // Only one message present (or none). Cannonball it if it's a user
+    // prompt that exceeds the window so the model still gets a reply budget.
+    const sole = user || system;
+    if (!sole) return [];
+    if (sole.role === "user") {
+      const soleSize = tokenManager.countFromString(sole.content);
+      if (soleSize > llm.limits.user) {
+        return [
+          {
+            role: "user",
+            content: cannonball({
+              input: sole.content,
+              targetTokenSize: llm.promptWindowLimit() * 0.8,
+              tiktokenInstance: tokenManager,
+            }),
+          },
+        ];
+      }
+    }
+    return [sole];
+  }
   const userPromptSize = tokenManager.countFromString(user.content);
 
   // User prompt is the main focus here - we we prioritize it and allow
@@ -130,7 +152,7 @@ async function messageArrayCompressor(llm, messages = [], rawHistory = []) {
     const eligibleHistoryItems = [];
     var historyTokenCount = 0;
 
-    for (const [i, history] of rawHistory.reverse().entries()) {
+    for (const [i, history] of rawHistory.slice().reverse().entries()) {
       const [user, assistant] = convertToPromptHistory([history]);
       const [userTokens, assistantTokens] = [
         tokenManager.countFromString(user.content),
@@ -244,7 +266,7 @@ async function messageStringCompressor(llm, promptArgs = {}, rawHistory = []) {
     const eligibleHistoryItems = [];
     var historyTokenCount = 0;
 
-    for (const [i, history] of rawHistory.reverse().entries()) {
+    for (const [i, history] of rawHistory.slice().reverse().entries()) {
       const [user, assistant] = convertToPromptHistory([history]);
       const [userTokens, assistantTokens] = [
         tokenManager.countFromString(user.content),
@@ -410,7 +432,7 @@ function fillSourceWindow({
   // Looking at this function by itself you may think that this loop could be extreme for long history chats,
   // but this was already handled where `history` we derived. This comes from `recentChatHistory` which
   // includes a limit for history (default: 20). So this loop does not look as extreme as on first glance.
-  for (const chat of history.reverse()) {
+  for (const chat of history.slice().reverse()) {
     if (sources.length >= nDocs) {
       log(
         `Citations backfilled to ${nDocs} references from ${searchResults.length} original citations.`,

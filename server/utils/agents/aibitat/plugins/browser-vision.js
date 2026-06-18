@@ -377,28 +377,36 @@ const browserVision = {
                 () => controller.abort(),
                 FETCH_TIMEOUT_MS,
               );
-              const res = await fetch(url, {
-                signal: controller.signal,
-                headers: {
-                  "User-Agent":
-                    "Mozilla/5.0 (compatible; OpenSIN-BrowserVision/1.0)",
-                  Accept: "text/html,*/*;q=0.5",
-                },
-              });
-              clearTimeout(timer);
+              let res;
+              try {
+                res = await fetch(url, {
+                  signal: controller.signal,
+                  headers: {
+                    "User-Agent":
+                      "Mozilla/5.0 (compatible; OpenSIN-BrowserVision/1.0)",
+                    Accept: "text/html,*/*;q=0.5",
+                  },
+                });
+              } finally {
+                clearTimeout(timer);
+              }
 
               // Read first 32 KB only
               const reader = res.body?.getReader();
               let html = "";
               if (reader) {
-                let received = 0;
-                while (received < 32768) {
-                  const { done, value } = await reader.read();
-                  if (done) break;
-                  html += new TextDecoder().decode(value);
-                  received += value?.length ?? 0;
+                const decoder = new TextDecoder();
+                try {
+                  let received = 0;
+                  while (received < 32768) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    html += decoder.decode(value, { stream: true });
+                    received += value?.length ?? 0;
+                  }
+                } finally {
+                  await reader.cancel().catch(() => {});
                 }
-                reader.cancel();
               } else {
                 html = await res.text();
               }
