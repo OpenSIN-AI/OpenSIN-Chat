@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 const crypto = require("crypto");
-const { dumpENV } = require("../helpers/updateENV");
 
 // Class that is used to arbitrarily encrypt/decrypt string data via a persistent passphrase/salt that
 // is either user defined or is created and saved to the ENV on creation.
@@ -41,6 +40,7 @@ class EncryptionManager {
       this.log("Self-assigning key & salt for encrypting arbitrary data.");
       process.env[this.#keyENV] = crypto.randomBytes(32).toString("hex");
       process.env[this.#saltENV] = crypto.randomBytes(32).toString("hex");
+      const { dumpENV } = require("../helpers/updateENV");
       dumpENV();
     } else
       this.log("Loaded existing key & salt for encrypting arbitrary data.");

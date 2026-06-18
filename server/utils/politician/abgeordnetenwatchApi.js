@@ -123,7 +123,7 @@ class AbgeordnetenwatchApi {
     const res = await this.#fetch(url);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
-      res.text().catch(() => {});
+      res.text?.().catch(() => {});
       return null;
     }
     const data = await res.json();

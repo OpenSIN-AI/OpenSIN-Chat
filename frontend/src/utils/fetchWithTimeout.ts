@@ -12,7 +12,10 @@
  * @param {RequestInit & { timeoutMs?: number, signal?: AbortSignal }} [options]
  * @returns {Promise<Response>}
  */
-export async function fetchWithTimeout(url, options = {}) {
+export async function fetchWithTimeout(
+  url: string,
+  options: RequestInit & { timeoutMs?: number; signal?: AbortSignal } = {},
+) {
   const { timeoutMs = 8000, signal: externalSignal, ...rest } = options;
   const controller = new AbortController();
   const timer = setTimeout(() => controller?.abort(), timeoutMs);
@@ -32,7 +35,7 @@ export async function fetchWithTimeout(url, options = {}) {
     // Distinguish a real timeout/cancel from a network error.
     if (e.name === "AbortError") {
       if (externalSignal?.aborted) throw e; // intentional cancel — let caller ignore
-      throw new Error("Zeitüberschreitung – Server antwortet nicht.");
+      throw new Error("Zeitüberschreitung – der Server antwortet nicht.");
     }
     throw e;
   } finally {

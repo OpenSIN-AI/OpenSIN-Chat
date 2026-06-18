@@ -75,7 +75,7 @@ describe("AbgeordnetenwatchApi (21. WP / parliament_period=132)", () => {
     });
 
     it("stops when a page returns non-ok", async () => {
-      jest.spyOn(global, "fetch").mockResolvedValue({ ok: false, status: 500 });
+      jest.spyOn(global, "fetch").mockResolvedValue({ ok: false, status: 500, text: () => Promise.resolve("") });
       const all = await api.fetchAllPoliticians();
       expect(all).toEqual([]);
     });

@@ -99,18 +99,30 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
         }
 
         if (token) {
-          // Filter out reasoning tags from token text
           let filteredToken = token;
           if (reasoningMode) {
-            // Strip  tags and their content
-            filteredToken = token.replace(/<\/?arg_value\s*(?:[^>]*?)?>/gi, "");
-            // If we're inside a reasoning block, skip the token entirely
-            if (token.includes("") || (reasoningBlockOpen && !token.includes(""))) {
-              if (token.includes("")) reasoningBlockOpen = true;
-              if (token.includes("")) reasoningBlockOpen = false;
-              continue;
+            if (reasoningBlockOpen) {
+              const endIdx = filteredToken.indexOf("OutputModule");
+              if (endIdx !== -1) {
+                reasoningBlockOpen = false;
+                filteredToken = filteredToken.slice(endIdx + 8);
+              } else {
+                continue;
+              }
             }
-            if (reasoningBlockOpen) continue;
+            const startIdx = filteredToken.indexOf("InputModule");
+            if (startIdx !== -1) {
+              const afterStart = filteredToken.slice(startIdx + 8);
+              const endIdx = afterStart.indexOf("OutputModule");
+              if (endIdx !== -1) {
+                filteredToken = afterStart.slice(endIdx + 8);
+              } else {
+                reasoningBlockOpen = true;
+                continue;
+              }
+            }
+            if (!filteredToken) continue;
+            reasoningMode = false;
           }
           
           fullText += filteredToken;
