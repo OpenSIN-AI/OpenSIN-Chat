@@ -25,15 +25,20 @@ export default function CustomSiteSettings(): JSX.Element {
 
   async function handleSiteSettingUpdate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await Admin.updateSystemPreferences({
+    const { success, error } = await Admin.updateSystemPreferences({
       meta_page_title: title ?? null,
       meta_page_favicon: faviconUrl ?? null,
     });
+    if (!success) {
+      showToast(t("customSiteSettings.updateFailed", { error }), "error", {
+        clear: true,
+      });
+      return;
+    }
     showToast(t("customSiteSettings.updateSuccess"), "success", {
       clear: true,
     });
     setHasChanges(false);
-    return;
   }
 
   return (

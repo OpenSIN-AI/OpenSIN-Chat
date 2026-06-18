@@ -117,7 +117,7 @@ function apiOpenAICompatibleEndpoints(app) {
         if (!workspace) return response.status(401).end();
 
         const userMessage = messages.pop();
-        if (userMessage.role !== "user") {
+        if (!userMessage || userMessage.role !== "user") {
           return response.status(400).json({
             id: uuidv4(),
             type: "abort",
@@ -324,8 +324,8 @@ function apiOpenAICompatibleEndpoints(app) {
           });
         }
         return response.status(200).json({
-          first_id: [...data].splice(0)?.[0]?.id,
-          last_id: [...data].splice(-1)?.[0]?.id ?? data.splice(1)?.[0]?.id,
+          first_id: data[0]?.id,
+          last_id: data[data.length - 1]?.id,
           data,
           has_more: false,
         });

@@ -1584,6 +1584,10 @@ const TRANSLATIONS = {
         recommended: "Empfohlene Größe: 800 x 200",
         remove: "Löschen",
         replace: "Ersetzen",
+        uploadFailed: "Logo konnte nicht hochgeladen werden: {{error}}",
+        uploadSuccess: "Bild erfolgreich hochgeladen.",
+        removeFailed: "Logo konnte nicht entfernt werden: {{error}}",
+        removeSuccess: "Bild erfolgreich entfernt.",
       },
       "browser-appearance": {
         title: "Browser-Ansicht",
@@ -3751,6 +3755,10 @@ const TRANSLATIONS = {
     resizeSidebarTitle: "Ziehen um die Breite der Seitenleiste zu ändern",
     topNavigationMobile: "Obere Navigation - Mobile",
     openSidebar: "Seitenleiste öffnen",
+    hideSidebar: "Seitenleiste ausblenden",
+    showSidebar: "Seitenleiste einblenden",
+    hideSidebarShortcut: "Seitenleiste ausblenden ({{shortcut}})",
+    showSidebarShortcut: "Seitenleiste einblenden ({{shortcut}})",
     mobileNavigation: "Seitenleisten-Navigation - Mobile",
     settings: "Einstellungen",
     backToWorkspaces: "Zurück zu Workspaces",
@@ -3860,6 +3868,8 @@ const TRANSLATIONS = {
     },
   },
   footerCustomization: {
+    updateSuccess: "Footer-Icons erfolgreich aktualisiert.",
+    updateFailed: "Footer-Icons konnten nicht aktualisiert werden: {{error}}",
     newIconForm: {
       urlPlaceholder: "https://example.com",
       save: "Speichern",
@@ -3922,6 +3932,16 @@ const TRANSLATIONS = {
     delete: "Löschen",
     dragHere: "Hierher ziehen",
     folderThreadCount: "({{count}})",
+  },
+  activeWorkspaces: {
+    createTooltip: "Neuen Chat oder Ordner erstellen",
+    newChat: "Neuer Chat",
+    newFolder: "Neuer Ordner",
+    reorderFailed: "Workspace-Sortierung fehlgeschlagen.",
+    chatCreateFailed: "Chat konnte nicht erstellt werden: {{error}}",
+    folderNamePrompt: "Ordnername:",
+    folderCreateFailed: "Ordner konnte nicht erstellt werden: {{message}}",
+    uploadDocuments: "Dokumente in diesen Workspace für RAG-Indizierung hochladen",
   },
   privacyAndData: {
     telemetryToggled: "Anonyme Telemetrie wurde {{status}}.",
@@ -4006,6 +4026,7 @@ const TRANSLATIONS = {
   sidebarSearch: {
     searchingFor: 'Suche nach "{{searchTerm}}"',
     noResultsFound: "Keine Ergebnisse gefunden für",
+    searchFailed: "Suche fehlgeschlagen. Bitte erneut versuchen.",
     workspaces: "Workspaces",
     threads: "Threads",
     searchTermQuoted: '"{{searchTerm}}"',
@@ -4350,6 +4371,7 @@ const TRANSLATIONS = {
   customSiteSettings: {
     updateSuccess:
       "Seiteneinstellungen aktualisiert! Sie werden beim Neuladen der Seite wirksam.",
+    updateFailed: "Seiteneinstellungen konnten nicht aktualisiert werden: {{error}}",
     titlePlaceholder:
       "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",
     titleDefault: "OpenSIN Chat | Ihr persönliches LLM, trainiert auf allem",

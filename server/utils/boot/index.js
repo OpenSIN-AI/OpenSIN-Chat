@@ -37,10 +37,11 @@ function bootSSL(app, port = 3001) {
         new EncryptionManager();
         new BackgroundService().boot();
         await eagerLoadContextWindows();
+        registerSignalHandlers();
         // eslint-disable-next-line no-console
         console.log(`Primary server in HTTPS mode listening on port ${port}`);
       })
-      .on("error", catchSigTerms);
+      .on("error", handleServerError);
 
     require("@mintplex-labs/express-ws").default(app, server);
     return { app, server };
@@ -70,15 +71,16 @@ function bootHTTP(app, port = 3001) {
       new EncryptionManager();
       new BackgroundService().boot();
       await eagerLoadContextWindows();
+      registerSignalHandlers();
       // eslint-disable-next-line no-console
       console.log(`Primary server in HTTP mode listening on port ${port}`);
     })
-    .on("error", catchSigTerms);
+    .on("error", handleServerError);
 
   return { app, server: null };
 }
 
-function catchSigTerms() {
+function registerSignalHandlers() {
   process.once("SIGUSR2", function () {
     Telemetry.flush();
     process.kill(process.pid, "SIGUSR2");
@@ -87,6 +89,15 @@ function catchSigTerms() {
     Telemetry.flush();
     process.kill(process.pid, "SIGINT");
   });
+}
+
+function handleServerError(error) {
+  // eslint-disable-next-line no-console
+  console.error(
+    `\x1b[31m[SERVER ERROR]\x1b[0m ${error?.message || "Unknown error"}`,
+    error,
+  );
+  process.exit(1);
 }
 
 module.exports = {

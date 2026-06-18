@@ -49,7 +49,7 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     setOpen(false);
     const { thread, error } = await Workspace.threads.new(workspace.slug);
     if (error) {
-      showToast(`Chat konnte nicht erstellt werden: ${error}`, "error", {
+      showToast(t("activeWorkspaces.chatCreateFailed", { error }), "error", {
         clear: true,
       });
       return;
@@ -62,16 +62,18 @@ function WorkspaceQuickAdd({ workspace, isActive }: any) {
     e.preventDefault();
     e.stopPropagation();
     setOpen(false);
-    const name = window.prompt("Ordnername:")?.trim();
+    const name = window.prompt(t("activeWorkspaces.folderNamePrompt"))?.trim();
     if (!name) return;
     const { folder, message } = await Workspace.threads.folders.new(
       workspace.slug,
       name,
     );
     if (message || !folder) {
-      showToast(`Ordner konnte nicht erstellt werden: ${message}`, "error", {
-        clear: true,
-      });
+      showToast(
+        t("activeWorkspaces.folderCreateFailed", { message }),
+        "error",
+        { clear: true },
+      );
       return;
     }
     invalidateThreads(workspace.slug);
@@ -283,7 +285,9 @@ export default function ActiveWorkspaces() {
                                     showModal();
                                   }}
                                   data-tooltip-id="upload-workspace"
-                                  data-tooltip-content="Upload documents to this workspace for RAG indexing"
+                                  data-tooltip-content={t(
+                                    "activeWorkspaces.uploadDocuments",
+                                  )}
                                   className={`group/upload border-none rounded-md flex items-center justify-center ml-auto p-[2px] ${isActive ? "hover:bg-zinc-500 light:hover:bg-sky-800/30" : "hover:bg-zinc-500 light:hover:bg-slate-400"}`}
                                 >
                                   <UploadSimple

@@ -146,7 +146,7 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ["@openafd/piper-tts-web"],
+    include: ["@mintplex-labs/piper-tts-web"],
     rolldownOptions: {
       define: {
         global: "globalThis"

@@ -30,15 +30,25 @@ function setConnectionMeta(request, response, next) {
 
 async function validEmbedConfigId(request, response, next) {
   const { embedId } = request.params;
-
-  const embed = await EmbedConfig.get({ id: Number(embedId) });
-  if (!embed) {
+  const numericId = Number(embedId);
+  if (!Number.isFinite(numericId)) {
     response.sendStatus(404).end();
     return;
   }
 
-  response.locals.embedConfig = embed;
-  next();
+  try {
+    const embed = await EmbedConfig.get({ id: numericId });
+    if (!embed) {
+      response.sendStatus(404).end();
+      return;
+    }
+
+    response.locals.embedConfig = embed;
+    next();
+  } catch {
+    response.sendStatus(500).end();
+    return;
+  }
 }
 
 async function canRespond(request, response, next) {

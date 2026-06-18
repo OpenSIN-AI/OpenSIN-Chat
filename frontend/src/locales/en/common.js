@@ -2000,6 +2000,10 @@ const TRANSLATIONS = {
         recommended: "Recommended size: 800 x 200",
         remove: "Remove",
         replace: "Replace",
+        uploadFailed: "Failed to upload logo: {{error}}",
+        uploadSuccess: "Image uploaded successfully.",
+        removeFailed: "Failed to remove logo: {{error}}",
+        removeSuccess: "Image successfully removed.",
       },
       "browser-appearance": {
         title: "Browser Appearance",
@@ -3680,6 +3684,10 @@ const TRANSLATIONS = {
     resizeSidebarTitle: "Drag to change the sidebar width",
     topNavigationMobile: "Top navigation - Mobile",
     openSidebar: "Open sidebar",
+    hideSidebar: "Hide sidebar",
+    showSidebar: "Show sidebar",
+    hideSidebarShortcut: "Hide sidebar ({{shortcut}})",
+    showSidebarShortcut: "Show sidebar ({{shortcut}})",
     mobileNavigation: "Sidebar navigation - Mobile",
     settings: "Settings",
     backToWorkspaces: "Back to workspaces",
@@ -3789,6 +3797,8 @@ const TRANSLATIONS = {
     },
   },
   footerCustomization: {
+    updateSuccess: "Footer icons updated successfully.",
+    updateFailed: "Failed to update footer icons: {{error}}",
     newIconForm: {
       urlPlaceholder: "https://example.com",
       save: "Save",
@@ -3851,6 +3861,16 @@ const TRANSLATIONS = {
     delete: "Delete",
     dragHere: "Drag here",
     folderThreadCount: "({{count}})",
+  },
+  activeWorkspaces: {
+    createTooltip: "Create new chat or folder",
+    newChat: "New Chat",
+    newFolder: "New Folder",
+    reorderFailed: "Failed to reorder workspaces.",
+    chatCreateFailed: "Could not create chat: {{error}}",
+    folderNamePrompt: "Folder name:",
+    folderCreateFailed: "Could not create folder: {{message}}",
+    uploadDocuments: "Upload documents to this workspace for RAG indexing",
   },
   privacyAndData: {
     telemetryToggled: "Anonymous Telemetry has been {{status}}.",
@@ -3935,6 +3955,7 @@ const TRANSLATIONS = {
   sidebarSearch: {
     searchingFor: 'Searching for "{{searchTerm}}"',
     noResultsFound: "No results found for",
+    searchFailed: "Search failed. Please try again.",
     workspaces: "Workspaces",
     threads: "Threads",
     searchTermQuoted: '"{{searchTerm}}"',
@@ -4273,6 +4294,7 @@ const TRANSLATIONS = {
   customSiteSettings: {
     updateSuccess:
       "Site preferences updated! They will reflect on page reload.",
+    updateFailed: "Failed to update site preferences: {{error}}",
     titlePlaceholder: "OpenSIN Chat | Your personal LLM trained on anything",
     titleDefault: "OpenSIN Chat | Your personal LLM trained on anything",
     faviconPlaceholder: "url to your image",

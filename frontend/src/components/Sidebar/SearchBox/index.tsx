@@ -7,6 +7,7 @@ import paths from "@/utils/paths";
 import Preloader from "@/components/Preloader";
 import debounce from "lodash.debounce";
 import Workspace from "@/models/workspace";
+import showToast from "@/utils/toast";
 import { Tooltip } from "react-tooltip";
 
 const DEFAULT_SEARCH_RESULTS = {
@@ -34,7 +35,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
     } catch (error) {
       console.error(error);
       setSearchResults(DEFAULT_SEARCH_RESULTS);
-      showToast(t("searchBox.searchFailed"), "error", { clear: true });
+      showToast(t("sidebarSearch.searchFailed"), "error", { clear: true });
     } finally {
       setLoading(false);
     }

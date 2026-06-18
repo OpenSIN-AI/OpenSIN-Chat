@@ -8,10 +8,10 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
 import { useTranslation } from "react-i18next";
-import { t } from "i18next";
 import useCustomAppName from "@/hooks/useCustomAppName";
 
 const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState("");
   const [recoveryCodeInputs, setRecoveryCodeInputs] = useState(
     Array(2).fill(""),

@@ -37,7 +37,7 @@ export default function CustomLogo(): JSX.Element {
     const { success, error } = await System.uploadLogo(formData);
     URL.revokeObjectURL(objectURL);
     if (!success) {
-      showToast(`Failed to upload logo: ${error}`, "error");
+      showToast(t("customization.items.logo.uploadFailed", { error }), "error");
       setLogo(_initLogo);
       return;
     }
@@ -46,7 +46,7 @@ export default function CustomLogo(): JSX.Element {
     _setLogo(logoURL);
     refreshIsDefaultLogo();
 
-    showToast("Image uploaded successfully.", "success");
+    showToast(t("customization.items.logo.uploadSuccess"), "success");
     setIsDefaultLogo(false);
   };
 
@@ -57,7 +57,7 @@ export default function CustomLogo(): JSX.Element {
     const { success, error } = await System.removeCustomLogo();
     if (!success) {
       console.error("Failed to remove logo:", error);
-      showToast(`Failed to remove logo: ${error}`, "error");
+      showToast(t("customization.items.logo.removeFailed", { error }), "error");
       const { logoURL } = await System.fetchLogo();
       setLogo(logoURL);
       setIsDefaultLogo(false);
@@ -68,7 +68,7 @@ export default function CustomLogo(): JSX.Element {
     _setLogo(logoURL);
     refreshIsDefaultLogo();
 
-    showToast("Image successfully removed.", "success");
+    showToast(t("customization.items.logo.removeSuccess"), "success");
   };
 
   const triggerFileInputClick = () => {

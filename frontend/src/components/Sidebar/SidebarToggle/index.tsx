@@ -1,14 +1,9 @@
 // SPDX-License-Identifier: MIT
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { SidebarSimple } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 import paths from "@/utils/paths";
 
 const SIDEBAR_TOGGLE_STORAGE_KEY = "openafd_sidebar_toggle";
@@ -32,7 +27,11 @@ const SidebarToggleContext = createContext<SidebarToggleContextValue>({
   canToggleSidebar: true,
 });
 
-export function SidebarToggleProvider({ children }: { children: React.ReactNode }) {
+export function SidebarToggleProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [showSidebar, setShowSidebar] = useState(previousSidebarState());
   const [canToggleSidebar, setCanToggleSidebar] = useState(true);
   const { pathname } = useLocation();
@@ -100,8 +99,12 @@ export function useSidebarToggle() {
 }
 
 export function ToggleSidebarButton({ showSidebar, setShowSidebar }: any) {
+  const { t } = useTranslation();
   const isMac = navigator.userAgent.includes("Mac");
   const shortcut = isMac ? "⌘ + Shift + S" : "Ctrl + Shift + S";
+
+  const hideLabel = t("sidebar.hideSidebarShortcut", { shortcut });
+  const showLabel = t("sidebar.showSidebarShortcut", { shortcut });
 
   return (
     <>
@@ -110,16 +113,8 @@ export function ToggleSidebarButton({ showSidebar, setShowSidebar }: any) {
         className={`hidden md:block border-none bg-transparent outline-none ring-0 absolute transition-all duration-500 z-10 ${showSidebar ? "top-[18px] left-[248px]" : "top-[20px] left-[30px]"}`}
         onClick={() => setShowSidebar((prev: boolean) => !prev)}
         data-tooltip-id="sidebar-toggle"
-        data-tooltip-content={
-          showSidebar
-            ? `Hide Sidebar (${shortcut})`
-            : `Show Sidebar (${shortcut})`
-        }
-        aria-label={
-          showSidebar
-            ? `Hide Sidebar (${shortcut})`
-            : `Show Sidebar (${shortcut})`
-        }
+        data-tooltip-content={showSidebar ? hideLabel : showLabel}
+        aria-label={showSidebar ? hideLabel : showLabel}
       >
         <SidebarSimple
           className="text-theme-text-secondary hover:text-theme-text-primary"

@@ -16,7 +16,7 @@
 # After first start run the setup script to enable pgvector and create buckets:
 #   node scripts/supabase-setup.mjs
 
-name: openafd-supabase
+name: opensin-supabase
 
 networks:
   supabase-net:
@@ -30,7 +30,7 @@ services:
 
   # ─── PostgreSQL 15 with pgvector extension ──────────────────────────────────
   db:
-    container_name: openafd-supabase-db
+    container_name: opensin-supabase-db
     image: supabase/postgres:15.6.1.148
     restart: unless-stopped
     healthcheck:
@@ -63,7 +63,7 @@ services:
 
   # ─── Supabase Storage ───────────────────────────────────────────────────────
   storage:
-    container_name: openafd-supabase-storage
+    container_name: opensin-supabase-storage
     image: supabase/storage-api:v1.11.13
     restart: unless-stopped
     depends_on:
@@ -91,7 +91,7 @@ services:
 
   # ─── PostgREST (required by Storage API for RLS checks) ─────────────────────
   rest:
-    container_name: openafd-supabase-rest
+    container_name: opensin-supabase-rest
     image: postgrest/postgrest:v12.2.0
     restart: unless-stopped
     depends_on:
@@ -110,7 +110,7 @@ services:
 
   # ─── Image transformation (optional, used by Storage API) ───────────────────
   imgproxy:
-    container_name: openafd-supabase-imgproxy
+    container_name: opensin-supabase-imgproxy
     image: darthsim/imgproxy:v3.8.0
     restart: unless-stopped
     environment:
@@ -126,7 +126,7 @@ services:
   # ─── Kong API Gateway ────────────────────────────────────────────────────────
   # Exposes Storage API at http://localhost:8000/storage/v1
   kong:
-    container_name: openafd-supabase-kong
+    container_name: opensin-supabase-kong
     image: kong:2.8.1
     restart: unless-stopped
     depends_on:
@@ -150,7 +150,7 @@ services:
 
   # ─── pg-meta (Postgres metadata API / DB admin) ──────────────────────────────
   meta:
-    container_name: openafd-supabase-meta
+    container_name: opensin-supabase-meta
     image: supabase/postgres-meta:v0.84.2
     restart: unless-stopped
     depends_on:

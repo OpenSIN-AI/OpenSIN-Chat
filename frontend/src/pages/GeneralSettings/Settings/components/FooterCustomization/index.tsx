@@ -31,7 +31,7 @@ export default function FooterCustomization() {
     });
 
     if (!success) {
-      showToast(`Failed to update footer icons - ${error}`, "error", {
+      showToast(t("footerCustomization.updateFailed", { error }), "error", {
         clear: true,
       });
       return;
@@ -39,7 +39,9 @@ export default function FooterCustomization() {
 
     window.localStorage.removeItem(System.cacheKeys.footerIcons);
     setFooterIcons(updatedIcons);
-    showToast("Successfully updated footer icons.", "success", { clear: true });
+    showToast(t("footerCustomization.updateSuccess"), "success", {
+      clear: true,
+    });
   };
 
   const handleRemoveIcon = (index: number) => {

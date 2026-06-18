@@ -31,6 +31,7 @@ export default function ThreadContainer({
   isVirtualThread = false,
 }) {
   const { threadSlug = null } = useParams();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const {
     threads,
