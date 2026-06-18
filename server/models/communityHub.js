@@ -1,6 +1,18 @@
 // SPDX-License-Identifier: MIT
 const ImportedPlugin = require("../utils/agents/imported");
 
+const HUB_TIMEOUT_MS = 15_000;
+
+function withTimeout(options = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), HUB_TIMEOUT_MS);
+  return {
+    ...options,
+    signal: controller.signal,
+    _timer: timer,
+  };
+}
+
 /**
  * An interface to the OpenSIN Chat Community Hub external API.
  */
@@ -37,10 +49,13 @@ const CommunityHub = {
    * @returns {Promise<{agentSkills: {items: [], hasMore: boolean, totalCount: number}, systemPrompts: {items: [], hasMore: boolean, totalCount: number}, slashCommands: {items: [], hasMore: boolean, totalCount: number}}>}
    */
   fetchExploreItems: async function () {
-    return await fetch(`${this.apiBase}/explore`, {
-      method: "GET",
-    })
+    const opts = withTimeout({ method: "GET" });
+    return await fetch(`${this.apiBase}/explore`, opts)
       .then((response) => response.json())
+      .then((res) => {
+        clearTimeout(opts._timer);
+        return res;
+      })
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.error("Error fetching explore items:", error);

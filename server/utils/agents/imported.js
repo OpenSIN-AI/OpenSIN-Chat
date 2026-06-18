@@ -276,6 +276,15 @@ class ImportedPlugin {
               resolve(false);
             });
           });
+          request.setTimeout(30000, () => {
+            request.destroy();
+            zipFile.destroy();
+            // eslint-disable-next-line no-console
+            console.error(
+              "ImportedPlugin.importCommunityItemFromUrl - download timed out after 30s",
+            );
+            resolve(false);
+          });
 
           request.on("error", (error) => {
             // eslint-disable-next-line no-console

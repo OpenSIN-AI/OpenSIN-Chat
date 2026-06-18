@@ -157,12 +157,21 @@ function apiReportsEndpoints(app) {
       const filePath = path.join(STORAGE_DIR, safeName);
       if (!fs.existsSync(filePath))
         return response.status(404).json({ error: "Report not found" });
+      const stat = fs.statSync(filePath);
       response.setHeader("Content-Type", "application/pdf");
+      response.setHeader("Content-Length", stat.size);
       response.setHeader(
         "Content-Disposition",
         `inline; filename="${safeName}"`,
       );
-      fs.createReadStream(filePath).pipe(response);
+      const stream = fs.createReadStream(filePath);
+      stream.on("error", (streamErr) => {
+        if (!response.headersSent)
+          response.status(500).json({ error: "Internal Server Error" });
+        else response.end();
+        logger.error(`[reports] stream error: ${streamErr.message}`, streamErr);
+      });
+      stream.pipe(response);
     } catch (err) {
       logger.error(`[reports] ${err.message}`, err);
       response.status(500).json({ error: "Internal Server Error" });

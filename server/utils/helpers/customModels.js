@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 const { fireworksAiModels } = require("../AiProviders/fireworksAi");
-const { ElevenLabsTTS } = require("../TextToSpeech/elevenLabs");
 const { parseLMStudioBasePath } = require("../AiProviders/lmStudio");
 const { parseNvidiaNimBasePath } = require("../AiProviders/nvidiaNim");
 const { parseOpencodeZenBasePath } = require("../AiProviders/opencodeZen");
@@ -440,35 +439,6 @@ async function getMistralModels(apiKey = null) {
   if (models.length > 0 && !!apiKey) process.env.MISTRAL_API_KEY = apiKey;
   return { models, error: null };
 }
-
-async function getElevenLabsModels(apiKey = null) {
-  const models = (await ElevenLabsTTS.voices(apiKey)).map((model) => {
-    return {
-      id: model.voice_id,
-      organization: model.category,
-      name: model.name,
-    };
-  });
-
-  if (models.length === 0) {
-    return {
-      models: [
-        {
-          id: "21m00Tcm4TlvDq8ikWAM",
-          organization: "premade",
-          name: "Rachel (default)",
-        },
-      ],
-      error: null,
-    };
-  }
-
-  if (models.length > 0 && !!apiKey) process.env.TTS_ELEVEN_LABS_KEY = apiKey;
-  return { models, error: null };
-}
-
-
-
 
 async function getXAIModels(_apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
