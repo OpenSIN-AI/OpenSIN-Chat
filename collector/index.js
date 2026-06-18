@@ -186,7 +186,7 @@ app.post(
   "/process-raw-text",
   [verifyPayloadIntegrity],
   async function (request, response) {
-    const { textContent, metadata } = reqBody(request);
+    const { textContent, metadata = {} } = reqBody(request);
     try {
       const {
         success,
@@ -226,11 +226,8 @@ app
     // eslint-disable-next-line no-console
     console.log(`Document processor app listening on port ${COLLECTOR_PORT}`);
   })
-  .on("error", function (_) {
-    process.once("SIGUSR2", function () {
-      process.kill(process.pid, "SIGUSR2");
-    });
-    process.on("SIGINT", function () {
-      process.kill(process.pid, "SIGINT");
-    });
+  .on("error", function (err) {
+    // eslint-disable-next-line no-console
+    console.error("Failed to start collector server:", err.message);
+    process.exit(1);
   });

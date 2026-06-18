@@ -34,6 +34,7 @@ import useChatHistoryScrollHandle from "@/hooks/useChatHistoryScrollHandle";
 import { ThoughtExpansionProvider } from "./ThoughtContainer";
 import { MessageActionsProvider } from "./MessageActionsContext";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
+import { useTranslation } from "react-i18next";
 
 export default forwardRef(function (
   {
@@ -48,6 +49,7 @@ export default forwardRef(function (
 ) {
   const lastScrollTopRef = useRef(0);
   const chatHistoryRef = useRef(null);
+  const { t } = useTranslation();
   const { threadSlug = null } = useParams();
   const { showing, hideModal } = useManageWorkspaceModal();
   const [isAtBottom, setIsAtBottom] = useState(true as any);
@@ -361,7 +363,7 @@ function buildMessages({
           key={props.uuid}
           fallback={
             <div className="text-theme-text-secondary text-xs italic">
-              Chart wird geladen…
+              {t("chat_window.chart_loading")}
             </div>
           }
         >

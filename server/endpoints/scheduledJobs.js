@@ -26,7 +26,7 @@ function scheduledJobEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).json({ tools: [] });
+        response.status(500).json({ tools: [] });
       }
     },
   );
@@ -107,7 +107,9 @@ function scheduledJobEndpoints(app) {
           if (!killed) await ScheduledJobRun.kill(run.id);
           return response.status(200).json({ success: true });
         }
-      } catch {
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e?.message || "Unknown error", e);
         response.sendStatus(500);
       }
     },

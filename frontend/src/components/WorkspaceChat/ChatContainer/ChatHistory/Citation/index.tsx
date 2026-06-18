@@ -266,7 +266,7 @@ export function CitationDetailModal({ source, onClose }: any) {
                       <div className="w-full flex items-center text-xs text-white/60 light:text-slate-500 gap-x-2 cursor-default">
                         <div
                           data-tooltip-id="similarity-score"
-                          data-tooltip-content={`This is the semantic similarity score of this chunk of text compared to your query calculated by the vector database.`}
+                          data-tooltip-content={t("citation.similarityTooltip")}
                           className="flex items-center gap-x-1"
                         >
                           <Info size={14} />

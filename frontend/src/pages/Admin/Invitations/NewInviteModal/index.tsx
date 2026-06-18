@@ -28,26 +28,36 @@ export default function NewInviteModal({
     setError(null);
     e.preventDefault();
 
-    const { invite: newInvite, error } = await Admin.newInvite({
-      role: null,
-      workspaceIds: selectedWorkspaceIds,
-    });
-    if (!!newInvite) {
-      setInvite(newInvite);
-      onSuccess();
+    try {
+      const { invite: newInvite, error } = await Admin.newInvite({
+        role: null,
+        workspaceIds: selectedWorkspaceIds,
+      });
+      if (!!newInvite) {
+        setInvite(newInvite);
+        onSuccess();
+      }
+      setError(error);
+    } catch (err: any) {
+      setError(err?.message ?? "Failed to create invite");
     }
-    setError(error);
   };
 
   const copyInviteLink = () => {
     if (!invite) return false;
-    window.navigator.clipboard.writeText(
-      `${window.location.origin}/accept-invite/${invite.code}`,
-    );
-    setCopied(true);
-    showToast(t("admin.newInvite.copiedToClipboard"), "success", {
-      clear: true,
-    });
+    window.navigator.clipboard
+      .writeText(
+        `${window.location.origin}/accept-invite/${invite.code}`,
+      )
+      .then(() => {
+        setCopied(true);
+        showToast(t("admin.newInvite.copiedToClipboard"), "success", {
+          clear: true,
+        });
+      })
+      .catch(() => {
+        showToast(t("admin.newInvite.copyFailed"), "error");
+      });
   };
 
   const handleWorkspaceSelection = (workspaceId: string) => {
@@ -60,13 +70,11 @@ export default function NewInviteModal({
   };
 
   useEffect(() => {
-    function resetStatus() {
-      if (!copied) return false;
-      setTimeout(() => {
-        setCopied(false);
-      }, 3000);
-    }
-    resetStatus();
+    if (!copied) return;
+    const timer = setTimeout(() => {
+      setCopied(false);
+    }, 3000);
+    return () => clearTimeout(timer);
   }, [copied]);
 
   return (

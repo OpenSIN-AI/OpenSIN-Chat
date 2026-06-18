@@ -164,7 +164,8 @@ class OpenAiLLM {
         }),
     );
 
-    if (!result.output.hasOwnProperty("output_text")) return null;
+    if (!result.output || !result.output.hasOwnProperty("output_text"))
+      return null;
 
     const usage = result.output.usage || {};
     return {

@@ -199,13 +199,26 @@ async function loadSource(source) {
 
 async function fetchBuffer(url) {
   await assertSafeUrl(url);
-  const res = await fetch(url, {
-    headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
-  });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const buf = Buffer.from(await res.arrayBuffer());
-  if (buf.byteLength > MAX_FETCH_BYTES) return buf.subarray(0, MAX_FETCH_BYTES);
-  return buf;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      redirect: "manual",
+      headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
+    });
+    if ([301, 302, 307, 308].includes(res.status)) {
+      const loc = res.headers.get("location");
+      if (!loc) throw new Error("Redirect ohne Ziel.");
+      return fetchBuffer(new URL(loc, url).toString());
+    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const buf = Buffer.from(await res.arrayBuffer());
+    if (buf.byteLength > MAX_FETCH_BYTES) return buf.subarray(0, MAX_FETCH_BYTES);
+    return buf;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 async function loadSourceSafe(source) {

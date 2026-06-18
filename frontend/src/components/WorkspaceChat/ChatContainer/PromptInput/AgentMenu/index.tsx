@@ -58,19 +58,14 @@ export function AvailableAgents({
   }, []);
 
   useEffect(() => {
-    function listenForOutsideClick() {
-      if (!showing || !formRef.current) return false;
-      document.addEventListener("click", closeIfOutside);
+    if (!showing) return;
+    function closeIfOutside({ target }: any) {
+      if (target.id === "agent-list-btn") return;
+      if (!formRef?.current?.contains(target)) setShowing(false);
     }
-    listenForOutsideClick();
+    document.addEventListener("click", closeIfOutside);
+    return () => document.removeEventListener("click", closeIfOutside);
   }, [showing]);
-
-  const closeIfOutside = ({ target }: any) => {
-    if (target.id === "agent-list-btn") return;
-    const isOutside = !formRef?.current?.contains(target);
-    if (!isOutside) return;
-    setShowing(false);
-  };
 
   const handleAgentClick = () => {
     setShowing(false);

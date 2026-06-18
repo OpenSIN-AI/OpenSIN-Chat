@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { X, Terminal, Bug, Trash } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import ChatSidebar, { useConsoleSidebar } from "../ChatSidebar";
+import { baseHeaders } from "@/utils/request";
 
 const TABS = ["logs", "terminal"] as const;
 type TabName = (typeof TABS)[number];
@@ -118,7 +119,7 @@ function TerminalTab() {
     try {
       const res = await fetch("/api/utils/terminal/exec", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ command: trimmed }),
       });
       if (res.ok) {
@@ -160,7 +161,7 @@ function TerminalTab() {
       setInput(cmdHistory[idx] ?? "");
     } else if (e.key === "ArrowDown") {
       e.preventDefault();
-      const idx = Math.max(historyIdx + 1, -1); // FIXED: +1 not -1
+      const idx = Math.max(historyIdx - 1, -1);
       setHistoryIdx(idx);
       setInput(idx === -1 ? "" : (cmdHistory[idx] ?? ""));
     }

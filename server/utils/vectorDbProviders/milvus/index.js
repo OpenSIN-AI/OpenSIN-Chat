@@ -28,7 +28,7 @@ class Milvus extends VectorDatabase {
   // If the first char of the collection is not an underscore or letter the collection name will be invalid.
   normalize(inputString) {
     let normalized = inputString.replace(/[^a-zA-Z0-9_]/g, "_");
-    if (new RegExp(/^[a-zA-Z_]/).test(normalized.slice(0, 1)))
+    if (!new RegExp(/^[a-zA-Z_]/).test(normalized.slice(0, 1)))
       normalized = `openafd_${normalized}`;
     return normalized;
   }
@@ -60,12 +60,13 @@ class Milvus extends VectorDatabase {
   async totalVectors() {
     const { client } = await this.connect();
     const { collection_names } = await client.listCollections();
-    const total = collection_names.reduce(async (acc, collection_name) => {
+    let total = 0;
+    for (const collection_name of collection_names) {
       const statistics = await client.getCollectionStatistics({
         collection_name: this.normalize(collection_name),
       });
-      return Number(acc) + Number(statistics?.data?.row_count ?? 0);
-    }, 0);
+      total += Number(statistics?.data?.row_count ?? 0);
+    }
     return total;
   }
 

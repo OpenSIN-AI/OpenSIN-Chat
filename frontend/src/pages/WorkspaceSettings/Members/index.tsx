@@ -50,8 +50,8 @@ export default function Members({ workspace }: { workspace: { id: number } }) {
         </thead>
         <tbody>
           {workspaceUsers.length > 0 ? (
-            workspaceUsers.map((user: any, index: number) => (
-              <WorkspaceMemberRow key={index} user={user} />
+            workspaceUsers.map((user: any) => (
+              <WorkspaceMemberRow key={user.id} user={user} />
             ))
           ) : (
             <tr>

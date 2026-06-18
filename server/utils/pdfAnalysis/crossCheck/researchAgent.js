@@ -88,8 +88,11 @@ async function webSearch(query) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ q: query, num: RESULTS_PER_QUERY }),
-    }).then((r) => r.json());
-    return (res.organic || []).map((r) => ({
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) throw new Error(`Serper HTTP ${res.status}`);
+    const json = await res.json();
+    return (json.organic || []).map((r) => ({
       title: r.title,
       url: r.link,
       snippet: r.snippet || "",
@@ -103,8 +106,11 @@ async function webSearch(query) {
     });
     const res = await fetch(
       `https://www.searchapi.io/api/v1/search?${params}`,
-    ).then((r) => r.json());
-    return (res.organic_results || [])
+      { signal: AbortSignal.timeout(15000) },
+    );
+    if (!res.ok) throw new Error(`SearchApi HTTP ${res.status}`);
+    const json = await res.json();
+    return (json.organic_results || [])
       .slice(0, RESULTS_PER_QUERY)
       .map((r) => ({ title: r.title, url: r.link, snippet: r.snippet || "" }));
   }

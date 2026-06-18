@@ -6,7 +6,6 @@ import {
   FolderOpen,
   Database,
   Newspaper,
-  Terminal,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import useLoginMode from "@/hooks/useLoginMode";
@@ -61,11 +60,6 @@ export default function ChatSettingsMenu() {
       id: "political",
       icon: Newspaper,
       label: t("right_sidebar.icon_political", "Politisches"),
-    },
-    {
-      id: "console",
-      icon: Terminal,
-      label: t("right_sidebar.icon_console", "Konsole & Terminal"),
     },
   ];
 

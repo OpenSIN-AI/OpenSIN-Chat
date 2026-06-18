@@ -19,11 +19,15 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
     const data = {};
     const form = new FormData(formEl.current);
     for (const [key, value] of form.entries()) data[key] = value;
-    const { workspace, message } = await Workspace.new(data);
-    if (!!workspace) {
-      navigate(paths.workspace.chat(workspace.slug));
+    try {
+      const { workspace, message } = await Workspace.new(data);
+      if (!!workspace) {
+        navigate(paths.workspace.chat(workspace.slug));
+      }
+      setError(message);
+    } catch (err) {
+      setError(t("newWorkspaceModal.creationFailed", { error: err?.message }));
     }
-    setError(message);
   };
 
   return (

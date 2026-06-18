@@ -348,12 +348,12 @@ class GenericOpenAiLLM {
             // Filter out reasoning tags from token text
             let filteredToken = token;
             if (reasoningMode) {
-              // Strip  tags and their content
-              filteredToken = token.replace(/<\/?arg_value\s*(?:[^>]*?)?>/gi, "");
+              // Strip <think> tags and their content
+              filteredToken = token.replace(/<\/?think\s*(?:[^>]*?)?>/gi, "");
               // If we're inside a reasoning block, skip the token entirely
-              if (token.includes("") || (reasoningBlockOpen && !token.includes(""))) {
-                if (token.includes("")) reasoningBlockOpen = true;
-                if (token.includes("")) reasoningBlockOpen = false;
+              if (token.includes("<think>") || (reasoningBlockOpen && !token.includes("</think>"))) {
+                if (token.includes("<think>")) reasoningBlockOpen = true;
+                if (token.includes("</think>")) reasoningBlockOpen = false;
                 continue;
               }
               if (reasoningBlockOpen) continue;

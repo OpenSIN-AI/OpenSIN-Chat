@@ -20,11 +20,15 @@ export default function NewWorkspaceModal({
     setError(null);
     e.preventDefault();
     const form = new FormData(e.currentTarget);
-    const { workspace, error: createError } = await Admin.newWorkspace(
-      form.get("name") as string,
-    );
-    if (!!workspace) window.location.reload();
-    setError(createError);
+    try {
+      const { workspace, error: createError } = await Admin.newWorkspace(
+        form.get("name") as string,
+      );
+      if (!!workspace) window.location.reload();
+      setError(createError);
+    } catch (err: any) {
+      setError(err?.message ?? "Failed to create workspace");
+    }
   };
 
   return (

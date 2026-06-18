@@ -41,11 +41,13 @@ function embedManagementEndpoints(app) {
         const user = await userFromSession(request, response);
         const data = reqBody(request);
         const { embed, message: error } = await EmbedConfig.new(data, user?.id);
-        await EventLogs.logEvent(
-          "embed_created",
-          { embedId: embed.id },
-          user?.id,
-        );
+        if (embed) {
+          await EventLogs.logEvent(
+            "embed_created",
+            { embedId: embed.id },
+            user?.id,
+          );
+        }
         response.status(200).json({ embed, error });
       } catch (e) {
         // eslint-disable-next-line no-console

@@ -209,7 +209,9 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           ? await this.options.evaluate(page, browser)
           : await page.evaluate(() => document.body.innerHTML);
 
-        await browser.close();
+        // evaluate() already closes the browser; only close if we used
+        // the fallback path that didn't call evaluate.
+        if (!this.options?.evaluate) await browser.close();
         return bodyHTML;
       };
     }

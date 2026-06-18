@@ -46,21 +46,18 @@ function handleSignOut() {
   window.location.replace(paths.home());
 }
 
-function Avatar({ pfp, initials }: { pfp?: string | null; initials: string }) {
+function Avatar({ pfp, initials, size = 32 }: { pfp?: string | null; initials: string; size?: number }) {
+  const cls = `rounded-full object-cover shrink-0`;
+  const style = { width: size, height: size };
   if (pfp) {
-    return (
-      <img
-        src={pfp}
-        alt=""
-        aria-hidden="true"
-        className="h-8 w-8 rounded-full object-cover shrink-0"
-      />
-    );
+    return <img src={pfp} alt="" aria-hidden="true" className={cls} style={style} />;
   }
+  const fontSize = size <= 24 ? "text-[10px]" : "text-xs";
   return (
     <div
       aria-hidden="true"
-      className="h-8 w-8 rounded-full shrink-0 flex items-center justify-center bg-primary-button text-slate-900 text-xs font-semibold uppercase"
+      className={`rounded-full shrink-0 flex items-center justify-center bg-primary-button text-slate-900 ${fontSize} font-semibold uppercase ${cls}`}
+      style={style}
     >
       {initials}
     </div>
@@ -136,7 +133,7 @@ function LanguageRow() {
 
 type PopupPosition = { left: number; bottom: number; width: number };
 
-export default function AccountMenu() {
+export default function AccountMenu({ compact = false }: { compact?: boolean }) {
   const { user } = useUser();
   const { pfp } = usePfp();
   const mode = useLoginMode();
@@ -151,16 +148,12 @@ export default function AccountMenu() {
   const initials = displayName.slice(0, 2).toUpperCase();
   const isLoggedIn = mode !== null;
 
-  // Position the portal popup directly above the trigger so it is never
-  // clipped by the sidebar's overflow-hidden container.
   useLayoutEffect(() => {
     if (!open) return;
     function reposition() {
       const el = triggerRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      // Keep the popup at a consistent, comfortable width regardless of how
-      // wide the user has resized the sidebar, and keep it on-screen.
       const width = Math.min(300, Math.max(rect.width, 248));
       const left = Math.max(
         8,
@@ -204,29 +197,44 @@ export default function AccountMenu() {
   }, [open]);
 
   return (
-    <div className="w-full px-2 pt-2 border-t border-white/10 light:border-slate-300/70">
-      {/* Trigger */}
+    <div className={compact ? "" : "w-full px-2 pt-2 border-t border-white/10 light:border-slate-300/70"}>
       <button
         ref={triggerRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="flex items-center gap-x-2.5 w-full px-2 py-2 rounded-xl hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+        data-tooltip-id={compact ? "lsib-profile" : undefined}
+        data-tooltip-content={compact ? "Profil" : undefined}
+        className={
+          compact
+            ? "flex items-center justify-center w-9 h-9 rounded-full border border-white/20 light:border-slate-400 cursor-pointer transition-all bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-white shadow-sm"
+            : "flex items-center gap-x-2.5 w-full px-2 py-2 rounded-xl hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+        }
       >
-        <Avatar pfp={pfp} initials={initials} />
-        <div className="flex flex-col items-start min-w-0 flex-grow">
-          <span className="text-sm font-semibold text-white light:text-slate-800 truncate max-w-full">
-            {displayName}
-          </span>
-          <span className="text-xs text-white/55 light:text-slate-500 truncate max-w-full">
-            {subtitle}
-          </span>
-        </div>
-        <CaretUpDown
-          className="h-4 w-4 text-white/55 light:text-slate-500 shrink-0"
-          aria-hidden="true"
-        />
+        {compact ? (
+          <Avatar
+            pfp={pfp}
+            initials={initials}
+            size={28}
+          />
+        ) : (
+          <>
+            <Avatar pfp={pfp} initials={initials} />
+            <div className="flex flex-col items-start min-w-0 flex-grow">
+              <span className="text-sm font-semibold text-white light:text-slate-800 truncate max-w-full">
+                {displayName}
+              </span>
+              <span className="text-xs text-white/55 light:text-slate-500 truncate max-w-full">
+                {subtitle}
+              </span>
+            </div>
+            <CaretUpDown
+              className="h-4 w-4 text-white/55 light:text-slate-500 shrink-0"
+              aria-hidden="true"
+            />
+          </>
+        )}
       </button>
 
       {/* Popup (portaled, opens upward, never clipped) */}

@@ -99,6 +99,13 @@ const { DocumentSyncRun } = require("../models/documentSyncRun.js");
       }
 
       const currentDocumentData = await fileData(document.docpath);
+      if (!currentDocumentData) {
+        log(
+          `Source document ${document.filename} no longer exists on disk. Removing from watch queue.`,
+        );
+        await DocumentSyncQueue.unwatch(document);
+        continue;
+      }
       if (currentDocumentData.pageContent === newContent) {
         const nextSync = DocumentSyncQueue.calcNextSync(queue);
         log(

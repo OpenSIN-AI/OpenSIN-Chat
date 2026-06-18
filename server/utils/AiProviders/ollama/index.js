@@ -427,7 +427,7 @@ class OllamaAILLM {
                 });
                 reasoningText += reasoningToken;
               }
-            } else if (content.length > 0) {
+            } else if (content?.length > 0) {
               // If we have reasoning text, we need to close the reasoning tag and then append the content.
               if (reasoningText.length > 0) {
                 const endTag = "</think>";

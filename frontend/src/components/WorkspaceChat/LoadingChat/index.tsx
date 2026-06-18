@@ -9,7 +9,7 @@ export default function LoadingChat() {
   return (
     <div
       style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
-      className="h-[var(--content-height)] transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll no-scroll p-4"
+      className="h-[var(--content-height)] transition-all duration-500 relative md:ml-[16px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll no-scroll p-4"
     >
       <Skeleton.default
         height="100px"

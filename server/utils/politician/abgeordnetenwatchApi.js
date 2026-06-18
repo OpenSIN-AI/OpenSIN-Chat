@@ -66,6 +66,7 @@ class AbgeordnetenwatchApi {
     this.maxRetries = 3;
     this.retryDelayMs = 1000;
     this.rateLimitDelayMs = 500;
+    this.fetchTimeoutMs = 30000;
     this.lastRequestTime = 0;
     this.cache = new Map();
   }
@@ -91,9 +92,16 @@ class AbgeordnetenwatchApi {
 
     for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
       try {
-        return await fetch(url, {
-          headers: { Accept: "application/json" },
-        });
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), this.fetchTimeoutMs);
+        try {
+          return await fetch(url, {
+            headers: { Accept: "application/json" },
+            signal: controller.signal,
+          });
+        } finally {
+          clearTimeout(timer);
+        }
       } catch (err) {
         lastError = err;
         if (attempt < this.maxRetries)
@@ -115,6 +123,7 @@ class AbgeordnetenwatchApi {
     const res = await this.#fetch(url);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
+      res.text().catch(() => {});
       return null;
     }
     const data = await res.json();

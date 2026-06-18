@@ -135,7 +135,8 @@ function workspaceThreadEndpoints(app) {
     async (request, response) => {
       try {
         const { slugs = [] } = reqBody(request);
-        if (slugs.length === 0) return response.sendStatus(200).end();
+        if (!Array.isArray(slugs) || slugs.length === 0)
+          return response.sendStatus(200).end();
 
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
@@ -220,6 +221,11 @@ function workspaceThreadEndpoints(app) {
     async (request, response) => {
       try {
         const { startingId } = reqBody(request);
+        if (!startingId || isNaN(Number(startingId))) {
+          return response
+            .status(400)
+            .json({ success: false, error: "startingId is required." });
+        }
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
         const thread = response.locals.thread;
@@ -250,6 +256,8 @@ function workspaceThreadEndpoints(app) {
     async (request, response) => {
       try {
         const { chatId, newText = null, role = "assistant" } = reqBody(request);
+        if (!chatId || isNaN(Number(chatId)))
+          throw new Error("Valid chatId is required.");
         if (!newText || !String(newText).trim())
           throw new Error("Cannot save empty edit");
 

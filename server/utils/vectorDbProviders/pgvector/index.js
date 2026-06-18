@@ -458,6 +458,7 @@ class PGVector extends VectorDatabase {
         err,
       );
       await connection.query(`ROLLBACK`);
+      throw err;
     }
     return true;
   }

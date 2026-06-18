@@ -4,12 +4,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import PdfAnalysis from "@/models/pdfAnalysis";
-import { API_BASE } from "@/utils/constants";
-
-interface SourceType {
-  value: string;
-  label: string;
-}
 
 interface SourceInput {
   type: string;
@@ -59,25 +53,19 @@ interface CrossCheckReport {
   [key: string]: any;
 }
 
-const SOURCE_TYPES: SourceType[] = [
-  { value: "url", label: "Webseite (URL)" },
-  { value: "youtube", label: "YouTube-Video" },
-  { value: "image", label: "Bild (URL)" },
-  { value: "video", label: "Video-Datei (URL)" },
-  { value: "pdf", label: "PDF (Server-Pfad)" },
-  { value: "text", label: "Roh-Text" },
+const SOURCE_TYPES: string[] = [
+  "url",
+  "youtube",
+  "image",
+  "video",
+  "pdf",
+  "text",
 ];
 
 const VERDICT_STYLES: Record<string, string> = {
   supports: "text-green-400 border-green-400/40",
   contradicts: "text-red-400 border-red-400/40",
   inconclusive: "text-yellow-400 border-yellow-400/40",
-};
-
-const VERDICT_LABELS: Record<string, string> = {
-  supports: "Bestätigt",
-  contradicts: "Widerspricht",
-  inconclusive: "Unklar",
 };
 
 interface CrossCheckPanelProps {
@@ -259,9 +247,9 @@ function CrossCheckForm({ prefillFactIds, onStarted }: CrossCheckFormProps) {
               aria-label={t("pdfAnalysis.crossCheck.sourceTypeAriaLabel")}
               className="md:w-48 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary"
             >
-              {SOURCE_TYPES.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {t(`pdfAnalysis.sourceTypes.${item.value}`)}
+              {SOURCE_TYPES.map((value) => (
+                <option key={value} value={value}>
+                  {t(`pdfAnalysis.sourceTypes.${value}`)}
                 </option>
               ))}
             </select>
@@ -438,9 +426,13 @@ function CrossCheckReportModal({ job, onClose }: CrossCheckReportModalProps) {
   const [result, setResult] = useState<CrossCheckReport | null>(null);
 
   useEffect(() => {
-    PdfAnalysis.crossCheckResult(job.id).then((res) =>
-      setResult(res as CrossCheckReport),
-    );
+    let cancelled = false;
+    PdfAnalysis.crossCheckResult(job.id).then((res) => {
+      if (!cancelled) setResult(res as CrossCheckReport);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [job.id]);
 
   return (
@@ -456,7 +448,7 @@ function CrossCheckReportModal({ job, onClose }: CrossCheckReportModalProps) {
             {t("pdfAnalysis.crossCheck.modalTitle")}
           </h3>
           <a
-            href={`${API_BASE}/pdf-analysis/crosscheck/${job.id}/report/download`}
+            href={`/pdf-analysis/crosscheck/${job.id}/report/download`}
             download
             className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
           >
@@ -496,7 +488,7 @@ function CrossCheckReportModal({ job, onClose }: CrossCheckReportModalProps) {
                         {pc.sourceVerdicts.map((sv, j) => (
                           <span
                             key={j}
-                            className={`text-xs px-2 py-0.5 rounded-md border ${VERDICT_STYLES[sv.verdict]}`}
+                            className={`text-xs px-2 py-0.5 rounded-md border ${VERDICT_STYLES[sv.verdict] ?? VERDICT_STYLES.inconclusive}`}
                             title={sv.reasoning}
                           >
                             {sv.source}:{" "}
@@ -505,7 +497,7 @@ function CrossCheckReportModal({ job, onClose }: CrossCheckReportModalProps) {
                         ))}
                         {pc.webResearch && (
                           <span
-                            className={`text-xs px-2 py-0.5 rounded-md border ${VERDICT_STYLES[pc.webResearch.overall]}`}
+                            className={`text-xs px-2 py-0.5 rounded-md border ${VERDICT_STYLES[pc.webResearch.overall] ?? VERDICT_STYLES.inconclusive}`}
                           >
                             {t("pdfAnalysis.crossCheck.webResearch", {
                               count: pc.webResearch.sourcesChecked,

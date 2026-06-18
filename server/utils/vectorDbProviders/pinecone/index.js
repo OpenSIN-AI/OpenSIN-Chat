@@ -257,7 +257,7 @@ class PineconeDB extends VectorDatabase {
     const details = await this.namespace(pineconeIndex, namespace);
     await this.deleteVectorsInNamespace(pineconeIndex, namespace);
     return {
-      message: `Namespace ${namespace} was deleted along with ${details.vectorCount} vectors.`,
+      message: `Namespace ${namespace} was deleted along with ${details?.vectorCount || 0} vectors.`,
     };
   }
 

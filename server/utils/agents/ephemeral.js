@@ -671,6 +671,13 @@ class EphemeralEventListener extends EventEmitter {
         continue;
       }
 
+      // reportPreview is a side-channel event for the frontend PreviewSidebar.
+      // It must NOT fall through to the textResponse fallback below — its
+      // content is an object, not a string, and would corrupt the response.
+      if (msg.type === "reportPreview") {
+        continue;
+      }
+
       if (msg.type === "reportStreamEvent") {
         const inner = msg.content;
         if (inner?.type === "textResponseChunk" && inner?.content)
@@ -731,6 +738,12 @@ class EphemeralEventListener extends EventEmitter {
           close: false,
           error: null,
         });
+      }
+
+      // reportPreview is a frontend-only side-channel event; skip it in the
+      // HTTP streaming path so it is not mis-sent as a textResponse chunk.
+      if (data.type === "reportPreview") {
+        return;
       }
 
       if (data.type === "reportStreamEvent") {

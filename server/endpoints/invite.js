@@ -43,6 +43,18 @@ function inviteEndpoints(app) {
       try {
         const { code } = request.params;
         const { username, password } = reqBody(request);
+        if (!username || typeof username !== "string" || !username.trim()) {
+          response
+            .status(200)
+            .json({ success: false, error: "Username is required." });
+          return;
+        }
+        if (!password || typeof password !== "string" || !password.trim()) {
+          response
+            .status(200)
+            .json({ success: false, error: "Password is required." });
+          return;
+        }
         const invite = await Invite.get({ code });
         if (!invite || invite.status !== "pending") {
           response

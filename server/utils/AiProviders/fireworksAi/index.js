@@ -9,6 +9,7 @@ const {
 } = require("../../helpers/chat/LLMPerformanceMonitor");
 const {
   handleDefaultStreamResponseV2,
+  formatChatHistory,
 } = require("../../helpers/chat/responses");
 
 const cacheFolder = getStoragePath("models", "fireworks");
@@ -21,7 +22,9 @@ class FireworksAiLLM {
       throw new Error("No FireworksAI API key was set.");
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
-      baseURL: "https://api.fireworks.ai/inference/v1",
+      baseURL:
+        process.env.FIREWORKS_AI_LLM_BASE_PATH ||
+        "https://api.fireworks.ai/inference/v1",
       apiKey: process.env.FIREWORKS_AI_LLM_API_KEY ?? null,
     });
     this.model = modelPreference || process.env.FIREWORKS_AI_LLM_MODEL_PREF;
@@ -111,27 +114,87 @@ class FireworksAiLLM {
   // Ensure the user set a value for the token limit
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
+    if (process.env.FIREWORKS_AI_LLM_MODEL_TOKEN_LIMIT)
+      return parseInt(process.env.FIREWORKS_AI_LLM_MODEL_TOKEN_LIMIT, 10);
     const availableModels = this.models();
     return availableModels[this.model]?.maxLength || 4096;
   }
 
   async isValidChatCompletionModel(model = "") {
+    // When using a custom base path (e.g. SINator pool proxy), trust the
+    // user's model preference — the cached model list may not contain it.
+    if (process.env.FIREWORKS_AI_LLM_BASE_PATH) return true;
     await this.#syncModels();
     const availableModels = this.models();
     return availableModels.hasOwnProperty(model);
   }
 
+  /**
+   * Generates appropriate content array for a message + attachments.
+   * Mirrors the genericOpenAi pattern — FireworksAI is OpenAI-compatible
+   * and supports image_url content parts for vision models.
+   * @param {Object} props
+   * @param {string} props.userPrompt - the user prompt to be sent to the model
+   * @param {import("../../helpers").Attachment[]} props.attachments - the array of attachments to be sent to the model
+   * @returns {string|object[]}
+   */
+  #generateContent({ userPrompt, attachments = [] }) {
+    if (!attachments.length) {
+      return userPrompt;
+    }
+
+    const content = [{ type: "text", text: userPrompt }];
+    for (let attachment of attachments) {
+      content.push({
+        type: "image_url",
+        image_url: {
+          url: attachment.contentString,
+          detail: "high",
+        },
+      });
+    }
+    return content.flat();
+  }
+
+  /**
+   * Parses and prepends reasoning from the response and returns the full text response.
+   * @param {Object} response
+   * @returns {string}
+   */
+  #parseReasoningFromResponse({ message }) {
+    let textResponse = message?.content;
+    if (
+      !!message?.reasoning_content &&
+      message.reasoning_content.trim().length > 0
+    )
+      textResponse = `<think>${message.reasoning_content}</think>${textResponse}`;
+    return textResponse;
+  }
+
+  /**
+   * Construct the user prompt for this model.
+   * @param {{attachments: import("../../helpers").Attachment[]}} param0
+   * @returns
+   */
   constructPrompt({
     systemPrompt = "",
     contextTexts = [],
     chatHistory = [],
     userPrompt = "",
+    attachments = [],
   }) {
     const prompt = {
       role: "system",
       content: `${systemPrompt}${this.#appendContext(contextTexts)}`,
     };
-    return [prompt, ...chatHistory, { role: "user", content: userPrompt }];
+    return [
+      prompt,
+      ...formatChatHistory(chatHistory, this.#generateContent),
+      {
+        role: "user",
+        content: this.#generateContent({ userPrompt, attachments }),
+      },
+    ];
   }
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
@@ -155,12 +218,15 @@ class FireworksAiLLM {
       return null;
 
     return {
-      textResponse: result.output.choices[0].message.content,
+      textResponse: this.#parseReasoningFromResponse(
+        result.output.choices[0],
+      ),
       metrics: {
         prompt_tokens: result.output?.usage?.prompt_tokens || 0,
         completion_tokens: result.output?.usage?.completion_tokens || 0,
         total_tokens: result.output?.usage?.total_tokens || 0,
-        outputTps: result.output?.usage?.completion_tokens / result.duration,
+        outputTps:
+          (result.output?.usage?.completion_tokens || 0) / result.duration,
         duration: result.duration,
         model: this.model,
         provider: this.className,
@@ -213,7 +279,9 @@ async function fireworksAiModels(providedApiKey = null) {
   const apiKey = providedApiKey || process.env.FIREWORKS_AI_LLM_API_KEY || null;
   const { OpenAI: OpenAIApi } = require("openai");
   const client = new OpenAIApi({
-    baseURL: "https://api.fireworks.ai/inference/v1",
+    baseURL:
+      process.env.FIREWORKS_AI_LLM_BASE_PATH ||
+      "https://api.fireworks.ai/inference/v1",
     apiKey: apiKey,
   });
 

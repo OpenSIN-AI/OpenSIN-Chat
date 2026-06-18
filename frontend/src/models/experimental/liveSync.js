@@ -7,7 +7,7 @@ const LiveDocumentSync = {
   toggleFeature: async function (updatedStatus = false) {
     return await fetch(`${API_BASE}/experimental/toggle-live-sync`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ updatedStatus }),
     })
       .then((res) => {
@@ -39,7 +39,7 @@ const LiveDocumentSync = {
   setWatchStatusForDocument: async function (slug, docPath, watchStatus) {
     return fetch(`${API_BASE}/workspace/${slug}/update-watch-status`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ docPath, watchStatus }),
     })
       .then((res) => {

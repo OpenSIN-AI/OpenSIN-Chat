@@ -33,9 +33,13 @@ export default function NewUserModal({
     for (const [key, value] of form.entries()) data[key] = value;
     data.dailyMessageLimit = messageLimit.enabled ? messageLimit.limit : null;
 
-    const { user, error } = await Admin.newUser(data);
-    if (!!user) window.location.reload();
-    setError(error);
+    try {
+      const { user, error } = await Admin.newUser(data);
+      if (!!user) window.location.reload();
+      setError(error);
+    } catch (err: any) {
+      setError(err?.message ?? "Failed to create user");
+    }
   };
 
   const user = userFromStorage();

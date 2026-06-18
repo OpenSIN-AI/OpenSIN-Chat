@@ -425,15 +425,27 @@ function toChunks(arr, size) {
  * Works in both the child worker process (IPC via process.send) and the
  * main server process (direct SSE emit via EmbeddingWorkerManager).
  *
- * Requires `global.__embeddingProgress` to be set by the caller with
- * { workspaceSlug, filename, userId }.
+ * Requires `global.__embeddingProgressMap` (Map keyed by workspace slug) or
+ * `global.__embeddingProgress` (scalar, used by child worker processes) to be
+ * set by the caller with { workspaceSlug, filename, userId }.
  *
  * @param {number} chunksProcessed
  * @param {number} totalChunks
  */
 function reportEmbeddingProgress(chunksProcessed, totalChunks) {
-  if (!global.__embeddingProgress) return;
-  const ctx = global.__embeddingProgress;
+  let ctx = null;
+  if (global.__embeddingProgressMap && global.__embeddingProgressMap.size > 0) {
+    const slug = global.__embeddingProgress?.workspaceSlug;
+    if (slug && global.__embeddingProgressMap.has(slug)) {
+      ctx = global.__embeddingProgressMap.get(slug);
+    } else {
+      const first = global.__embeddingProgressMap.values().next();
+      ctx = first.done ? null : first.value;
+    }
+  } else if (global.__embeddingProgress) {
+    ctx = global.__embeddingProgress;
+  }
+  if (!ctx) return;
   const event = {
     type: "chunk_progress",
     workspaceSlug: ctx.workspaceSlug,

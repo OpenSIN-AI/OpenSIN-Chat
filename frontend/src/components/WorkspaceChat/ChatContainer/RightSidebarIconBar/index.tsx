@@ -10,7 +10,6 @@ import {
   Database,
   Newspaper,
   BookOpen,
-  Terminal,
   Brain,
   FilePdf,
 } from "@phosphor-icons/react";
@@ -65,12 +64,6 @@ export default function RightSidebarIconBar() {
       icon: Brain,
       label: t("right_sidebar.icon_memories", "Memories"),
       action: () => toggleSidebar("memories"),
-    },
-    {
-      id: "console",
-      icon: Terminal,
-      label: t("right_sidebar.icon_console", "Konsole & Terminal"),
-      action: () => toggleSidebar("console"),
     },
   ];
 

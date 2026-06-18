@@ -146,7 +146,7 @@ function persistDIPDocument(doc, outFolderPath) {
 
   // Dokumenten-ID: "20/12345" oder "vorgang-<uuid>"
   const idStr = fundstelle.dokumentnummer || `vorgang-${doc.id}`;
-  const wahlperiode = fundstelle.wa18 || meta.wahlperiode || "?";
+  const wahlperiode = fundstelle.wahlperiode || meta.wahlperiode || "?";
   const titel = (doc.titel || doc.kurztitle || idStr).trim();
 
   // Volltext-Inhalt

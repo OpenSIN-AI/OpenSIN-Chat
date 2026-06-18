@@ -53,7 +53,7 @@ const Invite = {
           const workspaceIds = (await Workspace.where({})).map(
             (workspace) => workspace.id,
           );
-          const ids = safeJsonParse(invite.workspaceIds)
+          const ids = safeJsonParse(invite.workspaceIds, [])
             .map((id) => Number(id))
             .filter((id) => workspaceIds.includes(id));
           if (ids.length !== 0) await WorkspaceUser.createMany(user.id, ids);

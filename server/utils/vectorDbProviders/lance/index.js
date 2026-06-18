@@ -482,7 +482,11 @@ class LanceDb extends VectorDatabase {
   async reset() {
     const { client } = await this.connect();
     const fs = require("fs");
-    fs.rm(`${client.uri}`, { recursive: true }, () => null);
+    try {
+      await fs.promises.rm(`${client.uri}`, { recursive: true });
+    } catch (e) {
+      this.logger("reset error", e?.message || e);
+    }
     return { reset: true };
   }
 

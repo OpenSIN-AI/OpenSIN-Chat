@@ -127,7 +127,14 @@ async function getDocumentsByFolder(folderName = "") {
     const filePath = path.join(folderPath, file);
     const rawData = fs.readFileSync(filePath, "utf8");
     const cachefilename = `${folderName}/${file}`;
-    const { pageContent: _pageContent, ...metadata } = JSON.parse(rawData);
+    let parsed;
+    try {
+      parsed = JSON.parse(rawData);
+    } catch {
+      console.error(`[getDocumentsByFolder] Skipping corrupt JSON: ${file}`);
+      continue;
+    }
+    const { pageContent: _pageContent, ...metadata } = parsed;
     documents.push({
       name: file,
       type: "file",
@@ -246,7 +253,13 @@ async function findDocumentInDocuments(documentName = null) {
 
     const fileData = fs.readFileSync(targetFileLocation, "utf8");
     const cachefilename = `${folder}/${targetFilename}`;
-    const { pageContent: _pageContent, ...metadata } = JSON.parse(fileData);
+    let parsed;
+    try {
+      parsed = JSON.parse(fileData);
+    } catch {
+      continue;
+    }
+    const { pageContent: _pageContent, ...metadata } = parsed;
     return {
       name: targetFilename,
       type: "file",

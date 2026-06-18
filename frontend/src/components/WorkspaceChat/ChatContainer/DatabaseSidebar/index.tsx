@@ -128,7 +128,7 @@ export default function DatabaseSidebar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-zinc-600 hover:text-zinc-300 transition-colors flex-shrink-0"
-                    aria-label="Profil öffnen"
+                    aria-label={t("sidebar.database.openProfile")}
                   >
                     <ArrowSquareOut size={13} />
                   </a>

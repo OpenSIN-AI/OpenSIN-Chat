@@ -14,7 +14,7 @@ const ScheduledJobs: any = {
   create: async function (data: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/new`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
@@ -32,7 +32,7 @@ const ScheduledJobs: any = {
   update: async function (id: any, data: any) {
     return await fetch(`${API_BASE}/scheduled-jobs/${id}`, {
       method: "PUT",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())

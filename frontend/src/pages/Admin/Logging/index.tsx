@@ -39,18 +39,13 @@ export default function AdminLogs(): JSX.Element {
   const canNext = result?.hasPages ?? false;
 
   const handleResetLogs = async () => {
-    if (
-      !window.confirm(
-        "Are you sure you want to clear all event logs? This action is irreversible.",
-      )
-    )
-      return;
+    if (!window.confirm(t("event.clearConfirm"))) return;
     const { success, error } = await System.clearEventLogs();
     if (success) {
-      showToast("Event logs cleared successfully.", "success");
+      showToast(t("event.clearSuccess"), "success");
       setOffset(0);
     } else {
-      showToast(`Failed to clear logs: ${error}`, "error");
+      showToast(t("event.clearFailed", { error }), "error");
     }
   };
 

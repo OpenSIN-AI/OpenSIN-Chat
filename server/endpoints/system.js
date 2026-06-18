@@ -23,7 +23,10 @@ const {
 const { v4 } = require("uuid");
 const { SystemSettings } = require("../models/systemSettings");
 const { User } = require("../models/user");
-const { validatedRequest } = require("../utils/middleware/validatedRequest");
+const {
+  validatedRequest,
+  invalidateAuthTokenHash,
+} = require("../utils/middleware/validatedRequest");
 const fs = require("fs");
 const path = require("path");
 const {
@@ -644,6 +647,7 @@ function systemEndpoints(app) {
             true,
           )?.error;
         }
+        invalidateAuthTokenHash();
         response.status(200).json({ success: !error, error });
       } catch (e) {
         // eslint-disable-next-line no-console

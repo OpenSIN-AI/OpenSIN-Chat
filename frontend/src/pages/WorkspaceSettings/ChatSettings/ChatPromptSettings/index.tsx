@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useRef, Fragment } from "react";
+import { useState, useRef, Fragment, useEffect } from "react";
 import { getWorkspaceSystemPrompt } from "@/utils/chat";
 import { useTranslation } from "react-i18next";
 import Highlighter from "react-highlight-words";
@@ -68,10 +68,11 @@ export default function ChatPromptSettings({
   }
   prevHasChanges.current = hasChanges;
 
-  // Auto-focus textarea when editing
-  if (isEditing && promptRef.current) {
-    promptRef.current.focus();
-  }
+  useEffect(() => {
+    if (isEditing && promptRef.current) {
+      promptRef.current.focus();
+    }
+  }, [isEditing]);
 
   const handleRestoreFromHistory = (historicalPrompt: string) => {
     setPrompt(historicalPrompt);

@@ -144,10 +144,11 @@ class XAiLLM {
     return {
       textResponse: result.output.choices[0].message.content,
       metrics: {
-        prompt_tokens: result.output.usage.prompt_tokens || 0,
-        completion_tokens: result.output.usage.completion_tokens || 0,
-        total_tokens: result.output.usage.total_tokens || 0,
-        outputTps: result.output.usage.completion_tokens / result.duration,
+        prompt_tokens: result.output?.usage?.prompt_tokens || 0,
+        completion_tokens: result.output?.usage?.completion_tokens || 0,
+        total_tokens: result.output?.usage?.total_tokens || 0,
+        outputTps:
+          (result.output?.usage?.completion_tokens || 0) / result.duration,
         duration: result.duration,
         model: this.model,
         provider: this.className,

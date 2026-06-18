@@ -38,7 +38,7 @@ async function asMbox({
     };
   }
 
-  let item = 1;
+  let item = 0;
   const documents = [];
   for (const mail of mails) {
     if (!mail.hasOwnProperty("text")) continue;

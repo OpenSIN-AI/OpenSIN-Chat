@@ -57,6 +57,7 @@ function PdfFileInput({
   label,
   placeholder,
 }: PdfFileInputProps) {
+  const { t } = useTranslation();
   const [fileNames, setFileNames] = useState<string[]>([]);
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFileNames(Array.from(e.target.files || []).map((f) => f.name));
@@ -85,7 +86,7 @@ function PdfFileInput({
           ? placeholder
           : fileNames.length === 1
             ? fileNames[0]
-            : `${fileNames.length} Dateien ausgewählt`}
+            : `${t("pdfAnalysis.panel.filesSelected", { count: fileNames.length })}`}
       </span>
     </div>
   );
@@ -95,16 +96,6 @@ export default function PdfAnalysisPage() {
   const { t } = useTranslation();
   const [tab, setTab] = useState("jobs");
   const [crossCheckFactIds, setCrossCheckFactIds] = useState<string[]>([]);
-
-  const PHASE_LABELS: Record<string, string> = {
-    init: t("pdfAnalysis.panel.phaseInit"),
-    reading: t("pdfAnalysis.panel.phaseReading"),
-    analyzing: t("pdfAnalysis.panel.phaseAnalyzing"),
-    synthesizing: t("pdfAnalysis.panel.phaseSynthesizing"),
-    "verifying-facts": t("pdfAnalysis.panel.phaseVerifying"),
-    "storing-facts": t("pdfAnalysis.panel.phaseStoring"),
-    done: t("pdfAnalysis.panel.phaseDone"),
-  };
 
   return (
     <SidebarToggleProvider>
@@ -293,7 +284,10 @@ function StartForm({ onStarted }: StartFormProps) {
       setTask("");
       setReportType("");
       setFactCriteria("");
-      if (fileRef.current) fileRef.current.value = "";
+      if (fileRef.current) {
+        fileRef.current.value = "";
+        fileRef.current.dispatchEvent(new Event("change", { bubbles: true }));
+      }
       onStarted?.();
     } catch (err: any) {
       setError(err.message);
@@ -520,6 +514,20 @@ interface Heading {
 }
 
 /**
+ * Recursively extracts plain text from React children (strings, numbers,
+ * arrays, and elements with nested children).  Needed because
+ * String(children) on a React element yields "[object Object]".
+ */
+function nodeToText(node: React.ReactNode): string {
+  if (node == null) return "";
+  if (typeof node === "string") return node;
+  if (typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(nodeToText).join("");
+  if (React.isValidElement(node)) return nodeToText((node.props as any).children);
+  return "";
+}
+
+/**
  * Parses a Markdown string and returns a flat list of heading objects
  * { level: 1|2|3, text: string, id: string } for the table of contents.
  */
@@ -681,7 +689,13 @@ function ReportModal({ job, onClose }: ReportModalProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    PdfAnalysis.result(job.id).then((res) => setResult(res as ReportResult));
+    let cancelled = false;
+    PdfAnalysis.result(job.id).then((res) => {
+      if (!cancelled) setResult(res as ReportResult);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [job.id]);
 
   // Build table of contents from headings in the report
@@ -755,7 +769,7 @@ function ReportModal({ job, onClose }: ReportModalProps) {
             onClick={() => downloadMarkdown(job.documentName, reportMd)}
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
-            title="Markdown"
+            title={t("pdfAnalysis.panel.downloadMd")}
           >
             <FileMd size={13} aria-hidden="true" />
             .md
@@ -764,10 +778,12 @@ function ReportModal({ job, onClose }: ReportModalProps) {
           {/* Download DOCX */}
           <button
             type="button"
-            onClick={() => downloadDocx(job.documentName, reportMd)}
+            onClick={() =>
+              downloadDocx(job.documentName, reportMd).catch(() => {})
+            }
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
-            title="Word-Dokument"
+            title={t("pdfAnalysis.panel.downloadDocx")}
           >
             <FileDoc size={13} aria-hidden="true" />
             .docx
@@ -779,7 +795,7 @@ function ReportModal({ job, onClose }: ReportModalProps) {
             onClick={() => downloadPdf(job.documentName, reportMd)}
             disabled={!result?.report}
             className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-40 whitespace-nowrap"
-            title="PDF-Dokument"
+            title={t("pdfAnalysis.panel.downloadPdf")}
           >
             <FilePdf size={13} aria-hidden="true" />
             .pdf
@@ -854,7 +870,7 @@ function ReportModal({ job, onClose }: ReportModalProps) {
                   components={
                     {
                       h1: ({ children, ...p }: any) => {
-                        const text = String(children);
+                        const text = nodeToText(children);
                         const id = text
                           .toLowerCase()
                           .replace(/[^\w\s-]/g, "")
@@ -870,7 +886,7 @@ function ReportModal({ job, onClose }: ReportModalProps) {
                         );
                       },
                       h2: ({ children, ...p }: any) => {
-                        const text = String(children);
+                        const text = nodeToText(children);
                         const id = text
                           .toLowerCase()
                           .replace(/[^\w\s-]/g, "")
@@ -886,7 +902,7 @@ function ReportModal({ job, onClose }: ReportModalProps) {
                         );
                       },
                       h3: ({ children, ...p }: any) => {
-                        const text = String(children);
+                        const text = nodeToText(children);
                         const id = text
                           .toLowerCase()
                           .replace(/[^\w\s-]/g, "")
@@ -937,15 +953,23 @@ function ReportModal({ job, onClose }: ReportModalProps) {
                           {children}
                         </blockquote>
                       ),
-                      code: ({ inline, children }: any) =>
-                        inline ? (
-                          <code className="px-1 py-0.5 rounded bg-theme-bg-container text-xs font-mono text-theme-text-primary">
+                      pre: ({ children }: any) => (
+                        <pre className="bg-theme-bg-container rounded-md p-3 text-xs font-mono text-theme-text-primary overflow-x-auto my-3">
+                          {children}
+                        </pre>
+                      ),
+                      code: ({ className, children, ...props }: any) =>
+                        className ? (
+                          <code className={className} {...props}>
                             {children}
                           </code>
                         ) : (
-                          <pre className="bg-theme-bg-container rounded-md p-3 text-xs font-mono text-theme-text-primary overflow-x-auto my-3">
-                            <code>{children}</code>
-                          </pre>
+                          <code
+                            className="px-1 py-0.5 rounded bg-theme-bg-container text-xs font-mono text-theme-text-primary"
+                            {...props}
+                          >
+                            {children}
+                          </code>
                         ),
                       table: ({ children }: any) => (
                         <div className="overflow-x-auto my-3">
@@ -1023,7 +1047,19 @@ function FactsPanel({ onCrossCheck }: FactsPanelProps) {
   }, [q, documentFilter]);
 
   useEffect(() => {
-    search();
+    let cancelled = false;
+    setLoading(true);
+    PdfAnalysis.searchFacts({ q, document: documentFilter })
+      .then((res) => {
+        if (cancelled) return;
+        setFacts(res as Fact[]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (

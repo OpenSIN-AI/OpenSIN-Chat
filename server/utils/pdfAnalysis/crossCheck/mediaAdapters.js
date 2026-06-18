@@ -38,25 +38,43 @@ function run(bin, args, timeoutMs = 120000) {
   });
 }
 
+const VIDEO_FETCH_TIMEOUT_MS = Number(
+  process.env.PDF_ANALYSIS_VIDEO_FETCH_TIMEOUT_MS || 60000,
+);
+
 /** Lädt ein Video größenbegrenzt in eine Temp-Datei (nach SSRF-Check des Aufrufers). */
 async function downloadVideo(url) {
   const tmpFile = path.join(
     os.tmpdir(),
     `xcheck-video-${Date.now()}${path.extname(new URL(url).pathname) || ".mp4"}`,
   );
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), VIDEO_FETCH_TIMEOUT_MS);
   const res = await fetch(url, {
     headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
+    signal: controller.signal,
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status} für ${url}`);
+  if (!res.ok) {
+    clearTimeout(timer);
+    throw new Error(`HTTP ${res.status} für ${url}`);
+  }
   const reader = res.body.getReader();
   const stream = fs.createWriteStream(tmpFile);
   let received = 0;
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    received += value.byteLength;
-    if (received > MAX_VIDEO_BYTES) break; // Anfang reicht für Keyframes
-    stream.write(Buffer.from(value));
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      received += value.byteLength;
+      if (received > MAX_VIDEO_BYTES) {
+        await reader.cancel();
+        break;
+      }
+      stream.write(Buffer.from(value));
+    }
+  } finally {
+    clearTimeout(timer);
+    reader.closed.catch(() => {});
   }
   await new Promise((r) => stream.end(r));
   return tmpFile;
@@ -111,10 +129,13 @@ async function extractKeyframes(videoFile) {
       .filter((f) => f.endsWith(".png"))
       .sort();
   }
-  return files.map((f, i) => ({
-    file: path.join(outDir, f),
-    timestamp: `Keyframe ${i + 1}/${files.length}`,
-  }));
+  return {
+    keyframes: files.map((f, i) => ({
+      file: path.join(outDir, f),
+      timestamp: `Keyframe ${i + 1}/${files.length}`,
+    })),
+    outDir,
+  };
 }
 
 /** Bild-URL → Vision-Beschreibung. */
@@ -132,17 +153,25 @@ async function analyzeImageUrl(url, fetchBuffer) {
 /** Video-URL → zeitgestempeltes visuelles Transkript via Keyframes. */
 async function analyzeVideoUrl(url) {
   const videoFile = await downloadVideo(url);
+  let outDir = null;
   try {
-    const keyframes = await extractKeyframes(videoFile);
+    const result = await extractKeyframes(videoFile);
+    outDir = result.outDir;
+    const keyframes = result.keyframes;
     if (!keyframes.length) throw new Error("Keine Keyframes extrahierbar.");
     const parts = [];
     for (const kf of keyframes) {
-      const description = await describeImage(
-        fs.readFileSync(kf.file),
-        `${kf.timestamp} des Videos ${url}`,
-      );
-      if (description) parts.push(`[${kf.timestamp}]\n${description}`);
-      fs.unlinkSync(kf.file);
+      try {
+        const description = await describeImage(
+          fs.readFileSync(kf.file),
+          `${kf.timestamp} des Videos ${url}`,
+        );
+        if (description) parts.push(`[${kf.timestamp}]\n${description}`);
+      } catch {
+        /* einzelner Keyframe fehlgeschlagen — weitermachen */
+      } finally {
+        try { fs.unlinkSync(kf.file); } catch { /* already gone */ }
+      }
     }
     if (!parts.length)
       throw new Error("Vision-Analyse der Keyframes nicht verfügbar.");
@@ -151,6 +180,7 @@ async function analyzeVideoUrl(url) {
       text: `Visuelles Transkript (${parts.length} Keyframes, Szenenwechsel-Sampling):\n\n${parts.join("\n\n")}`,
     };
   } finally {
+    if (outDir) { try { fs.rmSync(outDir, { recursive: true, force: true }); } catch { /* temp dir cleanup best-effort */ } }
     fs.existsSync(videoFile) && fs.unlinkSync(videoFile);
   }
 }

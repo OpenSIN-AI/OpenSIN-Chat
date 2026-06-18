@@ -8,7 +8,7 @@ const AgentPlugins = {
       `${API_BASE}/experimental/agent-plugins/${hubId}/toggle`,
       {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ active }),
       },
     )
@@ -26,7 +26,7 @@ const AgentPlugins = {
       `${API_BASE}/experimental/agent-plugins/${hubId}/config`,
       {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ updates }),
       },
     )

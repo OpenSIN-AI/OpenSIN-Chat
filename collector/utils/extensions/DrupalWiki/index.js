@@ -96,7 +96,7 @@ async function loadPage({ baseUrl, pageId, accessToken }) {
   } catch {
     return {
       success: false,
-      reason: `Failed (re)-fetching DrupalWiki page ${pageId} form ${baseUrl}}`,
+      reason: `Failed (re)-fetching DrupalWiki page ${pageId} from ${baseUrl}`,
       content: null,
     };
   }

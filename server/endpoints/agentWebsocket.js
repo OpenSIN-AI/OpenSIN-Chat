@@ -7,7 +7,12 @@ const { AgentHandler } = require("../utils/agents");
 const {
   WEBSOCKET_BAIL_COMMANDS,
 } = require("../utils/agents/aibitat/plugins/websocket");
-const { safeJsonParse } = require("../utils/http");
+const { safeJsonParse, decodeJWT } = require("../utils/http");
+const { SystemSettings } = require("../models/systemSettings");
+const { User } = require("../models/user");
+const { EncryptionManager } = require("../utils/EncryptionManager");
+const { getAuthTokenHash } = require("../utils/middleware/validatedRequest");
+const EncryptionMgr = new EncryptionManager();
 
 // Setup listener for incoming messages to relay to socket so it can be handled by agent plugin.
 function relayToSocket(message) {
@@ -16,6 +21,38 @@ function relayToSocket(message) {
   if (this.handleClarificationResponse)
     return this?.handleClarificationResponse?.(message);
   this.checkBailCommand(message);
+}
+
+async function isAuthorizedRequest(request) {
+  if (
+    process.env.NODE_ENV === "development" ||
+    process.env.NODE_ENV === "test" ||
+    !process.env.AUTH_TOKEN ||
+    !process.env.JWT_SECRET
+  ) {
+    return true;
+  }
+
+  const auth = request.headers.authorization;
+  const token = auth ? auth.split(" ")[1] : request.query?.token;
+  if (!token) return false;
+
+  const decoded = decodeJWT(token);
+  if (!decoded) return false;
+
+  const multiUserMode = await SystemSettings.isMultiUserMode();
+  if (multiUserMode) {
+    if (!decoded.id) return false;
+    const user = await User.get({ id: decoded.id });
+    if (!user || user.suspended) return false;
+    return true;
+  }
+
+  const { p } = decoded;
+  if (p === null || !/\w{32}:\w{32}/.test(p)) return false;
+
+  const bcrypt = require("bcryptjs");
+  return bcrypt.compareSync(EncryptionMgr.decrypt(p), getAuthTokenHash());
 }
 
 function agentWebsocket(app, routePrefix = "") {
@@ -40,6 +77,11 @@ function agentWebsocket(app, routePrefix = "") {
     `${routePrefix}/agent-invocation/:uuid`,
     async function (socket, request) {
       try {
+        if (!(await isAuthorizedRequest(request))) {
+          socket.close(1008, "Unauthorized");
+          return;
+        }
+
         const agentHandler = await new AgentHandler({
           uuid: String(request.params.uuid),
         }).init();

@@ -8,7 +8,7 @@ const DataConnector: any = {
     branches: async ({ repo, accessToken }: any) => {
       return await fetch(`${API_BASE}/ext/github/branches`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         cache: "force-cache",
         body: JSON.stringify({ repo, accessToken }),
       })
@@ -34,7 +34,7 @@ const DataConnector: any = {
     }: any) {
       return await fetch(`${API_BASE}/ext/github/repo`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ repo, accessToken, branch, ignorePaths }),
       })
         .then((res) => res.json())
@@ -52,7 +52,7 @@ const DataConnector: any = {
     branches: async ({ repo, accessToken }: any) => {
       return await fetch(`${API_BASE}/ext/gitlab/branches`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         cache: "force-cache",
         body: JSON.stringify({ repo, accessToken }),
       })
@@ -80,7 +80,7 @@ const DataConnector: any = {
     }: any) {
       return await fetch(`${API_BASE}/ext/gitlab/repo`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({
           repo,
           accessToken,
@@ -105,7 +105,7 @@ const DataConnector: any = {
     transcribe: async ({ url }: any) => {
       return await fetch(`${API_BASE}/ext/youtube/transcript`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
       })
         .then((res) => res.json())
@@ -123,7 +123,7 @@ const DataConnector: any = {
     scrape: async ({ url, depth, maxLinks }: any) => {
       return await fetch(`${API_BASE}/ext/website-depth`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ url, depth, maxLinks }),
       })
         .then((res) => res.json())
@@ -150,7 +150,7 @@ const DataConnector: any = {
     }: any) {
       return await fetch(`${API_BASE}/ext/confluence`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({
           baseUrl,
           spaceKey,
@@ -177,7 +177,7 @@ const DataConnector: any = {
     collect: async function ({ baseUrl, spaceIds, accessToken }: any) {
       return await fetch(`${API_BASE}/ext/drupalwiki`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({
           baseUrl,
           spaceIds,
@@ -199,7 +199,7 @@ const DataConnector: any = {
     collect: async function ({ files }: any) {
       return await fetch(`${API_BASE}/ext/obsidian/vault`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({
           files,
         }),
@@ -220,7 +220,7 @@ const DataConnector: any = {
     collect: async function ({ baseUrl, apiToken }: any) {
       return await fetch(`${API_BASE}/ext/paperless-ngx`, {
         method: "POST",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ baseUrl, apiToken }),
       })
         .then((res) => res.json())

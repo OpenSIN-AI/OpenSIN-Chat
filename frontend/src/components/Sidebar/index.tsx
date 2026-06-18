@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
-import { List, Plus } from "@phosphor-icons/react";
+import { List, Plus, SidebarSimple } from "@phosphor-icons/react";
 import NewWorkspaceModal, {
   useNewWorkspaceModal,
 } from "../Modals/NewWorkspace";
@@ -98,34 +98,48 @@ export default function Sidebar() {
     <>
       <nav
         aria-label={t("sidebar.mainNavigation")}
-        style={{ "--sidebar-width": showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className={`ml-[44px] w-[var(--sidebar-width)] relative transition-all duration-500 ${
-          showSidebar ? "pl-0" : "pl-0"
-        }`}
+        style={{ width: showSidebar ? `${sidebarWidth}px` : "0px" }}
+        className="relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-50"
       >
         <div className="overflow-hidden h-full">
-          <div className="flex shrink-0 w-full justify-start my-[18px] px-[24px]">
-            <div
-              className="w-[var(--sidebar-logo-width)] flex items-center"
-              style={{ "--sidebar-logo-width": `${sidebarWidth - 48}px` }}
+          <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-[18px] px-[16px]">
+            <Link
+              to={paths.home()}
+              aria-label={t("sidebar.home")}
+              className="flex items-center gap-x-2.5 overflow-hidden flex-shrink min-w-0"
             >
-              <Link
-                to={paths.home()}
-                aria-label={t("sidebar.home")}
-                className="flex items-center gap-x-2.5"
-              >
-                <img
-                  src={logo}
-                  alt={t("sidebar.logo")}
-                  className={`h-9 w-9 max-h-[36px] max-w-[36px] object-contain transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
-                />
-                <span
-                  className={`text-white font-bold text-lg whitespace-nowrap transition-opacity duration-500 ${showSidebar ? "opacity-100" : "opacity-0"}`}
-                >
-                  OpenSIN
-                </span>
-              </Link>
-            </div>
+              <img
+                src={logo}
+                alt={t("sidebar.logo")}
+                className="h-9 w-9 max-h-[36px] max-w-[36px] object-contain flex-shrink-0"
+              />
+              <span className="text-white font-bold text-lg whitespace-nowrap">
+                OpenSIN
+              </span>
+            </Link>
+            <button
+              type="button"
+              onClick={() => setShowSidebar((prev) => !prev)}
+              data-tooltip-id="sidebar-header-toggle"
+              data-tooltip-content={
+                showSidebar ? "Sidebar ausblenden" : "Sidebar einblenden"
+              }
+              aria-label={
+                showSidebar ? "Sidebar ausblenden" : "Sidebar einblenden"
+              }
+              className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-white flex-shrink-0"
+            >
+              <SidebarSimple
+                size={18}
+                weight={showSidebar ? "fill" : "regular"}
+              />
+            </button>
+            <Tooltip
+              id="sidebar-header-toggle"
+              place="bottom"
+              delayShow={300}
+              className="tooltip !text-xs z-99"
+            />
           </div>
           <div
             ref={sidebarRef}

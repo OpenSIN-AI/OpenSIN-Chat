@@ -15,6 +15,10 @@ function getAuthTokenHash() {
   return _cachedAuthTokenHash;
 }
 
+function invalidateAuthTokenHash() {
+  _cachedAuthTokenHash = null;
+}
+
 async function validatedRequest(request, response, next) {
   const multiUserMode = await SystemSettings.isMultiUserMode();
   response.locals.multiUserMode = multiUserMode;
@@ -140,4 +144,6 @@ async function validateMultiUserRequest(request, response, next) {
 
 module.exports = {
   validatedRequest,
+  invalidateAuthTokenHash,
+  getAuthTokenHash,
 };

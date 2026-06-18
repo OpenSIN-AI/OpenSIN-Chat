@@ -18,6 +18,7 @@ import {
   Upload,
   CloudArrowUp,
   Plus,
+  Trash,
 } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import { useFilesystem } from "@/hooks/useFilesystem";
@@ -50,12 +51,12 @@ function formatSize(bytes) {
 }
 
 function getBreadcrumbs(path) {
-  if (!path) return [];
+  const crumbs = [{ name: "Uploads", path: "" }];
+  if (!path) return crumbs;
   const parts = path.split("/").filter(Boolean);
-  const crumbs = [{ name: "/", path: "/" }];
   let current = "";
   for (const part of parts) {
-    current += "/" + part;
+    current = current ? current + "/" + part : part;
     crumbs.push({ name: part, path: current });
   }
   return crumbs;
@@ -75,6 +76,9 @@ export default function FilesystemSidebar() {
     browse,
     navigateTo,
     navigateUp,
+    createDirectory,
+    createFile,
+    deleteItem,
     toggleFileSelection,
     clearSelection,
   } = useFileBrowser();
@@ -83,6 +87,10 @@ export default function FilesystemSidebar() {
   const [connecting, setConnecting] = useState(false);
   const [connectResult, setConnectResult] = useState(null);
   const [selectedDirectory, setSelectedDirectory] = useState(null);
+  const [creatingType, setCreatingType] = useState(null);
+  const [newItemName, setNewItemName] = useState("");
+  const [itemActionMsg, setItemActionMsg] = useState(null);
+  const [deletingPath, setDeletingPath] = useState(null);
 
   useEffect(() => {
     if (sidebarOpen && !currentPath) {
@@ -93,10 +101,10 @@ export default function FilesystemSidebar() {
   const breadcrumbs = getBreadcrumbs(currentPath);
 
   const handleSelectDirectory = useCallback(() => {
-    if (currentPath && currentPath !== "/") {
-      setSelectedDirectory(currentPath);
+    if (currentPath !== null) {
+      setSelectedDirectory(currentPath || t("sidebar.filesystem.uploadsRoot"));
     }
-  }, [currentPath]);
+  }, [currentPath, t]);
 
   const handleConnect = useCallback(async () => {
     if (selectedFiles.length === 0 && !selectedDirectory) return;
@@ -131,6 +139,21 @@ export default function FilesystemSidebar() {
     }
   }, [selectedFiles, selectedDirectory, clearSelection]);
 
+  const handleDelete = useCallback(async (itemPath, itemName) => {
+    if (!window.confirm(t("sidebar.filesystem.confirmDelete") + (itemName ? `\n${itemName}` : ""))) return;
+    setDeletingPath(itemPath);
+    setItemActionMsg(null);
+    try {
+      await deleteItem(itemPath);
+      setItemActionMsg({ success: true, message: t("sidebar.filesystem.deleteSuccess") });
+      browse(currentPath || "");
+    } catch (err) {
+      setItemActionMsg({ success: false, message: `${t("sidebar.filesystem.deleteFailed")}: ${err.message}` });
+    } finally {
+      setDeletingPath(null);
+    }
+  }, [deleteItem, browse, currentPath, t]);
+
   const sysInfoRows = sysInfo
     ? [
         { icon: Cpu, label: "Plattform", value: `${sysInfo.platform} (${sysInfo.arch})` },
@@ -148,7 +171,7 @@ export default function FilesystemSidebar() {
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">
           <FolderOpen size={15} className="text-zinc-400 light:text-slate-500" />
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
-            {t("sidebar.filesystem.title", "Verzeichnis wählen")}
+            {t("sidebar.filesystem.title")}
           </p>
           <button
             onClick={() => setShowSysInfo(!showSysInfo)}
@@ -208,12 +231,91 @@ export default function FilesystemSidebar() {
         {!selectedDirectory && (
           <>
             <div className="px-3 py-2 border-b border-zinc-800 light:border-slate-200 shrink-0">
-              <p className="text-[10px] text-zinc-500 light:text-slate-400 uppercase tracking-wider mb-1">
-                Verzeichnis für Workspace wählen
+              <p className="text-[11px] text-zinc-400 light:text-slate-500 mb-2">
+                {t("sidebar.filesystem.description")}
               </p>
-              <p className="text-[11px] text-zinc-400 light:text-slate-500">
-                Navigiere zu einem Ordner und klicke "Als Workspace-Quelle festlegen"
-              </p>
+              <div className="flex items-center gap-1.5 mb-1">
+                <button
+                  onClick={() => { setCreatingType(creatingType === "folder" ? null : "folder"); setNewItemName(""); setItemActionMsg(null); }}
+                  type="button"
+                  className="flex items-center gap-1 text-[10px] font-medium text-zinc-300 light:text-slate-700 bg-zinc-800 light:bg-slate-200 hover:bg-zinc-700 light:hover:bg-slate-300 px-2 py-1 rounded-md border-none cursor-pointer transition-colors"
+                >
+                  <Plus size={10} weight="bold" />
+                  <Folder size={10} weight="fill" className="text-blue-400 light:text-blue-600" />
+                  {t("sidebar.filesystem.newFolder")}
+                </button>
+                <button
+                  onClick={() => { setCreatingType(creatingType === "file" ? null : "file"); setNewItemName(""); setItemActionMsg(null); }}
+                  type="button"
+                  className="flex items-center gap-1 text-[10px] font-medium text-zinc-300 light:text-slate-700 bg-zinc-800 light:bg-slate-200 hover:bg-zinc-700 light:hover:bg-slate-300 px-2 py-1 rounded-md border-none cursor-pointer transition-colors"
+                >
+                  <Plus size={10} weight="bold" />
+                  <FileText size={10} className="text-zinc-400 light:text-slate-500" />
+                  {t("sidebar.filesystem.newFile")}
+                </button>
+              </div>
+              {creatingType && (
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <input
+                    autoFocus
+                    type="text"
+                    value={newItemName}
+                    onChange={(e) => setNewItemName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && newItemName.trim()) {
+                        const fn = creatingType === "folder" ? createDirectory : createFile;
+                        fn(newItemName.trim(), currentPath || "").then(() => {
+                          setItemActionMsg({ success: true, message: t("sidebar.filesystem.createSuccess") });
+                          setCreatingType(null);
+                          setNewItemName("");
+                          browse(currentPath || "");
+                        }).catch((err) => {
+                          setItemActionMsg({ success: false, message: `${t("sidebar.filesystem.createFailed")}: ${err.message}` });
+                        });
+                      } else if (e.key === "Escape") {
+                        setCreatingType(null);
+                        setNewItemName("");
+                      }
+                    }}
+                    placeholder={creatingType === "folder" ? t("sidebar.filesystem.folderName") : t("sidebar.filesystem.fileName")}
+                    className="flex-1 text-xs bg-zinc-950 light:bg-white border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1 text-white light:text-slate-900 outline-none focus:border-blue-500"
+                  />
+                  <button
+                    onClick={() => {
+                      if (!newItemName.trim()) return;
+                      const fn = creatingType === "folder" ? createDirectory : createFile;
+                      fn(newItemName.trim(), currentPath || "").then(() => {
+                        setItemActionMsg({ success: true, message: t("sidebar.filesystem.createSuccess") });
+                        setCreatingType(null);
+                        setNewItemName("");
+                        browse(currentPath || "");
+                      }).catch((err) => {
+                        setItemActionMsg({ success: false, message: `${t("sidebar.filesystem.createFailed")}: ${err.message}` });
+                      });
+                    }}
+                    type="button"
+                    className="text-[10px] font-medium text-white bg-blue-600 hover:bg-blue-500 px-2 py-1 rounded-md border-none cursor-pointer transition-colors"
+                  >
+                    {t("sidebar.filesystem.create")}
+                  </button>
+                  <button
+                    onClick={() => { setCreatingType(null); setNewItemName(""); }}
+                    type="button"
+                    className="text-[10px] text-zinc-400 hover:text-white border-none bg-transparent cursor-pointer"
+                  >
+                    {t("sidebar.filesystem.cancel")}
+                  </button>
+                </div>
+              )}
+              {itemActionMsg && (
+                <div className={`mt-1.5 text-[10px] px-2 py-1 rounded-md ${
+                  itemActionMsg.success
+                    ? "bg-green-950/40 text-green-400 border border-green-800/50"
+                    : "bg-red-950/40 text-red-400 border border-red-800/50"
+                }`}>
+                  {itemActionMsg.message}
+                </div>
+              )}
             </div>
 
             {currentPath !== null && (
@@ -240,7 +342,7 @@ export default function FilesystemSidebar() {
                           : "text-zinc-400 hover:text-white light:hover:text-slate-900"
                       }`}
                     >
-                      {crumb.name === "/" ? "Root" : crumb.name}
+                      {crumb.name}
                     </button>
                   </div>
                 ))}
@@ -277,7 +379,7 @@ export default function FilesystemSidebar() {
                     <div
                       key={item.path}
                       onClick={() => navigateTo(item.path)}
-                      className="flex items-center gap-2.5 px-2 py-1.5 rounded-md cursor-pointer transition-all hover:bg-zinc-800 light:hover:bg-slate-100 border border-transparent"
+                      className="group flex items-center gap-2.5 px-2 py-1.5 rounded-md cursor-pointer transition-all hover:bg-zinc-800 light:hover:bg-slate-100 border border-transparent"
                     >
                       <Folder
                         size={16}
@@ -287,6 +389,15 @@ export default function FilesystemSidebar() {
                       <span className="text-xs text-zinc-200 light:text-slate-800 truncate flex-1">
                         {item.name}
                       </span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleDelete(item.path, item.name); }}
+                        disabled={deletingPath === item.path}
+                        type="button"
+                        className="text-zinc-600 light:text-slate-400 hover:text-red-400 light:hover:text-red-500 transition-colors border-none bg-transparent cursor-pointer opacity-0 group-hover:opacity-100 disabled:opacity-40 flex-shrink-0"
+                        aria-label={t("sidebar.filesystem.delete")}
+                      >
+                        <Trash size={12} weight="bold" className={deletingPath === item.path ? "animate-spin" : ""} />
+                      </button>
                     </div>
                   ))}
                   {items.filter((item) => item.type === "file").length > 0 && (
@@ -300,7 +411,7 @@ export default function FilesystemSidebar() {
                       <div
                         key={item.path}
                         onClick={() => isSupported && toggleFileSelection(item)}
-                        className={`flex items-center gap-2.5 px-2 py-1.5 rounded-md cursor-pointer transition-all ${
+                        className={`group flex items-center gap-2.5 px-2 py-1.5 rounded-md cursor-pointer transition-all ${
                           isSelected
                             ? "bg-blue-600/20 border border-blue-500/40"
                             : isSupported
@@ -321,6 +432,15 @@ export default function FilesystemSidebar() {
                         {isSelected && (
                           <CheckCircle size={14} weight="fill" className="text-blue-400 flex-shrink-0" />
                         )}
+                        <button
+                          onClick={(e) => { e.stopPropagation(); handleDelete(item.path, item.name); }}
+                          disabled={deletingPath === item.path}
+                          type="button"
+                          className="text-zinc-600 light:text-slate-400 hover:text-red-400 light:hover:text-red-500 transition-colors border-none bg-transparent cursor-pointer opacity-0 group-hover:opacity-100 disabled:opacity-40 flex-shrink-0"
+                          aria-label={t("sidebar.filesystem.delete")}
+                        >
+                          <Trash size={12} weight="bold" className={deletingPath === item.path ? "animate-spin" : ""} />
+                        </button>
                       </div>
                     );
                   })}
@@ -343,7 +463,7 @@ export default function FilesystemSidebar() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleSelectDirectory}
-                  disabled={!currentPath || currentPath === "/" || currentPath === ""}
+                  disabled={currentPath === null}
                   type="button"
                   className="flex items-center gap-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-40 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors flex-1"
                 >

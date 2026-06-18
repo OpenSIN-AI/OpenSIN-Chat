@@ -114,7 +114,7 @@ class Weaviate extends VectorDatabase {
       .do();
 
     const responses = queryResponse?.data?.Get?.[camelCase(namespace)];
-    responses.forEach((response) => {
+    (responses || []).forEach((response) => {
       // In Weaviate we have to pluck id from _additional and spread it into the rest
       // of the properties.
       const {

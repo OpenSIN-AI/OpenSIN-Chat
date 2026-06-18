@@ -504,7 +504,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
       window.removeEventListener("keydown", onPress);
       window.removeEventListener("keyup", onRelease);
     };
-  }, []);
+  }, [showing, t]);
 
   if (!showing) return null;
   return children;

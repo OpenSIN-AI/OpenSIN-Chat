@@ -102,7 +102,7 @@ class PoliticianVectorStore {
         connection,
         submissions,
         namespace: this.namespace,
-        dimensions: vectors[0].length,
+        dimensions: (vectors.find((v) => v && Array.isArray(v)) || vectors[0] || []).length,
       });
 
       this.log(`Indexed ${submissions.length} chunks for speech ${speechId}`);

@@ -1,6 +1,16 @@
 // SPDX-License-Identifier: MIT
-const { getStoragePath } = require("../utils/paths");
+const {
+  getStoragePath,
+  safeStorageJoin,
+  ensureStorageDir,
+} = require("../utils/paths");
 const { SystemSettings } = require("../models/systemSettings");
+const { validatedRequest } = require("../utils/middleware/validatedRequest");
+const {
+  flexUserRoleValid,
+  ROLES,
+} = require("../utils/middleware/multiUserProtected");
+const { reqBody } = require("../utils/http");
 
 /**
  * fetch() wrapper that aborts after `timeoutMs` so a hung upstream API
@@ -28,7 +38,7 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
 function utilEndpoints(app) {
   if (!app) return;
 
-  app.get("/utils/metrics", async (_, response) => {
+  app.get("/utils/metrics", [validatedRequest], async (_, response) => {
     try {
       const metrics = {
         online: true,
@@ -137,7 +147,7 @@ function utilEndpoints(app) {
   });
 
   // Filesystem info for FilesystemSidebar (Issue #56)
-  app.get("/utils/filesystem", async (_, response) => {
+  app.get("/utils/filesystem", [validatedRequest], async (_, response) => {
     try {
       const os = require("os");
       const disk = await getDiskStorage();
@@ -159,58 +169,164 @@ function utilEndpoints(app) {
     }
   });
 
-  // Directory browser for FileBrowserSidebar — Finder-style local file browsing
-  app.get("/utils/browse-directory", async (req, response) => {
-    try {
-      const path = require("path");
-      const fs = require("fs");
-      const os = require("os");
+  // Directory browser for FileBrowserSidebar — sandboxed to uploads/
+  // The `path` query param is RELATIVE to the uploads directory.
+  app.get(
+    "/utils/browse-directory",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, response) => {
+      try {
+        const path = require("path");
+        const fs = require("fs");
 
-      const requestedPath = req.query.path || os.homedir();
-      const resolvedPath = path.resolve(requestedPath);
+        const uploadsRoot = ensureStorageDir("uploads");
+        const relativePath = req.query.path || "";
+        const resolvedPath = safeStorageJoin("uploads", relativePath);
 
-      // Security: prevent path traversal — only allow absolute paths under /
-      if (!path.isAbsolute(resolvedPath)) {
-        return response.status(400).json({ error: "Path must be absolute" });
-      }
+        const entries = fs.readdirSync(resolvedPath, { withFileTypes: true });
+        const items = entries
+          .filter((entry) => !entry.name.startsWith("."))
+          .map((entry) => {
+            const fullPath = path.join(resolvedPath, entry.name);
+            const itemRelPath = path.relative(uploadsRoot, fullPath);
+            let size = 0;
+            let ext = "";
+            try {
+              if (entry.isFile()) {
+                const stat = fs.statSync(fullPath);
+                size = stat.size;
+                ext = path.extname(entry.name).toLowerCase();
+              }
+            } catch {}
+            return {
+              name: entry.name,
+              type: entry.isDirectory() ? "directory" : "file",
+              path: itemRelPath,
+              size,
+              ext,
+            };
+          })
+          .sort((a, b) => {
+            if (a.type !== b.type) return a.type === "directory" ? -1 : 1;
+            return a.name.localeCompare(b.name);
+          });
 
-      const entries = fs.readdirSync(resolvedPath, { withFileTypes: true });
-      const items = entries
-        .filter((entry) => !entry.name.startsWith("."))
-        .map((entry) => {
-          const fullPath = path.join(resolvedPath, entry.name);
-          let size = 0;
-          let ext = "";
-          try {
-            if (entry.isFile()) {
-              const stat = fs.statSync(fullPath);
-              size = stat.size;
-              ext = path.extname(entry.name).toLowerCase();
-            }
-          } catch {}
-          return {
-            name: entry.name,
-            type: entry.isDirectory() ? "directory" : "file",
-            path: fullPath,
-            size,
-            ext,
-          };
-        })
-        .sort((a, b) => {
-          if (a.type !== b.type) return a.type === "directory" ? -1 : 1;
-          return a.name.localeCompare(b.name);
+        response.status(200).json({
+          path: resolvedPath,
+          parent:
+            resolvedPath === uploadsRoot
+              ? null
+              : path.relative(uploadsRoot, path.dirname(resolvedPath)),
+          items,
         });
+      } catch (e) {
+        console.error("browse-directory endpoint error", e.message);
+        response.status(500).json({ error: e.message });
+      }
+    },
+  );
 
-      response.status(200).json({
-        path: resolvedPath,
-        parent: path.dirname(resolvedPath) !== resolvedPath ? path.dirname(resolvedPath) : null,
-        items,
-      });
-    } catch (e) {
-      console.error("browse-directory endpoint error", e.message);
-      response.status(500).json({ error: e.message });
-    }
-  });
+  // Create a directory inside uploads/ — parentPath is relative to uploads root
+  app.post(
+    "/utils/create-directory",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, response) => {
+      try {
+        const fs = require("fs");
+        const { name, parentPath = "" } = reqBody(request);
+
+        if (!name || typeof name !== "string") {
+          return response.status(400).json({ error: "Name is required" });
+        }
+        if (
+          /[\/\\]/.test(name) ||
+          name.includes("..") ||
+          name.startsWith(".")
+        ) {
+          return response.status(400).json({ error: "Invalid directory name" });
+        }
+
+        const resolved = safeStorageJoin("uploads", parentPath, name);
+        if (fs.existsSync(resolved)) {
+          return response
+            .status(409)
+            .json({ error: "Directory already exists" });
+        }
+
+        fs.mkdirSync(resolved, { recursive: true });
+        response.status(200).json({ success: true, path: resolved });
+      } catch (e) {
+        console.error("create-directory endpoint error", e.message);
+        response.status(500).json({ error: e.message });
+      }
+    },
+  );
+
+  // Create a file inside uploads/ — parentPath is relative to uploads root
+  app.post(
+    "/utils/create-file",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, response) => {
+      try {
+        const fs = require("fs");
+        const { name, parentPath = "", content = "" } = reqBody(request);
+
+        if (!name || typeof name !== "string") {
+          return response.status(400).json({ error: "Name is required" });
+        }
+        if (
+          /[\/\\]/.test(name) ||
+          name.includes("..") ||
+          name.startsWith(".")
+        ) {
+          return response.status(400).json({ error: "Invalid file name" });
+        }
+
+        const resolved = safeStorageJoin("uploads", parentPath, name);
+        if (fs.existsSync(resolved)) {
+          return response.status(409).json({ error: "File already exists" });
+        }
+
+        fs.writeFileSync(resolved, content || "");
+        response.status(200).json({ success: true, path: resolved });
+      } catch (e) {
+        console.error("create-file endpoint error", e.message);
+        response.status(500).json({ error: e.message });
+      }
+    },
+  );
+
+  // Delete a file or directory inside uploads/ — path is relative to uploads root
+  app.delete(
+    "/utils/delete-item",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (req, response) => {
+      try {
+        const fs = require("fs");
+        const itemPath = reqBody(request).path || req.query.path;
+
+        if (!itemPath || typeof itemPath !== "string" || itemPath === "") {
+          return response.status(400).json({ error: "Path is required" });
+        }
+
+        const resolved = safeStorageJoin("uploads", itemPath);
+        if (resolved === getStoragePath("uploads")) {
+          return response
+            .status(400)
+            .json({ error: "Cannot delete uploads root" });
+        }
+        if (!fs.existsSync(resolved)) {
+          return response.status(404).json({ error: "Item not found" });
+        }
+
+        fs.rmSync(resolved, { recursive: true });
+        response.status(200).json({ success: true });
+      } catch (e) {
+        console.error("delete-item endpoint error", e.message);
+        response.status(500).json({ error: e.message });
+      }
+    },
+  );
 
   // Report download for browser (public, no API key needed) — Issue #55
   // Reports are stored in STORAGE_DIR/generated-reports/ by the ReportGenerator

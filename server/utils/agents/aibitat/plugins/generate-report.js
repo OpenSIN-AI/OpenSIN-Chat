@@ -89,6 +89,23 @@ const generateReport = {
               }
 
               const result = await ReportGenerator.generate(reportData);
+              const fileSizeBytes = Math.round(
+                parseFloat(result.fileSizeKB) * 1024,
+              );
+              const downloadUrl = `/api/utils/reports/${result.fileName}`;
+              const templateLabel =
+                template === "brief"
+                  ? "Kurzbericht"
+                  : template === "full"
+                    ? "Ausführlicher Bericht"
+                    : "Standardbericht";
+              const versions = [
+                {
+                  label: templateLabel,
+                  fileName: result.fileName,
+                  downloadUrl,
+                },
+              ];
 
               // Notify the frontend so PreviewSidebar opens automatically (Issue #55).
               this.super.socket?.send?.("reportPreview", {
@@ -98,22 +115,37 @@ const generateReport = {
                 type: "pdf",
                 // Public, no-API-key route so the browser iframe can load it.
                 // (the /api/reports/:fileName route requires a valid API key)
-                downloadUrl: `/api/utils/reports/${result.fileName}`,
-                versions: [
-                  {
-                    label:
-                      template === "brief"
-                        ? "Kurzbericht"
-                        : template === "full"
-                          ? "Ausführlicher Bericht"
-                          : "Standardbericht",
-                    fileName: result.fileName,
-                    downloadUrl: `/api/utils/reports/${result.fileName}`,
-                  },
-                ],
+                downloadUrl,
+                versions,
               });
 
-              return `Report generated: "${result.fileName}" (${result.fileSizeKB} KB). Download via GET /api/reports/${result.fileName}`;
+              // Send a fileDownloadCard event so a download card appears in
+              // the chat history AND is persisted for reloads.  Without this,
+              // the report is invisible after a page refresh even though the
+              // PDF still exists on disk.  Include `versions` so the
+              // PreviewSidebar version dropdown survives the auto-preview
+              // that FileDownloadCard triggers.
+              this.super.socket?.send?.("fileDownloadCard", {
+                filename: result.fileName,
+                fileSize: fileSizeBytes,
+                downloadUrl,
+                versions,
+              });
+
+              // Register the output on the aibitat instance so it is persisted
+              // in the chat history (re-rendered via HistoricalOutputs on reload).
+              if (!this.super._pendingOutputs) this.super._pendingOutputs = [];
+              this.super._pendingOutputs.push({
+                type: "ReportFileDownload",
+                payload: {
+                  filename: result.fileName,
+                  fileSize: fileSizeBytes,
+                  downloadUrl,
+                  versions,
+                },
+              });
+
+              return `Report generated: "${result.fileName}" (${result.fileSizeKB} KB). Download via GET ${downloadUrl}`;
             } catch (error) {
               return `Error generating report: ${error.message}`;
             }

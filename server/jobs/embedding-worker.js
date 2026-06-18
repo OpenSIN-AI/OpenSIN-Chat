@@ -78,7 +78,13 @@ async function processQueue() {
       totalDocs: batch.length,
     };
 
-    const data = await fileData(filePath);
+    let data;
+    try {
+      data = await fileData(filePath);
+    } catch (err) {
+      console.error("Error loading file data:", err.message);
+      data = null;
+    }
     if (!data) {
       emit({
         type: "doc_failed",

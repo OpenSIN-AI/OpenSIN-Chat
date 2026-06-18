@@ -291,8 +291,10 @@ const Workspace = {
   },
 
   getWithUser: async function (user = null, clause = {}) {
-    if ([ROLES.admin, ROLES.manager].includes(user.role))
+    if (user && [ROLES.admin, ROLES.manager].includes(user.role))
       return this.get(clause);
+
+    if (!user) return null;
 
     try {
       const workspace = await prisma.workspaces.findFirst({
@@ -421,8 +423,10 @@ const Workspace = {
     limit = null,
     orderBy = null,
   ) {
-    if ([ROLES.admin, ROLES.manager].includes(user.role))
+    if (user && [ROLES.admin, ROLES.manager].includes(user.role))
       return await this.where(clause, limit, orderBy);
+
+    if (!user) return [];
 
     try {
       const workspaces = await prisma.workspaces.findMany({

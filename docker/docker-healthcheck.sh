@@ -13,9 +13,10 @@ STORAGE_DIR="${STORAGE_DIR:-/app/server/storage}"
 PDF_DIR="${STORAGE_DIR}/pdf-analysis"
 JOBS_DIR="${PDF_DIR}/jobs"
 FACTS_DB="${PDF_DIR}/facts.sqlite"
+SERVER_PORT="${SERVER_PORT:-3001}"
 
 # ── 1) Liveness: HTTP /ping muss 200 liefern ──────────────────────
-response=$(curl --write-out '%{http_code}' --silent --output /dev/null --max-time 5 http://localhost:3001/ping)
+response=$(curl --write-out '%{http_code}' --silent --output /dev/null --max-time 5 "http://localhost:${SERVER_PORT}/ping")
 if [ "$response" -ne 200 ]; then
   echo "Server is down (ping HTTP $response)"
   exit 1

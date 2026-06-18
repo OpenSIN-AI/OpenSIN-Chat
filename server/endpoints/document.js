@@ -49,6 +49,10 @@ function documentEndpoints(app) {
     async (request, response) => {
       try {
         const { files } = reqBody(request);
+        if (!Array.isArray(files) || files.length === 0) {
+          response.status(200).json({ success: true, message: null });
+          return;
+        }
         const docpaths = files.map(({ from }) => from);
         const documents = await Document.where({ docpath: { in: docpaths } });
 

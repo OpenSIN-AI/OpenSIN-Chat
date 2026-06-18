@@ -70,7 +70,7 @@ export default function AsyncTTSMessage({ slug, chatId }: any) {
         data-tooltip-id="message-to-speech"
         data-tooltip-content={
           speaking
-            ? t("pause_tts_speech_message")
+            ? t("chat_window.pause_tts_speech_message")
             : t("chat_window.tts_speak_message")
         }
         className="border-none text-zinc-300 light:text-slate-500"

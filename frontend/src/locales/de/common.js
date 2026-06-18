@@ -303,6 +303,9 @@ const TRANSLATIONS = {
     microphone: "Spreche deinen Prompt ein.",
     send: "Versende den Prompt an den Workspace.",
     tts_speak_message: "Nachricht vorlesen (TTS)",
+    at_agent: "@agent",
+    default_agent_description: "Standard-Agent — verwendet Tools automatisch",
+    pause_tts_speech_message: "TTS-Sprachausgabe pausieren",
     copy: "Kopieren",
     regenerate: "Neu generieren",
     regenerate_response: "Antwort neu generieren",
@@ -463,6 +466,9 @@ const TRANSLATIONS = {
     stt_mic_denied:
       "Es konnte nicht auf das Mikrofon zugegriffen werden. Bitte erteilen Sie die erforderlichen Berechtigungen und versuchen Sie es erneut.",
     stt_transcription_failed: "Transkription fehlgeschlagen: {{error}}",
+    stt_mic_access_denied:
+      "OpenSIN Chat hat keinen Zugriff auf das Mikrofon. Bitte aktivieren Sie den Zugriff für diese Website, um diese Funktion zu nutzen.",
+    chart_loading: "Diagramm wird geladen...",
   },
   dndWrapper: {
     addAnything: "Fügen Sie etwas hinzu",
@@ -564,6 +570,8 @@ const TRANSLATIONS = {
     remove: "Entfernen",
     resizeRightSidebar: "Rechte Seitenleiste skalieren",
     rightSidebar: "Rechte Seitenleiste",
+    hideSidebar: "Seitenleiste ausblenden",
+    showSidebar: "Seitenleiste einblenden",
     routingToModel: "Modell wird geroutet...",
     searchEmbeddingProviders: "Alle Einbettungsanbieter durchsuchen",
     searchLLMProviders: "Alle LLM-Anbieter durchsuchen",
@@ -733,6 +741,7 @@ const TRANSLATIONS = {
         "Löschen Sie diesen Workspace und alle seine Daten. Dies löscht den Workspace für alle Benutzer.",
       delete: "Workspace löschen",
       deleting: "Workspace wird gelöscht...",
+      deleteFailed: "Workspace konnte nicht gelöscht werden!",
       "confirm-start": "Sie sind dabei, Ihren gesamten",
       "confirm-end":
         "Workspace zu löschen. Dies entfernt alle Vektoreinbettungen in Ihrer Vektordatenbank.\n\nDie ursprünglichen Quelldateien bleiben unberührt. Diese Aktion ist irreversibel.",
@@ -1747,6 +1756,10 @@ const TRANSLATIONS = {
     description:
       "Sehen Sie alle Aktionen und Ereignisse, die auf dieser Instanz zur Überwachung stattfinden.",
     clear: "Ereignisprotokolle löschen",
+    clearConfirm:
+      "Möchten Sie wirklich alle Ereignisprotokolle löschen? Diese Aktion ist irreversibel.",
+    clearSuccess: "Ereignisprotokolle erfolgreich gelöscht.",
+    clearFailed: "Fehler beim Löschen der Protokolle: {{error}}",
     table: {
       type: "Ereignistyp",
       user: "Benutzer",
@@ -2300,6 +2313,8 @@ const TRANSLATIONS = {
           "Standardmäßig sind Sie der einzige Administrator. Als Administrator müssen Sie Konten für alle neuen Benutzer oder Administratoren erstellen. Verlieren Sie Ihr Passwort nicht, da nur ein Administrator-Benutzer Passwörter zurücksetzen kann.",
         username: "Administrator-Kontoname",
         password: "Administrator-Kontopasswort",
+        success: "Mehrbenutzer-Modus erfolgreich aktiviert.",
+        failed: "Mehrbenutzer-Modus konnte nicht aktiviert werden: {{error}}",
       },
     },
     password: {
@@ -2307,6 +2322,10 @@ const TRANSLATIONS = {
       description:
         "Schützen Sie Ihre OpenSIN Chat-Instanz mit einem Passwort. Wenn Sie dieses vergessen, gibt es keine Wiederherstellungsmethode, also stellen Sie sicher, dass Sie dieses Passwort speichern.",
       "password-label": "Instanzpasswort",
+      restrictedChars:
+        "Ihr Passwort enthält unzulässige Sonderzeichen. Erlaubt sind _,-,!,@,$,%,^,&,*,(,),;",
+      refreshing: "Die Seite wird in wenigen Sekunden neu geladen.",
+      updateFailed: "Passwort konnte nicht aktualisiert werden: {{error}}",
     },
     placeholder: {
       adminUsername: "Ihr Admin-Benutzername",
@@ -2612,6 +2631,10 @@ const TRANSLATIONS = {
       checkSourcesAria: "Quellen prüfen für: {{text}}",
       delete: "Löschen",
       deleteFactAria: "Fakt löschen: {{text}}",
+      filesSelected: "{{count}} Dateien ausgewählt",
+      downloadMd: "Markdown",
+      downloadDocx: "Word-Dokument",
+      downloadPdf: "PDF-Dokument",
     },
     corpus: {
       section: "Korpus-Analysen",
@@ -3597,6 +3620,7 @@ const TRANSLATIONS = {
       createInvite: "Einladung erstellen",
       close: "Schließen",
       copiedToClipboard: "Einladungslink in die Zwischenablage kopiert",
+      copyFailed: "Fehler beim Kopieren des Einladungslinks in die Zwischenablage",
     },
     usersPage: {
       title: "Benutzer",
@@ -3718,6 +3742,28 @@ const TRANSLATIONS = {
     openSettings: "Einstellungen öffnen",
     workspacesList: "Workspaces",
     generalAppearanceSettings: "Allgemeine Erscheinungseinstellungen",
+    database: {
+      openProfile: "Profil öffnen",
+    },
+    filesystem: {
+      title: "Dateien",
+      uploadsRoot: "Uploads",
+      newFolder: "Neuer Ordner",
+      newFile: "Neue Datei",
+      folderName: "Ordnername",
+      fileName: "Dateiname",
+      create: "Erstellen",
+      cancel: "Abbrechen",
+      delete: "Löschen",
+      confirmDelete: "Dieses Element löschen?",
+      createSuccess: "Erfolgreich erstellt",
+      createFailed: "Erstellung fehlgeschlagen",
+      deleteSuccess: "Erfolgreich gelöscht",
+      deleteFailed: "Löschen fehlgeschlagen",
+      description: "Ordner und Dateien erstellen oder Dateien hochladen. Alle im Chat oder als Quelle hinzugefügten Dateien erscheinen hier.",
+      error: "Fehler beim Laden:",
+      empty: "Verzeichnis ist leer",
+    },
   },
   right_sidebar: {
     icon_collapse: "Einklappen",
@@ -3819,6 +3865,7 @@ const TRANSLATIONS = {
       "Um Ihr Passwort in Zukunft zurückzusetzen, benötigen Sie diese Wiederherstellungscodes. Laden Sie die Codes herunter oder kopieren Sie sie, um sie zu speichern.",
     shownOnce: "Diese Wiederherstellungscodes werden nur einmal angezeigt!",
     copiedToClipboard: "Wiederherstellungscodes in die Zwischenablage kopiert",
+    copiedToClipboardFailed: "Fehler beim Kopieren der Wiederherstellungscodes in die Zwischenablage",
     copyAriaLabel: "Wiederherstellungscodes in die Zwischenablage kopieren",
     closeAriaLabel: "Wiederherstellungscodes schließen",
     downloadAriaLabel: "Wiederherstellungscodes herunterladen",
@@ -4185,6 +4232,15 @@ const TRANSLATIONS = {
     noMembers: "Keine Workspace-Mitglieder",
     manageUsers: "Benutzer verwalten",
   },
+  addMemberModal: {
+    users: "Benutzer",
+    searchPlaceholder: "Benutzer suchen...",
+    noUsersFound: "Keine Benutzer gefunden.",
+    selectAll: "Alle auswählen",
+    unselect: "Alle abwählen",
+    save: "Speichern",
+    usersUpdatedSuccess: "Benutzer erfolgreich aktualisiert.",
+  },
   mistralAiOptions: {
     apiKey: "API-Schlüssel",
     apiKeyPlaceholder: "Mistral AI API-Schlüssel",
@@ -4206,6 +4262,8 @@ const TRANSLATIONS = {
   citation: {
     referencedTimes: "{{count}}-mal referenziert.",
     moreCount: "+ {{count}}",
+    similarityTooltip:
+      "Dies ist die semantische Ähnlichkeitsbewertung dieses Textabschnitts im Vergleich zu Ihrer Anfrage, berechnet durch die Vektordatenbank.",
   },
   contextualSaveBar: {
     unsavedChanges: "Ungespeicherte Änderungen",
@@ -4314,6 +4372,7 @@ const TRANSLATIONS = {
     closeAriaLabel: "Neuen Workspace-Dialog schließen",
     error: "Fehler: {{error}}",
     save: "Speichern",
+    creationFailed: "Fehler beim Erstellen des Workspace: {{error}}",
   },
   promptReply: {
     couldNotRespond: "Konnte nicht auf die Nachricht antworten.",
@@ -4442,6 +4501,60 @@ const TRANSLATIONS = {
     unsupported: "Nicht unterstützter Diagrammtyp.",
     downloading: "Diagramm wird heruntergeladen...",
     downloadGraph: "Diagramm herunterladen",
+  },
+  experimentalFeatures: {
+    title: "Experimentelle Funktionen",
+    selectFeature: "Wählen Sie links eine Funktion aus, um sie zu konfigurieren.",
+    toastEnabled: "Experimentelle Funktionen aktiviert!",
+    termsTitle: "Experimentelle Funktionen — Nutzungsbedingungen",
+    termsP1:
+      "Diese Funktionen sind experimentell und können instabil sein, ohne Vorankündigung geändert oder vollständig entfernt werden.",
+    termsP2:
+      "Durch das Aktivieren experimenteller Funktionen bestätigen Sie die folgenden Risiken:",
+    termsLi1: "Datenverlust oder -beschädigung kann auftreten.",
+    termsLi2: "Leistungseinbußen sind möglich.",
+    termsLi3: "Funktionen funktionieren möglicherweise nicht wie erwartet.",
+    termsLi4: "Keine Garantie für Abwärtskompatibilität.",
+    termsLi5: "Eingeschränkter oder kein Support wird geboten.",
+    termsLi6: "Ihre Arbeitsbereich-Einstellungen können geändert werden.",
+    termsP3: "Zusätzlich sollten Sie Folgendes beachten:",
+    termsLi7: "Experimentelle Funktionen sind nicht sicherheitsgeprüft.",
+    termsLi8: "Sie können Sicherheitslücken einführen.",
+    termsLi9: "Sie können die Systemstabilität beeinträchtigen.",
+    termsLi10: "Sie können zusätzliche Ressourcen verbrauchen.",
+    termsLi11: "Sie sind nur für Test- und Evaluierungszwecke bestimmt.",
+    termsP4:
+      "Wenn Sie diese Risiken verstehen und akzeptieren, klicken Sie auf Akzeptieren, um fortzufahren. Andernfalls klicken Sie auf Ablehnen, um zur Startseite zurückzukehren.",
+    reject: "Ablehnen",
+    accept: "Akzeptieren",
+    toggleFailed: "Fehler beim Umschalten der Funktionskennung.",
+    toggleEnabled: "Funktion erfolgreich aktiviert.",
+    toggleDisabled: "Funktion erfolgreich deaktiviert.",
+    autoSyncTitle: "Auto-Sync überwachter Dokumente",
+    autoSyncDesc1:
+      "Überwachte Dokumente automatisch neu synchronisieren, wenn sie sich an der Quelle ändern.",
+    autoSyncDesc2:
+      "Dokumente werden auf Änderungen überwacht und ohne manuelles Eingreifen neu eingelesen.",
+    autoSyncDesc3:
+      "Hinweis: Diese Funktion erfordert Netzwerkzugriff auf die Quelldokumente.",
+    featureDocs: "Funktionsdokumentation",
+    manageWatched: "Überwachte Dokumente verwalten",
+    watchedDocs: "Überwachte Dokumente",
+    watchedDocsDesc:
+      "Derzeit überwachte Dokumente zur Live-Synchronisation.",
+    colDocumentName: "Dokumentname",
+    colLastSynced: "Zuletzt synchronisiert",
+    colNextRefresh: "Nächste Aktualisierung",
+    colCreatedOn: "Erstellt am",
+  },
+  workspaceLLMItem: {
+    editSettings: "Einstellungen bearbeiten",
+    settingsTitle: "{{name}} Einstellungen",
+    setupDescription:
+      "Um {{name}} als Agent-LLM dieses Arbeitsbereichs zu verwenden, müssen Sie es zuerst einrichten.",
+    cancel: "Abbrechen",
+    saveSettings: "{{name}} Einstellungen speichern",
+    saveFailed: "Fehler beim Speichern der {{name}} Einstellungen: {{error}}",
   },
 };
 export default TRANSLATIONS;

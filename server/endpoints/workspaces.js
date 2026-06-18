@@ -46,7 +46,15 @@ const {
 
 function workspaceEndpoints(app) {
   if (!app) return;
+  const RESPONSE_CACHE_MAX = 50;
   const responseCache = new Map();
+  function cacheSet(key, value) {
+    responseCache.set(key, value);
+    if (responseCache.size > RESPONSE_CACHE_MAX) {
+      const firstKey = responseCache.keys().next().value;
+      responseCache.delete(firstKey);
+    }
+  }
 
   app.post(
     "/workspace/new",
@@ -845,7 +853,7 @@ function workspaceEndpoints(app) {
         const buffer = await TTSProvider.ttsBuffer(text);
         if (buffer === null) return response.sendStatus(204).end();
 
-        responseCache.set(cacheKey, { buffer, mime: "audio/mpeg" });
+        cacheSet(cacheKey, { buffer, mime: "audio/mpeg" });
         response.writeHead(200, {
           "Content-Type": "audio/mpeg",
         });
@@ -888,7 +896,7 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        responseCache.set(slug, { buffer, mime });
+        cacheSet(slug, { buffer, mime });
 
         response.writeHead(200, {
           "Content-Type": mime || "image/png",

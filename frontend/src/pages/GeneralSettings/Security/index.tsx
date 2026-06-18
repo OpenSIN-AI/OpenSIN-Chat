@@ -62,7 +62,7 @@ function MultiUserMode() {
 
       const { success, error } = await System.setupMultiUser(data);
       if (success) {
-        showToast("Multi-User mode enabled successfully.", "success");
+        showToast(t("security.multiuser.enable.success"), "success");
         setSaving(false);
         setTimeout(() => {
           window.localStorage.removeItem(AUTH_USER);
@@ -73,7 +73,7 @@ function MultiUserMode() {
         return;
       }
 
-      showToast(`Failed to enable Multi-User mode: ${error}`, "error");
+      showToast(t("security.multiuser.enable.failed", { error }), "error");
       setSaving(false);
       return;
     }
@@ -109,7 +109,11 @@ function MultiUserMode() {
         {hasChanges && (
           <div className="flex justify-end">
             <CTAButton
-              onClick={() => handleSubmit()}
+              onClick={() =>
+                handleSubmit({
+                  preventDefault: () => {},
+                } as FormEvent<HTMLFormElement>)
+              }
               className="mt-3 mr-0 -mb-20 z-10"
             >
               {saving ? t("common.saving") : t("common.save")}
@@ -211,10 +215,7 @@ function PasswordProtection() {
     const form = new FormData(e.currentTarget);
 
     if (!PW_REGEX.test(form.get("password") as string)) {
-      showToast(
-        `Your password has restricted characters in it. Allowed symbols are _,-,!,@,$,%,^,&,*,(,),;`,
-        "error",
-      );
+      showToast(t("security.password.restrictedChars"), "error");
       setSaving(false);
       return;
     }
@@ -228,7 +229,7 @@ function PasswordProtection() {
 
     const { success, error } = await System.updateSystemPassword(data);
     if (success) {
-      showToast("Your page will refresh in a few seconds.", "success");
+      showToast(t("security.password.refreshing"), "success");
       setSaving(false);
       setTimeout(() => {
         window.localStorage.removeItem(AUTH_USER);
@@ -238,7 +239,7 @@ function PasswordProtection() {
       }, 3_000);
       return;
     } else {
-      showToast(`Failed to update password: ${error}`, "error");
+      showToast(t("security.password.updateFailed", { error }), "error");
       setSaving(false);
     }
   };
@@ -281,7 +282,11 @@ function PasswordProtection() {
         {hasChanges && (
           <div className="flex justify-end">
             <CTAButton
-              onClick={() => handleSubmit()}
+              onClick={() =>
+                handleSubmit({
+                  preventDefault: () => {},
+                } as FormEvent<HTMLFormElement>)
+              }
               className="mt-3 mr-0 -mb-20 z-10"
             >
               {saving ? t("common.saving") : t("common.save")}

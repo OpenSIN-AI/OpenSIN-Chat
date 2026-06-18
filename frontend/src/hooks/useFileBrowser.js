@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState, useCallback } from "react";
 import { API_BASE } from "@/utils/constants";
+import { baseHeaders } from "@/utils/request";
 
 export function useFileBrowser() {
   const [currentPath, setCurrentPath] = useState(null);
@@ -15,7 +16,7 @@ export function useFileBrowser() {
     setError(null);
     try {
       const res = await fetch(
-        `${API_BASE}/utils/browse-directory?path=${encodeURIComponent(targetPath)}`,
+        `${API_BASE}/utils/browse-directory?path=${encodeURIComponent(targetPath || "")}`,
       );
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -42,6 +43,45 @@ export function useFileBrowser() {
     if (parentPath) browse(parentPath);
   }, [parentPath, browse]);
 
+  const createDirectory = useCallback(async (name, dirParentPath) => {
+    const res = await fetch(`${API_BASE}/utils/create-directory`, {
+      method: "POST",
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({ name, parentPath: dirParentPath || "" }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || `HTTP ${res.status}`);
+    }
+    return res.json();
+  }, []);
+
+  const createFile = useCallback(async (name, dirParentPath, content = "") => {
+    const res = await fetch(`${API_BASE}/utils/create-file`, {
+      method: "POST",
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({ name, parentPath: dirParentPath || "", content }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || `HTTP ${res.status}`);
+    }
+    return res.json();
+  }, []);
+
+  const deleteItem = useCallback(async (itemPath) => {
+    const res = await fetch(`${API_BASE}/utils/delete-item`, {
+      method: "DELETE",
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
+      body: JSON.stringify({ path: itemPath }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      throw new Error(data.error || `HTTP ${res.status}`);
+    }
+    return res.json();
+  }, []);
+
   const toggleFileSelection = useCallback((file) => {
     setSelectedFiles((prev) => {
       const exists = prev.find((f) => f.path === file.path);
@@ -62,6 +102,9 @@ export function useFileBrowser() {
     browse,
     navigateTo,
     navigateUp,
+    createDirectory,
+    createFile,
+    deleteItem,
     toggleFileSelection,
     clearSelection,
   };

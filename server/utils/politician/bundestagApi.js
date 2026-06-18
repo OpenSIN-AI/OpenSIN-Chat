@@ -67,6 +67,7 @@ class BundestagApi {
     this.maxRetries = 3;
     this.retryDelayMs = 1000;
     this.rateLimitDelayMs = 500;
+    this.fetchTimeoutMs = 30000;
     this.lastRequestTime = 0;
     this.cache = new Map();
   }
@@ -93,7 +94,13 @@ class BundestagApi {
 
     for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
       try {
-        return await fetch(url, { headers });
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), this.fetchTimeoutMs);
+        try {
+          return await fetch(url, { headers, signal: controller.signal });
+        } finally {
+          clearTimeout(timer);
+        }
       } catch (err) {
         lastError = err;
         if (attempt < this.maxRetries)
@@ -116,6 +123,7 @@ class BundestagApi {
     const res = await this.#fetch(url, headers);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
+      res.text().catch(() => {});
       return null;
     }
     const data = await res.json();
@@ -313,7 +321,10 @@ class BundestagApi {
     if (!profileUrl) return null;
     try {
       const res = await this.#fetch(profileUrl, { Accept: "text/html" });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        res.text().catch(() => {});
+        return null;
+      }
       return await res.text();
     } catch (err) {
       this.log(`Error fetching bio from ${profileUrl}: ${err.message}`);

@@ -93,10 +93,17 @@ class GitLabRepoLoader {
   async #validateAccessToken() {
     if (!this.accessToken) return;
     try {
-      await fetch(`${this.apiBase}/api/v4/user`, {
+      const valid = await fetch(`${this.apiBase}/api/v4/user`, {
         method: "GET",
         headers: this.accessToken ? { "PRIVATE-TOKEN": this.accessToken } : {},
       }).then((res) => res.ok);
+      if (!valid) {
+        // eslint-disable-next-line no-console
+        console.error(
+          "Invalid Gitlab Access Token provided! Access token will not be used"
+        );
+        this.accessToken = null;
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(

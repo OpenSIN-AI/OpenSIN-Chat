@@ -48,7 +48,7 @@ function buildWinstonLogger() {
   };
   // eslint-disable-next-line no-console
   console.info = function (...args) {
-    logger.warn(formatArgs(args));
+    logger.info(formatArgs(args));
   };
 
   return logger;

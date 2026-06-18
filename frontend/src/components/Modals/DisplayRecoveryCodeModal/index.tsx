@@ -34,11 +34,16 @@ export default function RecoveryCodeModal({
   };
 
   const handleCopyToClipboard = () => {
-    navigator.clipboard.writeText(recoveryCodes.join(",\n")).then(() => {
-      showToast(t("recoveryCode.copiedToClipboard"), "success", {
-        clear: true,
+    navigator.clipboard
+      .writeText(recoveryCodes.join(",\n"))
+      .then(() => {
+        showToast(t("recoveryCode.copiedToClipboard"), "success", {
+          clear: true,
+        });
+      })
+      .catch(() => {
+        showToast(t("recoveryCode.copiedToClipboardFailed"), "error");
       });
-    });
   };
 
   return (

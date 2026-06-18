@@ -7,9 +7,25 @@ import { humanFileSize } from "@/utils/numbers";
 import StorageFiles from "@/models/files";
 import { useChatSidebar } from "../../ChatSidebar";
 import { API_BASE } from "@/utils/constants";
+import { baseHeaders } from "@/utils/request";
 import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
 
 const autoPreviewedFiles = new Set();
+
+/**
+ * Resolve a server-relative "/api/..." URL to the configured API base.
+ * When the frontend is served from a different origin than the API
+ * (VITE_API_BASE is a full URL), rewrite the "/api" prefix so the
+ * iframe / fetch targets the API host, not the frontend origin.
+ * Mirrors ReportPreviewListener.resolveUrl.
+ */
+function resolveApiUrl(url: string | null | undefined): string | null {
+  if (!url) return url ?? null;
+  if (API_BASE !== "/api" && url.startsWith("/api/")) {
+    return `${API_BASE}${url.slice(4)}`;
+  }
+  return url;
+}
 
 const IMAGE_EXTENSIONS = new Set(["png", "jpg", "jpeg", "gif", "webp", "svg"]);
 
@@ -122,18 +138,19 @@ function FileDownloadCard({ props, autoPreview = false }) {
   const [downloading, setDownloading] = useState(false);
   const { openPreview } = useChatSidebar();
 
-  const previewUrl =
+  const previewUrl = resolveApiUrl(
     downloadUrl ||
-    (storageFilename
-      ? `${API_BASE}/agent-skills/generated-files/${encodeURIComponent(storageFilename)}`
-      : null);
+      (storageFilename
+        ? `${API_BASE}/agent-skills/generated-files/${encodeURIComponent(storageFilename)}`
+        : null),
+  );
 
   function buildPreviewData() {
     return {
       title: filename || t("preview.title"),
       type: previewType,
       downloadUrl: previewUrl,
-      versions: [],
+      versions: props.content?.versions || [],
       content: null,
     };
   }
@@ -161,13 +178,22 @@ function FileDownloadCard({ props, autoPreview = false }) {
 
   const handleDownload = async () => {
     if (downloading) return;
-    if (!storageFilename) return;
+    if (!storageFilename && !downloadUrl) return;
 
     setDownloading(true);
     try {
-      const blob = await StorageFiles.download(storageFilename);
+      let blob: Blob | null = null;
+      if (storageFilename) {
+        blob = await StorageFiles.download(storageFilename);
+      } else if (downloadUrl) {
+        const res = await fetch(resolveApiUrl(downloadUrl), {
+          headers: baseHeaders(),
+        });
+        if (!res.ok) throw new Error(`Download failed: ${res.status}`);
+        blob = await res.blob();
+      }
       if (!blob) throw new Error("Failed to download file");
-      saveAs(blob, filename || storageFilename);
+      saveAs(blob, filename || storageFilename || "download");
     } catch {
       console.error("Failed to download file");
     } finally {

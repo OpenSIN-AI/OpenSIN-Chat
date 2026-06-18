@@ -77,7 +77,7 @@ export default function PiperTTS({ chatId, voiceId = null, message }: any) {
         data-auto-play-chat-id={chatId}
         data-tooltip-id="message-to-speech"
         data-tooltip-content={
-          speaking ? "Pause TTS speech of message" : "TTS Speak message"
+          speaking ? t("common.pauseSpeech") : t("common.speakMessage")
         }
         className="border-none text-[var(--theme-sidebar-footer-icon-fill)]"
         aria-label={

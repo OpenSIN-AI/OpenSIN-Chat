@@ -24,6 +24,9 @@ model api_keys {
   createdBy     Int?
   createdAt     DateTime @default(now())
   lastUpdatedAt DateTime @default(now())
+  createdByUser users?   @relation(fields: [createdBy], references: [id], onDelete: SetNull)
+
+  @@index([createdBy])
 }
 
 model workspace_documents {
@@ -37,8 +40,10 @@ model workspace_documents {
   watched              Boolean?              @default(false)
   createdAt            DateTime              @default(now())
   lastUpdatedAt        DateTime              @default(now())
-  workspace            workspaces            @relation(fields: [workspaceId], references: [id])
+  workspace            workspaces            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   document_sync_queues document_sync_queues?
+
+  @@index([workspaceId])
 }
 
 model invites {
@@ -50,6 +55,9 @@ model invites {
   createdAt     DateTime @default(now())
   createdBy     Int
   lastUpdatedAt DateTime @default(now())
+  claimedByUser users?   @relation(fields: [claimedBy], references: [id], onDelete: SetNull)
+
+  @@index([claimedBy])
 }
 
 model system_settings {
@@ -90,6 +98,11 @@ model users {
   desktop_mobile_devices       desktop_mobile_devices[]
   workspace_parsed_files       workspace_parsed_files[]
   memories                     memories[]
+  api_keys                     api_keys[]
+  invites                      invites[]
+  event_logs                   event_logs[]
+  model_routers                model_routers[]
+  model_router_rules           model_router_rules[]
 }
 
 model recovery_codes {
@@ -119,6 +132,8 @@ model document_vectors {
   vectorId      String
   createdAt     DateTime @default(now())
   lastUpdatedAt DateTime @default(now())
+
+  @@index([docId])
 }
 
 model workspaces {
@@ -144,6 +159,7 @@ model workspaces {
   vectorSearchMode             String?                        @default("default")
   router_id                    Int?
   workspace_users              workspace_users[]
+  workspace_chats              workspace_chats[]
   documents                    workspace_documents[]
   workspace_suggested_messages workspace_suggested_messages[]
   embed_configs                embed_configs[]
@@ -215,6 +231,12 @@ model workspace_chats {
   feedbackScore   Boolean?
   memoryProcessed Boolean? @map("memory_processed")
   users           users?   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  workspace       workspaces @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([user_id])
+  @@index([thread_id])
+  @@index([workspaceId, thread_id])
 }
 
 model workspace_agent_invocations {
@@ -231,6 +253,8 @@ model workspace_agent_invocations {
   workspace     workspaces @relation(fields: [workspace_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([uuid])
+  @@index([workspace_id])
+  @@index([user_id])
 }
 
 model workspace_users {
@@ -241,6 +265,9 @@ model workspace_users {
   lastUpdatedAt DateTime   @default(now())
   workspaces    workspaces @relation(fields: [workspace_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   users         users      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([user_id])
+  @@index([workspace_id])
 }
 
 model cache_data {
@@ -272,7 +299,10 @@ model embed_configs {
   createdAt                  DateTime      @default(now())
   workspace                  workspaces    @relation(fields: [workspace_id], references: [id], onDelete: Cascade)
   embed_chats                embed_chats[]
-  users                      users?        @relation(fields: [usersId], references: [id])
+  users                      users?        @relation(fields: [usersId], references: [id], onDelete: SetNull)
+
+  @@index([workspace_id])
+  @@index([usersId])
 }
 
 model embed_chats {
@@ -286,7 +316,10 @@ model embed_chats {
   usersId                Int?
   createdAt              DateTime      @default(now())
   embed_config           embed_configs @relation(fields: [embed_id], references: [id], onDelete: Cascade)
-  users                  users?        @relation(fields: [usersId], references: [id])
+  users                  users?        @relation(fields: [usersId], references: [id], onDelete: SetNull)
+
+  @@index([embed_id])
+  @@index([usersId])
 }
 
 model event_logs {
@@ -295,8 +328,10 @@ model event_logs {
   metadata   String?
   userId     Int?
   occurredAt DateTime @default(now())
+  user       users?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([event])
+  @@index([userId])
 }
 
 model slash_command_presets {
@@ -331,6 +366,8 @@ model document_sync_executions {
   result    String?
   createdAt DateTime             @default(now())
   queue     document_sync_queues @relation(fields: [queueId], references: [id], onDelete: Cascade)
+
+  @@index([queueId])
 }
 
 model browser_extension_api_keys {
@@ -377,9 +414,10 @@ model prompt_history {
   prompt      String
   modifiedBy  Int?
   modifiedAt  DateTime   @default(now())
-  user        users?     @relation(fields: [modifiedBy], references: [id])
+  user        users?     @relation(fields: [modifiedBy], references: [id], onDelete: SetNull)
 
   @@index([workspaceId])
+  @@index([modifiedBy])
 }
 
 // Schema specific to mobile app <> Desktop app connection
@@ -411,6 +449,7 @@ model workspace_parsed_files {
 
   @@index([workspaceId])
   @@index([userId])
+  @@index([threadId])
 }
 
 model external_communication_connectors {
@@ -432,7 +471,7 @@ model scheduled_jobs {
   lastRunAt DateTime?
   nextRunAt DateTime?
   createdAt DateTime             @default(now())
-  updatedAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
   runs      scheduled_job_runs[]
 }
 
@@ -593,6 +632,7 @@ model politician_committee_memberships {
   committee  politician_committees @relation(fields: [committeeId], references: [id], onDelete: Cascade)
 
   @@unique([politicianId, committeeId])
+  @@index([committeeId])
 }
 
 model politician_sync_log {
@@ -654,7 +694,10 @@ model model_routers {
   created_by        Int?
   createdAt         DateTime             @default(now())
   lastUpdatedAt     DateTime             @default(now())
+  createdByUser     users?               @relation(fields: [created_by], references: [id], onDelete: SetNull)
   rules             model_router_rules[]
+
+  @@index([created_by])
 }
 
 model model_router_rules {
@@ -679,11 +722,13 @@ model model_router_rules {
   created_by      Int?
   createdAt       DateTime      @default(now())
   lastUpdatedAt   DateTime      @default(now())
+  createdByUser   users?        @relation(fields: [created_by], references: [id], onDelete: SetNull)
   router          model_routers @relation(fields: [router_id], references: [id], onDelete: Cascade)
 
   @@unique([router_id, title])
   @@index([router_id])
   @@index([router_id, enabled, priority])
+  @@index([created_by])
 }
 
 // Persistente Background-Job Queue

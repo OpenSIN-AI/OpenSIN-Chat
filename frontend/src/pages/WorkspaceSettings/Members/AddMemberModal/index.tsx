@@ -36,12 +36,13 @@ export default function AddMemberModal({
       selectedUsers,
     );
     if (success) {
-      showToast("Users updated successfully.", "success");
+      showToast(t("addMemberModal.usersUpdatedSuccess"), "success");
       setTimeout(() => {
         window.location.reload();
       }, 1000);
+    } else {
+      showToast(error, "error");
     }
-    showToast(error, "error");
   };
 
   const handleUserSelect = (userId: string) => {

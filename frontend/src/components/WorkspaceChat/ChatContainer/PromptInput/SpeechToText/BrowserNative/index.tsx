@@ -5,6 +5,7 @@ import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import Appearance from "@/models/appearance";
+import { useTranslation } from "react-i18next";
 import MicButton from "../MicButton";
 
 let timeout;
@@ -17,6 +18,7 @@ const SILENCE_INTERVAL = 3_200; // wait in seconds of silence before closing.
  * @returns {React.ReactElement} The SpeechToText component
  */
 export default function BrowserNativeSTT({ sendCommand }: any) {
+  const { t } = useTranslation();
   const previousTranscriptRef = useRef("");
   const {
     transcript,
@@ -31,9 +33,7 @@ export default function BrowserNativeSTT({ sendCommand }: any) {
 
   function startSTTSession() {
     if (!isMicrophoneAvailable) {
-      alert(
-        "OpenSIN Chat does not have access to microphone. Please enable for this site to use this feature.",
-      );
+      alert(t("chat_window.stt_mic_access_denied"));
       return;
     }
 

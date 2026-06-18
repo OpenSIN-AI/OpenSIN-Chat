@@ -31,7 +31,7 @@ const ModelRouter: any = {
   create: async (data: any) => {
     return await fetch(`${API_BASE}/model-routers/new`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
@@ -44,7 +44,7 @@ const ModelRouter: any = {
   update: async (id: any, data: any) => {
     return await fetch(`${API_BASE}/model-routers/${id}`, {
       method: "PUT",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
@@ -69,7 +69,7 @@ const ModelRouter: any = {
   createRule: async (routerId: any, data: any) => {
     return await fetch(`${API_BASE}/model-routers/${routerId}/rules/new`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
@@ -84,7 +84,7 @@ const ModelRouter: any = {
       `${API_BASE}/model-routers/${routerId}/rules/${ruleId}`,
       {
         method: "PUT",
-        headers: baseHeaders(),
+        headers: { ...baseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify(data),
       },
     )
@@ -113,7 +113,7 @@ const ModelRouter: any = {
   reorderRules: async (routerId: any, ruleUpdates: any) => {
     return await fetch(`${API_BASE}/model-routers/${routerId}/rules/reorder`, {
       method: "PUT",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ ruleUpdates }),
     })
       .then((res) => res.json())

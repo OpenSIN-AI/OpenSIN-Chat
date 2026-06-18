@@ -24,12 +24,17 @@ function log(message, ...args) {
  * or generating infinite tokens.
  * @returns {Promise<void>}
  */
-export async function subscribeToPushNotifications(askToEnable = true) {
+export async function subscribeToPushNotifications(
+  askToEnable = true,
+  abortSignal?: AbortSignal,
+) {
   try {
     if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
       log("Push notifications not supported");
       return;
     }
+
+    if (abortSignal?.aborted) return;
 
     if (askToEnable) {
       // Check current permission status
@@ -82,9 +87,23 @@ export async function subscribeToPushNotifications(askToEnable = true) {
     });
 
     // Handle service worker updates
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
+    const onControllerChange = () => {
       log("Service worker controller changed");
-    });
+    };
+    navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
+
+    if (abortSignal) {
+      abortSignal.addEventListener(
+        "abort",
+        () => {
+          navigator.serviceWorker.removeEventListener(
+            "controllerchange",
+            onControllerChange,
+          );
+        },
+        { once: true },
+      );
+    }
 
     if (swReg.installing) {
       await new Promise((resolve) => {
@@ -120,8 +139,10 @@ export async function subscribeToPushNotifications(askToEnable = true) {
  */
 export default function useWebPushNotifications(askToEnable = true) {
   useEffect(() => {
-    subscribeToPushNotifications(askToEnable);
-  }, []);
+    const controller = new AbortController();
+    subscribeToPushNotifications(askToEnable, controller.signal);
+    return () => controller.abort();
+  }, [askToEnable]);
 }
 
 function urlBase64ToUint8Array(base64String) {

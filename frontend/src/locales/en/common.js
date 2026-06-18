@@ -302,8 +302,14 @@ const TRANSLATIONS = {
     stt_mic_denied:
       "Could not access the microphone. Please grant permission and try again.",
     stt_transcription_failed: "Transcription failed: {{error}}",
+    stt_mic_access_denied:
+      "OpenSIN Chat does not have access to microphone. Please enable for this site to use this feature.",
+    chart_loading: "Loading chart...",
     send: "Send prompt message to workspace",
     tts_speak_message: "TTS Speak message",
+    at_agent: "@agent",
+    default_agent_description: "Default agent — uses tools automatically",
+    pause_tts_speech_message: "Pause TTS speech of message",
     copy: "Copy",
     regenerate: "Regenerate",
     regenerate_response: "Regenerate response",
@@ -560,6 +566,8 @@ const TRANSLATIONS = {
     remove: "Remove",
     resizeRightSidebar: "Resize right sidebar",
     rightSidebar: "Right Sidebar",
+    hideSidebar: "Hide sidebar",
+    showSidebar: "Show sidebar",
     routingToModel: "Routing to model...",
     searchEmbeddingProviders: "Search all embedding providers",
     searchLLMProviders: "Search all LLM providers",
@@ -938,6 +946,10 @@ const TRANSLATIONS = {
       checkSourcesAria: "Check sources for: {{text}}",
       delete: "Delete",
       deleteFactAria: "Delete fact: {{text}}",
+      filesSelected: "{{count}} files selected",
+      downloadMd: "Markdown",
+      downloadDocx: "Word document",
+      downloadPdf: "PDF document",
     },
     corpus: {
       section: "Corpus analyses",
@@ -1162,6 +1174,7 @@ const TRANSLATIONS = {
         "Delete this workspace and all of its data. This will delete the workspace for all users.",
       delete: "Delete Workspace",
       deleting: "Deleting Workspace...",
+      deleteFailed: "Workspace could not be deleted!",
       "confirm-start": "You are about to delete your entire",
       "confirm-end":
         "workspace. This will remove all vector embeddings in your vector database.\n\nThe original source files will remain untouched. This action is irreversible.",
@@ -2396,6 +2409,8 @@ const TRANSLATIONS = {
           "By default, you will be the only admin. As an admin you will need to create accounts for all new users or admins. Do not lose your password as only an Admin user can reset passwords.",
         username: "Admin account username",
         password: "Admin account password",
+        success: "Multi-User mode enabled successfully.",
+        failed: "Failed to enable Multi-User mode: {{error}}",
       },
     },
     password: {
@@ -2403,6 +2418,10 @@ const TRANSLATIONS = {
       description:
         "Protect your OpenSIN Chat instance with a password. If you forget this there is no recovery method so ensure you save this password.",
       "password-label": "Instance Password",
+      restrictedChars:
+        "Your password has restricted characters in it. Allowed symbols are _,-,!,@,$,%,^,&,*,(,),;",
+      refreshing: "Your page will refresh in a few seconds.",
+      updateFailed: "Failed to update password: {{error}}",
     },
     placeholder: {
       adminUsername: "Your admin username",
@@ -2415,6 +2434,10 @@ const TRANSLATIONS = {
     description:
       "View all actions and events happening on this instance for monitoring.",
     clear: "Clear Event Logs",
+    clearConfirm:
+      "Are you sure you want to clear all event logs? This action is irreversible.",
+    clearSuccess: "Event logs cleared successfully.",
+    clearFailed: "Failed to clear logs: {{error}}",
     table: {
       type: "Event Type",
       user: "User",
@@ -3511,6 +3534,7 @@ const TRANSLATIONS = {
       createInvite: "Create Invite",
       close: "Close",
       copiedToClipboard: "Invite link copied to clipboard",
+      copyFailed: "Failed to copy invite link to clipboard",
     },
     usersPage: {
       title: "Users",
@@ -3631,6 +3655,28 @@ const TRANSLATIONS = {
     openSettings: "Open settings",
     workspacesList: "Workspaces",
     generalAppearanceSettings: "General appearance settings",
+    database: {
+      openProfile: "Open profile",
+    },
+    filesystem: {
+      title: "Files",
+      uploadsRoot: "Uploads",
+      newFolder: "New Folder",
+      newFile: "New File",
+      folderName: "Folder name",
+      fileName: "File name",
+      create: "Create",
+      cancel: "Cancel",
+      delete: "Delete",
+      confirmDelete: "Delete this item?",
+      createSuccess: "Created successfully",
+      createFailed: "Failed to create",
+      deleteSuccess: "Deleted successfully",
+      deleteFailed: "Failed to delete",
+      description: "Create folders and files or upload files. All files added in chat or as sources appear here.",
+      error: "Error loading:",
+      empty: "Directory is empty",
+    },
   },
   right_sidebar: {
     icon_collapse: "Collapse",
@@ -3732,6 +3778,7 @@ const TRANSLATIONS = {
       "In order to reset your password in the future, you will need these recovery codes. Download or copy your recovery codes to save them.",
     shownOnce: "These recovery codes are only shown once!",
     copiedToClipboard: "Recovery codes copied to clipboard",
+    copiedToClipboardFailed: "Failed to copy recovery codes to clipboard",
     copyAriaLabel: "Copy recovery codes to clipboard",
     closeAriaLabel: "Close recovery codes",
     downloadAriaLabel: "Download recovery codes",
@@ -4093,6 +4140,15 @@ const TRANSLATIONS = {
     noMembers: "No workspace members",
     manageUsers: "Manage Users",
   },
+  addMemberModal: {
+    users: "Users",
+    searchPlaceholder: "Search users...",
+    noUsersFound: "No users found.",
+    selectAll: "Select All",
+    unselect: "Unselect All",
+    save: "Save",
+    usersUpdatedSuccess: "Users updated successfully.",
+  },
   mistralAiOptions: {
     apiKey: "API Key",
     apiKeyPlaceholder: "Mistral AI API Key",
@@ -4114,6 +4170,8 @@ const TRANSLATIONS = {
   citation: {
     referencedTimes: "Referenced {{count}} times.",
     moreCount: "+ {{count}}",
+    similarityTooltip:
+      "This is the semantic similarity score of this chunk of text compared to your query calculated by the vector database.",
   },
   contextualSaveBar: {
     unsavedChanges: "Unsaved Changes",
@@ -4220,6 +4278,7 @@ const TRANSLATIONS = {
     closeAriaLabel: "Close new workspace dialog",
     error: "Error: {{error}}",
     save: "Save",
+    creationFailed: "Failed to create workspace: {{error}}",
   },
   promptReply: {
     couldNotRespond: "Could not respond to message.",
@@ -4347,6 +4406,60 @@ const TRANSLATIONS = {
     unsupported: "Unsupported chart type.",
     downloading: "Downloading chart...",
     downloadGraph: "Download graph",
+  },
+  experimentalFeatures: {
+    title: "Experimental Features",
+    selectFeature: "Select a feature from the left to configure it.",
+    toastEnabled: "Experimental features enabled!",
+    termsTitle: "Experimental Features — Terms of Use",
+    termsP1:
+      "These features are experimental and may be unstable, change without notice, or be removed entirely.",
+    termsP2:
+      "By enabling experimental features, you acknowledge the following risks:",
+    termsLi1: "Data loss or corruption may occur.",
+    termsLi2: "Performance degradation is possible.",
+    termsLi3: "Features may not work as expected.",
+    termsLi4: "No guarantee of backward compatibility.",
+    termsLi5: "Limited or no support is provided.",
+    termsLi6: "Your workspace settings may be modified.",
+    termsP3: "Additionally, please be aware that:",
+    termsLi7: "Experimental features are not security-tested.",
+    termsLi8: "They may introduce vulnerabilities.",
+    termsLi9: "They may affect system stability.",
+    termsLi10: "They may consume additional resources.",
+    termsLi11: "They are intended for testing and evaluation only.",
+    termsP4:
+      "If you understand and accept these risks, click Accept to proceed. Otherwise, click Reject to return to the homepage.",
+    reject: "Reject",
+    accept: "Accept",
+    toggleFailed: "Failed to toggle feature flag.",
+    toggleEnabled: "Feature enabled successfully.",
+    toggleDisabled: "Feature disabled successfully.",
+    autoSyncTitle: "Auto-Sync Watched Documents",
+    autoSyncDesc1:
+      "Automatically re-sync watched documents when they change on the source.",
+    autoSyncDesc2:
+      "Documents are monitored for changes and re-ingested without manual intervention.",
+    autoSyncDesc3:
+      "Note: This feature requires network access to the source documents.",
+    featureDocs: "Feature Documentation",
+    manageWatched: "Manage Watched Documents",
+    watchedDocs: "Watched Documents",
+    watchedDocsDesc:
+      "Documents currently being monitored for live synchronization.",
+    colDocumentName: "Document Name",
+    colLastSynced: "Last Synced",
+    colNextRefresh: "Next Refresh",
+    colCreatedOn: "Created On",
+  },
+  workspaceLLMItem: {
+    editSettings: "Edit Settings",
+    settingsTitle: "{{name}} Settings",
+    setupDescription:
+      "To use {{name}} as this workspace's agent LLM you need to set it up first.",
+    cancel: "Cancel",
+    saveSettings: "Save {{name}} settings",
+    saveFailed: "Failed to save {{name}} settings: {{error}}",
   },
 };
 export default TRANSLATIONS;

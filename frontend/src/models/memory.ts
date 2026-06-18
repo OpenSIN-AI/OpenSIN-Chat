@@ -39,7 +39,7 @@ const Memory: any = {
   create: async function (slug: any, { content, scope = "workspace" }: any) {
     return await fetch(`${API_BASE}/workspaces/${slug}/memories`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ content, scope }),
     })
       .then((res) => res.json())
@@ -55,7 +55,7 @@ const Memory: any = {
   update: async function (memoryId: any, { content }: any) {
     return await fetch(`${API_BASE}/memories/${memoryId}`, {
       method: "PUT",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ content }),
     })
       .then((res) => res.json())

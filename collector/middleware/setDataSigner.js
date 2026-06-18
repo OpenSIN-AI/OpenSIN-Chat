@@ -29,11 +29,15 @@ const { CommunicationKey } = require("../utils/comKey");
 function setDataSigner(request, response, next) {
   const comKey = new CommunicationKey();
   const encryptedPayloadSigner = request.header("X-Payload-Signer");
-  if (!encryptedPayloadSigner)
+  if (!encryptedPayloadSigner) {
     // eslint-disable-next-line no-console
     console.error(
       "Failed to find signed-payload to set encryption worker! Encryption calls will fail."
     );
+    return response
+      .status(400)
+      .json({ msg: "Missing X-Payload-Signer header." });
+  }
 
   const decryptedPayloadSignerKey = comKey.decrypt(encryptedPayloadSigner);
   const encryptionWorker = new EncryptionWorker(decryptedPayloadSignerKey);

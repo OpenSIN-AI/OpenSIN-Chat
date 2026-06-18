@@ -45,6 +45,7 @@ class PlenarScraper {
     this.maxRetries = 3;
     this.retryDelayMs = 1000;
     this.rateLimitDelayMs = 1000;
+    this.fetchTimeoutMs = 30000;
     this.lastRequestTime = 0;
   }
 
@@ -70,10 +71,17 @@ class PlenarScraper {
 
     for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
       try {
-        return await fetch(url, {
-          headers: { "User-Agent": "OpenSIN-Chat/1.0" },
-          ...opts,
-        });
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), this.fetchTimeoutMs);
+        try {
+          return await fetch(url, {
+            headers: { "User-Agent": "OpenSIN-Chat/1.0" },
+            signal: controller.signal,
+            ...opts,
+          });
+        } finally {
+          clearTimeout(timer);
+        }
       } catch (err) {
         lastError = err;
         if (attempt < this.maxRetries)
@@ -254,6 +262,10 @@ class PlenarScraper {
   async #parseXmlProtocol(url, session, sitting) {
     try {
       const res = await this.#fetch(url);
+      if (!res.ok) {
+        this.log(`HTTP ${res.status} for XML protocol ${url}`);
+        return [];
+      }
       const xmlText = await res.text();
 
       // Extract the document date from the root <datum date="DD.MM.YYYY"> element.
@@ -425,7 +437,10 @@ class PlenarScraper {
    * @returns {{politicianId: string | null, confidence: number}}
    */
   matchSpeaker(speech, nameMap) {
-    const names = speech.speakerName.split(" ");
+    if (!speech?.speakerName || !speech.speakerName.trim())
+      return { politicianId: null, confidence: 0 };
+
+    const names = speech.speakerName.trim().split(" ");
     const lastName = names[names.length - 1]?.toLowerCase();
     const firstName = names[0]?.toLowerCase();
 

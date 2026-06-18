@@ -1,6 +1,21 @@
 // SPDX-License-Identifier: MIT
 const prisma = require("../utils/prisma");
 
+const SUPPORTS_VECTORS = process.env.DATABASE_TYPE === "postgres";
+
+const SAFE_SELECT = SUPPORTS_VECTORS
+  ? undefined
+  : {
+      id: true,
+      userId: true,
+      workspaceId: true,
+      scope: true,
+      content: true,
+      lastUsedAt: true,
+      createdAt: true,
+      updatedAt: true,
+    };
+
 /**
  * @typedef {Object} Memory
  * @property {number} id
@@ -58,6 +73,7 @@ const Memory = {
           scope: "workspace",
         },
         orderBy: { createdAt: "desc" },
+        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
       });
       return memories;
     } catch (error) {
@@ -80,6 +96,7 @@ const Memory = {
           scope: "global",
         },
         orderBy: { createdAt: "desc" },
+        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
       });
       return memories;
     } catch (error) {
@@ -105,26 +122,38 @@ const Memory = {
     content,
   }) {
     try {
-      const count = await this.countForScope(userId, workspaceId, scope);
+      const validatedScope = this.validations.scope(scope);
       const limit =
-        this.validations.scope(scope) === "global"
+        validatedScope === "global"
           ? this.GLOBAL_LIMIT
           : this.WORKSPACE_LIMIT;
-      if (count >= limit)
-        return {
-          memory: null,
-          message: `Maximum ${scope} memory limit (${limit}) reached.`,
-        };
+      const where = {
+        userId: this.validations.userId(userId),
+        scope: validatedScope,
+      };
+      if (validatedScope === "workspace")
+        where.workspaceId = this.validations.workspaceId(workspaceId);
 
-      const memory = await prisma.memories.create({
-        data: {
-          userId: this.validations.userId(userId),
-          workspaceId: this.validations.workspaceId(workspaceId),
-          scope: this.validations.scope(scope),
-          content: this.validations.content(content),
-        },
+      const result = await prisma.$transaction(async (tx) => {
+        const count = await tx.memories.count({ where });
+        if (count >= limit)
+          return {
+            memory: null,
+            message: `Maximum ${scope} memory limit (${limit}) reached.`,
+          };
+
+        const memory = await tx.memories.create({
+          data: {
+            userId: this.validations.userId(userId),
+            workspaceId: this.validations.workspaceId(workspaceId),
+            scope: validatedScope,
+            content: this.validations.content(content),
+          },
+          ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
+        });
+        return { memory, message: null };
       });
-      return { memory, message: null };
+      return result;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error.message);
@@ -146,6 +175,7 @@ const Memory = {
           content: this.validations.content(content),
           updatedAt: new Date(),
         },
+        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
       });
       return { memory, message: null };
     } catch (error) {
@@ -181,29 +211,36 @@ const Memory = {
    */
   promoteToGlobal: async function (id) {
     try {
+      const validatedId = this.validations.id(id);
       const existing = await prisma.memories.findUnique({
-        where: { id: this.validations.id(id) },
+        where: { id: validatedId },
+        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
       });
       if (!existing) return { memory: null, message: "Memory not found." };
       if (existing.scope === "global")
         return { memory: existing, message: "Memory is already global." };
 
-      const globalCount = await this.countForScope(
-        existing.userId,
-        null,
-        "global",
-      );
-      if (globalCount >= this.GLOBAL_LIMIT)
-        return {
-          memory: null,
-          message: `Maximum global memory limit (${this.GLOBAL_LIMIT}) reached.`,
-        };
+      const result = await prisma.$transaction(async (tx) => {
+        const globalCount = await tx.memories.count({
+          where: {
+            userId: this.validations.userId(existing.userId),
+            scope: "global",
+          },
+        });
+        if (globalCount >= this.GLOBAL_LIMIT)
+          return {
+            memory: null,
+            message: `Maximum global memory limit (${this.GLOBAL_LIMIT}) reached.`,
+          };
 
-      const memory = await prisma.memories.update({
-        where: { id: this.validations.id(id) },
-        data: { scope: "global", workspaceId: null, updatedAt: new Date() },
+        const memory = await tx.memories.update({
+          where: { id: validatedId },
+          data: { scope: "global", workspaceId: null, updatedAt: new Date() },
+          ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
+        });
+        return { memory, message: null };
       });
-      return { memory, message: null };
+      return result;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error.message);
@@ -222,6 +259,7 @@ const Memory = {
     try {
       const existing = await prisma.memories.findUnique({
         where: { id: this.validations.id(id) },
+        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
       });
       if (!existing) return { memory: null, message: "Memory not found." };
       if (existing.scope === "workspace")
@@ -248,6 +286,7 @@ const Memory = {
           workspaceId: this.validations.id(workspaceId),
           updatedAt: new Date(),
         },
+        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
       });
       return { memory, message: null };
     } catch (error) {
@@ -330,6 +369,7 @@ const Memory = {
               scope: "workspace",
               content,
             },
+            ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
           });
         }
       });
@@ -394,6 +434,7 @@ const Memory = {
               scope: "workspace",
               content,
             },
+            ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
           });
         }
 
@@ -405,6 +446,7 @@ const Memory = {
               scope: "global",
               content,
             },
+            ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
           });
         }
 
@@ -412,6 +454,7 @@ const Memory = {
           await tx.memories.update({
             where: { id: this.validations.id(updateId) },
             data: { content, updatedAt: new Date() },
+            ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
           });
         }
       });
@@ -452,7 +495,10 @@ const Memory = {
    */
   get: async function (clause = {}) {
     try {
-      const memory = await prisma.memories.findFirst({ where: clause });
+      const memory = await prisma.memories.findFirst({
+        where: clause,
+        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
+      });
       return memory || null;
     } catch (error) {
       // eslint-disable-next-line no-console

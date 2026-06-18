@@ -59,12 +59,6 @@ export default function CorpusPanel() {
     return () => clearInterval(interval);
   }, [refresh]);
 
-  const CORPUS_PHASE_LABELS: Record<string, string> = {
-    "analyzing-documents": t("pdfAnalysis.corpus.phaseAnalyzingDocs"),
-    comparing: t("pdfAnalysis.corpus.phaseComparing"),
-    done: t("pdfAnalysis.corpus.phaseDone"),
-  };
-
   return (
     <div className="flex flex-col gap-6">
       <CorpusForm onStarted={refresh} />
@@ -340,9 +334,13 @@ function CorpusReportModal({ job, onClose }: CorpusReportModalProps) {
   const [result, setResult] = useState<CorpusReport | null>(null);
 
   useEffect(() => {
-    PdfAnalysis.corpusResult(job.id).then((res) =>
-      setResult(res as CorpusReport),
-    );
+    let cancelled = false;
+    PdfAnalysis.corpusResult(job.id).then((res) => {
+      if (!cancelled) setResult(res as CorpusReport);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, [job.id]);
 
   const conflicts = result?.comparison?.conflicts || [];

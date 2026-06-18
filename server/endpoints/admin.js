@@ -195,14 +195,16 @@ function adminEndpoints(app) {
           workspaceIds: body?.workspaceIds || [],
         });
 
-        await EventLogs.logEvent(
-          "invite_created",
-          {
-            inviteCode: invite.code,
-            createdBy: response.locals?.user?.username,
-          },
-          response.locals?.user?.id,
-        );
+        if (invite) {
+          await EventLogs.logEvent(
+            "invite_created",
+            {
+              inviteCode: invite.code,
+              createdBy: response.locals?.user?.username,
+            },
+            response.locals?.user?.id,
+          );
+        }
         response.status(200).json({ invite, error });
       } catch (e) {
         // eslint-disable-next-line no-console

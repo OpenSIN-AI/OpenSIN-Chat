@@ -47,7 +47,7 @@ const METADATA_KEYS = {
   },
 };
 
-async function processRawText(textContent, metadata) {
+async function processRawText(textContent, metadata = {}) {
   // eslint-disable-next-line no-console
   console.log(`-- Working Raw Text doc ${metadata.title} --`);
   if (!textContent || textContent.length === 0) {
