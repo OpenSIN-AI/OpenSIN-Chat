@@ -6,7 +6,7 @@ function isSupportedRepoProvider(request, response, next) {
   const { repo_platform = null } = request.params;
   if (!repo_platform || !REPO_PLATFORMS.includes(repo_platform))
     return response
-      .status(400)
+      .status(500)
       .send(`Unsupported repo platform ${repo_platform}`);
   next();
 }

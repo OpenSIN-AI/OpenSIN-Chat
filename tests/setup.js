@@ -5,6 +5,9 @@
 // server that `createApp()` starts on the IPv6 loopback (`::1`). This avoids
 // conflicts with OrbStack/Cloudflare which often occupies port 3001 on IPv4.
 
+process.env.DISABLE_RATE_LIMITS = "true";
+process.env.POLITICIAN_API_MAX_RETRIES = "0";
+
 const originalFetch = global.fetch;
 
 const TEST_PORT = process.env.SERVER_PORT || "3001";
