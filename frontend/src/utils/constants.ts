@@ -14,6 +14,7 @@ export const PENDING_HOME_MESSAGE = "openafd_pending_home_message";
 export const APPEARANCE_SETTINGS = "openafd_appearance_settings";
 export const THEME_KEY = "openafd_theme";
 export const LEGACY_THEME_KEY = "theme";
+export const RESET_TOKEN = "openafd_resetToken";
 
 export const OLLAMA_COMMON_URLS = [
   "http://127.0.0.1:11434",

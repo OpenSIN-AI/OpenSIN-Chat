@@ -23,6 +23,7 @@ import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import showToast from "@/utils/toast";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { safeJsonParse } from "@/utils/request";
+import { safeGetItem } from "@/utils/safeStorage";
 import { invalidateThreads } from "@/hooks/useThreads";
 import { useTranslation } from "react-i18next";
 
@@ -191,7 +192,7 @@ export default function ActiveWorkspaces() {
   const virtualActiveSlug: any = (() => {
     if (!isHomePage || workspaces.length === 0) return null;
     const lastVisited = safeJsonParse(
-      localStorage.getItem(LAST_VISITED_WORKSPACE),
+      safeGetItem(LAST_VISITED_WORKSPACE),
     );
     if (
       lastVisited?.slug &&

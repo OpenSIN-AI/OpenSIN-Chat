@@ -11,12 +11,13 @@ import { Tooltip } from "react-tooltip";
 import { SidebarSimple } from "@phosphor-icons/react";
 import { useTranslation } from "react-i18next";
 import paths from "@/utils/paths";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 
 const SIDEBAR_TOGGLE_STORAGE_KEY = "openafd_sidebar_toggle";
 export const SIDEBAR_TOGGLE_EVENT = "sidebar-toggle";
 
 function previousSidebarState() {
-  const previousState = window.localStorage.getItem(SIDEBAR_TOGGLE_STORAGE_KEY);
+  const previousState = safeGetItem(SIDEBAR_TOGGLE_STORAGE_KEY);
   if (previousState === "closed") return false;
   return true;
 }
@@ -65,7 +66,7 @@ export function SidebarToggleProvider({
       ) {
         setShowSidebar((prev) => {
           const newState = !prev;
-          window.localStorage.setItem(
+          safeSetItem(
             SIDEBAR_TOGGLE_STORAGE_KEY,
             newState ? "open" : "closed",
           );
@@ -80,7 +81,7 @@ export function SidebarToggleProvider({
   }, [canToggleSidebar]);
 
   useEffect(() => {
-    window.localStorage.setItem(
+    safeSetItem(
       SIDEBAR_TOGGLE_STORAGE_KEY,
       showSidebar ? "open" : "closed",
     );

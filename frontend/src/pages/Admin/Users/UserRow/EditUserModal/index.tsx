@@ -4,6 +4,7 @@ import { X } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
 import { MessageLimitInput, RoleHintDisplay } from "../..";
 import { AUTH_USER } from "@/utils/constants";
+import { safeSetItem } from "@/utils/safeStorage";
 import { useTranslation } from "react-i18next";
 import {
   USERNAME_MIN_LENGTH,
@@ -52,7 +53,7 @@ export default function EditUserModal({
         currentUser.username = data.username;
         currentUser.bio = data.bio;
         currentUser.role = data.role;
-        localStorage.setItem(AUTH_USER, JSON.stringify(currentUser));
+        safeSetItem(AUTH_USER, JSON.stringify(currentUser));
       }
 
       window.location.reload();

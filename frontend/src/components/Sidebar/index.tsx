@@ -11,6 +11,7 @@ import Footer from "../Footer";
 import SettingsButton from "../SettingsButton";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import { useTranslation } from "react-i18next";
 import { useSidebarToggle } from "./SidebarToggle";
 import SearchBox from "./SearchBox";
@@ -37,7 +38,7 @@ export default function Sidebar() {
   // Sidebar width state with localStorage persistence
   const [sidebarWidth, setSidebarWidth] = useState(() => {
     if (typeof window === "undefined") return SIDEBAR_DEFAULT_WIDTH;
-    const stored = window.localStorage.getItem(SIDEBAR_WIDTH_STORAGE_KEY);
+    const stored = safeGetItem(SIDEBAR_WIDTH_STORAGE_KEY);
     if (stored) {
       const n = Number(stored);
       if (!isNaN(n) && n >= SIDEBAR_MIN_WIDTH && n <= SIDEBAR_MAX_WIDTH)
@@ -52,7 +53,7 @@ export default function Sidebar() {
   // Persist width changes
   useEffect(() => {
     if (typeof window !== "undefined") {
-      window.localStorage.setItem(
+      safeSetItem(
         SIDEBAR_WIDTH_STORAGE_KEY,
         String(sidebarWidth),
       );
