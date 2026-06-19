@@ -8,6 +8,7 @@
 async function executeWebScraping(config, context) {
   const { CollectorApi } = require("../../collectorApi");
   const { TokenManager } = require("../../helpers/tiktoken");
+  const { validateUrl } = require("../../ssrf");
   const Provider = require("../../agents/aibitat/providers/ai-provider");
   const { summarizeContent } = require("../../agents/aibitat/utils/summarize");
 
@@ -20,6 +21,8 @@ async function executeWebScraping(config, context) {
   if (!url) {
     throw new Error("URL is required for web scraping");
   }
+
+  validateUrl(url);
 
   const captureMode = captureAs === "querySelector" ? "html" : captureAs;
   introspect(`Scraping the content of ${url} as ${captureAs}`);

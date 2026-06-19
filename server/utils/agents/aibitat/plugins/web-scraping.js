@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 const { CollectorApi } = require("../../../collectorApi");
+const { validateUrl } = require("../../../ssrf");
 const Provider = require("../providers/ai-provider");
 const { summarizeContent } = require("../utils/summarize");
 
@@ -97,6 +98,7 @@ const webScraping = {
            * @returns
            */
           scrape: async function (url) {
+            validateUrl(url);
             this.super.introspect(
               `${this.caller}: Scraping the content of ${url}`,
             );

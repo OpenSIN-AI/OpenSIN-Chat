@@ -31,6 +31,17 @@ class PostgresSQLConnector {
    * @returns {Promise<import(".").QueryResult>}
    */
   async runQuery(queryString = "", params = []) {
+    const SELECT_ONLY_REGEX = /^\s*(SELECT|WITH|SHOW|EXPLAIN|DESCRIBE)\b/i;
+    const cleanQuery =
+      typeof queryString === "string" ? queryString.trim() : "";
+    if (!SELECT_ONLY_REGEX.test(cleanQuery)) {
+      return {
+        rows: [],
+        count: 0,
+        error: "Only SELECT/WITH/SHOW/EXPLAIN/DESCRIBE queries are allowed",
+      };
+    }
+
     const result = { rows: [], count: 0, error: null };
     try {
       if (!this.#connected) await this.connect();

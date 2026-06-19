@@ -5,6 +5,7 @@ const path = require("path");
 const { safeJsonParse } = require("../http");
 const { isWithin, normalizePath } = require("../files");
 const { CollectorApi } = require("../collectorApi");
+const { validateUrl } = require("../ssrf");
 const pluginsPath = getStoragePath("plugins", "agent-skills");
 const sharedWebScraper = new CollectorApi();
 
@@ -287,6 +288,7 @@ class ImportedPlugin {
       );
 
     try {
+      validateUrl(url);
       const protocol = new URL(url).protocol.replace(":", "");
       const httpLib = protocol === "https" ? require("https") : require("http");
 
