@@ -31,7 +31,9 @@ const DIP_PUBLIC_API_KEY =
   DIP_PUBLIC_DEMO_KEY;
 
 const MAX_RETRIES = Number(process.env.POLITICIAN_API_MAX_RETRIES ?? 3);
-const RETRY_DELAY_MS = Number(process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000);
+const RETRY_DELAY_MS = Number(
+  process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000,
+);
 
 /**
  * @typedef {Object} PlenarSpeech

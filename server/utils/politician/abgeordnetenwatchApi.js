@@ -22,7 +22,9 @@ const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 const CACHE_MAX_ENTRIES = 500;
 
 const MAX_RETRIES = Number(process.env.POLITICIAN_API_MAX_RETRIES ?? 3);
-const RETRY_DELAY_MS = Number(process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000);
+const RETRY_DELAY_MS = Number(
+  process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000,
+);
 
 /**
  * Default parliament_period for the current Bundestag (21. WP, 2021–2025).

@@ -39,13 +39,24 @@ const { User } = require("../../models/user");
 const { writeResponseChunk } = require("../../utils/helpers/chat/responses");
 const { reqBody, userFromSession, multiUserMode } = require("../../utils/http");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
-const { ROLES, flexUserRoleValid } = require("../../utils/middleware/multiUserProtected");
-const { validWorkspaceSlug, validWorkspaceAndThreadSlug } = require("../../utils/middleware/validWorkspace");
+const {
+  ROLES,
+  flexUserRoleValid,
+} = require("../../utils/middleware/multiUserProtected");
+const {
+  validWorkspaceSlug,
+  validWorkspaceAndThreadSlug,
+} = require("../../utils/middleware/validWorkspace");
 const { createMockApp } = require("../helpers/mockExpressApp");
 const { chatEndpoints } = require("../../endpoints/chat");
 
-const WS_LOCALS = { workspace: { id: 1, name: "ws", slug: "ws", chatMode: "chat" } };
-const THREAD_LOCALS = { workspace: { id: 1, name: "ws", slug: "ws", chatMode: "chat" }, thread: { id: 10, slug: "t1", name: "Thread 1" } };
+const WS_LOCALS = {
+  workspace: { id: 1, name: "ws", slug: "ws", chatMode: "chat" },
+};
+const THREAD_LOCALS = {
+  workspace: { id: 1, name: "ws", slug: "ws", chatMode: "chat" },
+  thread: { id: 10, slug: "t1", name: "Thread 1" },
+};
 
 function buildApp() {
   const harness = createMockApp();
@@ -57,7 +68,11 @@ describe("chatEndpoints", () => {
   let app;
   beforeEach(() => {
     app = buildApp();
-    userFromSession.mockResolvedValue({ id: 1, username: "user1", dailyMessageLimit: 100 });
+    userFromSession.mockResolvedValue({
+      id: 1,
+      username: "user1",
+      dailyMessageLimit: 100,
+    });
     reqBody.mockImplementation((req) => req.body);
     multiUserMode.mockReturnValue(false);
     streamChatWithWorkspace.mockResolvedValue();
@@ -116,7 +131,10 @@ describe("chatEndpoints", () => {
         body: { message: "hello" },
         locals: WS_LOCALS,
       });
-      expect(writeResponseChunk).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ type: "abort" }));
+      expect(writeResponseChunk).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.objectContaining({ type: "abort" }),
+      );
     });
 
     it("handles errors gracefully", async () => {
@@ -125,16 +143,23 @@ describe("chatEndpoints", () => {
         body: { message: "hello" },
         locals: WS_LOCALS,
       });
-      expect(writeResponseChunk).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ error: "LLM down" }));
+      expect(writeResponseChunk).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.objectContaining({ error: "LLM down" }),
+      );
     });
   });
 
   describe("POST /workspace/:slug/thread/:threadSlug/stream-chat", () => {
     it("streams a thread chat", async () => {
-      const res = await app.call("post", "/workspace/ws/thread/t1/stream-chat", {
-        body: { message: "hello" },
-        locals: THREAD_LOCALS,
-      });
+      const res = await app.call(
+        "post",
+        "/workspace/ws/thread/t1/stream-chat",
+        {
+          body: { message: "hello" },
+          locals: THREAD_LOCALS,
+        },
+      );
       expect(streamChatWithWorkspace).toHaveBeenCalledWith(
         expect.any(Object),
         THREAD_LOCALS.workspace,
@@ -148,10 +173,14 @@ describe("chatEndpoints", () => {
     });
 
     it("returns 400 when message is empty", async () => {
-      const res = await app.call("post", "/workspace/ws/thread/t1/stream-chat", {
-        body: { message: "" },
-        locals: THREAD_LOCALS,
-      });
+      const res = await app.call(
+        "post",
+        "/workspace/ws/thread/t1/stream-chat",
+        {
+          body: { message: "" },
+          locals: THREAD_LOCALS,
+        },
+      );
       expect(res.statusCode).toBe(400);
     });
 
@@ -165,11 +194,18 @@ describe("chatEndpoints", () => {
 
     it("handles errors gracefully", async () => {
       streamChatWithWorkspace.mockRejectedValue(new Error("fail"));
-      const res = await app.call("post", "/workspace/ws/thread/t1/stream-chat", {
-        body: { message: "hello" },
-        locals: THREAD_LOCALS,
-      });
-      expect(writeResponseChunk).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ error: "fail" }));
+      const res = await app.call(
+        "post",
+        "/workspace/ws/thread/t1/stream-chat",
+        {
+          body: { message: "hello" },
+          locals: THREAD_LOCALS,
+        },
+      );
+      expect(writeResponseChunk).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.objectContaining({ error: "fail" }),
+      );
     });
   });
 });

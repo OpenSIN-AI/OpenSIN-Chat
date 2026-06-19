@@ -23,7 +23,9 @@ const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 
 const MAX_RETRIES = Number(process.env.POLITICIAN_API_MAX_RETRIES ?? 3);
-const RETRY_DELAY_MS = Number(process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000);
+const RETRY_DELAY_MS = Number(
+  process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000,
+);
 
 /** Current Bundestag electoral term (Wahlperiode). Default: 21. WP. */
 const DEFAULT_WAHLPERIODE = parseInt(
