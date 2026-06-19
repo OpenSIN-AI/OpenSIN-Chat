@@ -201,7 +201,7 @@ function processSheet(sheet) {
     return {
       name,
       content,
-      wordCount: content.split(/\s+/).length,
+      wordCount: content.split(/\s+/).filter(Boolean).length,
     };
   } catch (err) {
     // eslint-disable-next-line no-console

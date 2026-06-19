@@ -144,7 +144,7 @@ function workspaceEndpoints(app) {
       try {
         const { slug = null } = request.params;
         const user = await userFromSession(request, response);
-        const currWorkspace = multiUserMode(response)
+        const currWorkspace = multiuserMode(response)
           ? await Workspace.getWithUser(user, { slug })
           : await Workspace.get({ slug });
 
@@ -155,6 +155,7 @@ function workspaceEndpoints(app) {
 
         const Collector = new CollectorApi();
         const { originalname } = request.file;
+        const collectorFilename = request.file.filename || originalname;
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
@@ -169,8 +170,10 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const { success, reason, documents } =
-          await Collector.processDocument(originalname);
+        const { success, reason, documents } = await Collector.processDocument(
+          collectorFilename,
+          { title: originalname },
+        );
         if (!success || documents?.length === 0) {
           cleanupHotdirFile(request);
           response.status(500).json({ success: false, error: reason }).end();
@@ -1154,7 +1157,7 @@ function workspaceEndpoints(app) {
       try {
         const { slug = null } = request.params;
         const user = await userFromSession(request, response);
-        const currWorkspace = multiUserMode(response)
+        const currWorkspace = multiuserMode(response)
           ? await Workspace.getWithUser(user, { slug })
           : await Workspace.get({ slug });
 
@@ -1165,6 +1168,7 @@ function workspaceEndpoints(app) {
 
         const Collector = new CollectorApi();
         const { originalname } = request.file;
+        const collectorFilename = request.file.filename || originalname;
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
@@ -1179,8 +1183,10 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        const { success, reason, documents } =
-          await Collector.processDocument(originalname);
+        const { success, reason, documents } = await Collector.processDocument(
+          collectorFilename,
+          { title: originalname },
+        );
         if (!success || documents?.length === 0) {
           cleanupHotdirFile(request);
           response.status(500).json({ success: false, error: reason }).end();
@@ -1304,19 +1310,13 @@ function workspaceEndpoints(app) {
 
   app.delete(
     "/workspace/prompt-history/:id",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin, ROLES.manager]),
-      validWorkspaceSlug,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
         const { id } = request.params;
+        const { PromptHistory } = require("../models/promptHistory");
         response.status(200).json({
-          success: await Workspace.deletePromptHistory({
-            workspaceId: response.locals.workspace.id,
-            id: Number(id),
-          }),
+          success: await PromptHistory.delete({ id: Number(id) }),
         });
       } catch (error) {
         // eslint-disable-next-line no-console

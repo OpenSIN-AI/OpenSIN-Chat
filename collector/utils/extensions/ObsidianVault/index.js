@@ -61,7 +61,7 @@ async function loadObsidianVault({ files = [] }) {
         docSource: "Obsidian Vault",
         chunkSource: `obsidian://${file.path}`,
         published: new Date().toLocaleString(),
-        wordCount: fullPageContent.split(" ").length,
+        wordCount: fullPageContent.split(/\s+/).filter(Boolean).length,
         pageContent: fullPageContent,
         token_count_estimate: tokenizeString(fullPageContent),
       };

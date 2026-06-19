@@ -176,7 +176,7 @@ async function bulkScrapePages(links, outFolderPath) {
         docSource: "URL link uploaded by the user.",
         chunkSource: `link://${link}`,
         published: new Date().toLocaleString(),
-        wordCount: content.split(" ").length,
+        wordCount: content.split(/\s+/).filter(Boolean).length,
         pageContent: content,
         token_count_estimate: tokenizeString(content),
       };

@@ -45,6 +45,15 @@ function validateWorkspaceSlugQuery(request, response, next) {
 function apiDocumentEndpoints(app) {
   if (!app) return;
 
+  function cleanupHotdirFile(request) {
+    try {
+      const filePath = request.file?.path;
+      if (filePath && fs.existsSync(filePath)) fs.rmSync(filePath);
+    } catch {
+      // Best-effort cleanup
+    }
+  }
+
   app.post(
     "/v1/document/upload",
     [validApiKey, handleAPIFileUpload, validateWorkspaceSlugQuery],
@@ -124,9 +133,12 @@ function apiDocumentEndpoints(app) {
           typeof _metadata === "string"
             ? safeJsonParse(_metadata, {})
             : _metadata;
+        const collectorFilename = request.file.filename || originalname;
+        if (!metadata.title) metadata.title = originalname;
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
+          cleanupHotdirFile(request);
           response
             .status(500)
             .json({
@@ -138,11 +150,12 @@ function apiDocumentEndpoints(app) {
         }
 
         const { success, reason, documents } = await Collector.processDocument(
-          originalname,
+          collectorFilename,
           metadata,
         );
 
         if (!success || !documents?.length) {
+          cleanupHotdirFile(request);
           return response
             .status(500)
             .json({ success: false, error: reason, documents })
@@ -267,6 +280,8 @@ function apiDocumentEndpoints(app) {
           typeof _metadata === "string"
             ? safeJsonParse(_metadata, {})
             : _metadata;
+        const collectorFilename = request.file.filename || originalname;
+        if (!metadata.title) metadata.title = originalname;
 
         let folder = request.params?.folderName || "custom-documents";
         folder = normalizePath(folder);
@@ -282,6 +297,7 @@ function apiDocumentEndpoints(app) {
         const Collector = new CollectorApi();
         const processingOnline = await Collector.online();
         if (!processingOnline) {
+          cleanupHotdirFile(request);
           return response
             .status(500)
             .json({
@@ -293,10 +309,11 @@ function apiDocumentEndpoints(app) {
 
         // Process the uploaded document with metadata
         const { success, reason, documents } = await Collector.processDocument(
-          originalname,
+          collectorFilename,
           metadata,
         );
         if (!success || !documents?.length) {
+          cleanupHotdirFile(request);
           return response
             .status(500)
             .json({ success: false, error: reason, documents })

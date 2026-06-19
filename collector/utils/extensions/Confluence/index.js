@@ -110,7 +110,7 @@ async function loadConfluence(
         response.locals.encryptionWorker
       ),
       published: new Date().toLocaleString(),
-      wordCount: doc.pageContent.split(" ").length,
+      wordCount: doc.pageContent.split(/\s+/).filter(Boolean).length,
       pageContent: doc.pageContent,
       token_count_estimate: tokenizeString(doc.pageContent),
     };

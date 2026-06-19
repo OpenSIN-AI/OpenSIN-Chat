@@ -12,6 +12,16 @@ const { validWorkspaceSlug } = require("../utils/middleware/validWorkspace");
 const { CollectorApi } = require("../utils/collectorApi");
 const { WorkspaceThread } = require("../models/workspaceThread");
 const { WorkspaceParsedFiles } = require("../models/workspaceParsedFiles");
+const fs = require("fs");
+
+function cleanupHotdirFile(request) {
+  try {
+    const filePath = request.file?.path;
+    if (filePath && fs.existsSync(filePath)) fs.rmSync(filePath);
+  } catch {
+    // Best-effort cleanup
+  }
+}
 
 function workspaceParsedFilesEndpoints(app) {
   if (!app) return;
@@ -146,9 +156,11 @@ function workspaceParsedFilesEndpoints(app) {
         const workspace = response.locals.workspace;
         const Collector = new CollectorApi();
         const originalname = request.file?.originalname || "unknown";
+        const collectorFilename = request.file?.filename || originalname;
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
+          cleanupHotdirFile(request);
           return response.status(500).json({
             success: false,
             error: `Document processing API is not online. Document ${originalname} will not be parsed.`,
@@ -156,8 +168,9 @@ function workspaceParsedFilesEndpoints(app) {
         }
 
         const { success, reason, documents } =
-          await Collector.parseDocument(originalname);
+          await Collector.parseDocument(collectorFilename);
         if (!success || !documents?.[0]) {
+          cleanupHotdirFile(request);
           return response.status(500).json({
             success: false,
             error: reason || "No document returned from collector",
@@ -210,6 +223,7 @@ function workspaceParsedFilesEndpoints(app) {
           files,
         });
       } catch (e) {
+        cleanupHotdirFile(request);
         // eslint-disable-next-line no-console
         console.error(e.message, e);
         return response.status(500).json({ success: false, error: e.message });

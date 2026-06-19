@@ -11,6 +11,7 @@ jest.mock("../../utils/logger", () => () => ({
 }));
 
 jest.mock("../../models/workspace");
+jest.mock("../../models/promptHistory");
 jest.mock("../../models/documents");
 jest.mock("../../models/vectors");
 jest.mock("../../models/workspaceChats");
@@ -315,7 +316,8 @@ describe("workspaceEndpoints", () => {
 
   describe("DELETE /workspace/prompt-history/:id", () => {
     it("deletes a single prompt history entry", async () => {
-      Workspace.deletePromptHistory.mockResolvedValue(true);
+      const { PromptHistory } = require("../../models/promptHistory");
+      PromptHistory.delete.mockResolvedValue(true);
       const res = await app.call("delete", "/workspace/prompt-history/5", { locals: WS_LOCALS });
       expect(res.statusCode).toBe(200);
       expect(res.body.success).toBe(true);

@@ -189,7 +189,7 @@ class DrupalWiki {
     // This UUID will ensure that re-importing the same page without any changes will not
     // show up (deduplication).
     const targetUUID = `${hostname}.${page.spaceId}.${page.id}.${page.created}`;
-    const wordCount = page.processedBody.split(" ").length;
+    const wordCount = page.processedBody.split(/\s+/).filter(Boolean).length;
     const data = {
       id: targetUUID,
       url: `drupalwiki://${page.url}`,

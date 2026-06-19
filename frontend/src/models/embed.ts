@@ -50,7 +50,7 @@ const Embed: any = {
       })
       .catch((e) => {
         console.error(e);
-        return { success: true, error: e.message };
+        return { success: false, error: e.message };
       });
   },
   chats: async (offset: any = 0) => {
@@ -62,7 +62,7 @@ const Embed: any = {
       .then((res) => res.json())
       .catch((e) => {
         console.error(e);
-        return [];
+        return { chats: [], hasPages: false, totalChats: 0 };
       });
   },
   deleteChat: async (chatId: any) => {

@@ -81,7 +81,7 @@ async function loadPaperlessNgx({ baseUrl = null, apiToken = null }, response) {
         response.locals.encryptionWorker
       ),
       published: doc.metadata.created,
-      wordCount: doc.pageContent.split(" ").length,
+      wordCount: doc.pageContent.split(/\s+/).filter(Boolean).length,
       pageContent: doc.pageContent,
       token_count_estimate: tokenizeString(doc.pageContent),
     };

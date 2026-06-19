@@ -165,7 +165,7 @@ async function loadYouTubeTranscript({ url }, options = { parseOnly: false }) {
     docSource: url,
     chunkSource: `youtube://${url}`,
     published: new Date().toLocaleString(),
-    wordCount: content.split(" ").length,
+    wordCount: content.split(/\s+/).filter(Boolean).length,
     pageContent: content,
     token_count_estimate: tokenizeString(content),
   };
