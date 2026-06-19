@@ -139,7 +139,7 @@ export default class PiperTTSClient {
         "error",
         { clear: true },
       );
-      return;
+      return null;
     }
 
     return blobURL;

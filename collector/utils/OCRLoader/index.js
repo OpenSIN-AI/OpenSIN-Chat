@@ -302,16 +302,6 @@ class OCRLoader {
     }
   }
 
-  /**
-   * OCRs a batch of image files using a single shared tesseract worker.
-   * The worker is reused across all files (one worker instead of one per file),
-   * which materially reduces startup cost (no per-image model load) and avoids
-   * OOM from many simultaneous workers.
-   * @param {string[]} filePaths - The image file paths to OCR.
-   * @param {Object} [options]
-   * @param {number} [options.maxExecutionTime=600000] - Overall timeout in ms.
-   * @returns {Promise<(string|null)[]>} - One entry per file; null on per-file failure.
-   */
   async ocrImageBatch(filePaths = [], { maxExecutionTime = 600_000 } = {}) {
     if (!Array.isArray(filePaths) || filePaths.length === 0) return [];
     let worker = null;
@@ -370,16 +360,10 @@ class OCRLoader {
       const processQueue = async () => {
         for (const idx of valid) {
           try {
-            const { data } = await worker.recognize(
-              filePaths[idx],
-              {},
-              "text"
-            );
+            const { data } = await worker.recognize(filePaths[idx], {}, "text");
             results[idx] = data.text;
           } catch (e) {
-            this.log(
-              `Batch OCR error on ${filePaths[idx]}: ${e.message}`
-            );
+            this.log(`Batch OCR error on ${filePaths[idx]}: ${e.message}`);
             results[idx] = null;
           }
         }

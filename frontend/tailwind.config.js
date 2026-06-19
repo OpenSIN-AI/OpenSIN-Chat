@@ -5,13 +5,9 @@ export default {
   content: {
     relative: true,
     files: [
-      "./src/components/**/*.{js,jsx,ts,tsx}",
-      "./src/hooks/**/*.{js,ts}",
-      "./src/models/**/*.{js,ts}",
-      "./src/pages/**/*.{js,jsx,ts,tsx}",
-      "./src/utils/**/*.{js,ts}",
-      "./src/*.{jsx,tsx}",
       "./index.html",
+      "./src/**/*.{js,jsx,ts,tsx}",
+      "./src/*.{js,jsx,ts,tsx}",
       "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}"
     ]
   },

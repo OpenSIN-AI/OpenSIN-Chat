@@ -3,9 +3,7 @@ const { v4 } = require("uuid");
 const { writeToServerDocuments } = require("../utils/files");
 const { tokenizeString } = require("../utils/tokenizer");
 const { default: slugify } = require("slugify");
-const {
-  RecursiveCharacterTextSplitter,
-} = require("@langchain/textsplitters");
+const { RecursiveCharacterTextSplitter } = require("@langchain/textsplitters");
 
 const DEFAULT_CHUNK_SIZE = 1_000;
 const DEFAULT_CHUNK_OVERLAP = 100;
@@ -17,7 +15,10 @@ function stripAndSlug(input) {
   return slugify(input.split(".").slice(0, -1).join("-"), { lower: true });
 }
 
-function makeSplitter({ chunkSize = DEFAULT_CHUNK_SIZE, chunkOverlap = DEFAULT_CHUNK_OVERLAP } = {}) {
+function makeSplitter({
+  chunkSize = DEFAULT_CHUNK_SIZE,
+  chunkOverlap = DEFAULT_CHUNK_OVERLAP,
+} = {}) {
   return new RecursiveCharacterTextSplitter({
     chunkSize,
     chunkOverlap,

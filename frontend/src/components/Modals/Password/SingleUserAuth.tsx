@@ -95,7 +95,7 @@ export default function SingleUserAuth() {
                 type="password"
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 required={true}
-                autoComplete="off"
+                autoComplete="current-password"
               />
             </div>
             {error && (

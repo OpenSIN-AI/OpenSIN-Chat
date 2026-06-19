@@ -5,6 +5,7 @@ class OpenAiSTT {
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
       apiKey: process.env.OPEN_AI_KEY,
+      timeout: 120_000,
     });
     this.model = process.env.STT_OPEN_AI_MODEL ?? "whisper-1";
   }
@@ -16,13 +17,19 @@ class OpenAiSTT {
    * @returns {Promise<string>} The transcribed text.
    */
   async transcribe(audioBuffer, filename = "audio.webm") {
-    const { toFile } = require("openai");
-    const file = await toFile(audioBuffer, filename);
-    const result = await this.openai.audio.transcriptions.create({
-      file,
-      model: this.model,
-    });
-    return result?.text ?? "";
+    try {
+      const { toFile } = require("openai");
+      const file = await toFile(audioBuffer, filename);
+      const result = await this.openai.audio.transcriptions.create({
+        file,
+        model: this.model,
+      });
+      return result?.text ?? "";
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(`OpenAiSTT:transcribe failed: ${e?.message || e}`);
+      throw new Error(`OpenAI transcription failed: ${e?.message || "Unknown error"}`);
+    }
   }
 }
 

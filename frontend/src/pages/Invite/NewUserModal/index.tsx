@@ -73,7 +73,7 @@ export default function NewUserModal(): JSX.Element {
                   maxLength={USERNAME_MAX_LENGTH}
                   pattern={USERNAME_PATTERN}
                   required={true}
-                  autoComplete="off"
+                  autoComplete="username"
                 />
                 <p className="mt-2 text-xs text-theme-text-secondary">
                   {t("common.username_requirements")}
@@ -93,7 +93,7 @@ export default function NewUserModal(): JSX.Element {
                   placeholder={t("invite.newUser.passwordPlaceholder")}
                   required={true}
                   minLength={8}
-                  autoComplete="off"
+                  autoComplete="new-password"
                 />
               </div>
               {error && (

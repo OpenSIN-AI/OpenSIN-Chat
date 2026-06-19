@@ -9,6 +9,7 @@ const { humanFileSize } = require("../../../../helpers");
 const { safeJsonParse } = require("../../../../http");
 
 const MAX_TOTAL_ATTACHMENT_SIZE = 20 * 1024 * 1024; // 20MB limit for all attachments combined
+const GMAIL_API_TIMEOUT_MS = 30_000; // 30s timeout for Gmail Apps Script requests
 
 /**
  * Validates and prepares a file attachment for email.
@@ -359,6 +360,7 @@ class GmailBridge {
           action,
           ...params,
         }),
+        signal: AbortSignal.timeout(GMAIL_API_TIMEOUT_MS),
       });
 
       if (!response.ok) {

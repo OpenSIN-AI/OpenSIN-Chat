@@ -8,6 +8,7 @@ const { EmbedChats } = require("../../models/embedChats");
 const {
   validEmbedConfig,
   canRespond,
+  canAccessEmbed,
   setConnectionMeta,
 } = require("../../utils/middleware/embedMiddleware");
 const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
@@ -81,7 +82,7 @@ function embeddedEndpoints(app) {
 
   app.get(
     "/embed/:embedId/:sessionId",
-    [validEmbedConfig],
+    [validEmbedConfig, canAccessEmbed],
     async (request, response) => {
       try {
         const { sessionId } = request.params;
@@ -105,7 +106,7 @@ function embeddedEndpoints(app) {
 
   app.delete(
     "/embed/:embedId/:sessionId",
-    [validEmbedConfig],
+    [validEmbedConfig, canAccessEmbed],
     async (request, response) => {
       try {
         const { sessionId } = request.params;

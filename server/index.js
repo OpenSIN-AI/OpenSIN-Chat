@@ -9,13 +9,19 @@ const { buildApp, bootApp } = require("./app");
 const BackgroundQueue = require("./utils/backgroundJobs/queue");
 
 // Resume interrupted PDF analysis, cross-check, and corpus jobs after a restart.
-const { PdfAnalysisPipeline } = require("./utils/pdfAnalysis");
-PdfAnalysisPipeline.resumeInterrupted();
+(async () => {
+  const { PdfAnalysisPipeline } = require("./utils/pdfAnalysis");
+  const { CrossCheckPipeline } = require("./utils/pdfAnalysis/crossCheck");
+  const { CorpusPipeline } = require("./utils/pdfAnalysis/corpus");
 
-const { CrossCheckPipeline } = require("./utils/pdfAnalysis/crossCheck");
-CrossCheckPipeline.restorePersisted(PdfAnalysisPipeline.factStore);
-
-require("./utils/pdfAnalysis/corpus").CorpusPipeline.restorePersisted();
+  await Promise.all([
+    Promise.resolve(PdfAnalysisPipeline.resumeInterrupted()),
+    Promise.resolve(CorpusPipeline.restorePersisted()),
+  ]);
+  await Promise.resolve(
+    CrossCheckPipeline.restorePersisted(PdfAnalysisPipeline.factStore),
+  );
+})();
 
 // Memory hygiene runs on boot and every 1 hour (stuck-job detection, orphan
 // detection, stale-job cleanup, upload/checkpoint/report retention).

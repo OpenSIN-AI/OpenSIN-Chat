@@ -1328,11 +1328,18 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         const { offset = 0, limit = 10 } = reqBody(request);
-        const logs = await EventLogs.whereWithData({}, limit, offset * limit, {
-          id: "desc",
-        });
+        const clampedLimit = Math.min(Math.max(parseInt(limit) || 10, 1), 100);
+        const clampedOffset = Math.max(parseInt(offset) || 0, 0);
+        const logs = await EventLogs.whereWithData(
+          {},
+          clampedLimit,
+          clampedOffset * clampedLimit,
+          {
+            id: "desc",
+          },
+        );
         const totalLogs = await EventLogs.count();
-        const hasPages = totalLogs > (offset + 1) * limit;
+        const hasPages = totalLogs > (clampedOffset + 1) * clampedLimit;
 
         response.status(200).json({ logs: logs, hasPages, totalLogs });
       } catch (e) {
@@ -1373,14 +1380,16 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         const { offset = 0, limit = 20 } = reqBody(request);
+        const clampedLimit = Math.min(Math.max(parseInt(limit) || 20, 1), 100);
+        const clampedOffset = Math.max(parseInt(offset) || 0, 0);
         const chats = await WorkspaceChats.whereWithData(
           {},
-          limit,
-          offset * limit,
+          clampedLimit,
+          clampedOffset * clampedLimit,
           { id: "desc" },
         );
         const totalChats = await WorkspaceChats.count();
-        const hasPages = totalChats > (offset + 1) * limit;
+        const hasPages = totalChats > (clampedOffset + 1) * clampedLimit;
 
         response.status(200).json({ chats: chats, hasPages, totalChats });
       } catch (e) {
@@ -1428,7 +1437,14 @@ function systemEndpoints(app) {
           },
           response.locals.user?.id,
         );
+        const safeType = String(type).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 20) || "jsonl";
+        const safeChatType = String(chatType).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 20) || "workspace";
+        const ext = safeType === "jsonAlpaca" ? "json" : safeType;
         response.setHeader("Content-Type", contentType);
+        response.setHeader(
+          "Content-Disposition",
+          `attachment; filename="exported-chats-${safeChatType}.${ext}"`,
+        );
         response.status(200).send(data);
       } catch (e) {
         // eslint-disable-next-line no-console

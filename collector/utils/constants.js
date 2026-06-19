@@ -12,16 +12,14 @@ const ACCEPTED_MIMES = {
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [
     ".docx",
   ],
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document.macroEnabled": [
-    ".docm",
-  ],
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document.macroEnabled":
+    [".docm"],
   "application/vnd.ms-word.template.macroEnabled.main+xml": [".dotm"],
   "application/vnd.openxmlformats-officedocument.presentationml.presentation": [
     ".pptx",
   ],
-  "application/vnd.openxmlformats-officedocument.presentationml.presentation.macroEnabled": [
-    ".pptm",
-  ],
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation.macroEnabled":
+    [".pptm"],
 
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
     ".xlsx",

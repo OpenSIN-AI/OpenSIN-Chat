@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 const { sourceIdentifier } = require("../../chats");
 const { VectorDatabase } = require("../base");
 const { withTimeout } = require("../../helpers/withTimeout");
+const prisma = require("../../prisma");
 
 /*
  Embedding Table Schema (table name defined by user)
@@ -651,10 +652,28 @@ class PGVector extends VectorDatabase {
           namespace,
           dimensions: vectorDimensions,
         });
+        await prisma.$transaction(async (tx) => {
+          await tx.document_vectors.createMany({
+            data: documentVectors.map((dv) => ({
+              docId: dv.docId,
+              vectorId: dv.vectorId,
+            })),
+            skipDuplicates: true,
+          });
+        });
         await storeVectorResult(chunks, fullFilePath);
+      } else {
+        await prisma.$transaction(async (tx) => {
+          await tx.document_vectors.createMany({
+            data: documentVectors.map((dv) => ({
+              docId: dv.docId,
+              vectorId: dv.vectorId,
+            })),
+            skipDuplicates: true,
+          });
+        });
       }
 
-      await DocumentVectors.bulkInsert(documentVectors);
       return { vectorized: true, error: null };
     } catch (err) {
       this.logger("addDocumentToNamespace", err.message);

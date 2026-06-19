@@ -8,6 +8,19 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../../utils/middleware/multiUserProtected");
+const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
+
+const mobileAuthRateLimit = simpleRateLimit({
+  bucket: "mobile-auth",
+  max: 20,
+  windowMs: 60 * 1000,
+});
+
+const mobileRegisterRateLimit = simpleRateLimit({
+  bucket: "mobile-register",
+  max: 10,
+  windowMs: 60 * 1000,
+});
 
 function mobileEndpoints(app) {
   if (!app) return;
@@ -105,17 +118,21 @@ function mobileEndpoints(app) {
    * Checks if the device auth token is valid
    * against approved devices.
    */
-  app.get("/mobile/auth", [validDeviceToken], async (_, response) => {
-    try {
-      return response
-        .status(200)
-        .json({ success: true, message: "Device authenticated" });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      response.sendStatus(500);
-    }
-  });
+  app.get(
+    "/mobile/auth",
+    [validDeviceToken, mobileAuthRateLimit],
+    async (_, response) => {
+      try {
+        return response
+          .status(200)
+          .json({ success: true, message: "Device authenticated" });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        response.sendStatus(500);
+      }
+    },
+  );
 
   /**
    * Registers a new device (is open so that the mobile app can register itself)
@@ -126,7 +143,7 @@ function mobileEndpoints(app) {
    */
   app.post(
     "/mobile/register",
-    [validRegistrationToken],
+    [validRegistrationToken, mobileRegisterRateLimit],
     async (request, response) => {
       try {
         const body = reqBody(request);
@@ -152,7 +169,7 @@ function mobileEndpoints(app) {
 
   app.post(
     "/mobile/send/:command",
-    [validDeviceToken],
+    [validDeviceToken, mobileAuthRateLimit],
     async (request, response) => {
       try {
         return handleMobileCommand(request, response);

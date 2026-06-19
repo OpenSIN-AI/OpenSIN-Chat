@@ -22,6 +22,7 @@ class GenericOpenAiTTS {
     this.openai = new OpenAIApi({
       apiKey: process.env.TTS_OPEN_AI_COMPATIBLE_KEY || null,
       baseURL: process.env.TTS_OPEN_AI_COMPATIBLE_ENDPOINT,
+      timeout: 30_000,
     });
     this.model = process.env.TTS_OPEN_AI_COMPATIBLE_MODEL ?? "tts-1";
     this.voice = process.env.TTS_OPEN_AI_COMPATIBLE_VOICE_MODEL ?? "alloy";
@@ -50,7 +51,7 @@ class GenericOpenAiTTS {
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
+      console.error(`GenericOpenAiTTS:ttsBuffer failed: ${e?.message || e}`);
     }
     return null;
   }

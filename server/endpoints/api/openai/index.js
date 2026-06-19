@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-const { v4: uuidv4 } = require("uuid");
 const { Document } = require("../../../models/documents");
 const { Telemetry } = require("../../../models/telemetry");
 const { Workspace } = require("../../../models/workspace");
@@ -11,7 +10,11 @@ const {
   OpenAICompatibleChat,
 } = require("../../../utils/chats/openaiCompatible");
 const { getModelTag } = require("../../utils");
-const { extractTextContent, extractAttachments } = require("./helpers");
+const {
+  extractTextContent,
+  extractAttachments,
+  openAIError,
+} = require("./helpers");
 const {
   simpleRateLimit,
 } = require("../../../utils/middleware/simpleRateLimit");
@@ -86,7 +89,7 @@ function apiOpenAICompatibleEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500);
+        openAIError(response, 500, "Internal server error", "server_error");
       }
     },
   );
@@ -131,19 +134,26 @@ function apiOpenAICompatibleEndpoints(app) {
           stream = false,
         } = reqBody(request);
         const workspace = await Workspace.get({ slug: String(model) });
-        if (!workspace) return response.status(401).end();
+        if (!workspace)
+          return openAIError(
+            response,
+            404,
+            `The model \`${model}\` does not exist.`,
+            "invalid_request_error",
+            "model_not_found",
+            "model",
+          );
 
         const userMessage = messages.pop();
         if (!userMessage || userMessage.role !== "user") {
-          return response.status(400).json({
-            id: uuidv4(),
-            type: "abort",
-            textResponse: null,
-            sources: [],
-            close: true,
-            error:
-              "No user prompt found. Must be last element in message array with 'user' role.",
-          });
+          return openAIError(
+            response,
+            400,
+            "No user prompt found. Must be last element in message array with 'user' role.",
+            "invalid_request_error",
+            "missing_user_message",
+            "messages",
+          );
         }
 
         const systemPrompt =
@@ -203,7 +213,7 @@ function apiOpenAICompatibleEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.status(500).end();
+        openAIError(response, 500, "Internal server error", "server_error");
       }
     },
   );
@@ -271,7 +281,12 @@ function apiOpenAICompatibleEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.status(500).end();
+        openAIError(
+          response,
+          500,
+          e.message || "Internal server error",
+          "server_error",
+        );
       }
     },
   );
@@ -348,7 +363,7 @@ function apiOpenAICompatibleEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.status(500).end();
+        openAIError(response, 500, "Internal server error", "server_error");
       }
     },
   );

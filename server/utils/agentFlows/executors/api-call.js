@@ -2,6 +2,8 @@
 const { safeJsonParse } = require("../../http");
 const { validateUrl } = require("../../ssrf");
 
+const API_CALL_TIMEOUT_MS = 30_000; // 30s timeout for outbound API calls
+
 /**
  * Execute an API call flow step
  * @param {Object} config Flow step configuration
@@ -41,8 +43,11 @@ async function executeApiCall(config, context) {
 
   try {
     validateUrl(url);
-    introspect(`Sending body to ${url}: ${requestConfig?.body || "No body"}`);
-    const response = await fetch(url, requestConfig);
+    introspect(`Sending ${method} request to ${url}`);
+    const response = await fetch(url, {
+      ...requestConfig,
+      signal: AbortSignal.timeout(API_CALL_TIMEOUT_MS),
+    });
     if (!response.ok) {
       introspect(`Request failed with status ${response.status}`);
       throw new Error(`HTTP error! status: ${response.status}`);

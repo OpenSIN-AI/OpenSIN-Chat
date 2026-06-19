@@ -132,6 +132,7 @@ function DemoVoiceSample({ voiceId }: any) {
   const [speaking, setSpeaking] = useState(false as any);
   const [loading, setLoading] = useState(false as any);
   const [audioSrc, setAudioSrc] = useState(null);
+  const clientRef = useRef<any>(null);
 
   async function speakMessage(e: any) {
     e.preventDefault();
@@ -144,6 +145,7 @@ function DemoVoiceSample({ voiceId }: any) {
       if (!audioSrc) {
         setLoading(true);
         const client = new PiperTTSClient({ voiceId });
+        clientRef.current = client;
         const blobUrl = await client.getAudioBlobForText(
           t("textToSpeech.piper.demoText"),
         );
@@ -151,6 +153,7 @@ function DemoVoiceSample({ voiceId }: any) {
         setLoading(false);
         client.worker?.terminate();
         PiperTTSClient._instance = null;
+        clientRef.current = null;
       } else {
         playerRef.current.play();
       }
@@ -183,6 +186,19 @@ function DemoVoiceSample({ voiceId }: any) {
       player.removeEventListener("pause", handlePause);
     };
   }, []);
+
+  // Release the demo audio blob URL and terminate any pending worker when
+  // the component unmounts so neither the blob nor the worker leaks.
+  useEffect(() => {
+    return () => {
+      if (audioSrc) URL.revokeObjectURL(audioSrc);
+      if (clientRef.current?.worker) {
+        clientRef.current.worker.terminate();
+        PiperTTSClient._instance = null;
+        clientRef.current = null;
+      }
+    };
+  }, [audioSrc]);
 
   return (
     <button

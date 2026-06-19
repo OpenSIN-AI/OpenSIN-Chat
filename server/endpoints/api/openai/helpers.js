@@ -45,7 +45,37 @@ function extractAttachments(content) {
     }));
 }
 
+/**
+ * Sends an OpenAI-compatible JSON error response.
+ * Matches the { error: { message, type, param, code } } shape that
+ * OpenAI clients expect for structured error handling.
+ * @param {import("express").Response} response
+ * @param {number} status - HTTP status code
+ * @param {string} message - Human-readable error message
+ * @param {string} [type="invalid_request_error"] - Error type
+ * @param {string|null} [code=null] - Machine-readable error code
+ * @param {string|null} [param=null] - The parameter that caused the error
+ */
+function openAIError(
+  response,
+  status,
+  message,
+  type = "invalid_request_error",
+  code = null,
+  param = null,
+) {
+  if (response.headersSent) {
+    response.end();
+    return;
+  }
+  const error = { message, type };
+  if (param !== null) error.param = param;
+  if (code !== null) error.code = code;
+  response.status(status).json({ error });
+}
+
 module.exports = {
   extractTextContent,
   extractAttachments,
+  openAIError,
 };

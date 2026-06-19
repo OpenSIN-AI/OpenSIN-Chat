@@ -5,6 +5,20 @@ const { validApiKey } = require("../../../utils/middleware/validApiKey");
 const { reqBody } = require("../../../utils/http");
 const { Workspace } = require("../../../models/workspace");
 
+/**
+ * In multi-user mode, verifies that the embed belongs to the API key creator.
+ * Returns true if access is allowed (single-user mode or ownership matches).
+ * @param {import("express").Response} response
+ * @param {import("@prisma/client").embed_configs} embed
+ * @returns {Promise<boolean>}
+ */
+async function canAccessEmbed(response, embed) {
+  if (!response.locals.multiUserMode) return true;
+  const apiKey = response.locals.apiKey;
+  if (!apiKey?.createdBy) return false;
+  return Number(embed.createdBy) === Number(apiKey.createdBy);
+}
+
 function apiEmbedEndpoints(app) {
   if (!app) return;
 
@@ -56,7 +70,17 @@ function apiEmbedEndpoints(app) {
       }
     */
     try {
-      const embeds = await EmbedConfig.whereWithWorkspace();
+      const multiUserMode = response.locals.multiUserMode;
+      const apiKey = response.locals.apiKey;
+      // In multi-user mode, scope embeds to the API key creator to prevent
+      // cross-user data enumeration. Orphaned keys (null createdBy) get nothing.
+      const clause =
+        multiUserMode && apiKey?.createdBy
+          ? { createdBy: Number(apiKey.createdBy) }
+          : multiUserMode
+            ? { id: -1 }
+            : {};
+      const embeds = await EmbedConfig.whereWithWorkspace(clause);
       const filteredEmbeds = embeds.map((embed) => ({
         id: embed.id,
         uuid: embed.uuid,
@@ -128,6 +152,12 @@ function apiEmbedEndpoints(app) {
     */
       try {
         const { embedUuid } = request.params;
+        const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
+        if (!embed)
+          return response.status(404).json({ error: "Embed not found" });
+        if (!(await canAccessEmbed(response, embed)))
+          return response.status(403).json({ error: "Access denied" });
+
         const chats = await EmbedChats.where({
           embed_config: { uuid: String(embedUuid) },
         });
@@ -189,6 +219,12 @@ function apiEmbedEndpoints(app) {
     */
       try {
         const { embedUuid, sessionUuid } = request.params;
+        const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
+        if (!embed)
+          return response.status(404).json({ error: "Embed not found" });
+        if (!(await canAccessEmbed(response, embed)))
+          return response.status(403).json({ error: "Access denied" });
+
         const chats = await EmbedChats.where({
           embed_config: { uuid: String(embedUuid) },
           session_id: String(sessionUuid),
@@ -350,6 +386,9 @@ function apiEmbedEndpoints(app) {
       if (!embed) {
         return response.status(404).json({ error: "Embed not found" });
       }
+      if (!(await canAccessEmbed(response, embed))) {
+        return response.status(403).json({ error: "Access denied" });
+      }
 
       const { success, error } = await EmbedConfig.update(embed.id, data);
       response.status(200).json({ success, error });
@@ -400,6 +439,8 @@ function apiEmbedEndpoints(app) {
         const embed = await EmbedConfig.get({ uuid: String(embedUuid) });
         if (!embed)
           return response.status(404).json({ error: "Embed not found" });
+        if (!(await canAccessEmbed(response, embed)))
+          return response.status(403).json({ error: "Access denied" });
         const success = await EmbedConfig.delete({ id: embed.id });
         response
           .status(200)

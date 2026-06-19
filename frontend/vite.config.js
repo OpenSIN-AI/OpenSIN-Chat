@@ -103,7 +103,7 @@ export default defineConfig({
           if (/[\\/]node_modules[\\/](react-markdown|markdown-it|dompurify|@mintplex-labs[\\/]mdpdf|marked|remark[-/]|rehype[-/]|mdast[-/]|micromark[-/]|unist[-/]|hast[-/]|property-information|entities|space-separated-tokens|comma-separated-tokens|vfile)[\\/]/.test(id))
             return "vendor-markdown";
           if (/[\\/]node_modules[\\/](@phosphor-icons|react-icons|lucide-react)[\\/]/.test(id))
-            return "vendor-icons";
+            return undefined;
           // KEEP recharts / @tremor / d3 in the route chunks. The previous
           // vendor-charts split produced an ESM TDZ race because recharts reached
           // the React namespace before it had initialized. Leaving them inside the

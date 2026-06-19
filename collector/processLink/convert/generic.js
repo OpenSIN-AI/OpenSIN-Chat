@@ -179,7 +179,6 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
     const MAX_REDIRECT_DEPTH = 5;
     const MAX_META_REFRESH_DEPTH = 3;
     const redirectUrls = new Set();
-    let currentUrl = link;
     let metaDepth = 0;
 
     const scrapeWithPool = async (entryLink) => {
@@ -189,7 +188,6 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
         page = await browser.newPage();
         if (hasHeaders) await page.setExtraHTTPHeaders(overrideHeaders);
 
-        const redirectCount = { value: 0 };
         await page.setRequestInterception(true);
         const onRequest = (req) => {
           if (page && !page.isClosed()) {
@@ -357,18 +355,45 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
   try {
     const abortController = new AbortController();
     const timeout = setTimeout(() => abortController.abort(), 15_000);
+    const visited = new Set();
+    let currentLink = link;
+    let hops = 0;
+    const MAX_FETCH_HOPS = 5;
     try {
-      const response = await fetch(link, {
-        method: "GET",
-        headers: {
-          "Content-Type": "text/plain",
-          "User-Agent":
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
-          ...validatedHeaders(headers),
-        },
-        signal: abortController.signal,
-      });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      let response = null;
+      while (hops <= MAX_FETCH_HOPS) {
+        if (visited.has(currentLink)) {
+          throw new Error(`Redirect loop detected for ${link}`);
+        }
+        visited.add(currentLink);
+        response = await fetch(currentLink, {
+          method: "GET",
+          redirect: "manual",
+          headers: {
+            "Content-Type": "text/plain",
+            "User-Agent":
+              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
+            ...validatedHeaders(headers),
+          },
+          signal: abortController.signal,
+        });
+        if (
+          response.status >= 300 &&
+          response.status < 400 &&
+          response.headers.get("location")
+        ) {
+          const next = new URL(
+            response.headers.get("location"),
+            currentLink
+          ).toString();
+          currentLink = next;
+          hops += 1;
+          continue;
+        }
+        break;
+      }
+      if (!response || !response.ok)
+        throw new Error(`HTTP ${response?.status}`);
       const contentLength = parseInt(
         response.headers.get("content-length") || "0",
         10
@@ -390,6 +415,20 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
   }
 
   return null;
+}
+
+const META_REFRESH_REGEX =
+  /<meta[^>]*http-equiv\s*=\s*["']?refresh["']?[^>]*content\s*=\s*["']?\s*\d+\s*;\s*url\s*=\s*([^"'>\s]+)/i;
+
+function extractMetaRefresh(html = "") {
+  if (!html) return null;
+  const match = html.match(META_REFRESH_REGEX);
+  if (!match) return null;
+  try {
+    return new URL(match[1], "").toString();
+  } catch {
+    return null;
+  }
 }
 
 module.exports = {

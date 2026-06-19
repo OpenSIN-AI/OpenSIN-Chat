@@ -12,6 +12,7 @@ class KokoroTTS {
     this.openai = new OpenAIApi({
       apiKey: process.env.TTS_KOKORO_KEY || null,
       baseURL: endpoint.toString(),
+      timeout: 30_000,
     });
 
     this.model = "kokoro";
@@ -42,7 +43,7 @@ class KokoroTTS {
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
+      console.error(`KokoroTTS:ttsBuffer failed: ${e?.message || e}`);
     }
     return null;
   }

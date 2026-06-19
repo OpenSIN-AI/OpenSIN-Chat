@@ -21,6 +21,7 @@ class GenericOpenAiSTT {
     this.openai = new OpenAIApi({
       apiKey: process.env.STT_OPEN_AI_COMPATIBLE_KEY || null,
       baseURL: process.env.STT_OPEN_AI_COMPATIBLE_ENDPOINT,
+      timeout: 120_000,
     });
     this.model = process.env.STT_OPEN_AI_COMPATIBLE_MODEL ?? "whisper-1";
     this.#log(
@@ -40,20 +41,26 @@ class GenericOpenAiSTT {
    * @returns {Promise<string>} The transcribed text.
    */
   async transcribe(audioBuffer, filename = "audio.webm") {
-    const { toFile } = require("openai");
-    const extension = path.extname(filename).toLowerCase() || ".webm";
-    let payloadBuffer = audioBuffer;
-    let payloadFilename = filename;
-    if (extension !== ".wav") {
-      payloadBuffer = await convertAudioBufferToWav(audioBuffer, extension);
-      payloadFilename = "audio.wav";
+    try {
+      const { toFile } = require("openai");
+      const extension = path.extname(filename).toLowerCase() || ".webm";
+      let payloadBuffer = audioBuffer;
+      let payloadFilename = filename;
+      if (extension !== ".wav") {
+        payloadBuffer = await convertAudioBufferToWav(audioBuffer, extension);
+        payloadFilename = "audio.wav";
+      }
+      const file = await toFile(payloadBuffer, payloadFilename);
+      const result = await this.openai.audio.transcriptions.create({
+        file,
+        model: this.model,
+      });
+      return result?.text ?? "";
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(`GenericOpenAiSTT:transcribe failed: ${e?.message || e}`);
+      throw new Error(`STT transcription failed: ${e?.message || "Unknown error"}`);
     }
-    const file = await toFile(payloadBuffer, payloadFilename);
-    const result = await this.openai.audio.transcriptions.create({
-      file,
-      model: this.model,
-    });
-    return result?.text ?? "";
   }
 }
 

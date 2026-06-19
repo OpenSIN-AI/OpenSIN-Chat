@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import * as TTS from "@mintplex-labs/piper-tts-web";
+import { stored, voices, flush, TtsSession } from "@mintplex-labs/piper-tts-web";
 
 /** @type {import("@mintplex-labs/piper-web-tts").TtsSession | null} */
 let PIPER_SESSION = null;
@@ -45,26 +45,26 @@ let PIPER_SESSION = null;
  */
 async function main(event) {
   if (event.data.type === "voices") {
-    const stored = await TTS.stored();
-    const voices = await TTS.voices();
-    voices.forEach((voice) => {
+    const storedIds = await stored();
+    const voiceList = await voices();
+    voiceList.forEach((voice) => {
       const v = voice as typeof voice & { is_stored?: boolean };
-      v.is_stored = stored.includes(voice.key);
+      v.is_stored = storedIds.includes(voice.key);
     });
 
-    self.postMessage({ type: "voices", voices });
+    self.postMessage({ type: "voices", voices: voiceList });
     return;
   }
 
   if (event.data.type === "flush") {
-    await TTS.flush();
+    await flush();
     self.postMessage({ type: "flush", flushed: true });
     return;
   }
 
   if (event.data?.type !== "init") return;
   if (!PIPER_SESSION) {
-    PIPER_SESSION = new TTS.TtsSession({
+    PIPER_SESSION = new TtsSession({
       voiceId: event.data.voiceId,
       progress: (e) => self.postMessage(JSON.stringify(e)),
       logger: (msg) => self.postMessage(msg),

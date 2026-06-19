@@ -26,8 +26,9 @@ export default function useAuthenticatedBlobUrl(url?: string | null) {
     let cancelled = false;
     setBlobUrl(null);
     setError(false);
+    const ctrl = new AbortController();
 
-    fetch(url, { headers: baseHeaders() })
+    fetch(url, { headers: baseHeaders(), signal: ctrl.signal })
       .then((res) => {
         if (!res.ok) throw new Error(String(res.status));
         return res.blob();
@@ -43,6 +44,7 @@ export default function useAuthenticatedBlobUrl(url?: string | null) {
 
     return () => {
       cancelled = true;
+      ctrl.abort();
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
   }, [url]);

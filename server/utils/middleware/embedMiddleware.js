@@ -181,9 +181,78 @@ async function canRespond(request, response, next) {
   }
 }
 
+/**
+ * Lightweight access guard for non-streaming embed endpoints (GET history,
+ * DELETE session). Unlike `canRespond` it does not require a request body —
+ * it validates the embed is enabled, the requesting origin is in the
+ * allowlist (when configured), and the sessionId path param is a valid UUID.
+ */
+async function canAccessEmbed(request, response, next) {
+  try {
+    const embed = response.locals.embedConfig;
+    if (!embed) {
+      response.sendStatus(404);
+      return;
+    }
+
+    if (!embed.enabled) {
+      response.status(503).json({
+        id: uuidv4(),
+        type: "abort",
+        textResponse: null,
+        sources: [],
+        close: true,
+        error:
+          "This chat has been disabled by the administrator - try again later.",
+      });
+      return;
+    }
+
+    const host = request.headers.origin ?? "";
+    const allowedHosts = EmbedConfig.parseAllowedHosts(embed);
+    if (allowedHosts !== null && !allowedHosts.includes(host)) {
+      response.status(401).json({
+        id: uuidv4(),
+        type: "abort",
+        textResponse: null,
+        sources: [],
+        close: true,
+        error: "Invalid request.",
+      });
+      return;
+    }
+
+    const { sessionId } = request.params;
+    if (typeof sessionId !== "string" || !validate(String(sessionId))) {
+      response.status(404).json({
+        id: uuidv4(),
+        type: "abort",
+        textResponse: null,
+        sources: [],
+        close: true,
+        error: "Invalid session ID.",
+      });
+      return;
+    }
+
+    next();
+  } catch {
+    response.status(500).json({
+      id: uuidv4(),
+      type: "abort",
+      textResponse: null,
+      sources: [],
+      close: true,
+      error: "Invalid request.",
+    });
+    return;
+  }
+}
+
 module.exports = {
   setConnectionMeta,
   validEmbedConfig,
   validEmbedConfigId,
   canRespond,
+  canAccessEmbed,
 };

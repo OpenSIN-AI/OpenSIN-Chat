@@ -17,6 +17,7 @@ class NvidiaNimTTS {
       apiKey: process.env.TTS_NVIDIA_NIM_API_KEY,
       baseURL:
         process.env.TTS_NVIDIA_NIM_ENDPOINT || NvidiaNimTTS.DEFAULT_BASE_URL,
+      timeout: 30_000,
     });
 
     this.model = process.env.TTS_NVIDIA_NIM_MODEL || NvidiaNimTTS.DEFAULT_MODEL;
@@ -46,7 +47,7 @@ class NvidiaNimTTS {
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
+      console.error(`NvidiaNimTTS:ttsBuffer failed: ${e?.message || e}`);
     }
     return null;
   }

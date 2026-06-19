@@ -15,11 +15,11 @@ const DEFAULT_MAX_FILES = 10_000;
 const DEFAULT_MAX_RATIO = 100;
 
 const DANGEROUS_ENTRY_PATTERNS = [
-  /(^|[\/\\])vbaProject\.bin$/i,
-  /(^|[\/\\])vbaData\.xml$/i,
-  /(^|[\/\\])externalLinks([\/\\]|$)/i,
-  /(^|[\/\\])embeddings([\/\\]|$)/i,
-  /(^|[\/\\])activeX([\/\\]|$)/i,
+  /(^|[/\\])vbaProject\.bin$/i,
+  /(^|[/\\])vbaData\.xml$/i,
+  /(^|[/\\])externalLinks([/\\]|$)/i,
+  /(^|[/\\])embeddings([/\\]|$)/i,
+  /(^|[/\\])activeX([/\\]|$)/i,
 ];
 
 function isDangerousEntryName(fileName = "") {

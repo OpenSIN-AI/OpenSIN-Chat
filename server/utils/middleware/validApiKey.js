@@ -35,7 +35,8 @@ async function validApiKey(request, response, next) {
     return;
   }
 
-  if (!(await ApiKey.get({ secret: bearerKey }))) {
+  const apiKey = await ApiKey.get({ secret: bearerKey });
+  if (!apiKey) {
     logFailedAuth(request, "invalid_key");
     response.status(403).json({
       error: "No valid api key found.",
@@ -43,6 +44,9 @@ async function validApiKey(request, response, next) {
     return;
   }
 
+  // Expose the validated API key (secret already stripped by ApiKey.get)
+  // so downstream route handlers can scope responses to the key creator.
+  response.locals.apiKey = apiKey;
   next();
 }
 

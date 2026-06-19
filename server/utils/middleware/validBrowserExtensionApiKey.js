@@ -12,6 +12,7 @@ async function validBrowserExtensionApiKey(request, response, next) {
   const auth = request.header("Authorization");
   const bearerKey = auth ? auth.split(" ")[1] : null;
   if (!bearerKey) {
+    logFailedAuth(request, "missing_bearer");
     response.status(403).json({
       error: "No valid API key found.",
     });
@@ -20,6 +21,7 @@ async function validBrowserExtensionApiKey(request, response, next) {
 
   const apiKey = await BrowserExtensionApiKey.validate(bearerKey);
   if (!apiKey) {
+    logFailedAuth(request, "invalid_key");
     response.status(403).json({
       error: "No valid API key found.",
     });
@@ -47,6 +49,23 @@ async function validBrowserExtensionApiKey(request, response, next) {
 
   response.locals.apiKey = apiKey;
   next();
+}
+
+/**
+ * Log a failed browser-extension auth attempt. Never logs the attempted
+ * credential — only IP, method, path, and failure reason.
+ * @param {import("express").Request} request
+ * @param {"missing_bearer"|"invalid_key"} reason
+ */
+function logFailedAuth(request, reason) {
+  try {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `\x1b[33m[BROWSER-EXT-AUTH-FAIL]\x1b[0m reason=${reason} ip=${request.ip || "unknown"} ${request.method} ${request.originalUrl || request.path}`,
+    );
+  } catch {
+    /* logging must never break auth flow */
+  }
 }
 
 module.exports = { validBrowserExtensionApiKey };

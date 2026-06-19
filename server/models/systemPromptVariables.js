@@ -244,7 +244,7 @@ const SystemPromptVariables = {
       // Find all variable patterns in the string
       const matches = str.match(/\{([^}]+)\}/g) || [];
 
-      // Process each match
+        // Process each match
       for (const match of matches) {
         const key = match.substring(1, match.length - 1); // Remove { and }
 
@@ -283,7 +283,7 @@ const SystemPromptVariables = {
                 );
                 value = `[${variableTypeDisplay} ${prop}]`;
               }
-              result = result.replace(match, value);
+              result = result.split(match).join(String(value));
             } else {
               let value;
               try {
@@ -301,11 +301,11 @@ const SystemPromptVariables = {
                 );
                 value = `[${variableTypeDisplay} ${prop}]`;
               }
-              result = result.replace(match, value);
+              result = result.split(match).join(String(value));
             }
           } else {
             // If the variable is not a function, replace the match with the variable value
-            result = result.replace(match, `[${variableTypeDisplay} ${prop}]`);
+            result = result.split(match).join(`[${variableTypeDisplay} ${prop}]`);
           }
           continue;
         }
@@ -322,18 +322,18 @@ const SystemPromptVariables = {
           try {
             if (variable.value.constructor.name === "AsyncFunction") {
               const value = await variable.value(userId);
-              result = result.replace(match, value);
+              result = result.split(match).join(String(value));
             } else {
               const value = variable.value();
-              result = result.replace(match, value);
+              result = result.split(match).join(String(value));
             }
           } catch (error) {
             // eslint-disable-next-line no-console
             console.error(`Error processing dynamic variable ${key}:`, error);
-            result = result.replace(match, match);
+            result = result.split(match).join(match);
           }
         } else {
-          result = result.replace(match, variable.value || match);
+          result = result.split(match).join(String(variable.value || match));
         }
       }
       return result;

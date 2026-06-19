@@ -13,13 +13,20 @@ const {
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
 const { Telemetry } = require("../models/telemetry");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
+
+const browserExtensionRateLimit = simpleRateLimit({
+  bucket: "browser-extension",
+  max: 60,
+  windowMs: 60 * 1000,
+});
 
 function browserExtensionEndpoints(app) {
   if (!app) return;
 
   app.get(
     "/browser-extension/check",
-    [validBrowserExtensionApiKey],
+    [validBrowserExtensionApiKey, browserExtensionRateLimit],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -45,7 +52,7 @@ function browserExtensionEndpoints(app) {
 
   app.delete(
     "/browser-extension/disconnect",
-    [validBrowserExtensionApiKey],
+    [validBrowserExtensionApiKey, browserExtensionRateLimit],
     async (_request, response) => {
       try {
         const apiKeyId = response.locals.apiKey.id;
@@ -65,7 +72,7 @@ function browserExtensionEndpoints(app) {
 
   app.get(
     "/browser-extension/workspaces",
-    [validBrowserExtensionApiKey],
+    [validBrowserExtensionApiKey, browserExtensionRateLimit],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -84,7 +91,7 @@ function browserExtensionEndpoints(app) {
 
   app.post(
     "/browser-extension/embed-content",
-    [validBrowserExtensionApiKey],
+    [validBrowserExtensionApiKey, browserExtensionRateLimit],
     async (request, response) => {
       try {
         const { workspaceId, textContent, metadata } = reqBody(request);
@@ -139,7 +146,7 @@ function browserExtensionEndpoints(app) {
 
   app.post(
     "/browser-extension/upload-content",
-    [validBrowserExtensionApiKey],
+    [validBrowserExtensionApiKey, browserExtensionRateLimit],
     async (request, response) => {
       try {
         const { textContent, metadata } = reqBody(request);

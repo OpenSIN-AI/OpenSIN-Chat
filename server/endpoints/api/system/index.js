@@ -201,7 +201,13 @@ function apiSystemEndpoints(app) {
         await EventLogs.logEvent("exported_chats", {
           type,
         });
+        const safeType = String(type).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 20) || "jsonl";
+        const ext = safeType === "jsonAlpaca" ? "json" : safeType;
         response.setHeader("Content-Type", contentType);
+        response.setHeader(
+          "Content-Disposition",
+          `attachment; filename="exported-chats-workspace.${ext}"`,
+        );
         response.status(200).send(data);
       } catch (e) {
         // eslint-disable-next-line no-console

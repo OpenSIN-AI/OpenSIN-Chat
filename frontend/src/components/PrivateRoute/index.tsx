@@ -38,9 +38,14 @@ function useIsAuthenticated() {
     !settingsLoading ? ONBOARDING_STATUS_KEY : null,
     () => {
       // Avoid circular import by using the system model lazily
-      return import("@/models/system").then((m) =>
-        m.default.isOnboardingComplete(),
-      );
+      return import("@/models/system")
+        .then((m) => m.default)
+        .catch((err) => {
+          console.error("Auth module load failed", err);
+          window.location.href = "/login";
+          throw err;
+        })
+        .then((system) => system.isOnboardingComplete());
     },
     { revalidateOnFocus: false, dedupingInterval: 10000 },
   );

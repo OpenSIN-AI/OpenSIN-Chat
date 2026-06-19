@@ -11,6 +11,10 @@ const { humanFileSize } = require("../../../../helpers");
 const { safeJsonParse } = require("../../../../http");
 
 const MAX_TOTAL_ATTACHMENT_SIZE = 25 * 1024 * 1024; // 25MB limit for Outlook
+const GRAPH_API_TIMEOUT_MS = 30_000; // 30s timeout for Graph API requests
+const OAUTH_TIMEOUT_MS = 15_000; // 15s timeout for OAuth token exchange/refresh
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Parses a comma-separated email string into Graph API recipient format.
@@ -19,9 +23,11 @@ const MAX_TOTAL_ATTACHMENT_SIZE = 25 * 1024 * 1024; // 25MB limit for Outlook
  */
 function parseEmailRecipients(emailString) {
   if (!emailString) return [];
-  return emailString.split(",").map((email) => ({
-    emailAddress: { address: email.trim() },
-  }));
+  return emailString
+    .split(",")
+    .map((email) => email.trim())
+    .filter((email) => EMAIL_REGEX.test(email))
+    .map((email) => ({ emailAddress: { address: email } }));
 }
 
 /**
@@ -685,6 +691,7 @@ class OutlookBridge {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: params.toString(),
+        signal: AbortSignal.timeout(OAUTH_TIMEOUT_MS),
       });
 
       const data = await response.json();
@@ -762,6 +769,7 @@ class OutlookBridge {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: params.toString(),
+        signal: AbortSignal.timeout(OAUTH_TIMEOUT_MS),
       });
 
       const data = await response.json();
@@ -947,6 +955,7 @@ class OutlookBridge {
           "Content-Type": "application/json",
           ...options.headers,
         },
+        signal: AbortSignal.timeout(GRAPH_API_TIMEOUT_MS),
       });
 
       if (!response.ok) {
@@ -960,7 +969,6 @@ class OutlookBridge {
         this.#log(
           `API request failed: ${response.status} ${response.statusText}`,
           `\n  Endpoint: ${endpoint}`,
-          `\n  Headers: ${JSON.stringify(Object.fromEntries(response.headers.entries()))}`,
           `\n  Error: ${JSON.stringify(errorData, null, 2)}`,
         );
         return {

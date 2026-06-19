@@ -6,6 +6,7 @@ class OpenAiTTS {
     const { OpenAI: OpenAIApi } = require("openai");
     this.openai = new OpenAIApi({
       apiKey: process.env.TTS_OPEN_AI_KEY,
+      timeout: 30_000,
     });
     this.voice = process.env.TTS_OPEN_AI_VOICE_MODEL ?? "alloy";
   }
@@ -20,7 +21,7 @@ class OpenAiTTS {
       return Buffer.from(await result.arrayBuffer());
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error(e);
+      console.error(`OpenAiTTS:ttsBuffer failed: ${e?.message || e}`);
     }
     return null;
   }

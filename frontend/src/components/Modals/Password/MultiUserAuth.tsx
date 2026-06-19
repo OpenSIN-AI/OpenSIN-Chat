@@ -173,6 +173,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
+              autoComplete="new-password"
             />
           </div>
           <div className="w-full flex flex-col gap-y-2">
@@ -191,6 +192,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              autoComplete="new-password"
             />
           </div>
         </div>
@@ -199,6 +201,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
         <button
           type="submit"
           disabled={loading}
+          aria-busy={loading}
           className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading
@@ -233,70 +236,84 @@ export default function MultiUserAuth() {
     setError(null);
     setLoading(true);
     e.preventDefault();
-    const data = {};
-    const form = new FormData(e.target);
-    for (const [key, value] of form.entries()) data[key] = value;
-    const { valid, user, token, message, recoveryCodes } =
-      await System.requestToken(data);
-    if (valid && !!token && !!user) {
-      setUser(user);
-      setToken(token);
+    try {
+      const data = {};
+      const form = new FormData(e.target);
+      for (const [key, value] of form.entries()) data[key] = value;
+      const { valid, user, token, message, recoveryCodes } =
+        await System.requestToken(data);
+      if (valid && !!token && !!user) {
+        setUser(user);
+        setToken(token);
 
-      if (recoveryCodes) {
-        setRecoveryCodes(recoveryCodes);
-        openRecoveryCodeModal();
+        if (recoveryCodes) {
+          setRecoveryCodes(recoveryCodes);
+          openRecoveryCodeModal();
+        } else {
+          safeSetItem(AUTH_USER, JSON.stringify(user));
+          safeSetItem(AUTH_TOKEN, token);
+          window.location.href = paths.home();
+        }
       } else {
-        safeSetItem(AUTH_USER, JSON.stringify(user));
-        safeSetItem(AUTH_TOKEN, token);
-        window.location.href = paths.home();
+        setError(message);
       }
-    } else {
-      setError(message);
+    } catch (err) {
+      console.error(err);
+    } finally {
       setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleDownloadComplete = () => setDownloadComplete(true);
   const handleResetPassword = () => setShowRecoveryForm(true);
   const handleRecoverySubmit = async (username, recoveryCodes) => {
-    const { success, resetToken, error } = await System.recoverAccount(
-      username,
-      recoveryCodes,
-    );
+    try {
+      const { success, resetToken, error } = await System.recoverAccount(
+        username,
+        recoveryCodes,
+      );
 
-    if (success && resetToken) {
-      safeSetItem(RESET_TOKEN, resetToken);
-      setShowRecoveryForm(false);
-      setShowResetPasswordForm(true);
-    } else {
-      showToast(error, "error", { clear: true });
+      if (success && resetToken) {
+        safeSetItem(RESET_TOKEN, resetToken);
+        setShowRecoveryForm(false);
+        setShowResetPasswordForm(true);
+      } else {
+        showToast(error, "error", { clear: true });
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
   const handleResetSubmit = async (newPassword, confirmPassword) => {
-    const resetToken = safeGetItem(RESET_TOKEN);
+    try {
+      const resetToken = safeGetItem(RESET_TOKEN);
 
-    if (resetToken) {
-      const { success, error } = await System.resetPassword(
-        resetToken,
-        newPassword,
-        confirmPassword,
-      );
+      if (resetToken) {
+        const { success, error } = await System.resetPassword(
+          resetToken,
+          newPassword,
+          confirmPassword,
+        );
 
-      if (success) {
-        safeRemoveItem(RESET_TOKEN);
-        setShowResetPasswordForm(false);
-        showToast(t("multiUserAuth.resetPassword.success"), "success", {
+        if (success) {
+          safeRemoveItem(RESET_TOKEN);
+          setShowResetPasswordForm(false);
+          showToast(t("multiUserAuth.resetPassword.success"), "success", {
+            clear: true,
+          });
+        } else {
+          showToast(error, "error", { clear: true });
+        }
+      } else {
+        showToast(t("multiUserAuth.resetPassword.invalidToken"), "error", {
           clear: true,
         });
-      } else {
-        showToast(error, "error", { clear: true });
       }
-    } else {
-      showToast(t("multiUserAuth.resetPassword.invalidToken"), "error", {
-        clear: true,
-      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -353,7 +370,7 @@ export default function MultiUserAuth() {
                 aria-label={t("auth.username")}
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 required={true}
-                autoComplete="off"
+                autoComplete="username"
               />
             </div>
             <div className="w-full px-0 flex flex-col gap-y-2">
@@ -370,7 +387,7 @@ export default function MultiUserAuth() {
                 aria-label={t("auth.password")}
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 required={true}
-                autoComplete="off"
+                autoComplete="current-password"
               />
             </div>
             {error && (
@@ -383,6 +400,7 @@ export default function MultiUserAuth() {
         <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
           <button
             disabled={loading || appNameLoading}
+            aria-busy={loading || appNameLoading}
             type="submit"
             className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full"
           >

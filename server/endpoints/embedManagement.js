@@ -112,14 +112,16 @@ function embedManagementEndpoints(app) {
     async (request, response) => {
       try {
         const { offset = 0, limit = 20 } = reqBody(request);
+        const clampedLimit = Math.min(Math.max(parseInt(limit) || 20, 1), 100);
+        const clampedOffset = Math.max(parseInt(offset) || 0, 0);
         const embedChats = await EmbedChats.whereWithEmbedAndWorkspace(
           {},
-          limit,
+          clampedLimit,
           { id: "desc" },
-          offset * limit,
+          clampedOffset * clampedLimit,
         );
         const totalChats = await EmbedChats.count();
-        const hasPages = totalChats > (offset + 1) * limit;
+        const hasPages = totalChats > (clampedOffset + 1) * clampedLimit;
         response.status(200).json({ chats: embedChats, hasPages, totalChats });
       } catch (e) {
         // eslint-disable-next-line no-console

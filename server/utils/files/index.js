@@ -3,6 +3,7 @@ const { getStoragePath, getCollectorPath } = require("../paths");
 const fs = require("fs");
 const path = require("path");
 const { v5: uuidv5 } = require("uuid");
+const crypto = require("node:crypto");
 const { Document } = require("../../models/documents");
 const { DocumentSyncQueue } = require("../../models/documentSyncQueue");
 
@@ -10,6 +11,8 @@ const documentsPath = getStoragePath("documents");
 const directUploadsPath = getStoragePath("direct-uploads");
 const vectorCachePath = getStoragePath("vector-cache");
 const hotdirPath = getCollectorPath("hotdir");
+
+const MAX_DOC_BYTES = 50 * 1024 * 1024;
 
 // Should take in a folder that is a subfolder of documents
 // eg: youtube-subject/video-123.json
@@ -19,8 +22,21 @@ async function fileData(filePath = null) {
   if (!fs.existsSync(fullFilePath) || !isWithin(documentsPath, fullFilePath))
     return null;
 
-  const data = fs.readFileSync(fullFilePath, "utf8");
+  let stat;
   try {
+    stat = fs.statSync(fullFilePath);
+  } catch {
+    return null;
+  }
+  if (stat.size > MAX_DOC_BYTES) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `[fileData] Refusing ${filePath}: ${stat.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
+    );
+    return null;
+  }
+  try {
+    const data = await fs.promises.readFile(fullFilePath, "utf8");
     return JSON.parse(data);
   } catch {
     // eslint-disable-next-line no-console
@@ -131,10 +147,22 @@ async function getDocumentsByFolder(folderName = "") {
   for (const file of files) {
     if (path.extname(file) !== ".json") continue;
     const filePath = path.join(folderPath, file);
-    const rawData = fs.readFileSync(filePath, "utf8");
+    try {
+      const st = fs.statSync(filePath);
+      if (st.size > MAX_DOC_BYTES) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[getDocumentsByFolder] Skipping ${file}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
+        );
+        continue;
+      }
+    } catch {
+      continue;
+    }
     const cachefilename = `${folderName}/${file}`;
     let parsed;
     try {
+      const rawData = await fs.promises.readFile(filePath, "utf8");
       parsed = JSON.parse(rawData);
     } catch {
       console.error(`[getDocumentsByFolder] Skipping corrupt JSON: ${file}`);
@@ -176,7 +204,7 @@ async function getDocumentsByFolder(folderName = "") {
 async function cachedVectorInformation(filename = null, checkOnly = false) {
   if (!filename) return checkOnly ? false : { exists: false, chunks: [] };
 
-  const digest = uuidv5(filename, uuidv5.URL);
+  const digest = await vectorCacheKey(filename);
   const file = path.resolve(vectorCachePath, `${digest}.json`);
   const exists = fs.existsSync(file);
 
@@ -207,7 +235,7 @@ async function storeVectorResult(vectorData = [], filename = null) {
   );
   if (!fs.existsSync(vectorCachePath)) fs.mkdirSync(vectorCachePath);
 
-  const digest = uuidv5(filename, uuidv5.URL);
+  const digest = await vectorCacheKey(filename);
   const writeTo = path.resolve(vectorCachePath, `${digest}.json`);
   await fs.promises.writeFile(writeTo, JSON.stringify(vectorData), "utf8");
   return;
@@ -234,7 +262,7 @@ async function purgeSourceDocument(filename = null) {
 // Purges a vector-cache file from the vector-cache/ folder.
 async function purgeVectorCache(filename = null) {
   if (!filename) return;
-  const digest = uuidv5(filename, uuidv5.URL);
+  const digest = await vectorCacheKey(filename);
   const filePath = path.resolve(vectorCachePath, `${digest}.json`);
 
   if (!fs.existsSync(filePath) || !fs.lstatSync(filePath).isFile()) return;
@@ -263,11 +291,23 @@ async function findDocumentInDocuments(documentName = null) {
     )
       continue;
 
-    const fileData = fs.readFileSync(targetFileLocation, "utf8");
+    try {
+      const st = fs.statSync(targetFileLocation);
+      if (st.size > MAX_DOC_BYTES) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[findDocumentInDocuments] Skipping ${targetFilename}: ${st.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
+        );
+        continue;
+      }
+    } catch {
+      continue;
+    }
     const cachefilename = `${folder}/${targetFilename}`;
     let parsed;
     try {
-      parsed = JSON.parse(fileData);
+      const rawData = await fs.promises.readFile(targetFileLocation, "utf8");
+      parsed = JSON.parse(rawData);
     } catch {
       continue;
     }
@@ -326,6 +366,45 @@ function normalizePath(filepath = "") {
     .trim();
   if (["..", ".", "/"].includes(result)) throw new Error("Invalid path.");
   return result;
+}
+
+async function contentHash(filePath) {
+  if (!filePath) return "";
+  try {
+    const fd = await fs.promises.open(filePath, "r");
+    try {
+      const stat = await fd.stat();
+      const sampleBytes = Math.min(8192, stat.size);
+      const head = Buffer.allocUnsafe(sampleBytes);
+      await fd.read(head, 0, sampleBytes, 0);
+      const tailBytes = Math.min(8192, stat.size);
+      const tail = Buffer.allocUnsafe(tailBytes);
+      if (stat.size > 8192) {
+        await fd.read(tail, 0, tailBytes, stat.size - tailBytes);
+      } else {
+        tail.set(head.subarray(0, tailBytes));
+      }
+      return crypto
+        .createHash("sha256")
+        .update(head)
+        .update(tail)
+        .update(String(stat.size))
+        .update(String(stat.mtimeMs || 0))
+        .digest("hex")
+        .slice(0, 16);
+    } finally {
+      await fd.close();
+    }
+  } catch {
+    return "";
+  }
+}
+
+async function vectorCacheKey(filename) {
+  const resolved = path.resolve(filename);
+  const hash = await contentHash(resolved);
+  if (!hash) return uuidv5(resolved, uuidv5.URL);
+  return uuidv5(`${resolved}:${hash}`, uuidv5.URL);
 }
 
 /**
@@ -452,7 +531,21 @@ async function fileToPickerData({
   const cachedStatus = await cachedVectorInformation(cachefilename, true);
 
   if (fileStats.size < FILE_READ_SIZE_THRESHOLD) {
-    const rawData = fs.readFileSync(pathToFile, "utf8");
+    if (fileStats.size > MAX_DOC_BYTES) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[fileToPickerData] Skipping ${pathToFile}: ${fileStats.size} bytes exceeds ${MAX_DOC_BYTES} byte cap`,
+      );
+      return null;
+    }
+    let rawData;
+    try {
+      rawData = await fs.promises.readFile(pathToFile, "utf8");
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error("Error reading file", err);
+      return null;
+    }
     try {
       metadata = JSON.parse(rawData);
       // Remove the pageContent field from the metadata - it is large and not needed for the picker
