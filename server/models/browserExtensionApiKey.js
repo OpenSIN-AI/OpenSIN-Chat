@@ -43,7 +43,6 @@ const BrowserExtensionApiKey = {
     if (!key.startsWith("brx-")) return false;
     const apiKey = await prisma.browser_extension_api_keys.findUnique({
       where: { key: key.toString() },
-      include: { user: true },
     });
     if (!apiKey) return false;
 
@@ -126,7 +125,9 @@ const BrowserExtensionApiKey = {
         where: clause,
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null ? { orderBy } : {}),
-        include: { user: true },
+        include: {
+          user: { select: { id: true, username: true, role: true } },
+        },
       });
       return apiKeys;
     } catch (error) {
@@ -160,7 +161,9 @@ const BrowserExtensionApiKey = {
           ...clause,
           user_id: user.id,
         },
-        include: { user: true },
+        include: {
+          user: { select: { id: true, username: true, role: true } },
+        },
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null ? { orderBy } : {}),
       });

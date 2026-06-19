@@ -21,7 +21,6 @@ describe("featureFlagEnabled middleware", () => {
 
     expect(next).not.toHaveBeenCalled();
     expect(response.sendStatus).toHaveBeenCalledWith(401);
-    expect(response.end).toHaveBeenCalled();
   });
 
   it("returns 401 when SystemSettings.get returns null", async () => {

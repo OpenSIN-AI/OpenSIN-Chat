@@ -312,4 +312,4 @@ function buildChunkPlan(totalPages, pagesPerChunk, overlap) {
   return chunks;
 }
 
-module.exports = { PdfReader, buildChunkPlan };
+module.exports = { PdfReader, buildChunkPlan, loadPdfjs };

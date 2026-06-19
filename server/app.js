@@ -88,7 +88,9 @@ function buildApp() {
 
   const corsOrigin = process.env.CORS_ORIGIN
     ? process.env.CORS_ORIGIN.split(",").map((s) => s.trim())
-    : true;
+    : process.env.NODE_ENV === "production"
+      ? false
+      : true;
   app.use(cors({ origin: corsOrigin }));
   app.use(bodyParser.text({ limit: FILE_LIMIT }));
   app.use(bodyParser.json({ limit: FILE_LIMIT }));

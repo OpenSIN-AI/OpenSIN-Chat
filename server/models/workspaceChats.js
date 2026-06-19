@@ -385,7 +385,6 @@ const WorkspaceChats = {
       const { chat } = await prisma.workspace_chats.upsert({
         where: {
           id: Number(chatId),
-          user_id: data.user?.id || null,
         },
         // On updates, we already have the prompt so we don't need to set it again.
         update: { ...payload, lastUpdatedAt: new Date() },

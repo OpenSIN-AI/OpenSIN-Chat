@@ -222,7 +222,10 @@ function systemEndpoints(app) {
     },
   );
 
-  app.post("/request-token", async (request, response) => {
+  app.post(
+    "/request-token",
+    [simpleRateLimit({ bucket: "login", max: 10, windowMs: 15 * 60 * 1000 })],
+    async (request, response) => {
     try {
       const bcrypt = require("bcryptjs");
 
@@ -468,7 +471,14 @@ function systemEndpoints(app) {
 
   app.post(
     "/system/reset-password",
-    [isMultiUserSetup],
+    [
+      isMultiUserSetup,
+      simpleRateLimit({
+        bucket: "password-reset",
+        max: 5,
+        windowMs: 15 * 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { token, newPassword, confirmPassword } = reqBody(request);
@@ -646,7 +656,7 @@ function systemEndpoints(app) {
         if (!usePassword) {
           // Password is being disabled so directly unset everything to bypass validation.
           process.env.AUTH_TOKEN = "";
-          process.env.JWT_SECRET = "";
+          process.env.JWT_SECRET = v4();
         } else {
           error = await updateENV(
             {

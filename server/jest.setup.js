@@ -12,3 +12,7 @@ jest.mock("buffer-equal-constant-time", () => {
     return result === 0;
   };
 });
+
+// Disable rate limiting in test runs — the fixed-window limiter
+// would throttle sequential test calls to the same endpoint bucket.
+process.env.DISABLE_RATE_LIMITS = "true";

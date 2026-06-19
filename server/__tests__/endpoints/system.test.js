@@ -598,7 +598,7 @@ describe("systemEndpoints", () => {
       User.create.mockResolvedValue({ user: { id: 1 }, error: null });
       SystemSettings._updateSettings.mockResolvedValue(true);
       updateENVModule.updateENV.mockResolvedValue({ error: null });
-      const res = await app.call("post", "/system/enable-multi-user", { body: { username: "admin", password: "pass" }, locals: { multiUserMode: false } });
+      const res = await app.call("post", "/system/enable-multi-user", { body: { username: "admin", password: "password123" }, locals: { multiUserMode: false } });
       expect(res.body.success).toBe(true);
       expect(BrowserExtensionApiKey.migrateApiKeysToMultiUser).toHaveBeenCalled();
       expect(Memory.migrateToMultiUser).toHaveBeenCalled();
@@ -617,7 +617,7 @@ describe("systemEndpoints", () => {
         return Promise.resolve({ success: true, error: null });
       });
       User.delete.mockResolvedValue(true);
-      const res = await app.call("post", "/system/enable-multi-user", { body: { username: "admin", password: "p" }, locals: { multiUserMode: false } });
+      const res = await app.call("post", "/system/enable-multi-user", { body: { username: "admin", password: "password123" }, locals: { multiUserMode: false } });
       expect(res.statusCode).toBe(500);
       expect(User.delete).toHaveBeenCalled();
     });

@@ -346,6 +346,7 @@ model slash_command_presets {
   user          users?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([uid, command])
+  @@index([userId])
 }
 
 model document_sync_queues {
