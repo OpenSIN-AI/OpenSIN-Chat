@@ -84,8 +84,11 @@ function apiAdminEndpoints(app) {
     }
   });
 
-  app.post("/v1/admin/users/new", [validAdminApiKey], async (request, response) => {
-    /*
+  app.post(
+    "/v1/admin/users/new",
+    [validAdminApiKey],
+    async (request, response) => {
+      /*
     #swagger.tags = ['Admin']
     #swagger.description = 'Create a new user with username and password. Methods are disabled until multi user mode is enabled via the UI.'
     #swagger.requestBody = {
@@ -127,24 +130,28 @@ function apiAdminEndpoints(app) {
       description: "Instance is not in Multi-User mode. Method denied",
     }
     */
-    try {
-      if (!multiUserMode(response)) {
-        response.sendStatus(401);
-        return;
+      try {
+        if (!multiUserMode(response)) {
+          response.sendStatus(401);
+          return;
+        }
+
+        const newUserParams = reqBody(request);
+        const { user: newUser, error } = await User.create(newUserParams);
+        response.status(newUser ? 200 : 400).json({ user: newUser, error });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        response.sendStatus(500);
       }
+    },
+  );
 
-      const newUserParams = reqBody(request);
-      const { user: newUser, error } = await User.create(newUserParams);
-      response.status(newUser ? 200 : 400).json({ user: newUser, error });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      response.sendStatus(500);
-    }
-  });
-
-  app.post("/v1/admin/users/:id", [validAdminApiKey], async (request, response) => {
-    /*
+  app.post(
+    "/v1/admin/users/:id",
+    [validAdminApiKey],
+    async (request, response) => {
+      /*
     #swagger.tags = ['Admin']
     #swagger.parameters['id'] = {
       in: 'path',
@@ -189,32 +196,33 @@ function apiAdminEndpoints(app) {
       description: "Instance is not in Multi-User mode. Method denied",
     }
     */
-    try {
-      if (!multiUserMode(response)) {
-        response.sendStatus(401);
-        return;
+      try {
+        if (!multiUserMode(response)) {
+          response.sendStatus(401);
+          return;
+        }
+
+        const { id } = request.params;
+        const updates = reqBody(request);
+        const user = await User.get({ id: Number(id) });
+        const validAdminRoleModification = await canModifyAdmin(user, updates);
+
+        if (!validAdminRoleModification.valid) {
+          response
+            .status(200)
+            .json({ success: false, error: validAdminRoleModification.error });
+          return;
+        }
+
+        const { success, error } = await User.update(id, updates);
+        response.status(200).json({ success, error });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        response.sendStatus(500);
       }
-
-      const { id } = request.params;
-      const updates = reqBody(request);
-      const user = await User.get({ id: Number(id) });
-      const validAdminRoleModification = await canModifyAdmin(user, updates);
-
-      if (!validAdminRoleModification.valid) {
-        response
-          .status(200)
-          .json({ success: false, error: validAdminRoleModification.error });
-        return;
-      }
-
-      const { success, error } = await User.update(id, updates);
-      response.status(200).json({ success, error });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      response.sendStatus(500);
-    }
-  });
+    },
+  );
 
   app.delete(
     "/v1/admin/users/:id",
@@ -272,8 +280,11 @@ function apiAdminEndpoints(app) {
     },
   );
 
-  app.get("/v1/admin/invites", [validAdminApiKey], async (request, response) => {
-    /*
+  app.get(
+    "/v1/admin/invites",
+    [validAdminApiKey],
+    async (request, response) => {
+      /*
     #swagger.tags = ['Admin']
     #swagger.description = 'List all existing invitations to instance regardless of status. Methods are disabled until multi user mode is enabled via the UI.'
     #swagger.responses[200] = {
@@ -304,23 +315,27 @@ function apiAdminEndpoints(app) {
       description: "Instance is not in Multi-User mode. Method denied",
     }
     */
-    try {
-      if (!multiUserMode(response)) {
-        response.sendStatus(401);
-        return;
+      try {
+        if (!multiUserMode(response)) {
+          response.sendStatus(401);
+          return;
+        }
+
+        const invites = await Invite.whereWithUsers();
+        response.status(200).json({ invites });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        response.sendStatus(500);
       }
+    },
+  );
 
-      const invites = await Invite.whereWithUsers();
-      response.status(200).json({ invites });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      response.sendStatus(500);
-    }
-  });
-
-  app.post("/v1/admin/invite/new", [validAdminApiKey], async (request, response) => {
-    /*
+  app.post(
+    "/v1/admin/invite/new",
+    [validAdminApiKey],
+    async (request, response) => {
+      /*
     #swagger.tags = ['Admin']
     #swagger.description = 'Create a new invite code for someone to use to register with instance. Methods are disabled until multi user mode is enabled via the UI.'
     #swagger.requestBody = {
@@ -360,23 +375,24 @@ function apiAdminEndpoints(app) {
       description: "Instance is not in Multi-User mode. Method denied",
     }
     */
-    try {
-      if (!multiUserMode(response)) {
-        response.sendStatus(401);
-        return;
-      }
+      try {
+        if (!multiUserMode(response)) {
+          response.sendStatus(401);
+          return;
+        }
 
-      const body = reqBody(request);
-      const { invite, error } = await Invite.create({
-        workspaceIds: body?.workspaceIds ?? [],
-      });
-      response.status(200).json({ invite, error });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      response.sendStatus(500);
-    }
-  });
+        const body = reqBody(request);
+        const { invite, error } = await Invite.create({
+          workspaceIds: body?.workspaceIds ?? [],
+        });
+        response.status(200).json({ invite, error });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        response.sendStatus(500);
+      }
+    },
+  );
 
   app.delete(
     "/v1/admin/invite/:id",

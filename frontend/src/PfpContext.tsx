@@ -71,12 +71,7 @@ export function PfpProvider({ children }) {
     };
   }, []);
 
-  const value = useMemo(
-    () => ({ pfp: pfp ?? null, setPfp }),
-    [pfp, setPfp],
-  );
+  const value = useMemo(() => ({ pfp: pfp ?? null, setPfp }), [pfp, setPfp]);
 
-  return (
-    <PfpContext.Provider value={value}>{children}</PfpContext.Provider>
-  );
+  return <PfpContext.Provider value={value}>{children}</PfpContext.Provider>;
 }

@@ -33,9 +33,7 @@ function isPrivateIPv4(ip) {
 function isPrivateIPv6(hostname) {
   if (isIP(hostname) !== 6) return false;
   return (
-    hostname === "::1" ||
-    hostname.startsWith("fc") ||
-    hostname.startsWith("fd")
+    hostname === "::1" || hostname.startsWith("fc") || hostname.startsWith("fd")
   );
 }
 

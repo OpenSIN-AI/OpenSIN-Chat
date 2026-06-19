@@ -5,7 +5,10 @@ const { multiUserMode } = require("../../../utils/http");
 const {
   simpleSSOEnabled,
 } = require("../../../utils/middleware/simpleSSOEnabled");
-const { validApiKey, validAdminApiKey } = require("../../../utils/middleware/validApiKey");
+const {
+  validApiKey,
+  validAdminApiKey,
+} = require("../../../utils/middleware/validApiKey");
 
 function apiUserManagementEndpoints(app) {
   if (!app) return;

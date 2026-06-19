@@ -85,34 +85,39 @@ export default class PiperTTSClient {
    * Runs prediction via webworker so we can get an audio blob back.
    * @returns {Promise<{blobURL: string|null, error: string|null}>} objectURL blob: type.
    */
-  async waitForBlobResponse(): Promise<{ blobURL: string | null; error: string | null }> {
-    return new Promise<{ blobURL: string | null; error: string | null }>((resolve) => {
-      let timeout: any = null;
-      const handleMessage = (event) => {
-        if (event.data.type === "error") {
+  async waitForBlobResponse(): Promise<{
+    blobURL: string | null;
+    error: string | null;
+  }> {
+    return new Promise<{ blobURL: string | null; error: string | null }>(
+      (resolve) => {
+        let timeout: any = null;
+        const handleMessage = (event) => {
+          if (event.data.type === "error") {
+            this.worker.removeEventListener("message", handleMessage);
+            if (timeout) clearTimeout(timeout);
+            return resolve({ blobURL: null, error: event.data.message });
+          }
+
+          if (event.data.type !== "result") {
+            return;
+          }
+          resolve({
+            blobURL: URL.createObjectURL(event.data.audio),
+            error: null,
+          });
           this.worker.removeEventListener("message", handleMessage);
           if (timeout) clearTimeout(timeout);
-          return resolve({ blobURL: null, error: event.data.message });
-        }
+        };
 
-        if (event.data.type !== "result") {
-          return;
-        }
-        resolve({
-          blobURL: URL.createObjectURL(event.data.audio),
-          error: null,
-        });
-        this.worker.removeEventListener("message", handleMessage);
-        if (timeout) clearTimeout(timeout);
-      };
-
-      timeout = setTimeout(() => {
-        this.worker.removeEventListener("message", handleMessage);
-        if (timeout) clearTimeout(timeout);
-        resolve({ blobURL: null, error: "PiperTTSWorker Worker timed out." });
-      }, 30_000);
-      this.worker.addEventListener("message", handleMessage);
-    });
+        timeout = setTimeout(() => {
+          this.worker.removeEventListener("message", handleMessage);
+          if (timeout) clearTimeout(timeout);
+          resolve({ blobURL: null, error: "PiperTTSWorker Worker timed out." });
+        }, 30_000);
+        this.worker.addEventListener("message", handleMessage);
+      },
+    );
   }
 
   async getAudioBlobForText(textToSpeak, voiceId = null) {

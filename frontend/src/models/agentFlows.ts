@@ -135,7 +135,8 @@ const AgentFlows: any = {
         body: JSON.stringify({ active }),
       })
         .then((res) => {
-          if (!res.ok) throw new Error(res.statusText || "Failed to toggle flow");
+          if (!res.ok)
+            throw new Error(res.statusText || "Failed to toggle flow");
           return res;
         })
         .then((res) => res.json());

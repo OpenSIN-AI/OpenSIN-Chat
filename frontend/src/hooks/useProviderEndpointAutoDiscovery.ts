@@ -91,7 +91,7 @@ export default function useProviderEndpointAutoDiscovery({
 
   useEffect(() => {
     if (!initialBasePath && !autoDetectAttempted) autoDetect();
-  }, [initialBasePath, initialAuthToken, autoDetectAttempted]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [initialBasePath, initialAuthToken, autoDetectAttempted]);
 
   return {
     autoDetecting: loading,

@@ -230,127 +230,161 @@ function systemEndpoints(app) {
     "/request-token",
     [simpleRateLimit({ bucket: "login", max: 10, windowMs: 15 * 60 * 1000 })],
     async (request, response) => {
-    try {
-      const bcrypt = require("bcryptjs");
+      try {
+        const bcrypt = require("bcryptjs");
 
-      if (await SystemSettings.isMultiUserMode()) {
-        if (simpleSSOLoginDisabled()) {
-          response.status(403).json({
-            user: null,
-            valid: false,
-            token: null,
-            message:
-              "[005] Login via credentials has been disabled by the administrator.",
-          });
-          return;
-        }
+        if (await SystemSettings.isMultiUserMode()) {
+          if (simpleSSOLoginDisabled()) {
+            response.status(403).json({
+              user: null,
+              valid: false,
+              token: null,
+              message:
+                "[005] Login via credentials has been disabled by the administrator.",
+            });
+            return;
+          }
 
-        const { username, password } = reqBody(request);
-        if (!username || !password) {
-          return response.status(400).json({ error: "Username and password are required." });
-        }
-        const existingUser = await User._get({ username: String(username) });
+          const { username, password } = reqBody(request);
+          if (!username || !password) {
+            return response
+              .status(400)
+              .json({ error: "Username and password are required." });
+          }
+          const existingUser = await User._get({ username: String(username) });
 
-        if (!existingUser) {
+          if (!existingUser) {
+            await EventLogs.logEvent(
+              "failed_login_invalid_username",
+              {
+                ip: request.ip || "Unknown IP",
+                username: username || "Unknown user",
+              },
+              existingUser?.id,
+            );
+            response.status(200).json({
+              user: null,
+              valid: false,
+              token: null,
+              message: "[001] Invalid login credentials.",
+            });
+            return;
+          }
+
+          if (!bcrypt.compareSync(String(password), existingUser.password)) {
+            await EventLogs.logEvent(
+              "failed_login_invalid_password",
+              {
+                ip: request.ip || "Unknown IP",
+                username: username || "Unknown user",
+              },
+              existingUser?.id,
+            );
+            response.status(200).json({
+              user: null,
+              valid: false,
+              token: null,
+              message: "[002] Invalid login credentials.",
+            });
+            return;
+          }
+
+          if (existingUser.suspended) {
+            await EventLogs.logEvent(
+              "failed_login_account_suspended",
+              {
+                ip: request.ip || "Unknown IP",
+                username: username || "Unknown user",
+              },
+              existingUser?.id,
+            );
+            response.status(200).json({
+              user: null,
+              valid: false,
+              token: null,
+              message: "[004] Account suspended by admin.",
+            });
+            return;
+          }
+
+          await Telemetry.sendTelemetry(
+            "login_event",
+            { multiUserMode: false },
+            existingUser?.id,
+          );
+
           await EventLogs.logEvent(
-            "failed_login_invalid_username",
+            "login_event",
             {
               ip: request.ip || "Unknown IP",
-              username: username || "Unknown user",
+              username: existingUser.username || "Unknown user",
             },
             existingUser?.id,
           );
-          response.status(200).json({
-            user: null,
-            valid: false,
-            token: null,
-            message: "[001] Invalid login credentials.",
-          });
-          return;
-        }
 
-        if (!bcrypt.compareSync(String(password), existingUser.password)) {
-          await EventLogs.logEvent(
-            "failed_login_invalid_password",
-            {
-              ip: request.ip || "Unknown IP",
-              username: username || "Unknown user",
-            },
-            existingUser?.id,
+          // Generate a session token for the user then check if they have seen the recovery codes
+          // and if not, generate recovery codes and return them to the frontend.
+          const sessionToken = makeJWT(
+            { id: existingUser.id, username: existingUser.username },
+            process.env.JWT_EXPIRY,
           );
-          response.status(200).json({
-            user: null,
-            valid: false,
-            token: null,
-            message: "[002] Invalid login credentials.",
-          });
-          return;
-        }
+          if (!existingUser.seen_recovery_codes) {
+            const plainTextCodes = await generateRecoveryCodes(existingUser.id);
+            response.status(200).json({
+              valid: true,
+              user: User.filterFields(existingUser),
+              token: sessionToken,
+              message: null,
+              recoveryCodes: plainTextCodes,
+            });
+            return;
+          }
 
-        if (existingUser.suspended) {
-          await EventLogs.logEvent(
-            "failed_login_account_suspended",
-            {
-              ip: request.ip || "Unknown IP",
-              username: username || "Unknown user",
-            },
-            existingUser?.id,
-          );
-          response.status(200).json({
-            user: null,
-            valid: false,
-            token: null,
-            message: "[004] Account suspended by admin.",
-          });
-          return;
-        }
-
-        await Telemetry.sendTelemetry(
-          "login_event",
-          { multiUserMode: false },
-          existingUser?.id,
-        );
-
-        await EventLogs.logEvent(
-          "login_event",
-          {
-            ip: request.ip || "Unknown IP",
-            username: existingUser.username || "Unknown user",
-          },
-          existingUser?.id,
-        );
-
-        // Generate a session token for the user then check if they have seen the recovery codes
-        // and if not, generate recovery codes and return them to the frontend.
-        const sessionToken = makeJWT(
-          { id: existingUser.id, username: existingUser.username },
-          process.env.JWT_EXPIRY,
-        );
-        if (!existingUser.seen_recovery_codes) {
-          const plainTextCodes = await generateRecoveryCodes(existingUser.id);
           response.status(200).json({
             valid: true,
             user: User.filterFields(existingUser),
             token: sessionToken,
             message: null,
-            recoveryCodes: plainTextCodes,
           });
           return;
-        }
+        } else {
+          const { password } = reqBody(request);
+          // Single-user mode WITHOUT an AUTH_TOKEN env var: auth is disabled.
+          // Auto-grant a session token instead of crashing on
+          // `bcrypt.hashSync(undefined, 10)`.
+          if (!process.env.AUTH_TOKEN) {
+            await Telemetry.sendTelemetry("login_event", {
+              multiUserMode: false,
+            });
+            await EventLogs.logEvent("login_event", {
+              ip: request.ip || "Unknown IP",
+              multiUserMode: false,
+            });
+            response.status(200).json({
+              valid: true,
+              token: makeJWT({ p: null }, process.env.JWT_EXPIRY),
+              message: null,
+            });
+            return;
+          }
+          if (
+            !bcrypt.compareSync(
+              password,
+              bcrypt.hashSync(process.env.AUTH_TOKEN, 10),
+            )
+          ) {
+            await EventLogs.logEvent("failed_login_invalid_password", {
+              ip: request.ip || "Unknown IP",
+              multiUserMode: false,
+            });
+            response.status(401).json({
+              valid: false,
+              token: null,
+              message: "[003] Invalid password provided",
+            });
+            return;
+          }
 
-        response.status(200).json({
-          valid: true,
-          user: User.filterFields(existingUser),
-          token: sessionToken,
-          message: null,
-        });
-        return;
-      } else {
-        const { password } = reqBody(request);
-        // Single-user mode WITHOUT an AUTH_TOKEN env var: auth is disabled.
-        // Auto-grant a session token instead of crashing on
-        // `bcrypt.hashSync(undefined, 10)`.
-        if (!process.env.AUTH_TOKEN) {
           await Telemetry.sendTelemetry("login_event", {
             multiUserMode: false,
           });
@@ -360,55 +394,30 @@ function systemEndpoints(app) {
           });
           response.status(200).json({
             valid: true,
-            token: makeJWT({ p: null }, process.env.JWT_EXPIRY),
+            token: makeJWT(
+              { p: new EncryptionManager().encrypt(password) },
+              process.env.JWT_EXPIRY,
+            ),
             message: null,
           });
-          return;
         }
-        if (
-          !bcrypt.compareSync(
-            password,
-            bcrypt.hashSync(process.env.AUTH_TOKEN, 10),
-          )
-        ) {
-          await EventLogs.logEvent("failed_login_invalid_password", {
-            ip: request.ip || "Unknown IP",
-            multiUserMode: false,
-          });
-          response.status(401).json({
-            valid: false,
-            token: null,
-            message: "[003] Invalid password provided",
-          });
-          return;
-        }
-
-        await Telemetry.sendTelemetry("login_event", { multiUserMode: false });
-        await EventLogs.logEvent("login_event", {
-          ip: request.ip || "Unknown IP",
-          multiUserMode: false,
-        });
-        response.status(200).json({
-          valid: true,
-          token: makeJWT(
-            { p: new EncryptionManager().encrypt(password) },
-            process.env.JWT_EXPIRY,
-          ),
-          message: null,
-        });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e.message, e);
+        response.sendStatus(500);
       }
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e.message, e);
-      response.sendStatus(500);
-    }
-  });
+    },
+  );
 
   app.get(
     "/request-token/sso/simple",
     [
       simpleSSOEnabled,
-      simpleRateLimit({ bucket: "sso-token", max: 10, windowMs: 15 * 60 * 1000 }),
+      simpleRateLimit({
+        bucket: "sso-token",
+        max: 10,
+        windowMs: 15 * 60 * 1000,
+      }),
     ],
     async (request, response) => {
       const { token: tempAuthToken } = request.query;
@@ -454,7 +463,11 @@ function systemEndpoints(app) {
     "/system/recover-account",
     [
       isMultiUserSetup,
-      simpleRateLimit({ bucket: "recover-account", max: 5, windowMs: 15 * 60 * 1000 }),
+      simpleRateLimit({
+        bucket: "recover-account",
+        max: 5,
+        windowMs: 15 * 60 * 1000,
+      }),
     ],
     async (request, response) => {
       try {
@@ -704,7 +717,9 @@ function systemEndpoints(app) {
           return response.status(400).json({ error: "Username is required." });
         }
         if (!password || typeof password !== "string" || password.length < 8) {
-          return response.status(400).json({ error: "Password must be at least 8 characters." });
+          return response
+            .status(400)
+            .json({ error: "Password must be at least 8 characters." });
         }
         const { user, error } = await User.create({
           username,
@@ -843,24 +858,21 @@ function systemEndpoints(app) {
   });
 
   // No middleware protection in order to get this on the login page
-  app.get(
-    "/system/custom-app-name",
-    async (_, response) => {
-      try {
-        const customAppName =
-          (
-            await SystemSettings.get({
-              label: "custom_app_name",
-            })
-          )?.value ?? null;
-        response.status(200).json({ customAppName: customAppName });
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error("Error fetching custom app name:", error);
-        response.status(500).json({ message: "Internal server error" });
-      }
-    },
-  );
+  app.get("/system/custom-app-name", async (_, response) => {
+    try {
+      const customAppName =
+        (
+          await SystemSettings.get({
+            label: "custom_app_name",
+          })
+        )?.value ?? null;
+      response.status(200).json({ customAppName: customAppName });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Error fetching custom app name:", error);
+      response.status(500).json({ message: "Internal server error" });
+    }
+  });
 
   app.get(
     "/system/pfp/:id",
@@ -1167,8 +1179,7 @@ function systemEndpoints(app) {
     [validatedRequest],
     async (request, response) => {
       try {
-        if (response.locals.multiUserMode)
-          return response.sendStatus(401);
+        if (response.locals.multiUserMode) return response.sendStatus(401);
         const { id } = request.params;
         if (!id || isNaN(Number(id))) return response.sendStatus(400);
 

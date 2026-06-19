@@ -1092,7 +1092,9 @@ function apiDocumentEndpoints(app) {
       try {
         const { files } = reqBody(request);
         if (!Array.isArray(files) || files.length === 0) {
-          return response.status(400).json({ success: false, error: "Files array is required." });
+          return response
+            .status(400)
+            .json({ success: false, error: "Files array is required." });
         }
         const docpaths = files.map(({ from }) => from);
         const documents = await Document.where({ docpath: { in: docpaths } });

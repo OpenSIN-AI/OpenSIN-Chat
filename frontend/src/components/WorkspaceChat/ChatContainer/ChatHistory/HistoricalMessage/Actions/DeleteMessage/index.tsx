@@ -25,11 +25,13 @@ export function useWatchDeleteMessage({
     if (isDeleted && !deleteCalled.current) {
       deleteCalled.current = true;
       if (role === "assistant") {
-        Workspace.deleteChat(chatId).then(() => {
-          invalidateChatHistory(workspaceSlug, threadSlug);
-        }).catch((e) => {
-          console.error("Failed to delete chat:", e);
-        });
+        Workspace.deleteChat(chatId)
+          .then(() => {
+            invalidateChatHistory(workspaceSlug, threadSlug);
+          })
+          .catch((e) => {
+            console.error("Failed to delete chat:", e);
+          });
       }
     }
   }, [isDeleted, chatId, role, workspaceSlug, threadSlug]);

@@ -262,7 +262,7 @@ export default function BlockList({
   ): React.ReactNode => {
     switch (block.type) {
       case BLOCK_TYPES.FLOW_INFO:
-        return <FlowInfoNode {...({...props, ref: refs} as any)} />;
+        return <FlowInfoNode {...({ ...props, ref: refs } as any)} />;
       case BLOCK_TYPES.START:
         return <StartNode {...(props as any)} />;
       case BLOCK_TYPES.API_CALL:

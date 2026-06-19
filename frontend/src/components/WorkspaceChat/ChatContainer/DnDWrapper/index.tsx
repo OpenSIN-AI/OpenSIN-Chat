@@ -93,7 +93,10 @@ export function DnDFileUploaderProvider({
     window.addEventListener(REMOVE_ATTACHMENT_EVENT, onRemove);
     window.addEventListener(CLEAR_ATTACHMENTS_EVENT, onReset);
     window.addEventListener(PASTE_ATTACHMENT_EVENT, onPasted);
-    window.addEventListener(PARSED_FILE_ATTACHMENT_REMOVED_EVENT, onParsedRemove);
+    window.addEventListener(
+      PARSED_FILE_ATTACHMENT_REMOVED_EVENT,
+      onParsedRemove,
+    );
 
     return () => {
       window.removeEventListener(REMOVE_ATTACHMENT_EVENT, onRemove);
@@ -263,7 +266,11 @@ export function DnDFileUploaderProvider({
             }
 
             // File is within limits, keep in parsed files
-            const result = { success: true, document: file, error: null as string | null };
+            const result = {
+              success: true,
+              document: file,
+              error: null as string | null,
+            };
             const updates = {
               status: result.success ? "added_context" : "failed",
               error: result.error ?? null,

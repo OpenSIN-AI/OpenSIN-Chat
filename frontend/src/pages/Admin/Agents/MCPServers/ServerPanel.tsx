@@ -177,7 +177,11 @@ export default function ServerPanel({
           />
           <div className="flex w-full justify-between">
             <div className="flex items-center gap-x-2">
-              <img src={MCPLogo} className="w-6 h-6 light:invert" alt={t("common.mcpLogo")} />
+              <img
+                src={MCPLogo}
+                className="w-6 h-6 light:invert"
+                alt={t("common.mcpLogo")}
+              />
               <label htmlFor="name" className="text-white text-md font-bold">
                 {titleCase(server.name.replace(/[_-]/g, " "))}
               </label>

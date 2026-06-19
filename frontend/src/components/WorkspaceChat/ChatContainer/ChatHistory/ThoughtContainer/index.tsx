@@ -159,8 +159,8 @@ export function ThoughtBrainButton({ messageId, content }: any) {
 export const ThoughtChainComponent = forwardRef(
   ({ content: initialContent, messageId }: any, ref) => {
     const [content, setContent] = useState(initialContent);
-    const [hasReadableContent, setHasReadableContent] = useState(
-      () => contentIsNotEmpty(initialContent),
+    const [hasReadableContent, setHasReadableContent] = useState(() =>
+      contentIsNotEmpty(initialContent),
     );
     const { expanded: persistedExpanded, setExpanded: setPersistedExpanded } =
       useThoughtExpansion(messageId);

@@ -100,24 +100,16 @@ function apiPdfAnalysisEndpoints(app) {
     });
   });
 
-  app.get(
-    "/pdf-analysis/facts/stats",
-    [validApiKey],
-    (_request, response) => {
-      response.status(200).json(PdfAnalysisPipeline.factStore.stats());
-    },
-  );
+  app.get("/pdf-analysis/facts/stats", [validApiKey], (_request, response) => {
+    response.status(200).json(PdfAnalysisPipeline.factStore.stats());
+  });
 
-  app.get(
-    "/pdf-analysis/facts/:factId",
-    [validApiKey],
-    (request, response) => {
-      const fact = PdfAnalysisPipeline.factStore.get(request.params.factId);
-      if (!fact)
-        return response.status(404).json({ error: "Fakt nicht gefunden." });
-      response.status(200).json(fact);
-    },
-  );
+  app.get("/pdf-analysis/facts/:factId", [validApiKey], (request, response) => {
+    const fact = PdfAnalysisPipeline.factStore.get(request.params.factId);
+    if (!fact)
+      return response.status(404).json({ error: "Fakt nicht gefunden." });
+    response.status(200).json(fact);
+  });
 
   app.delete(
     "/pdf-analysis/facts/:factId",
@@ -131,37 +123,29 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   // ---- Cross-Check (Kreuz-Verifikation) — vor /:id registriert! ----
-  app.post(
-    "/pdf-analysis/crosscheck",
-    [validApiKey],
-    (request, response) => {
-      try {
-        const { claims, factIds, sources, deepWeb } = request.body || {};
-        const { jobId } = CrossCheckPipeline.start(
-          {
-            claims: Array.isArray(claims) ? claims : [],
-            factIds: Array.isArray(factIds) ? factIds : [],
-            sources: Array.isArray(sources) ? sources : [],
-            deepWeb: !!deepWeb,
-          },
-          PdfAnalysisPipeline.factStore,
-        );
-        response.status(200).json({ jobId });
-      } catch (e) {
-        response
-          .status(e.statusCode || 400)
-          .json({ error: e?.message || String(e) });
-      }
-    },
-  );
+  app.post("/pdf-analysis/crosscheck", [validApiKey], (request, response) => {
+    try {
+      const { claims, factIds, sources, deepWeb } = request.body || {};
+      const { jobId } = CrossCheckPipeline.start(
+        {
+          claims: Array.isArray(claims) ? claims : [],
+          factIds: Array.isArray(factIds) ? factIds : [],
+          sources: Array.isArray(sources) ? sources : [],
+          deepWeb: !!deepWeb,
+        },
+        PdfAnalysisPipeline.factStore,
+      );
+      response.status(200).json({ jobId });
+    } catch (e) {
+      response
+        .status(e.statusCode || 400)
+        .json({ error: e?.message || String(e) });
+    }
+  });
 
-  app.get(
-    "/pdf-analysis/crosscheck/list",
-    [validApiKey],
-    (_req, response) => {
-      response.status(200).json({ jobs: CrossCheckPipeline.list() });
-    },
-  );
+  app.get("/pdf-analysis/crosscheck/list", [validApiKey], (_req, response) => {
+    response.status(200).json({ jobs: CrossCheckPipeline.list() });
+  });
 
   app.get(
     "/pdf-analysis/crosscheck/:id",
@@ -251,16 +235,12 @@ function apiPdfAnalysisEndpoints(app) {
     response.status(200).json({ jobs: CorpusPipeline.list() });
   });
 
-  app.get(
-    "/pdf-analysis/corpus/:id",
-    [validApiKey],
-    (request, response) => {
-      const status = CorpusPipeline.getStatus(request.params.id);
-      if (!status)
-        return response.status(404).json({ error: "Job nicht gefunden." });
-      response.status(200).json(status);
-    },
-  );
+  app.get("/pdf-analysis/corpus/:id", [validApiKey], (request, response) => {
+    const status = CorpusPipeline.getStatus(request.params.id);
+    if (!status)
+      return response.status(404).json({ error: "Job nicht gefunden." });
+    response.status(200).json(status);
+  });
 
   app.get(
     "/pdf-analysis/corpus/:id/result",
@@ -273,14 +253,10 @@ function apiPdfAnalysisEndpoints(app) {
     },
   );
 
-  app.delete(
-    "/pdf-analysis/corpus/:id",
-    [validApiKey],
-    (request, response) => {
-      const ok = CorpusPipeline.cancel(request.params.id);
-      response.status(ok ? 200 : 404).json({ cancelled: ok });
-    },
-  );
+  app.delete("/pdf-analysis/corpus/:id", [validApiKey], (request, response) => {
+    const ok = CorpusPipeline.cancel(request.params.id);
+    response.status(ok ? 200 : 404).json({ cancelled: ok });
+  });
 
   // ---- Job-Status / Ergebnis ----
   app.get("/pdf-analysis/:id", [validApiKey], (request, response) => {
@@ -290,16 +266,12 @@ function apiPdfAnalysisEndpoints(app) {
     response.status(200).json(status);
   });
 
-  app.get(
-    "/pdf-analysis/:id/result",
-    [validApiKey],
-    (request, response) => {
-      const result = PdfAnalysisPipeline.getResult(request.params.id);
-      if (!result)
-        return response.status(404).json({ error: "Job nicht gefunden." });
-      response.status(200).json(result);
-    },
-  );
+  app.get("/pdf-analysis/:id/result", [validApiKey], (request, response) => {
+    const result = PdfAnalysisPipeline.getResult(request.params.id);
+    if (!result)
+      return response.status(404).json({ error: "Job nicht gefunden." });
+    response.status(200).json(result);
+  });
 
   app.delete("/pdf-analysis/:id", [validApiKey], (request, response) => {
     const ok = PdfAnalysisPipeline.cancel(request.params.id);

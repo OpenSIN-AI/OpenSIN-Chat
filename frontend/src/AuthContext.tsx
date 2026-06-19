@@ -83,8 +83,6 @@ export function AuthProvider(props) {
   const value = useMemo(() => ({ store, actions }), [store, actions]);
 
   return (
-    <AuthContext.Provider value={value}>
-      {props.children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={value}>{props.children}</AuthContext.Provider>
   );
 }

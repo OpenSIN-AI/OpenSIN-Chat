@@ -82,7 +82,10 @@ export default function SingleUserAuth() {
         <div className="w-full px-12">
           <div className="w-full flex flex-col gap-y-3">
             <div className="w-full flex flex-col gap-y-2">
-              <label htmlFor="single-user-password" className="text-zinc-300 light:text-slate-800 text-sm">
+              <label
+                htmlFor="single-user-password"
+                className="text-zinc-300 light:text-slate-800 text-sm"
+              >
                 {t("login.single-user.password")}
               </label>
               <input

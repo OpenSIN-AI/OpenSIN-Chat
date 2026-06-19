@@ -778,7 +778,8 @@ const TRANSLATIONS = {
       heading: "Erkläre mir",
       body: "die Vorteile von OpenSIN Chat",
       maxMessages: "Maximal 4 Nachrichten erlaubt.",
-      saveFailed: "Fehler beim Aktualisieren der vorgeschlagenen Chat-Nachrichten: {{error}}",
+      saveFailed:
+        "Fehler beim Aktualisieren der vorgeschlagenen Chat-Nachrichten: {{error}}",
     },
     delete: {
       title: "Workspace löschen",
@@ -4454,7 +4455,8 @@ const TRANSLATIONS = {
     workspaceUpdated: "Workspace aktualisiert!",
     error: "Fehler: {{message}}",
     preferencesSaved: "Agent-Einstellungen erfolgreich gespeichert.",
-    preferencesSaveFailed: "Agent-Einstellungen konnten nicht gespeichert werden.",
+    preferencesSaveFailed:
+      "Agent-Einstellungen konnten nicht gespeichert werden.",
     toggleToolFailed: "Werkzeug konnte nicht umgeschaltet werden.",
   },
   // ── Batch 10 — i18next/no-literal-string fixes ─────────────────────
@@ -4679,7 +4681,8 @@ const TRANSLATIONS = {
   accountModal: {
     bio: "Bio",
     bioPlaceholder: "Erzählen Sie etwas über sich...",
-    passwordPlaceholder: "Neues Passwort (leer lassen, um das aktuelle zu behalten)",
+    passwordPlaceholder:
+      "Neues Passwort (leer lassen, um das aktuelle zu behalten)",
     profilePictureAlt: "Profilbild",
     usernamePlaceholder: "Benutzername",
   },

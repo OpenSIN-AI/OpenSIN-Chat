@@ -90,7 +90,9 @@ function browserExtensionEndpoints(app) {
         const { workspaceId, textContent, metadata } = reqBody(request);
         const user = await userFromSession(request, response);
         if (!workspaceId) {
-          return response.status(400).json({ error: "workspaceId is required." });
+          return response
+            .status(400)
+            .json({ error: "workspaceId is required." });
         }
         const workspace = multiUserMode(response)
           ? await Workspace.getWithUser(user, { id: parseInt(workspaceId) })

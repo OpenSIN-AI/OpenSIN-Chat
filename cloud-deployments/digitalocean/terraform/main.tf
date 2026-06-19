@@ -15,7 +15,7 @@ provider "digitalocean" {
 }  
 
   
-resource "digitalocean_droplet" "anything_llm_instance" {  
+resource "digitalocean_droplet" "opensin_chat_instance" {  
   image  = "ubuntu-24-04-x64"  
   name   = "opensin-chat-instance"  
   region = "nyc3"  

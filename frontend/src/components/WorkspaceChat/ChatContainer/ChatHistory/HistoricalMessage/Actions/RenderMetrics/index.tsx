@@ -39,7 +39,14 @@ function getAutoShowMetrics() {
  * @param {metrics: {duration:number, outputTps: number, model?: string, timestamp?: number}} metrics
  * @returns {string}
  */
-function buildMetricsString(metrics: { model?: string; duration?: number; outputTps?: number; timestamp?: number } = {}) {
+function buildMetricsString(
+  metrics: {
+    model?: string;
+    duration?: number;
+    outputTps?: number;
+    timestamp?: number;
+  } = {},
+) {
   return [
     metrics?.model ? metrics.model : "",
     `${formatDuration(metrics.duration)} (${formatTps(metrics.outputTps)} tok/s)`,
@@ -73,8 +80,9 @@ function toggleAutoShowMetrics() {
  * @returns {React.ReactNode}
  */
 export function MetricsProvider({ children }: any) {
-  const [showMetricsAutomatically, setShowMetricsAutomatically] =
-    useState(() => getAutoShowMetrics());
+  const [showMetricsAutomatically, setShowMetricsAutomatically] = useState(() =>
+    getAutoShowMetrics(),
+  );
 
   useEffect(() => {
     function handleShowingMetricsEvent(e: any) {

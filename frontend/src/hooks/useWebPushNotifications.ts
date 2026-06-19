@@ -109,15 +109,23 @@ export async function subscribeToPushNotifications(
 
     if (swReg.installing) {
       await new Promise<void>((resolve) => {
-        swReg.installing.addEventListener("statechange", () => {
-          if (swReg.installing?.state === "activated") resolve();
-        }, { once: true });
+        swReg.installing.addEventListener(
+          "statechange",
+          () => {
+            if (swReg.installing?.state === "activated") resolve();
+          },
+          { once: true },
+        );
       });
     } else if (swReg.waiting) {
       await new Promise<void>((resolve) => {
-        swReg.waiting.addEventListener("statechange", () => {
-          if (swReg.waiting?.state === "activated") resolve();
-        }, { once: true });
+        swReg.waiting.addEventListener(
+          "statechange",
+          () => {
+            if (swReg.waiting?.state === "activated") resolve();
+          },
+          { once: true },
+        );
       });
     }
 

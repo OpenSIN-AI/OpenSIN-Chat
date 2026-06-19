@@ -185,9 +185,12 @@ const System = {
   },
 
   checkDocumentProcessorOnline: async () => {
-    return await fetchWithTimeout(`${API_BASE}/system/document-processing-status`, {
-      headers: baseHeaders(),
-    })
+    return await fetchWithTimeout(
+      `${API_BASE}/system/document-processing-status`,
+      {
+        headers: baseHeaders(),
+      },
+    )
       .then((res) => res.ok)
       .catch(() => false);
   },

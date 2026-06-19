@@ -4,7 +4,11 @@ import { toast, type ToastOptions } from "react-toastify";
 // Additional Configs (opts)
 // You can also pass valid ReactToast params to override the defaults.
 // clear: false, // Will dismiss all visible toasts before rendering next toast
-const showToast: any = (message, type: any = "default", opts: { clear?: boolean; [key: string]: any } = {}) => {
+const showToast: any = (
+  message,
+  type: any = "default",
+  opts: { clear?: boolean; [key: string]: any } = {},
+) => {
   const theme = localStorage?.getItem("theme") || "default";
   const { clear, ...restOpts } = opts;
   const options: ToastOptions = {

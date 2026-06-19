@@ -24,7 +24,10 @@ function relayToSocket(message) {
 }
 
 async function isAuthorizedRequest(request) {
-  if (process.env.NODE_ENV === "test" && process.env.INTEGRATION_TEST === "true") {
+  if (
+    process.env.NODE_ENV === "test" &&
+    process.env.INTEGRATION_TEST === "true"
+  ) {
     return true;
   }
 

@@ -58,7 +58,8 @@ export function RenderFileRows({
     .flatMap((folder) => folder.items)
     .sort(sortMovedItemsAndFiles)
     .map((item) => {
-      const folder = files.items.find((f) => f.items.includes(item)) ?? ({} as Folder);
+      const folder =
+        files.items.find((f) => f.items.includes(item)) ?? ({} as Folder);
       return children({ item, folder });
     });
 }

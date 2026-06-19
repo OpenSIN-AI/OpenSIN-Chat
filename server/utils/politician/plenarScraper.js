@@ -24,7 +24,8 @@ const DIP_BASE = "https://dserver.bundestag.de";
 // (Issue #52). A public demo API key is published by the Bundestag; callers may
 // override it via BUNDESTAG_API_KEY.
 const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
-const DIP_PUBLIC_API_KEY = process.env.DIP_API_KEY || "I9FKdCn.hbfefNWCY336dL6x62vfwNKpoN2RZ1gp21";
+const DIP_PUBLIC_API_KEY =
+  process.env.DIP_API_KEY || "I9FKdCn.hbfefNWCY336dL6x62vfwNKpoN2RZ1gp21";
 
 /**
  * @typedef {Object} PlenarSpeech

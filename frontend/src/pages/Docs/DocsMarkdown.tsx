@@ -181,15 +181,18 @@ export default function DocsMarkdown({
       const code = block?.querySelector("code");
       const text = code?.textContent ?? "";
       if (!text) return;
-      navigator.clipboard?.writeText(text).then(() => {
-        block?.classList.add("is-copied");
-        const labelEl = copyBtn.querySelector(".docs-code-copy-label");
-        if (labelEl) labelEl.textContent = t("common.docsCodeCopied");
-        window.setTimeout(() => {
-          block?.classList.remove("is-copied");
-          if (labelEl) labelEl.textContent = t("common.docsCopyCode");
-        }, 2000);
-      }).catch(() => {});
+      navigator.clipboard
+        ?.writeText(text)
+        .then(() => {
+          block?.classList.add("is-copied");
+          const labelEl = copyBtn.querySelector(".docs-code-copy-label");
+          if (labelEl) labelEl.textContent = t("common.docsCodeCopied");
+          window.setTimeout(() => {
+            block?.classList.remove("is-copied");
+            if (labelEl) labelEl.textContent = t("common.docsCopyCode");
+          }, 2000);
+        })
+        .catch(() => {});
       return;
     }
 

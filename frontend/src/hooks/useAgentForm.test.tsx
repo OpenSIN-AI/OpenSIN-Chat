@@ -94,7 +94,9 @@ describe("useAgentForm", () => {
     form.appendChild(input);
     result.current.formEl.current = form;
 
-    vi.mocked(Admin.updateSystemPreferences).mockResolvedValue({ success: true });
+    vi.mocked(Admin.updateSystemPreferences).mockResolvedValue({
+      success: true,
+    });
     vi.mocked(System.updateSystem).mockResolvedValue({ success: true });
 
     await act(async () => {

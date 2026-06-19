@@ -105,7 +105,9 @@ const ManageWorkspace = ({ hideModal = noop, providedSlug = null }) => {
               <DocumentSettings workspace={workspace} />
             </EmbeddingProgressProvider>
           ) : (
-            <DataConnectors {...({ workspace, systemSettings: settings } as any)} />
+            <DataConnectors
+              {...({ workspace, systemSettings: settings } as any)}
+            />
           )}
         </div>
       </div>

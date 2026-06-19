@@ -83,7 +83,15 @@ const pfpUploadStorage = multer.diskStorage({
 
 // ----- Multer handler factories --------------------------------------------
 
-const BLOCKED_EXTENSIONS = [".exe", ".bat", ".cmd", ".sh", ".ps1", ".dll", ".so"];
+const BLOCKED_EXTENSIONS = [
+  ".exe",
+  ".bat",
+  ".cmd",
+  ".sh",
+  ".ps1",
+  ".dll",
+  ".so",
+];
 const executableFileFilter = (_req, file, cb) => {
   const ext = path.extname(file.originalname).toLowerCase();
   if (BLOCKED_EXTENSIONS.includes(ext)) {

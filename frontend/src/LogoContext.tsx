@@ -112,7 +112,5 @@ export function LogoProvider({ children }) {
     [data?.logo, data?.loginLogo, data?.isCustomLogo, setLogo],
   );
 
-  return (
-    <LogoContext.Provider value={value}>{children}</LogoContext.Provider>
-  );
+  return <LogoContext.Provider value={value}>{children}</LogoContext.Provider>;
 }
