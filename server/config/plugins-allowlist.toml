@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: MIT
+
+# OpenSIN-Chat — plugin handler allowlist.
+#
+# Each hub ID listed in `allow` may be `require()`d into the server process
+# from `server/utils/agents/imported.js`. Plugins whose hubId is NOT in the
+# allowlist are silently skipped on load — the agent admin UI surfaces them
+# as installed but inert.
+#
+# Recommended posture:
+#   • Leave `allow = []` in production unless an admin explicitly opts into a
+#     community zip via the agent-flows API and has reviewed handler.js.
+#   • Add a hubId only after the corresponding handler.js has been audited
+#     for `child_process`, `fs`, and `os` use (the plugin surface area inside
+#     agent-skills/<hubId>/handler.js is RCE-equivalent).
+#
+# Format is line-list TOML: one hubId per quoted string inside the array.
+# Comments start with `#`. Tokens must match `[a-z0-9._-]+` to keep the lookup
+# aligned with the path validation in `server/utils/files/index.js`.
+
+allow = [
+  # "example-verified-plugin",
+  # "another-trusted-plugin",
+]
