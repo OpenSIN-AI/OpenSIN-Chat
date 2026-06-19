@@ -72,8 +72,9 @@ export default function TranscriptionModelPreference() {
   }, [settingsLoading, systemSettings]);
 
   const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
+    e?.preventDefault();
+    const form = (e?.target ??
+      document.getElementById("transcription-form")) as HTMLFormElement;
     const data: any = { WhisperProvider: selectedProvider };
     const formData = new FormData(form);
 
@@ -143,7 +144,11 @@ export default function TranscriptionModelPreference() {
           }
           className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
         >
-          <form onSubmit={handleSubmit} className="flex w-full">
+          <form
+            id="transcription-form"
+            onSubmit={handleSubmit}
+            className="flex w-full"
+          >
             <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] py-16 md:py-6">
               <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
                 <div className="flex gap-x-4 items-center">

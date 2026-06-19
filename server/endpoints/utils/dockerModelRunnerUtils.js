@@ -82,7 +82,7 @@ function dockerModelRunnerUtilsEndpoints(app) {
         // eslint-disable-next-line no-console
         console.error(e);
         response.write(
-          `data: ${JSON.stringify({ type: "error", message: e?.message || String(e) })}\n\n`,
+          `data: ${JSON.stringify({ type: "error", message: "Internal server error." })}\n\n`,
         );
       } finally {
         response.end();

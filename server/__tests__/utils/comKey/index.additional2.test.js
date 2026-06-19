@@ -5,10 +5,24 @@
 const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
+const os = require("os");
+
+// Isolate this test's comkey storage from other Jest workers AND from
+// concurrent `yarn test` shells. Without an isolated base, parallel workers
+// race on the same <repo>/server/storage/comkey directory: one worker's
+// afterAll wipe steals another worker's keys mid-suite (ENOENT on
+// ipc-{priv,pub}.pem), and two concurrent top-level fs.rmSync calls collide
+// with ENOTEMPTY in CommunicationKey.#generate(). mkdtempSync gives each
+// process a unique fresh base directory.
+process.env.STORAGE_DIR = fs.mkdtempSync(
+  path.join(os.tmpdir(), "opensin-comkey-"),
+);
 
 const { getStoragePath } = require("../../../utils/paths");
 
-// getStoragePath("comkey") resolves to <repo>/server/storage/comkey in dev.
+// Real storage path = <STORAGE_DIR>/comkey — same path comKey/index.js
+// resolves via getStoragePath("comkey"). We ensure it exists, freshly
+// empty, before requiring comKey so #generate() writes into the same dir.
 const realStoragePath = getStoragePath("comkey");
 if (fs.existsSync(realStoragePath)) {
   fs.rmSync(realStoragePath, { recursive: true, force: true });

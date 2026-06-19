@@ -36,7 +36,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response
           .status(500)
-          .json({ success: false, error: error?.message || String(error) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );
@@ -55,7 +55,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response
           .status(500)
-          .json({ success: false, error: error?.message || String(error) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );
@@ -73,7 +73,7 @@ function communityHubEndpoints(app) {
         response.status(500).json({
           success: false,
           result: null,
-          error: error?.message || String(error),
+          error: "Internal server error.",
         });
       }
     },
@@ -95,7 +95,7 @@ function communityHubEndpoints(app) {
         response.status(500).json({
           success: false,
           item: null,
-          error: error?.message || String(error),
+          error: "Internal server error.",
         });
       }
     },
@@ -141,7 +141,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response
           .status(500)
-          .json({ success: false, error: error?.message || String(error) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );
@@ -187,7 +187,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response.status(500).json({
           success: false,
-          error: error?.message || String(error),
+          error: "Internal server error.",
         });
       }
     },
@@ -206,7 +206,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response
           .status(500)
-          .json({ success: false, error: error?.message || String(error) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );
@@ -246,7 +246,7 @@ function communityHubEndpoints(app) {
         console.error(error);
         response
           .status(500)
-          .json({ success: false, error: error?.message || String(error) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );

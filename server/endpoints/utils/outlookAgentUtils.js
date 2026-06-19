@@ -105,7 +105,7 @@ function outlookAgentEndpoints(app) {
         console.error("Outlook auth URL error:", e);
         response
           .status(500)
-          .json({ success: false, error: e?.message || String(e) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );
@@ -206,7 +206,7 @@ function outlookAgentEndpoints(app) {
         console.error("Outlook status error:", e);
         response
           .status(500)
-          .json({ success: false, error: e?.message || String(e) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );
@@ -226,7 +226,7 @@ function outlookAgentEndpoints(app) {
         console.error("Outlook revoke error:", e);
         response
           .status(500)
-          .json({ success: false, error: e?.message || String(e) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );

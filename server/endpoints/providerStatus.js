@@ -37,7 +37,7 @@ function providerStatusEndpoints(app) {
         console.error("provider-key-status failed:", e.message);
         response
           .status(500)
-          .json({ providers: [], paths: null, error: e?.message || String(e) });
+          .json({ providers: [], paths: null, error: "Internal server error" });
       }
     },
   );
@@ -66,7 +66,7 @@ function providerStatusEndpoints(app) {
         console.error("provider-connectivity failed:", e.message);
         response
           .status(500)
-          .json({ results: [], error: e?.message || String(e) });
+          .json({ results: [], error: "Internal server error" });
       }
     },
   );

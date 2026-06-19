@@ -37,7 +37,7 @@ function googleAgentSkillEndpoints(app) {
         console.error("Gmail status error:", e);
         response
           .status(500)
-          .json({ success: false, error: e?.message || String(e) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );
@@ -68,7 +68,7 @@ function googleAgentSkillEndpoints(app) {
         console.error("Google Calendar status error:", e);
         response
           .status(500)
-          .json({ success: false, error: e?.message || String(e) });
+          .json({ success: false, error: "Internal server error." });
       }
     },
   );

@@ -467,7 +467,7 @@ function apiWorkspaceThreadEndpoints(app) {
           textResponse: null,
           sources: [],
           close: true,
-          error: e?.message || String(e),
+          error: "Internal server error.",
         });
       }
     },
@@ -650,7 +650,7 @@ function apiWorkspaceThreadEndpoints(app) {
           textResponse: null,
           sources: [],
           close: true,
-          error: e?.message || String(e),
+          error: "Internal server error.",
         });
         response.end();
       }

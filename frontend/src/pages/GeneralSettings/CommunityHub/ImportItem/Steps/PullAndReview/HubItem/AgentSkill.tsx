@@ -61,7 +61,7 @@ export default function AgentSkill({
   }
 
   useEffect(() => {
-    setEventDelegatorForCodeSnippets();
+    return setEventDelegatorForCodeSnippets();
   }, []);
 
   return (

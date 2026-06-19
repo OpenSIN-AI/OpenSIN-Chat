@@ -368,7 +368,7 @@ function systemEndpoints(app) {
 
           await Telemetry.sendTelemetry(
             "login_event",
-            { multiUserMode: false },
+            { multiUserMode: true },
             existingUser?.id,
           );
 
@@ -616,7 +616,7 @@ function systemEndpoints(app) {
         console.error("Error resetting password:", error);
         response
           .status(500)
-          .json({ success: false, message: error?.message || String(error) });
+          .json({ success: false, message: "Internal server error" });
       }
     },
   );
@@ -1980,7 +1980,7 @@ function systemEndpoints(app) {
         console.error("Error updating system prompt variable:", error);
         response.status(500).json({
           success: false,
-          error: `Failed to update system prompt variable: ${error.message}`,
+          error: "Failed to update system prompt variable.",
         });
       }
     },
@@ -2009,7 +2009,7 @@ function systemEndpoints(app) {
         console.error("Error deleting system prompt variable:", error);
         response.status(500).json({
           success: false,
-          error: `Failed to delete system prompt variable: ${error.message}`,
+          error: "Failed to delete system prompt variable.",
         });
       }
     },
@@ -2047,7 +2047,7 @@ function systemEndpoints(app) {
         console.error("STT transcription error:", error);
         return response.status(500).json({
           success: false,
-          error: error.message || "Transcription failed",
+          error: "Transcription failed.",
         });
       }
     },

@@ -2,12 +2,22 @@
 const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
+const os = require("os");
+
+// Isolate this test's comkey storage from other Jest workers AND concurrent
+// `yarn test` shells. Without an isolated base, parallel workers race on the
+// same <repo>/server/storage/comkey directory and one worker's afterAll wipe
+// can steal another worker's keys mid-suite (ENOENT on ipc-{priv,pub}.pem).
+// mkdtempSync guarantees a unique fresh base directory per process.
+process.env.STORAGE_DIR = fs.mkdtempSync(
+  path.join(os.tmpdir(), "opensin-comkey-"),
+);
 
 const { getStoragePath } = require("../../../utils/paths");
 
-// The module is at server/utils/comKey/index.js
-// getStoragePath("comkey") resolves to <repo>/server/storage/comkey in dev.
-// We need to ensure that directory exists before the module is required.
+// Real storage path = <STORAGE_DIR>/comkey — same path comKey/index.js
+// resolves via getStoragePath("comkey"). We ensure it exists, freshly
+// empty, before requiring comKey so #generate() writes into the same dir.
 const realStoragePath = getStoragePath("comkey");
 if (fs.existsSync(realStoragePath)) {
   fs.rmSync(realStoragePath, { recursive: true, force: true });

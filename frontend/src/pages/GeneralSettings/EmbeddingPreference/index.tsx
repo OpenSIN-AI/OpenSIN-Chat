@@ -158,10 +158,12 @@ export default function GeneralEmbeddingPreference() {
   }
 
   const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e?.preventDefault();
+    const form = (e?.target ??
+      document.getElementById("embedding-form")) as HTMLFormElement;
     if (
       (selectedEmbedder !== settings?.EmbeddingEngine ||
-        embedderModelChanged(e.target as HTMLFormElement)) &&
+        embedderModelChanged(form)) &&
       hasChanges &&
       (hasEmbeddings || hasCachedEmbeddings)
     ) {

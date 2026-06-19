@@ -695,6 +695,11 @@ function workspaceEndpoints(app) {
     async (request, response) => {
       try {
         const { startingId } = reqBody(request);
+        if (!startingId || isNaN(Number(startingId))) {
+          return response
+            .status(400)
+            .json({ success: false, error: "startingId is required." });
+        }
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
 
@@ -1042,6 +1047,7 @@ function workspaceEndpoints(app) {
         const workspaceRecord = await Workspace.get({
           slug,
         });
+        if (!workspaceRecord) return response.sendStatus(404);
         const oldPfpFilename = workspaceRecord.pfpFilename;
 
         if (oldPfpFilename) {

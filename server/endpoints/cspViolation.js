@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 const crypto = require("node:crypto");
 const express = require("express");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 
 function cspViolationEndpoint(app) {
   if (!app) return;
@@ -15,7 +16,17 @@ function cspViolationEndpoint(app) {
     limit: "32kb",
   });
 
-  app.post("/csp-violation", reportParser, async (request, response) => {
+  app.post(
+    "/csp-violation",
+    [
+      simpleRateLimit({
+        bucket: "csp-violation",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+      reportParser,
+    ],
+    async (request, response) => {
     const id = crypto.randomUUID();
     const raw = request.body;
     let body = {};

@@ -76,10 +76,11 @@ export default function SpeechToTextProvider({
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e?.preventDefault();
     setSaving(true);
     try {
-      const form = e.currentTarget;
+      const form = (e?.currentTarget ??
+        document.getElementById("stt-form")) as HTMLFormElement;
       const data: any = { SpeechToTextProvider: selectedProvider };
       const formData = new FormData(form);
 
@@ -127,7 +128,7 @@ export default function SpeechToTextProvider({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full">
+    <form id="stt-form" onSubmit={handleSubmit} className="flex w-full">
       <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
         <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
           <div className="flex gap-x-4 items-center">

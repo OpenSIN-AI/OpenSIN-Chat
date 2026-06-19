@@ -80,9 +80,10 @@ function FileUploadProgressComponent({
         onUploadError(message);
         setError(message);
       } finally {
-        if (!mountedRef.current) return;
-        setLoading(false);
-        setLoadingMessage("");
+        if (mountedRef.current) {
+          setLoading(false);
+          setLoadingMessage("");
+        }
       }
 
       // Begin fadeout timer to clear uploader queue.
