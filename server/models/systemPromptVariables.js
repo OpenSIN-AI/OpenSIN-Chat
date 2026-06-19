@@ -244,7 +244,7 @@ const SystemPromptVariables = {
       // Find all variable patterns in the string
       const matches = str.match(/\{([^}]+)\}/g) || [];
 
-        // Process each match
+      // Process each match
       for (const match of matches) {
         const key = match.substring(1, match.length - 1); // Remove { and }
 
@@ -305,7 +305,9 @@ const SystemPromptVariables = {
             }
           } else {
             // If the variable is not a function, replace the match with the variable value
-            result = result.split(match).join(`[${variableTypeDisplay} ${prop}]`);
+            result = result
+              .split(match)
+              .join(`[${variableTypeDisplay} ${prop}]`);
           }
           continue;
         }

@@ -217,11 +217,15 @@ app.get("/accepts", function (_, response) {
   response.status(200).json(ACCEPTED_MIMES);
 });
 
+app.get("/health", function (_, response) {
+  response.status(200).json({ status: "ok", port: COLLECTOR_PORT });
+});
+
 app.all("{*path}", function (_, response) {
   response.sendStatus(200);
 });
 
-app
+const server = app
   .listen(COLLECTOR_PORT, async () => {
     await wipeCollectorStorage();
     // eslint-disable-next-line no-console
@@ -232,3 +236,21 @@ app
     console.error("Failed to start collector server:", err.message);
     process.exit(1);
   });
+
+function gracefulShutdown(signal) {
+  // eslint-disable-next-line no-console
+  console.log(`[collector] Received ${signal}, shutting down gracefully…`);
+  server.close(() => {
+    // eslint-disable-next-line no-console
+    console.log("[collector] HTTP server closed. Exiting.");
+    process.exit(0);
+  });
+  setTimeout(() => {
+    // eslint-disable-next-line no-console
+    console.warn("[collector] Forced shutdown after 10s timeout.");
+    process.exit(1);
+  }, 10_000);
+}
+
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+process.on("SIGINT", () => gracefulShutdown("SIGINT"));

@@ -9,13 +9,8 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("@phosphor-icons/react", () => ({
-  DotsThree: ({ size, weight }) => (
-    <span data-testid="dots-three" data-size={size} data-weight={weight}>
-      ⋮
-    </span>
-  ),
-}));
+vi.mock("@phosphor-icons/react/dist/csr/Plus", () => ({ default: (props) => <svg data-testid="phosphor-plus-icon" {...props} />, Plus: (props) => <svg data-testid="phosphor-plus-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/DotsThree", () => ({ default: (props) => <svg data-testid="dots-three" {...props} />, DotsThree: (props) => <svg data-testid="dots-three" {...props} /> }));;
 
 describe("SlashCommandRow", () => {
   const onClick = vi.fn();

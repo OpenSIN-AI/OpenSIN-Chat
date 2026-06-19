@@ -33,13 +33,19 @@ const RECENT_FILE_GRACE_MS = Number(
 
         // Skip files/folders that don't match our naming pattern and add to deletion list
         if (!filename.match(/^[a-z]+-[a-f0-9-]{36}(\.\w+)?$/i)) {
-          filesToDelete.push({ path: fullPath, isDirectory: stat.isDirectory() });
+          filesToDelete.push({
+            path: fullPath,
+            isDirectory: stat.isDirectory(),
+          });
           continue;
         }
 
         // If file/folder is not referenced in any active chat, add to deletion list
         if (!activeFileRefs.has(filename))
-          filesToDelete.push({ path: fullPath, isDirectory: stat.isDirectory() });
+          filesToDelete.push({
+            path: fullPath,
+            isDirectory: stat.isDirectory(),
+          });
       } catch (statErr) {
         // File was deleted between readdirSync and statSync — skip it.
         // This is a normal race condition and must not abort the entire cleanup.

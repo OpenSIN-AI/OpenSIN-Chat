@@ -342,10 +342,12 @@ function workspaceThreadEndpoints(app) {
     async (request, response) => {
       try {
         const { folderId } = request.params;
+        const workspace = response.locals.workspace;
         const data = reqBody(request);
         const { folder, message } = await WorkspaceThreadFolder.update(
           folderId,
           data,
+          workspace.id,
         );
         response.status(200).json({ folder, message });
       } catch (e) {
@@ -361,7 +363,11 @@ function workspaceThreadEndpoints(app) {
     async (request, response) => {
       try {
         const { folderId } = request.params;
-        const success = await WorkspaceThreadFolder.delete(folderId);
+        const workspace = response.locals.workspace;
+        const success = await WorkspaceThreadFolder.delete(
+          folderId,
+          workspace.id,
+        );
         if (!success) return response.sendStatus(500);
         response.sendStatus(200);
       } catch (e) {

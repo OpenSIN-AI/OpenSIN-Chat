@@ -35,20 +35,18 @@ i18n.use(initReactI18next).init({
   },
 });
 
-vi.mock("@phosphor-icons/react", () => ({
-  X: () => null,
-  ArrowSquareOut: () => null,
-  DownloadSimple: () => null,
-  Bookmark: () => null,
-  CaretDown: () => null,
-  FilePdf: () => null,
-  FileText: () => null,
-  Table: () => null,
-  ChartLineUp: () => null,
-  Image: () => null,
-  DotsThree: () => null,
-  Eye: () => null,
-}));
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="phosphor-x-icon" {...props} />, X: (props) => <svg data-testid="phosphor-x-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/ArrowSquareOut", () => ({ default: (props) => <svg data-testid="phosphor-arrowsquareout-icon" {...props} />, ArrowSquareOut: (props) => <svg data-testid="phosphor-arrowsquareout-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/DownloadSimple", () => ({ default: (props) => <svg data-testid="phosphor-downloadsimple-icon" {...props} />, DownloadSimple: (props) => <svg data-testid="phosphor-downloadsimple-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Bookmark", () => ({ default: (props) => <svg data-testid="phosphor-bookmark-icon" {...props} />, Bookmark: (props) => <svg data-testid="phosphor-bookmark-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/CaretDown", () => ({ default: (props) => <svg data-testid="phosphor-caretdown-icon" {...props} />, CaretDown: (props) => <svg data-testid="phosphor-caretdown-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/FilePdf", () => ({ default: (props) => <svg data-testid="phosphor-filepdf-icon" {...props} />, FilePdf: (props) => <svg data-testid="phosphor-filepdf-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/FileText", () => ({ default: (props) => <svg data-testid="phosphor-filetext-icon" {...props} />, FileText: (props) => <svg data-testid="phosphor-filetext-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Table", () => ({ default: (props) => <svg data-testid="phosphor-table-icon" {...props} />, Table: (props) => <svg data-testid="phosphor-table-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/ChartLineUp", () => ({ default: (props) => <svg data-testid="phosphor-chartlineup-icon" {...props} />, ChartLineUp: (props) => <svg data-testid="phosphor-chartlineup-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Image", () => ({ default: (props) => <svg data-testid="phosphor-image-icon" {...props} />, Image: (props) => <svg data-testid="phosphor-image-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/DotsThree", () => ({ default: (props) => <svg data-testid="phosphor-dotsthree-icon" {...props} />, DotsThree: (props) => <svg data-testid="phosphor-dotsthree-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Eye", () => ({ default: (props) => <svg data-testid="phosphor-eye-icon" {...props} />, Eye: (props) => <svg data-testid="phosphor-eye-icon" {...props} /> }));;
 
 vi.mock("@/utils/chat/purify", () => ({ default: { sanitize: (s) => s } }));
 vi.mock("@/utils/request", () => ({

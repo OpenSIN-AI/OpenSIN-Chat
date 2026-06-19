@@ -36,9 +36,7 @@ vi.mock("@/components/lib/Toggle", () => ({
   ),
 }));
 
-vi.mock("@phosphor-icons/react", () => ({
-  Image: () => null,
-}));
+;
 
 import useSystemSettings from "@/hooks/useSystemSettings";
 

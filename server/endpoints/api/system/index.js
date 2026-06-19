@@ -201,7 +201,10 @@ function apiSystemEndpoints(app) {
         await EventLogs.logEvent("exported_chats", {
           type,
         });
-        const safeType = String(type).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 20) || "jsonl";
+        const safeType =
+          String(type)
+            .replace(/[^a-zA-Z0-9_-]/g, "")
+            .slice(0, 20) || "jsonl";
         const ext = safeType === "jsonAlpaca" ? "json" : safeType;
         response.setHeader("Content-Type", contentType);
         response.setHeader(

@@ -117,6 +117,7 @@ ALLOWED_FILES=(
   #    Downloads Chromium for ARM from webassets.anythingllm.com (upstream
   #    prebuilt binary). The URL is a factual dependency, not brand promotion.
   "docker/Dockerfile"
+  "cloud-deployments/openshift/Dockerfile"   # same upstream Chromium ARM download as docker/Dockerfile
 
   # ── Architectural decision records ────────────────────
   #    docs/adr/*.md reference the upstream AnythingLLM codebase + issues
@@ -186,7 +187,7 @@ ALLOWED_FILES=(
 )
 
 # Build ripgrep exclude-from-file
-EXCLUDE_FILE="$(mktemp -t openafd-branding-XXXXXX)"
+EXCLUDE_FILE="$(mktemp -t opensin-branding-XXXXXX)"
 trap 'rm -f "$EXCLUDE_FILE"' EXIT
 {
   for f in "${ALLOWED_FILES[@]}"; do

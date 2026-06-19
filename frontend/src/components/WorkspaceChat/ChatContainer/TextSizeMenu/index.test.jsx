@@ -18,17 +18,7 @@ vi.mock("react-device-detect", () => ({
   },
 }));
 
-vi.mock("@phosphor-icons/react", () => ({
-  SlidersHorizontal: ({ size, className }) => (
-    <span
-      data-testid="sliders-icon"
-      className={className}
-      style={{ fontSize: size }}
-    >
-      Sliders
-    </span>
-  ),
-}));
+vi.mock("@phosphor-icons/react/dist/csr/SlidersHorizontal", () => ({ default: (props) => <svg data-testid="sliders-icon" {...props} />, SlidersHorizontal: (props) => <svg data-testid="sliders-icon" {...props} /> }));;
 
 describe("TextSizeMenu", () => {
   beforeEach(() => {

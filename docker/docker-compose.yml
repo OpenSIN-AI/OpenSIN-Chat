@@ -48,6 +48,11 @@ services:
       - opensin-chat
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
     deploy:
       resources:
         limits:
@@ -68,6 +73,11 @@ services:
     restart: unless-stopped
     networks:
       - opensin-chat
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
     deploy:
       resources:
         limits:

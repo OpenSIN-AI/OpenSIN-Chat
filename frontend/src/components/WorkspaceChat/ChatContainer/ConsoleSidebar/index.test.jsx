@@ -22,12 +22,10 @@ vi.mock("../ChatSidebar", () => ({
   useConsoleSidebar: () => mockUseConsoleSidebar(),
 }));
 
-vi.mock("@phosphor-icons/react", () => ({
-  X: (props) => <svg data-testid="x-icon" {...props} />,
-  Terminal: (props) => <svg data-testid="terminal-icon" {...props} />,
-  Bug: (props) => <svg data-testid="bug-icon" {...props} />,
-  Trash: (props) => <svg data-testid="trash-icon" {...props} />,
-}));
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="x-icon" {...props} />, X: (props) => <svg data-testid="x-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Terminal", () => ({ default: (props) => <svg data-testid="terminal-icon" {...props} />, Terminal: (props) => <svg data-testid="terminal-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Bug", () => ({ default: (props) => <svg data-testid="bug-icon" {...props} />, Bug: (props) => <svg data-testid="bug-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Trash", () => ({ default: (props) => <svg data-testid="trash-icon" {...props} />, Trash: (props) => <svg data-testid="trash-icon" {...props} /> }));;
 
 describe("ConsoleSidebar", () => {
   beforeEach(() => {

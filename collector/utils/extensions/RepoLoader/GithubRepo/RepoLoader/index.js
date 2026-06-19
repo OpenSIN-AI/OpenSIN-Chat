@@ -23,10 +23,15 @@ class GitHubRepoLoader {
     this.branch = args?.branch;
     this.accessToken = args?.accessToken || null;
     this.ignorePaths = args?.ignorePaths || [];
+    this.maxRetries = 3;
 
     this.author = null;
     this.project = null;
     this.branches = [];
+  }
+
+  #wait(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   /**
@@ -215,34 +220,51 @@ class GitHubRepoLoader {
       console.log(`Fetching page ${page} of branches for ${this.project}`);
       const branchAbort = new AbortController();
       const branchTimeout = setTimeout(() => branchAbort.abort(), 10_000);
-      await fetch(
-        `https://api.github.com/repos/${this.author}/${this.project}/branches?per_page=100&page=${page}`,
-        {
-          method: "GET",
-          headers: {
-            ...(this.accessToken
-              ? { Authorization: `Bearer ${this.accessToken}` }
-              : {}),
-            "X-GitHub-Api-Version": "2022-11-28",
-          },
-          signal: branchAbort.signal,
-        }
-      )
-        .then((res) => {
-          if (res.ok) return res.json();
-          throw new Error(`Invalid request to Github API: ${res.statusText}`);
-        })
-        .then((branchObjects) => {
+      let retries = 0;
+      let success = false;
+      while (!success && retries <= this.maxRetries) {
+        try {
+          const res = await fetch(
+            `https://api.github.com/repos/${this.author}/${this.project}/branches?per_page=100&page=${page}`,
+            {
+              method: "GET",
+              headers: {
+                ...(this.accessToken
+                  ? { Authorization: `Bearer ${this.accessToken}` }
+                  : {}),
+                "X-GitHub-Api-Version": "2022-11-28",
+              },
+              signal: branchAbort.signal,
+            }
+          );
+
+          if (res.status === 429 && retries < this.maxRetries) {
+            const retryAfter = Number(res.headers.get("retry-after")) || 60;
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[GitHub Loader]: Rate limit (429) for branches page ${page}. Waiting ${retryAfter}s…`
+            );
+            clearTimeout(branchTimeout);
+            await this.#wait(retryAfter * 1000);
+            retries++;
+            continue;
+          }
+
+          if (!res.ok) throw new Error(`Invalid request to Github API: ${res.statusText}`);
+
+          const branchObjects = await res.json();
           polling = branchObjects.length > 0;
           branches.push(branchObjects.map((branch) => branch.name));
           page++;
-        })
-        .catch((err) => {
+          success = true;
+        } catch (err) {
           polling = false;
           // eslint-disable-next-line no-console
           console.error(`RepoLoader.branches`, err);
-        })
-        .finally(() => clearTimeout(branchTimeout));
+          break;
+        }
+      }
+      clearTimeout(branchTimeout);
     }
 
     this.branches = [...new Set(branches.flat())];
@@ -254,11 +276,11 @@ class GitHubRepoLoader {
    * @param {string} sourceFilePath - The path to the file in the repository.
    * @returns {Promise<string|null>} The content of the file, or null if fetching fails.
    */
-  async fetchSingleFile(sourceFilePath) {
+  async fetchSingleFile(sourceFilePath, retries = 0) {
     const fileAbort = new AbortController();
     const fileTimeout = setTimeout(() => fileAbort.abort(), 15_000);
     try {
-      return await fetch(
+      const res = await fetch(
         `https://api.github.com/repos/${this.author}/${this.project}/contents/${sourceFilePath}?ref=${this.branch}`,
         {
           method: "GET",
@@ -271,16 +293,25 @@ class GitHubRepoLoader {
           },
           signal: fileAbort.signal,
         }
-      )
-        .then((res) => {
-          if (res.ok) return res.json();
-          throw new Error(`Failed to fetch from Github API: ${res.statusText}`);
-        })
-        .then((json) => {
-          if (json.hasOwnProperty("status") || !json.hasOwnProperty("content"))
-            throw new Error(json?.message || "missing content");
-          return atob(json.content);
-        });
+      );
+
+      if (res.status === 429 && retries < this.maxRetries) {
+        const retryAfter = Number(res.headers.get("retry-after")) || 60;
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[GitHub Loader]: Rate limit (429) for ${sourceFilePath}. Waiting ${retryAfter}s…`
+        );
+        clearTimeout(fileTimeout);
+        await this.#wait(retryAfter * 1000);
+        return this.fetchSingleFile(sourceFilePath, retries + 1);
+      }
+
+      if (!res.ok) throw new Error(`Failed to fetch from Github API: ${res.statusText}`);
+
+      const json = await res.json();
+      if (json.hasOwnProperty("status") || !json.hasOwnProperty("content"))
+        throw new Error(json?.message || "missing content");
+      return atob(json.content);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(`RepoLoader.fetchSingleFile`, e);

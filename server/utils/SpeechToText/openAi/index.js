@@ -28,7 +28,9 @@ class OpenAiSTT {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(`OpenAiSTT:transcribe failed: ${e?.message || e}`);
-      throw new Error(`OpenAI transcription failed: ${e?.message || "Unknown error"}`);
+      throw new Error(
+        `OpenAI transcription failed: ${e?.message || "Unknown error"}`,
+      );
     }
   }
 }

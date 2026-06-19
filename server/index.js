@@ -25,7 +25,10 @@ const BackgroundQueue = require("./utils/backgroundJobs/queue");
 
 // Memory hygiene runs on boot and every 1 hour (stuck-job detection, orphan
 // detection, stale-job cleanup, upload/checkpoint/report retention).
-const { startRetentionSchedule, stopRetentionSchedule } = require("./utils/pdfAnalysis/retention");
+const {
+  startRetentionSchedule,
+  stopRetentionSchedule,
+} = require("./utils/pdfAnalysis/retention");
 startRetentionSchedule();
 
 // Terminate OCR workers cleanly on process exit.

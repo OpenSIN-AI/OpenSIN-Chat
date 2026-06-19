@@ -35,12 +35,26 @@ const WorkspaceThreadFolder = {
     }
   },
 
-  update: async function (folderId, data = {}) {
+  update: async function (folderId, data = {}, workspaceId = null) {
     const allowed = {};
     if (data.name?.trim()) allowed.name = data.name.trim();
     if (!Object.keys(allowed).length)
       return { folder: null, message: "Nothing to update." };
     try {
+      // When workspaceId is provided, verify the folder belongs to that
+      // workspace before updating to prevent cross-workspace modification.
+      if (workspaceId !== null) {
+        const existing = await prisma.workspace_thread_folders.findFirst({
+          where: { id: Number(folderId), workspace_id: Number(workspaceId) },
+          select: { id: true },
+        });
+        if (!existing)
+          return {
+            folder: null,
+            message: "Folder not found in this workspace.",
+          };
+      }
+
       const folder = await prisma.workspace_thread_folders.update({
         where: { id: Number(folderId) },
         data: { ...allowed, lastUpdatedAt: new Date() },
@@ -52,8 +66,23 @@ const WorkspaceThreadFolder = {
     }
   },
 
-  delete: async function (folderId) {
+  delete: async function (folderId, workspaceId = null) {
     try {
+      // When workspaceId is provided, verify the folder belongs to that
+      // workspace before deleting to prevent cross-workspace deletion.
+      if (workspaceId !== null) {
+        const existing = await prisma.workspace_thread_folders.findFirst({
+          where: { id: Number(folderId), workspace_id: Number(workspaceId) },
+          select: { id: true },
+        });
+        if (!existing) {
+          console.error(
+            "WorkspaceThreadFolder.delete: folder does not belong to workspace",
+          );
+          return false;
+        }
+      }
+
       await prisma.$transaction([
         prisma.workspace_threads.updateMany({
           where: { folder_id: Number(folderId) },
@@ -72,6 +101,30 @@ const WorkspaceThreadFolder = {
 
   assignThread: async function (threadId, folderId = null) {
     try {
+      // Unassigning (folderId = null) is always safe.
+      if (folderId) {
+        // Verify the folder belongs to the same workspace as the thread
+        // to prevent cross-workspace assignment.
+        const thread = await prisma.workspace_threads.findFirst({
+          where: { id: Number(threadId) },
+          select: { workspace_id: true },
+        });
+        if (!thread) return false;
+
+        const folder = await prisma.workspace_thread_folders.findFirst({
+          where: { id: Number(folderId) },
+          select: { workspace_id: true },
+        });
+        if (!folder) return false;
+
+        if (thread.workspace_id !== folder.workspace_id) {
+          console.error(
+            "WorkspaceThreadFolder.assignThread: thread and folder belong to different workspaces",
+          );
+          return false;
+        }
+      }
+
       await prisma.workspace_threads.update({
         where: { id: Number(threadId) },
         data: { folder_id: folderId ? Number(folderId) : null },

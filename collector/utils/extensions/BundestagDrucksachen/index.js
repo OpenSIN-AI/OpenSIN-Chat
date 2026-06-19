@@ -38,6 +38,8 @@ const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
 // Setze den Key in der .env als BUNDESTAG_DIP_API_KEY, oder übergebe ihn
 // per `apiKey`-Parameter an die jeweilige Funktion.
 const DIP_API_KEY = process.env.BUNDESTAG_DIP_API_KEY || null;
+const DIP_MAX_RETRIES = 3;
+const DIP_MAX_PAGES = 100;
 
 /**
  * DIP-Aktivitäts-IDs, die wir unterstützen:
@@ -104,7 +106,7 @@ function buildDIPUrl(params = {}) {
  * @param {string} [apiKey] - optional, sonst process.env.BUNDESTAG_DIP_API_KEY
  * @returns {Promise<object>}
  */
-async function dipFetch(url, apiKey) {
+async function dipFetch(url, apiKey, retries = 0) {
   const key = apiKey || DIP_API_KEY;
   if (!key) {
     throw new Error(
@@ -123,6 +125,17 @@ async function dipFetch(url, apiKey) {
     },
     signal: abortController.signal,
   }).finally(() => clearTimeout(timeout));
+
+  if (res.status === 429 && retries < DIP_MAX_RETRIES) {
+    const retryAfter = Number(res.headers.get("retry-after")) || 60;
+    // eslint-disable-next-line no-console
+    console.warn(
+      `DIP-API rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${retries + 1}/${DIP_MAX_RETRIES}…`
+    );
+    await new Promise((r) => setTimeout(r, retryAfter * 1000));
+    return dipFetch(url, apiKey, retries + 1);
+  }
+
   if (!res.ok) {
     const body = await res.text().catch(() => "");
     throw new Error(
@@ -261,25 +274,54 @@ async function bundestagSearch(params = {}) {
     throw new Error("bundestagSearch: 'q' parameter required");
   }
   const { q, wahlperiode, limit = 20, endpoint = "search" } = params;
-  const url = buildDIPUrl({ endpoint, q, wahlperiode, limit });
   const outFolder = path.resolve(
     documentsFolder,
     `bundestag-search-${slugify(q).slice(0, 30)}-${v4().slice(0, 4)}`
   );
   if (!fs.existsSync(outFolder)) fs.mkdirSync(outFolder, { recursive: true });
 
-  const data = await dipFetch(url, params.apiKey);
-  const docs = Array.isArray(data.documents) ? data.documents : [];
-  if (!docs.length) {
+  const allDocs = [];
+  let cursor = null;
+  let pagesFetched = 0;
+  const perPage = Math.min(Math.max(limit, 1), 100);
+
+  do {
+    const url = buildDIPUrl({ endpoint, q, wahlperiode, limit: perPage, cursor });
+    const data = await dipFetch(url, params.apiKey);
+    const docs = Array.isArray(data.documents) ? data.documents : [];
+    if (!docs.length) {
+      if (pagesFetched === 0) {
+        // eslint-disable-next-line no-console
+        console.warn(`bundestagSearch: DIP-API lieferte 0 Treffer für "${q}"`);
+      }
+      break;
+    }
+
     // eslint-disable-next-line no-console
-    console.warn(`bundestagSearch: DIP-API lieferte 0 Treffer für "${q}"`);
-    return [];
-  }
+    console.log(
+      `bundestagSearch: Seite ${pagesFetched + 1} — ${docs.length} Treffer (gesamt: ${allDocs.length + docs.length})`
+    );
+
+    for (const d of docs) {
+      try {
+        allDocs.push(persistDIPDocument(d, outFolder));
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(`bundestagSearch: Fehler beim Persistieren eines Dokuments:`, err.message);
+      }
+    }
+
+    if (allDocs.length >= limit) break;
+
+    cursor = data.cursor || null;
+    pagesFetched++;
+  } while (cursor && pagesFetched < DIP_MAX_PAGES);
+
   // eslint-disable-next-line no-console
   console.log(
-    `bundestagSearch: ${docs.length} Treffer für "${q}" — Importiere…`
+    `bundestagSearch: ${allDocs.length} Treffer für "${q}" importiert (${pagesFetched} Seiten).`
   );
-  return docs.map((d) => persistDIPDocument(d, outFolder));
+  return allDocs;
 }
 
 /**

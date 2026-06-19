@@ -1,4 +1,4 @@
-# How to use Dockerized Anything LLM
+# How to use Dockerized OpenSIN Chat
 
 Use the Dockerized version of OpenSIN Chat for a much faster and complete startup of OpenSIN Chat.
 
@@ -38,7 +38,7 @@ Use the Dockerized version of OpenSIN Chat for a much faster and complete startu
 Pull in the latest image from docker. Supports both `amd64` and `arm64` CPU architectures.
 
 ```shell
-docker pull openafd/openafd
+docker pull ghcr.io/opensin-ai/opensin-chat
 ```
 
 <table>
@@ -52,7 +52,7 @@ docker pull openafd/openafd
 <td>
 
 ```shell
-export STORAGE_LOCATION=$HOME/openafd && \
+export STORAGE_LOCATION=$HOME/opensin-chat && \
 mkdir -p $STORAGE_LOCATION && \
 touch "$STORAGE_LOCATION/.env" && \
 docker run -d --rm -p 3001:3001 \
@@ -60,7 +60,7 @@ docker run -d --rm -p 3001:3001 \
 -v ${STORAGE_LOCATION}:/app/server/storage \
 -v ${STORAGE_LOCATION}/.env:/app/server/.env \
 -e STORAGE_DIR="/app/server/storage" \
-openafd/openafd
+ghcr.io/opensin-ai/opensin-chat
 ```
 
 </td>
@@ -73,7 +73,7 @@ openafd/openafd
 
 ```powershell
 # Run this in powershell terminal
-$env:STORAGE_LOCATION="$HOME\Documents\openafd"; `
+$env:STORAGE_LOCATION="$HOME\Documents\opensin-chat"; `
 If(!(Test-Path $env:STORAGE_LOCATION)) {New-Item $env:STORAGE_LOCATION -ItemType Directory}; `
 If(!(Test-Path "$env:STORAGE_LOCATION\.env")) {New-Item "$env:STORAGE_LOCATION\.env" -ItemType File}; `
 docker run -d --rm -p 3001:3001 `
@@ -81,7 +81,7 @@ docker run -d --rm -p 3001:3001 `
 -v "$env:STORAGE_LOCATION`:/app/server/storage" `
 -v "$env:STORAGE_LOCATION\.env:/app/server/.env" `
 -e STORAGE_DIR="/app/server/storage" `
-openafd/openafd;
+ghcr.io/opensin-ai/opensin-chat;
 ```
 
 </td>
@@ -94,9 +94,9 @@ openafd/openafd;
 ```yaml
 version: '3.8'
 services:
-  openafd:
-    image: openafd/openafd
-    container_name: openafd
+  opensin-chat:
+    image: ghcr.io/opensin-ai/opensin-chat
+    container_name: opensin-chat
     ports:
     - "3001:3001"
     cap_add:
@@ -120,11 +120,11 @@ services:
       # Add any other keys here for services or settings
       # you can find in the docker/.env.example file
     volumes:
-      - openafd_storage:/app/server/storage
+      - opensin_chat_storage:/app/server/storage
     restart: always
 
 volumes:
-  openafd_storage:
+  opensin_chat_storage:
     driver: local
     driver_opts:
       type: none
@@ -150,7 +150,7 @@ container rebuilds or pulls from Docker Hub.
 ## Build locally from source _not recommended for casual use_
 
 - `git clone` this repo and `cd opensin-chat` to get to the root directory.
-- `touch server/storage/openafd.db` to create empty SQLite DB file.
+- `touch server/storage/opensin-chat.db` to create empty SQLite DB file.
 - `cd docker/`
 - `cp .env.example .env` **you must do this before building**
 - `docker-compose up -d --build` to build the image - this will take a few moments.

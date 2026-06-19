@@ -33,11 +33,9 @@ vi.mock("../MemoriesSidebar/MemoriesContext", () => ({
 }));
 
 // SidebarTabs uses phosphor icons; render placeholders to keep DOM small
-vi.mock("@phosphor-icons/react", () => ({
-  FileText: () => <span data-testid="icon-sources" />,
-  FolderOpen: () => <span data-testid="icon-workspace" />,
-  BookOpen: () => <span data-testid="icon-global" />,
-}));
+vi.mock("@phosphor-icons/react/dist/csr/BookOpen", () => ({ default: (props) => <svg data-testid="icon-global" {...props} />, BookOpen: (props) => <svg data-testid="icon-global" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/FileText", () => ({ default: (props) => <svg data-testid="icon-sources" {...props} />, FileText: (props) => <svg data-testid="icon-sources" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/FolderOpen", () => ({ default: (props) => <svg data-testid="icon-workspace" {...props} />, FolderOpen: (props) => <svg data-testid="icon-workspace" {...props} /> }));;
 
 import SidebarTabs from "./SidebarTabs";
 

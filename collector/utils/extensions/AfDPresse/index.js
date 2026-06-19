@@ -33,13 +33,15 @@ const fs = require("fs");
 
 // Standard-URL für AfD-Pressemitteilungen
 const AFD_PRESS_BASE = "https://www.afd.de/presse/pressemitteilungen/";
+const AFD_MAX_RETRIES = 3;
 
 /**
  * HTTP-Fetch mit angepasstem User-Agent (kein Bot-Blocker).
  * @param {string} url
+ * @param {number} [retries=0]
  * @returns {Promise<string>} - HTML-Text
  */
-async function fetchHtml(url) {
+async function fetchHtml(url, retries = 0) {
   const abortController = new AbortController();
   const timeout = setTimeout(() => abortController.abort(), 15_000);
   try {
@@ -52,6 +54,16 @@ async function fetchHtml(url) {
       },
       signal: abortController.signal,
     });
+    if (res.status === 429 && retries < AFD_MAX_RETRIES) {
+      const retryAfter = Number(res.headers.get("retry-after")) || 30;
+      // eslint-disable-next-line no-console
+      console.warn(
+        `afd.de rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${retries + 1}/${AFD_MAX_RETRIES}…`
+      );
+      clearTimeout(timeout);
+      await new Promise((r) => setTimeout(r, retryAfter * 1000));
+      return fetchHtml(url, retries + 1);
+    }
     if (!res.ok) {
       const body = await res.text().catch(() => "");
       throw new Error(

@@ -7,6 +7,7 @@ const path = require("path");
 
 const MAX_DOCUMENT_BYTES = 500 * 1024 * 1024;
 const MAX_PAGES = 10_000;
+const PAPERLESS_MAX_RETRIES = 3;
 
 class PaperlessNgxLoader {
   constructor({ baseUrl, apiToken }) {
@@ -35,7 +36,7 @@ class PaperlessNgxLoader {
    * @param {string} documentId
    * @returns {Promise<{tempPath: string, contentType: string}|null>}
    */
-  async downloadDocumentToTemp(documentId) {
+  async downloadDocumentToTemp(documentId, retries = 0) {
     const abortController = new AbortController();
     const timeout = setTimeout(() => abortController.abort(), 60_000);
     let response;
@@ -49,6 +50,16 @@ class PaperlessNgxLoader {
       );
     } finally {
       clearTimeout(timeout);
+    }
+
+    if (response.status === 429 && retries < PAPERLESS_MAX_RETRIES) {
+      const retryAfter = Number(response.headers.get("retry-after")) || 30;
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[PaperlessNgx] Rate limit (429) for document ${documentId}. Waiting ${retryAfter}s before retry ${retries + 1}/${PAPERLESS_MAX_RETRIES}…`
+      );
+      await new Promise((r) => setTimeout(r, retryAfter * 1000));
+      return this.downloadDocumentToTemp(documentId, retries + 1);
     }
 
     if (!response.ok)
@@ -135,21 +146,37 @@ class PaperlessNgxLoader {
         try {
           const abortController = new AbortController();
           const timeout = setTimeout(() => abortController.abort(), 30_000);
-          const data = await fetch(nextUrl, {
-            headers: {
-              "Content-Type": "application/json",
-              ...this.baseHeaders,
-            },
-            signal: abortController.signal,
-          })
+          let response;
+          try {
+            response = await fetch(nextUrl, {
+              headers: {
+                "Content-Type": "application/json",
+                ...this.baseHeaders,
+              },
+              signal: abortController.signal,
+            });
+          } finally {
+            clearTimeout(timeout);
+          }
+
+          if (response.status === 429) {
+            const retryAfter = Number(response.headers.get("retry-after")) || 30;
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[PaperlessNgx] Rate limit (429) on page ${page}. Waiting ${retryAfter}s…`
+            );
+            await new Promise((r) => setTimeout(r, retryAfter * 1000));
+            continue;
+          }
+
+          const data = await response
             .then((res) => {
               if (!res.ok)
                 throw new Error(
                   `Failed to fetch documents from Paperless-ngx: ${res.status}`
                 );
               return res.json();
-            })
-            .finally(() => clearTimeout(timeout));
+            });
 
           const validResults = Array.isArray(data.results)
             ? data.results.filter((doc) => doc?.id)

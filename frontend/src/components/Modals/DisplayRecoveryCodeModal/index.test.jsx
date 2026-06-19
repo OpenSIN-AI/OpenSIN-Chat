@@ -15,10 +15,8 @@ vi.mock("@/components/ModalWrapper", () => ({
   default: ({ children }) => <div data-testid="modal-wrapper">{children}</div>,
 }));
 
-vi.mock("@phosphor-icons/react", () => ({
-  DownloadSimple: (props) => <svg data-testid="download-icon" {...props} />,
-  Key: (props) => <svg data-testid="key-icon" {...props} />,
-}));
+vi.mock("@phosphor-icons/react/dist/csr/DownloadSimple", () => ({ default: (props) => <svg data-testid="download-icon" {...props} />, DownloadSimple: (props) => <svg data-testid="download-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Key", () => ({ default: (props) => <svg data-testid="key-icon" {...props} />, Key: (props) => <svg data-testid="key-icon" {...props} /> }));;
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");

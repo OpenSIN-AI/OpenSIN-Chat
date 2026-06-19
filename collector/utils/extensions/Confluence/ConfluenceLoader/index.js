@@ -26,6 +26,7 @@ class ConfluencePagesLoader {
     this.personalAccessToken = personalAccessToken;
     this.cloud = cloud;
     this.bypassSSL = bypassSSL;
+    this.maxRetries = 3;
     this.log("Initialized Confluence Loader");
     if (this.bypassSSL)
       this.log("!!SSL bypass is enabled!! Use at your own risk!!");
@@ -61,7 +62,7 @@ class ConfluencePagesLoader {
     }
   }
 
-  async fetchConfluenceData(url) {
+  async fetchConfluenceData(url, retries = 0) {
     const prevTlsSetting = process.env.NODE_TLS_REJECT_UNAUTHORIZED;
     try {
       const initialHeaders = {
@@ -80,6 +81,14 @@ class ConfluencePagesLoader {
         headers: initialHeaders,
         signal: abortController.signal,
       }).finally(() => clearTimeout(timeout));
+
+      if (response.status === 429 && retries < this.maxRetries) {
+        const retryAfter = Number(response.headers.get("retry-after")) || 10;
+        this.log(`Rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${retries + 1}/${this.maxRetries}…`);
+        await new Promise((r) => setTimeout(r, retryAfter * 1000));
+        return this.fetchConfluenceData(url, retries + 1);
+      }
+
       if (!response.ok) {
         throw new Error(
           `Failed to fetch ${url} from Confluence: ${response.status}`

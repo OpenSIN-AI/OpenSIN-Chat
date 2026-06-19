@@ -10,22 +10,7 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("@phosphor-icons/react", () => ({
-  CircleNotch: ({ className }) => <span className={className}>Spinner</span>,
-  FileCode: () => <span>CodeIcon</span>,
-  FileCsv: () => <span>CsvIcon</span>,
-  FileDoc: () => <span>DocIcon</span>,
-  FileHtml: () => <span>HtmlIcon</span>,
-  FileImage: () => <span>ImageIcon</span>,
-  FilePdf: () => <span>PdfIcon</span>,
-  FileText: () => <span>TextIcon</span>,
-  WarningOctagon: () => <span>Warning</span>,
-  X: ({ size }) => (
-    <span data-testid="remove-icon" data-size={size}>
-      X
-    </span>
-  ),
-}));
+;
 
 vi.mock("@/components/ImageLightbox", () => ({
   openImageLightbox: vi.fn(),

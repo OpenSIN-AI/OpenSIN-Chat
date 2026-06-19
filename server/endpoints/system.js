@@ -1437,8 +1437,14 @@ function systemEndpoints(app) {
           },
           response.locals.user?.id,
         );
-        const safeType = String(type).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 20) || "jsonl";
-        const safeChatType = String(chatType).replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 20) || "workspace";
+        const safeType =
+          String(type)
+            .replace(/[^a-zA-Z0-9_-]/g, "")
+            .slice(0, 20) || "jsonl";
+        const safeChatType =
+          String(chatType)
+            .replace(/[^a-zA-Z0-9_-]/g, "")
+            .slice(0, 20) || "workspace";
         const ext = safeType === "jsonAlpaca" ? "json" : safeType;
         response.setHeader("Content-Type", contentType);
         response.setHeader(

@@ -39,9 +39,7 @@ vi.mock("./DataConnectors", () => ({
   default: () => <div data-testid="dataconnectors-tab">DataConnectors</div>,
 }));
 
-vi.mock("@phosphor-icons/react", () => ({
-  X: (props) => <svg data-testid="x-icon" {...props} />,
-}));
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="x-icon" {...props} />, X: (props) => <svg data-testid="x-icon" {...props} /> }));;
 
 import useUser from "../../../hooks/useUser";
 import useSystemSettings from "../../../hooks/useSystemSettings";

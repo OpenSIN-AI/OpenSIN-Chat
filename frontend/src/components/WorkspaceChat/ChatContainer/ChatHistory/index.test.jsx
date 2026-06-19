@@ -10,9 +10,7 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("@phosphor-icons/react", () => ({
-  ArrowDown: () => <svg data-testid="arrow-down" />,
-}));
+vi.mock("@phosphor-icons/react/dist/csr/ArrowDown", () => ({ default: (props) => <svg data-testid="arrow-down" {...props} />, ArrowDown: (props) => <svg data-testid="arrow-down" {...props} /> }));;
 
 // ---- module mocks ----
 vi.mock("./HistoricalMessage", () => ({

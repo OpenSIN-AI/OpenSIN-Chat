@@ -57,6 +57,7 @@ class DrupalWiki {
     this.baseUrl = baseUrl;
     this.accessToken = accessToken;
     this.storagePath = this.#prepareStoragePath(baseUrl);
+    this.maxRetries = 3;
   }
 
   /**
@@ -237,13 +238,24 @@ class DrupalWiki {
     )}`;
   }
 
-  async _doFetch(url) {
+  async _doFetch(url, retries = 0) {
     const abortController = new AbortController();
     const timeout = setTimeout(() => abortController.abort(), 30_000);
     const response = await fetch(url, {
       headers: this.#getHeaders(),
       signal: abortController.signal,
     }).finally(() => clearTimeout(timeout));
+
+    if (response.status === 429 && retries < this.maxRetries) {
+      const retryAfter = Number(response.headers.get("retry-after")) || 30;
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[DrupalWiki] Rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${retries + 1}/${this.maxRetries}…`
+      );
+      await new Promise((r) => setTimeout(r, retryAfter * 1000));
+      return this._doFetch(url, retries + 1);
+    }
+
     if (!response.ok) {
       throw new Error(`Failed to fetch ${url}: ${response.status}`);
     }

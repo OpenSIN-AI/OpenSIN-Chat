@@ -7,19 +7,7 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("@phosphor-icons/react", () => ({
-  X: ({ size, "aria-hidden": ariaHidden, className }) => (
-    <svg
-      data-testid="x-icon"
-      data-size={size}
-      className={className}
-      aria-hidden={ariaHidden}
-    />
-  ),
-  CaretRight: ({ size }) => (
-    <svg data-testid="caret-right-icon" data-size={size} />
-  ),
-}));
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="x-icon" {...props} />, X: (props) => <svg data-testid="x-icon" {...props} /> }));;
 
 vi.mock("@/utils/paths", () => ({
   default: {

@@ -31,6 +31,23 @@ if [ ! -f /app/server/utils/paths.js ]; then
     exit 1
 fi
 
+# Track child PIDs for graceful shutdown
+SERVER_PID=""
+COLLECTOR_PID=""
+
+shutdown() {
+  echo "[entrypoint] Received shutdown signal, forwarding to children…"
+  [ -n "$SERVER_PID" ] && kill -TERM "$SERVER_PID" 2>/dev/null
+  [ -n "$COLLECTOR_PID" ] && kill -TERM "$COLLECTOR_PID" 2>/dev/null
+  # Give children 10s to finish, then force-kill
+  sleep 10
+  [ -n "$SERVER_PID" ] && kill -KILL "$SERVER_PID" 2>/dev/null
+  [ -n "$COLLECTOR_PID" ] && kill -KILL "$COLLECTOR_PID" 2>/dev/null
+  exit 0
+}
+
+trap shutdown SIGTERM SIGINT
+
 {
   cd /app/server/ &&
     # Disable Prisma CLI telemetry (https://www.prisma.io/docs/orm/tools/prisma-cli#how-to-opt-out-of-data-collection)
@@ -39,6 +56,8 @@ fi
     npx prisma migrate deploy --schema=./prisma/schema.prisma &&
     node /app/server/index.js
 } &
+SERVER_PID=$!
 { node /app/collector/index.js; } &
+COLLECTOR_PID=$!
 wait -n
 exit $?

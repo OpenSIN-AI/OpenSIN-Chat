@@ -20,9 +20,12 @@ const MAX_KEYFRAMES = Number(process.env.PDF_ANALYSIS_VIDEO_MAX_FRAMES || 8);
 const MAX_VIDEO_BYTES = Number(
   process.env.PDF_ANALYSIS_VIDEO_MAX_BYTES || 200 * 1024 * 1024,
 );
-const _rawSceneThreshold = process.env.PDF_ANALYSIS_VIDEO_SCENE_THRESHOLD || "0.3";
+const _rawSceneThreshold =
+  process.env.PDF_ANALYSIS_VIDEO_SCENE_THRESHOLD || "0.3";
 const SCENE_THRESHOLD =
-  !isNaN(parseFloat(_rawSceneThreshold)) && parseFloat(_rawSceneThreshold) >= 0 && parseFloat(_rawSceneThreshold) <= 1
+  !isNaN(parseFloat(_rawSceneThreshold)) &&
+  parseFloat(_rawSceneThreshold) >= 0 &&
+  parseFloat(_rawSceneThreshold) <= 1
     ? String(parseFloat(_rawSceneThreshold))
     : "0.3";
 

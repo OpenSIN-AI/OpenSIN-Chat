@@ -35,12 +35,25 @@ const WorkspaceThread = {
 
   new: async function (workspace, userId = null, data = {}) {
     try {
+      let slug = data.slug
+        ? this.slugify(data.slug, { lowercase: true })
+        : uuidv4();
+
+      // When a slug is explicitly provided, check for collision and retry
+      // with a random suffix (mirrors Workspace.new behaviour). UUID-based
+      // slugs (no data.slug) are already unique and need no check.
+      if (data.slug && slug) {
+        const existing = await this.get({ slug });
+        if (existing) {
+          const slugSeed = Math.floor(10000000 + Math.random() * 90000000);
+          slug = this.slugify(`${data.slug}-${slugSeed}`, { lowercase: true });
+        }
+      }
+
       const thread = await prisma.workspace_threads.create({
         data: {
           name: data.name ? String(data.name) : this.defaultName,
-          slug: data.slug
-            ? this.slugify(data.slug, { lowercase: true })
-            : uuidv4(),
+          slug,
           user_id: userId ? Number(userId) : null,
           workspace_id: workspace.id,
         },
@@ -95,6 +108,26 @@ const WorkspaceThread = {
 
   delete: async function (clause = {}) {
     try {
+      // workspace_chats and workspace_agent_invocations have thread_id columns
+      // with NO foreign-key relation to workspace_threads (by design — see
+      // schema comment). Prisma cascade-delete therefore cannot reach them,
+      // so we must clean them up manually to prevent orphaned rows with
+      // dangling thread_id references.
+      const threads = await prisma.workspace_threads.findMany({
+        where: clause,
+        select: { id: true },
+      });
+      const threadIds = threads.map((t) => t.id);
+
+      if (threadIds.length > 0) {
+        await prisma.workspace_chats.deleteMany({
+          where: { thread_id: { in: threadIds } },
+        });
+        await prisma.workspace_agent_invocations.deleteMany({
+          where: { thread_id: { in: threadIds } },
+        });
+      }
+
       await prisma.workspace_threads.deleteMany({
         where: clause,
       });

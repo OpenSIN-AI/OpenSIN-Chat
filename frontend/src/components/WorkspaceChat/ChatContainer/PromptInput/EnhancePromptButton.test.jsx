@@ -12,11 +12,7 @@ vi.mock("react-tooltip", () => ({
   Tooltip: ({ id }) => <div data-testid={`tooltip-${id}`} />,
 }));
 
-vi.mock("@phosphor-icons/react", () => ({
-  Sparkle: ({ weight, className }) => (
-    <svg data-weight={weight} className={className} />
-  ),
-}));
+vi.mock("@phosphor-icons/react/dist/csr/Sparkle", () => ({ default: (props) => <svg data-testid="phosphor-sparkle-icon" {...props} />, Sparkle: (props) => <svg data-testid="phosphor-sparkle-icon" {...props} /> }));;
 
 describe("EnhancePromptButton", () => {
   const setPromptInput = vi.fn();

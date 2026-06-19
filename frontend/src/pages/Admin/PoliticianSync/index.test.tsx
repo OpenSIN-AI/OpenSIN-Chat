@@ -15,13 +15,11 @@ vi.mock("react-loading-skeleton", () => ({
   default: () => <div data-testid="skeleton" />,
 }));
 
-vi.mock("@phosphor-icons/react", () => ({
-  ArrowsClockwise: () => <svg data-testid="arrows-clockwise-icon" />,
-  CheckCircle: () => <svg data-testid="check-circle-icon" />,
-  WarningCircle: () => <svg data-testid="warning-circle-icon" />,
-  XCircle: () => <svg data-testid="x-circle-icon" />,
-  TrendUp: () => <svg data-testid="trend-up-icon" />,
-}));
+vi.mock("@phosphor-icons/react/dist/csr/ArrowsClockwise", () => ({ default: (props) => <svg data-testid="arrows-clockwise-icon" {...props} />, ArrowsClockwise: (props) => <svg data-testid="arrows-clockwise-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/CheckCircle", () => ({ default: (props) => <svg data-testid="check-circle-icon" {...props} />, CheckCircle: (props) => <svg data-testid="check-circle-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/WarningCircle", () => ({ default: (props) => <svg data-testid="warning-circle-icon" {...props} />, WarningCircle: (props) => <svg data-testid="warning-circle-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/XCircle", () => ({ default: (props) => <svg data-testid="x-circle-icon" {...props} />, XCircle: (props) => <svg data-testid="x-circle-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/TrendUp", () => ({ default: (props) => <svg data-testid="trend-up-icon" {...props} />, TrendUp: (props) => <svg data-testid="trend-up-icon" {...props} /> }));;
 
 vi.mock("@/components/lib/CTAButton", () => ({
   default: ({ children, onClick }) => (

@@ -55,7 +55,10 @@ class ModelRouterService {
 
   _startSweep() {
     if (this._sweepTimer) return;
-    this._sweepTimer = setInterval(() => this._sweepExpired(), ModelRouterService.SWEEP_INTERVAL_MS);
+    this._sweepTimer = setInterval(
+      () => this._sweepExpired(),
+      ModelRouterService.SWEEP_INTERVAL_MS,
+    );
     if (this._sweepTimer.unref) this._sweepTimer.unref();
   }
 
@@ -72,7 +75,8 @@ class ModelRouterService {
       if (now - entry.cachedAt > ttl) this.llmCache.delete(key);
     }
     for (const [key, entry] of this.lastNotifiedRoute) {
-      if (now - (entry.notifiedAt || 0) > stickyTtl) this.lastNotifiedRoute.delete(key);
+      if (now - (entry.notifiedAt || 0) > stickyTtl)
+        this.lastNotifiedRoute.delete(key);
     }
   }
 

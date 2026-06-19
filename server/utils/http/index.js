@@ -43,9 +43,15 @@ function extractJsonFromString(str) {
 }
 
 function reqBody(request) {
-  return typeof request.body === "string"
-    ? JSON.parse(request.body)
-    : request.body;
+  if (typeof request.body === "string") {
+    try {
+      return JSON.parse(request.body);
+    } catch (e) {
+      console.debug("reqBody: JSON.parse failed:", e.message);
+      return {};
+    }
+  }
+  return request.body;
 }
 
 function queryParams(request) {
@@ -130,7 +136,8 @@ function parseAuthHeader(headerValue = null, apiKey = null) {
 }
 
 function safeJsonParse(jsonString, fallback = null) {
-  if (jsonString === null) return fallback;
+  if (jsonString === null || jsonString === undefined) return fallback;
+  if (typeof jsonString !== "string") return jsonString;
 
   try {
     return JSON.parse(jsonString);
@@ -138,7 +145,7 @@ function safeJsonParse(jsonString, fallback = null) {
     console.debug("safeJsonParse: JSON.parse failed:", e.message);
   }
 
-  if (jsonString?.startsWith("[") || jsonString?.startsWith("{")) {
+  if (jsonString.startsWith("[") || jsonString.startsWith("{")) {
     try {
       const repairedJson = jsonrepair(jsonString);
       return JSON.parse(repairedJson);

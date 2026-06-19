@@ -148,7 +148,9 @@ function adminEndpoints(app) {
         const { id } = request.params;
         const user = await User.get({ id: Number(id) });
         if (!user) {
-          response.status(404).json({ success: false, error: "User not found." });
+          response
+            .status(404)
+            .json({ success: false, error: "User not found." });
           return;
         }
 

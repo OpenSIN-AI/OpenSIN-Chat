@@ -12,12 +12,10 @@ vi.mock("@/models/files", () => ({ default: { download: vi.fn() } }));
 vi.mock("@/utils/numbers", () => ({
   humanFileSize: vi.fn((bytes) => (bytes != null ? `${bytes} B` : "0 B")),
 }));
-vi.mock("@phosphor-icons/react", () => ({
-  DownloadSimple: () => <svg data-testid="download-icon" />,
-  CircleNotch: () => <svg data-testid="circle-notch-icon" />,
-  Eye: () => <svg data-testid="eye-icon" />,
-  Image: () => <svg data-testid="image-icon" />,
-}));
+vi.mock("@phosphor-icons/react/dist/csr/ArrowDown", () => ({ default: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} />, ArrowDown: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/DownloadSimple", () => ({ default: (props) => <svg data-testid="download-icon" {...props} />, DownloadSimple: (props) => <svg data-testid="download-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/CircleNotch", () => ({ default: (props) => <svg data-testid="circle-notch-icon" {...props} />, CircleNotch: (props) => <svg data-testid="circle-notch-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/Eye", () => ({ default: (props) => <svg data-testid="eye-icon" {...props} />, Eye: (props) => <svg data-testid="eye-icon" {...props} /> }));;
 
 // Capture the openPreview mock so individual tests can assert against it.
 const openPreviewMock = vi.fn();
