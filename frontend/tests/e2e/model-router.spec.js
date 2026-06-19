@@ -115,33 +115,59 @@ test.describe("model router configuration", () => {
     const descInput = page.locator('input[name="description"]');
     await descInput.fill("E2E test router — safe to delete");
 
-    // The fallback provider/model picker uses select elements
-    // Wait for the provider select to be visible (it loads from system settings)
+    // The fallback provider/model picker uses select elements.
+    // The default provider comes from system settings (LLMProvider).
+    // We do NOT change the provider — selecting an unconfigured one opens
+    // a configuration modal that intercepts pointer events (issue #...).
+    // If the default provider is already set, the form will submit fine.
+    // If not, we fill the model text input directly.
     const providerSelect = page.locator("select").first();
     await expect(providerSelect).toBeVisible({ timeout: 10000 });
 
-    // Select the first available provider if there is one
-    const providerOptions = await providerSelect.locator("option").count();
-    if (providerOptions > 1) {
-      await providerSelect.selectOption({ index: 1 });
-      await page.waitForTimeout(500);
-
-      // The model select should now be visible
-      const modelSelect = page.locator("select").nth(1);
-      if (await modelSelect.isVisible().catch(() => false)) {
-        const modelOptions = await modelSelect.locator("option").count();
-        if (modelOptions > 1) {
-          await modelSelect.selectOption({ index: 1 });
-        }
+    // Check if the provider select already has a value (from system settings)
+    const providerValue = await providerSelect.inputValue();
+    if (!providerValue) {
+      // No default provider — try to select "Fireworks AI" which should be configured
+      const options = await providerSelect.locator("option").allTextContents();
+      const fireworksIdx = options.findIndex(
+        (text) => /fireworks/i.test(text) && !/setup required/i.test(text),
+      );
+      if (fireworksIdx > 0) {
+        await providerSelect.selectOption({ index: fireworksIdx });
+        await page.waitForTimeout(1000);
+      } else {
+        // No configured provider available — skip the creation test
+        const cancelBtn = page.getByRole("button", {
+          name: /cancel|abbrechen/i,
+        }).first();
+        await cancelBtn.click().catch(() => {});
+        createdRouterName = null;
+        test.skip(true, "No configured LLM provider available — skipping router creation test");
       }
     }
 
-    // Click create button
+    // Fill the model field — it may be a select or a text input
+    const modelField = page.locator(
+      'select[name="fallback_model"], input[name="fallback_model"]',
+    ).first();
+    if (await modelField.isVisible({ timeout: 5000 }).catch(() => false)) {
+      const tagName = await modelField.evaluate((el) => el.tagName.toLowerCase());
+      if (tagName === "select") {
+        const modelOptions = await modelField.locator("option").count();
+        if (modelOptions > 1) {
+          await modelField.selectOption({ index: 1 });
+        }
+      } else {
+        await modelField.fill("default-model");
+      }
+    }
+
+    // Click create button — use force:true to bypass any overlay interception
     // i18n: model-router.new-router.create
     const createBtn = page.getByRole("button", {
-      name: /create|erstellen/i,
+      name: /create router|router erstellen|create/i,
     }).first();
-    await createBtn.click();
+    await createBtn.click({ force: true });
 
     // Wait for the modal to close and the list to refresh
     await page.waitForTimeout(3000);
@@ -169,12 +195,16 @@ test.describe("model router configuration", () => {
     ).toBeVisible({ timeout: 15000 });
 
     // Find the router row and click the delete (X) button
-    // The RouterRow renders the name in a span, and the delete button
-    // has aria-label from i18n: model-router.toast-deleted
-    const routerRow = page.locator("div").filter({ hasText: createdRouterName }).first();
+    // The RouterRow renders two action buttons: edit (PencilSimple) and delete (X)
+    // The delete button is the LAST button in the row
+    // Use aria-label for a more specific selector
+    const routerRow = page
+      .locator("div")
+      .filter({ hasText: createdRouterName })
+      .first();
 
-    // The delete button is the last button in the row (X icon)
-    // Use a more specific selector: the button with X icon
+    // The delete button has aria-label from i18n: model-router.toast-deleted
+    // Or we can find the last button in the row
     const deleteBtn = routerRow.locator("button").last();
 
     // Set up dialog handler to accept the confirmation

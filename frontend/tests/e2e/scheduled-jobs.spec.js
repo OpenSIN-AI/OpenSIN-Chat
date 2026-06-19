@@ -156,49 +156,40 @@ test.describe("scheduled jobs", () => {
     ).toBeVisible({ timeout: 15000 });
 
     // Find the job row and click the delete button
-    // The JobRow component renders action buttons including delete
-    // The delete button uses window.confirm (i18n: scheduledJobs.confirmDelete)
-    // We need to find the delete button in the job's row
+    // The JobRow component has 4 buttons in order: delete (X), edit, trigger, toggle
+    // The delete button is the FIRST button — it has a title attribute
+    // i18n: scheduledJobs.row.delete
     const jobRow = page.locator("div").filter({ hasText: createdJobName }).first();
 
-    // The JobRow has a delete button — look for a button with trash icon
-    // or a button that triggers the delete confirmation
-    // The row has multiple buttons (trigger, toggle, edit, delete)
-    // The delete button is typically the last one
-    const buttons = jobRow.locator("button");
-    const buttonCount = await buttons.count();
+    // The delete button is the first button in the actions div
+    // Use title attribute for a more specific selector
+    const deleteBtn = jobRow.locator('button[title*="delete" i], button[title*="löschen" i], button[title*="Delete" i]').first();
 
-    if (buttonCount > 0) {
-      // The delete button is typically the last action button
-      const deleteBtn = buttons.last();
-
-      // Set up dialog handler to accept the confirmation
-      page.once("dialog", (dialog) => {
-        expect(dialog.type()).toBe("confirm");
-        dialog.accept();
-      });
-
-      await deleteBtn.click();
-      await page.waitForTimeout(3000);
-
-      // Verify the job is no longer in the list
-      await expect(
-        page.getByText(createdJobName, { exact: false }),
-      ).toHaveCount(0, { timeout: 10000 });
-    } else {
-      // Try a broader search for the delete button
-      const allDeleteButtons = page.locator('button:has(.Trash), button[aria-label*="delete" i]');
-      if (await allDeleteButtons.first().isVisible({ timeout: 5000 }).catch(() => false)) {
-        page.once("dialog", (dialog) => dialog.accept());
-        await allDeleteButtons.first().click();
-        await page.waitForTimeout(3000);
-        await expect(
-          page.getByText(createdJobName, { exact: false }),
-        ).toHaveCount(0, { timeout: 10000 });
+    let deleteButton = deleteBtn;
+    if (!(await deleteBtn.isVisible({ timeout: 5000 }).catch(() => false))) {
+      // Fallback: the first button in the row's action area
+      const buttons = jobRow.locator("button");
+      const buttonCount = await buttons.count();
+      if (buttonCount > 0) {
+        deleteButton = buttons.first();
       } else {
         test.skip(true, "Delete button not found for the created job");
       }
     }
+
+    // Set up dialog handler to accept the confirmation
+    page.once("dialog", (dialog) => {
+      expect(dialog.type()).toBe("confirm");
+      dialog.accept();
+    });
+
+    await deleteButton.click();
+    await page.waitForTimeout(3000);
+
+    // Verify the job is no longer in the list
+    await expect(
+      page.getByText(createdJobName, { exact: false }),
+    ).toHaveCount(0, { timeout: 10000 });
 
     createdJobName = null;
     await assertAppLoaded(page);
