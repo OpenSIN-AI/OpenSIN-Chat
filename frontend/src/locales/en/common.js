@@ -3782,6 +3782,7 @@ const TRANSLATIONS = {
       rss_empty: "No press releases found.",
       hint: 'Tip: "@agent Bundestag document..." in chat for detailed queries.',
     },
+    searchWorkspace: "Search workspaces and threads",
   },
   right_sidebar: {
     icon_collapse: "Collapse",
@@ -3966,6 +3967,10 @@ const TRANSLATIONS = {
       success: "Password reset successful",
       invalidToken: "Invalid reset token",
     },
+  },
+  thread: {
+    deleteMark: "Mark thread for deletion",
+    cancelDelete: "Cancel thread deletion",
   },
   threadContainer: {
     loadingThreads: "Loading threads...",

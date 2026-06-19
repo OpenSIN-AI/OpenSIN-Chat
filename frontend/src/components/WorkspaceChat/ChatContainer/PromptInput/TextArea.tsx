@@ -31,6 +31,7 @@ export default function TextArea({
     <textarea
       id={PROMPT_INPUT_ID}
       ref={textareaRef}
+      aria-label={t("chat.messageInput")}
       onChange={handleChange}
       onKeyDown={captureEnterOrUndo}
       onPaste={(e) => {

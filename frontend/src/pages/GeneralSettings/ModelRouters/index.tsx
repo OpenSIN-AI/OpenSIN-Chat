@@ -103,7 +103,7 @@ function Layout({ t, showAction, onAction, children }: LayoutProps) {
               </p>
             </div>
             {showAction && (
-              <button
+              <button type="button"
                 onClick={onAction}
                 className="border-none shrink-0 flex items-center justify-center h-9 px-5 py-2.5 rounded-lg bg-slate-50 text-zinc-950 text-sm font-medium leading-5 hover:opacity-90 transition-opacity duration-200"
               >
@@ -175,7 +175,7 @@ function EmptyState({ onCreateClick, t }: EmptyStateProps) {
           {t("model-router.empty-description")}
         </p>
       </div>
-      <button
+      <button type="button"
         onClick={onCreateClick}
         className="border-none flex items-center justify-center h-9 px-5 py-2.5 rounded-lg bg-slate-50 text-zinc-950 text-sm font-medium leading-5 hover:opacity-90 transition-opacity duration-200"
       >
@@ -239,7 +239,7 @@ function RouterRow({
           {router.workspaceCount || 0}
         </span>
         <div className="flex items-center justify-end gap-[14px]">
-          <button
+          <button type="button"
             onClick={handleEditClick}
             aria-label={t("model-router.edit-router.title", {
               name: router.name,
@@ -248,7 +248,7 @@ function RouterRow({
           >
             <PencilSimple size={16} weight="bold" />
           </button>
-          <button
+          <button type="button"
             onClick={handleDelete}
             aria-label={t("model-router.toast-deleted")}
             className="border-none text-zinc-400 light:text-slate-500 hover:text-red-400 light:hover:text-red-500 transition-colors"

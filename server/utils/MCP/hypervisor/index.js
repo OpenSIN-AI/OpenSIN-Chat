@@ -15,6 +15,15 @@ const {
 } = require("@modelcontextprotocol/sdk/client/streamableHttp.js");
 const { patchShellEnvironmentPath } = require("../../helpers/shell");
 
+const ALLOWED_MCP_LAUNCHERS = [
+  "npx",
+  "node",
+  "uvx",
+  "docker",
+  "python",
+  "python3",
+];
+
 /**
  * @typedef {'stdio' | 'http' | 'sse'} MCPServerTypes
  */
@@ -407,6 +416,16 @@ class MCPHypervisor {
   async #setupServerTransport(server, type) {
     // if not stdio then it is http or sse
     if (type !== "stdio") return this.createHttpTransport(server);
+
+    const launcher = String(server.command || "")
+      .replace(/\\/g, "/")
+      .split("/")
+      .pop();
+    if (!ALLOWED_MCP_LAUNCHERS.includes(launcher)) {
+      throw new Error(
+        `MCP launcher "${launcher}" is not in the allowlist (${ALLOWED_MCP_LAUNCHERS.join(", ")})`,
+      );
+    }
 
     return new StdioClientTransport({
       command: server.command,

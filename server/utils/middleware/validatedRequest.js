@@ -19,8 +19,29 @@ function invalidateAuthTokenHash() {
   _cachedAuthTokenHash = null;
 }
 
+const MULTI_USER_MODE_TTL_MS = 60 * 1000;
+let cachedMultiUserMode = { value: null, expiresAt: 0 };
+async function getCachedMultiUserMode() {
+  if (
+    Date.now() < cachedMultiUserMode.expiresAt &&
+    cachedMultiUserMode.value !== null
+  ) {
+    return cachedMultiUserMode.value;
+  }
+  const value = await SystemSettings.isMultiUserMode();
+  cachedMultiUserMode = {
+    value,
+    expiresAt: Date.now() + MULTI_USER_MODE_TTL_MS,
+  };
+  return value;
+}
+
+function invalidateMultiUserModeCache() {
+  cachedMultiUserMode = { value: null, expiresAt: 0 };
+}
+
 async function validatedRequest(request, response, next) {
-  const multiUserMode = await SystemSettings.isMultiUserMode();
+  const multiUserMode = await getCachedMultiUserMode();
   response.locals.multiUserMode = multiUserMode;
   if (multiUserMode)
     return await validateMultiUserRequest(request, response, next);
@@ -152,4 +173,6 @@ module.exports = {
   validatedRequest,
   invalidateAuthTokenHash,
   getAuthTokenHash,
+  invalidateMultiUserModeCache,
+  getCachedMultiUserMode,
 };

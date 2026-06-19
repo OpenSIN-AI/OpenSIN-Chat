@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: MIT
 const fs = require("fs").promises;
+const { validateArchive } = require("../../../safeUnzip");
+
+const HARD_MAX_BYTES = 500 * 1024 * 1024;
 
 class PDFLoader {
   constructor(filePath, { splitPages = true } = {}) {
@@ -9,12 +12,33 @@ class PDFLoader {
 
   async load() {
     const stat = await fs.stat(this.filePath);
-    if (stat.size > 500 * 1024 * 1024) {
+    if (stat.size > HARD_MAX_BYTES) {
+      throw new Error(
+        `[PDFLoader] Refusing ${this.filePath}: ${stat.size} bytes exceeds hard cap of ${HARD_MAX_BYTES}`
+      );
+    }
+    if (stat.size > 100 * 1024 * 1024) {
+      // eslint-disable-next-line no-console
       console.warn(
         `[PDFLoader] Large file detected (${(stat.size / 1024 / 1024).toFixed(
           1
         )}MB). Attempting to load with pdf.js streaming...`
       );
+    }
+
+    try {
+      const guard = await validateArchive(this.filePath, {
+        maxTotalBytes: HARD_MAX_BYTES,
+        maxFiles: 1000,
+        maxRatio: 1000,
+      });
+      if (guard?.safe === false) {
+        throw new Error(
+          `[PDFLoader] Archive pre-flight failed: ${guard.reason || "unknown"}`
+        );
+      }
+    } catch (e) {
+      if (e?.message?.startsWith("[PDFLoader]")) throw e;
     }
 
     const buffer = await fs.readFile(this.filePath);
@@ -29,6 +53,7 @@ class PDFLoader {
         useSystemFonts: true,
       }).promise;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(`[PDFLoader] Failed to load PDF: ${e.message}`);
       return [];
     }

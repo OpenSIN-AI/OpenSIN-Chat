@@ -739,7 +739,19 @@ const SystemSettings = {
       delete updates[key];
     });
 
-    return this._updateSettings(updates);
+    const result = await this._updateSettings(updates);
+    if (
+      result.success &&
+      Object.prototype.hasOwnProperty.call(updates, "multi_user_mode")
+    ) {
+      try {
+        const {
+          invalidateMultiUserModeCache,
+        } = require("../utils/middleware/validatedRequest");
+        invalidateMultiUserModeCache();
+      } catch {}
+    }
+    return result;
   },
 
   delete: async function (clause = {}) {
@@ -788,6 +800,14 @@ const SystemSettings = {
       }
 
       await Promise.all(updatePromises);
+      if (Object.prototype.hasOwnProperty.call(updates, "multi_user_mode")) {
+        try {
+          const {
+            invalidateMultiUserModeCache,
+          } = require("../utils/middleware/validatedRequest");
+          invalidateMultiUserModeCache();
+        } catch {}
+      }
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console

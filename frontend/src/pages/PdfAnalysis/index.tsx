@@ -2,6 +2,7 @@
 // Purpose: PDF analysis page for uploading documents, extracting facts, and cross-checking claims.
 // Docs: index.doc.md
 import React, {
+  Suspense,
   useEffect,
   useRef,
   useState,
@@ -9,7 +10,7 @@ import React, {
   useMemo,
 } from "react";
 import { useTranslation } from "react-i18next";
-import ReactMarkdown from "react-markdown";
+const ReactMarkdown = React.lazy(() => import("react-markdown"));
 import remarkGfm from "remark-gfm";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
 import jsPDF from "jspdf";
@@ -28,6 +29,7 @@ import PdfAnalysis from "@/models/pdfAnalysis";
 import { ChatSidebarProvider } from "@/components/WorkspaceChat/ChatContainer/ChatSidebar";
 import Sidebars from "@/components/WorkspaceChat/ChatContainer/Sidebars";
 import CrossCheckPanel from "./CrossCheckPanel";
+import PreLoader from "@/components/Preloader";
 import { copyText } from "@/utils/clipboard";
 import CorpusPanel from "./CorpusPanel";
 
@@ -877,7 +879,8 @@ function ReportModal({ job, onClose }: ReportModalProps) {
                     })}
                 </p>
                 {/* Rendered Markdown */}
-                <ReactMarkdown
+                <Suspense fallback={<PreLoader />}>
+                  <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={
                     {
@@ -1004,7 +1007,8 @@ function ReportModal({ job, onClose }: ReportModalProps) {
                   }
                 >
                   {result.report}
-                </ReactMarkdown>
+                  </ReactMarkdown>
+                </Suspense>
               </>
             ) : (
               <p className="text-sm text-red-400">

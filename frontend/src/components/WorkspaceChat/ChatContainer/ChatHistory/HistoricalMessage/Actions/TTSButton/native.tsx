@@ -38,7 +38,7 @@ export default function NativeTTSMessage({ chatId, message }: any) {
   if (!supported) return null;
   return (
     <div className="relative flex items-center justify-center h-7 w-7">
-      <button
+      <button type="button"
         onClick={speakMessage}
         data-auto-play-chat-id={chatId}
         data-tooltip-id="message-to-speech"

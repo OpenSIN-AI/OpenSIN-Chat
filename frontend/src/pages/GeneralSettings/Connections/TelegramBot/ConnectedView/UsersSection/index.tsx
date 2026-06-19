@@ -149,13 +149,13 @@ function UserRow({
         <div className="flex items-center justify-end gap-x-3 w-[80px] shrink-0">
           {isPending ? (
             <>
-              <button
+              <button type="button"
                 onClick={() => onDeny?.(chatId)}
                 className="text-zinc-400 light:text-slate-400 hover:text-red-400 light:hover:text-red-500 transition-colors"
               >
                 <X className="h-4 w-4" weight="bold" />
               </button>
-              <button
+              <button type="button"
                 onClick={() => onApprove?.(chatId)}
                 className="text-zinc-400 light:text-slate-400 hover:text-green-400 light:hover:text-green-500 transition-colors"
               >
@@ -163,7 +163,7 @@ function UserRow({
               </button>
             </>
           ) : (
-            <button
+            <button type="button"
               onClick={() => onRevoke?.(chatId)}
               className="text-sm text-white/80 light:text-slate-500 hover:text-white light:hover:text-slate-700 transition-colors"
             >

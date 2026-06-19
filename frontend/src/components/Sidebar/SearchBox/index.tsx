@@ -64,6 +64,7 @@ export default function SearchBox({ user, showNewWsModal }: any) {
         <input
           ref={searchRef}
           type="search"
+          aria-label={t("sidebar.searchWorkspace")}
           placeholder={t("common.search")}
           onChange={handleSearch}
           onReset={handleReset}
@@ -203,7 +204,7 @@ function ShortWidthNewWorkspaceButton({ user, showNewWsModal }: any) {
 
   return (
     <>
-      <button
+      <button type="button"
         data-tooltip-id="new-workspace-tooltip"
         data-tooltip-content={t("new-workspace.title")}
         onClick={showNewWsModal}

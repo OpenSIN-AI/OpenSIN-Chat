@@ -16,6 +16,15 @@ jest.mock("fs", () => ({
   statSync: jest.fn(),
   existsSync: jest.fn(),
   createReadStream: jest.fn(),
+  constants: { F_OK: 0 },
+  promises: {
+    readdir: jest.fn(),
+    stat: jest.fn(),
+    access: jest.fn(),
+    mkdir: jest.fn(),
+    writeFile: jest.fn(),
+    rm: jest.fn(),
+  },
 }));
 
 // Mock dependencies required at module load time by endpoints/utils.js
@@ -97,13 +106,13 @@ describe("GET /utils/browse-directory", () => {
   afterEach(() => jest.clearAllMocks());
 
   test("lists directory items sorted (directories first, then alphabetical)", async () => {
-    fs.readdirSync.mockReturnValue([
+    fs.promises.readdir.mockResolvedValue([
       makeDirent("zebra.txt", false),
       makeDirent("alpha", true),
       makeDirent("bravo.txt", false),
       makeDirent("zulu", true),
     ]);
-    fs.statSync.mockReturnValue({ size: 100 });
+    fs.promises.stat.mockResolvedValue({ size: 100 });
 
     const { call } = buildApp();
     const res = await call("get", "/utils/browse-directory", {
@@ -125,13 +134,13 @@ describe("GET /utils/browse-directory", () => {
   });
 
   test("hides dotfiles from the listing", async () => {
-    fs.readdirSync.mockReturnValue([
+    fs.promises.readdir.mockResolvedValue([
       makeDirent(".hidden", true),
       makeDirent("visible.txt", false),
       makeDirent(".env", false),
       makeDirent(".git", true),
     ]);
-    fs.statSync.mockReturnValue({ size: 50 });
+    fs.promises.stat.mockResolvedValue({ size: 50 });
 
     const { call } = buildApp();
     const res = await call("get", "/utils/browse-directory", {
@@ -153,11 +162,11 @@ describe("GET /utils/browse-directory", () => {
   });
 
   test("includes file size and extension for files", async () => {
-    fs.readdirSync.mockReturnValue([
+    fs.promises.readdir.mockResolvedValue([
       makeDirent("report.pdf", false),
       makeDirent("folder", true),
     ]);
-    fs.statSync.mockReturnValue({ size: 2048 });
+    fs.promises.stat.mockResolvedValue({ size: 2048 });
 
     const { call } = buildApp();
     const res = await call("get", "/utils/browse-directory", {
@@ -174,7 +183,7 @@ describe("GET /utils/browse-directory", () => {
   });
 
   test("includes parent path when not at filesystem root", async () => {
-    fs.readdirSync.mockReturnValue([]);
+    fs.promises.readdir.mockResolvedValue([]);
     const { call } = buildApp();
     const res = await call("get", "/utils/browse-directory", {
       query: { path: "/tmp/test" },
@@ -185,7 +194,7 @@ describe("GET /utils/browse-directory", () => {
   });
 
   test("returns null parent at filesystem root", async () => {
-    fs.readdirSync.mockReturnValue([]);
+    fs.promises.readdir.mockResolvedValue([]);
     const { call } = buildApp();
     const res = await call("get", "/utils/browse-directory", {
       query: { path: "/" },
@@ -195,8 +204,8 @@ describe("GET /utils/browse-directory", () => {
     expect(res.body.parent).toBe("../../..");
   });
 
-  test("returns 500 when readdirSync throws", async () => {
-    fs.readdirSync.mockImplementation(() => {
+  test("returns 500 when readdir throws", async () => {
+    fs.promises.readdir.mockImplementation(() => {
       throw new Error("permission denied");
     });
     const { call } = buildApp();

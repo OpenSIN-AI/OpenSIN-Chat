@@ -33,7 +33,7 @@ export function EnhancePromptButton({
   };
 
   return (
-    <button
+    <button type="button"
       onClick={handleEnhance}
       disabled={!promptInput.trim() || isStreaming || enhancing}
       className="text-white/80 hover:text-white transition-colors duration-200"

@@ -107,7 +107,7 @@ export default function MenuOption({
           </p>
         </Link>
         {hasChildren && (
-          <button
+          <button type="button"
             onClick={handleClick}
             className="p-2 text-white"
             aria-label={isExpanded ? t("common.collapse") : t("common.expand")}

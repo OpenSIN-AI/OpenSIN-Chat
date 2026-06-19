@@ -142,7 +142,7 @@ export default function WorkspaceChats() {
                   {t("recorded.title")}
                 </p>
                 <div className="relative">
-                  <button
+                  <button type="button"
                     ref={openMenuButton}
                     onClick={toggleMenu}
                     className="flex items-center gap-x-2 px-4 py-1 rounded-lg bg-primary-button hover:light:bg-theme-bg-primary hover:text-theme-text-primary text-xs font-semibold hover:bg-secondary shadow-[0_4px_14px_rgba(0,0,0,0.25)] h-[34px] w-fit"
@@ -159,7 +159,7 @@ export default function WorkspaceChats() {
                   >
                     <div className="py-2">
                       {Object.entries(exportOptions).map(([key, data]) => (
-                        <button
+                        <button type="button"
                           key={key}
                           onClick={() => {
                             handleDumpChats(key as keyof typeof exportOptions);
@@ -174,7 +174,7 @@ export default function WorkspaceChats() {
                   </div>
                 </div>
                 {chats.length > 0 && (
-                  <button
+                  <button type="button"
                     onClick={handleClearAllChats}
                     className="flex items-center gap-x-2 px-4 py-1 border hover:border-transparent light:border-theme-sidebar-border border-white/40 text-white/40 light:text-theme-text-secondary rounded-lg bg-transparent hover:light:text-theme-bg-primary hover:text-theme-text-primary text-xs font-semibold hover:bg-red-500 shadow-[0_4px_14px_rgba(0,0,0,0.25)] h-[34px] w-fit"
                   >
@@ -288,7 +288,7 @@ function ChatsContainer({
         </tbody>
       </table>
       <div className="flex w-full justify-between items-center mt-6">
-        <button
+        <button type="button"
           onClick={handlePrevious}
           className="px-4 py-2 rounded-lg border border-theme-text-secondary text-theme-text-secondary text-sm items-center flex gap-x-2 hover:bg-theme-text-secondary hover:text-theme-bg-secondary disabled:invisible"
           disabled={offset === 0}
@@ -296,7 +296,7 @@ function ChatsContainer({
           {" "}
           {t("chats.previousPage")}
         </button>
-        <button
+        <button type="button"
           onClick={handleNext}
           className="px-4 py-2 rounded-lg border border-slate-200 text-slate-200 light:text-theme-text-secondary light:border-theme-sidebar-border text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 disabled:invisible"
           disabled={!canNext}

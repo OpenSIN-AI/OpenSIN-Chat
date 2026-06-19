@@ -35,13 +35,32 @@ class MySQLConnector {
    * @returns {Promise<import(".").QueryResult>}
    */
   async runQuery(queryString = "", params = []) {
+    const SELECT_ONLY_REGEX = /^\s*(SELECT|WITH|SHOW|EXPLAIN|DESCRIBE)\b/i;
+    const cleanQuery =
+      typeof queryString === "string" ? queryString.trim() : "";
+    if (!SELECT_ONLY_REGEX.test(cleanQuery)) {
+      return {
+        rows: [],
+        count: 0,
+        error: "Only SELECT/WITH/SHOW/EXPLAIN/DESCRIBE queries are allowed",
+      };
+    }
+
+    const QUERY_TIMEOUT_MS = 30_000;
     const result = { rows: [], count: 0, error: null };
     try {
       if (!this.#connected) await this.connect();
-      const [query] =
+      const runner =
         params.length > 0
-          ? await this._client.execute(queryString, params)
-          : await this._client.query(queryString);
+          ? this._client.execute(queryString, params)
+          : this._client.query(queryString);
+      const timeout = new Promise((_, reject) => {
+        setTimeout(
+          () => reject(new Error(`MySQL query timed out after 30s`)),
+          QUERY_TIMEOUT_MS,
+        ).unref?.();
+      });
+      const [query] = await Promise.race([runner, timeout]);
       result.rows = query;
       result.count = query?.length;
     } catch (err) {

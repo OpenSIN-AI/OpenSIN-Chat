@@ -13,7 +13,7 @@ import {
   Trash,
   X,
 } from "@phosphor-icons/react";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
@@ -21,7 +21,7 @@ import { useTranslation } from "react-i18next";
 import { copyText } from "@/utils/clipboard";
 
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
-export default function ThreadItem({
+function ThreadItem({
   idx,
   activeIdx,
   isActive,
@@ -112,6 +112,7 @@ export default function ThreadItem({
             {ctrlPressed && (
               <button
                 type="button"
+                aria-label={t("thread.cancelDelete")}
                 className="border-none"
                 onClick={() => toggleMarkForDeletion(thread.id)}
               >
@@ -149,6 +150,7 @@ export default function ThreadItem({
             {ctrlPressed ? (
               <button
                 type="button"
+                aria-label={t("thread.deleteMark")}
                 className="border-none"
                 onClick={() => toggleMarkForDeletion(thread.id)}
               >
@@ -189,6 +191,8 @@ export default function ThreadItem({
     </div>
   );
 }
+
+export default memo(ThreadItem);
 
 function OptionsMenu({
   containerRef,

@@ -38,7 +38,7 @@ vi.mock("@/utils/request", () => ({
 vi.mock("../AccountModal", () => ({
   default: ({ user, hideModal }) => (
     <div data-testid="account-modal" data-user={user?.username}>
-      <button onClick={hideModal}>Close</button>
+      <button type="button" onClick={hideModal}>Close</button>
     </div>
   ),
 }));

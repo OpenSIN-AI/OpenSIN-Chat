@@ -117,7 +117,7 @@ export default function ParsedFilesMenu({
               {t("parsedFilesMenu.contextFullWarning")}
             </div>
           </div>
-          <button
+          <button type="button"
             onClick={handleEmbed}
             disabled={isEmbedding}
             className="border-none disabled:opacity-50 flex items-center justify-center gap-2 px-3 py-2 text-xs bg-primary-button hover:bg-theme-button-primary-hover text-white font-medium rounded transition-colors shadow-sm"
@@ -148,7 +148,7 @@ export default function ParsedFilesMenu({
               <div className="truncate flex-1 text-theme-text-primary">
                 {file.title}
               </div>
-              <button
+              <button type="button"
                 onClick={(e) => handleRemove(e, file)}
                 className="border-none text-theme-text-secondary hover:text-theme-text-primary"
                 disabled={isEmbedding}

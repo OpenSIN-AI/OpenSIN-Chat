@@ -21,6 +21,7 @@ const { decodeJWT } = require("../../../utils/http");
 const {
   validatedRequest,
   invalidateAuthTokenHash,
+  invalidateMultiUserModeCache,
 } = require("../../../utils/middleware/validatedRequest");
 
 function mockReqRes({ authHeader } = {}) {
@@ -49,6 +50,7 @@ describe("validatedRequest", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     invalidateAuthTokenHash();
+    invalidateMultiUserModeCache();
     process.env = { ...ORIGINAL_ENV };
     SystemSettings.isMultiUserMode.mockResolvedValue(false);
   });

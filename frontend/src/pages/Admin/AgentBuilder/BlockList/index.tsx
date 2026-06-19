@@ -322,7 +322,7 @@ export default function BlockList({
                     block.type !== BLOCK_TYPES.FLOW_INFO && (
                       <div className="flex items-center gap-1">
                         {index > 2 && (
-                          <button
+                          <button type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               moveBlock(index, index - 1);
@@ -337,7 +337,7 @@ export default function BlockList({
                           </button>
                         )}
                         {index < blocks.length - 2 && (
-                          <button
+                          <button type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               moveBlock(index, index + 1);
@@ -351,7 +351,7 @@ export default function BlockList({
                             <CaretDown className="w-3.5 h-3.5" />
                           </button>
                         )}
-                        <button
+                        <button type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             removeBlock(block.id);

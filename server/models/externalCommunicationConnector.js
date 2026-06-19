@@ -89,7 +89,8 @@ const ExternalCommunicationConnector = {
       return { connector: null, error: `No ${type} connector found` };
 
     const mergedConfig = { ...existing.config, ...configUpdates };
-    return this.upsert(type, mergedConfig, existing.active);
+    mergedConfig.active = existing.active;
+    return this.upsert(type, mergedConfig);
   },
 
   /**

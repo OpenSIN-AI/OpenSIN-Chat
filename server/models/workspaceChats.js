@@ -48,6 +48,13 @@ const WorkspaceChats = {
           api_session_id: null, // do not include api-session chats in the frontend for anyone.
           include: true,
         },
+        select: {
+          id: true,
+          prompt: true,
+          response: true,
+          createdAt: true,
+          feedbackScore: true,
+        },
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
@@ -74,6 +81,13 @@ const WorkspaceChats = {
           api_session_id: String(apiSessionId),
           thread_id: null,
         },
+        select: {
+          id: true,
+          prompt: true,
+          response: true,
+          createdAt: true,
+          feedbackScore: true,
+        },
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
       });
@@ -98,6 +112,13 @@ const WorkspaceChats = {
           thread_id: null, // this function is now only used for the default thread on workspaces
           api_session_id: null, // do not include api-session chats in the frontend for anyone.
           include: true,
+        },
+        select: {
+          id: true,
+          prompt: true,
+          response: true,
+          createdAt: true,
+          feedbackScore: true,
         },
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null ? { orderBy } : { orderBy: { id: "asc" } }),
@@ -168,7 +189,12 @@ const WorkspaceChats = {
    * @returns {Promise<void>}
    */
   markThreadHistoryInvalidV2: async function (whereClause = {}) {
-    if (!whereClause) return;
+    if (
+      !whereClause ||
+      typeof whereClause !== "object" ||
+      !whereClause.workspaceId
+    )
+      return;
     try {
       await prisma.workspace_chats.updateMany({
         where: whereClause,
@@ -187,6 +213,18 @@ const WorkspaceChats = {
     try {
       const chat = await prisma.workspace_chats.findFirst({
         where: clause,
+        select: {
+          id: true,
+          workspaceId: true,
+          prompt: true,
+          response: true,
+          user_id: true,
+          thread_id: true,
+          api_session_id: true,
+          createdAt: true,
+          feedbackScore: true,
+          include: true,
+        },
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null ? { orderBy } : {}),
       });
@@ -220,6 +258,18 @@ const WorkspaceChats = {
     try {
       const chats = await prisma.workspace_chats.findMany({
         where: clause,
+        select: {
+          id: true,
+          workspaceId: true,
+          prompt: true,
+          response: true,
+          user_id: true,
+          thread_id: true,
+          api_session_id: true,
+          createdAt: true,
+          feedbackScore: true,
+          include: true,
+        },
         ...(limit !== null ? { take: limit } : {}),
         ...(offset !== null ? { skip: offset } : {}),
         ...(orderBy !== null ? { orderBy } : {}),

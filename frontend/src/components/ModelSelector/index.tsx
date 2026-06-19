@@ -13,13 +13,17 @@ function FreeFormLLMInput({ workspace, setHasChanges }: any) {
   const { t } = useTranslation();
   return (
     <div className="mt-4 flex flex-col gap-y-1">
-      <label className="block input-label">{t("chat.model.title")}</label>
+      <label htmlFor="freeform-chat-model" className="block input-label">
+        {t("chat.model.title")}
+      </label>
       <p className="text-white text-opacity-60 text-xs font-medium py-1.5">
         {t("chat.model.description")}
       </p>
       <input
+        id="freeform-chat-model"
         type="text"
         name="chatModel"
+        aria-label={t("chat.model.title")}
         defaultValue={workspace?.chatModel || ""}
         onChange={() => setHasChanges(true)}
         className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"

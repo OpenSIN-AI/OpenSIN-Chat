@@ -53,7 +53,7 @@ export function DeleteMessage({ chatId, isEditing, role }) {
   }
 
   return (
-    <button
+    <button type="button"
       onClick={emitDeleteEvent}
       className="border-none flex items-center gap-x-1 w-full"
       role="menuitem"

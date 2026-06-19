@@ -270,7 +270,8 @@ export default function ThreadFolderItem({
                 e.stopPropagation();
                 setEditing(true);
               }}
-              className="p-1 rounded hover:bg-white/10 light:hover:bg-slate-300"
+              aria-label={t("threadFolderItem.rename")}
+              className="p-2 rounded hover:bg-white/10 light:hover:bg-slate-300"
               title={t("threadFolderItem.rename")}
             >
               <PencilSimple
@@ -284,7 +285,8 @@ export default function ThreadFolderItem({
                 e.stopPropagation();
                 handleDelete();
               }}
-              className="p-1 rounded hover:bg-red-500/20"
+              aria-label={t("threadFolderItem.delete")}
+              className="p-2 rounded hover:bg-red-500/20"
               title={t("threadFolderItem.delete")}
             >
               <Trash
@@ -300,7 +302,7 @@ export default function ThreadFolderItem({
       {open && (
         <div className="pl-4">
           {threads.length === 0 ? (
-            <p className="text-xs text-white/30 light:text-theme-text-secondary italic py-1 px-2">
+            <p className="text-xs text-zinc-400 light:text-theme-text-secondary italic py-1 px-2">
               {t("threadFolderItem.dragHere")}
             </p>
           ) : (

@@ -36,7 +36,7 @@ vi.mock("../ThoughtContainer", () => ({
     </div>
   ),
   ThoughtBrainButton: ({ content }) => (
-    <button data-testid="brain-button" data-content={content}>
+    <button type="button" data-testid="brain-button" data-content={content}>
       Brain
     </button>
   ),

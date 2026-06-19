@@ -269,9 +269,10 @@ const PoliticianSpeech = {
 /** @type {{ bulkUpsert: Function, where: Function }} */
 const PoliticianMandate = {
   bulkUpsert: async function (mandates = []) {
-    if (mandates.length === 0) return { inserted: 0, updated: 0 };
+    if (mandates.length === 0) return { inserted: 0, updated: 0, errors: 0 };
     let inserted = 0;
     let updated = 0;
+    let errors = 0;
 
     for (const m of mandates) {
       try {
@@ -298,10 +299,10 @@ const PoliticianMandate = {
         });
         updated++;
       } catch {
-        inserted++;
+        errors++;
       }
     }
-    return { inserted, updated };
+    return { inserted, updated, errors };
   },
 
   where: async function (clause = {}, limit) {

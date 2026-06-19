@@ -24,13 +24,13 @@ vi.mock("../MemoriesContext", () => ({
 vi.mock("./CardMenu", () => ({
   default: ({ onEdit, onDelete, onMove, menuRef }) => (
     <div data-testid="card-menu" ref={menuRef}>
-      <button data-testid="menu-edit" onClick={onEdit}>
+      <button type="button" data-testid="menu-edit" onClick={onEdit}>
         Edit
       </button>
-      <button data-testid="menu-delete" onClick={onDelete}>
+      <button type="button" data-testid="menu-delete" onClick={onDelete}>
         Delete
       </button>
-      <button data-testid="menu-move" onClick={onMove}>
+      <button type="button" data-testid="menu-move" onClick={onMove}>
         Move
       </button>
     </div>

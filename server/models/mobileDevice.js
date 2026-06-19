@@ -172,11 +172,17 @@ const MobileDevice = {
     // If no updates, return the device.
     if (Object.keys(validUpdates).length === 0) return { device, error: null };
 
-    const updatedDevice = await prisma.desktop_mobile_devices.update({
-      where: { id: device.id },
-      data: validUpdates,
-    });
-    return { device: updatedDevice, error: null };
+    try {
+      const updatedDevice = await prisma.desktop_mobile_devices.update({
+        where: { id: device.id },
+        data: validUpdates,
+      });
+      return { device: updatedDevice, error: null };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("FAILED TO UPDATE MOBILE DEVICE.", error.message);
+      return { device: null, error: error.message };
+    }
   },
 
   /**
@@ -190,11 +196,11 @@ const MobileDevice = {
         where: clause,
         ...(include !== null ? { include } : {}),
       });
-      return device;
+      return device || null;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("FAILED TO GET MOBILE DEVICE.", error);
-      return [];
+      return null;
     }
   },
 

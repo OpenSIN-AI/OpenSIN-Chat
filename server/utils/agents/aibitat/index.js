@@ -8,10 +8,8 @@ const { v4 } = require("uuid");
 const { ToolReranker } = require("./utils/toolReranker.js");
 const Ajv = require("ajv");
 
-const TOOL_OUTPUT_MAX_BYTES = parseInt(
-  process.env.AGENT_TOOL_OUTPUT_MAX_BYTES,
-  10,
-) || 8192;
+const TOOL_OUTPUT_MAX_BYTES =
+  parseInt(process.env.AGENT_TOOL_OUTPUT_MAX_BYTES, 10) || 8192;
 const _ajv = new Ajv({ allErrors: true, strict: false });
 
 function sanitizeToolResultForLLM(result) {
@@ -988,6 +986,25 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
   }
 
   /**
+   * Record provider usage to per-invocation cost accumulator.
+   * Uses lastUsage from the provider instance and a configurable USD-per-1k-token rate.
+   */
+  #recordInvocationUsage() {
+    this._invocationCostUsd ??= 0;
+    try {
+      const usage = this.providerInstance?.getUsage?.() || {};
+      const tokens = usage.total_tokens || 0;
+      const pricePer1k = parseFloat(process.env.AGENT_TOKEN_PRICE_USD_PER_1K);
+      const rate = !isNaN(pricePer1k) && pricePer1k > 0 ? pricePer1k : 0.01;
+      this._invocationCostUsd += (tokens / 1000) * rate;
+    } catch (e) {
+      this.handlerProps?.log?.(
+        `[warning]: Failed to record invocation usage: ${e.message}`,
+      );
+    }
+  }
+
+  /**
    * Handle the async (streaming) execution of the provider
    * with tool calls. Reads the provider from this.providerInstance.
    *
@@ -1018,10 +1035,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     }
 
     const checkInvocationBudget = () => {
-      if (
-        this._invocationDeadline &&
-        Date.now() > this._invocationDeadline
-      ) {
+      if (this._invocationDeadline && Date.now() > this._invocationDeadline) {
         this.handlerProps?.log?.(
           "[error]: Agent wall-clock deadline exceeded; aborting.",
         );
@@ -1274,10 +1288,7 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     }
 
     const checkInvocationBudget = () => {
-      if (
-        this._invocationDeadline &&
-        Date.now() > this._invocationDeadline
-      ) {
+      if (this._invocationDeadline && Date.now() > this._invocationDeadline) {
         this.handlerProps?.log?.(
           "[error]: Agent wall-clock deadline exceeded; aborting.",
         );

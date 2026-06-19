@@ -5,8 +5,13 @@ const runtimeSettings = new RuntimeSettings();
 
 function verifyPayloadIntegrity(request, response, next) {
   const comKey = new CommunicationKey();
-  if (process.env.NODE_ENV === "development") {
-    comKey.log("verifyPayloadIntegrity is skipped in development.");
+  const DEV_BYPASS_ENABLED =
+    process.env.NODE_ENV === "development" &&
+    process.env.SIN_ALLOW_INSECURE_DEV_BYPASS === "true";
+  if (DEV_BYPASS_ENABLED) {
+    comKey.log(
+      "[verifyIntegrity] Auth bypass enabled — only for local dev. NEVER set SIN_ALLOW_INSECURE_DEV_BYPASS in production!"
+    );
     runtimeSettings.parseOptionsFromRequest(request);
     next();
     return;

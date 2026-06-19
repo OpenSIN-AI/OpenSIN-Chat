@@ -40,7 +40,7 @@ function AgentSkillSettingsModal({
           <div className="text-white text-left font-medium text-lg">
             {t("agent.settings.title")}
           </div>
-          <button
+          <button type="button"
             onClick={closeModal}
             className="text-white opacity-60 hover:text-white hover:opacity-100 border-none outline-none"
           >

@@ -40,7 +40,7 @@ function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
 
   return (
     <div className="mt-2 -ml-0.5 relative" ref={menuRef}>
-      <button
+      <button type="button"
         onClick={toggleMenu}
         className="border-none text-zinc-300 light:text-slate-500 transition-colors duration-200"
         data-tooltip-id="action-menu"
@@ -51,14 +51,14 @@ function ActionMenu({ chatId, forkThread, isEditing, role }: any) {
       </button>
       {open && (
         <div className="absolute -top-1 left-7 mt-1 border-[1.5px] border-white/40 rounded-lg bg-theme-action-menu-bg flex flex-col shadow-[0_4px_14px_rgba(0,0,0,0.25)] text-white z-99 md:z-10">
-          <button
+          <button type="button"
             onClick={handleFork}
             className="border-none rounded-t-lg flex items-center text-white gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >
             <TreeView size={18} />
             <span className="text-sm">{t("chat_window.fork")}</span>
           </button>
-          <button
+          <button type="button"
             onClick={handleDelete}
             className="border-none flex rounded-b-lg items-center text-white gap-x-2 hover:bg-theme-action-menu-item-hover py-1.5 px-2 transition-colors duration-200 w-full text-left"
           >

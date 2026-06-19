@@ -294,7 +294,7 @@ export default function ActiveWorkspaces() {
                                     className={`h-[20px] w-[20px] ${isActive ? "text-zinc-400 hover:text-white light:text-blue-700 light:group-hover/upload:text-blue-900" : "text-zinc-400 hover:text-white light:text-slate-600 light:group-hover/upload:text-slate-950"}`}
                                   />
                                 </button>
-                                <button
+                                <button type="button"
                                   onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();

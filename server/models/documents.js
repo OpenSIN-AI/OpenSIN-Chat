@@ -40,6 +40,18 @@ const Document = {
     if (!workspaceId) return [];
     return await prisma.workspace_documents.findMany({
       where: { workspaceId },
+      select: {
+        id: true,
+        docId: true,
+        filename: true,
+        docpath: true,
+        metadata: true,
+        pinned: true,
+        watched: true,
+        createdAt: true,
+        lastUpdatedAt: true,
+        workspaceId: true,
+      },
     });
   },
 
@@ -79,8 +91,24 @@ const Document = {
         where: clause,
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null ? { orderBy } : {}),
-        ...(include !== null ? { include } : {}),
-        ...(select !== null ? { select: { ...select } } : {}),
+        ...(include !== null
+          ? { include }
+          : select !== null
+            ? { select: { ...select } }
+            : {
+                select: {
+                  id: true,
+                  docId: true,
+                  filename: true,
+                  docpath: true,
+                  workspaceId: true,
+                  metadata: true,
+                  pinned: true,
+                  watched: true,
+                  createdAt: true,
+                  lastUpdatedAt: true,
+                },
+              }),
       });
       return results;
     } catch (error) {

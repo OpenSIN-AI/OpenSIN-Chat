@@ -148,7 +148,7 @@ export default function EmbedChatsView() {
             {t("embed-chats.title")}
           </p>
           <div className="relative">
-            <button
+            <button type="button"
               ref={openMenuButton}
               onClick={toggleMenu}
               className="flex items-center gap-x-2 px-4 py-1 rounded-lg text-theme-bg-chat bg-primary-button hover:bg-secondary hover:text-white text-xs font-semibold h-[34px] w-fit"
@@ -165,7 +165,7 @@ export default function EmbedChatsView() {
             >
               <div className="py-2">
                 {Object.entries(exportOptions).map(([key, data]) => (
-                  <button
+                  <button type="button"
                     key={key}
                     onClick={() => {
                       handleDumpChats(key);
@@ -216,7 +216,7 @@ export default function EmbedChatsView() {
         </table>
         {(offset > 0 || canNext) && (
           <div className="flex items-center justify-end gap-2 mt-4 pb-6">
-            <button
+            <button type="button"
               onClick={handlePrevious}
               disabled={offset === 0}
               className={`px-4 py-2 text-sm rounded-lg ${
@@ -227,7 +227,7 @@ export default function EmbedChatsView() {
             >
               {t("common.previous")}
             </button>
-            <button
+            <button type="button"
               onClick={handleNext}
               disabled={!canNext}
               className={`px-4 py-2 text-sm rounded-lg ${

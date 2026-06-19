@@ -57,12 +57,17 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
       <div className="w-full px-12">
         <div className="w-full flex flex-col gap-y-3">
           <div className="w-full flex flex-col gap-y-2">
-            <label className="text-zinc-300 light:text-slate-800 text-sm">
+            <label
+              htmlFor="recovery-username"
+              className="text-zinc-300 light:text-slate-800 text-sm"
+            >
               {t("login.multi-user.placeholder-username")}
             </label>
             <input
+              id="recovery-username"
               name="username"
               type="text"
+              aria-label={t("auth.username")}
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -79,6 +84,9 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
                 key={index}
                 type="text"
                 name={`recoveryCode${index + 1}`}
+                aria-label={`${t("login.password-reset.recovery-codes")} ${
+                  index + 1
+                }`}
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 value={code}
                 onChange={(e) =>
@@ -149,12 +157,17 @@ const ResetPasswordForm = ({ onSubmit }) => {
       <div className="w-full px-12">
         <div className="w-full flex flex-col gap-y-3">
           <div className="w-full flex flex-col gap-y-2">
-            <label className="text-zinc-300 light:text-slate-800 text-sm">
+            <label
+              htmlFor="reset-newPassword"
+              className="text-zinc-300 light:text-slate-800 text-sm"
+            >
               {t("multiUserAuth.resetPassword.newPassword")}
             </label>
             <input
+              id="reset-newPassword"
               type="password"
               name="newPassword"
+              aria-label={t("auth.newPassword")}
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -162,12 +175,17 @@ const ResetPasswordForm = ({ onSubmit }) => {
             />
           </div>
           <div className="w-full flex flex-col gap-y-2">
-            <label className="text-zinc-300 light:text-slate-800 text-sm">
+            <label
+              htmlFor="reset-confirmPassword"
+              className="text-zinc-300 light:text-slate-800 text-sm"
+            >
               {t("multiUserAuth.resetPassword.confirmPassword")}
             </label>
             <input
+              id="reset-confirmPassword"
               type="password"
               name="confirmPassword"
+              aria-label={t("auth.newPassword")}
               className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -321,24 +339,34 @@ export default function MultiUserAuth() {
         <div className="w-full px-12">
           <div className="w-full flex flex-col gap-y-3">
             <div className="w-full flex flex-col gap-y-2">
-              <label className="text-zinc-300 light:text-slate-800 text-sm">
+              <label
+                htmlFor="login-username"
+                className="text-zinc-300 light:text-slate-800 text-sm"
+              >
                 {t("login.multi-user.placeholder-username")}
               </label>
               <input
+                id="login-username"
                 name="username"
                 type="text"
+                aria-label={t("auth.username")}
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 required={true}
                 autoComplete="off"
               />
             </div>
             <div className="w-full px-0 flex flex-col gap-y-2">
-              <label className="text-zinc-300 light:text-slate-800 text-sm">
+              <label
+                htmlFor="login-password"
+                className="text-zinc-300 light:text-slate-800 text-sm"
+              >
                 {t("login.multi-user.placeholder-password")}
               </label>
               <input
+                id="login-password"
                 name="password"
                 type="password"
+                aria-label={t("auth.password")}
                 className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 required={true}
                 autoComplete="off"

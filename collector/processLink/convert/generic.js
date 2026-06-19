@@ -16,6 +16,10 @@ const {
 } = require("../../utils/extensions/YoutubeTranscript");
 const RuntimeSettings = require("../../utils/runtimeSettings");
 const { htmlToMarkdown } = require("../helpers/htmlToMarkdown");
+const { browserPool } = require("../../utils/browserPool");
+
+const MAX_RESPONSE_BYTES = 50 * 1024 * 1024;
+const PUPPETEER_TIMEOUT_MS = 60_000;
 
 /**
  * Scrape a generic URL and return the content in the specified format
@@ -141,20 +145,13 @@ function validatedHeaders(headers = {}) {
  * @returns {Promise<string>} - The content of the page
  */
 async function getPageContent({ link, captureAs = "text", headers = {} }) {
+  const runtimeSettings = new RuntimeSettings();
+  const overrideHeaders = validatedHeaders(headers);
+  const hasHeaders = Object.keys(overrideHeaders).length > 0;
+  let docs = [];
+
   try {
-    let pageContents = [];
-    const runtimeSettings = new RuntimeSettings();
-
-    /** @type {import('puppeteer').PuppeteerLaunchOptions} */
-    let launchConfig = { headless: "new" };
-
-    /* On MacOS 15.1, the headless=new option causes the browser to crash immediately.
-     * It is not clear why this is the case, but it is reproducible. Since the app
-     * in production runs in a container, we can disable headless mode to workaround the issue for development purposes.
-     *
-     * This may show a popup window when scraping a page in development mode.
-     * This is expected behavior if seen in development mode on MacOS 15+
-     */
+    const launchConfig = { headless: "new" };
     if (
       process.platform === "darwin" &&
       process.env.NODE_ENV === "development"
@@ -166,71 +163,137 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
       launchConfig.headless = "false";
     }
 
-    const loader = new PuppeteerWebBaseLoader(link, {
-      launchOptions: {
-        headless: launchConfig.headless,
-        ignoreHTTPSErrors: true,
-        args: runtimeSettings.get("browserLaunchArgs"),
-      },
-      gotoOptions: {
-        waitUntil: "networkidle2",
-      },
-      async evaluate(page, browser) {
-        const innerHTML = await page.evaluate(
-          () => document.documentElement.innerHTML
+    const capResponseBytes = async (response) => {
+      const contentLength = parseInt(
+        response.headers()?.["content-length"] || "0",
+        10
+      );
+      if (contentLength > MAX_RESPONSE_BYTES) {
+        throw new Error(
+          `Response too large (Content-Length ${contentLength} > ${MAX_RESPONSE_BYTES})`
         );
-        if (captureAs === "html") return innerHTML;
-        return htmlToMarkdown(innerHTML, link);
-      },
-    });
+      }
+      return response;
+    };
 
-    // Override scrape method if headers are available
-    let overrideHeaders = validatedHeaders(headers);
-    if (Object.keys(overrideHeaders).length > 0) {
-      loader.scrape = async function () {
-        const { launch } = await PuppeteerWebBaseLoader.imports();
-        const browser = await launch({
-          headless: "new",
-          defaultViewport: null,
-          ignoreDefaultArgs: ["--disable-extensions"],
-          ...this.options?.launchOptions,
-        });
-        try {
-          const page = await browser.newPage();
-          await page.setExtraHTTPHeaders(overrideHeaders);
+    const scrapeWithPool = async () => {
+      const browser = await browserPool.acquire();
+      try {
+        const page = await browser.newPage();
+        if (hasHeaders) await page.setExtraHTTPHeaders(overrideHeaders);
 
-          await page.goto(this.webPath, {
-            timeout: 180000,
-            waitUntil: "networkidle2",
-            ...this.options?.gotoOptions,
-          });
+        const gotoOptions = {
+          timeout: PUPPETEER_TIMEOUT_MS,
+          waitUntil: "networkidle2",
+        };
+        const response = await page.goto(link, gotoOptions);
+        const res = await capResponseBytes(response);
+        if (!res || !res.ok())
+          throw new Error(`HTTP ${res?.status?.() ?? "?"} on ${link}`);
 
-          const bodyHTML = this.options?.evaluate
-            ? await this.options.evaluate(page, browser)
-            : await page.evaluate(() => document.body.innerHTML);
-
-          return bodyHTML;
-        } finally {
-          await browser.close();
+        const originalContent = await page.content();
+        const renderedBytes = Buffer.byteLength(originalContent, "utf8");
+        if (renderedBytes > MAX_RESPONSE_BYTES) {
+          throw new Error(
+            `Rendered page exceeds ${MAX_RESPONSE_BYTES} bytes (got ${renderedBytes})`
+          );
         }
-      };
+        return { pageContent: originalContent };
+      } finally {
+        await browserPool.release(browser);
+      }
+    };
+
+    const scrapeWithCustomLoader = async () => {
+      const loader = new PuppeteerWebBaseLoader(link, {
+        launchOptions: {
+          headless: launchConfig.headless,
+          ignoreHTTPSErrors: true,
+          args: runtimeSettings.get("browserLaunchArgs"),
+        },
+        gotoOptions: {
+          timeout: PUPPETEER_TIMEOUT_MS,
+          waitUntil: "networkidle2",
+        },
+        async evaluate(page, _browser) {
+          const innerHTML = await page.evaluate(
+            () => document.documentElement.innerHTML
+          );
+          if (Buffer.byteLength(innerHTML, "utf8") > MAX_RESPONSE_BYTES)
+            throw new Error(
+              `Rendered page exceeds ${MAX_RESPONSE_BYTES} bytes`
+            );
+          if (captureAs === "html") return innerHTML;
+          return htmlToMarkdown(innerHTML, link);
+        },
+      });
+      if (hasHeaders) {
+        loader.scrape = async function () {
+          const { launch } = await PuppeteerWebBaseLoader.imports();
+          const browser = await launch({
+            headless: "new",
+            defaultViewport: null,
+            ignoreDefaultArgs: ["--disable-extensions"],
+            ...this.options?.launchOptions,
+          });
+          try {
+            const page = await browser.newPage();
+            await page.setExtraHTTPHeaders(overrideHeaders);
+
+            await page.goto(this.webPath, {
+              timeout: PUPPETEER_TIMEOUT_MS,
+              waitUntil: "networkidle2",
+              ...this.options?.gotoOptions,
+            });
+
+            const bodyHTML = this.options?.evaluate
+              ? await this.options.evaluate(page, browser)
+              : await page.evaluate(() => document.body.innerHTML);
+
+            if (Buffer.byteLength(bodyHTML, "utf8") > MAX_RESPONSE_BYTES)
+              throw new Error(
+                `Rendered page exceeds ${MAX_RESPONSE_BYTES} bytes`
+              );
+            return bodyHTML;
+          } finally {
+            await browser.close();
+          }
+        };
+      }
+      const loadedDocs = await loader.load();
+      docs = Array.isArray(loadedDocs) ? loadedDocs : [];
+    };
+
+    if (hasHeaders) {
+      await scrapeWithCustomLoader();
+    } else {
+      const scrapedDoc = await scrapeWithPool();
+      docs = [scrapedDoc];
     }
 
-    const docs = await loader.load();
-    for (const doc of docs) pageContents.push(doc.pageContent);
-    return pageContents.join(" ");
+    if (captureAs !== "html" && docs.length) {
+      docs = docs.map((d) => ({
+        pageContent: d?.pageContent ? htmlToMarkdown(d.pageContent, link) : "",
+      }));
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(
       "getPageContent failed to be fetched by puppeteer - falling back to fetch!",
       error
     );
+    docs = [];
+  }
+
+  if (docs.length) {
+    const pageContents = docs.map((d) => d?.pageContent).filter(Boolean);
+    if (pageContents.length) return pageContents.join(" ");
   }
 
   try {
     const abortController = new AbortController();
     const timeout = setTimeout(() => abortController.abort(), 15_000);
-    const pageText = await fetch(link, {
+    const response = await fetch(link, {
       method: "GET",
       headers: {
         "Content-Type": "text/plain",
@@ -239,9 +302,20 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
         ...validatedHeaders(headers),
       },
       signal: abortController.signal,
-    })
-      .then((res) => res.text())
-      .finally(() => clearTimeout(timeout));
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const contentLength = parseInt(
+      response.headers.get("content-length") || "0",
+      10
+    );
+    if (contentLength > MAX_RESPONSE_BYTES)
+      throw new Error(
+        `Response too large (Content-Length ${contentLength} > ${MAX_RESPONSE_BYTES})`
+      );
+    const pageText = await response.text();
+    if (Buffer.byteLength(pageText, "utf8") > MAX_RESPONSE_BYTES)
+      throw new Error(`Response body exceeds ${MAX_RESPONSE_BYTES} bytes`);
+    clearTimeout(timeout);
     return htmlToMarkdown(pageText, link);
   } catch (error) {
     // eslint-disable-next-line no-console

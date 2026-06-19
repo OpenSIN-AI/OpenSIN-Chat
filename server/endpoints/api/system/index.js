@@ -265,7 +265,7 @@ function apiSystemEndpoints(app) {
       */
       try {
         const { names } = reqBody(request);
-        for await (const name of names) await purgeDocument(name);
+        await Promise.all(names.map((name) => purgeDocument(name)));
         response
           .status(200)
           .json({ success: true, message: "Documents removed successfully" })

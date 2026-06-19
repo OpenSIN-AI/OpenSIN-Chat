@@ -6,6 +6,9 @@ const {
 } = require("../../../helpers");
 const { Deduplicator } = require("../utils/dedupe");
 
+const MEMORY_STORE_LIMIT_PER_SESSION =
+  parseInt(process.env.AGENT_MEMORY_STORE_LIMIT_PER_SESSION, 10) || 3;
+
 const memory = {
   name: "rag-memory",
   startupConfig: {
@@ -18,6 +21,7 @@ const memory = {
         aibitat.function({
           super: aibitat,
           tracker: new Deduplicator(),
+          storeCount: 0,
           name: this.name,
           description:
             "Search your local documents and workspace files for relevant information, or store information to long-term memory. Use search to find answers in uploaded documents, embedded files, or previously stored memories. Use store only when explicitly asked to remember or save something.",
@@ -71,9 +75,19 @@ const memory = {
               if (isDuplicate)
                 return `This was a duplicated call and it's output will be ignored.`;
 
+              if (
+                action === "store" &&
+                this.storeCount >= MEMORY_STORE_LIMIT_PER_SESSION
+              ) {
+                return `Memory store rate limit reached for this session (${MEMORY_STORE_LIMIT_PER_SESSION}). Not storing more.`;
+              }
+
               let response = "There was nothing to do.";
               if (action === "search") response = await this.search(content);
-              if (action === "store") response = await this.store(content);
+              if (action === "store") {
+                response = await this.store(content);
+                this.storeCount += 1;
+              }
 
               this.tracker.trackRun(this.name, { action, content });
               return response;

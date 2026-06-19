@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useRef } from "react";
-import "regenerator-runtime"; //required polyfill for speech recognition;
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";

@@ -29,6 +29,13 @@ const EventLogs = {
     try {
       const logs = await prisma.event_logs.findMany({
         where: { event },
+        select: {
+          id: true,
+          event: true,
+          metadata: true,
+          userId: true,
+          occurredAt: true,
+        },
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null
           ? { orderBy }
@@ -46,6 +53,13 @@ const EventLogs = {
     try {
       const logs = await prisma.event_logs.findMany({
         where: { userId },
+        select: {
+          id: true,
+          event: true,
+          metadata: true,
+          userId: true,
+          occurredAt: true,
+        },
         ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null
           ? { orderBy }
@@ -68,6 +82,13 @@ const EventLogs = {
     try {
       const logs = await prisma.event_logs.findMany({
         where: clause,
+        select: {
+          id: true,
+          event: true,
+          metadata: true,
+          userId: true,
+          occurredAt: true,
+        },
         ...(limit !== null ? { take: limit } : {}),
         ...(offset !== null ? { skip: offset } : {}),
         ...(orderBy !== null

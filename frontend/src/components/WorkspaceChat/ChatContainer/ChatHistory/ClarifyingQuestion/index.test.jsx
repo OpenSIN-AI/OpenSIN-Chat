@@ -14,7 +14,7 @@ vi.mock("./Header", () => ({
       <span>
         {index}/{total}
       </span>
-      <button onClick={onClose} data-testid="close-btn">
+      <button type="button" onClick={onClose} data-testid="close-btn">
         Close
       </button>
     </div>
@@ -30,7 +30,7 @@ vi.mock("./InputForm", () => ({
         value={draft?.value ?? ""}
         onChange={(e) => onChange(e.target.value)}
       />
-      <button data-testid="input-submit" onClick={onSubmit}>
+      <button type="button" data-testid="input-submit" onClick={onSubmit}>
         Submit
       </button>
     </div>
@@ -48,7 +48,7 @@ vi.mock("./ChoiceForm", () => ({
   }) => (
     <div data-testid="choice-form">
       <span data-testid="choice-question">{question?.question}</span>
-      <button data-testid="choice-skip" onClick={onSkip}>
+      <button type="button" data-testid="choice-skip" onClick={onSkip}>
         Skip
       </button>
     </div>
@@ -60,13 +60,13 @@ vi.mock("./Footer", () => ({
     <div data-testid="footer">
       {isSingle && <span>single</span>}
       {isLast && <span>last</span>}
-      <button data-testid="footer-skip" onClick={onSkipThis}>
+      <button type="button" data-testid="footer-skip" onClick={onSkipThis}>
         SkipThis
       </button>
-      <button data-testid="footer-next" onClick={onNext}>
+      <button type="button" data-testid="footer-next" onClick={onNext}>
         Next
       </button>
-      <button data-testid="footer-submit" onClick={onSubmitAll}>
+      <button type="button" data-testid="footer-submit" onClick={onSubmitAll}>
         SubmitAll
       </button>
     </div>

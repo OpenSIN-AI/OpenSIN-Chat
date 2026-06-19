@@ -64,7 +64,7 @@ export default function AsyncTTSMessage({ slug, chatId }: any) {
   if (!chatId) return null;
   return (
     <div className="mt-3 relative">
-      <button
+      <button type="button"
         onClick={speakMessage}
         data-auto-play-chat-id={chatId}
         data-tooltip-id="message-to-speech"

@@ -567,7 +567,7 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         const { names } = reqBody(request);
-        for await (const name of names) await purgeDocument(name);
+        await Promise.all(names.map((name) => purgeDocument(name)));
         response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console

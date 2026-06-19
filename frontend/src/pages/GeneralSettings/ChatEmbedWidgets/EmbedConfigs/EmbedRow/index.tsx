@@ -118,7 +118,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
           }
         </th>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
-          <button
+          <button type="button"
             onClick={openSnippetModal}
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-code-hover-bg"
           >
@@ -126,7 +126,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
               {t("embedConfigs.embedRow.code")}
             </span>
           </button>
-          <button
+          <button type="button"
             onClick={handleSuspend}
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-disable-hover-bg"
           >
@@ -136,7 +136,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
                 : t("embedConfigs.embedRow.enable")}
             </span>
           </button>
-          <button
+          <button type="button"
             onClick={handleDelete}
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-delete-hover-bg"
           >
@@ -144,7 +144,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
               {t("embedConfigs.embedRow.delete")}
             </span>
           </button>
-          <button
+          <button type="button"
             onClick={openSettingsModal}
             className="text-xs font-medium text-theme-button-text hover:text-theme-text-secondary hover:bg-theme-hover px-2 py-1 rounded-lg"
           >

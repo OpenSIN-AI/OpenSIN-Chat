@@ -92,7 +92,7 @@ export default function DeviceRow({
         </td>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
           {status ? (
-            <button
+            <button type="button"
               onClick={handleDeny}
               className={`border-none flex items-center justify-center text-xs font-medium text-white/80 light:text-black/80 rounded-lg p-1 hover:bg-white hover:light:bg-red-50 hover:bg-opacity-10`}
             >
@@ -100,13 +100,13 @@ export default function DeviceRow({
             </button>
           ) : (
             <>
-              <button
+              <button type="button"
                 onClick={handleApprove}
                 className={`border-none flex items-center justify-center text-xs font-medium text-white/80 light:text-black/80 rounded-lg p-1 hover:bg-white hover:bg-opacity-10 hover:light:bg-green-50 hover:light:text-green-500 hover:text-green-300`}
               >
                 {t("deviceRow.approveAccess")}
               </button>
-              <button
+              <button type="button"
                 onClick={handleDeny}
                 className={`border-none flex items-center justify-center text-xs font-medium text-white/80 light:text-black/80 rounded-lg p-1 hover:bg-white hover:bg-opacity-10 hover:light:bg-red-50 hover:light:text-red-500 hover:text-red-300`}
               >

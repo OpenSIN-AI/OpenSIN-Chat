@@ -19,13 +19,13 @@ export default function ContextualSaveBar({
         </p>
       </div>
       <div className="flex items-center gap-x-2">
-        <button
+        <button type="button"
           className="border-none text-theme-text-primary font-medium text-sm px-[10px] py-[6px] rounded-md bg-theme-bg-secondary hover:bg-theme-bg-primary"
           onClick={onCancel}
         >
           {t("contextualSaveBar.cancel")}
         </button>
-        <button
+        <button type="button"
           className="border-none text-theme-text-primary font-medium text-sm px-[10px] py-[6px] rounded-md bg-primary-button hover:bg-primary-button-hover"
           onClick={onSave}
         >

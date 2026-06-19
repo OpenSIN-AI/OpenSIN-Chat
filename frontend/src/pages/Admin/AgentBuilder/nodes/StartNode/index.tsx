@@ -54,7 +54,7 @@ export default function StartNode({
             spellCheck={false}
           />
           {config.variables.length > 1 && (
-            <button
+            <button type="button"
               onClick={() => handleDeleteVariable(index, variable.name)}
               className="p-2.5 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:text-red-500 hover:border-red-500/20 hover:bg-red-500/10 transition-colors duration-300"
               title={t("startNode.deleteVariable")}
@@ -63,7 +63,7 @@ export default function StartNode({
             </button>
           )}
           {index === config.variables.length - 1 && (
-            <button
+            <button type="button"
               onClick={() => {
                 const newVars = [...config.variables, { name: "", value: "" }];
                 onConfigChange({ variables: newVars });

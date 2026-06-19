@@ -209,7 +209,7 @@ async function storeVectorResult(vectorData = [], filename = null) {
 
   const digest = uuidv5(filename, uuidv5.URL);
   const writeTo = path.resolve(vectorCachePath, `${digest}.json`);
-  fs.writeFileSync(writeTo, JSON.stringify(vectorData), "utf8");
+  await fs.promises.writeFile(writeTo, JSON.stringify(vectorData), "utf8");
   return;
 }
 

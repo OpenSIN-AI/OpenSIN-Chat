@@ -90,7 +90,7 @@ export default function UserSetup({
           {t("onboarding.userSetup.howManyUsers")}
         </div>
         <div className="flex flex-col md:flex-row gap-6 w-full justify-center">
-          <button
+          <button type="button"
             onClick={() => setSelectedOption("just_me")}
             className={`${
               selectedOption === "just_me"
@@ -102,7 +102,7 @@ export default function UserSetup({
               {t("onboarding.userSetup.justMe")}
             </div>
           </button>
-          <button
+          <button type="button"
             onClick={() => setSelectedOption("my_team")}
             className={`${
               selectedOption === "my_team"
@@ -219,7 +219,7 @@ const JustMe = ({
           {t("onboarding.userSetup.setPassword")}
         </div>
         <div className="flex flex-col md:flex-row gap-6 w-full justify-center">
-          <button
+          <button type="button"
             onClick={handleYes}
             className={`${
               enablePassword && itemSelected
@@ -231,7 +231,7 @@ const JustMe = ({
               {t("common.yes")}
             </div>
           </button>
-          <button
+          <button type="button"
             onClick={handleNo}
             className={`${
               !enablePassword && itemSelected

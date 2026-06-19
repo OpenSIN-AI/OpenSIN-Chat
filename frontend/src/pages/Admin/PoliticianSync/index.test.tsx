@@ -25,7 +25,7 @@ vi.mock("@phosphor-icons/react", () => ({
 
 vi.mock("@/components/lib/CTAButton", () => ({
   default: ({ children, onClick }) => (
-    <button onClick={onClick} data-testid="cta-button">
+    <button type="button" onClick={onClick} data-testid="cta-button">
       {children}
     </button>
   ),

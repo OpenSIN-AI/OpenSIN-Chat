@@ -106,7 +106,7 @@ function DisconnectButton({
   }
 
   return (
-    <button
+    <button type="button"
       onClick={handleDisconnect}
       disabled={disconnecting}
       className="flex items-center justify-center gap-x-2 text-sm font-medium bg-zinc-50 light:bg-slate-900 text-zinc-950 light:text-white rounded-lg h-9 px-5 w-fit hover:opacity-90 transition-opacity duration-200 disabled:opacity-50 disabled:cursor-not-allowed"

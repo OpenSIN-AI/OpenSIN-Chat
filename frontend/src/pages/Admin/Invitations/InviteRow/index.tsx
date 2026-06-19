@@ -59,14 +59,14 @@ export default function InviteRow({ invite }: { invite: any }) {
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
           {status === "pending" && (
             <>
-              <button
+              <button type="button"
                 onClick={copyInviteLink}
                 disabled={copied}
                 className="text-xs font-medium text-blue-300 rounded-lg hover:text-blue-400 hover:underline"
               >
                 {copied ? t("inviteRow.copied") : t("inviteRow.copyInviteLink")}
               </button>
-              <button
+              <button type="button"
                 onClick={handleDelete}
                 className="text-xs font-medium text-white/80 light:text-black/80 hover:light:text-red-500 hover:text-red-300 rounded-lg px-2 py-1 hover:bg-white hover:light:bg-red-50 hover:bg-opacity-10"
               >

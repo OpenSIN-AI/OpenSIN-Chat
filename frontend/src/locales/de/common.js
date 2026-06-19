@@ -1,6 +1,19 @@
 // SPDX-License-Identifier: MIT
 // Anything with "null" requires a translation. Contribute to translation via a PR!
 const TRANSLATIONS = {
+  page: {
+    title: "OpenSIN Chat",
+    description:
+      "OpenSIN Chat — souveräner KI-Arbeitsraum für politische Forschung. Chatte mit deinen Dokumenten, automatisiere Recherche, selbst gehostet, ohne Telemetrie.",
+  },
+  a11y: {
+    skipToContent: "Zum Hauptinhalt springen",
+  },
+  auth: {
+    username: "Benutzername",
+    password: "Passwort",
+    newPassword: "Neues Passwort",
+  },
   onboarding: {
     home: {
       getStarted: "Jetzt starten",
@@ -871,6 +884,7 @@ const TRANSLATIONS = {
         "Je höher die Zahl, desto kreativer. Bei einigen Modellen kann dies zu unverständlichen Antworten führen, wenn sie zu hoch eingestellt ist.",
       hint: "Die meisten LLMs haben verschiedene akzeptable Bereiche gültiger Werte. Konsultieren Sie Ihren LLM-Anbieter für diese Informationen.",
     },
+    messageInput: "Nachrichteneingabe",
   },
   "vector-workspace": {
     identifier: "Vektordatenbank-Identifikator",
@@ -3860,6 +3874,7 @@ const TRANSLATIONS = {
       rss_empty: "Keine Pressemitteilungen gefunden.",
       hint: 'Tipp: "@agent Bundestag Drucksache..." im Chat für detaillierte Abfragen.',
     },
+    searchWorkspace: "Workspaces und Threads durchsuchen",
   },
   right_sidebar: {
     icon_collapse: "Einklappen",
@@ -4046,6 +4061,10 @@ const TRANSLATIONS = {
       success: "Passwort erfolgreich zurückgesetzt",
       invalidToken: "Ungültiges Reset-Token",
     },
+  },
+  thread: {
+    deleteMark: "Thread zum Löschen markieren",
+    cancelDelete: "Thread-Löschung abbrechen",
   },
   threadContainer: {
     loadingThreads: "Threads werden geladen...",

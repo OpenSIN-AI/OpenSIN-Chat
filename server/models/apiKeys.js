@@ -10,6 +10,12 @@ const ApiKey = {
     return uuidAPIKey.create().apiKey;
   },
 
+  _stripSecret: function (apiKey) {
+    if (!apiKey) return null;
+    const { secret: _secret, ...rest } = apiKey;
+    return rest;
+  },
+
   create: async function (createdByUserId = null, name = null) {
     try {
       const normalizedName =
@@ -33,7 +39,7 @@ const ApiKey = {
   get: async function (clause = {}) {
     try {
       const apiKey = await prisma.api_keys.findFirst({ where: clause });
-      return apiKey;
+      return apiKey ? this._stripSecret(apiKey) : null;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("FAILED TO GET API KEY.", error.message);
@@ -69,7 +75,7 @@ const ApiKey = {
         where: clause,
         take: limit,
       });
-      return apiKeys;
+      return apiKeys.map((k) => this._stripSecret(k));
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("FAILED TO GET API KEYS.", error.message);

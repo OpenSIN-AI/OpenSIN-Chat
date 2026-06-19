@@ -128,21 +128,28 @@ function apiReportsEndpoints(app) {
 
   app.get("/reports/list", [validApiKey], async (_, response) => {
     try {
-      if (!fs.existsSync(STORAGE_DIR))
+      if (
+        !(await fs.promises
+          .access(STORAGE_DIR, fs.constants.F_OK)
+          .then(() => true)
+          .catch(() => false))
+      )
         return response.status(200).json({ reports: [] });
-      const files = fs
-        .readdirSync(STORAGE_DIR)
-        .filter((f) => f.endsWith(".pdf"));
-      const reports = files
-        .map((f) => {
-          const stat = fs.statSync(path.join(STORAGE_DIR, f));
-          return {
-            fileName: f,
-            fileSizeKB: (stat.size / 1024).toFixed(1),
-            createdAt: stat.birthtime,
-          };
-        })
-        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      const files = (await fs.promises.readdir(STORAGE_DIR)).filter((f) =>
+        f.endsWith(".pdf"),
+      );
+      const reports = (
+        await Promise.all(
+          files.map(async (f) => {
+            const stat = await fs.promises.stat(path.join(STORAGE_DIR, f));
+            return {
+              fileName: f,
+              fileSizeKB: (stat.size / 1024).toFixed(1),
+              createdAt: stat.birthtime,
+            };
+          }),
+        )
+      ).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       response.status(200).json({ reports });
     } catch (err) {
       logger.error(`[reports] ${err.message}`, err);
@@ -155,9 +162,14 @@ function apiReportsEndpoints(app) {
       const { fileName } = request.params;
       const safeName = path.basename(fileName);
       const filePath = path.join(STORAGE_DIR, safeName);
-      if (!fs.existsSync(filePath))
+      if (
+        !(await fs.promises
+          .access(filePath, fs.constants.F_OK)
+          .then(() => true)
+          .catch(() => false))
+      )
         return response.status(404).json({ error: "Report not found" });
-      const stat = fs.statSync(filePath);
+      const stat = await fs.promises.stat(filePath);
       response.setHeader("Content-Type", "application/pdf");
       response.setHeader("Content-Length", stat.size);
       response.setHeader(

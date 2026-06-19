@@ -58,7 +58,7 @@ export default function StatusResponse({
               )}
             </div>
             {previousThoughts?.length > 0 && (
-              <button
+              <button type="button"
                 onClick={handleExpandClick}
                 className="absolute top-4 right-4 border-none text-zinc-200 light:text-slate-800 transition-colors"
                 data-tooltip-id="expand-cot"

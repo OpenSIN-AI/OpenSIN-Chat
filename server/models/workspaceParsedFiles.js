@@ -98,11 +98,17 @@ const WorkspaceParsedFiles = {
   },
 
   totalTokenCount: async function (clause = {}) {
-    const { _sum } = await prisma.workspace_parsed_files.aggregate({
-      where: clause,
-      _sum: { tokenCountEstimate: true },
-    });
-    return _sum.tokenCountEstimate || 0;
+    try {
+      const { _sum } = await prisma.workspace_parsed_files.aggregate({
+        where: clause,
+        _sum: { tokenCountEstimate: true },
+      });
+      return _sum.tokenCountEstimate || 0;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("FAILED TO AGGREGATE TOKEN COUNT.", error.message);
+      return 0;
+    }
   },
 
   /**

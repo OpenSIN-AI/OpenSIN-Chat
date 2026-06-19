@@ -69,7 +69,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
         />
       </div>
       <div className="flex justify-start mt-4">
-        <button
+        <button type="button"
           onClick={(e) => {
             e.preventDefault();
             setShowAdvancedControls(!showAdvancedControls);
@@ -117,7 +117,7 @@ export default function LMStudioOptions({ settings, showAlert = false }: any) {
               ) : (
                 <>
                   {!basePathValue.value && (
-                    <button
+                    <button type="button"
                       onClick={handleAutoDetectClick}
                       className="border-none bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >

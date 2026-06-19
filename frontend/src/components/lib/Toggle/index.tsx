@@ -200,7 +200,8 @@ export function SimpleToggleSwitch({
     <div
       role="switch"
       aria-checked={enabled}
-      tabIndex={0}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : 0}
       onClick={(e) => {
         e.stopPropagation();
         onChange(!enabled);

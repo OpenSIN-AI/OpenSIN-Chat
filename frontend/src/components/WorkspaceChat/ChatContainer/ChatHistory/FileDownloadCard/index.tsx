@@ -240,7 +240,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
                 <span>{t("preview.open")}</span>
               </button>
             )}
-            <button
+            <button type="button"
               onClick={handleDownload}
               disabled={downloading}
               className="flex items-center gap-x-2 px-4 py-2 rounded-lg border border-zinc-600 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-white light:text-theme-text-primary text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"

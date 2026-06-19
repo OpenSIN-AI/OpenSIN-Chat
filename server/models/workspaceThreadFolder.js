@@ -4,6 +4,7 @@ const prisma = require("../utils/prisma");
 const WorkspaceThreadFolder = {
   // List all folders for a workspace (+ user scope in multi-user mode)
   where: async function ({ workspace_id, user_id = null }) {
+    if (workspace_id === undefined || workspace_id === null) return [];
     const filters = { workspace_id };
     if (user_id !== undefined) filters.user_id = user_id;
 
@@ -53,14 +54,15 @@ const WorkspaceThreadFolder = {
 
   delete: async function (folderId) {
     try {
-      // Unassign all threads first (set folder_id = null)
-      await prisma.workspace_threads.updateMany({
-        where: { folder_id: Number(folderId) },
-        data: { folder_id: null },
-      });
-      await prisma.workspace_thread_folders.delete({
-        where: { id: Number(folderId) },
-      });
+      await prisma.$transaction([
+        prisma.workspace_threads.updateMany({
+          where: { folder_id: Number(folderId) },
+          data: { folder_id: null },
+        }),
+        prisma.workspace_thread_folders.delete({
+          where: { id: Number(folderId) },
+        }),
+      ]);
       return true;
     } catch (e) {
       console.error("WorkspaceThreadFolder.delete:", e.message);

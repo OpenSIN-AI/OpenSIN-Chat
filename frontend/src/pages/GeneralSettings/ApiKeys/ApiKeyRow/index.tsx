@@ -68,14 +68,14 @@ export default function ApiKeyRow({
         </td>
         <td className="px-6 py-3 align-middle">
           <div className="flex items-center gap-x-6">
-            <button
+            <button type="button"
               onClick={copyApiKey}
               disabled={copied}
               className="text-xs font-medium text-blue-300 rounded-lg hover:text-white hover:light:text-blue-500 hover:text-opacity-60 hover:underline"
             >
               {copied ? t("api.row.copied") : t("api.row.copy")}
             </button>
-            <button
+            <button type="button"
               onClick={handleDelete}
               className="text-xs font-medium text-white/80 light:text-black/80 hover:light:text-red-500 hover:text-red-300 rounded-lg px-2 py-1 hover:bg-white hover:light:bg-red-50 hover:bg-opacity-10"
             >

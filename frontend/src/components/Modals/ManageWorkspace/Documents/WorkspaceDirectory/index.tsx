@@ -178,7 +178,7 @@ function WorkspaceDirectory({
             <div className="absolute bottom-[12px] left-0 right-0 flex justify-center pointer-events-none">
               <div className="mx-auto bg-white/40 light:bg-white rounded-lg py-1 px-2 pointer-events-auto light:shadow-lg">
                 <div className="flex flex-row items-center gap-x-2">
-                  <button
+                  <button type="button"
                     onClick={handleToggleSelectAll}
                     className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white"
                   >
@@ -186,7 +186,7 @@ function WorkspaceDirectory({
                       ? t("connectors.directory.deselect_all")
                       : t("connectors.directory.select_all")}
                   </button>
-                  <button
+                  <button type="button"
                     onClick={handleRemoveSelectedItems}
                     className="border-none text-sm font-semibold bg-white light:bg-[#E0F2FE] h-[30px] px-2.5 rounded-lg hover:bg-neutral-800/80 hover:text-white light:text-[#026AA2] light:hover:bg-[#026AA2] light:hover:text-white"
                   >
@@ -200,7 +200,7 @@ function WorkspaceDirectory({
       </div>
       {hasChanges && (
         <div className="flex items-center justify-end py-6">
-          <button
+          <button type="button"
             onClick={handleSaveChanges}
             className="border border-slate-200 px-5 py-2.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:bg-slate-200 hover:text-slate-800 focus:ring-gray-800"
           >

@@ -55,7 +55,7 @@ export default function UserButton() {
   if (mode === null) return null;
   return (
     <div className="absolute top-3 right-4 md:top-9 md:right-10 w-fit h-fit z-40">
-      <button
+      <button type="button"
         ref={buttonRef}
         onClick={() => setShowMenu(!showMenu)}
         type="button"
@@ -71,7 +71,7 @@ export default function UserButton() {
         >
           <div className="flex flex-col gap-y-2">
             {mode === "multi" && !!user && (
-              <button
+              <button type="button"
                 onClick={handleOpenAccountModal}
                 className="border-none text-white hover:bg-theme-action-menu-item-hover w-full text-left px-4 py-1.5 rounded-md"
               >
@@ -84,7 +84,7 @@ export default function UserButton() {
             >
               {t("profile_settings.support")}
             </a>
-            <button
+            <button type="button"
               onClick={() => {
                 window.localStorage.removeItem(AUTH_USER);
                 window.localStorage.removeItem(AUTH_TOKEN);

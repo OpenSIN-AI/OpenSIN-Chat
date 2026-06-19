@@ -207,33 +207,38 @@ function utilEndpoints(app) {
         const relativePath = req.query.path || "";
         const resolvedPath = safeStorageJoin("uploads", relativePath);
 
-        const entries = fs.readdirSync(resolvedPath, { withFileTypes: true });
-        const items = entries
-          .filter((entry) => !entry.name.startsWith("."))
-          .map((entry) => {
-            const fullPath = path.join(resolvedPath, entry.name);
-            const itemRelPath = path.relative(uploadsRoot, fullPath);
-            let size = 0;
-            let ext = "";
-            try {
-              if (entry.isFile()) {
-                const stat = fs.statSync(fullPath);
-                size = stat.size;
-                ext = path.extname(entry.name).toLowerCase();
-              }
-            } catch {}
-            return {
-              name: entry.name,
-              type: entry.isDirectory() ? "directory" : "file",
-              path: itemRelPath,
-              size,
-              ext,
-            };
-          })
-          .sort((a, b) => {
-            if (a.type !== b.type) return a.type === "directory" ? -1 : 1;
-            return a.name.localeCompare(b.name);
-          });
+        const entries = await fs.promises.readdir(resolvedPath, {
+          withFileTypes: true,
+        });
+        const items = (
+          await Promise.all(
+            entries
+              .filter((entry) => !entry.name.startsWith("."))
+              .map(async (entry) => {
+                const fullPath = path.join(resolvedPath, entry.name);
+                const itemRelPath = path.relative(uploadsRoot, fullPath);
+                let size = 0;
+                let ext = "";
+                try {
+                  if (entry.isFile()) {
+                    const stat = await fs.promises.stat(fullPath);
+                    size = stat.size;
+                    ext = path.extname(entry.name).toLowerCase();
+                  }
+                } catch {}
+                return {
+                  name: entry.name,
+                  type: entry.isDirectory() ? "directory" : "file",
+                  path: itemRelPath,
+                  size,
+                  ext,
+                };
+              }),
+          )
+        ).sort((a, b) => {
+          if (a.type !== b.type) return a.type === "directory" ? -1 : 1;
+          return a.name.localeCompare(b.name);
+        });
 
         response.status(200).json({
           path: resolvedPath,
@@ -267,13 +272,18 @@ function utilEndpoints(app) {
         }
 
         const resolved = safeStorageJoin("uploads", parentPath, name);
-        if (fs.existsSync(resolved)) {
+        if (
+          await fs.promises
+            .access(resolved, fs.constants.F_OK)
+            .then(() => true)
+            .catch(() => false)
+        ) {
           return response
             .status(409)
             .json({ error: "Directory already exists" });
         }
 
-        fs.mkdirSync(resolved, { recursive: true });
+        await fs.promises.mkdir(resolved, { recursive: true });
         response.status(200).json({ success: true, path: resolved });
       } catch (e) {
         console.error("create-directory endpoint error", e.message);
@@ -299,11 +309,16 @@ function utilEndpoints(app) {
         }
 
         const resolved = safeStorageJoin("uploads", parentPath, name);
-        if (fs.existsSync(resolved)) {
+        if (
+          await fs.promises
+            .access(resolved, fs.constants.F_OK)
+            .then(() => true)
+            .catch(() => false)
+        ) {
           return response.status(409).json({ error: "File already exists" });
         }
 
-        fs.writeFileSync(resolved, content || "");
+        await fs.promises.writeFile(resolved, content || "");
         response.status(200).json({ success: true, path: resolved });
       } catch (e) {
         console.error("create-file endpoint error", e.message);
@@ -331,11 +346,16 @@ function utilEndpoints(app) {
             .status(400)
             .json({ error: "Cannot delete uploads root" });
         }
-        if (!fs.existsSync(resolved)) {
+        if (
+          !(await fs.promises
+            .access(resolved, fs.constants.F_OK)
+            .then(() => true)
+            .catch(() => false))
+        ) {
           return response.status(404).json({ error: "Item not found" });
         }
 
-        fs.rmSync(resolved, { recursive: true });
+        await fs.promises.rm(resolved, { recursive: true });
         response.status(200).json({ success: true });
       } catch (e) {
         console.error("delete-item endpoint error", e.message);
@@ -364,9 +384,15 @@ function utilEndpoints(app) {
           return response.sendStatus(403);
         }
 
-        if (!fs.existsSync(filePath)) return response.sendStatus(404);
+        if (
+          !(await fs.promises
+            .access(filePath, fs.constants.F_OK)
+            .then(() => true)
+            .catch(() => false))
+        )
+          return response.sendStatus(404);
 
-        const stat = fs.statSync(filePath);
+        const stat = await fs.promises.stat(filePath);
         const stream = fs.createReadStream(filePath);
         response.setHeader("Content-Type", "application/pdf");
         response.setHeader("Content-Length", stat.size);

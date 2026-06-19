@@ -94,6 +94,9 @@ class MCPCompatibilityLayer extends MCPHypervisor {
                     );
 
                     const MCP_TOOL_TIMEOUT_MS = 60_000;
+                    const MCP_RESULT_MAX_BYTES =
+                      parseInt(process.env.MCP_TOOL_OUTPUT_MAX_BYTES, 10) ||
+                      65536;
                     let timeoutId;
                     const timeoutPromise = new Promise((_, reject) => {
                       timeoutId = setTimeout(
@@ -122,7 +125,15 @@ class MCPCompatibilityLayer extends MCPHypervisor {
                       aibitat.introspect(
                         `MCP server: ${name}:${tool.name} completed successfully`,
                       );
-                      return MCPCompatibilityLayer.returnMCPResult(result);
+                      let serialized =
+                        MCPCompatibilityLayer.returnMCPResult(result);
+                      if (serialized.length > MCP_RESULT_MAX_BYTES)
+                        serialized = `${serialized.slice(0, MCP_RESULT_MAX_BYTES)}\n...[truncated]`;
+                      const fenceName = `${name}:${tool.name}`.replace(
+                        /[^a-zA-Z0-9_:\-.]/g,
+                        "_",
+                      );
+                      return `<mcp_tool_output tool="${fenceName}">\n${serialized}\n</mcp_tool_output>`;
                     } catch (error) {
                       if (timeoutId) clearTimeout(timeoutId);
                       aibitat.handlerProps.log(

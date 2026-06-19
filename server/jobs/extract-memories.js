@@ -45,7 +45,7 @@ const MIN_CHATS_TO_PROCESS = 5;
     const groups = groupByUserWorkspace(allUnprocessed);
     log(`Found ${groups.size} user/workspace pair(s) with unprocessed chats.`);
 
-    for (const group of groups.values()) await processGroup(group);
+    await Promise.all([...groups.values()].map(processGroup));
 
     log("Memory extraction complete.");
   } catch (e) {

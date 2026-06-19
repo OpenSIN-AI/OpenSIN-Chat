@@ -50,8 +50,8 @@ vi.mock("@/utils/toast", () => ({
 vi.mock("./FileUploadWarningModal", () => ({
   default: ({ onClose, onConfirm }) => (
     <div data-testid="warning-modal">
-      <button onClick={onClose}>Cancel</button>
-      <button onClick={onConfirm}>Confirm</button>
+      <button type="button" onClick={onClose}>Cancel</button>
+      <button type="button" onClick={onConfirm}>Confirm</button>
     </div>
   ),
 }));
