@@ -34,7 +34,8 @@ services:
       # persist data, even if it is missing from .env. Must match the mounted
       # volume target (../server/storage -> /app/server/storage).
       - STORAGE_DIR=/app/server/storage
-      - JWT_SECRET=${JWT_SECRET}
+      - AUTH_TOKEN=${AUTH_TOKEN:?AUTH_TOKEN env var is required in production}
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET env var is required in production}
       - SIG_KEY=${SIG_KEY}
       - SIG_SALT=${SIG_SALT}
       - LLM_PROVIDER=${LLM_PROVIDER:-generic-openai}

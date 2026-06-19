@@ -70,10 +70,40 @@ describe("validatedRequest", () => {
     expect(next).toHaveBeenCalledTimes(1);
   });
 
-  it("passes through in production when AUTH_TOKEN is not set", async () => {
+  it("returns 503 in production when AUTH_TOKEN is missing (fail-closed)", async () => {
     process.env.NODE_ENV = "production";
     delete process.env.AUTH_TOKEN;
     process.env.JWT_SECRET = "secret";
+    const { request, response } = mockReqRes();
+    const next = jest.fn();
+
+    await validatedRequest(request, response, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(503);
+    expect(response.body.error).toMatch(/misconfigured/i);
+    expect(typeof response.body.id).toBe("string");
+    expect(response.body.id.length).toBeGreaterThan(0);
+  });
+
+  it("returns 503 in production when JWT_SECRET is missing (fail-closed)", async () => {
+    process.env.NODE_ENV = "production";
+    process.env.AUTH_TOKEN = "my-token";
+    delete process.env.JWT_SECRET;
+    const { request, response } = mockReqRes();
+    const next = jest.fn();
+
+    await validatedRequest(request, response, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(503);
+    expect(response.body.error).toMatch(/misconfigured/i);
+  });
+
+  it("falls through to dev escape hatch when AUTH_TOKEN unset in development", async () => {
+    process.env.NODE_ENV = "development";
+    delete process.env.AUTH_TOKEN;
+    delete process.env.JWT_SECRET;
     const { request, response } = mockReqRes();
     const next = jest.fn();
 

@@ -46,6 +46,23 @@ async function validatedRequest(request, response, next) {
   if (multiUserMode)
     return await validateMultiUserRequest(request, response, next);
 
+  if (
+    process.env.NODE_ENV === "production" &&
+    (!process.env.AUTH_TOKEN || !process.env.JWT_SECRET)
+  ) {
+    const id =
+      (typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+    console.error(
+      `[validatedRequest FATAL id=${id}] auth misconfigured in production. AUTH_TOKEN=${!!process.env.AUTH_TOKEN} JWT_SECRET=${!!process.env.JWT_SECRET}`,
+    );
+    return response.status(503).json({
+      error: "Server is misconfigured. Please contact the operator.",
+      id,
+    });
+  }
+
   // When in development or test mode passthrough auth token for ease of development.
   // Or if the user simply did not set an Auth token or JWT Secret
   if (

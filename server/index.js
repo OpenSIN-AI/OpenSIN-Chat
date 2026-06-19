@@ -8,6 +8,24 @@
 const { buildApp, bootApp } = require("./app");
 const BackgroundQueue = require("./utils/backgroundJobs/queue");
 const { Telemetry } = require("./models/telemetry");
+const { execSync } = require("child_process");
+
+if (!process.env.APP_VERSION) {
+  try {
+    process.env.APP_VERSION = execSync("git describe --tags --always", {
+      encoding: "utf8",
+    }).trim();
+  } catch {
+    /* no git available — APP_VERSION stays undefined */
+  }
+}
+if (!process.env.GIT_SHA) {
+  try {
+    process.env.GIT_SHA = execSync("git rev-parse HEAD", { encoding: "utf8" }).trim();
+  } catch {
+    /* no git available — GIT_SHA stays undefined */
+  }
+}
 
 // Resume interrupted PDF analysis, cross-check, and corpus jobs after a restart.
 // Fire-and-forget with error catch — failures here must not prevent server boot.
