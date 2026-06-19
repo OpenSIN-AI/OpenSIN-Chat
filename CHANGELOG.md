@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed — Bug sweep #3 (issue #254)
+
+- **HIGH — Prisma `model_routers` / `model_router_rules` ambiguous
+  relations.** `server/prisma/schema.prisma` — annotated both
+  `createdByUser` relations explicitly with `@relation("RouterOwner")`
+  and `@relation("RuleOwner")`, plus the matching back-references on
+  `users`. `prisma format` + `prisma validate` + `prisma generate`
+  all pass. **No DB migration required** — only the generated client
+  typing changes.
+
+#### Already landed in 48b929f8 (part of the same audit batch)
+
+- **CRITICAL — resync handlers always returned HTTP 200.**
+  `collector/extensions/resync/index.js` — all 6 handlers
+  (`resyncLink`, `resyncYouTube`, `resyncConfluence`, `resyncGithub`,
+  `resyncDrupalWiki`, `resyncPaperlessNgx`) now respond with
+  **HTTP 502 + `{ success: false, content: null, error: "Resync failed", id: <uuid> }`**
+  in their `catch` blocks instead of misleading HTTP 200.
+  Frontend can now trust `response.ok`. Uses Node `crypto.randomUUID()`
+  (Node ≥ 22, matching `engines.node`).
+  Added `collector/__tests__/extensions/resync/index.additional.test.js`
+  (12 new tests) asserting 502 + UUID envelope for all 6 handlers.
+- **CRITICAL — `decodeURIComponent` outside try/catch.**
+  `collector/processLink/convert/generic.js` — wrapped the
+  `decodeURIComponent(url.pathname)` call so a malformed URI surrogate
+  no longer crashes the link-saver; falls back to the raw path.
+- **HIGH — manual redirect loop threw on malformed `Location`.**
+  `collector/processLink/convert/generic.js` — wrapped the
+  `new URL(...).toString()` call so a malformed absolute-relative
+  Location header now aborts the redirect chain instead of bubbling
+  a TypeError that killed the whole link-fetch.
+- **HIGH — `AddSourceMenu` URL submit could leave loading state stuck.**
+  `frontend/src/components/WorkspaceChat/ChatContainer/PromptInput/
+  AttachItem/AddSourceMenu/index.tsx` — wrapped the post-`setSubmitting(true)`
+  block in `try / catch / finally`, removed the redundant inline
+  `setSubmitting(false)` calls. `submitting` is now guaranteed to
+  flip back to `false` no matter what the upload throws.
+
 ### Added — Web push notification endpoints (web-push)
 
 Closes the long-broken `/web-push/*` surface so the frontend

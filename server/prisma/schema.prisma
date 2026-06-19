@@ -85,8 +85,6 @@ model users {
   web_push_subscription_config String?
   failed_login_count           Int?                          @default(0)
   failed_login_last_at         DateTime?
-  @@index([failed_login_count])
-  @@index([failed_login_last_at])
   workspace_chats              workspace_chats[]
   workspace_users              workspace_users[]
   embed_configs                embed_configs[]
@@ -107,8 +105,11 @@ model users {
   api_keys                     api_keys[]
   invites                      invites[]
   event_logs                   event_logs[]
-  model_routers                model_routers[]
-  model_router_rules           model_router_rules[]
+  model_routers                model_routers[]               @relation("RouterOwner")
+  model_router_rules           model_router_rules[]          @relation("RuleOwner")
+
+  @@index([failed_login_count])
+  @@index([failed_login_last_at])
 }
 
 model recovery_codes {
@@ -713,7 +714,7 @@ model model_routers {
   created_by        Int?
   createdAt         DateTime             @default(now())
   lastUpdatedAt     DateTime             @default(now())
-  createdByUser     users?               @relation(fields: [created_by], references: [id], onDelete: SetNull)
+  createdByUser     users?               @relation("RouterOwner", fields: [created_by], references: [id], onDelete: SetNull)
   rules             model_router_rules[]
 
   @@index([created_by])
@@ -741,7 +742,7 @@ model model_router_rules {
   created_by      Int?
   createdAt       DateTime      @default(now())
   lastUpdatedAt   DateTime      @default(now())
-  createdByUser   users?        @relation(fields: [created_by], references: [id], onDelete: SetNull)
+  createdByUser   users?        @relation("RuleOwner", fields: [created_by], references: [id], onDelete: SetNull)
   router          model_routers @relation(fields: [router_id], references: [id], onDelete: Cascade)
 
   @@unique([router_id, title])
