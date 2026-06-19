@@ -4,7 +4,10 @@ import { DotsThreeVertical } from "@phosphor-icons/react";
 import { useRef, useState, useEffect } from "react";
 import PromptHistory from "@/models/promptHistory";
 import { useTranslation } from "react-i18next";
-import moment from "moment";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 import { truncate } from "@/utils/strings";
 
 const MAX_PROMPT_LENGTH = 200; // chars
@@ -74,7 +77,7 @@ export default function PromptHistoryItem({
             </>
           )}
           <span className="text-white opacity-50 light:opacity-100">
-            {moment(modifiedAt).fromNow()}
+            {dayjs(modifiedAt).fromNow()}
           </span>
         </div>
         <div className="flex items-center gap-2">

@@ -1,5 +1,18 @@
 // SPDX-License-Identifier: MIT
 const TRANSLATIONS = {
+  page: {
+    title: "OpenSIN Chat",
+    description:
+      "OpenSIN Chat — sovereign AI workspace for political research. Chat with your documents, automate research, self-hosted, no telemetry.",
+  },
+  a11y: {
+    skipToContent: "Skip to main content",
+  },
+  auth: {
+    username: "Username",
+    password: "Password",
+    newPassword: "New password",
+  },
   onboarding: {
     home: {
       welcome: "Welcome",
@@ -1304,6 +1317,7 @@ const TRANSLATIONS = {
         "The higher the number the more creative. For some models this can lead to incoherent responses when set too high.",
       hint: "Most LLMs have various acceptable ranges of valid values. Consult your LLM provider for that information.",
     },
+    messageInput: "Message input",
   },
   "vector-workspace": {
     identifier: "Vector database identifier",

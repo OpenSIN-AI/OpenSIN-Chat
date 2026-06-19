@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: MIT
-import moment from "moment";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(localizedFormat);
 
 export function formatDate(dateString) {
   const date = isNaN(new Date(dateString).getTime())
@@ -11,11 +14,11 @@ export function formatDate(dateString) {
 }
 
 export function formatDateTimeAsMoment(dateString, format = "LLL") {
-  if (!dateString) return moment().format(format);
+  if (!dateString) return dayjs().format(format);
   try {
-    return moment(dateString).format(format);
+    return dayjs(dateString).format(format);
   } catch {
-    return moment().format(format);
+    return dayjs().format(format);
   }
 }
 

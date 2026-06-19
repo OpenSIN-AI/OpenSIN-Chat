@@ -6,6 +6,36 @@ const Providers = require("./providers/index.js");
 const { Telemetry } = require("../../../models/telemetry.js");
 const { v4 } = require("uuid");
 const { ToolReranker } = require("./utils/toolReranker.js");
+const Ajv = require("ajv");
+
+const TOOL_OUTPUT_MAX_BYTES = parseInt(
+  process.env.AGENT_TOOL_OUTPUT_MAX_BYTES,
+  10,
+) || 8192;
+const _ajv = new Ajv({ allErrors: true, strict: false });
+
+function sanitizeToolResultForLLM(result) {
+  const text =
+    typeof result === "string"
+      ? result
+      : result === undefined || result === null
+        ? ""
+        : (() => {
+            try {
+              return JSON.stringify(result);
+            } catch {
+              return String(result);
+            }
+          })();
+  const stripped = String(text)
+    .replace(/\u001b\[[0-9;]*[a-zA-Z]/g, "")
+    .replace(/[\x00-\x08\x0B-\x1F\x7F]/g, "");
+  const truncated =
+    stripped.length > TOOL_OUTPUT_MAX_BYTES
+      ? `${stripped.slice(0, TOOL_OUTPUT_MAX_BYTES)}\n...[truncated]`
+      : stripped;
+  return `<tool_output>\n${truncated}\n</tool_output>`;
+}
 
 /**
  * AIbitat is a class that manages the conversation between agents.
@@ -461,6 +491,9 @@ class AIbitat {
     };
 
     this._chats.push(chat);
+    if (this._chats.length > 200) {
+      this._chats.splice(0, this._chats.length - 200);
+    }
     this.emitter.emit("message", chat, this);
   }
 
@@ -520,6 +553,9 @@ class AIbitat {
       state: "error",
     };
     this._chats.push(chat);
+    if (this._chats.length > 200) {
+      this._chats.splice(0, this._chats.length - 200);
+    }
     this.emitter.emit("replyError", error, chat);
   }
 
@@ -971,6 +1007,39 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       this?.socket?.send(type, data);
     };
 
+    if (depth === 0) {
+      const timeoutMs = parseInt(process.env.AGENT_TIMEOUT_MS, 10);
+      this._invocationDeadline =
+        Date.now() + (!isNaN(timeoutMs) && timeoutMs > 0 ? timeoutMs : 300000);
+      const costCap = parseFloat(process.env.AGENT_MAX_COST_USD);
+      this._invocationCostCapUsd =
+        !isNaN(costCap) && costCap > 0 ? costCap : 5.0;
+      this._invocationCostUsd = 0;
+    }
+
+    const checkInvocationBudget = () => {
+      if (
+        this._invocationDeadline &&
+        Date.now() > this._invocationDeadline
+      ) {
+        this.handlerProps?.log?.(
+          "[error]: Agent wall-clock deadline exceeded; aborting.",
+        );
+        this.abort();
+        throw new Error("Agent wall-clock deadline exceeded");
+      }
+      if (
+        this._invocationCostCapUsd &&
+        this._invocationCostUsd > this._invocationCostCapUsd
+      ) {
+        this.handlerProps?.log?.(
+          `[error]: Agent invocation exceeded cost cap ($${this._invocationCostCapUsd.toFixed(2)}); aborting.`,
+        );
+        this.abort();
+        throw new Error("Agent invocation cost cap exceeded");
+      }
+    };
+
     const absoluteMaxDepth = this.maxToolCalls + 5;
     if (depth >= absoluteMaxDepth) {
       this.handlerProps?.log?.(
@@ -996,10 +1065,13 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     // Emit routing notification before the first completion so it appears above the response
     if (depth === 0) this?.flushRoutingMetadata?.(v4());
 
+    checkInvocationBudget();
+
     /** @type {{ functionCall: { name: string, arguments: string }, textResponse: string }} */
     const completionStream = await this.#safeProviderCall(() =>
       this.providerInstance.stream(messages, functions, eventHandler),
     );
+    this.#recordInvocationUsage();
 
     if (completionStream.functionCall) {
       const { name, arguments: args } = completionStream.functionCall;
@@ -1043,6 +1115,40 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       this.handlerProps?.log?.(
         `[debug]: ${fn.caller} is attempting to call \`${name}\` tool ${JSON.stringify(args, null, 2)}`,
       );
+
+      if (fn.parameters) {
+        try {
+          const validate = _ajv.compile(fn.parameters);
+          if (!validate(args)) {
+            const errs = JSON.stringify(validate.errors);
+            this.handlerProps?.log?.(
+              `[error]: ${name} rejected — args do not match schema: ${errs}`,
+            );
+            return await this.handleAsyncExecution(
+              [
+                ...messages,
+                {
+                  name,
+                  role: "function",
+                  content: `<tool_output>Invalid arguments for "${name}": ${errs}</tool_output>`,
+                  originalFunctionCall: completionStream.functionCall,
+                },
+              ],
+              reachedToolLimit ? [] : functions,
+              byAgent,
+              depth + 1,
+            );
+          }
+        } catch (e) {
+          this.handlerProps?.log?.(
+            `[warning]: ${name} schema compile failed; skipping validation: ${e.message}`,
+          );
+        }
+      } else {
+        this.handlerProps?.log?.(
+          `[warning]: ${name} has no parameters schema; skipping runtime validation.`,
+        );
+      }
 
       const result = await fn.handler(args);
       Telemetry.sendTelemetry(
@@ -1091,12 +1197,13 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       }
 
       const toolAttachments = this.collectToolAttachments();
+      const wrappedResult = sanitizeToolResultForLLM(result);
       const newMessages = [
         ...messages,
         {
           name,
           role: "function",
-          content: result,
+          content: wrappedResult,
           originalFunctionCall: completionStream.functionCall,
         },
       ];
@@ -1156,6 +1263,39 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       this?.socket?.send(type, data);
     };
 
+    if (depth === 0) {
+      const timeoutMs = parseInt(process.env.AGENT_TIMEOUT_MS, 10);
+      this._invocationDeadline =
+        Date.now() + (!isNaN(timeoutMs) && timeoutMs > 0 ? timeoutMs : 300000);
+      const costCap = parseFloat(process.env.AGENT_MAX_COST_USD);
+      this._invocationCostCapUsd =
+        !isNaN(costCap) && costCap > 0 ? costCap : 5.0;
+      this._invocationCostUsd = 0;
+    }
+
+    const checkInvocationBudget = () => {
+      if (
+        this._invocationDeadline &&
+        Date.now() > this._invocationDeadline
+      ) {
+        this.handlerProps?.log?.(
+          "[error]: Agent wall-clock deadline exceeded; aborting.",
+        );
+        this.abort();
+        throw new Error("Agent wall-clock deadline exceeded");
+      }
+      if (
+        this._invocationCostCapUsd &&
+        this._invocationCostUsd > this._invocationCostCapUsd
+      ) {
+        this.handlerProps?.log?.(
+          `[error]: Agent invocation exceeded cost cap ($${this._invocationCostCapUsd.toFixed(2)}); aborting.`,
+        );
+        this.abort();
+        throw new Error("Agent invocation cost cap exceeded");
+      }
+    };
+
     const absoluteMaxDepth = this.maxToolCalls + 5;
     if (depth >= absoluteMaxDepth) {
       this.handlerProps?.log?.(
@@ -1180,10 +1320,13 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     // Emit routing notification before the first completion so it appears above the response
     if (depth === 0) this?.flushRoutingMetadata?.(msgUUID);
 
+    checkInvocationBudget();
+
     // get the chat completion
     const completion = await this.#safeProviderCall(() =>
       this.providerInstance.complete(messages, functions),
     );
+    this.#recordInvocationUsage();
 
     if (completion.functionCall) {
       const { name, arguments: args } = completion.functionCall;

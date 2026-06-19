@@ -4,7 +4,10 @@
 import showToast from "@/utils/toast";
 import MobileConnection from "@/models/mobile";
 import { useState } from "react";
-import moment from "moment";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(localizedFormat);
 import { BugDroid, AppleLogo } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
@@ -71,7 +74,7 @@ export default function DeviceRow({
         </td>
         <td className="px-6">
           <div className="flex items-center gap-x-2">
-            {moment(device.createdAt).format(LLL_FORMAT)}
+            {dayjs(device.createdAt).format(LLL_FORMAT)}
             {device.user && (
               <div className="flex items-center gap-x-1">
                 <span className="text-xs text-theme-text-secondary">

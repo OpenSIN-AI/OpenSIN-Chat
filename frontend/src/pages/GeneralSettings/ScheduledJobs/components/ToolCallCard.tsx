@@ -8,7 +8,10 @@ import { safeJsonParse } from "@/utils/request";
 import { useTheme } from "@/hooks/useTheme";
 import DOMPurify from "@/utils/chat/purify";
 import { truncate } from "@/utils/strings";
-import moment from "moment";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(localizedFormat);
 
 const MAX_RESULT_LENGTH = 5000;
 
@@ -85,7 +88,7 @@ function ToolCallTimestamp({
   toolCall,
 }: ToolCallTimestampProps): JSX.Element | null {
   if (!toolCall.timestamp) return null;
-  const formatted = moment(toolCall.timestamp).format("LTS");
+  const formatted = dayjs(toolCall.timestamp).format("LTS");
   return <span className="text-xs text-theme-text-secondary">{formatted}</span>;
 }
 

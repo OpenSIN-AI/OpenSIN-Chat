@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect } from "vitest";
-import moment from "moment";
+import dayjs from "dayjs";
 import {
   formatDate,
   formatDateTimeAsMoment,
@@ -29,7 +29,7 @@ describe("formatDate", () => {
 describe("formatDateTimeAsMoment", () => {
   it("returns current moment for null input", () => {
     const result = formatDateTimeAsMoment(null, "YYYY-MM-DD");
-    const today = moment().format("YYYY-MM-DD");
+    const today = dayjs().format("YYYY-MM-DD");
     expect(result).toBe(today);
   });
 
@@ -38,7 +38,7 @@ describe("formatDateTimeAsMoment", () => {
     expect(result).toBe("2025-06-08");
   });
 
-  it('returns "Invalid date" for unparseable input (moment does not throw)', () => {
+  it('returns "Invalid date" for unparseable input (dayjs does not throw)', () => {
     const result = formatDateTimeAsMoment("garbage", "YYYY-MM-DD");
     expect(result).toBe("Invalid date");
   });

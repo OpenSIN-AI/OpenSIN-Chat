@@ -10,7 +10,10 @@ import paths from "@/utils/paths";
 import { nFormatter } from "@/utils/numbers";
 import EditEmbedModal from "./EditEmbedModal";
 import CodeSnippetModal from "./CodeSnippetModal";
-import moment from "moment";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
 import { safeJsonParse } from "@/utils/request";
 import { useTranslation } from "react-i18next";
 
@@ -109,9 +112,9 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
         >
           {
             // If the embed was created more than a day ago, show the date, otherwise show the time ago
-            moment(embed.createdAt).diff(moment(), "days") > 0
-              ? moment(embed.createdAt).format("MMM D, YYYY") // eslint-disable-line i18next/no-literal-string
-              : moment(embed.createdAt).fromNow()
+            dayjs(embed.createdAt).diff(dayjs(), "day") > 0
+              ? dayjs(embed.createdAt).format("MMM D, YYYY") // eslint-disable-line i18next/no-literal-string
+              : dayjs(embed.createdAt).fromNow()
           }
         </th>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">

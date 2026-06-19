@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Circle, Stop } from "@phosphor-icons/react";
-import moment from "moment";
+import dayjs from "dayjs";
 import paths from "@/utils/paths";
 import StatusBadge from "./StatusBadge";
 import ScheduledJobs from "@/models/scheduledJobs";
@@ -25,10 +25,8 @@ type Run = {
  */
 function formatRunDuration(run: Run): string {
   if (!run.completedAt || !run.startedAt) return `—`;
-  const duration = moment.duration(
-    moment(run.completedAt).diff(moment(run.startedAt)),
-  );
-  return formatDuration(duration.asSeconds());
+  const diffMs = dayjs(run.completedAt).diff(dayjs(run.startedAt));
+  return formatDuration(diffMs / 1000);
 }
 
 type RunRowProps = {

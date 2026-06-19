@@ -1,9 +1,14 @@
 // SPDX-License-Identifier: MIT
 import cronstrue from "cronstrue/i18n";
-import moment from "moment";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 /**
- * Convert a local hour and minute to UTC using moment.js.
+ * Convert a local hour and minute to UTC using dayjs.
  * Handles DST and timezone edge cases properly.
  * @param {number} localHour - Hour in local time (0-23).
  * @param {number} localMinute - Minute (0-59).
@@ -13,13 +18,14 @@ export function localTimeToUTC(
   localHour: number,
   localMinute: number = 0,
 ): { hour: number; minute: number } {
-  const local = moment().hour(localHour).minute(localMinute).second(0);
-  const utc = local.clone().utc();
-  return { hour: utc.hour(), minute: utc.minute() };
+  const tz = dayjs.tz.guess();
+  const local = dayjs().tz(tz).hour(localHour).minute(localMinute).second(0);
+  const utcMoment = local.utc();
+  return { hour: utcMoment.hour(), minute: utcMoment.minute() };
 }
 
 /**
- * Convert a UTC hour and minute to local time using moment.js.
+ * Convert a UTC hour and minute to local time using dayjs.
  * Handles DST and timezone edge cases properly.
  * @param {number} utcHour - Hour in UTC (0-23).
  * @param {number} utcMinute - Minute (0-59).
@@ -29,8 +35,9 @@ export function utcTimeToLocal(
   utcHour: number,
   utcMinute: number = 0,
 ): { hour: number; minute: number } {
-  const utc = moment.utc().hour(utcHour).minute(utcMinute).second(0);
-  const local = utc.clone().local();
+  const tz = dayjs.tz.guess();
+  const utcTime = dayjs.utc().hour(utcHour).minute(utcMinute).second(0);
+  const local = utcTime.tz(tz);
   return { hour: local.hour(), minute: local.minute() };
 }
 
