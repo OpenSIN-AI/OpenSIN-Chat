@@ -119,6 +119,7 @@ function workspaceParsedFilesEndpoints(app) {
           user?.id,
         );
 
+        await WorkspaceParsedFiles.delete({ id: parseInt(fileId) });
         return response.status(200).json({
           success: true,
           error: null,
@@ -128,10 +129,6 @@ function workspaceParsedFilesEndpoints(app) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
         return response.sendStatus(500);
-      } finally {
-        // eslint-disable-next-line
-        if (!fileId) return;
-        await WorkspaceParsedFiles.delete({ id: parseInt(fileId) });
       }
     },
   );

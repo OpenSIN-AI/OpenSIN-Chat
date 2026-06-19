@@ -47,6 +47,55 @@ async function validApiKey(request, response, next) {
 }
 
 /**
+ * Validates the Bearer API key AND requires the key owner to have admin role.
+ * Extends validApiKey with a role check when multi-user mode is enabled.
+ */
+async function validAdminApiKey(request, response, next) {
+  const multiUserMode = await SystemSettings.isMultiUserMode();
+  response.locals.multiUserMode = multiUserMode;
+
+  if (
+    process.env.NODE_ENV === "test" &&
+    process.env.INTEGRATION_TEST === "true"
+  ) {
+    next();
+    return;
+  }
+
+  const auth = request.header("Authorization");
+  const bearerKey = auth ? auth.split(" ")[1] : null;
+  if (!bearerKey) {
+    logFailedAuth(request, "missing_bearer");
+    response.status(403).json({
+      error: "No valid api key found.",
+    });
+    return;
+  }
+
+  const apiKey = await ApiKey.get({ secret: bearerKey });
+  if (!apiKey) {
+    logFailedAuth(request, "invalid_key");
+    response.status(403).json({
+      error: "No valid api key found.",
+    });
+    return;
+  }
+
+  if (multiUserMode && apiKey.createdBy) {
+    const { User } = require("../../models/user");
+    const user = await User.get({ id: apiKey.createdBy });
+    if (!user || user.role !== "admin") {
+      response.status(403).json({
+        error: "Admin access required.",
+      });
+      return;
+    }
+  }
+
+  next();
+}
+
+/**
  * Log a failed API authentication attempt. Never logs the attempted
  * credential — only IP, method, path, and failure reason.
  * @param {import("express").Request} request
@@ -65,4 +114,5 @@ function logFailedAuth(request, reason) {
 
 module.exports = {
   validApiKey,
+  validAdminApiKey,
 };

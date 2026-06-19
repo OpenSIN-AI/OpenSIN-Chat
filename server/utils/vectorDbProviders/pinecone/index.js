@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require("uuid");
 const { toChunks, getEmbeddingEngineSelection } = require("../../helpers");
 const { sourceIdentifier } = require("../../chats");
 const { VectorDatabase } = require("../base");
+const { withTimeout } = require("../../helpers/withTimeout");
 
 class PineconeDB extends VectorDatabase {
   constructor() {
@@ -26,7 +27,10 @@ class PineconeDB extends VectorDatabase {
     });
 
     const pineconeIndex = client.Index(process.env.PINECONE_INDEX);
-    const { status } = await client.describeIndex(process.env.PINECONE_INDEX);
+    const { status } = await withTimeout(
+      client.describeIndex(process.env.PINECONE_INDEX),
+      30000,
+    );
 
     if (!status.ready) throw new Error("Pinecone::Index not ready.");
     return { client, pineconeIndex, indexName: process.env.PINECONE_INDEX };

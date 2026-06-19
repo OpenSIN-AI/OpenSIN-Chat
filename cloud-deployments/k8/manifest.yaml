@@ -14,7 +14,7 @@ spec:
     - ReadWriteOnce                                                                                                                                      
   awsElasticBlockStore:    
     # This is the volume UUID from AWS EC2 EBS Volumes list.                                                                                                                              
-    volumeID: "{{ openafd_awsElasticBlockStore_volumeID }}"                                                                                                                           
+    volumeID: "{{ opensin_awsElasticBlockStore_volumeID }}"                                                                                                                           
     fsType: ext4
   nodeAffinity:                                                                                                                                          
     required:                                                                                                                                            
@@ -92,9 +92,9 @@ spec:
             memory: "512Mi"
             cpu: "250m"
         imagePullPolicy: IfNotPresent
-        image: "openafd/openafd:render"
+        image: "ghcr.io/opensin-ai/opensin-chat:1.13.0"
         securityContext:                     
-          allowPrivilegeEscalation: true                                                                                                                                                                                                                                                 
+          allowPrivilegeEscalation: false                                                                                                                                                                                                                                                 
           capabilities:                                                                                                                                                                                                                                                                  
             add:                                                                                                                                                                                                                                                                         
               - SYS_ADMIN                                                                                                                                                                                                                                                                
@@ -127,15 +127,15 @@ spec:
             exit $?
         readinessProbe:
           httpGet:
-            path: /v1/api/health
-            port: 8888
+            path: /ping
+            port: 3001
           initialDelaySeconds: 15
           periodSeconds: 5
           successThreshold: 2
         livenessProbe:
           httpGet:
-            path: /v1/api/health
-            port: 8888
+            path: /ping
+            port: 3001
           initialDelaySeconds: 15
           periodSeconds: 5
           failureThreshold: 3
@@ -149,7 +149,7 @@ spec:
           - name: SERVER_PORT
             value: "3001"
           - name: JWT_SECRET
-            value: "my-random-string-for-seeding" # Please generate random string at least 12 chars long.
+            value: "REPLACE_WITH_SECURE_SECRET" # Generate with: openssl rand -hex 24
           - name: STORAGE_DIR
             value: "/storage"
           - name: NODE_ENV

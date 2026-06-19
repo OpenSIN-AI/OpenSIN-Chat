@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useMemo } from "react";
 import useSWR from "swr";
 import {
   AUTH_TIMESTAMP,
@@ -80,8 +80,10 @@ export function AuthProvider(props) {
     },
   });
 
+  const value = useMemo(() => ({ store, actions }), [store, actions]);
+
   return (
-    <AuthContext.Provider value={{ store, actions }}>
+    <AuthContext.Provider value={value}>
       {props.children}
     </AuthContext.Provider>
   );

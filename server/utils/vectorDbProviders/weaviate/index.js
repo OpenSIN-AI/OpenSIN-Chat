@@ -8,6 +8,7 @@ const { toChunks, getEmbeddingEngineSelection } = require("../../helpers");
 const { camelCase } = require("../../helpers/camelcase");
 const { sourceIdentifier } = require("../../chats");
 const { VectorDatabase } = require("../base");
+const { withTimeout } = require("../../helpers/withTimeout");
 
 class Weaviate extends VectorDatabase {
   constructor() {
@@ -31,7 +32,7 @@ class Weaviate extends VectorDatabase {
         : {}),
     };
     const client = weaviate.client(options);
-    const isAlive = await await client.misc.liveChecker().do();
+    const isAlive = await withTimeout(client.misc.liveChecker().do(), 30000);
     if (!isAlive)
       throw new Error(
         "Weaviate::Invalid Alive signal received - is the service online?",

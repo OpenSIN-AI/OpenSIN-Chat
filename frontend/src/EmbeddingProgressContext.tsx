@@ -203,7 +203,6 @@ export function EmbeddingProgressProvider({ children }: any) {
         onclose: () => delete abortControllersRef.current[slug],
         onerror: () => {
           delete abortControllersRef.current[slug];
-          throw new Error("SSE connection error");
         },
       }).catch((err) => {
         console.warn("EmbeddingProgress SSE connection failed", err);

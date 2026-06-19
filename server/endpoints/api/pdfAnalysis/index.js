@@ -31,8 +31,8 @@ const upload = multer({
   // KEIN Dateigrößen-Limit — das Tool ist für Riesen-Dateien gebaut.
   // multer streamt multipart direkt auf Disk, RAM bleibt konstant.
   limits: {
-    fileSize: Infinity,
-    fieldSize: Infinity,
+    fileSize: 1024 * 1024 * 1024,
+    fieldSize: 1024 * 1024 * 1024,
   },
   fileFilter: (_req, file, cb) => {
     const ok =

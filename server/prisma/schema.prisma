@@ -218,19 +218,19 @@ model workspace_suggested_messages {
 }
 
 model workspace_chats {
-  id              Int      @id @default(autoincrement())
+  id              Int        @id @default(autoincrement())
   workspaceId     Int
   prompt          String
   response        String
-  include         Boolean  @default(true)
+  include         Boolean    @default(true)
   user_id         Int?
   thread_id       Int?
   api_session_id  String? // String identifier for only the dev API to partition chats in any mode.
-  createdAt       DateTime @default(now())
-  lastUpdatedAt   DateTime @default(now())
+  createdAt       DateTime   @default(now())
+  lastUpdatedAt   DateTime   @default(now())
   feedbackScore   Boolean?
-  memoryProcessed Boolean? @map("memory_processed")
-  users           users?   @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  memoryProcessed Boolean?   @map("memory_processed")
+  users           users?     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   workspace       workspaces @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@index([workspaceId])
@@ -252,7 +252,6 @@ model workspace_agent_invocations {
   user          users?     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   workspace     workspaces @relation(fields: [workspace_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
-  @@index([uuid])
   @@index([workspace_id])
   @@index([user_id])
 }
@@ -279,6 +278,9 @@ model cache_data {
   expiresAt     DateTime?
   createdAt     DateTime  @default(now())
   lastUpdatedAt DateTime  @default(now())
+
+  @@index([expiresAt])
+  @@index([belongsTo])
 }
 
 model embed_configs {
@@ -332,6 +334,7 @@ model event_logs {
 
   @@index([event])
   @@index([userId])
+  @@index([occurredAt])
 }
 
 model slash_command_presets {
@@ -488,6 +491,7 @@ model scheduled_job_runs {
   job         scheduled_jobs @relation(fields: [jobId], references: [id], onDelete: Cascade)
 
   @@index([jobId])
+  @@index([status])
 }
 
 model politicians {
@@ -584,22 +588,22 @@ model politician_votes {
 
 model politician_speeches {
   id              String    @id @default(uuid())
-  dedupeKey      String?   @unique // session/sitting/speaker/text hash for idempotent sync
-  politicianId   String
-  speakerName    String?   // extracted from Plenarprotokoll
-  speakerParty   String?   // faction/party at time of speech
-  session        Int? // Wahlperiode
-  sitting        Int? // Sitzungsnummer
-  speechTitle    String? // TOP description
-  speechText     String // full speech text
-  speechDate     DateTime?
-  documentUrl    String? // Link to Plenarprotokoll
-  pageNumbers    String? // e.g. "1234-1236"
-  rawData        String? // JSON blob
-  matchConfidence Float?   // 0..1 speaker matching confidence
-  vectorized     Boolean   @default(false)
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime? @updatedAt
+  dedupeKey       String?   @unique // session/sitting/speaker/text hash for idempotent sync
+  politicianId    String
+  speakerName     String? // extracted from Plenarprotokoll
+  speakerParty    String? // faction/party at time of speech
+  session         Int? // Wahlperiode
+  sitting         Int? // Sitzungsnummer
+  speechTitle     String? // TOP description
+  speechText      String // full speech text
+  speechDate      DateTime?
+  documentUrl     String? // Link to Plenarprotokoll
+  pageNumbers     String? // e.g. "1234-1236"
+  rawData         String? // JSON blob
+  matchConfidence Float? // 0..1 speaker matching confidence
+  vectorized      Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
 
   politician politicians @relation(fields: [politicianId], references: [id], onDelete: Cascade)
 
@@ -647,6 +651,10 @@ model politician_sync_log {
   details        String? // JSON metadata
   startedAt      DateTime  @default(now())
   completedAt    DateTime?
+
+  @@index([source])
+  @@index([status])
+  @@index([startedAt])
 }
 
 // Retry queue for failed sync phases (Issue #52). When a phase fails it is
@@ -654,14 +662,14 @@ model politician_sync_log {
 // due entries at the start of each run. A unique `phase` keeps a single live
 // entry per phase (members | abgeordnetenwatch | speeches).
 model politician_sync_retry {
-  id          Int       @id @default(autoincrement())
-  phase       String    @unique // members | abgeordnetenwatch | speeches
-  attempts    Int       @default(0)
-  status      String    @default("pending") // pending | exhausted | resolved
+  id          Int      @id @default(autoincrement())
+  phase       String   @unique // members | abgeordnetenwatch | speeches
+  attempts    Int      @default(0)
+  status      String   @default("pending") // pending | exhausted | resolved
   lastError   String?
-  nextRetryAt DateTime  @default(now())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  nextRetryAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model memories {
@@ -683,6 +691,7 @@ model memories {
 
   @@index([userId, workspaceId])
   @@index([userId, scope])
+  @@index([workspaceId])
 }
 
 model model_routers {

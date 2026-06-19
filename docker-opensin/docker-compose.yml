@@ -33,3 +33,13 @@ services:
       - opensin-chat
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+          cpus: '2'
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+          cpus: '2'

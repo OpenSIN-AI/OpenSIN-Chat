@@ -32,13 +32,13 @@ function checkPort(options = {}) {
 async function isPortInUse(port, host) {
   try {
     await checkPort({ port, host });
-    return true;
+    return false;
   } catch (error) {
-    if (!["EADDRNOTAVAIL", "EINVAL"].includes(error.code)) {
-      return false;
+    if (error.code === "EADDRINUSE") {
+      return true;
     }
+    return false;
   }
-  return false;
 }
 
 module.exports = {

@@ -8,15 +8,15 @@ sudo usermod -a -G docker ubuntu
 sudo systemctl enable docker  
 sudo systemctl start docker  
   
-mkdir -p /home/openafd
-cat <<EOF >/home/openafd/.env
+mkdir -p /home/opensin-chat
+cat <<EOF >/home/opensin-chat/.env
 ${env_content}
 EOF
 
-sudo docker pull openafd/openafd
-sudo docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v /home/openafd:/app/server/storage -v /home/openafd/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" openafd/openafd
+sudo docker pull ghcr.io/opensin-ai/opensin-chat:1.13.0
+sudo docker run -d -p 3001:3001 --cap-add SYS_ADMIN -v /home/opensin-chat:/app/server/storage -v /home/opensin-chat/.env:/app/server/.env -e STORAGE_DIR="/app/server/storage" ghcr.io/opensin-ai/opensin-chat:1.13.0
 echo "Container ID: $(sudo docker ps --latest --quiet)"  
   
-export ONLINE=$(curl -Is http://localhost:3001/api/ping | head -n 1|cut -d$' ' -f2)  
+export ONLINE=$(curl -Is http://localhost:3001/ping | head -n 1|cut -d$' ' -f2)  
 echo "Health check: $ONLINE"  
 echo "Setup complete! OpenSIN Chat instance is now online!"  

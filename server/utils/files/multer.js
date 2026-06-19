@@ -223,6 +223,7 @@ function handleAssetUpload(request, response, next) {
   const upload = multer({
     storage,
     limits: { fileSize: 100 * 1024 * 1024 },
+    fileFilter: executableFileFilter,
   }).single("logo");
   upload(request, response, function (err) {
     if (err) {
@@ -278,6 +279,13 @@ function handlePfpUpload(request, response, next) {
   const upload = multer({
     storage,
     limits: { fileSize: 5 * 1024 * 1024 },
+    fileFilter: (req, file, cb) => {
+      if (file.mimetype.startsWith("image/")) {
+        cb(null, true);
+      } else {
+        cb(new Error("Only image files are allowed"));
+      }
+    },
   }).single("file");
   upload(request, response, function (err) {
     if (err) {

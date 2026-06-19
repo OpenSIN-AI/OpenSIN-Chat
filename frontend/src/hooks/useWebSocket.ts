@@ -94,6 +94,14 @@ export default function useWebSocket({
           setWebsocket(null);
           setSocketId(null);
         });
+
+        socket.addEventListener("error", () => {
+          setAgentSessionActive(false);
+          setLoadingResponse(false);
+          setChatHistory([]);
+          window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
+        });
+
         setWebsocket(socket);
         setAgentSessionActive(true);
         window.dispatchEvent(new CustomEvent(AGENT_SESSION_START));

@@ -13,13 +13,13 @@ OpenShift has a unique security model that differs from standard Docker/Kubernet
 2. **GID 0 Requirement**: All containers run with GID 0 (root group) as the primary group
 3. **Restricted SCCs**: The default Security Context Constraints (SCCs) prevent containers from running as specific users
 
-These requirements are incompatible with the standard OpenSIN Chat Docker image, which uses a fixed `openafd` user with UID/GID 1000.
+These requirements are incompatible with the standard OpenSIN Chat Docker image, which uses a fixed `opensin` user with UID/GID 1000.
 
 ## Key Differences from Standard Dockerfile
 
 | Feature | Standard Docker | OpenShift Template |
 |---------|-----------------|-------------------|
-| File ownership | `openafd:openafd` | `openafd:0` (root group) |
+| File ownership | `opensin:opensin` | `opensin:0` (root group) |
 | File permissions | Standard | Group-writable (`g+w`) |
 | `/etc/passwd` | Read-only | Group-writable for UID injection |
 | Supplementary groups | None | Added to group 0 |
@@ -43,7 +43,7 @@ Use this template **only** if you are deploying to:
 From the repository root:
 
 ```bash
-docker build -f cloud-deployments/openshift/Dockerfile -t openafd:openshift .
+docker build -f cloud-deployments/openshift/Dockerfile -t opensin-chat:openshift .
 ```
 
 For multi-architecture builds:
@@ -52,7 +52,7 @@ For multi-architecture builds:
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
   -f cloud-deployments/openshift/Dockerfile \
-  -t your-registry/openafd:openshift \
+  -t your-registry/opensin-chat:openshift \
   --push .
 ```
 
@@ -62,16 +62,16 @@ docker buildx build \
 
 ```bash
 # Create a new project (namespace)
-oc new-project openafd
+oc new-project opensin-chat
 
 # Create a deployment
-oc new-app your-registry/openafd:openshift
+oc new-app your-registry/opensin-chat:openshift
 
 # Expose the service
-oc expose svc/openafd --port=3001
+oc expose svc/opensin-chat --port=3001
 
 # Set required environment variables
-oc set env deployment/openafd \
+oc set env deployment/opensin-chat \
   STORAGE_DIR=/app/server/storage \
   JWT_SECRET=$(openssl rand -hex 32)
 ```
@@ -82,20 +82,20 @@ oc set env deployment/openafd \
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: openafd
+  name: opensin-chat
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: openafd
+      app: opensin-chat
   template:
     metadata:
       labels:
-        app: openafd
+        app: opensin-chat
     spec:
       containers:
-      - name: openafd
-        image: your-registry/openafd:openshift
+      - name: opensin-chat
+        image: your-registry/opensin-chat:openshift
         ports:
         - containerPort: 3001
         env:
@@ -104,7 +104,7 @@ spec:
         - name: JWT_SECRET
           valueFrom:
             secretKeyRef:
-              name: openafd-secrets
+              name: opensin-chat-secrets
               key: jwt-secret
         volumeMounts:
         - name: storage
@@ -112,7 +112,7 @@ spec:
       volumes:
       - name: storage
         persistentVolumeClaim:
-          claimName: openafd-storage
+          claimName: opensin-chat-storage
 ```
 
 ## Persistent Storage
@@ -123,7 +123,7 @@ OpenShift PersistentVolumeClaims work with this image. Ensure the PVC is created
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: openafd-storage
+  name: opensin-chat-storage
 spec:
   accessModes:
     - ReadWriteOnce

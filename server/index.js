@@ -30,22 +30,33 @@ process.on("beforeExit", () => {
 const app = buildApp();
 
 // Start the HTTP/HTTPS server and boot background services.
-bootApp(app, process.env.SERVER_PORT || 3001);
+// The returned `server` object is used for graceful shutdown.
+const { server: httpServer } = bootApp(app, process.env.SERVER_PORT || 3001);
 
 // Start persistent background queue after all endpoints are registered so
 // request handlers can add jobs immediately.
 BackgroundQueue.start();
 
-// Graceful shutdown: stop the queue before exiting so no job is interrupted
-// mid-write (SQLite transactions would catch this, but consistency is safer).
-process.on("SIGTERM", () => {
-  console.log("[Server] SIGTERM received, stopping queue...");
+// Graceful shutdown: stop the queue and close the HTTP server before exiting
+// so no job is interrupted mid-write (SQLite transactions would catch this,
+// but consistency is safer) and in-progress HTTP requests can finish.
+function shutdown(signal) {
+  console.log(`[Server] ${signal} received, shutting down...`);
   BackgroundQueue.stop();
-  process.exit(0);
-});
+  if (httpServer && typeof httpServer.close === "function") {
+    httpServer.close(() => {
+      console.log("[Server] HTTP server closed, exiting.");
+      process.exit(0);
+    });
+    // Force-exit after 10s if connections hang
+    setTimeout(() => {
+      console.warn("[Server] Graceful shutdown timeout, forcing exit.");
+      process.exit(1);
+    }, 10000).unref();
+  } else {
+    process.exit(0);
+  }
+}
 
-process.on("SIGINT", () => {
-  console.log("[Server] SIGINT received, stopping queue...");
-  BackgroundQueue.stop();
-  process.exit(0);
-});
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));

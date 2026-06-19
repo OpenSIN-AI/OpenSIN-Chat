@@ -26,14 +26,16 @@ export default function handleChat(
     routedTo = null,
   } = chatResult;
 
+  const chatHistory = [..._chatHistory];
+
   if (type === "modelRouteNotification") {
-    _chatHistory.push({
+    chatHistory.push({
       type: "modelRouteNotification",
       uuid,
       routedTo,
       role: "assistant",
     });
-    setChatHistory([..._chatHistory]);
+    setChatHistory([...chatHistory]);
     return;
   }
 
@@ -54,7 +56,7 @@ export default function handleChat(
         metrics,
       },
     ]);
-    _chatHistory.push({
+    chatHistory.push({
       type,
       uuid,
       content: textResponse,
@@ -83,7 +85,7 @@ export default function handleChat(
         metrics,
       },
     ]);
-    _chatHistory.push({
+    chatHistory.push({
       uuid,
       content: textResponse,
       role: "assistant",
@@ -100,9 +102,9 @@ export default function handleChat(
     type === "textResponseChunk" ||
     type === "finalizeResponseStream"
   ) {
-    const chatIdx = _chatHistory.findIndex((chat) => chat.uuid === uuid);
+    const chatIdx = chatHistory.findIndex((chat) => chat.uuid === uuid);
     if (chatIdx !== -1) {
-      const existingHistory = { ..._chatHistory[chatIdx] };
+      const existingHistory = { ...chatHistory[chatIdx] };
       let updatedHistory;
 
       // If the response is finalized, we can set the loading state to false.
@@ -117,7 +119,7 @@ export default function handleChat(
           metrics,
         };
 
-        _chatHistory[chatIdx - 1] = { ..._chatHistory[chatIdx - 1], chatId }; // update prompt with chatID
+        chatHistory[chatIdx - 1] = { ...chatHistory[chatIdx - 1], chatId }; // update prompt with chatID
 
         emitAssistantMessageCompleteEvent(chatId);
         setLoadingResponse(false);
@@ -134,9 +136,9 @@ export default function handleChat(
           metrics,
         };
       }
-      _chatHistory[chatIdx] = updatedHistory;
+      chatHistory[chatIdx] = updatedHistory;
     } else {
-      _chatHistory.push({
+      chatHistory.push({
         uuid,
         sources,
         error,
@@ -149,12 +151,12 @@ export default function handleChat(
         metrics,
       });
     }
-    setChatHistory([..._chatHistory]);
+    setChatHistory([...chatHistory]);
   } else if (type === "agentInitWebsocketConnection") {
     setWebsocket(chatResult.websocketUUID);
   } else if (type === "stopGeneration") {
-    const chatIdx = _chatHistory.length - 1;
-    const existingHistory = { ..._chatHistory[chatIdx] };
+    const chatIdx = chatHistory.length - 1;
+    const existingHistory = { ...chatHistory[chatIdx] };
     const updatedHistory = {
       ...existingHistory,
       sources: [],
@@ -164,9 +166,9 @@ export default function handleChat(
       pending: false,
       metrics,
     };
-    _chatHistory[chatIdx] = updatedHistory;
+    chatHistory[chatIdx] = updatedHistory;
 
-    setChatHistory([..._chatHistory]);
+    setChatHistory([...chatHistory]);
     setLoadingResponse(false);
   }
 

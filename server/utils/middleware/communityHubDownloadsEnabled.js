@@ -31,6 +31,9 @@ function communityHubDownloadsEnabled(request, response, next) {
   // If the admin specifically did not set the system to `allow_all` then downloads are limited to verified items or private items only.
   // This is to prevent users from downloading unverified items and importing them into their own instance without understanding the risks.
   const item = response.locals.bundleItem;
+  if (!item) {
+    return response.status(500).json({ error: "Bundle item not loaded" });
+  }
   if (
     !item.verified &&
     item.visibility !== "private" &&

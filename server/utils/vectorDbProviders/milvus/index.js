@@ -12,6 +12,7 @@ const { storeVectorResult, cachedVectorInformation } = require("../../files");
 const { toChunks, getEmbeddingEngineSelection } = require("../../helpers");
 const { sourceIdentifier } = require("../../chats");
 const { VectorDatabase } = require("../base");
+const { withTimeout } = require("../../helpers/withTimeout");
 
 class Milvus extends VectorDatabase {
   constructor() {
@@ -43,7 +44,7 @@ class Milvus extends VectorDatabase {
       password: process.env.MILVUS_PASSWORD,
     });
 
-    const { isHealthy } = await client.checkHealth();
+    const { isHealthy } = await withTimeout(client.checkHealth(), 30000);
     if (!isHealthy)
       throw new Error(
         `${this.name}::Invalid Heartbeat received - is the instance online?`,

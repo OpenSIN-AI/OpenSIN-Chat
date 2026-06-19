@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require("uuid");
 const { toChunks, getEmbeddingEngineSelection } = require("../../helpers");
 const { sourceIdentifier } = require("../../chats");
 const { VectorDatabase } = require("../base");
+const { withTimeout } = require("../../helpers/withTimeout");
 
 class QDrant extends VectorDatabase {
   constructor() {
@@ -28,7 +29,9 @@ class QDrant extends VectorDatabase {
         : {}),
     });
 
-    const isAlive = (await client.api("cluster")?.clusterStatus())?.ok || false;
+    const isAlive =
+      (await withTimeout(client.api("cluster")?.clusterStatus(), 30000))?.ok ||
+      false;
     if (!isAlive)
       throw new Error(
         "QDrant::Invalid Heartbeat received - is the instance online?",

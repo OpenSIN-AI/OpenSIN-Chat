@@ -116,7 +116,9 @@ describe("workspaceThreadEndpoints", () => {
 
   describe("DELETE /workspace/:slug/thread-bulk-delete", () => {
     it("bulk deletes threads", async () => {
+      WorkspaceThread.where.mockResolvedValue([{ id: 10 }, { id: 11 }]);
       WorkspaceThread.delete.mockResolvedValue();
+      WorkspaceChats.delete.mockResolvedValue();
       const res = await app.call("delete", "/workspace/ws/thread-bulk-delete", {
         body: { slugs: ["t1", "t2"] },
         locals: WS_LOCALS,

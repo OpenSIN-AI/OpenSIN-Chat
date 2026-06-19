@@ -11,6 +11,7 @@ const crypto = require("node:crypto");
 const LOG_PREFIX = "\x1b[32m[JWT Secret]\x1b[0m";
 const WEAK_VALUES = new Set([
   "my-random-string-for-seeding",
+  "change-me-please",
   "passphrase",
   "salt",
   "hunter2",

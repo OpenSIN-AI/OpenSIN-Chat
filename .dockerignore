@@ -25,6 +25,7 @@ collector/outputs
 
 # Docker / env files (mounted at runtime or contain secrets)
 docker/.env
+docker-opensin/.env
 .env
 .env.example
 
@@ -34,6 +35,20 @@ docker/.env
 .idea
 *.swp
 *.swo
+
+# OpenSIN tooling / CI / internal directories (not needed in the image)
+.sin
+.sin-code
+.pcpm
+.claude
+.github
+n8n
+ceo-audits
+history
+images
+extras
+locales
+docker-opensin
 
 # Test artifacts and large downloads
 frontend/.vitest

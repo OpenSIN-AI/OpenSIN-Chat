@@ -87,7 +87,7 @@ function chatEndpoints(app) {
           },
           user?.id,
         );
-        response.end();
+        if (!response.writableEnded) response.end();
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e?.message || "Unknown error", e);
@@ -99,7 +99,7 @@ function chatEndpoints(app) {
           close: true,
           error: e?.message || String(e),
         });
-        response.end();
+        if (!response.writableEnded) response.end();
       }
     },
   );
@@ -195,7 +195,7 @@ function chatEndpoints(app) {
           },
           user?.id,
         );
-        response.end();
+        if (!response.writableEnded) response.end();
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e?.message || "Unknown error", e);
@@ -207,7 +207,7 @@ function chatEndpoints(app) {
           close: true,
           error: e?.message || String(e),
         });
-        response.end();
+        if (!response.writableEnded) response.end();
       }
     },
   );

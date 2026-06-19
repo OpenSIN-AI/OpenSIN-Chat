@@ -116,13 +116,20 @@ const Document = {
         totalDocs: additions.length,
       };
 
-      const data = await fileData(path);
+      let data;
+      try {
+        data = await fileData(path);
+      } catch (err) {
+        console.error("Error loading file data:", err.message);
+        data = null;
+      }
       if (!data) {
         emitProgress(workspace.slug, {
           type: "doc_failed",
           ...docProgress,
           error: "Failed to load file data",
         });
+        failedToEmbed.push(path);
         continue;
       }
 

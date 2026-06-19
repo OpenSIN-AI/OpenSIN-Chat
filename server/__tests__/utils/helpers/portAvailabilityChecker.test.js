@@ -30,7 +30,7 @@ describe("getLocalHosts", () => {
 });
 
 describe("isPortInUse", () => {
-  test("returns true when port is available", async () => {
+  test("returns false when port is available", async () => {
     // Use a high random port that's likely free
     const port = 49152 + Math.floor(Math.random() * 1000);
     const result = await isPortInUse(port, "127.0.0.1");

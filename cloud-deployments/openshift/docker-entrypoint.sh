@@ -5,7 +5,7 @@
 # If the current UID has no entry, dynamically add one using nss_wrapper-style injection.
 if ! whoami &> /dev/null 2>&1; then
   if [ -w /etc/passwd ]; then
-    echo "openafd:x:$(id -u):0:OpenSIN Chat User:/app:/bin/bash" >> /etc/passwd
+    echo "opensin:x:$(id -u):0:OpenSIN Chat User:/app:/bin/bash" >> /etc/passwd
   fi
 fi
 export HOME=/app

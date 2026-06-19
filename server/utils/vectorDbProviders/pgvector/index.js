@@ -5,6 +5,7 @@ const { TextSplitter } = require("../../TextSplitter");
 const { v4: uuidv4 } = require("uuid");
 const { sourceIdentifier } = require("../../chats");
 const { VectorDatabase } = require("../base");
+const { withTimeout } = require("../../helpers/withTimeout");
 
 /*
  Embedding Table Schema (table name defined by user)
@@ -290,7 +291,7 @@ class PGVector extends VectorDatabase {
     if (!PGVector.tableName()) throw new Error("No table name provided");
 
     const client = this.client();
-    await client.connect();
+    await withTimeout(client.connect(), 30000);
     return client;
   }
 

@@ -176,10 +176,9 @@ async function processGroup(groupChats) {
     log(
       `Applied ${result.workspaceCount} workspace + ${result.globalCount} global + ${result.updatedCount} updated memories for ${tag} in "${workspace.name}". Reviewed ${chats.length} chat(s).`,
     );
+    await WorkspaceChats.markMemoryProcessed(unprocessedIds);
   } catch (error) {
     log(`Error processing ${tag}: ${error.message}`);
-  } finally {
-    await WorkspaceChats.markMemoryProcessed(unprocessedIds);
   }
 }
 

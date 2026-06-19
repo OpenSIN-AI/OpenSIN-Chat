@@ -7,8 +7,22 @@ const { PrismaClient } = require("@prisma/client");
 // npx prisma migrate reset -> resets the db
 
 const logLevels = ["error", "info", "warn"]; // add "query" to debug query logs
-const prisma = new PrismaClient({
+
+const prismaClientConfig = {
   log: logLevels,
-});
+};
+
+if (process.env.DATABASE_URL?.startsWith("postgresql://")) {
+  prismaClientConfig.datasources = {
+    db: {
+      url:
+        process.env.DATABASE_URL +
+        (process.env.DATABASE_URL.includes("?") ? "&" : "?") +
+        "connection_limit=10&pool_timeout=10",
+    },
+  };
+}
+
+const prisma = new PrismaClient(prismaClientConfig);
 
 module.exports = prisma;

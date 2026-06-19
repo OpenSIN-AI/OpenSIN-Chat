@@ -35,7 +35,7 @@ export async function fetchWithTimeout(
     // Distinguish a real timeout/cancel from a network error.
     if (e.name === "AbortError") {
       if (externalSignal?.aborted) throw e; // intentional cancel — let caller ignore
-      throw new Error("Zeitüberschreitung – der Server antwortet nicht.");
+      throw new Error("Request timeout — server did not respond.");
     }
     throw e;
   } finally {

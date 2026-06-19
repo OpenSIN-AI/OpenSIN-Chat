@@ -22,6 +22,7 @@ class AnthropicLLM {
     const AnthropicAI = require("@anthropic-ai/sdk");
     const anthropic = new AnthropicAI({
       apiKey: process.env.ANTHROPIC_API_KEY,
+      timeout: 120000,
       defaultHeaders: {
         "User-Agent": getOpenSINChatUserAgent(),
       },
@@ -230,7 +231,7 @@ class AnthropicLLM {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
-      return { textResponse: error, metrics: {} };
+      return { textResponse: error.message, metrics: {} };
     }
   }
 

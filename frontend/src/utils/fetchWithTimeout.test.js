@@ -46,7 +46,7 @@ describe("fetchWithTimeout", () => {
     });
     vi.advanceTimersByTime(5000);
 
-    await expect(promise).rejects.toThrow("Zeitüberschreitung");
+    await expect(promise).rejects.toThrow("Request timeout");
   });
 
   it("re-throws original AbortError when external signal is already aborted", async () => {
@@ -106,7 +106,7 @@ describe("fetchWithTimeout", () => {
     expect(capturedSignal.aborted).toBe(false);
 
     vi.advanceTimersByTime(1);
-    await expect(promise).rejects.toThrow("Zeitüberschreitung");
+    await expect(promise).rejects.toThrow("Request timeout");
   });
 
   it("respects custom timeoutMs", async () => {
@@ -128,7 +128,7 @@ describe("fetchWithTimeout", () => {
     expect(capturedSignal.aborted).toBe(false);
 
     vi.advanceTimersByTime(1);
-    await expect(promise).rejects.toThrow("Zeitüberschreitung");
+    await expect(promise).rejects.toThrow("Request timeout");
   });
 
   it("propagates network errors", async () => {

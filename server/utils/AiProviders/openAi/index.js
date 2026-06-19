@@ -19,6 +19,7 @@ class OpenAiLLM {
 
     this.openai = new OpenAIApi({
       apiKey: process.env.OPEN_AI_KEY,
+      timeout: 120000,
     });
     this.model = modelPreference || process.env.OPEN_MODEL_PREF || "gpt-4o";
     this.limits = {

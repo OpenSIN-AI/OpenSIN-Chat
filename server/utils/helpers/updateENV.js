@@ -846,8 +846,8 @@ async function validDockerizedUrl(input = "") {
     if (!localInterfaces.includes(hostname)) return null;
     if (isNaN(port)) return "Invalid URL: Port is not specified or invalid";
 
-    const isPortAvailableFromDocker = await isPortInUse(port, hostname);
-    if (isPortAvailableFromDocker)
+    const isPortInUseFromDocker = await isPortInUse(port, hostname);
+    if (!isPortInUseFromDocker)
       return "Port is not running a reachable service on loopback address from inside the OpenSIN Chat container. Please use host.docker.internal (for linux use 172.17.0.1), a real machine ip, or domain to connect to your service.";
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -1140,12 +1140,11 @@ function dumpENV() {
 
   // Simple sanitization of each value to prevent ENV injection via newline or quote escaping.
   function sanitizeValue(value) {
-    const offendingChars =
-      /[\n\r\t\v\f\u0085\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000"'`#]/;
-    const firstOffendingCharIndex = value.search(offendingChars);
-    if (firstOffendingCharIndex === -1) return value;
-
-    return value.substring(0, firstOffendingCharIndex);
+    const controlChars =
+      /[\n\r\t\v\f\u0085\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]/g;
+    return String(value)
+      .replace(controlChars, "")
+      .replace(/'/g, "'\\''");
   }
 
   for (const key of protectedKeys) {

@@ -9,6 +9,7 @@ const { v4: uuidv4 } = require("uuid");
 const { sourceIdentifier } = require("../../chats");
 const { NativeEmbeddingReranker } = require("../../EmbeddingRerankers/native");
 const { VectorDatabase } = require("../base");
+const { withTimeout } = require("../../helpers/withTimeout");
 const path = require("path");
 
 /**
@@ -32,7 +33,7 @@ class LanceDb extends VectorDatabase {
 
   /** @returns {Promise<{client: LanceClient}>} */
   async connect() {
-    const client = await lancedb.connect(this.uri);
+    const client = await withTimeout(lancedb.connect(this.uri), 30000);
     return { client };
   }
 

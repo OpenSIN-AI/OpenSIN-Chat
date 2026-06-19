@@ -193,7 +193,7 @@ COPY --chown=opensin:opensin ./collector/package.json ./collector/yarn.lock /app
 WORKDIR /app/collector
 ENV PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testing-public
 # WORKAROUND: force git to resolve github ssh://git@github.com/... over https.
-# Base image has no openssh-client; the Mintplex-Labs/epub2-static dep in
+# Base image has no openssh-client; the epub2-static dep in
 # collector/package.json is pinned to ssh, which crashes yarn install with
 # "ssh: not found". This redirect is non-destructive and only affects this stage.
 RUN git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
@@ -213,7 +213,6 @@ ARG APP_VERSION=dev
 ARG GIT_SHA=unknown
 ENV NODE_ENV=production
 ENV OPENSIN_CHAT_RUNTIME=docker
-ENV ANYTHING_LLM_RUNTIME=docker
 ENV DEPLOYMENT_VERSION=1.13.0
 ENV APP_VERSION=${APP_VERSION}
 ENV GIT_SHA=${GIT_SHA}

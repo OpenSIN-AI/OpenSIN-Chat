@@ -6,7 +6,7 @@ initContainers: []
   #   command: ['sh', '-c', 'chown -R 1000:1000 /storage']
 
 image:
-  repository: mintplexlabs/anythingllm
+  repository: ghcr.io/opensin-ai/opensin-chat
   pullPolicy: IfNotPresent
   # tag leer lassen -> nutzt Chart.appVersion
   tag: ""
@@ -102,13 +102,11 @@ podSecurityContext:
   # in order to have the right permissions on mounted volumes
   fsGroup: 1000
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  allowPrivilegeEscalation: false
 
 # OpenSIN Chat configuration options, these are stored in a ConfigMap and passed
 # to the container as environment variables.

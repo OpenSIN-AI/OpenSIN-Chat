@@ -13,6 +13,7 @@ import useCustomAppName from "@/hooks/useCustomAppName";
 const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
   const { t } = useTranslation();
   const [username, setUsername] = useState("");
+  const [loading, setLoading] = useState(false);
   const [recoveryCodeInputs, setRecoveryCodeInputs] = useState(
     Array(2).fill(""),
   );
@@ -23,12 +24,17 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
     setRecoveryCodeInputs(updatedCodes);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const recoveryCodes = recoveryCodeInputs.filter(
-      (code) => code.trim() !== "",
-    );
-    onSubmit(username, recoveryCodes);
+    setLoading(true);
+    try {
+      const recoveryCodes = recoveryCodeInputs.filter(
+        (code) => code.trim() !== "",
+      );
+      await onSubmit(username, recoveryCodes);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -88,9 +94,12 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
       <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
         <button
           type="submit"
-          className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full"
+          disabled={loading}
+          className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {t("login.password-reset.title")}
+          {loading
+            ? t("login.multi-user.validating")
+            : t("login.password-reset.title")}
         </button>
         <button
           type="button"
@@ -108,10 +117,16 @@ const ResetPasswordForm = ({ onSubmit }) => {
   const { t } = useTranslation();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(newPassword, confirmPassword);
+    setLoading(true);
+    try {
+      await onSubmit(newPassword, confirmPassword);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -164,9 +179,12 @@ const ResetPasswordForm = ({ onSubmit }) => {
       <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
         <button
           type="submit"
-          className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full"
+          disabled={loading}
+          className="text-zinc-950 bg-white hover:bg-zinc-300 light:bg-sky-200 light:text-slate-950 light:hover:bg-sky-300 text-sm font-semibold rounded-lg border-primary-button h-[34px] w-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {t("multiUserAuth.resetPassword.title")}
+          {loading
+            ? t("login.multi-user.validating")
+            : t("multiUserAuth.resetPassword.title")}
         </button>
       </div>
     </form>
@@ -327,7 +345,7 @@ export default function MultiUserAuth() {
               />
             </div>
             {error && (
-              <p className="text-red-400 text-sm">
+              <p role="alert" className="text-red-400 text-sm">
                 {t("login.multi-user.errorPrefix", { error })}
               </p>
             )}

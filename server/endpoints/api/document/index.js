@@ -1091,6 +1091,9 @@ function apiDocumentEndpoints(app) {
       */
       try {
         const { files } = reqBody(request);
+        if (!Array.isArray(files) || files.length === 0) {
+          return response.status(400).json({ success: false, error: "Files array is required." });
+        }
         const docpaths = files.map(({ from }) => from);
         const documents = await Document.where({ docpath: { in: docpaths } });
         const embeddedFiles = documents.map((doc) => doc.docpath);
@@ -1118,28 +1121,27 @@ function apiDocumentEndpoints(app) {
             });
           });
         });
-        Promise.all(movePromises)
-          .then(() => {
-            const unmovableCount = files.length - moveableFiles.length;
-            if (unmovableCount > 0) {
-              response.status(200).json({
-                success: true,
-                message: `${unmovableCount}/${files.length} files not moved. Unembed them from all workspaces.`,
-              });
-            } else {
-              response.status(200).json({
-                success: true,
-                message: null,
-              });
-            }
-          })
-          .catch((err) => {
-            // eslint-disable-next-line no-console
-            console.error("Error moving files:", err);
-            response
-              .status(500)
-              .json({ success: false, message: "Failed to move some files." });
-          });
+        try {
+          await Promise.all(movePromises);
+          const unmovableCount = files.length - moveableFiles.length;
+          if (unmovableCount > 0) {
+            response.status(200).json({
+              success: true,
+              message: `${unmovableCount}/${files.length} files not moved. Unembed them from all workspaces.`,
+            });
+          } else {
+            response.status(200).json({
+              success: true,
+              message: null,
+            });
+          }
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error("Error moving files:", err);
+          response
+            .status(500)
+            .json({ success: false, message: "Failed to move some files." });
+        }
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);

@@ -18,7 +18,7 @@
 # - Your container will build and boot. You now have OpenSIN Chat on HuggingFace. Your data is stored in the persistent storage attached.
 # Have Fun 🤗 
 # Have issues? Check the logs on HuggingFace for clues.
-FROM openafd/openafd:render
+FROM ubuntu:noble-20251013
 
 USER root
 RUN mkdir -p /data/storage
@@ -28,4 +28,4 @@ USER openafd
 ENV STORAGE_DIR="/data/storage"
 ENV SERVER_PORT=7860
 
-ENTRYPOINT ["/bin/bash", "/usr/local/bin/render-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/usr/local/bin/docker-entrypoint.sh"]

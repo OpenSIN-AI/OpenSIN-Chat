@@ -25,6 +25,7 @@ class GenericOpenAiLLM {
     this.openai = new OpenAIApi({
       baseURL: this.basePath,
       apiKey: process.env.GENERIC_OPEN_AI_API_KEY ?? null,
+      timeout: 120000,
       defaultHeaders: {
         "User-Agent": getOpenSINChatUserAgent(),
         ...GenericOpenAiLLM.parseCustomHeaders(),

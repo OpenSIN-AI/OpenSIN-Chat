@@ -63,7 +63,7 @@ process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled Rejection at:", promise, "reason:", reason);
 });
 
-const FILE_LIMIT = process.env.BODY_LIMIT || "5120MB";
+const FILE_LIMIT = process.env.BODY_LIMIT || "50MB";
 
 let activeApp = null;
 // Kept as a reference to prevent the HTTP server from being garbage-collected.

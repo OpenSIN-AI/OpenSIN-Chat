@@ -144,7 +144,7 @@ function workspaceEndpoints(app) {
       try {
         const { slug = null } = request.params;
         const user = await userFromSession(request, response);
-        const currWorkspace = multiuserMode(response)
+        const currWorkspace = multiUserMode(response)
           ? await Workspace.getWithUser(user, { slug })
           : await Workspace.get({ slug });
 
@@ -225,8 +225,9 @@ function workspaceEndpoints(app) {
       try {
         const { slug = null } = request.params;
         const { files: filePaths } = reqBody(request);
+        const user = await userFromSession(request, response);
         const currWorkspace = multiUserMode(response)
-          ? await Workspace.get({ slug })
+          ? await Workspace.getWithUser(user, { slug })
           : await Workspace.get({ slug });
 
         if (!currWorkspace) {
@@ -789,7 +790,7 @@ function workspaceEndpoints(app) {
         // eslint-disable-next-line no-console
         console.error("Error processing the suggested messages:", error);
         response.status(500).json({
-          success: true,
+          success: false,
           message: "Error saving the suggested messages.",
         });
       }
@@ -961,6 +962,8 @@ function workspaceEndpoints(app) {
         const workspaceRecord = await Workspace.get({
           slug,
         });
+
+        if (!workspaceRecord) return response.sendStatus(404);
 
         const oldPfpFilename = workspaceRecord.pfpFilename;
         if (oldPfpFilename) {
@@ -1157,7 +1160,7 @@ function workspaceEndpoints(app) {
       try {
         const { slug = null } = request.params;
         const user = await userFromSession(request, response);
-        const currWorkspace = multiuserMode(response)
+        const currWorkspace = multiUserMode(response)
           ? await Workspace.getWithUser(user, { slug })
           : await Workspace.get({ slug });
 

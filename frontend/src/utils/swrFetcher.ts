@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
 /**
  * Global SWR fetcher used as the default `fetcher` in `<SWRConfig>`.
@@ -24,7 +25,7 @@ export async function swrFetcher(key) {
       ? key
       : `${API_BASE}${key}`;
 
-  const res = await fetch(url, { headers: baseHeaders() });
+  const res = await fetchWithTimeout(url, { headers: baseHeaders() });
   if (!res.ok) {
     const error = new Error(
       `Request failed with HTTP ${res.status}`,

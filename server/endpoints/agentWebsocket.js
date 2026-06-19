@@ -24,12 +24,7 @@ function relayToSocket(message) {
 }
 
 async function isAuthorizedRequest(request) {
-  if (
-    process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "test" ||
-    !process.env.AUTH_TOKEN ||
-    !process.env.JWT_SECRET
-  ) {
+  if (process.env.NODE_ENV === "test" && process.env.INTEGRATION_TEST === "true") {
     return true;
   }
 

@@ -139,8 +139,10 @@ describe("handleFileUpload (GUI document uploads)", () => {
     const { nextCalled } = await runHandler(multerHandlers.handleFileUpload, req);
 
     expect(nextCalled).toBe(true);
-    expect(fs.existsSync(path.join(hotdir, "doc.txt"))).toBe(true);
-    expect(fs.readFileSync(path.join(hotdir, "doc.txt"), "utf8")).toBe("abc");
+    const files = fs.readdirSync(hotdir);
+    const written = files.find((f) => f.endsWith("_doc.txt"));
+    expect(written).toBeDefined();
+    expect(fs.readFileSync(path.join(hotdir, written), "utf8")).toBe("abc");
   });
 
   test("re-decodes latin1 filenames to utf8 (umlauts survive)", async () => {
@@ -152,7 +154,8 @@ describe("handleFileUpload (GUI document uploads)", () => {
 
     expect(nextCalled).toBe(true);
     expect(outReq.file.originalname).toBe("übersicht.txt");
-    expect(fs.existsSync(path.join(hotdir, "übersicht.txt"))).toBe(true);
+    const files = fs.readdirSync(hotdir);
+    expect(files.some((f) => f.endsWith("_übersicht.txt"))).toBe(true);
   });
 
   test("runs filenames through normalizePath and sanitizeFileName", async () => {
@@ -213,7 +216,8 @@ describe("handleAPIFileUpload (API document uploads)", () => {
     );
 
     expect(nextCalled).toBe(true);
-    expect(fs.existsSync(path.join(hotdir, "api-doc.txt"))).toBe(true);
+    const files = fs.readdirSync(hotdir);
+    expect(files.some((f) => f.endsWith("_api-doc.txt"))).toBe(true);
   });
 
   test("routes to Supabase documents bucket when enabled", async () => {

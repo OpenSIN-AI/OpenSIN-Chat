@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE, AUTH_TIMESTAMP, fullApiUrl } from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
+import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import DataConnector from "./dataConnector";
 import LiveDocumentSync from "./experimental/liveSync";
 import AgentPlugins from "./experimental/agentPlugins";
@@ -32,7 +33,7 @@ const System = {
     deploymentVersion: "openafd_deployment_version",
   },
   ping: async function () {
-    return await fetch(`${API_BASE}/ping`)
+    return await fetchWithTimeout(`${API_BASE}/ping`)
       .then((res) => res.json())
       .then((res) => res?.online || false)
       .catch(() => false);
@@ -40,7 +41,7 @@ const System = {
   totalIndexes: async function (slug = null) {
     const url = new URL(`${fullApiUrl()}/system/system-vectors`);
     if (!!slug) url.searchParams.append("slug", encodeURIComponent(slug));
-    return await fetch(url.toString(), {
+    return await fetchWithTimeout(url.toString(), {
       headers: baseHeaders(),
     })
       .then((res) => {
@@ -80,7 +81,7 @@ const System = {
       .catch(() => false);
   },
   keys: async function () {
-    return await fetch(`${API_BASE}/setup-complete`)
+    return await fetchWithTimeout(`${API_BASE}/setup-complete`)
       .then((res) => {
         if (!res.ok) throw new Error("Could not find setup information.");
         return res.json();
@@ -89,7 +90,7 @@ const System = {
       .catch(() => null);
   },
   localFiles: async function () {
-    return await fetch(`${API_BASE}/system/local-files`, {
+    return await fetchWithTimeout(`${API_BASE}/system/local-files`, {
       headers: baseHeaders(),
     })
       .then((res) => {
@@ -107,7 +108,7 @@ const System = {
   },
 
   checkAuth: async function (currentToken = null) {
-    const valid = await fetch(`${API_BASE}/system/check-token`, {
+    const valid = await fetchWithTimeout(`${API_BASE}/system/check-token`, {
       headers: baseHeaders(currentToken),
     })
       .then((res) => res.ok)
@@ -117,7 +118,7 @@ const System = {
     return valid;
   },
   requestToken: async function (body) {
-    return await fetch(`${API_BASE}/request-token`, {
+    return await fetchWithTimeout(`${API_BASE}/request-token`, {
       method: "POST",
       body: JSON.stringify({ ...body }),
     })
@@ -135,7 +136,7 @@ const System = {
    * @returns {Promise<{success: boolean, user: Object | null, message: string | null}>}
    */
   refreshUser: () => {
-    return fetch(`${API_BASE}/system/refresh-user`, {
+    return fetchWithTimeout(`${API_BASE}/system/refresh-user`, {
       headers: baseHeaders(),
     })
       .then((res) => {
@@ -147,7 +148,7 @@ const System = {
       });
   },
   recoverAccount: async function (username, recoveryCodes) {
-    return await fetch(`${API_BASE}/system/recover-account`, {
+    return await fetchWithTimeout(`${API_BASE}/system/recover-account`, {
       method: "POST",
       headers: baseHeaders(),
       body: JSON.stringify({ username, recoveryCodes }),
@@ -165,7 +166,7 @@ const System = {
       });
   },
   resetPassword: async function (token, newPassword, confirmPassword) {
-    return await fetch(`${API_BASE}/system/reset-password`, {
+    return await fetchWithTimeout(`${API_BASE}/system/reset-password`, {
       method: "POST",
       headers: baseHeaders(),
       body: JSON.stringify({ token, newPassword, confirmPassword }),
@@ -184,7 +185,7 @@ const System = {
   },
 
   checkDocumentProcessorOnline: async () => {
-    return await fetch(`${API_BASE}/system/document-processing-status`, {
+    return await fetchWithTimeout(`${API_BASE}/system/document-processing-status`, {
       headers: baseHeaders(),
     })
       .then((res) => res.ok)

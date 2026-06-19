@@ -95,7 +95,7 @@ export default function SingleUserAuth() {
               />
             </div>
             {error && (
-              <p className="text-red-400 text-sm">
+              <p role="alert" className="text-red-400 text-sm">
                 {t("login.multi-user.errorPrefix", { error })}
               </p>
             )}

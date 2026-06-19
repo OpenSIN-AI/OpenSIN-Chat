@@ -5,6 +5,7 @@
 // every Bree-spawned worker job, so installing the shim here covers all
 // of them with a single point of change.
 const { getStoragePath } = require("../../utils/paths");
+const { isWithin } = require("../../utils/files");
 require("../../utils/boot/patchSlowBuffer")();
 
 const path = require("node:path");
@@ -28,6 +29,9 @@ function conclude() {
 
 function updateSourceDocument(docPath = null, jsonContent = {}) {
   const destinationFilePath = path.resolve(documentsPath, docPath);
+  if (!isWithin(documentsPath, destinationFilePath)) {
+    throw new Error("Path traversal detected");
+  }
   fs.writeFileSync(destinationFilePath, JSON.stringify(jsonContent, null, 4), {
     encoding: "utf-8",
   });

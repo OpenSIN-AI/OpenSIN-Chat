@@ -17,8 +17,13 @@ let runId = null;
 process.on("SIGTERM", async () => {
   status = "killed";
   log("Received SIGTERM, marking job as killed by user");
-  if (runId) await ScheduledJobRun.kill(runId);
-  conclude();
+  try {
+    if (runId) await ScheduledJobRun.kill(runId);
+  } catch (e) {
+    console.error(e.message);
+  } finally {
+    conclude();
+  }
 });
 
 process.on("message", async (payload) => {

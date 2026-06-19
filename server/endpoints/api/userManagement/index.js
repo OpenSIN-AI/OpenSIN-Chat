@@ -5,7 +5,7 @@ const { multiUserMode } = require("../../../utils/http");
 const {
   simpleSSOEnabled,
 } = require("../../../utils/middleware/simpleSSOEnabled");
-const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const { validApiKey, validAdminApiKey } = require("../../../utils/middleware/validApiKey");
 
 function apiUserManagementEndpoints(app) {
   if (!app) return;
@@ -68,7 +68,7 @@ function apiUserManagementEndpoints(app) {
 
   app.get(
     "/v1/users/:id/issue-auth-token",
-    [validApiKey, simpleSSOEnabled],
+    [validAdminApiKey, simpleSSOEnabled],
     async (request, response) => {
       /*
       #swagger.tags = ['User Management']

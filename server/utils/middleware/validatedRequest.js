@@ -89,12 +89,13 @@ async function validatedRequest(request, response, next) {
     return;
   }
 
-  // Since the blame of this comment we have been encrypting the `p` property of JWTs with the persistent
-  // encryptionManager PEM's. This prevents us from storing the `p` unencrypted in the JWT itself, which could
-  // be unsafe. As a consequence, existing JWTs with invalid `p` values that do not match the regex
-  // in ln:44 will be marked invalid so they can be logged out and forced to log back in and obtain an encrypted token.
-  // This kind of methodology only applies to single-user password mode.
-  if (!bcrypt.compareSync(EncryptionMgr.decrypt(p), getAuthTokenHash())) {
+  const decrypted = EncryptionMgr.decrypt(p);
+  if (!decrypted) {
+    response.status(401).json({ error: "Invalid credentials" });
+    return;
+  }
+
+  if (!bcrypt.compareSync(decrypted, getAuthTokenHash())) {
     response.status(401).json({
       error: "Invalid auth credentials.",
     });
@@ -105,41 +106,46 @@ async function validatedRequest(request, response, next) {
 }
 
 async function validateMultiUserRequest(request, response, next) {
-  const auth = request.header("Authorization");
-  const token = auth ? auth.split(" ")[1] : null;
+  try {
+    const auth = request.header("Authorization");
+    const token = auth ? auth.split(" ")[1] : null;
 
-  if (!token) {
-    response.status(401).json({
-      error: "No auth token found.",
-    });
-    return;
+    if (!token) {
+      response.status(401).json({
+        error: "No auth token found.",
+      });
+      return;
+    }
+
+    const valid = decodeJWT(token);
+    if (!valid || !valid.id) {
+      response.status(401).json({
+        error: "Invalid auth token.",
+      });
+      return;
+    }
+
+    const user = await User.get({ id: valid.id });
+    if (!user) {
+      response.status(401).json({
+        error: "Invalid auth for user.",
+      });
+      return;
+    }
+
+    if (user.suspended) {
+      response.status(401).json({
+        error: "User is suspended from system",
+      });
+      return;
+    }
+
+    response.locals.user = user;
+    next();
+  } catch (e) {
+    console.error(e.message, e);
+    response.status(500).json({ error: "Internal server error" });
   }
-
-  const valid = decodeJWT(token);
-  if (!valid || !valid.id) {
-    response.status(401).json({
-      error: "Invalid auth token.",
-    });
-    return;
-  }
-
-  const user = await User.get({ id: valid.id });
-  if (!user) {
-    response.status(401).json({
-      error: "Invalid auth for user.",
-    });
-    return;
-  }
-
-  if (user.suspended) {
-    response.status(401).json({
-      error: "User is suspended from system",
-    });
-    return;
-  }
-
-  response.locals.user = user;
-  next();
 }
 
 module.exports = {

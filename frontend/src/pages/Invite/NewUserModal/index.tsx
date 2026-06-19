@@ -16,27 +16,33 @@ import {
 export default function NewUserModal(): JSX.Element {
   const { code } = useParams();
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
     setError(null);
     e.preventDefault();
-    const data: Record<string, any> = {};
-    const form = new FormData(e.currentTarget);
-    for (const [key, value] of form.entries()) data[key] = value;
-    const { success, error } = await Invite.acceptInvite(code, data);
-    if (success) {
-      const { valid, user, token, message } = await System.requestToken(data);
-      if (valid && !!token && !!user) {
-        window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
-        window.localStorage.setItem(AUTH_TOKEN, token);
-        window.location.href = paths.home();
-      } else {
-        setError(message);
+    setLoading(true);
+    try {
+      const data: Record<string, any> = {};
+      const form = new FormData(e.currentTarget);
+      for (const [key, value] of form.entries()) data[key] = value;
+      const { success, error } = await Invite.acceptInvite(code, data);
+      if (success) {
+        const { valid, user, token, message } = await System.requestToken(data);
+        if (valid && !!token && !!user) {
+          window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
+          window.localStorage.setItem(AUTH_TOKEN, token);
+          window.location.href = paths.home();
+        } else {
+          setError(message);
+        }
+        return;
       }
-      return;
+      setError(error);
+    } finally {
+      setLoading(false);
     }
-    setError(error);
   };
 
   return (
@@ -102,9 +108,12 @@ export default function NewUserModal(): JSX.Element {
           <div className="flex w-full justify-between items-center p-6 space-x-2 border-t rounded-b border-theme-modal-border">
             <button
               type="submit"
-              className="w-full transition-all duration-300 border border-theme-text-primary px-4 py-2 rounded-lg text-theme-text-primary text-sm items-center flex gap-x-2 hover:bg-theme-text-primary hover:text-theme-bg-primary focus:ring-gray-800 text-center justify-center"
+              disabled={loading}
+              className="w-full transition-all duration-300 border border-theme-text-primary px-4 py-2 rounded-lg text-theme-text-primary text-sm items-center flex gap-x-2 hover:bg-theme-text-primary hover:text-theme-bg-primary focus:ring-gray-800 text-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {t("invite.newUser.acceptInvitation")}
+              {loading
+                ? t("login.multi-user.validating")
+                : t("invite.newUser.acceptInvitation")}
             </button>
           </div>
         </form>

@@ -8,6 +8,7 @@ const { toChunks, getEmbeddingEngineSelection } = require("../../helpers");
 const { parseAuthHeader } = require("../../http");
 const { sourceIdentifier } = require("../../chats");
 const { VectorDatabase } = require("../base");
+const { withTimeout } = require("../../helpers/withTimeout");
 const COLLECTION_REGEX = new RegExp(
   /^(?!\d+\.\d+\.\d+\.\d+$)(?!.*\.\.)(?=^[a-zA-Z0-9][a-zA-Z0-9_-]{1,61}[a-zA-Z0-9]$).{3,63}$/,
 );
@@ -83,7 +84,7 @@ class Chroma extends VectorDatabase {
         : {}),
     });
 
-    const isAlive = await client.heartbeat();
+    const isAlive = await withTimeout(client.heartbeat(), 30000);
     if (!isAlive)
       throw new Error(
         "ChromaDB::Invalid Heartbeat received - is the instance online?",

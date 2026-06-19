@@ -400,8 +400,7 @@ async function ollamaAIModels(basePath = null, _authToken = null) {
 
 async function getFireworksAiModels(apiKey = null) {
   const knownModels = await fireworksAiModels(apiKey);
-  if (!Object.keys(knownModels).length === 0)
-    return { models: [], error: null };
+  if (Object.keys(knownModels).length === 0) return { models: [], error: null };
 
   const models = Object.values(knownModels).map((model) => {
     return {
