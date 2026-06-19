@@ -4,6 +4,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -239,15 +240,18 @@ export function EmbeddingProgressProvider({ children }: any) {
     return success;
   }, []);
 
+  const contextValue = useMemo(
+    () => ({
+      embeddingProgressMap,
+      startEmbedding,
+      connectSSE,
+      removeQueuedFile,
+    }),
+    [embeddingProgressMap, startEmbedding, connectSSE, removeQueuedFile],
+  );
+
   return (
-    <EmbeddingProgressContext.Provider
-      value={{
-        embeddingProgressMap,
-        startEmbedding,
-        connectSSE,
-        removeQueuedFile,
-      }}
-    >
+    <EmbeddingProgressContext.Provider value={contextValue}>
       {children}
     </EmbeddingProgressContext.Provider>
   );

@@ -203,9 +203,9 @@ class GroqLLM {
         completion_tokens: result.output?.usage?.completion_tokens || 0,
         total_tokens: result.output?.usage?.total_tokens || 0,
         outputTps:
-          result.output?.usage?.completion_tokens /
-          result.output?.usage?.completion_time,
-        duration: result.output?.usage?.total_time,
+          (result.output?.usage?.completion_tokens || 0) /
+          (result.output?.usage?.completion_time || result.duration),
+        duration: result.output?.usage?.total_time || result.duration,
         model: this.model,
         provider: this.className,
         timestamp: new Date(),

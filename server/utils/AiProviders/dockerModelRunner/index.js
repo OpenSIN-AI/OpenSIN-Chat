@@ -154,11 +154,15 @@ class DockerModelRunnerLLM {
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
-      this.dmr.chat.completions.create({
-        model: this.model,
-        messages,
-        temperature,
-      }),
+      this.dmr.chat.completions
+        .create({
+          model: this.model,
+          messages,
+          temperature,
+        })
+        .catch((e) => {
+          throw new Error(e.message);
+        }),
     );
 
     if (

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import System from "@/models/system";
 
 export default function useProviderEndpointAutoDiscovery({
@@ -16,6 +16,14 @@ export default function useProviderEndpointAutoDiscovery({
   const [authTokenValue, setAuthTokenValue] = useState(initialAuthToken);
   const [autoDetectAttempted, setAutoDetectAttempted] = useState(false as any);
   const [showAdvancedControls, setShowAdvancedControls] = useState(true as any);
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   async function autoDetect() {
     setLoading(true);
@@ -43,6 +51,8 @@ export default function useProviderEndpointAutoDiscovery({
         console.error("All endpoints failed to resolve.");
         return { endpoint: null, models: null };
       });
+
+    if (!mountedRef.current) return;
 
     if (models !== null) {
       setBasePath(endpoint);

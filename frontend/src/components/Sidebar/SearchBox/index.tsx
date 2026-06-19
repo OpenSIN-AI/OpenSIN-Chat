@@ -24,6 +24,10 @@ export default function SearchBox({ user, showNewWsModal }: any) {
   const [searchResults, setSearchResults] = useState(DEFAULT_SEARCH_RESULTS);
   const handleSearch = useCallback(debounce(handleSearchDebounced, 500), []);
 
+  useEffect(() => {
+    return () => handleSearch.cancel();
+  }, [handleSearch]);
+
   async function handleSearchDebounced(e: any) {
     try {
       const searchValue = (e.target as unknown as any)?.value;

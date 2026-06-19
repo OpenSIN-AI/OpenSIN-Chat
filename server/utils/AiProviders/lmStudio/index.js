@@ -238,11 +238,15 @@ class LMStudioLLM {
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
-      this.lmstudio.chat.completions.create({
-        model: this.model,
-        messages,
-        temperature,
-      }),
+      this.lmstudio.chat.completions
+        .create({
+          model: this.model,
+          messages,
+          temperature,
+        })
+        .catch((e) => {
+          throw new Error(e.message);
+        }),
     );
 
     if (

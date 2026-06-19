@@ -1,5 +1,13 @@
 // SPDX-License-Identifier: MIT
-import { useState, useEffect, createContext, useContext } from "react";
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import { v4 } from "uuid";
 import { useDropzone } from "react-dropzone";
 import DndIcon from "./dnd-icon.png";
@@ -63,25 +71,37 @@ export function DnDFileUploaderProvider({
     threadSlug,
   );
 
+  // Refs to always point at the latest handler closures so the
+  // window event listeners (registered once on mount) never go stale.
+  const handleRemoveRef = useRef(null);
+  const handlePastedAttachmentRef = useRef(null);
+  const handleRemoveParsedFileRef = useRef(null);
+
   useEffect(() => {
-    window.addEventListener(REMOVE_ATTACHMENT_EVENT, handleRemove);
-    window.addEventListener(CLEAR_ATTACHMENTS_EVENT, resetAttachments);
-    window.addEventListener(PASTE_ATTACHMENT_EVENT, handlePastedAttachment);
-    window.addEventListener(
-      PARSED_FILE_ATTACHMENT_REMOVED_EVENT,
-      handleRemoveParsedFile,
-    );
+    function onRemove(e) {
+      handleRemoveRef.current?.(e);
+    }
+    function onReset() {
+      setFiles([]);
+    }
+    function onPasted(e) {
+      handlePastedAttachmentRef.current?.(e);
+    }
+    function onParsedRemove(e) {
+      handleRemoveParsedFileRef.current?.(e);
+    }
+    window.addEventListener(REMOVE_ATTACHMENT_EVENT, onRemove);
+    window.addEventListener(CLEAR_ATTACHMENTS_EVENT, onReset);
+    window.addEventListener(PASTE_ATTACHMENT_EVENT, onPasted);
+    window.addEventListener(PARSED_FILE_ATTACHMENT_REMOVED_EVENT, onParsedRemove);
 
     return () => {
-      window.removeEventListener(REMOVE_ATTACHMENT_EVENT, handleRemove);
-      window.removeEventListener(CLEAR_ATTACHMENTS_EVENT, resetAttachments);
+      window.removeEventListener(REMOVE_ATTACHMENT_EVENT, onRemove);
+      window.removeEventListener(CLEAR_ATTACHMENTS_EVENT, onReset);
+      window.removeEventListener(PASTE_ATTACHMENT_EVENT, onPasted);
       window.removeEventListener(
         PARSED_FILE_ATTACHMENT_REMOVED_EVENT,
-        handleRemoveParsedFile,
-      );
-      window.removeEventListener(
-        PASTE_ATTACHMENT_EVENT,
-        handlePastedAttachment,
+        onParsedRemove,
       );
     };
   }, []);
@@ -124,7 +144,7 @@ export function DnDFileUploaderProvider({
    * for a chat.
    * @returns {{name:string,mime:string,contentString:string}[]}
    */
-  function parseAttachments() {
+  const parseAttachments = useCallback(() => {
     return (
       files
         ?.filter((file) => file.type === "attachment")
@@ -141,7 +161,7 @@ export function DnDFileUploaderProvider({
           },
         ) || []
     );
-  }
+  }, [files]);
 
   /**
    * Handle pasted attachments.
@@ -172,42 +192,6 @@ export function DnDFileUploaderProvider({
         });
       }
     }
-    setFiles((prev) => [...prev, ...newAccepted]);
-    embedEligibleAttachments(newAccepted);
-  }
-
-  /**
-   * Handle dropped files.
-   * @param {Attachment[]} acceptedFiles
-   * @param {any[]} _rejections
-   */
-  async function onDrop(acceptedFiles: any, _rejections: any) {
-    setDragging(false);
-
-    /** @type {Attachment[]} */
-    const newAccepted = [];
-    for (const file of acceptedFiles) {
-      if (file.type.startsWith("image/")) {
-        newAccepted.push({
-          uid: v4(),
-          file,
-          contentString: await toBase64(file),
-          status: "success",
-          error: null,
-          type: "attachment",
-        });
-      } else {
-        newAccepted.push({
-          uid: v4(),
-          file,
-          contentString: null,
-          status: "in_progress",
-          error: null,
-          type: "upload",
-        });
-      }
-    }
-
     setFiles((prev) => [...prev, ...newAccepted]);
     embedEligibleAttachments(newAccepted);
   }
@@ -309,6 +293,53 @@ export function DnDFileUploaderProvider({
         window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT)),
       );
   }
+
+  // Keep a ref to the latest embedEligibleAttachments so onDrop can be
+  // useCallback-stable without embedding the function in its deps.
+  const embedEligibleAttachmentsRef = useRef(embedEligibleAttachments);
+  embedEligibleAttachmentsRef.current = embedEligibleAttachments;
+
+  // Keep refs to the latest event handler closures so the window event
+  // listeners (registered once on mount) always call current versions.
+  handleRemoveRef.current = handleRemove;
+  handlePastedAttachmentRef.current = handlePastedAttachment;
+  handleRemoveParsedFileRef.current = handleRemoveParsedFile;
+
+  /**
+   * Handle dropped files.
+   * @param {Attachment[]} acceptedFiles
+   * @param {any[]} _rejections
+   */
+  const onDrop = useCallback(async (acceptedFiles: any, _rejections: any) => {
+    setDragging(false);
+
+    /** @type {Attachment[]} */
+    const newAccepted = [];
+    for (const file of acceptedFiles) {
+      if (file.type.startsWith("image/")) {
+        newAccepted.push({
+          uid: v4(),
+          file,
+          contentString: await toBase64(file),
+          status: "success",
+          error: null,
+          type: "attachment",
+        });
+      } else {
+        newAccepted.push({
+          uid: v4(),
+          file,
+          contentString: null,
+          status: "in_progress",
+          error: null,
+          type: "upload",
+        });
+      }
+    }
+
+    setFiles((prev) => [...prev, ...newAccepted]);
+    embedEligibleAttachmentsRef.current(newAccepted);
+  }, []);
 
   // Handle modal actions
   const handleCloseModal = async () => {
@@ -418,10 +449,13 @@ export function DnDFileUploaderProvider({
     }
   };
 
+  const contextValue = useMemo(
+    () => ({ files, ready, dragging, setDragging, onDrop, parseAttachments }),
+    [files, ready, dragging, onDrop, parseAttachments],
+  );
+
   return (
-    <DndUploaderContext.Provider
-      value={{ files, ready, dragging, setDragging, onDrop, parseAttachments }}
-    >
+    <DndUploaderContext.Provider value={contextValue}>
       <FileUploadWarningModal
         show={showWarningModal}
         onClose={handleCloseModal}

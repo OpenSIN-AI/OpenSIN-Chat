@@ -1,5 +1,12 @@
 // SPDX-License-Identifier: MIT
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 import { useMemoriesSidebar } from "../ChatSidebar";
 import useUser from "@/hooks/useUser";
 import useSystemSettings from "@/hooks/useSystemSettings";
@@ -45,78 +52,120 @@ export function MemoriesProvider({ workspace, children }) {
     setAutoExtraction(settings?.MemoryAutoExtraction !== false);
   }, [settings, settingsLoading]);
 
-  async function handleCreate(content) {
-    const { memory } = await Memory.create(workspace.slug, {
-      content,
-      scope: activeTab,
-    });
-    if (memory) refreshMemories();
-  }
+  const handleCreate = useCallback(
+    async (content) => {
+      const { memory } = await Memory.create(workspace.slug, {
+        content,
+        scope: activeTab,
+      });
+      if (memory) refreshMemories();
+    },
+    [workspace?.slug, activeTab, refreshMemories],
+  );
 
-  async function handleDelete(memoryId) {
-    await Memory.delete(memoryId);
-    refreshMemories();
-  }
+  const handleDelete = useCallback(
+    async (memoryId) => {
+      await Memory.delete(memoryId);
+      refreshMemories();
+    },
+    [refreshMemories],
+  );
 
-  async function handleUpdate(memoryId, content) {
-    const { memory } = await Memory.update(memoryId, { content });
-    if (memory) refreshMemories();
-  }
+  const handleUpdate = useCallback(
+    async (memoryId, content) => {
+      const { memory } = await Memory.update(memoryId, { content });
+      if (memory) refreshMemories();
+    },
+    [refreshMemories],
+  );
 
-  async function handlePromote(memoryId) {
-    const { memory } = await Memory.promoteToGlobal(memoryId);
-    if (memory) refreshMemories();
-  }
+  const handlePromote = useCallback(
+    async (memoryId) => {
+      const { memory } = await Memory.promoteToGlobal(memoryId);
+      if (memory) refreshMemories();
+    },
+    [refreshMemories],
+  );
 
-  async function handleDemote(memoryId) {
-    if (!workspace?.slug) return;
-    const { memory } = await Memory.demoteToWorkspace(memoryId, workspace.slug);
-    if (memory) refreshMemories();
-  }
+  const handleDemote = useCallback(
+    async (memoryId) => {
+      if (!workspace?.slug) return;
+      const { memory } = await Memory.demoteToWorkspace(
+        memoryId,
+        workspace.slug,
+      );
+      if (memory) refreshMemories();
+    },
+    [workspace?.slug, refreshMemories],
+  );
 
-  function openCreateModal() {
+  const openCreateModal = useCallback(() => {
     setEditingMemory(null);
     setModalState({ open: true, mode: "create" });
-  }
+  }, []);
 
-  function openEditModal(memory) {
+  const openEditModal = useCallback((memory) => {
     setEditingMemory(memory);
     setModalState({ open: true, mode: "edit" });
-  }
+  }, []);
 
-  function closeModal() {
+  const closeModal = useCallback(() => {
     setModalState({ open: false, mode: "create" });
     setEditingMemory(null);
-  }
+  }, []);
 
   const activeMemories =
     activeTab === "workspace" ? memories.workspace : memories.global;
 
-  const value = {
-    workspace,
-    sidebarOpen,
-    closeSidebar,
-    canToggle,
-    memories,
-    activeTab,
-    setActiveTab,
-    activeMemories,
-    enabled,
-    setEnabled,
-    autoExtraction,
-    setAutoExtraction,
-    loadingEnabled: settingsLoading,
-    modalState,
-    editingMemory,
-    openCreateModal,
-    openEditModal,
-    closeModal,
-    handleCreate,
-    handleDelete,
-    handleUpdate,
-    handlePromote,
-    handleDemote,
-  };
+  const value = useMemo(
+    () => ({
+      workspace,
+      sidebarOpen,
+      closeSidebar,
+      canToggle,
+      memories,
+      activeTab,
+      setActiveTab,
+      activeMemories,
+      enabled,
+      setEnabled,
+      autoExtraction,
+      setAutoExtraction,
+      loadingEnabled: settingsLoading,
+      modalState,
+      editingMemory,
+      openCreateModal,
+      openEditModal,
+      closeModal,
+      handleCreate,
+      handleDelete,
+      handleUpdate,
+      handlePromote,
+      handleDemote,
+    }),
+    [
+      workspace,
+      sidebarOpen,
+      closeSidebar,
+      canToggle,
+      memories,
+      activeTab,
+      activeMemories,
+      enabled,
+      autoExtraction,
+      settingsLoading,
+      modalState,
+      editingMemory,
+      openCreateModal,
+      openEditModal,
+      closeModal,
+      handleCreate,
+      handleDelete,
+      handleUpdate,
+      handlePromote,
+      handleDemote,
+    ],
+  );
 
   return (
     <MemoriesContext.Provider value={value}>

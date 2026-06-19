@@ -21,6 +21,7 @@ export default function MemoryModal({
 }: any) {
   const { t } = useTranslation();
   const [content, setContent] = useState(initialContent);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const isCreate = mode === "create";
   const [title, submitLabel, description] = useMemo(() => {
     if (isCreate) {
@@ -42,10 +43,15 @@ export default function MemoryModal({
     if (isOpen) setContent(initialContent);
   }, [isOpen, initialContent]);
 
-  function handleSubmit() {
-    if (!content.trim()) return;
-    onSubmit(content.trim());
-    onClose();
+  async function handleSubmit() {
+    if (!content.trim() || isSubmitting) return;
+    setIsSubmitting(true);
+    try {
+      await onSubmit(content.trim());
+      onClose();
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -96,7 +102,7 @@ export default function MemoryModal({
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={!content.trim()}
+            disabled={!content.trim() || isSubmitting}
             className="h-9 px-5 rounded-lg border-none bg-zinc-50 light:bg-slate-900 text-zinc-900 light:text-white text-sm font-medium cursor-pointer hover:bg-white light:hover:bg-slate-800 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
             {submitLabel}

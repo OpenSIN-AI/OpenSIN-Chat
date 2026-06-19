@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+} from "react";
 import { useLocation } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { SidebarSimple } from "@phosphor-icons/react";
@@ -85,10 +91,13 @@ export function SidebarToggleProvider({
     );
   }, [showSidebar]);
 
+  const value = useMemo(
+    () => ({ showSidebar, setShowSidebar, canToggleSidebar }),
+    [showSidebar, canToggleSidebar],
+  );
+
   return (
-    <SidebarToggleContext.Provider
-      value={{ showSidebar, setShowSidebar, canToggleSidebar }}
-    >
+    <SidebarToggleContext.Provider value={value}>
       {children}
     </SidebarToggleContext.Provider>
   );

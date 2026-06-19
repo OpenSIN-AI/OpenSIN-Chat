@@ -102,7 +102,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
           let filteredToken = token;
           if (reasoningMode) {
             if (reasoningBlockOpen) {
-              const endIdx = filteredToken.indexOf("OutputModule");
+              const endIdx = filteredToken.indexOf("</think>");
               if (endIdx !== -1) {
                 reasoningBlockOpen = false;
                 filteredToken = filteredToken.slice(endIdx + 8);
@@ -110,10 +110,10 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
                 continue;
               }
             }
-            const startIdx = filteredToken.indexOf("InputModule");
+            const startIdx = filteredToken.indexOf("<think>");
             if (startIdx !== -1) {
-              const afterStart = filteredToken.slice(startIdx + 8);
-              const endIdx = afterStart.indexOf("OutputModule");
+              const afterStart = filteredToken.slice(startIdx + 7);
+              const endIdx = afterStart.indexOf("</think>");
               if (endIdx !== -1) {
                 filteredToken = afterStart.slice(endIdx + 8);
               } else {

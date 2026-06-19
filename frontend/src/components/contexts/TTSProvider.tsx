@@ -16,14 +16,17 @@ export function TTSProvider({ children }: any) {
     [settings],
   );
 
+  const contextValue = useMemo(
+    () => ({
+      settings,
+      provider,
+      loading,
+    }),
+    [settings, provider, loading],
+  );
+
   return (
-    <TTSProviderContext.Provider
-      value={{
-        settings,
-        provider,
-        loading,
-      }}
-    >
+    <TTSProviderContext.Provider value={contextValue}>
       {children}
     </TTSProviderContext.Provider>
   );

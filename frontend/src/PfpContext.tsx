@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { createContext, useCallback, useEffect, useRef } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import useSWR from "swr";
 import useUser from "./hooks/useUser";
 import System from "./models/system";
@@ -65,9 +71,12 @@ export function PfpProvider({ children }) {
     };
   }, []);
 
+  const value = useMemo(
+    () => ({ pfp: pfp ?? null, setPfp }),
+    [pfp, setPfp],
+  );
+
   return (
-    <PfpContext.Provider value={{ pfp: pfp ?? null, setPfp }}>
-      {children}
-    </PfpContext.Provider>
+    <PfpContext.Provider value={value}>{children}</PfpContext.Provider>
   );
 }

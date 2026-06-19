@@ -971,6 +971,28 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       this?.socket?.send(type, data);
     };
 
+    const absoluteMaxDepth = this.maxToolCalls + 5;
+    if (depth >= absoluteMaxDepth) {
+      this.handlerProps?.log?.(
+        `[warning]: Absolute depth limit (${absoluteMaxDepth}) reached. Forcing text response.`,
+      );
+      this?.introspect?.(
+        `Maximum execution depth reached. Generating final response without further tool calls.`,
+      );
+      const fallbackStream = await this.#safeProviderCall(() =>
+        this.providerInstance.stream(messages, [], eventHandler),
+      );
+      const fallbackUuid = fallbackStream?.uuid || v4();
+      eventHandler?.("reportStreamEvent", {
+        type: "usageMetrics",
+        uuid: fallbackUuid,
+        metrics: this.providerInstance.getUsage(),
+      });
+      this?.flushCitations?.(fallbackUuid);
+      this?.emitChatId?.(fallbackUuid);
+      return fallbackStream?.textResponse || "";
+    }
+
     // Emit routing notification before the first completion so it appears above the response
     if (depth === 0) this?.flushRoutingMetadata?.(v4());
 
@@ -1133,6 +1155,27 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
     const eventHandler = (type, data) => {
       this?.socket?.send(type, data);
     };
+
+    const absoluteMaxDepth = this.maxToolCalls + 5;
+    if (depth >= absoluteMaxDepth) {
+      this.handlerProps?.log?.(
+        `[warning]: Absolute depth limit (${absoluteMaxDepth}) reached. Forcing text response.`,
+      );
+      this?.introspect?.(
+        `Maximum execution depth reached. Generating final response without further tool calls.`,
+      );
+      const fallbackCompletion = await this.#safeProviderCall(() =>
+        this.providerInstance.complete(messages, []),
+      );
+      eventHandler?.("reportStreamEvent", {
+        type: "usageMetrics",
+        uuid: msgUUID,
+        metrics: this.providerInstance.getUsage(),
+      });
+      this?.flushCitations?.(msgUUID);
+      this?.emitChatId?.(msgUUID);
+      return fallbackCompletion?.textResponse || "";
+    }
 
     // Emit routing notification before the first completion so it appears above the response
     if (depth === 0) this?.flushRoutingMetadata?.(msgUUID);

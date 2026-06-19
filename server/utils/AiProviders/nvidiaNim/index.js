@@ -9,8 +9,7 @@ const {
 } = require("../../helpers/chat/responses");
 
 const HARDCODED_BASE_PATH = "https://integrate.api.nvidia.com/v1";
-const HARDCODED_API_KEY =
-  "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";
+const PLACEHOLDER_API_KEY = "nvidia-nim";
 const HARDCODED_MODEL_PREF = "nvidia/nemotron-nano-12b-v2-vl";
 const HARDCODED_TOKEN_LIMIT = 8192;
 
@@ -25,7 +24,7 @@ class NvidiaNimLLM {
       // NIM is OpenAI-compatible and self-hosted containers usually need no key.
       // The OpenAI SDK throws "Missing credentials" if apiKey is null/empty, so
       // pass a placeholder when none is configured.
-      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || HARDCODED_API_KEY,
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || PLACEHOLDER_API_KEY,
     });
 
     this.model =
@@ -58,7 +57,7 @@ class NvidiaNimLLM {
    * @returns {string}
    */
   #safeError(error) {
-    const key = process.env.NVIDIA_NIM_LLM_API_KEY || HARDCODED_API_KEY;
+    const key = process.env.NVIDIA_NIM_LLM_API_KEY || PLACEHOLDER_API_KEY;
     let message = error?.message || String(error);
     if (key) {
       message = message.replaceAll(key, "[REDACTED]");
@@ -91,7 +90,7 @@ class NvidiaNimLLM {
       baseURL: parseNvidiaNimBasePath(
         basePath || process.env.NVIDIA_NIM_LLM_BASE_PATH || HARDCODED_BASE_PATH,
       ),
-      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || HARDCODED_API_KEY,
+      apiKey: process.env.NVIDIA_NIM_LLM_API_KEY || PLACEHOLDER_API_KEY,
     });
     const model = await openai.models
       .list()

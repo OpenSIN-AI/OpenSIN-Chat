@@ -459,11 +459,37 @@ class MCPHypervisor {
     const transport = await this.#setupServerTransport(server, serverType);
 
     // Add connection event listeners
-    transport.onclose = () => this.log(`${name} - Transport closed`);
+    transport.onclose = () => {
+      this.log(`${name} - Transport closed`);
+      if (this.mcps[name] === mcp) {
+        this.log(`${name} - Process exited, cleaning up client reference`);
+        delete this.mcps[name];
+        this.mcpLoadingResults[name] = {
+          status: "failed",
+          message: `MCP server ${name} process exited unexpectedly. Use force-reload to restart.`,
+        };
+      }
+    };
     transport.onerror = (error) =>
       this.log(`${name} - Transport error:`, error);
     transport.onmessage = (message) =>
       this.log(`${name} - Transport message:`, message);
+
+    // Monitor the child process for unexpected exit (stdio transport only)
+    if (transport instanceof StdioClientTransport && transport._process) {
+      transport._process.on("exit", (code, signal) => {
+        this.log(
+          `${name} - Child process exited (code=${code}, signal=${signal})`,
+        );
+        if (this.mcps[name] === mcp) {
+          delete this.mcps[name];
+          this.mcpLoadingResults[name] = {
+            status: "failed",
+            message: `MCP server ${name} process exited (code=${code}, signal=${signal}). Use force-reload to restart.`,
+          };
+        }
+      });
+    }
 
     // Connect and await the connection with a timeout
     this.mcps[name] = mcp;

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import UploadFile from "../UploadFile";
 import PreLoader from "@/components/Preloader";
-import { memo, useMemo, useState } from "react";
+import { memo, useMemo, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import FolderRow from "./FolderRow";
 import System from "@/models/system";
@@ -181,10 +181,18 @@ function Directory({
     setLoading(false);
   };
 
-  const handleSearch = debounce((e) => {
-    const searchValue = e.target.value;
-    setSearchTerm(searchValue);
-  }, 500);
+  const handleSearch = useMemo(
+    () =>
+      debounce((e) => {
+        const searchValue = e.target.value;
+        setSearchTerm(searchValue);
+      }, 500),
+    [],
+  );
+
+  useEffect(() => {
+    return () => handleSearch.cancel();
+  }, [handleSearch]);
 
   const filteredFiles = filterFileSearchResults(files, searchTerm);
 

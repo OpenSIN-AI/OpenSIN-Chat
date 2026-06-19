@@ -161,12 +161,14 @@ class AnthropicLLM {
 
     const content = [{ type: "text", text: userPrompt }];
     for (let attachment of attachments) {
+      const parts = attachment.contentString.split("base64,");
+      const base64Data = parts.length > 1 ? parts[1] : parts[0];
       content.push({
         type: "image",
         source: {
           type: "base64",
           media_type: attachment.mime,
-          data: attachment.contentString.split("base64,")[1],
+          data: base64Data,
         },
       });
     }

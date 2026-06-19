@@ -121,11 +121,15 @@ class LocalAiLLM {
       );
 
     const result = await LLMPerformanceMonitor.measureAsyncFunction(
-      this.openai.chat.completions.create({
-        model: this.model,
-        messages,
-        temperature,
-      }),
+      this.openai.chat.completions
+        .create({
+          model: this.model,
+          messages,
+          temperature,
+        })
+        .catch((e) => {
+          throw new Error(e.message);
+        }),
     );
 
     if (

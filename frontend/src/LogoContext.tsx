@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: MIT
-import React, { createContext, useEffect, useRef } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import useSWR from "swr";
 import OpenSINLogo from "./media/logo/opensin-logo.png";
 import OpenSINLogoDark from "./media/logo/opensin-logo-dark.png";
@@ -91,17 +97,22 @@ export function LogoProvider({ children }) {
     };
   }, [mutate]);
 
+  const setLogo = useCallback(
+    (logo: string) => mutate((prev) => ({ ...prev!, logo }), false),
+    [mutate],
+  );
+
+  const value = useMemo(
+    () => ({
+      logo: data!.logo,
+      setLogo,
+      loginLogo: data!.loginLogo,
+      isCustomLogo: data!.isCustomLogo,
+    }),
+    [data?.logo, data?.loginLogo, data?.isCustomLogo, setLogo],
+  );
+
   return (
-    <LogoContext.Provider
-      value={{
-        logo: data!.logo,
-        setLogo: (logo: string) =>
-          mutate((prev) => ({ ...prev!, logo }), false),
-        loginLogo: data!.loginLogo,
-        isCustomLogo: data!.isCustomLogo,
-      }}
-    >
-      {children}
-    </LogoContext.Provider>
+    <LogoContext.Provider value={value}>{children}</LogoContext.Provider>
   );
 }

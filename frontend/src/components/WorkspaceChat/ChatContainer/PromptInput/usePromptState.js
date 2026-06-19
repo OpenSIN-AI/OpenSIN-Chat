@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import debounce from "lodash.debounce";
 import { useSearchParams } from "react-router-dom";
 import { useIsAgentSessionActive } from "@/utils/chat/agent";
@@ -97,10 +97,14 @@ export default function usePromptState({
     (adjustment = 0) => saveCurrentStateRef.current(adjustment),
     [],
   );
-  const debouncedSaveState = useCallback(
-    (...args) => debounce(() => saveCurrentStateRef.current(...args), 250)(),
+  const debouncedSaveState = useMemo(
+    () => debounce((...args) => saveCurrentStateRef.current(...args), 250),
     [],
   );
+
+  useEffect(() => {
+    return () => debouncedSaveState.cancel();
+  }, [debouncedSaveState]);
 
   function handleSubmit(e) {
     // Ignore submits from portaled modals (slash command preset forms)

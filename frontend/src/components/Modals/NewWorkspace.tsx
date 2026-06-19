@@ -12,10 +12,13 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
   const formEl = useRef(null);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { t } = useTranslation();
   const handleCreate = async (e) => {
+    if (isSubmitting) return;
     setError(null);
     e.preventDefault();
+    setIsSubmitting(true);
     const data = {};
     const form = new FormData(formEl.current);
     for (const [key, value] of form.entries()) data[key] = value;
@@ -27,6 +30,8 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
       setError(message);
     } catch (err) {
       setError(t("newWorkspaceModal.creationFailed", { error: err?.message }));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -85,9 +90,10 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
             <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
               <button
                 type="submit"
-                className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
+                disabled={isSubmitting}
+                className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {t("newWorkspaceModal.save")}
+                {isSubmitting ? "..." : t("newWorkspaceModal.save")}
               </button>
             </div>
           </form>

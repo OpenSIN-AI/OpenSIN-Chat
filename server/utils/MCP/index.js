@@ -92,18 +92,49 @@ class MCPCompatibilityLayer extends MCPHypervisor {
                     aibitat.introspect(
                       `Executing MCP server: ${name} with ${JSON.stringify(args, null, 2)}`,
                     );
-                    const result = await currentMcp.callTool({
-                      name: tool.name,
-                      arguments: args,
+
+                    const MCP_TOOL_TIMEOUT_MS = 60_000;
+                    let timeoutId;
+                    const timeoutPromise = new Promise((_, reject) => {
+                      timeoutId = setTimeout(
+                        () =>
+                          reject(
+                            new Error(
+                              `MCP tool ${name}:${tool.name} timed out after ${MCP_TOOL_TIMEOUT_MS / 1000}s`,
+                            ),
+                          ),
+                        MCP_TOOL_TIMEOUT_MS,
+                      );
                     });
-                    aibitat.handlerProps.log(
-                      `MCP server: ${name}:${tool.name} completed successfully`,
-                      result,
-                    );
-                    aibitat.introspect(
-                      `MCP server: ${name}:${tool.name} completed successfully`,
-                    );
-                    return MCPCompatibilityLayer.returnMCPResult(result);
+                    try {
+                      const result = await Promise.race([
+                        currentMcp.callTool({
+                          name: tool.name,
+                          arguments: args,
+                        }),
+                        timeoutPromise,
+                      ]);
+                      if (timeoutId) clearTimeout(timeoutId);
+                      aibitat.handlerProps.log(
+                        `MCP server: ${name}:${tool.name} completed successfully`,
+                        result,
+                      );
+                      aibitat.introspect(
+                        `MCP server: ${name}:${tool.name} completed successfully`,
+                      );
+                      return MCPCompatibilityLayer.returnMCPResult(result);
+                    } catch (error) {
+                      if (timeoutId) clearTimeout(timeoutId);
+                      aibitat.handlerProps.log(
+                        `MCP server: ${name}:${tool.name} failed with error:`,
+                        error,
+                      );
+                      aibitat.introspect(
+                        `MCP server: ${name}:${tool.name} failed with error:`,
+                        error,
+                      );
+                      return `The tool ${name}:${tool.name} failed with error: ${error?.message || "An unknown error occurred"}`;
+                    }
                   } catch (error) {
                     aibitat.handlerProps.log(
                       `MCP server: ${name}:${tool.name} failed with error:`,

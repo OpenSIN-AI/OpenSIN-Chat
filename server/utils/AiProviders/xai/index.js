@@ -64,7 +64,7 @@ class XAiLLM {
     return MODEL_MAP.get("xai", this.model) ?? 131_072;
   }
 
-  isValidChatCompletionModel(_modelName = "") {
+  async isValidChatCompletionModel(_modelName = "") {
     return true;
   }
 
@@ -118,7 +118,7 @@ class XAiLLM {
   }
 
   async getChatCompletion(messages = null, { temperature = 0.7 }) {
-    if (!this.isValidChatCompletionModel(this.model))
+    if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
         `xAI chat: ${this.model} is not valid for chat completion!`,
       );
@@ -158,7 +158,7 @@ class XAiLLM {
   }
 
   async streamGetChatCompletion(messages = null, { temperature = 0.7 }) {
-    if (!this.isValidChatCompletionModel(this.model))
+    if (!(await this.isValidChatCompletionModel(this.model)))
       throw new Error(
         `xAI chat: ${this.model} is not valid for chat completion!`,
       );

@@ -152,10 +152,10 @@ const WorkspaceThread = {
       name: truncate(prompt, 22),
     });
     const updatedThread = result.thread;
-    if (!updatedThread) return false;
+    if (!updatedThread) return { renamed: false, thread };
 
     onRename?.(updatedThread);
-    return true;
+    return { renamed: true, thread: updatedThread };
   },
 };
 
