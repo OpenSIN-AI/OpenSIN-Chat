@@ -7,6 +7,8 @@ const { Telemetry } = require("../../models/telemetry");
 const { safeJsonParse } = require("../http");
 
 class FlowExecutor {
+  static MAX_STEPS = 100;
+
   constructor() {
     this.variables = {};
     // eslint-disable-next-line no-console
@@ -207,7 +209,14 @@ class FlowExecutor {
     const results = [];
     let directOutputResult = null;
 
-    for (const step of flow.config.steps) {
+    const steps = flow.config.steps || [];
+    if (steps.length > FlowExecutor.MAX_STEPS) {
+      throw new Error(
+        `Flow has ${steps.length} steps, exceeding the maximum of ${FlowExecutor.MAX_STEPS}.`,
+      );
+    }
+
+    for (const step of steps) {
       try {
         const result = await this.executeStep(step);
 

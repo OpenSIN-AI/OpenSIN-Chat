@@ -94,7 +94,8 @@ class TokenManager {
     if (Array.isArray(input)) {
       const perMessageFactorTokens = input.length * 3;
       const tokensFromContent = input.reduce(
-        (a, b) => a + this.countFromString(b.content),
+        (a, b) =>
+          a + this.countFromString(b?.content ?? ""),
         0,
       );
       const diffCoefficient = 5;

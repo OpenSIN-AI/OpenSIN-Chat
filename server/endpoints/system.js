@@ -1460,6 +1460,136 @@ function systemEndpoints(app) {
     },
   );
 
+  // GDPR: User self-service data export (data portability)
+  // Allows a user to export their own chat data without admin intervention.
+  app.get(
+    "/system/export-my-data",
+    [
+      chatHistoryViewable,
+      validatedRequest,
+      flexUserRoleValid([ROLES.all]),
+    ],
+    async (request, response) => {
+      try {
+        const user = await userFromSession(request, response);
+        if (!user?.id) {
+          response
+            .status(401)
+            .json({ success: false, error: "Authentication required." });
+          return;
+        }
+
+        const { type = "jsonl" } = request.query;
+        const safeType =
+          String(type)
+            .replace(/[^a-zA-Z0-9_-]/g, "")
+            .slice(0, 20) || "jsonl";
+
+        const chats = await WorkspaceChats.whereWithData(
+          { user_id: user.id, include: true },
+          null,
+          null,
+          { id: "asc" },
+        );
+
+        const { contentType, data } = await exportChatsAsType(
+          safeType,
+          "workspace",
+          chats,
+        );
+        await EventLogs.logEvent(
+          "exported_my_data",
+          { type: safeType, count: chats.length },
+          user.id,
+        );
+        const ext = safeType === "jsonAlpaca" ? "json" : safeType;
+        response.setHeader("Content-Type", contentType);
+        response.setHeader(
+          "Content-Disposition",
+          `attachment; filename="my-data-${user.username}.${ext}"`,
+        );
+        response.setHeader("Content-Length", Buffer.byteLength(data));
+        response.status(200).send(data);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        response.sendStatus(500);
+      }
+    },
+  );
+
+  // GDPR: User self-service account deletion (right to be forgotten)
+  // Allows a user to delete their own account with password confirmation.
+  app.delete(
+    "/system/user",
+    [validatedRequest, flexUserRoleValid([ROLES.all])],
+    async (request, response) => {
+      try {
+        const sessionUser = await userFromSession(request, response);
+        if (!sessionUser?.id) {
+          response
+            .status(401)
+            .json({ success: false, error: "Authentication required." });
+          return;
+        }
+
+        const id = Number(sessionUser.id);
+        const isMultiUser = await multiUserMode(response);
+
+        // In multi-user mode, require password confirmation to prevent
+        // account deletion via a stolen session token.
+        if (isMultiUser) {
+          const { currentPassword } = reqBody(request);
+          if (!currentPassword) {
+            response.status(400).json({
+              success: false,
+              error: "Current password is required to delete your account.",
+            });
+            return;
+          }
+          const fullUser = await User._get({ id });
+          const bcrypt = require("bcryptjs");
+          if (
+            !fullUser ||
+            !bcrypt.compareSync(String(currentPassword), fullUser.password)
+          ) {
+            response.status(403).json({
+              success: false,
+              error: "Current password is incorrect.",
+            });
+            return;
+          }
+        }
+
+        // Prevent the last admin from deleting their own account (system lockout).
+        if (sessionUser.role === ROLES.admin) {
+          const adminCount = await User.count({ role: ROLES.admin });
+          if (adminCount <= 1) {
+            response.status(400).json({
+              success: false,
+              error:
+                "Cannot delete the last remaining admin account. Assign another admin first.",
+            });
+            return;
+          }
+        }
+
+        await BrowserExtensionApiKey.deleteAllForUser(id);
+        await User.delete({ id });
+        await EventLogs.logEvent(
+          "user_self_deleted",
+          { userName: sessionUser.username },
+          id,
+        );
+        response.status(200).json({ success: true, error: null });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        response.sendStatus(500);
+      }
+    },
+  );
+
   // Used for when a user in multi-user updates their own profile
   // from the UI.
   app.post("/system/user", [validatedRequest], async (request, response) => {

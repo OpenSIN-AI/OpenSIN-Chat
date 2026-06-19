@@ -1397,6 +1397,41 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
         `[debug]: ${fn.caller} is attempting to call \`${name}\` tool`,
       );
 
+      if (fn.parameters) {
+        try {
+          const validate = _ajv.compile(fn.parameters);
+          if (!validate(args)) {
+            const errs = JSON.stringify(validate.errors);
+            this.handlerProps?.log?.(
+              `[error]: ${name} rejected — args do not match schema: ${errs}`,
+            );
+            return await this.handleExecution(
+              [
+                ...messages,
+                {
+                  name,
+                  role: "function",
+                  content: `<tool_output>Invalid arguments for "${name}": ${errs}</tool_output>`,
+                  originalFunctionCall: completion.functionCall,
+                },
+              ],
+              reachedToolLimit ? [] : functions,
+              byAgent,
+              depth + 1,
+              msgUUID,
+            );
+          }
+        } catch (e) {
+          this.handlerProps?.log?.(
+            `[warning]: ${name} schema compile failed; skipping validation: ${e.message}`,
+          );
+        }
+      } else {
+        this.handlerProps?.log?.(
+          `[warning]: ${name} has no parameters schema; skipping runtime validation.`,
+        );
+      }
+
       const result = await fn.handler(args);
       Telemetry.sendTelemetry(
         "agent_tool_call",
@@ -1431,12 +1466,13 @@ Consider enabling \x1b[0;93mIntelligent Skill Selection\x1b[0m to reduce token u
       }
 
       const toolAttachments = this.collectToolAttachments();
+      const wrappedResult = sanitizeToolResultForLLM(result);
       const newMessages = [
         ...messages,
         {
           name,
           role: "function",
-          content: result,
+          content: wrappedResult,
           originalFunctionCall: completion.functionCall,
         },
       ];

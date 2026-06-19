@@ -29,10 +29,15 @@ class LLMPerformanceMonitor {
   /**
    * Counts the tokens in the messages.
    * @param {Array<{content: string}>} messages - the messages sent to the LLM so we can calculate the prompt tokens since most providers do not return this on stream
+   * @param {string} [model] - optional model name to select the correct tokenizer; falls back to the default (gpt-3.5-turbo / cl100k_base) when not provided
    * @returns {number}
    */
-  static countTokens(messages = []) {
+  static countTokens(messages = [], model = null) {
     try {
+      if (model) {
+        const modelTokenManager = new TokenManager(model);
+        return modelTokenManager.statsFrom(messages);
+      }
       return this.tokenManager.statsFrom(messages);
     } catch {
       return 0;
@@ -78,7 +83,9 @@ class LLMPerformanceMonitor {
     stream.duration = 0;
     stream.metrics = {
       completion_tokens: 0,
-      prompt_tokens: runPromptTokenCalculation ? this.countTokens(messages) : 0,
+      prompt_tokens: runPromptTokenCalculation
+        ? this.countTokens(messages, modelTag || null)
+        : 0,
       total_tokens: 0,
       outputTps: 0,
       duration: 0,
