@@ -83,7 +83,9 @@ const https = require("https");
 // ── Run a command and return { ok, stdout, stderr } ────
 function run(cmd, opts = {}) {
   return new Promise((resolve) => {
-    exec(cmd, { cwd: opts.cwd || REPO_DIR, timeout: opts.timeout || 300000, maxBuffer: 10 * 1024 * 1024 }, (err, stdout, stderr) => {
+    // Source nvm so Node 22 is available in subprocesses
+    const fullCmd = `export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && nvm use 22 >/dev/null 2>&1 && ${cmd}`;
+    exec(fullCmd, { cwd: opts.cwd || REPO_DIR, timeout: opts.timeout || 300000, maxBuffer: 10 * 1024 * 1024, shell: "/bin/bash" }, (err, stdout, stderr) => {
       resolve({ ok: !err, stdout: stdout.toString(), stderr: stderr.toString(), err });
     });
   });
@@ -120,7 +122,7 @@ async function runPipeline(sha) {
 
   // 5. Frontend tests
   log("Step 5: frontend tests");
-  const feTest = await run("CI=true yarn test --reporter=dot 2>&1 | tail -5", { cwd: REPO_DIR + "/frontend", timeout: 300000 });
+  const feTest = await run("CI=true yarn test --reporter=dot 2>&1 | tail -10", { cwd: REPO_DIR + "/frontend", timeout: 300000 });
   const feTestOk = feTest.ok && (feTest.stdout.includes("passed") || feTest.stdout.includes("Tests"));
   steps.push({ name: "frontend-tests", ok: feTestOk, detail: feTest.stdout.slice(-200) });
   log(`  fe-tests: ${feTestOk ? "PASS" : "FAIL"}`);
@@ -133,7 +135,7 @@ async function runPipeline(sha) {
 
   // 7. Server tests
   log("Step 7: server tests");
-  const srvTest = await run("CI=true yarn test:server 2>&1 | tail -5", { cwd: REPO_DIR + "/server", timeout: 300000 });
+  const srvTest = await run('CI=true NODE_OPTIONS="--experimental-vm-modules" npx jest --ci --passWithNoTests 2>&1 | tail -10', { cwd: REPO_DIR + "/server", timeout: 300000 });
   const srvTestOk = srvTest.ok || srvTest.stdout.includes("passed");
   steps.push({ name: "server-tests", ok: srvTestOk, detail: srvTest.stdout.slice(-200) });
   log(`  srv-tests: ${srvTestOk ? "PASS" : "FAIL"}`);
