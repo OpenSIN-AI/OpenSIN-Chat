@@ -56,6 +56,18 @@ const websocket = {
     return {
       name: this.name,
       setup(aibitat) {
+        if (typeof socket?.on === "function") {
+          socket.on("close", () => {
+            try {
+              socket._pendingApproval?.reject?.(
+                new Error("Socket disconnected before tool approval"),
+              );
+            } catch {}
+            socket._pendingApproval = null;
+            socket.handleToolApproval = null;
+            socket.handleClarificationResponse = null;
+          });
+        }
         aibitat.onError(async (error) => {
           let errorMessage =
             error?.message || "An error occurred while running the agent.";
@@ -140,8 +152,31 @@ const websocket = {
           }
 
           const requestId = uuidv4();
-          return new Promise((resolve) => {
+          return new Promise((resolve, reject) => {
             let timeoutId = null;
+            let settled = false;
+            const settleOnce = (value) => {
+              if (settled) return;
+              settled = true;
+              delete socket.handleToolApproval;
+              clearTimeout(timeoutId);
+              resolve(value);
+            };
+
+            socket._pendingApproval = {
+              requestId,
+              reject: (reason) => {
+                if (settled) return;
+                settled = true;
+                delete socket.handleToolApproval;
+                clearTimeout(timeoutId);
+                reject(
+                  reason instanceof Error
+                    ? reason
+                    : new Error(String(reason)),
+                );
+              },
+            };
 
             socket.handleToolApproval = (message) => {
               try {
@@ -152,17 +187,14 @@ const websocket = {
                 )
                   return;
 
-                delete socket.handleToolApproval;
-                clearTimeout(timeoutId);
-
                 if (data.approved) {
-                  return resolve({
+                  return settleOnce({
                     approved: true,
                     message: "User approved the tool execution.",
                   });
                 }
 
-                return resolve({
+                return settleOnce({
                   approved: false,
                   message: "Tool call was rejected by the user.",
                 });
@@ -184,14 +216,13 @@ const websocket = {
             );
 
             timeoutId = setTimeout(() => {
-              delete socket.handleToolApproval;
               // eslint-disable-next-line no-console
               console.log(
                 chalk.yellow(
                   `Tool approval request timed out after ${TOOL_APPROVAL_TIMEOUT_MS}ms`,
                 ),
               );
-              resolve({
+              settleOnce({
                 approved: false,
                 message:
                   "Tool approval request timed out. User did not respond in time.",

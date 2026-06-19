@@ -554,7 +554,12 @@ class MCPHypervisor {
     this.#validateServerDefinitionByType(name, server, serverType);
     this.log(`Attempting to start MCP server: ${name}`);
     const mcp = new Client({ name: name, version: "1.0.0" });
-    const transport = await this.#setupServerTransport(server, serverType);
+    let transport;
+    try {
+      transport = await this.#setupServerTransport(server, serverType);
+    } catch (e) {
+      throw e;
+    }
 
     // Add connection event listeners
     transport.onclose = () => {
@@ -606,6 +611,13 @@ class MCPHypervisor {
       if (timeoutId) clearTimeout(timeoutId);
     } catch (error) {
       if (timeoutId) clearTimeout(timeoutId);
+      try {
+        transport?.close?.();
+      } catch {}
+      try {
+        if (transport?._process?.kill) transport._process.kill("SIGTERM");
+      } catch {}
+      delete this.mcps[name];
       throw error;
     }
     return true;
