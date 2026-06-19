@@ -72,7 +72,10 @@ export function useTheme({ broadcastLogoChange = false } = {}) {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", resolvedTheme);
-    document.documentElement.classList.toggle("light", resolvedTheme === "light");
+    document.documentElement.classList.toggle(
+      "light",
+      resolvedTheme === "light",
+    );
     document.body.classList.toggle("light", resolvedTheme === "light");
     safeSetItem(THEME_KEY, theme);
     if (!hasMountedRef.current) {
@@ -98,10 +101,10 @@ export function useTheme({ broadcastLogoChange = false } = {}) {
   }, []);
 
   /**
-    * Sets the theme of the application and runs any
-    * other necessary side effects
-    * @param {ThemeOption} newTheme The new theme to set
-    */
+   * Sets the theme of the application and runs any
+   * other necessary side effects
+   * @param {ThemeOption} newTheme The new theme to set
+   */
   function setTheme(newTheme) {
     _setTheme(newTheme);
     window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));

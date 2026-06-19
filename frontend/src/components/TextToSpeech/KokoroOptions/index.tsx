@@ -14,9 +14,7 @@ export default function KokoroTTSOptions({ settings }: any) {
 
   useEffect(() => {
     setEndpoint(settings?.TTSKokoroEndpoint || "http://localhost:8880/v1");
-    setInputEndpoint(
-      settings?.TTSKokoroEndpoint || "http://localhost:8880/v1",
-    );
+    setInputEndpoint(settings?.TTSKokoroEndpoint || "http://localhost:8880/v1");
     setApiKey(settings?.TTSKokoroKey);
     setInputApiKey(settings?.TTSKokoroKey);
   }, [settings?.TTSKokoroEndpoint, settings?.TTSKokoroKey]);

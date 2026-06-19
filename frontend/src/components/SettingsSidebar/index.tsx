@@ -460,9 +460,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
   const { t } = useTranslation();
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [showing, setShowing] = useState(() =>
-    safeGetItem(
-      "openafd_experimental_feature_preview_unlocked",
-    ),
+    safeGetItem("openafd_experimental_feature_preview_unlocked"),
   );
 
   useEffect(() => {
@@ -472,10 +470,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
       timeoutRef.current = setTimeout(() => {
         setShowing("enabled");
         showToast(t("settingsSidebar.experimentalFeaturesUnlocked"));
-        safeSetItem(
-          "openafd_experimental_feature_preview_unlocked",
-          "enabled",
-        );
+        safeSetItem("openafd_experimental_feature_preview_unlocked", "enabled");
         window.removeEventListener("keydown", onPress);
         window.removeEventListener("keyup", onRelease);
         if (timeoutRef.current !== null) {

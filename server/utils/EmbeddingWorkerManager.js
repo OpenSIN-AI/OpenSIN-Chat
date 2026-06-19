@@ -25,7 +25,11 @@ function _enforceMaxWorkers() {
   while (runningWorkers.size >= MAX_WORKERS) {
     const oldestSlug = runningWorkers.keys().next().value;
     const oldEntry = runningWorkers.get(oldestSlug);
-    try { oldEntry?.worker?.terminate?.(); } catch { /* worker may be gone */ }
+    try {
+      oldEntry?.worker?.terminate?.();
+    } catch {
+      /* worker may be gone */
+    }
     runningWorkers.delete(oldestSlug);
     sseConnections.delete(oldestSlug);
     eventHistory.delete(oldestSlug);

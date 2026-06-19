@@ -12,7 +12,10 @@ vi.mock("@/components/ModalWrapper", () => ({
   default: ({ children }) => <div data-testid="modal-wrapper">{children}</div>,
 }));
 
-vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="x-icon" {...props} />, X: (props) => <svg data-testid="x-icon" {...props} /> }));;
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({
+  default: (props) => <svg data-testid="x-icon" {...props} />,
+  X: (props) => <svg data-testid="x-icon" {...props} />,
+}));
 
 vi.mock("@/models/workspace", () => ({
   default: {

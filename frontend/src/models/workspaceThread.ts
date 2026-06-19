@@ -100,7 +100,24 @@ const WorkspaceThread: any = {
     // to early abort the streaming response. On abort we send a special `stopGeneration`
     // event to be handled which resets the UI for us to be able to send another message.
     // The backend response abort handling is done in each LLM's handleStreamResponse.
-    const handleAbort = () => {
+    const handleAbort = (event: any) => {
+      const detail = event && event.detail;
+      if (detail) {
+        if (
+          detail.workspaceSlug &&
+          workspaceSlug &&
+          detail.workspaceSlug !== workspaceSlug
+        ) {
+          return;
+        }
+        if (
+          detail.threadSlug &&
+          threadSlug &&
+          detail.threadSlug !== threadSlug
+        ) {
+          return;
+        }
+      }
       ctrl?.abort();
       handleChat({ id: v4(), type: "stopGeneration" });
     };

@@ -140,7 +140,10 @@ export default function PromptInput({
                     isStreaming={isStreaming}
                   />
                   {isStreaming ? (
-                    <StopGenerationButton />
+                    <StopGenerationButton
+                      workspaceSlug={workspaceSlug ?? workspace?.slug ?? null}
+                      threadSlug={threadSlug ?? null}
+                    />
                   ) : (
                     <SendPromptButton
                       formRef={formRef}

@@ -36,8 +36,6 @@ vi.mock("@/components/lib/Toggle", () => ({
   ),
 }));
 
-;
-
 import useSystemSettings from "@/hooks/useSystemSettings";
 
 const baseProps = {

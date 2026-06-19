@@ -37,7 +37,6 @@ const MAX_COMPLETED_JOBS = Number(
 
 const jobs = new Map();
 
-
 function persistCorpusJob(job) {
   fs.mkdirSync(CORPUS_JOBS_DIR, { recursive: true });
   const file = path.join(CORPUS_JOBS_DIR, `${job.id}.json`);

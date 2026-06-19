@@ -11,7 +11,12 @@ vi.mock("@/media/logo/openafd-icon.svg", () => ({
   default: "mock-logo.svg",
 }));
 
-vi.mock("@phosphor-icons/react/dist/csr/ArrowSquareOut", () => ({ default: (props) => <svg data-testid="arrow-square-out-icon" {...props} />, ArrowSquareOut: (props) => <svg data-testid="arrow-square-out-icon" {...props} /> }));;
+vi.mock("@phosphor-icons/react/dist/csr/ArrowSquareOut", () => ({
+  default: (props) => <svg data-testid="arrow-square-out-icon" {...props} />,
+  ArrowSquareOut: (props) => (
+    <svg data-testid="arrow-square-out-icon" {...props} />
+  ),
+}));
 
 vi.mock("react-router-dom", () => ({
   Link: ({ children, to, ...props }) => (

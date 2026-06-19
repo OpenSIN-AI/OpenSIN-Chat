@@ -1397,7 +1397,7 @@ entities@^7.0.1:
   resolved "https://registry.yarnpkg.com/entities/-/entities-7.0.1.tgz#26e8a88889db63417dcb9a1e79a3f1bc92b5976b"
   integrity sha512-TWrgLOFUQTH994YUyl1yT4uyavY5nNB5muff+RtWaqNVCAK408b5ZnnbNAUEWLTCpum9w6arT70i1XdQ4UeOPA==
 
-"epub2@git+https://github.com/Mintplex-Labs/epub2-static.git#main":
+"epub2@git+https://github.com/Mintplex-Labs/epub2-static.git#eb0a45cd41ac1a5b4c97766e9935d97583104d35":
   version "3.0.2"
   resolved "git+https://github.com/Mintplex-Labs/epub2-static.git#eb0a45cd41ac1a5b4c97766e9935d97583104d35"
   dependencies:
@@ -2695,10 +2695,10 @@ node-xlsx@^0.24.0:
   dependencies:
     xlsx "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
 
-nodemailer@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-9.0.0.tgz#b01f5fe72c1b3576fdd2d7b272eee8c1c6ad45bd"
-  integrity sha512-tbPTid7d/p9jAA8CRZ3iomvrMaST0o6NYuY7v6JQZHpPRZ61mLFSPKYd7342NtOFuej9/+L48SOIxwfu2uDvtw==
+nodemailer@9.0.0, nodemailer@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-9.0.1.tgz#871c04d8423fc0c790289f4a8f6f71f1b3563e8c"
+  integrity sha512-Gwv8SQewT616ZM/URn0H54b8PWo/Wum7md3EW2aWy1lO27+WZCX+Xyak3J+NlmHUjDh5ME+uesJUDRbR3Ye8Bw==
 
 nodemon@^2.0.22:
   version "2.0.22"

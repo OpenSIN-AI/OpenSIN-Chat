@@ -344,6 +344,8 @@ export default function useChatStream({
     handleSocketResponse,
     setChatHistory,
     pendingResetRef,
+    workspaceSlug: workspace?.slug ?? null,
+    threadSlug: threadSlug ?? null,
   });
 
   return {

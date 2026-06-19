@@ -3,9 +3,18 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import ImageLightbox, { openImageLightbox } from "./index";
 
-vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="x-icon" {...props} />, X: (props) => <svg data-testid="x-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/CaretLeft", () => ({ default: (props) => <svg data-testid="caret-left-icon" {...props} />, CaretLeft: (props) => <svg data-testid="caret-left-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/CaretRight", () => ({ default: (props) => <svg data-testid="caret-right-icon" {...props} />, CaretRight: (props) => <svg data-testid="caret-right-icon" {...props} /> }));;
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({
+  default: (props) => <svg data-testid="x-icon" {...props} />,
+  X: (props) => <svg data-testid="x-icon" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/CaretLeft", () => ({
+  default: (props) => <svg data-testid="caret-left-icon" {...props} />,
+  CaretLeft: (props) => <svg data-testid="caret-left-icon" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/CaretRight", () => ({
+  default: (props) => <svg data-testid="caret-right-icon" {...props} />,
+  CaretRight: (props) => <svg data-testid="caret-right-icon" {...props} />,
+}));
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -48,7 +57,9 @@ describe("ImageLightbox", () => {
         0,
       );
     });
-    expect(screen.getByRole("button", { name: "Close lightbox" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Close lightbox" }),
+    ).toBeInTheDocument();
   });
 
   it("closes when close button is clicked", () => {

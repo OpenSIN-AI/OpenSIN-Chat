@@ -197,10 +197,7 @@ function FeatureVerification({ children }: FeatureVerificationProps) {
     function acceptTos(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault();
 
-      safeSetItem(
-        "openafd_tos_experimental_feature_set",
-        "accepted",
-      );
+      safeSetItem("openafd_tos_experimental_feature_set", "accepted");
       showToast(t("experimentalFeatures.toastEnabled"), "success");
       setTimeout(() => {
         window.location.reload();

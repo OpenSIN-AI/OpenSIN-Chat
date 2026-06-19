@@ -855,7 +855,9 @@ function systemEndpoints(app) {
         await AgentSkillWhitelist.clearSingleUserWhitelist();
         await updateENV(
           {
-            JWTSecret: process.env.JWT_SECRET || crypto.randomBytes(64).toString("base64url"),
+            JWTSecret:
+              process.env.JWT_SECRET ||
+              crypto.randomBytes(64).toString("base64url"),
           },
           true,
         );
@@ -1892,10 +1894,7 @@ function systemEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(
-          `[system prompt-variables fetch error id=${id}]`,
-          error,
-        );
+        console.error(`[system prompt-variables fetch error id=${id}]`, error);
         response.status(500).json({
           success: false,
           error: "Internal error",
@@ -1934,10 +1933,7 @@ function systemEndpoints(app) {
       } catch (error) {
         const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(
-          `[system prompt-variables create error id=${id}]`,
-          error,
-        );
+        console.error(`[system prompt-variables create error id=${id}]`, error);
         response.status(500).json({
           success: false,
           error: "Internal error",

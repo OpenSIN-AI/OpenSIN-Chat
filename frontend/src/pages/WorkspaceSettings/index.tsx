@@ -57,6 +57,7 @@ function ShowWorkspaceChat(): JSX.Element | null {
   const [workspace, setWorkspace] = useState<any>(null);
   const [deletionProtected, setDeletionProtected] = useState(false);
   const [loading, setLoading] = useState(true);
+  const isLoading = Boolean(workspaceLoading || settingsLoading || loading);
 
   useEffect(() => {
     if (workspaceLoading || settingsLoading) return;
@@ -86,7 +87,7 @@ function ShowWorkspaceChat(): JSX.Element | null {
     systemSettings,
   ]);
 
-  if (loading) return <FullScreenLoader />;
+  if (isLoading) return <FullScreenLoader />;
 
   // Guard: an invalid or missing tab would make TABS[tab] undefined and
   // crash React with "Element type is invalid". Redirect to the default tab.

@@ -31,7 +31,6 @@ import { useParams } from "react-router-dom";
 import paths from "@/utils/paths";
 import Appearance from "@/models/appearance";
 import useTextSize from "@/hooks/useTextSize";
-import useChatHistoryScrollHandle from "@/hooks/useChatHistoryScrollHandle";
 import { ThoughtExpansionProvider } from "./ThoughtContainer";
 import { MessageActionsProvider } from "./MessageActionsContext";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
@@ -308,9 +307,7 @@ export default forwardRef(function (
           return (
             <StatusResponse
               messages={row.messages}
-              isThinking={
-                !hasSubsequentMessages && lastMessageInfo.isAnimating
-              }
+              isThinking={!hasSubsequentMessages && lastMessageInfo.isAnimating}
             />
           );
         }
@@ -406,10 +403,7 @@ export default forwardRef(function (
     ],
   );
 
-  const computeItemKey = useCallback(
-    (_index: number, row: any) => row.id,
-    [],
-  );
+  const computeItemKey = useCallback((_index: number, row: any) => row.id, []);
 
   return (
     <MessageActionsProvider>

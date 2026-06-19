@@ -43,6 +43,8 @@ export default function useWebSocket({
   handleSocketResponse,
   setChatHistory,
   pendingResetRef,
+  workspaceSlug = null,
+  threadSlug = null,
 }) {
   // Track whether the close was intentional (user abort, /reset, etc.)
   // so we don't attempt reconnection on intentional disconnects.
@@ -72,7 +74,35 @@ export default function useWebSocket({
       }
     }
 
-    function handleAbortStream() {
+    function handleAbortStream(event: any) {
+      const detail = event && event.detail;
+      if (detail) {
+        if (detail.socketId && detail.socketId !== socketId) {
+          return;
+        }
+        if (
+          workspaceSlug &&
+          detail.workspaceSlug &&
+          detail.workspaceSlug !== workspaceSlug
+        ) {
+          return;
+        }
+        if (
+          threadSlug &&
+          detail.threadSlug &&
+          detail.threadSlug !== threadSlug
+        ) {
+          return;
+        }
+        if (
+          !detail.socketId &&
+          workspaceSlug &&
+          !detail.workspaceSlug &&
+          !detail.threadSlug
+        ) {
+          return;
+        }
+      }
       intentionalCloseRef.current = true;
       setAgentSessionActive(false);
       window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));

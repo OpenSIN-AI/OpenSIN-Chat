@@ -197,7 +197,10 @@ const PoliticianVote = {
         results.push(...partial);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.warn(`[PoliticianVote.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`, e.message);
+        console.warn(
+          `[PoliticianVote.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`,
+          e.message,
+        );
       }
     }
     return { count: results.length };
@@ -246,7 +249,10 @@ const PoliticianSpeech = {
         results.push(...partial);
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.warn(`[PoliticianSpeech.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`, e.message);
+        console.warn(
+          `[PoliticianSpeech.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`,
+          e.message,
+        );
       }
     }
     return { count: results.length };

@@ -58,20 +58,31 @@ function FileUploadProgressComponent({
       }, 100);
 
       // Chunk streaming not working in production so we just sit and wait
-      const result = await upload({ slug, formData });
-      const { response, data } = result;
-      if (!mountedRef.current) return;
-      if (!response.ok) {
+      try {
+        const result = await upload({ slug, formData });
+        const { response, data } = result;
+        if (!mountedRef.current) return;
+        if (!response.ok) {
+          setStatus("failed");
+          clearInterval(timer);
+          onUploadError(data.error);
+          setError(data.error);
+        } else {
+          setStatus("complete");
+          clearInterval(timer);
+          onUploadSuccess();
+        }
+      } catch (err: any) {
+        if (!mountedRef.current) return;
+        const message = err?.message || String(err);
         setStatus("failed");
         clearInterval(timer);
-        onUploadError(data.error);
-        setError(data.error);
-      } else {
+        onUploadError(message);
+        setError(message);
+      } finally {
+        if (!mountedRef.current) return;
         setLoading(false);
         setLoadingMessage("");
-        setStatus("complete");
-        clearInterval(timer);
-        onUploadSuccess();
       }
 
       // Begin fadeout timer to clear uploader queue.

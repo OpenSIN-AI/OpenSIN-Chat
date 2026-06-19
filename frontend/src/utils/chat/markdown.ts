@@ -14,10 +14,7 @@ const markdown = markdownIt({
   typographer: true,
   highlight: function (code: any, lang: any) {
     const uuid = v4();
-    const theme =
-      getStoredTheme() === "light"
-        ? "github"
-        : "github-dark";
+    const theme = getStoredTheme() === "light" ? "github" : "github-dark";
 
     if (lang && hljs.getLanguage(lang)) {
       try {

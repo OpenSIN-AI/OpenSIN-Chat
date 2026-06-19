@@ -7,7 +7,10 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="x-icon" {...props} />, X: (props) => <svg data-testid="x-icon" {...props} /> }));;
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({
+  default: (props) => <svg data-testid="x-icon" {...props} />,
+  X: (props) => <svg data-testid="x-icon" {...props} />,
+}));
 
 vi.mock("@/utils/paths", () => ({
   default: {

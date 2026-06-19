@@ -21,7 +21,9 @@ if (!process.env.APP_VERSION) {
 }
 if (!process.env.GIT_SHA) {
   try {
-    process.env.GIT_SHA = execSync("git rev-parse HEAD", { encoding: "utf8" }).trim();
+    process.env.GIT_SHA = execSync("git rev-parse HEAD", {
+      encoding: "utf8",
+    }).trim();
   } catch {
     /* no git available — GIT_SHA stays undefined */
   }

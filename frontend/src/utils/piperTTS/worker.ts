@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: MIT
-import { stored, voices, flush, TtsSession } from "@mintplex-labs/piper-tts-web";
+import {
+  stored,
+  voices,
+  flush,
+  TtsSession,
+} from "@mintplex-labs/piper-tts-web";
 
 /** @type {import("@mintplex-labs/piper-web-tts").TtsSession | null} */
 let PIPER_SESSION = null;

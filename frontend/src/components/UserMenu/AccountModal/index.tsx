@@ -172,7 +172,9 @@ export default function AccountModal({ user, hideModal }: any) {
                   name="currentPassword"
                   type="password"
                   className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                  placeholder={t("profile_settings.current_password_placeholder")}
+                  placeholder={t(
+                    "profile_settings.current_password_placeholder",
+                  )}
                   autoComplete="current-password"
                 />
                 <p className="mt-2 text-xs text-white/60">

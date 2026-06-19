@@ -30,7 +30,7 @@ describe("formatDateTimeAsMoment", () => {
     expect(result).toBe("2025-06-08");
   });
 
-  it('returns em-dash for unparseable input (dayjs does not throw)', () => {
+  it("returns em-dash for unparseable input (dayjs does not throw)", () => {
     expect(formatDateTimeAsMoment("garbage", "YYYY-MM-DD")).toBe("—");
   });
 });

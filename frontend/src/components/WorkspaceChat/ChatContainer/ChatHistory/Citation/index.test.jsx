@@ -42,15 +42,58 @@ vi.mock("truncate", () => ({
   default: (s, len) => (s.length > len ? s.slice(0, len) : s),
 }));
 
-vi.mock("@phosphor-icons/react/dist/csr/ArrowDown", () => ({ default: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} />, ArrowDown: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/FileText", () => ({ default: (props) => <svg data-testid="icon-filetext" {...props} />, FileText: (props) => <svg data-testid="icon-filetext" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Info", () => ({ default: (props) => <svg data-testid="icon-info" {...props} />, Info: (props) => <svg data-testid="icon-info" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/ArrowSquareOut", () => ({ default: (props) => <svg data-testid="phosphor-arrowsquareout-icon" {...props} />, ArrowSquareOut: (props) => <svg data-testid="phosphor-arrowsquareout-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/GithubLogo", () => ({ default: (props) => <svg data-testid="phosphor-githublogo-icon" {...props} />, GithubLogo: (props) => <svg data-testid="phosphor-githublogo-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="phosphor-x-icon" {...props} />, X: (props) => <svg data-testid="phosphor-x-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/YoutubeLogo", () => ({ default: (props) => <svg data-testid="phosphor-youtubelogo-icon" {...props} />, YoutubeLogo: (props) => <svg data-testid="phosphor-youtubelogo-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/LinkSimple", () => ({ default: (props) => <svg data-testid="phosphor-linksimple-icon" {...props} />, LinkSimple: (props) => <svg data-testid="phosphor-linksimple-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/GitlabLogo", () => ({ default: (props) => <svg data-testid="phosphor-gitlablogo-icon" {...props} />, GitlabLogo: (props) => <svg data-testid="phosphor-gitlablogo-icon" {...props} /> }));;
+vi.mock("@phosphor-icons/react/dist/csr/ArrowDown", () => ({
+  default: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} />,
+  ArrowDown: (props) => (
+    <svg data-testid="phosphor-arrowdown-icon" {...props} />
+  ),
+}));
+vi.mock("@phosphor-icons/react/dist/csr/FileText", () => ({
+  default: (props) => <svg data-testid="icon-filetext" {...props} />,
+  FileText: (props) => <svg data-testid="icon-filetext" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Info", () => ({
+  default: (props) => <svg data-testid="icon-info" {...props} />,
+  Info: (props) => <svg data-testid="icon-info" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/ArrowSquareOut", () => ({
+  default: (props) => (
+    <svg data-testid="phosphor-arrowsquareout-icon" {...props} />
+  ),
+  ArrowSquareOut: (props) => (
+    <svg data-testid="phosphor-arrowsquareout-icon" {...props} />
+  ),
+}));
+vi.mock("@phosphor-icons/react/dist/csr/GithubLogo", () => ({
+  default: (props) => <svg data-testid="phosphor-githublogo-icon" {...props} />,
+  GithubLogo: (props) => (
+    <svg data-testid="phosphor-githublogo-icon" {...props} />
+  ),
+}));
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({
+  default: (props) => <svg data-testid="phosphor-x-icon" {...props} />,
+  X: (props) => <svg data-testid="phosphor-x-icon" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/YoutubeLogo", () => ({
+  default: (props) => (
+    <svg data-testid="phosphor-youtubelogo-icon" {...props} />
+  ),
+  YoutubeLogo: (props) => (
+    <svg data-testid="phosphor-youtubelogo-icon" {...props} />
+  ),
+}));
+vi.mock("@phosphor-icons/react/dist/csr/LinkSimple", () => ({
+  default: (props) => <svg data-testid="phosphor-linksimple-icon" {...props} />,
+  LinkSimple: (props) => (
+    <svg data-testid="phosphor-linksimple-icon" {...props} />
+  ),
+}));
+vi.mock("@phosphor-icons/react/dist/csr/GitlabLogo", () => ({
+  default: (props) => <svg data-testid="phosphor-gitlablogo-icon" {...props} />,
+  GitlabLogo: (props) => (
+    <svg data-testid="phosphor-gitlablogo-icon" {...props} />
+  ),
+}));
 
 vi.mock("@/pages/Admin/Agents/GMailSkillPanel/gmail.png", () => ({
   default: "gmail-mock.png",
@@ -234,12 +277,16 @@ describe("Citation", () => {
 
     it("renders github icon for github type", () => {
       const { container } = render(<SourceTypeCircle type="github" />);
-      expect(container.querySelector('[data-testid="phosphor-githublogo-icon"]')).toBeInTheDocument();
+      expect(
+        container.querySelector('[data-testid="phosphor-githublogo-icon"]'),
+      ).toBeInTheDocument();
     });
 
     it("renders youtube icon for youtube type", () => {
       const { container } = render(<SourceTypeCircle type="youtube" />);
-      expect(container.querySelector('[data-testid="phosphor-youtubelogo-icon"]')).toBeInTheDocument();
+      expect(
+        container.querySelector('[data-testid="phosphor-youtubelogo-icon"]'),
+      ).toBeInTheDocument();
     });
   });
 

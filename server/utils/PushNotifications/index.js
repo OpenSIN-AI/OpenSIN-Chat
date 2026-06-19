@@ -47,7 +47,10 @@ function loadOrCreateVapid() {
     return existing;
 
   const generated = webpush.generateVAPIDKeys();
-  const v = { publicKey: generated.publicKey, privateKey: generated.privateKey };
+  const v = {
+    publicKey: generated.publicKey,
+    privateKey: generated.privateKey,
+  };
   writeJsonSafe(file, v);
   return v;
 }

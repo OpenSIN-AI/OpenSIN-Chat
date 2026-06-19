@@ -97,8 +97,7 @@ const ScriptTag = ({ embed }: ScriptTagProps): JSX.Element => {
     ? "http://localhost:3001"
     : window.location.origin;
   const snippet = createScriptTagSnippet(embed, scriptHost, serverHost);
-  const theme =
-    getStoredTheme() === "light" ? "github" : "github-dark";
+  const theme = getStoredTheme() === "light" ? "github" : "github-dark";
 
   const handleClick = () => {
     copyText(snippet).then((ok) => {

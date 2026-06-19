@@ -78,7 +78,13 @@ export async function subscribeToPushNotifications(
         ) {
           log("New service worker installed, ready to activate");
 
-          if (confirm(translate ? translate("sw_update_available") : "A new version is available. Reload to update?")) {
+          if (
+            confirm(
+              translate
+                ? translate("sw_update_available")
+                : "A new version is available. Reload to update?",
+            )
+          ) {
             window.location.reload();
           }
         }

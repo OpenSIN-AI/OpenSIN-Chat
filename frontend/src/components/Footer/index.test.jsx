@@ -47,24 +47,80 @@ vi.mock("react-router-dom", () => ({
   ),
 }));
 
-vi.mock("@phosphor-icons/react/dist/csr/ArrowUpRight", () => ({ default: (props) => <svg data-testid="icon-arrowupright" {...props} />, ArrowUpRight: (props) => <svg data-testid="icon-arrowupright" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/BookOpen", () => ({ default: (props) => <svg data-testid="icon-bookopen" {...props} />, BookOpen: (props) => <svg data-testid="icon-bookopen" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/CaretUpDown", () => ({ default: (props) => <svg data-testid="icon-caretupdown" {...props} />, CaretUpDown: (props) => <svg data-testid="icon-caretupdown" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/ChatCircleText", () => ({ default: (props) => <svg data-testid="icon-chatcircletext" {...props} />, ChatCircleText: (props) => <svg data-testid="icon-chatcircletext" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Desktop", () => ({ default: (props) => <svg data-testid="icon-desktop" {...props} />, Desktop: (props) => <svg data-testid="icon-desktop" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Gear", () => ({ default: (props) => <svg data-testid="icon-gear" {...props} />, Gear: (props) => <svg data-testid="icon-gear" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/GithubLogo", () => ({ default: (props) => <svg data-testid="icon-githublogo" {...props} />, GithubLogo: (props) => <svg data-testid="icon-githublogo" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Briefcase", () => ({ default: (props) => <svg data-testid="icon-briefcase" {...props} />, Briefcase: (props) => <svg data-testid="icon-briefcase" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Envelope", () => ({ default: (props) => <svg data-testid="icon-envelope" {...props} />, Envelope: (props) => <svg data-testid="icon-envelope" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Globe", () => ({ default: (props) => <svg data-testid="icon-globe" {...props} />, Globe: (props) => <svg data-testid="icon-globe" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/HouseLine", () => ({ default: (props) => <svg data-testid="icon-houseline" {...props} />, HouseLine: (props) => <svg data-testid="icon-houseline" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Info", () => ({ default: (props) => <svg data-testid="icon-info" {...props} />, Info: (props) => <svg data-testid="icon-info" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/LinkSimple", () => ({ default: (props) => <svg data-testid="icon-linksimple" {...props} />, LinkSimple: (props) => <svg data-testid="icon-linksimple" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Moon", () => ({ default: (props) => <svg data-testid="icon-moon" {...props} />, Moon: (props) => <svg data-testid="icon-moon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/SignIn", () => ({ default: (props) => <svg data-testid="icon-signin" {...props} />, SignIn: (props) => <svg data-testid="icon-signin" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/SignOut", () => ({ default: (props) => <svg data-testid="icon-signout" {...props} />, SignOut: (props) => <svg data-testid="icon-signout" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Sun", () => ({ default: (props) => <svg data-testid="icon-sun" {...props} />, Sun: (props) => <svg data-testid="icon-sun" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/UserCircle", () => ({ default: (props) => <svg data-testid="icon-usercircle" {...props} />, UserCircle: (props) => <svg data-testid="icon-usercircle" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/ArrowUpRight", () => ({
+  default: (props) => <svg data-testid="icon-arrowupright" {...props} />,
+  ArrowUpRight: (props) => <svg data-testid="icon-arrowupright" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/BookOpen", () => ({
+  default: (props) => <svg data-testid="icon-bookopen" {...props} />,
+  BookOpen: (props) => <svg data-testid="icon-bookopen" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/CaretUpDown", () => ({
+  default: (props) => <svg data-testid="icon-caretupdown" {...props} />,
+  CaretUpDown: (props) => <svg data-testid="icon-caretupdown" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/ChatCircleText", () => ({
+  default: (props) => <svg data-testid="icon-chatcircletext" {...props} />,
+  ChatCircleText: (props) => (
+    <svg data-testid="icon-chatcircletext" {...props} />
+  ),
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Desktop", () => ({
+  default: (props) => <svg data-testid="icon-desktop" {...props} />,
+  Desktop: (props) => <svg data-testid="icon-desktop" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Gear", () => ({
+  default: (props) => <svg data-testid="icon-gear" {...props} />,
+  Gear: (props) => <svg data-testid="icon-gear" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/GithubLogo", () => ({
+  default: (props) => <svg data-testid="icon-githublogo" {...props} />,
+  GithubLogo: (props) => <svg data-testid="icon-githublogo" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Briefcase", () => ({
+  default: (props) => <svg data-testid="icon-briefcase" {...props} />,
+  Briefcase: (props) => <svg data-testid="icon-briefcase" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Envelope", () => ({
+  default: (props) => <svg data-testid="icon-envelope" {...props} />,
+  Envelope: (props) => <svg data-testid="icon-envelope" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Globe", () => ({
+  default: (props) => <svg data-testid="icon-globe" {...props} />,
+  Globe: (props) => <svg data-testid="icon-globe" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/HouseLine", () => ({
+  default: (props) => <svg data-testid="icon-houseline" {...props} />,
+  HouseLine: (props) => <svg data-testid="icon-houseline" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Info", () => ({
+  default: (props) => <svg data-testid="icon-info" {...props} />,
+  Info: (props) => <svg data-testid="icon-info" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/LinkSimple", () => ({
+  default: (props) => <svg data-testid="icon-linksimple" {...props} />,
+  LinkSimple: (props) => <svg data-testid="icon-linksimple" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Moon", () => ({
+  default: (props) => <svg data-testid="icon-moon" {...props} />,
+  Moon: (props) => <svg data-testid="icon-moon" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/SignIn", () => ({
+  default: (props) => <svg data-testid="icon-signin" {...props} />,
+  SignIn: (props) => <svg data-testid="icon-signin" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/SignOut", () => ({
+  default: (props) => <svg data-testid="icon-signout" {...props} />,
+  SignOut: (props) => <svg data-testid="icon-signout" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Sun", () => ({
+  default: (props) => <svg data-testid="icon-sun" {...props} />,
+  Sun: (props) => <svg data-testid="icon-sun" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/UserCircle", () => ({
+  default: (props) => <svg data-testid="icon-usercircle" {...props} />,
+  UserCircle: (props) => <svg data-testid="icon-usercircle" {...props} />,
+}));
 
 describe("Footer", () => {
   beforeEach(() => {

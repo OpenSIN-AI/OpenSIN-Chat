@@ -66,10 +66,7 @@ export function SidebarToggleProvider({
       ) {
         setShowSidebar((prev) => {
           const newState = !prev;
-          safeSetItem(
-            SIDEBAR_TOGGLE_STORAGE_KEY,
-            newState ? "open" : "closed",
-          );
+          safeSetItem(SIDEBAR_TOGGLE_STORAGE_KEY, newState ? "open" : "closed");
           return newState;
         });
       }
@@ -81,10 +78,7 @@ export function SidebarToggleProvider({
   }, [canToggleSidebar]);
 
   useEffect(() => {
-    safeSetItem(
-      SIDEBAR_TOGGLE_STORAGE_KEY,
-      showSidebar ? "open" : "closed",
-    );
+    safeSetItem(SIDEBAR_TOGGLE_STORAGE_KEY, showSidebar ? "open" : "closed");
     window.dispatchEvent(
       new CustomEvent(SIDEBAR_TOGGLE_EVENT, {
         detail: { open: showSidebar },

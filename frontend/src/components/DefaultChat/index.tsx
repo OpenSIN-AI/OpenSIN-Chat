@@ -28,9 +28,7 @@ export default function DefaultChatContainer() {
   const [lastVisitedWorkspace, setLastVisitedWorkspace] = useState(null);
 
   useEffect(() => {
-    const serializedLastVisitedWorkspace = safeGetItem(
-      LAST_VISITED_WORKSPACE,
-    );
+    const serializedLastVisitedWorkspace = safeGetItem(LAST_VISITED_WORKSPACE);
     if (!serializedLastVisitedWorkspace) return;
 
     try {

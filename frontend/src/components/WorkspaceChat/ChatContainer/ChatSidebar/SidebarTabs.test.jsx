@@ -33,9 +33,18 @@ vi.mock("../MemoriesSidebar/MemoriesContext", () => ({
 }));
 
 // SidebarTabs uses phosphor icons; render placeholders to keep DOM small
-vi.mock("@phosphor-icons/react/dist/csr/BookOpen", () => ({ default: (props) => <svg data-testid="icon-global" {...props} />, BookOpen: (props) => <svg data-testid="icon-global" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/FileText", () => ({ default: (props) => <svg data-testid="icon-sources" {...props} />, FileText: (props) => <svg data-testid="icon-sources" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/FolderOpen", () => ({ default: (props) => <svg data-testid="icon-workspace" {...props} />, FolderOpen: (props) => <svg data-testid="icon-workspace" {...props} /> }));;
+vi.mock("@phosphor-icons/react/dist/csr/BookOpen", () => ({
+  default: (props) => <svg data-testid="icon-global" {...props} />,
+  BookOpen: (props) => <svg data-testid="icon-global" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/FileText", () => ({
+  default: (props) => <svg data-testid="icon-sources" {...props} />,
+  FileText: (props) => <svg data-testid="icon-sources" {...props} />,
+}));
+vi.mock("@phosphor-icons/react/dist/csr/FolderOpen", () => ({
+  default: (props) => <svg data-testid="icon-workspace" {...props} />,
+  FolderOpen: (props) => <svg data-testid="icon-workspace" {...props} />,
+}));
 
 import SidebarTabs from "./SidebarTabs";
 

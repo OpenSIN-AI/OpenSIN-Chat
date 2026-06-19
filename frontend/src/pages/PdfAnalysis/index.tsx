@@ -15,9 +15,13 @@ import remarkGfm from "remark-gfm";
 let docxMod = null;
 let jsPDFMod = null;
 const docxReady = () =>
-  docxMod ? Promise.resolve(docxMod) : import("docx").then((m) => (docxMod = m));
+  docxMod
+    ? Promise.resolve(docxMod)
+    : import("docx").then((m) => (docxMod = m));
 const jsPDFReady = () =>
-  jsPDFMod ? Promise.resolve(jsPDFMod) : import("jspdf").then((m) => (jsPDFMod = m.default ?? m));
+  jsPDFMod
+    ? Promise.resolve(jsPDFMod)
+    : import("jspdf").then((m) => (jsPDFMod = m.default ?? m));
 import { UploadSimple } from "@phosphor-icons/react/dist/csr/UploadSimple";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 import { FileDoc } from "@phosphor-icons/react/dist/csr/FileDoc";

@@ -55,10 +55,7 @@ export default function Sidebar() {
   // Persist width changes
   useEffect(() => {
     if (typeof window !== "undefined") {
-      safeSetItem(
-        SIDEBAR_WIDTH_STORAGE_KEY,
-        String(sidebarWidth),
-      );
+      safeSetItem(SIDEBAR_WIDTH_STORAGE_KEY, String(sidebarWidth));
     }
   }, [sidebarWidth]);
 

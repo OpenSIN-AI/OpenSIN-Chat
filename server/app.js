@@ -58,6 +58,7 @@ const { memoryEndpoints } = require("./endpoints/memory");
 const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const { webPushEndpoints } = require("./endpoints/webPush");
+const cspViolationEndpoint = require("./endpoints/cspViolation");
 const { httpLogger } = require("./middleware/httpLogger");
 const { securityHeaders } = require("./utils/middleware/securityHeaders");
 
@@ -99,11 +100,18 @@ function buildApp() {
       const origin = request.headers.origin;
       if (origin) {
         const allowed = (process.env.CORS_ORIGIN || "")
-          .split(",").map(s => s.trim()).filter(Boolean);
-        if (allowed.length && !allowed.includes("*") &&
-            !allowed.some(o => o.toLowerCase() === origin.toLowerCase())) {
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        if (
+          allowed.length &&
+          !allowed.includes("*") &&
+          !allowed.some((o) => o.toLowerCase() === origin.toLowerCase())
+        ) {
           const id = crypto.randomUUID();
-          console.error(`[OriginBlock id=${id}] rejected ${request.method} ${request.path} from ${origin}`);
+          console.error(
+            `[OriginBlock id=${id}] rejected ${request.method} ${request.path} from ${origin}`,
+          );
           return response.status(403).json({ error: "Origin not allowed", id });
         }
       }
@@ -138,11 +146,16 @@ function buildApp() {
     );
   }
   const corsOrigin = corsOriginEnv
-    ? corsOriginEnv.split(",").map((s) => s.trim()).filter(Boolean)
+    ? corsOriginEnv
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean)
     : process.env.NODE_ENV === "production"
       ? false
       : true;
-  app.use(cors({ origin: corsOrigin.length === 1 ? corsOrigin[0] : corsOrigin }));
+  app.use(
+    cors({ origin: corsOrigin.length === 1 ? corsOrigin[0] : corsOrigin }),
+  );
 
   app.use("/request-token", bodyParser.json({ limit: "8kb" }));
   app.use("/system/reset-password", bodyParser.json({ limit: "8kb" }));
@@ -199,6 +212,7 @@ function buildApp() {
   logBootDiagnostics();
   embeddedEndpoints(apiRouter);
   browserExtensionEndpoints(apiRouter);
+  cspViolationEndpoint(apiRouter);
 
   if (
     process.env.NODE_ENV !== "development" &&

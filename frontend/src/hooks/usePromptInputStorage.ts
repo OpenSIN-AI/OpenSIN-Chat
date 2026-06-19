@@ -48,8 +48,7 @@ export default function usePromptInputStorage({ promptInput, setPromptInput }) {
   // draft indefinitely.
   const storageKey = threadSlug ?? workspaceSlug;
   useEffect(() => {
-    const serializedPromptInputMap =
-      safeGetItem(USER_PROMPT_INPUT_MAP) || "{}";
+    const serializedPromptInputMap = safeGetItem(USER_PROMPT_INPUT_MAP) || "{}";
 
     const promptInputMap = safeJsonParse(serializedPromptInputMap, {});
 
@@ -58,7 +57,6 @@ export default function usePromptInputStorage({ promptInput, setPromptInput }) {
       setPromptInput(userPromptInputValue);
     }
     // Re-run when the storage key changes (thread/workspace switch).
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
 
   const debouncedWriteToStorage = useMemo(
@@ -68,10 +66,7 @@ export default function usePromptInputStorage({ promptInput, setPromptInput }) {
           safeGetItem(USER_PROMPT_INPUT_MAP) || "{}";
         const promptInputMap = safeJsonParse(serializedPromptInputMap, {});
         promptInputMap[slug] = value;
-        safeSetItem(
-          USER_PROMPT_INPUT_MAP,
-          JSON.stringify(promptInputMap),
-        );
+        safeSetItem(USER_PROMPT_INPUT_MAP, JSON.stringify(promptInputMap));
       }, 500),
     [],
   );

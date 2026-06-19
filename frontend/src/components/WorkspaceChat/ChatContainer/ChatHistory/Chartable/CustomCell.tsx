@@ -12,7 +12,7 @@ export default function CustomCell({ ...props }: any) {
         style={{
           "--cell-fill":
             depth < 2
-              ? colors[Math.floor((index /               (root?.children?.length ?? 0)) * 6)]
+              ? colors[Math.floor((index / (root?.children?.length ?? 0)) * 6)]
               : "#ffffff00",
           "--cell-stroke": "#fff",
           "--cell-stroke-width": 2 / (depth + 1e-10),

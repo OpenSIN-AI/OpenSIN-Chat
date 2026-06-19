@@ -327,7 +327,11 @@ function agentWebsocket(app, routePrefix = "") {
         try {
           if (socket)
             socket.send(
-              JSON.stringify({ type: "wssFailure", content: "Internal error", id }),
+              JSON.stringify({
+                type: "wssFailure",
+                content: "Internal error",
+                id,
+              }),
             );
         } catch {
           /* socket already gone */

@@ -117,9 +117,7 @@ export function DnDFileUploaderProvider({
   async function handleRemoveParsedFile(event: any) {
     const { document } = event.detail;
     setFiles((prev) =>
-      (prev as any).filter(
-        (prevFile) => prevFile.document?.id !== document.id,
-      ),
+      (prev as any).filter((prevFile) => prevFile.document?.id !== document.id),
     );
   }
 
@@ -386,9 +384,7 @@ export function DnDFileUploaderProvider({
     // call deleteAndUnembedFile. Without `location`, handleRemove silently
     // skips the backend delete, orphaning the document in the vector store.
     const docData = await mutateParsedFiles().catch(() => null);
-    const fileMap = new Map(
-      (docData?.files || []).map((f: any) => [f.id, f]),
-    );
+    const fileMap = new Map((docData?.files || []).map((f: any) => [f.id, f]));
     const results = (pendingFiles as any).map((file) => {
       const fullDoc = fileMap.get(file.parsedFileId);
       return {

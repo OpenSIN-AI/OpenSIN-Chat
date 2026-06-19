@@ -8,8 +8,16 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-vi.mock("@phosphor-icons/react/dist/csr/ArrowDown", () => ({ default: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} />, ArrowDown: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} /> }));
-vi.mock("@phosphor-icons/react/dist/csr/Shuffle", () => ({ default: (props) => <svg data-testid="shuffle-icon" {...props} />, Shuffle: (props) => <svg data-testid="shuffle-icon" {...props} /> }));;
+vi.mock("@phosphor-icons/react/dist/csr/ArrowDown", () => ({
+  default: (props) => <svg data-testid="phosphor-arrowdown-icon" {...props} />,
+  ArrowDown: (props) => (
+    <svg data-testid="phosphor-arrowdown-icon" {...props} />
+  ),
+}));
+vi.mock("@phosphor-icons/react/dist/csr/Shuffle", () => ({
+  default: (props) => <svg data-testid="shuffle-icon" {...props} />,
+  Shuffle: (props) => <svg data-testid="shuffle-icon" {...props} />,
+}));
 
 vi.mock("@/media/animations/router-animation.webm", () => ({
   default: "router-animation.webm",

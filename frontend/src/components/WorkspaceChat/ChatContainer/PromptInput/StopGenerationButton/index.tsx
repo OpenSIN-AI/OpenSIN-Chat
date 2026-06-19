@@ -3,10 +3,20 @@ import { ABORT_STREAM_EVENT } from "@/utils/chat";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 
-export default function StopGenerationButton() {
+export default function StopGenerationButton({
+  workspaceSlug = null,
+  threadSlug = null,
+}: {
+  workspaceSlug?: string | null;
+  threadSlug?: string | null;
+}) {
   const { t } = useTranslation();
   function emitHaltEvent() {
-    window.dispatchEvent(new CustomEvent(ABORT_STREAM_EVENT));
+    window.dispatchEvent(
+      new CustomEvent(ABORT_STREAM_EVENT, {
+        detail: { workspaceSlug, threadSlug },
+      }),
+    );
   }
 
   return (

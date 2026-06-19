@@ -51,9 +51,9 @@ async function validatedRequest(request, response, next) {
     (!process.env.AUTH_TOKEN || !process.env.JWT_SECRET)
   ) {
     const id =
-      (typeof crypto !== "undefined" && crypto.randomUUID
+      typeof crypto !== "undefined" && crypto.randomUUID
         ? crypto.randomUUID()
-        : `${Date.now()}-${Math.random().toString(36).slice(2)}`);
+        : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     console.error(
       `[validatedRequest FATAL id=${id}] auth misconfigured in production. AUTH_TOKEN=${!!process.env.AUTH_TOKEN} JWT_SECRET=${!!process.env.JWT_SECRET}`,
     );

@@ -30,10 +30,7 @@ export default function SimpleSSOPassthrough() {
 
           safeSetItem(AUTH_USER, JSON.stringify(res.user));
           safeSetItem(AUTH_TOKEN, res.token);
-          safeSetItem(
-            AUTH_TIMESTAMP,
-            String(Number(new Date())),
-          );
+          safeSetItem(AUTH_TIMESTAMP, String(Number(new Date())));
           setReady(res.valid);
         })
         .catch((e) => {

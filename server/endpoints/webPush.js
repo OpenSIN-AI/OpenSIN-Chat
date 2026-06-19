@@ -48,9 +48,7 @@ function webPushEndpoints(app) {
       } catch (e) {
         const id = crypto.randomUUID();
         console.error(`[webPush subscribe FATAL id=${id}]`, e);
-        return response
-          .status(500)
-          .json({ error: "Subscription failed", id });
+        return response.status(500).json({ error: "Subscription failed", id });
       }
     },
   );
@@ -64,9 +62,7 @@ function webPushEndpoints(app) {
           request.body && typeof request.body === "object" ? request.body : {};
         const { endpoint } = body;
         if (!endpoint || typeof endpoint !== "string") {
-          return response
-            .status(400)
-            .json({ error: "endpoint required" });
+          return response.status(400).json({ error: "endpoint required" });
         }
         const removed = await pushNotificationService.unregisterSubscription({
           endpoint,
@@ -75,9 +71,7 @@ function webPushEndpoints(app) {
       } catch (e) {
         const id = crypto.randomUUID();
         console.error(`[webPush unsubscribe FATAL id=${id}]`, e);
-        return response
-          .status(500)
-          .json({ error: "Unsubscribe failed", id });
+        return response.status(500).json({ error: "Unsubscribe failed", id });
       }
     },
   );
@@ -99,37 +93,29 @@ function webPushEndpoints(app) {
     },
   );
 
-  app.post(
-    "/web-push/send",
-    [validatedRequest],
-    async (request, response) => {
-      try {
-        const body =
-          request.body && typeof request.body === "object" ? request.body : {};
-        const { title, body: bodyText, url, to } = body;
-        if (!title || typeof title !== "string") {
-          return response
-            .status(400)
-            .json({ error: "title required" });
-        }
-        const result = await pushNotificationService.sendNotification({
-          to: to || "primary",
-          payload: {
-            title,
-            body: bodyText || "",
-            data: { url: url || "/" },
-          },
-        });
-        return response.status(200).json(result);
-      } catch (e) {
-        const id = crypto.randomUUID();
-        console.error(`[webPush send FATAL id=${id}]`, e);
-        return response
-          .status(500)
-          .json({ error: "Send failed", id });
+  app.post("/web-push/send", [validatedRequest], async (request, response) => {
+    try {
+      const body =
+        request.body && typeof request.body === "object" ? request.body : {};
+      const { title, body: bodyText, url, to } = body;
+      if (!title || typeof title !== "string") {
+        return response.status(400).json({ error: "title required" });
       }
-    },
-  );
+      const result = await pushNotificationService.sendNotification({
+        to: to || "primary",
+        payload: {
+          title,
+          body: bodyText || "",
+          data: { url: url || "/" },
+        },
+      });
+      return response.status(200).json(result);
+    } catch (e) {
+      const id = crypto.randomUUID();
+      console.error(`[webPush send FATAL id=${id}]`, e);
+      return response.status(500).json({ error: "Send failed", id });
+    }
+  });
 }
 
 module.exports = { webPushEndpoints };
