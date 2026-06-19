@@ -218,6 +218,27 @@ function buildApp() {
       IndexPage.generateManifest(response);
     });
 
+    let prismaClient = null;
+    try {
+      prismaClient = require("./utils/prisma");
+    } catch {
+      prismaClient = null;
+    }
+
+    app.get("/healthz", (_req, res) => res.status(200).json({ status: "ok" }));
+    app.get("/readyz", async (_req, res) => {
+      if (!prismaClient)
+        return res.status(200).json({ status: "ready", db: "unchecked" });
+      try {
+        await prismaClient.$queryRaw`SELECT 1`;
+        res.status(200).json({ status: "ready" });
+      } catch (e) {
+        const id = crypto.randomUUID();
+        console.error(`[readyz error] id=${id}`, e);
+        res.status(503).json({ status: "not ready", id });
+      }
+    });
+
     app.use("/", function (_, response) {
       IndexPage.generate(response);
     });
@@ -249,27 +270,6 @@ function buildApp() {
       }
     });
   }
-
-  let prismaClient = null;
-  try {
-    prismaClient = require("./utils/prisma");
-  } catch {
-    prismaClient = null;
-  }
-
-  app.get("/healthz", (_req, res) => res.status(200).json({ status: "ok" }));
-  app.get("/readyz", async (_req, res) => {
-    if (!prismaClient)
-      return res.status(200).json({ status: "ready", db: "unchecked" });
-    try {
-      await prismaClient.$queryRaw`SELECT 1`;
-      res.status(200).json({ status: "ready" });
-    } catch (e) {
-      const id = crypto.randomUUID();
-      console.error(`[readyz error] id=${id}`, e);
-      res.status(503).json({ status: "not ready", id });
-    }
-  });
 
   app.use(function (_, response) {
     response.sendStatus(404);
