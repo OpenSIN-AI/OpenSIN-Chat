@@ -64,7 +64,7 @@ export default function ApiKeyRow({
           }
         </td>
         <td className="px-6 py-3 whitespace-nowrap align-middle">
-          {new Date(apiKey.createdAt).toLocaleString()}
+          {apiKey.createdAt ? new Date(apiKey.createdAt).toLocaleString() : "—"}
         </td>
         <td className="px-6 py-3 align-middle">
           <div className="flex items-center gap-x-6">

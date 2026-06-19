@@ -75,7 +75,9 @@ export default function DeviceRow({
         </td>
         <td className="px-6">
           <div className="flex items-center gap-x-2">
-            {dayjs(device.createdAt).format(LLL_FORMAT)}
+            {device.createdAt
+              ? dayjs(device.createdAt).format(LLL_FORMAT)
+              : "—"}
             {device.user && (
               <div className="flex items-center gap-x-1">
                 <span className="text-xs text-theme-text-secondary">

@@ -96,7 +96,7 @@ export default function RunRow({
         <StatusBadge status={run.status} />
       </div>
       <span className="w-[260px] text-sm font-medium text-white light:text-slate-950 truncate">
-        {new Date(run.startedAt).toLocaleString()}
+        {run.startedAt ? new Date(run.startedAt).toLocaleString() : "—"}
       </span>
       <span className="w-[160px] text-sm font-medium text-white light:text-slate-950 truncate">
         {formatRunDuration(run)}

@@ -120,7 +120,7 @@ export default function BrowserExtensionApiKeyRow({
         </td>
       )}
       <td className="px-6 py-2">
-        {new Date(apiKey.createdAt).toLocaleString()}
+        {apiKey.createdAt ? new Date(apiKey.createdAt).toLocaleString() : "—"}
       </td>
       <td className="px-6 py-2">
         <button

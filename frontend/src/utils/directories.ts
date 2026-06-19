@@ -5,20 +5,21 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 dayjs.extend(localizedFormat);
 
 export function formatDate(dateString) {
-  const date = isNaN(new Date(dateString).getTime())
-    ? new Date()
-    : new Date(dateString);
+  if (!dateString) return "—";
+  const parsed = new Date(dateString);
+  if (isNaN(parsed.getTime())) return "—";
   const options = { year: "numeric", month: "short", day: "numeric" } as const;
-  const formattedDate = date.toLocaleDateString("en-US", options);
-  return formattedDate;
+  return parsed.toLocaleDateString("en-US", options);
 }
 
 export function formatDateTimeAsMoment(dateString, format = "LLL") {
-  if (!dateString) return dayjs().format(format);
+  if (!dateString) return "—";
   try {
-    return dayjs(dateString).format(format);
+    const d = dayjs(dateString);
+    if (!d.isValid()) return "—";
+    return d.format(format);
   } catch {
-    return dayjs().format(format);
+    return "—";
   }
 }
 

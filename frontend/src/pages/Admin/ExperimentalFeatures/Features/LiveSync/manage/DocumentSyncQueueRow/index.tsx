@@ -33,15 +33,23 @@ export default function DocumentSyncQueueRow({ queue }: { queue: any }) {
         <td scope="row" className="px-6 py-4 whitespace-nowrap">
           {stripUuidAndJsonFromString(queue.workspaceDoc.filename)}
         </td>
-        <td className="px-6 py-4">{dayjs(queue.lastSyncedAt).fromNow()}</td>
         <td className="px-6 py-4">
-          {dayjs(queue.nextSyncAt).format(MOMENT_LLL_FORMAT)}
-          <i className="text-xs px-2">
-            {wrapRelative(dayjs(queue.nextSyncAt).fromNow())}
-          </i>
+          {queue.lastSyncedAt ? dayjs(queue.lastSyncedAt).fromNow() : "—"}
         </td>
         <td className="px-6 py-4">
-          {dayjs(queue.createdAt).format(MOMENT_LLL_FORMAT)}
+          {queue.nextSyncAt
+            ? dayjs(queue.nextSyncAt).format(MOMENT_LLL_FORMAT)
+            : "—"}
+          {queue.nextSyncAt && (
+            <i className="text-xs px-2">
+              {wrapRelative(dayjs(queue.nextSyncAt).fromNow())}
+            </i>
+          )}
+        </td>
+        <td className="px-6 py-4">
+          {queue.createdAt
+            ? dayjs(queue.createdAt).format(MOMENT_LLL_FORMAT)
+            : "—"}
         </td>
         <td className="px-6 py-4 flex items-center gap-x-6">
           <button
