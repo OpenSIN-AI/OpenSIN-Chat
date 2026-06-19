@@ -51,7 +51,7 @@ function workspaceParsedFilesEndpoints(app) {
     async function (request, response) {
       try {
         const { fileIds = [] } = reqBody(request);
-        if (!fileIds.length) return response.sendStatus(400).end();
+        if (!fileIds.length) return response.sendStatus(400);
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
         const success = await WorkspaceParsedFiles.delete({
@@ -65,7 +65,7 @@ function workspaceParsedFilesEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        return response.sendStatus(500).end();
+        return response.sendStatus(500);
       }
     },
   );
@@ -84,7 +84,7 @@ function workspaceParsedFilesEndpoints(app) {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
 
-        if (!fileId) return response.sendStatus(400).end();
+        if (!fileId) return response.sendStatus(400);
         const { success, error, document } =
           await WorkspaceParsedFiles.moveToDocumentsAndEmbed(
             user,
@@ -117,7 +117,7 @@ function workspaceParsedFilesEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        return response.sendStatus(500).end();
+        return response.sendStatus(500);
       } finally {
         // eslint-disable-next-line
         if (!fileId) return;

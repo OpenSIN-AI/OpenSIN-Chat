@@ -87,7 +87,7 @@ function embeddedEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -105,7 +105,7 @@ function embeddedEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

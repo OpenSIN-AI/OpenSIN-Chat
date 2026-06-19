@@ -104,13 +104,13 @@ function systemEndpoints(app) {
     [simpleRateLimit({ bucket: "env-dump", max: 2, windowMs: 60 * 1000 })],
     async (request, response) => {
       if (process.env.NODE_ENV !== "production")
-        return response.sendStatus(200).end();
+        return response.sendStatus(200);
       // eslint-disable-next-line no-console
       console.warn(
         `\x1b[33m[ENV-DUMP]\x1b[0m triggered by ip=${request.ip || "unknown"}`,
       );
       dumpENV();
-      response.sendStatus(200).end();
+      response.sendStatus(200);
     },
   );
 
@@ -121,7 +121,7 @@ function systemEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -131,11 +131,11 @@ function systemEndpoints(app) {
     async (_, response) => {
       try {
         await SystemSettings.markOnboardingComplete();
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -147,7 +147,7 @@ function systemEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -159,19 +159,19 @@ function systemEndpoints(app) {
         if (multiUserMode(response)) {
           const user = await userFromSession(request, response);
           if (!user || user.suspended) {
-            response.sendStatus(403).end();
+            response.sendStatus(403);
             return;
           }
 
-          response.sendStatus(200).end();
+          response.sendStatus(200);
           return;
         }
 
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -393,7 +393,7 @@ function systemEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -507,7 +507,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -519,11 +519,11 @@ function systemEndpoints(app) {
       try {
         const { name } = reqBody(request);
         await purgeDocument(name);
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -535,11 +535,11 @@ function systemEndpoints(app) {
       try {
         const { names } = reqBody(request);
         for await (const name of names) await purgeDocument(name);
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -551,11 +551,11 @@ function systemEndpoints(app) {
       try {
         const { name } = reqBody(request);
         await purgeFolder(name);
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -570,7 +570,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -585,7 +585,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -597,7 +597,7 @@ function systemEndpoints(app) {
       try {
         const types = await new CollectorApi().acceptedFileTypes();
         if (!types) {
-          response.sendStatus(404).end();
+          response.sendStatus(404);
           return;
         }
 
@@ -605,7 +605,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -625,7 +625,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -637,7 +637,7 @@ function systemEndpoints(app) {
       try {
         // Cannot update password in multi - user mode.
         if (multiUserMode(response)) {
-          response.sendStatus(401).end();
+          response.sendStatus(401);
           return;
         }
 
@@ -661,7 +661,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -728,7 +728,7 @@ function systemEndpoints(app) {
 
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -743,7 +743,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -766,7 +766,7 @@ function systemEndpoints(app) {
       const { found, buffer, size, mime } = fetchLogo(logoPath);
 
       if (!found) {
-        response.sendStatus(204).end();
+        response.sendStatus(204);
         return;
       }
 
@@ -850,13 +850,13 @@ function systemEndpoints(app) {
       try {
         const { id } = request.params;
         if (response.locals?.user?.id !== Number(id))
-          return response.sendStatus(204).end();
+          return response.sendStatus(204);
 
         const pfpPath = await determinePfpFilepath(id);
-        if (!pfpPath) return response.sendStatus(204).end();
+        if (!pfpPath) return response.sendStatus(204);
 
         const { found, buffer, size, mime } = fetchPfp(pfpPath);
-        if (!found) return response.sendStatus(204).end();
+        if (!found) return response.sendStatus(204);
 
         response.writeHead(200, {
           "Content-Type": mime || "image/png",
@@ -1092,7 +1092,7 @@ function systemEndpoints(app) {
   app.get("/system/api-keys", [validatedRequest], async (_, response) => {
     try {
       if (response.locals.multiUserMode) {
-        return response.sendStatus(401).end();
+        return response.sendStatus(401);
       }
 
       const apiKeys = await ApiKey.where({});
@@ -1116,7 +1116,7 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         if (response.locals.multiUserMode) {
-          return response.sendStatus(401).end();
+          return response.sendStatus(401);
         }
 
         const { name = null } = reqBody(request);
@@ -1149,9 +1149,9 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         if (response.locals.multiUserMode)
-          return response.sendStatus(401).end();
+          return response.sendStatus(401);
         const { id } = request.params;
-        if (!id || isNaN(Number(id))) return response.sendStatus(400).end();
+        if (!id || isNaN(Number(id))) return response.sendStatus(400);
 
         await ApiKey.delete({ id: Number(id) });
         await EventLogs.logEvent(
@@ -1207,7 +1207,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1227,7 +1227,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1255,7 +1255,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1273,7 +1273,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1302,7 +1302,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

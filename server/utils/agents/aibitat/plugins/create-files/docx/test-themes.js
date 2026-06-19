@@ -9,7 +9,7 @@
 
 const path = require("path");
 const fs = require("fs/promises");
-const { getStoragePath } = require("../../../../paths");
+const { getStoragePath } = require("../../../../../paths");
 const {
   DOCUMENT_STYLES,
   getTheme,

@@ -88,7 +88,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -106,7 +106,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!currWorkspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -119,7 +119,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -140,7 +140,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!currWorkspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -197,7 +197,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -321,7 +321,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!currWorkspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -376,7 +376,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -394,7 +394,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!currWorkspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -443,7 +443,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -465,7 +465,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!workspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -488,11 +488,11 @@ function workspaceEndpoints(app) {
           // eslint-disable-next-line no-console
           console.error(e.message);
         }
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -510,7 +510,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!workspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -531,11 +531,11 @@ function workspaceEndpoints(app) {
           // eslint-disable-next-line no-console
           console.error(e.message);
         }
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -554,7 +554,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -574,7 +574,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -591,7 +591,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!workspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -602,7 +602,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -617,7 +617,7 @@ function workspaceEndpoints(app) {
         const workspace = response.locals.workspace;
 
         if (!workspace || !Array.isArray(chatIds)) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -630,11 +630,11 @@ function workspaceEndpoints(app) {
           workspaceId: workspace.id,
         });
 
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -655,11 +655,11 @@ function workspaceEndpoints(app) {
           id: { gte: Number(startingId) },
         });
 
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -698,11 +698,11 @@ function workspaceEndpoints(app) {
           });
         }
 
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -797,7 +797,7 @@ function workspaceEndpoints(app) {
           workspaceId: workspace.id,
           docpath: docPath,
         });
-        if (!document) return response.sendStatus(404).end();
+        if (!document) return response.sendStatus(404);
 
         await Document.update(document.id, { pinned: pinStatus });
         return response.status(200).end();
@@ -835,7 +835,7 @@ function workspaceEndpoints(app) {
         }
 
         const rawText = safeJsonParse(wsChat.response, null)?.text;
-        if (!rawText) return response.sendStatus(204).end();
+        if (!rawText) return response.sendStatus(204);
 
         // Strip thinking/thought blocks before handing the text to the TTS
         // provider — the model's internal reasoning must not be read aloud.
@@ -864,11 +864,11 @@ function workspaceEndpoints(app) {
         // Strip <response>/<answer> wrapper tags but keep their content.
         text = text.replace(/<\/?(response|answer)\s*(?:[^>]*?)?>/gi, " ");
         text = text.replace(/\s+/g, " ").trim();
-        if (!text) return response.sendStatus(204).end();
+        if (!text) return response.sendStatus(204);
 
         const TTSProvider = getTTSProvider();
         const buffer = await TTSProvider.ttsBuffer(text);
-        if (buffer === null) return response.sendStatus(204).end();
+        if (buffer === null) return response.sendStatus(204);
 
         cacheSet(cacheKey, { buffer, mime: "audio/mpeg" });
         response.writeHead(200, {
@@ -903,13 +903,13 @@ function workspaceEndpoints(app) {
         const pfpPath = await determineWorkspacePfpFilepath(slug);
 
         if (!pfpPath) {
-          response.sendStatus(204).end();
+          response.sendStatus(204);
           return;
         }
 
         const { found, buffer, mime } = fetchPfp(pfpPath);
         if (!found) {
-          response.sendStatus(204).end();
+          response.sendStatus(204);
           return;
         }
 
@@ -1147,7 +1147,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!currWorkspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -1210,7 +1210,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1232,7 +1232,7 @@ function workspaceEndpoints(app) {
           : await Workspace.get({ slug });
 
         if (!currWorkspace || !body.documentLocation)
-          return response.sendStatus(400).end();
+          return response.sendStatus(400);
 
         // Will delete the document from the entire system + wil unembed it.
         await purgeDocument(body.documentLocation);
@@ -1240,7 +1240,7 @@ function workspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1258,7 +1258,7 @@ function workspaceEndpoints(app) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error fetching prompt history:", error);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1280,7 +1280,7 @@ function workspaceEndpoints(app) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error clearing prompt history:", error);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1304,7 +1304,7 @@ function workspaceEndpoints(app) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error deleting prompt history:", error);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -1327,7 +1327,7 @@ function workspaceEndpoints(app) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error searching for workspaces:", error);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

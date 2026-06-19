@@ -76,7 +76,7 @@ function apiWorkspaceThreadEndpoints(app) {
         const workspace = await Workspace.get({ slug: wslug });
 
         if (!workspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -105,7 +105,7 @@ function apiWorkspaceThreadEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -175,7 +175,7 @@ function apiWorkspaceThreadEndpoints(app) {
         });
 
         if (!workspace || !thread) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -187,7 +187,7 @@ function apiWorkspaceThreadEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -225,7 +225,7 @@ function apiWorkspaceThreadEndpoints(app) {
         const workspace = await Workspace.get({ slug });
 
         if (!workspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -233,11 +233,11 @@ function apiWorkspaceThreadEndpoints(app) {
           slug: threadSlug,
           workspace_id: workspace.id,
         });
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -299,7 +299,7 @@ function apiWorkspaceThreadEndpoints(app) {
         });
 
         if (!workspace || !thread) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -318,7 +318,7 @@ function apiWorkspaceThreadEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

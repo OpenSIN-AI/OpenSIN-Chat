@@ -33,7 +33,7 @@ function extensionEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -61,7 +61,7 @@ function extensionEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -84,7 +84,7 @@ function extensionEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -107,7 +107,7 @@ function extensionEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -129,7 +129,7 @@ function extensionEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -151,7 +151,7 @@ function extensionEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -174,7 +174,7 @@ function extensionEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -197,7 +197,7 @@ function extensionEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

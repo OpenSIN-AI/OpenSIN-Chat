@@ -46,7 +46,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -83,7 +83,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -125,7 +125,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -159,7 +159,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -174,7 +174,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -209,7 +209,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -230,7 +230,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -245,7 +245,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -261,7 +261,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -281,7 +281,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -301,7 +301,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -319,7 +319,7 @@ function adminEndpoints(app) {
         const VectorDb = getVectorDbClass();
         const workspace = await Workspace.get({ id: Number(id) });
         if (!workspace) {
-          response.sendStatus(404).end();
+          response.sendStatus(404);
           return;
         }
 
@@ -338,7 +338,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -471,7 +471,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -509,7 +509,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -555,7 +555,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -566,7 +566,7 @@ function adminEndpoints(app) {
     async (request, response) => {
       try {
         const { id } = request.params;
-        if (!id || isNaN(Number(id))) return response.sendStatus(400).end();
+        if (!id || isNaN(Number(id))) return response.sendStatus(400);
         await ApiKey.delete({ id: Number(id) });
 
         await EventLogs.logEvent(
@@ -578,7 +578,7 @@ function adminEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

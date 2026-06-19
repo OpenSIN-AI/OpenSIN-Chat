@@ -30,8 +30,8 @@ const INITIAL_CHUNK_BYTES = Number(
 );
 
 let pdfjs = null;
-function loadPdfjs() {
-  if (!pdfjs) pdfjs = require("pdfjs-dist/legacy/build/pdf.js");
+async function loadPdfjs() {
+  if (!pdfjs) pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
   return pdfjs;
 }
 
@@ -83,7 +83,7 @@ class PdfReader {
   }
 
   async open() {
-    const lib = loadPdfjs();
+    const lib = await loadPdfjs();
     const { size } = fs.statSync(this.pdfPath);
     this.fd = fs.openSync(this.pdfPath, "r");
 
@@ -186,7 +186,7 @@ class PdfReader {
    * Kleine Logos/Icons unterhalb der Flächenschwelle werden ignoriert.
    */
   async pageHasSignificantImages(pageNumber) {
-    const lib = loadPdfjs();
+    const lib = await loadPdfjs();
     const page = await this.doc.getPage(pageNumber);
     try {
       const ops = await page.getOperatorList();

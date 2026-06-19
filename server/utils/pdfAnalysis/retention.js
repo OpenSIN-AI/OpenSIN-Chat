@@ -161,4 +161,11 @@ function startRetentionSchedule() {
   timer.unref(); // Prozess-Ende nicht blockieren
 }
 
-module.exports = { startRetentionSchedule, runCleanup };
+function stopRetentionSchedule() {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
+}
+
+module.exports = { startRetentionSchedule, runCleanup, stopRetentionSchedule };

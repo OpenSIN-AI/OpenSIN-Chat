@@ -166,7 +166,7 @@ function apiDocumentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -348,7 +348,7 @@ function apiDocumentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -473,7 +473,7 @@ function apiDocumentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -618,7 +618,7 @@ function apiDocumentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -664,7 +664,7 @@ function apiDocumentEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -728,7 +728,7 @@ function apiDocumentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -778,7 +778,7 @@ function apiDocumentEndpoints(app) {
       try {
         const types = await new CollectorApi().acceptedFileTypes();
         if (!types) {
-          response.sendStatus(404).end();
+          response.sendStatus(404);
           return;
         }
 
@@ -786,7 +786,7 @@ function apiDocumentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -837,7 +837,7 @@ function apiDocumentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -889,14 +889,14 @@ function apiDocumentEndpoints(app) {
       const { docName } = request.params;
       const document = await findDocumentInDocuments(docName);
       if (!document) {
-        response.sendStatus(404).end();
+        response.sendStatus(404);
         return;
       }
       response.status(200).json({ document });
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 

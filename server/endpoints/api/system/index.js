@@ -23,13 +23,13 @@ function apiSystemEndpoints(app) {
    */
     try {
       if (process.env.NODE_ENV !== "production")
-        return response.sendStatus(200).end();
+        return response.sendStatus(200);
       dumpENV();
-      response.sendStatus(200).end();
+      response.sendStatus(200);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -67,7 +67,7 @@ function apiSystemEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -100,7 +100,7 @@ function apiSystemEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -149,7 +149,7 @@ function apiSystemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -206,7 +206,7 @@ function apiSystemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -273,7 +273,7 @@ function apiSystemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

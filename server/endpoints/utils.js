@@ -54,7 +54,7 @@ function utilEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -189,7 +189,7 @@ function utilEndpoints(app) {
       });
     } catch (e) {
       console.error("filesystem endpoint error", e.message);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -361,10 +361,10 @@ function utilEndpoints(app) {
 
         // Verify resolved path is still under generated-reports/ (security check)
         if (!filePath.startsWith(reportsDir)) {
-          return response.sendStatus(403).end();
+          return response.sendStatus(403);
         }
 
-        if (!fs.existsSync(filePath)) return response.sendStatus(404).end();
+        if (!fs.existsSync(filePath)) return response.sendStatus(404);
 
         const stat = fs.statSync(filePath);
         const stream = fs.createReadStream(filePath);
@@ -372,10 +372,10 @@ function utilEndpoints(app) {
         response.setHeader("Content-Length", stat.size);
         response.setHeader("Cache-Control", "public, max-age=86400");
         stream.pipe(response);
-        stream.on("error", () => response.sendStatus(500).end());
+        stream.on("error", () => response.sendStatus(500));
       } catch (e) {
         console.error("reports download error", e.message);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

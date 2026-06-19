@@ -29,6 +29,7 @@ const invocationUrlPromptCache = new Map();
 function cacheInvocationAttachments(uuid, attachments = []) {
   if (attachments.length > 0) {
     invocationAttachmentsCache.set(uuid, attachments);
+    setTimeout(() => invocationAttachmentsCache.delete(uuid), 5 * 60 * 1000);
   }
 }
 
@@ -49,7 +50,10 @@ function getAndClearInvocationAttachments(uuid) {
  * @param {string|null} urlPrompt - The prompt instruction to inject into the agent system prompt
  */
 function cacheInvocationUrlPrompt(uuid, urlPrompt = null) {
-  if (urlPrompt) invocationUrlPromptCache.set(uuid, urlPrompt);
+  if (urlPrompt) {
+    invocationUrlPromptCache.set(uuid, urlPrompt);
+    setTimeout(() => invocationUrlPromptCache.delete(uuid), 5 * 60 * 1000);
+  }
 }
 
 /**

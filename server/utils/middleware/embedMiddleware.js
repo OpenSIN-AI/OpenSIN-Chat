@@ -12,7 +12,7 @@ async function validEmbedConfig(request, response, next) {
 
   const embed = await EmbedConfig.getWithWorkspace({ uuid: String(embedId) });
   if (!embed) {
-    response.sendStatus(404).end();
+    response.sendStatus(404);
     return;
   }
 
@@ -32,21 +32,21 @@ async function validEmbedConfigId(request, response, next) {
   const { embedId } = request.params;
   const numericId = Number(embedId);
   if (!Number.isFinite(numericId)) {
-    response.sendStatus(404).end();
+    response.sendStatus(404);
     return;
   }
 
   try {
     const embed = await EmbedConfig.get({ id: numericId });
     if (!embed) {
-      response.sendStatus(404).end();
+      response.sendStatus(404);
       return;
     }
 
     response.locals.embedConfig = embed;
     next();
   } catch {
-    response.sendStatus(500).end();
+    response.sendStatus(500);
     return;
   }
 }
@@ -55,7 +55,7 @@ async function canRespond(request, response, next) {
   try {
     const embed = response.locals.embedConfig;
     if (!embed) {
-      response.sendStatus(404).end();
+      response.sendStatus(404);
       return;
     }
 

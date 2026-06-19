@@ -60,7 +60,7 @@ function workspaceThreadEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -104,7 +104,7 @@ function workspaceThreadEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -120,11 +120,11 @@ function workspaceThreadEndpoints(app) {
       try {
         const thread = response.locals.thread;
         await WorkspaceThread.delete({ id: thread.id });
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -136,7 +136,7 @@ function workspaceThreadEndpoints(app) {
       try {
         const { slugs = [] } = reqBody(request);
         if (!Array.isArray(slugs) || slugs.length === 0)
-          return response.sendStatus(200).end();
+          return response.sendStatus(200);
 
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
@@ -145,11 +145,11 @@ function workspaceThreadEndpoints(app) {
           user_id: user?.id ?? null,
           workspace_id: workspace.id,
         });
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -182,7 +182,7 @@ function workspaceThreadEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -206,7 +206,7 @@ function workspaceThreadEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -237,11 +237,11 @@ function workspaceThreadEndpoints(app) {
           id: { gte: Number(startingId) },
         });
 
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -287,11 +287,11 @@ function workspaceThreadEndpoints(app) {
           });
         }
 
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -314,7 +314,7 @@ function workspaceThreadEndpoints(app) {
         response.status(200).json({ folder, message });
       } catch (e) {
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -333,7 +333,7 @@ function workspaceThreadEndpoints(app) {
         response.status(200).json({ folder, message });
       } catch (e) {
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -345,11 +345,11 @@ function workspaceThreadEndpoints(app) {
       try {
         const { folderId } = request.params;
         const success = await WorkspaceThreadFolder.delete(folderId);
-        if (!success) return response.sendStatus(500).end();
-        response.sendStatus(200).end();
+        if (!success) return response.sendStatus(500);
+        response.sendStatus(200);
       } catch (e) {
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -369,11 +369,11 @@ function workspaceThreadEndpoints(app) {
           thread.id,
           folderId ?? null,
         );
-        if (!success) return response.sendStatus(500).end();
-        response.sendStatus(200).end();
+        if (!success) return response.sendStatus(500);
+        response.sendStatus(200);
       } catch (e) {
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

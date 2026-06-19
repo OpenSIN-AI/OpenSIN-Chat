@@ -67,19 +67,24 @@ function liveSyncEndpoints(app) {
       featureFlagEnabled(DocumentSyncQueue.featureKey),
     ],
     async (_, response) => {
-      const queues = await DocumentSyncQueue.where(
-        {},
-        null,
-        { createdAt: "asc" },
-        {
-          workspaceDoc: {
-            include: {
-              workspace: true,
+      try {
+        const queues = await DocumentSyncQueue.where(
+          {},
+          null,
+          { createdAt: "asc" },
+          {
+            workspaceDoc: {
+              include: {
+                workspace: true,
+              },
             },
           },
-        },
-      );
-      response.status(200).json({ queues });
+        );
+        response.status(200).json({ queues });
+      } catch (e) {
+        console.error(e.message, e);
+        response.status(500).json({ error: "Internal server error" });
+      }
     },
   );
 
@@ -101,7 +106,7 @@ function liveSyncEndpoints(app) {
           workspaceId: workspace.id,
           docpath: docPath,
         });
-        if (!document) return response.sendStatus(404).end();
+        if (!document) return response.sendStatus(404);
 
         await DocumentSyncQueue.toggleWatchStatus(document, watchStatus);
         return response.status(200).end();

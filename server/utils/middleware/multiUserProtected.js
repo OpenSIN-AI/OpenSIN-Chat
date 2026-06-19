@@ -15,10 +15,15 @@ const DEFAULT_ROLES = [ROLES.admin, ROLES.admin];
  * @returns {function}
  */
 async function isSingleUserMode(_request, response, next) {
-  const multiUserMode = await SystemSettings.isMultiUserMode();
-  if (multiUserMode) return response.sendStatus(401).end();
-  next();
-  return;
+  try {
+    const multiUserMode = await SystemSettings.isMultiUserMode();
+    if (multiUserMode) return response.sendStatus(401);
+    next();
+    return;
+  } catch (e) {
+    console.error(e.message, e);
+    response.status(500).json({ error: "Internal server error" });
+  }
 }
 
 /**
@@ -33,24 +38,29 @@ function strictMultiUserRoleValid(allowedRoles = DEFAULT_ROLES) {
     return async (_request, _response, next) => next();
   }
   return async (request, response, next) => {
-    // If the access-control is allowable for all - skip validations and continue;
-    if (allowedRoles.includes(ROLES.all)) {
-      next();
-      return;
-    }
+    try {
+      // If the access-control is allowable for all - skip validations and continue;
+      if (allowedRoles.includes(ROLES.all)) {
+        next();
+        return;
+      }
 
-    const multiUserMode =
-      response.locals?.multiUserMode ??
-      (await SystemSettings.isMultiUserMode());
-    if (!multiUserMode) return response.sendStatus(401).end();
+      const multiUserMode =
+        response.locals?.multiUserMode ??
+        (await SystemSettings.isMultiUserMode());
+      if (!multiUserMode) return response.sendStatus(401);
 
-    const user =
-      response.locals?.user ?? (await userFromSession(request, response));
-    if (allowedRoles.includes(user?.role)) {
-      next();
-      return;
+      const user =
+        response.locals?.user ?? (await userFromSession(request, response));
+      if (allowedRoles.includes(user?.role)) {
+        next();
+        return;
+      }
+      return response.sendStatus(401);
+    } catch (e) {
+      console.error(e.message, e);
+      response.status(500).json({ error: "Internal server error" });
     }
-    return response.sendStatus(401).end();
   };
 }
 
@@ -62,45 +72,55 @@ function strictMultiUserRoleValid(allowedRoles = DEFAULT_ROLES) {
  */
 function flexUserRoleValid(allowedRoles = DEFAULT_ROLES) {
   return async (request, response, next) => {
-    // If the access-control is allowable for all - skip validations and continue;
-    // It does not matter if multi-user or not.
-    if (allowedRoles.includes(ROLES.all)) {
-      next();
-      return;
-    }
+    try {
+      // If the access-control is allowable for all - skip validations and continue;
+      // It does not matter if multi-user or not.
+      if (allowedRoles.includes(ROLES.all)) {
+        next();
+        return;
+      }
 
-    // Bypass if not in multi-user mode
-    const multiUserMode =
-      response.locals?.multiUserMode ??
-      (await SystemSettings.isMultiUserMode());
-    if (!multiUserMode) {
-      next();
-      return;
-    }
+      // Bypass if not in multi-user mode
+      const multiUserMode =
+        response.locals?.multiUserMode ??
+        (await SystemSettings.isMultiUserMode());
+      if (!multiUserMode) {
+        next();
+        return;
+      }
 
-    const user =
-      response.locals?.user ?? (await userFromSession(request, response));
-    if (allowedRoles.includes(user?.role)) {
-      next();
-      return;
+      const user =
+        response.locals?.user ?? (await userFromSession(request, response));
+      if (allowedRoles.includes(user?.role)) {
+        next();
+        return;
+      }
+      return response.sendStatus(401);
+    } catch (e) {
+      console.error(e.message, e);
+      response.status(500).json({ error: "Internal server error" });
     }
-    return response.sendStatus(401).end();
   };
 }
 
 // Middleware check on a public route if the instance is in a valid
 // multi-user set up.
 async function isMultiUserSetup(_request, response, next) {
-  const multiUserMode = await SystemSettings.isMultiUserMode();
-  if (!multiUserMode) {
-    response.status(403).json({
-      error: "Invalid request",
-    });
-    return;
-  }
+  try {
+    const multiUserMode = await SystemSettings.isMultiUserMode();
+    if (!multiUserMode) {
+      response.status(403).json({
+        error: "Invalid request",
+      });
+      return;
+    }
 
-  next();
-  return;
+    next();
+    return;
+  } catch (e) {
+    console.error(e.message, e);
+    response.status(500).json({ error: "Internal server error" });
+  }
 }
 
 module.exports = {

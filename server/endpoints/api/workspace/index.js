@@ -104,7 +104,7 @@ function apiWorkspaceEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -159,7 +159,7 @@ function apiWorkspaceEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -225,7 +225,7 @@ function apiWorkspaceEndpoints(app) {
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e.message, e);
-      response.sendStatus(500).end();
+      response.sendStatus(500);
     }
   });
 
@@ -254,7 +254,7 @@ function apiWorkspaceEndpoints(app) {
         const workspace = await Workspace.get({ slug });
 
         if (!workspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -273,11 +273,11 @@ function apiWorkspaceEndpoints(app) {
           // eslint-disable-next-line no-console
           console.error(e.message);
         }
-        response.sendStatus(200).end();
+        response.sendStatus(200);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -344,7 +344,7 @@ function apiWorkspaceEndpoints(app) {
         const currWorkspace = await Workspace.get({ slug });
 
         if (!currWorkspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -356,7 +356,7 @@ function apiWorkspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -431,7 +431,7 @@ function apiWorkspaceEndpoints(app) {
         const workspace = await Workspace.get({ slug });
 
         if (!workspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -454,7 +454,7 @@ function apiWorkspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -519,7 +519,7 @@ function apiWorkspaceEndpoints(app) {
         const currWorkspace = await Workspace.get({ slug });
 
         if (!currWorkspace) {
-          response.sendStatus(400).end();
+          response.sendStatus(400);
           return;
         }
 
@@ -532,7 +532,7 @@ function apiWorkspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );
@@ -586,13 +586,13 @@ function apiWorkspaceEndpoints(app) {
         const { slug = null } = request.params;
         const { docPath, pinStatus = false } = reqBody(request);
         const workspace = await Workspace.get({ slug });
-        if (!workspace) return response.sendStatus(404).end();
+        if (!workspace) return response.sendStatus(404);
 
         const document = await Document.get({
           workspaceId: workspace.id,
           docpath: docPath,
         });
-        if (!document) return response.sendStatus(404).end();
+        if (!document) return response.sendStatus(404);
 
         await Document.update(document.id, { pinned: pinStatus });
         return response
@@ -1036,7 +1036,7 @@ function apiWorkspaceEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500).end();
+        response.sendStatus(500);
       }
     },
   );

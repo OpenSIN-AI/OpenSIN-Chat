@@ -210,8 +210,9 @@ class PGVector extends VectorDatabase {
     const instance = new PGVector();
 
     try {
+      let timeoutTimerId;
       const timeoutPromise = new Promise((resolve) => {
-        setTimeout(() => {
+        timeoutTimerId = setTimeout(() => {
           resolve({
             error: `Connection timeout (${(instance.connectionTimeout / 1000).toFixed(0)}s). Please check your connection string and try again.`,
             success: false,
@@ -246,6 +247,7 @@ class PGVector extends VectorDatabase {
 
       // Race the connection attempt against the timeout
       const result = await Promise.race([connectionPromise, timeoutPromise]);
+      clearTimeout(timeoutTimerId);
       return result;
     } catch (err) {
       instance.logger("Validation Error:", err.message);
