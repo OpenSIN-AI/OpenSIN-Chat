@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join, relative, dirname } from "node:path";
 
 const ROOT = "/Users/jeremy/dev/OpenSIN-Chat/frontend/src";
 
@@ -13,24 +13,65 @@ function* walk(dir) {
   }
 }
 
-function listSiblingSources(testFile) {
-  const dir = testFile.replace(/\/[^/]+$/, "");
+function findFile(resolved) {
+  const tryExtensions = [
+    ".tsx",
+    ".ts",
+    ".jsx",
+    ".js",
+    "/index.tsx",
+    "/index.ts",
+    "/index.jsx",
+    "/index.js",
+  ];
+  for (const ext of tryExtensions) {
+    const candidate = resolved + ext;
+    try {
+      if (statSync(candidate).isFile()) return candidate;
+    } catch (e) {}
+    try {
+      if (statSync(resolved).isDirectory()) return resolved + "/index" + ext;
+    } catch (e) {}
+  }
+  return null;
+}
+
+function listSourceFilesRecursively(startFile) {
+  const seen = new Set();
   const out = new Set();
-  for (const f of [
-    join(dir, "..", "index.tsx"),
-    join(dir, "..", "index.ts"),
-    join(dir, "..", "index.jsx"),
-    join(dir, "..", "index.js"),
-    join(dir, "index.tsx"),
-    join(dir, "index.ts"),
-    join(dir, "index.jsx"),
-    join(dir, "index.js"),
-    testFile.replace(/\.test\.[jt]sx?$/, ".tsx"),
-    testFile.replace(/\.test\.[jt]sx?$/, ".ts"),
-    testFile.replace(/\.test\.[jt]sx?$/, ".jsx"),
-    testFile.replace(/\.test\.[jt]sx?$/, ".js"),
-  ]) {
-    out.add(f);
+  const queue = [startFile];
+  while (queue.length) {
+    const cur = queue.shift();
+    if (!cur || seen.has(cur)) continue;
+    seen.add(cur);
+    try {
+      const s = statSync(cur);
+      if (!s.isFile()) continue;
+    } catch {
+      continue;
+    }
+    out.add(cur);
+    let src;
+    try {
+      src = readFileSync(cur, "utf8");
+    } catch {
+      continue;
+    }
+    const re =
+      /(?:import\s+[^"'\n]*?\sfrom\s+|require\(\s*)["']([^"']+?)["']/g;
+    let m;
+    while ((m = re.exec(src)) !== null) {
+      const spec = m[1];
+      if (spec.startsWith("@phosphor")) continue;
+      if (!spec.startsWith(".") && !spec.startsWith("/") && !spec.startsWith("@/"))
+        continue;
+      let resolved;
+      if (spec.startsWith("@/")) resolved = join(ROOT, spec.slice(2));
+      else if (spec.startsWith("/")) resolved = join(ROOT, spec.slice(1));
+      else resolved = findFile(join(dirname(cur), spec));
+      if (!resolved) continue;
+      queue.push(resolved);
+    }
   }
   return [...out];
 }
@@ -41,7 +82,10 @@ const MOCK_RE =
 function parseExistingMock(originalBlock) {
   const out = new Map();
   const trimmed = originalBlock.trim();
-  const inner = trimmed.startsWith("{") && trimmed.endsWith("}") ? trimmed.slice(1, -1) : trimmed;
+  const inner =
+    trimmed.startsWith("{") && trimmed.endsWith("}")
+      ? trimmed.slice(1, -1)
+      : trimmed;
   const parts = [];
   let depth = 0;
   let buf = "";
@@ -110,7 +154,23 @@ for (const file of walk(ROOT)) {
   ) {
     continue;
   }
-  const sources = listSiblingSources(file);
+  const dir = file.replace(/\/[^/]+$/, "");
+  const sourcesSet = new Set();
+  for (const starter of [
+    join(dir, "index.tsx"),
+    join(dir, "index.ts"),
+    join(dir, "index.jsx"),
+    join(dir, "index.js"),
+    file.replace(/\.test\.[jt]sx?$/, ".tsx"),
+    file.replace(/\.test\.[jt]sx?$/, ".ts"),
+    file.replace(/\.test\.[jt]sx?$/, ".jsx"),
+    file.replace(/\.test\.[jt]sx?$/, ".js"),
+  ]) {
+    for (const f of listSourceFilesRecursively(starter))
+      sourcesSet.add(f);
+  }
+  const sources = [...sourcesSet];
+
   const entries = new Map();
   for (const sf of sources) {
     for (const [iconFile, iconName] of collectAllIcons(sf)) {
