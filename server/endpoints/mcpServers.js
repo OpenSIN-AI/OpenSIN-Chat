@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("node:crypto");
 const { reqBody } = require("../utils/http");
 const MCPCompatibilityLayer = require("../utils/MCP");
 const {
@@ -23,11 +24,13 @@ function mcpServersEndpoints(app) {
           servers: await mcp.servers(),
         });
       } catch (error) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error("Error force reloading MCP servers:", error);
+        console.error(`[mcpServers force-reload error id=${id}]`, error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: "Internal error",
+          id,
           servers: [],
         });
       }
@@ -45,11 +48,13 @@ function mcpServersEndpoints(app) {
           servers,
         });
       } catch (error) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error("Error listing MCP servers:", error);
+        console.error(`[mcpServers list error id=${id}]`, error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: "Internal error",
+          id,
         });
       }
     },
@@ -74,11 +79,13 @@ function mcpServersEndpoints(app) {
           error: result.error,
         });
       } catch (error) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error("Error toggling MCP server:", error);
+        console.error(`[mcpServers toggle error id=${id}]`, error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: "Internal error",
+          id,
         });
       }
     },
@@ -101,11 +108,13 @@ function mcpServersEndpoints(app) {
           error: result.error,
         });
       } catch (error) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error("Error deleting MCP server:", error);
+        console.error(`[mcpServers delete error id=${id}]`, error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: "Internal error",
+          id,
         });
       }
     },
@@ -138,11 +147,13 @@ function mcpServersEndpoints(app) {
           suppressedTools: result.suppressedTools,
         });
       } catch (error) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error("Error toggling MCP tool:", error);
+        console.error(`[mcpServers toggle-tool error id=${id}]`, error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: "Internal error",
+          id,
           suppressedTools: [],
         });
       }

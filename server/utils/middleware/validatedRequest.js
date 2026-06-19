@@ -47,7 +47,7 @@ async function validatedRequest(request, response, next) {
     return await validateMultiUserRequest(request, response, next);
 
   if (
-    process.env.NODE_ENV === "production" &&
+    (process.env.NODE_ENV ?? "").toLowerCase() === "production" &&
     (!process.env.AUTH_TOKEN || !process.env.JWT_SECRET)
   ) {
     const id =

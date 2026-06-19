@@ -17,7 +17,11 @@ if (RATE_LIMIT_BACKEND === "redis") {
       process.env.REDIS_URL || "redis://localhost:6379",
       { lazyConnect: true, maxRetriesPerRequest: 1 },
     );
-    redisClient.connect().catch(() => {});
+    redisClient.connect().catch((err) => {
+      console.warn(
+        `[simpleRateLimit] Redis connection failed: ${err.message}. Falling back to in-memory.`,
+      );
+    });
     redisBump = async function (key, windowMs) {
       const v = await redisClient.incr(key);
       if (v === 1) await redisClient.pexpire(key, windowMs);
@@ -26,9 +30,9 @@ if (RATE_LIMIT_BACKEND === "redis") {
     redisTtl = async function (key) {
       return await redisClient.pttl(key);
     };
-  } catch {
+  } catch (err) {
     console.warn(
-      "[simpleRateLimit] RATE_LIMIT_BACKEND=redis requested but ioredis not installed — falling back to in-memory.",
+      `[simpleRateLimit] RATE_LIMIT_BACKEND=redis requested but ioredis not installed: ${err.message}. Falling back to in-memory.`,
     );
     redisClient = null;
     redisBump = null;

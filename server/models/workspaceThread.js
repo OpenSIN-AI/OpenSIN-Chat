@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { randomBytes } = require("crypto");
 const prisma = require("../utils/prisma");
 const slugifyModule = require("slugify");
 const { v4: uuidv4 } = require("uuid");
@@ -45,7 +46,7 @@ const WorkspaceThread = {
       if (data.slug && slug) {
         const existing = await this.get({ slug });
         if (existing) {
-          const slugSeed = Math.floor(10000000 + Math.random() * 90000000);
+          const slugSeed = Number.parseInt(randomBytes(4).toString("hex"), 16).toString().slice(0, 8);
           slug = this.slugify(`${data.slug}-${slugSeed}`, { lowercase: true });
         }
       }

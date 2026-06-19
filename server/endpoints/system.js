@@ -1055,18 +1055,22 @@ function systemEndpoints(app) {
         });
         if (!success)
           throw new Error(
-            error.message || "Failed to update default system prompt.",
+            error && error.message
+              ? error.message
+              : "Failed to update default system prompt.",
           );
         response.status(200).json({
           success: true,
           message: "Default system prompt updated successfully.",
         });
       } catch (error) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error("Error updating default system prompt:", error);
+        console.error(`[system default-system-prompt error id=${id}]`, error);
         response.status(500).json({
           success: false,
-          message: error.message || "Internal server error",
+          message: "Internal server error",
+          id,
         });
       }
     },
@@ -1821,11 +1825,16 @@ function systemEndpoints(app) {
         const variables = await SystemPromptVariables.getAll(user?.id);
         response.status(200).json({ variables });
       } catch (error) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error("Error fetching system prompt variables:", error);
+        console.error(
+          `[system prompt-variables fetch error id=${id}]`,
+          error,
+        );
         response.status(500).json({
           success: false,
-          error: `Failed to fetch system prompt variables: ${error.message}`,
+          error: "Internal error",
+          id,
         });
       }
     },
@@ -1858,11 +1867,16 @@ function systemEndpoints(app) {
           variable,
         });
       } catch (error) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error("Error creating system prompt variable:", error);
+        console.error(
+          `[system prompt-variables create error id=${id}]`,
+          error,
+        );
         response.status(500).json({
           success: false,
-          error: `Failed to create system prompt variable: ${error.message}`,
+          error: "Internal error",
+          id,
         });
       }
     },

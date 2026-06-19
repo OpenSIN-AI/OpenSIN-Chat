@@ -65,7 +65,8 @@ describe("MCP Servers endpoints", () => {
       const res = await call("get", "/mcp-servers/force-reload");
       expect(res.statusCode).toBe(500);
       expect(res.body.success).toBe(false);
-      expect(res.body.error).toBe("reload fail");
+      expect(res.body.error).toBe("Internal error");
+      expect(res.body.id).toEqual(expect.any(String));
     });
   });
 

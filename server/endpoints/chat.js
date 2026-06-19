@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("node:crypto");
 const { v4: uuidv4 } = require("uuid");
 const { reqBody, userFromSession, multiUserMode } = require("../utils/http");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
@@ -128,15 +129,16 @@ function chatEndpoints(app) {
         if (!response.writableEnded) response.end();
       } catch (e) {
         if (stopHeartbeat) stopHeartbeat();
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(e?.message || "Unknown error", e);
+        console.error(`[chat SSE error id=${id}]`, e);
         writeResponseChunk(response, {
-          id: uuidv4(),
+          id,
           type: "abort",
           textResponse: null,
           sources: [],
           close: true,
-          error: e?.message || String(e),
+          error: "Internal error",
         });
         if (!response.writableEnded) response.end();
       }
@@ -249,15 +251,16 @@ function chatEndpoints(app) {
         if (!response.writableEnded) response.end();
       } catch (e) {
         if (stopHeartbeat) stopHeartbeat();
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(e?.message || "Unknown error", e);
+        console.error(`[chat SSE error id=${id}]`, e);
         writeResponseChunk(response, {
-          id: uuidv4(),
+          id,
           type: "abort",
           textResponse: null,
           sources: [],
           close: true,
-          error: e?.message || String(e),
+          error: "Internal error",
         });
         if (!response.writableEnded) response.end();
       }

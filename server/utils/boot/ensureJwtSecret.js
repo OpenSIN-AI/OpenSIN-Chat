@@ -75,6 +75,13 @@ function ensureJwtSecret() {
     lines.push(`JWT_SECRET='${secret}'`);
     try {
       fs.writeFileSync(envFile, lines.join("\n") + "\n");
+      try {
+        fs.chmodSync(envFile, 0o600);
+      } catch (e) {
+        console.warn(
+          `${LOG_PREFIX} Could not chmod ${envFile} to 0o600: ${e.message}`,
+        );
+      }
       console.log(
         `${LOG_PREFIX} Generated new JWT_SECRET and wrote it to ${path.basename(envFile)}`,
       );

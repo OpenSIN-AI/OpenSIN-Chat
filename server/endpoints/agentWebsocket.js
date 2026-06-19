@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("node:crypto");
 const { Telemetry } = require("../models/telemetry");
 const {
   WorkspaceAgentInvocation,
@@ -318,13 +319,15 @@ function agentWebsocket(app, routePrefix = "") {
         await agentHandler.createAIbitat({ socket });
         await agentHandler.startAgentCluster();
       } catch (e) {
+        const id = crypto.randomUUID();
         // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        console.error(`[wss error id=${id}]`, e);
         cleanup();
         try {
-          socket?.send(
-            JSON.stringify({ type: "wssFailure", content: e.message }),
-          );
+          if (socket)
+            socket.send(
+              JSON.stringify({ type: "wssFailure", content: "Internal error", id }),
+            );
         } catch {
           /* socket already gone */
         }

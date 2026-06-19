@@ -145,7 +145,7 @@ describe("chatEndpoints", () => {
       });
       expect(writeResponseChunk).toHaveBeenCalledWith(
         expect.any(Object),
-        expect.objectContaining({ error: "LLM down" }),
+        expect.objectContaining({ error: "Internal error", type: "abort" }),
       );
     });
   });
@@ -204,7 +204,7 @@ describe("chatEndpoints", () => {
       );
       expect(writeResponseChunk).toHaveBeenCalledWith(
         expect.any(Object),
-        expect.objectContaining({ error: "fail" }),
+        expect.objectContaining({ error: "Internal error", type: "abort" }),
       );
     });
   });

@@ -1175,6 +1175,11 @@ function dumpENV() {
 
   const envPath = path.join(__dirname, "../../.env");
   fs.writeFileSync(envPath, envResult, { encoding: "utf8", flag: "w" });
+  try {
+    fs.chmodSync(envPath, 0o600);
+  } catch (e) {
+    console.error(`Failed to chmod ${envPath} to 0o600: ${e.message}`);
+  }
   return true;
 }
 
