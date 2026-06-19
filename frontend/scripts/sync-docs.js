@@ -40,6 +40,10 @@ const ADR_FILES = [
 ];
 
 try {
+  if (process.env.SKIP_DOC_SYNC === "1") {
+    console.log("[docs-sync] SKIP_DOC_SYNC=1 — skipping doc sync.");
+    process.exit(0);
+  }
   // Ensure content directory exists
   if (!fs.existsSync(CONTENT_DEST)) {
     fs.mkdirSync(CONTENT_DEST, { recursive: true });

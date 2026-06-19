@@ -114,9 +114,9 @@ async function runPipeline(sha) {
   steps.push({ name: "frontend-install", ok: feInstall.ok, detail: feInstall.stderr.slice(-200) });
   log(`  fe-install: ${feInstall.ok ? "PASS" : "FAIL"}`);
 
-  // 4. Frontend build
+  // 4. Frontend build (skip doc sync — permission issue on VM)
   log("Step 4: frontend build");
-  const feBuild = await run("node -v && yarn build 2>&1", { cwd: REPO_DIR + "/frontend", timeout: 180000 });
+  const feBuild = await run("node -v && SKIP_DOC_SYNC=1 yarn build 2>&1", { cwd: REPO_DIR + "/frontend", timeout: 180000 });
   steps.push({ name: "frontend-build", ok: feBuild.ok, detail: (feBuild.stdout + feBuild.stderr).slice(-300) });
   log(`  fe-build: ${feBuild.ok ? "PASS" : "FAIL"}`);
 
