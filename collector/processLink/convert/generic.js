@@ -179,7 +179,6 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
         const innerHTML = await page.evaluate(
           () => document.documentElement.innerHTML
         );
-        await browser.close();
         if (captureAs === "html") return innerHTML;
         return htmlToMarkdown(innerHTML, link);
       },
@@ -196,23 +195,24 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           ignoreDefaultArgs: ["--disable-extensions"],
           ...this.options?.launchOptions,
         });
-        const page = await browser.newPage();
-        await page.setExtraHTTPHeaders(overrideHeaders);
+        try {
+          const page = await browser.newPage();
+          await page.setExtraHTTPHeaders(overrideHeaders);
 
-        await page.goto(this.webPath, {
-          timeout: 180000,
-          waitUntil: "networkidle2",
-          ...this.options?.gotoOptions,
-        });
+          await page.goto(this.webPath, {
+            timeout: 180000,
+            waitUntil: "networkidle2",
+            ...this.options?.gotoOptions,
+          });
 
-        const bodyHTML = this.options?.evaluate
-          ? await this.options.evaluate(page, browser)
-          : await page.evaluate(() => document.body.innerHTML);
+          const bodyHTML = this.options?.evaluate
+            ? await this.options.evaluate(page, browser)
+            : await page.evaluate(() => document.body.innerHTML);
 
-        // evaluate() already closes the browser; only close if we used
-        // the fallback path that didn't call evaluate.
-        if (!this.options?.evaluate) await browser.close();
-        return bodyHTML;
+          return bodyHTML;
+        } finally {
+          await browser.close();
+        }
       };
     }
 

@@ -3,6 +3,7 @@ const { WATCH_DIRECTORY, ACCEPTED_MIMES } = require("../constants");
 const fs = require("fs");
 const path = require("path");
 const { pipeline } = require("stream/promises");
+const { Transform } = require("stream");
 const { validURL } = require("../url");
 const { default: slugify } = require("slugify");
 
@@ -50,6 +51,15 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
       })
       .finally(() => clearTimeout(timeout));
 
+    const MAX_FILE_SIZE = 500 * 1024 * 1024;
+    const contentLength = parseInt(
+      res.headers.get("content-length") || "0",
+      10
+    );
+    if (contentLength > MAX_FILE_SIZE) {
+      throw new Error("File too large (max 500MB)");
+    }
+
     const urlObj = new URL(url);
     const sluggedPath = slugify(urlObj.pathname, { lower: true });
     let filename = `${urlObj.hostname}-${sluggedPath}`;
@@ -77,7 +87,18 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
 
     const localFilePath = path.join(WATCH_DIRECTORY, filename);
     const writeStream = fs.createWriteStream(localFilePath);
-    await pipeline(res.body, writeStream);
+    let bytesWritten = 0;
+    const sizeLimiter = new Transform({
+      transform(chunk, encoding, callback) {
+        bytesWritten += chunk.length;
+        if (bytesWritten > MAX_FILE_SIZE) {
+          callback(new Error("File too large (max 500MB)"));
+          return;
+        }
+        callback(null, chunk);
+      },
+    });
+    await pipeline(res.body, sizeLimiter, writeStream);
 
     // eslint-disable-next-line no-console
     console.log(`[SUCCESS]: File ${localFilePath} downloaded to hotdir.`);

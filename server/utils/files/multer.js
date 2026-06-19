@@ -83,6 +83,15 @@ const pfpUploadStorage = multer.diskStorage({
 
 // ----- Multer handler factories --------------------------------------------
 
+const BLOCKED_EXTENSIONS = [".exe", ".bat", ".cmd", ".sh", ".ps1", ".dll", ".so"];
+const executableFileFilter = (_req, file, cb) => {
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (BLOCKED_EXTENSIONS.includes(ext)) {
+    return cb(new Error("File type not allowed"));
+  }
+  cb(null, true);
+};
+
 /**
  * Handle Generic file upload as documents from the GUI.
  * Routes to Supabase Storage when enabled, otherwise writes to local hotdir.
@@ -95,7 +104,11 @@ function handleFileUpload(request, response, next) {
     ? multer.memoryStorage()
     : fileUploadStorage;
 
-  const upload = multer({ storage }).single("file");
+  const upload = multer({
+    storage,
+    limits: { fileSize: 100 * 1024 * 1024 },
+    fileFilter: executableFileFilter,
+  }).single("file");
   upload(request, response, function (err) {
     if (err) {
       response
@@ -151,7 +164,11 @@ function handleAPIFileUpload(request, response, next) {
     ? multer.memoryStorage()
     : fileAPIUploadStorage;
 
-  const upload = multer({ storage }).single("file");
+  const upload = multer({
+    storage,
+    limits: { fileSize: 100 * 1024 * 1024 },
+    fileFilter: executableFileFilter,
+  }).single("file");
   upload(request, response, function (err) {
     if (err) {
       response
@@ -203,7 +220,10 @@ function handleAssetUpload(request, response, next) {
     ? multer.memoryStorage()
     : assetUploadStorage;
 
-  const upload = multer({ storage }).single("logo");
+  const upload = multer({
+    storage,
+    limits: { fileSize: 100 * 1024 * 1024 },
+  }).single("logo");
   upload(request, response, function (err) {
     if (err) {
       response
@@ -255,7 +275,10 @@ function handlePfpUpload(request, response, next) {
     ? multer.memoryStorage()
     : pfpUploadStorage;
 
-  const upload = multer({ storage }).single("file");
+  const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 },
+  }).single("file");
   upload(request, response, function (err) {
     if (err) {
       response

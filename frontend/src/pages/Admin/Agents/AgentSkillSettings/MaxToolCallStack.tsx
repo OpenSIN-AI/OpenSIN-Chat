@@ -9,7 +9,7 @@ export default function MaxToolCallStack() {
   const { t } = useTranslation();
   const { settings, loading } = useSystemSettings();
   const [maxCallStack, setMaxCallStack] = useState<number>(
-    () => parseInt(settings?.AgentSkillMaxToolCalls as string) || 10,
+    () => parseInt(settings?.AgentSkillMaxToolCalls as string, 10) || 10,
   );
 
   const debouncedUpdateMaxCallStack = useMemo(() => {
@@ -41,7 +41,7 @@ export default function MaxToolCallStack() {
           onChange={(e) => {
             if (Number(e.target.value) < 1) return;
             debouncedUpdateMaxCallStack(Number(e.target.value));
-            setMaxCallStack(parseInt(e.target.value));
+            setMaxCallStack(parseInt(e.target.value, 10));
           }}
           onWheel={(e) => (e.target as HTMLInputElement).blur()}
           className="border border-white/10 bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"

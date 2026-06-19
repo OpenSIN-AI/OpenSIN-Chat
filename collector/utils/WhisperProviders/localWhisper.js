@@ -60,6 +60,7 @@ class LocalWhisper {
   }
 
   async #convertToWavAudioData(sourcePath) {
+    let outputFile = null;
     try {
       let buffer;
       const wavefile = require("wavefile");
@@ -69,7 +70,7 @@ class LocalWhisper {
       if (!fs.existsSync(outFolder))
         fs.mkdirSync(outFolder, { recursive: true });
 
-      const outputFile = path.resolve(outFolder, `${v4()}.wav`);
+      outputFile = path.resolve(outFolder, `${v4()}.wav`);
       const success = await ffmpeg.convertAudioToWav(sourcePath, outputFile);
       if (!success)
         throw new Error(
@@ -110,6 +111,11 @@ class LocalWhisper {
 
       return audioData;
     } catch (error) {
+      if (outputFile) {
+        try {
+          fs.rmSync(outputFile, { force: true });
+        } catch {}
+      }
       // eslint-disable-next-line no-console
       console.error(`convertToWavAudioData`, error);
       return null;

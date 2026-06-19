@@ -240,7 +240,7 @@ export default function FilesystemSidebar() {
             onClick={() => setShowSysInfo(!showSysInfo)}
             type="button"
             className="text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer mr-1"
-            aria-label="System-Info"
+            aria-label={t("sidebar.filesystem.systemInfo")}
           >
             <Info size={14} weight="bold" />
           </button>
@@ -297,13 +297,15 @@ export default function FilesystemSidebar() {
                 className="text-blue-400 flex-shrink-0"
               />
               <span className="text-xs text-blue-300 truncate flex-1">
-                Aktuell: {selectedDirectory}
+                {t("sidebar.filesystem.currentPath", {
+                  path: selectedDirectory,
+                })}
               </span>
               <button
                 onClick={() => setSelectedDirectory(null)}
                 className="text-xs text-zinc-400 hover:text-white border-none bg-transparent cursor-pointer"
               >
-                Ändern
+                {t("sidebar.filesystem.change")}
               </button>
             </div>
           </div>
@@ -635,7 +637,7 @@ export default function FilesystemSidebar() {
                   className="flex items-center gap-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-40 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors flex-1"
                 >
                   <FolderOpen size={12} weight="bold" />
-                  Verzeichnis festlegen
+                  {t("sidebar.filesystem.setDirectory")}
                 </button>
                 {selectedFiles.length > 0 && (
                   <button
@@ -645,7 +647,9 @@ export default function FilesystemSidebar() {
                     className="flex items-center gap-1.5 text-xs font-medium text-white bg-zinc-700 hover:bg-zinc-600 disabled:opacity-50 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors"
                   >
                     <Upload size={12} weight="bold" />
-                    {selectedFiles.length} Datei(en)
+                    {t("sidebar.filesystem.fileCount", {
+                      count: selectedFiles.length,
+                    })}
                   </button>
                 )}
               </div>
@@ -654,7 +658,7 @@ export default function FilesystemSidebar() {
                   onClick={clearSelection}
                   className="mt-1 text-[10px] text-zinc-500 hover:text-white border-none bg-transparent cursor-pointer w-full text-center"
                 >
-                  Auswahl aufheben
+                  {t("sidebar.filesystem.clearSelection")}
                 </button>
               )}
             </div>
@@ -669,21 +673,20 @@ export default function FilesystemSidebar() {
               className="text-blue-400 mb-3"
             />
             <p className="text-sm text-white light:text-slate-900 font-medium text-center mb-1">
-              Verzeichnis verbunden
+              {t("sidebar.filesystem.directoryConnected")}
             </p>
             <p className="text-xs text-zinc-400 light:text-slate-500 text-center mb-4 font-mono">
               {selectedDirectory}
             </p>
             <p className="text-[11px] text-zinc-500 light:text-slate-400 text-center mb-4">
-              Die KI in diesem Workspace hat Zugriff auf alle Dateien in diesem
-              Verzeichnis.
+              {t("sidebar.filesystem.directoryAccessDescription")}
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setSelectedDirectory(null)}
                 className="text-xs text-zinc-400 hover:text-white border border-zinc-700 hover:border-zinc-600 px-3 py-1.5 rounded-md bg-transparent cursor-pointer transition-colors"
               >
-                Ändern
+                {t("sidebar.filesystem.change")}
               </button>
               <button
                 onClick={handleConnect}
@@ -691,7 +694,9 @@ export default function FilesystemSidebar() {
                 className="flex items-center gap-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors"
               >
                 <Upload size={12} weight="bold" />
-                {connecting ? "Verbinde..." : "Verbinden"}
+                {connecting
+                  ? t("sidebar.filesystem.connecting")
+                  : t("sidebar.filesystem.connect")}
               </button>
             </div>
             {connectResult && (

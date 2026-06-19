@@ -101,7 +101,11 @@ function systemEndpoints(app) {
 
   app.get(
     "/env-dump",
-    [simpleRateLimit({ bucket: "env-dump", max: 2, windowMs: 60 * 1000 })],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({ bucket: "env-dump", max: 2, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       if (process.env.NODE_ENV !== "production")
         return response.sendStatus(200);
@@ -402,7 +406,10 @@ function systemEndpoints(app) {
 
   app.get(
     "/request-token/sso/simple",
-    [simpleSSOEnabled],
+    [
+      simpleSSOEnabled,
+      simpleRateLimit({ bucket: "sso-token", max: 10, windowMs: 15 * 60 * 1000 }),
+    ],
     async (request, response) => {
       const { token: tempAuthToken } = request.query;
       const { sessionToken, token, error } =
@@ -445,7 +452,10 @@ function systemEndpoints(app) {
 
   app.post(
     "/system/recover-account",
-    [isMultiUserSetup],
+    [
+      isMultiUserSetup,
+      simpleRateLimit({ bucket: "recover-account", max: 5, windowMs: 15 * 60 * 1000 }),
+    ],
     async (request, response) => {
       try {
         const { username, recoveryCodes } = reqBody(request);

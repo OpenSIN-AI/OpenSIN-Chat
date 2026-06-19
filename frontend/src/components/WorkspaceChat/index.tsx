@@ -50,6 +50,10 @@ export default function WorkspaceChat({ loading, workspace }: any) {
     });
   }, [workspace, loading, threadSlug, history, historyLoading]);
 
+  useEffect(() => {
+    return setEventDelegatorForCodeSnippets();
+  }, []);
+
   const hasPendingMessage = !!sessionStorage.getItem(PENDING_HOME_MESSAGE);
   if (loaded === null) {
     if (hasPendingMessage) {
@@ -97,7 +101,6 @@ export default function WorkspaceChat({ loading, workspace }: any) {
     );
   }
 
-  setEventDelegatorForCodeSnippets();
   return (
     <TTSProvider>
       <DnDFileUploaderProvider
@@ -144,10 +147,12 @@ function copyCodeSnippet(uuid: any) {
 
 // Listens and hunts for all data-code-snippet clicks.
 export function setEventDelegatorForCodeSnippets() {
-  document?.addEventListener("click", function (e) {
+  const handler = function (e: Event) {
     const target = (e.target as HTMLElement).closest("[data-code-snippet]");
     const uuidCode = (target as HTMLElement | null)?.dataset?.code;
     if (!uuidCode) return false;
     copyCodeSnippet(uuidCode);
-  });
+  };
+  document?.addEventListener("click", handler);
+  return () => document?.removeEventListener("click", handler);
 }

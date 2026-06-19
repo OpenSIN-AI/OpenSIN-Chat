@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const { validateUrl } = require("../../../../../ssrf");
 /**
  * Utilities for converting markdown to DOCX format.
  * Uses marked for parsing, jsdom for HTML traversal, and docx for document generation.
@@ -178,16 +179,10 @@ async function fetchImage(src, log) {
         return null;
       }
     } else if (src.startsWith("http://") || src.startsWith("https://")) {
-      let parsedUrl;
       try {
-        parsedUrl = new URL(src);
-      } catch {
-        log(`create-docx-file: Invalid URL: ${src}`);
-        return null;
-      }
-
-      if (!["http:", "https:"].includes(parsedUrl.protocol)) {
-        log(`create-docx-file: Invalid URL protocol: ${parsedUrl.protocol}`);
+        validateUrl(src);
+      } catch (e) {
+        log(`create-docx-file: ${e.message}: ${src}`);
         return null;
       }
 

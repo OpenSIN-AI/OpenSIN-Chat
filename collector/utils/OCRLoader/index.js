@@ -229,6 +229,7 @@ class OCRLoader {
   async ocrImage(filePath, { maxExecutionTime = 300_000 } = {}) {
     let content = "";
     let worker = null;
+    let timeoutHandle = null;
     if (
       !filePath ||
       !fs.existsSync(filePath) ||
@@ -249,7 +250,7 @@ class OCRLoader {
 
       // Race the timeout with the OCR
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => {
+        timeoutHandle = setTimeout(() => {
           reject(
             new Error(
               `OCR job took too long to complete (${
@@ -275,6 +276,7 @@ class OCRLoader {
       this.log(`Error: ${e.message}`);
       return null;
     } finally {
+      if (timeoutHandle) clearTimeout(timeoutHandle);
       //eslint-disable-next-line
       if (!worker) return;
       await worker.terminate();

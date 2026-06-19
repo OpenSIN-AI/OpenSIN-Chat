@@ -41,6 +41,7 @@ function FileUploadProgressComponent({
   const mountedRef = useRef(true);
   useEffect(() => {
     mountedRef.current = true;
+    let fadeTimeoutId: ReturnType<typeof setTimeout>;
     async function uploadFile() {
       setLoading(true);
       setLoadingMessage(t("uploadProgress.uploadingFile"));
@@ -73,7 +74,7 @@ function FileUploadProgressComponent({
       }
 
       // Begin fadeout timer to clear uploader queue.
-      setTimeout(() => {
+      fadeTimeoutId = setTimeout(() => {
         if (!mountedRef.current) return;
         fadeOut(() => setTimeout(() => beginFadeOut(), 300));
       }, 5000);
@@ -81,6 +82,7 @@ function FileUploadProgressComponent({
     if (!!file && !rejected) uploadFile();
     return () => {
       mountedRef.current = false;
+      clearTimeout(fadeTimeoutId);
     };
   }, []);
 

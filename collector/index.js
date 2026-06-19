@@ -19,7 +19,7 @@ const { convertAudioToWav } = require("./convertAudioToWav");
 const { verifyPayloadIntegrity } = require("./middleware/verifyIntegrity");
 const { httpLogger } = require("./middleware/httpLogger");
 const app = express();
-const FILE_LIMIT = "5120MB";
+const FILE_LIMIT = "500MB";
 const COLLECTOR_PORT = getCollectorPort();
 
 // Only log HTTP requests in development mode and if the ENABLE_HTTP_LOGGER environment variable is set to true
@@ -48,6 +48,7 @@ app.post(
   [verifyPayloadIntegrity],
   async function (request, response) {
     const { filename, options = {}, metadata = {} } = reqBody(request);
+    if (options && options.absolutePath) delete options.absolutePath;
     try {
       const targetFilename = path
         .normalize(filename)
@@ -79,6 +80,7 @@ app.post(
   [verifyPayloadIntegrity],
   async function (request, response) {
     const { filename, options = {} } = reqBody(request);
+    if (options && options.absolutePath) delete options.absolutePath;
     try {
       const targetFilename = path
         .normalize(filename)
@@ -90,7 +92,6 @@ app.post(
       } = await processSingleFile(targetFilename, {
         ...options,
         parseOnly: true,
-        absolutePath: options.absolutePath || null,
       });
       response
         .status(200)

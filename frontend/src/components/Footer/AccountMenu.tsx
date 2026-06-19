@@ -21,6 +21,7 @@ import usePfp from "@/hooks/usePfp";
 import useLoginMode from "@/hooks/useLoginMode";
 import { useTheme } from "@/hooks/useTheme";
 import { useLanguageOptions } from "@/hooks/useLanguageOptions";
+import { useTranslation } from "react-i18next";
 import AccountModal from "../UserMenu/AccountModal";
 import {
   AUTH_TIMESTAMP,
@@ -75,20 +76,23 @@ function Avatar({
 }
 
 function ThemeSegment() {
+  const { t } = useTranslation();
   const { theme, setTheme } = useTheme();
   const options: {
     key: "system" | "light" | "dark";
     label: string;
     Icon: React.ComponentType<{ className?: string; weight?: any }>;
   }[] = [
-    { key: "system", label: "System", Icon: Desktop },
-    { key: "light", label: "Hell", Icon: Sun },
-    { key: "dark", label: "Dunkel", Icon: Moon },
+    { key: "system", label: t("common.themeSystem"), Icon: Desktop },
+    { key: "light", label: t("common.themeLight"), Icon: Sun },
+    { key: "dark", label: t("common.themeDark"), Icon: Moon },
   ];
 
   return (
     <div className="flex items-center justify-between px-2.5 py-1.5">
-      <span className="text-sm text-white light:text-slate-700">Design</span>
+      <span className="text-sm text-white light:text-slate-700">
+        {t("common.theme")}
+      </span>
       <div className="flex items-center gap-0.5 rounded-lg bg-black/20 light:bg-black/5 p-0.5">
         {options.map(({ key, label, Icon }) => {
           const active = theme === key;
@@ -116,6 +120,7 @@ function ThemeSegment() {
 }
 
 function LanguageRow() {
+  const { t } = useTranslation();
   const {
     currentLanguage,
     supportedLanguages,
@@ -124,9 +129,11 @@ function LanguageRow() {
   } = useLanguageOptions();
   return (
     <div className="flex items-center justify-between px-2.5 py-1.5">
-      <span className="text-sm text-white light:text-slate-700">Sprache</span>
+      <span className="text-sm text-white light:text-slate-700">
+        {t("common.language")}
+      </span>
       <select
-        aria-label="Sprache"
+        aria-label={t("common.language")}
         value={currentLanguage || "en"}
         onChange={(e) => changeLanguage(e.target.value)}
         className="border-none bg-black/20 light:bg-black/5 text-white light:text-slate-700 text-xs rounded-md py-1.5 pl-2.5 pr-6 outline-none focus:ring-2 focus:ring-white/40 cursor-pointer"
@@ -148,6 +155,7 @@ export default function AccountMenu({
 }: {
   compact?: boolean;
 }) {
+  const { t } = useTranslation();
   const { user } = useUser();
   const { pfp } = usePfp();
   const mode = useLoginMode();
@@ -158,7 +166,7 @@ export default function AccountMenu({
   const popupRef = useRef<HTMLDivElement>(null);
 
   const displayName = user?.username || "OpenAfD";
-  const subtitle = user?.email || "Demo-Konto";
+  const subtitle = user?.email || t("common.demoAccount");
   const initials = displayName.slice(0, 2).toUpperCase();
   const isLoggedIn = mode !== null;
 
@@ -225,7 +233,8 @@ export default function AccountMenu({
         aria-haspopup="menu"
         aria-expanded={open}
         data-tooltip-id={compact ? "lsib-profile" : undefined}
-        data-tooltip-content={compact ? "Profil" : undefined}
+        data-tooltip-content={compact ? t("common.profile") : undefined}
+        aria-label={compact ? t("common.profile") : undefined}
         className={
           compact
             ? "flex items-center justify-center w-9 h-9 rounded-full border border-white/20 light:border-slate-400 cursor-pointer transition-all bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover text-white shadow-sm"
@@ -295,7 +304,7 @@ export default function AccountMenu({
                 className={ITEM_CLASSES}
               >
                 <UserCircle className={ICON_CLASSES} />
-                <span className="flex-grow">Profil</span>
+                <span className="flex-grow">{t("common.profile")}</span>
               </button>
             )}
 
@@ -306,7 +315,7 @@ export default function AccountMenu({
               className={ITEM_CLASSES}
             >
               <Gear className={ICON_CLASSES} />
-              <span className="flex-grow">Einstellungen</span>
+              <span className="flex-grow">{t("common.settings")}</span>
             </Link>
 
             <Link
@@ -316,7 +325,7 @@ export default function AccountMenu({
               className={ITEM_CLASSES}
             >
               <BookOpen className={ICON_CLASSES} />
-              <span className="flex-grow">Dokumentation</span>
+              <span className="flex-grow">{t("common.documentation")}</span>
             </Link>
 
             <a
@@ -328,7 +337,7 @@ export default function AccountMenu({
               className={ITEM_CLASSES}
             >
               <ChatCircleText className={ICON_CLASSES} />
-              <span className="flex-grow">Feedback</span>
+              <span className="flex-grow">{t("common.feedback")}</span>
               <ArrowUpRight
                 className="h-4 w-4 text-white/45 light:text-slate-400"
                 aria-hidden="true"
@@ -339,7 +348,7 @@ export default function AccountMenu({
 
             {/* Preferences */}
             <p className="px-2.5 pt-1 pb-0.5 text-[11px] font-medium uppercase tracking-wide text-white/40 light:text-slate-400">
-              Präferenzen
+              {t("common.preferences")}
             </p>
             <ThemeSegment />
             <LanguageRow />
@@ -355,7 +364,7 @@ export default function AccountMenu({
                 className={ITEM_CLASSES}
               >
                 <SignOut className={ICON_CLASSES} />
-                <span className="flex-grow">Abmelden</span>
+                <span className="flex-grow">{t("common.signOut")}</span>
               </button>
             ) : (
               <Link
@@ -365,7 +374,7 @@ export default function AccountMenu({
                 className={ITEM_CLASSES}
               >
                 <SignIn className={ICON_CLASSES} />
-                <span className="flex-grow">Anmelden</span>
+                <span className="flex-grow">{t("common.signIn")}</span>
               </Link>
             )}
           </div>,

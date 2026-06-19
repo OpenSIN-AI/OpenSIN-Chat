@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 const { safeJsonParse } = require("../../http");
+const { validateUrl } = require("../../ssrf");
 
 /**
  * Execute an API call flow step
@@ -39,6 +40,7 @@ async function executeApiCall(config, context) {
   }
 
   try {
+    validateUrl(url);
     introspect(`Sending body to ${url}: ${requestConfig?.body || "No body"}`);
     const response = await fetch(url, requestConfig);
     if (!response.ok) {

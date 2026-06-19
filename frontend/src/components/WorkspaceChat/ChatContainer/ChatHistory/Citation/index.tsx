@@ -69,6 +69,7 @@ export function SourceTypeCircle({
   url = null,
   customImage = null,
 }: any) {
+  const { t } = useTranslation();
   const Icon = CIRCLE_ICONS[type] || CIRCLE_ICONS.file;
   const [imgError, setImgError] = useState(false as any);
 
@@ -95,8 +96,7 @@ export function SourceTypeCircle({
       {faviconUrl && !imgError ? (
         <img
           src={faviconUrl}
-          // eslint-disable-next-line i18next/no-literal-string
-          alt="favicon"
+          alt={t("common.favicon")}
           className="object-cover w-full h-full"
           onError={() => setImgError(true)}
         />

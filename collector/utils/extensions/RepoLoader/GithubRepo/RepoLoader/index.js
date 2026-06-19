@@ -206,7 +206,7 @@ class GitHubRepoLoader {
     if (!this.#validGithubUrl() || !this.author || !this.project) return [];
     await this.#validateAccessToken(); // Ensure API access token is valid for pre-flight
 
-    let page = 0;
+    let page = 1;
     let polling = true;
     const branches = [];
 

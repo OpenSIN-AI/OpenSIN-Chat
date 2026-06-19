@@ -41,9 +41,15 @@ class CommunicationKey {
   // that we know was done with the same key-pair and the given input is in base64 format already.
   // Returns plaintext string of the data that was encrypted.
   decrypt(base64String = "") {
-    return crypto
-      .publicDecrypt(this.#readPublicKey(), Buffer.from(base64String, "base64"))
-      .toString();
+    try {
+      return crypto
+        .publicDecrypt(
+          this.#readPublicKey(),
+          Buffer.from(base64String, "base64")
+        )
+        .toString();
+    } catch {}
+    return null;
   }
 }
 

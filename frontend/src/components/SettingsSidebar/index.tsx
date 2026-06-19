@@ -58,8 +58,7 @@ export default function SettingsSidebar() {
           <div className="flex items-center justify-center flex-grow gap-x-2">
             <img
               src={logo}
-              // eslint-disable-next-line i18next/no-literal-string
-              alt="Logo"
+              alt={t("common.logo")}
               className="h-6 w-6 max-h-6 max-w-6 object-contain"
             />
             <span className="text-white font-bold text-base">OpenSIN</span>
@@ -88,8 +87,7 @@ export default function SettingsSidebar() {
                 <div className="flex shrink-1 w-fit items-center justify-start gap-x-2">
                   <img
                     src={logo}
-                    // eslint-disable-next-line i18next/no-literal-string
-                    alt="Logo"
+                    alt={t("common.logo")}
                     className="w-8 h-8 max-h-[32px] max-w-[32px] object-contain"
                   />
                   <span className="text-white font-bold text-base">
@@ -144,8 +142,7 @@ export default function SettingsSidebar() {
         >
           <img
             src={logo}
-            // eslint-disable-next-line i18next/no-literal-string
-            alt="Logo"
+            alt={t("common.logo")}
             className="h-6 w-6 max-h-[24px] max-w-[24px] object-contain"
           />
           <span className="text-white font-bold text-sm">OpenSIN</span>
@@ -307,7 +304,7 @@ const SidebarOptions = ({ user = null, t }: any) => (
           icon={
             <img
               src={AgentIcon}
-              alt="Agent"
+              alt={t("common.agent")}
               className="h-5 w-5 flex-shrink-0 light:invert"
             />
           }
@@ -321,7 +318,7 @@ const SidebarOptions = ({ user = null, t }: any) => (
           icon={
             <img
               src={CommunityHubIcon}
-              alt="Community Hub"
+              alt={t("settings.community-hub.title")}
               className="h-5 w-5 flex-shrink-0 light:invert"
             />
           }

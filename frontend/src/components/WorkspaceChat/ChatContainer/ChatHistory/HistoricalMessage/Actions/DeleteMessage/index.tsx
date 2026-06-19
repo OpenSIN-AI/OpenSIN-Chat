@@ -27,6 +27,8 @@ export function useWatchDeleteMessage({
       if (role === "assistant") {
         Workspace.deleteChat(chatId).then(() => {
           invalidateChatHistory(workspaceSlug, threadSlug);
+        }).catch((e) => {
+          console.error("Failed to delete chat:", e);
         });
       }
     }

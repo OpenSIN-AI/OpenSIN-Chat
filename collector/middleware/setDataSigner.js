@@ -39,10 +39,16 @@ function setDataSigner(request, response, next) {
       .json({ msg: "Missing X-Payload-Signer header." });
   }
 
-  const decryptedPayloadSignerKey = comKey.decrypt(encryptedPayloadSigner);
-  const encryptionWorker = new EncryptionWorker(decryptedPayloadSignerKey);
-  response.locals.encryptionWorker = encryptionWorker;
-  next();
+  try {
+    const decryptedPayloadSignerKey = comKey.decrypt(encryptedPayloadSigner);
+    const encryptionWorker = new EncryptionWorker(decryptedPayloadSignerKey);
+    response.locals.encryptionWorker = encryptionWorker;
+    next();
+  } catch {
+    return response
+      .status(400)
+      .json({ msg: "Invalid X-Payload-Signer header." });
+  }
 }
 
 module.exports = {

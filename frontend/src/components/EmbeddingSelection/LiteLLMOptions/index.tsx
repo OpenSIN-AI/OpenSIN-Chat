@@ -111,7 +111,7 @@ function LiteLLMModelSelection({
   );
   const models = customModels as any[];
 
-  if (loading || models.length == 0) {
+  if (loading || models.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">

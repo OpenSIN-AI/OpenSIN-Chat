@@ -37,7 +37,7 @@ export default function MistralOptions({ settings }: any) {
 function MistralModelSelection({ apiKey, settings }: any) {
   const { t } = useTranslation();
   const { customModels, isLoading } = useProviderModels("mistral", apiKey);
-  if (isLoading || customModels.length == 0) {
+  if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-3">

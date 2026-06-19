@@ -164,7 +164,7 @@ function LocalAIModelSelection({
     apiKey,
     basePath,
   );
-  if (isLoading || customModels.length == 0) {
+  if (isLoading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <label className="text-white text-sm font-semibold block mb-2">

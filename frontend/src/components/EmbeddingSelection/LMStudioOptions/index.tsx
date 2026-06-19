@@ -216,7 +216,7 @@ function LMStudioModelSelection({
     basePath,
   );
 
-  if (loading || customModels.length == 0) {
+  if (loading || customModels.length === 0) {
     return (
       <div className="flex flex-col w-60">
         <div className="flex items-center mb-2 gap-x-1">

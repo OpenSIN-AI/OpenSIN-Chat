@@ -27,6 +27,7 @@
  */
 
 const { TokenManager } = require("../../../helpers/tiktoken");
+const { validateUrl } = require("../../../ssrf");
 const tiktoken = new TokenManager();
 
 // ── HTML parsing helpers ──────────────────────────────────────────────────────
@@ -135,6 +136,7 @@ const MAX_FETCH_RETRIES = 2;
  * @returns {Promise<{html: string, finalUrl: string}>}
  */
 async function fetchWithRetry(url) {
+  validateUrl(url);
   let lastErr;
   for (let attempt = 1; attempt <= MAX_FETCH_RETRIES; attempt++) {
     const controller = new AbortController();
@@ -181,6 +183,7 @@ async function fetchWithRetry(url) {
  * @returns {Promise<{html: string, finalUrl: string}>}
  */
 async function fetchHtml(url) {
+  validateUrl(url);
   if (process.env.AGENT_BROWSER_VISION_PLAYWRIGHT === "true") {
     let browser;
     try {
@@ -372,6 +375,8 @@ const browserVision = {
               this.super.introspect(
                 `${this.caller}: Fetching page metadata from ${url} ...`,
               );
+
+              validateUrl(url);
 
               // Only fetch the first 32 KB of the page to get <head> quickly
               const controller = new AbortController();

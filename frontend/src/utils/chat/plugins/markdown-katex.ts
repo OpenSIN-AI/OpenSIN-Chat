@@ -52,7 +52,7 @@ function math_inline(state, silent) {
       while (state.src[pos] === "\\") {
         pos -= 1;
       }
-      if ((match - pos) % 2 == 1) {
+      if ((match - pos) % 2 === 1) {
         break;
       }
       match += 1;

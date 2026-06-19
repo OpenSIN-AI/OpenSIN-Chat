@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { CaretRight } from "@phosphor-icons/react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { safeJsonParse } from "@/utils/request";
 import { isPathMatch } from "@/utils/paths";
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
@@ -17,6 +18,7 @@ export default function MenuOption({
   hidden = false,
   isChild = false,
 }: any) {
+  const { t } = useTranslation();
   const storageKey = generateStorageKey({ key: btnText });
   const location = useLocation();
   const hasChildren = childOptions.length > 0;
@@ -105,7 +107,12 @@ export default function MenuOption({
           </p>
         </Link>
         {hasChildren && (
-          <button onClick={handleClick} className="p-2 text-white">
+          <button
+            onClick={handleClick}
+            className="p-2 text-white"
+            aria-label={isExpanded ? t("common.collapse") : t("common.expand")}
+            aria-expanded={isExpanded}
+          >
             <CaretRight
               size={16}
               weight="bold"

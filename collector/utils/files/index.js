@@ -65,8 +65,12 @@ function parseableAsText(filepath) {
   try {
     const fd = fs.openSync(filepath, "r");
     const buffer = Buffer.alloc(1024); // Read first 1KB of the file synchronously
-    const bytesRead = fs.readSync(fd, buffer, 0, 1024, 0);
-    fs.closeSync(fd);
+    let bytesRead;
+    try {
+      bytesRead = fs.readSync(fd, buffer, 0, buffer.length, 0);
+    } finally {
+      fs.closeSync(fd);
+    }
 
     const content = buffer.subarray(0, bytesRead).toString("utf8");
     const nullCount = (content.match(/\0/g) || []).length;

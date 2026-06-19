@@ -228,9 +228,11 @@ class GitLabRepoLoader {
     };
 
     let branchesPage = [];
+    let maxPages = 1000;
     while ((branchesPage = await this.fetchNextPage(branchesRequestData))) {
       if (!Array.isArray(branchesPage) || !branchesPage?.length) break;
       this.branches.push(...branchesPage.map((branch) => branch.name));
+      if (--maxPages <= 0) break;
     }
     return this.#branchPrefSort(this.branches);
   }
@@ -251,6 +253,7 @@ class GitLabRepoLoader {
 
     let filesPage = null;
     let pagePromises = [];
+    let maxPages = 1000;
     while ((filesPage = await this.fetchNextPage(filesRequestData))) {
       if (!Array.isArray(filesPage) || !filesPage?.length) break;
       // Fetch all the files that are not ignored in parallel.
@@ -273,6 +276,7 @@ class GitLabRepoLoader {
       files.push(...pageFiles.filter((item) => item !== null));
       // eslint-disable-next-line no-console
       console.log(`Fetched ${files.length} files.`);
+      if (--maxPages <= 0) break;
     }
     // eslint-disable-next-line no-console
     console.log(`Total files fetched: ${files.length}`);
@@ -291,6 +295,7 @@ class GitLabRepoLoader {
 
     let issuesPage = null;
     let pagePromises = [];
+    let maxPages = 1000;
     while ((issuesPage = await this.fetchNextPage(issuesRequestData))) {
       if (!Array.isArray(issuesPage) || !issuesPage?.length) break;
       // Fetch all the issues in parallel.
@@ -327,6 +332,7 @@ ${body}`
       issues.push(...pageIssues);
       // eslint-disable-next-line no-console
       console.log(`Fetched ${issues.length} issues.`);
+      if (--maxPages <= 0) break;
     }
     // eslint-disable-next-line no-console
     console.log(`Total issues fetched: ${issues.length}`);

@@ -64,7 +64,7 @@ class FFMPEGWrapper {
   isValidFFMPEG(pathToTest) {
     try {
       if (!pathToTest || !fs.existsSync(pathToTest)) return false;
-      execSync(`"${pathToTest}" -version`, { encoding: "utf8", stdio: "pipe" });
+      spawnSync(pathToTest, ["-version"], { encoding: "utf8", stdio: "pipe" });
       return true;
     } catch {
       return false;

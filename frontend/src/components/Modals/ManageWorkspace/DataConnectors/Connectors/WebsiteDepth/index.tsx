@@ -22,8 +22,8 @@ export default function WebsiteDepthOptions() {
 
       const { data, error } = await System.dataConnectors.websiteDepth.scrape({
         url: form.get("url") as string,
-        depth: parseInt(form.get("depth") as string),
-        maxLinks: parseInt(form.get("maxLinks") as string),
+        depth: parseInt(form.get("depth") as string, 10),
+        maxLinks: parseInt(form.get("maxLinks") as string, 10),
       });
 
       if (!!error) {

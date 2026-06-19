@@ -13,7 +13,7 @@ export default function AgentClarifyingQuestions(): JSX.Element {
   const { settings, loading } = useSystemSettings();
   const enabled = !!settings.AgentClarifyingQuestionsEnabled;
   const [maxPerTurn, setMaxPerTurn] = useState(
-    () => parseInt(settings.AgentClarifyingQuestionsMaxPerTurn) || 3,
+    () => parseInt(settings.AgentClarifyingQuestionsMaxPerTurn, 10) || 3,
   );
 
   const debouncedUpdateMaxPerTurn = useMemo(
@@ -79,9 +79,9 @@ export default function AgentClarifyingQuestions(): JSX.Element {
               min={1}
               value={maxPerTurn}
               onChange={(e) => {
-                if (parseInt(e.target.value) < 1) return;
+                if (parseInt(e.target.value, 10) < 1) return;
                 debouncedUpdateMaxPerTurn(e.target.value);
-                setMaxPerTurn(parseInt(e.target.value));
+                setMaxPerTurn(parseInt(e.target.value, 10));
               }}
               onWheel={(e) => (e.target as HTMLElement).blur()}
               className="border border-white/10 bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"

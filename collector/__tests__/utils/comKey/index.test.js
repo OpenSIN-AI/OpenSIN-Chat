@@ -78,8 +78,8 @@ describe("CommunicationKey", () => {
       expect(result).toBe(plaintext);
     });
 
-    it("throws for invalid base64 input", () => {
-      expect(() => comKey.decrypt("invalidbase64")).toThrow();
+    it("returns null for invalid base64 input", () => {
+      expect(comKey.decrypt("invalidbase64")).toBeNull();
     });
 
     it("decrypts JSON data encrypted with the private key", () => {

@@ -65,8 +65,7 @@ export async function subscribeToPushNotifications(
       `/service-workers/push-notifications.js?v=${SW_VERSION}`,
     );
 
-    // Check for updates
-    swReg.addEventListener("updatefound", () => {
+    const onUpdateFound = () => {
       const newWorker = swReg.installing;
       log("Service worker update found");
 
@@ -75,16 +74,15 @@ export async function subscribeToPushNotifications(
           newWorker.state === "installed" &&
           navigator.serviceWorker.controller
         ) {
-          // New service worker is installed and ready
           log("New service worker installed, ready to activate");
 
-          // Optionally show a notification to the user
           if (confirm("A new version is available. Reload to update?")) {
             window.location.reload();
           }
         }
       });
-    });
+    };
+    swReg.addEventListener("updatefound", onUpdateFound);
 
     // Handle service worker updates
     const onControllerChange = () => {
@@ -103,6 +101,7 @@ export async function subscribeToPushNotifications(
             "controllerchange",
             onControllerChange,
           );
+          swReg.removeEventListener("updatefound", onUpdateFound);
         },
         { once: true },
       );
@@ -112,13 +111,13 @@ export async function subscribeToPushNotifications(
       await new Promise<void>((resolve) => {
         swReg.installing.addEventListener("statechange", () => {
           if (swReg.installing?.state === "activated") resolve();
-        });
+        }, { once: true });
       });
     } else if (swReg.waiting) {
       await new Promise<void>((resolve) => {
         swReg.waiting.addEventListener("statechange", () => {
           if (swReg.waiting?.state === "activated") resolve();
-        });
+        }, { once: true });
       });
     }
 

@@ -13,7 +13,7 @@ export default function AgentSkillReranker(): JSX.Element {
   const { settings, loading } = useSystemSettings();
   const enabled = !!settings.AgentSkillRerankerEnabled;
   const [maxTools, setMaxTools] = useState(
-    () => parseInt(settings.AgentSkillRerankerTopN) || 15,
+    () => parseInt(settings.AgentSkillRerankerTopN, 10) || 15,
   );
 
   const debouncedUpdateMaxTools = useMemo(
@@ -78,9 +78,9 @@ export default function AgentSkillReranker(): JSX.Element {
             min={10}
             value={maxTools}
             onChange={(e) => {
-              if (parseInt(e.target.value) < 10) return;
+              if (parseInt(e.target.value, 10) < 10) return;
               debouncedUpdateMaxTools(e.target.value);
-              setMaxTools(parseInt(e.target.value));
+              setMaxTools(parseInt(e.target.value, 10));
             }}
             onWheel={(e) => (e.target as HTMLElement).blur()}
             className="border border-white/10 bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-[80px] p-2.5 text-center"
