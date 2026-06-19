@@ -3,16 +3,13 @@
 // through the ManageWorkspace modal and verify it appears in the document list.
 // Docs: frontend/tests/e2e/README.doc.md
 //
-// Flow: login → create workspace (API) → navigate to workspace chat → open
-// ManageWorkspace modal via sidebar upload button → upload a temp .txt file
-// via the dropzone → verify the file name appears in the workspace directory.
-// Skips gracefully if the document processor is offline.
+// Uses an existing workspace from the server to avoid the workspace-creation
+// rate limiter. Skips gracefully if the document processor is offline.
 import { test, expect } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 import os from "os";
 import {
-  createWorkspace,
   seedSession,
   mockOnboardingCheck,
   assertAppLoaded,
@@ -25,31 +22,25 @@ test.describe("document upload flow", () => {
   let token;
   let slug;
   let tmpFile;
-  let createdSlugs = [];
 
   test.beforeAll(async ({ request }) => {
     token = await login(request);
-  });
 
-  test.beforeEach(async ({ page, request }) => {
-    slug = await createWorkspace(request, token);
-    createdSlugs.push(slug);
-    await seedSession(page, token);
-    await mockOnboardingCheck(page);
+    // List existing workspaces and use the first one
+    const response = await request.get("/api/workspaces", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    expect(response.ok()).toBeTruthy();
+    const { workspaces } = await response.json();
+    expect(workspaces.length).toBeGreaterThan(0);
+    slug = workspaces[0].slug;
 
+    // Create a temporary .txt file for upload
     tmpFile = path.join(os.tmpdir(), `e2e-upload-${Date.now()}.txt`);
     fs.writeFileSync(tmpFile, "Hello world test content");
   });
 
-  test.afterEach(async ({ request }) => {
-    for (const s of createdSlugs) {
-      await request
-        .delete(`/api/workspace/${s}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .catch(() => {});
-    }
-    createdSlugs = [];
+  test.afterAll(async () => {
     if (tmpFile && fs.existsSync(tmpFile)) {
       fs.unlinkSync(tmpFile);
     }
@@ -58,6 +49,9 @@ test.describe("document upload flow", () => {
   test("upload a text file and verify it appears in document list", async ({
     page,
   }) => {
+    await seedSession(page, token);
+    await mockOnboardingCheck(page);
+
     await page.goto(`/workspace/${slug}`, { waitUntil: "networkidle" });
     await assertAppLoaded(page);
 

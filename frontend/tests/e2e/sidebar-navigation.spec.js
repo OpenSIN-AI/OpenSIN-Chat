@@ -2,9 +2,12 @@
 // Purpose: E2E test for sidebar navigation — workspace list loading,
 // clicking a workspace to enter chat, and sidebar collapse/expand toggle.
 // Docs: frontend/tests/e2e/README.doc.md
+//
+// Uses an existing workspace from the server (listed via API) instead of
+// creating a new one, to avoid hitting the workspace-creation rate limiter
+// (5 per hour per IP).
 import { test, expect } from "@playwright/test";
 import {
-  createWorkspace,
   seedSession,
   mockOnboardingCheck,
   assertAppLoaded,
@@ -16,33 +19,30 @@ test.describe("sidebar navigation", () => {
 
   let token;
   let slug;
-  let createdSlugs = [];
+  let workspaceName;
 
   test.beforeAll(async ({ request }) => {
     token = await login(request);
+
+    // List existing workspaces and use the first one — avoids the
+    // workspace-creation rate limiter (5/hour).
+    const response = await request.get("/api/workspaces", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    expect(response.ok()).toBeTruthy();
+    const { workspaces } = await response.json();
+    expect(workspaces.length).toBeGreaterThan(0);
+    slug = workspaces[0].slug;
+    workspaceName = workspaces[0].name;
   });
 
-  test.beforeEach(async ({ page, request }) => {
-    slug = await createWorkspace(request, token);
-    createdSlugs.push(slug);
+  test.beforeEach(async ({ page }) => {
     await seedSession(page, token);
     await mockOnboardingCheck(page);
   });
 
-  test.afterEach(async ({ request }) => {
-    for (const s of createdSlugs) {
-      await request
-        .delete(`/api/workspace/${s}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .catch(() => {});
-    }
-    createdSlugs = [];
-  });
-
   test("workspace list loads and clicking a workspace opens chat", async ({
     page,
-    request,
   }) => {
     await page.goto("/", { waitUntil: "networkidle" });
     await assertAppLoaded(page);
@@ -55,15 +55,9 @@ test.describe("sidebar navigation", () => {
     const wsList = page.getByRole("list", { name: /Workspaces/i });
     await expect(wsList).toBeVisible({ timeout: 10000 });
 
-    // Fetch workspace name from API
-    const wsResponse = await request.get(`/api/workspace/${slug}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const { workspace } = await wsResponse.json();
-
     // Click the workspace link
     const wsLink = page
-      .getByRole("link", { name: workspace.name })
+      .getByRole("link", { name: workspaceName })
       .first();
     await expect(wsLink).toBeVisible({ timeout: 10000 });
     await wsLink.click();
@@ -94,17 +88,20 @@ test.describe("sidebar navigation", () => {
     });
     await expect(sidebar).toBeVisible({ timeout: 10000 });
 
-    // Click to collapse — button says "Hide sidebar"
-    const hideBtn = page.getByRole("button", {
+    // Click to collapse — target the toggle button inside the sidebar nav
+    // (there are two "Hide sidebar" buttons: one in LeftSidebarIconBar, one
+    // in the sidebar header). Scope to the nav element.
+    const hideBtn = sidebar.getByRole("button", {
       name: /Hide sidebar/i,
     });
     await expect(hideBtn).toBeVisible({ timeout: 10000 });
     await hideBtn.click();
 
     // After collapsing, the toggle button says "Show sidebar"
+    // (check both possible locations)
     const showBtn = page.getByRole("button", {
       name: /Show sidebar/i,
-    });
+    }).first();
     await expect(showBtn).toBeVisible({ timeout: 5000 });
 
     // Verify localStorage persisted the closed state
@@ -118,7 +115,7 @@ test.describe("sidebar navigation", () => {
 
     const hideBtnAgain = page.getByRole("button", {
       name: /Hide sidebar/i,
-    });
+    }).first();
     await expect(hideBtnAgain).toBeVisible({ timeout: 5000 });
 
     const toggleStateOpen = await page.evaluate(() =>
@@ -136,8 +133,11 @@ test.describe("sidebar navigation", () => {
       .first()
       .waitFor({ state: "visible", timeout: 30000 });
 
-    // Collapse the sidebar
-    const hideBtn = page.getByRole("button", {
+    // Collapse the sidebar — scope to nav to avoid the LeftSidebarIconBar duplicate
+    const sidebar = page.getByRole("navigation", {
+      name: /Main navigation/i,
+    });
+    const hideBtn = sidebar.getByRole("button", {
       name: /Hide sidebar/i,
     });
     await expect(hideBtn).toBeVisible({ timeout: 10000 });
@@ -145,7 +145,7 @@ test.describe("sidebar navigation", () => {
 
     const showBtn = page.getByRole("button", {
       name: /Show sidebar/i,
-    });
+    }).first();
     await expect(showBtn).toBeVisible({ timeout: 5000 });
 
     // Reload
@@ -154,7 +154,7 @@ test.describe("sidebar navigation", () => {
 
     // After reload, the sidebar should still be collapsed
     await expect(
-      page.getByRole("button", { name: /Show sidebar/i }),
+      page.getByRole("button", { name: /Show sidebar/i }).first(),
     ).toBeVisible({ timeout: 10000 });
   });
 });

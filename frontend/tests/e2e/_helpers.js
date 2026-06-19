@@ -78,7 +78,9 @@ export async function seedSession(page, token) {
     window.localStorage.setItem("openafd_authToken", t);
     window.localStorage.setItem(
       "openafd_user",
-      JSON.stringify({ username: "admin" }),
+      // Include role: "admin" so SettingsSidebar shows all options
+      // (MenuOption hides groups when user?.role is undefined).
+      JSON.stringify({ username: "admin", role: "admin" }),
     );
     window.localStorage.setItem("openafd-demo-unlocked", "1");
     window.localStorage.setItem("i18nextLng", "en");

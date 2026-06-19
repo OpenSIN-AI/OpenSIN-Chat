@@ -47,10 +47,9 @@ test.describe("settings navigation", () => {
       await page.goto(path, { waitUntil: "networkidle" });
       await assertAppLoaded(page);
 
-      // The settings sidebar renders a "Settings" heading
-      const settingsHeading = page
-        .getByText("Settings", { exact: true })
-        .first();
+      // The settings sidebar renders an "Instance Settings" heading
+      // (i18n: settings.title → "Instance Settings")
+      const settingsHeading = page.getByText(/Instance Settings/i).first();
       await expect(settingsHeading).toBeVisible({ timeout: 10000 });
 
       // Verify no error boundary is rendered

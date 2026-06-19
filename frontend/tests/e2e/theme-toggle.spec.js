@@ -31,8 +31,12 @@ test.describe("theme toggle", () => {
     await page.goto("/", { waitUntil: "networkidle" });
     await assertAppLoaded(page);
 
-    // Open the account menu — the button with aria-haspopup="menu" in the sidebar footer
-    const menuTrigger = page.locator('button[aria-haspopup="menu"]').first();
+    // Open the account menu — target the non-compact trigger in the sidebar
+    // footer (contains "admin" text), not the compact one in LeftSidebarIconBar
+    // (which has aria-label="Profile" and is intercepted by the nav).
+    const menuTrigger = page
+      .locator('button[aria-haspopup="menu"]')
+      .filter({ hasText: /admin/i });
     await menuTrigger.waitFor({ state: "visible", timeout: 10000 });
     await menuTrigger.click();
 
@@ -60,7 +64,9 @@ test.describe("theme toggle", () => {
     await page.goto("/", { waitUntil: "networkidle" });
     await assertAppLoaded(page);
 
-    const menuTrigger = page.locator('button[aria-haspopup="menu"]').first();
+    const menuTrigger = page
+      .locator('button[aria-haspopup="menu"]')
+      .filter({ hasText: /admin/i });
     await menuTrigger.waitFor({ state: "visible", timeout: 10000 });
     await menuTrigger.click();
 
