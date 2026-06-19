@@ -30,6 +30,7 @@ async function streamChatWithWorkspace(
   user = null,
   thread = null,
   attachments = [],
+  abortController = null,
 ) {
   const uuid = uuidv4();
 
@@ -330,6 +331,7 @@ async function streamChatWithWorkspace(
       await LLMConnector.getChatCompletion(messages, {
         temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
         user: user,
+        signal: abortController?.signal,
       });
 
     response.removeListener("close", onClientClose);
@@ -357,6 +359,7 @@ async function streamChatWithWorkspace(
     const stream = await LLMConnector.streamGetChatCompletion(messages, {
       temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
       user: user,
+      signal: abortController?.signal,
     });
     completeText = await LLMConnector.handleStream(response, stream, {
       uuid,

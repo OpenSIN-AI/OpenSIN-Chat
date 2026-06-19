@@ -60,8 +60,8 @@ export default function GeneralLLMPreference() {
     const formData = new FormData(form);
 
     for (const [key, value] of formData.entries()) data[key] = value;
-    const { error } = await System.updateSystem(data);
     setSaving(true);
+    const { error } = await System.updateSystem(data);
 
     if (error) {
       showToast(t("llmPreference.saveFailed", { error }), "error");

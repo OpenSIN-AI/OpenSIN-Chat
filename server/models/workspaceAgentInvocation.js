@@ -73,7 +73,7 @@ const WorkspaceAgentInvocation = {
 
   delete: async function (clause = {}) {
     try {
-      await prisma.workspace_agent_invocations.delete({
+      await prisma.workspace_agent_invocations.deleteMany({
         where: clause,
       });
       return true;

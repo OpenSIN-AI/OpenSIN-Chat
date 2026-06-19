@@ -326,6 +326,7 @@ model embed_chats {
 
   @@index([embed_id])
   @@index([usersId])
+  @@index([session_id])
 }
 
 model event_logs {

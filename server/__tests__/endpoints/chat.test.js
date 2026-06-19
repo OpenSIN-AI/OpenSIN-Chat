@@ -143,6 +143,7 @@ describe("chatEndpoints", () => {
         expect.any(Object),
         THREAD_LOCALS.thread,
         [],
+        expect.any(Object),
       );
     });
 

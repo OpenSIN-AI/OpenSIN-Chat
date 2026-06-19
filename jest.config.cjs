@@ -3,6 +3,7 @@ module.exports = {
     {
       displayName: "server",
       testMatch: ["<rootDir>/server/__tests__/**/*.test.js"],
+      setupFiles: ["<rootDir>/server/jest.setup.js"],
     },
     {
       displayName: "collector",

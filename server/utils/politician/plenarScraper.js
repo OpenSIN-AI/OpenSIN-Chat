@@ -30,6 +30,9 @@ const DIP_PUBLIC_API_KEY =
   process.env.DIP_API_KEY ||
   DIP_PUBLIC_DEMO_KEY;
 
+const MAX_RETRIES = Number(process.env.POLITICIAN_API_MAX_RETRIES ?? 3);
+const RETRY_DELAY_MS = Number(process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000);
+
 /**
  * @typedef {Object} PlenarSpeech
  * @property {string} speakerName - full name of the speaker
@@ -58,7 +61,7 @@ class PlenarScraper {
   }
 
   /**
-   * Rate-limited fetch with retry.
+   * Rate-limited fetch with exponential backoff + Retry-After support.
    * @param {string} url
    * @param {Object} [opts]
    * @returns {Promise<Response>}
@@ -70,28 +73,36 @@ class PlenarScraper {
       await new Promise((r) => setTimeout(r, this.rateLimitDelayMs - elapsed));
 
     this.lastRequestTime = Date.now();
-    let lastError = null;
 
-    for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), this.fetchTimeoutMs);
       try {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), this.fetchTimeoutMs);
-        try {
-          return await fetch(url, {
-            headers: { "User-Agent": "OpenSIN-Chat/1.0" },
-            signal: controller.signal,
-            ...opts,
-          });
-        } finally {
-          clearTimeout(timer);
+        const res = await fetch(url, {
+          headers: { "User-Agent": "OpenSIN-Chat/1.0" },
+          signal: ctrl.signal,
+          ...opts,
+        });
+        clearTimeout(t);
+        if (!res.ok) {
+          if (res.status < 500 && res.status !== 429) return res;
+          if (res.status === 429) {
+            const retryAfter = res.headers.get("Retry-After");
+            const wait = retryAfter ? Number(retryAfter) * 1000 : 0;
+            if (wait) await new Promise((r) => setTimeout(r, wait));
+          }
         }
+        return res;
       } catch (err) {
-        lastError = err;
-        if (attempt < this.maxRetries)
-          await new Promise((r) => setTimeout(r, this.retryDelayMs * attempt));
+        clearTimeout(t);
+        if (err.name === "AbortError") throw err;
+        if (attempt === MAX_RETRIES) throw err;
+        const delay =
+          RETRY_DELAY_MS * Math.pow(2, attempt) + Math.random() * 1000;
+        await new Promise((r) => setTimeout(r, delay));
       }
     }
-    throw lastError;
+    throw new Error("Unreachable: retry loop exited");
   }
 
   /**

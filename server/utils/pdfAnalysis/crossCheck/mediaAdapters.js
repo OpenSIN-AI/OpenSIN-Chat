@@ -51,9 +51,10 @@ const VIDEO_FETCH_TIMEOUT_MS = Number(
 
 /** Lädt ein Video größenbegrenzt in eine Temp-Datei (nach SSRF-Check des Aufrufers). */
 async function downloadVideo(url) {
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "xcheck-video-"));
   const tmpFile = path.join(
-    os.tmpdir(),
-    `xcheck-video-${Date.now()}${path.extname(new URL(url).pathname) || ".mp4"}`,
+    tmpDir,
+    `video${path.extname(new URL(url).pathname) || ".mp4"}`,
   );
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), VIDEO_FETCH_TIMEOUT_MS);
@@ -102,7 +103,7 @@ async function downloadVideo(url) {
     reader.cancel().catch(() => {});
     if (!streamEnded) stream.destroy();
   }
-  return tmpFile;
+  return { file: tmpFile, dir: tmpDir };
 }
 
 /**
@@ -177,7 +178,7 @@ async function analyzeImageUrl(url, fetchBuffer) {
 
 /** Video-URL → zeitgestempeltes visuelles Transkript via Keyframes. */
 async function analyzeVideoUrl(url) {
-  const videoFile = await downloadVideo(url);
+  const { file: videoFile, dir: videoDir } = await downloadVideo(url);
   let outDir = null;
   try {
     const result = await extractKeyframes(videoFile);
@@ -216,7 +217,13 @@ async function analyzeVideoUrl(url) {
         /* temp dir cleanup best-effort */
       }
     }
-    fs.existsSync(videoFile) && fs.unlinkSync(videoFile);
+    if (videoDir) {
+      try {
+        fs.rmSync(videoDir, { recursive: true, force: true });
+      } catch {
+        /* temp dir cleanup best-effort */
+      }
+    }
   }
 }
 

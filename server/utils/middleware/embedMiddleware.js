@@ -122,7 +122,7 @@ async function canRespond(request, response, next) {
       const dailyChatCount = await EmbedChats.count({
         embed_id: embed.id,
         createdAt: {
-          gte: new Date(new Date() - 24 * 60 * 60 * 1000),
+          gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
         },
       });
 
@@ -149,7 +149,7 @@ async function canRespond(request, response, next) {
         embed_id: embed.id,
         session_id: sessionId,
         createdAt: {
-          gte: new Date(new Date() - 24 * 60 * 60 * 1000),
+          gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
         },
       });
 

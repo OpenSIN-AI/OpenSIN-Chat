@@ -62,6 +62,12 @@ const { securityHeaders } = require("./utils/middleware/securityHeaders");
 
 process.on("unhandledRejection", (reason, promise) => {
   console.error("Unhandled Rejection at:", promise, "reason:", reason);
+  process.exit(1);
+});
+
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+  process.exit(1);
 });
 
 const FILE_LIMIT = process.env.BODY_LIMIT || "50MB";
@@ -238,14 +244,10 @@ function buildApp() {
     });
   }
 
-  app.use(function (_, response) {
-    response.sendStatus(404);
-  });
-
   let prismaClient = null;
   try {
     prismaClient = require("./utils/prisma");
-  } catch (e) {
+  } catch {
     prismaClient = null;
   }
 
@@ -261,6 +263,10 @@ function buildApp() {
       console.error(`[readyz error] id=${id}`, e);
       res.status(503).json({ status: "not ready", id });
     }
+  });
+
+  app.use(function (_, response) {
+    response.sendStatus(404);
   });
 
   app.use(function (err, _req, response, _next) {
@@ -301,11 +307,11 @@ function createApp() {
  * Production bootstrap: start the app with full boot services (telemetry,
  * encryption, background workers, etc.). Used by server/index.js.
  */
-function bootApp(app, port = 3001) {
+function bootApp(app, port = 3001, onReady) {
   if (process.env.ENABLE_HTTPS === "true") {
-    return bootSSL(app, port);
+    return bootSSL(app, port, onReady);
   }
-  return bootHTTP(app, port);
+  return bootHTTP(app, port, onReady);
 }
 
 module.exports = { buildApp, createApp, bootApp };

@@ -1,9 +1,21 @@
 // SPDX-License-Identifier: MIT
 const { EncryptionManager } = require("../EncryptionManager");
-const { Agent } = require("undici");
+const { Agent: UndiciAgent } = require("undici");
 
 const COLLECTOR_HEALTH_TIMEOUT_MS = 5_000;
 const COLLECTOR_PROCESS_TIMEOUT_MS = 120_000;
+
+let _extensionAgent;
+function extensionRequestAgent() {
+  if (!_extensionAgent) {
+    _extensionAgent = new UndiciAgent({
+      headersTimeout: 600_000,
+      bodyTimeout: 600_000,
+      pipelining: 0,
+    });
+  }
+  return _extensionAgent;
+}
 
 /**
  * @typedef {Object} CollectorOptions
@@ -24,11 +36,6 @@ class CollectorApi {
 
   /** @type {number} - The maximum timeout for extension requests in milliseconds */
   extensionRequestTimeout = 15 * 60_000; // 15 minutes
-  /** @type {Agent} - The agent for extension requests */
-  extensionRequestAgent = new Agent({
-    headersTimeout: this.extensionRequestTimeout,
-    bodyTimeout: this.extensionRequestTimeout,
-  });
 
   /**
    * Gets the collector port from the environment variables.
@@ -130,7 +137,7 @@ class CollectorApi {
       },
       body: data,
       signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
-      dispatcher: new Agent({ headersTimeout: 600000 }),
+      dispatcher: extensionRequestAgent(),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Response could not be completed");
@@ -276,7 +283,7 @@ class CollectorApi {
       },
       // Extensions do a lot of work, and may take a while to complete so we need to increase the timeout
       // substantially so that they do not show a failure to the user early.
-      dispatcher: this.extensionRequestAgent,
+      dispatcher: extensionRequestAgent(),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Response could not be completed");

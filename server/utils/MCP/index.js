@@ -58,6 +58,16 @@ class MCPCompatibilityLayer extends MCPHypervisor {
 
     const plugins = [];
     for (const tool of tools) {
+      if (
+        !tool.inputSchema ||
+        typeof tool.inputSchema !== "object" ||
+        Object.keys(tool.inputSchema).length === 0
+      ) {
+        this.log(
+          `MCP tool ${name}:${tool.name} has empty inputSchema; rejecting registration`,
+        );
+        continue;
+      }
       plugins.push({
         name: `${name}-${tool.name}`,
         description: tool.description,

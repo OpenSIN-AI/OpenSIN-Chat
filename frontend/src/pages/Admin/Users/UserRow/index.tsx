@@ -8,6 +8,8 @@ import showToast from "@/utils/toast";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useTranslation } from "react-i18next";
+import { mutate } from "swr";
+import { USERS_KEY } from "@/hooks/useUsers";
 
 const ModMap: Record<string, string[]> = {
   admin: ["admin", "manager", "default"],
@@ -53,8 +55,8 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
     const { success, error } = await Admin.deleteUser(user.id);
     if (!success) showToast(error, "error", { clear: true });
     if (success) {
-      rowRef?.current?.remove();
       showToast(t("userRow.deleteSuccess"), "success", { clear: true });
+      mutate(USERS_KEY);
     }
   };
 

@@ -12,17 +12,22 @@ const prismaClientConfig = {
   log: logLevels,
 };
 
+function buildPostgresUrl(base) {
+  if (!base) return null;
+  const connLimit = Number(process.env.PRISMA_CONNECTION_LIMIT ?? 10);
+  const poolTimeout = Number(process.env.PRISMA_POOL_TIMEOUT ?? 10);
+  const stmtTimeout = process.env.PRISMA_STATEMENT_TIMEOUT ?? "15000";
+  const sep = base.includes("?") ? "&" : "?";
+  return `${base}${sep}connection_limit=${connLimit}&pool_timeout=${poolTimeout}&statement_timeout=${stmtTimeout}`;
+}
+
 if (process.env.DATABASE_URL?.startsWith("postgresql://")) {
   prismaClientConfig.datasources = {
-    db: {
-      url:
-        process.env.DATABASE_URL +
-        (process.env.DATABASE_URL.includes("?") ? "&" : "?") +
-        "connection_limit=10&pool_timeout=10",
-    },
+    db: { url: buildPostgresUrl(process.env.DATABASE_URL) },
   };
 }
 
 const prisma = new PrismaClient(prismaClientConfig);
 
 module.exports = prisma;
+module.exports.buildPostgresUrl = buildPostgresUrl;

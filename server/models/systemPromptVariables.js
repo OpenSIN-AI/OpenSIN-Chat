@@ -120,10 +120,16 @@ const SystemPromptVariables = {
    */
   get: async function (key = null) {
     if (!key) return null;
-    const variable = await prisma.system_prompt_variables.findUnique({
-      where: { key: String(key) },
-    });
-    return variable;
+    try {
+      const variable = await prisma.system_prompt_variables.findUnique({
+        where: { key: String(key) },
+      });
+      return variable;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Error getting system prompt variable:", error.message);
+      return null;
+    }
   },
 
   /**
@@ -169,16 +175,22 @@ const SystemPromptVariables = {
     type = "static",
     userId = null,
   }) {
-    await this._checkVariableKey(key, true);
-    return await prisma.system_prompt_variables.create({
-      data: {
-        key: String(key),
-        value: String(value),
-        description: description ? String(description) : null,
-        type: type ? String(type) : "static",
-        userId: userId ? Number(userId) : null,
-      },
-    });
+    try {
+      await this._checkVariableKey(key, true);
+      return await prisma.system_prompt_variables.create({
+        data: {
+          key: String(key),
+          value: String(value),
+          description: description ? String(description) : null,
+          type: type ? String(type) : "static",
+          userId: userId ? Number(userId) : null,
+        },
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Error creating system prompt variable:", error.message);
+      throw error;
+    }
   },
 
   /**
@@ -189,20 +201,26 @@ const SystemPromptVariables = {
    */
   update: async function (id, { key, value, description = null }) {
     if (!id || !key || !value) return null;
-    const existingRecord = await prisma.system_prompt_variables.findFirst({
-      where: { id: Number(id) },
-    });
-    if (!existingRecord) throw new Error("System prompt variable not found");
-    await this._checkVariableKey(key, false);
+    try {
+      const existingRecord = await prisma.system_prompt_variables.findFirst({
+        where: { id: Number(id) },
+      });
+      if (!existingRecord) throw new Error("System prompt variable not found");
+      await this._checkVariableKey(key, false);
 
-    return await prisma.system_prompt_variables.update({
-      where: { id: existingRecord.id },
-      data: {
-        key: String(key),
-        value: String(value),
-        description: description ? String(description) : null,
-      },
-    });
+      return await prisma.system_prompt_variables.update({
+        where: { id: existingRecord.id },
+        data: {
+          key: String(key),
+          value: String(value),
+          description: description ? String(description) : null,
+        },
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Error updating system prompt variable:", error.message);
+      throw error;
+    }
   },
 
   /**

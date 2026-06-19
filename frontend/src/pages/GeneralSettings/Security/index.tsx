@@ -176,7 +176,7 @@ function MultiUserMode() {
                       </label>
                       <input
                         name="password"
-                        type="text"
+                        type="password"
                         className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 placeholder:text-theme-settings-input-placeholder focus:ring-blue-500"
                         placeholder={t("security.placeholder.adminPassword")}
                         minLength={8}
@@ -317,7 +317,7 @@ function PasswordProtection() {
                       </label>
                       <input
                         name="password"
-                        type="text"
+                        type="password"
                         className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5 placeholder:text-theme-settings-input-placeholder"
                         placeholder={t("security.placeholder.instancePassword")}
                         minLength={8}

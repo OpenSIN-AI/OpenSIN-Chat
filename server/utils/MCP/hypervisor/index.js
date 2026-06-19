@@ -24,6 +24,45 @@ const ALLOWED_MCP_LAUNCHERS = [
   "python3",
 ];
 
+const DENIED_MCP_LAUNCHER_ARGS =
+  /(^|\s)(--privileged|--cap-add=|--cap-drop=|--net=host|--pid=host|--ipc=host|-v\s+[/\\]\w:|--security-opt|--userns=host)(?=\s|$)/;
+
+const SAFE_INHERITED_ENV_KEYS = new Set([
+  "PATH",
+  "LANG",
+  "LC_ALL",
+  "LC_CTYPE",
+  "TZ",
+  "NODE_PATH",
+  "HOME",
+  "TMPDIR",
+]);
+
+const RESERVED_ENV_OVERRIDE =
+  /^(JWT_|AUTH_TOKEN|DATABASE_URL|DB_|ANYTHINGLLM_AUTH_TOKEN|.*_KEY$|.*_SECRET$|.*_TOKEN$)/i;
+
+function buildSafeBaseEnv(processEnv = process.env) {
+  const out = {};
+  for (const [k, v] of Object.entries(processEnv)) {
+    if (SAFE_INHERITED_ENV_KEYS.has(k)) out[k] = v;
+  }
+  return out;
+}
+
+function isAllowedLauncher(command) {
+  if (!command || typeof command !== "string") return false;
+  const normalized = command.replace(/\\/g, "/");
+  if (!path.isAbsolute(normalized)) return false;
+  let real = normalized;
+  try {
+    real = fs.realpathSync(normalized);
+  } catch {
+    real = normalized;
+  }
+  const base = path.basename(real);
+  return ALLOWED_MCP_LAUNCHERS.includes(base);
+}
+
 /**
  * @typedef {'stdio' | 'http' | 'sse'} MCPServerTypes
  */
@@ -88,6 +127,24 @@ class MCPHypervisor {
         JSON.stringify({ mcpServers: {} }, null, 2),
         { encoding: "utf8" },
       );
+      try {
+        fs.chmodSync(this.mcpServerJSONPath, 0o600);
+      } catch (e) {
+        this.log(
+          `Failed to chmod ${this.mcpServerJSONPath} to 0o600: ${e.message}`,
+        );
+      }
+    } else {
+      try {
+        const stat = fs.statSync(this.mcpServerJSONPath);
+        if (stat.mode & 0o077) {
+          throw new Error(
+            `Refusing to read ${this.mcpServerJSONPath} with permissive mode ${(stat.mode & 0o777).toString(8)}`,
+          );
+        }
+      } catch (e) {
+        if (e.code !== "ENOENT") throw e;
+      }
     }
 
     this.log(`MCP Config File: ${this.mcpServerJSONPath}`);
@@ -131,6 +188,13 @@ class MCPHypervisor {
       JSON.stringify(servers, null, 2),
       "utf8",
     );
+    try {
+      fs.chmodSync(this.mcpServerJSONPath, 0o600);
+    } catch (e) {
+      this.log(
+        `Failed to chmod ${this.mcpServerJSONPath} to 0o600: ${e.message}`,
+      );
+    }
     this.log(`MCP server ${name} removed from config file`);
     return true;
   }
@@ -178,6 +242,13 @@ class MCPHypervisor {
       JSON.stringify(servers, null, 2),
       "utf8",
     );
+    try {
+      fs.chmodSync(this.mcpServerJSONPath, 0o600);
+    } catch (e) {
+      this.log(
+        `Failed to chmod ${this.mcpServerJSONPath} to 0o600: ${e.message}`,
+      );
+    }
 
     this.log(
       `MCP server ${serverName} tool ${toolName} ${enabled ? "enabled" : "suppressed"}`,
@@ -305,18 +376,19 @@ class MCPHypervisor {
    * @returns {Promise<{env: { [key: string]: string } | {}}}> - The environment variables
    */
   async #buildMCPServerENV(server) {
+    const safeBase = buildSafeBaseEnv();
     const shellEnv = await patchShellEnvironmentPath();
-    let baseEnv = {
-      PATH:
-        shellEnv.PATH ||
-        process.env.PATH ||
-        "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
-      NODE_PATH:
-        shellEnv.NODE_PATH ||
-        process.env.NODE_PATH ||
-        "/usr/local/lib/node_modules",
-      ...shellEnv, // Include all shell environment variables
-    };
+    const PATH =
+      safeBase.PATH ||
+      shellEnv.PATH ||
+      process.env.PATH ||
+      "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+    const NODE_PATH =
+      safeBase.NODE_PATH ||
+      shellEnv.NODE_PATH ||
+      process.env.NODE_PATH ||
+      "/usr/local/lib/node_modules";
+    let baseEnv = { PATH, NODE_PATH };
 
     // Docker-specific environment setup
     if (
@@ -327,8 +399,10 @@ class MCPHypervisor {
         // Fixed: NODE_PATH should point to modules directory, not node binary
         NODE_PATH: "/usr/local/lib/node_modules",
         PATH: "/usr/local/bin:/usr/bin:/bin",
-        ...baseEnv, // Allow inheritance to override docker defaults if needed
+        ...safeBase,
       };
+    } else {
+      baseEnv = { ...safeBase, ...baseEnv };
     }
 
     // No custom environment specified - return base environment
@@ -336,14 +410,14 @@ class MCPHypervisor {
       return { env: baseEnv };
     }
 
-    // Merge user-specified environment with base environment
-    // User environment takes precedence over defaults
-    return {
-      env: {
-        ...baseEnv,
-        ...server.env,
-      },
-    };
+    const env = { ...baseEnv };
+    for (const [k, v] of Object.entries(server.env)) {
+      if (RESERVED_ENV_OVERRIDE.test(k))
+        throw new Error(`Refusing to set reserved env key: ${k}`);
+      if (typeof v !== "string") continue;
+      env[k] = v;
+    }
+    return { env };
   }
 
   /**
@@ -417,19 +491,25 @@ class MCPHypervisor {
     // if not stdio then it is http or sse
     if (type !== "stdio") return this.createHttpTransport(server);
 
-    const launcher = String(server.command || "")
-      .replace(/\\/g, "/")
-      .split("/")
-      .pop();
-    if (!ALLOWED_MCP_LAUNCHERS.includes(launcher)) {
+    if (!isAllowedLauncher(server.command)) {
       throw new Error(
-        `MCP launcher "${launcher}" is not in the allowlist (${ALLOWED_MCP_LAUNCHERS.join(", ")})`,
+        `MCP launcher "${server.command}" is not in the allowlist (${ALLOWED_MCP_LAUNCHERS.join(", ")})`,
+      );
+    }
+
+    const argList = Array.isArray(server?.args) ? server.args : [];
+    const argBlob = argList
+      .map((a) => String(a ?? ""))
+      .join(" ");
+    if (DENIED_MCP_LAUNCHER_ARGS.test(argBlob)) {
+      throw new Error(
+        `MCP launcher "${server.command}" contains disallowed args`,
       );
     }
 
     return new StdioClientTransport({
       command: server.command,
-      args: server?.args ?? [],
+      args: argList,
       ...(await this.#buildMCPServerENV(server)),
     });
   }

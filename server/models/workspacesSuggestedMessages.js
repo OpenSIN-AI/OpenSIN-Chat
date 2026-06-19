@@ -37,26 +37,26 @@ const WorkspaceSuggestedMessages = {
 
       if (!workspace) throw new Error("Workspace not found");
 
-      // Delete all existing messages for the workspace
-      await prisma.workspace_suggested_messages.deleteMany({
-        where: { workspaceId: workspace.id },
-      });
+      const safeMessages = Array.isArray(messages) ? messages : [];
 
-      // Create new messages
-      // We create each message individually because prisma
-      // with sqlite does not support createMany()
-      for (const message of messages) {
-        await prisma.workspace_suggested_messages.create({
-          data: {
-            workspaceId: workspace.id,
-            heading: message.heading,
-            message: message.message,
-          },
-        });
-      }
+      return await prisma.$transaction([
+        prisma.workspace_suggested_messages.deleteMany({
+          where: { workspaceId: workspace.id },
+        }),
+        ...safeMessages.map((message) =>
+          prisma.workspace_suggested_messages.create({
+            data: {
+              workspaceId: workspace.id,
+              heading: message.heading,
+              message: message.message,
+            },
+          }),
+        ),
+      ]);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Failed to save all messages", error.message);
+      return [];
     }
   },
 

@@ -3780,6 +3780,7 @@ const TRANSLATIONS = {
       link: "Link",
       users: "Benutzer",
       createdOn: "Erstellt am",
+      deleteSuccess: "Workspace erfolgreich gelöscht.",
     },
     newWorkspaceModal: {
       title: "Neuen Workspace erstellen",

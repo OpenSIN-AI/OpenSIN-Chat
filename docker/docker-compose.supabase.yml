@@ -60,6 +60,16 @@ services:
       - "${POSTGRES_PORT:-5432}:5432"
     networks:
       - supabase-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1'
 
   # ─── Supabase Storage ───────────────────────────────────────────────────────
   storage:
@@ -88,6 +98,16 @@ services:
     ports: []
     networks:
       - supabase-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
 
   # ─── PostgREST (required by Storage API for RLS checks) ─────────────────────
   rest:
@@ -107,6 +127,16 @@ services:
       PGRST_APP_SETTINGS_JWT_EXP: ${JWT_EXPIRY:-3600}
     networks:
       - supabase-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'
 
   # ─── Image transformation (optional, used by Storage API) ───────────────────
   imgproxy:
@@ -122,6 +152,16 @@ services:
       - storage-data:/var/lib/storage
     networks:
       - supabase-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
 
   # ─── Kong API Gateway ────────────────────────────────────────────────────────
   # Exposes Storage API at http://localhost:8000/storage/v1
@@ -147,6 +187,16 @@ services:
       - ./supabase-kong.yml:/var/lib/kong/kong.yml:ro
     networks:
       - supabase-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
 
   # ─── pg-meta (Postgres metadata API / DB admin) ──────────────────────────────
   meta:
@@ -167,3 +217,13 @@ services:
       - "${META_PORT:-5433}:8080"
     networks:
       - supabase-net
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.25'

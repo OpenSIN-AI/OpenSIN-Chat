@@ -4,6 +4,30 @@
 const prisma = require("../../utils/prisma");
 const logger = require("../../utils/logger")();
 
+async function fetchWithRetry(url, opts, maxRetries = 3) {
+  for (let i = 0; i <= maxRetries; i++) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 8000);
+    try {
+      const res = await fetch(url, { ...opts, signal: ctrl.signal });
+      clearTimeout(t);
+      if (res.ok) return res;
+      if (res.status < 500) return res;
+    } catch (e) {
+      clearTimeout(t);
+      if (i === maxRetries) {
+        console.error(
+          `[syncHealthCheck] Webhook ${url} failed after ${maxRetries} retries: ${e.message}`,
+        );
+        return null;
+      }
+    }
+    const delay = 1000 * Math.pow(2, i) + Math.random() * 500;
+    await new Promise((r) => setTimeout(r, delay));
+  }
+  return null;
+}
+
 /**
  * Check if any politician sync source is stale (>24h since last success).
  * Logs warnings and optionally sends alerts via webhook.
@@ -67,21 +91,15 @@ async function checkSyncHealth(client = prisma) {
 
       // Optional webhook alert
       if (process.env.SYNC_ALERT_WEBHOOK) {
-        try {
-          await fetch(process.env.SYNC_ALERT_WEBHOOK, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              event: "politician_sync_stale",
-              sources: staleSources,
-              timestamp: new Date().toISOString(),
-            }),
-          });
-        } catch (webhookErr) {
-          logger.error(
-            `[SyncHealth] Webhook alert failed: ${webhookErr.message}`,
-          );
-        }
+        await fetchWithRetry(process.env.SYNC_ALERT_WEBHOOK, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            event: "politician_sync_stale",
+            sources: staleSources,
+            timestamp: new Date().toISOString(),
+          }),
+        });
       }
     }
 

@@ -4,6 +4,10 @@ import Admin from "@/models/admin";
 import paths from "@/utils/paths";
 import { LinkSimple } from "@phosphor-icons/react/dist/csr/LinkSimple";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
+import { mutate } from "swr";
+import { ADMIN_WORKSPACES_KEY } from "@/hooks/useAdminWorkspaces";
+import showToast from "@/utils/toast";
+import { useTranslation } from "react-i18next";
 
 export default function WorkspaceRow({
   workspace,
@@ -21,6 +25,7 @@ export default function WorkspaceRow({
   deletionProtected?: boolean;
 }) {
   const rowRef = useRef<HTMLTableRowElement>(null);
+  const { t } = useTranslation();
   const handleDelete = async () => {
     if (
       !window.confirm(
@@ -28,8 +33,15 @@ export default function WorkspaceRow({
       )
     )
       return false;
-    rowRef?.current?.remove();
-    await Admin.deleteWorkspace(workspace.id);
+    const { success, error } = await Admin.deleteWorkspace(workspace.id);
+    if (!success) {
+      showToast(error, "error", { clear: true });
+      return;
+    }
+    showToast(t("admin.workspacesPage.deleteSuccess"), "success", {
+      clear: true,
+    });
+    mutate(ADMIN_WORKSPACES_KEY);
   };
 
   return (

@@ -11,6 +11,8 @@ import {
   USERNAME_MAX_LENGTH,
   USERNAME_PATTERN,
 } from "@/utils/username";
+import { mutate } from "swr";
+import { USERS_KEY } from "@/hooks/useUsers";
 
 export default function NewUserModal({
   closeModal,
@@ -35,7 +37,10 @@ export default function NewUserModal({
 
     try {
       const { user, error } = await Admin.newUser(data);
-      if (!!user) window.location.reload();
+      if (!!user) {
+        mutate(USERS_KEY);
+        closeModal();
+      }
       setError(error);
     } catch (err: any) {
       setError(err?.message ?? "Failed to create user");
@@ -95,7 +100,7 @@ export default function NewUserModal({
                 </label>
                 <input
                   name="password"
-                  type="text"
+                  type="password"
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("newUserModal.password.placeholder")}
                   required={true}

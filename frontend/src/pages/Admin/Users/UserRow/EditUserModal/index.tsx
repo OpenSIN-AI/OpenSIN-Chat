@@ -11,6 +11,8 @@ import {
   USERNAME_MAX_LENGTH,
   USERNAME_PATTERN,
 } from "@/utils/username";
+import { mutate } from "swr";
+import { USERS_KEY } from "@/hooks/useUsers";
 
 interface EditUserModalProps {
   currentUser: any;
@@ -64,7 +66,8 @@ export default function EditUserModal({
         safeSetItem(AUTH_USER, JSON.stringify(currentUser));
       }
 
-      window.location.reload();
+      mutate(USERS_KEY);
+      closeModal();
     }
     setError(error);
   };
@@ -121,7 +124,7 @@ export default function EditUserModal({
                 </label>
                 <input
                   name="password"
-                  type="text"
+                  type="password"
                   className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("admin.editUser.passwordPlaceholder", {
                     username: user.username,

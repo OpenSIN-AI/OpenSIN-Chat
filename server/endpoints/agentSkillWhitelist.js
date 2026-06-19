@@ -51,7 +51,7 @@ function agentSkillWhitelistEndpoints(app) {
 
   app.post(
     "/agent-skills/whitelist/add",
-    [validatedRequest, flexUserRoleValid(ROLES.all)],
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
     async (request, response) => {
       try {
         const { skillName } = reqBody(request);

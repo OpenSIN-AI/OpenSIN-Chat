@@ -16,7 +16,7 @@ const markOnboarded = require("./markOnboarded");
 // Update .env keys with the correct values and boot. These are temporary and not real SSL certs - only use for local.
 // Test with https://localhost:3001/api/ping
 // build and copy frontend to server/public with correct API_BASE and start server in prod model and all should be ok
-function bootSSL(app, port = 3001) {
+function bootSSL(app, port = 3001, onReady) {
   try {
     // eslint-disable-next-line no-console
     console.log(
@@ -37,13 +37,14 @@ function bootSSL(app, port = 3001) {
         new EncryptionManager();
         new BackgroundService().boot();
         await eagerLoadContextWindows();
-        registerSignalHandlers(server);
+        if (onReady) await onReady();
         // eslint-disable-next-line no-console
         console.log(`Primary server in HTTPS mode listening on port ${port}`);
       })
       .on("error", handleServerError);
 
     require("@mintplex-labs/express-ws").default(app, server);
+    registerSignalHandlers();
     return { app, server };
   } catch (e) {
     // eslint-disable-next-line no-console
@@ -56,11 +57,11 @@ function bootSSL(app, port = 3001) {
         stacktrace: e.stack,
       },
     );
-    return bootHTTP(app, port);
+    return bootHTTP(app, port, onReady);
   }
 }
 
-function bootHTTP(app, port = 3001) {
+function bootHTTP(app, port = 3001, onReady) {
   if (!app) throw new Error('No "app" defined - crashing!');
 
   const server = app
@@ -71,43 +72,20 @@ function bootHTTP(app, port = 3001) {
       new EncryptionManager();
       new BackgroundService().boot();
       await eagerLoadContextWindows();
-      registerSignalHandlers(server);
+      if (onReady) await onReady();
       // eslint-disable-next-line no-console
       console.log(`Primary server in HTTP mode listening on port ${port}`);
     })
     .on("error", handleServerError);
 
+  registerSignalHandlers();
   return { app, server };
 }
 
-function registerSignalHandlers(server) {
-  function gracefulShutdown(signal) {
-    console.log(`[boot] ${signal} received, closing HTTP server...`);
-    if (server && typeof server.close === "function") {
-      server.close(() => {
-        Telemetry.flush();
-        process.exit(0);
-      });
-      // Force-exit after 10s if connections hang
-      setTimeout(() => {
-        console.warn("[boot] Graceful shutdown timeout, forcing exit.");
-        process.exit(1);
-      }, 10000).unref();
-    } else {
-      Telemetry.flush();
-      process.exit(0);
-    }
-  }
-
-  process.once("SIGUSR2", function () {
-    Telemetry.flush();
+function registerSignalHandlers() {
+  process.once("SIGUSR2", async function () {
+    await Telemetry.flush();
     process.kill(process.pid, "SIGUSR2");
-  });
-  process.on("SIGINT", function () {
-    gracefulShutdown("SIGINT");
-  });
-  process.on("SIGTERM", function () {
-    gracefulShutdown("SIGTERM");
   });
 }
 

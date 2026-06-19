@@ -59,7 +59,7 @@ const DocumentSyncQueue = {
    * @param {import("@prisma/client").document_sync_queues} queueRecord - queue record to calculate for
    */
   calcNextSync: function (queueRecord) {
-    return new Date(Number(new Date()) + queueRecord.staleAfterMs);
+    return new Date(Date.now() + queueRecord.staleAfterMs);
   },
 
   /**
@@ -108,7 +108,7 @@ const DocumentSyncQueue = {
         data: {
           workspaceDocId: document.id,
           staleAfterMs: this.defaultStaleAfter,
-          nextSyncAt: new Date(Number(new Date()) + this.defaultStaleAfter),
+          nextSyncAt: new Date(Date.now() + this.defaultStaleAfter),
         },
       });
       await Document._updateAll(

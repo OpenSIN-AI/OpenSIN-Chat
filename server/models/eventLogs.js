@@ -53,7 +53,7 @@ const EventLogs = {
   getByUserId: async function (userId, limit = null, orderBy = null) {
     try {
       const logs = await prisma.event_logs.findMany({
-        where: { userId },
+        where: { userId: userId != null ? Number(userId) : null },
         take: limit ?? 1000,
         select: {
           id: true,

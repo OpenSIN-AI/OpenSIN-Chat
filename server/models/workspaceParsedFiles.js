@@ -20,7 +20,7 @@ const WorkspaceParsedFiles = {
       const file = await prisma.workspace_parsed_files.create({
         data: {
           filename,
-          workspaceId: parseInt(workspaceId),
+          workspaceId: parseInt(workspaceId) || null,
           userId: userId ? parseInt(userId) : null,
           threadId: threadId ? parseInt(threadId) : null,
           metadata,

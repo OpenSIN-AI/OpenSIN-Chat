@@ -29,10 +29,23 @@ async function _launchBrowser() {
   if (isDarwinDev) {
     log("Darwin dev mode: launching non-headless browser");
   }
+  const args = [
+    "--no-sandbox",
+    "--disable-setuid-sandbox",
+    "--disable-dev-shm-usage",
+    "--no-zygote",
+    "--single-process",
+  ];
+  if (process.env.NODE_ENV === "production") {
+    args.push(
+      "--enable-features=UseOzonePlatform",
+      "--ozone-platform=headless",
+    );
+  }
   const browser = await puppeteer.launch({
     headless: isDarwinDev ? "false" : "new",
     ignoreHTTPSErrors: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args,
   });
   return browser;
 }

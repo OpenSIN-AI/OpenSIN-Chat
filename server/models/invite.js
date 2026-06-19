@@ -5,7 +5,10 @@ const prisma = require("../utils/prisma");
 const Invite = {
   // Invites expire after this many ms. Configurable via INVITE_EXPIRY_HOURS env var.
   // Default: 7 days (168 hours). 0 disables expiry (backwards-compatible).
-  expiryMs: Number(process.env.INVITE_EXPIRY_HOURS || 168) * 60 * 60 * 1000,
+  expiryMs: (() => {
+    const hours = Number(process.env.INVITE_EXPIRY_HOURS || 168);
+    return Number.isNaN(hours) ? 168 * 60 * 60 * 1000 : hours * 60 * 60 * 1000;
+  })(),
 
   makeCode: () => {
     const uuidAPIKey = require("uuid-apikey");

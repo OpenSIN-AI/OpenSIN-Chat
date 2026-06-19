@@ -73,6 +73,7 @@ const Memory = {
           scope: "workspace",
         },
         orderBy: { createdAt: "desc" },
+        take: this.WORKSPACE_LIMIT,
         ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
       });
       return memories;
@@ -96,6 +97,7 @@ const Memory = {
           scope: "global",
         },
         orderBy: { createdAt: "desc" },
+        take: this.GLOBAL_LIMIT,
         ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
       });
       return memories;
@@ -255,41 +257,50 @@ const Memory = {
    */
   demoteToWorkspace: async function (id, workspaceId) {
     try {
-      const existing = await prisma.memories.findUnique({
-        where: { id: this.validations.id(id) },
-        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
-      });
-      if (!existing) return { memory: null, message: "Memory not found." };
-      if (existing.scope === "workspace")
-        return {
-          memory: existing,
-          message: "Memory is already workspace-scoped.",
-        };
+      return await prisma.$transaction(async (tx) => {
+        const existing = await tx.memories.findUnique({
+          where: { id: this.validations.id(id) },
+          ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
+        });
+        if (!existing) return { memory: null, message: "Memory not found." };
+        if (existing.scope === "workspace")
+          return {
+            memory: existing,
+            message: "Memory is already workspace-scoped.",
+          };
 
-      const wsCount = await this.countForScope(
-        existing.userId,
-        workspaceId,
-        "workspace",
-      );
-      if (wsCount >= this.WORKSPACE_LIMIT)
+        const wsCount = await this.countForScope(
+          existing.userId,
+          workspaceId,
+          "workspace",
+          tx,
+        );
+        if (wsCount >= this.WORKSPACE_LIMIT) {
+          throw new Error(
+            `WORKSPACE_LIMIT reached: ${this.WORKSPACE_LIMIT}`,
+          );
+        }
+
+        const memory = await tx.memories.update({
+          where: { id: this.validations.id(id) },
+          data: {
+            scope: "workspace",
+            workspaceId: this.validations.id(workspaceId),
+            updatedAt: new Date(),
+          },
+          ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
+        });
+        return { memory, message: null };
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error.message);
+      if (String(error.message).startsWith("WORKSPACE_LIMIT reached")) {
         return {
           memory: null,
           message: `Maximum workspace memory limit (${this.WORKSPACE_LIMIT}) reached.`,
         };
-
-      const memory = await prisma.memories.update({
-        where: { id: this.validations.id(id) },
-        data: {
-          scope: "workspace",
-          workspaceId: this.validations.id(workspaceId),
-          updatedAt: new Date(),
-        },
-        ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
-      });
-      return { memory, message: null };
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
+      }
       return { memory: null, message: error.message };
     }
   },
@@ -319,7 +330,7 @@ const Memory = {
    * @param {"workspace"|"global"} scope
    * @returns {Promise<number>}
    */
-  countForScope: async function (userId, workspaceId, scope) {
+  countForScope: async function (userId, workspaceId, scope, client = prisma) {
     try {
       const where = {
         userId: this.validations.userId(userId),
@@ -327,7 +338,7 @@ const Memory = {
       };
       if (scope === "workspace")
         where.workspaceId = this.validations.workspaceId(workspaceId);
-      return await prisma.memories.count({ where });
+      return await client.memories.count({ where });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error.message);

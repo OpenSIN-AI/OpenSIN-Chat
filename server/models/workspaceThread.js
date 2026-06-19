@@ -112,25 +112,29 @@ const WorkspaceThread = {
       // with NO foreign-key relation to workspace_threads (by design — see
       // schema comment). Prisma cascade-delete therefore cannot reach them,
       // so we must clean them up manually to prevent orphaned rows with
-      // dangling thread_id references.
+      // dangling thread_id references. Wrap in a transaction so a failure
+      // mid-cleanup does not leave partial state.
       const threads = await prisma.workspace_threads.findMany({
         where: clause,
         select: { id: true },
       });
       const threadIds = threads.map((t) => t.id);
 
-      if (threadIds.length > 0) {
-        await prisma.workspace_chats.deleteMany({
-          where: { thread_id: { in: threadIds } },
-        });
-        await prisma.workspace_agent_invocations.deleteMany({
-          where: { thread_id: { in: threadIds } },
-        });
-      }
-
-      await prisma.workspace_threads.deleteMany({
-        where: clause,
-      });
+      await prisma.$transaction([
+        ...(threadIds.length > 0
+          ? [
+              prisma.workspace_chats.deleteMany({
+                where: { thread_id: { in: threadIds } },
+              }),
+              prisma.workspace_agent_invocations.deleteMany({
+                where: { thread_id: { in: threadIds } },
+              }),
+            ]
+          : []),
+        prisma.workspace_threads.deleteMany({
+          where: clause,
+        }),
+      ]);
       return true;
     } catch (error) {
       // eslint-disable-next-line no-console

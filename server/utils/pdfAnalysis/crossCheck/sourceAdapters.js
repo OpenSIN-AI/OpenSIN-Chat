@@ -13,6 +13,7 @@
  */
 const dns = require("dns").promises;
 const net = require("net");
+const { Agent: UndiciAgent, fetch: undiciFetch } = require("undici");
 const { PdfReader } = require("../pdfReader");
 const { validatePdfPath } = require("../security");
 const { analyzeImageUrl, analyzeVideoUrl } = require("./mediaAdapters");
@@ -26,6 +27,8 @@ const FETCH_TIMEOUT_MS = Number(
 const MAX_SOURCE_CHARS = Number(
   process.env.PDF_ANALYSIS_XCHECK_MAX_SOURCE_CHARS || 60000,
 );
+
+const RESOLVED_LOOKUPS = new Map();
 
 function isPrivateIp(ip) {
   if (net.isIPv6(ip)) return /^(::1|fc|fd|fe80)/i.test(ip) || ip === "::";
@@ -55,17 +58,36 @@ async function assertSafeUrl(rawUrl) {
   return parsed;
 }
 
+async function buildSafeDispatcher(parsedUrl) {
+  let ip = RESOLVED_LOOKUPS.get(parsedUrl.hostname);
+  if (!ip) {
+    const { address } = await dns.lookup(parsedUrl.hostname);
+    if (isPrivateIp(address))
+      throw new Error("Zugriff auf private/lokale Adressen ist nicht erlaubt.");
+    ip = address;
+    RESOLVED_LOOKUPS.set(parsedUrl.hostname, ip);
+  }
+  return new UndiciAgent({
+    connect: { hostname: ip, servername: parsedUrl.hostname },
+    headersTimeout: FETCH_TIMEOUT_MS,
+    bodyTimeout: FETCH_TIMEOUT_MS,
+  });
+}
+
 async function fetchWithLimits(url) {
   await assertSafeUrl(url);
+  const parsed = new URL(url);
+  const dispatcher = await buildSafeDispatcher(parsed);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const res = await fetch(url, {
+    const res = await undiciFetch(url, {
       signal: controller.signal,
       redirect: "manual",
       headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
+      dispatcher,
     });
-    // Redirects manuell folgen, Ziel erneut SSRF-prüfen
+    // Redirects manuell folgen, Ziel erneut SSRF-prüfen + neu pinnen
     if ([301, 302, 307, 308].includes(res.status)) {
       const loc = res.headers.get("location");
       if (!loc) throw new Error("Redirect ohne Ziel.");
@@ -199,13 +221,16 @@ async function loadSource(source) {
 
 async function fetchBuffer(url) {
   await assertSafeUrl(url);
+  const parsed = new URL(url);
+  const dispatcher = await buildSafeDispatcher(parsed);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const res = await fetch(url, {
+    const res = await undiciFetch(url, {
       signal: controller.signal,
       redirect: "manual",
       headers: { "User-Agent": "OpenSIN-CrossCheck/1.0" },
+      dispatcher,
     });
     if ([301, 302, 307, 308].includes(res.status)) {
       const loc = res.headers.get("location");

@@ -93,6 +93,9 @@ function chatEndpoints(app) {
           return;
         }
 
+        const abortController = new AbortController();
+        request.on("close", () => abortController.abort("client-disconnect"));
+
         await streamChatWithWorkspace(
           response,
           workspace,
@@ -101,6 +104,7 @@ function chatEndpoints(app) {
           user,
           null,
           attachments,
+          abortController,
         );
         stopHeartbeat();
         await Telemetry.sendTelemetry("sent_chat", {
@@ -190,6 +194,9 @@ function chatEndpoints(app) {
           return;
         }
 
+        const abortController = new AbortController();
+        request.on("close", () => abortController.abort("client-disconnect"));
+
         await streamChatWithWorkspace(
           response,
           workspace,
@@ -198,6 +205,7 @@ function chatEndpoints(app) {
           user,
           thread,
           attachments,
+          abortController,
         );
         stopHeartbeat();
 

@@ -17,10 +17,8 @@ services:
       args:
         ARG_UID: ${UID:-1000}
         ARG_GID: ${GID:-1000}
-    cap_add:
-      - SYS_ADMIN
     volumes:
-      - "./.env:/app/server/.env"
+      - "./.env:/app/server/.env:ro"
       - "../server/storage:/app/server/storage"
       - "../collector/hotdir/:/app/collector/hotdir"
       - "../collector/outputs/:/app/collector/outputs"
@@ -60,7 +58,7 @@ services:
           cpus: '2'
 
   vane:
-    image: itzcrazykns1337/vane:latest
+    image: itzcrazykns1337/vane:v1.0.0
     container_name: opensin-vane
     ports:
       # Host 8310 → container 8300. Internal 8300 avoids clashing with

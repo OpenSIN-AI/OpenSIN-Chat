@@ -132,7 +132,7 @@ const EmbedConfig = {
 
   delete: async function (clause = {}) {
     try {
-      await prisma.embed_configs.delete({
+      await prisma.embed_configs.deleteMany({
         where: clause,
       });
       return true;

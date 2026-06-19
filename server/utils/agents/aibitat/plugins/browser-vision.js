@@ -188,7 +188,20 @@ async function fetchHtml(url) {
     let browser;
     try {
       const { chromium } = require("playwright");
-      browser = await chromium.launch({ headless: true });
+      const launchArgs = [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--no-zygote",
+        "--single-process",
+      ];
+      if (process.env.NODE_ENV === "production") {
+        launchArgs.push(
+          "--enable-features=UseOzonePlatform",
+          "--ozone-platform=headless",
+        );
+      }
+      browser = await chromium.launch({ headless: true, args: launchArgs });
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: "domcontentloaded", timeout: 20_000 });
       const html = await page.content();

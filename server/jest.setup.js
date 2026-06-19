@@ -16,3 +16,8 @@ jest.mock("buffer-equal-constant-time", () => {
 // Disable rate limiting in test runs — the fixed-window limiter
 // would throttle sequential test calls to the same endpoint bucket.
 process.env.DISABLE_RATE_LIMITS = "true";
+
+// Shrink HTTP retry backoff in test runs so mocked-rejection assertions
+// finish well within Jest's 5s default per-test budget. Production defaults
+// (3 retries, 1s × 2^attempt + ≤1s jitter) remain unchanged for real deployments.
+process.env.POLITICIAN_API_MAX_RETRIES = "0";

@@ -35,6 +35,21 @@ const SHELL_META_RE = /[;&|`$<>(){}[\]\\*?!#~^]/;
 const EXEC_TIMEOUT_MS = 5000;
 const MAX_OUTPUT_BYTES = 8192;
 
+const REDACTED_HOST_PATHS = [
+  [/\/var\/lib\/anythingllm/gi, "<storage>"],
+  [/\/app\/server/gi, "<app>"],
+  [/\/home\/node\/app/gi, "<app>"],
+];
+
+function redactStorage(value) {
+  if (value == null) return value;
+  let out = String(value);
+  for (const [pattern, replacement] of REDACTED_HOST_PATHS) {
+    out = out.replace(pattern, replacement);
+  }
+  return out;
+}
+
 /**
  * Validates a parsed command + args against the whitelist.
  * Returns { ok: true } or { ok: false, reason: string }
@@ -118,11 +133,11 @@ function terminalExecEndpoint(app) {
             shell: false, // critical — no shell, prevents injection
           });
 
-          const output = (stdout || stderr || "").slice(0, MAX_OUTPUT_BYTES);
+          const rawOutput = (stdout || stderr || "").slice(0, MAX_OUTPUT_BYTES);
+          const output = redactStorage(rawOutput);
           return response.status(200).json({ output, exitCode: 0 });
         } catch (execErr) {
-          // execFile rejects on non-zero exit or timeout
-          const output = (
+          const rawOutput = (
             execErr.stdout ||
             execErr.stderr ||
             execErr.message ||
@@ -136,6 +151,7 @@ function terminalExecEndpoint(app) {
                 ? execErr.code
                 : 1;
 
+          const output = redactStorage(rawOutput);
           return response.status(200).json({ output, exitCode });
         }
       } catch (e) {

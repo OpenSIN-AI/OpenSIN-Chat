@@ -7,20 +7,26 @@
 
 const { buildApp, bootApp } = require("./app");
 const BackgroundQueue = require("./utils/backgroundJobs/queue");
+const { Telemetry } = require("./models/telemetry");
 
 // Resume interrupted PDF analysis, cross-check, and corpus jobs after a restart.
+// Fire-and-forget with error catch — failures here must not prevent server boot.
 (async () => {
-  const { PdfAnalysisPipeline } = require("./utils/pdfAnalysis");
-  const { CrossCheckPipeline } = require("./utils/pdfAnalysis/crossCheck");
-  const { CorpusPipeline } = require("./utils/pdfAnalysis/corpus");
+  try {
+    const { PdfAnalysisPipeline } = require("./utils/pdfAnalysis");
+    const { CrossCheckPipeline } = require("./utils/pdfAnalysis/crossCheck");
+    const { CorpusPipeline } = require("./utils/pdfAnalysis/corpus");
 
-  await Promise.all([
-    Promise.resolve(PdfAnalysisPipeline.resumeInterrupted()),
-    Promise.resolve(CorpusPipeline.restorePersisted()),
-  ]);
-  await Promise.resolve(
-    CrossCheckPipeline.restorePersisted(PdfAnalysisPipeline.factStore),
-  );
+    await Promise.all([
+      Promise.resolve(PdfAnalysisPipeline.resumeInterrupted()),
+      Promise.resolve(CorpusPipeline.restorePersisted()),
+    ]);
+    await Promise.resolve(
+      CrossCheckPipeline.restorePersisted(PdfAnalysisPipeline.factStore),
+    );
+  } catch (err) {
+    console.error("[Server] PDF job resumption failed:", err?.message || err);
+  }
 })();
 
 // Memory hygiene runs on boot and every 1 hour (stuck-job detection, orphan
@@ -31,30 +37,49 @@ const {
 } = require("./utils/pdfAnalysis/retention");
 startRetentionSchedule();
 
-// Terminate OCR workers cleanly on process exit.
 const { shutdownOcr } = require("./utils/pdfAnalysis/ocr");
-process.on("beforeExit", () => {
-  shutdownOcr();
-});
+
+let prismaClient = null;
+try {
+  prismaClient = require("./utils/prisma");
+} catch {
+  prismaClient = null;
+}
 
 const app = buildApp();
 
 // Start the HTTP/HTTPS server and boot background services.
 // The returned `server` object is used for graceful shutdown.
-const { server: httpServer } = bootApp(app, process.env.SERVER_PORT || 3001);
-
-// Start persistent background queue after all endpoints are registered so
-// request handlers can add jobs immediately.
-BackgroundQueue.start();
+// BackgroundQueue.start() is deferred to onReady so it only begins polling
+// AFTER the server's listen callback completes (encryption, telemetry, etc.).
+const { server: httpServer } = bootApp(
+  app,
+  process.env.SERVER_PORT || 3001,
+  () => {
+    BackgroundQueue.start();
+  },
+);
 
 // Graceful shutdown: stop the queue and close the HTTP server before exiting
 // so no job is interrupted mid-write (SQLite transactions would catch this,
 // but consistency is safer) and in-progress HTTP requests can finish.
-function shutdown(signal) {
+async function shutdown(signal) {
   console.log(`[Server] ${signal} received, shutting down...`);
   BackgroundQueue.stop();
   stopRetentionSchedule();
-  shutdownOcr();
+  await shutdownOcr();
+  try {
+    await Telemetry.flush();
+  } catch {
+    /* telemetry flush failure is non-fatal during shutdown */
+  }
+  if (prismaClient) {
+    try {
+      await prismaClient.$disconnect();
+    } catch {
+      /* DB disconnect failure is non-fatal during shutdown */
+    }
+  }
   if (httpServer && typeof httpServer.close === "function") {
     httpServer.close(() => {
       console.log("[Server] HTTP server closed, exiting.");
@@ -72,3 +97,4 @@ function shutdown(signal) {
 
 process.on("SIGTERM", () => shutdown("SIGTERM"));
 process.on("SIGINT", () => shutdown("SIGINT"));
+process.on("SIGHUP", () => shutdown("SIGHUP"));

@@ -507,8 +507,22 @@ const Workspace = {
    */
   updateUsers: async function (workspaceId, userIds = []) {
     try {
-      await WorkspaceUser.delete({ workspace_id: Number(workspaceId) });
-      await WorkspaceUser.createManyUsers(userIds, workspaceId);
+      // Wrap delete-all + create-many in a transaction so a failure
+      // mid-create does not leave the workspace with zero users.
+      await prisma.$transaction(async (tx) => {
+        await tx.workspace_users.deleteMany({
+          where: { workspace_id: Number(workspaceId) },
+        });
+        if (userIds.length === 0) return;
+        for (const userId of userIds) {
+          await tx.workspace_users.create({
+            data: {
+              user_id: Number(userId),
+              workspace_id: Number(workspaceId),
+            },
+          });
+        }
+      });
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -37,6 +37,13 @@ spec:
     requests:
       storage: 5Gi
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: opensin-chat-sa
+  namespace: "{{ namespace }}"
+automountServiceAccountToken: false
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -52,8 +59,8 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 0%
-      maxUnavailable: 100%
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -66,22 +73,29 @@ spec:
         prometheus.io/path: /metrics
         prometheus.io/port: "9090"
     spec:
-      serviceAccountName: "default"
+      serviceAccountName: opensin-chat-sa
       terminationGracePeriodSeconds: 10
       securityContext:                                                                                                                                                              
         fsGroup: 1000
         runAsNonRoot: true                                                                                                                                                          
         runAsGroup: 1000
         runAsUser: 1000
-      affinity:                                                                                                                                                                                                                                                                          
-        nodeAffinity:                                                                                                                                                                                                                                                                    
-          requiredDuringSchedulingIgnoredDuringExecution:                                                                                                                                                                                                                                
-            nodeSelectorTerms:                                                                                                                                                                                                                                                           
-            - matchExpressions:                                                                                                                                                                                                                                                          
-              - key: topology.kubernetes.io/zone                                                                                                                                                                                                                                         
-                operator: In                                                                                                                                                                                                                                                             
-                values:                                                                                                                                                                                                                                                                  
-                - us-east-1c  
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topology.kubernetes.io/zone
+                operator: In
+                values:
+                - us-east-1c
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              k8s-app: opensin-chat
       containers:
       - name: opensin-chat
         resources:
@@ -93,14 +107,11 @@ spec:
             cpu: "250m"
         imagePullPolicy: IfNotPresent
         image: "ghcr.io/opensin-ai/opensin-chat:1.13.0"
-        securityContext:                     
-          allowPrivilegeEscalation: false                                                                                                                                                                                                                                                 
-          capabilities:                                                                                                                                                                                                                                                                  
-            add:                                                                                                                                                                                                                                                                         
-              - SYS_ADMIN                                                                                                                                                                                                                                                                
-          runAsNonRoot: true                                                                                                                                                                                                                                                             
-          runAsGroup: 1000                                                                                                                                                                                                                                                               
-          runAsUser: 1000                                                                                                                                       
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsGroup: 1000
+          runAsUser: 1000
         command: 
           # Specify a command to override the Dockerfile's ENTRYPOINT.
           - /bin/bash
@@ -143,13 +154,22 @@ spec:
           - name: AWS_REGION
             value: "{{ aws_region }}"
           - name: AWS_ACCESS_KEY_ID
-            value: "{{ aws_access_id }}"
+            valueFrom:
+              secretKeyRef:
+                name: aws-creds
+                key: access-key-id
           - name: AWS_SECRET_ACCESS_KEY
-            value: "{{ aws_access_secret }}"
+            valueFrom:
+              secretKeyRef:
+                name: aws-creds
+                key: secret-access-key
           - name: SERVER_PORT
             value: "3001"
           - name: JWT_SECRET
-            value: "REPLACE_WITH_SECURE_SECRET" # Generate with: openssl rand -hex 24
+            valueFrom:
+              secretKeyRef:
+                name: jwt-secret
+                key: secret
           - name: STORAGE_DIR
             value: "/storage"
           - name: NODE_ENV
@@ -158,6 +178,7 @@ spec:
             value: "1000"
           - name: GID
             value: "1000"
+        # Create the aws-creds and jwt-secret Secrets in this namespace before applying (e.g. kubectl create secret generic aws-creds --from-literal=access-key-id=... --from-literal=secret-access-key=...).
         volumeMounts: 
           - name: opensin-chat-server-storage-volume-mount
             mountPath: /storage                                                                                                                                                  
@@ -212,3 +233,51 @@ spec:
     name: metrics
   selector:
     k8s-app: opensin-chat
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: opensin-chat-pdb
+  namespace: "{{ namespace }}"
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      k8s-app: opensin-chat
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: opensin-chat-netpol
+  namespace: "{{ namespace }}"
+spec:
+  podSelector:
+    matchLabels:
+      k8s-app: opensin-chat
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: ingress-nginx
+      ports:
+        - protocol: TCP
+          port: 3001
+        - protocol: TCP
+          port: 9090
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53

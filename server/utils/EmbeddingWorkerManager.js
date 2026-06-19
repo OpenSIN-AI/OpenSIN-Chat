@@ -34,7 +34,7 @@ function emitProgress(slug, event) {
     try {
       res.write(data);
     } catch {
-      connections.delete(res);
+      removeSSEConnection(slug, res);
     }
   }
 }

@@ -22,6 +22,9 @@ const BUNDESTAG_API_BASE = `${BUNDESTAG_BASE_URL}/SiteGlobals/Functions/Abgeordn
 const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 
+const MAX_RETRIES = Number(process.env.POLITICIAN_API_MAX_RETRIES ?? 3);
+const RETRY_DELAY_MS = Number(process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000);
+
 /** Current Bundestag electoral term (Wahlperiode). Default: 21. WP. */
 const DEFAULT_WAHLPERIODE = parseInt(
   process.env.BUNDESTAG_WAHLPERIODE || "21",
@@ -82,7 +85,7 @@ class BundestagApi {
   }
 
   /**
-   * Rate-limited fetch with retry logic.
+   * Rate-limited fetch with exponential backoff + Retry-After support.
    * @param {string} url
    * @param {Object} [headers]
    * @returns {Promise<Response>}
@@ -94,24 +97,32 @@ class BundestagApi {
       await new Promise((r) => setTimeout(r, this.rateLimitDelayMs - elapsed));
 
     this.lastRequestTime = Date.now();
-    let lastError = null;
 
-    for (let attempt = 1; attempt <= this.maxRetries; attempt++) {
+    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), this.fetchTimeoutMs);
       try {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), this.fetchTimeoutMs);
-        try {
-          return await fetch(url, { headers, signal: controller.signal });
-        } finally {
-          clearTimeout(timer);
+        const res = await fetch(url, { headers, signal: ctrl.signal });
+        clearTimeout(t);
+        if (!res.ok) {
+          if (res.status < 500 && res.status !== 429) return res;
+          if (res.status === 429) {
+            const retryAfter = res.headers.get("Retry-After");
+            const wait = retryAfter ? Number(retryAfter) * 1000 : 0;
+            if (wait) await new Promise((r) => setTimeout(r, wait));
+          }
         }
+        return res;
       } catch (err) {
-        lastError = err;
-        if (attempt < this.maxRetries)
-          await new Promise((r) => setTimeout(r, this.retryDelayMs * attempt));
+        clearTimeout(t);
+        if (err.name === "AbortError") throw err;
+        if (attempt === MAX_RETRIES) throw err;
+        const delay =
+          RETRY_DELAY_MS * Math.pow(2, attempt) + Math.random() * 1000;
+        await new Promise((r) => setTimeout(r, delay));
       }
     }
-    throw lastError;
+    throw new Error("Unreachable: retry loop exited");
   }
 
   /**

@@ -5,6 +5,9 @@ import Admin from "@/models/admin";
 import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { useTranslation } from "react-i18next";
 import { copyText } from "@/utils/clipboard";
+import showToast from "@/utils/toast";
+import { mutate } from "swr";
+import { INVITES_KEY } from "@/hooks/useInvites";
 
 const DASH = "--";
 
@@ -15,17 +18,27 @@ export default function InviteRow({ invite }: { invite: any }) {
   const [copied, setCopied] = useState(false);
   const handleDelete = async () => {
     if (!window.confirm(t("inviteRow.deactivateConfirm"))) return false;
-    if (rowRef?.current && rowRef.current.children.length > 0) {
-      rowRef.current.children[0].textContent = t("inviteRow.disabled");
+    const { success, error } = await Admin.disableInvite(invite.id);
+    if (!success) {
+      showToast(error, "error", { clear: true });
+      return;
     }
     setStatus("disabled");
-    await Admin.disableInvite(invite.id);
+    showToast(t("inviteRow.disabled"), "success", { clear: true });
+    mutate(INVITES_KEY);
   };
   const copyInviteLink = () => {
     if (!invite) return false;
     copyText(`${window.location.origin}/accept-invite/${invite.code}`).then(
       (ok) => {
-        if (ok) setCopied(true);
+        if (ok) {
+          setCopied(true);
+          showToast(t("admin.newInvite.copiedToClipboard"), "success", {
+            clear: true,
+          });
+        } else {
+          showToast(t("admin.newInvite.copyFailed"), "error");
+        }
       },
     );
   };

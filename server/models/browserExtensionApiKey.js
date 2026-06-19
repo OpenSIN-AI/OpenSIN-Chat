@@ -40,17 +40,23 @@ const BrowserExtensionApiKey = {
    * @returns {Promise<{apiKey: import("@prisma/client").browser_extension_api_keys|boolean}>}
    */
   validate: async function (key) {
-    if (!key.startsWith("brx-")) return false;
-    const apiKey = await prisma.browser_extension_api_keys.findUnique({
-      where: { key: key.toString() },
-    });
-    if (!apiKey) return false;
+    if (!key || !key.startsWith("brx-")) return false;
+    try {
+      const apiKey = await prisma.browser_extension_api_keys.findUnique({
+        where: { key: key.toString() },
+      });
+      if (!apiKey) return false;
 
-    const multiUserMode = await SystemSettings.isMultiUserMode();
-    if (!multiUserMode) return apiKey; // In single-user mode, all keys are valid
+      const multiUserMode = await SystemSettings.isMultiUserMode();
+      if (!multiUserMode) return apiKey; // In single-user mode, all keys are valid
 
-    // In multi-user mode, check if the key is associated with a user
-    return apiKey.user_id ? apiKey : false;
+      // In multi-user mode, check if the key is associated with a user
+      return apiKey.user_id ? apiKey : false;
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("FAILED TO VALIDATE BROWSER EXTENSION API KEY.", error.message);
+      return false;
+    }
   },
 
   /**

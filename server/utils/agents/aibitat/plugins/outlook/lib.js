@@ -288,12 +288,9 @@ function prepareAttachment(filePath) {
  * @returns {Promise<{success: boolean, content: string|null, error: string|null}>}
  */
 async function parseAttachment(attachment) {
-  const tempDir = os.tmpdir();
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "outlook-attachment-"));
   const safeFilename = attachment.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-  const tempFilePath = path.join(
-    tempDir,
-    `outlook-attachment-${Date.now()}-${safeFilename}`,
-  );
+  const tempFilePath = path.join(tempDir, safeFilename);
 
   try {
     const buffer = Buffer.from(attachment.contentBytes, "base64");
@@ -304,9 +301,9 @@ async function parseAttachment(attachment) {
       absolutePath: tempFilePath,
     });
 
-    if (fs.existsSync(tempFilePath)) {
-      fs.unlinkSync(tempFilePath);
-    }
+    try {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    } catch {}
 
     if (!result.success) {
       return {
@@ -327,11 +324,9 @@ async function parseAttachment(attachment) {
       error: null,
     };
   } catch (e) {
-    if (fs.existsSync(tempFilePath)) {
-      try {
-        fs.unlinkSync(tempFilePath);
-      } catch {}
-    }
+    try {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    } catch {}
     return { success: false, content: null, error: e.message };
   }
 }

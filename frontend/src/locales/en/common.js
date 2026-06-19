@@ -3688,6 +3688,7 @@ const TRANSLATIONS = {
       link: "Link",
       users: "Users",
       createdOn: "Created On",
+      deleteSuccess: "Workspace deleted successfully.",
     },
     newWorkspaceModal: {
       title: "Create new workspace",
