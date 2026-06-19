@@ -88,7 +88,8 @@ function FeedbackButton({
 }: any) {
   return (
     <div className="relative flex items-center justify-center h-7 w-7">
-      <button type="button"
+      <button
+        type="button"
         onClick={handleFeedback}
         data-tooltip-id="feedback-button"
         data-tooltip-content={tooltipContent}
@@ -107,7 +108,8 @@ function CopyMessage({ message }: any) {
 
   return (
     <div className="relative flex items-center justify-center h-7 w-7">
-      <button type="button"
+      <button
+        type="button"
         onClick={() => copyText(message)}
         data-tooltip-id="copy-assistant-text"
         data-tooltip-content={t("chat_window.copy")}
@@ -125,7 +127,8 @@ function RegenerateMessage({ regenerateMessage, chatId }: any) {
   if (!chatId) return null;
   return (
     <div className="relative flex items-center justify-center h-7 w-7">
-      <button type="button"
+      <button
+        type="button"
         onClick={() => regenerateMessage(chatId)}
         data-tooltip-id="regenerate-assistant-text"
         data-tooltip-content={t("chat_window.regenerate_response")}

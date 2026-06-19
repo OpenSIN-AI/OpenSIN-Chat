@@ -94,7 +94,12 @@ function ShowWorkspaceChat(): JSX.Element | null {
   // crash React with "Element type is invalid". Redirect to the default tab.
   const TabContent = TABS[tab ?? ""];
   if (!TabContent || !slug) {
-    return <Navigate to={paths.workspace.settings.generalAppearance(slug ?? "")} replace />;
+    return (
+      <Navigate
+        to={paths.workspace.settings.generalAppearance(slug ?? "")}
+        replace
+      />
+    );
   }
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">

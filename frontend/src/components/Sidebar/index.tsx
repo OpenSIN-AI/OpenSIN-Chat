@@ -222,7 +222,8 @@ export function SidebarMobileHeader() {
         aria-label={t("sidebar.topNavigationMobile")}
         className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-theme-bg-sidebar light:bg-white text-slate-200 shadow-lg h-16"
       >
-        <button type="button"
+        <button
+          type="button"
           onClick={() => setShowSidebar(true)}
           className="rounded-md p-2 flex items-center justify-center text-theme-text-secondary hover:bg-white/10 transition-colors"
           aria-label={t("sidebar.openSidebar")}
@@ -307,7 +308,8 @@ function NewWorkspaceButton({ user, showNewWsModal }: any) {
 
   return (
     <div className="flex gap-x-2 items-center justify-between">
-      <button type="button"
+      <button
+        type="button"
         onClick={showNewWsModal}
         className="flex flex-grow w-[75%] h-[44px] gap-x-2 py-[5px] px-4 bg-white rounded-lg text-sidebar justify-center items-center hover:bg-opacity-80 transition-all duration-300"
       >

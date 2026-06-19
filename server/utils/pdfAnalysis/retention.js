@@ -29,6 +29,9 @@ const {
   markStuckJobsAsFailed,
   getOrphanedJobs,
 } = require("./jobStore");
+const { PdfAnalysisPipeline } = require("./index");
+const { CrossCheckPipeline } = require("./crossCheck");
+const { CorpusPipeline } = require("./corpus");
 
 const UPLOAD_TTL_DAYS = Number(process.env.PDF_ANALYSIS_UPLOAD_TTL_DAYS || 7);
 const REPORT_TTL_DAYS = Number(process.env.PDF_ANALYSIS_REPORT_TTL_DAYS || 0);
@@ -91,6 +94,16 @@ function runCleanup() {
 
   // 0b. Stale terminal-state Jobs älter als 24h aufräumen (JobStore).
   cleanupStaleJobs(24);
+
+  // 0c. In-Memory Job-Maps prunen — terminale Jobs älter als 24h entfernen,
+  //     damit der Speicher auf langlebigen Servern nicht unbegrenzt wächst.
+  const pruned = [
+    PdfAnalysisPipeline.pruneCompletedJobs(24),
+    CrossCheckPipeline.pruneCompletedJobs(24),
+    CorpusPipeline.pruneCompletedJobs(24),
+  ].reduce((a, b) => a + b, 0);
+  if (pruned > 0)
+    console.log(`[pdfAnalysis] ${pruned} in-memory job(s) gepruned.`);
 
   const jobs = loadAllJobs();
   const activePdfPaths = new Set(

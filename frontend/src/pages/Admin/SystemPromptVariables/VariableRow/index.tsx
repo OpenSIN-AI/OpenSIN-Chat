@@ -116,13 +116,15 @@ export default function VariableRow({
         <td className="px-4 py-2 flex items-center justify-end gap-x-4">
           {variable.type === "static" && (
             <>
-              <button type="button"
+              <button
+                type="button"
                 onClick={openModal}
                 className="text-xs font-medium text-white/80 light:text-black/80 rounded-lg hover:text-white hover:light:text-gray-500 px-2 py-1 hover:bg-white hover:bg-opacity-10"
               >
                 {t("common.edit")}
               </button>
-              <button type="button"
+              <button
+                type="button"
                 onClick={handleDelete}
                 className="text-xs font-medium text-white/80 light:text-black/80 hover:light:text-red-500 hover:text-red-300 rounded-lg px-2 py-1 hover:bg-white hover:light:bg-red-50 hover:bg-opacity-10"
               >

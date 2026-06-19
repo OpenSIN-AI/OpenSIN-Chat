@@ -108,6 +108,7 @@ class PdfAnalysisPipeline {
     this._run(job).catch((e) => {
       job.status = "failed";
       job.error = e.message;
+      job.completedAt = new Date().toISOString();
       persistJob(job);
     });
     return { jobId };
@@ -273,6 +274,7 @@ class PdfAnalysisPipeline {
       };
       job.status = "completed";
       job.progress.phase = "done";
+      job.completedAt = new Date().toISOString();
       persistJob(job);
       clearCheckpoint(job.id);
     } finally {
@@ -310,6 +312,29 @@ class PdfAnalysisPipeline {
     if (!job) return false;
     job.cancelled = true;
     return true;
+  }
+
+  /**
+   * Remove terminal-state jobs older than maxAgeHours from the in-memory Map
+   * to prevent unbounded growth on long-running servers. Disk cleanup is
+   * handled separately by jobStore.cleanupStaleJobs.
+   * @param {number} maxAgeHours - Jobs older than this are pruned (default 24).
+   * @returns {number} Number of jobs pruned.
+   */
+  static pruneCompletedJobs(maxAgeHours = 24) {
+    const cutoff = Date.now() - maxAgeHours * 60 * 60 * 1000;
+    let pruned = 0;
+    for (const [id, job] of jobs) {
+      if (!["completed", "failed"].includes(job.status)) continue;
+      const ts = job.completedAt
+        ? Date.parse(job.completedAt)
+        : Date.parse(job.createdAt);
+      if (ts < cutoff) {
+        jobs.delete(id);
+        pruned++;
+      }
+    }
+    return pruned;
   }
 }
 

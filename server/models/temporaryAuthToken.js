@@ -85,6 +85,19 @@ const TemporaryAuthToken = {
       if (token.expiresAt < new Date()) throw new Error("Token expired.");
       if (token.user.suspended) throw new Error("User account suspended.");
 
+      // Atomically claim the single-use token: delete only if it still exists
+      // and hasn't expired. If count === 0, a concurrent request already claimed
+      // it — refuse to issue a second session token (prevents check-then-act race).
+      const claimResult = await prisma.temporary_auth_tokens.deleteMany({
+        where: {
+          token: String(publicToken),
+          expiresAt: { gte: new Date() },
+        },
+      });
+      if (claimResult.count === 0) {
+        throw new Error("Token already used or expired.");
+      }
+
       // Create a new session token for the user valid for 30 days
       const sessionToken = makeJWT(
         { id: token.user.id, username: token.user.username },
@@ -97,9 +110,18 @@ const TemporaryAuthToken = {
       console.error("FAILED TO VALIDATE TEMPORARY AUTH TOKEN.", error.message);
       return { sessionToken: null, token: null, error: error.message };
     } finally {
-      // Delete the token after it has been used under all circumstances if it was retrieved
-      if (token)
-        await prisma.temporary_auth_tokens.delete({ where: { id: token.id } });
+      // Best-effort cleanup: if the token was found but not claimed (e.g.,
+      // validation failed due to expiry/suspension), delete it so it can't
+      // be retried. If it was already claimed above, this is a no-op.
+      if (token) {
+        try {
+          await prisma.temporary_auth_tokens.deleteMany({
+            where: { id: token.id },
+          });
+        } catch {
+          // Already deleted or doesn't exist — ignore
+        }
+      }
     }
   },
 };

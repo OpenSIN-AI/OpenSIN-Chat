@@ -88,7 +88,8 @@ export function AvailableAgents({
             ref={formRef}
             className="w-[600px] p-2 bg-theme-action-menu-bg rounded-2xl shadow flex-col justify-center items-start gap-2.5 inline-flex overflow-y-auto max-h-[200px] no-scroll"
           >
-            <button type="button"
+            <button
+              type="button"
               onClick={handleAgentClick}
               className="border-none w-full hover:cursor-pointer hover:bg-theme-action-menu-item-hover px-2 py-2 rounded-xl flex flex-col justify-start group"
             >

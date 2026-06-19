@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 
 export default function AsyncTTSMessage({ slug, chatId }: any) {
   const playerRef = useRef(null);
+  const fetchInFlightRef = useRef(false);
   const [speaking, setSpeaking] = useState(false as any);
   const [loading, setLoading] = useState(false as any);
   const [audioSrc, setAudioSrc] = useState(null);
@@ -20,6 +21,8 @@ export default function AsyncTTSMessage({ slug, chatId }: any) {
 
     try {
       if (!audioSrc) {
+        if (fetchInFlightRef.current) return; // Prevent concurrent TTS fetches
+        fetchInFlightRef.current = true;
         setLoading(true);
         Workspace.ttsMessage(slug, chatId)
           .then((audioBlob) => {
@@ -28,12 +31,16 @@ export default function AsyncTTSMessage({ slug, chatId }: any) {
             setAudioSrc(audioBlob);
           })
           .catch((e) => showToast(e.message, "error", { clear: true }))
-          .finally(() => setLoading(false));
+          .finally(() => {
+            fetchInFlightRef.current = false;
+            setLoading(false);
+          });
       } else {
         playerRef.current.play();
       }
     } catch (e) {
       console.error(e);
+      fetchInFlightRef.current = false;
       setLoading(false);
       setSpeaking(false);
     }
@@ -64,7 +71,8 @@ export default function AsyncTTSMessage({ slug, chatId }: any) {
   if (!chatId) return null;
   return (
     <div className="mt-3 relative">
-      <button type="button"
+      <button
+        type="button"
         onClick={speakMessage}
         data-auto-play-chat-id={chatId}
         data-tooltip-id="message-to-speech"

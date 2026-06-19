@@ -29,7 +29,8 @@ export function EditMessageAction({ chatId = null, role, isEditing }: any) {
         role === "user" && !isEditing ? "" : "!opacity-100"
       }`}
     >
-      <button type="button"
+      <button
+        type="button"
         onClick={handleEditClick}
         data-tooltip-id="edit-input-text"
         data-tooltip-content={`${

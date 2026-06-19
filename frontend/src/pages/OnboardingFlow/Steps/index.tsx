@@ -76,7 +76,8 @@ export function OnboardingLayout({
           <div className="flex w-full justify-center gap-x-4 pb-20">
             <div className="flex justify-center items-center">
               {backBtn.showing && (
-                <button type="button"
+                <button
+                  type="button"
                   disabled={backBtn.disabled}
                   onClick={backBtn.onClick}
                   className="group p-2 rounded-lg border-2 border-zinc-300 disabled:border-zinc-600 h-fit w-fit disabled:not-allowed hover:bg-zinc-100 disabled:hover:bg-transparent"
@@ -91,7 +92,8 @@ export function OnboardingLayout({
 
             <div className="flex justify-center items-center">
               {forwardBtn.showing && (
-                <button type="button"
+                <button
+                  type="button"
                   disabled={forwardBtn.disabled}
                   onClick={forwardBtn.onClick}
                   className="group p-2 rounded-lg border-2 border-zinc-300 disabled:border-zinc-600 h-fit w-fit disabled:not-allowed hover:bg-teal disabled:hover:bg-transparent"
@@ -116,7 +118,8 @@ export function OnboardingLayout({
     >
       <div className="flex w-1/5 h-screen justify-center items-center">
         {backBtn.showing && (
-          <button type="button"
+          <button
+            type="button"
             disabled={backBtn.disabled}
             onClick={backBtn.onClick}
             className="group p-2 rounded-lg border-2 border-theme-sidebar-border h-fit w-fit disabled:cursor-not-allowed hover:bg-theme-bg-secondary disabled:hover:bg-transparent"
@@ -144,7 +147,8 @@ export function OnboardingLayout({
 
       <div className="flex w-1/5 h-screen justify-center items-center">
         {forwardBtn.showing && (
-          <button type="button"
+          <button
+            type="button"
             disabled={forwardBtn.disabled}
             onClick={forwardBtn.onClick}
             className="group p-2 rounded-lg border-2 border-theme-sidebar-border h-fit w-fit disabled:cursor-not-allowed hover:bg-teal disabled:hover:bg-transparent"

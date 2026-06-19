@@ -128,7 +128,8 @@ const ScriptTag = ({ embed }: ScriptTagProps): JSX.Element => {
           {t("codeSnippetModal.viewOptions")}
         </a>
       </div>
-      <button type="button"
+      <button
+        type="button"
         disabled={copied}
         onClick={handleClick}
         className={`disabled:border disabled:border-green-300 disabled:light:border-green-600 border border-transparent relative w-full font-mono flex hljs ${theme} light:border light:border-gray-700 text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none p-2.5 m-1`}

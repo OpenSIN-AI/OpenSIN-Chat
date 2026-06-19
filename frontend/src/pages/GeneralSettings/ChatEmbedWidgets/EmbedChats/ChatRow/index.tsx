@@ -89,7 +89,8 @@ export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
         </td>
         <td className="px-6">{chat.createdAt}</td>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
-          <button type="button"
+          <button
+            type="button"
             onClick={handleDelete}
             className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-delete-hover-bg"
           >

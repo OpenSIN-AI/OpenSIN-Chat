@@ -68,7 +68,8 @@ vi.mock("@/components/ModalWrapper", () => ({
 
 vi.mock("@/components/lib/Toggle", () => ({
   default: ({ checked, onChange }) => (
-    <button type="button"
+    <button
+      type="button"
       data-testid="toggle"
       aria-checked={checked}
       onClick={() => onChange(!checked)}

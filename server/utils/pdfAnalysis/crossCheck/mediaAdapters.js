@@ -70,6 +70,7 @@ async function downloadVideo(url) {
     }
   });
   let received = 0;
+  let streamEnded = false;
   try {
     while (true) {
       const { done, value } = await reader.read();
@@ -82,16 +83,18 @@ async function downloadVideo(url) {
       stream.write(Buffer.from(value));
       if (streamError) throw streamError;
     }
+    await new Promise((r, reject) => {
+      stream.end((err) => {
+        if (streamError || err) reject(streamError || err);
+        else r();
+      });
+    });
+    streamEnded = true;
   } finally {
     clearTimeout(timer);
-    reader.closed.catch(() => {});
+    reader.cancel().catch(() => {});
+    if (!streamEnded) stream.destroy();
   }
-  await new Promise((r, reject) => {
-    stream.end((err) => {
-      if (streamError || err) reject(streamError || err);
-      else r();
-    });
-  });
   return tmpFile;
 }
 

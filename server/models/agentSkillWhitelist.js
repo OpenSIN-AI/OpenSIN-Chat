@@ -47,21 +47,29 @@ const AgentSkillWhitelist = {
       }
 
       const label = this._getLabel(userId);
-      const currentList = await this.get(userId);
 
-      if (currentList.includes(skillName)) {
+      // Wrap read-modify-write in a transaction to prevent concurrent add()
+      // calls from clobbering each other's additions (lost-update race).
+      return await prisma.$transaction(async (tx) => {
+        const setting = await tx.system_settings.findFirst({
+          where: { label },
+        });
+        const currentList = safeJsonParse(setting?.value, []);
+
+        if (currentList.includes(skillName)) {
+          return { success: true, error: null };
+        }
+
+        const newList = [...currentList, skillName];
+
+        await tx.system_settings.upsert({
+          where: { label },
+          update: { value: JSON.stringify(newList) },
+          create: { label, value: JSON.stringify(newList) },
+        });
+
         return { success: true, error: null };
-      }
-
-      const newList = [...currentList, skillName];
-
-      await prisma.system_settings.upsert({
-        where: { label },
-        update: { value: JSON.stringify(newList) },
-        create: { label, value: JSON.stringify(newList) },
       });
-
-      return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("AgentSkillWhitelist.add error:", error.message);

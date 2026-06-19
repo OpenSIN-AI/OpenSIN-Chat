@@ -307,6 +307,18 @@ const TRANSLATIONS = {
       downloadSize: "Download Size:",
       viewModelCard: "View model card on Hugging Face \u2192",
     },
+    gemini: {
+      apiKey: "Gemini API Key",
+      apiKeyPlaceholder: "Gemini API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+    },
+    openAi: {
+      apiKey: "API Key",
+      apiKeyPlaceholder: "OpenAI API Key",
+      modelSelection: "Chat Model Selection",
+      loadingModels: "-- loading available models --",
+    },
   },
   chat_window: {
     sources: "Sources",
@@ -3499,6 +3511,12 @@ const TRANSLATIONS = {
       playSample: "Play sample",
       demoText: "Hello, welcome to OpenSIN Chat!",
     },
+    elevenLabs: {
+      apiKey: "ElevenLabs API Key",
+      apiKeyPlaceholder: "ElevenLabs API Key",
+      modelSelection: "Voice Model Selection",
+      loadingModels: "-- loading available models --",
+    },
   },
   speechToText: {
     genericOpenAi: {
@@ -3516,6 +3534,18 @@ const TRANSLATIONS = {
       modelDescriptionPart2:
         " parameter passed to the transcription endpoint (e.g. ",
       modelDescriptionPart3: ").",
+    },
+    deepgram: {
+      apiKey: "Deepgram API Key",
+      apiKeyPlaceholder: "Deepgram API Key",
+      modelSelection: "Model Selection",
+      loadingModels: "-- loading available models --",
+    },
+    openAi: {
+      apiKey: "OpenAI API Key",
+      apiKeyPlaceholder: "OpenAI API Key",
+      modelSelection: "Model Selection",
+      loadingModels: "-- loading available models --",
     },
   },
   parsedFilesMenu: {
@@ -4616,6 +4646,137 @@ const TRANSLATIONS = {
     thoughtChain: "Thought chain",
     showThoughts: "Show thoughts",
     hideThoughts: "Hide thoughts",
+  },
+  dockerModelRunner: {
+    baseUrlLabel: "Docker Model Runner Base URL",
+    autoDetect: "Auto-Detect",
+    baseUrlTooltip1: "Enter the URL where Docker Model Runner is running.",
+    baseUrlTooltip2a: "Docker Model Runner uses the",
+    baseUrlTooltip2b: "docker model",
+    baseUrlTooltip2c: "CLI to manage local models.",
+    learnMore: "Learn more →",
+    baseUrlPlaceholder: "http://localhost:12434/v1",
+    modelContextWindowLabel: "Model context window",
+    modelContextWindowTooltip1:
+      "Specify the maximum number of tokens that can be used for the model context window.",
+    modelContextWindowTooltip2a: "Use",
+    modelContextWindowTooltipCode: "docker model configure --context-size",
+    modelContextWindowTooltip2b:
+      "to set the context size for a specific model. Default is",
+    modelContextWindowTooltipCode2: "8192",
+    modelContextWindowTooltip2c: "if not specified.",
+    contextWindowPlaceholder: "Automatically managed",
+    noModelsFound: "No models found",
+  },
+  newEmbedModal: {
+    title: "Create new embed",
+    maxChatsPerDay: "Max chats per day",
+    maxChatsPerDayHint:
+      "Limit the amount of chats this embedded chat can process in a 24 hour period. Zero is unlimited.",
+    maxChatsPerSession: "Max chats per session",
+    maxChatsPerSessionHint:
+      "Limit the amount of chats a session user can send with this embed in a 24 hour period. Zero is unlimited.",
+    messageHistoryLimit: "Message History Limit",
+    messageHistoryLimitHint:
+      "The number of previous messages to include in the chat context. Default is 20.",
+    enableDynamicModel: "Enable dynamic model use",
+    enableDynamicModelHint:
+      "Allow setting of the preferred LLM model to override the workspace default.",
+    enableDynamicTemperature: "Enable dynamic LLM temperature",
+    enableDynamicTemperatureHint:
+      "Allow setting of the LLM temperature to override the workspace default.",
+    enablePromptOverride: "Enable Prompt Override",
+    enablePromptOverrideHint:
+      "Allow setting of the system prompt to override the workspace default.",
+    error: "Error",
+    afterCreateHintBefore:
+      "After creating an embed you will be provided a link that you can publish on your website with a simple",
+    afterCreateHintAfter: "tag.",
+    cancel: "Cancel",
+    createEmbed: "Create embed",
+    workspace: "Workspace",
+    workspaceHint: "Select the workspace this embed will be associated with.",
+    allowedChatMethod: "Chat mode",
+    chatModeHintPart1:
+      "Chat mode will provide answers with the LLM's general knowledge and document context.",
+    chatModeHintPart2:
+      "Query mode will only provide answers if document context is found.",
+    chatModeChat: "Chat",
+    chatModeQuery: "Query",
+    restrictDomains: "Permitted Domains",
+    restrictDomainsHintPart1:
+      "Restrict which domains can host this embedded chat.",
+    restrictDomainsHintPart2: "Leave empty to allow any domain.",
+    domainsPlaceholder: "https://example.com",
+  },
+  lmStudio: {
+    embeddingAlert:
+      "The LLM provider you have selected does not have an embedding model set. Please set an embedding model in the embedding preferences to use this provider.",
+    manageEmbedding: "Manage embedding model",
+    hideAdvanced: "Hide",
+    showAdvanced: "Show",
+    advancedSettings: "advanced settings",
+    baseUrlLabel: "LM Studio Base URL",
+    baseUrlTooltip: "Enter the URL where LM Studio is running.",
+    autoDetect: "Auto-Detect",
+    baseUrlPlaceholder: "http://127.0.0.1:11434",
+    contextWindowLabel: "Model context window",
+    contextWindowTooltip:
+      "Specify the maximum number of tokens that can be used for the model context window.",
+    contextWindowPlaceholder: "Automatically managed",
+    authTokenLabel: "Auth Token",
+    authTokenTooltipPart1: "Enter a",
+    authTokenTooltipBearer: "Bearer",
+    authTokenTooltipPart2:
+      "Auth Token for interacting with your LM Studio server.",
+    authTokenTooltipPart3:
+      "Used only if running LM Studio behind an authentication server.",
+    authTokenPlaceholder: "LM Studio Auth Token",
+    modelLabel: "LM Studio Model",
+    modelErrorTooltip: "Could not load models from the LM Studio server.",
+    loadingModels: "-- loading available models --",
+    noModelsFound: "No models found",
+    enterUrlFirst: "Enter LM Studio URL first",
+    yourLoadedModels: "Your loaded models",
+  },
+  localAiLlm: {
+    alertMessage:
+      "The LLM provider you have selected does not have an embedding model set. Please set an embedding model in the embedding preferences to use this provider.",
+    manageEmbedding: "Manage embedding model",
+    contextWindowLabel: "Model context window",
+    contextWindowPlaceholder: "Automatically managed",
+    apiKeyLabel: "API Key",
+    optional: "Optional",
+    apiKeyPlaceholder: "LocalAI API Key",
+    hideAdvanced: "Hide",
+    showAdvanced: "Show",
+    advancedSettings: "advanced settings",
+    baseUrlLabel: "LocalAI Base URL",
+    autoDetect: "Auto-Detect",
+    baseUrlPlaceholder: "http://127.0.0.1:8080",
+    modelLabel: "LocalAI Model",
+    loadingModels: "-- loading available models --",
+    waitingUrl: "Enter LocalAI URL first",
+    yourLoadedModels: "Your loaded models",
+  },
+  nvidiaNim: {
+    apiKeyLabel: "NVIDIA NIM API Key",
+    apiKeyPlaceholder: "NVIDIA NIM API Key",
+    apiKeyHelp1: "You can get an API key from",
+    apiKeyHelpLink: "build.nvidia.com",
+    apiKeyHelp2: ".",
+    baseUrlLabel: "Base URL",
+    optional: "Optional",
+    baseUrlPlaceholder: "https://integrate.api.nvidia.com/v1",
+    baseUrlHelp: "Enter the URL where NVIDIA NIM is running.",
+    modelLabel: "Model",
+    modelPlaceholder: "ai-magnify/arctic-tts",
+    modelHelp1: "Model name for TTS. For example:",
+    modelHelp2: ".",
+    voiceLabel: "Voice Model",
+    voicePlaceholder: "English-US.Female-1",
+    voiceHelp1: "Voice model identifier. For example:",
+    voiceHelp2: ".",
   },
 };
 export default TRANSLATIONS;

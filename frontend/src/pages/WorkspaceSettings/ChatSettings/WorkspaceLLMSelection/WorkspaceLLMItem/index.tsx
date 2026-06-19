@@ -97,7 +97,8 @@ export default function WorkspaceLLM({
             </div>
           </div>
           {checked && !NO_SETTINGS_NEEDED.includes(value) && (
-            <button type="button"
+            <button
+              type="button"
               onClick={(e) => {
                 e.preventDefault();
                 openModal();

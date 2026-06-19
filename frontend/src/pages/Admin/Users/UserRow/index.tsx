@@ -71,7 +71,8 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
         <td className="px-6">{user.createdAt}</td>
         <td className="px-6 flex items-center gap-x-6 h-full mt-2">
           {canModify && (
-            <button type="button"
+            <button
+              type="button"
               onClick={openModal}
               className="text-xs font-medium text-white/80 light:text-black/80 rounded-lg hover:text-white hover:light:text-gray-500 px-2 py-1 hover:bg-white hover:bg-opacity-10"
             >
@@ -80,13 +81,15 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
           )}
           {currUser?.id !== user.id && canModify && (
             <>
-              <button type="button"
+              <button
+                type="button"
                 onClick={handleSuspend}
                 className="text-xs font-medium text-white/80 light:text-black/80 hover:light:text-orange-500 hover:text-orange-300 rounded-lg px-2 py-1 hover:bg-white hover:light:bg-orange-50 hover:bg-opacity-10"
               >
                 {suspended ? t("userRow.unsuspend") : t("userRow.suspend")}
               </button>
-              <button type="button"
+              <button
+                type="button"
                 onClick={handleDelete}
                 className="text-xs font-medium text-white/80 light:text-black/80 hover:light:text-red-500 hover:text-red-300 rounded-lg px-2 py-1 hover:bg-white hover:light:bg-red-50 hover:bg-opacity-10"
               >

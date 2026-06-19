@@ -49,7 +49,8 @@ export default function SettingsSidebar() {
     return (
       <>
         <div className="fixed top-0 left-0 right-0 z-10 flex justify-between items-center px-4 py-2 bg-theme-bg-sidebar light:bg-white text-theme-text-secondary shadow-lg h-16">
-          <button type="button"
+          <button
+            type="button"
             onClick={() => setShowSidebar(true)}
             className="rounded-md p-2 flex items-center justify-center text-theme-text-secondary"
           >

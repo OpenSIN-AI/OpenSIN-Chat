@@ -42,7 +42,8 @@ export default function AnthropicAiOptions({ settings }: any) {
         )}
       </div>
       <div className="flex justify-start mt-4">
-        <button type="button"
+        <button
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             setShowAdvancedControls(!showAdvancedControls);

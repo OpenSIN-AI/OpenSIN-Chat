@@ -70,7 +70,8 @@ function TextSizeMenu({ tooltipRef }: any) {
 
   return (
     <div className="flex flex-col justify-start items-stretch gap-1 p-2">
-      <button type="button"
+      <button
+        type="button"
         onClick={(e) => {
           e.preventDefault();
           handleTextSizeChange("small");
@@ -86,7 +87,8 @@ function TextSizeMenu({ tooltipRef }: any) {
         </div>
       </button>
 
-      <button type="button"
+      <button
+        type="button"
         onClick={(e) => {
           e.preventDefault();
           handleTextSizeChange("normal");
@@ -102,7 +104,8 @@ function TextSizeMenu({ tooltipRef }: any) {
         </div>
       </button>
 
-      <button type="button"
+      <button
+        type="button"
         onClick={(e) => {
           e.preventDefault();
           handleTextSizeChange("large");

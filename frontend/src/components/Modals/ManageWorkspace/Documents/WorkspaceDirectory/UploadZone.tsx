@@ -94,7 +94,8 @@ export function UploadZone({
                 { count: movedItems.length },
               )}
             </p>
-            <button type="button"
+            <button
+              type="button"
               onClick={handleSaveChanges}
               className="border border-slate-200 px-5 py-1.5 rounded-lg text-white text-sm items-center flex gap-x-2 hover:opacity-80 whitespace-nowrap"
             >

@@ -292,6 +292,7 @@ class ImportedPlugin {
               "ImportedPlugin.importCommunityItemFromUrl - error downloading zip file: ",
               error,
             );
+            zipFile.destroy();
             resolve(false);
           });
         } catch (error) {

@@ -53,7 +53,9 @@ vi.mock("./SidebarToggle", () => ({
     setShowSidebar: vi.fn(),
     canToggleSidebar: true,
   }),
-  ToggleSidebarButton: () => <button type="button" data-testid="sidebar-toggle" />,
+  ToggleSidebarButton: () => (
+    <button type="button" data-testid="sidebar-toggle" />
+  ),
 }));
 
 import Sidebar from "@/components/Sidebar";

@@ -236,7 +236,8 @@ export default function FilesystemSidebar() {
           <p className="flex-1 font-medium text-sm text-white light:text-slate-900">
             {t("sidebar.filesystem.title")}
           </p>
-          <button type="button"
+          <button
+            type="button"
             onClick={() => setShowSysInfo(!showSysInfo)}
             type="button"
             className="text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer mr-1"
@@ -244,7 +245,8 @@ export default function FilesystemSidebar() {
           >
             <Info size={14} weight="bold" />
           </button>
-          <button type="button"
+          <button
+            type="button"
             onClick={() => browse(currentPath || "")}
             type="button"
             disabled={loading}
@@ -301,7 +303,8 @@ export default function FilesystemSidebar() {
                   path: selectedDirectory,
                 })}
               </span>
-              <button type="button"
+              <button
+                type="button"
                 onClick={() => setSelectedDirectory(null)}
                 className="text-xs text-zinc-400 hover:text-white border-none bg-transparent cursor-pointer"
               >
@@ -318,7 +321,8 @@ export default function FilesystemSidebar() {
                 {t("sidebar.filesystem.description")}
               </p>
               <div className="flex items-center gap-1.5 mb-1">
-                <button type="button"
+                <button
+                  type="button"
                   onClick={() => {
                     setCreatingType(
                       creatingType === "folder" ? null : "folder",
@@ -337,7 +341,8 @@ export default function FilesystemSidebar() {
                   />
                   {t("sidebar.filesystem.newFolder")}
                 </button>
-                <button type="button"
+                <button
+                  type="button"
                   onClick={() => {
                     setCreatingType(creatingType === "file" ? null : "file");
                     setNewItemName("");
@@ -395,7 +400,8 @@ export default function FilesystemSidebar() {
                     }
                     className="flex-1 text-xs bg-zinc-950 light:bg-white border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1 text-white light:text-slate-900 outline-none focus:border-blue-500"
                   />
-                  <button type="button"
+                  <button
+                    type="button"
                     onClick={() => {
                       if (!newItemName.trim()) return;
                       const fn =
@@ -424,7 +430,8 @@ export default function FilesystemSidebar() {
                   >
                     {t("sidebar.filesystem.create")}
                   </button>
-                  <button type="button"
+                  <button
+                    type="button"
                     onClick={() => {
                       setCreatingType(null);
                       setNewItemName("");
@@ -467,7 +474,8 @@ export default function FilesystemSidebar() {
                     className="flex items-center gap-1 flex-shrink-0"
                   >
                     {i > 0 && <span className="text-zinc-700 text-xs">/</span>}
-                    <button type="button"
+                    <button
+                      type="button"
                       onClick={() => navigateTo(crumb.path)}
                       type="button"
                       className={`text-xs border-none bg-transparent cursor-pointer transition-colors ${
@@ -528,7 +536,8 @@ export default function FilesystemSidebar() {
                         <span className="text-xs text-zinc-200 light:text-slate-800 truncate flex-1">
                           {item.name}
                         </span>
-                        <button type="button"
+                        <button
+                          type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDelete(item.path, item.name);
@@ -592,7 +601,8 @@ export default function FilesystemSidebar() {
                               className="text-blue-400 flex-shrink-0"
                             />
                           )}
-                          <button type="button"
+                          <button
+                            type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               handleDelete(item.path, item.name);
@@ -654,7 +664,8 @@ export default function FilesystemSidebar() {
                 )}
               </div>
               {selectedFiles.length > 0 && (
-                <button type="button"
+                <button
+                  type="button"
                   onClick={clearSelection}
                   className="mt-1 text-[10px] text-zinc-500 hover:text-white border-none bg-transparent cursor-pointer w-full text-center"
                 >
@@ -682,13 +693,15 @@ export default function FilesystemSidebar() {
               {t("sidebar.filesystem.directoryAccessDescription")}
             </p>
             <div className="flex gap-2">
-              <button type="button"
+              <button
+                type="button"
                 onClick={() => setSelectedDirectory(null)}
                 className="text-xs text-zinc-400 hover:text-white border border-zinc-700 hover:border-zinc-600 px-3 py-1.5 rounded-md bg-transparent cursor-pointer transition-colors"
               >
                 {t("sidebar.filesystem.change")}
               </button>
-              <button type="button"
+              <button
+                type="button"
                 onClick={handleConnect}
                 disabled={connecting}
                 className="flex items-center gap-1.5 text-xs font-medium text-white bg-blue-600 hover:bg-blue-500 disabled:opacity-50 px-3 py-1.5 rounded-md border-none cursor-pointer transition-colors"

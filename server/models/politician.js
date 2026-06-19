@@ -55,13 +55,6 @@ const Politician = {
     for (const p of politicians) {
       try {
         const id = p.id || require("uuid").v4();
-        const existing =
-          p.externalId && p.source
-            ? await prisma.politicians.findFirst({
-                where: { externalId: p.externalId, source: p.source },
-              })
-            : null;
-
         const data = {
           id,
           externalId: p.externalId || null,
@@ -95,12 +88,28 @@ const Politician = {
           lastSyncedAt: new Date(),
         };
 
-        if (existing) {
-          await prisma.politicians.update({
-            where: { id: existing.id },
-            data,
+        // Use atomic upsert when externalId is present (it is @unique in the
+        // schema). This eliminates the check-then-act race where two concurrent
+        // syncs both findFirst → both create → unique-constraint violation.
+        // When externalId is null there is no unique key to dedup on, so we
+        // just create.
+        if (p.externalId) {
+          const result = await prisma.politicians.upsert({
+            where: { externalId: p.externalId },
+            update: data,
+            create: data,
           });
-          updated++;
+          // Prisma upsert doesn't tell us if it was insert or update, so we
+          // approximate: check if createdAt equals updatedAt (new record).
+          if (
+            result.createdAt &&
+            result.updatedAt &&
+            result.createdAt.getTime() === result.updatedAt.getTime()
+          ) {
+            inserted++;
+          } else {
+            updated++;
+          }
         } else {
           await prisma.politicians.create({ data });
           inserted++;

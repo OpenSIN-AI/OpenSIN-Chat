@@ -54,15 +54,21 @@ class MySQLConnector {
         params.length > 0
           ? this._client.execute(queryString, params)
           : this._client.query(queryString);
+      let timerId;
       const timeout = new Promise((_, reject) => {
-        setTimeout(
+        timerId = setTimeout(
           () => reject(new Error(`MySQL query timed out after 30s`)),
           QUERY_TIMEOUT_MS,
-        ).unref?.();
+        );
+        timerId?.unref?.();
       });
-      const [query] = await Promise.race([runner, timeout]);
-      result.rows = query;
-      result.count = query?.length;
+      try {
+        const [query] = await Promise.race([runner, timeout]);
+        result.rows = query;
+        result.count = query?.length;
+      } finally {
+        clearTimeout(timerId);
+      }
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(this.className, err);

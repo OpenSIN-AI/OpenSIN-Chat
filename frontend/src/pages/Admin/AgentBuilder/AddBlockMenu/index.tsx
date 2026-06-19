@@ -59,7 +59,8 @@ export default function AddBlockMenu({
   if (checkIfCanAddBlock(blocks) === false) return null;
   return (
     <div className="relative mt-4 w-[280px] mx-auto pb-4" ref={menuRef}>
-      <button type="button"
+      <button
+        type="button"
         onClick={() => setShowBlockMenu(!showBlockMenu)}
         className="transition-all duration-300 w-full p-2.5 bg-theme-action-menu-bg hover:bg-theme-action-menu-item-hover border border-white/10 rounded-lg text-white flex items-center justify-center gap-2 text-sm font-medium"
       >
@@ -76,7 +77,8 @@ export default function AddBlockMenu({
               type !== BLOCK_TYPES.START &&
               type !== BLOCK_TYPES.FINISH &&
               type !== BLOCK_TYPES.FLOW_INFO && (
-                <button type="button"
+                <button
+                  type="button"
                   key={type}
                   onClick={() => {
                     addBlock(type);

@@ -160,7 +160,8 @@ export default function CommunityHubAuthentication(): JSX.Element {
                   {PERIOD}
                 </p>
                 {!!originalConnectionKey && (
-                  <button type="button"
+                  <button
+                    type="button"
                     onClick={disconnectHub}
                     className="border-none text-red-500 hover:text-red-600 text-sm font-medium transition-colors duration-200"
                   >

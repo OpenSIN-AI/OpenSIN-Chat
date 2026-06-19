@@ -136,7 +136,8 @@ export function EmbeddingFileRow({
               {STATUS_STYLES[status]?.label || t("embeddingFileRow.queued")}
             </p>
             {onRemove && (
-              <button type="button"
+              <button
+                type="button"
                 onClick={onRemove}
                 className="border-none hover:bg-white/10 light:hover:bg-sky-900/10 rounded p-0.5 transition-colors"
                 title={t("embeddingFileRow.removeFromQueue")}

@@ -129,7 +129,8 @@ function EmptyRulesState({ onCreateRule }: EmptyRulesStateProps) {
           {t("model-router.rules.empty-description")}
         </p>
       </div>
-      <button type="button"
+      <button
+        type="button"
         onClick={onCreateRule}
         className="border-none flex items-center justify-center h-9 px-5 py-2.5 rounded-lg bg-slate-50 text-zinc-950 text-sm font-medium leading-5 hover:opacity-90 transition-opacity duration-200"
       >
@@ -236,7 +237,8 @@ export default function RuleBuilder({
           </p>
         </div>
         {hasRules && (
-          <button type="button"
+          <button
+            type="button"
             onClick={openCreate}
             className="border-none shrink-0 flex items-center justify-center h-9 px-5 py-2.5 rounded-lg bg-slate-50 text-zinc-950 text-sm font-medium leading-5 hover:opacity-90 transition-opacity duration-200"
           >

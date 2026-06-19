@@ -113,14 +113,16 @@ export default function RuleRow({
           onChange={onToggle}
           size="md"
         />
-        <button type="button"
+        <button
+          type="button"
           onClick={onEdit}
           className="border-none text-zinc-400 light:text-slate-500 hover:text-white light:hover:text-slate-900 transition-colors"
           aria-label={t("model-router.rules.aria-edit-rule")}
         >
           <PencilSimple size={16} weight="bold" />
         </button>
-        <button type="button"
+        <button
+          type="button"
           onClick={onDelete}
           className="border-none text-zinc-400 light:text-slate-500 hover:text-red-400 light:hover:text-red-500 transition-colors"
           aria-label={t("model-router.rules.aria-delete-rule")}

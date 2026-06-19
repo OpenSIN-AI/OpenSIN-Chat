@@ -52,7 +52,8 @@ function SideBarSelection({
             ].join(" ")}
           >
             {isDone || isSelected ? (
-              <button type="button"
+              <button
+                type="button"
                 onClick={() => setStep(stepKey)}
                 className="border-none hover:underline text-sm font-medium text-theme-text-primary"
               >

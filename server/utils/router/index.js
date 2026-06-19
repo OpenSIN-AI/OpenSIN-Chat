@@ -36,6 +36,7 @@ class ModelRouterService {
     this.routerCache = new Map();
     this.stickyRoutes = new Map();
     this.llmCache = new Map();
+    this.llmInFlight = new Map();
     this.lastNotifiedRoute = new Map();
     this.LOG_PREFIX = "\x1b[35m[ModelRouterService]\x1b[0m";
   }
@@ -185,6 +186,7 @@ class ModelRouterService {
     );
     svc.stickyRoutes.delete(key);
     svc.llmCache.delete(key);
+    svc.llmInFlight.delete(key);
     svc.lastNotifiedRoute.delete(key);
     svc.log(
       `Reset routing state for key "${key}" (workspace: ${workspace.slug})`,
@@ -466,11 +468,30 @@ class ModelRouterService {
       };
     }
 
-    this.log(
-      `Evaluating LLM batch of ${llmRules.length} rules: [${llmRules.map((r) => `"${r.title}"`).join(", ")}]`,
-    );
-    const matched = await classifyWithLLM(llmRules, context.prompt, router);
-    this.setCachedLLMResult(cacheKey, matched || null);
+    // Deduplicate in-flight LLM calls: if a concurrent request for the same
+    // cacheKey is already awaiting the LLM, share its promise instead of
+    // spawning a second expensive call (thundering-herd prevention).
+    let inflight = this.llmInFlight.get(cacheKey);
+    if (!inflight) {
+      inflight = (async () => {
+        this.log(
+          `Evaluating LLM batch of ${llmRules.length} rules: [${llmRules.map((r) => `"${r.title}"`).join(", ")}]`,
+        );
+        const matched = await classifyWithLLM(llmRules, context.prompt, router);
+        this.setCachedLLMResult(cacheKey, matched || null);
+        return matched;
+      })();
+      this.llmInFlight.set(cacheKey, inflight);
+      // Clean up the in-flight entry after settlement so future cache-miss
+      // cycles can fire again (e.g. after TTL expiry).
+      inflight.finally(() => this.llmInFlight.delete(cacheKey));
+    } else {
+      this.log(
+        `LLM classification: sharing in-flight call for key "${cacheKey}"`,
+      );
+    }
+
+    const matched = await inflight;
 
     if (matched) {
       this.log(

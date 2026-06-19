@@ -147,13 +147,15 @@ export default function SuggestedChatMessages({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-white/60 text-xs mt-2 w-full justify-center max-w-[600px]">
         {suggestedMessages.map((suggestion, index) => (
           <div key={index} className="relative w-full">
-            <button type="button"
+            <button
+              type="button"
               className="transition-all duration-300 absolute z-10 text-neutral-700 bg-white rounded-full hover:bg-zinc-600 hover:border-zinc-600 hover:text-white border-transparent border shadow-lg ml-2 -top-2 left-[265px]"
               onClick={() => handleRemoveMessage(index)}
             >
               <X className="m-[1px]" size={20} />
             </button>
-            <button type="button"
+            <button
+              type="button"
               key={index}
               onClick={(e) => startEditing(e, index)}
               className={`text-left p-2.5 border rounded-xl w-full border-white/20 bg-theme-settings-input-bg hover:bg-theme-sidebar-item-selected-gradient ${

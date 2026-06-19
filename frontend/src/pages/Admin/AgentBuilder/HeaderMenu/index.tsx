@@ -56,7 +56,8 @@ export default function HeaderMenu({
     <div className="absolute top-[calc(40px+16px)] left-4 right-4">
       <div className="flex justify-between items-start max-w-[1700px] mx-auto">
         <div className="flex items-center gap-x-2">
-          <button type="button"
+          <button
+            type="button"
             onClick={() => navigate(paths.settings.agentSkills())}
             className="w-8 h-8 flex items-center justify-center rounded-full bg-theme-settings-input-bg border border-white/10 hover:bg-theme-action-menu-bg transition-colors duration-300"
           >
@@ -69,7 +70,8 @@ export default function HeaderMenu({
             className="flex items-center bg-theme-settings-input-bg rounded-md border border-white/10 pointer-events-auto"
             ref={dropdownRef}
           >
-            <button type="button"
+            <button
+              type="button"
               onClick={() => navigate(paths.settings.agentSkills())}
               className="!border-t-transparent !border-l-transparent !border-b-transparent flex items-center gap-x-2 px-4 py-2 border-r border-white/10 hover:bg-theme-action-menu-bg transition-colors duration-300"
             >
@@ -83,7 +85,8 @@ export default function HeaderMenu({
               </span>
             </button>
             <div className="relative">
-              <button type="button"
+              <button
+                type="button"
                 disabled={!hasOtherFlows}
                 className="border-none flex items-center justify-between gap-x-1 text-theme-text-primary text-sm px-4 py-2 enabled:hover:bg-theme-action-menu-bg transition-colors duration-300 min-w-[200px] max-w-[300px]"
                 onClick={() => {
@@ -114,7 +117,8 @@ export default function HeaderMenu({
                   {availableFlows
                     .filter((flow) => flow.uuid !== flowId)
                     .map((flow, index) => (
-                      <button type="button"
+                      <button
+                        type="button"
                         key={flow?.uuid || `flow-${index}`}
                         onClick={() => {
                           navigate(paths.agents.editAgent(flow.uuid));
@@ -136,20 +140,23 @@ export default function HeaderMenu({
 
         <div className="flex flex-col gap-y-1 items-end">
           <div className="flex items-center gap-x-[15px]">
-            <button type="button"
+            <button
+              type="button"
               onClick={onNewFlow}
               className="flex items-center gap-x-2 text-theme-text-primary text-sm font-medium px-3 py-2 rounded-lg border border-white bg-theme-settings-input-bg hover:bg-theme-action-menu-bg transition-colors duration-300"
             >
               <Plus className="w-4 h-4" />
               {t("agentBuilder.headerMenu.newFlow")}
             </button>
-            <button type="button"
+            <button
+              type="button"
               onClick={onPublishFlow}
               className="px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-center gap-2 border border-white/10 bg-theme-bg-primary text-theme-text-primary hover:bg-theme-action-menu-bg transition-all duration-300"
             >
               {t("agentBuilder.headerMenu.publish")}
             </button>
-            <button type="button"
+            <button
+              type="button"
               onClick={onSaveFlow}
               className="border-none bg-primary-button hover:opacity-80 text-black light:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2"
             >

@@ -66,7 +66,8 @@ export const PinAlert = memo(() => {
           </div>
         </div>
         <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
-          <button type="button"
+          <button
+            type="button"
             onClick={dismissAlert}
             className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
           >
@@ -138,7 +139,8 @@ export const DocumentWatchAlert = memo(() => {
           </div>
         </div>
         <div className="flex w-full justify-end items-center p-6 space-x-2 border-t border-theme-modal-border rounded-b">
-          <button type="button"
+          <button
+            type="button"
             onClick={dismissAlert}
             className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
           >

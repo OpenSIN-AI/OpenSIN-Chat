@@ -106,7 +106,8 @@ export default function ApiCallNode({
             spellCheck={false}
           />
           <div className="relative">
-            <button type="button"
+            <button
+              type="button"
               ref={varButtonRef}
               onClick={() => setShowVarMenu(!showVarMenu)}
               className="h-full px-3 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300 flex items-center gap-1"
@@ -155,7 +156,8 @@ export default function ApiCallNode({
           <label className="text-sm font-medium text-theme-text-primary">
             {t("apiCallNode.headers")}
           </label>
-          <button type="button"
+          <button
+            type="button"
             onClick={addHeader}
             className="p-1.5 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:bg-theme-action-menu-item-hover transition-colors duration-300"
             title={t("apiCallNode.addHeader")}
@@ -188,7 +190,8 @@ export default function ApiCallNode({
                 autoComplete="off"
                 spellCheck={false}
               />
-              <button type="button"
+              <button
+                type="button"
                 onClick={() => removeHeader(index)}
                 className="p-2.5 rounded-lg border-none bg-theme-settings-input-bg text-theme-text-primary hover:text-red-500 hover:border-red-500/20 hover:bg-red-500/10 transition-colors duration-300"
                 title={t("apiCallNode.removeHeader")}
@@ -274,7 +277,8 @@ export default function ApiCallNode({
                         autoComplete="off"
                         spellCheck={false}
                       />
-                      <button type="button"
+                      <button
+                        type="button"
                         onClick={() => {
                           const newFormData = [
                             ...(config.formData || []),
@@ -289,7 +293,8 @@ export default function ApiCallNode({
                     </div>
                   ),
                 )}
-                <button type="button"
+                <button
+                  type="button"
                   onClick={() => {
                     const newFormData = [
                       ...(config.formData || []),

@@ -47,7 +47,8 @@ export default function DockerModelRunnerOptions({ settings }: any) {
               ) : (
                 <>
                   {!basePathValue.value && (
-                    <button type="button"
+                    <button
+                      type="button"
                       onClick={handleAutoDetectClick}
                       className="bg-primary-button text-xs font-medium px-2 py-1 rounded-lg hover:bg-secondary hover:text-white shadow-[0_4px_14px_rgba(0,0,0,0.25)]"
                     >

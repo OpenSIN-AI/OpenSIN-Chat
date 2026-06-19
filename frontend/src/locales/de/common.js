@@ -310,6 +310,18 @@ const TRANSLATIONS = {
       downloadSize: "Download-Größe:",
       viewModelCard: "Modellkarte auf Hugging Face anzeigen \u2192",
     },
+    gemini: {
+      apiKey: "Gemini API-Schlüssel",
+      apiKeyPlaceholder: "Gemini API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    openAi: {
+      apiKey: "API-Schlüssel",
+      apiKeyPlaceholder: "OpenAI API-Schlüssel",
+      modelSelection: "Chat-Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
   },
   chat_window: {
     sources: "Quellen",
@@ -3453,7 +3465,7 @@ const TRANSLATIONS = {
   },
   liteLLM: {
     baseUrl: {
-      label: "Base URL",
+      label: "Basis-URL",
       placeholder: "http://127.0.0.1:4000",
     },
     maxChunkLength: {
@@ -3462,7 +3474,7 @@ const TRANSLATIONS = {
       tooltip: "Maximale Länge von Text-Chunks in Zeichen für das Embedding.",
     },
     apiKey: {
-      label: "API Key",
+      label: "API-Schlüssel",
       placeholder: "sk-mysecretkey",
     },
     modelSelection: {
@@ -3485,13 +3497,13 @@ const TRANSLATIONS = {
       part2: "Server. Die Stimmenliste wird live von Ihrem Server abgerufen.",
     },
     baseUrl: {
-      label: "Base URL",
+      label: "Basis-URL",
       placeholder: "http://localhost:8880/v1",
       help: "Die OpenAI-kompatible Basis-URL Ihres {{service}}-Servers.",
     },
     apiKey: {
-      label: "API Key",
-      placeholder: "Optionaler API Key",
+      label: "API-Schlüssel",
+      placeholder: "Optionaler API-Schlüssel",
       help: "Optional — nur erforderlich, wenn Sie Ihren Kokoro-Server mit Authentifizierung absichern.",
     },
     voiceModel: {
@@ -3589,6 +3601,12 @@ const TRANSLATIONS = {
       playSample: "Beispiel abspielen",
       demoText: "Hallo, willkommen bei OpenSIN Chat!",
     },
+    elevenLabs: {
+      apiKey: "ElevenLabs API-Schlüssel",
+      apiKeyPlaceholder: "ElevenLabs API-Schlüssel",
+      modelSelection: "Stimmmodellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
   },
   speechToText: {
     genericOpenAi: {
@@ -3606,6 +3624,18 @@ const TRANSLATIONS = {
       modelDescriptionPart2:
         "-Parameter, der an den Transkriptions-Endpunkt übergeben wird (z.B. ",
       modelDescriptionPart3: ").",
+    },
+    deepgram: {
+      apiKey: "Deepgram API-Schlüssel",
+      apiKeyPlaceholder: "Deepgram API-Schlüssel",
+      modelSelection: "Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
+    },
+    openAi: {
+      apiKey: "OpenAI API-Schlüssel",
+      apiKeyPlaceholder: "OpenAI API-Schlüssel",
+      modelSelection: "Modellauswahl",
+      loadingModels: "-- verfügbare Modelle werden geladen --",
     },
   },
   parsedFilesMenu: {
@@ -4721,6 +4751,140 @@ const TRANSLATIONS = {
     thoughtChain: "Gedankenkette",
     showThoughts: "Gedanken anzeigen",
     hideThoughts: "Gedanken ausblenden",
+  },
+  dockerModelRunner: {
+    baseUrlLabel: "Docker Model Runner Basis-URL",
+    autoDetect: "Automatisch erkennen",
+    baseUrlTooltip1:
+      "Geben Sie die URL ein, unter der Docker Model Runner läuft.",
+    baseUrlTooltip2a: "Docker Model Runner verwendet die",
+    baseUrlTooltip2b: "docker model",
+    baseUrlTooltip2c: "CLI zur Verwaltung lokaler Modelle.",
+    learnMore: "Mehr erfahren →",
+    baseUrlPlaceholder: "http://localhost:12434/v1",
+    modelContextWindowLabel: "Modell-Kontextfenster",
+    modelContextWindowTooltip1:
+      "Geben Sie die maximale Anzahl von Tokens an, die für das Modell-Kontextfenster verwendet werden können.",
+    modelContextWindowTooltip2a: "Verwenden Sie",
+    modelContextWindowTooltipCode: "docker model configure --context-size",
+    modelContextWindowTooltip2b:
+      "um die Kontextgröße für ein bestimmtes Modell festzulegen. Standard ist",
+    modelContextWindowTooltipCode2: "8192",
+    modelContextWindowTooltip2c: "falls nicht angegeben.",
+    contextWindowPlaceholder: "Automatisch verwaltet",
+    noModelsFound: "Keine Modelle gefunden",
+  },
+  newEmbedModal: {
+    title: "Neue Einbettung erstellen",
+    maxChatsPerDay: "Max. Chats pro Tag",
+    maxChatsPerDayHint:
+      "Begrenzen Sie die Anzahl der Chats, die dieser eingebettete Chat in 24 Stunden verarbeiten kann. Null bedeutet unbegrenzt.",
+    maxChatsPerSession: "Max. Chats pro Sitzung",
+    maxChatsPerSessionHint:
+      "Begrenzen Sie die Anzahl der Chats, die ein Sitzungsbenutzer mit dieser Einbettung in 24 Stunden senden kann. Null bedeutet unbegrenzt.",
+    messageHistoryLimit: "Nachrichtenverlaufslimit",
+    messageHistoryLimitHint:
+      "Die Anzahl der vorherigen Nachrichten, die im Chat-Kontext enthalten sein sollen. Standard ist 20.",
+    enableDynamicModel: "Dynamische Modellauswahl aktivieren",
+    enableDynamicModelHint:
+      "Ermöglicht das Festlegen des bevorzugten LLM-Modells zur Übersteuerung des Workspace-Standards.",
+    enableDynamicTemperature: "Dynamische LLM-Temperatur aktivieren",
+    enableDynamicTemperatureHint:
+      "Ermöglicht das Festlegen der LLM-Temperatur zur Übersteuerung des Workspace-Standards.",
+    enablePromptOverride: "Prompt-Übersteuerung aktivieren",
+    enablePromptOverrideHint:
+      "Ermöglicht das Festlegen des System-Prompts zur Übersteuerung des Workspace-Standards.",
+    error: "Fehler",
+    afterCreateHintBefore:
+      "Nach dem Erstellen einer Einbettung erhalten Sie einen Link, den Sie mit einem einfachen",
+    afterCreateHintAfter: "-Tag auf Ihrer Website veröffentlichen können.",
+    cancel: "Abbrechen",
+    createEmbed: "Einbettung erstellen",
+    workspace: "Workspace",
+    workspaceHint:
+      "Wählen Sie den Workspace, mit dem diese Einbettung verknüpft werden soll.",
+    allowedChatMethod: "Chat-Modus",
+    chatModeHintPart1:
+      "Der Chat-Modus liefert Antworten basierend auf dem allgemeinen Wissen des LLM und dem Dokumentkontext.",
+    chatModeHintPart2:
+      "Der Abfrage-Modus liefert Antworten nur, wenn Dokumentkontext gefunden wird.",
+    chatModeChat: "Chat",
+    chatModeQuery: "Abfrage",
+    restrictDomains: "Zulässige Domains",
+    restrictDomainsHintPart1:
+      "Beschränken Sie, welche Domains diesen eingebetteten Chat hosten dürfen.",
+    restrictDomainsHintPart2: "Leer lassen, um alle Domains zuzulassen.",
+    domainsPlaceholder: "https://beispiel.de",
+  },
+  lmStudio: {
+    embeddingAlert:
+      "Der ausgewählte LLM-Anbieter hat kein Einbettungsmodell festgelegt. Bitte legen Sie ein Einbettungsmodell in den Einbettungseinstellungen fest, um diesen Anbieter zu verwenden.",
+    manageEmbedding: "Einbettungsmodell verwalten",
+    hideAdvanced: "Ausblenden",
+    showAdvanced: "Anzeigen",
+    advancedSettings: "erweiterte Einstellungen",
+    baseUrlLabel: "LM Studio Basis-URL",
+    baseUrlTooltip: "Geben Sie die URL ein, unter der LM Studio läuft.",
+    autoDetect: "Automatisch erkennen",
+    baseUrlPlaceholder: "http://127.0.0.1:11434",
+    contextWindowLabel: "Modell-Kontextfenster",
+    contextWindowTooltip:
+      "Geben Sie die maximale Anzahl von Tokens an, die für das Modell-Kontextfenster verwendet werden können.",
+    contextWindowPlaceholder: "Automatisch verwaltet",
+    authTokenLabel: "Auth-Token",
+    authTokenTooltipPart1: "Geben Sie ein",
+    authTokenTooltipBearer: "Bearer",
+    authTokenTooltipPart2:
+      "Auth-Token für die Interaktion mit Ihrem LM Studio-Server ein.",
+    authTokenTooltipPart3:
+      "Wird nur verwendet, wenn LM Studio hinter einem Authentifizierungsserver läuft.",
+    authTokenPlaceholder: "LM Studio Auth-Token",
+    modelLabel: "LM Studio Modell",
+    modelErrorTooltip:
+      "Modelle konnten nicht vom LM Studio-Server geladen werden.",
+    loadingModels: "-- verfügbare Modelle werden geladen --",
+    noModelsFound: "Keine Modelle gefunden",
+    enterUrlFirst: "Geben Sie zuerst die LM Studio-URL ein",
+    yourLoadedModels: "Ihre geladenen Modelle",
+  },
+  localAiLlm: {
+    alertMessage:
+      "Der ausgewählte LLM-Anbieter hat kein Einbettungsmodell festgelegt. Bitte legen Sie ein Einbettungsmodell in den Einbettungseinstellungen fest, um diesen Anbieter zu verwenden.",
+    manageEmbedding: "Einbettungsmodell verwalten",
+    contextWindowLabel: "Modell-Kontextfenster",
+    contextWindowPlaceholder: "Automatisch verwaltet",
+    apiKeyLabel: "API-Schlüssel",
+    optional: "Optional",
+    apiKeyPlaceholder: "LocalAI API-Schlüssel",
+    hideAdvanced: "Ausblenden",
+    showAdvanced: "Anzeigen",
+    advancedSettings: "erweiterte Einstellungen",
+    baseUrlLabel: "LocalAI Basis-URL",
+    autoDetect: "Automatisch erkennen",
+    baseUrlPlaceholder: "http://127.0.0.1:8080",
+    modelLabel: "LocalAI Modell",
+    loadingModels: "-- verfügbare Modelle werden geladen --",
+    waitingUrl: "Geben Sie zuerst die LocalAI-URL ein",
+    yourLoadedModels: "Ihre geladenen Modelle",
+  },
+  nvidiaNim: {
+    apiKeyLabel: "NVIDIA NIM API-Schlüssel",
+    apiKeyPlaceholder: "NVIDIA NIM API-Schlüssel",
+    apiKeyHelp1: "Sie können einen API-Schlüssel erhalten von",
+    apiKeyHelpLink: "build.nvidia.com",
+    apiKeyHelp2: ".",
+    baseUrlLabel: "Basis-URL",
+    optional: "Optional",
+    baseUrlPlaceholder: "https://integrate.api.nvidia.com/v1",
+    baseUrlHelp: "Geben Sie die URL ein, unter der NVIDIA NIM läuft.",
+    modelLabel: "Modell",
+    modelPlaceholder: "ai-magnify/arctic-tts",
+    modelHelp1: "Modellname für TTS. Zum Beispiel:",
+    modelHelp2: ".",
+    voiceLabel: "Stimmmodell",
+    voicePlaceholder: "English-US.Female-1",
+    voiceHelp1: "Stimmmodell-Bezeichner. Zum Beispiel:",
+    voiceHelp2: ".",
   },
 };
 export default TRANSLATIONS;

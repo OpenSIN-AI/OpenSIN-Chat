@@ -119,7 +119,8 @@ function ToolApprovalHeader({
         </div>
       </div>
       {hasPayload && (
-        <button type="button"
+        <button
+          type="button"
           onClick={() => setIsExpanded(!isExpanded)}
           className="absolute top-4 right-4 border-none"
           aria-label={isExpanded ? t("common.hide") : t("common.show")}

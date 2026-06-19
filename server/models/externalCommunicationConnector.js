@@ -84,13 +84,51 @@ const ExternalCommunicationConnector = {
    * @returns {Promise<{connector: object|null, error: string|null}>}
    */
   updateConfig: async function (type, configUpdates = {}) {
-    const existing = await this.get(type);
-    if (!existing)
-      return { connector: null, error: `No ${type} connector found` };
+    if (!this.supportedTypes.includes(type))
+      return { connector: null, error: `Unsupported connector type: ${type}` };
 
-    const mergedConfig = { ...existing.config, ...configUpdates };
-    mergedConfig.active = existing.active;
-    return this.upsert(type, mergedConfig);
+    try {
+      // Wrap read-merge-write in a transaction to prevent concurrent
+      // updateConfig() calls from clobbering each other's merges.
+      const connector = await prisma.$transaction(async (tx) => {
+        const existing = await tx.external_communication_connectors.findUnique({
+          where: { type: String(type) },
+        });
+        if (!existing) return null;
+
+        const existingConfig = safeJsonParse(existing.config, {});
+        const mergedConfig = { ...existingConfig, ...configUpdates };
+        mergedConfig.active = existing.active;
+
+        const update = {
+          config: JSON.stringify(mergedConfig),
+          lastUpdatedAt: new Date(),
+        };
+
+        return tx.external_communication_connectors.update({
+          where: { type: String(type) },
+          data: update,
+        });
+      });
+
+      if (!connector)
+        return { connector: null, error: `No ${type} connector found` };
+
+      return {
+        connector: {
+          ...connector,
+          config: safeJsonParse(connector.config, {}),
+        },
+        error: null,
+      };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(
+        "ExternalCommunicationConnector.updateConfig",
+        error.message,
+      );
+      return { connector: null, error: error.message };
+    }
   },
 
   /**

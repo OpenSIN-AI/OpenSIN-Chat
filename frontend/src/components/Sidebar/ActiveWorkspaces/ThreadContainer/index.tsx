@@ -439,7 +439,8 @@ function NewThreadButton({ workspace, mutate }) {
   };
 
   return (
-    <button type="button"
+    <button
+      type="button"
       onClick={onClick}
       className="w-full relative flex h-[40px] items-center border-none hover:bg-[var(--theme-sidebar-thread-selected)] light:hover:bg-slate-300 hover:light:bg-theme-sidebar-subitem-hover rounded-lg"
     >
@@ -495,7 +496,8 @@ function NewFolderButton({ workspace, onCreated }) {
   };
 
   return (
-    <button type="button"
+    <button
+      type="button"
       onClick={onClick}
       className="w-full relative flex h-[40px] items-center border-none hover:bg-[var(--theme-sidebar-thread-selected)] light:hover:bg-slate-300 rounded-lg"
     >
