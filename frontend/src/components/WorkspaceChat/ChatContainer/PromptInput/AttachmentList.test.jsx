@@ -10,7 +10,16 @@ vi.mock("react-i18next", async () => {
   return createI18nMock();
 });
 
-;
+vi.mock("@phosphor-icons/react/dist/csr/CircleNotch", () => ({ default: (props) => <span {...props}>Spinner</span>, CircleNotch: (props) => <span {...props}>Spinner</span> }));
+vi.mock("@phosphor-icons/react/dist/csr/WarningOctagon", () => ({ default: (props) => <span {...props}>Warning</span>, WarningOctagon: (props) => <span {...props}>Warning</span> }));
+vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="remove-icon" {...props} />, X: (props) => <svg data-testid="remove-icon" {...props} /> }));
+vi.mock("@phosphor-icons/react/dist/csr/FilePdf", () => ({ default: (props) => <span {...props}>PdfIcon</span>, FilePdf: (props) => <span {...props}>PdfIcon</span> }));
+vi.mock("@phosphor-icons/react/dist/csr/FileCsv", () => ({ default: (props) => <span {...props}>CsvIcon</span>, FileCsv: (props) => <span {...props}>CsvIcon</span> }));
+vi.mock("@phosphor-icons/react/dist/csr/FileHtml", () => ({ default: (props) => <span {...props}>HtmlIcon</span>, FileHtml: (props) => <span {...props}>HtmlIcon</span> }));
+vi.mock("@phosphor-icons/react/dist/csr/FileCode", () => ({ default: (props) => <span {...props}>CodeIcon</span>, FileCode: (props) => <span {...props}>CodeIcon</span> }));
+vi.mock("@phosphor-icons/react/dist/csr/FileImage", () => ({ default: (props) => <span {...props}>ImageIcon</span>, FileImage: (props) => <span {...props}>ImageIcon</span> }));
+vi.mock("@phosphor-icons/react/dist/csr/FileText", () => ({ default: (props) => <span {...props}>TextIcon</span>, FileText: (props) => <span {...props}>TextIcon</span> }));
+vi.mock("@phosphor-icons/react/dist/csr/FileDoc", () => ({ default: (props) => <span {...props}>DocIcon</span>, FileDoc: (props) => <span {...props}>DocIcon</span> }));
 
 vi.mock("@/components/ImageLightbox", () => ({
   openImageLightbox: vi.fn(),

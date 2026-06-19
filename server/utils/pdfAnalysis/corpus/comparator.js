@@ -26,7 +26,7 @@
  *     dass ein einzelner Prompt das Context-Window des LLM sprengt.
  */
 const { chat, parseJson } = require("../llm");
-const { asyncPool } = require("./index");
+const { asyncPool } = require("./asyncPool");
 
 const CONFLICT_SYSTEM = `Du bist ein forensischer Dokument-Vergleichsanalyst.
 Du erhältst Kernbefunde aus MEHREREN Dokumenten (jeweils mit Dokumentname und Seitenverweisen).

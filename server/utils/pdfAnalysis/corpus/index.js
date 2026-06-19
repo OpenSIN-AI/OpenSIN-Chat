@@ -21,6 +21,7 @@ const { v4: uuidv4 } = require("uuid");
 const config = require("../config");
 const { getStoragePath } = require("../../paths");
 const { PdfAnalysisPipeline } = require("../index");
+const { asyncPool } = require("./asyncPool");
 const { compareCorpus } = require("./comparator");
 
 // Korpus-Doc-Parallelität kommt aus der zentralen Config (ENV:
@@ -36,45 +37,6 @@ const MAX_COMPLETED_JOBS = Number(
 
 const jobs = new Map();
 
-/**
- * asyncPool — minimaler Promise-Semaphor (kein p-limit-Dependency nötig).
- *
- * Ruft iteratorFn für jedes Element von `array` auf, lässt höchstens
- * `poolLimit` Promises gleichzeitig laufen, gibt alle Ergebnisse in
- * Eingabereihenfolge zurück. Fehler in iteratorFn werden durchgereicht
- * (Promise.all am Ende wirft beim ersten Fehler).
- *
- * @template T, R
- * @param {number} poolLimit Maximal gleichzeitig laufende iterator-Aufrufe.
- * @param {readonly T[]} array Eingabe-Liste.
- * @param {(item: T, index: number) => Promise<R>} iteratorFn
- * @returns {Promise<R[]>}
- */
-async function asyncPool(poolLimit, array, iteratorFn) {
-  // Defensiv: bei poolLimit<=0 oder leerem Array sofort auflösen.
-  const limit = Math.max(1, Math.floor(poolLimit) || 1);
-  const ret = [];
-  const executing = new Set();
-  for (let i = 0; i < array.length; i++) {
-    // Iterator-Funktion "in eine Promise verpacken", damit .then(cb) sicher ist
-    // und iteratorFn auch synchron returnen darf (z. B. throws werden zu rejection).
-    const p = Promise.resolve()
-      .then(() => iteratorFn(array[i], i))
-      .finally(() => {
-        executing.delete(p);
-      });
-    ret.push(p);
-    executing.add(p);
-    if (executing.size >= limit) {
-      // Auf den ersten Abschluss warten, dann nächste Iteration freigeben.
-      // Promise.race statt Promise.any: wirft, sobald irgendeiner wirft;
-      // das ist OK, weil das Endergebnis ohnehin über Promise.all(ret) läuft
-      // und Konsumenten mit try/catch arbeiten.
-      await Promise.race(executing);
-    }
-  }
-  return Promise.all(ret);
-}
 
 function persistCorpusJob(job) {
   fs.mkdirSync(CORPUS_JOBS_DIR, { recursive: true });

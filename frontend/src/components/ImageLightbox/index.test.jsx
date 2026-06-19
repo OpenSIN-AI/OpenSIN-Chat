@@ -48,7 +48,7 @@ describe("ImageLightbox", () => {
         0,
       );
     });
-    expect(screen.getByLabelText("Close lightbox")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Close lightbox" })).toBeInTheDocument();
   });
 
   it("closes when close button is clicked", () => {
@@ -60,7 +60,7 @@ describe("ImageLightbox", () => {
       );
     });
     expect(screen.getByRole("img")).toBeInTheDocument();
-    fireEvent.click(screen.getByLabelText("Close lightbox"));
+    fireEvent.click(screen.getByRole("button", { name: "Close lightbox" }));
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
   });
 

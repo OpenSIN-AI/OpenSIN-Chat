@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Web push notification endpoints (web-push)
+
+Closes the long-broken `/web-push/*` surface so the frontend
+`useWebPushNotifications` hook (already shipped) and the Vitest
+suites `tests/webPush.test.js` + `tests/notifications.test.js`
+finally have a working backend.
+
+- `server/utils/PushNotifications/index.js` — new
+  `pushNotificationService` singleton. VAPID keys auto-generated
+  via `web-push` (`generateVAPIDKeys()`) on first request and
+  persisted to `server/storage/push-notifications/vapid-keys.json`
+  (atomic temp+rename). Subscriptions persist as a JSON array at
+  `server/storage/push-notifications/subscriptions.json`. The
+  service registers/upserts/unsubscribes by `endpoint`, lists per
+  user, and sends via `webpush.sendNotification` — automatically
+  purging dead endpoints on HTTP 404/410.
+- `server/endpoints/webPush.js` — registers five endpoints on the
+  global `apiRouter`:
+  - `GET  /web-push/pubkey`       → `{ publicKey }` (no auth)
+  - `POST /web-push/subscribe`    → `201 { success, id }` (auth)
+  - `POST /web-push/unsubscribe`  → `200 { success, removed }`
+  - `GET  /web-push/subscriptions`→ `200 { subscriptions: [] }`
+  - `POST /web-push/send`         → `200 { success, delivered, total }`
+- `server/app.js` — wired `webPushEndpoints(apiRouter)` next to
+  `providerStatusEndpoints` (immediately before `logBootDiagnostics`).
+- `server/package.json` — added `web-push ^3.6.7` (MIT).
+
+**Storage layout (gitignored under `storage/push-notifications/*`)**:
+- `vapid-keys.json` — `{ publicKey, privateKey }`, generated once,
+  reused across restarts.
+- `subscriptions.json` — `{ subscriptions: [{ id, userId, endpoint,
+  p256dh, auth, createdAt, updatedAt }, …] }`.
+
+**Prisma migration is deferred.** The persistence layer is
+intentionally a file store so this ships without a DB schema bump.
+Migrating `subscriptions.json` → a `web_push_subscriptions` Prisma
+model is left for a follow-up release that bundles the migration +
+a back-fill script. The service interface is stable; only the
+storage primitive will swap.
+
 ### Incident — 2026-06-17 — Cloudflare Error 1033 on sinchat.delqhi.com
 
 A fresh-out outage surfaced a structural gap: `cloudflared` had died

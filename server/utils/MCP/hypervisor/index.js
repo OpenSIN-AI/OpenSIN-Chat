@@ -138,9 +138,10 @@ class MCPHypervisor {
       try {
         const stat = fs.statSync(this.mcpServerJSONPath);
         if (stat.mode & 0o077) {
-          throw new Error(
-            `Refusing to read ${this.mcpServerJSONPath} with permissive mode ${(stat.mode & 0o777).toString(8)}`,
+          this.log(
+            `Fixing permissions on ${this.mcpServerJSONPath} from ${(stat.mode & 0o777).toString(8)} to 0600`,
           );
+          fs.chmodSync(this.mcpServerJSONPath, 0o600);
         }
       } catch (e) {
         if (e.code !== "ENOENT") throw e;

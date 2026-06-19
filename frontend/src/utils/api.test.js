@@ -55,7 +55,7 @@ describe("api utilities", () => {
       } catch (e) {
         expect(e).toBeInstanceOf(ApiError);
         expect(e.status).toBe(404);
-        expect(e.message).toContain("404");
+        expect(e.message).toContain("not found");
       }
     });
 
@@ -82,7 +82,9 @@ describe("api utilities", () => {
         "/api/items",
         expect.objectContaining({
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: expect.objectContaining({
+            "Content-Type": "application/json",
+          }),
           body: JSON.stringify(payload),
         }),
       );
@@ -124,7 +126,9 @@ describe("api utilities", () => {
         "/api/items/1",
         expect.objectContaining({
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: expect.objectContaining({
+            "Content-Type": "application/json",
+          }),
           body: JSON.stringify(payload),
         }),
       );

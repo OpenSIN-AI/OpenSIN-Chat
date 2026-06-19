@@ -9,19 +9,47 @@
 // `regeneratorRuntime is not defined` regression that took down the whole
 // React tree before the `regenerator-runtime` polyfill was added to main.tsx).
 import { expect } from "@playwright/test";
+import fs from "fs";
+import path from "path";
+import os from "os";
+
+const TOKEN_CACHE_FILE = path.join(os.tmpdir(), "opensin-chat-e2e-token.txt");
 
 /**
  * Authenticate against the running backend (single-user mode) and return the
  * JWT. Username "admin" with an empty password matches the default dev/prod
  * single-user configuration.
+ *
+ * Checks a temp-file token cache first to avoid hitting the production rate
+ * limiter when multiple test files call login() in quick succession. The
+ * cache is written by _token-cache.js::sharedLogin on the first successful
+ * login and is valid for ~30 days (JWT exp).
  */
 export async function login(request) {
+  // Try cached token first (shared across test files via temp file)
+  try {
+    if (fs.existsSync(TOKEN_CACHE_FILE)) {
+      const cached = fs.readFileSync(TOKEN_CACHE_FILE, "utf-8").trim();
+      if (cached && cached.length > 20) return cached;
+    }
+  } catch {
+    // ignore read errors
+  }
+
   const response = await request.post("/api/request-token", {
     data: { username: "admin", password: "" },
   });
   expect(response.ok()).toBeTruthy();
   const { token } = await response.json();
   expect(token).toBeTruthy();
+
+  // Cache the token for subsequent calls
+  try {
+    fs.writeFileSync(TOKEN_CACHE_FILE, token);
+  } catch {
+    // ignore write errors
+  }
+
   return token;
 }
 

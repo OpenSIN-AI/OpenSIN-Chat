@@ -234,12 +234,12 @@ describe("Citation", () => {
 
     it("renders github icon for github type", () => {
       const { container } = render(<SourceTypeCircle type="github" />);
-      expect(container.querySelector("span")).toHaveTextContent("GH");
+      expect(container.querySelector('[data-testid="phosphor-githublogo-icon"]')).toBeInTheDocument();
     });
 
     it("renders youtube icon for youtube type", () => {
       const { container } = render(<SourceTypeCircle type="youtube" />);
-      expect(container.querySelector("span")).toHaveTextContent("YT");
+      expect(container.querySelector('[data-testid="phosphor-youtubelogo-icon"]')).toBeInTheDocument();
     });
   });
 

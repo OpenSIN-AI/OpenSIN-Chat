@@ -55,6 +55,7 @@ describe("securityHeaders", () => {
     const csp = res.headers["Content-Security-Policy"];
     expect(csp).toBeDefined();
     expect(csp).toContain("default-src 'self'");
+    expect(csp).toContain("font-src 'self' data:");
     expect(csp).toContain("frame-ancestors 'none'");
   });
 

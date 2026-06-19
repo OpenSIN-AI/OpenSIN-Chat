@@ -8,6 +8,7 @@ vi.mock("react-i18next", async () => {
 });
 
 vi.mock("@phosphor-icons/react/dist/csr/X", () => ({ default: (props) => <svg data-testid="x-icon" {...props} />, X: (props) => <svg data-testid="x-icon" {...props} /> }));;
+vi.mock("@phosphor-icons/react/dist/csr/CaretRight", () => ({ default: (props) => <svg data-testid="caret-right-icon" {...props} />, CaretRight: (props) => <svg data-testid="caret-right-icon" {...props} /> }));
 
 vi.mock("@/utils/paths", () => ({
   default: {

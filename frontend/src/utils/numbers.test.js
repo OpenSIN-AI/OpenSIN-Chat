@@ -107,17 +107,16 @@ describe("utils/numbers – toPercentString", () => {
   });
 
   it("respects the decimals argument on the integer part of the percent", () => {
-    // toPercentString uses Math.round first, THEN toFixed — so the decimal
-    // argument only affects trailing zeros / width, not the precision of the
-    // rounding itself. 0.1234 * 100 = 12.34 → round to 12 → "12.00%".
-    expect(toPercentString(0.1234, 2)).toBe("12.00%");
+    // toPercentString uses toFixed directly when decimals > 0 (no pre-rounding).
+    // 0.1234 * 100 = 12.34 → toFixed(2) → "12.34%".
+    expect(toPercentString(0.1234, 2)).toBe("12.34%");
   });
 
   it("respects the decimals argument for values that round to a tenths/decimal place", () => {
-    // 0.125 * 100 = 12.5 → round to 13 (half-up), decimals default 0.
+    // 0.125 * 100 = 12.5 → Math.round (decimals=0) → "13%".
     expect(toPercentString(0.125, 0)).toBe("13%");
-    // Same rounding, padded to 2 decimals.
-    expect(toPercentString(0.125, 2)).toBe("13.00%");
+    // Same value, decimals=2 → toFixed(2) → "12.50%".
+    expect(toPercentString(0.125, 2)).toBe("12.50%");
   });
 
   it("uses 0 decimals when decimals is 0 explicitly", () => {

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect } from "vitest";
-import dayjs from "dayjs";
 import {
   formatDate,
   formatDateTimeAsMoment,
@@ -16,21 +15,14 @@ describe("formatDate", () => {
     expect(result).toMatch(/2025/);
   });
 
-  it("falls back to today for invalid date", () => {
-    const today = new Date().toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-    expect(formatDate("not-a-date")).toBe(today);
+  it("falls back to em-dash for invalid date", () => {
+    expect(formatDate("not-a-date")).toBe("—");
   });
 });
 
 describe("formatDateTimeAsMoment", () => {
-  it("returns current moment for null input", () => {
-    const result = formatDateTimeAsMoment(null, "YYYY-MM-DD");
-    const today = dayjs().format("YYYY-MM-DD");
-    expect(result).toBe(today);
+  it("returns em-dash for null input", () => {
+    expect(formatDateTimeAsMoment(null, "YYYY-MM-DD")).toBe("—");
   });
 
   it("formats a valid date with the given format", () => {
@@ -38,9 +30,8 @@ describe("formatDateTimeAsMoment", () => {
     expect(result).toBe("2025-06-08");
   });
 
-  it('returns "Invalid Date" for unparseable input (dayjs does not throw)', () => {
-    const result = formatDateTimeAsMoment("garbage", "YYYY-MM-DD");
-    expect(result).toBe("Invalid Date");
+  it('returns em-dash for unparseable input (dayjs does not throw)', () => {
+    expect(formatDateTimeAsMoment("garbage", "YYYY-MM-DD")).toBe("—");
   });
 });
 

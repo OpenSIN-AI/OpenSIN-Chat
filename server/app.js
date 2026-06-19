@@ -57,6 +57,7 @@ const {
 const { memoryEndpoints } = require("./endpoints/memory");
 const { providerStatusEndpoints } = require("./endpoints/providerStatus");
 const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
+const { webPushEndpoints } = require("./endpoints/webPush");
 const { httpLogger } = require("./middleware/httpLogger");
 const { securityHeaders } = require("./utils/middleware/securityHeaders");
 
@@ -163,6 +164,7 @@ function buildApp() {
   pdfAnalysisEndpoints(apiRouter);
   memoryEndpoints(apiRouter);
   providerStatusEndpoints(apiRouter);
+  webPushEndpoints(apiRouter);
   logBootDiagnostics();
   embeddedEndpoints(apiRouter);
   browserExtensionEndpoints(apiRouter);

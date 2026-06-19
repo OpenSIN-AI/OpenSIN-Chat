@@ -192,7 +192,7 @@ describe("Chartable", () => {
 
   it("renders download button", () => {
     render(<Chartable {...makeProps("area")} />);
-    expect(screen.getByText("Download")).toBeInTheDocument();
+    expect(screen.getByLabelText("Download graph")).toBeInTheDocument();
   });
 
   it("renders caption when provided", () => {
@@ -234,7 +234,7 @@ describe("Chartable", () => {
   it("triggers download when the download button is clicked", async () => {
     const user = userEvent.setup();
     render(<Chartable {...makeProps("area")} />);
-    await user.click(screen.getByText("Download"));
+    await user.click(screen.getByLabelText("Download graph"));
     await waitFor(() => expect(mockGetDivJpeg).toHaveBeenCalledTimes(1));
     expect(saveAs).toHaveBeenCalledWith(
       "blob",
@@ -246,7 +246,7 @@ describe("Chartable", () => {
     const user = userEvent.setup();
     mockGetDivJpeg.mockImplementation(() => new Promise(() => {}));
     render(<Chartable {...makeProps("area")} />);
-    await user.click(screen.getByText("Download"));
+    await user.click(screen.getByLabelText("Download graph"));
     await waitFor(() =>
       expect(screen.getByLabelText("Downloading chart...")).toBeInTheDocument(),
     );

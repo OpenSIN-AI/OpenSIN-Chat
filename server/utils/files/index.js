@@ -431,9 +431,10 @@ function hasVectorCachedFiles() {
       fs.readdirSync(vectorCachePath)?.filter((name) => name.endsWith(".json"))
         .length !== 0
     );
-  } catch {
-    // eslint-disable-next-line no-console
-    console.error("Error reading vector cache directory");
+  } catch (e) {
+    if (e.code !== "ENOENT") {
+      console.error("Error reading vector cache directory:", e.message);
+    }
   }
   return false;
 }
