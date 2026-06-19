@@ -857,14 +857,14 @@
                     "error": null,
                     "documents": [
                       {
-                        "location": "custom-documents/openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "name": "openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/openafd.txt",
-                        "title": "openafd.txt",
+                        "location": "custom-documents/opensin.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
+                        "name": "opensin.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
+                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/opensin.txt",
+                        "title": "opensin.txt",
                         "docAuthor": "Unknown",
                         "description": "Unknown",
                         "docSource": "a text file uploaded by the user.",
-                        "chunkSource": "openafd.txt",
+                        "chunkSource": "opensin.txt",
                         "published": "1/16/2024, 3:07:00 PM",
                         "wordCount": 93,
                         "token_count_estimate": 115
@@ -964,14 +964,14 @@
                     "error": null,
                     "documents": [
                       {
-                        "location": "custom-documents/openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "name": "openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/openafd.txt",
-                        "title": "openafd.txt",
+                        "location": "custom-documents/opensin.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
+                        "name": "opensin.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
+                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/opensin.txt",
+                        "title": "opensin.txt",
                         "docAuthor": "Unknown",
                         "description": "Unknown",
                         "docSource": "a text file uploaded by the user.",
-                        "chunkSource": "openafd.txt",
+                        "chunkSource": "opensin.txt",
                         "published": "1/16/2024, 3:07:00 PM",
                         "wordCount": 93,
                         "token_count_estimate": 115
@@ -1077,7 +1077,7 @@
                         "docAuthor": "no author found",
                         "description": "No description found.",
                         "docSource": "URL link uploaded by the user.",
-                        "chunkSource": "https:openafd.com.html",
+                        "chunkSource": "https:opensin.ai.html",
                         "published": "1/16/2024, 3:46:33 PM",
                         "wordCount": 252,
                         "pageContent": "OpenSIN Chat is the best....",
@@ -1120,7 +1120,7 @@
               "schema": {
                 "type": "object",
                 "example": {
-                  "link": "https://openafd.com",
+                  "link": "https://opensin.ai",
                   "addToWorkspaces": "workspace1,workspace2",
                   "scraperHeaders": {
                     "Authorization": "Bearer token123",
@@ -2265,7 +2265,7 @@
                   "custom-documents/my-pdf.pdf-hash.json"
                 ],
                 "deletes": [
-                  "custom-documents/openafd.txt-hash.json"
+                  "custom-documents/opensin.txt-hash.json"
                 ]
               }
             }
@@ -2357,7 +2357,7 @@
                     "textResponse": "Response to your query",
                     "sources": [
                       {
-                        "title": "openafd.txt",
+                        "title": "opensin.txt",
                         "chunk": "This is a context chunk used in the answer of the prompt by the LLM,"
                       }
                     ],
@@ -2466,7 +2466,7 @@
                       "textResponse": "final chunk of LLM output!",
                       "sources": [
                         {
-                          "title": "openafd.txt",
+                          "title": "opensin.txt",
                           "chunk": "This is a context chunk used in the answer of the prompt by the LLM. This will only return in the final chunk."
                         }
                       ],
@@ -3232,7 +3232,7 @@
                     "textResponse": "Response to your query",
                     "sources": [
                       {
-                        "title": "openafd.txt",
+                        "title": "opensin.txt",
                         "chunk": "This is a context chunk used in the answer of the prompt by the LLM."
                       }
                     ],
@@ -3346,7 +3346,7 @@
                       "textResponse": "final chunk of LLM output!",
                       "sources": [
                         {
-                          "title": "openafd.txt",
+                          "title": "opensin.txt",
                           "chunk": "This is a context chunk used in the answer of the prompt by the LLM. This will only return in the final chunk."
                         }
                       ],

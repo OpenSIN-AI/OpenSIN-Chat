@@ -1,6 +1,6 @@
 [
   {
-    "thumbnail_url": "https://cdn.openafd.com/support/announcements/assets/private-browsing.png",
+    "thumbnail_url": "https://cdn.opensin.delqhi.com/support/announcements/assets/private-browsing.png",
     "title": "Private Web Scraping",
     "short_description": "Scrape private, gated, or authenticated websites using the browser tool.",
     "goto": "https://docs.opensin.delqhi.com/features/browser-tool",
@@ -8,7 +8,7 @@
     "date": "July 8, 2025"
   },
   {
-    "thumbnail_url": "https://cdn.openafd.com/support/announcements/assets/mobile.png",
+    "thumbnail_url": "https://cdn.opensin.delqhi.com/support/announcements/assets/mobile.png",
     "title": "OpenSIN Chat Mobile Beta",
     "short_description": "OpenSIN Chat on-device, offline, and private. Syncs with OpenSIN Chat.",
     "goto": "https://docs.google.com/forms/d/e/1FAIpQLSdrMRCUXVDWKrtNTcHzVcHQk_SRoiT8X8tiawTFtAhjMq_L6Q/viewform",
@@ -18,7 +18,7 @@
   {
     "title": "Community Hub updates",
     "short_description": "You can now easily push and pull Agent Flows, System Prompts, and more to the OpenSIN Chat Community Hub.",
-    "goto": "https://hub.openafd.com",
+    "goto": "https://hub.opensin.delqhi.com",
     "author": "OpenSIN Chat",
     "date": "June 25, 2025"
   }

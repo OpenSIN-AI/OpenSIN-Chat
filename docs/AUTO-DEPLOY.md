@@ -51,7 +51,7 @@ cat logs/auto-deploy.log
 
 ### 3b. Per launchd (empfohlen auf dem Mac, überlebt Reboots sauberer)
 
-Datei `~/Library/LaunchAgents/com.openafd.autodeploy.plist` anlegen:
+Datei `~/Library/LaunchAgents/com.opensin.autodeploy.plist` anlegen:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -59,7 +59,7 @@ Datei `~/Library/LaunchAgents/com.openafd.autodeploy.plist` anlegen:
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openafd.autodeploy</string>
+    <string>com.opensin.autodeploy</string>
     <key>ProgramArguments</key>
     <array>
         <string>/pfad/zu/OpenSIN-Chat/scripts/auto-deploy.sh</string>

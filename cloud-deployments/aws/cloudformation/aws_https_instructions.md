@@ -102,9 +102,9 @@ These instructions are for CLI configuration and assume you are logged in to EC2
 ## Step 9: Generate/install cert
 These instructions are for CLI configuration and assume you are logged in to EC2 instance as the ec2-user.
 1. $sudo certbot --nginx -d [Insert FQDN here] 
-    Example command: $sudo certbot --nginx -d openafd.exampleorganization.org
+    Example command: $sudo certbot --nginx -d opensin.exampleorganization.org
     This command will generate the appropriate certificate files, write the files to /etc/letsencrypt/live/yourFQDN, and make updates to the nginx
-    configuration file for openafd located at /etc/nginx/conf.d/anything.llm
+    configuration file for opensin-chat located at /etc/nginx/conf.d/anything.llm
 3. Enter the email address you would like to use for updates.
 4. Accept the terms of service.
 5. Accept or decline to receive communication from LetsEncrypt.

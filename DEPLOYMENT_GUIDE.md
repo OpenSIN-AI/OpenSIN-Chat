@@ -75,7 +75,7 @@ NODE_ENV=development PORT=8000 node index.js
 #### Option 2: Docker Deploy (Production)
 ```bash
 # Use official OpenSIN Chat Docker image
-docker run -v openafd:/app/server/storage -p 3001:3001 openafd/openafd:latest
+docker run -v opensin-chat:/app/server/storage -p 3001:3001 ghcr.io/opensin-ai/opensin-chat:latest
 
 # Access at http://localhost:3001
 ```

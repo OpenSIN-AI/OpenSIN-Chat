@@ -16,7 +16,7 @@
 
 ## Logo
 
-- **Vollformat:** `images/wordmark.svg` (mit "AfD CHAT" links + "OpenAfD" rechts)
+- **Vollformat:** `images/wordmark.svg` (mit "OpenSIN" als Wordmark)
 - **Icon:** `frontend/src/media/logo/openafd-icon.svg` (für Sidebar, Favicon, App-Icon)
 - **Login-Illustration:** `frontend/src/media/illustrations/login-logo.svg`
 

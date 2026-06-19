@@ -1,6 +1,6 @@
 [
   {
-    "thumbnail_url": "https://cdn.openafd.com/support/announcements/assets/meeting-assistant.png",
+    "thumbnail_url": "https://cdn.opensin.delqhi.com/support/announcements/assets/meeting-assistant.png",
     "title": "Meeting Assistant",
     "short_description": "Transcribe meetings and generate meeting notes entirely on device.",
     "goto": "https://docs.opensin.delqhi.com/meeting-assistant/introduction",
@@ -8,10 +8,10 @@
     "date": "January 21, 2026"
   },
   {
-    "thumbnail_url": "https://cdn.openafd.com/support/announcements/assets/mobile.png",
+    "thumbnail_url": "https://cdn.opensin.delqhi.com/support/announcements/assets/mobile.png",
     "title": "OpenSIN Chat Mobile",
     "short_description": "OpenSIN Chat Mobile is now available on the Google Play Store.",
-    "goto": "https://play.google.com/store/apps/details?id=com.openafd",
+    "goto": "https://play.google.com/store/apps/details?id=com.opensin.chat",
     "author": "OpenSIN Chat",
     "date": "January 5, 2026"
   },

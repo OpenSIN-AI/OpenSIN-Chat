@@ -10,7 +10,7 @@ With an AWS account you can easily deploy a private OpenSIN Chat instance on AWS
 
 ![Create Stack](../../../images/screenshots/create_stack.png)
 
-5. Use the file `cloudformation_create_openafd.json` as your JSON template.
+5. Use the file `cloudformation_create_opensin_chat.json` as your JSON template.
 
 ![Upload Stack](../../../images/screenshots/upload.png)
 

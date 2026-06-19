@@ -39,7 +39,7 @@ const SAFE_INHERITED_ENV_KEYS = new Set([
 ]);
 
 const RESERVED_ENV_OVERRIDE =
-  /^(JWT_|AUTH_TOKEN|DATABASE_URL|DB_|ANYTHINGLLM_AUTH_TOKEN|.*_KEY$|.*_SECRET$|.*_TOKEN$)/i;
+  /^(JWT_|AUTH_TOKEN|DATABASE_URL|DB_|OPENSIN_CHAT_AUTH_TOKEN|.*_KEY$|.*_SECRET$|.*_TOKEN$)/i;
 
 function buildSafeBaseEnv(processEnv = process.env) {
   const out = {};

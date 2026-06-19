@@ -1,4 +1,13 @@
 // SPDX-License-Identifier: MIT
+// react-speech-recognition (split into the "vendor-speech" chunk) is a
+// babel-compiled CJS library that references the global `regeneratorRuntime`
+// at module-evaluation time. Vite 8/Rolldown no longer injects that polyfill
+// automatically, so the production build crashed with
+// "regeneratorRuntime is not defined" the moment the workspace chat chunk
+// loaded — taking down the whole app with an "Unexpected Application Error!".
+// Importing the runtime as the very first entry-chunk statement guarantees the
+// global is defined before any lazy vendor chunk that depends on it evaluates.
+import "regenerator-runtime/runtime";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

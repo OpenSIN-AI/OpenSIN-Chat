@@ -1,100 +1,33 @@
 // SPDX-License-Identifier: MIT
 // Purpose: End-to-end test for the chat upload/attachment flow.
 // Docs: frontend/tests/e2e/README.doc.md
+//
+// NOTE: This spec is correct as written. If it fails with a generic
+// "getByTestId('attach-item-trigger') not found" timeout, the root cause is a
+// production build crash (the app never mounts), NOT the selector. The
+// `assertAppLoaded` guard in _helpers.js surfaces such crashes with the real
+// exception (e.g. "regeneratorRuntime is not defined"). See main.tsx for the
+// regenerator-runtime polyfill that fixes the production bundle.
 import { test, expect } from "@playwright/test";
 import path from "path";
 import { fileURLToPath } from "url";
+import { bootstrapWorkspaceChat } from "./_helpers.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-/**
- * Authenticate against the running backend and return the JWT token.
- *
- * Uses the same credentials as the existing sidebar-tabs repro script:
- * username "admin" with no password. This matches the single-user mode the
- * dev server is running in.
- */
-async function login(request) {
-  const response = await request.post("/api/request-token", {
-    data: { username: "admin", password: "" },
-  });
-  expect(response.ok()).toBeTruthy();
-  const { token } = await response.json();
-  expect(token).toBeTruthy();
-  return token;
-}
-
-/**
- * Create a workspace via the API so the test has a real workspace slug to
- * navigate to. The home page does not auto-create a workspace on initial load,
- * so we set one up explicitly.
- */
-async function createWorkspace(request, token) {
-  const response = await request.post("/api/workspace/new", {
-    headers: { Authorization: `Bearer ${token}` },
-    data: { name: `e2e-upload-${Date.now()}` },
-  });
-  expect(response.ok()).toBeTruthy();
-  const { workspace } = await response.json();
-  expect(workspace?.slug).toBeTruthy();
-  return workspace.slug;
-}
-
-/**
- * Seed the browser session with the auth token and preferred locale before
- * loading the application so the PrivateRoute lets us through.
- *
- * Using `page.addInitScript` guarantees the localStorage values are present
- * before any application code reads them, avoiding an unauthenticated flash or
- * redirect.
- */
-async function seedSession(page, token) {
-  await page.addInitScript((t) => {
-    window.localStorage.setItem("openafd_authToken", t);
-    window.localStorage.setItem(
-      "openafd_user",
-      JSON.stringify({ username: "admin" }),
-    );
-    window.localStorage.setItem("openafd-demo-unlocked", "1");
-    window.localStorage.setItem("i18nextLng", "en");
-  }, token);
-}
-
-/**
- * Intercept the frontend onboarding check so the PrivateRoute does not
- * redirect to the onboarding flow. This works around a dev-server issue where
- * `POST /api/onboarding` returns 200 but does not persist the onboarding flag.
- */
-async function mockOnboardingCheck(page) {
-  await page.route("/api/onboarding", async (route) => {
-    await route.fulfill({
-      status: 200,
-      contentType: "application/json",
-      body: JSON.stringify({ onboardingComplete: true }),
-    });
-  });
-}
 
 test.describe("upload attachment flow", () => {
   test("opens the AddSourceMenu and uploads an image attachment", async ({
     page,
     request,
   }) => {
-    const token = await login(request);
-    const slug = await createWorkspace(request, token);
-    await seedSession(page, token);
-    await mockOnboardingCheck(page);
-
-    // Navigate to the chat page for a real workspace.
-    await page.goto(`/workspace/${slug}`, { waitUntil: "networkidle" });
-
-    // Wait for the chat composer to be ready.
-    const attachButton = page.getByTestId("attach-item-trigger");
-    await expect(attachButton).toBeVisible();
+    await bootstrapWorkspaceChat(page, request, { waitFor: "attach" });
 
     // Open the v0-style AddSourceMenu.
+    const attachButton = page.getByTestId("attach-item-trigger");
+    await expect(attachButton).toBeVisible();
     await attachButton.click();
+
     const menu = page.getByRole("menu", { name: /add files/i });
     await expect(menu).toBeVisible();
 
@@ -106,8 +39,8 @@ test.describe("upload attachment flow", () => {
     await uploadMenuItem.click();
 
     // Simulate the native file picker by setting the file directly on the
-    // hidden dropzone input. This is the standard Playwright pattern for
-    // testing file uploads without a real OS dialog.
+    // hidden dropzone input — the standard Playwright pattern for file
+    // uploads without a real OS dialog.
     const fixturePath = path.join(
       __dirname,
       "..",
@@ -117,8 +50,8 @@ test.describe("upload attachment flow", () => {
     const fileInput = page.locator("input#dnd-chat-file-uploader");
     await fileInput.setInputFiles(fixturePath);
 
-    // Verify the attachment appears in the prompt input area.
-    // Image attachments render as a preview <img> with the file name in the alt
+    // Verify the attachment appears in the prompt input area. Image
+    // attachments render as a preview <img> with the file name in the alt
     // text and as a tooltip on the wrapping element.
     const imageAttachment = page.locator('img[alt*="test-image.png"]');
     await expect(imageAttachment).toBeVisible({ timeout: 10000 });

@@ -1,4 +1,4 @@
-# openafd
+# opensin-chat
 
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.85.0](https://img.shields.io/badge/AppVersion-1.85.0-informational?style=flat-square)
 
@@ -57,7 +57,7 @@ Notes:
 
 ```yaml
 image:
-  repository: openafd/openafd
+  repository: opensin/opensin-chat
   tag: "1.13.0"
 
 service:
@@ -78,7 +78,7 @@ persistentVolume:
 Install with:
 
 ```
-helm install my-openafd ./openafd -f values-secret.yaml
+helm install my-opensin-chat ./opensin-chat -f values-secret.yaml
 ```
 
 **Best practices & tips**
@@ -103,7 +103,7 @@ helm install my-openafd ./openafd -f values-secret.yaml
 | envFrom | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"openafd/openafd"` |  |
+| image.repository | string | `"opensin/opensin-chat"` |  |
 | image.tag | string | `"1.13.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |

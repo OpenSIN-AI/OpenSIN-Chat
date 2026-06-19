@@ -140,6 +140,12 @@ ALLOWED_FILES=(
   #    require('@mintplex-labs/express-ws') — upstream WebSocket layer used as-is.
   "server/endpoints/agentWebsocket.js"
 
+  # ── Terminal endpoint — legacy path redaction ──────────
+  #    terminalExec.js redacts /var/lib/anythingllm from command output so
+  #    that legacy Docker installations upgrading to OpenSIN-Chat don't leak
+  #    their host storage path. The path is a backward-compat security redaction.
+  "server/endpoints/utils/terminalExec.js"
+
   # ── Collector package.json — upstream NPM dep ────────
   #    epub2: "git+https://github.com/Mintplex-Labs/epub2-static.git#main"
   #    Upstream EPUB parsing package we use as-is.

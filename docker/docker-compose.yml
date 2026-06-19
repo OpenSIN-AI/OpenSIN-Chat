@@ -24,7 +24,7 @@ services:
       - "../collector/outputs/:/app/collector/outputs"
     user: "${UID:-1000}:${GID:-1000}"
     ports:
-      # Host 38471 is a rare, high port to avoid clashing with OpenAfD on host 3001.
+      # Host 38471 is a rare, high port to avoid clashing with legacy deployments on host 3001.
       # Container still listens on 3001 (SERVER_PORT in .env).
       - "38471:3001"
     env_file:
