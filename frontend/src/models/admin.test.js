@@ -34,6 +34,17 @@ describe("Admin", () => {
       const result = await Admin.users();
       expect(result).toEqual([]);
     });
+
+    it("returns an empty array on 401 without throwing JSON parse error", async () => {
+      global.fetch = vi.fn().mockResolvedValue(
+        new Response("Unauthorized", {
+          status: 401,
+          statusText: "Unauthorized",
+        }),
+      );
+      const result = await Admin.users();
+      expect(result).toEqual([]);
+    });
   });
 
   describe("newUser", () => {

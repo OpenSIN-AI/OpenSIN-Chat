@@ -273,8 +273,7 @@ const HistoricalMessage = ({
 export default memo(
   HistoricalMessage,
   (prevProps, nextProps) =>
-    prevProps.message.uuid === nextProps.message.uuid &&
-    prevProps.chatId === nextProps.chatId,
+    prevProps.uuid === nextProps.uuid && prevProps.chatId === nextProps.chatId,
 );
 
 /**

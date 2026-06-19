@@ -50,12 +50,21 @@ export default function useChatStream({
   /**
    * Sync server-fetched history into local state when not streaming.
    * This keeps local state in sync with SWR revalidations after mutations.
+   *
+   * NOTE: `loadingResponse` is intentionally excluded from the dependency
+   * array. When it was a dependency, the effect fired the instant streaming
+   * completed (true→false) and overwrote the just-streamed chat history with
+   * stale `knownHistory` — the SWR refetch triggered by the invalidate effect
+   * below had not yet returned. This caused the user's message and the
+   * assistant's response (or error) to vanish from the UI.  By syncing only
+   * when `knownHistory` itself changes (i.e. after the SWR refetch completes),
+   * the streamed content stays visible until the fresh server data arrives.
    */
   useEffect(() => {
     if (!loadingResponse) {
       setChatHistory(knownHistory);
     }
-  }, [knownHistory, loadingResponse]);
+  }, [knownHistory]);
 
   /**
    * Invalidate the SWR chat history cache after streaming completes.

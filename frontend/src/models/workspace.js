@@ -262,7 +262,12 @@ const Workspace = {
       headers: baseHeaders(),
     });
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      data = { success: false, error: response.statusText || "Upload failed" };
+    }
     return { response, data };
   },
   parseFile: async function (slug, formData) {
@@ -272,7 +277,12 @@ const Workspace = {
       headers: baseHeaders(),
     });
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      data = { success: false, error: response.statusText || "Parse failed" };
+    }
     return { response, data };
   },
 
@@ -294,7 +304,15 @@ const Workspace = {
       headers: baseHeaders(),
     });
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      data = {
+        success: false,
+        error: response.statusText || "Link upload failed",
+      };
+    }
     return { response, data };
   },
 
@@ -487,7 +505,15 @@ const Workspace = {
       },
     );
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      data = {
+        success: false,
+        error: response.statusText || "Upload and embed failed",
+      };
+    }
     return { response, data };
   },
 
@@ -512,7 +538,12 @@ const Workspace = {
       },
     );
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      data = { success: false, error: response.statusText || "Embed failed" };
+    }
     return { response, data };
   },
 

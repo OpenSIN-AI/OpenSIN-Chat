@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: MIT
-import { API_BASE, AUTH_TIMESTAMP, fullApiUrl } from "@/utils/constants";
+import {
+  API_BASE,
+  AUTH_TIMESTAMP,
+  THEME_KEY,
+  fullApiUrl,
+} from "@/utils/constants";
 import { baseHeaders, safeJsonParse } from "@/utils/request";
+import { safeGetItem } from "@/utils/safeStorage";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import DataConnector from "./dataConnector";
 import LiveDocumentSync from "./experimental/liveSync";
@@ -451,7 +457,7 @@ const System = {
     // Resolve the stored theme preference (system/light/dark/legacy "default")
     // into a concrete dark-mode boolean so the server returns the correct
     // light/dark logo variant.
-    const stored = localStorage.getItem("theme");
+    const stored = safeGetItem(THEME_KEY);
     let theme = stored === "default" ? "dark" : stored || "system";
     if (theme === "system") {
       theme =

@@ -2,6 +2,20 @@
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
+/**
+ * Safely parse a JSON response body.
+ * Returns the parsed JSON or a fallback when the body is not valid JSON
+ * (e.g. when the server sends "Unauthorized" text for 401 responses).
+ */
+async function safeJson(res, fallback) {
+  if (!res.ok) return fallback;
+  try {
+    return await res.json();
+  } catch {
+    return fallback;
+  }
+}
+
 const Admin = {
   // User Management
   users: async () => {
@@ -9,12 +23,9 @@ const Admin = {
       method: "GET",
       headers: baseHeaders(),
     })
-      .then((res) => res.json())
+      .then((res) => safeJson(res, { users: [] }))
       .then((res) => res?.users || [])
-      .catch((e) => {
-        console.error(e);
-        return [];
-      });
+      .catch(() => []);
   },
   newUser: async (data) => {
     return await fetch(`${API_BASE}/admin/users/new`, {
@@ -22,11 +33,8 @@ const Admin = {
       headers: baseHeaders(),
       body: JSON.stringify(data),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { user: null, error: e.message };
-      });
+      .then((res) => safeJson(res, { user: null, error: "Request failed" }))
+      .catch((e) => ({ user: null, error: e.message }));
   },
   updateUser: async (userId, data) => {
     return await fetch(`${API_BASE}/admin/user/${userId}`, {
@@ -34,22 +42,16 @@ const Admin = {
       headers: baseHeaders(),
       body: JSON.stringify(data),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { success: false, error: e.message };
-      });
+      .then((res) => safeJson(res, { success: false, error: "Request failed" }))
+      .catch((e) => ({ success: false, error: e.message }));
   },
   deleteUser: async (userId) => {
     return await fetch(`${API_BASE}/admin/user/${userId}`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { success: false, error: e.message };
-      });
+      .then((res) => safeJson(res, { success: false, error: "Request failed" }))
+      .catch((e) => ({ success: false, error: e.message }));
   },
 
   // Invitations
@@ -58,12 +60,9 @@ const Admin = {
       method: "GET",
       headers: baseHeaders(),
     })
-      .then((res) => res.json())
+      .then((res) => safeJson(res, { invites: [] }))
       .then((res) => res?.invites || [])
-      .catch((e) => {
-        console.error(e);
-        return [];
-      });
+      .catch(() => []);
   },
   newInvite: async ({ role = null, workspaceIds = null }) => {
     return await fetch(`${API_BASE}/admin/invite/new`, {
@@ -74,22 +73,16 @@ const Admin = {
         workspaceIds,
       }),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { invite: null, error: e.message };
-      });
+      .then((res) => safeJson(res, { invite: null, error: "Request failed" }))
+      .catch((e) => ({ invite: null, error: e.message }));
   },
   disableInvite: async (inviteId) => {
     return await fetch(`${API_BASE}/admin/invite/${inviteId}`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { success: false, error: e.message };
-      });
+      .then((res) => safeJson(res, { success: false, error: "Request failed" }))
+      .catch((e) => ({ success: false, error: e.message }));
   },
 
   // Workspaces Mgmt
@@ -98,24 +91,18 @@ const Admin = {
       method: "GET",
       headers: baseHeaders(),
     })
-      .then((res) => res.json())
+      .then((res) => safeJson(res, { workspaces: [] }))
       .then((res) => res?.workspaces || [])
-      .catch((e) => {
-        console.error(e);
-        return [];
-      });
+      .catch(() => []);
   },
   workspaceUsers: async (workspaceId) => {
     return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}/users`, {
       method: "GET",
       headers: baseHeaders(),
     })
-      .then((res) => res.json())
+      .then((res) => safeJson(res, { users: [] }))
       .then((res) => res?.users || [])
-      .catch((e) => {
-        console.error(e);
-        return [];
-      });
+      .catch(() => []);
   },
   newWorkspace: async (name) => {
     return await fetch(`${API_BASE}/admin/workspaces/new`, {
@@ -123,11 +110,10 @@ const Admin = {
       headers: baseHeaders(),
       body: JSON.stringify({ name }),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { workspace: null, error: e.message };
-      });
+      .then((res) =>
+        safeJson(res, { workspace: null, error: "Request failed" }),
+      )
+      .catch((e) => ({ workspace: null, error: e.message }));
   },
   updateUsersInWorkspace: async (workspaceId, userIds = []) => {
     return await fetch(
@@ -138,22 +124,16 @@ const Admin = {
         body: JSON.stringify({ userIds }),
       },
     )
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { success: false, error: e.message };
-      });
+      .then((res) => safeJson(res, { success: false, error: "Request failed" }))
+      .catch((e) => ({ success: false, error: e.message }));
   },
   deleteWorkspace: async (workspaceId) => {
     return await fetch(`${API_BASE}/admin/workspaces/${workspaceId}`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { success: false, error: e.message };
-      });
+      .then((res) => safeJson(res, { success: false, error: "Request failed" }))
+      .catch((e) => ({ success: false, error: e.message }));
   },
 
   // System Preferences
@@ -170,11 +150,8 @@ const Admin = {
         headers: baseHeaders(),
       },
     )
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return null;
-      });
+      .then((res) => safeJson(res, null))
+      .catch(() => null);
   },
   updateSystemPreferences: async (updates = {}) => {
     return await fetch(`${API_BASE}/admin/system-preferences`, {
@@ -182,11 +159,8 @@ const Admin = {
       headers: baseHeaders(),
       body: JSON.stringify(updates),
     })
-      .then((res) => res.json())
-      .catch((e) => {
-        console.error(e);
-        return { success: false, error: e.message };
-      });
+      .then((res) => safeJson(res, { success: false, error: "Request failed" }))
+      .catch((e) => ({ success: false, error: e.message }));
   },
 
   // API Keys
@@ -195,16 +169,8 @@ const Admin = {
       method: "GET",
       headers: baseHeaders(),
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || "Error fetching api keys.");
-        }
-        return res.json();
-      })
-      .catch((e) => {
-        console.error(e);
-        return { apiKeys: [], error: e.message };
-      });
+      .then((res) => safeJson(res, { apiKeys: [], error: "Request failed" }))
+      .catch((e) => ({ apiKeys: [], error: e.message }));
   },
   generateApiKey: async function (data = {}) {
     return fetch(`${API_BASE}/admin/generate-api-key`, {
@@ -212,16 +178,8 @@ const Admin = {
       headers: baseHeaders(),
       body: JSON.stringify(data),
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(res.statusText || "Error generating api key.");
-        }
-        return res.json();
-      })
-      .catch((e) => {
-        console.error(e);
-        return { apiKey: null, error: e.message };
-      });
+      .then((res) => safeJson(res, { apiKey: null, error: "Request failed" }))
+      .catch((e) => ({ apiKey: null, error: e.message }));
   },
   deleteApiKey: async function (apiKeyId = "") {
     return fetch(`${API_BASE}/admin/delete-api-key/${apiKeyId}`, {
@@ -229,10 +187,7 @@ const Admin = {
       headers: baseHeaders(),
     })
       .then((res) => res.ok)
-      .catch((e) => {
-        console.error(e);
-        return false;
-      });
+      .catch(() => false);
   },
 };
 

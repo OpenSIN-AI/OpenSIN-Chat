@@ -54,6 +54,27 @@ export async function login(request) {
 }
 
 /**
+ * Get an existing workspace slug via the API, or create one if none exist.
+ * Reuses the first workspace to avoid hitting rate limits during E2E runs.
+ */
+export async function getOrCreateWorkspace(request, token) {
+  // Try to get an existing workspace first
+  const listResp = await request.get("/api/workspaces", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (listResp.ok()) {
+    try {
+      const { workspaces } = await listResp.json();
+      if (workspaces && workspaces.length > 0) {
+        return workspaces[0].slug;
+      }
+    } catch {}
+  }
+  // Fall back to creating one
+  return createWorkspace(request, token);
+}
+
+/**
  * Create a throwaway workspace via the API so the test has a real slug to
  * navigate to. The home page does not auto-create one on first load.
  */
@@ -116,7 +137,7 @@ export async function bootstrapWorkspaceChat(
   { waitFor = "attach" } = {},
 ) {
   const token = await login(request);
-  const slug = await createWorkspace(request, token);
+  const slug = await getOrCreateWorkspace(request, token);
   await seedSession(page, token);
   await mockOnboardingCheck(page);
 

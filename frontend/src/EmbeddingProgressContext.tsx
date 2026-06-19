@@ -200,9 +200,13 @@ export function EmbeddingProgressProvider({ children }: any) {
         signal: ctrl.signal,
         openWhenHidden: true,
         onmessage: (msg) => handleMessage(slug, msg, ctrl),
-        onclose: () => delete abortControllersRef.current[slug],
-        onerror: () => {
+        onclose: () => {
           delete abortControllersRef.current[slug];
+          throw new Error("SSE closed by server");
+        },
+        onerror: (err) => {
+          delete abortControllersRef.current[slug];
+          throw err;
         },
       }).catch((err) => {
         console.warn("EmbeddingProgress SSE connection failed", err);

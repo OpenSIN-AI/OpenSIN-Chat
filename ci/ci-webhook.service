@@ -1,0 +1,18 @@
+[Unit]
+Description=OpenSIN-Chat CI Webhook Receiver
+After=network.target docker.service
+Wants=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/OpenSIN-Chat
+EnvironmentFile=/home/ubuntu/ci-webhook.env
+ExecStart=/usr/bin/node /home/ubuntu/OpenSIN-Chat/ci/webhook-server.js
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
