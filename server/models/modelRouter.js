@@ -163,14 +163,23 @@ const ModelRouter = {
           },
         },
       });
-      const results = await Promise.all(
-        routers.map(async ({ _count, ...router }) => ({
-          ...router,
-          ruleCount: _count.rules,
-          workspaceCount: await this.workspaceCount(router.id),
-        })),
+
+      // Batch workspace counts in a single groupBy query instead of
+      // N+1 per-router count queries.
+      const workspaceCounts = await prisma.workspaces.groupBy({
+        by: ["router_id"],
+        where: { router_id: { not: null } },
+        _count: { router_id: true },
+      });
+      const countMap = new Map(
+        workspaceCounts.map((wc) => [wc.router_id, wc._count.router_id]),
       );
-      return results;
+
+      return routers.map(({ _count, ...router }) => ({
+        ...router,
+        ruleCount: _count.rules,
+        workspaceCount: countMap.get(router.id) || 0,
+      }));
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error.message);

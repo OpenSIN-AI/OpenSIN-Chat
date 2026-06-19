@@ -48,59 +48,68 @@ const Politician = {
    * @returns {Promise<{inserted: number, updated: number, errors: number}>}
    */
   massUpsert: async function (politicians = []) {
+    if (politicians.length === 0) return { inserted: 0, updated: 0, errors: 0 };
+
+    const uuid = require("uuid");
     let inserted = 0;
     let updated = 0;
     let errors = 0;
 
-    for (const p of politicians) {
+    // Batch upserts via $transaction for parallelism instead of sequential
+    // awaits. Split into chunks of 50 to avoid SQLite "too many SQL variables"
+    // errors.
+    const CHUNK_SIZE = 50;
+    for (let i = 0; i < politicians.length; i += CHUNK_SIZE) {
+      const chunk = politicians.slice(i, i + CHUNK_SIZE);
       try {
-        const id = p.id || require("uuid").v4();
-        const data = {
-          id,
-          externalId: p.externalId || null,
-          source: p.source || "bundestag",
-          title: p.title || null,
-          firstName: p.firstName,
-          lastName: p.lastName,
-          fullName: p.fullName,
-          party: p.party || null,
-          faction: p.faction || null,
-          gender: p.gender || null,
-          birthDate: p.birthDate ? new Date(p.birthDate) : null,
-          birthPlace: p.birthPlace || null,
-          profession: p.profession || null,
-          education: p.education || null,
-          photoUrl: p.photoUrl || null,
-          profileUrl: p.profileUrl || null,
-          email: p.email || null,
-          electoralDistrict: p.electoralDistrict || null,
-          electoralList: p.electoralList || null,
-          state: p.state || null,
-          bio: p.bio || null,
-          websiteUrl: p.websiteUrl || null,
-          twitterHandle: p.twitterHandle || null,
-          facebookUrl: p.facebookUrl || null,
-          linkedinUrl: p.linkedinUrl || null,
-          instagramUrl: p.instagramUrl || null,
-          youtubeUrl: p.youtubeUrl || null,
-          tiktokUrl: p.tiktokUrl || null,
-          rawData: p.rawData || null,
-          lastSyncedAt: new Date(),
-        };
+        const results = await prisma.$transaction(
+          chunk.map((p) => {
+            const id = p.id || uuid.v4();
+            const data = {
+              id,
+              externalId: p.externalId || null,
+              source: p.source || "bundestag",
+              title: p.title || null,
+              firstName: p.firstName,
+              lastName: p.lastName,
+              fullName: p.fullName,
+              party: p.party || null,
+              faction: p.faction || null,
+              gender: p.gender || null,
+              birthDate: p.birthDate ? new Date(p.birthDate) : null,
+              birthPlace: p.birthPlace || null,
+              profession: p.profession || null,
+              education: p.education || null,
+              photoUrl: p.photoUrl || null,
+              profileUrl: p.profileUrl || null,
+              email: p.email || null,
+              electoralDistrict: p.electoralDistrict || null,
+              electoralList: p.electoralList || null,
+              state: p.state || null,
+              bio: p.bio || null,
+              websiteUrl: p.websiteUrl || null,
+              twitterHandle: p.twitterHandle || null,
+              facebookUrl: p.facebookUrl || null,
+              linkedinUrl: p.linkedinUrl || null,
+              instagramUrl: p.instagramUrl || null,
+              youtubeUrl: p.youtubeUrl || null,
+              tiktokUrl: p.tiktokUrl || null,
+              rawData: p.rawData || null,
+              lastSyncedAt: new Date(),
+            };
 
-        // Use atomic upsert when externalId is present (it is @unique in the
-        // schema). This eliminates the check-then-act race where two concurrent
-        // syncs both findFirst → both create → unique-constraint violation.
-        // When externalId is null there is no unique key to dedup on, so we
-        // just create.
-        if (p.externalId) {
-          const result = await prisma.politicians.upsert({
-            where: { externalId: p.externalId },
-            update: data,
-            create: data,
-          });
-          // Prisma upsert doesn't tell us if it was insert or update, so we
-          // approximate: check if createdAt equals updatedAt (new record).
+            if (p.externalId) {
+              return prisma.politicians.upsert({
+                where: { externalId: p.externalId },
+                update: data,
+                create: data,
+              });
+            }
+            return prisma.politicians.create({ data });
+          }),
+        );
+
+        for (const result of results) {
           if (
             result.createdAt &&
             result.updatedAt &&
@@ -110,16 +119,11 @@ const Politician = {
           } else {
             updated++;
           }
-        } else {
-          await prisma.politicians.create({ data });
-          inserted++;
         }
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(
-          `[Politician] massUpsert error for ${p.fullName}: ${err.message}`,
-        );
-        errors++;
+        console.error(`[Politician] massUpsert chunk error: ${err.message}`);
+        errors += chunk.length;
       }
     }
 

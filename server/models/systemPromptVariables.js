@@ -135,7 +135,10 @@ const SystemPromptVariables = {
   getAll: async function (userId = null) {
     // All user-defined system variables are available to everyone globally since only admins can create them.
     const userDefinedSystemVariables =
-      await prisma.system_prompt_variables.findMany();
+      await prisma.system_prompt_variables.findMany({
+        take: 500,
+        orderBy: { id: "asc" },
+      });
     const formattedDbVars = userDefinedSystemVariables.map((v) => ({
       id: v.id,
       key: v.key,

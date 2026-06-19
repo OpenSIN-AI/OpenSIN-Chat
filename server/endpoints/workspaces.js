@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("crypto");
 const path = require("path");
 const fs = require("fs");
 const {
@@ -319,8 +320,9 @@ function workspaceEndpoints(app) {
           results,
         });
       } catch (e) {
-        console.error("connect-files error", e.message, e);
-        response.status(500).json({ error: e.message }).end();
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({ error: "Internal server error", errorId }).end();
       }
     },
   );
@@ -1370,7 +1372,6 @@ function workspaceEndpoints(app) {
 
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Content-Type", "text/event-stream");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
         addSSEConnection(workspace.slug, response);
@@ -1407,9 +1408,11 @@ function workspaceEndpoints(app) {
         const sent = removeQueuedFile(workspace.slug, filename);
         response.status(200).json({ success: sent });
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e.message, e);
-        response.status(500).json({ success: false, error: e.message });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response
+          .status(500)
+          .json({ success: false, error: "Internal server error", errorId });
       }
     },
   );

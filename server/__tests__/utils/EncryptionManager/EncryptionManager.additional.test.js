@@ -54,17 +54,17 @@ describe("EncryptionManager — additional edge cases", () => {
       expect(manager.encrypt(0)).toBeNull();
     });
 
-    it("IV segment is exactly 32 hex characters (16 bytes)", () => {
+    it("IV is exactly 12 bytes (16-byte authTag follows)", () => {
       const encrypted = manager.encrypt("check-iv-length");
-      const [, iv] = encrypted.split(manager.separator);
-      expect(iv.length).toBe(32);
-      expect(iv).toMatch(/^[0-9a-f]+$/);
+      const buf = Buffer.from(encrypted, "base64");
+      // 12-byte IV + 16-byte authTag + at least 0 bytes ciphertext
+      expect(buf.length).toBeGreaterThanOrEqual(28);
     });
 
-    it("ciphertext segment is valid hex", () => {
-      const encrypted = manager.encrypt("check-cipher-hex");
-      const [cipher] = encrypted.split(manager.separator);
-      expect(cipher).toMatch(/^[0-9a-f]+$/);
+    it("ciphertext segment is valid base64", () => {
+      const encrypted = manager.encrypt("check-cipher-base64");
+      expect(() => Buffer.from(encrypted, "base64")).not.toThrow();
+      expect(encrypted).toMatch(/^[A-Za-z0-9+/=]+$/);
     });
   });
 
@@ -73,21 +73,23 @@ describe("EncryptionManager — additional edge cases", () => {
       expect(manager.decrypt("")).toBeNull();
     });
 
-    it("returns null for string with separator but empty parts", () => {
-      expect(manager.decrypt(":")).toBeNull();
+    it("returns null for malformed base64 input", () => {
+      // contains chars outside the base64 alphabet — Buffer-from will throw
+      expect(() => manager.decrypt("!!!not-base64!!!")).not.toThrow();
+      expect(manager.decrypt("!!!not-base64!!!")).toBeNull();
     });
 
-    it("returns null for string with separator but empty IV", () => {
-      expect(manager.decrypt("somecipher:")).toBeNull();
+    it("returns null for payload shorter than IV+authTag (28 bytes)", () => {
+      // 20 bytes of base64 random — too short for the 12-byte IV + 16-byte authTag
+      expect(manager.decrypt(Buffer.alloc(20).toString("base64"))).toBeNull();
     });
 
-    it("returns null for string with separator but empty ciphertext", () => {
-      expect(manager.decrypt(":someiv")).toBeNull();
-    });
-
-    it("returns null when given valid hex IV but garbled ciphertext", () => {
-      const iv = crypto.randomBytes(16).toString("hex");
-      expect(manager.decrypt("garbled-" + iv + ":" + iv)).toBeNull();
+    it("returns null when authTag fails to verify (tampered ciphertext)", () => {
+      const encrypted = manager.encrypt("secret");
+      const buf = Buffer.from(encrypted, "base64");
+      // Flip a byte in the ciphertext region to break the GCM auth tag
+      buf[buf.length - 1] ^= 0xff;
+      expect(manager.decrypt(buf.toString("base64"))).toBeNull();
     });
 
     it("returns null for ciphertext encrypted with wrong key", () => {

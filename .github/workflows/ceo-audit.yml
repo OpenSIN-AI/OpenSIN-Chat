@@ -77,7 +77,7 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: frontend
-        run: yarn install --frozen-lockfile || yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Generate frontend package-lock.json for npm audit
         working-directory: frontend

@@ -169,6 +169,8 @@ model workspaces {
   prompt_history               prompt_history[]
   workspace_parsed_files       workspace_parsed_files[]
   memories                     memories[]
+
+  @@index([router_id])
 }
 
 model workspace_threads {

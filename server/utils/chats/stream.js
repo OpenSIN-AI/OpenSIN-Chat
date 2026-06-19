@@ -299,6 +299,16 @@ async function streamChatWithWorkspace(
     rawHistory,
   );
 
+  // Early exit if the client already disconnected during the prep work
+  // (vector search, doc fetching, prompt assembly).
+  if (response.writableEnded || response.destroyed) {
+    // eslint-disable-next-line no-console
+    console.log(
+      `\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client disconnected before LLM call. Skipping generation.`,
+    );
+    return;
+  }
+
   // If streaming is not explicitly enabled for connector
   // we do regular waiting of a response and send a single chunk.
   if (LLMConnector.streamingEnabled() !== true) {
@@ -306,11 +316,31 @@ async function streamChatWithWorkspace(
     console.log(
       `\x1b[31m[STREAMING DISABLED]\x1b[0m Streaming is not available for ${LLMConnector.constructor.name}. Will use regular chat method.`,
     );
+
+    // Abort early if the client disconnected during the non-streaming
+    // completion call — without this the server keeps consuming LLM
+    // tokens for a response nobody will read.
+    let clientDisconnected = false;
+    const onClientClose = () => {
+      clientDisconnected = true;
+    };
+    response.on("close", onClientClose);
+
     const { textResponse, metrics: performanceMetrics } =
       await LLMConnector.getChatCompletion(messages, {
         temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
         user: user,
       });
+
+    response.removeListener("close", onClientClose);
+
+    if (clientDisconnected) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `\x1b[43m\x1b[34m[STREAM ABORTED]\x1b[0m Client disconnected during non-streaming completion. Skipping write.`,
+      );
+      return;
+    }
 
     completeText = textResponse;
     metrics = performanceMetrics;

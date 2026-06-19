@@ -8,7 +8,7 @@ vi.mock("@/models/appearance", () => ({
   default: { get: (key) => (key === "renderHTML" ? false : undefined) },
 }));
 vi.mock("uuid", () => ({ v4: () => "test-uuid" }));
-vi.mock("highlight.js", () => {
+vi.mock("./hljs", () => {
   const hljs = {
     registerLanguage: vi.fn(),
     getLanguage: vi.fn((lang) =>
@@ -19,7 +19,7 @@ vi.mock("highlight.js", () => {
       language: opts?.language,
     }),
   };
-  return { default: hljs, ...hljs };
+  return { default: hljs };
 });
 vi.mock("./hljs-libraries/svelte", () => ({ default: {} }));
 

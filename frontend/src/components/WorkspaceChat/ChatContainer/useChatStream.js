@@ -286,16 +286,25 @@ export default function useChatStream({
         if (!promptMessage || !promptMessage?.userMessage) return false;
         const attachments = promptMessage?.attachments ?? parseAttachments();
         window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
-        websocket.send(
-          JSON.stringify({
-            type: "awaitingFeedback",
-            feedback: promptMessage?.userMessage,
-            attachments,
-          }),
-        );
+        // Guard against sending on a non-OPEN socket — the server-side
+        // heartbeat or reconnection may have closed it. If the socket
+        // isn't ready, fall through to the SSE streaming path instead.
+        if (websocket.readyState === WebSocket.OPEN) {
+          websocket.send(
+            JSON.stringify({
+              type: "awaitingFeedback",
+              feedback: promptMessage?.userMessage,
+              attachments,
+            }),
+          );
 
-        if (promptMessage.userMessage.trim() !== "/reset") return;
-        pendingResetRef.current = true;
+          if (promptMessage.userMessage.trim() !== "/reset") return;
+          pendingResetRef.current = true;
+        } else {
+          // Socket isn't open — clear it so we use SSE streaming instead.
+          setWebsocket(null);
+          setSocketId(null);
+        }
       }
 
       if (!promptMessage || !promptMessage?.userMessage) return false;

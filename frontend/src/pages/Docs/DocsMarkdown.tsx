@@ -13,7 +13,7 @@ import { useEffect, useMemo, useRef, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import MarkdownIt from "markdown-it";
-import hljs from "highlight.js";
+import hljs from "@/utils/chat/hljs";
 import "highlight.js/styles/github-dark.css";
 import DOMPurify from "@/utils/chat/purify";
 import { resolveDocLink } from "./docsManifest";

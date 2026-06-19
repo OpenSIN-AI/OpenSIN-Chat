@@ -49,15 +49,15 @@ describe("EncryptionManager", () => {
 
     it("produces output containing the separator character", () => {
       const encrypted = manager.encrypt("test data");
-      expect(encrypted).toContain(manager.separator);
+      expect(typeof encrypted).toBe("string");
+      expect(encrypted.length).toBeGreaterThan(0);
     });
 
-    it("produces two hex segments separated by colon", () => {
+    it("produces valid base64 output with at least IV+authTag+payload", () => {
       const encrypted = manager.encrypt("test data");
-      const parts = encrypted.split(manager.separator);
-      expect(parts.length).toBe(2);
-      expect(parts[0].length).toBeGreaterThan(0);
-      expect(parts[1].length).toBeGreaterThan(0);
+      const buf = Buffer.from(encrypted, "base64");
+      // 12-byte IV + 16-byte authTag + at least 0 bytes ciphertext
+      expect(buf.length).toBeGreaterThanOrEqual(28);
     });
   });
 
@@ -85,8 +85,9 @@ describe("EncryptionManager", () => {
       expect(manager.decrypt("not-valid-encrypted")).toBeNull();
     });
 
-    it("returns null when IV is missing", () => {
-      expect(manager.decrypt("noivhere")).toBeNull();
+    it("returns null for payload shorter than IV+authTag", () => {
+      // 'Zg==' is base64 for the single byte 'f' — too short to contain a 12-byte IV + 16-byte authTag
+      expect(manager.decrypt("Zg==")).toBeNull();
     });
 
     it("returns null for null input", () => {
@@ -112,8 +113,8 @@ describe("EncryptionManager", () => {
   });
 
   describe("constructor", () => {
-    it("sets algorithm to aes-256-cbc", () => {
-      expect(manager.algorithm).toBe("aes-256-cbc");
+    it("sets algorithm to aes-256-gcm", () => {
+      expect(manager.algorithm).toBe("aes-256-gcm");
     });
 
     it("sets separator to colon", () => {

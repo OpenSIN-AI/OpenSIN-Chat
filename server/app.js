@@ -15,6 +15,7 @@ require("./utils/boot/patchSdkTimeouts")();
 require("./utils/boot/ensureJwtSecret")();
 require("./utils/boot/ensureJwtSecret").ensureEncryptionSecrets();
 const { logBootDiagnostics } = require("./utils/boot/logBootDiagnostics");
+const crypto = require("crypto");
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -73,6 +74,12 @@ function buildApp() {
   const app = express();
 
   app.set("trust proxy", parseInt(process.env.TRUST_PROXY ?? "1", 10));
+  app.use((req, res, next) => {
+    const id = req.headers["x-request-id"] || crypto.randomUUID();
+    req.requestId = id;
+    res.setHeader("X-Request-Id", id);
+    next();
+  });
   app.use(securityHeaders());
 
   if (
@@ -229,10 +236,34 @@ function buildApp() {
     response.sendStatus(404);
   });
 
+  let prismaClient = null;
+  try {
+    prismaClient = require("./utils/prisma");
+  } catch (e) {
+    prismaClient = null;
+  }
+
+  app.get("/healthz", (_req, res) => res.status(200).json({ status: "ok" }));
+  app.get("/readyz", async (_req, res) => {
+    if (!prismaClient)
+      return res
+        .status(200)
+        .json({ status: "ready", db: "unchecked" });
+    try {
+      await prismaClient.$queryRaw`SELECT 1`;
+      res.status(200).json({ status: "ready" });
+    } catch (e) {
+      const id = crypto.randomUUID();
+      console.error(`[readyz error] id=${id}`, e);
+      res.status(503).json({ status: "not ready", id });
+    }
+  });
+
   app.use(function (err, _req, response, _next) {
-    console.error(err);
+    const id = crypto.randomUUID();
+    console.error(`[errorHandler] id=${id}`, err);
     if (!response.headersSent) {
-      response.status(500).json({ error: "Internal server error" });
+      response.status(500).json({ error: "Internal server error", id });
     }
   });
 

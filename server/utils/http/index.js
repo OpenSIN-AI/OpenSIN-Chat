@@ -53,15 +53,23 @@ function queryParams(request) {
 }
 
 /**
- * Creates a JWT with the given info and expiry
+ * Creates a JWT with the given info and expiry. Pins the algorithm to HS256
+ * and embeds issuer/audience claims so that the verifier can detect tokens
+ * minted with weaker settings.
  * @param {object} info - The info to include in the JWT
- * @param {string} expiry - The expiry time for the JWT (default: 30 days)
+ * @param {string} expiry - The expiry time for the JWT (default: 15m)
  * @returns {string} The JWT
  */
-function makeJWT(info = {}, expiry = "30d") {
+function makeJWT(info = {}, expiry = null) {
   if (!process.env.JWT_SECRET)
     throw new Error("Cannot create JWT as JWT_SECRET is unset.");
-  return JWT.sign(info, process.env.JWT_SECRET, { expiresIn: expiry });
+  const ttl = expiry ?? process.env.JWT_EXPIRY ?? "15m";
+  return JWT.sign(info, process.env.JWT_SECRET, {
+    algorithm: "HS256",
+    expiresIn: ttl,
+    issuer: "opensin-chat",
+    audience: "opensin-chat",
+  });
 }
 
 /**
@@ -94,8 +102,16 @@ async function userFromSession(request, response = null) {
 }
 
 function decodeJWT(jwtToken) {
+  if (!process.env.JWT_SECRET) {
+    console.warn("JWT decode skipped: JWT_SECRET is unset.");
+    return { p: null, id: null, username: null };
+  }
   try {
-    return JWT.verify(jwtToken, process.env.JWT_SECRET);
+    return JWT.verify(jwtToken, process.env.JWT_SECRET, {
+      algorithms: ["HS256"],
+      issuer: "opensin-chat",
+      audience: "opensin-chat",
+    });
   } catch (e) {
     console.warn("JWT decode failed:", e.message);
   }

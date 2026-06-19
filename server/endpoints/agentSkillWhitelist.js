@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("crypto");
 const { AgentSkillWhitelist } = require("../models/agentSkillWhitelist");
 const { reqBody, userFromSession } = require("../utils/http");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
@@ -20,11 +21,11 @@ function agentSkillWhitelistEndpoints(app) {
           .status(200)
           .json({ available: filesystemTool.isToolAvailable() });
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
         return response
           .status(500)
-          .json({ available: false, error: e.message });
+          .json({ available: false, error: "Internal server error", errorId });
       }
     },
   );
@@ -39,11 +40,11 @@ function agentSkillWhitelistEndpoints(app) {
           .status(200)
           .json({ available: createFilesTool.isToolAvailable() });
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
         return response
           .status(500)
-          .json({ available: false, error: e.message });
+          .json({ available: false, error: "Internal server error", errorId });
       }
     },
   );
@@ -75,9 +76,11 @@ function agentSkillWhitelistEndpoints(app) {
         );
         return response.status(success ? 200 : 400).json({ success, error });
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-        return response.status(500).json({ success: false, error: e.message });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        return response
+          .status(500)
+          .json({ success: false, error: "Internal server error", errorId });
       }
     },
   );

@@ -5,14 +5,33 @@ const {
 } = require("../../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 
+const DEFAULT_ALLOWED_REDIRECT_HOSTS = ["localhost:3000"];
+const ALLOWED_REDIRECT_HOSTS = (
+  process.env.OAUTH_REDIRECT_ALLOWED_HOSTS ||
+  DEFAULT_ALLOWED_REDIRECT_HOSTS.join(",")
+)
+  .split(",")
+  .map((h) => h.trim())
+  .filter(Boolean);
+
 /**
- * Constructs the OAuth redirect URI from the request headers.
+ * Constructs the OAuth redirect URI from the request headers, gated by an
+ * allowlist so an attacker cannot poison x-forwarded-host to redirect the
+ * OAuth callback to an externally-controlled server.
  * @param {Object} request - Express request object
  * @returns {string} The redirect URI for OAuth callback
+ * @throws {Error} when the host header is not in the allowlist
  */
 function getOutlookRedirectUri(request) {
   const protocol = request.headers["x-forwarded-proto"] || request.protocol;
-  const host = request.headers["x-forwarded-host"] || request.get("host");
+  const host = request.get("host");
+  const isAllowed = ALLOWED_REDIRECT_HOSTS.some(
+    (allowed) => host === allowed || host.startsWith(allowed + ":"),
+  );
+  if (!isAllowed)
+    throw new Error(
+      `Redirect host "${host}" not in OAUTH_REDIRECT_ALLOWED_HOSTS allowlist.`,
+    );
   return `${protocol}://${host}/api/agent-skills/outlook/auth-callback`;
 }
 
@@ -111,9 +130,14 @@ function outlookAgentEndpoints(app) {
           );
         }
 
+        const { state } = request.query;
         const outlookLib = require("../../utils/agents/aibitat/plugins/outlook/lib");
         const redirectUri = getOutlookRedirectUri(request);
-        const result = await outlookLib.exchangeCodeForToken(code, redirectUri);
+        const result = await outlookLib.exchangeCodeForToken(
+          code,
+          redirectUri,
+          state,
+        );
 
         const frontendUrl =
           process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";

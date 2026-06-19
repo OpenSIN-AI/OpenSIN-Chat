@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("crypto");
 const {
   getStoragePath,
   safeStorageJoin,
@@ -75,7 +76,10 @@ function utilEndpoints(app) {
     [validatedRequest],
     async (req, response) => {
       try {
-        const apiKey = process.env.BUNDESTAG_API_KEY || "";
+        const apiKey =
+          process.env.BUNDESTAG_DIP_API_KEY ||
+          process.env.BUNDESTAG_API_KEY ||
+          "";
         const params = new URLSearchParams({
           f_fraktion: "AfD",
           format: "json",
@@ -90,7 +94,9 @@ function utilEndpoints(app) {
         const json = await res.json();
         response.status(200).json(json);
       } catch (e) {
-        response.status(502).json({ error: e?.message || String(e) });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response.status(502).json({ error: "Upstream error", errorId });
       }
     },
   );
@@ -114,7 +120,9 @@ function utilEndpoints(app) {
         const json = await res.json();
         response.status(200).json(json);
       } catch (e) {
-        response.status(502).json({ error: e?.message || String(e) });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response.status(502).json({ error: "Upstream error", errorId });
       }
     },
   );
@@ -166,7 +174,9 @@ function utilEndpoints(app) {
       }
       response.status(200).json({ items });
     } catch (e) {
-      response.status(502).json({ error: e?.message || String(e) });
+      const errorId = crypto.randomUUID();
+      console.error(`[endpoint error ${errorId}]`, e);
+      response.status(502).json({ error: "Upstream error", errorId });
     }
   });
 
@@ -249,8 +259,9 @@ function utilEndpoints(app) {
           items,
         });
       } catch (e) {
-        console.error("browse-directory endpoint error", e.message);
-        response.status(500).json({ error: e?.message || String(e) });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({ error: "Internal server error", errorId });
       }
     },
   );
@@ -286,8 +297,9 @@ function utilEndpoints(app) {
         await fs.promises.mkdir(resolved, { recursive: true });
         response.status(200).json({ success: true, path: resolved });
       } catch (e) {
-        console.error("create-directory endpoint error", e.message);
-        response.status(500).json({ error: e?.message || String(e) });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({ error: "Internal server error", errorId });
       }
     },
   );
@@ -321,8 +333,9 @@ function utilEndpoints(app) {
         await fs.promises.writeFile(resolved, content || "");
         response.status(200).json({ success: true, path: resolved });
       } catch (e) {
-        console.error("create-file endpoint error", e.message);
-        response.status(500).json({ error: e?.message || String(e) });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({ error: "Internal server error", errorId });
       }
     },
   );
@@ -358,8 +371,9 @@ function utilEndpoints(app) {
         await fs.promises.rm(resolved, { recursive: true });
         response.status(200).json({ success: true });
       } catch (e) {
-        console.error("delete-item endpoint error", e.message);
-        response.status(500).json({ error: e?.message || String(e) });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response.status(500).json({ error: "Internal server error", errorId });
       }
     },
   );
@@ -410,21 +424,28 @@ function utilEndpoints(app) {
   );
 }
 
+let _cachedGitVersion = null;
+
 function getGitVersion() {
+  if (_cachedGitVersion !== null) return _cachedGitVersion;
   if (
     (process.env.OPENSIN_CHAT_RUNTIME || process.env.ANYTHING_LLM_RUNTIME) ===
     "docker"
-  )
-    return "--";
+  ) {
+    _cachedGitVersion = "--";
+    return _cachedGitVersion;
+  }
   try {
-    return require("child_process")
+    _cachedGitVersion = require("child_process")
       .execSync("git rev-parse HEAD")
       .toString()
       .trim();
+    return _cachedGitVersion;
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error("getGitVersion", e.message);
-    return "--";
+    _cachedGitVersion = "--";
+    return _cachedGitVersion;
   }
 }
 

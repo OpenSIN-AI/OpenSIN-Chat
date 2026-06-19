@@ -36,7 +36,9 @@ vi.mock("@/models/appearance", () => ({
 vi.mock("uuid", () => ({ v4: () => "test-uuid" }));
 
 // Minimal hljs mock — known languages return a truthy object from getLanguage.
-vi.mock("highlight.js", () => {
+// Now that markdown.ts imports from ./hljs (which wraps highlight.js/lib/core),
+// we mock the wrapper module directly.
+vi.mock("./hljs", () => {
   const hljs = {
     registerLanguage: vi.fn(),
     getLanguage: vi.fn((lang: string) =>
@@ -47,7 +49,7 @@ vi.mock("highlight.js", () => {
       language: opts?.language,
     }),
   };
-  return { default: hljs, ...hljs };
+  return { default: hljs };
 });
 
 vi.mock("./hljs-libraries/svelte", () => ({ default: {} }));

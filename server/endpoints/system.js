@@ -4,6 +4,7 @@
 process.env.NODE_ENV === "development"
   ? require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` })
   : require("dotenv").config();
+const crypto = require("crypto");
 const { viewLocalFiles, normalizePath, isWithin } = require("../utils/files");
 const { purgeDocument, purgeFolder } = require("../utils/files/purgeDocument");
 const { getVectorDbClass } = require("../utils/helpers");
@@ -217,10 +218,13 @@ function systemEndpoints(app) {
           message: null,
         });
       } catch (e) {
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
         return response.status(500).json({
           success: false,
           user: null,
-          message: e?.message || String(e),
+          message: "Internal server error",
+          errorId,
         });
       }
     },
@@ -228,7 +232,14 @@ function systemEndpoints(app) {
 
   app.post(
     "/request-token",
-    [simpleRateLimit({ bucket: "login", max: 10, windowMs: 15 * 60 * 1000 })],
+    [
+      simpleRateLimit({
+        bucket: "login",
+        max: 10,
+        windowMs: 15 * 60 * 1000,
+        identity: "user",
+      }),
+    ],
     async (request, response) => {
       try {
         const bcrypt = require("bcryptjs");
@@ -716,10 +727,14 @@ function systemEndpoints(app) {
         if (!username || typeof username !== "string" || !username.trim()) {
           return response.status(400).json({ error: "Username is required." });
         }
-        if (!password || typeof password !== "string" || password.length < 8) {
+        if (!password || typeof password !== "string" || !password.trim()) {
+          return response.status(400).json({ error: "Password is required." });
+        }
+        const passwordCheck = User.checkPasswordComplexity(password);
+        if (!passwordCheck.checkedOK) {
           return response
             .status(400)
-            .json({ error: "Password must be at least 8 characters." });
+            .json({ error: passwordCheck.error });
         }
         const { user, error } = await User.create({
           username,
@@ -1368,11 +1383,13 @@ function systemEndpoints(app) {
       const { success, error } = await User.update(id, updates);
       response.status(200).json({ success, error });
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      response
-        .status(500)
-        .json({ success: false, error: e.message || "Internal server error" });
+      const errorId = crypto.randomUUID();
+      console.error(`[endpoint error ${errorId}]`, e);
+      response.status(500).json({
+        success: false,
+        error: "Internal server error",
+        errorId,
+      });
     }
   });
 

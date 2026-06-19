@@ -15,8 +15,10 @@
  *  - Strict-Transport-Security            (only when ENABLE_HSTS=true; set it
  *    once TLS termination is confirmed — HSTS on plain HTTP is harmless but
  *    misleading, HSTS behind broken TLS locks users out)
+ *  - Content-Security-Policy              (enforced; restricts outbound
+ *    fetches to known LLM + storage endpoints, no inline scripts)
  *  - Content-Security-Policy-Report-Only  (only when CSP_REPORT_ONLY=true;
- *    measure violations first, enforce later)
+ *    measure violations first, kept on as a parallel signal)
  */
 
 const PERMISSIONS_POLICY = [
@@ -28,9 +30,42 @@ const PERMISSIONS_POLICY = [
   "microphone=(self)",
 ].join(", ");
 
-// Intentionally permissive starter policy for the report-only phase:
-// the SPA uses inline styles, blob workers (TTS/WASM), data: images,
-// and talks to configurable LLM endpoints (connect-src must stay open).
+const ENFORCED_CSP_CONNECT_SRC = [
+  "'self'",
+  "https://api.openai.com",
+  "https://api.anthropic.com",
+  "https://api.fireworks.ai",
+  "https://api.cohere.ai",
+  "https://api.groq.com",
+  "https://generativelanguage.googleapis.com",
+  "https://api.mistral.ai",
+  "https://api.deepseek.com",
+  "https://api.perplexity.ai",
+  "https://api.together.xyz",
+  "https://openrouter.ai",
+  "https://api.x.ai",
+  "https://ark.cn-beijing.volces.com",
+  "https://dashscope.aliyuncs.com",
+  "https://api.openai.com/v1",
+  "https://api.elevenlabs.io",
+  "https://*.supabase.co",
+  "https://*.amazonaws.com",
+  "https://*.googleusercontent.com",
+];
+
+const ENFORCED_CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self' blob:",
+  "worker-src 'self' blob:",
+  `connect-src ${ENFORCED_CSP_CONNECT_SRC.join(" ")}`,
+  "frame-ancestors 'none'",
+].join("; ");
+
+// Broader permissive starter policy for the report-only phase — useful for
+// tracking unexpected endpoints before locking them down in ENFORCED_CSP.
 const REPORT_ONLY_CSP = [
   "default-src 'self'",
   "script-src 'self' 'wasm-unsafe-eval'",
@@ -57,6 +92,7 @@ function securityHeaders() {
     response.setHeader("X-Frame-Options", "DENY");
     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     response.setHeader("Permissions-Policy", PERMISSIONS_POLICY);
+    response.setHeader("Content-Security-Policy", ENFORCED_CSP);
 
     if (hstsEnabled)
       response.setHeader(

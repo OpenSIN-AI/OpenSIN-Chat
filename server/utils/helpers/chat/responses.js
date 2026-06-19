@@ -128,6 +128,8 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
           fullText += filteredToken;
           // If we never saw a usage metric, we can estimate them by number of completion chunks
           if (!hasUsageMetrics) usage.completion_tokens++;
+          // Skip writing if the client already disconnected.
+          if (response.writableEnded || response.destroyed) continue;
           writeResponseChunk(response, {
             uuid,
             sources: [],
@@ -347,7 +349,15 @@ function safeJSONStringify(obj) {
 }
 
 function writeResponseChunk(response, data) {
-  response.write(`data: ${safeJSONStringify(data)}\n\n`);
+  // Guard against writing to an already-ended or destroyed response.
+  // Without this, a client disconnect during streaming causes an
+  // "ERR_STREAM_WRITE_AFTER_END" or silent write to a dead socket.
+  if (response.writableEnded || response.destroyed) return;
+  try {
+    response.write(`data: ${safeJSONStringify(data)}\n\n`);
+  } catch {
+    // Response was closed between our check and the write.
+  }
   return;
 }
 

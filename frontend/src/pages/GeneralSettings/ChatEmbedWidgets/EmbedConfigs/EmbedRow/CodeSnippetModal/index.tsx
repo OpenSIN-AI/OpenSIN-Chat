@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { CheckCircle, CopySimple, X } from "@phosphor-icons/react";
 import showToast from "@/utils/toast";
-import hljs from "highlight.js";
+import hljs from "@/utils/chat/hljs";
 import DOMPurify from "@/utils/chat/purify";
 import "@/utils/chat/themes/github-dark.css";
 import "@/utils/chat/themes/github.css";

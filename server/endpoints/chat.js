@@ -18,6 +18,27 @@ const { WorkspaceThread } = require("../models/workspaceThread");
 const { User } = require("../models/user");
 const { getModelTag } = require("./utils");
 
+/**
+ * Start an SSE heartbeat that sends a comment-line keepalive every 15s.
+ * Returns a stop function that clears the interval.
+ * Prevents proxy/load-balancer timeouts during long prep phases
+ * (vector search, doc fetching) before the first token is streamed.
+ */
+function startSSEHeartbeat(response) {
+  const interval = setInterval(() => {
+    if (response.writableEnded || response.destroyed) {
+      clearInterval(interval);
+      return;
+    }
+    try {
+      response.write(": heartbeat\n\n");
+    } catch {
+      clearInterval(interval);
+    }
+  }, 15_000);
+  return () => clearInterval(interval);
+}
+
 function chatEndpoints(app) {
   if (!app) return;
 
@@ -25,6 +46,7 @@ function chatEndpoints(app) {
     "/workspace/:slug/stream-chat",
     [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
     async (request, response) => {
+      let stopHeartbeat = null;
       try {
         const user = await userFromSession(request, response);
         const { message, attachments = [] } = reqBody(request);
@@ -47,8 +69,10 @@ function chatEndpoints(app) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
+        stopHeartbeat = startSSEHeartbeat(response);
 
         if (multiUserMode(response) && !(await User.canSendChat(user))) {
+          stopHeartbeat();
           writeResponseChunk(response, {
             id: uuidv4(),
             type: "abort",
@@ -69,6 +93,7 @@ function chatEndpoints(app) {
           null,
           attachments,
         );
+        stopHeartbeat();
         await Telemetry.sendTelemetry("sent_chat", {
           multiUserMode: multiUserMode(response),
           LLMSelection: process.env.LLM_PROVIDER || "openai",
@@ -89,6 +114,7 @@ function chatEndpoints(app) {
         );
         if (!response.writableEnded) response.end();
       } catch (e) {
+        if (stopHeartbeat) stopHeartbeat();
         // eslint-disable-next-line no-console
         console.error(e?.message || "Unknown error", e);
         writeResponseChunk(response, {
@@ -112,6 +138,7 @@ function chatEndpoints(app) {
       validWorkspaceAndThreadSlug,
     ],
     async (request, response) => {
+      let stopHeartbeat = null;
       try {
         const user = await userFromSession(request, response);
         const { message, attachments = [] } = reqBody(request);
@@ -135,8 +162,10 @@ function chatEndpoints(app) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
+        stopHeartbeat = startSSEHeartbeat(response);
 
         if (multiUserMode(response) && !(await User.canSendChat(user))) {
+          stopHeartbeat();
           writeResponseChunk(response, {
             id: uuidv4(),
             type: "abort",
@@ -157,6 +186,7 @@ function chatEndpoints(app) {
           thread,
           attachments,
         );
+        stopHeartbeat();
 
         // If thread was renamed emit event to frontend via special `action` response.
         await WorkspaceThread.autoRenameThread({
@@ -197,6 +227,7 @@ function chatEndpoints(app) {
         );
         if (!response.writableEnded) response.end();
       } catch (e) {
+        if (stopHeartbeat) stopHeartbeat();
         // eslint-disable-next-line no-console
         console.error(e?.message || "Unknown error", e);
         writeResponseChunk(response, {

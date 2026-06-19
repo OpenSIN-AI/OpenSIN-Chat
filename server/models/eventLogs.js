@@ -109,17 +109,34 @@ const EventLogs = {
     offset = null,
     orderBy = null,
   ) {
-    const { User } = require("./user");
-
     try {
-      const results = await this.where(clause, limit, orderBy, offset);
+      const logs = await prisma.event_logs.findMany({
+        where: clause,
+        select: {
+          id: true,
+          event: true,
+          metadata: true,
+          userId: true,
+          occurredAt: true,
+          user: { select: { username: true } },
+        },
+        ...(limit !== null ? { take: limit } : {}),
+        ...(offset !== null ? { skip: offset } : {}),
+        ...(orderBy !== null
+          ? { orderBy }
+          : { orderBy: { occurredAt: "desc" } }),
+      });
 
-      for (const res of results) {
-        const user = res.userId ? await User.get({ id: res.userId }) : null;
-        res.user = user
-          ? { username: user.username }
-          : { username: "unknown user" };
-      }
+      const results = logs.map((res) => ({
+        id: res.id,
+        event: res.event,
+        metadata: res.metadata,
+        userId: res.userId,
+        occurredAt: res.occurredAt,
+        user: res.user
+          ? { username: res.user.username }
+          : { username: "unknown user" },
+      }));
 
       return results;
     } catch (error) {

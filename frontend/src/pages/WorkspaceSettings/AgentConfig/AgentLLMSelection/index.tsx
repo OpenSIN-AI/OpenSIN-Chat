@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import AgentLLMItem from "./AgentLLMItem";
-import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference";
+import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference/llmProviders";
 import { CaretUpDown, Gauge, MagnifyingGlass, X } from "@phosphor-icons/react";
 import AgentModelSelection from "../AgentModelSelection";
 import ModelSelector from "@/components/ModelSelector";

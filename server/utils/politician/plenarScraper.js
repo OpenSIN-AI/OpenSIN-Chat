@@ -22,10 +22,13 @@ const DIP_BASE = "https://dserver.bundestag.de";
 // DIP (Dokumentations- und Informationssystem für Parlamentsmaterialien) REST
 // API — used as a robust fallback when the dserver protocol XML is unavailable
 // (Issue #52). A public demo API key is published by the Bundestag; callers may
-// override it via BUNDESTAG_API_KEY.
+// override it via BUNDESTAG_DIP_API_KEY (preferred) or the legacy DIP_API_KEY.
 const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
+const DIP_PUBLIC_DEMO_KEY = "I9FKdCn.hbfefNWCY336dL6x62vfwNKpoN2RZ1gp21";
 const DIP_PUBLIC_API_KEY =
-  process.env.DIP_API_KEY || "I9FKdCn.hbfefNWCY336dL6x62vfwNKpoN2RZ1gp21";
+  process.env.BUNDESTAG_DIP_API_KEY ||
+  process.env.DIP_API_KEY ||
+  DIP_PUBLIC_DEMO_KEY;
 
 /**
  * @typedef {Object} PlenarSpeech
@@ -147,7 +150,11 @@ class PlenarScraper {
    * @returns {string}
    */
   #dipApiKey() {
-    return process.env.BUNDESTAG_API_KEY || DIP_PUBLIC_API_KEY;
+    return (
+      process.env.BUNDESTAG_DIP_API_KEY ||
+      process.env.BUNDESTAG_API_KEY ||
+      DIP_PUBLIC_API_KEY
+    );
   }
 
   /**

@@ -63,7 +63,11 @@ class BundestagApi {
     this.baseUrl = BUNDESTAG_API_BASE;
     this.wahlperiode = opts.wahlperiode || DEFAULT_WAHLPERIODE;
     this.dipApiKey =
-      opts.dipApiKey || process.env.BUNDESTAG_DIP_API_KEY || null;
+      opts.dipApiKey ||
+      process.env.BUNDESTAG_DIP_API_KEY ||
+      process.env.BUNDESTAG_API_KEY ||
+      process.env.DIP_API_KEY ||
+      null;
     this.maxRetries = 3;
     this.retryDelayMs = 1000;
     this.rateLimitDelayMs = 500;

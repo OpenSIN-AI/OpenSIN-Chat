@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 const { reqBody, multiUserMode } = require("../../utils/http");
 const { Telemetry } = require("../../models/telemetry");
@@ -35,7 +36,6 @@ function embeddedEndpoints(app) {
 
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Content-Type", "text/event-stream");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
 
@@ -53,15 +53,16 @@ function embeddedEndpoints(app) {
         });
         response.end();
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
         writeResponseChunk(response, {
           id: uuidv4(),
           type: "abort",
           sources: [],
           textResponse: null,
           close: true,
-          error: e.message,
+          error: "Internal server error",
+          errorId,
         });
         response.end();
       }

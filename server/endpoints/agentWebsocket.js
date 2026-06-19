@@ -14,13 +14,76 @@ const { EncryptionManager } = require("../utils/EncryptionManager");
 const { getAuthTokenHash } = require("../utils/middleware/validatedRequest");
 const EncryptionMgr = new EncryptionManager();
 
+// ── Connection safety limits ───────────────────────────────────────────────
+const MAX_WS_CONNECTIONS = Number(process.env.AGENT_WS_MAX_CONNECTIONS) || 50;
+const MAX_MESSAGE_BYTES =
+  Number(process.env.AGENT_WS_MAX_MESSAGE_BYTES) || 1_048_576; // 1 MiB
+const HEARTBEAT_INTERVAL_MS =
+  Number(process.env.AGENT_WS_HEARTBEAT_MS) || 30_000;
+const HEARTBEAT_TIMEOUT_MS = HEARTBEAT_INTERVAL_MS * 2;
+
+// Track active connections per-process for DoS protection.
+let activeConnectionCount = 0;
+
+/**
+ * Validate the Origin header to prevent Cross-Site WebSocket Hijacking (CSWSH).
+ * In browser context the WebSocket API always sends Origin; its absence on a
+ * browser-initiated connection is suspicious and we reject it.  In test mode
+ * or non-browser clients (curl, server-to-server) the header may be absent
+ * and we allow it when running outside production.
+ */
+function isOriginAllowed(request) {
+  if (
+    process.env.NODE_ENV === "test" &&
+    process.env.INTEGRATION_TEST === "true"
+  ) {
+    return true;
+  }
+
+  const origin = request.headers.origin;
+  if (!origin) {
+    // Non-browser clients (Node, curl) don't send Origin — allow in
+    // development, reject in production for defence-in-depth.
+    return process.env.NODE_ENV !== "production";
+  }
+
+  // Reject obviously foreign origins.  The CORS_ORIGIN env var (if set)
+  // is the authoritative allow-list; otherwise fall back to same-host.
+  const corsOrigin = process.env.CORS_ORIGIN;
+  if (corsOrigin) {
+    const allowed = corsOrigin
+      .split(",")
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+    if (allowed.includes("*")) return true;
+    return allowed.some(
+      (allowedOrigin) => origin.toLowerCase() === allowedOrigin.toLowerCase(),
+    );
+  }
+
+  // No explicit CORS_ORIGIN: allow same-host origins only.
+  const host = request.headers.host;
+  if (!host) return false;
+  try {
+    const originUrl = new URL(origin);
+    return originUrl.host === host.toLowerCase();
+  } catch {
+    return false;
+  }
+}
+
 // Setup listener for incoming messages to relay to socket so it can be handled by agent plugin.
 function relayToSocket(message) {
-  if (this.handleFeedback) return this?.handleFeedback?.(message);
-  if (this.handleToolApproval) return this?.handleToolApproval?.(message);
-  if (this.handleClarificationResponse)
-    return this?.handleClarificationResponse?.(message);
-  this.checkBailCommand(message);
+  try {
+    if (this.handleFeedback) return this?.handleFeedback?.(message);
+    if (this.handleToolApproval) return this?.handleToolApproval?.(message);
+    if (this.handleClarificationResponse)
+      return this?.handleClarificationResponse?.(message);
+    this.checkBailCommand(message);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error("[agentWebsocket] relayToSocket error:", e.message);
+  }
 }
 
 async function isAuthorizedRequest(request) {
@@ -57,7 +120,7 @@ function agentWebsocket(app, routePrefix = "") {
   if (!app) return;
   // `@mintplex-labs/express-ws` only patches `.ws` onto objects that exist
   // (and are passed) when `expressWs(app)` runs. The main `app` always has it;
-  // a plain `express.Router()` created *before* expressWs ran does NOT.
+  // a plain `express.Router()` created *before` expressWs ran does NOT.
   // So this MUST be called with the main `app` (not the apiRouter), and we
   // prefix the route with `/api` so it still matches the client URL
   // `${websocketURI()}/api/agent-invocation/:uuid`.
@@ -74,6 +137,74 @@ function agentWebsocket(app, routePrefix = "") {
   app.ws(
     `${routePrefix}/agent-invocation/:uuid`,
     async function (socket, request) {
+      // ── Connection-level guards ──────────────────────────────────────────
+      // DoS protection: reject when too many concurrent agent sockets exist.
+      if (activeConnectionCount >= MAX_WS_CONNECTIONS) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[agentWebsocket] Rejecting connection: ${activeConnectionCount}/${MAX_WS_CONNECTIONS} slots in use.`,
+        );
+        socket.close(1013, "Maximum concurrent connections reached");
+        return;
+      }
+
+      // CSWSH protection: validate Origin header.
+      if (!isOriginAllowed(request)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[agentWebsocket] Rejecting connection from disallowed origin: ${request.headers.origin || "<missing>"}`,
+        );
+        socket.close(1008, "Origin not allowed");
+        return;
+      }
+
+      let heartbeatInterval = null;
+      let heartbeatTimeout = null;
+      let isTerminated = false;
+
+      // Heartbeat: detect dead connections that half-open TCP keeps alive.
+      // The ws library auto-responds to ping with pong; we just need to
+      // track whether the pong arrived before the timeout.
+      const startHeartbeat = () => {
+        heartbeatInterval = setInterval(() => {
+          if (socket.readyState !== 1 /* OPEN */) return;
+          // Clear previous pong timeout; if pong doesn't arrive in time,
+          // the connection is stale and we terminate it.
+          clearTimeout(heartbeatTimeout);
+          heartbeatTimeout = setTimeout(() => {
+            // eslint-disable-next-line no-console
+            console.warn(
+              "[agentWebsocket] Heartbeat timeout — terminating stale connection.",
+            );
+            try {
+              socket.terminate();
+            } catch {
+              /* already closed */
+            }
+          }, HEARTBEAT_TIMEOUT_MS);
+
+          // Send a ping; the ws library fires "pong" automatically.
+          try {
+            socket.ping();
+          } catch {
+            /* socket gone */
+          }
+        }, HEARTBEAT_INTERVAL_MS);
+
+        // Reset the pong-timeout whenever a pong arrives.
+        socket.on("pong", () => {
+          clearTimeout(heartbeatTimeout);
+        });
+      };
+
+      const cleanup = () => {
+        if (isTerminated) return;
+        isTerminated = true;
+        if (heartbeatInterval) clearInterval(heartbeatInterval);
+        if (heartbeatTimeout) clearTimeout(heartbeatTimeout);
+        if (activeConnectionCount > 0) activeConnectionCount--;
+      };
+
       try {
         if (!(await isAuthorizedRequest(request))) {
           socket.close(1008, "Unauthorized");
@@ -89,11 +220,66 @@ function agentWebsocket(app, routePrefix = "") {
           return;
         }
 
-        socket.on("message", relayToSocket);
+        activeConnectionCount++;
+        startHeartbeat();
+
+        socket.on("message", (data, isBinary) => {
+          // Message size limit: prevent OOM via oversized payloads.
+          if (isBinary) return; // We only accept text frames.
+          const size =
+            typeof data === "string" ? Buffer.byteLength(data) : data.length;
+          if (size > MAX_MESSAGE_BYTES) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[agentWebsocket] Message rejected: ${size} bytes exceeds ${MAX_MESSAGE_BYTES} byte limit.`,
+            );
+            try {
+              socket.send(
+                JSON.stringify({
+                  type: "wssFailure",
+                  content: "Message exceeds maximum allowed size.",
+                }),
+              );
+            } catch {
+              /* socket gone */
+            }
+            return;
+          }
+          relayToSocket.call(socket, data.toString());
+        });
+
         socket.on("close", () => {
+          cleanup();
           agentHandler.closeAlert();
+          // Abort the agent cluster so it stops consuming LLM tokens and
+          // releases resources immediately on client disconnect.
+          try {
+            if (agentHandler.aibitat) {
+              agentHandler.aibitat.abort();
+            }
+          } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(
+              "[agentWebsocket] Error aborting agent on close:",
+              e.message,
+            );
+          }
           WorkspaceAgentInvocation.close(String(request.params.uuid));
           return;
+        });
+
+        socket.on("error", (error) => {
+          // eslint-disable-next-line no-console
+          console.error(
+            "[agentWebsocket] Socket error:",
+            error?.message || error,
+          );
+          cleanup();
+          try {
+            if (agentHandler.aibitat) agentHandler.aibitat.abort();
+          } catch {
+            /* already cleaned up */
+          }
         });
 
         socket.checkBailCommand = (data) => {
@@ -102,7 +288,11 @@ function agentWebsocket(app, routePrefix = "") {
             agentHandler.log(
               `User invoked bail command while processing. Closing session now.`,
             );
-            agentHandler.aibitat.abort();
+            try {
+              agentHandler.aibitat.abort();
+            } catch {
+              /* already aborted */
+            }
             socket.close();
             return;
           }
@@ -114,9 +304,14 @@ function agentWebsocket(app, routePrefix = "") {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        socket?.send(
-          JSON.stringify({ type: "wssFailure", content: e.message }),
-        );
+        cleanup();
+        try {
+          socket?.send(
+            JSON.stringify({ type: "wssFailure", content: e.message }),
+          );
+        } catch {
+          /* socket already gone */
+        }
         socket?.close();
       }
     },

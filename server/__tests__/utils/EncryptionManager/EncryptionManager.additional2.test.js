@@ -32,9 +32,9 @@ describe("EncryptionManager — additional2 edge cases", () => {
       expect(decoded.length).not.toBe(Buffer.from(key).length);
     });
 
-    it("uses aes-256-cbc algorithm", () => {
-      expect(manager.algorithm).toBe("aes-256-cbc");
-      expect(crypto.getCiphers().includes("aes-256-cbc")).toBe(true);
+    it("uses aes-256-gcm algorithm", () => {
+      expect(manager.algorithm).toBe("aes-256-gcm");
+      expect(crypto.getCiphers().includes("aes-256-gcm")).toBe(true);
     });
 
     it("uses ':' as the separator between ciphertext and IV", () => {
@@ -52,10 +52,10 @@ describe("EncryptionManager — additional2 edge cases", () => {
   });
 
   describe("encrypt — randomness and structure", () => {
-    it("produces 3 colon-separated segments only if ciphertext contains no colon (always 2 here)", () => {
+    it("produces a base64 string (no internal separators)", () => {
       const enc = manager.encrypt("check");
-      const parts = enc.split(":");
-      expect(parts).toHaveLength(2);
+      expect(enc).not.toContain(":");
+      expect(enc).toMatch(/^[A-Za-z0-9+/=]+$/);
     });
 
     it("two consecutive encrypts of the same plaintext produce different ciphertext", () => {
@@ -67,17 +67,21 @@ describe("EncryptionManager — additional2 edge cases", () => {
     it("two consecutive encrypts of the same plaintext produce different IVs", () => {
       const a = manager.encrypt("identical-input");
       const b = manager.encrypt("identical-input");
-      const ivA = a.split(manager.separator)[1];
-      const ivB = b.split(manager.separator)[1];
-      expect(ivA).not.toBe(ivB);
+      const ivA = Buffer.from(a, "base64").subarray(0, 12);
+      const ivB = Buffer.from(b, "base64").subarray(0, 12);
+      expect(ivA.equals(ivB)).toBe(false);
     });
 
-    it("ciphertext is AES-CBC aligned to 16-byte multiples (hex-encoded)", () => {
-      // AES-CBC ciphertext is a multiple of 16 bytes; hex = 2 chars per byte
+    it("ciphertext region (after IV+authTag) round-trips to plaintext", () => {
       const enc = manager.encrypt("block-alignment-test");
-      const cipher = enc.split(manager.separator)[0];
-      expect(cipher.length % 2).toBe(0);
-      expect((cipher.length / 2) % 16).toBe(0);
+      expect(manager.decrypt(enc)).toBe("block-alignment-test");
+    });
+
+    it("encrypted payload is base64 of IV||authTag||ciphertext", () => {
+      const enc = manager.encrypt("structure-test");
+      const buf = Buffer.from(enc, "base64");
+      // 12 IV + 16 authTag = 28 fixed bytes; + ciphertext (≥0)
+      expect(buf.length).toBeGreaterThanOrEqual(28);
     });
 
     it("encrypts an empty-looking but truthy string (e.g. space)", () => {
@@ -100,22 +104,29 @@ describe("EncryptionManager — additional2 edge cases", () => {
   });
 
   describe("decrypt — error handling", () => {
-    it("returns null for a string without the separator", () => {
+    it("returns null when payload is too short to contain IV+authTag", () => {
       expect(manager.decrypt("no-separator-here")).toBeNull();
     });
 
-    it("returns null when IV is not valid hex", () => {
-      expect(manager.decrypt("deadbeef:ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ")).toBeNull();
+    it("returns null when authTag is tampered (GCM verification fails)", () => {
+      const valid = manager.encrypt("reader-payload");
+      const buf = Buffer.from(valid, "base64");
+      buf[20] ^= 0x01; // flip a bit inside the authTag region
+      expect(manager.decrypt(buf.toString("base64"))).toBeNull();
     });
 
-    it("returns null when IV is wrong length (not 16 bytes)", () => {
-      // 8-byte IV in hex = 16 chars
-      expect(manager.decrypt("deadbeef:0011223344556677")).toBeNull();
+    it("returns null when IV region is truncated", () => {
+      const valid = manager.encrypt("truncate-test");
+      const buf = Buffer.from(valid, "base64");
+      // Drop a byte from the IV — gives createDecipheriv a 11-byte IV
+      expect(manager.decrypt(buf.subarray(1).toString("base64"))).toBeNull();
     });
 
-    it("returns null when ciphertext is not valid hex", () => {
-      const iv = crypto.randomBytes(16).toString("hex");
-      expect(manager.decrypt(`zz-not-hex-${iv}:${iv}`)).toBeNull();
+    it("returns null when ciphertext bytes are tampered", () => {
+      const valid = manager.encrypt("tamper-test");
+      const buf = Buffer.from(valid, "base64");
+      buf[buf.length - 1] ^= 0xff;
+      expect(manager.decrypt(buf.toString("base64"))).toBeNull();
     });
 
     it("returns null for non-string input (number)", () => {

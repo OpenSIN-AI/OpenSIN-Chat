@@ -4,6 +4,7 @@
  * Session-geschützt über validatedRequest — für die Frontend-UI.
  * (Die Developer-API unter /api/pdf-analysis/* bleibt unverändert bestehen.)
  */
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const multer = require("multer");
@@ -74,7 +75,12 @@ function pdfAnalysisEndpoints(app) {
       });
       response.status(200).json({ jobId });
     } catch (e) {
-      response.status(e.statusCode || 400).json({ error: e.message });
+      const errorId = crypto.randomUUID();
+      console.error(`[endpoint error ${errorId}]`, e);
+      response.status(e.statusCode || 500).json({
+        error: "Internal server error",
+        errorId,
+      });
     }
   });
 
@@ -100,7 +106,12 @@ function pdfAnalysisEndpoints(app) {
         );
         response.status(200).json({ jobId });
       } catch (e) {
-        response.status(e.statusCode || 400).json({ error: e.message });
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
+        response.status(e.statusCode || 500).json({
+          error: "Internal server error",
+          errorId,
+        });
       }
     },
   );
@@ -223,7 +234,12 @@ function pdfAnalysisEndpoints(app) {
       });
       response.status(200).json({ jobId });
     } catch (e) {
-      response.status(e.statusCode || 400).json({ error: e.message });
+      const errorId = crypto.randomUUID();
+      console.error(`[endpoint error ${errorId}]`, e);
+      response.status(e.statusCode || 500).json({
+        error: "Internal server error",
+        errorId,
+      });
     }
   });
 

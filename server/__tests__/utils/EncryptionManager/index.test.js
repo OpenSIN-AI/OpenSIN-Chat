@@ -17,8 +17,8 @@ describe("EncryptionManager", () => {
       expect(manager.key.length).toBe(32);
     });
 
-    test("sets algorithm to aes-256-cbc", () => {
-      expect(manager.algorithm).toBe("aes-256-cbc");
+    test("sets algorithm to aes-256-gcm", () => {
+      expect(manager.algorithm).toBe("aes-256-gcm");
     });
 
     test("sets separator to colon", () => {
@@ -31,21 +31,20 @@ describe("EncryptionManager", () => {
   });
 
   describe("encrypt", () => {
-    test("encrypts a string and returns IV-separated string", () => {
+    test("encrypts a string and returns base64-encoded payload", () => {
       const result = manager.encrypt("Hello World");
       expect(result).toBeTruthy();
-      expect(result).toContain(":");
-      const [encrypted, iv] = result.split(":");
-      expect(encrypted).toBeTruthy();
-      expect(iv).toBeTruthy();
+      expect(result).not.toContain(":");
+      const buf = Buffer.from(result, "base64");
+      expect(buf.length).toBeGreaterThanOrEqual(28); // 12 IV + 16 authTag
     });
 
     test("produces different IV for same plaintext", () => {
       const result1 = manager.encrypt("Same text");
       const result2 = manager.encrypt("Same text");
-      const iv1 = result1.split(":")[1];
-      const iv2 = result2.split(":")[1];
-      expect(iv1).not.toBe(iv2);
+      const iv1 = Buffer.from(result1, "base64").subarray(0, 12);
+      const iv2 = Buffer.from(result2, "base64").subarray(0, 12);
+      expect(iv1.equals(iv2)).toBe(false);
     });
 
     test("returns null for empty string", () => {
@@ -59,7 +58,7 @@ describe("EncryptionManager", () => {
     test("encrypts special characters", () => {
       const result = manager.encrypt("Hello\nWorld\t!");
       expect(result).toBeTruthy();
-      expect(result).toContain(":");
+      expect(result).not.toContain(":");
     });
 
     test("encrypts unicode characters", () => {
@@ -103,12 +102,15 @@ describe("EncryptionManager", () => {
       expect(decrypted).toBe(original);
     });
 
-    test("returns null for invalid input without IV", () => {
+    test("returns null for payload shorter than IV+authTag", () => {
       expect(manager.decrypt("invalid-no-iv")).toBeNull();
     });
 
-    test("returns null for corrupted encrypted data", () => {
-      expect(manager.decrypt("not-hex:00")).toBeNull();
+    test("returns null for tampered ciphertext (auth tag mismatch)", () => {
+      const valid = manager.encrypt("secret");
+      const buf = Buffer.from(valid, "base64");
+      buf[buf.length - 1] ^= 0xff;
+      expect(manager.decrypt(buf.toString("base64"))).toBeNull();
     });
 
     test("returns null for empty string", () => {

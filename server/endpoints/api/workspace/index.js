@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+const crypto = require("crypto");
 const { v4: uuidv4 } = require("uuid");
 const { Document } = require("../../../models/documents");
 const { Telemetry } = require("../../../models/telemetry");
@@ -728,15 +729,16 @@ function apiWorkspaceEndpoints(app) {
         });
         return response.status(200).json({ ...result });
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
         response.status(500).json({
           id: uuidv4(),
           type: "abort",
           textResponse: null,
           sources: [],
           close: true,
-          error: e.message,
+          error: "Internal server error",
+          errorId,
         });
       }
     },
@@ -862,7 +864,6 @@ function apiWorkspaceEndpoints(app) {
 
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Content-Type", "text/event-stream");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
 
@@ -890,15 +891,16 @@ function apiWorkspaceEndpoints(app) {
         });
         response.end();
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e.message, e);
+        const errorId = crypto.randomUUID();
+        console.error(`[endpoint error ${errorId}]`, e);
         writeResponseChunk(response, {
           id: uuidv4(),
           type: "abort",
           textResponse: null,
           sources: [],
           close: true,
-          error: e.message,
+          error: "Internal server error",
+          errorId,
         });
         response.end();
       }

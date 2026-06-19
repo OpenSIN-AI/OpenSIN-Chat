@@ -136,7 +136,7 @@ vi.mock("he", () => ({
       .replace(/'/g, "&#39;"),
 }));
 
-vi.mock("highlight.js", () => {
+vi.mock("./hljs", () => {
   const hljs = {
     registerLanguage: vi.fn(),
     getLanguage: vi.fn((lang) => (lang === "svelte" ? {} : null)),
@@ -145,7 +145,7 @@ vi.mock("highlight.js", () => {
       language: opts?.language,
     }),
   };
-  return { default: hljs, ...hljs };
+  return { default: hljs };
 });
 
 vi.mock("uuid", () => ({

@@ -56,6 +56,27 @@ function addSSEConnection(slug, res) {
   if (!sseConnections.has(slug)) sseConnections.set(slug, new Set());
   sseConnections.get(slug).add(res);
 
+  // SSE heartbeat: send a comment-line keepalive every 15 seconds so
+  // proxies and load balancers (Cloudflare, nginx, etc.) don't close
+  // the connection during long gaps between embedding events.
+  // The comment line (": heartbeat\n\n") is valid SSE and ignored by
+  // the EventSource parser on the client.
+  if (!res._sseHeartbeat) {
+    res._sseHeartbeat = setInterval(() => {
+      if (res.writableEnded || res.destroyed) {
+        clearInterval(res._sseHeartbeat);
+        res._sseHeartbeat = null;
+        return;
+      }
+      try {
+        res.write(": heartbeat\n\n");
+      } catch {
+        clearInterval(res._sseHeartbeat);
+        res._sseHeartbeat = null;
+      }
+    }, 15_000);
+  }
+
   // Only replay buffered events when a worker is actively running.
   // If the worker has already exited the history is stale (e.g. contains
   // all_complete from a previous run) and replaying it would poison a
@@ -75,6 +96,12 @@ function addSSEConnection(slug, res) {
 }
 
 function removeSSEConnection(slug, res) {
+  // Clear the heartbeat interval to prevent timer leaks.
+  if (res._sseHeartbeat) {
+    clearInterval(res._sseHeartbeat);
+    res._sseHeartbeat = null;
+  }
+
   const set = sseConnections.get(slug);
   if (!set) return;
   set.delete(res);

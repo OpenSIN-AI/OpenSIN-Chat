@@ -12,7 +12,7 @@ class EncryptionManager {
   constructor({ key = null, salt = null } = {}) {
     this.#loadOrCreateKeySalt(key, salt);
     this.key = crypto.scryptSync(this.#encryptionKey, this.#encryptionSalt, 32);
-    this.algorithm = "aes-256-cbc";
+    this.algorithm = "aes-256-gcm";
     this.separator = ":";
 
     // Used to send key to collector process to be able to decrypt data since they do not share ENVs
@@ -54,13 +54,14 @@ class EncryptionManager {
     try {
       if (!plainTextString)
         throw new Error("Empty string is not valid for this method.");
-      const iv = crypto.randomBytes(16);
+      const iv = crypto.randomBytes(12);
       const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
-      const encrypted = cipher.update(plainTextString, "utf8", "hex");
-      return [
-        encrypted + cipher.final("hex"),
-        Buffer.from(iv).toString("hex"),
-      ].join(this.separator);
+      const encrypted = Buffer.concat([
+        cipher.update(plainTextString, "utf8"),
+        cipher.final(),
+      ]);
+      const authTag = cipher.getAuthTag();
+      return Buffer.concat([iv, authTag, encrypted]).toString("base64");
     } catch (e) {
       this.log(e);
       return null;
@@ -69,14 +70,15 @@ class EncryptionManager {
 
   decrypt(encryptedString) {
     try {
-      const [encrypted, iv] = encryptedString.split(this.separator);
-      if (!iv) throw new Error("IV not found");
-      const decipher = crypto.createDecipheriv(
-        this.algorithm,
-        this.key,
-        Buffer.from(iv, "hex"),
+      const data = Buffer.from(encryptedString, "base64");
+      const iv = data.subarray(0, 12);
+      const authTag = data.subarray(12, 28);
+      const encrypted = data.subarray(28);
+      const decipher = crypto.createDecipheriv(this.algorithm, this.key, iv);
+      decipher.setAuthTag(authTag);
+      return (
+        decipher.update(encrypted, undefined, "utf8") + decipher.final("utf8")
       );
-      return decipher.update(encrypted, "hex", "utf8") + decipher.final("utf8");
     } catch (e) {
       this.log(e);
       return null;

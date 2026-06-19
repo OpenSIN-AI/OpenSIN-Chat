@@ -301,22 +301,41 @@ const WorkspaceChats = {
     offset = null,
     orderBy = null,
   ) {
-    const { Workspace } = require("./workspace");
-    const { User } = require("./user");
-
     try {
-      const results = await this.where(clause, limit, orderBy, offset);
+      const chats = await prisma.workspace_chats.findMany({
+        where: clause,
+        select: {
+          id: true,
+          workspaceId: true,
+          prompt: true,
+          response: true,
+          user_id: true,
+          thread_id: true,
+          api_session_id: true,
+          createdAt: true,
+          feedbackScore: true,
+          include: true,
+          workspace: { select: { name: true, slug: true } },
+          users: { select: { username: true } },
+        },
+        ...(limit !== null ? { take: limit } : {}),
+        ...(offset !== null ? { skip: offset } : {}),
+        ...(orderBy !== null ? { orderBy } : {}),
+      });
 
+      const results = chats.map((res) => ({
+        ...res,
+        workspace: res.workspace
+          ? { name: res.workspace.name, slug: res.workspace.slug }
+          : { name: "deleted workspace", slug: null },
+        user: res.users
+          ? { username: res.users.username }
+          : { username: res.api_session_id !== null ? "API" : "unknown user" },
+      }));
+
+      // Strip the relation aliases to match the original shape
       for (const res of results) {
-        const workspace = await Workspace.get({ id: res.workspaceId });
-        res.workspace = workspace
-          ? { name: workspace.name, slug: workspace.slug }
-          : { name: "deleted workspace", slug: null };
-
-        const user = res.user_id ? await User.get({ id: res.user_id }) : null;
-        res.user = user
-          ? { username: user.username }
-          : { username: res.api_session_id !== null ? "API" : "unknown user" };
+        delete res.users;
       }
 
       return results;
