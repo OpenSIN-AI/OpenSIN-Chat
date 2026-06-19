@@ -11,6 +11,7 @@ const {
 } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
+const { guardArchiveOrThrow } = require("../../utils/safeUnzip");
 
 function convertToCSV(data) {
   return data
@@ -44,6 +45,19 @@ async function asXlsx({
   metadata = {},
 }) {
   const documents = [];
+
+  try {
+    await guardArchiveOrThrow(fullFilePath, filename);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`[asXlsx] Refused ${filename}: ${err.message}`);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: err.message,
+      documents: [],
+    };
+  }
 
   try {
     const workSheetsFromFile = xlsx.parse(fullFilePath);

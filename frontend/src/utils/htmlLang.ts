@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import i18next from "./i18n";
+import i18next from "../i18n";
 
 export function syncHtmlLang(lng) {
   const normalized = (lng || i18next.language || "en").split("-")[0];

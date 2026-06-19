@@ -38,9 +38,9 @@ describe("formatDateTimeAsMoment", () => {
     expect(result).toBe("2025-06-08");
   });
 
-  it('returns "Invalid date" for unparseable input (dayjs does not throw)', () => {
+  it('returns "Invalid Date" for unparseable input (dayjs does not throw)', () => {
     const result = formatDateTimeAsMoment("garbage", "YYYY-MM-DD");
-    expect(result).toBe("Invalid date");
+    expect(result).toBe("Invalid Date");
   });
 });
 

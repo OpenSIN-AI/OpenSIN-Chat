@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
@@ -14,13 +15,20 @@ export default function RouterRulesPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { router, isLoading, error, refresh } = useModelRouter(id);
+  const redirected = useRef(false);
 
-  if (error || (!isLoading && !router)) {
-    showToast(error || "Router not found", "error");
-    navigate(paths.settings.modelRouters());
-  }
+  // Side-effectful redirect must run in an effect, not during render.
+  // The ref guard prevents duplicate toasts / navigate calls on re-render.
+  useEffect(() => {
+    if (redirected.current) return;
+    if (error || (!isLoading && !router)) {
+      redirected.current = true;
+      showToast(error || "Router not found", "error");
+      navigate(paths.settings.modelRouters(), { replace: true });
+    }
+  }, [error, isLoading, router, navigate]);
 
-  if (isLoading)
+  if (isLoading || error || !router)
     return (
       <Layout t={t}>
         <div className="flex items-center justify-center py-20">

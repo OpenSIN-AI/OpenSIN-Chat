@@ -73,6 +73,17 @@ class GitLabRepoLoader {
     this.apiBase = new URL(this.repo).origin;
     this.author = author;
     this.project = project;
+
+    try {
+      const hostname = new URL(this.repo).hostname;
+      const ALLOWED_GITLAB_HOSTS = [/^gitlab\.com$/i, /^gitlab\..+\..+$/i];
+      if (!ALLOWED_GITLAB_HOSTS.some((re) => re.test(hostname))) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          `[Gitlab Loader]: baseUrl host ${hostname} is not in the standard GitLab allowlist (gitlab.com / gitlab.<sub>.<tld>). Please confirm this instance is trusted — PAT will be sent to it.`
+        );
+      }
+    } catch {}
     return true;
   }
 

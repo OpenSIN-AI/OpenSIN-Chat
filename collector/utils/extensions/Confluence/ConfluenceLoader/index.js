@@ -98,21 +98,22 @@ class ConfluencePagesLoader {
 
   // https://developer.atlassian.com/cloud/confluence/rest/v2/intro/#auth
   async fetchAllPagesInSpace(start = 0, limit = this.limit) {
-    const url = `${this.baseUrl}${
-      this.cloud ? "/wiki" : ""
-    }/rest/api/content?spaceKey=${
-      this.spaceKey
-    }&limit=${limit}&start=${start}&expand=${this.expand}`;
-    const data = await this.fetchConfluenceData(url);
-    if (data.size === 0) {
-      return [];
+    const MAX_PAGES = 50000;
+    const allPages = [];
+    let currentStart = start;
+    while (allPages.length < MAX_PAGES) {
+      const url = `${this.baseUrl}${
+        this.cloud ? "/wiki" : ""
+      }/rest/api/content?spaceKey=${
+        this.spaceKey
+      }&limit=${limit}&start=${currentStart}&expand=${this.expand}`;
+      const data = await this.fetchConfluenceData(url);
+      const results = Array.isArray(data?.results) ? data.results : [];
+      allPages.push(...results);
+      if (!data || data.size === 0 || results.length === 0) break;
+      currentStart += data.size;
     }
-    const nextPageStart = start + data.size;
-    const nextPageResults = await this.fetchAllPagesInSpace(
-      nextPageStart,
-      limit
-    );
-    return data.results.concat(nextPageResults);
+    return allPages;
   }
 
   createDocumentFromPage(page) {

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
@@ -69,11 +69,16 @@ export default function RunDetailPage() {
   const { run, job, isLoading, mutate: refresh } = useRunDetail(runId);
   const [continuing, setContinuing] = useState(false);
   const [killing, setKilling] = useState(false);
+  const markedRead = useRef<string | null>(null);
 
-  // Mark run as read on first load
-  if (run && !run.readAt) {
-    ScheduledJobs.markRunRead(runId);
-  }
+  // Mark run as read once per runId (side-effect must live in an effect,
+  // not in the render body — otherwise it fires on every re-render).
+  useEffect(() => {
+    if (run && runId && !run.readAt && markedRead.current !== runId) {
+      markedRead.current = runId;
+      ScheduledJobs.markRunRead(runId).then(() => refresh());
+    }
+  }, [run, runId, refresh]);
 
   const handleContinueInThread = async () => {
     setContinuing(true);

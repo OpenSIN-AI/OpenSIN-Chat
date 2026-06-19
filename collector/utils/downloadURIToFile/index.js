@@ -23,6 +23,45 @@ function mimeToExtension(mimeType) {
   return possibleExtensions[0];
 }
 
+const MAX_REDIRECTS = 3;
+const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
+
+/**
+ * Performs a fetch with manual redirect-following that re-runs the SSRF
+ * guard on every Location hop. Throws on redirect loops or unvalidated targets.
+ * @param {string} url
+ * @param {AbortSignal} signal
+ * @param {number} hopCount
+ * @returns {Promise<Response>}
+ */
+async function fetchWithValidatedRedirects(url, signal, hopCount = 0) {
+  const response = await fetch(url, { redirect: "manual", signal });
+  if (!REDIRECT_STATUSES.has(response.status)) return response;
+
+  if (hopCount >= MAX_REDIRECTS) {
+    throw new Error(
+      `Too many redirects (limit ${MAX_REDIRECTS}) while fetching ${url}`
+    );
+  }
+
+  const location = response.headers.get("location");
+  if (!location) throw new Error("Redirect with no Location header");
+
+  const nextUrl = new URL(location, url).href;
+  if (!validURL(nextUrl)) {
+    throw new Error(
+      `Redirect target ${nextUrl} blocked by SSRF guard (origin: ${url})`
+    );
+  }
+
+  try {
+    await response.arrayBuffer();
+  } catch {
+    // body may not be readable; safe to ignore — fetch will not reuse it
+  }
+  return fetchWithValidatedRedirects(nextUrl, signal, hopCount + 1);
+}
+
 /**
  * Download a file to the hotdir
  * @param {string} url - The URL of the file to download
@@ -44,7 +83,7 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
       );
     }, maxTimeout);
 
-    const res = await fetch(url, { signal: abortController.signal })
+    const res = await fetchWithValidatedRedirects(url, abortController.signal)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         return res;
@@ -98,7 +137,14 @@ async function downloadURIToFile(url, maxTimeout = 10_000) {
         callback(null, chunk);
       },
     });
-    await pipeline(res.body, sizeLimiter, writeStream);
+    try {
+      await pipeline(res.body, sizeLimiter, writeStream);
+    } catch (pipelineError) {
+      try {
+        fs.rmSync(localFilePath, { force: true });
+      } catch {}
+      throw pipelineError;
+    }
 
     // eslint-disable-next-line no-console
     console.log(`[SUCCESS]: File ${localFilePath} downloaded to hotdir.`);

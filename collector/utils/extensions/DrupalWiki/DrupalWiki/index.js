@@ -306,41 +306,50 @@ class DrupalWiki {
 
       const extensionsList = Object.keys(SUPPORTED_FILETYPE_CONVERTERS);
       for (const attachment of data.content || data) {
-        const { fileName, id: attachId } = attachment;
-        const lowerName = fileName.toLowerCase();
-        if (!extensionsList.some((ext) => lowerName.endsWith(ext))) {
-          continue;
-        }
+        try {
+          const { fileName, id: attachId } = attachment;
+          const lowerName = fileName.toLowerCase();
+          if (!extensionsList.some((ext) => lowerName.endsWith(ext))) {
+            continue;
+          }
 
-        const downloadUrl = `${this.baseUrl}/api/rest/scope/api/attachment/${attachId}/download`;
-        const attachAbort = new AbortController();
-        const attachTimeout = setTimeout(() => attachAbort.abort(), 30_000);
-        const attachmentResponse = await fetch(downloadUrl, {
-          headers: this.#getHeaders(),
-          signal: attachAbort.signal,
-        }).finally(() => clearTimeout(attachTimeout));
-        if (!attachmentResponse.ok) {
-          // eslint-disable-next-line no-console
-          console.log(`Skipping attachment: ${fileName} - Download failed`);
-          continue;
-        }
+          const downloadUrl = `${this.baseUrl}/api/rest/scope/api/attachment/${attachId}/download`;
+          const attachAbort = new AbortController();
+          const attachTimeout = setTimeout(() => attachAbort.abort(), 30_000);
+          const attachmentResponse = await fetch(downloadUrl, {
+            headers: this.#getHeaders(),
+            signal: attachAbort.signal,
+          }).finally(() => clearTimeout(attachTimeout));
+          if (!attachmentResponse.ok) {
+            // eslint-disable-next-line no-console
+            console.log(`Skipping attachment: ${fileName} - Download failed`);
+            continue;
+          }
 
-        const buffer = await attachmentResponse.arrayBuffer();
-        const localFilePath = normalizePath(
-          sanitizeFileName(path.resolve(WATCH_DIRECTORY, fileName))
-        );
-        if (!isWithin(path.resolve(WATCH_DIRECTORY), localFilePath)) {
+          const buffer = await attachmentResponse.arrayBuffer();
+          const localFilePath = normalizePath(
+            sanitizeFileName(path.resolve(WATCH_DIRECTORY, fileName))
+          );
+          if (!isWithin(path.resolve(WATCH_DIRECTORY), localFilePath)) {
+            // eslint-disable-next-line no-console
+            console.error(
+              `[DrupalWiki Loader]: File name ${localFilePath} is not within the storage path ${path.resolve(
+                WATCH_DIRECTORY
+              )}`
+            );
+            continue;
+          }
+
+          require("fs").writeFileSync(localFilePath, Buffer.from(buffer));
+          await processSingleFile(localFilePath);
+        } catch (attachErr) {
           // eslint-disable-next-line no-console
           console.error(
-            `[DrupalWiki Loader]: File name ${localFilePath} is not within the storage path ${path.resolve(
-              WATCH_DIRECTORY
-            )}`
+            `[DrupalWiki Loader]: Failed to process attachment ${attachment?.fileName || attachment?.id || "unknown"}:`,
+            attachErr
           );
           continue;
         }
-
-        require("fs").writeFileSync(localFilePath, Buffer.from(buffer));
-        await processSingleFile(localFilePath);
       }
     } catch (err) {
       // eslint-disable-next-line no-console

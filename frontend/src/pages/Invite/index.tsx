@@ -14,22 +14,38 @@ export default function InvitePage() {
   });
 
   useEffect(() => {
+    let cancelled = false;
     async function checkInvite() {
       if (!code) {
-        setResult({
-          status: "invalid",
-          message: "No invite code provided.",
-        });
+        if (!cancelled)
+          setResult({
+            status: "invalid",
+            message: "No invite code provided.",
+          });
         return;
       }
-      const { invite, error } = await Invite.checkInvite(code);
-      setResult({
-        status: invite ? "valid" : "invalid",
-        message: error,
-      });
+      try {
+        const { invite, error } = await Invite.checkInvite(code);
+        if (cancelled) return;
+        setResult({
+          status: invite ? "valid" : "invalid",
+          message: error,
+        });
+      } catch (err: any) {
+        if (cancelled) return;
+        setResult({
+          status: "invalid",
+          message:
+            err?.message ||
+            "Unable to verify invite code. Please try again later.",
+        });
+      }
     }
     checkInvite();
-  }, []);
+    return () => {
+      cancelled = true;
+    };
+  }, [code]);
 
   if (result.status === "loading") {
     return (

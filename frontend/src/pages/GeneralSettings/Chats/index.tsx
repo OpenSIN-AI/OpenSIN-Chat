@@ -113,14 +113,31 @@ export default function WorkspaceChats() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
     async function fetchChats() {
-      const { chats: _chats = [], hasPages = false } =
-        await System.chats(offset);
-      setChats(_chats);
-      setCanNext(hasPages);
-      setLoading(false);
+      setLoading(true);
+      try {
+        const { chats: _chats = [], hasPages = false } =
+          await System.chats(offset);
+        if (cancelled) return;
+        setChats(_chats);
+        setCanNext(hasPages);
+      } catch (err: any) {
+        if (cancelled) return;
+        setChats([]);
+        setCanNext(false);
+        showToast(
+          `Failed to load chats: ${err?.message || String(err)}`,
+          "error",
+        );
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
     fetchChats();
+    return () => {
+      cancelled = true;
+    };
   }, [offset]);
 
   return (

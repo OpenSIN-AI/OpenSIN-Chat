@@ -15,7 +15,7 @@ import {
   Wrench,
 } from "@phosphor-icons/react";
 import paths from "@/utils/paths";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, Navigate } from "react-router-dom";
 import GeneralAppearance from "./GeneralAppearance";
 import ChatSettings from "./ChatSettings";
 import VectorDatabase from "./VectorDatabase";
@@ -47,7 +47,7 @@ export default function WorkspaceSettings(): JSX.Element | null {
 
 function ShowWorkspaceChat(): JSX.Element | null {
   const { t } = useTranslation();
-  const { slug, tab } = useParams() as { slug: string; tab: string };
+  const { slug, tab } = useParams() as { slug?: string; tab?: string };
   const { user } = useUser();
   const {
     workspace: rawWorkspace,
@@ -90,7 +90,12 @@ function ShowWorkspaceChat(): JSX.Element | null {
 
   if (loading) return <FullScreenLoader />;
 
-  const TabContent = TABS[tab];
+  // Guard: an invalid or missing tab would make TABS[tab] undefined and
+  // crash React with "Element type is invalid". Redirect to the default tab.
+  const TabContent = TABS[tab ?? ""];
+  if (!TabContent || !slug) {
+    return <Navigate to={paths.workspace.settings.generalAppearance(slug ?? "")} replace />;
+  }
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
       {!isMobile && <Sidebar />}

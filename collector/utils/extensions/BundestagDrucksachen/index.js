@@ -132,7 +132,13 @@ async function dipFetch(url, apiKey) {
       )}`
     );
   }
-  return res.json();
+  try {
+    return await res.json();
+  } catch {
+    throw new Error(
+      `DIP-API returned invalid JSON for ${url}`
+    );
+  }
 }
 
 /**

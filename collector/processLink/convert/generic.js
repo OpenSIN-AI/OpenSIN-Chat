@@ -293,30 +293,33 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
   try {
     const abortController = new AbortController();
     const timeout = setTimeout(() => abortController.abort(), 15_000);
-    const response = await fetch(link, {
-      method: "GET",
-      headers: {
-        "Content-Type": "text/plain",
-        "User-Agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
-        ...validatedHeaders(headers),
-      },
-      signal: abortController.signal,
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const contentLength = parseInt(
-      response.headers.get("content-length") || "0",
-      10
-    );
-    if (contentLength > MAX_RESPONSE_BYTES)
-      throw new Error(
-        `Response too large (Content-Length ${contentLength} > ${MAX_RESPONSE_BYTES})`
+    try {
+      const response = await fetch(link, {
+        method: "GET",
+        headers: {
+          "Content-Type": "text/plain",
+          "User-Agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36,gzip(gfe)",
+          ...validatedHeaders(headers),
+        },
+        signal: abortController.signal,
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const contentLength = parseInt(
+        response.headers.get("content-length") || "0",
+        10
       );
-    const pageText = await response.text();
-    if (Buffer.byteLength(pageText, "utf8") > MAX_RESPONSE_BYTES)
-      throw new Error(`Response body exceeds ${MAX_RESPONSE_BYTES} bytes`);
-    clearTimeout(timeout);
-    return htmlToMarkdown(pageText, link);
+      if (contentLength > MAX_RESPONSE_BYTES)
+        throw new Error(
+          `Response too large (Content-Length ${contentLength} > ${MAX_RESPONSE_BYTES})`
+        );
+      const pageText = await response.text();
+      if (Buffer.byteLength(pageText, "utf8") > MAX_RESPONSE_BYTES)
+        throw new Error(`Response body exceeds ${MAX_RESPONSE_BYTES} bytes`);
+      return htmlToMarkdown(pageText, link);
+    } finally {
+      clearTimeout(timeout);
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error("getPageContent failed to be fetched by any method.", error);

@@ -1,20 +1,20 @@
 // SPDX-License-Identifier: MIT
 const { v4 } = require("uuid");
-const {
-  PuppeteerWebBaseLoader,
-} = require("@langchain/community/document_loaders/web/puppeteer");
-const { default: slugify } = require("slugify");
 const { parse } = require("node-html-parser");
 const { writeToServerDocuments, documentsFolder } = require("../../files");
 const { tokenizeString } = require("../../tokenizer");
 const path = require("path");
 const fs = require("fs");
-const RuntimeSettings = require("../../runtimeSettings");
+const { default: slugify } = require("slugify");
+const { browserPool } = require("../../browserPool");
+
+const MAX_RESPONSE_BYTES = 50 * 1024 * 1024;
+const PUPPETEER_TIMEOUT_MS = 60_000;
 
 async function discoverLinks(startUrl, maxDepth = 1, maxLinks = 20) {
   const baseUrl = new URL(startUrl);
   const discoveredLinks = new Set([startUrl]);
-  let queue = [[startUrl, 0]]; // [url, currentDepth]
+  let queue = [[startUrl, 0]];
   const scrapedUrls = new Set();
 
   for (let currentDepth = 0; currentDepth < maxDepth; currentDepth++) {
@@ -47,46 +47,22 @@ async function discoverLinks(startUrl, maxDepth = 1, maxLinks = 20) {
 }
 
 async function getPageLinks(url, baseUrl) {
+  const browser = await browserPool.acquire();
   try {
-    const runtimeSettings = new RuntimeSettings();
-    /** @type {import('puppeteer').PuppeteerLaunchOptions} */
-    let launchConfig = { headless: "new" };
-
-    /* On MacOS 15.1, the headless=new option causes the browser to crash immediately.
-     * It is not clear why this is the case, but it is reproducible. Since the app
-     * in production runs in a container, we can disable headless mode to workaround the issue for development purposes.
-     *
-     * This may show a popup window when scraping a page in development mode.
-     * This is expected behavior if seen in development mode on MacOS 15+
-     */
-    if (
-      process.platform === "darwin" &&
-      process.env.NODE_ENV === "development"
-    ) {
-      // eslint-disable-next-line no-console
-      console.log(
-        "Darwin Development Mode: Disabling headless mode to prevent Chromium from crashing."
-      );
-      launchConfig.headless = "false";
-    }
-
-    const loader = new PuppeteerWebBaseLoader(url, {
-      launchOptions: {
-        headless: launchConfig.headless,
-        ignoreHTTPSErrors: true,
-        args: runtimeSettings.get("browserLaunchArgs"),
-      },
-      gotoOptions: { waitUntil: "networkidle2" },
+    const page = await browser.newPage();
+    await page.goto(url, {
+      timeout: PUPPETEER_TIMEOUT_MS,
+      waitUntil: "networkidle2",
     });
-    const docs = await loader.load();
-    if (!docs?.length) return [];
-    const html = docs[0].pageContent;
-    const links = extractLinks(html, baseUrl);
-    return links;
+    const html = await page.evaluate(() => document.documentElement.outerHTML);
+    if (Buffer.byteLength(html, "utf8") > MAX_RESPONSE_BYTES) return [];
+    return extractLinks(html, baseUrl);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Failed to get page links from ${url}.`, error);
     return [];
+  } finally {
+    await browserPool.release(browser);
   }
 }
 
@@ -113,25 +89,6 @@ function extractLinks(html, baseUrl) {
 }
 
 async function bulkScrapePages(links, outFolderPath) {
-  const runtimeSettings = new RuntimeSettings();
-  /** @type {import('puppeteer').PuppeteerLaunchOptions} */
-  let launchConfig = { headless: "new" };
-
-  /* On MacOS 15.1, the headless=new option causes the browser to crash immediately.
-   * It is not clear why this is the case, but it is reproducible. Since the app
-   * in production runs in a container, we can disable headless mode to workaround the issue for development purposes.
-   *
-   * This may show a popup window when scraping a page in development mode.
-   * This is expected behavior if seen in development mode on MacOS 15+
-   */
-  if (process.platform === "darwin" && process.env.NODE_ENV === "development") {
-    // eslint-disable-next-line no-console
-    console.log(
-      "Darwin Development Mode: Disabling headless mode to prevent Chromium from crashing."
-    );
-    launchConfig.headless = "false";
-  }
-
   const scrapedData = [];
 
   for (let i = 0; i < links.length; i++) {
@@ -139,25 +96,16 @@ async function bulkScrapePages(links, outFolderPath) {
     // eslint-disable-next-line no-console
     console.log(`Scraping ${i + 1}/${links.length}: ${link}`);
 
+    const browser = await browserPool.acquire();
     try {
-      const loader = new PuppeteerWebBaseLoader(link, {
-        launchOptions: {
-          headless: launchConfig.headless,
-          ignoreHTTPSErrors: true,
-          args: runtimeSettings.get("browserLaunchArgs"),
-        },
-        gotoOptions: { waitUntil: "networkidle2" },
-        async evaluate(page, browser) {
-          const result = await page.evaluate(() => document.body.innerText);
-          await browser.close();
-          return result;
-        },
+      const page = await browser.newPage();
+      await page.goto(link, {
+        timeout: PUPPETEER_TIMEOUT_MS,
+        waitUntil: "networkidle2",
       });
-      const docs = await loader.load();
-      if (!docs?.length) continue;
-      const content = docs[0].pageContent;
+      const content = await page.evaluate(() => document.body.innerText);
 
-      if (!content.length) {
+      if (!content?.length) {
         // eslint-disable-next-line no-console
         console.warn(`Empty content for ${link}. Skipping.`);
         continue;
@@ -193,6 +141,8 @@ async function bulkScrapePages(links, outFolderPath) {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(`Failed to scrape ${link}.`, error);
+    } finally {
+      await browserPool.release(browser);
     }
   }
 

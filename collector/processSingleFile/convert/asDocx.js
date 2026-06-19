@@ -8,6 +8,7 @@ const {
 } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
+const { guardArchiveOrThrow } = require("../../utils/safeUnzip");
 
 async function asDocX({
   fullFilePath = "",
@@ -15,6 +16,19 @@ async function asDocX({
   options = {},
   metadata = {},
 }) {
+  try {
+    await guardArchiveOrThrow(fullFilePath, filename);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`[asDocX] Refused ${filename}: ${err.message}`);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: err.message,
+      documents: [],
+    };
+  }
+
   const loader = new DocxLoader(fullFilePath);
 
   // eslint-disable-next-line no-console

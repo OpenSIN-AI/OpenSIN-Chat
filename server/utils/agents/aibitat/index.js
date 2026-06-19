@@ -25,9 +25,23 @@ function sanitizeToolResultForLLM(result) {
               return String(result);
             }
           })();
-  const stripped = String(text)
-    .replace(/\u001b\[[0-9;]*[a-zA-Z]/g, "")
-    .replace(/[\x00-\x08\x0B-\x1F\x7F]/g, "");
+  let stripped = "";
+  let inAnsiSeq = false;
+  for (const ch of String(text)) {
+    const code = ch.charCodeAt(0);
+    if (inAnsiSeq) {
+      if (code >= 0x40 && code <= 0x7e) inAnsiSeq = false;
+      continue;
+    }
+    if (code === 0x1b) {
+      inAnsiSeq = true;
+      continue;
+    }
+    if (code <= 0x08) continue;
+    if (code >= 0x0b && code <= 0x1f) continue;
+    if (code === 0x7f) continue;
+    stripped += ch;
+  }
   const truncated =
     stripped.length > TOOL_OUTPUT_MAX_BYTES
       ? `${stripped.slice(0, TOOL_OUTPUT_MAX_BYTES)}\n...[truncated]`

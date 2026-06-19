@@ -110,7 +110,7 @@ class OCRLoader {
     const { createWorker, OEM } = require("tesseract.js");
     const BATCH_SIZE = batchSize;
     const MAX_EXECUTION_TIME = maxExecutionTime;
-    const NUM_WORKERS = maxWorkers ?? Math.min(os.cpus().length, 4);
+    const NUM_WORKERS = Math.min(maxWorkers ?? os.cpus().length, 4);
     const totalPages = pdfDocument.numPages;
     let workerPool = [];
     let timeoutHandle = null;
@@ -277,9 +277,7 @@ class OCRLoader {
       return null;
     } finally {
       if (timeoutHandle) clearTimeout(timeoutHandle);
-      //eslint-disable-next-line
-      if (!worker) return;
-      await worker.terminate();
+      if (worker) await worker.terminate();
     }
   }
 }

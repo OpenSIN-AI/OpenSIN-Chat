@@ -8,6 +8,7 @@ const {
   writeToServerDocuments,
 } = require("../../utils/files");
 const { default: slugify } = require("slugify");
+const { guardArchiveOrThrow } = require("../../utils/safeUnzip");
 
 async function asEPub({
   fullFilePath = "",
@@ -16,6 +17,18 @@ async function asEPub({
   metadata = {},
 }) {
   let content = "";
+  try {
+    await guardArchiveOrThrow(fullFilePath, filename);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`[asEPub] Refused ${filename}: ${err.message}`);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: err.message,
+      documents: [],
+    };
+  }
   try {
     const loader = new EPubLoader(fullFilePath, { splitChapters: false });
     const docs = await loader.load();

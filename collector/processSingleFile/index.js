@@ -13,6 +13,81 @@ const {
 } = require("../utils/files");
 const RESERVED_FILES = ["__HOTDIR__.md"];
 
+const ALLOWED_MIMES = new Set([
+  "text/plain",
+  "text/csv",
+  "text/html",
+  "text/markdown",
+  "application/pdf",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "application/vnd.ms-excel",
+  "application/vnd.ms-powerpoint",
+  "application/msword",
+  "application/zip",
+  "application/x-zip-compressed",
+  "application/epub+zip",
+  "application/json",
+  "application/xml",
+  "image/png",
+  "image/jpeg",
+  "image/gif",
+  "image/bmp",
+  "image/webp",
+  "image/svg+xml",
+  "audio/mpeg",
+  "audio/wav",
+  "audio/x-wav",
+  "audio/ogg",
+  "audio/flac",
+  "audio/x-m4a",
+  "audio/mp4",
+  "video/mp4",
+  "video/x-msvideo",
+  "video/quicktime",
+  "application/octet-stream",
+]);
+
+let _fileTypeModulePromise = null;
+async function _loadFileType() {
+  if (!_fileTypeModulePromise) {
+    _fileTypeModulePromise = (async () => {
+      try {
+        const mod = await import("file-type");
+        return mod;
+      } catch {
+        return null;
+      }
+    })();
+  }
+  return _fileTypeModulePromise;
+}
+
+/**
+ * Best-effort magic-byte MIME detection. Returns null when `file-type` is
+ * unavailable, when the bytes are too short, or when detection fails. Never
+ * throws.
+ * @param {string} fullFilePath
+ * @returns {Promise<string|null>}
+ */
+async function detectMime(fullFilePath) {
+  try {
+    const mod = await _loadFileType();
+    if (!mod?.fileTypeFromFile) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "\x1b[33m[Collector]\x1b[0m file-type package not available — skipping magic-byte MIME detection"
+      );
+      return null;
+    }
+    const detected = await mod.fileTypeFromFile(fullFilePath);
+    return detected?.mime ?? null;
+  } catch {
+    return null;
+  }
+}
+
 /**
  * Process a single file and return the documents
  * @param {string} targetFilename - The filename to process
@@ -79,6 +154,20 @@ async function processSingleFile(targetFilename, options = {}, metadata = {}) {
         documents: [],
       };
     }
+  }
+
+  const detectedMime = await detectMime(fullFilePath);
+  if (
+    detectedMime &&
+    !ALLOWED_MIMES.has(detectedMime) &&
+    processFileAs !== ".txt"
+  ) {
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `Detected MIME ${detectedMime} is not in the allowed list for ${targetFilename}.`,
+      documents: [],
+    };
   }
 
   const FileTypeProcessor = require(SUPPORTED_FILETYPE_CONVERTERS[

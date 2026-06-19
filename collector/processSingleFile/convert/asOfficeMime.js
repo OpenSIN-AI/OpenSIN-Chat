@@ -8,6 +8,7 @@ const {
 } = require("../../utils/files");
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
+const { guardArchiveOrThrow } = require("../../utils/safeUnzip");
 
 async function asOfficeMime({
   fullFilePath = "",
@@ -18,6 +19,18 @@ async function asOfficeMime({
   // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
   let content = "";
+  try {
+    await guardArchiveOrThrow(fullFilePath, filename);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`[asOfficeMime] Refused ${filename}: ${err.message}`);
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: err.message,
+      documents: [],
+    };
+  }
   try {
     const { parseOffice } = officeParser;
     const ast = await parseOffice(fullFilePath);
