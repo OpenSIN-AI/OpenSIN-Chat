@@ -142,17 +142,21 @@ async function runPipeline(sha) {
 
   // Summary
   const allOk = steps.every((s) => s.ok);
-  log(`=== Pipeline ${allOk ? "PASS" : "FAIL"} ===`);
-  steps.forEach((s) => log(`  ${s.ok ? "✓" : "✗"} ${s.name}${s.detail ? ": " + s.detail.slice(0, 80) : ""}`));
 
   // 8. Deploy if all passed
+  let deployOk = true;
   if (allOk) {
     log("Step 8: DEPLOY");
     const deploy = await deployToContainer();
+    deployOk = deploy.ok;
     log(`  deploy: ${deploy.ok ? "DONE" : "FAIL: " + deploy.error}`);
   }
 
-  return { allOk, steps };
+  const overallOk = allOk && deployOk;
+  log(`=== Pipeline ${overallOk ? "PASS" : "FAIL"} ===`);
+  steps.forEach((s) => log(`  ${s.ok ? "✓" : "✗"} ${s.name}${s.detail ? ": " + s.detail.slice(0, 80) : ""}`));
+
+  return { allOk: overallOk, steps };
 }
 
 // ── Deploy to production container ──────────────────────
@@ -166,11 +170,19 @@ async function deployToContainer() {
     await run(`docker cp ${REPO_DIR}/server/models opensin-app:/app/server/models`);
     // Restart container
     await run("docker restart opensin-app");
-    // Wait for health
-    await new Promise((r) => setTimeout(r, 15000));
-    const health = await run("docker exec opensin-app curl -s http://localhost:3001/healthz");
-    if (!health.ok || !health.stdout.includes("ok")) {
-      return { ok: false, error: "health check failed" };
+    // Wait for health (container needs ~20s to boot)
+    let healthy = false;
+    for (let i = 0; i < 6; i++) {
+      await new Promise((r) => setTimeout(r, 10000));
+      const health = await run("docker exec opensin-app curl -s http://localhost:3001/healthz 2>/dev/null");
+      if (health.stdout.includes("ok")) {
+        healthy = true;
+        break;
+      }
+      log(`  health check attempt ${i + 1}/6: not ready yet`);
+    }
+    if (!healthy) {
+      return { ok: false, error: "health check failed after 60s" };
     }
     // Restart cloudflare tunnel
     await run("sudo systemctl restart cloudflared-opensin-chat.service");
