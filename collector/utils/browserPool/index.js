@@ -5,6 +5,8 @@ const puppeteer = require("puppeteer").default || require("puppeteer");
 
 const MAX_CONCURRENT_BROWSERS = 2;
 const IDLE_BROWSER_TTL_MS = 60_000;
+const ACQUIRE_TIMEOUT_MS =
+  Number(process.env.BROWSER_POOL_ACQUIRE_TIMEOUT_MS) || 30_000;
 
 const _state = {
   idle: [],
@@ -100,7 +102,34 @@ async function acquire() {
       throw e;
     }
   }
-  return await new Promise((resolve) => _state.pending.push(resolve));
+  return await new Promise((resolve, reject) => {
+    let settled = false;
+    const entry = {
+      resolve: (browser) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timeoutHandle);
+        resolve(browser);
+      },
+      reject: (err) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timeoutHandle);
+        reject(err);
+      },
+    };
+    const timeoutHandle = setTimeout(() => {
+      if (settled) return;
+      _state.pending = _state.pending.filter((p) => p !== entry);
+      entry.reject(
+        new Error(
+          `BrowserPool acquire timed out after ${ACQUIRE_TIMEOUT_MS}ms`,
+        ),
+      );
+    }, ACQUIRE_TIMEOUT_MS);
+    if (typeof timeoutHandle.unref === "function") timeoutHandle.unref();
+    _state.pending.push(entry);
+  });
 }
 
 /**
@@ -116,7 +145,7 @@ function release(browser) {
   if (_state.pending.length) {
     const waiter = _state.pending.shift();
     _state.active += 1;
-    waiter(browser);
+    waiter.resolve(browser);
     return;
   }
   if (_state.idle.length < MAX_CONCURRENT_BROWSERS) {
@@ -143,7 +172,7 @@ async function shutdown() {
       // ignore
     }
   }
-  for (const waiter of _state.pending) waiter(null);
+  for (const waiter of _state.pending) waiter.resolve(null);
   _state.pending = [];
 }
 

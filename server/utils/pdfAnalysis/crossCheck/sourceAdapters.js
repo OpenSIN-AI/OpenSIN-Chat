@@ -28,7 +28,24 @@ const MAX_SOURCE_CHARS = Number(
   process.env.PDF_ANALYSIS_XCHECK_MAX_SOURCE_CHARS || 60000,
 );
 
+const LOOKUP_TTL_MS = Number(process.env.DNS_LOOKUP_TTL_MS) || 60000;
+
 const RESOLVED_LOOKUPS = new Map();
+
+async function resolveAndPin(hostname) {
+  const cached = RESOLVED_LOOKUPS.get(hostname);
+  const now = Date.now();
+  if (cached && now - cached.at < LOOKUP_TTL_MS) return cached.ip;
+  const { address } = await dns.lookup(hostname);
+  if (isPrivateIp(address))
+    throw new Error("Zugriff auf private/lokale Adressen ist nicht erlaubt.");
+  RESOLVED_LOOKUPS.set(hostname, { ip: address, at: now });
+  return address;
+}
+
+function _resetResolvedLookups() {
+  RESOLVED_LOOKUPS.clear();
+}
 
 function isPrivateIp(ip) {
   if (net.isIPv6(ip)) return /^(::1|fc|fd|fe80)/i.test(ip) || ip === "::";
@@ -59,14 +76,7 @@ async function assertSafeUrl(rawUrl) {
 }
 
 async function buildSafeDispatcher(parsedUrl) {
-  let ip = RESOLVED_LOOKUPS.get(parsedUrl.hostname);
-  if (!ip) {
-    const { address } = await dns.lookup(parsedUrl.hostname);
-    if (isPrivateIp(address))
-      throw new Error("Zugriff auf private/lokale Adressen ist nicht erlaubt.");
-    ip = address;
-    RESOLVED_LOOKUPS.set(parsedUrl.hostname, ip);
-  }
+  const ip = await resolveAndPin(parsedUrl.hostname);
   return new UndiciAgent({
     connect: { hostname: ip, servername: parsedUrl.hostname },
     headersTimeout: FETCH_TIMEOUT_MS,
@@ -266,4 +276,9 @@ async function loadSourceSafe(source) {
   }
 }
 
-module.exports = { loadSourceSafe, fetchWithLimits, htmlToText };
+module.exports = {
+  loadSourceSafe,
+  fetchWithLimits,
+  htmlToText,
+  _resetResolvedLookups,
+};

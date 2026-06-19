@@ -163,18 +163,20 @@ async function runPipeline(sha) {
 async function deployToContainer() {
   try {
     // Copy frontend dist into container
-    await run(`docker cp ${REPO_DIR}/frontend/dist/. opensin-app:/app/server/public/`);
+    await run(`sudo docker cp ${REPO_DIR}/frontend/dist/. opensin-app:/app/server/public/`);
     // Copy server files (exclude .env, storage, prisma DBs)
-    await run(`docker cp ${REPO_DIR}/server/endpoints opensin-app:/app/server/endpoints`);
-    await run(`docker cp ${REPO_DIR}/server/utils opensin-app:/app/server/utils`);
-    await run(`docker cp ${REPO_DIR}/server/models opensin-app:/app/server/models`);
+    await run(`sudo docker cp ${REPO_DIR}/server/endpoints opensin-app:/app/server/endpoints`);
+    await run(`sudo docker cp ${REPO_DIR}/server/utils opensin-app:/app/server/utils`);
+    await run(`sudo docker cp ${REPO_DIR}/server/models opensin-app:/app/server/models`);
+    // Fix ownership (docker cp sets root:root, container runs as uid 1000)
+    await run("sudo docker exec -u root opensin-app chown -R 1000:1000 /app/server/storage/ /app/server/endpoints/ /app/server/utils/ /app/server/models/");
     // Restart container
-    await run("docker restart opensin-app");
+    await run("sudo docker restart opensin-app");
     // Wait for health (container needs ~20s to boot)
     let healthy = false;
     for (let i = 0; i < 6; i++) {
       await new Promise((r) => setTimeout(r, 10000));
-      const health = await run("docker exec opensin-app curl -s http://localhost:3001/healthz 2>/dev/null");
+      const health = await run("sudo docker exec opensin-app curl -s http://localhost:3001/healthz 2>/dev/null");
       if (health.stdout.includes("ok")) {
         healthy = true;
         break;
