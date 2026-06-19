@@ -371,8 +371,11 @@ function utilEndpoints(app) {
         response.setHeader("Content-Type", "application/pdf");
         response.setHeader("Content-Length", stat.size);
         response.setHeader("Cache-Control", "public, max-age=86400");
+        stream.on("error", () => {
+          if (!response.headersSent) response.sendStatus(500);
+          else response.end();
+        });
         stream.pipe(response);
-        stream.on("error", () => response.sendStatus(500));
       } catch (e) {
         console.error("reports download error", e.message);
         response.sendStatus(500);

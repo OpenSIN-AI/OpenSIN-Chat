@@ -129,6 +129,7 @@ class CollectorApi {
         ),
       },
       body: data,
+      signal: AbortSignal.timeout(COLLECTOR_PROCESS_TIMEOUT_MS),
       dispatcher: new Agent({ headersTimeout: 600000 }),
     })
       .then((res) => {

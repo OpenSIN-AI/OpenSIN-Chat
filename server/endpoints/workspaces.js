@@ -44,6 +44,15 @@ const {
   workspaceDeletionProtection,
 } = require("../utils/middleware/workspaceDeletionProtection");
 
+function cleanupHotdirFile(request) {
+  try {
+    const filePath = request.file?.path;
+    if (filePath && fs.existsSync(filePath)) fs.rmSync(filePath);
+  } catch {
+    // Best-effort cleanup — swallow errors
+  }
+}
+
 function workspaceEndpoints(app) {
   if (!app) return;
   const RESPONSE_CACHE_MAX = 50;
@@ -149,6 +158,7 @@ function workspaceEndpoints(app) {
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
+          cleanupHotdirFile(request);
           response
             .status(500)
             .json({
@@ -162,6 +172,7 @@ function workspaceEndpoints(app) {
         const { success, reason, documents } =
           await Collector.processDocument(originalname);
         if (!success || documents?.length === 0) {
+          cleanupHotdirFile(request);
           response.status(500).json({ success: false, error: reason }).end();
           return;
         }
@@ -195,6 +206,7 @@ function workspaceEndpoints(app) {
 
         response.status(200).json({ success: true, error: null, document });
       } catch (e) {
+        cleanupHotdirFile(request);
         // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);
@@ -1156,6 +1168,7 @@ function workspaceEndpoints(app) {
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
+          cleanupHotdirFile(request);
           response
             .status(500)
             .json({
@@ -1169,6 +1182,7 @@ function workspaceEndpoints(app) {
         const { success, reason, documents } =
           await Collector.processDocument(originalname);
         if (!success || documents?.length === 0) {
+          cleanupHotdirFile(request);
           response.status(500).json({ success: false, error: reason }).end();
           return;
         }
@@ -1185,11 +1199,13 @@ function workspaceEndpoints(app) {
           response.locals?.user?.id,
         );
 
-        if (!documents?.length)
+        if (!documents?.length) {
+          cleanupHotdirFile(request);
           return response.status(400).json({
             success: false,
             error: "No documents were returned from processing.",
           });
+        }
         const document = documents[0];
         const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
           currWorkspace,
@@ -1208,6 +1224,7 @@ function workspaceEndpoints(app) {
           document: { id: document.id, location: document.location },
         });
       } catch (e) {
+        cleanupHotdirFile(request);
         // eslint-disable-next-line no-console
         console.error(e.message, e);
         response.sendStatus(500);

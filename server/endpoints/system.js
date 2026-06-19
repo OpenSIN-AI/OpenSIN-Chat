@@ -845,7 +845,6 @@ function systemEndpoints(app) {
   // No middleware protection in order to get this on the login page
   app.get(
     "/system/custom-app-name",
-    [validatedRequest],
     async (_, response) => {
       try {
         const customAppName =

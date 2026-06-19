@@ -93,24 +93,24 @@ describe("Footer", () => {
   it("renders the account trigger with name and demo subtitle", () => {
     render(<Footer />);
     expect(screen.getByText("OpenAfD")).toBeInTheDocument();
-    expect(screen.getByText("Demo-Konto")).toBeInTheDocument();
+    expect(screen.getByText("Demo account")).toBeInTheDocument();
   });
 
   it("does not show the menu items until the trigger is clicked", () => {
     render(<Footer />);
-    expect(screen.queryByText("Profil")).not.toBeInTheDocument();
+    expect(screen.queryByText("Profile")).not.toBeInTheDocument();
   });
 
   it("opens the menu with all entries on click", () => {
     render(<Footer />);
     fireEvent.click(screen.getByRole("button", { expanded: false }));
-    expect(screen.getByText("Profil")).toBeInTheDocument();
-    expect(screen.getByText("Einstellungen")).toBeInTheDocument();
-    expect(screen.getByText("Dokumentation")).toBeInTheDocument();
+    expect(screen.getByText("Profile")).toBeInTheDocument();
+    expect(screen.getByText("Settings")).toBeInTheDocument();
+    expect(screen.getByText("Documentation")).toBeInTheDocument();
     expect(screen.getByText("Feedback")).toBeInTheDocument();
-    expect(screen.getByText("Design")).toBeInTheDocument();
-    expect(screen.getByText("Sprache")).toBeInTheDocument();
-    expect(screen.getByText("Abmelden")).toBeInTheDocument();
+    expect(screen.getByText("Theme")).toBeInTheDocument();
+    expect(screen.getByText("Language")).toBeInTheDocument();
+    expect(screen.getByText("Sign out")).toBeInTheDocument();
   });
 
   it("links Feedback to the GitHub new issue page", () => {

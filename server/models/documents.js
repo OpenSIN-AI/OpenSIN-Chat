@@ -21,7 +21,13 @@ const Document = {
     const metadata = safeJsonParse(document.metadata, null);
     if (!metadata) return { metadata: null, type: null, source: null };
 
-    // Parse the correct type of source and its original source path.
+    if (
+      !metadata.chunkSource ||
+      typeof metadata.chunkSource !== "string" ||
+      !metadata.chunkSource.includes("://")
+    )
+      return { metadata, type: null, source: null };
+
     const idx = metadata.chunkSource.indexOf("://");
     const [type, source] = [
       metadata.chunkSource.slice(0, idx),

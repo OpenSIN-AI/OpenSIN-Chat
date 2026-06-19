@@ -188,7 +188,13 @@ async function cachedVectorInformation(filename = null, checkOnly = false) {
     `Cached vectorized results of ${filename} found! Using cached data to save on embed costs.`,
   );
   const rawData = fs.readFileSync(file, "utf8");
-  return { exists: true, chunks: JSON.parse(rawData) };
+  try {
+    return { exists: true, chunks: JSON.parse(rawData) };
+  } catch {
+    // eslint-disable-next-line no-console
+    console.error(`Corrupt vector-cache file detected, ignoring: ${file}`);
+    return { exists: false, chunks: [] };
+  }
 }
 
 // vectorData: pre-chunked vectorized data for a given file that includes the proper metadata and chunk-size limit so it can be iterated and dumped into Pinecone, etc

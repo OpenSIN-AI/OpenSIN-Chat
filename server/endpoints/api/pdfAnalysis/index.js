@@ -47,7 +47,7 @@ function apiPdfAnalysisEndpoints(app) {
 
   // PDF hochladen — liefert pdfPath für /start zurück
   app.post(
-    "/api/pdf-analysis/upload",
+    "/pdf-analysis/upload",
     [validApiKey, upload.single("file")],
     (request, response) => {
       if (!request.file)
@@ -63,7 +63,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   // Analyse starten — Nutzer gibt nur PDF + Auftrag an, Rest läuft autonom
-  app.post("/api/pdf-analysis/start", [validApiKey], (request, response) => {
+  app.post("/pdf-analysis/start", [validApiKey], (request, response) => {
     try {
       const { pdfPath, task, reportType, factCriteria, deepScan } =
         request.body || {};
@@ -82,12 +82,12 @@ function apiPdfAnalysisEndpoints(app) {
     }
   });
 
-  app.get("/api/pdf-analysis/list", [validApiKey], (_request, response) => {
+  app.get("/pdf-analysis/list", [validApiKey], (_request, response) => {
     response.status(200).json({ jobs: PdfAnalysisPipeline.list() });
   });
 
   // ---- Fakten-Speicher (vor /:id registrieren!) ----
-  app.get("/api/pdf-analysis/facts", [validApiKey], (request, response) => {
+  app.get("/pdf-analysis/facts", [validApiKey], (request, response) => {
     const { q, document, tag, page, limit } = request.query || {};
     response.status(200).json({
       facts: PdfAnalysisPipeline.factStore.search({
@@ -101,7 +101,7 @@ function apiPdfAnalysisEndpoints(app) {
   });
 
   app.get(
-    "/api/pdf-analysis/facts/stats",
+    "/pdf-analysis/facts/stats",
     [validApiKey],
     (_request, response) => {
       response.status(200).json(PdfAnalysisPipeline.factStore.stats());
@@ -109,7 +109,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.get(
-    "/api/pdf-analysis/facts/:factId",
+    "/pdf-analysis/facts/:factId",
     [validApiKey],
     (request, response) => {
       const fact = PdfAnalysisPipeline.factStore.get(request.params.factId);
@@ -120,7 +120,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.delete(
-    "/api/pdf-analysis/facts/:factId",
+    "/pdf-analysis/facts/:factId",
     [validApiKey],
     (request, response) => {
       const removed = PdfAnalysisPipeline.factStore.remove(
@@ -132,7 +132,7 @@ function apiPdfAnalysisEndpoints(app) {
 
   // ---- Cross-Check (Kreuz-Verifikation) — vor /:id registriert! ----
   app.post(
-    "/api/pdf-analysis/crosscheck",
+    "/pdf-analysis/crosscheck",
     [validApiKey],
     (request, response) => {
       try {
@@ -156,7 +156,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.get(
-    "/api/pdf-analysis/crosscheck/list",
+    "/pdf-analysis/crosscheck/list",
     [validApiKey],
     (_req, response) => {
       response.status(200).json({ jobs: CrossCheckPipeline.list() });
@@ -164,7 +164,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.get(
-    "/api/pdf-analysis/crosscheck/:id",
+    "/pdf-analysis/crosscheck/:id",
     [validApiKey],
     (request, response) => {
       const status = CrossCheckPipeline.getStatus(request.params.id);
@@ -175,7 +175,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.get(
-    "/api/pdf-analysis/crosscheck/:id/result",
+    "/pdf-analysis/crosscheck/:id/result",
     [validApiKey],
     (request, response) => {
       const result = CrossCheckPipeline.getResult(request.params.id);
@@ -186,7 +186,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.delete(
-    "/api/pdf-analysis/crosscheck/:id",
+    "/pdf-analysis/crosscheck/:id",
     [validApiKey],
     (request, response) => {
       const ok = CrossCheckPipeline.cancel(request.params.id);
@@ -196,7 +196,7 @@ function apiPdfAnalysisEndpoints(app) {
 
   // ---- Report-Downloads (vor /:id registriert) ----
   app.get(
-    "/api/pdf-analysis/:id/report/download",
+    "/pdf-analysis/:id/report/download",
     [validApiKey],
     (request, response) => {
       const result = PdfAnalysisPipeline.getResult(request.params.id);
@@ -212,7 +212,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.get(
-    "/api/pdf-analysis/crosscheck/:id/report/download",
+    "/pdf-analysis/crosscheck/:id/report/download",
     [validApiKey],
     (request, response) => {
       const result = CrossCheckPipeline.getResult(request.params.id);
@@ -228,7 +228,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   // ---- Korpus-Analyse (vor /:id registriert!) ----
-  app.post("/api/pdf-analysis/corpus", [validApiKey], (request, response) => {
+  app.post("/pdf-analysis/corpus", [validApiKey], (request, response) => {
     try {
       const { pdfPaths, task, reportType, factCriteria, deepScan } =
         request.body || {};
@@ -247,12 +247,12 @@ function apiPdfAnalysisEndpoints(app) {
     }
   });
 
-  app.get("/api/pdf-analysis/corpus/list", [validApiKey], (_req, response) => {
+  app.get("/pdf-analysis/corpus/list", [validApiKey], (_req, response) => {
     response.status(200).json({ jobs: CorpusPipeline.list() });
   });
 
   app.get(
-    "/api/pdf-analysis/corpus/:id",
+    "/pdf-analysis/corpus/:id",
     [validApiKey],
     (request, response) => {
       const status = CorpusPipeline.getStatus(request.params.id);
@@ -263,7 +263,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.get(
-    "/api/pdf-analysis/corpus/:id/result",
+    "/pdf-analysis/corpus/:id/result",
     [validApiKey],
     (request, response) => {
       const result = CorpusPipeline.getResult(request.params.id);
@@ -274,7 +274,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   app.delete(
-    "/api/pdf-analysis/corpus/:id",
+    "/pdf-analysis/corpus/:id",
     [validApiKey],
     (request, response) => {
       const ok = CorpusPipeline.cancel(request.params.id);
@@ -283,7 +283,7 @@ function apiPdfAnalysisEndpoints(app) {
   );
 
   // ---- Job-Status / Ergebnis ----
-  app.get("/api/pdf-analysis/:id", [validApiKey], (request, response) => {
+  app.get("/pdf-analysis/:id", [validApiKey], (request, response) => {
     const status = PdfAnalysisPipeline.getStatus(request.params.id);
     if (!status)
       return response.status(404).json({ error: "Job nicht gefunden." });
@@ -291,7 +291,7 @@ function apiPdfAnalysisEndpoints(app) {
   });
 
   app.get(
-    "/api/pdf-analysis/:id/result",
+    "/pdf-analysis/:id/result",
     [validApiKey],
     (request, response) => {
       const result = PdfAnalysisPipeline.getResult(request.params.id);
@@ -301,7 +301,7 @@ function apiPdfAnalysisEndpoints(app) {
     },
   );
 
-  app.delete("/api/pdf-analysis/:id", [validApiKey], (request, response) => {
+  app.delete("/pdf-analysis/:id", [validApiKey], (request, response) => {
     const ok = PdfAnalysisPipeline.cancel(request.params.id);
     response.status(ok ? 200 : 404).json({ cancelled: ok });
   });

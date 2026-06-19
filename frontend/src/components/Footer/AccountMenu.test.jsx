@@ -16,6 +16,11 @@ vi.mock("react-router-dom", () => ({
   ),
 }));
 
+vi.mock("react-i18next", async () => {
+  const { createI18nMock } = await import("@/test/i18nMock");
+  return createI18nMock();
+});
+
 vi.mock("@/utils/paths", () => ({
   default: {
     github: () => "https://github.com/OpenSIN-AI/OpenSIN-Chat",
@@ -103,10 +108,10 @@ describe("AccountMenu", () => {
   it("exposes the theme segment with System/Hell/Dunkel and switches theme", () => {
     render(<AccountMenu />);
     openMenu();
-    for (const label of ["System", "Hell", "Dunkel"]) {
+    for (const label of ["System", "Light", "Dark"]) {
       expect(screen.getByRole("button", { name: label })).toBeInTheDocument();
     }
-    fireEvent.click(screen.getByRole("button", { name: "Hell" }));
+    fireEvent.click(screen.getByRole("button", { name: "Light" }));
     expect(setTheme).toHaveBeenCalledWith("light");
   });
 
@@ -114,11 +119,11 @@ describe("AccountMenu", () => {
     currentTheme = "light";
     render(<AccountMenu />);
     openMenu();
-    expect(screen.getByRole("button", { name: "Hell" })).toHaveAttribute(
+    expect(screen.getByRole("button", { name: "Light" })).toHaveAttribute(
       "aria-pressed",
       "true",
     );
-    expect(screen.getByRole("button", { name: "Dunkel" })).toHaveAttribute(
+    expect(screen.getByRole("button", { name: "Dark" })).toHaveAttribute(
       "aria-pressed",
       "false",
     );
@@ -127,7 +132,7 @@ describe("AccountMenu", () => {
   it("renders the language switcher and changes language", () => {
     render(<AccountMenu />);
     openMenu();
-    const select = screen.getByLabelText("Sprache");
+    const select = screen.getByLabelText("Language");
     expect(select).toHaveValue("de");
     fireEvent.change(select, { target: { value: "en" } });
     expect(changeLanguage).toHaveBeenCalledWith("en");
@@ -137,10 +142,10 @@ describe("AccountMenu", () => {
     render(<AccountMenu />);
     openMenu();
     expect(
-      screen.getByRole("menuitem", { name: /Abmelden/i }),
+      screen.getByRole("menuitem", { name: /Sign out/i }),
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole("menuitem", { name: /Anmelden/i }),
+      screen.queryByRole("menuitem", { name: /Sign in/i }),
     ).not.toBeInTheDocument();
   });
 
@@ -150,10 +155,10 @@ describe("AccountMenu", () => {
     render(<AccountMenu />);
     openMenu();
     expect(
-      screen.getByRole("menuitem", { name: /Anmelden/i }),
+      screen.getByRole("menuitem", { name: /Sign in/i }),
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole("menuitem", { name: /Abmelden/i }),
+      screen.queryByRole("menuitem", { name: /Sign out/i }),
     ).not.toBeInTheDocument();
   });
 

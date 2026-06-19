@@ -62,7 +62,7 @@ async function asDocX({
     docSource: metadata.docSource || "docx file uploaded by the user.",
     chunkSource: metadata.chunkSource || "",
     published: createdDate(fullFilePath),
-    wordCount: content.split(" ").length,
+    wordCount: content.split(/\s+/).filter(Boolean).length,
     pageContent: content,
     token_count_estimate: tokenizeString(content),
   };
