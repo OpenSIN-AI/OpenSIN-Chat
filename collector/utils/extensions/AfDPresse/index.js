@@ -55,7 +55,10 @@ async function fetchHtml(url) {
     if (!res.ok) {
       const body = await res.text().catch(() => "");
       throw new Error(
-        `afd.de ${res.status} ${res.statusText} for ${url}\n${body.slice(0, 500)}`
+        `afd.de ${res.status} ${res.statusText} for ${url}\n${body.slice(
+          0,
+          500
+        )}`
       );
     }
     return await res.text();

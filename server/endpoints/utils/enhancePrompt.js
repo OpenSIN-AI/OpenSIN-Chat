@@ -68,7 +68,7 @@ function enhancePromptEndpoint(app) {
         // eslint-disable-next-line no-console
         console.error("[enhance-prompt]", e.message);
         // Return 200 with error so the frontend can fall back silently
-        return response.status(200).json({ error: e.message });
+        return response.status(200).json({ error: e?.message || String(e) });
       }
     },
   );

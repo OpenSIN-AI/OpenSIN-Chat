@@ -21,7 +21,7 @@ const preserveCamelCase = (
   let isLastCharLower = false;
   let isLastCharUpper = false;
   let isLastLastCharUpper = false;
-  let isLastLastCharPreserved = false;
+  let isLastLastCharPreserved;
 
   for (let index = 0; index < string.length; index++) {
     const character = string[index];

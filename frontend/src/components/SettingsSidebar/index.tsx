@@ -462,7 +462,7 @@ const SidebarOptions = ({ user = null, t }: any) => (
 function HoldToReveal({ children, holdForMs = 3_000 }: any) {
   const { t } = useTranslation();
   let timeout = null;
-  const [showing, setShowing] = useState(
+  const [showing, setShowing] = useState(() =>
     window.localStorage.getItem(
       "openafd_experimental_feature_preview_unlocked",
     ),

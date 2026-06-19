@@ -111,7 +111,7 @@ const MobileDevice = {
    * @returns {string}
    */
   connectionURL: function (user = null) {
-    let baseUrl = "/api/mobile";
+    let baseUrl;
     if (process.env.NODE_ENV === "production") baseUrl = "/api/mobile";
     else
       baseUrl = `http://${getLocalIpAddress()}:${process.env.SERVER_PORT || 3001}/api/mobile`;

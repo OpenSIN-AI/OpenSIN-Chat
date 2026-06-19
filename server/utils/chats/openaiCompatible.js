@@ -454,7 +454,6 @@ async function streamChat({
   );
   responseInterceptor.removeAllListeners("data");
   responseInterceptor.destroy();
-  responseInterceptor = null;
 
   if (completeText?.length > 0) {
     const { chat } = await WorkspaceChats.new({

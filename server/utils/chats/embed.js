@@ -76,7 +76,7 @@ async function streamChatWithForEmbed(
   }
 
   let completeText;
-  let metrics = {};
+  let metrics;
   let contextTexts = [];
   let sources = [];
   let pinnedDocIdentifiers = [];
@@ -136,7 +136,7 @@ async function streamChatWithForEmbed(
 
   const { fillSourceWindow } = require("../helpers/chat");
   const filledSources = fillSourceWindow({
-    nDocs: embed.workspace?.topN || 4,
+    nDocs: embed.workspace?.topN ?? 4,
     searchResults: vectorSearchResults.sources,
     history: rawHistory,
     filterIdentifiers: pinnedDocIdentifiers,
@@ -258,7 +258,7 @@ async function resolveLLMConnectorForEmbed({
     ? { ...embed?.workspace, chatModel }
     : embed?.workspace;
   try {
-    const messageLimit = workspace?.openAiHistory || 20;
+    const messageLimit = workspace?.openAiHistory ?? 20;
     const embedHistory = await recentEmbedChatHistory(
       sessionId,
       embed,

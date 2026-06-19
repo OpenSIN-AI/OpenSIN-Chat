@@ -19,7 +19,12 @@ function convertToCSV(data) {
         .map((cell) => {
           if (cell === null || cell === undefined) return "";
           let str = String(cell);
-          if (str.includes(",") || str.includes('"') || str.includes("\n") || str.includes("\r")) {
+          if (
+            str.includes(",") ||
+            str.includes('"') ||
+            str.includes("\n") ||
+            str.includes("\r")
+          ) {
             str = `"${str.replace(/"/g, '""')}"`;
           }
           if (/^[=+\-@]/.test(str) && !/^[-+]?\d/.test(str)) {

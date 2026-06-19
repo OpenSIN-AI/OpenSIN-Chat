@@ -46,7 +46,7 @@ function agentFlowEndpoints(app) {
         console.error("Error saving flow:", error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: error?.message || String(error),
         });
       }
     },
@@ -68,7 +68,7 @@ function agentFlowEndpoints(app) {
         console.error("Error listing flows:", error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: error?.message || String(error),
         });
       }
     },
@@ -98,7 +98,7 @@ function agentFlowEndpoints(app) {
         console.error("Error getting flow:", error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: error?.message || String(error),
         });
       }
     },
@@ -134,7 +134,7 @@ function agentFlowEndpoints(app) {
   //       console.error("Error running flow:", error);
   //       return response.status(500).json({
   //         success: false,
-  //         error: error.message,
+  //         error: error?.message || String(error),
   //       });
   //     }
   //   }
@@ -164,7 +164,7 @@ function agentFlowEndpoints(app) {
         console.error("Error deleting flow:", error);
         return response.status(500).json({
           success: false,
-          error: error.message,
+          error: error?.message || String(error),
         });
       }
     },
@@ -199,7 +199,9 @@ function agentFlowEndpoints(app) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error toggling flow:", error);
-        response.status(500).json({ success: false, error: error.message });
+        response
+          .status(500)
+          .json({ success: false, error: error?.message || String(error) });
       }
     },
   );

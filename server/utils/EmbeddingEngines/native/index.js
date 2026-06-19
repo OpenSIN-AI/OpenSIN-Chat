@@ -262,7 +262,8 @@ class NativeEmbedder {
           pipeline = null;
           output = null;
           data = null;
-          if (chunkLen - 1 === idx) await this.#writeToTempfile(tmpFilePath, "]");
+          if (chunkLen - 1 === idx)
+            await this.#writeToTempfile(tmpFilePath, "]");
           continue;
         }
 

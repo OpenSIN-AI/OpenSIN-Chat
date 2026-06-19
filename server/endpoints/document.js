@@ -37,7 +37,7 @@ function documentEndpoints(app) {
         console.error(e);
         response.status(500).json({
           success: false,
-          message: `Failed to create folder: ${e.message} `,
+          message: `Failed to create folder: ${e?.message || String(e)} `,
         });
       }
     },

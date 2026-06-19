@@ -26,7 +26,7 @@ export default function EditUserModal({
   const [error, setError] = useState<string | null>(null);
   const [messageLimit, setMessageLimit] = useState({
     enabled: user.dailyMessageLimit !== null,
-    limit: user.dailyMessageLimit || 10,
+    limit: user.dailyMessageLimit ?? 10,
   });
   const { t } = useTranslation();
 

@@ -333,7 +333,7 @@ async function fetchRemoteModels(task = "chat") {
     DockerModelRunnerLLM.cacheFolder,
     ".cached_at",
   );
-  let cacheTime = 0;
+  let cacheTime;
 
   if (fs.existsSync(cachePath) && fs.existsSync(cachedAtPath)) {
     cacheTime = Number(fs.readFileSync(cachedAtPath, "utf8"));

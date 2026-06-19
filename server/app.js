@@ -113,7 +113,7 @@ function buildApp() {
 
   // Load WebSocket support before registering the agent WebSocket route.
   // In HTTPS mode this is handled by bootSSL; in test mode it is not needed.
-  if (process.env.NODE_ENV !== "test" && !process.env.ENABLE_HTTPS) {
+  if (process.env.NODE_ENV !== "test" && process.env.ENABLE_HTTPS !== "true") {
     require("@mintplex-labs/express-ws").default(app);
   }
 
@@ -208,8 +208,8 @@ function buildApp() {
           response.status(200).json({ ...resBody });
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.error(JSON.stringify(e));
-          response.status(500).json({ error: e.message });
+          console.error(e?.message || "Unknown error", e);
+          response.status(500).json({ error: e?.message || String(e) });
         }
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -236,7 +236,7 @@ function createApp() {
   if (activeApp) return activeApp;
 
   activeApp = buildApp();
-  if (!process.env.ENABLE_HTTPS) {
+  if (process.env.ENABLE_HTTPS !== "true") {
     const port = process.env.SERVER_PORT || 3001;
     // In test mode bind to IPv6 loopback only. Port 3001 is often occupied by
     // OrbStack/Cloudflare on IPv4, so we avoid the conflict and rely on the
@@ -254,7 +254,7 @@ function createApp() {
  * encryption, background workers, etc.). Used by server/index.js.
  */
 function bootApp(app, port = 3001) {
-  if (!!process.env.ENABLE_HTTPS) {
+  if (process.env.ENABLE_HTTPS === "true") {
     return bootSSL(app, port);
   }
   return bootHTTP(app, port);

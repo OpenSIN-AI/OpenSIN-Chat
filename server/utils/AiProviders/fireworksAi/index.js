@@ -218,9 +218,7 @@ class FireworksAiLLM {
       return null;
 
     return {
-      textResponse: this.#parseReasoningFromResponse(
-        result.output.choices[0],
-      ),
+      textResponse: this.#parseReasoningFromResponse(result.output.choices[0]),
       metrics: {
         prompt_tokens: result.output?.usage?.prompt_tokens || 0,
         completion_tokens: result.output?.usage?.completion_tokens || 0,

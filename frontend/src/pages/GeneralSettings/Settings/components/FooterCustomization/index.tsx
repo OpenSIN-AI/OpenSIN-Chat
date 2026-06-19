@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import showToast from "@/utils/toast";
 import NewIconForm from "./NewIconForm";
 import Admin from "@/models/admin";
@@ -9,12 +9,15 @@ import useFooterSettings from "@/hooks/useFooterSettings";
 
 export default function FooterCustomization() {
   const { footerIcons: initialIcons, isLoading } = useFooterSettings();
-  const [footerIcons, setFooterIcons] = useState(Array(3).fill(null));
+  const [footerIcons, setFooterIcons] = useState(() => Array(3).fill(null));
   const { t } = useTranslation();
 
-  // Sync SWR data into local state once loaded
+  // Sync SWR data into local state once loaded.
+  // Using useEffect avoids the setState-during-render anti-pattern that
+  // forces React to discard the in-progress render and immediately re-render.
   const [synced, setSynced] = useState(false);
-  if (!isLoading && !synced) {
+  useEffect(() => {
+    if (isLoading || synced) return;
     const updatedIcons = Array(3).fill(null);
     if (Array.isArray(initialIcons)) {
       initialIcons.forEach((icon, index) => {
@@ -23,7 +26,7 @@ export default function FooterCustomization() {
     }
     setFooterIcons(updatedIcons);
     setSynced(true);
-  }
+  }, [isLoading, synced, initialIcons]);
 
   const updateFooterIcons = async (updatedIcons: any[]) => {
     const { success, error } = await Admin.updateSystemPreferences({

@@ -824,12 +824,6 @@ function validChromaURL(input = "") {
     : null;
 }
 
-function validOpenAiTokenLimit(input = "") {
-  const tokenLimit = Number(input);
-  if (isNaN(tokenLimit)) return "Token limit is not a number";
-  return null;
-}
-
 function requiresForceMode(_, forceModeEnabled = false) {
   return forceModeEnabled === true ? null : "Cannot set this setting.";
 }

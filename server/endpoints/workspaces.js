@@ -229,10 +229,13 @@ function workspaceEndpoints(app) {
         const processingOnline = await Collector.online();
 
         if (!processingOnline) {
-          response.status(500).json({
-            success: false,
-            error: "Document processing API is not online.",
-          }).end();
+          response
+            .status(500)
+            .json({
+              success: false,
+              error: "Document processing API is not online.",
+            })
+            .end();
           return;
         }
 
@@ -241,33 +244,47 @@ function workspaceEndpoints(app) {
           try {
             const basename = path.basename(filePath);
             if (!fs.existsSync(filePath)) {
-              results.push({ file: basename, success: false, error: "File not found" });
+              results.push({
+                file: basename,
+                success: false,
+                error: "File not found",
+              });
               continue;
             }
 
             const destPath = path.join(storageDir, basename);
             fs.copyFileSync(filePath, destPath);
 
-            const { success, reason, documents } = await Collector.processDocument(basename);
+            const { success, reason, documents } =
+              await Collector.processDocument(basename);
             if (!success || documents?.length === 0) {
               results.push({ file: basename, success: false, error: reason });
               continue;
             }
 
             const document = documents[0];
-            const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
-              currWorkspace,
-              [document.location],
-              response.locals?.user?.id,
-            );
+            const { failedToEmbed = [], errors = [] } =
+              await Document.addDocuments(
+                currWorkspace,
+                [document.location],
+                response.locals?.user?.id,
+              );
 
             if (failedToEmbed.length > 0) {
-              results.push({ file: basename, success: false, error: errors?.[0] });
+              results.push({
+                file: basename,
+                success: false,
+                error: errors?.[0],
+              });
             } else {
               results.push({ file: basename, success: true, document });
             }
           } catch (e) {
-            results.push({ file: path.basename(filePath), success: false, error: e.message });
+            results.push({
+              file: path.basename(filePath),
+              success: false,
+              error: e.message,
+            });
           }
         }
 

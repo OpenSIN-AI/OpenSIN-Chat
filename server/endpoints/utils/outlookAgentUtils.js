@@ -83,7 +83,9 @@ function outlookAgentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Outlook auth URL error:", e);
-        response.status(500).json({ success: false, error: e.message });
+        response
+          .status(500)
+          .json({ success: false, error: e?.message || String(e) });
       }
     },
   );
@@ -169,7 +171,9 @@ function outlookAgentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Outlook status error:", e);
-        response.status(500).json({ success: false, error: e.message });
+        response
+          .status(500)
+          .json({ success: false, error: e?.message || String(e) });
       }
     },
   );
@@ -187,7 +191,9 @@ function outlookAgentEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Outlook revoke error:", e);
-        response.status(500).json({ success: false, error: e.message });
+        response
+          .status(500)
+          .json({ success: false, error: e?.message || String(e) });
       }
     },
   );

@@ -19,7 +19,7 @@ const MessageActionsContext = createContext<any>(null);
  */
 export function MessageActionsProvider({ children }: any) {
   const [editingMessage, setEditingMessage] = useState(null);
-  const [deletedMessages, setDeletedMessages] = useState(new Set());
+  const [deletedMessages, setDeletedMessages] = useState(() => new Set());
 
   useEffect(() => {
     function handleEditEvent(e: any) {

@@ -351,14 +351,17 @@ class GenericOpenAiLLM {
               // Strip <think> tags and their content
               filteredToken = token.replace(/<\/?think\s*(?:[^>]*?)?>/gi, "");
               // If we're inside a reasoning block, skip the token entirely
-              if (token.includes("<think>") || (reasoningBlockOpen && !token.includes("</think>"))) {
+              if (
+                token.includes("<think>") ||
+                (reasoningBlockOpen && !token.includes("</think>"))
+              ) {
                 if (token.includes("<think>")) reasoningBlockOpen = true;
                 if (token.includes("</think>")) reasoningBlockOpen = false;
                 continue;
               }
               if (reasoningBlockOpen) continue;
             }
-            
+
             fullText += filteredToken;
             // If we never saw a usage metric, we can estimate them by number of completion chunks
             if (!hasUsageMetrics) usage.completion_tokens++;

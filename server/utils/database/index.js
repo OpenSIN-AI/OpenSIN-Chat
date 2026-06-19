@@ -5,8 +5,13 @@ const { Telemetry } = require("../../models/telemetry");
 function checkColumnTemplate(tablename = null, column = null) {
   if (!tablename || !column)
     throw new Error(`Migration Error`, { tablename, column });
-  if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(tablename) || !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(column))
-    throw new Error(`Invalid table or column name in migration check: ${tablename}.${column}`);
+  if (
+    !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(tablename) ||
+    !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(column)
+  )
+    throw new Error(
+      `Invalid table or column name in migration check: ${tablename}.${column}`,
+    );
   return `SELECT COUNT(*) AS _exists FROM pragma_table_info('${tablename}') WHERE name='${column}'`;
 }
 

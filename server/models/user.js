@@ -46,7 +46,7 @@ const User = {
           );
         return username;
       } catch (e) {
-        throw new Error(e.message);
+        throw new Error(e.message, { cause: e });
       }
     },
     role: (role = "default") => {

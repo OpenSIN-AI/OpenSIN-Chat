@@ -55,7 +55,7 @@ async function executeApiCall(config, context) {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
-    throw new Error(`API Call failed: ${error.message}`);
+    throw new Error(`API Call failed: ${error.message}`, { cause: error });
   }
 }
 

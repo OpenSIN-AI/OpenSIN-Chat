@@ -124,9 +124,7 @@ const Memory = {
     try {
       const validatedScope = this.validations.scope(scope);
       const limit =
-        validatedScope === "global"
-          ? this.GLOBAL_LIMIT
-          : this.WORKSPACE_LIMIT;
+        validatedScope === "global" ? this.GLOBAL_LIMIT : this.WORKSPACE_LIMIT;
       const where = {
         userId: this.validations.userId(userId),
         scope: validatedScope,

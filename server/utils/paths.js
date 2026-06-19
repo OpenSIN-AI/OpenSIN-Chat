@@ -91,7 +91,7 @@ function pathsHealth() {
   const collectorPath = getCollectorPath();
   const hotdir = getCollectorPath("hotdir");
 
-  let storageWritable = false;
+  let storageWritable;
   try {
     fs.accessSync(storagePath, fs.constants.W_OK);
     storageWritable = true;

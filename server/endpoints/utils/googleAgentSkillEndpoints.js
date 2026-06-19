@@ -35,7 +35,9 @@ function googleAgentSkillEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Gmail status error:", e);
-        response.status(500).json({ success: false, error: e.message });
+        response
+          .status(500)
+          .json({ success: false, error: e?.message || String(e) });
       }
     },
   );
@@ -64,7 +66,9 @@ function googleAgentSkillEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Google Calendar status error:", e);
-        response.status(500).json({ success: false, error: e.message });
+        response
+          .status(500)
+          .json({ success: false, error: e?.message || String(e) });
       }
     },
   );

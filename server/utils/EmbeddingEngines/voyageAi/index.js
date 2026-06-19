@@ -63,7 +63,9 @@ class VoyageAiEmbedder {
           "Cannot read properties of undefined (reading '0')",
         )
       )
-        throw new Error("Voyage AI failed to embed: Rate limit reached");
+        throw new Error("Voyage AI failed to embed: Rate limit reached", {
+          cause: error,
+        });
       throw error;
     }
   }

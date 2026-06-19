@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { memo, useState } from "react";
+import { memo, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
   formatDateTimeAsMoment,
@@ -135,7 +135,13 @@ const PinItemToWorkspace = memo(function PinItemToWorkspace({
   const [pinned, setPinned] = useState(
     item?.pinnedWorkspaces?.includes(workspace.id) || false,
   );
-  const pinEvent = new CustomEvent("pinned_document");
+  // Reuse a single CustomEvent instance across renders instead of allocating
+  // a new one on every render. The event is stateless and only dispatched.
+  const pinEventRef = useRef(null);
+  if (pinEventRef.current === null) {
+    pinEventRef.current = new CustomEvent("pinned_document");
+  }
+  const pinEvent = pinEventRef.current;
 
   const updatePinStatus = async (e) => {
     try {
@@ -212,7 +218,13 @@ const WatchForChanges = memo(function WatchForChanges({
   item: any;
 }) {
   const [watched, setWatched] = useState(item?.watched || false);
-  const watchEvent = new CustomEvent("watch_document_for_changes");
+  // Reuse a single CustomEvent instance across renders instead of allocating
+  // a new one on every render. The event is stateless and only dispatched.
+  const watchEventRef = useRef(null);
+  if (watchEventRef.current === null) {
+    watchEventRef.current = new CustomEvent("watch_document_for_changes");
+  }
+  const watchEvent = watchEventRef.current;
 
   const updateWatchStatus = async (e) => {
     try {

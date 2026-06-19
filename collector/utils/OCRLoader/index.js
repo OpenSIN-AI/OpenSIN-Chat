@@ -129,7 +129,8 @@ class OCRLoader {
       workerPool = workerResults
         .filter((r) => r.status === "fulfilled")
         .map((r) => r.value);
-      if (workerPool.length === 0) throw new Error("Failed to create any OCR workers");
+      if (workerPool.length === 0)
+        throw new Error("Failed to create any OCR workers");
 
       this.log("Bootstrapping OCR completed successfully!", {
         MAX_EXECUTION_TIME_MS: MAX_EXECUTION_TIME,

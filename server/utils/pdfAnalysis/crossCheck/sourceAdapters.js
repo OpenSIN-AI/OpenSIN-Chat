@@ -214,7 +214,8 @@ async function fetchBuffer(url) {
     }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const buf = Buffer.from(await res.arrayBuffer());
-    if (buf.byteLength > MAX_FETCH_BYTES) return buf.subarray(0, MAX_FETCH_BYTES);
+    if (buf.byteLength > MAX_FETCH_BYTES)
+      return buf.subarray(0, MAX_FETCH_BYTES);
     return buf;
   } finally {
     clearTimeout(timer);

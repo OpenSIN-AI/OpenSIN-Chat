@@ -74,7 +74,7 @@ function toggleAutoShowMetrics() {
  */
 export function MetricsProvider({ children }: any) {
   const [showMetricsAutomatically, setShowMetricsAutomatically] =
-    useState(getAutoShowMetrics());
+    useState(() => getAutoShowMetrics());
 
   useEffect(() => {
     function handleShowingMetricsEvent(e: any) {

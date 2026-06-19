@@ -160,7 +160,7 @@ export const ThoughtChainComponent = forwardRef(
   ({ content: initialContent, messageId }: any, ref) => {
     const [content, setContent] = useState(initialContent);
     const [hasReadableContent, setHasReadableContent] = useState(
-      contentIsNotEmpty(initialContent),
+      () => contentIsNotEmpty(initialContent),
     );
     const { expanded: persistedExpanded, setExpanded: setPersistedExpanded } =
       useThoughtExpansion(messageId);
@@ -173,7 +173,7 @@ export const ThoughtChainComponent = forwardRef(
         setContent(initialContent);
         setHasReadableContent(contentIsNotEmpty(initialContent));
       }
-    }, [initialContent]);
+    }, [initialContent, content]);
 
     useImperativeHandle(ref, () => ({
       updateContent: (newContent) => {

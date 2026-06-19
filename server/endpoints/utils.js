@@ -28,7 +28,7 @@ async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
     return await fetch(url, { ...options, signal: controller.signal });
   } catch (e) {
     if (e.name === "AbortError")
-      throw new Error(`Zeitüberschreitung nach ${timeoutMs}ms`);
+      throw new Error(`Zeitüberschreitung nach ${timeoutMs}ms`, { cause: e });
     throw e;
   } finally {
     clearTimeout(timer);
@@ -90,7 +90,7 @@ function utilEndpoints(app) {
         const json = await res.json();
         response.status(200).json(json);
       } catch (e) {
-        response.status(502).json({ error: e.message });
+        response.status(502).json({ error: e?.message || String(e) });
       }
     },
   );
@@ -114,7 +114,7 @@ function utilEndpoints(app) {
         const json = await res.json();
         response.status(200).json(json);
       } catch (e) {
-        response.status(502).json({ error: e.message });
+        response.status(502).json({ error: e?.message || String(e) });
       }
     },
   );
@@ -166,7 +166,7 @@ function utilEndpoints(app) {
       }
       response.status(200).json({ items });
     } catch (e) {
-      response.status(502).json({ error: e.message });
+      response.status(502).json({ error: e?.message || String(e) });
     }
   });
 
@@ -245,7 +245,7 @@ function utilEndpoints(app) {
         });
       } catch (e) {
         console.error("browse-directory endpoint error", e.message);
-        response.status(500).json({ error: e.message });
+        response.status(500).json({ error: e?.message || String(e) });
       }
     },
   );
@@ -262,11 +262,7 @@ function utilEndpoints(app) {
         if (!name || typeof name !== "string") {
           return response.status(400).json({ error: "Name is required" });
         }
-        if (
-          /[\/\\]/.test(name) ||
-          name.includes("..") ||
-          name.startsWith(".")
-        ) {
+        if (/[/\\]/.test(name) || name.includes("..") || name.startsWith(".")) {
           return response.status(400).json({ error: "Invalid directory name" });
         }
 
@@ -281,7 +277,7 @@ function utilEndpoints(app) {
         response.status(200).json({ success: true, path: resolved });
       } catch (e) {
         console.error("create-directory endpoint error", e.message);
-        response.status(500).json({ error: e.message });
+        response.status(500).json({ error: e?.message || String(e) });
       }
     },
   );
@@ -298,11 +294,7 @@ function utilEndpoints(app) {
         if (!name || typeof name !== "string") {
           return response.status(400).json({ error: "Name is required" });
         }
-        if (
-          /[\/\\]/.test(name) ||
-          name.includes("..") ||
-          name.startsWith(".")
-        ) {
+        if (/[/\\]/.test(name) || name.includes("..") || name.startsWith(".")) {
           return response.status(400).json({ error: "Invalid file name" });
         }
 
@@ -315,7 +307,7 @@ function utilEndpoints(app) {
         response.status(200).json({ success: true, path: resolved });
       } catch (e) {
         console.error("create-file endpoint error", e.message);
-        response.status(500).json({ error: e.message });
+        response.status(500).json({ error: e?.message || String(e) });
       }
     },
   );
@@ -347,7 +339,7 @@ function utilEndpoints(app) {
         response.status(200).json({ success: true });
       } catch (e) {
         console.error("delete-item endpoint error", e.message);
-        response.status(500).json({ error: e.message });
+        response.status(500).json({ error: e?.message || String(e) });
       }
     },
   );
@@ -437,7 +429,7 @@ async function getDiskStorage() {
  * @returns {string} The model tag.
  */
 function getModelTag() {
-  let model = null;
+  let model;
   const provider = process.env.LLM_PROVIDER;
 
   switch (provider) {
@@ -515,9 +507,6 @@ function getDeploymentVersion() {
  * @returns {string} The user agent.
  */
 function getOpenSINChatUserAgent() {
-  const version = getDeploymentVersion() || "unknown";
-  // Cloudflare blocks non-browser User-Agents (Bot-Schutz).
-  // Use a browser UA to allow /v1/models requests through Cloudflare tunnels.
   return `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36`;
 }
 

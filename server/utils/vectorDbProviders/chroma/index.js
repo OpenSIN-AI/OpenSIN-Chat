@@ -330,7 +330,9 @@ class Chroma extends VectorDatabase {
           );
         } catch (error) {
           this.logger("Error adding to ChromaDB:", error);
-          throw new Error(`Error embedding into ChromaDB: ${error.message}`);
+          throw new Error(`Error embedding into ChromaDB: ${error.message}`, {
+            cause: error,
+          });
         }
 
         await storeVectorResult(chunks, fullFilePath);

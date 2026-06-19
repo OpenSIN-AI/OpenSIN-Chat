@@ -41,7 +41,9 @@ async function executeLLMInstruction(config, context) {
     return completion.textResponse;
   } catch (error) {
     logger(`LLM processing failed: ${error.message}`, error);
-    throw new Error(`LLM processing failed: ${error.message}`);
+    throw new Error(`LLM processing failed: ${error.message}`, {
+      cause: error,
+    });
   }
 }
 

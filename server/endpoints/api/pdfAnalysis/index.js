@@ -76,7 +76,9 @@ function apiPdfAnalysisEndpoints(app) {
       });
       response.status(200).json({ jobId });
     } catch (e) {
-      response.status(e.statusCode || 400).json({ error: e.message });
+      response
+        .status(e.statusCode || 400)
+        .json({ error: e?.message || String(e) });
     }
   });
 
@@ -146,7 +148,9 @@ function apiPdfAnalysisEndpoints(app) {
         );
         response.status(200).json({ jobId });
       } catch (e) {
-        response.status(e.statusCode || 400).json({ error: e.message });
+        response
+          .status(e.statusCode || 400)
+          .json({ error: e?.message || String(e) });
       }
     },
   );
@@ -237,7 +241,9 @@ function apiPdfAnalysisEndpoints(app) {
       });
       response.status(200).json({ jobId });
     } catch (e) {
-      response.status(e.statusCode || 400).json({ error: e.message });
+      response
+        .status(e.statusCode || 400)
+        .json({ error: e?.message || String(e) });
     }
   });
 

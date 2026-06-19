@@ -413,11 +413,6 @@ async function getFireworksAiModels(apiKey = null) {
   return { models, error: null };
 }
 
-
-
-
-
-
 async function getMistralModels(apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
   const openai = new OpenAIApi({
@@ -514,14 +509,10 @@ async function getGeminiModels(_apiKey = null) {
   return { models, error: null };
 }
 
-
-
 function getNativeEmbedderModels() {
   const { NativeEmbedder } = require("../EmbeddingEngines/native");
   return { models: NativeEmbedder.availableModels(), error: null };
 }
-
-
 
 /**
  * Get Cohere models
@@ -529,8 +520,6 @@ function getNativeEmbedderModels() {
  * @param {'chat' | 'embed'} type - The type of model to get
  * @returns {Promise<{models: Array<{id: string, organization: string, name: string}>, error: string | null}>}
  */
-
-
 
 async function getDockerModelRunnerModels(basePath = null) {
   try {
@@ -545,8 +534,6 @@ async function getDockerModelRunnerModels(basePath = null) {
     };
   }
 }
-
-
 
 /**
  * Get Deepgram STT models from the Management API.

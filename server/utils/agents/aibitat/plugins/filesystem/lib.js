@@ -470,6 +470,7 @@ class FilesystemManager {
             );
             throw new Error(
               `Access denied - parent directory outside allowed directories.`,
+              { cause: error },
             );
           }
           return absolute;

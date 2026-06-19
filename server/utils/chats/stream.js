@@ -110,7 +110,7 @@ async function streamChatWithWorkspace(
 
   const VectorDb = getVectorDbClass();
 
-  const messageLimit = workspace?.openAiHistory || 20;
+  const messageLimit = workspace?.openAiHistory ?? 20;
   const hasVectorizedSpace = await VectorDb.hasNamespace(workspace.slug);
   const embeddingsCount = await VectorDb.namespaceCount(workspace.slug);
 
@@ -149,7 +149,7 @@ async function streamChatWithWorkspace(
   // 1. Chatting in "chat" mode and may or may _not_ have embeddings
   // 2. Chatting in "query" mode and has at least 1 embedding
   let completeText;
-  let metrics = {};
+  let metrics;
   let contextTexts = [];
   let sources = [];
   let pinnedDocIdentifiers = [];
@@ -231,7 +231,7 @@ async function streamChatWithWorkspace(
 
   const { fillSourceWindow } = require("../helpers/chat");
   const filledSources = fillSourceWindow({
-    nDocs: workspace?.topN || 4,
+    nDocs: workspace?.topN ?? 4,
     searchResults: vectorSearchResults.sources,
     history: rawHistory,
     filterIdentifiers: pinnedDocIdentifiers,

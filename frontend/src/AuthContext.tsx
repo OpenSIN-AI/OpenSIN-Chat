@@ -15,11 +15,15 @@ export const AuthContext = createContext<any>(null);
 export const userKey = "system/refresh-user";
 
 export function AuthProvider(props) {
-  const localUser = localStorage.getItem(AUTH_USER);
-  const localAuthToken = localStorage.getItem(AUTH_TOKEN);
-  const [store, setStore] = useState({
-    user: localUser ? safeJsonParse(localUser, null as any) : null,
-    authToken: localAuthToken ? localAuthToken : null,
+  // Lazy initialiser so localStorage access and safeJsonParse only run on the
+  // very first render rather than on every render of the provider.
+  const [store, setStore] = useState(() => {
+    const localUser = localStorage.getItem(AUTH_USER);
+    const localAuthToken = localStorage.getItem(AUTH_TOKEN);
+    return {
+      user: localUser ? safeJsonParse(localUser, null as any) : null,
+      authToken: localAuthToken ? localAuthToken : null,
+    };
   });
 
   const navigate = useNavigate();

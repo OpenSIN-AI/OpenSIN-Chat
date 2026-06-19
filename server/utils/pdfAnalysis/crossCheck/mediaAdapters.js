@@ -185,7 +185,11 @@ async function analyzeVideoUrl(url) {
       } catch {
         /* einzelner Keyframe fehlgeschlagen — weitermachen */
       } finally {
-        try { fs.unlinkSync(kf.file); } catch { /* already gone */ }
+        try {
+          fs.unlinkSync(kf.file);
+        } catch {
+          /* already gone */
+        }
       }
     }
     if (!parts.length)
@@ -195,7 +199,13 @@ async function analyzeVideoUrl(url) {
       text: `Visuelles Transkript (${parts.length} Keyframes, Szenenwechsel-Sampling):\n\n${parts.join("\n\n")}`,
     };
   } finally {
-    if (outDir) { try { fs.rmSync(outDir, { recursive: true, force: true }); } catch { /* temp dir cleanup best-effort */ } }
+    if (outDir) {
+      try {
+        fs.rmSync(outDir, { recursive: true, force: true });
+      } catch {
+        /* temp dir cleanup best-effort */
+      }
+    }
     fs.existsSync(videoFile) && fs.unlinkSync(videoFile);
   }
 }

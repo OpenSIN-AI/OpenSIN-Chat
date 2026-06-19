@@ -132,7 +132,8 @@ const Document = {
 
       emitProgress(workspace.slug, { type: "doc_starting", ...docProgress });
 
-      if (!global.__embeddingProgressMap) global.__embeddingProgressMap = new Map();
+      if (!global.__embeddingProgressMap)
+        global.__embeddingProgressMap = new Map();
       global.__embeddingProgressMap.set(workspace.slug, {
         workspaceSlug: workspace.slug,
         filename: path,
@@ -184,7 +185,8 @@ const Document = {
       }
     }
 
-    if (global.__embeddingProgressMap) global.__embeddingProgressMap.delete(workspace.slug);
+    if (global.__embeddingProgressMap)
+      global.__embeddingProgressMap.delete(workspace.slug);
     global.__embeddingProgress = null;
 
     emitProgress(workspace.slug, {

@@ -91,9 +91,13 @@ function systemEndpoints(app) {
     });
   });
 
-  app.get("/migrate", [validatedRequest, flexUserRoleValid([ROLES.admin])], async (_, response) => {
-    response.sendStatus(200);
-  });
+  app.get(
+    "/migrate",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (_, response) => {
+      response.sendStatus(200);
+    },
+  );
 
   app.get(
     "/env-dump",
@@ -212,7 +216,7 @@ function systemEndpoints(app) {
         return response.status(500).json({
           success: false,
           user: null,
-          message: e.message,
+          message: e?.message || String(e),
         });
       }
     },
@@ -479,7 +483,9 @@ function systemEndpoints(app) {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Error resetting password:", error);
-        response.status(500).json({ success: false, message: error.message });
+        response
+          .status(500)
+          .json({ success: false, message: error?.message || String(error) });
       }
     },
   );
@@ -718,16 +724,20 @@ function systemEndpoints(app) {
     },
   );
 
-  app.get("/system/multi-user-mode", [validatedRequest], async (_, response) => {
-    try {
-      const multiUserMode = await SystemSettings.isMultiUserMode();
-      response.status(200).json({ multiUserMode });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e.message, e);
-      response.sendStatus(500).end();
-    }
-  });
+  app.get(
+    "/system/multi-user-mode",
+    [validatedRequest],
+    async (_, response) => {
+      try {
+        const multiUserMode = await SystemSettings.isMultiUserMode();
+        response.status(200).json({ multiUserMode });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e.message, e);
+        response.sendStatus(500).end();
+      }
+    },
+  );
 
   app.get("/system/logo", async function (request, response) {
     try {
@@ -804,21 +814,25 @@ function systemEndpoints(app) {
   });
 
   // No middleware protection in order to get this on the login page
-  app.get("/system/custom-app-name", [validatedRequest], async (_, response) => {
-    try {
-      const customAppName =
-        (
-          await SystemSettings.get({
-            label: "custom_app_name",
-          })
-        )?.value ?? null;
-      response.status(200).json({ customAppName: customAppName });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error("Error fetching custom app name:", error);
-      response.status(500).json({ message: "Internal server error" });
-    }
-  });
+  app.get(
+    "/system/custom-app-name",
+    [validatedRequest],
+    async (_, response) => {
+      try {
+        const customAppName =
+          (
+            await SystemSettings.get({
+              label: "custom_app_name",
+            })
+          )?.value ?? null;
+        response.status(200).json({ customAppName: customAppName });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Error fetching custom app name:", error);
+        response.status(500).json({ message: "Internal server error" });
+      }
+    },
+  );
 
   app.get(
     "/system/pfp/:id",
@@ -1025,18 +1039,22 @@ function systemEndpoints(app) {
     },
   );
 
-  app.get("/system/is-default-logo", [validatedRequest], async (_, response) => {
-    try {
-      const currentLogoFilename = await SystemSettings.currentLogoFilename();
-      const isDefaultLogo =
-        !currentLogoFilename || isDefaultFilename(currentLogoFilename);
-      response.status(200).json({ isDefaultLogo });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error("Error processing the logo request:", error);
-      response.status(500).json({ message: "Internal server error" });
-    }
-  });
+  app.get(
+    "/system/is-default-logo",
+    [validatedRequest],
+    async (_, response) => {
+      try {
+        const currentLogoFilename = await SystemSettings.currentLogoFilename();
+        const isDefaultLogo =
+          !currentLogoFilename || isDefaultFilename(currentLogoFilename);
+        response.status(200).json({ isDefaultLogo });
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Error processing the logo request:", error);
+        response.status(500).json({ message: "Internal server error" });
+      }
+    },
+  );
 
   app.get(
     "/system/remove-logo",

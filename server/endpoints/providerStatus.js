@@ -36,7 +36,7 @@ function providerStatusEndpoints(app) {
         console.error("provider-key-status failed:", e.message);
         response
           .status(500)
-          .json({ providers: [], paths: null, error: e.message });
+          .json({ providers: [], paths: null, error: e?.message || String(e) });
       }
     },
   );
@@ -55,7 +55,9 @@ function providerStatusEndpoints(app) {
           .json({ results, checkedAt: new Date().toISOString() });
       } catch (e) {
         console.error("provider-connectivity failed:", e.message);
-        response.status(500).json({ results: [], error: e.message });
+        response
+          .status(500)
+          .json({ results: [], error: e?.message || String(e) });
       }
     },
   );

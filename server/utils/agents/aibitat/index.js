@@ -609,7 +609,7 @@ class AIbitat {
     }
 
     // If it's a direct message, reply to the message
-    let reply = "";
+    let reply;
     try {
       reply = await this.reply(route);
     } catch (error) {

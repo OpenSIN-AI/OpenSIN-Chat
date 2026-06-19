@@ -124,7 +124,7 @@ function handleDefaultStreamResponseV2(response, stream, responseProps) {
             if (!filteredToken) continue;
             reasoningMode = false;
           }
-          
+
           fullText += filteredToken;
           // If we never saw a usage metric, we can estimate them by number of completion chunks
           if (!hasUsageMetrics) usage.completion_tokens++;

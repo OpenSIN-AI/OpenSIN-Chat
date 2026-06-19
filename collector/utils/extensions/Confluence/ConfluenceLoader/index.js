@@ -90,7 +90,8 @@ class ConfluencePagesLoader {
       this.log("Error:", error);
       throw new Error(error.message);
     } finally {
-      if (prevTlsSetting === undefined) delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
+      if (prevTlsSetting === undefined)
+        delete process.env.NODE_TLS_REJECT_UNAUTHORIZED;
       else process.env.NODE_TLS_REJECT_UNAUTHORIZED = prevTlsSetting;
     }
   }

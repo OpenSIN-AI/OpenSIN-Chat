@@ -19,7 +19,6 @@
  */
 
 const DIP_BASE = "https://dserver.bundestag.de";
-const BUNDESTAG_BASE = "https://www.bundestag.de";
 // DIP (Dokumentations- und Informationssystem für Parlamentsmaterialien) REST
 // API — used as a robust fallback when the dserver protocol XML is unavailable
 // (Issue #52). A public demo API key is published by the Bundestag; callers may

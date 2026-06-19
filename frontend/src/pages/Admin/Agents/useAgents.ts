@@ -200,9 +200,11 @@ export function useAgents(): UseAgentsReturn {
       const updatedSkills = prev.includes(skillName)
         ? prev.filter((name) => name !== skillName)
         : [...prev, skillName];
-      setHasChanges(true);
       return updatedSkills;
     });
+    // Side effects must run outside the updater function: React StrictMode
+    // invokes updaters twice to detect impure updaters.
+    setHasChanges(true);
   };
 
   const toggleAgentSkill = (skillName: string) => {
@@ -210,9 +212,9 @@ export function useAgents(): UseAgentsReturn {
       const updatedSkills = prev.includes(skillName)
         ? prev.filter((name) => name !== skillName)
         : [...prev, skillName];
-      setHasChanges(true);
       return updatedSkills;
     });
+    setHasChanges(true);
   };
 
   const toggleFlow = (flowId: string) => {

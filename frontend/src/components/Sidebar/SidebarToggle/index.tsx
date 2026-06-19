@@ -32,7 +32,7 @@ export function SidebarToggleProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [showSidebar, setShowSidebar] = useState(previousSidebarState());
+  const [showSidebar, setShowSidebar] = useState(() => previousSidebarState());
   const [canToggleSidebar, setCanToggleSidebar] = useState(true);
   const { pathname } = useLocation();
 

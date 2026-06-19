@@ -94,9 +94,12 @@ export function useAgentForm() {
       const updatedSkills = prev.includes(skillName)
         ? (prev as any).filter((name) => name !== skillName)
         : [...prev, skillName];
-      setHasChanges(true);
       return updatedSkills;
     });
+    // Side effects must run outside the updater function: React StrictMode
+    // invokes upders twice to detect impure updaters, which would call
+    // setHasChanges twice (harmless here but violates purity contract).
+    setHasChanges(true);
   };
 
   const toggleAgentSkill: any = (skillName) => {
@@ -104,9 +107,9 @@ export function useAgentForm() {
       const updatedSkills = prev.includes(skillName)
         ? (prev as any).filter((name) => name !== skillName)
         : [...prev, skillName];
-      setHasChanges(true);
       return updatedSkills;
     });
+    setHasChanges(true);
   };
 
   const toggleFlow: any = (flowId) => {

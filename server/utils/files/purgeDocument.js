@@ -65,14 +65,18 @@ async function purgeFolder(folderName = null) {
   // Remove associated Vector-cache files
   for (const filename of filenames) {
     const rmVectorCache = () =>
-      purgeVectorCache(filename).then(() => true).catch(() => true);
+      purgeVectorCache(filename)
+        .then(() => true)
+        .catch(() => true);
     purgePromises.push(rmVectorCache);
   }
 
   // Remove workspace document associations
   for (const workspace of workspaces) {
     const rmWorkspaceDoc = () =>
-      Document.removeDocuments(workspace, filenames).then(() => true).catch(() => true);
+      Document.removeDocuments(workspace, filenames)
+        .then(() => true)
+        .catch(() => true);
     purgePromises.push(rmWorkspaceDoc);
   }
 

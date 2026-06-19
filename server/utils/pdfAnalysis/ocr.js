@@ -22,7 +22,6 @@ const FALLBACK_LANG_CHAIN = OCR_LANGS.includes("+")
   : [OCR_LANGS, "osd"];
 
 let workerPromise = null;
-let workerLang = null;
 let ocrQueue = Promise.resolve();
 
 async function getWorker() {
@@ -32,7 +31,6 @@ async function getWorker() {
       for (const lang of FALLBACK_LANG_CHAIN) {
         try {
           const worker = await createWorker(lang);
-          workerLang = lang;
           return worker;
         } catch (e) {
           console.warn(

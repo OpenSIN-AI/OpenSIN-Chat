@@ -90,14 +90,14 @@ function chatEndpoints(app) {
         response.end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        console.error(e?.message || "Unknown error", e);
         writeResponseChunk(response, {
           id: uuidv4(),
           type: "abort",
           textResponse: null,
           sources: [],
           close: true,
-          error: e.message,
+          error: e?.message || String(e),
         });
         response.end();
       }
@@ -198,14 +198,14 @@ function chatEndpoints(app) {
         response.end();
       } catch (e) {
         // eslint-disable-next-line no-console
-        console.error(e);
+        console.error(e?.message || "Unknown error", e);
         writeResponseChunk(response, {
           id: uuidv4(),
           type: "abort",
           textResponse: null,
           sources: [],
           close: true,
-          error: e.message,
+          error: e?.message || String(e),
         });
         response.end();
       }

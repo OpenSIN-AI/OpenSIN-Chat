@@ -74,10 +74,10 @@ class LMStudioEmbedder {
           .then((result) => {
             const embedding = result.data?.[0]?.embedding;
             if (!Array.isArray(embedding) || !embedding.length)
-              throw {
-                type: "EMPTY_ARR",
-                message: "The embedding was empty from LMStudio",
-              };
+              throw Object.assign(
+                new Error("The embedding was empty from LMStudio"),
+                { type: "EMPTY_ARR" },
+              );
             reportEmbeddingProgress(idx + 1, textChunks.length);
             return { data: embedding, error: null };
           })
