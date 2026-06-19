@@ -186,6 +186,7 @@ function verifySignature(body, signature) {
   const hmac = crypto.createHmac("sha256", WEBHOOK_SECRET);
   hmac.update(body);
   const expected = "sha256=" + hmac.digest("hex");
+  if (expected.length !== signature.length) return false;
   return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
 }
 
