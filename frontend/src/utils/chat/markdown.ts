@@ -7,6 +7,7 @@ import hljs from "./hljs";
 import "./themes/github-dark.css";
 import "./themes/github.css";
 import { v4 } from "uuid";
+import { getStoredTheme } from "@/utils/safeStorage";
 
 const markdown = markdownIt({
   html: Appearance.get("renderHTML") ?? false,
@@ -14,7 +15,7 @@ const markdown = markdownIt({
   highlight: function (code: any, lang: any) {
     const uuid = v4();
     const theme =
-      window.localStorage.getItem("theme") === "light"
+      getStoredTheme() === "light"
         ? "github"
         : "github-dark";
 

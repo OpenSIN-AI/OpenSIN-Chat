@@ -45,14 +45,17 @@ describe("securityHeaders", () => {
     expect(next).toHaveBeenCalledTimes(1);
   });
 
-  it("does not set HSTS or CSP by default", () => {
+  it("does not set HSTS by default but enforces a baseline CSP", () => {
     const mw = securityHeaders();
     const res = mockRes();
     mw({}, res, jest.fn());
 
     expect(res.headers["Strict-Transport-Security"]).toBeUndefined();
     expect(res.headers["Content-Security-Policy-Report-Only"]).toBeUndefined();
-    expect(res.headers["Content-Security-Policy"]).toBeUndefined();
+    const csp = res.headers["Content-Security-Policy"];
+    expect(csp).toBeDefined();
+    expect(csp).toContain("default-src 'self'");
+    expect(csp).toContain("frame-ancestors 'none'");
   });
 
   it("sets HSTS when ENABLE_HSTS=true", () => {
@@ -65,16 +68,18 @@ describe("securityHeaders", () => {
     expect(res.headers["Strict-Transport-Security"]).not.toContain("preload");
   });
 
-  it("sets report-only CSP (never enforcing) when CSP_REPORT_ONLY=true", () => {
+  it("sets report-only CSP alongside enforced CSP when CSP_REPORT_ONLY=true", () => {
     process.env.CSP_REPORT_ONLY = "true";
     const mw = securityHeaders();
     const res = mockRes();
     mw({}, res, jest.fn());
 
-    const csp = res.headers["Content-Security-Policy-Report-Only"];
-    expect(csp).toContain("default-src 'self'");
-    expect(csp).toContain("frame-ancestors 'none'");
-    expect(csp).toContain("worker-src 'self' blob:");
-    expect(res.headers["Content-Security-Policy"]).toBeUndefined();
+    const reportOnly = res.headers["Content-Security-Policy-Report-Only"];
+    expect(reportOnly).toContain("default-src 'self'");
+    expect(reportOnly).toContain("frame-ancestors 'none'");
+    expect(reportOnly).toContain("worker-src 'self' blob:");
+    expect(res.headers["Content-Security-Policy"]).toContain(
+      "default-src 'self'",
+    );
   });
 });

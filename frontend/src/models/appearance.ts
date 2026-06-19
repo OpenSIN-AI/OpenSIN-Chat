@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { APPEARANCE_SETTINGS } from "@/utils/constants";
 import { safeJsonParse } from "@/utils/request";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 
 /**
  * @typedef { 'showScrollbar' |
@@ -25,7 +26,7 @@ const Appearance: any = {
    * @returns {{showScrollbar: boolean, autoSubmitSttInput: boolean, autoPlayAssistantTtsResponse: boolean, enableSpellCheck: boolean, renderHTML: boolean}}
    */
   getSettings: () => {
-    const settings = localStorage.getItem(APPEARANCE_SETTINGS);
+    const settings = safeGetItem(APPEARANCE_SETTINGS);
     return safeJsonParse(settings, Appearance.defaultSettings);
   },
 
@@ -61,7 +62,7 @@ const Appearance: any = {
    */
   updateSettings: (newSettings: any) => {
     const updatedSettings = { ...Appearance.getSettings(), ...newSettings };
-    localStorage.setItem(APPEARANCE_SETTINGS, JSON.stringify(updatedSettings));
+    safeSetItem(APPEARANCE_SETTINGS, JSON.stringify(updatedSettings));
     return updatedSettings;
   },
 };

@@ -13,6 +13,9 @@ const { validWorkspaceSlug } = require("../utils/middleware/validWorkspace");
 const { CollectorApi } = require("../utils/collectorApi");
 const { WorkspaceThread } = require("../models/workspaceThread");
 const { WorkspaceParsedFiles } = require("../models/workspaceParsedFiles");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 const fs = require("fs");
 
 function cleanupHotdirFile(request) {
@@ -92,6 +95,11 @@ function workspaceParsedFilesEndpoints(app) {
       // Embed is still an admin/manager only feature
       flexUserRoleValid([ROLES.admin, ROLES.manager]),
       validWorkspaceSlug,
+      simpleRateLimit({
+        bucket: "workspace-embed-parsed",
+        max: 20,
+        windowMs: 60 * 1000,
+      }),
     ],
     async function (request, response) {
       const { fileId = null } = request.params;
@@ -145,6 +153,11 @@ function workspaceParsedFilesEndpoints(app) {
       flexUserRoleValid([ROLES.all]),
       handleFileUpload,
       validWorkspaceSlug,
+      simpleRateLimit({
+        bucket: "workspace-parse",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
     ],
     async function (request, response) {
       try {

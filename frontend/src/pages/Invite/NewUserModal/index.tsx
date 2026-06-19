@@ -5,6 +5,7 @@ import Invite from "@/models/invite";
 import paths from "@/utils/paths";
 import { useParams } from "react-router-dom";
 import { AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import { safeSetItem } from "@/utils/safeStorage";
 import System from "@/models/system";
 import { useTranslation } from "react-i18next";
 import {
@@ -31,8 +32,8 @@ export default function NewUserModal(): JSX.Element {
       if (success) {
         const { valid, user, token, message } = await System.requestToken(data);
         if (valid && !!token && !!user) {
-          window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
-          window.localStorage.setItem(AUTH_TOKEN, token);
+          safeSetItem(AUTH_USER, JSON.stringify(user));
+          safeSetItem(AUTH_TOKEN, token);
           window.location.href = paths.home();
         } else {
           setError(message);

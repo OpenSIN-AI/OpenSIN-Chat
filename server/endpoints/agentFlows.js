@@ -5,6 +5,9 @@ const {
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 const { Telemetry } = require("../models/telemetry");
 
 function agentFlowEndpoints(app) {
@@ -13,7 +16,15 @@ function agentFlowEndpoints(app) {
   // Save a flow configuration
   app.post(
     "/agent-flows/save",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "agent-flows-save",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { name, config, uuid } = request.body;
@@ -143,7 +154,15 @@ function agentFlowEndpoints(app) {
   // Delete a specific flow
   app.delete(
     "/agent-flows/:uuid",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "agent-flows-delete",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { uuid } = request.params;
@@ -173,7 +192,15 @@ function agentFlowEndpoints(app) {
   // Toggle flow active status
   app.post(
     "/agent-flows/:uuid/toggle",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "agent-flows-toggle",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { uuid } = request.params;

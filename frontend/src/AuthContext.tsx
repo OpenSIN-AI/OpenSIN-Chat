@@ -10,6 +10,7 @@ import {
 import System from "./models/system";
 import { useNavigate } from "react-router-dom";
 import { safeJsonParse } from "@/utils/request";
+import { safeGetItem, safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
 
 export const AuthContext = createContext<any>(null);
 export const userKey = "system/refresh-user";
@@ -18,8 +19,8 @@ export function AuthProvider(props) {
   // Lazy initialiser so localStorage access and safeJsonParse only run on the
   // very first render rather than on every render of the provider.
   const [store, setStore] = useState(() => {
-    const localUser = localStorage.getItem(AUTH_USER);
-    const localAuthToken = localStorage.getItem(AUTH_TOKEN);
+    const localUser = safeGetItem(AUTH_USER);
+    const localAuthToken = safeGetItem(AUTH_TOKEN);
     return {
       user: localUser ? safeJsonParse(localUser, null as any) : null,
       authToken: localAuthToken ? localAuthToken : null,
@@ -43,16 +44,16 @@ export function AuthProvider(props) {
         if (data.success && data.user === null) return;
 
         if (!data.success) {
-          localStorage.removeItem(AUTH_USER);
-          localStorage.removeItem(AUTH_TOKEN);
-          localStorage.removeItem(AUTH_TIMESTAMP);
-          localStorage.removeItem(USER_PROMPT_INPUT_MAP);
+          safeRemoveItem(AUTH_USER);
+          safeRemoveItem(AUTH_TOKEN);
+          safeRemoveItem(AUTH_TIMESTAMP);
+          safeRemoveItem(USER_PROMPT_INPUT_MAP);
           setStore({ user: null, authToken: null });
           navigate("/login");
           return;
         }
 
-        localStorage.setItem(AUTH_USER, JSON.stringify(data.user));
+        safeSetItem(AUTH_USER, JSON.stringify(data.user));
         setStore((prev) => ({ ...prev, user: data.user }));
       },
     },
@@ -65,16 +66,16 @@ export function AuthProvider(props) {
    */
   const [actions] = useState({
     updateUser: (user, authToken = "" as any) => {
-      localStorage.setItem(AUTH_USER, JSON.stringify(user));
-      localStorage.setItem(AUTH_TOKEN, authToken);
+      safeSetItem(AUTH_USER, JSON.stringify(user));
+      safeSetItem(AUTH_TOKEN, authToken);
       setStore({ user, authToken });
       mutate({ success: true, user, message: null }, false);
     },
     unsetUser: () => {
-      localStorage.removeItem(AUTH_USER);
-      localStorage.removeItem(AUTH_TOKEN);
-      localStorage.removeItem(AUTH_TIMESTAMP);
-      localStorage.removeItem(USER_PROMPT_INPUT_MAP);
+      safeRemoveItem(AUTH_USER);
+      safeRemoveItem(AUTH_TOKEN);
+      safeRemoveItem(AUTH_TIMESTAMP);
+      safeRemoveItem(USER_PROMPT_INPUT_MAP);
       setStore({ user: null, authToken: null });
       mutate({ success: false, user: null, message: null }, false);
     },

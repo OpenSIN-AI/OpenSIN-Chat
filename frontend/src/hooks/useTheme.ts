@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { REFETCH_LOGO_EVENT } from "@/LogoContext";
 import { useState, useEffect, useRef } from "react";
+import { THEME_KEY } from "@/utils/constants";
+import { getStoredTheme, safeSetItem } from "@/utils/safeStorage";
 
 const availableThemes = {
   system: "System",
@@ -16,7 +18,7 @@ const availableThemes = {
  * @returns {boolean} Whether the resolved theme is dark mode.
  */
 export function resolveDarkMode(): boolean {
-  const stored = localStorage.getItem("theme");
+  const stored = getStoredTheme();
   let theme = stored === "default" ? "dark" : stored || "system";
   if (theme === "system") {
     theme = window.matchMedia?.("(prefers-color-scheme: light)").matches
@@ -45,7 +47,7 @@ export function resolveDarkMode(): boolean {
  */
 export function useTheme({ broadcastLogoChange = false } = {}) {
   const [theme, _setTheme] = useState(() => {
-    const stored = localStorage.getItem("theme");
+    const stored = getStoredTheme();
     if (stored === "default") return "dark"; // migrate legacy value
     return stored || "system";
   });
@@ -70,8 +72,9 @@ export function useTheme({ broadcastLogoChange = false } = {}) {
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", resolvedTheme);
+    document.documentElement.classList.toggle("light", resolvedTheme === "light");
     document.body.classList.toggle("light", resolvedTheme === "light");
-    localStorage.setItem("theme", theme);
+    safeSetItem(THEME_KEY, theme);
     if (!hasMountedRef.current) {
       hasMountedRef.current = true;
       return;
@@ -95,10 +98,10 @@ export function useTheme({ broadcastLogoChange = false } = {}) {
   }, []);
 
   /**
-   * Sets the theme of the application and runs any
-   * other necessary side effects
-   * @param {ThemeOption} newTheme The new theme to set
-   */
+    * Sets the theme of the application and runs any
+    * other necessary side effects
+    * @param {ThemeOption} newTheme The new theme to set
+    */
   function setTheme(newTheme) {
     _setTheme(newTheme);
     window.dispatchEvent(new Event(REFETCH_LOGO_EVENT));

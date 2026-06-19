@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { toast, type ToastOptions } from "react-toastify";
+import { getStoredTheme } from "@/utils/safeStorage";
 
 // Additional Configs (opts)
 // You can also pass valid ReactToast params to override the defaults.
@@ -9,7 +10,7 @@ const showToast: any = (
   type: any = "default",
   opts: { clear?: boolean; [key: string]: any } = {},
 ) => {
-  const theme = localStorage?.getItem("theme") || "default";
+  const theme = getStoredTheme() || "default";
   const { clear, ...restOpts } = opts;
   const options: ToastOptions = {
     position: "bottom-center",

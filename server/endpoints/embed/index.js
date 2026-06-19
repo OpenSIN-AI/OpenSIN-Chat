@@ -11,16 +11,28 @@ const {
   setConnectionMeta,
 } = require("../../utils/middleware/embedMiddleware");
 const {
+  simpleRateLimit,
+} = require("../../utils/middleware/simpleRateLimit");
+const {
   convertToChatHistory,
   writeResponseChunk,
 } = require("../../utils/helpers/chat/responses");
+
+function embedStreamRateLimit(request, response, next) {
+  const { embedId } = request.params;
+  return simpleRateLimit({
+    bucket: `embed-stream:${embedId}`,
+    max: 60,
+    windowMs: 60 * 1000,
+  })(request, response, next);
+}
 
 function embeddedEndpoints(app) {
   if (!app) return;
 
   app.post(
     "/embed/:embedId/stream-chat",
-    [validEmbedConfig, setConnectionMeta, canRespond],
+    [validEmbedConfig, setConnectionMeta, canRespond, embedStreamRateLimit],
     async (request, response) => {
       try {
         const embed = response.locals.embedConfig;

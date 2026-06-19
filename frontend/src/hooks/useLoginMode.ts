@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import { safeGetItem } from "@/utils/safeStorage";
 
 /**
  * Synchronously derives the login mode from localStorage.
@@ -12,8 +13,8 @@ import { AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
  * @returns {"multi" | "single" | null}
  */
 export default function useLoginMode(): "multi" | "single" | null {
-  const user = !!window.localStorage.getItem(AUTH_USER);
-  const token = !!window.localStorage.getItem(AUTH_TOKEN);
+  const user = !!safeGetItem(AUTH_USER);
+  const token = !!safeGetItem(AUTH_TOKEN);
   if (user && token) return "multi";
   if (!user && token) return "single";
   return null;

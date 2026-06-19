@@ -24,6 +24,7 @@ import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";
+import { safeGetItem } from "@/utils/safeStorage";
 import { invalidateThreads } from "@/hooks/useThreads";
 import WorkspaceSources from "@/components/lib/WorkspaceSources";
 import SuggestedMessages from "@/components/lib/SuggestedMessages";
@@ -44,7 +45,7 @@ interface HomeWorkspace {
 
 async function getTargetWorkspace(): Promise<HomeWorkspace | null> {
   const lastVisited = safeJsonParse(
-    localStorage.getItem(LAST_VISITED_WORKSPACE),
+    safeGetItem(LAST_VISITED_WORKSPACE),
   );
   if (lastVisited?.slug) {
     const workspace = await Workspace.bySlug(lastVisited.slug);

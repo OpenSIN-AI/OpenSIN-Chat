@@ -214,6 +214,7 @@ describe("GET /utils/browse-directory", () => {
     });
 
     expect(res.statusCode).toBe(500);
-    expect(res.body.error).toBe("permission denied");
+    expect(res.body.error).toBe("Internal server error");
+    expect(res.body.errorId).toBeDefined();
   });
 });

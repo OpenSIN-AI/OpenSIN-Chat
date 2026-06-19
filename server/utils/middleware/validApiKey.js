@@ -81,7 +81,16 @@ async function validAdminApiKey(request, response, next) {
     return;
   }
 
-  if (multiUserMode && apiKey.createdBy) {
+  if (multiUserMode) {
+    // In multi-user mode, admin API keys must have a valid creator with
+    // admin role. If createdBy is null (e.g. creator was deleted), the key
+    // is orphaned and must NOT be granted admin access.
+    if (!apiKey.createdBy) {
+      response.status(403).json({
+        error: "Admin access required.",
+      });
+      return;
+    }
     const { User } = require("../../models/user");
     const user = await User.get({ id: apiKey.createdBy });
     if (!user || user.role !== "admin") {

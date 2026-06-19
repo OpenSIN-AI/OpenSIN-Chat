@@ -9,6 +9,9 @@ const {
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 
 function modelRouterEndpoints(app) {
   if (!app) return;
@@ -54,7 +57,15 @@ function modelRouterEndpoints(app) {
 
   app.post(
     "/model-routers/new",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "model-router-create",
+        max: 10,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -77,7 +88,15 @@ function modelRouterEndpoints(app) {
 
   app.put(
     "/model-routers/:id",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "model-router-update",
+        max: 20,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { id } = request.params;
@@ -117,7 +136,15 @@ function modelRouterEndpoints(app) {
 
   app.post(
     "/model-routers/:id/rules/new",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "model-router-rule-create",
+        max: 20,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { id } = request.params;

@@ -101,6 +101,38 @@ const executableFileFilter = (_req, file, cb) => {
 };
 
 /**
+ * File filter for image-only uploads (logos, PFP, etc.). Requires the
+ * mimetype to start with `image/` and also blocks executable extensions
+ * as defense-in-depth. SVG is allowed (serving endpoints use
+ * Content-Disposition: attachment to prevent inline XSS).
+ */
+const imageFileFilter = (_req, file, cb) => {
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (BLOCKED_EXTENSIONS.includes(ext)) {
+    return cb(new Error("File type not allowed"));
+  }
+  if (!file.mimetype?.startsWith("image/")) {
+    return cb(new Error("Only image files are allowed"));
+  }
+  cb(null, true);
+};
+
+/**
+ * Maps a multer/upload error to the appropriate HTTP status code.
+ * - LIMIT_FILE_SIZE → 413 (Payload Too Large)
+ * - File type rejected by filter → 415 (Unsupported Media Type)
+ * - Everything else → 500 (Internal Server Error)
+ */
+function uploadErrorStatus(err) {
+  if (!err) return 500;
+  if (err.code === "LIMIT_FILE_SIZE") return 413;
+  if (err.message === "File type not allowed") return 415;
+  if (err.message === "Only image files are allowed") return 415;
+  if (err.message === "Only audio uploads are allowed.") return 415;
+  return 500;
+}
+
+/**
  * Handle Generic file upload as documents from the GUI.
  * Routes to Supabase Storage when enabled, otherwise writes to local hotdir.
  * @param {Request} request
@@ -120,7 +152,7 @@ function handleFileUpload(request, response, next) {
   upload(request, response, function (err) {
     if (err) {
       response
-        .status(500)
+        .status(uploadErrorStatus(err))
         .json({
           success: false,
           error: `Invalid file upload. ${err.message}`,
@@ -145,6 +177,7 @@ function handleFileUpload(request, response, next) {
         .then(({ path: storagePath, url }) => {
           request.file.supabasePath = storagePath;
           request.file.supabaseUrl = url;
+          request.file.supabaseBucket = "documents";
           next();
         })
         .catch((uploadErr) => {
@@ -180,7 +213,7 @@ function handleAPIFileUpload(request, response, next) {
   upload(request, response, function (err) {
     if (err) {
       response
-        .status(500)
+        .status(uploadErrorStatus(err))
         .json({
           success: false,
           error: `Invalid file upload. ${err.message}`,
@@ -205,6 +238,7 @@ function handleAPIFileUpload(request, response, next) {
         .then(({ path: storagePath, url }) => {
           request.file.supabasePath = storagePath;
           request.file.supabaseUrl = url;
+          request.file.supabaseBucket = "documents";
           next();
         })
         .catch((uploadErr) => {
@@ -231,12 +265,12 @@ function handleAssetUpload(request, response, next) {
   const upload = multer({
     storage,
     limits: { fileSize: 100 * 1024 * 1024 },
-    fileFilter: executableFileFilter,
+    fileFilter: imageFileFilter,
   }).single("logo");
   upload(request, response, function (err) {
     if (err) {
       response
-        .status(500)
+        .status(uploadErrorStatus(err))
         .json({
           success: false,
           error: `Invalid file upload. ${err.message}`,
@@ -261,6 +295,7 @@ function handleAssetUpload(request, response, next) {
         .then(({ path: storagePath, url }) => {
           request.file.supabasePath = storagePath;
           request.file.supabaseUrl = url;
+          request.file.supabaseBucket = "assets";
           next();
         })
         .catch((uploadErr) => {
@@ -287,18 +322,12 @@ function handlePfpUpload(request, response, next) {
   const upload = multer({
     storage,
     limits: { fileSize: 5 * 1024 * 1024 },
-    fileFilter: (req, file, cb) => {
-      if (file.mimetype.startsWith("image/")) {
-        cb(null, true);
-      } else {
-        cb(new Error("Only image files are allowed"));
-      }
-    },
+    fileFilter: imageFileFilter,
   }).single("file");
   upload(request, response, function (err) {
     if (err) {
       response
-        .status(500)
+        .status(uploadErrorStatus(err))
         .json({
           success: false,
           error: `Invalid file upload. ${err.message}`,
@@ -322,6 +351,7 @@ function handlePfpUpload(request, response, next) {
         .then(({ path: storagePath, url }) => {
           request.file.supabasePath = storagePath;
           request.file.supabaseUrl = url;
+          request.file.supabaseBucket = "avatars";
           next();
         })
         .catch((uploadErr) => {
@@ -352,7 +382,7 @@ function handleAudioUpload(request, response, next) {
   }).single("audio");
   upload(request, response, function (err) {
     if (err) {
-      return response.status(500).json({
+      return response.status(uploadErrorStatus(err)).json({
         success: false,
         error: `Invalid audio upload. ${err.message}`,
       });
@@ -361,10 +391,39 @@ function handleAudioUpload(request, response, next) {
   });
 }
 
+/**
+ * Best-effort cleanup of an uploaded file from both local disk and Supabase
+ * Storage. Called by endpoint handlers when document processing fails so the
+ * uploaded file is not orphaned.
+ *
+ * @param {import("express").Request} request — Express request with a
+ *   possible `request.file` object populated by multer / the Supabase
+ *   upload middleware.
+ */
+function cleanupUploadedFile(request) {
+  try {
+    const filePath = request.file?.path;
+    if (filePath && fs.existsSync(filePath)) fs.rmSync(filePath);
+  } catch {
+    // Best-effort local cleanup
+  }
+  try {
+    if (request.file?.supabasePath) {
+      const bucket = request.file.supabaseBucket || "documents";
+      supabaseStorage
+        .deleteFile(bucket, request.file.supabasePath)
+        .catch(() => {});
+    }
+  } catch {
+    // Best-effort Supabase cleanup
+  }
+}
+
 module.exports = {
   handleFileUpload,
   handleAPIFileUpload,
   handleAssetUpload,
   handlePfpUpload,
   handleAudioUpload,
+  cleanupUploadedFile,
 };

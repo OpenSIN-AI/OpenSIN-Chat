@@ -5,12 +5,11 @@
 import { setupWorker } from "msw/browser";
 import { pdfAnalysisHandlers } from "./pdfAnalysisHandlers";
 import { auditHandlers } from "./auditHandlers";
+import { safeGetItem } from "@/utils/safeStorage";
 
 // Audit handlers are only registered when the audit flag is set, so the PDF
 // mock keeps working independently.
-const auditEnabled =
-  typeof localStorage !== "undefined" &&
-  localStorage.getItem("anythingllm_ws_mock") === "true";
+const auditEnabled = safeGetItem("anythingllm_ws_mock") === "true";
 
 export const worker = setupWorker(
   ...pdfAnalysisHandlers,

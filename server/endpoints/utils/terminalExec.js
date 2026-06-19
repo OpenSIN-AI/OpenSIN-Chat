@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 const { reqBody } = require("../../utils/http");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
+const {
+  simpleRateLimit,
+} = require("../../utils/middleware/simpleRateLimit");
 const { execFile } = require("child_process");
 const { promisify } = require("util");
 
@@ -80,7 +83,14 @@ function terminalExecEndpoint(app) {
 
   app.post(
     "/utils/terminal/exec",
-    [validatedRequest],
+    [
+      validatedRequest,
+      simpleRateLimit({
+        bucket: "terminal-exec",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { command } = reqBody(request);

@@ -4,6 +4,9 @@ import { SlidersHorizontal } from "@phosphor-icons/react";
 import useLoginMode from "@/hooks/useLoginMode";
 import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
+
+const VALID_TEXT_SIZES = ["small", "normal", "large"];
 
 function getTextSizes(t: any) {
   return [
@@ -18,9 +21,10 @@ export default function TextSizeMenu() {
   const TEXT_SIZES = useMemo(() => getTextSizes(t), [t]);
   const mode = useLoginMode();
   const [showMenu, setShowMenu] = useState(false as any);
-  const [selectedSize, setSelectedSize] = useState(
-    window.localStorage.getItem("openafd_text_size" as any) || "normal",
-  );
+  const [selectedSize, setSelectedSize] = useState(() => {
+    const stored = safeGetItem("openafd_text_size");
+    return VALID_TEXT_SIZES.includes(stored as any) ? stored : "normal";
+  });
   const menuRef: any = useRef(null);
   const buttonRef = useRef(null);
 
@@ -42,7 +46,7 @@ export default function TextSizeMenu() {
 
   function handleTextSizeChange(size: any) {
     setSelectedSize(size);
-    window.localStorage.setItem("openafd_text_size", size);
+    safeSetItem("openafd_text_size", size);
     window.dispatchEvent(new CustomEvent("textSizeChange", { detail: size }));
   }
 

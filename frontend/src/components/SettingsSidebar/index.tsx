@@ -21,6 +21,7 @@ import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import Option from "./MenuOption";
 import { CanViewChatHistoryProvider } from "../CanViewChatHistory";
 import useAppVersion from "@/hooks/useAppVersion";
@@ -461,7 +462,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
   const { t } = useTranslation();
   let timeout = null;
   const [showing, setShowing] = useState(() =>
-    window.localStorage.getItem(
+    safeGetItem(
       "openafd_experimental_feature_preview_unlocked",
     ),
   );
@@ -472,7 +473,7 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
       timeout = setTimeout(() => {
         setShowing("enabled");
         showToast(t("settingsSidebar.experimentalFeaturesUnlocked"));
-        window.localStorage.setItem(
+        safeSetItem(
           "openafd_experimental_feature_preview_unlocked",
           "enabled",
         );

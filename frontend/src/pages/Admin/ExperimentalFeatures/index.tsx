@@ -9,6 +9,7 @@ import { configurableFeatures } from "./features";
 import ModalWrapper from "@/components/ModalWrapper";
 import showToast from "@/utils/toast";
 import paths from "@/utils/paths";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import useExperimentalFeatures from "@/hooks/useExperimentalFeatures";
 
 export default function ExperimentalFeatures() {
@@ -191,11 +192,11 @@ interface FeatureVerificationProps {
 
 function FeatureVerification({ children }: FeatureVerificationProps) {
   const { t } = useTranslation();
-  if (!window.localStorage.getItem("openafd_tos_experimental_feature_set")) {
+  if (!safeGetItem("openafd_tos_experimental_feature_set")) {
     function acceptTos(e: React.FormEvent<HTMLFormElement>) {
       e.preventDefault();
 
-      window.localStorage.setItem(
+      safeSetItem(
         "openafd_tos_experimental_feature_set",
         "accepted",
       );

@@ -4,6 +4,7 @@ import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import debounce from "lodash.debounce";
 import { safeJsonParse } from "@/utils/request";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 
 /**
  * Synchronizes prompt input value with localStorage, scoped to the current thread.
@@ -33,9 +34,9 @@ import { safeJsonParse } from "@/utils/request";
  */
 export function clearPromptInputDraft(storageKey) {
   try {
-    const map = safeJsonParse(localStorage.getItem(USER_PROMPT_INPUT_MAP), {});
+    const map = safeJsonParse(safeGetItem(USER_PROMPT_INPUT_MAP), {});
     map[storageKey] = "";
-    localStorage.setItem(USER_PROMPT_INPUT_MAP, JSON.stringify(map));
+    safeSetItem(USER_PROMPT_INPUT_MAP, JSON.stringify(map));
   } catch {}
 }
 
@@ -43,7 +44,7 @@ export default function usePromptInputStorage({ promptInput, setPromptInput }) {
   const { threadSlug = null, slug: workspaceSlug } = useParams();
   useEffect(() => {
     const serializedPromptInputMap =
-      localStorage.getItem(USER_PROMPT_INPUT_MAP) || "{}";
+      safeGetItem(USER_PROMPT_INPUT_MAP) || "{}";
 
     const promptInputMap = safeJsonParse(serializedPromptInputMap, {});
 
@@ -57,10 +58,10 @@ export default function usePromptInputStorage({ promptInput, setPromptInput }) {
     () =>
       debounce((value, slug) => {
         const serializedPromptInputMap =
-          localStorage.getItem(USER_PROMPT_INPUT_MAP) || "{}";
+          safeGetItem(USER_PROMPT_INPUT_MAP) || "{}";
         const promptInputMap = safeJsonParse(serializedPromptInputMap, {});
         promptInputMap[slug] = value;
-        localStorage.setItem(
+        safeSetItem(
           USER_PROMPT_INPUT_MAP,
           JSON.stringify(promptInputMap),
         );

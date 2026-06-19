@@ -351,7 +351,7 @@ describe("handleAudioUpload (STT transcription)", () => {
     expect(fs.readdirSync(hotdir)).toHaveLength(0);
   });
 
-  test("rejects non-audio mimetypes with HTTP 500", async () => {
+  test("rejects non-audio mimetypes with HTTP 415", async () => {
     const req = makeUploadRequest({
       fieldName: "audio",
       filename: "not-audio.txt",
@@ -364,7 +364,7 @@ describe("handleAudioUpload (STT transcription)", () => {
     );
 
     expect(nextCalled).toBe(false);
-    expect(res.statusCode).toBe(500);
+    expect(res.statusCode).toBe(415);
     expect(res.body.success).toBe(false);
     expect(res.body.error).toContain("Only audio uploads are allowed.");
   });

@@ -13,6 +13,7 @@ import SimpleSSOPassthrough from "@/pages/Login/SSO/simple";
 import OnboardingFlow from "@/pages/OnboardingFlow";
 import "@/index.css";
 import "@/i18n";
+import { safeGetItem } from "@/utils/safeStorage";
 
 const isDev = import.meta.env.DEV;
 const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
@@ -22,8 +23,8 @@ const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
 // can be fully tested without a running backend.
 if (
   isDev &&
-  (localStorage.getItem("anythingllm_pdf_mock") === "true" ||
-    localStorage.getItem("anythingllm_ws_mock") === "true")
+  (safeGetItem("anythingllm_pdf_mock") === "true" ||
+    safeGetItem("anythingllm_ws_mock") === "true")
 ) {
   const { startMockWorker } = await import("@/mocks/browser");
   await startMockWorker();

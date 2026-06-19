@@ -32,6 +32,9 @@ const {
 const {
   workspaceDeletionProtection,
 } = require("../utils/middleware/workspaceDeletionProtection");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 
 function adminEndpoints(app) {
   if (!app) return;
@@ -53,7 +56,11 @@ function adminEndpoints(app) {
 
   app.post(
     "/admin/users/new",
-    [validatedRequest, strictMultiUserRoleValid([ROLES.admin, ROLES.manager])],
+    [
+      validatedRequest,
+      strictMultiUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({ bucket: "admin-user-new", max: 20, windowMs: 60 * 1000 }),
+    ],
     async (request, response) => {
       try {
         const currUser = await userFromSession(request, response);
@@ -185,6 +192,11 @@ function adminEndpoints(app) {
       validatedRequest,
       strictMultiUserRoleValid([ROLES.admin, ROLES.manager]),
       simpleSSOLoginDisabledMiddleware,
+      simpleRateLimit({
+        bucket: "admin-invite-new",
+        max: 20,
+        windowMs: 60 * 1000,
+      }),
     ],
     async (request, response) => {
       try {
@@ -537,7 +549,15 @@ function adminEndpoints(app) {
 
   app.post(
     "/admin/generate-api-key",
-    [validatedRequest, strictMultiUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      strictMultiUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "admin-generate-api-key",
+        max: 5,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -562,7 +582,15 @@ function adminEndpoints(app) {
 
   app.delete(
     "/admin/delete-api-key/:id",
-    [validatedRequest, strictMultiUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      strictMultiUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "admin-delete-api-key",
+        max: 10,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { id } = request.params;

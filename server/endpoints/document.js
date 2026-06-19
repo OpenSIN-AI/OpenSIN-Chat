@@ -7,6 +7,9 @@ const {
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 const fs = require("fs");
 const path = require("path");
 
@@ -14,7 +17,15 @@ function documentEndpoints(app) {
   if (!app) return;
   app.post(
     "/document/create-folder",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "document-create-folder",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { name } = reqBody(request);
@@ -45,7 +56,15 @@ function documentEndpoints(app) {
 
   app.post(
     "/document/move-files",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "document-move-files",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { files } = reqBody(request);

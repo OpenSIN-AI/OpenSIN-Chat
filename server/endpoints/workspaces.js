@@ -14,7 +14,11 @@ const { Document } = require("../models/documents");
 const { DocumentVectors } = require("../models/vectors");
 const { WorkspaceChats } = require("../models/workspaceChats");
 const { getVectorDbClass } = require("../utils/helpers");
-const { handleFileUpload, handlePfpUpload } = require("../utils/files/multer");
+const {
+  handleFileUpload,
+  handlePfpUpload,
+  cleanupUploadedFile,
+} = require("../utils/files/multer");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const { Telemetry } = require("../models/telemetry");
 const {
@@ -44,14 +48,12 @@ const { workspaceParsedFilesEndpoints } = require("./workspacesParsedFiles");
 const {
   workspaceDeletionProtection,
 } = require("../utils/middleware/workspaceDeletionProtection");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 
 function cleanupHotdirFile(request) {
-  try {
-    const filePath = request.file?.path;
-    if (filePath && fs.existsSync(filePath)) fs.rmSync(filePath);
-  } catch {
-    // Best-effort cleanup — swallow errors
-  }
+  cleanupUploadedFile(request);
 }
 
 function workspaceEndpoints(app) {
@@ -401,7 +403,15 @@ function workspaceEndpoints(app) {
 
   app.post(
     "/workspace/:slug/update-embeddings",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "workspace-update-embeddings",
+        max: 10,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -1157,6 +1167,11 @@ function workspaceEndpoints(app) {
       validatedRequest,
       flexUserRoleValid([ROLES.admin, ROLES.manager]),
       handleFileUpload,
+      simpleRateLimit({
+        bucket: "workspace-upload-and-embed",
+        max: 20,
+        windowMs: 60 * 1000,
+      }),
     ],
     async function (request, response) {
       try {

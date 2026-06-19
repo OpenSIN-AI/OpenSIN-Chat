@@ -129,6 +129,7 @@ jest.mock("../../models/user", () => ({
   User: {
     _get: jest.fn(), create: jest.fn(), get: jest.fn(), update: jest.fn(),
     delete: jest.fn(), filterFields: jest.fn((u) => u),
+    checkPasswordComplexity: jest.fn(() => ({ checkedOK: true, error: null })),
     validations: { username: jest.fn((v) => v) },
   },
 }));
@@ -876,8 +877,28 @@ describe("systemEndpoints", () => {
 
   describe("POST /system/user", () => {
     it("updates user profile", async () => {
+      User._get.mockResolvedValue({ id: 1, username: "admin", password: "hashed" });
+      const bcrypt = require("bcryptjs");
+      bcrypt.compareSync.mockReturnValue(true);
       User.update.mockResolvedValue({ success: true, error: null });
+      const res = await app.call("post", "/system/user", { body: { username: "new", password: "p", currentPassword: "old" } });
+      expect(res.body.success).toBe(true);
+    });
+    it("returns 400 when changing password without currentPassword", async () => {
       const res = await app.call("post", "/system/user", { body: { username: "new", password: "p" } });
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toContain("Current password is required");
+    });
+    it("returns 403 when currentPassword is incorrect", async () => {
+      User._get.mockResolvedValue({ id: 1, username: "admin", password: "hashed" });
+      const bcrypt = require("bcryptjs");
+      bcrypt.compareSync.mockReturnValue(false);
+      const res = await app.call("post", "/system/user", { body: { username: "new", password: "p", currentPassword: "wrong" } });
+      expect(res.statusCode).toBe(403);
+    });
+    it("updates profile without password change (no currentPassword needed)", async () => {
+      User.update.mockResolvedValue({ success: true, error: null });
+      const res = await app.call("post", "/system/user", { body: { username: "new", bio: "hello" } });
       expect(res.body.success).toBe(true);
     });
     it("returns 400 for invalid id", async () => {

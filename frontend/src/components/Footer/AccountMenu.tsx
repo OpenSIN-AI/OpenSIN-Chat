@@ -30,6 +30,7 @@ import {
   LAST_VISITED_WORKSPACE,
   USER_PROMPT_INPUT_MAP,
 } from "@/utils/constants";
+import { safeRemoveItem } from "@/utils/safeStorage";
 
 const FEEDBACK_URL = `${paths.github()}/issues/new`;
 
@@ -39,11 +40,11 @@ const ITEM_CLASSES =
 const ICON_CLASSES = "h-[18px] w-[18px] shrink-0 opacity-80";
 
 function handleSignOut() {
-  window.localStorage.removeItem(AUTH_USER);
-  window.localStorage.removeItem(AUTH_TOKEN);
-  window.localStorage.removeItem(AUTH_TIMESTAMP);
-  window.localStorage.removeItem(LAST_VISITED_WORKSPACE);
-  window.localStorage.removeItem(USER_PROMPT_INPUT_MAP);
+  safeRemoveItem(AUTH_USER);
+  safeRemoveItem(AUTH_TOKEN);
+  safeRemoveItem(AUTH_TIMESTAMP);
+  safeRemoveItem(LAST_VISITED_WORKSPACE);
+  safeRemoveItem(USER_PROMPT_INPUT_MAP);
   window.location.replace(paths.home());
 }
 

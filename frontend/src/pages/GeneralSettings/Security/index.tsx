@@ -6,6 +6,7 @@ import showToast from "@/utils/toast";
 import System from "@/models/system";
 import paths from "@/utils/paths";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import { safeRemoveItem } from "@/utils/safeStorage";
 import PreLoader from "@/components/Preloader";
 import CTAButton from "@/components/lib/CTAButton";
 import { useTranslation } from "react-i18next";
@@ -65,9 +66,9 @@ function MultiUserMode() {
         showToast(t("security.multiuser.enable.success"), "success");
         setSaving(false);
         setTimeout(() => {
-          window.localStorage.removeItem(AUTH_USER);
-          window.localStorage.removeItem(AUTH_TOKEN);
-          window.localStorage.removeItem(AUTH_TIMESTAMP);
+          safeRemoveItem(AUTH_USER);
+          safeRemoveItem(AUTH_TOKEN);
+          safeRemoveItem(AUTH_TIMESTAMP);
           window.location.href = paths.settings.users();
         }, 2_000);
         return;
@@ -232,9 +233,9 @@ function PasswordProtection() {
       showToast(t("security.password.refreshing"), "success");
       setSaving(false);
       setTimeout(() => {
-        window.localStorage.removeItem(AUTH_USER);
-        window.localStorage.removeItem(AUTH_TOKEN);
-        window.localStorage.removeItem(AUTH_TIMESTAMP);
+        safeRemoveItem(AUTH_USER);
+        safeRemoveItem(AUTH_TOKEN);
+        safeRemoveItem(AUTH_TIMESTAMP);
         window.location.reload();
       }, 3_000);
       return;

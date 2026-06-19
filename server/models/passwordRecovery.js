@@ -116,6 +116,36 @@ const PasswordResetToken = {
       return false;
     }
   },
+
+  /**
+   * Atomically claim a single-use reset token.
+   * Deletes the token only if it exists and has not expired, returning the
+   * delete count so callers can detect a concurrent claim (TOCTOU race).
+   * @param {string} token - The plaintext token to claim.
+   * @returns {Promise<{count: number, userId: number|null}>}
+   */
+  claim: async function (token) {
+    try {
+      const record = await prisma.password_reset_tokens.findUnique({
+        where: { token: String(token) },
+      });
+      if (!record) return { count: 0, userId: null };
+      if (record.expiresAt < new Date())
+        return { count: 0, userId: record.user_id };
+
+      const result = await prisma.password_reset_tokens.deleteMany({
+        where: {
+          token: String(token),
+          expiresAt: { gte: new Date() },
+        },
+      });
+      return { count: result.count, userId: record.user_id };
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("FAILED TO CLAIM PASSWORD RESET TOKEN.", error.message);
+      return { count: 0, userId: null };
+    }
+  },
 };
 
 module.exports = {

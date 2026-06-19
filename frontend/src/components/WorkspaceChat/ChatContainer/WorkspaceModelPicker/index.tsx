@@ -15,6 +15,7 @@ import {
   PROVIDER_SETUP_EVENT,
 } from "../PromptInput/LLMSelector/action";
 import { SIDEBAR_TOGGLE_EVENT } from "@/components/Sidebar/SidebarToggle";
+import { safeGetItem } from "@/utils/safeStorage";
 
 export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   const [config, setConfig] = useState({ settings: {}, provider: null });
   const [refreshKey, setRefreshKey] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(
-    () => window.localStorage.getItem("openafd_sidebar_toggle") !== "closed",
+    () => safeGetItem("openafd_sidebar_toggle") !== "closed",
   );
 
   const effectiveProvider =

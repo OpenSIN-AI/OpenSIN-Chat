@@ -99,6 +99,12 @@ function buildApp() {
       ? false
       : true;
   app.use(cors({ origin: corsOrigin }));
+
+  app.use("/request-token", bodyParser.json({ limit: "8kb" }));
+  app.use("/system/reset-password", bodyParser.json({ limit: "8kb" }));
+  app.use("/system/enable-multi-user", bodyParser.json({ limit: "8kb" }));
+  app.use("/invite", bodyParser.json({ limit: "8kb" }));
+
   app.use(bodyParser.text({ limit: FILE_LIMIT }));
   app.use(bodyParser.json({ limit: FILE_LIMIT }));
   app.use(bodyParser.urlencoded({ limit: FILE_LIMIT, extended: true }));

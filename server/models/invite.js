@@ -3,9 +3,26 @@ const { safeJsonParse } = require("../utils/http");
 const prisma = require("../utils/prisma");
 
 const Invite = {
+  // Invites expire after this many ms. Configurable via INVITE_EXPIRY_HOURS env var.
+  // Default: 7 days (168 hours). 0 disables expiry (backwards-compatible).
+  expiryMs:
+    Number(process.env.INVITE_EXPIRY_HOURS || 168) * 60 * 60 * 1000,
+
   makeCode: () => {
     const uuidAPIKey = require("uuid-apikey");
     return uuidAPIKey.create().apiKey;
+  },
+
+  /**
+   * Check if a pending invite has expired based on its createdAt timestamp.
+   * @param {Object} invite - The invite record from the database.
+   * @returns {boolean} True if the invite has expired.
+   */
+  isExpired: function (invite) {
+    if (!invite || this.expiryMs <= 0) return false;
+    if (invite.status !== "pending") return false;
+    const ageMs = Date.now() - new Date(invite.createdAt).getTime();
+    return ageMs > this.expiryMs;
   },
 
   create: async function ({ createdByUserId = 0, workspaceIds = [] }) {

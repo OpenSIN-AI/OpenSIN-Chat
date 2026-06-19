@@ -12,11 +12,24 @@ const {
 } = require("../../../utils/chats/openaiCompatible");
 const { getModelTag } = require("../../utils");
 const { extractTextContent, extractAttachments } = require("./helpers");
+const {
+  simpleRateLimit,
+} = require("../../../utils/middleware/simpleRateLimit");
+
+function apiKeyQuota(request, _response, next) {
+  const auth = request.header("Authorization");
+  const bearer = auth ? auth.split(" ")[1] : "anon";
+  return simpleRateLimit({
+    bucket: `api-key:${bearer}`,
+    max: 100,
+    windowMs: 60 * 1000,
+  })(request, _response, next);
+}
 
 function apiOpenAICompatibleEndpoints(app) {
   if (!app) return;
 
-  app.get("/v1/openai/models", [validApiKey], async (_, response) => {
+  app.get("/v1/openai/models", [validApiKey, apiKeyQuota], async (_, response) => {
     /*
     #swagger.tags = ['OpenAI Compatible Endpoints']
     #swagger.description = 'Get all available "models" which are workspaces you can use for chatting.'
@@ -76,7 +89,7 @@ function apiOpenAICompatibleEndpoints(app) {
 
   app.post(
     "/v1/openai/chat/completions",
-    [validApiKey],
+    [validApiKey, apiKeyQuota],
     async (request, response) => {
       /*
       #swagger.tags = ['OpenAI Compatible Endpoints']
@@ -193,7 +206,7 @@ function apiOpenAICompatibleEndpoints(app) {
 
   app.post(
     "/v1/openai/embeddings",
-    [validApiKey],
+    [validApiKey, apiKeyQuota],
     async (request, response) => {
       /*
       #swagger.tags = ['OpenAI Compatible Endpoints']
@@ -261,7 +274,7 @@ function apiOpenAICompatibleEndpoints(app) {
 
   app.get(
     "/v1/openai/vector_stores",
-    [validApiKey],
+    [validApiKey, apiKeyQuota],
     async (request, response) => {
       /*
       #swagger.tags = ['OpenAI Compatible Endpoints']

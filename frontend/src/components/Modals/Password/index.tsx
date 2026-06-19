@@ -11,6 +11,7 @@ import {
 } from "../../../utils/constants";
 import useLogo from "../../../hooks/useLogo";
 import useSystemSettings from "../../../hooks/useSystemSettings";
+import { safeGetItem, safeRemoveItem } from "@/utils/safeStorage";
 import useSWR from "swr";
 
 const AUTH_CHECK_KEY = "system/auth-check";
@@ -34,7 +35,7 @@ export function usePasswordModal(notry: any = false) {
   const { settings, loading: settingsLoading } = useSystemSettings();
   const { MultiUserMode, RequiresAuth } = settings || {};
 
-  const currentToken = window.localStorage.getItem(AUTH_TOKEN);
+  const currentToken = safeGetItem(AUTH_TOKEN);
 
   // Determine if we actually need a token validity check.
   // Skip when: settings are still loading, notry guard allows skip, or no token exists.
@@ -79,9 +80,9 @@ export function usePasswordModal(notry: any = false) {
 
   // Token check returned invalid — clean up storage
   if (tokenValid === false) {
-    window.localStorage.removeItem(AUTH_USER);
-    window.localStorage.removeItem(AUTH_TOKEN);
-    window.localStorage.removeItem(AUTH_TIMESTAMP);
+    safeRemoveItem(AUTH_USER);
+    safeRemoveItem(AUTH_TOKEN);
+    safeRemoveItem(AUTH_TIMESTAMP);
     return { loading: false, requiresAuth: true, mode };
   }
 

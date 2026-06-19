@@ -12,6 +12,9 @@ const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const {
   chatHistoryViewable,
 } = require("../utils/middleware/chatHistoryViewable");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 
 function embedManagementEndpoints(app) {
   if (!app) return;
@@ -35,7 +38,15 @@ function embedManagementEndpoints(app) {
 
   app.post(
     "/embeds/new",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      simpleRateLimit({
+        bucket: "embed-create",
+        max: 10,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);

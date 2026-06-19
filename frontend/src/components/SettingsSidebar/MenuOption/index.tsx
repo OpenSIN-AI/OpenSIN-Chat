@@ -4,6 +4,7 @@ import { CaretRight } from "@phosphor-icons/react";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { safeJsonParse } from "@/utils/request";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import { isPathMatch } from "@/utils/paths";
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 
@@ -67,7 +68,7 @@ export default function MenuOption({
       e.preventDefault();
       const newExpandedState = !isExpanded;
       setIsExpanded(newExpandedState);
-      localStorage.setItem(storageKey, JSON.stringify(newExpandedState));
+      safeSetItem(storageKey, JSON.stringify(newExpandedState));
     }
   };
 
@@ -149,7 +150,7 @@ function useIsExpanded({
 }: any) {
   const [isExpanded, setIsExpanded] = useState(() => {
     if (hasVisibleChildren) {
-      const storedValue = localStorage.getItem(storageKey);
+      const storedValue = safeGetItem(storageKey);
       if (storedValue !== null) {
         return safeJsonParse(storedValue, false);
       }
@@ -167,7 +168,7 @@ function useIsExpanded({
       );
       if (shouldExpand && !isExpanded) {
         setIsExpanded(true);
-        localStorage.setItem(storageKey, JSON.stringify(true));
+        safeSetItem(storageKey, JSON.stringify(true));
       }
     }
   }, [location]);

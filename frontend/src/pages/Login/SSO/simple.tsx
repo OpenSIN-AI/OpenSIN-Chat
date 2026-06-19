@@ -6,6 +6,7 @@ import paths from "@/utils/paths";
 import useQuery from "@/hooks/useQuery";
 import System from "@/models/system";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import { safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
 
 export default function SimpleSSOPassthrough() {
   const { t } = useTranslation();
@@ -19,17 +20,17 @@ export default function SimpleSSOPassthrough() {
       if (!query.get("token")) throw new Error("No token provided.");
 
       // Clear any existing auth data
-      window.localStorage.removeItem(AUTH_USER);
-      window.localStorage.removeItem(AUTH_TOKEN);
-      window.localStorage.removeItem(AUTH_TIMESTAMP);
+      safeRemoveItem(AUTH_USER);
+      safeRemoveItem(AUTH_TOKEN);
+      safeRemoveItem(AUTH_TIMESTAMP);
 
       System.simpleSSOLogin(query.get("token")!)
         .then((res) => {
           if (!res.valid) throw new Error(res.message);
 
-          window.localStorage.setItem(AUTH_USER, JSON.stringify(res.user));
-          window.localStorage.setItem(AUTH_TOKEN, res.token);
-          window.localStorage.setItem(
+          safeSetItem(AUTH_USER, JSON.stringify(res.user));
+          safeSetItem(AUTH_TOKEN, res.token);
+          safeSetItem(
             AUTH_TIMESTAMP,
             String(Number(new Date())),
           );

@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
+import { safeGetItem } from "@/utils/safeStorage";
+
+const VALID_TEXT_SIZES = ["small", "normal", "large"];
 
 export default function useTextSize() {
   const [textSize, setTextSize] = useState("normal");
@@ -17,8 +20,8 @@ export default function useTextSize() {
   };
 
   useEffect(() => {
-    const storedTextSize = window.localStorage.getItem("openafd_text_size");
-    if (storedTextSize) {
+    const storedTextSize = safeGetItem("openafd_text_size");
+    if (storedTextSize && VALID_TEXT_SIZES.includes(storedTextSize)) {
       setTextSize(storedTextSize);
       setTextSizeClass(getTextSizeClass(storedTextSize));
     }

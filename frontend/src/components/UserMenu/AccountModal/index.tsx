@@ -5,6 +5,7 @@ import System from "@/models/system";
 import Appearance from "@/models/appearance";
 import { AUTH_USER } from "@/utils/constants";
 import showToast from "@/utils/toast";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 import { Info, Plus, X } from "@phosphor-icons/react";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useTheme } from "@/hooks/useTheme";
@@ -62,11 +63,11 @@ export default function AccountModal({ user, hideModal }: any) {
 
     const { success, error } = await System.updateUser(data);
     if (success) {
-      const storedUser = safeJsonParse(localStorage.getItem(AUTH_USER), null);
+      const storedUser = safeJsonParse(safeGetItem(AUTH_USER), null);
       if (storedUser) {
         (storedUser as any).username = data.username;
         (storedUser as any).bio = data.bio;
-        localStorage.setItem(AUTH_USER, JSON.stringify(storedUser));
+        safeSetItem(AUTH_USER, JSON.stringify(storedUser));
       }
       showToast(t("profile_settings.profile_updated"), "success", {
         clear: true,
@@ -160,6 +161,24 @@ export default function AccountModal({ user, hideModal }: any) {
               </div>
               <div>
                 <label
+                  htmlFor="currentPassword"
+                  className="block mb-2 text-sm font-medium text-white"
+                >
+                  {t("profile_settings.current_password")}
+                </label>
+                <input
+                  name="currentPassword"
+                  type="password"
+                  className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("profile_settings.current_password_placeholder")}
+                  autoComplete="current-password"
+                />
+                <p className="mt-2 text-xs text-white/60">
+                  {t("profile_settings.current_password_description")}
+                </p>
+              </div>
+              <div>
+                <label
                   htmlFor="password"
                   className="block mb-2 text-sm font-medium text-white"
                 >
@@ -167,12 +186,13 @@ export default function AccountModal({ user, hideModal }: any) {
                 </label>
                 <input
                   name="password"
-                  type="text"
+                  type="password"
                   className="border-none bg-theme-settings-input-bg placeholder:text-theme-settings-input-placeholder border-gray-500 text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
                   placeholder={t("accountModal.passwordPlaceholder", {
                     username: user.username,
                   })}
                   minLength={8}
+                  autoComplete="new-password"
                 />
                 <p className="mt-2 text-xs text-white/60">
                   {t("profile_settings.password_description")}

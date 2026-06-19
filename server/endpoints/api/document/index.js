@@ -2,7 +2,10 @@
 const { getStoragePath } = require("../../../utils/paths");
 const { Telemetry } = require("../../../models/telemetry");
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
-const { handleAPIFileUpload } = require("../../../utils/files/multer");
+const {
+  handleAPIFileUpload,
+  cleanupUploadedFile,
+} = require("../../../utils/files/multer");
 const {
   viewLocalFiles,
   findDocumentInDocuments,

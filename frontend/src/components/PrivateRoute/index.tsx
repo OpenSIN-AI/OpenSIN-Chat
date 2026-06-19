@@ -5,6 +5,7 @@ import validateSessionTokenForUser from "@/utils/session";
 import paths from "@/utils/paths";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
 import { userFromStorage } from "@/utils/request";
+import { safeGetItem, safeRemoveItem } from "@/utils/safeStorage";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import useSWR from "swr";
 import UserMenu from "../UserMenu";
@@ -29,8 +30,8 @@ function useIsAuthenticated() {
   const { settings, loading: settingsLoading } = useSystemSettings();
   const { MultiUserMode, RequiresAuth } = settings || {};
 
-  const localAuthToken = localStorage.getItem(AUTH_TOKEN);
-  const localUser = localStorage.getItem(AUTH_USER);
+  const localAuthToken = safeGetItem(AUTH_TOKEN);
+  const localUser = safeGetItem(AUTH_USER);
 
   // Step 1: check onboarding (always needed)
   const { data: onboardingComplete, isLoading: onboardingLoading } = useSWR(
@@ -107,9 +108,9 @@ function useIsAuthenticated() {
 
   // Session token was invalid — clean up storage
   if (needsTokenCheck && sessionValid === false) {
-    localStorage.removeItem(AUTH_USER);
-    localStorage.removeItem(AUTH_TOKEN);
-    localStorage.removeItem(AUTH_TIMESTAMP);
+    safeRemoveItem(AUTH_USER);
+    safeRemoveItem(AUTH_TOKEN);
+    safeRemoveItem(AUTH_TIMESTAMP);
     return {
       isAuthd: false,
       shouldRedirectToOnboarding: false,

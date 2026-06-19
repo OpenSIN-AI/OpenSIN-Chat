@@ -89,7 +89,14 @@ describe("embeddedEndpoints", () => {
         body: { sessionId: "s1", message: "hello" },
         locals: EMBED_LOCALS,
       });
-      expect(writeResponseChunk).toHaveBeenCalledWith(expect.any(Object), expect.objectContaining({ error: "LLM down" }));
+      expect(writeResponseChunk).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.objectContaining({ error: "Internal server error" }),
+      );
+      expect(writeResponseChunk).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.objectContaining({ errorId: expect.any(String) }),
+      );
     });
   });
 

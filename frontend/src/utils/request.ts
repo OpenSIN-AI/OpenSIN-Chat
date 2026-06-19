@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: MIT
 import { AUTH_TOKEN, AUTH_USER } from "./constants";
+import { safeGetItem } from "./safeStorage";
 
 // Sets up the base headers for all authenticated requests so that we are able to prevent
 // basic spoofing since a valid token is required and that cannot be spoofed
 export function userFromStorage() {
-  const userString = window.localStorage.getItem(AUTH_USER);
+  const userString = safeGetItem(AUTH_USER);
   if (!userString) return null;
   return safeJsonParse(userString, null);
 }
 
 export function baseHeaders(providedToken = null) {
-  const token = providedToken || window.localStorage.getItem(AUTH_TOKEN);
+  const token = providedToken || safeGetItem(AUTH_TOKEN);
   return {
     Authorization: token ? `Bearer ${token}` : null,
   };

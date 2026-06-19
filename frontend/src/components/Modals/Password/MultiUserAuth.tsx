@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect } from "react";
 import System from "../../../models/system";
-import { AUTH_TOKEN, AUTH_USER } from "../../../utils/constants";
+import { AUTH_TOKEN, AUTH_USER, RESET_TOKEN } from "../../../utils/constants";
 import paths from "../../../utils/paths";
 import showToast from "@/utils/toast";
+import { safeGetItem, safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
@@ -245,8 +246,8 @@ export default function MultiUserAuth() {
         setRecoveryCodes(recoveryCodes);
         openRecoveryCodeModal();
       } else {
-        window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
-        window.localStorage.setItem(AUTH_TOKEN, token);
+        safeSetItem(AUTH_USER, JSON.stringify(user));
+        safeSetItem(AUTH_TOKEN, token);
         window.location.href = paths.home();
       }
     } else {
@@ -265,7 +266,7 @@ export default function MultiUserAuth() {
     );
 
     if (success && resetToken) {
-      window.localStorage.setItem("resetToken", resetToken);
+      safeSetItem(RESET_TOKEN, resetToken);
       setShowRecoveryForm(false);
       setShowResetPasswordForm(true);
     } else {
@@ -274,7 +275,7 @@ export default function MultiUserAuth() {
   };
 
   const handleResetSubmit = async (newPassword, confirmPassword) => {
-    const resetToken = window.localStorage.getItem("resetToken");
+    const resetToken = safeGetItem(RESET_TOKEN);
 
     if (resetToken) {
       const { success, error } = await System.resetPassword(
@@ -284,7 +285,7 @@ export default function MultiUserAuth() {
       );
 
       if (success) {
-        window.localStorage.removeItem("resetToken");
+        safeRemoveItem(RESET_TOKEN);
         setShowResetPasswordForm(false);
         showToast(t("multiUserAuth.resetPassword.success"), "success", {
           clear: true,
@@ -301,8 +302,8 @@ export default function MultiUserAuth() {
 
   useEffect(() => {
     if (downloadComplete && user && token) {
-      window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
-      window.localStorage.setItem(AUTH_TOKEN, token);
+      safeSetItem(AUTH_USER, JSON.stringify(user));
+      safeSetItem(AUTH_TOKEN, token);
       window.location.href = paths.home();
     }
   }, [downloadComplete, user, token]);

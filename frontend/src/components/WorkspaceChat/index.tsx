@@ -54,7 +54,10 @@ export default function WorkspaceChat({ loading, workspace }: any) {
     return setEventDelegatorForCodeSnippets();
   }, []);
 
-  const hasPendingMessage = !!sessionStorage.getItem(PENDING_HOME_MESSAGE);
+  let hasPendingMessage = false;
+  try {
+    hasPendingMessage = !!sessionStorage.getItem(PENDING_HOME_MESSAGE);
+  } catch {}
   if (loaded === null) {
     if (hasPendingMessage) {
       return (

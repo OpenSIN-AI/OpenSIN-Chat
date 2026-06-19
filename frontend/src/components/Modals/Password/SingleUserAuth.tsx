@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import System from "../../../models/system";
 import { AUTH_TOKEN } from "../../../utils/constants";
 import paths from "../../../utils/paths";
+import { safeSetItem } from "@/utils/safeStorage";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
@@ -40,7 +41,7 @@ export default function SingleUserAuth() {
         setRecoveryCodes(recoveryCodes);
         openRecoveryCodeModal();
       } else {
-        window.localStorage.setItem(AUTH_TOKEN, token);
+        safeSetItem(AUTH_TOKEN, token);
         window.location.href = paths.home();
       }
     } else {
@@ -56,7 +57,7 @@ export default function SingleUserAuth() {
 
   useEffect(() => {
     if (downloadComplete && token) {
-      window.localStorage.setItem(AUTH_TOKEN, token);
+      safeSetItem(AUTH_TOKEN, token);
       window.location.href = paths.home();
     }
   }, [downloadComplete, token]);

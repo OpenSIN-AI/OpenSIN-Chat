@@ -17,6 +17,9 @@ const { writeResponseChunk } = require("../utils/helpers/chat/responses");
 const { WorkspaceThread } = require("../models/workspaceThread");
 const { User } = require("../models/user");
 const { getModelTag } = require("./utils");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 
 /**
  * Start an SSE heartbeat that sends a comment-line keepalive every 15s.
@@ -44,7 +47,16 @@ function chatEndpoints(app) {
 
   app.post(
     "/workspace/:slug/stream-chat",
-    [validatedRequest, flexUserRoleValid([ROLES.all]), validWorkspaceSlug],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.all]),
+      validWorkspaceSlug,
+      simpleRateLimit({
+        bucket: "chat-stream",
+        max: 60,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       let stopHeartbeat = null;
       try {
@@ -66,7 +78,6 @@ function chatEndpoints(app) {
 
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Content-Type", "text/event-stream");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
         stopHeartbeat = startSSEHeartbeat(response);
@@ -136,6 +147,11 @@ function chatEndpoints(app) {
       validatedRequest,
       flexUserRoleValid([ROLES.all]),
       validWorkspaceAndThreadSlug,
+      simpleRateLimit({
+        bucket: "chat-stream",
+        max: 60,
+        windowMs: 60 * 1000,
+      }),
     ],
     async (request, response) => {
       let stopHeartbeat = null;
@@ -159,7 +175,6 @@ function chatEndpoints(app) {
 
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Content-Type", "text/event-stream");
-        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Connection", "keep-alive");
         response.flushHeaders();
         stopHeartbeat = startSSEHeartbeat(response);

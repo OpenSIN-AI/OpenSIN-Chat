@@ -6,6 +6,9 @@ const { reqBody } = require("../utils/http");
 const {
   simpleSSOLoginDisabledMiddleware,
 } = require("../utils/middleware/simpleSSOEnabled");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 
 function inviteEndpoints(app) {
   if (!app) return;
@@ -26,6 +29,13 @@ function inviteEndpoints(app) {
         return;
       }
 
+      if (Invite.isExpired(invite)) {
+        response
+          .status(200)
+          .json({ invite: null, error: "Invite has expired." });
+        return;
+      }
+
       response
         .status(200)
         .json({ invite: { code, status: invite.status }, error: null });
@@ -38,7 +48,14 @@ function inviteEndpoints(app) {
 
   app.post(
     "/invite/:code",
-    [simpleSSOLoginDisabledMiddleware],
+    [
+      simpleSSOLoginDisabledMiddleware,
+      simpleRateLimit({
+        bucket: "invite-accept",
+        max: 5,
+        windowMs: 15 * 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { code } = request.params;
@@ -60,6 +77,13 @@ function inviteEndpoints(app) {
           response
             .status(200)
             .json({ success: false, error: "Invite not found or is invalid." });
+          return;
+        }
+
+        if (Invite.isExpired(invite)) {
+          response
+            .status(200)
+            .json({ success: false, error: "Invite has expired." });
           return;
         }
 

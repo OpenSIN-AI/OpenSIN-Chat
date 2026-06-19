@@ -7,23 +7,24 @@ import paths from "@/utils/paths";
 import { Link } from "react-router-dom";
 import ModalWrapper from "@/components/ModalWrapper";
 import DOMPurify from "@/utils/chat/purify";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 
 export const PinAlert = memo(() => {
   const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
   function dismissAlert() {
     setShowAlert(false);
-    window.localStorage.setItem(SEEN_DOC_PIN_ALERT, "1");
+    safeSetItem(SEEN_DOC_PIN_ALERT, "1");
     window.removeEventListener("pinned_document", handlePinEvent);
   }
 
   function handlePinEvent() {
-    if (!!window?.localStorage?.getItem(SEEN_DOC_PIN_ALERT)) return;
+    if (!!safeGetItem(SEEN_DOC_PIN_ALERT)) return;
     setShowAlert(true);
   }
 
   useEffect(() => {
-    if (!window || !!window?.localStorage?.getItem(SEEN_DOC_PIN_ALERT)) return;
+    if (!window || !!safeGetItem(SEEN_DOC_PIN_ALERT)) return;
     window?.addEventListener("pinned_document", handlePinEvent);
     return () => window.removeEventListener("pinned_document", handlePinEvent);
   }, []);
@@ -84,17 +85,17 @@ export const DocumentWatchAlert = memo(() => {
   const [showAlert, setShowAlert] = useState(false);
   function dismissAlert() {
     setShowAlert(false);
-    window.localStorage.setItem(SEEN_WATCH_ALERT, "1");
+    safeSetItem(SEEN_WATCH_ALERT, "1");
     window.removeEventListener("watch_document_for_changes", handlePinEvent);
   }
 
   function handlePinEvent() {
-    if (!!window?.localStorage?.getItem(SEEN_WATCH_ALERT)) return;
+    if (!!safeGetItem(SEEN_WATCH_ALERT)) return;
     setShowAlert(true);
   }
 
   useEffect(() => {
-    if (!window || !!window?.localStorage?.getItem(SEEN_WATCH_ALERT)) return;
+    if (!window || !!safeGetItem(SEEN_WATCH_ALERT)) return;
     window?.addEventListener("watch_document_for_changes", handlePinEvent);
     return () =>
       window.removeEventListener("watch_document_for_changes", handlePinEvent);

@@ -12,6 +12,7 @@ import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { isMobile } from "react-device-detect";
 import { FullScreenLoader } from "@/components/Preloader";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
+import { safeSetItem } from "@/utils/safeStorage";
 import useWorkspaceChats from "@/hooks/useWorkspaceChats";
 
 export default function WorkspaceChat() {
@@ -74,7 +75,7 @@ function ShowWorkspaceChat() {
       showAgentCommand,
     });
     setLoadedSlug(slug);
-    localStorage.setItem(
+    safeSetItem(
       LAST_VISITED_WORKSPACE,
       JSON.stringify({
         slug: rawWorkspace.slug,

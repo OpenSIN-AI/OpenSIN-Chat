@@ -4,6 +4,9 @@ import { TextT } from "@phosphor-icons/react";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@/hooks/useTheme";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
+
+const VALID_TEXT_SIZES = ["small", "normal", "large"];
 
 export default function TextSizeButton() {
   const tooltipRef = useRef(null);
@@ -57,13 +60,14 @@ export default function TextSizeButton() {
 
 function TextSizeMenu({ tooltipRef }: any) {
   const { t } = useTranslation();
-  const [selectedSize, setSelectedSize] = useState(
-    window.localStorage.getItem("openafd_text_size" as any) || "normal",
-  );
+  const [selectedSize, setSelectedSize] = useState(() => {
+    const stored = safeGetItem("openafd_text_size");
+    return VALID_TEXT_SIZES.includes(stored as any) ? stored : "normal";
+  });
 
   const handleTextSizeChange: any = (size) => {
     setSelectedSize(size);
-    window.localStorage.setItem("openafd_text_size", size);
+    safeSetItem("openafd_text_size", size);
     window.dispatchEvent(new CustomEvent("textSizeChange", { detail: size }));
     tooltipRef.current?.close();
   };

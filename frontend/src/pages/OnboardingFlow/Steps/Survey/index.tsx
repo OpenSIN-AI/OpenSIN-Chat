@@ -3,6 +3,7 @@
 // Docs: index.doc.md
 import { COMPLETE_QUESTIONNAIRE } from "@/utils/constants";
 import paths from "@/utils/paths";
+import { safeSetItem } from "@/utils/safeStorage";
 import { CheckCircle } from "@phosphor-icons/react";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -53,14 +54,14 @@ async function sendQuestionnaire({
       body: data,
     })
       .then(() => {
-        window.localStorage.setItem(COMPLETE_QUESTIONNAIRE, "true");
+        safeSetItem(COMPLETE_QUESTIONNAIRE, "true");
       })
       .catch((error) => {
         console.error(`sendQuestionnaire`, error.message);
       });
   }
 
-  window.localStorage.setItem(COMPLETE_QUESTIONNAIRE, "true");
+  safeSetItem(COMPLETE_QUESTIONNAIRE, "true");
 }
 
 export default function Survey({

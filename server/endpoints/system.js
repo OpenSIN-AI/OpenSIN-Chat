@@ -51,6 +51,7 @@ const {
   isMultiUserSetup,
 } = require("../utils/middleware/multiUserProtected");
 const { fetchPfp, determinePfpFilepath } = require("../utils/files/pfp");
+const supabaseStorage = require("../utils/storage/supabase");
 const { exportChatsAsType } = require("../utils/helpers/chat/convertTo");
 const { EventLogs } = require("../models/eventLogs");
 const { CollectorApi } = require("../utils/collectorApi");
@@ -712,7 +713,14 @@ function systemEndpoints(app) {
 
   app.post(
     "/system/enable-multi-user",
-    [validatedRequest],
+    [
+      validatedRequest,
+      simpleRateLimit({
+        bucket: "enable-multi-user",
+        max: 3,
+        windowMs: 60 * 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         if (response.locals.multiUserMode) {
@@ -932,27 +940,55 @@ function systemEndpoints(app) {
 
         const userRecord = await User.get({ id: user.id });
         const oldPfpFilename = userRecord.pfpFilename;
+
+        // Update the DB reference FIRST so we only delete the old file if the
+        // new reference is successfully persisted. This prevents orphaning the
+        // new file while the old one is already gone.
+        const { success, error } = await User.update(user.id, {
+          pfpFilename: uploadedFileName,
+        });
+
+        if (!success) {
+          // DB update failed — clean up the newly uploaded file so it is not
+          // orphaned on disk / Supabase.
+          if (request.file?.supabasePath) {
+            supabaseStorage
+              .deleteFile("avatars", request.file.supabasePath)
+              .catch(() => {});
+          } else {
+            const storagePath = getStoragePath("assets", "pfp");
+            const newPfpPath = path.join(
+              storagePath,
+              normalizePath(uploadedFileName),
+            );
+            if (isWithin(path.resolve(storagePath), path.resolve(newPfpPath)))
+              await fs.promises.unlink(newPfpPath).catch(() => {});
+          }
+          return response.status(500).json({
+            message: error || "Failed to update with new profile picture.",
+          });
+        }
+
+        // DB update succeeded — now safe to delete the old PFP.
         if (oldPfpFilename) {
           const storagePath = getStoragePath("assets", "pfp");
           const oldPfpPath = path.join(
             storagePath,
-            normalizePath(userRecord.pfpFilename),
+            normalizePath(oldPfpFilename),
           );
           if (!isWithin(path.resolve(storagePath), path.resolve(oldPfpPath)))
             throw new Error("Invalid path name");
           await fs.promises.unlink(oldPfpPath).catch(() => {
             /* file already gone, safe to ignore */
           });
+          // Also clean up old PFP from Supabase if it was stored there.
+          supabaseStorage
+            .deleteFile("avatars", `pfp/${oldPfpFilename}`)
+            .catch(() => {});
         }
 
-        const { success, error } = await User.update(user.id, {
-          pfpFilename: uploadedFileName,
-        });
-
-        return response.status(success ? 200 : 500).json({
-          message: success
-            ? "Profile picture uploaded successfully."
-            : error || "Failed to update with new profile picture.",
+        return response.status(200).json({
+          message: "Profile picture uploaded successfully.",
         });
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -1073,18 +1109,70 @@ function systemEndpoints(app) {
       }
 
       try {
-        const newFilename = await renameLogoFile(request.file.originalname);
-        const existingLogoFilename = await SystemSettings.currentLogoFilename();
-        await removeCustomLogo(existingLogoFilename);
+        let newFilename;
+        const isSupabase =
+          supabaseStorage.isEnabled() && !!request.file?.supabasePath;
 
+        if (isSupabase) {
+          // Supabase: the file was uploaded under the original name. Generate
+          // a UUID filename, re-upload the buffer to the new path, then remove
+          // the original-name object to avoid orphaning.
+          const ext = path.extname(request.file.originalname) || ".png";
+          newFilename = `${v4()}${ext}`;
+          await supabaseStorage.uploadBuffer({
+            bucket: "assets",
+            objectPath: newFilename,
+            buffer: request.file.buffer,
+            contentType: request.file.mimetype,
+          });
+          await supabaseStorage
+            .deleteFile("assets", request.file.supabasePath)
+            .catch(() => {});
+        } else {
+          newFilename = await renameLogoFile(request.file.originalname);
+        }
+
+        // Update DB FIRST, then delete old logo — prevents orphaning the new
+        // file while the old one is already gone.
+        const existingLogoFilename = await SystemSettings.currentLogoFilename();
         const { success, error } = await SystemSettings._updateSettings({
           logo_filename: newFilename,
         });
 
-        return response.status(success ? 200 : 500).json({
-          message: success
-            ? "Logo uploaded successfully."
-            : error || "Failed to update with new logo.",
+        if (!success) {
+          // DB update failed — clean up the newly uploaded file.
+          if (isSupabase) {
+            await supabaseStorage
+              .deleteFile("assets", newFilename)
+              .catch(() => {});
+          } else {
+            const assetsDir = getStoragePath("assets");
+            const newLogoPath = path.join(
+              assetsDir,
+              normalizePath(newFilename),
+            );
+            if (isWithin(path.resolve(assetsDir), path.resolve(newLogoPath)))
+              await fs.promises.unlink(newLogoPath).catch(() => {});
+          }
+          return response.status(500).json({
+            message: error || "Failed to update with new logo.",
+          });
+        }
+
+        // DB update succeeded — now safe to delete the old custom logo.
+        await removeCustomLogo(existingLogoFilename);
+        if (
+          isSupabase &&
+          existingLogoFilename &&
+          validFilename(existingLogoFilename)
+        ) {
+          await supabaseStorage
+            .deleteFile("assets", existingLogoFilename)
+            .catch(() => {});
+        }
+
+        return response.status(200).json({
+          message: "Logo uploaded successfully.",
         });
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -1357,7 +1445,7 @@ function systemEndpoints(app) {
   app.post("/system/user", [validatedRequest], async (request, response) => {
     try {
       const sessionUser = await userFromSession(request, response);
-      const { username, password, bio } = reqBody(request);
+      const { username, password, currentPassword, bio } = reqBody(request);
       const id = Number(sessionUser.id);
 
       if (!id) {
@@ -1370,7 +1458,29 @@ function systemEndpoints(app) {
       // Otherwise, do not attempt to validate it to allow existing users to keep their username if not changing it.
       if (username !== sessionUser.username)
         updates.username = User.validations.username(String(username));
-      if (password) updates.password = String(password);
+
+      // When changing password, verify the current password to prevent
+      // account takeover via a stolen session token (e.g. XSS).
+      if (password) {
+        if (!currentPassword) {
+          response.status(400).json({
+            success: false,
+            error: "Current password is required to change password.",
+          });
+          return;
+        }
+        const fullUser = await User._get({ id });
+        const bcrypt = require("bcryptjs");
+        if (!fullUser || !bcrypt.compareSync(String(currentPassword), fullUser.password)) {
+          response.status(403).json({
+            success: false,
+            error: "Current password is incorrect.",
+          });
+          return;
+        }
+        updates.password = String(password);
+      }
+
       if (bio) updates.bio = String(bio);
 
       if (Object.keys(updates).length === 0) {

@@ -4,6 +4,9 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
+const {
+  simpleRateLimit,
+} = require("../utils/middleware/simpleRateLimit");
 const { getProviderKeyStatuses } = require("../utils/providerKeyStatus");
 const {
   probeProvider,
@@ -43,7 +46,15 @@ function providerStatusEndpoints(app) {
 
   app.get(
     "/system/provider-connectivity",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "provider-connectivity-probe",
+        max: 10,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { provider = null } = request.query;

@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { useTranslation } from "react-i18next";
 import { safeJsonParse } from "@/utils/request";
+import { safeGetItem, safeRemoveItem } from "@/utils/safeStorage";
 import { BookOpen } from "@phosphor-icons/react";
 
 // Pure punctuation and a right-arrow glyph used in the home greeting.
@@ -27,7 +28,7 @@ export default function DefaultChatContainer() {
   const [lastVisitedWorkspace, setLastVisitedWorkspace] = useState(null);
 
   useEffect(() => {
-    const serializedLastVisitedWorkspace = localStorage.getItem(
+    const serializedLastVisitedWorkspace = safeGetItem(
       LAST_VISITED_WORKSPACE,
     );
     if (!serializedLastVisitedWorkspace) return;
@@ -44,7 +45,7 @@ export default function DefaultChatContainer() {
       if (!isValid) throw new Error("Invalid value!");
       setLastVisitedWorkspace(lastVisitedWorkspace);
     } catch {
-      localStorage.removeItem(LAST_VISITED_WORKSPACE);
+      safeRemoveItem(LAST_VISITED_WORKSPACE);
     }
   }, [workspaces]);
 

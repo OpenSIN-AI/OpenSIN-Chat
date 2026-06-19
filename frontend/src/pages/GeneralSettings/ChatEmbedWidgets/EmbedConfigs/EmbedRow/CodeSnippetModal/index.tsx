@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { CheckCircle, CopySimple, X } from "@phosphor-icons/react";
 import showToast from "@/utils/toast";
+import { getStoredTheme } from "@/utils/safeStorage";
 import hljs from "@/utils/chat/hljs";
 import DOMPurify from "@/utils/chat/purify";
 import "@/utils/chat/themes/github-dark.css";
@@ -95,7 +96,7 @@ const ScriptTag = ({ embed }: ScriptTagProps): JSX.Element => {
     : window.location.origin;
   const snippet = createScriptTagSnippet(embed, scriptHost, serverHost);
   const theme =
-    window.localStorage.getItem("theme") === "light" ? "github" : "github-dark";
+    getStoredTheme() === "light" ? "github" : "github-dark";
 
   const handleClick = () => {
     copyText(snippet).then((ok) => {

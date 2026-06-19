@@ -62,6 +62,12 @@ async function recoverAccount(username = "", recoveryCodes = []) {
     user.id,
   );
   if (!!error) return { success: false, error };
+
+  // Consume recovery codes immediately — they must be single-use.
+  // Without this, the same codes could generate multiple reset tokens
+  // before the password is actually changed.
+  await RecoveryCode.deleteMany({ user_id: user.id });
+
   return { success: true, resetToken: passwordResetToken.token };
 }
 
@@ -71,27 +77,28 @@ async function resetPassword(token, _newPassword = "", confirmPassword = "") {
   if (newPassword !== String(confirmPassword))
     throw new Error("Passwords do not match");
 
-  const resetToken = await PasswordResetToken.findUnique({
-    token: String(token),
-  });
-  if (!resetToken || resetToken.expiresAt < new Date()) {
+  // Atomically claim the single-use reset token: delete only if it exists
+  // and hasn't expired. If count === 0, a concurrent request already claimed
+  // it or it expired — refuse to proceed (prevents TOCTOU race).
+  const { count, userId } = await PasswordResetToken.claim(String(token));
+  if (count === 0 || !userId) {
     return { success: false, message: "Invalid reset token" };
   }
 
   // JOI password rules will be enforced inside .update.
-  const { error } = await User.update(resetToken.user_id, {
+  const { error } = await User.update(userId, {
     password: newPassword,
   });
 
   // seen_recovery_codes is not publicly writable
   // so we have to do direct update here
-  await User._update(resetToken.user_id, {
+  await User._update(userId, {
     seen_recovery_codes: false,
   });
 
   if (error) return { success: false, message: error };
-  await PasswordResetToken.deleteMany({ user_id: resetToken.user_id });
-  await RecoveryCode.deleteMany({ user_id: resetToken.user_id });
+  // Token was already atomically claimed above; clean up any remaining tokens.
+  await PasswordResetToken.deleteMany({ user_id: userId });
 
   // New codes are provided on first new login.
   return { success: true, message: "Password reset successful" };

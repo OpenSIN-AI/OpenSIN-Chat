@@ -8,6 +8,7 @@ import debounce from "lodash.debounce";
 import paths from "@/utils/paths";
 import { useNavigate } from "react-router-dom";
 import { AUTH_TIMESTAMP, AUTH_TOKEN, AUTH_USER } from "@/utils/constants";
+import { safeSetItem, safeRemoveItem } from "@/utils/safeStorage";
 import { useTranslation } from "react-i18next";
 import { USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH } from "@/utils/username";
 import { PW_REGEX } from "@/pages/GeneralSettings/Security";
@@ -184,9 +185,9 @@ const JustMe = ({
     const { token } = await System.requestToken({
       password: String(formData.get("password")),
     });
-    window.localStorage.removeItem(AUTH_USER);
-    window.localStorage.removeItem(AUTH_TIMESTAMP);
-    window.localStorage.setItem(AUTH_TOKEN, token);
+    safeRemoveItem(AUTH_USER);
+    safeRemoveItem(AUTH_TIMESTAMP);
+    safeSetItem(AUTH_TOKEN, token);
 
     navigate(paths.onboarding.dataHandling());
   };
@@ -317,9 +318,9 @@ const MyTeam = ({
     // Auto-request token with credentials that was just set so they
     // are not redirected to login after completion.
     const { user, token } = await System.requestToken(data);
-    window.localStorage.setItem(AUTH_USER, JSON.stringify(user));
-    window.localStorage.setItem(AUTH_TOKEN, token);
-    window.localStorage.removeItem(AUTH_TIMESTAMP);
+    safeSetItem(AUTH_USER, JSON.stringify(user));
+    safeSetItem(AUTH_TOKEN, token);
+    safeRemoveItem(AUTH_TIMESTAMP);
   };
 
   const setNewUsername = (e: React.ChangeEvent<HTMLInputElement>) =>

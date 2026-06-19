@@ -16,6 +16,7 @@ import {
   USER_PROMPT_INPUT_MAP,
 } from "@/utils/constants";
 import { useTranslation } from "react-i18next";
+import { safeRemoveItem } from "@/utils/safeStorage";
 
 export default function UserButton() {
   const { t } = useTranslation();
@@ -89,11 +90,11 @@ export default function UserButton() {
             <button
               type="button"
               onClick={() => {
-                window.localStorage.removeItem(AUTH_USER);
-                window.localStorage.removeItem(AUTH_TOKEN);
-                window.localStorage.removeItem(AUTH_TIMESTAMP);
-                window.localStorage.removeItem(LAST_VISITED_WORKSPACE);
-                window.localStorage.removeItem(USER_PROMPT_INPUT_MAP);
+                safeRemoveItem(AUTH_USER);
+                safeRemoveItem(AUTH_TOKEN);
+                safeRemoveItem(AUTH_TIMESTAMP);
+                safeRemoveItem(LAST_VISITED_WORKSPACE);
+                safeRemoveItem(USER_PROMPT_INPUT_MAP);
                 window.location.replace(paths.home());
               }}
               type="button"
