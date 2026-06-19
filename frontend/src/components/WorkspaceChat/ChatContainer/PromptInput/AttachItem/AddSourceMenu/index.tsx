@@ -492,50 +492,57 @@ function UrlView({ t, workspaceSlug, onBack, onClose }) {
     setSubmitting(true);
     setError("");
 
-    // Snapshot existing docpaths so we can detect the freshly scraped document.
-    const before = new Set(
-      flattenLocalFiles(await refreshDocuments()).map((f) => f.docpath),
-    );
+    try {
+      // Snapshot existing docpaths so we can detect the freshly scraped document.
+      const before = new Set(
+        flattenLocalFiles(await refreshDocuments()).map((f) => f.docpath),
+      );
 
-    const { response, data } = await Workspace.uploadLink(
-      workspaceSlug,
-      normalizedUrl,
-    );
-    if (!response.ok) {
-      setSubmitting(false);
-      // ==========================================
-      // <-- VERBESSERUNG: Besseres Error-Handling
-      // ==========================================
-      const errMsg =
-        data?.error ||
-        data?.message ||
-        t("chat_window.attach_menu.url_server_error", {
-          status: response.status,
-          statusText: response.statusText,
+      const { response, data } = await Workspace.uploadLink(
+        workspaceSlug,
+        normalizedUrl,
+      );
+      if (!response.ok) {
+        const errMsg =
+          data?.error ||
+          data?.message ||
+          t("chat_window.attach_menu.url_server_error", {
+            status: response.status,
+            statusText: response.statusText,
+          });
+        setError(errMsg);
+        showToast(errMsg, "error", { clear: true });
+        return;
+      }
+
+      // Find and embed the newly created document(s) into the current workspace.
+      const after = flattenLocalFiles(await refreshDocuments());
+      const newDocpaths = after
+        .map((f) => f.docpath)
+        .filter((docpath) => !before.has(docpath));
+      if (newDocpaths.length > 0) {
+        await Workspace.modifyEmbeddings(workspaceSlug, {
+          adds: newDocpaths,
+          deletes: [],
         });
-      setError(errMsg);
-      showToast(errMsg, "error", { clear: true });
-      return;
-    }
+        await refreshDocuments();
+      }
 
-    // Find and embed the newly created document(s) into the current workspace.
-    const after = flattenLocalFiles(await refreshDocuments());
-    const newDocpaths = after
-      .map((f) => f.docpath)
-      .filter((docpath) => !before.has(docpath));
-    if (newDocpaths.length > 0) {
-      await Workspace.modifyEmbeddings(workspaceSlug, {
-        adds: newDocpaths,
-        deletes: [],
+      showToast(t("chat_window.attach_menu.url_success"), "success");
+      window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT));
+      setLink("");
+      onClose?.();
+    } catch (err) {
+      console.error(err);
+      const msg = t("chat_window.attach_menu.url_server_error", {
+        status: 0,
+        statusText: "client",
       });
-      await refreshDocuments();
+      setError(msg);
+      showToast(msg, "error", { clear: true });
+    } finally {
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
-    showToast(t("chat_window.attach_menu.url_success"), "success");
-    window.dispatchEvent(new CustomEvent(ATTACHMENTS_PROCESSED_EVENT));
-    setLink("");
-    onClose?.();
   }
 
   return (

@@ -56,7 +56,9 @@ class PaperlessNgxLoader {
       const retryAfter = Number(response.headers.get("retry-after")) || 30;
       // eslint-disable-next-line no-console
       console.warn(
-        `[PaperlessNgx] Rate limit (429) for document ${documentId}. Waiting ${retryAfter}s before retry ${retries + 1}/${PAPERLESS_MAX_RETRIES}…`
+        `[PaperlessNgx] Rate limit (429) for document ${documentId}. Waiting ${retryAfter}s before retry ${
+          retries + 1
+        }/${PAPERLESS_MAX_RETRIES}…`
       );
       await new Promise((r) => setTimeout(r, retryAfter * 1000));
       return this.downloadDocumentToTemp(documentId, retries + 1);
@@ -160,11 +162,17 @@ class PaperlessNgxLoader {
             clearTimeout(timeout);
           }
 
-          while (response.status === 429 && rateLimitRetries < PAPERLESS_MAX_RETRIES) {
-            const retryAfter = Number(response.headers.get("retry-after")) || 30;
+          while (
+            response.status === 429 &&
+            rateLimitRetries < PAPERLESS_MAX_RETRIES
+          ) {
+            const retryAfter =
+              Number(response.headers.get("retry-after")) || 30;
             // eslint-disable-next-line no-console
             console.warn(
-              `[PaperlessNgx] Rate limit (429) on page ${page}. Waiting ${retryAfter}s (retry ${rateLimitRetries + 1}/${PAPERLESS_MAX_RETRIES})…`
+              `[PaperlessNgx] Rate limit (429) on page ${page}. Waiting ${retryAfter}s (retry ${
+                rateLimitRetries + 1
+              }/${PAPERLESS_MAX_RETRIES})…`
             );
             await new Promise((r) => setTimeout(r, retryAfter * 1000));
             rateLimitRetries++;
@@ -191,14 +199,13 @@ class PaperlessNgxLoader {
             break;
           }
 
-          const data = await response
-            .then((res) => {
-              if (!res.ok)
-                throw new Error(
-                  `Failed to fetch documents from Paperless-ngx: ${res.status}`
-                );
-              return res.json();
-            });
+          const data = await response.then((res) => {
+            if (!res.ok)
+              throw new Error(
+                `Failed to fetch documents from Paperless-ngx: ${res.status}`
+              );
+            return res.json();
+          });
 
           const validResults = Array.isArray(data.results)
             ? data.results.filter((doc) => doc?.id)

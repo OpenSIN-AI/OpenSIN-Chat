@@ -58,7 +58,9 @@ async function fetchHtml(url, retries = 0) {
       const retryAfter = Number(res.headers.get("retry-after")) || 30;
       // eslint-disable-next-line no-console
       console.warn(
-        `afd.de rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${retries + 1}/${AFD_MAX_RETRIES}…`
+        `afd.de rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${
+          retries + 1
+        }/${AFD_MAX_RETRIES}…`
       );
       clearTimeout(timeout);
       await new Promise((r) => setTimeout(r, retryAfter * 1000));

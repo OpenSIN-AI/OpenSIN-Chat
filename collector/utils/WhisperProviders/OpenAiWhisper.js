@@ -32,7 +32,11 @@ class OpenAiWhisper {
       if (stat.size > OPENAI_MAX_FILE_BYTES) {
         return {
           content: "",
-          error: `Audio file exceeds OpenAI's 25MB limit (${(stat.size / 1024 / 1024).toFixed(1)}MB).`,
+          error: `Audio file exceeds OpenAI's 25MB limit (${(
+            stat.size /
+            1024 /
+            1024
+          ).toFixed(1)}MB).`,
         };
       }
 

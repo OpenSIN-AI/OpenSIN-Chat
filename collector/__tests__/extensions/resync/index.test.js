@@ -72,10 +72,26 @@ describe("resync methods", () => {
     it("handles exceptions gracefully", async () => {
       getLinkText.mockRejectedValue(new Error("network error"));
       await RESYNC_METHODS.link({ link: "https://example.com" }, response);
-      expect(response.json).toHaveBeenCalledWith({
-        success: false,
-        content: null,
-      });
+      expect(response.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          success: false,
+          content: null,
+          error: "Resync failed",
+          id: expect.any(String),
+        })
+      );
+    });
+
+    it("returns HTTP 502 with error id on link fetch failure", async () => {
+      getLinkText.mockRejectedValue(new Error("network error"));
+      await RESYNC_METHODS.link({ link: "https://example.com" }, response);
+      expect(response.status).toHaveBeenCalledWith(502);
+      const lastJson =
+        response.json.mock.calls[response.json.mock.calls.length - 1][0];
+      expect(lastJson).toHaveProperty("error", "Resync failed");
+      expect(lastJson.id).toMatch(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      );
     });
   });
 

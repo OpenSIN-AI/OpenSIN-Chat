@@ -250,7 +250,8 @@ class GitHubRepoLoader {
             continue;
           }
 
-          if (!res.ok) throw new Error(`Invalid request to Github API: ${res.statusText}`);
+          if (!res.ok)
+            throw new Error(`Invalid request to Github API: ${res.statusText}`);
 
           const branchObjects = await res.json();
           polling = branchObjects.length > 0;
@@ -307,7 +308,8 @@ class GitHubRepoLoader {
         return this.fetchSingleFile(sourceFilePath, retries + 1);
       }
 
-      if (!res.ok) throw new Error(`Failed to fetch from Github API: ${res.statusText}`);
+      if (!res.ok)
+        throw new Error(`Failed to fetch from Github API: ${res.statusText}`);
 
       const json = await res.json();
       if (json.hasOwnProperty("status") || !json.hasOwnProperty("content"))

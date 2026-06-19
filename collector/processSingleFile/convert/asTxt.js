@@ -40,7 +40,12 @@ function readTextFileWithEncoding(filePath) {
     }
   }
 
-  if (buffer.length >= 3 && buffer[0] === 0xef && buffer[1] === 0xbb && buffer[2] === 0xbf) {
+  if (
+    buffer.length >= 3 &&
+    buffer[0] === 0xef &&
+    buffer[1] === 0xbb &&
+    buffer[2] === 0xbf
+  ) {
     return buffer.subarray(3).toString("utf8");
   }
 

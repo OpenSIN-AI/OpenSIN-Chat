@@ -112,6 +112,14 @@ function buildApp() {
   });
   app.use(securityHeaders());
 
+  app.use((req, res, next) => {
+    res.setHeader(
+      "Report-To",
+      JSON.stringify({ group: "csp-endpoint", max_age: 10800 }),
+    );
+    next();
+  });
+
   if (
     process.env.NODE_ENV === "development" &&
     !!process.env.ENABLE_HTTP_LOGGER
@@ -123,12 +131,18 @@ function buildApp() {
     );
   }
 
-  const corsOrigin = process.env.CORS_ORIGIN
-    ? process.env.CORS_ORIGIN.split(",").map((s) => s.trim())
+  const corsOriginEnv = process.env.CORS_ORIGIN || "";
+  if (corsOriginEnv === "*") {
+    throw new Error(
+      "[app.boot] CORS_ORIGIN=* is forbidden; supply an explicit comma-separated list of allowed origins.",
+    );
+  }
+  const corsOrigin = corsOriginEnv
+    ? corsOriginEnv.split(",").map((s) => s.trim()).filter(Boolean)
     : process.env.NODE_ENV === "production"
       ? false
       : true;
-  app.use(cors({ origin: corsOrigin }));
+  app.use(cors({ origin: corsOrigin.length === 1 ? corsOrigin[0] : corsOrigin }));
 
   app.use("/request-token", bodyParser.json({ limit: "8kb" }));
   app.use("/system/reset-password", bodyParser.json({ limit: "8kb" }));

@@ -251,7 +251,9 @@ class DrupalWiki {
       const retryAfter = Number(response.headers.get("retry-after")) || 30;
       // eslint-disable-next-line no-console
       console.warn(
-        `[DrupalWiki] Rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${retries + 1}/${this.maxRetries}…`
+        `[DrupalWiki] Rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${
+          retries + 1
+        }/${this.maxRetries}…`
       );
       await new Promise((r) => setTimeout(r, retryAfter * 1000));
       return this._doFetch(url, retries + 1);
@@ -358,7 +360,9 @@ class DrupalWiki {
         } catch (attachErr) {
           // eslint-disable-next-line no-console
           console.error(
-            `[DrupalWiki Loader]: Failed to process attachment ${attachment?.fileName || attachment?.id || "unknown"}:`,
+            `[DrupalWiki Loader]: Failed to process attachment ${
+              attachment?.fileName || attachment?.id || "unknown"
+            }:`,
             attachErr
           );
           continue;

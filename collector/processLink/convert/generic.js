@@ -87,7 +87,12 @@ async function scrapeGenericUrl({
 
   // Save the content as a document from the URL
   const url = new URL(link);
-  const decodedPathname = decodeURIComponent(url.pathname);
+  let decodedPathname;
+  try {
+    decodedPathname = decodeURIComponent(url.pathname);
+  } catch {
+    decodedPathname = url.pathname;
+  }
   const filename = `${url.hostname}${decodedPathname.replace(/\//g, "_")}`;
   const data = {
     id: v4(),
@@ -382,10 +387,15 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           response.status < 400 &&
           response.headers.get("location")
         ) {
-          const next = new URL(
-            response.headers.get("location"),
-            currentLink
-          ).toString();
+          let next;
+          try {
+            next = new URL(
+              response.headers.get("location"),
+              currentLink
+            ).toString();
+          } catch {
+            break;
+          }
           currentLink = next;
           hops += 1;
           continue;

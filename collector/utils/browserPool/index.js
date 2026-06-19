@@ -39,7 +39,7 @@ async function _launchBrowser() {
   if (process.env.NODE_ENV === "production") {
     args.push(
       "--enable-features=UseOzonePlatform",
-      "--ozone-platform=headless",
+      "--ozone-platform=headless"
     );
   }
   const browser = await puppeteer.launch({

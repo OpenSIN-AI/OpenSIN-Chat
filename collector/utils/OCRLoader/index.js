@@ -189,7 +189,11 @@ class OCRLoader {
                 const page = await pdfDocument.getPage(pageNum);
                 const imageBuffer = await pdfSharp.pageToBuffer({ page });
                 if (!imageBuffer) continue;
-                const { data } = await worker.recognize(imageBuffer, {}, "text");
+                const { data } = await worker.recognize(
+                  imageBuffer,
+                  {},
+                  "text"
+                );
                 this.log(
                   `✅ \x1b[34m[Worker ${
                     workerIndex + 1
@@ -294,10 +298,7 @@ class OCRLoader {
         let recognizeInput = filePath;
         try {
           const sharp = (await import("sharp")).default;
-          const oriented = await sharp(filePath)
-            .rotate()
-            .png()
-            .toBuffer();
+          const oriented = await sharp(filePath).rotate().png().toBuffer();
           recognizeInput = oriented;
           this.log(`Applied EXIF auto-orientation for ${documentTitle}`);
         } catch {

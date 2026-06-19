@@ -130,7 +130,9 @@ async function dipFetch(url, apiKey, retries = 0) {
     const retryAfter = Number(res.headers.get("retry-after")) || 60;
     // eslint-disable-next-line no-console
     console.warn(
-      `DIP-API rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${retries + 1}/${DIP_MAX_RETRIES}…`
+      `DIP-API rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${
+        retries + 1
+      }/${DIP_MAX_RETRIES}…`
     );
     await new Promise((r) => setTimeout(r, retryAfter * 1000));
     return dipFetch(url, apiKey, retries + 1);
@@ -148,9 +150,7 @@ async function dipFetch(url, apiKey, retries = 0) {
   try {
     return await res.json();
   } catch {
-    throw new Error(
-      `DIP-API returned invalid JSON for ${url}`
-    );
+    throw new Error(`DIP-API returned invalid JSON for ${url}`);
   }
 }
 
@@ -286,7 +286,13 @@ async function bundestagSearch(params = {}) {
   const perPage = Math.min(Math.max(limit, 1), 100);
 
   do {
-    const url = buildDIPUrl({ endpoint, q, wahlperiode, limit: perPage, cursor });
+    const url = buildDIPUrl({
+      endpoint,
+      q,
+      wahlperiode,
+      limit: perPage,
+      cursor,
+    });
     const data = await dipFetch(url, params.apiKey);
     const docs = Array.isArray(data.documents) ? data.documents : [];
     if (!docs.length) {
@@ -299,7 +305,9 @@ async function bundestagSearch(params = {}) {
 
     // eslint-disable-next-line no-console
     console.log(
-      `bundestagSearch: Seite ${pagesFetched + 1} — ${docs.length} Treffer (gesamt: ${allDocs.length + docs.length})`
+      `bundestagSearch: Seite ${pagesFetched + 1} — ${
+        docs.length
+      } Treffer (gesamt: ${allDocs.length + docs.length})`
     );
 
     for (const d of docs) {
@@ -307,7 +315,10 @@ async function bundestagSearch(params = {}) {
         allDocs.push(persistDIPDocument(d, outFolder));
       } catch (err) {
         // eslint-disable-next-line no-console
-        console.error(`bundestagSearch: Fehler beim Persistieren eines Dokuments:`, err.message);
+        console.error(
+          `bundestagSearch: Fehler beim Persistieren eines Dokuments:`,
+          err.message
+        );
       }
     }
 

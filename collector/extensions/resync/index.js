@@ -15,9 +15,11 @@ async function resyncLink({ link }, response) {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
-    response.status(200).json({
+    response.status(502).json({
       success: false,
       content: null,
+      error: "Resync failed",
+      id: crypto.randomUUID(),
     });
   }
 }
@@ -44,9 +46,11 @@ async function resyncYouTube({ link }, response) {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
-    response.status(200).json({
+    response.status(502).json({
       success: false,
       content: null,
+      error: "Resync failed",
+      id: crypto.randomUUID(),
     });
   }
 }
@@ -82,9 +86,11 @@ async function resyncConfluence({ chunkSource }, response) {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
-    response.status(200).json({
+    response.status(502).json({
       success: false,
       content: null,
+      error: "Resync failed",
+      id: crypto.randomUUID(),
     });
   }
 }
@@ -117,9 +123,11 @@ async function resyncGithub({ chunkSource }, response) {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
-    response.status(200).json({
+    response.status(502).json({
       success: false,
       content: null,
+      error: "Resync failed",
+      id: crypto.randomUUID(),
     });
   }
 }
@@ -146,9 +154,11 @@ async function resyncDrupalWiki({ chunkSource }, response) {
     if (!success) {
       // eslint-disable-next-line no-console
       console.error(`Failed to sync DrupalWiki page content. ${reason}`);
-      response.status(200).json({
+      response.status(502).json({
         success: false,
         content: null,
+        error: "Resync failed",
+        id: crypto.randomUUID(),
       });
     } else {
       response.status(200).json({ success, content });
@@ -156,9 +166,11 @@ async function resyncDrupalWiki({ chunkSource }, response) {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
-    response.status(200).json({
+    response.status(502).json({
       success: false,
       content: null,
+      error: "Resync failed",
+      id: crypto.randomUUID(),
     });
   }
 }
@@ -188,9 +200,11 @@ async function resyncPaperlessNgx({ chunkSource }, response) {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
-    response.status(200).json({
+    response.status(502).json({
       success: false,
       content: null,
+      error: "Resync failed",
+      id: crypto.randomUUID(),
     });
   }
 }

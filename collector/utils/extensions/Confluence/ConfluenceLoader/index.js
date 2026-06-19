@@ -84,7 +84,11 @@ class ConfluencePagesLoader {
 
       if (response.status === 429 && retries < this.maxRetries) {
         const retryAfter = Number(response.headers.get("retry-after")) || 10;
-        this.log(`Rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${retries + 1}/${this.maxRetries}…`);
+        this.log(
+          `Rate limit (429) for ${url}. Waiting ${retryAfter}s before retry ${
+            retries + 1
+          }/${this.maxRetries}…`
+        );
         await new Promise((r) => setTimeout(r, retryAfter * 1000));
         return this.fetchConfluenceData(url, retries + 1);
       }

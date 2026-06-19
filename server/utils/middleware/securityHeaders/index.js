@@ -72,6 +72,7 @@ function buildEnforcedCsp(nonce) {
     "worker-src 'self' blob:",
     `connect-src ${ENFORCED_CSP_CONNECT_SRC.join(" ")}`,
     "frame-ancestors 'none'",
+    "report-uri /api/csp-violation",
   ].join("; ");
 }
 

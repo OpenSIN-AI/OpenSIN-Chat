@@ -270,14 +270,32 @@ function systemEndpoints(app) {
               .status(400)
               .json({ error: "Username and password are required." });
           }
-          const existingUser = await User._get({ username: String(username) });
+          const attempted = String(username);
+          const usernameHash = crypto
+            .createHash("sha256")
+            .update(attempted)
+            .digest("hex")
+            .slice(0, 16);
+          const uaRaw =
+            request.headers && request.headers["user-agent"]
+              ? request.headers["user-agent"]
+              : null;
+          const ua = uaRaw ? String(uaRaw).slice(0, 200) : null;
+          const cfIp =
+            (request.headers && request.headers["cf-connecting-ip"]) || null;
+          const requestMeta = {
+            ip: request.ip || "Unknown IP",
+            userAgent: ua,
+            cf_connecting_ip: cfIp,
+          };
+          const existingUser = await User._get({ username: attempted });
 
           if (!existingUser) {
             await EventLogs.logEvent(
               "failed_login_invalid_username",
               {
-                ip: request.ip || "Unknown IP",
-                username: username || "Unknown user",
+                ...requestMeta,
+                username_hash: usernameHash,
               },
               existingUser?.id,
             );
@@ -294,8 +312,8 @@ function systemEndpoints(app) {
             await EventLogs.logEvent(
               "failed_login_account_locked",
               {
-                ip: request.ip || "Unknown IP",
-                username: existingUser.username || "Unknown user",
+                ...requestMeta,
+                username_hash: usernameHash,
               },
               existingUser.id,
             );
@@ -314,8 +332,8 @@ function systemEndpoints(app) {
             await EventLogs.logEvent(
               "failed_login_invalid_password",
               {
-                ip: request.ip || "Unknown IP",
-                username: username || "Unknown user",
+                ...requestMeta,
+                username_hash: usernameHash,
               },
               existingUser?.id,
             );
@@ -334,8 +352,8 @@ function systemEndpoints(app) {
             await EventLogs.logEvent(
               "failed_login_account_suspended",
               {
-                ip: request.ip || "Unknown IP",
-                username: username || "Unknown user",
+                ...requestMeta,
+                username_hash: usernameHash,
               },
               existingUser?.id,
             );
@@ -357,7 +375,7 @@ function systemEndpoints(app) {
           await EventLogs.logEvent(
             "login_event",
             {
-              ip: request.ip || "Unknown IP",
+              ...requestMeta,
               username: existingUser.username || "Unknown user",
             },
             existingUser?.id,
@@ -390,6 +408,19 @@ function systemEndpoints(app) {
           return;
         } else {
           const { password } = reqBody(request);
+          const uaRaw =
+            request.headers && request.headers["user-agent"]
+              ? request.headers["user-agent"]
+              : null;
+          const ua = uaRaw ? String(uaRaw).slice(0, 200) : null;
+          const cfIp =
+            (request.headers && request.headers["cf-connecting-ip"]) || null;
+          const singleRequestMeta = {
+            ip: request.ip || "Unknown IP",
+            multiUserMode: false,
+            userAgent: ua,
+            cf_connecting_ip: cfIp,
+          };
           // Single-user mode WITHOUT an AUTH_TOKEN env var: auth is disabled.
           // Auto-grant a session token instead of crashing on
           // `bcrypt.hashSync(undefined, 10)`.
@@ -397,10 +428,7 @@ function systemEndpoints(app) {
             await Telemetry.sendTelemetry("login_event", {
               multiUserMode: false,
             });
-            await EventLogs.logEvent("login_event", {
-              ip: request.ip || "Unknown IP",
-              multiUserMode: false,
-            });
+            await EventLogs.logEvent("login_event", singleRequestMeta);
             response.status(200).json({
               valid: true,
               token: makeJWT({ p: null }, process.env.JWT_EXPIRY),
@@ -414,10 +442,10 @@ function systemEndpoints(app) {
               bcrypt.hashSync(process.env.AUTH_TOKEN, 10),
             )
           ) {
-            await EventLogs.logEvent("failed_login_invalid_password", {
-              ip: request.ip || "Unknown IP",
-              multiUserMode: false,
-            });
+            await EventLogs.logEvent(
+              "failed_login_invalid_password",
+              singleRequestMeta,
+            );
             response.status(401).json({
               valid: false,
               token: null,
@@ -429,14 +457,11 @@ function systemEndpoints(app) {
           await Telemetry.sendTelemetry("login_event", {
             multiUserMode: false,
           });
-          await EventLogs.logEvent("login_event", {
-            ip: request.ip || "Unknown IP",
-            multiUserMode: false,
-          });
+          await EventLogs.logEvent("login_event", singleRequestMeta);
           response.status(200).json({
             valid: true,
             token: makeJWT(
-              { p: new EncryptionManager().encrypt(password) },
+              { p: new EncryptionManager().encrypt(String(password)) },
               process.env.JWT_EXPIRY,
             ),
             message: null,
@@ -461,42 +486,71 @@ function systemEndpoints(app) {
       }),
     ],
     async (request, response) => {
-      const { token: tempAuthToken } = request.query;
-      const { sessionToken, token, error } =
-        await TemporaryAuthToken.validate(tempAuthToken);
+      try {
+        const { token: tempAuthToken } = request.query;
+        const { sessionToken, token, error } =
+          await TemporaryAuthToken.validate(tempAuthToken);
 
-      if (error) {
-        await EventLogs.logEvent("failed_login_invalid_temporary_auth_token", {
-          ip: request.ip || "Unknown IP",
-          multiUserMode: true,
+        if (error) {
+          const uaRaw =
+            request.headers && request.headers["user-agent"]
+              ? request.headers["user-agent"]
+              : null;
+          const ua = uaRaw ? String(uaRaw).slice(0, 200) : null;
+          const cfIp =
+            (request.headers && request.headers["cf-connecting-ip"]) || null;
+          await EventLogs.logEvent(
+            "failed_login_invalid_temporary_auth_token",
+            {
+              ip: request.ip || "Unknown IP",
+              multiUserMode: true,
+              userAgent: ua,
+              cf_connecting_ip: cfIp,
+            },
+          );
+          return response.status(401).json({
+            valid: false,
+            token: null,
+            message: `[001] An error occurred while validating the token: ${error}`,
+          });
+        }
+
+        await Telemetry.sendTelemetry(
+          "login_event",
+          { multiUserMode: true },
+          token.user.id,
+        );
+        await EventLogs.logEvent(
+          "login_event",
+          {
+            ip: request.ip || "Unknown IP",
+            username: token.user.username || "Unknown user",
+            userAgent:
+              request.headers && request.headers["user-agent"]
+                ? String(request.headers["user-agent"]).slice(0, 200)
+                : null,
+            cf_connecting_ip:
+              (request.headers && request.headers["cf-connecting-ip"]) || null,
+          },
+          token.user.id,
+        );
+
+        response.status(200).json({
+          valid: true,
+          user: User.filterFields(token.user),
+          token: sessionToken,
+          message: null,
         });
-        return response.status(401).json({
+      } catch (e) {
+        const errorId = crypto.randomUUID();
+        console.error(`[sso-simple FATAL id=${errorId}]`, e);
+        return response.status(500).json({
           valid: false,
           token: null,
-          message: `[001] An error occurred while validating the token: ${error}`,
+          message: `[002] Internal server error`,
+          errorId,
         });
       }
-
-      await Telemetry.sendTelemetry(
-        "login_event",
-        { multiUserMode: true },
-        token.user.id,
-      );
-      await EventLogs.logEvent(
-        "login_event",
-        {
-          ip: request.ip || "Unknown IP",
-          username: token.user.username || "Unknown user",
-        },
-        token.user.id,
-      );
-
-      response.status(200).json({
-        valid: true,
-        user: User.filterFields(token.user),
-        token: sessionToken,
-        message: null,
-      });
     },
   );
 
@@ -608,6 +662,11 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         const { names } = reqBody(request);
+        if (!Array.isArray(names) || names.length === 0) {
+          return response
+            .status(400)
+            .json({ error: "names must be a non-empty array of strings." });
+        }
         await Promise.all(names.map((name) => purgeDocument(name)));
         response.sendStatus(200);
       } catch (e) {
@@ -2002,8 +2061,8 @@ function systemEndpoints(app) {
     "/system/validate-sql-connection",
     [validatedRequest, flexUserRoleValid([ROLES.admin])],
     async (request, response) => {
-      const { engine, connectionString } = reqBody(request);
       try {
+        const { engine, connectionString } = reqBody(request);
         if (!engine || !connectionString) {
           return response.status(400).json({
             success: false,

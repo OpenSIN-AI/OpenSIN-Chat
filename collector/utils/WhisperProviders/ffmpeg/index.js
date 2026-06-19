@@ -107,9 +107,7 @@ class FFMPEGWrapper {
 
     if (result.error) {
       if (result.error.signal === "SIGTERM") {
-        throw new Error(
-          "FFMPEG conversion timed out after 300 seconds."
-        );
+        throw new Error("FFMPEG conversion timed out after 300 seconds.");
       }
       throw new Error(`FFMPEG conversion failed: ${result.error.message}`);
     }
