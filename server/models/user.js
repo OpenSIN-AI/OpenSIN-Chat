@@ -373,11 +373,6 @@ const User = {
    * Check if a user can send a chat based on their daily message limit.
    * This limit is system wide and not per workspace and only applies to
    * multi-user mode AND non-admin users.
-   *
-   * The check+increment is performed in a single atomic statement against
-   * the User row (Prisma's `update.increment` is a single round-trip and
-   * serialised by the database), eliminating the read-then-write race in
-   * the original implementation.
    * @param {User} user The user object record.
    * @returns {Promise<boolean>} True if the user can send a chat, false otherwise.
    */
