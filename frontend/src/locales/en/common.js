@@ -4782,5 +4782,6 @@ const TRANSLATIONS = {
     voiceHelp1: "Voice model identifier. For example:",
     voiceHelp2: ".",
   },
+  sw_update_available: "A new version is available. Reload to update?",
 };
 export default TRANSLATIONS;

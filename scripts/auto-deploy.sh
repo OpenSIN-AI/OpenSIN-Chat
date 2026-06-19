@@ -89,7 +89,25 @@ done
 if [ "$ok" = "1" ]; then
   log "Deploy erfolgreich. Live auf neuer Version $REMOTE."
 else
-  log "WARNUNG: Healthcheck nicht bestanden. Container-Logs prüfen:"
+  log "WARNUNG: Healthcheck nicht bestanden. Versuche Rollback auf $LOCAL…"
   log "  $COMPOSE -f $COMPOSE_FILE logs --tail=100"
+  git reset --hard "$LOCAL" --quiet
+  log "Code auf $LOCAL zurückgesetzt. Baue altes Image neu…"
+  $COMPOSE -f "$COMPOSE_FILE" build --no-cache
+  $COMPOSE -f "$COMPOSE_FILE" up -d
+  rollback_ok=0
+  for i in $(seq 1 30); do
+    if curl -fsS "$HEALTH_URL" >/dev/null 2>&1; then
+      rollback_ok=1
+      break
+    fi
+    sleep 3
+  done
+  if [ "$rollback_ok" = "1" ]; then
+    log "Rollback erfolgreich. Live auf $LOCAL."
+  else
+    log "FEHLER: Rollback ebenfalls fehlgeschlagen. Manuelle Intervention nötig."
+    exit 2
+  fi
   exit 1
 fi

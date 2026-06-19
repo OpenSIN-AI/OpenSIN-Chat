@@ -161,6 +161,11 @@ const EventLogs = {
   },
 
   delete: async function (clause = {}) {
+    if (!process.env.EVENT_LOGS_ALLOW_PURGE) {
+      throw new Error(
+        "[event_logs] delete refused: append-only mode. Set EVENT_LOGS_ALLOW_PURGE=1 to override.",
+      );
+    }
     try {
       await prisma.event_logs.deleteMany({
         where: clause,

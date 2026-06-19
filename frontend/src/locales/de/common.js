@@ -4890,5 +4890,6 @@ const TRANSLATIONS = {
     voiceHelp1: "Stimmmodell-Bezeichner. Zum Beispiel:",
     voiceHelp2: ".",
   },
+  sw_update_available: "Eine neue Version ist verfügbar. Jetzt neu laden?",
 };
 export default TRANSLATIONS;

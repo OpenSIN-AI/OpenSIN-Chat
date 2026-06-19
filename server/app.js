@@ -93,6 +93,23 @@ function buildApp() {
     res.setHeader("X-Request-Id", id);
     next();
   });
+  app.use((request, response, next) => {
+    const mutating = !["GET", "HEAD", "OPTIONS"].includes(request.method);
+    if (mutating && process.env.NODE_ENV === "production") {
+      const origin = request.headers.origin;
+      if (origin) {
+        const allowed = (process.env.CORS_ORIGIN || "")
+          .split(",").map(s => s.trim()).filter(Boolean);
+        if (allowed.length && !allowed.includes("*") &&
+            !allowed.some(o => o.toLowerCase() === origin.toLowerCase())) {
+          const id = crypto.randomUUID();
+          console.error(`[OriginBlock id=${id}] rejected ${request.method} ${request.path} from ${origin}`);
+          return response.status(403).json({ error: "Origin not allowed", id });
+        }
+      }
+    }
+    next();
+  });
   app.use(securityHeaders());
 
   if (

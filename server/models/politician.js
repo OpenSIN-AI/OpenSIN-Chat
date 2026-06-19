@@ -169,33 +169,38 @@ const Politician = {
 /** @type {{ bulkInsert: Function, where: Function }} */
 const PoliticianVote = {
   bulkInsert: async function (votes = []) {
-    if (votes.length === 0) return 0;
-    try {
-      const inserts = votes.map((v) =>
-        prisma.politician_votes.create({
-          data: {
-            id: v.id || require("uuid").v4(),
-            politicianId: v.politicianId,
-            session: v.session || null,
-            sitting: v.sitting || null,
-            voteId: v.voteId || null,
-            voteTitle: v.voteTitle || null,
-            voteDescription: v.voteDescription || null,
-            voteResult: v.voteResult || null,
-            voteDate: v.voteDate ? new Date(v.voteDate) : null,
-            documentUrl: v.documentUrl || null,
-            plenaryProtocolUrl: v.plenaryProtocolUrl || null,
-            rawData: v.rawData || null,
-          },
-        }),
-      );
-      await prisma.$transaction(inserts);
-      return inserts.length;
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(`[PoliticianVote] bulkInsert error: ${err.message}`);
-      return 0;
+    if (votes.length === 0) return { count: 0 };
+    const inserts = votes.map((v) =>
+      prisma.politician_votes.create({
+        data: {
+          id: v.id || require("uuid").v4(),
+          politicianId: v.politicianId,
+          session: v.session || null,
+          sitting: v.sitting || null,
+          voteId: v.voteId || null,
+          voteTitle: v.voteTitle || null,
+          voteDescription: v.voteDescription || null,
+          voteResult: v.voteResult || null,
+          voteDate: v.voteDate ? new Date(v.voteDate) : null,
+          documentUrl: v.documentUrl || null,
+          plenaryProtocolUrl: v.plenaryProtocolUrl || null,
+          rawData: v.rawData || null,
+        },
+      }),
+    );
+    const CHUNK_SIZE = 50;
+    const results = [];
+    for (let i = 0; i < inserts.length; i += CHUNK_SIZE) {
+      const chunk = inserts.slice(i, i + CHUNK_SIZE);
+      try {
+        const partial = await prisma.$transaction(chunk);
+        results.push(...partial);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn(`[PoliticianVote.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`, e.message);
+      }
     }
+    return { count: results.length };
   },
 
   where: async function (clause = {}, limit) {
@@ -214,32 +219,37 @@ const PoliticianVote = {
 /** @type {{ bulkInsert: Function, markVectorized: Function, whereNotVectorized: Function, where: Function }} */
 const PoliticianSpeech = {
   bulkInsert: async function (speeches = []) {
-    if (speeches.length === 0) return 0;
-    try {
-      const inserts = speeches.map((s) =>
-        prisma.politician_speeches.create({
-          data: {
-            id: s.id || require("uuid").v4(),
-            politicianId: s.politicianId,
-            session: s.session || null,
-            sitting: s.sitting || null,
-            speechTitle: s.speechTitle || null,
-            speechText: s.speechText,
-            speechDate: s.speechDate ? new Date(s.speechDate) : null,
-            documentUrl: s.documentUrl || null,
-            pageNumbers: s.pageNumbers || null,
-            rawData: s.rawData || null,
-            vectorized: false,
-          },
-        }),
-      );
-      await prisma.$transaction(inserts);
-      return inserts.length;
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(`[PoliticianSpeech] bulkInsert error: ${err.message}`);
-      return 0;
+    if (speeches.length === 0) return { count: 0 };
+    const inserts = speeches.map((s) =>
+      prisma.politician_speeches.create({
+        data: {
+          id: s.id || require("uuid").v4(),
+          politicianId: s.politicianId,
+          session: s.session || null,
+          sitting: s.sitting || null,
+          speechTitle: s.speechTitle || null,
+          speechText: s.speechText,
+          speechDate: s.speechDate ? new Date(s.speechDate) : null,
+          documentUrl: s.documentUrl || null,
+          pageNumbers: s.pageNumbers || null,
+          rawData: s.rawData || null,
+          vectorized: false,
+        },
+      }),
+    );
+    const CHUNK_SIZE = 50;
+    const results = [];
+    for (let i = 0; i < inserts.length; i += CHUNK_SIZE) {
+      const chunk = inserts.slice(i, i + CHUNK_SIZE);
+      try {
+        const partial = await prisma.$transaction(chunk);
+        results.push(...partial);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn(`[PoliticianSpeech.bulkInsert] chunk ${i}-${i + CHUNK_SIZE} failed:`, e.message);
+      }
     }
+    return { count: results.length };
   },
 
   markVectorized: async function (speechId) {

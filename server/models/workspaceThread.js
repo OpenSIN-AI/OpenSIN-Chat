@@ -46,7 +46,7 @@ const WorkspaceThread = {
       if (data.slug && slug) {
         const existing = await this.get({ slug });
         if (existing) {
-          const slugSeed = Number.parseInt(randomBytes(4).toString("hex"), 16).toString().slice(0, 8);
+          const slugSeed = randomBytes(4).toString("hex").slice(0, 8);
           slug = this.slugify(`${data.slug}-${slugSeed}`, { lowercase: true });
         }
       }

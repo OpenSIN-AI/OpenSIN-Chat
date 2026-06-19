@@ -23,24 +23,31 @@ class EncryptionWorker {
    * @returns {URL} Javascript URL object with query params decrypted from payload query param.
    */
   expandPayload(chunkSource = "") {
+    let url;
     try {
-      const url = new URL(chunkSource);
-      if (!url.searchParams.has("payload")) return url;
+      url = new URL(chunkSource);
+    } catch {
+      throw new Error(`Invalid chunkSource URL: ${chunkSource.slice(0, 100)}`);
+    }
+    if (!url.searchParams.has("payload")) return url;
 
-      const decryptedPayload = this.decrypt(url.searchParams.get("payload"));
-      const encodedParams = JSON.parse(decryptedPayload);
-      url.searchParams.delete("payload"); // remove payload prop
-
-      // Add all query params needed to replay as query params
-      Object.entries(encodedParams).forEach(([key, value]) =>
-        url.searchParams.append(key, value)
-      );
-      return url;
+    const decryptedPayload = this.decrypt(url.searchParams.get("payload"));
+    if (!decryptedPayload) return url;
+    let encodedParams;
+    try {
+      encodedParams = JSON.parse(decryptedPayload);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
+      return url;
     }
-    return new URL(chunkSource);
+    if (!encodedParams || typeof encodedParams !== "object") return url;
+    url.searchParams.delete("payload"); // remove payload prop
+
+    Object.entries(encodedParams).forEach(([key, value]) =>
+      url.searchParams.append(key, value)
+    );
+    return url;
   }
 
   encrypt(plainTextString = null) {

@@ -95,14 +95,17 @@ test.describe("workspace management lifecycle", () => {
     // ── 4. Rename the workspace ──
     const renamed = `renamed-${Date.now()}`;
     await nameInput.fill(renamed);
+    await page.waitForTimeout(500);
 
+    // The save button only appears when hasChanges is true
     const updateBtn = page.getByRole("button", {
-      name: /Update Workspace/i,
+      name: /update workspace|workspace aktualisieren/i,
     });
     await expect(updateBtn).toBeVisible({ timeout: 5000 });
     await updateBtn.click();
 
-    await page.waitForTimeout(2000);
+    // Wait for the success toast or network response
+    await page.waitForTimeout(3000);
 
     // Verify the rename persisted via API
     const checkResponse = await request.get(`/api/workspace/${slug}`, {

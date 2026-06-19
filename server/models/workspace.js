@@ -200,7 +200,7 @@ const Workspace = {
 
     const existingBySlug = await this.get({ slug });
     if (existingBySlug !== null) {
-      const slugSeed = Number.parseInt(randomBytes(4).toString("hex"), 16).toString().slice(0, 8);
+      const slugSeed = randomBytes(4).toString("hex").slice(0, 8);
       slug = this.slugify(`${name}-${slugSeed}`, { lower: true });
     }
 

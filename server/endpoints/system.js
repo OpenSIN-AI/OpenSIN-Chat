@@ -235,16 +235,22 @@ function systemEndpoints(app) {
     "/request-token",
     [
       simpleRateLimit({
-        bucket: "login",
+        bucket: "login-ip",
         max: 5,
-        windowMs: 15 * 60 * 1000,
+        windowMs: 60 * 1000,
+        identity: "user",
+      }),
+      simpleRateLimit({
+        bucket: "login-account",
+        max: 5,
+        windowMs: 60 * 60 * 1000,
         identity: "user",
       }),
     ],
     async (request, response) => {
       try {
         const bcrypt = require("bcryptjs");
-        const LOCKOUT_WINDOW_MS = 15 * 60 * 1000;
+        const LOCKOUT_WINDOW_MS = 60 * 60 * 1000;
 
         if (await SystemSettings.isMultiUserMode()) {
           if (simpleSSOLoginDisabled()) {
@@ -714,12 +720,12 @@ function systemEndpoints(app) {
         if (!usePassword) {
           // Password is being disabled so directly unset everything to bypass validation.
           process.env.AUTH_TOKEN = "";
-          process.env.JWT_SECRET = v4();
+          process.env.JWT_SECRET = crypto.randomBytes(64).toString("base64url");
         } else {
           error = await updateENV(
             {
-              AuthToken: newPassword,
-              JWTSecret: v4(),
+              AuthToken: crypto.randomBytes(48).toString("base64url"),
+              JWTSecret: crypto.randomBytes(64).toString("base64url"),
             },
             true,
           )?.error;
@@ -790,7 +796,7 @@ function systemEndpoints(app) {
         await AgentSkillWhitelist.clearSingleUserWhitelist();
         await updateENV(
           {
-            JWTSecret: process.env.JWT_SECRET || v4(),
+            JWTSecret: process.env.JWT_SECRET || crypto.randomBytes(64).toString("base64url"),
           },
           true,
         );

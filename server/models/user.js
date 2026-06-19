@@ -97,7 +97,7 @@ const User = {
   },
 
   FAILED_LOGIN_THRESHOLD: 5,
-  FAILED_LOGIN_WINDOW_MS: 15 * 60 * 1000,
+  FAILED_LOGIN_WINDOW_MS: 60 * 60 * 1000,
 
   isLockedOut: async function (user) {
     if (!user) return false;

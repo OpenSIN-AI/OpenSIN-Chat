@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 
@@ -27,6 +28,7 @@ function log(message, ...args) {
 export async function subscribeToPushNotifications(
   askToEnable = true,
   abortSignal?: AbortSignal,
+  translate?: (key: string) => string,
 ) {
   try {
     if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
@@ -76,7 +78,7 @@ export async function subscribeToPushNotifications(
         ) {
           log("New service worker installed, ready to activate");
 
-          if (confirm("A new version is available. Reload to update?")) {
+          if (confirm(translate ? translate("sw_update_available") : "A new version is available. Reload to update?")) {
             window.location.reload();
           }
         }
@@ -148,11 +150,12 @@ export async function subscribeToPushNotifications(
  * @returns {void}
  */
 export default function useWebPushNotifications(askToEnable = true) {
+  const { t } = useTranslation();
   useEffect(() => {
     const controller = new AbortController();
-    subscribeToPushNotifications(askToEnable, controller.signal);
+    subscribeToPushNotifications(askToEnable, controller.signal, t);
     return () => controller.abort();
-  }, [askToEnable]);
+  }, [askToEnable, t]);
 }
 
 function urlBase64ToUint8Array(base64String) {
