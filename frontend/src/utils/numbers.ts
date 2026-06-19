@@ -2,6 +2,7 @@
 const Formatter = Intl.NumberFormat("en", { notation: "compact" });
 
 export function numberWithCommas(input) {
+  if (input === null || input === undefined) return "";
   return input.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -17,14 +18,15 @@ export function dollarFormat(input) {
 }
 
 export function toPercentString(input = null, decimals = 0) {
-  if (isNaN(input) || input === null) return "";
-  const percentage = Math.round(input * 100);
-  return (
-    (decimals > 0 ? percentage.toFixed(decimals) : percentage.toString()) + "%"
-  );
+  if (input === null || input === undefined || isNaN(input)) return "";
+  const value = input * 100;
+  const formatted =
+    decimals > 0 ? value.toFixed(decimals) : Math.round(value).toString();
+  return formatted + "%";
 }
 
 export function humanFileSize(bytes, si = false, dp = 1) {
+  if (bytes === null || bytes === undefined || isNaN(bytes)) return "—";
   const thresh = si ? 1000 : 1024;
 
   if (Math.abs(bytes) < thresh) {

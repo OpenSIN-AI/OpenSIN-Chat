@@ -27,6 +27,7 @@ jest.mock("../../utils/files", () => ({
 
 jest.mock("fs", () => ({
   existsSync: jest.fn(),
+  statSync: jest.fn(() => ({ size: 1024 })),
 }));
 
 const { processSingleFile } = require("../../processSingleFile");

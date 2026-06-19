@@ -58,7 +58,7 @@ export async function apiGet<T>(url: string): Promise<T> {
  */
 export async function apiPost<T>(url: string, data?: any): Promise<T> {
   const res = await fetch(url, {
-    headers: { "Content-Type": "application/json" },
+    headers: { ...baseHeaders(), "Content-Type": "application/json" },
     method: "POST",
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
@@ -77,7 +77,7 @@ export async function apiPost<T>(url: string, data?: any): Promise<T> {
  */
 export async function apiPut<T>(url: string, data?: any): Promise<T> {
   const res = await fetch(url, {
-    headers: { "Content-Type": "application/json" },
+    headers: { ...baseHeaders(), "Content-Type": "application/json" },
     method: "PUT",
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",

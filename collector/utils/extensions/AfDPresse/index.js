@@ -254,6 +254,11 @@ async function importSinglePress(url, outFolderPath) {
  * @returns {Promise<object[]>} - Array der gespeicherten Dokumente
  */
 async function afdPresseLatest({ limit = 20, baseUrl = AFD_PRESS_BASE } = {}) {
+  if (!/^https?:\/\/(www\.)?afd\.de\//i.test(baseUrl)) {
+    throw new Error(
+      "afdPresseLatest: baseUrl muss auf afd.de zeigen (Sicherheits-Check)"
+    );
+  }
   // eslint-disable-next-line no-console
   console.log(`afdPresseLatest: Lade Presseliste von ${baseUrl} …`);
   const listHtml = await fetchHtml(baseUrl);

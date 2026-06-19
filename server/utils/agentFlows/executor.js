@@ -195,6 +195,10 @@ class FlowExecutor {
   async executeFlow(flow, initialVariables = {}, aibitat) {
     await Telemetry.sendTelemetry("agent_flow_execution_started");
 
+    if (!flow?.config?.steps || !Array.isArray(flow.config.steps)) {
+      throw new Error("Invalid flow: missing or non-array 'steps' in config.");
+    }
+
     // Initialize variables with both initial values and any passed-in values
     this.variables = {
       ...(

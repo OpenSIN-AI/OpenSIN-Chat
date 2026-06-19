@@ -143,6 +143,7 @@ class PaperlessNgxLoader {
       while (nextUrl && documents.length < MAX_PAGES) {
         // eslint-disable-next-line no-console
         console.log(`Fetching documents page ${page} from Paperless-ngx`);
+        let rateLimitRetries = 0;
         try {
           const abortController = new AbortController();
           const timeout = setTimeout(() => abortController.abort(), 30_000);
@@ -159,14 +160,35 @@ class PaperlessNgxLoader {
             clearTimeout(timeout);
           }
 
-          if (response.status === 429) {
+          while (response.status === 429 && rateLimitRetries < PAPERLESS_MAX_RETRIES) {
             const retryAfter = Number(response.headers.get("retry-after")) || 30;
             // eslint-disable-next-line no-console
             console.warn(
-              `[PaperlessNgx] Rate limit (429) on page ${page}. Waiting ${retryAfter}s…`
+              `[PaperlessNgx] Rate limit (429) on page ${page}. Waiting ${retryAfter}s (retry ${rateLimitRetries + 1}/${PAPERLESS_MAX_RETRIES})…`
             );
             await new Promise((r) => setTimeout(r, retryAfter * 1000));
-            continue;
+            rateLimitRetries++;
+            const retryAbort = new AbortController();
+            const retryTimeout = setTimeout(() => retryAbort.abort(), 30_000);
+            try {
+              response = await fetch(nextUrl, {
+                headers: {
+                  "Content-Type": "application/json",
+                  ...this.baseHeaders,
+                },
+                signal: retryAbort.signal,
+              });
+            } finally {
+              clearTimeout(retryTimeout);
+            }
+          }
+
+          if (response.status === 429) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[PaperlessNgx] Rate limit persists on page ${page} after ${PAPERLESS_MAX_RETRIES} retries. Stopping.`
+            );
+            break;
           }
 
           const data = await response

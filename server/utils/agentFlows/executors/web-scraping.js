@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+const WEB_SCRAPING_TIMEOUT_MS = 30_000; // 30s timeout for collector content fetch
+
 /**
  * Execute a web scraping flow step
  * @param {Object} config Flow step configuration
@@ -26,12 +28,39 @@ async function executeWebScraping(config, context) {
 
   const captureMode = captureAs === "querySelector" ? "html" : captureAs;
   introspect(`Scraping the content of ${url} as ${captureAs}`);
-  const { success, content } = await new CollectorApi()
-    .getLinkContent(url, captureMode)
-    .then((res) => {
-      if (captureAs !== "querySelector") return res;
-      return parseHTMLwithSelector(res.content, config.querySelector, context);
-    });
+
+  let collectorResult;
+  let timerId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timerId = setTimeout(
+      () =>
+        reject(
+          new Error(
+            `Web scraping timed out after ${WEB_SCRAPING_TIMEOUT_MS / 1000}s`,
+          ),
+        ),
+      WEB_SCRAPING_TIMEOUT_MS,
+    );
+    timerId?.unref?.();
+  });
+  try {
+    collectorResult = await Promise.race([
+      new CollectorApi().getLinkContent(url, captureMode),
+      timeoutPromise,
+    ]);
+  } finally {
+    clearTimeout(timerId);
+  }
+
+  const result =
+    captureAs === "querySelector"
+      ? parseHTMLwithSelector(
+          collectorResult.content,
+          config.querySelector,
+          context,
+        )
+      : collectorResult;
+  const { success, content } = result;
 
   if (!success) {
     introspect(`Could not scrape ${url}. Cannot use this page's content.`);

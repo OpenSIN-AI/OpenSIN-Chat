@@ -218,11 +218,11 @@ class GitHubRepoLoader {
     while (polling) {
       // eslint-disable-next-line no-console
       console.log(`Fetching page ${page} of branches for ${this.project}`);
-      const branchAbort = new AbortController();
-      const branchTimeout = setTimeout(() => branchAbort.abort(), 10_000);
       let retries = 0;
       let success = false;
       while (!success && retries <= this.maxRetries) {
+        const branchAbort = new AbortController();
+        const branchTimeout = setTimeout(() => branchAbort.abort(), 10_000);
         try {
           const res = await fetch(
             `https://api.github.com/repos/${this.author}/${this.project}/branches?per_page=100&page=${page}`,
@@ -262,9 +262,10 @@ class GitHubRepoLoader {
           // eslint-disable-next-line no-console
           console.error(`RepoLoader.branches`, err);
           break;
+        } finally {
+          clearTimeout(branchTimeout);
         }
       }
-      clearTimeout(branchTimeout);
     }
 
     this.branches = [...new Set(branches.flat())];

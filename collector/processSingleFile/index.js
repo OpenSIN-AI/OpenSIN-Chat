@@ -12,6 +12,7 @@ const {
   isWithin,
 } = require("../utils/files");
 const RESERVED_FILES = ["__HOTDIR__.md"];
+const MAX_FILE_SIZE_BYTES = 500 * 1024 * 1024; // 500 MB — matches FILE_LIMIT in collector/index.js
 
 const ALLOWED_MIMES = new Set([
   "text/plain",
@@ -127,6 +128,16 @@ async function processSingleFile(targetFilename, options = {}, metadata = {}) {
       reason: "File does not exist in upload directory.",
       documents: [],
     };
+
+  const fileStat = fs.statSync(fullFilePath);
+  if (fileStat.size > MAX_FILE_SIZE_BYTES) {
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `File is too large (${fileStat.size} bytes > ${MAX_FILE_SIZE_BYTES} byte limit).`,
+      documents: [],
+    };
+  }
 
   const fileExtension = path.extname(fullFilePath).toLowerCase();
   if (fullFilePath.includes(".") && !fileExtension) {

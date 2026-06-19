@@ -73,6 +73,7 @@ class DrupalWiki {
     for (const pageId of pageIndex) {
       try {
         const page = await this.loadPage(pageId);
+        page.spaceId = spaceId;
 
         // Pages with an empty body will lead to embedding issues / exceptions
         if (page.processedBody.trim() !== "") {

@@ -42,10 +42,27 @@ class PostgresSQLConnector {
       };
     }
 
+    const QUERY_TIMEOUT_MS = 30_000;
     const result = { rows: [], count: 0, error: null };
     try {
       if (!this.#connected) await this.connect();
-      const query = await this._client.query(queryString, params);
+      let timerId;
+      const timeout = new Promise((_, reject) => {
+        timerId = setTimeout(
+          () => reject(new Error(`PostgreSQL query timed out after 30s`)),
+          QUERY_TIMEOUT_MS,
+        );
+        timerId?.unref?.();
+      });
+      let query;
+      try {
+        query = await Promise.race([
+          this._client.query(queryString, params),
+          timeout,
+        ]);
+      } finally {
+        clearTimeout(timerId);
+      }
       result.rows = query.rows;
       result.count = query.rowCount;
     } catch (err) {

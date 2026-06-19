@@ -31,13 +31,26 @@ async function fetchVideoTranscriptContent({ url }) {
   // eslint-disable-next-line no-console
   console.log(`-- Working YouTube ${url} --`);
   const loader = YoutubeLoader.createFromUrl(url, { addVideoInfo: true });
-  const { docs, error } = await loader
-    .load()
-    .then((docs) => ({ docs, error: null }))
-    .catch((e) => ({
-      docs: [],
-      error: e.message?.split("Error:")?.[1] || e.message,
-    }));
+  const LOAD_TIMEOUT_MS = 60_000;
+  const { docs, error } = await Promise.race([
+    loader
+      .load()
+      .then((docs) => ({ docs, error: null }))
+      .catch((e) => ({
+        docs: [],
+        error: e.message?.split("Error:")?.[1] || e.message,
+      })),
+    new Promise((resolve) =>
+      setTimeout(
+        () =>
+          resolve({
+            docs: [],
+            error: "YouTube transcript fetch timed out after 60s.",
+          }),
+        LOAD_TIMEOUT_MS
+      )
+    ),
+  ]);
 
   if (!docs.length || !!error) {
     return {

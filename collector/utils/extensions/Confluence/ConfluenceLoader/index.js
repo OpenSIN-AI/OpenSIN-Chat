@@ -116,7 +116,16 @@ class ConfluencePagesLoader {
       }/rest/api/content?spaceKey=${
         this.spaceKey
       }&limit=${limit}&start=${currentStart}&expand=${this.expand}`;
-      const data = await this.fetchConfluenceData(url);
+      let data;
+      try {
+        data = await this.fetchConfluenceData(url);
+      } catch (err) {
+        this.log(
+          `Error fetching page at start=${currentStart}, returning ${allPages.length} pages fetched so far:`,
+          err.message
+        );
+        break;
+      }
       const results = Array.isArray(data?.results) ? data.results : [];
       allPages.push(...results);
       if (!data || data.size === 0 || results.length === 0) break;
