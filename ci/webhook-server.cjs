@@ -110,14 +110,14 @@ async function runPipeline(sha) {
 
   // 3. Frontend install
   log("Step 3: frontend yarn install");
-  const feInstall = await run("yarn install --frozen-lockfile --network-timeout 100000", { cwd: REPO_DIR + "/frontend" });
+  const feInstall = await run("yarn install --frozen-lockfile --network-timeout 100000 --ignore-engines", { cwd: REPO_DIR + "/frontend" });
   steps.push({ name: "frontend-install", ok: feInstall.ok, detail: feInstall.stderr.slice(-200) });
   log(`  fe-install: ${feInstall.ok ? "PASS" : "FAIL"}`);
 
   // 4. Frontend build
   log("Step 4: frontend build");
-  const feBuild = await run("yarn build", { cwd: REPO_DIR + "/frontend", timeout: 180000 });
-  steps.push({ name: "frontend-build", ok: feBuild.ok, detail: feBuild.stderr.slice(-200) });
+  const feBuild = await run("node -v && yarn build 2>&1", { cwd: REPO_DIR + "/frontend", timeout: 180000 });
+  steps.push({ name: "frontend-build", ok: feBuild.ok, detail: (feBuild.stdout + feBuild.stderr).slice(-300) });
   log(`  fe-build: ${feBuild.ok ? "PASS" : "FAIL"}`);
 
   // 5. Frontend tests
@@ -129,7 +129,7 @@ async function runPipeline(sha) {
 
   // 6. Server install
   log("Step 6: server yarn install");
-  const srvInstall = await run("yarn install --frozen-lockfile --network-timeout 100000", { cwd: REPO_DIR + "/server" });
+  const srvInstall = await run("yarn install --frozen-lockfile --network-timeout 100000 --ignore-engines", { cwd: REPO_DIR + "/server" });
   steps.push({ name: "server-install", ok: srvInstall.ok, detail: srvInstall.stderr.slice(-200) });
   log(`  srv-install: ${srvInstall.ok ? "PASS" : "FAIL"}`);
 
