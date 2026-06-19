@@ -26,6 +26,15 @@ function embedStreamRateLimit(request, response, next) {
   })(request, response, next);
 }
 
+function embedHistoryRateLimit(request, response, next) {
+  const { embedId } = request.params;
+  return simpleRateLimit({
+    bucket: `embed-history:${embedId}`,
+    max: 60,
+    windowMs: 60 * 1000,
+  })(request, response, next);
+}
+
 function embeddedEndpoints(app) {
   if (!app) return;
 
@@ -82,7 +91,7 @@ function embeddedEndpoints(app) {
 
   app.get(
     "/embed/:embedId/:sessionId",
-    [validEmbedConfig, canAccessEmbed],
+    [validEmbedConfig, canAccessEmbed, embedHistoryRateLimit],
     async (request, response) => {
       try {
         const { sessionId } = request.params;
@@ -106,7 +115,7 @@ function embeddedEndpoints(app) {
 
   app.delete(
     "/embed/:embedId/:sessionId",
-    [validEmbedConfig, canAccessEmbed],
+    [validEmbedConfig, canAccessEmbed, embedHistoryRateLimit],
     async (request, response) => {
       try {
         const { sessionId } = request.params;

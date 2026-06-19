@@ -13,6 +13,13 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
+
+const communityHubImportRateLimit = simpleRateLimit({
+  bucket: "community-hub-import",
+  max: 5,
+  windowMs: 60 * 60 * 1000,
+});
 
 function communityHubEndpoints(app) {
   if (!app) return;
@@ -99,7 +106,12 @@ function communityHubEndpoints(app) {
    */
   app.post(
     "/community-hub/apply",
-    [validatedRequest, flexUserRoleValid([ROLES.admin]), communityHubItem],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      communityHubItem,
+      communityHubImportRateLimit,
+    ],
     async (request, response) => {
       try {
         const { options = {} } = reqBody(request);
@@ -146,6 +158,7 @@ function communityHubEndpoints(app) {
       flexUserRoleValid([ROLES.admin]),
       communityHubItem,
       communityHubDownloadsEnabled,
+      communityHubImportRateLimit,
     ],
     async (_, response) => {
       try {
@@ -200,7 +213,11 @@ function communityHubEndpoints(app) {
 
   app.post(
     "/community-hub/:communityHubItemType/create",
-    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin]),
+      communityHubImportRateLimit,
+    ],
     async (request, response) => {
       try {
         const { communityHubItemType } = request.params;

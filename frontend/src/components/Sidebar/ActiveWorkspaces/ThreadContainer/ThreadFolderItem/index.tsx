@@ -16,6 +16,25 @@ import { useTranslation } from "react-i18next";
 import ThreadItem from "../ThreadItem";
 import { useDroppable } from "@dnd-kit/core";
 import paths from "@/utils/paths";
+import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
+
+const FOLDER_COLLAPSE_KEY = "openafd_folder_collapse_state";
+
+function loadFolderCollapseState(): Record<string, boolean> {
+  try {
+    const stored = safeGetItem(FOLDER_COLLAPSE_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch {}
+  return {};
+}
+
+function saveFolderCollapseState(folderId: number, collapsed: boolean) {
+  try {
+    const state = loadFolderCollapseState();
+    state[String(folderId)] = collapsed;
+    safeSetItem(FOLDER_COLLAPSE_KEY, JSON.stringify(state));
+  } catch {}
+}
 
 /** Small + dropdown for Folder rows: creates a new Chat inside the folder or a new sub-folder */
 function FolderQuickAdd({ workspace, folder, isOpen, setIsOpen }: any) {
@@ -134,7 +153,10 @@ export default function ThreadFolderItem({
   const containsActiveThread = (threads as any).some(
     (t) => t.slug === threadSlug,
   );
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(() => {
+    const collapsedState = loadFolderCollapseState();
+    return collapsedState[String(folder.id)] !== true;
+  });
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState<string>(folder.name);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
@@ -201,7 +223,13 @@ export default function ThreadFolderItem({
       <div className="flex items-center w-full h-[38px] group px-2 gap-x-1 rounded-lg hover:bg-[var(--theme-sidebar-thread-selected)] light:hover:bg-slate-200">
         <button
           type="button"
-          onClick={() => setOpen((p) => !p)}
+          onClick={() => {
+            setOpen((p) => {
+              const next = !p;
+              saveFolderCollapseState(folder.id, !next);
+              return next;
+            });
+          }}
           className="flex-1 flex items-center gap-x-1.5 min-w-0"
           aria-expanded={open}
         >

@@ -8,6 +8,7 @@ const fileSize = {
   "Xenova/whisper-small": "250mb",
   "Xenova/whisper-large": "1.56GB",
 };
+const TRANSCRIPTION_TIMEOUT_MS = 600_000; // 10 minutes
 
 class LocalWhisper {
   constructor({ options }) {
@@ -188,10 +189,32 @@ class LocalWhisper {
       }
 
       this.#log(`Transcribing audio data to text...`);
-      const { text } = await transcriber(audioData, {
-        chunk_length_s: 30,
-        stride_length_s: 5,
+      let timeoutHandle = null;
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutHandle = setTimeout(() => {
+          reject(
+            new Error(
+              `Local Whisper transcription timed out after ${
+                TRANSCRIPTION_TIMEOUT_MS / 1000
+              } seconds.`
+            )
+          );
+        }, TRANSCRIPTION_TIMEOUT_MS);
       });
+
+      let text;
+      try {
+        const result = await Promise.race([
+          transcriber(audioData, {
+            chunk_length_s: 30,
+            stride_length_s: 5,
+          }),
+          timeoutPromise,
+        ]);
+        text = result.text;
+      } finally {
+        if (timeoutHandle) clearTimeout(timeoutHandle);
+      }
 
       return { content: text, error: null };
     } catch (error) {

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState, useRef } from "react";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useQuery from "@/hooks/useQuery";
 import ChatRow from "./ChatRow";
@@ -129,7 +129,7 @@ export default function EmbedChatsView() {
 
   if (loading) {
     return (
-      <Skeleton.default
+      <Skeleton
         height="80vh"
         width="100%"
         highlightColor="var(--theme-bg-primary)"

@@ -2,7 +2,7 @@
 // Docs: index.doc.md
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import WorkspaceRow from "./WorkspaceRow";
@@ -63,7 +63,7 @@ function WorkspacesContainer(): JSX.Element {
 
   if (isLoading) {
     return (
-      <Skeleton.default
+      <Skeleton
         height="80vh"
         width="100%"
         highlightColor="var(--theme-bg-primary)"

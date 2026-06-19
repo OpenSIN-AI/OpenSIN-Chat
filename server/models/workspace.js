@@ -102,27 +102,27 @@ const Workspace = {
     },
     chatProvider: (value) => {
       if (!value || typeof value !== "string" || value === "none") return null;
-      return String(value);
+      return String(value).slice(0, 255);
     },
     chatModel: (value) => {
       if (!value || typeof value !== "string") return null;
-      return String(value);
+      return String(value).slice(0, 255);
     },
     agentProvider: (value) => {
       if (!value || typeof value !== "string" || value === "none") return null;
-      return String(value);
+      return String(value).slice(0, 255);
     },
     agentModel: (value) => {
       if (!value || typeof value !== "string") return null;
-      return String(value);
+      return String(value).slice(0, 255);
     },
     queryRefusalResponse: (value) => {
       if (!value || typeof value !== "string") return null;
-      return String(value);
+      return String(value).slice(0, 1000);
     },
     openAiPrompt: (value) => {
       if (!value || typeof value !== "string") return null;
-      return String(value);
+      return String(value).slice(0, 10000);
     },
     vectorSearchMode: (value) => {
       if (

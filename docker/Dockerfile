@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 # Setup base image
 FROM ubuntu:noble-20251013 AS base
 
@@ -159,7 +160,9 @@ WORKDIR /app
 FROM --platform=$BUILDPLATFORM node:22-slim AS frontend-build
 WORKDIR /app/frontend
 COPY ./frontend/package.json ./frontend/yarn.lock ./
-RUN yarn install --network-timeout 100000
+RUN --mount=type=cache,target=/yarn-cache \
+    YARN_CACHE_FOLDER=/yarn-cache \
+    yarn install --frozen-lockfile --network-timeout 100000
 COPY ./frontend/ ./
 RUN yarn build
 WORKDIR /app
@@ -170,7 +173,9 @@ FROM build AS backend-build
 
 COPY --chown=opensin:opensin ./server/package.json ./server/yarn.lock /app/server/
 WORKDIR /app/server
-RUN yarn install --production --network-timeout 600000
+RUN --mount=type=cache,target=/yarn-cache,uid=1000,gid=1000 \
+    YARN_CACHE_FOLDER=/yarn-cache \
+    yarn install --production --frozen-lockfile --network-timeout 600000
 
 WORKDIR /app
 COPY --chown=opensin:opensin ./server/ /app/server/
@@ -197,7 +202,9 @@ ENV PUPPETEER_DOWNLOAD_BASE_URL=https://storage.googleapis.com/chrome-for-testin
 # collector/package.json is pinned to ssh, which crashes yarn install with
 # "ssh: not found". This redirect is non-destructive and only affects this stage.
 RUN git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
-RUN yarn install --production --network-timeout 600000
+RUN --mount=type=cache,target=/yarn-cache,uid=1000,gid=1000 \
+    YARN_CACHE_FOLDER=/yarn-cache \
+    yarn install --production --frozen-lockfile --network-timeout 600000
 
 COPY --chown=opensin:opensin ./collector/ /app/collector/
 WORKDIR /app

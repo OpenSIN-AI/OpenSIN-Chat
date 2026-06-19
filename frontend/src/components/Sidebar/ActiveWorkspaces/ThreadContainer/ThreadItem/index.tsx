@@ -220,8 +220,8 @@ function OptionsMenu({
   };
 
   function cleanupListeners() {
-    window.removeEventListener("click", outsideClick);
-    window.removeEventListener("keyup", isEsc);
+    window.document.removeEventListener("click", outsideClick);
+    window.document.removeEventListener("keyup", isEsc);
   }
   // end Ref menu options
 

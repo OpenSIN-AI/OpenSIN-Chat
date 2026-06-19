@@ -68,7 +68,15 @@ function workspaceEndpoints(app) {
 
   app.post(
     "/workspace/new",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "workspace-new",
+        max: 5,
+        windowMs: 60 * 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -105,7 +113,15 @@ function workspaceEndpoints(app) {
 
   app.post(
     "/workspace/:slug/update",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "workspace-update",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -139,6 +155,11 @@ function workspaceEndpoints(app) {
     [
       validatedRequest,
       flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "workspace-upload",
+        max: 30,
+        windowMs: 60 * 60 * 1000,
+      }),
       handleFileUpload,
     ],
     async function (request, response) {

@@ -4,7 +4,7 @@
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/Sidebar";
 import { isMobile } from "react-device-detect";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import DocumentSyncQueueRow from "./DocumentSyncQueueRow";
 import useLiveSync from "@/hooks/useLiveSync";
@@ -49,7 +49,7 @@ function WatchedDocumentsContainer(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Skeleton.default
+      <Skeleton
         height="80vh"
         width="100%"
         highlightColor="var(--theme-bg-primary)"

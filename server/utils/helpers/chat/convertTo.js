@@ -47,7 +47,10 @@ async function prepareChatsForExport(format = "jsonl", chatType = "workspace") {
   if (!exportMap.hasOwnProperty(format))
     throw new Error(`Invalid export type: ${format}`);
 
-  const EXPORT_MAX_CHATS = parseInt(process.env.EXPORT_MAX_CHATS || "50000", 10);
+  const EXPORT_MAX_CHATS = parseInt(
+    process.env.EXPORT_MAX_CHATS || "50000",
+    10,
+  );
 
   let chats;
   if (chatType === "workspace") {
@@ -220,11 +223,16 @@ function escapeCsv(str) {
   return `"${str.replace(/"/g, '""').replace(/\n/g, " ")}"`;
 }
 
-async function exportChatsAsType(format = "jsonl", chatType = "workspace", preloadedChats = null) {
+async function exportChatsAsType(
+  format = "jsonl",
+  chatType = "workspace",
+  preloadedChats = null,
+) {
   const { contentType, func } = exportMap.hasOwnProperty(format)
     ? exportMap[format]
     : exportMap.jsonl;
-  const chats = preloadedChats ?? await prepareChatsForExport(format, chatType);
+  const chats =
+    preloadedChats ?? (await prepareChatsForExport(format, chatType));
   return {
     contentType,
     data: await func(chats),

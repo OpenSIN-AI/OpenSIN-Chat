@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Tests for ChatHistory index (the scrollable message list)
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterAll } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import { createRef } from "react";
 import { MemoryRouter } from "react-router-dom";
+import { VirtuosoMockContext } from "react-virtuoso";
 
 vi.mock("react-i18next", async () => {
   const { createI18nMock } = await import("@/test/i18nMock");
@@ -89,7 +90,73 @@ beforeAll(async () => {
 
 const workspace = { slug: "ws-1", name: "Test WS" };
 
-const Wrapper = ({ children }) => <MemoryRouter>{children}</MemoryRouter>;
+const origClientHeight = Object.getOwnPropertyDescriptor(
+  HTMLElement.prototype,
+  "clientHeight",
+);
+const origClientWidth = Object.getOwnPropertyDescriptor(
+  HTMLElement.prototype,
+  "clientWidth",
+);
+const origOffsetHeight = Object.getOwnPropertyDescriptor(
+  HTMLElement.prototype,
+  "offsetHeight",
+);
+
+beforeAll(() => {
+  if (!HTMLElement.prototype.scrollTo) {
+    HTMLElement.prototype.scrollTo = vi.fn();
+  }
+  Object.defineProperty(HTMLElement.prototype, "clientHeight", {
+    configurable: true,
+    get() {
+      return 600;
+    },
+  });
+  Object.defineProperty(HTMLElement.prototype, "clientWidth", {
+    configurable: true,
+    get() {
+      return 800;
+    },
+  });
+  Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+    configurable: true,
+    get() {
+      return 80;
+    },
+  });
+});
+
+afterAll(() => {
+  if (origClientHeight)
+    Object.defineProperty(
+      HTMLElement.prototype,
+      "clientHeight",
+      origClientHeight,
+    );
+  if (origClientWidth)
+    Object.defineProperty(
+      HTMLElement.prototype,
+      "clientWidth",
+      origClientWidth,
+    );
+  if (origOffsetHeight)
+    Object.defineProperty(
+      HTMLElement.prototype,
+      "offsetHeight",
+      origOffsetHeight,
+    );
+});
+
+const Wrapper = ({ children }) => (
+  <MemoryRouter>
+    <VirtuosoMockContext.Provider
+      value={{ viewportHeight: 600, itemHeight: 80 }}
+    >
+      {children}
+    </VirtuosoMockContext.Provider>
+  </MemoryRouter>
+);
 
 describe("ChatHistory", () => {
   beforeEach(() => {

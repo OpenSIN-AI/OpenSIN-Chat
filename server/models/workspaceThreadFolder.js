@@ -23,7 +23,7 @@ const WorkspaceThreadFolder = {
     try {
       const folder = await prisma.workspace_thread_folders.create({
         data: {
-          name: name.trim(),
+          name: name.trim().slice(0, 255),
           workspace_id: workspace.id,
           user_id: userId ?? null,
         },
@@ -37,7 +37,7 @@ const WorkspaceThreadFolder = {
 
   update: async function (folderId, data = {}, workspaceId = null) {
     const allowed = {};
-    if (data.name?.trim()) allowed.name = data.name.trim();
+    if (data.name?.trim()) allowed.name = data.name.trim().slice(0, 255);
     if (!Object.keys(allowed).length)
       return { folder: null, message: "Nothing to update." };
     try {

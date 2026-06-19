@@ -415,7 +415,9 @@ function apiWorkspaceThreadEndpoints(app) {
 
         const resolvedMode = mode ?? workspace.chatMode;
         if (
-          (!message?.length || !VALID_CHAT_MODE.includes(resolvedMode)) &&
+          (typeof message !== "string" ||
+            !message.length ||
+            !VALID_CHAT_MODE.includes(resolvedMode)) &&
           !reset
         ) {
           response.status(400).json({
@@ -424,9 +426,10 @@ function apiWorkspaceThreadEndpoints(app) {
             textResponse: null,
             sources: [],
             close: true,
-            error: !message?.length
-              ? "Message is empty"
-              : `${resolvedMode} is not a valid mode.`,
+            error:
+              typeof message !== "string" || !message.length
+                ? "Message is empty"
+                : `${resolvedMode} is not a valid mode.`,
           });
           return;
         }
@@ -588,7 +591,9 @@ function apiWorkspaceThreadEndpoints(app) {
 
         const resolvedMode = mode ?? workspace.chatMode;
         if (
-          (!message?.length || !VALID_CHAT_MODE.includes(resolvedMode)) &&
+          (typeof message !== "string" ||
+            !message.length ||
+            !VALID_CHAT_MODE.includes(resolvedMode)) &&
           !reset
         ) {
           response.status(400).json({
@@ -597,9 +602,10 @@ function apiWorkspaceThreadEndpoints(app) {
             textResponse: null,
             sources: [],
             close: true,
-            error: !message?.length
-              ? "Message is empty"
-              : `${resolvedMode} is not a valid mode.`,
+            error:
+              typeof message !== "string" || !message.length
+                ? "Message is empty"
+                : `${resolvedMode} is not a valid mode.`,
           });
           return;
         }

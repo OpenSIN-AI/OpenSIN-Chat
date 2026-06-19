@@ -14,11 +14,11 @@ jobs:
   audit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3a93e3444e15be6668339c0b1f3a0642e
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@1a4442cacd436585916850bb9ac53c92d03a8a32
         with:
           node-version: "22"
           cache: "yarn"
@@ -160,7 +160,7 @@ jobs:
           "
 
       - name: Upload CEO Audit artefacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b1bbc7a0af
         if: always()
         with:
           name: ceo-audit-${{ github.run_number }}

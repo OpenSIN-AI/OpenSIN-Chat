@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-/* eslint-disable react-hooks/refs */
+
 import { memo, useRef, useEffect } from "react";
 import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
@@ -13,6 +13,41 @@ import {
   ThoughtChainComponent,
   ThoughtBrainButton,
 } from "../ThoughtContainer";
+
+const MARKDOWN_SANITIZE_OPTS = {
+  ALLOWED_TAGS: [
+    "a",
+    "b",
+    "i",
+    "u",
+    "strong",
+    "em",
+    "br",
+    "p",
+    "span",
+    "div",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "pre",
+    "code",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
+    "img",
+  ],
+};
+const safeMarkdown = (html) => DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);
 
 const PromptReply: any = ({
   uuid,
@@ -67,9 +102,11 @@ const PromptReply: any = ({
 };
 
 function RenderAssistantChatContent({ message, messageId }: any) {
-  const contentRef = useRef("");
   const thoughtChainRef = useRef(null);
 
+  // Update the ThoughtChainComponent imperatively when the message changes.
+  // The rendered markdown content is computed during render (not via ref)
+  // so streaming chunks appear immediately without a one-render lag.
   useEffect(() => {
     if (!message) return;
     const thinking =
@@ -81,13 +118,9 @@ function RenderAssistantChatContent({ message, messageId }: any) {
     }
 
     const completeThoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
-    const msgToRender = message.replace(THOUGHT_REGEX_COMPLETE, "");
-
     if (completeThoughtChain && thoughtChainRef.current) {
       thoughtChainRef.current.updateContent(completeThoughtChain);
     }
-
-    contentRef.current = msgToRender;
   }, [message]);
 
   // Guard: when reply is undefined but sources exist, parent falls through
@@ -97,10 +130,14 @@ function RenderAssistantChatContent({ message, messageId }: any) {
   const thinking =
     message.match(THOUGHT_REGEX_OPEN) && !message.match(THOUGHT_REGEX_CLOSE);
 
+  // Compute rendered content during render so streaming is real-time
+  const completeThoughtChain = message.match(THOUGHT_REGEX_COMPLETE)?.[0];
+  const msgToRender = message.replace(THOUGHT_REGEX_COMPLETE, "");
+
   // Determine thought chain content for the brain button
   const thoughtChainContent = thinking
     ? message
-    : (message.match(THOUGHT_REGEX_COMPLETE)?.[0] ?? null);
+    : (completeThoughtChain ?? null);
 
   if (thinking)
     return (
@@ -136,7 +173,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
         <span
           className="flex-1 min-w-0 break-words"
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(renderMarkdown(contentRef.current)),
+            __html: safeMarkdown(renderMarkdown(msgToRender)),
           }}
         />
       </div>

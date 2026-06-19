@@ -95,6 +95,60 @@ const User = {
     } = user;
     return { ...rest };
   },
+
+  FAILED_LOGIN_THRESHOLD: 5,
+  FAILED_LOGIN_WINDOW_MS: 15 * 60 * 1000,
+
+  isLockedOut: async function (user) {
+    if (!user) return false;
+    const count = Number(user.failed_login_count ?? 0);
+    if (count < this.FAILED_LOGIN_THRESHOLD) return false;
+    const lastAt = user.failed_login_last_at
+      ? new Date(user.failed_login_last_at).getTime()
+      : 0;
+    if (!lastAt) return false;
+    if (Date.now() - lastAt > this.FAILED_LOGIN_WINDOW_MS) {
+      try {
+        await prisma.users.update({
+          where: { id: user.id },
+          data: { failed_login_count: 0, failed_login_last_at: null },
+        });
+        user.failed_login_count = 0;
+        user.failed_login_last_at = null;
+      } catch (err) {
+        console.error("FAILED TO RESET EXPIRED LOCKOUT.", err.message);
+      }
+      return false;
+    }
+    return true;
+  },
+
+  recordFailedLogin: async function (userId) {
+    if (!userId) return;
+    try {
+      await prisma.users.update({
+        where: { id: Number(userId) },
+        data: {
+          failed_login_count: { increment: 1 },
+          failed_login_last_at: new Date(),
+        },
+      });
+    } catch (err) {
+      console.error("FAILED TO RECORD FAILED LOGIN.", err.message);
+    }
+  },
+
+  resetFailedLogins: async function (userId) {
+    if (!userId) return;
+    try {
+      await prisma.users.update({
+        where: { id: Number(userId) },
+        data: { failed_login_count: 0, failed_login_last_at: null },
+      });
+    } catch (err) {
+      console.error("FAILED TO RESET FAILED LOGINS.", err.message);
+    }
+  },
   _identifyErrorAndFormatMessage: function (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       // P2002 is the unique constraint violation error code

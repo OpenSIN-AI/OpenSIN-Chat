@@ -40,6 +40,9 @@ export default function ModalWrapper({
     previousActiveElement.current =
       (document.activeElement as HTMLElement) ?? null;
 
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     const dialog = dialogRef.current;
     const focusFirst = () => {
       if (!dialog) return;
@@ -82,6 +85,7 @@ export default function ModalWrapper({
     return () => {
       window.clearTimeout(focusTimer);
       document.removeEventListener("keydown", handleKeyDown, true);
+      document.body.style.overflow = prevOverflow;
       const previously = previousActiveElement.current;
       if (
         previously &&

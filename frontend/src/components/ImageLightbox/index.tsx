@@ -47,13 +47,18 @@ export default function ImageLightbox() {
 
   useEffect(() => {
     if (!images) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     function handleKeyDown(e: any) {
       if (e.key === "Escape") close();
       else if (e.key === "ArrowLeft") handlePrevious();
       else if (e.key === "ArrowRight") handleNext();
     }
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
   }, [images]);
 
   if (!images || images.length === 0) return null;
@@ -65,6 +70,9 @@ export default function ImageLightbox() {
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90"
       onClick={close}
+      role="dialog"
+      aria-modal="true"
+      aria-label={t("imageLightbox.close")}
     >
       <button
         type="button"

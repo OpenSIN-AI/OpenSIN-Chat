@@ -195,7 +195,15 @@ function browserExtensionEndpoints(app) {
 
   app.post(
     "/browser-extension/api-keys/new",
-    [validatedRequest, flexUserRoleValid([ROLES.admin, ROLES.manager])],
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "browser-extension-key-new",
+        max: 5,
+        windowMs: 60 * 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);

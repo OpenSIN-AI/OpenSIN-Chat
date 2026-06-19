@@ -79,7 +79,13 @@ let _activeServer = null;
 function buildApp() {
   const app = express();
 
-  app.set("trust proxy", parseInt(process.env.TRUST_PROXY ?? "1", 10));
+  app.set(
+    "trust proxy",
+    (process.env.TRUST_PROXY ?? "loopback")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean),
+  );
   app.use((req, res, next) => {
     const id = req.headers["x-request-id"] || crypto.randomUUID();
     req.requestId = id;

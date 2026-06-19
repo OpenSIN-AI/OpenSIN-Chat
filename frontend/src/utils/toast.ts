@@ -19,6 +19,7 @@ const showToast: any = (
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
+    limit: 3,
     theme: theme === "default" ? "dark" : "light",
     ...restOpts,
   };

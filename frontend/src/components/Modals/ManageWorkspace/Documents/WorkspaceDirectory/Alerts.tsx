@@ -10,6 +10,11 @@ import ModalWrapper from "@/components/ModalWrapper";
 import DOMPurify from "@/utils/chat/purify";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";
 
+const ALERT_SANITIZE_OPTS = {
+  ALLOWED_TAGS: ["a", "b", "i", "u", "strong", "em", "br", "p", "span"],
+};
+const safeAlert = (html) => DOMPurify.sanitize(html, ALERT_SANITIZE_OPTS);
+
 export const PinAlert = memo(() => {
   const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
@@ -49,7 +54,7 @@ export const PinAlert = memo(() => {
             <p>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(
+                  __html: safeAlert(
                     t("connectors.pinning.pin_explained_block1"),
                   ),
                 }}
@@ -58,7 +63,7 @@ export const PinAlert = memo(() => {
             <p>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(
+                  __html: safeAlert(
                     t("connectors.pinning.pin_explained_block2"),
                   ),
                 }}
@@ -121,7 +126,7 @@ export const DocumentWatchAlert = memo(() => {
             <p>
               <span
                 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(
+                  __html: safeAlert(
                     t("connectors.watching.watch_explained_block1"),
                   ),
                 }}

@@ -361,7 +361,7 @@ function isWithin(outer, inner) {
 
 function normalizePath(filepath = "") {
   const result = path
-    .normalize(filepath.trim())
+    .normalize(String(filepath).replace(/\0/g, "").trim())
     .replace(/^(\.\.(\/|\\|$))+/, "")
     .trim();
   if (["..", ".", "/"].includes(result)) throw new Error("Invalid path.");

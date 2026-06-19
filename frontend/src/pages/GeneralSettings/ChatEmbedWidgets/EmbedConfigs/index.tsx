@@ -2,7 +2,7 @@
 // Purpose: Embed widget configurations management
 // Docs: EmbedConfigs/index.doc.md
 import { useTranslation } from "react-i18next";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { CodeBlock } from "@phosphor-icons/react/dist/csr/CodeBlock";
 import EmbedRow from "./EmbedRow";
@@ -24,7 +24,7 @@ export default function EmbedConfigsView(): React.ReactElement {
 
   if (isLoading) {
     return (
-      <Skeleton.default
+      <Skeleton
         height="80vh"
         width="100%"
         highlightColor="var(--theme-bg-primary)"

@@ -11,6 +11,11 @@ import { Tooltip } from "react-tooltip";
 import DOMPurify from "@/utils/chat/purify";
 import useConnectorBranches from "@/hooks/useConnectorBranches";
 
+const ALERT_SANITIZE_OPTS = {
+  ALLOWED_TAGS: ["a", "b", "i", "u", "strong", "em", "br", "p", "span"],
+};
+const safeAlert = (html) => DOMPurify.sanitize(html, ALERT_SANITIZE_OPTS);
+
 const DEFAULT_BRANCHES = ["main", "master"];
 export default function GithubOptions() {
   const { t } = useTranslation();
@@ -250,9 +255,7 @@ function PATAlert({ accessToken }: any) {
         <p className="text-sm">
           <span
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(
-                t("connectors.github.token_information"),
-              ),
+              __html: safeAlert(t("connectors.github.token_information")),
             }}
           />
           <br />

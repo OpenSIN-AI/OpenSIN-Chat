@@ -10,6 +10,8 @@ const {
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 
+const MBOX_MAX_BYTES = 500 * 1024 * 1024;
+
 async function asMbox({
   fullFilePath = "",
   filename = "",
@@ -19,13 +21,36 @@ async function asMbox({
   // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
 
-  const mails = await mboxParser(fs.createReadStream(fullFilePath))
-    .then((mails) => mails)
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.error(`Could not parse mail items`, error);
-      return [];
-    });
+  try {
+    const stat = fs.statSync(fullFilePath);
+    if (stat.size > MBOX_MAX_BYTES) {
+      if (!options.absolutePath) trashFile(fullFilePath);
+      return {
+        success: false,
+        reason: `Mbox file exceeds ${MBOX_MAX_BYTES} byte limit (${stat.size} bytes).`,
+        documents: [],
+      };
+    }
+  } catch (statErr) {
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `Cannot stat mbox file: ${statErr.message}`,
+      documents: [],
+    };
+  }
+
+  let mails = [];
+  try {
+    mails = await mboxParser(fs.createReadStream(fullFilePath))
+      .then((mails) => mails)
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(`Could not parse mail items`, error);
+        return [];
+      });
+  } finally {
+  }
 
   if (!mails.length) {
     // eslint-disable-next-line no-console
@@ -40,45 +65,48 @@ async function asMbox({
 
   let item = 0;
   const documents = [];
-  for (const mail of mails) {
-    if (!mail.hasOwnProperty("text")) continue;
+  try {
+    for (const mail of mails) {
+      if (!mail.hasOwnProperty("text")) continue;
 
-    const content = mail.text;
-    if (!content) continue;
-    // eslint-disable-next-line no-console
-    console.log(
-      `-- Working on message "${mail.subject || "Unknown subject"}" --`
-    );
+      const content = mail.text;
+      if (!content) continue;
+      // eslint-disable-next-line no-console
+      console.log(
+        `-- Working on message "${mail.subject || "Unknown subject"}" --`
+      );
 
-    const data = {
-      id: v4(),
-      url: "file://" + fullFilePath,
-      title:
-        metadata.title ||
-        (mail?.subject
-          ? slugify(mail?.subject?.replace(".", "")) + ".mbox"
-          : `msg_${item}-${filename}`),
-      docAuthor: metadata.docAuthor || mail?.from?.text,
-      description: metadata.description || "No description found.",
-      docSource:
-        metadata.docSource || "Mbox message file uploaded by the user.",
-      chunkSource: metadata.chunkSource || "",
-      published: createdDate(fullFilePath),
-      wordCount: content.split(/\s+/).filter(Boolean).length,
-      pageContent: content,
-      token_count_estimate: tokenizeString(content),
-    };
+      const data = {
+        id: v4(),
+        url: "file://" + fullFilePath,
+        title:
+          metadata.title ||
+          (mail?.subject
+            ? slugify(mail?.subject?.replace(".", "")) + ".mbox"
+            : `msg_${item}-${filename}`),
+        docAuthor: metadata.docAuthor || mail?.from?.text,
+        description: metadata.description || "No description found.",
+        docSource:
+          metadata.docSource || "Mbox message file uploaded by the user.",
+        chunkSource: metadata.chunkSource || "",
+        published: createdDate(fullFilePath),
+        wordCount: content.split(/\s+/).filter(Boolean).length,
+        pageContent: content,
+        token_count_estimate: tokenizeString(content),
+      };
 
-    item++;
-    const document = writeToServerDocuments({
-      data,
-      filename: `${slugify(filename)}-${data.id}-msg-${item}`,
-      options: { parseOnly: options.parseOnly },
-    });
-    documents.push(document);
+      item++;
+      const document = writeToServerDocuments({
+        data,
+        filename: `${slugify(filename)}-${data.id}-msg-${item}`,
+        options: { parseOnly: options.parseOnly },
+      });
+      documents.push(document);
+    }
+  } finally {
+    if (!options.absolutePath) trashFile(fullFilePath);
   }
 
-  if (!options.absolutePath) trashFile(fullFilePath);
   // eslint-disable-next-line no-console
   console.log(
     `[SUCCESS]: ${filename} messages converted & ready for embedding.\n`

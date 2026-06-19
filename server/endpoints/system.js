@@ -236,7 +236,7 @@ function systemEndpoints(app) {
     [
       simpleRateLimit({
         bucket: "login",
-        max: 10,
+        max: 5,
         windowMs: 15 * 60 * 1000,
         identity: "user",
       }),
@@ -244,6 +244,7 @@ function systemEndpoints(app) {
     async (request, response) => {
       try {
         const bcrypt = require("bcryptjs");
+        const LOCKOUT_WINDOW_MS = 15 * 60 * 1000;
 
         if (await SystemSettings.isMultiUserMode()) {
           if (simpleSSOLoginDisabled()) {
@@ -283,7 +284,27 @@ function systemEndpoints(app) {
             return;
           }
 
+          if (await User.isLockedOut(existingUser)) {
+            await EventLogs.logEvent(
+              "failed_login_account_locked",
+              {
+                ip: request.ip || "Unknown IP",
+                username: existingUser.username || "Unknown user",
+              },
+              existingUser.id,
+            );
+            return response.status(423).json({
+              user: null,
+              valid: false,
+              token: null,
+              message:
+                "Account temporarily locked due to repeated failed logins. Try again later.",
+              retryAfterMs: LOCKOUT_WINDOW_MS,
+            });
+          }
+
           if (!bcrypt.compareSync(String(password), existingUser.password)) {
+            await User.recordFailedLogin(existingUser.id);
             await EventLogs.logEvent(
               "failed_login_invalid_password",
               {
@@ -300,6 +321,8 @@ function systemEndpoints(app) {
             });
             return;
           }
+
+          await User.resetFailedLogins(existingUser.id);
 
           if (existingUser.suspended) {
             await EventLogs.logEvent(
@@ -1244,7 +1267,14 @@ function systemEndpoints(app) {
 
   app.post(
     "/system/generate-api-key",
-    [validatedRequest],
+    [
+      validatedRequest,
+      simpleRateLimit({
+        bucket: "system-generate-api-key",
+        max: 5,
+        windowMs: 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         if (response.locals.multiUserMode) {
@@ -1464,11 +1494,7 @@ function systemEndpoints(app) {
   // Allows a user to export their own chat data without admin intervention.
   app.get(
     "/system/export-my-data",
-    [
-      chatHistoryViewable,
-      validatedRequest,
-      flexUserRoleValid([ROLES.all]),
-    ],
+    [chatHistoryViewable, validatedRequest, flexUserRoleValid([ROLES.all])],
     async (request, response) => {
       try {
         const user = await userFromSession(request, response);
@@ -1634,7 +1660,7 @@ function systemEndpoints(app) {
         updates.password = String(password);
       }
 
-      if (bio) updates.bio = String(bio);
+      if (bio) updates.bio = String(bio).slice(0, 1000);
 
       if (Object.keys(updates).length === 0) {
         response
@@ -1692,8 +1718,8 @@ function systemEndpoints(app) {
 
         const presetData = {
           command: formattedCommand,
-          prompt: String(prompt),
-          description: String(description),
+          prompt: prompt ? String(prompt) : "",
+          description: description ? String(description) : "",
         };
 
         const preset = await SlashCommandPresets.create(user?.id, presetData);
@@ -1740,8 +1766,8 @@ function systemEndpoints(app) {
 
         const updates = {
           command: formattedCommand,
-          prompt: String(prompt),
-          description: String(description),
+          prompt: prompt ? String(prompt) : "",
+          description: description ? String(description) : "",
         };
 
         const preset = await SlashCommandPresets.update(

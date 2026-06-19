@@ -11,7 +11,7 @@ import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
 import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
 import { XCircle } from "@phosphor-icons/react/dist/csr/XCircle";
 import { TrendUp } from "@phosphor-icons/react/dist/csr/TrendUp";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CTAButton from "@/components/lib/CTAButton";
 import showToast from "@/utils/toast";
@@ -200,7 +200,7 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {[1, 2, 3].map((i) => (
-                  <Skeleton.default
+                  <Skeleton
                     key={i}
                     height={160}
                     className="rounded-xl"
@@ -365,7 +365,7 @@ function StatCard({
         {icon}
       </div>
       {isLoading ? (
-        <Skeleton.default
+        <Skeleton
           height={32}
           width={60}
           baseColor="var(--theme-bg-secondary)"

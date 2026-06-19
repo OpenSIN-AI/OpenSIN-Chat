@@ -69,8 +69,8 @@ function LogsTab() {
             {t("consoleSidebar.noLogs")}
           </p>
         ) : (
-          consoleLogs.map((log, idx) => (
-            <div key={idx} className="flex gap-2 mb-0.5">
+          consoleLogs.map((log) => (
+            <div key={log.timestamp} className="flex gap-2 mb-0.5">
               <span className="text-zinc-600 light:text-slate-400 shrink-0">
                 {/* eslint-disable i18next/no-literal-string */}
                 {new Date(log.timestamp).toLocaleTimeString("de-DE", {

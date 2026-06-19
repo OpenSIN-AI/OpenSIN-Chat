@@ -8,6 +8,44 @@ const { CollectorApi } = require("../collectorApi");
 const pluginsPath = getStoragePath("plugins", "agent-skills");
 const sharedWebScraper = new CollectorApi();
 
+const ALLOWLIST_PATH = path.resolve(
+  __dirname,
+  "../../config/plugins-allowlist.toml",
+);
+const ALLOWLIST_CACHE = { fileMtimeMs: 0, ids: new Set() };
+
+function loadAllowlist() {
+  try {
+    const stat = fs.statSync(ALLOWLIST_PATH);
+    if (
+      stat.mtimeMs === ALLOWLIST_CACHE.fileMtimeMs &&
+      ALLOWLIST_CACHE.ids.size >= 0
+    )
+      return ALLOWLIST_CACHE.ids;
+    const raw = fs.readFileSync(ALLOWLIST_PATH, "utf8");
+    const ids = new Set();
+    const arrayMatch = raw.match(/allow\s*=\s*\[([\s\S]*?)\]/);
+    if (arrayMatch) {
+      const strings = arrayMatch[1].match(/"([^"]*)"/g) || [];
+      for (const token of strings) {
+        const value = token.slice(1, -1).trim();
+        if (/^[a-z0-9._-]+$/i.test(value)) ids.add(value);
+      }
+    }
+    ALLOWLIST_CACHE.fileMtimeMs = stat.mtimeMs;
+    ALLOWLIST_CACHE.ids = ids;
+    return ids;
+  } catch {
+    ALLOWLIST_CACHE.ids = new Set();
+    return ALLOWLIST_CACHE.ids;
+  }
+}
+
+function isAllowlisted(hubId) {
+  if (!hubId) return false;
+  return loadAllowlist().has(hubId);
+}
+
 class ImportedPlugin {
   constructor(config) {
     this.config = config;
@@ -16,6 +54,17 @@ class ImportedPlugin {
       this.config.hubId,
       "handler.js",
     );
+    this.allowlisted = isAllowlisted(this.config.hubId);
+    if (!this.allowlisted) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `ImportedPlugin — hubId '${this.config.hubId}' not on config/plugins-allowlist.toml; skipping handler load`,
+      );
+      this.handler = null;
+      this.name = config.hubId;
+      this.startupConfig = { params: {} };
+      return;
+    }
     delete require.cache[require.resolve(this.handlerLocation)];
     this.handler = require(this.handlerLocation);
     this.name = config.hubId;
@@ -57,7 +106,7 @@ class ImportedPlugin {
 
   /**
    * Loads plugins from `plugins` folder in storage that are custom loaded and defined.
-   * only loads plugins that are active: true.
+   * only loads plugins that are active: true AND on the handler allowlist.
    * @returns {string[]} - array of plugin names to be loaded later.
    */
   static activeImportedPlugins() {
@@ -72,14 +121,15 @@ class ImportedPlugin {
       );
       if (!this.isValidLocation(configLocation)) continue;
       const config = safeJsonParse(fs.readFileSync(configLocation, "utf8"));
-      if (config.active) plugins.push(`@@${config.hubId}`);
+      if (config.active && isAllowlisted(config.hubId))
+        plugins.push(`@@${config.hubId}`);
     }
     return plugins;
   }
 
   /**
    * Lists all imported plugins.
-   * @returns {Array} - array of plugin configurations (JSON).
+   * @returns {Array} - array of plugin configurations (JSON) augmented with `allowlisted`.
    */
   static listImportedPlugins() {
     const plugins = [];
@@ -95,6 +145,7 @@ class ImportedPlugin {
       );
       if (!this.isValidLocation(configLocation)) continue;
       const config = safeJsonParse(fs.readFileSync(configLocation, "utf8"));
+      config.allowlisted = isAllowlisted(config.hubId);
       plugins.push(config);
     }
     return plugins;

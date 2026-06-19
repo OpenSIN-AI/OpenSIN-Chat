@@ -131,6 +131,9 @@ jest.mock("../../models/user", () => ({
     delete: jest.fn(), filterFields: jest.fn((u) => u),
     checkPasswordComplexity: jest.fn(() => ({ checkedOK: true, error: null })),
     validations: { username: jest.fn((v) => v) },
+    isLockedOut: jest.fn().mockResolvedValue(false),
+    recordFailedLogin: jest.fn().mockResolvedValue(undefined),
+    resetFailedLogins: jest.fn().mockResolvedValue(undefined),
   },
 }));
 jest.mock("../../models/telemetry", () => ({ Telemetry: { sendTelemetry: jest.fn() } }));
@@ -389,6 +392,31 @@ describe("systemEndpoints", () => {
         User._get.mockImplementation(() => Promise.reject(new Error("fail")));
         const res = await app.call("post", "/request-token", { body: { username: "a", password: "b" } });
         expect(res.statusCode).toBe(500);
+      });
+      it("returns 423 when account is locked out after 5 failed attempts", async () => {
+        const locked = { id: 1, username: "admin", password: "hashed", failed_login_count: 5, failed_login_last_at: new Date() };
+        User._get.mockResolvedValue(locked);
+        User.isLockedOut.mockResolvedValue(true);
+        const res = await app.call("post", "/request-token", { body: { username: "admin", password: "pass" } });
+        expect(res.statusCode).toBe(423);
+        expect(res.body.valid).toBe(false);
+        expect(res.body.message).toMatch(/locked/i);
+        expect(User.recordFailedLogin).not.toHaveBeenCalled();
+        expect(bcrypt.compareSync).not.toHaveBeenCalled();
+      });
+      it("records failed login on invalid password", async () => {
+        User._get.mockResolvedValue({ id: 1, username: "admin", password: "hashed" });
+        User.isLockedOut.mockResolvedValue(false);
+        bcrypt.compareSync.mockReturnValue(false);
+        await app.call("post", "/request-token", { body: { username: "admin", password: "wrong" } });
+        expect(User.recordFailedLogin).toHaveBeenCalledWith(1);
+      });
+      it("resets failed logins on successful login", async () => {
+        User._get.mockResolvedValue({ id: 1, username: "admin", password: "hashed", seen_recovery_codes: true });
+        User.isLockedOut.mockResolvedValue(false);
+        bcrypt.compareSync.mockReturnValue(true);
+        await app.call("post", "/request-token", { body: { username: "admin", password: "pass" } });
+        expect(User.resetFailedLogins).toHaveBeenCalledWith(1);
       });
     });
   });

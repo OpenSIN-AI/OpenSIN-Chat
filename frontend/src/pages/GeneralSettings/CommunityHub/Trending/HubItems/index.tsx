@@ -2,7 +2,7 @@
 // Docs: index.doc.md
 import paths from "@/utils/paths";
 import HubItemCard from "./HubItemCard";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { readableType, typeToPath } from "../../utils";
 import useCommunityHubTrending from "@/hooks/useCommunityHubTrending";
@@ -81,7 +81,7 @@ export function HubItemCardSkeleton(): JSX.Element {
     <div className="flex flex-col gap-4">
       <div className="rounded-lg w-full">
         <div className="flex justify-between items-center">
-          <Skeleton.default
+          <Skeleton
             height="40px"
             width="300px"
             highlightColor="var(--theme-settings-input-active)"
@@ -89,7 +89,7 @@ export function HubItemCardSkeleton(): JSX.Element {
             count={1}
           />
         </div>
-        <Skeleton.default
+        <Skeleton
           height="200px"
           width="300px"
           highlightColor="var(--theme-settings-input-active)"
@@ -101,7 +101,7 @@ export function HubItemCardSkeleton(): JSX.Element {
       </div>
       <div className="rounded-lg w-full">
         <div className="flex justify-between items-center">
-          <Skeleton.default
+          <Skeleton
             height="40px"
             width="300px"
             highlightColor="var(--theme-settings-input-active)"
@@ -109,7 +109,7 @@ export function HubItemCardSkeleton(): JSX.Element {
             count={1}
           />
         </div>
-        <Skeleton.default
+        <Skeleton
           height="200px"
           width="300px"
           highlightColor="var(--theme-settings-input-active)"

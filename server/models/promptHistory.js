@@ -2,6 +2,8 @@
 const prisma = require("../utils/prisma");
 
 const PromptHistory = {
+  DEFAULT_LIMIT: 100,
+
   new: async function ({ workspaceId, prompt, modifiedBy = null }) {
     try {
       const history = await prisma.prompt_history.create({
@@ -35,7 +37,7 @@ const PromptHistory = {
     try {
       const history = await prisma.prompt_history.findMany({
         where: { workspaceId: Number(workspaceId) },
-        ...(limit !== null ? { take: limit } : {}),
+        ...(limit !== null ? { take: limit } : { take: this.DEFAULT_LIMIT }),
         ...(orderBy !== null
           ? { orderBy }
           : { orderBy: { modifiedAt: "desc" } }),

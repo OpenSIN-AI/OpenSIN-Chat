@@ -19,6 +19,46 @@ import { usePreviewSidebar, useChatSidebar } from "../ChatSidebar";
 import { baseHeaders } from "@/utils/request";
 import useAuthenticatedBlobUrl from "@/hooks/useAuthenticatedBlobUrl";
 
+const HTML_PREVIEW_SANITIZE_OPTS = {
+  ALLOWED_TAGS: [
+    "a",
+    "b",
+    "i",
+    "u",
+    "strong",
+    "em",
+    "br",
+    "p",
+    "span",
+    "div",
+    "section",
+    "article",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "pre",
+    "code",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
+    "img",
+    "figure",
+    "figcaption",
+  ],
+  ALLOWED_ATTR: ["href", "src", "alt", "title", "class", "id", "target", "rel"],
+};
+const safeHtml = (html) => DOMPurify.sanitize(html, HTML_PREVIEW_SANITIZE_OPTS);
+
 // Icon map for preview content types
 const TYPE_ICONS = {
   pdf: FilePdf,
@@ -61,7 +101,7 @@ function VersionDropdown({ versions, activeVersion, onSelect }: any) {
         <div className="absolute left-0 top-[28px] z-50 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-200 rounded-lg shadow-xl py-1 min-w-[160px]">
           {(versions as any).map((v, idx) => (
             <button
-              key={idx}
+              key={v.label || idx}
               type="button"
               onClick={() => {
                 onSelect(idx);
@@ -336,7 +376,7 @@ function PreviewContent({ previewData, activeVersion }: any) {
       <div
         className="w-full h-full overflow-auto p-4 bg-white rounded text-sm text-slate-800"
         dangerouslySetInnerHTML={{
-          __html: DOMPurify.sanitize(version.html || previewData.html),
+          __html: safeHtml(version.html || previewData.html),
         }}
       />
     );

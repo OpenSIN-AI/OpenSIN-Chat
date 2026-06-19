@@ -87,8 +87,22 @@ markdown.renderer.rules.image = function (tokens, idx: any) {
 
 markdown.use(markdownItKatexPlugin);
 
-export default function renderMarkdown(text = "") {
-  // Collapse excessive newlines (3+) into 2 to prevent large gaps in output
+const RENDER_CACHE = new Map<string, string>();
+const RENDER_CACHE_MAX = 256;
+
+function doRender(text: string): string {
   const cleanedText = text.replace(/\n{3,}/g, "\n\n");
   return markdown.render(cleanedText);
+}
+
+export default function renderMarkdown(text = "") {
+  const cached = RENDER_CACHE.get(text);
+  if (cached !== undefined) return cached;
+  const html = doRender(text);
+  if (RENDER_CACHE.size >= RENDER_CACHE_MAX) {
+    const firstKey = RENDER_CACHE.keys().next().value;
+    if (firstKey !== undefined) RENDER_CACHE.delete(firstKey);
+  }
+  RENDER_CACHE.set(text, html);
+  return html;
 }

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Workspace from "@/models/workspace";
 import ManageWorkspace, {
@@ -147,7 +147,7 @@ export default function ActiveWorkspaces() {
 
   if (loading) {
     return (
-      <Skeleton.default
+      <Skeleton
         height={40}
         width="100%"
         count={5}
@@ -189,9 +189,7 @@ export default function ActiveWorkspaces() {
   // When on the home page, resolve which workspace should be virtually active
   const virtualActiveSlug: any = (() => {
     if (!isHomePage || workspaces.length === 0) return null;
-    const lastVisited = safeJsonParse(
-      safeGetItem(LAST_VISITED_WORKSPACE),
-    );
+    const lastVisited = safeJsonParse(safeGetItem(LAST_VISITED_WORKSPACE));
     if (
       lastVisited?.slug &&
       (workspaces as any).some((ws) => ws.slug === lastVisited.slug)

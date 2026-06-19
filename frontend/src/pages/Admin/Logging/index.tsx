@@ -5,7 +5,7 @@ import useQuery from "@/hooks/useQuery";
 import System from "@/models/system";
 import { useState, ReactNode } from "react";
 import { isMobile } from "react-device-detect";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import LogRow from "./LogRow";
 import showToast from "@/utils/toast";
 import CTAButton from "@/components/lib/CTAButton";
@@ -110,7 +110,7 @@ function LogsContainer({
   const { t } = useTranslation();
   if (loading) {
     return (
-      <Skeleton.default
+      <Skeleton
         height="80vh"
         width="100%"
         highlightColor="var(--theme-bg-primary)"

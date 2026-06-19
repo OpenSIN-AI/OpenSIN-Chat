@@ -119,9 +119,12 @@ function memoryEndpoints(app) {
         if (!content || typeof content !== "string" || !content.trim()) {
           return response.status(400).json({ error: "Content is required." });
         }
-        const { memory, message } = await Memory.update(memoryId, {
-          content: content.trim(),
-        });
+        const user = await userFromSession(request, response);
+        const { memory, message } = await Memory.update(
+          memoryId,
+          { content: content.trim() },
+          response.locals.multiUserMode ? user?.id : undefined,
+        );
 
         if (!memory) return response.status(400).json({ error: message });
         response.status(200).json({ memory });
@@ -144,7 +147,13 @@ function memoryEndpoints(app) {
     async (request, response) => {
       try {
         const memoryId = Number(request.params.memoryId);
-        await Memory.delete(memoryId);
+        const user = await userFromSession(request, response);
+        const deleted = await Memory.delete(
+          memoryId,
+          response.locals.multiUserMode ? user?.id : undefined,
+        );
+        if (!deleted)
+          return response.status(404).json({ error: "Memory not found." });
         response.status(200).json({ success: true });
       } catch (e) {
         // eslint-disable-next-line no-console

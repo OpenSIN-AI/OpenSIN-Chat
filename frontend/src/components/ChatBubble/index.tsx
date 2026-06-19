@@ -5,6 +5,41 @@ import { userFromStorage } from "@/utils/request";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";
 
+const MARKDOWN_SANITIZE_OPTS = {
+  ALLOWED_TAGS: [
+    "a",
+    "b",
+    "i",
+    "u",
+    "strong",
+    "em",
+    "br",
+    "p",
+    "span",
+    "div",
+    "ul",
+    "ol",
+    "li",
+    "blockquote",
+    "pre",
+    "code",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "table",
+    "thead",
+    "tbody",
+    "tr",
+    "th",
+    "td",
+    "img",
+  ],
+};
+const safeMarkdown = (html) => DOMPurify.sanitize(html, MARKDOWN_SANITIZE_OPTS);
+
 export default function ChatBubble({ message, type }: any) {
   const isUser = type === "user";
 
@@ -22,7 +57,7 @@ export default function ChatBubble({ message, type }: any) {
           <div
             className={`markdown whitespace-pre-line text-white font-normal text-sm md:text-sm flex flex-col gap-y-1 mt-2`}
             dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(renderMarkdown(message)),
+              __html: safeMarkdown(renderMarkdown(message)),
             }}
           />
         </div>

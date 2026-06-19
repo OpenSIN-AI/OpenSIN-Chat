@@ -11,38 +11,50 @@ const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 function inviteEndpoints(app) {
   if (!app) return;
 
-  app.get("/invite/:code", async (request, response) => {
-    try {
-      const { code } = request.params;
-      const invite = await Invite.get({ code });
-      if (!invite) {
-        response.status(200).json({ invite: null, error: "Invite not found." });
-        return;
-      }
+  app.get(
+    "/invite/:code",
+    [
+      simpleRateLimit({
+        bucket: "invite-lookup",
+        max: 30,
+        windowMs: 60 * 1000,
+      }),
+    ],
+    async (request, response) => {
+      try {
+        const { code } = request.params;
+        const invite = await Invite.get({ code });
+        if (!invite) {
+          response
+            .status(200)
+            .json({ invite: null, error: "Invite not found." });
+          return;
+        }
 
-      if (invite.status !== "pending") {
+        if (invite.status !== "pending") {
+          response
+            .status(200)
+            .json({ invite: null, error: "Invite is no longer valid." });
+          return;
+        }
+
+        if (Invite.isExpired(invite)) {
+          response
+            .status(200)
+            .json({ invite: null, error: "Invite has expired." });
+          return;
+        }
+
         response
           .status(200)
-          .json({ invite: null, error: "Invite is no longer valid." });
-        return;
+          .json({ invite: { code, status: invite.status }, error: null });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        response.sendStatus(500);
       }
-
-      if (Invite.isExpired(invite)) {
-        response
-          .status(200)
-          .json({ invite: null, error: "Invite has expired." });
-        return;
-      }
-
-      response
-        .status(200)
-        .json({ invite: { code, status: invite.status }, error: null });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
-      response.sendStatus(500);
-    }
-  });
+    },
+  );
 
   app.post(
     "/invite/:code",

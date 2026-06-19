@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import PromptHistory from "@/models/promptHistory";
 import PromptHistoryItem from "./PromptHistoryItem";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 type ChatPromptHistoryProps = {
@@ -122,7 +122,7 @@ function LoaderSkeleton(): JSX.Element {
   const highlightColor = "var(--theme-bg-primary)";
   const baseColor = "var(--theme-bg-secondary)";
   return (
-    <Skeleton.default
+    <Skeleton
       height="85px"
       width="100%"
       highlightColor={highlightColor}

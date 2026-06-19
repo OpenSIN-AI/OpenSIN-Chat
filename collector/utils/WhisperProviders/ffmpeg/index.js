@@ -102,12 +102,24 @@ class FFMPEGWrapper {
         "-y",
         outputPath,
       ],
-      { encoding: "utf8" }
+      { encoding: "utf8", timeout: 300_000, maxBuffer: 10 * 1024 * 1024 }
     );
 
+    if (result.error) {
+      if (result.error.signal === "SIGTERM") {
+        throw new Error(
+          "FFMPEG conversion timed out after 300 seconds."
+        );
+      }
+      throw new Error(`FFMPEG conversion failed: ${result.error.message}`);
+    }
     // ffmpeg writes progress to stderr
     if (result.stderr) this.log(result.stderr.trim());
     if (result.status !== 0) throw new Error(`FFMPEG conversion failed`);
+    if (!fs.existsSync(outputPath))
+      throw new Error(
+        "FFMPEG conversion completed but output file was not created."
+      );
     this.log(`Conversion complete: ${path.basename(outputPath)}`);
     return true;
   }

@@ -9,7 +9,7 @@ import VariableRow from "./VariableRow";
 import ModalWrapper from "@/components/ModalWrapper";
 import AddVariableModal from "./AddVariableModal";
 import { useModal } from "@/hooks/useModal";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useSystemPromptVariables from "@/hooks/useSystemPromptVariables";
 import { useTranslation } from "react-i18next";
@@ -40,7 +40,7 @@ export default function SystemPromptVariables(): JSX.Element {
                 {t("admin.systemPromptVariables.page.description")}
               </p>
             </div>
-            <Skeleton.default
+            <Skeleton
               height="80vh"
               width="100%"
               highlightColor="var(--theme-bg-primary)"

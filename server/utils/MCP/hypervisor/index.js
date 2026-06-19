@@ -498,9 +498,7 @@ class MCPHypervisor {
     }
 
     const argList = Array.isArray(server?.args) ? server.args : [];
-    const argBlob = argList
-      .map((a) => String(a ?? ""))
-      .join(" ");
+    const argBlob = argList.map((a) => String(a ?? "")).join(" ");
     if (DENIED_MCP_LAUNCHER_ARGS.test(argBlob)) {
       throw new Error(
         `MCP launcher "${server.command}" contains disallowed args`,

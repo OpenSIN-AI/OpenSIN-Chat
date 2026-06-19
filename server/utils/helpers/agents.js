@@ -20,7 +20,10 @@ function skillIsAutoApproved({ skillName }) {
   // This is a special case and overrides any other items in the list.
   if (autoApprovedSkills.includes("<all>")) return true;
 
-  if (!autoApprovedSkills.length || !autoApprovedSkills.includes(String(skillName)))
+  if (
+    !autoApprovedSkills.length ||
+    !autoApprovedSkills.includes(String(skillName))
+  )
     return false;
 
   // eslint-disable-next-line no-console

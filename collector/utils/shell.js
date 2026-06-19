@@ -11,10 +11,13 @@ async function patchShellEnvironmentPath() {
     if (process.platform === "win32") return process.env;
     const { default: fixPath } = await import("fix-path");
     const { default: stripAnsi } = await import("strip-ansi");
+    const before = process.env.PATH;
     fixPath();
     if (process.env.PATH) process.env.PATH = stripAnsi(process.env.PATH);
-    // eslint-disable-next-line no-console
-    console.log("Shell environment path patched successfully.");
+    if (process.env.PATH !== before) {
+      // eslint-disable-next-line no-console
+      console.log("Shell environment path patched successfully.");
+    }
     return process.env;
   } catch (error) {
     // eslint-disable-next-line no-console

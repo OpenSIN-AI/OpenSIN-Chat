@@ -4,7 +4,7 @@ import { useState, Fragment, useEffect } from "react";
 import { isMobile } from "react-device-detect";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Highlighter from "react-highlight-words";
 import { Link } from "react-router-dom";
@@ -118,20 +118,20 @@ export default function DefaultSystemPrompt() {
           <div>
             {promptLoading ? (
               <div className="mt-8 flex flex-col gap-y-4">
-                <Skeleton.default
+                <Skeleton
                   height={20}
                   width={160}
                   highlightColor="var(--theme-bg-primary)"
                   baseColor="var(--theme-bg-secondary)"
                 />
-                <Skeleton.default
+                <Skeleton
                   height={120}
                   width="100%"
                   highlightColor="var(--theme-bg-primary)"
                   baseColor="var(--theme-bg-secondary)"
                   className="rounded-lg"
                 />
-                <Skeleton.default
+                <Skeleton
                   height={36}
                   width={140}
                   highlightColor="var(--theme-bg-primary)"

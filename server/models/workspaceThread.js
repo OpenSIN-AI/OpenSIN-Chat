@@ -52,7 +52,7 @@ const WorkspaceThread = {
 
       const thread = await prisma.workspace_threads.create({
         data: {
-          name: data.name ? String(data.name) : this.defaultName,
+          name: data.name ? String(data.name).slice(0, 255) : this.defaultName,
           slug,
           user_id: userId ? Number(userId) : null,
           workspace_id: workspace.id,
@@ -73,7 +73,13 @@ const WorkspaceThread = {
     const validData = {};
     Object.entries(data).forEach(([key, value]) => {
       if (!this.writable.includes(key)) return;
-      validData[key] = value;
+      if (key === "name") {
+        if (value === null || value === undefined) return;
+        if (typeof value !== "string") value = String(value);
+        validData[key] = value.slice(0, 255);
+      } else {
+        validData[key] = value;
+      }
     });
 
     if (Object.keys(validData).length === 0)
@@ -175,8 +181,8 @@ const WorkspaceThread = {
     prompt = null,
     onRename = null,
   }) {
-    if (!workspace || !thread || !prompt) return false;
-    if (thread.name !== this.defaultName) return false; // don't rename if already named.
+    if (!workspace || !thread || !prompt) return { renamed: false, thread };
+    if (thread.name !== this.defaultName) return { renamed: false, thread }; // don't rename if already named.
 
     const { WorkspaceChats } = require("./workspaceChats");
     const chatCount = await WorkspaceChats.count({

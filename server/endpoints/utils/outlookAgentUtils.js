@@ -4,6 +4,7 @@ const {
   isSingleUserMode,
 } = require("../../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
+const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 
 const DEFAULT_ALLOWED_REDIRECT_HOSTS = ["localhost:3000"];
 const ALLOWED_REDIRECT_HOSTS = (
@@ -111,7 +112,15 @@ function outlookAgentEndpoints(app) {
 
   app.get(
     "/agent-skills/outlook/auth-callback",
-    [validatedRequest, isSingleUserMode],
+    [
+      validatedRequest,
+      isSingleUserMode,
+      simpleRateLimit({
+        bucket: "outlook-oauth-callback",
+        max: 10,
+        windowMs: 60 * 60 * 1000,
+      }),
+    ],
     async (request, response) => {
       try {
         const { code, error, error_description } = request.query;

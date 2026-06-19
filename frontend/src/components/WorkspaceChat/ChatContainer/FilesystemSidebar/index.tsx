@@ -237,7 +237,6 @@ export default function FilesystemSidebar() {
           <button
             type="button"
             onClick={() => setShowSysInfo(!showSysInfo)}
-            type="button"
             className="text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer mr-1"
             aria-label={t("sidebar.filesystem.systemInfo")}
           >
@@ -246,7 +245,6 @@ export default function FilesystemSidebar() {
           <button
             type="button"
             onClick={() => browse(currentPath || "")}
-            type="button"
             disabled={loading}
             className="text-zinc-500 hover:text-white light:hover:text-slate-900 transition-colors border-none bg-transparent cursor-pointer disabled:opacity-40 mr-1"
             aria-label={t("common.refresh")}
@@ -328,7 +326,6 @@ export default function FilesystemSidebar() {
                     setNewItemName("");
                     setItemActionMsg(null);
                   }}
-                  type="button"
                   className="flex items-center gap-1 text-[10px] font-medium text-zinc-300 light:text-slate-700 bg-zinc-800 light:bg-slate-200 hover:bg-zinc-700 light:hover:bg-slate-300 px-2 py-1 rounded-md border-none cursor-pointer transition-colors"
                 >
                   <Plus size={10} weight="bold" />
@@ -346,7 +343,6 @@ export default function FilesystemSidebar() {
                     setNewItemName("");
                     setItemActionMsg(null);
                   }}
-                  type="button"
                   className="flex items-center gap-1 text-[10px] font-medium text-zinc-300 light:text-slate-700 bg-zinc-800 light:bg-slate-200 hover:bg-zinc-700 light:hover:bg-slate-300 px-2 py-1 rounded-md border-none cursor-pointer transition-colors"
                 >
                   <Plus size={10} weight="bold" />
@@ -423,7 +419,6 @@ export default function FilesystemSidebar() {
                           });
                         });
                     }}
-                    type="button"
                     className="text-[10px] font-medium text-white bg-blue-600 hover:bg-blue-500 px-2 py-1 rounded-md border-none cursor-pointer transition-colors"
                   >
                     {t("sidebar.filesystem.create")}
@@ -434,7 +429,6 @@ export default function FilesystemSidebar() {
                       setCreatingType(null);
                       setNewItemName("");
                     }}
-                    type="button"
                     className="text-[10px] text-zinc-400 hover:text-white border-none bg-transparent cursor-pointer"
                   >
                     {t("sidebar.filesystem.cancel")}
@@ -475,7 +469,6 @@ export default function FilesystemSidebar() {
                     <button
                       type="button"
                       onClick={() => navigateTo(crumb.path)}
-                      type="button"
                       className={`text-xs border-none bg-transparent cursor-pointer transition-colors ${
                         i === breadcrumbs.length - 1
                           ? "text-white light:text-slate-900 font-medium"
@@ -541,7 +534,6 @@ export default function FilesystemSidebar() {
                             handleDelete(item.path, item.name);
                           }}
                           disabled={deletingPath === item.path}
-                          type="button"
                           className="text-zinc-600 light:text-slate-400 hover:text-red-400 light:hover:text-red-500 transition-colors border-none bg-transparent cursor-pointer opacity-0 group-hover:opacity-100 disabled:opacity-40 flex-shrink-0"
                           aria-label={t("sidebar.filesystem.delete")}
                         >
@@ -606,7 +598,6 @@ export default function FilesystemSidebar() {
                               handleDelete(item.path, item.name);
                             }}
                             disabled={deletingPath === item.path}
-                            type="button"
                             className="text-zinc-600 light:text-slate-400 hover:text-red-400 light:hover:text-red-500 transition-colors border-none bg-transparent cursor-pointer opacity-0 group-hover:opacity-100 disabled:opacity-40 flex-shrink-0"
                             aria-label={t("sidebar.filesystem.delete")}
                           >

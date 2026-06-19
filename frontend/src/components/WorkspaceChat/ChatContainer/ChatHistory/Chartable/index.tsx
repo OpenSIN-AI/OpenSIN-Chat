@@ -30,15 +30,32 @@ import {
 import { Colors, getTremorColor } from "./chart-utils.js";
 import CustomCell from "./CustomCell.jsx";
 import Tooltip from "./CustomTooltip.jsx";
+import DOMPurify from "@/utils/chat/purify";
 import { safeJsonParse } from "@/utils/request.js";
 import renderMarkdown from "@/utils/chat/markdown.js";
-import DOMPurify from "@/utils/chat/purify";
 import { memo, useCallback, useState } from "react";
 import { saveAs } from "file-saver";
 import { useGenerateImage } from "recharts-to-png";
 import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
 import { useTranslation } from "react-i18next";
+
+const CHART_SANITIZE_OPTS = {
+  ALLOWED_TAGS: ["svg", "path", "rect", "g", "text", "line", "circle"],
+  ALLOWED_ATTR: [
+    "d",
+    "fill",
+    "stroke",
+    "width",
+    "height",
+    "viewBox",
+    "x",
+    "y",
+    "class",
+    "id",
+  ],
+};
+const safeChart = (html) => DOMPurify.sanitize(html, CHART_SANITIZE_OPTS);
 
 const dataFormatter: any = (number) => {
   return Intl.NumberFormat("us").format(number).toString();
@@ -405,7 +422,7 @@ export function Chartable({ props }: any) {
             <span
               className="flex flex-col gap-y-1 mt-2"
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(renderMarkdown(content.caption)),
+                __html: safeChart(renderMarkdown(content.caption)),
               }}
             />
           </div>
@@ -424,7 +441,7 @@ export function Chartable({ props }: any) {
         <span
           className="flex flex-col gap-y-1 mt-2"
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(renderMarkdown(content.caption)),
+            __html: safeChart(renderMarkdown(content.caption)),
           }}
         />
       </div>
@@ -469,10 +486,7 @@ function DownloadGraph({ onClick }: any) {
 
   return (
     <div className="absolute top-3 right-3 z-50 cursor-pointer">
-      <div
-        className="flex flex-col items-center"
-        aria-busy={loading}
-      >
+      <div className="flex flex-col items-center" aria-busy={loading}>
         <div className="p-1 rounded-full border-none">
           {loading ? (
             <CircleNotch

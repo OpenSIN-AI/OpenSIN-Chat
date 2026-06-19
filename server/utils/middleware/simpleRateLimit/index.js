@@ -1,26 +1,40 @@
 // SPDX-License-Identifier: MIT
-/**
- * simpleRateLimit — dependency-free fixed-window rate limiter middleware.
- *
- * Purpose: Protects expensive or brute-forceable endpoints without adding
- * a third-party dependency. In-memory, per-process (matches the single-node
- * production deployment model of OpenSIN-Chat).
- *
- * Keying: client IP (req.ip, honors Express trust-proxy settings) combined
- * with a route bucket name, so limits are independent per endpoint group.
- *
- * Memory safety: the window store is itself bounded — when it exceeds
- * MAX_TRACKED_KEYS, expired windows are purged; if still over the cap the
- * oldest entries are dropped. This prevents the limiter from becoming its
- * own memory-DoS vector via IP spoofing floods.
- *
- * Per-bucket identity: buckets that opt-in via `opts.identity: "user"` key
- * additionally on the POST username so credential-stuffing from a single
- * IP cannot spray usernames. Without that opt-in, IP-only keying is used.
- */
-
 const MAX_TRACKED_KEYS = 10000;
-const buckets = new Map(); // key -> { count, resetAt }
+const buckets = new Map();
+
+const RATE_LIMIT_BACKEND = (
+  process.env.RATE_LIMIT_BACKEND || "memory"
+).toLowerCase();
+
+let redisClient = null;
+let redisBump = null;
+let redisTtl = null;
+
+if (RATE_LIMIT_BACKEND === "redis") {
+  try {
+    const IORedis = require("ioredis");
+    redisClient = new IORedis(
+      process.env.REDIS_URL || "redis://localhost:6379",
+      { lazyConnect: true, maxRetriesPerRequest: 1 },
+    );
+    redisClient.connect().catch(() => {});
+    redisBump = async function (key, windowMs) {
+      const v = await redisClient.incr(key);
+      if (v === 1) await redisClient.pexpire(key, windowMs);
+      return v;
+    };
+    redisTtl = async function (key) {
+      return await redisClient.pttl(key);
+    };
+  } catch {
+    console.warn(
+      "[simpleRateLimit] RATE_LIMIT_BACKEND=redis requested but ioredis not installed — falling back to in-memory.",
+    );
+    redisClient = null;
+    redisBump = null;
+    redisTtl = null;
+  }
+}
 
 function purge(now) {
   for (const [key, entry] of buckets) {
@@ -33,24 +47,45 @@ function purge(now) {
   }
 }
 
-function bucketKey({ request, bucket, identity }) {
-  const ip = request.ip || "unknown";
-  if (identity !== "user") return `${bucket}:${ip}`;
+function getRealIp(request) {
+  return (
+    (request.headers && request.headers["cf-connecting-ip"]) ||
+    request.ip ||
+    "unknown"
+  );
+}
+
+function bucketKeys({ request, bucket, identity }) {
+  const ip = getRealIp(request);
+  if (identity !== "user") return [`${bucket}:ip:${ip}`];
   const username = (
     typeof request.body?.username === "string" ? request.body.username : ""
   ).trim();
-  return `${bucket}:${ip}:${username || "anonymous"}`;
+  const safeUser =
+    username.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 64) || "anonymous";
+  return [`${bucket}:ip:${ip}`, `${bucket}:account:${safeUser}`];
 }
 
-/**
- * Create a rate-limiting middleware.
- * @param {Object} opts
- * @param {string} opts.bucket - logical name, e.g. "reports-generate"
- * @param {number} opts.max - max requests per window
- * @param {number} opts.windowMs - window length in milliseconds
- * @param {"ip"|"user"} [opts.identity] - "user" keys on body.username as well
- * @returns {import("express").RequestHandler}
- */
+function bumpInMemory(keys, max, windowMs) {
+  const now = Date.now();
+  if (buckets.size > MAX_TRACKED_KEYS) purge(now);
+  let blocked = false;
+  let resetAt = now;
+  let bumpedCount = 0;
+  for (const key of keys) {
+    let entry = buckets.get(key);
+    if (!entry || entry.resetAt <= now) {
+      entry = { count: 0, resetAt: now + windowMs };
+      buckets.set(key, entry);
+    }
+    entry.count += 1;
+    if (entry.count > max) blocked = true;
+    if (entry.resetAt > resetAt) resetAt = entry.resetAt;
+    if (entry.count > bumpedCount) bumpedCount = entry.count;
+  }
+  return { blocked, resetAt, bumpedCount };
+}
+
 function simpleRateLimit({ bucket, max, windowMs, identity = "ip" }) {
   if (!bucket) throw new Error("simpleRateLimit: bucket is required");
 
@@ -58,42 +93,61 @@ function simpleRateLimit({ bucket, max, windowMs, identity = "ip" }) {
     String(process.env.DISABLE_RATE_LIMITS).toLowerCase() === "true" &&
     process.env.NODE_ENV === "production"
   ) {
-    // eslint-disable-next-line no-console
     console.error(
       "[FATAL] DISABLE_RATE_LIMITS=true in production — refusing to start.",
     );
     process.exit(1);
   }
 
-  return function rateLimitMiddleware(request, response, next) {
+  return async function rateLimitMiddleware(request, response, next) {
     if (String(process.env.DISABLE_RATE_LIMITS).toLowerCase() === "true")
       return next();
 
+    const keys = bucketKeys({ request, bucket, identity });
     const now = Date.now();
-    if (buckets.size > MAX_TRACKED_KEYS) purge(now);
+    let result;
 
-    const key = bucketKey({ request, bucket, identity });
-    let entry = buckets.get(key);
-
-    if (!entry || entry.resetAt <= now) {
-      entry = { count: 0, resetAt: now + windowMs };
-      buckets.set(key, entry);
+    if (redisBump) {
+      try {
+        const counts = await Promise.all(
+          keys.map(async (k) => {
+            const v = await redisBump(k, windowMs);
+            let keyReset = now + windowMs;
+            try {
+              const pttl = await redisTtl(k);
+              if (typeof pttl === "number" && pttl > 0) keyReset = now + pttl;
+            } catch (_) {}
+            return { v, keyReset };
+          }),
+        );
+        let blocked = false;
+        let resetAt = now;
+        let bumpedCount = 0;
+        for (const { v, keyReset } of counts) {
+          if (v > max) blocked = true;
+          if (keyReset > resetAt) resetAt = keyReset;
+          if (v > bumpedCount) bumpedCount = v;
+        }
+        result = { blocked, resetAt, bumpedCount };
+      } catch {
+        result = bumpInMemory(keys, max, windowMs);
+      }
+    } else {
+      result = bumpInMemory(keys, max, windowMs);
     }
 
-    entry.count += 1;
-
-    const remaining = Math.max(0, max - entry.count);
+    const remaining = Math.max(0, max - result.bumpedCount);
     response.setHeader("X-RateLimit-Limit", String(max));
     response.setHeader("X-RateLimit-Remaining", String(remaining));
     response.setHeader(
       "X-RateLimit-Reset",
-      String(Math.ceil(entry.resetAt / 1000)),
+      String(Math.ceil(result.resetAt / 1000)),
     );
 
-    if (entry.count > max) {
+    if (result.blocked) {
       response.setHeader(
         "Retry-After",
-        String(Math.ceil((entry.resetAt - now) / 1000)),
+        String(Math.ceil((result.resetAt - now) / 1000)),
       );
       return response
         .status(429)
@@ -104,9 +158,12 @@ function simpleRateLimit({ bucket, max, windowMs, identity = "ip" }) {
   };
 }
 
-/** Test helper — resets all rate-limit state. */
 function _resetRateLimits() {
   buckets.clear();
 }
 
-module.exports = { simpleRateLimit, _resetRateLimits };
+module.exports = {
+  simpleRateLimit,
+  _resetRateLimits,
+  _getBucketKeys: bucketKeys,
+};

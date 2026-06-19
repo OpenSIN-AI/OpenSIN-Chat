@@ -75,7 +75,7 @@ async function callWithLocals(harness, method, path, req = {}, locals = {}) {
 }
 
 describe("Memory endpoints", () => {
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => jest.resetAllMocks());
 
   describe("GET /workspaces/:slug/memories", () => {
     const workspace = { id: 1, name: "WS" };
@@ -239,7 +239,7 @@ describe("Memory endpoints", () => {
   describe("DELETE /memories/:memoryId", () => {
     it("deletes a memory successfully", async () => {
       mockMemoryGet.mockResolvedValue({ id: 5 });
-      mockMemoryDelete.mockResolvedValue(undefined);
+      mockMemoryDelete.mockResolvedValue(true);
       const harness = buildApp();
       const res = await callWithLocals(
         harness,
@@ -250,7 +250,7 @@ describe("Memory endpoints", () => {
       );
       expect(res.statusCode).toBe(200);
       expect(res.body.success).toBe(true);
-      expect(mockMemoryDelete).toHaveBeenCalledWith(5);
+      expect(mockMemoryDelete).toHaveBeenCalledWith(5, undefined);
     });
 
     it("returns 500 on exception", async () => {

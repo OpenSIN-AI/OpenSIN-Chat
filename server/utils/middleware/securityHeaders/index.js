@@ -21,6 +21,8 @@
  *    measure violations first, kept on as a parallel signal)
  */
 
+const { randomUUID } = require("crypto");
+
 const PERMISSIONS_POLICY = [
   "camera=()",
   "geolocation=()",
@@ -53,19 +55,23 @@ const ENFORCED_CSP_CONNECT_SRC = [
   "https://*.googleusercontent.com",
 ];
 
-const ENFORCED_CSP = [
-  "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https:",
-  "media-src 'self' blob:",
-  "worker-src 'self' blob:",
-  `connect-src ${ENFORCED_CSP_CONNECT_SRC.join(" ")}`,
-  "frame-ancestors 'none'",
-].join("; ");
+function buildEnforcedCsp(nonce) {
+  const scriptSrc =
+    process.env.NODE_ENV === "production"
+      ? `'self' 'nonce-${nonce}' 'wasm-unsafe-eval'`
+      : "'self' 'unsafe-inline' 'wasm-unsafe-eval'";
+  return [
+    "default-src 'self'",
+    `script-src ${scriptSrc}`,
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob: https:",
+    "media-src 'self' blob:",
+    "worker-src 'self' blob:",
+    `connect-src ${ENFORCED_CSP_CONNECT_SRC.join(" ")}`,
+    "frame-ancestors 'none'",
+  ].join("; ");
+}
 
-// Broader permissive starter policy for the report-only phase — useful for
-// tracking unexpected endpoints before locking them down in ENFORCED_CSP.
 const REPORT_ONLY_CSP = [
   "default-src 'self'",
   "script-src 'self' 'wasm-unsafe-eval'",
@@ -92,12 +98,19 @@ function securityHeaders() {
     response.setHeader("X-Frame-Options", "DENY");
     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
     response.setHeader("Permissions-Policy", PERMISSIONS_POLICY);
-    response.setHeader("Content-Security-Policy", ENFORCED_CSP);
+
+    if (response.locals && typeof response.locals === "object") {
+      response.locals.cspNonce = randomUUID().replaceAll("-", "");
+    }
+    response.setHeader(
+      "Content-Security-Policy",
+      buildEnforcedCsp(response.locals?.cspNonce || ""),
+    );
 
     if (hstsEnabled)
       response.setHeader(
         "Strict-Transport-Security",
-        "max-age=15552000; includeSubDomains", // 180 days, no preload yet
+        "max-age=15552000; includeSubDomains",
       );
 
     if (cspReportOnly)

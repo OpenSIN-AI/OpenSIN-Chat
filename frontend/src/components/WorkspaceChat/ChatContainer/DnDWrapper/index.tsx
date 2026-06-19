@@ -117,7 +117,9 @@ export function DnDFileUploaderProvider({
   async function handleRemoveParsedFile(event: any) {
     const { document } = event.detail;
     setFiles((prev) =>
-      (prev as any).filter((prevFile) => prevFile.document.id !== document.id),
+      (prev as any).filter(
+        (prevFile) => prevFile.document?.id !== document.id,
+      ),
     );
   }
 

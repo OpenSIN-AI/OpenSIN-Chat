@@ -54,7 +54,7 @@ const Memory = {
     content: (v) => {
       if (typeof v !== "string" || v.trim().length === 0)
         throw new Error("Content must be a non-empty string");
-      return v;
+      return v.trim().slice(0, 10000);
     },
   },
 
@@ -125,6 +125,11 @@ const Memory = {
   }) {
     try {
       const validatedScope = this.validations.scope(scope);
+      if (validatedScope === "workspace" && !workspaceId)
+        return {
+          memory: null,
+          message: "workspaceId is required for workspace-scoped memories.",
+        };
       const limit =
         validatedScope === "global" ? this.GLOBAL_LIMIT : this.WORKSPACE_LIMIT;
       const where = {
@@ -145,7 +150,10 @@ const Memory = {
         const memory = await tx.memories.create({
           data: {
             userId: this.validations.userId(userId),
-            workspaceId: this.validations.workspaceId(workspaceId),
+            workspaceId:
+              validatedScope === "global"
+                ? null
+                : this.validations.workspaceId(workspaceId),
             scope: validatedScope,
             content: this.validations.content(content),
           },
@@ -163,12 +171,28 @@ const Memory = {
 
   /**
    * Update an existing memory's content.
+   * When userId is provided, the update is scoped to that user (prevents TOCTOU races).
    * @param {number} id
    * @param {{content: string}} fields
+   * @param {number|null} [userId] - optional ownership filter
    * @returns {Promise<{memory: Memory|null, message: string|null}>}
    */
-  update: async function (id, { content }) {
+  update: async function (id, { content }, userId = undefined) {
     try {
+      if (userId !== undefined) {
+        const existing = await prisma.memories.findFirst({
+          where: {
+            id: this.validations.id(id),
+            userId: this.validations.userId(userId),
+          },
+          ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
+        });
+        if (!existing)
+          return {
+            memory: null,
+            message: "Memory not found or not owned by user.",
+          };
+      }
       const memory = await prisma.memories.update({
         where: { id: this.validations.id(id) },
         data: {
@@ -187,11 +211,22 @@ const Memory = {
 
   /**
    * Delete a memory by id.
+   * When userId is provided, the delete is scoped to that user (prevents TOCTOU races).
    * @param {number} id
+   * @param {number|null} [userId] - optional ownership filter
    * @returns {Promise<boolean>} true on success, false on error
    */
-  delete: async function (id) {
+  delete: async function (id, userId = undefined) {
     try {
+      if (userId !== undefined) {
+        const result = await prisma.memories.deleteMany({
+          where: {
+            id: this.validations.id(id),
+            userId: this.validations.userId(userId),
+          },
+        });
+        return result.count > 0;
+      }
       await prisma.memories.delete({
         where: { id: this.validations.id(id) },
       });
@@ -276,9 +311,7 @@ const Memory = {
           tx,
         );
         if (wsCount >= this.WORKSPACE_LIMIT) {
-          throw new Error(
-            `WORKSPACE_LIMIT reached: ${this.WORKSPACE_LIMIT}`,
-          );
+          throw new Error(`WORKSPACE_LIMIT reached: ${this.WORKSPACE_LIMIT}`);
         }
 
         const memory = await tx.memories.update({
@@ -434,6 +467,7 @@ const Memory = {
         .filter((m) => m.scope === "GLOBAL")
         .slice(0, Math.max(0, globalSlots));
 
+      let actuallyUpdated = 0;
       await prisma.$transaction(async (tx) => {
         for (const { content } of newWorkspace) {
           await tx.memories.create({
@@ -460,17 +494,23 @@ const Memory = {
         }
 
         for (const { updateId, content } of updates) {
-          await tx.memories.update({
-            where: { id: this.validations.id(updateId) },
-            data: { content, updatedAt: new Date() },
-            ...(SAFE_SELECT ? { select: SAFE_SELECT } : {}),
+          const updateResult = await tx.memories.updateMany({
+            where: {
+              id: this.validations.id(updateId),
+              userId: this.validations.userId(userId),
+            },
+            data: {
+              content: this.validations.content(content),
+              updatedAt: new Date(),
+            },
           });
+          if (updateResult.count > 0) actuallyUpdated++;
         }
       });
 
       result.workspaceCount = newWorkspace.length;
       result.globalCount = newGlobal.length;
-      result.updatedCount = updates.length;
+      result.updatedCount = actuallyUpdated;
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error.message);

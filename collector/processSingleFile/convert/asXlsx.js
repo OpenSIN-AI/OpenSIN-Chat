@@ -15,7 +15,7 @@ const { guardArchiveOrThrow } = require("../../utils/safeUnzip");
 
 function safeCsvCell(str) {
   if (typeof str !== "string") return str;
-  if (/^[=+\-@]/.test(str)) {
+  if (/^[=+\-@\t\r]/.test(str)) {
     if (!/^[-+]?\d+(\.\d+)?$/.test(str)) return "'" + str;
   }
   return str;
@@ -28,6 +28,7 @@ function convertToCSV(data) {
         .map((cell) => {
           if (cell === null || cell === undefined) return "";
           let str = String(cell);
+          str = safeCsvCell(str);
           if (
             str.includes(",") ||
             str.includes('"') ||
@@ -36,7 +37,6 @@ function convertToCSV(data) {
           ) {
             str = `"${str.replace(/"/g, '""')}"`;
           }
-          str = safeCsvCell(str);
           return str;
         })
         .join(",")

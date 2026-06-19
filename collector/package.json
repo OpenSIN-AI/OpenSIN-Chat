@@ -5,7 +5,7 @@
   "main": "index.js",
   "author": "Timothy Carambat (OpenSIN-AI)",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "engines": {
     "node": ">=22.0.0"
   },

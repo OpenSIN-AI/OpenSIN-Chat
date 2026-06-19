@@ -79,10 +79,14 @@ model users {
   createdAt                    DateTime                      @default(now())
   lastUpdatedAt                DateTime                      @default(now())
   dailyMessageLimit            Int?
-  dailyMessageUsedAt           Int?                           @default(0)
+  dailyMessageUsedAt           Int?                          @default(0)
   dailyMessageResetAt          DateTime?
   bio                          String?                       @default("")
   web_push_subscription_config String?
+  failed_login_count           Int?                          @default(0)
+  failed_login_last_at         DateTime?
+  @@index([failed_login_count])
+  @@index([failed_login_last_at])
   workspace_chats              workspace_chats[]
   workspace_users              workspace_users[]
   embed_configs                embed_configs[]

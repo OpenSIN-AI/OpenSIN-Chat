@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import AddMemberModal from "./AddMemberModal";
 import WorkspaceMemberRow from "./WorkspaceMemberRow";
 import CTAButton from "@/components/lib/CTAButton";
@@ -17,7 +17,7 @@ export default function Members({ workspace }: { workspace: { id: number } }) {
 
   if (isLoading) {
     return (
-      <Skeleton.default
+      <Skeleton
         height="80vh"
         width="100%"
         highlightColor="var(--theme-bg-primary)"

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import {
-  useEffect,
+  useImperativeHandle,
   useRef,
   useState,
   useMemo,
@@ -9,6 +9,8 @@ import {
   lazy,
   Suspense,
 } from "react";
+import type { VirtuosoHandle } from "react-virtuoso";
+import { Virtuoso } from "react-virtuoso";
 import HistoricalMessage from "./HistoricalMessage";
 import PromptReply from "./PromptReply";
 import StatusResponse from "./StatusResponse";
@@ -18,7 +20,6 @@ import FileDownloadCard from "./FileDownloadCard";
 import { useManageWorkspaceModal } from "../../../Modals/ManageWorkspace";
 import ManageWorkspace from "../../../Modals/ManageWorkspace";
 import { ArrowDown } from "@phosphor-icons/react/dist/csr/ArrowDown";
-import debounce from "lodash.debounce";
 // Chartable (recharts + @tremor) wird LAZY geladen, um den
 // ESM-Temporal-Dead-Zone-Race im Vite-Build zu vermeiden:
 // die Recharts-Top-Level-Factory ruft s.forwardRef(...) beim Modul-Eval
@@ -36,6 +37,131 @@ import { MessageActionsProvider } from "./MessageActionsContext";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
 import { useTranslation } from "react-i18next";
 
+function buildRows({ history, workspace, websocket, t }: any) {
+  const rows: any[] = [];
+  let statusGroup: any[] | null = null;
+
+  for (let index = 0; index < history.length; index++) {
+    const props = history[index];
+    const isLastBotReply =
+      index === history.length - 1 && props.role === "assistant";
+
+    if (props?.type === "statusResponse" && !!props.content) {
+      if (!statusGroup) statusGroup = [];
+      statusGroup.push(props);
+      continue;
+    }
+    if (statusGroup) {
+      rows.push({
+        kind: "statusGroup",
+        id: `status-group-${statusGroup[0].uuid ?? statusGroup[0].id ?? statusGroup[0].chatId ?? "x"}-${rows.length}`,
+        messages: statusGroup,
+      });
+      statusGroup = null;
+    }
+
+    if (props.type === "modelRouteNotification") {
+      const lastMsg = history[history.length - 1];
+      const isLast =
+        index === history.length - 1 ||
+        (index === history.length - 2 &&
+          (lastMsg?.animate || lastMsg?.pending));
+      const isStreaming =
+        isLast &&
+        (index === history.length - 1 || lastMsg?.animate || lastMsg?.pending);
+      rows.push({
+        kind: "route",
+        id: `route-${props.uuid ?? index}`,
+        routedTo: props.routedTo,
+        isStreaming,
+      });
+      continue;
+    }
+
+    if (props.type === "toolApprovalRequest") {
+      rows.push({
+        kind: "toolApproval",
+        id: `tool-approval-${props.requestId}`,
+        requestId: props.requestId,
+        skillName: props.skillName,
+        payload: props.payload,
+        description: props.description,
+        timeoutMs: props.timeoutMs,
+        websocket,
+      });
+      continue;
+    }
+
+    if (props.type === "clarifyingQuestion") {
+      rows.push({
+        kind: "clarifying",
+        id: `clarify-${props.requestId}`,
+        requestId: props.requestId,
+        questions: props.questions,
+        allowSkip: props.allowSkip,
+        timeoutMs: props.timeoutMs,
+        websocket,
+      });
+      continue;
+    }
+
+    if (props.type === "rechartVisualize" && !!props.content) {
+      rows.push({
+        kind: "rechart",
+        id: `rechart-${props.uuid ?? index}`,
+        uuid: props.uuid,
+        chartProps: props,
+        t,
+      });
+    } else if (props.type === "fileDownloadCard" && !!props.content) {
+      rows.push({
+        kind: "fileDownload",
+        id: `file-${props.uuid ?? index}`,
+        uuid: props.uuid,
+        chartProps: props,
+        autoPreview: !!props.justGenerated,
+      });
+    } else if (isLastBotReply && props.animate) {
+      rows.push({
+        kind: "promptReply",
+        id: `prompt-reply-${props.uuid ?? index}`,
+        uuid: props.uuid,
+        reply: props.content,
+        pending: props.pending,
+        sources: props.sources,
+        error: props.error,
+        closed: props.closed,
+      });
+    } else {
+      rows.push({
+        kind: "historical",
+        id: `historical-${props.uuid ?? props.chatId ?? index}`,
+        uuid: props.uuid,
+        message: props.content,
+        role: props.role,
+        workspace,
+        sources: props.sources,
+        feedbackScore: props.feedbackScore,
+        chatId: props.chatId,
+        error: props.error,
+        attachments: props.attachments,
+        isLastMessage: isLastBotReply,
+        metrics: props.metrics,
+        outputs: props.outputs,
+        clarifyingQuestions: props.clarifyingQuestions,
+      });
+    }
+  }
+  if (statusGroup) {
+    rows.push({
+      kind: "statusGroup",
+      id: `status-group-${statusGroup[0].uuid ?? statusGroup[0].id ?? statusGroup[0].chatId ?? "x"}-${rows.length}`,
+      messages: statusGroup,
+    });
+  }
+  return rows;
+}
+
 export default forwardRef(function (
   {
     history = [],
@@ -47,198 +173,266 @@ export default forwardRef(function (
   }: any,
   ref,
 ) {
+  const virtuosoRef = useRef<VirtuosoHandle | null>(null);
   const lastScrollTopRef = useRef(0);
-  const chatHistoryRef = useRef(null);
   const { t } = useTranslation();
   const { threadSlug = null } = useParams();
   const { showing, hideModal } = useManageWorkspaceModal();
   const [isAtBottom, setIsAtBottom] = useState(true as any);
-  const [isUserScrolling, setIsUserScrolling] = useState(false as any);
   const isStreaming = history[history.length - 1]?.animate;
   const { showScrollbar } = Appearance.getSettings();
   const { textSizeClass } = useTextSize();
 
-  useEffect(() => {
-    if (!isUserScrolling && (isAtBottom || isStreaming)) {
-      scrollToBottom(false); // Use instant scroll for auto-scrolling
-    }
-  }, [history, isAtBottom, isStreaming, isUserScrolling]);
-
-  const handleScroll: any = (e) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.target;
-    const isBottom = scrollHeight - scrollTop - clientHeight < 2;
-
-    // Detect if this is a user-initiated scroll
-    if (Math.abs(scrollTop - lastScrollTopRef.current) > 10) {
-      setIsUserScrolling(!isBottom);
-    }
-
-    setIsAtBottom(isBottom);
-    lastScrollTopRef.current = scrollTop;
-  };
-
-  const debouncedScroll = debounce(handleScroll, 100);
-
-  useEffect(() => {
-    const chatHistoryElement = chatHistoryRef.current;
-    if (chatHistoryElement) {
-      chatHistoryElement.addEventListener("scroll", debouncedScroll);
-      return () =>
-        chatHistoryElement.removeEventListener("scroll", debouncedScroll);
-    }
-  }, []);
-
-  const scrollToBottom: any = (smooth = false) => {
-    if (chatHistoryRef.current) {
-      chatHistoryRef.current.scrollTo({
-        top: chatHistoryRef.current.scrollHeight,
-
-        // Smooth is on when user clicks the button but disabled during auto scroll
-        // We must disable this during auto scroll because it causes issues with
-        // detecting when we are at the bottom of the chat.
-        ...(smooth ? { behavior: "smooth" } : {}),
-      });
-    }
-  };
-
-  useChatHistoryScrollHandle(ref, chatHistoryRef, {
-    setIsUserScrolling,
-    isStreaming,
-    scrollToBottom,
-  });
-
-  const saveEditedMessage = async ({
-    editedMessage,
-    chatId,
-    role,
-    attachments = [],
-    saveOnly = false,
-  }: any) => {
-    if (!editedMessage) return; // Don't save empty edits.
-
-    // "Save" on a user message: update the prompt text without regenerating
-    if (role === "user" && saveOnly) {
-      const updatedHistory = [...history];
-      const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
-      if (targetIdx < 0) return;
-      updatedHistory[targetIdx].content = editedMessage;
-      updateHistory(updatedHistory);
-      await Workspace.updateChat(
-        workspace.slug,
-        threadSlug,
-        chatId,
-        editedMessage,
-        "user",
-      );
-      invalidateChatHistory(workspace.slug, threadSlug);
-      return;
-    }
-
-    // "Submit" on a user message: auto-regenerate the response and delete all
-    // messages post modified message
-    if (role === "user") {
-      // remove all messages after the edited message
-      // technically there are two chatIds per-message pair, this will split the first.
-      const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
-      if (targetIdx < 0) return;
-      const updatedHistory = history.slice(0, targetIdx + 1);
-
-      // update last message in history to edited message
-      updatedHistory[updatedHistory.length - 1].content = editedMessage;
-      // remove all edited messages after the edited message in backend
-      await Workspace.deleteEditedChats(workspace.slug, threadSlug, chatId);
-      sendCommand({
-        text: editedMessage,
-        autoSubmit: true,
-        history: updatedHistory,
-        attachments,
-      });
-      // Streaming completion in useChatStream will invalidate the cache.
-      return;
-    }
-
-    // If role is an assistant we simply want to update the comment and save on the backend as an edit.
-    if (role === "assistant") {
-      const updatedHistory = [...history];
-      const targetIdx = history.findIndex(
-        (msg) => msg.chatId === chatId && msg.role === role,
-      );
-      if (targetIdx < 0) return;
-      updatedHistory[targetIdx].content = editedMessage;
-      updateHistory(updatedHistory);
-      await Workspace.updateChat(
-        workspace.slug,
-        threadSlug,
-        chatId,
-        editedMessage,
-      );
-      invalidateChatHistory(workspace.slug, threadSlug);
-      return;
-    }
-  };
-
-  const forkThread = async (chatId) => {
-    const newThreadSlug = await Workspace.forkThread(
-      workspace.slug,
-      threadSlug,
+  const saveEditedMessage = useCallback(
+    async ({
+      editedMessage,
       chatId,
-    );
-    invalidateChatHistory(workspace.slug, threadSlug);
-    window.location.href = paths.workspace.thread(
-      workspace.slug,
-      newThreadSlug,
-    );
-  };
+      role,
+      attachments = [],
+      saveOnly = false,
+    }: any) => {
+      if (!editedMessage) return;
 
-  const compiledHistory = useMemo(
-    () =>
-      buildMessages({
-        workspace,
-        history,
-        regenerateAssistantMessage,
-        saveEditedMessage,
-        forkThread,
-        websocket,
-        t,
-      }),
-    [
-      workspace,
-      history,
-      regenerateAssistantMessage,
-      saveEditedMessage,
-      forkThread,
-      websocket,
-    ],
+      if (role === "user" && saveOnly) {
+        const updatedHistory = [...history];
+        const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
+        if (targetIdx < 0) return;
+        updatedHistory[targetIdx].content = editedMessage;
+        updateHistory(updatedHistory);
+        await Workspace.updateChat(
+          workspace.slug,
+          threadSlug,
+          chatId,
+          editedMessage,
+          "user",
+        );
+        invalidateChatHistory(workspace.slug, threadSlug);
+        return;
+      }
+
+      if (role === "user") {
+        const targetIdx = history.findIndex((msg) => msg.chatId === chatId);
+        if (targetIdx < 0) return;
+        const updatedHistory = history.slice(0, targetIdx + 1);
+        updatedHistory[updatedHistory.length - 1].content = editedMessage;
+        await Workspace.deleteEditedChats(workspace.slug, threadSlug, chatId);
+        sendCommand({
+          text: editedMessage,
+          autoSubmit: true,
+          history: updatedHistory,
+          attachments,
+        });
+        return;
+      }
+
+      if (role === "assistant") {
+        const updatedHistory = [...history];
+        const targetIdx = history.findIndex(
+          (msg) => msg.chatId === chatId && msg.role === role,
+        );
+        if (targetIdx < 0) return;
+        updatedHistory[targetIdx].content = editedMessage;
+        updateHistory(updatedHistory);
+        await Workspace.updateChat(
+          workspace.slug,
+          threadSlug,
+          chatId,
+          editedMessage,
+        );
+        invalidateChatHistory(workspace.slug, threadSlug);
+        return;
+      }
+    },
+    [history, workspace?.slug, threadSlug, sendCommand, updateHistory],
   );
-  const lastMessageInfo = useMemo(() => getLastMessageInfo(history), [history]);
-  const renderStatusResponse = useCallback(
-    (item, index) => {
-      const hasSubsequentMessages = index < compiledHistory.length - 1;
-      return (
-        <StatusResponse
-          key={`status-group-${index}`}
-          messages={item}
-          isThinking={!hasSubsequentMessages && lastMessageInfo.isAnimating}
-        />
+
+  const forkThread = useCallback(
+    async (chatId: any) => {
+      const newThreadSlug = await Workspace.forkThread(
+        workspace.slug,
+        threadSlug,
+        chatId,
+      );
+      invalidateChatHistory(workspace.slug, threadSlug);
+      window.location.href = paths.workspace.thread(
+        workspace.slug,
+        newThreadSlug,
       );
     },
-    [compiledHistory.length, lastMessageInfo],
+    [workspace?.slug, threadSlug],
+  );
+
+  const stableRegenerate = useCallback(
+    (chatId: any) => regenerateAssistantMessage?.(chatId),
+    [regenerateAssistantMessage],
+  );
+
+  const compiledRows = useMemo(
+    () => buildRows({ history, workspace, websocket, t }),
+    [history, workspace, websocket, t],
+  );
+  const lastMessageInfo = useMemo(() => getLastMessageInfo(history), [history]);
+
+  const scrollVirtuosoToBottom = useCallback((smooth: boolean) => {
+    const handle: any = virtuosoRef.current;
+    if (!handle) return;
+    handle.scrollTo({
+      top: 1_000_000_000,
+      behavior: smooth ? "smooth" : "auto",
+    });
+  }, []);
+
+  const scrollVirtuosoToTop = useCallback(() => {
+    virtuosoRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      scrollToTop: () => scrollVirtuosoToTop(),
+      scrollToBottom: () => scrollVirtuosoToBottom(!isStreaming),
+    }),
+    [scrollVirtuosoToBottom, scrollVirtuosoToTop, isStreaming],
+  );
+
+  const handleScrollState = useCallback((atBottom: boolean) => {
+    setIsAtBottom(atBottom);
+  }, []);
+
+  const renderRow = useCallback(
+    (row: any) => {
+      switch (row.kind) {
+        case "statusGroup": {
+          const hasSubsequentMessages =
+            compiledRows.indexOf(row) < compiledRows.length - 1;
+          return (
+            <StatusResponse
+              messages={row.messages}
+              isThinking={
+                !hasSubsequentMessages && lastMessageInfo.isAnimating
+              }
+            />
+          );
+        }
+        case "route":
+          return (
+            <ModelRouteNotification
+              routedTo={row.routedTo}
+              isStreaming={row.isStreaming}
+            />
+          );
+        case "toolApproval":
+          return (
+            <ToolApprovalRequest
+              requestId={row.requestId}
+              skillName={row.skillName}
+              payload={row.payload}
+              description={row.description}
+              timeoutMs={row.timeoutMs}
+              websocket={row.websocket}
+            />
+          );
+        case "clarifying":
+          return (
+            <ClarifyingQuestionCard
+              requestId={row.requestId}
+              questions={row.questions}
+              allowSkip={row.allowSkip}
+              timeoutMs={row.timeoutMs}
+              websocket={row.websocket}
+            />
+          );
+        case "rechart":
+          return (
+            <Suspense
+              fallback={
+                <div className="text-theme-text-secondary text-xs italic">
+                  {row.t("chat_window.chart_loading")}
+                </div>
+              }
+            >
+              <Chartable props={row.chartProps} />
+            </Suspense>
+          );
+        case "fileDownload":
+          return (
+            <FileDownloadCard
+              props={row.chartProps}
+              autoPreview={row.autoPreview}
+            />
+          );
+        case "promptReply":
+          return (
+            <PromptReply
+              uuid={row.uuid}
+              reply={row.reply}
+              pending={row.pending}
+              sources={row.sources}
+              error={row.error}
+              closed={row.closed}
+            />
+          );
+        case "historical":
+          return (
+            <HistoricalMessage
+              uuid={row.uuid}
+              message={row.message}
+              role={row.role}
+              workspace={row.workspace}
+              sources={row.sources}
+              feedbackScore={row.feedbackScore}
+              chatId={row.chatId}
+              error={row.error}
+              attachments={row.attachments}
+              regenerateMessage={stableRegenerate}
+              isLastMessage={row.isLastMessage}
+              saveEditedMessage={saveEditedMessage}
+              forkThread={forkThread}
+              metrics={row.metrics}
+              outputs={row.outputs}
+              clarifyingQuestions={row.clarifyingQuestions}
+            />
+          );
+        default:
+          return null;
+      }
+    },
+    [
+      compiledRows,
+      lastMessageInfo,
+      saveEditedMessage,
+      forkThread,
+      stableRegenerate,
+    ],
+  );
+
+  const computeItemKey = useCallback(
+    (_index: number, row: any) => row.id,
+    [],
   );
 
   return (
     <MessageActionsProvider>
       <ThoughtExpansionProvider>
         <div
-          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full md:h-[83%] pb-[100px] pt-6 md:pt-0 md:pb-20 md:mx-0 overflow-y-scroll flex flex-col items-center justify-start ${showScrollbar ? "show-scrollbar" : "no-scroll"}`}
           id="chat-history"
-          ref={chatHistoryRef}
-          onScroll={handleScroll}
+          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full md:h-[83%] pb-[100px] pt-6 md:pt-0 md:pb-20 md:mx-0 flex flex-col items-center justify-start ${showScrollbar ? "show-scrollbar" : "no-scroll"}`}
         >
-          <div className="w-full max-w-[750px]">
-            {(compiledHistory as any).map((item, index) =>
-              Array.isArray(item) ? renderStatusResponse(item, index) : item,
-            )}
-          </div>
+          <Virtuoso
+            ref={virtuosoRef}
+            data={compiledRows}
+            computeItemKey={computeItemKey}
+            itemContent={(_index, row) => renderRow(row)}
+            followOutput={(atBottom: boolean) =>
+              atBottom || isStreaming ? "auto" : false
+            }
+            initialTopMostItemIndex={
+              compiledRows.length > 1 ? compiledRows.length - 1 : 0
+            }
+            atBottomStateChange={handleScrollState}
+            className="h-full w-full overflow-y-scroll"
+            defaultItemHeight={80}
+          />
           {showing && (
             <ManageWorkspace
               hideModal={hideModal}
@@ -252,8 +446,7 @@ export default forwardRef(function (
               <div
                 className="p-1 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 hover:text-white"
                 onClick={() => {
-                  scrollToBottom(isStreaming ? false : true);
-                  setIsUserScrolling(false);
+                  scrollVirtuosoToBottom(!isStreaming);
                 }}
               >
                 <ArrowDown weight="bold" className="text-white/60 w-5 h-5" />
@@ -266,158 +459,10 @@ export default forwardRef(function (
   );
 });
 
-const getLastMessageInfo: any = (history) => {
+const getLastMessageInfo: any = (history: any) => {
   const lastMessage = history?.[history.length - 1] || {};
   return {
     isAnimating: lastMessage?.animate,
     isStatusResponse: lastMessage?.type === "statusResponse",
   };
 };
-
-/**
- * Builds the history of messages for the chat.
- * This is mostly useful for rendering the history in a way that is easy to understand.
- * as well as compensating for agent thinking and other messages that are not part of the history, but
- * are still part of the chat.
- *
- * @param {Object} param0 - The parameters for building the messages.
- * @param {Array} param0.history - The history of messages.
- * @param {Object} param0.workspace - The workspace object.
- * @param {Function} param0.regenerateAssistantMessage - The function to regenerate the assistant message.
- * @param {Function} param0.saveEditedMessage - The function to save the edited message.
- * @param {Function} param0.forkThread - The function to fork the thread.
- * @param {WebSocket} param0.websocket - The active websocket connection for agent communication.
- * @returns {Array} The compiled history of messages.
- */
-function buildMessages({
-  history,
-  workspace,
-  regenerateAssistantMessage,
-  saveEditedMessage,
-  forkThread,
-  websocket,
-  t,
-}: any) {
-  return history.reduce((acc, props, index) => {
-    const isLastBotReply =
-      index === history.length - 1 && props.role === "assistant";
-
-    if (props?.type === "statusResponse" && !!props.content) {
-      if (acc.length > 0 && Array.isArray(acc[acc.length - 1])) {
-        acc[acc.length - 1].push(props);
-      } else {
-        acc.push([props]);
-      }
-      return acc;
-    }
-
-    if (props.type === "modelRouteNotification") {
-      const lastMsg = history[history.length - 1];
-      const isLast =
-        index === history.length - 1 ||
-        (index === history.length - 2 &&
-          (lastMsg?.animate || lastMsg?.pending));
-      const isStreaming =
-        isLast &&
-        (index === history.length - 1 || lastMsg?.animate || lastMsg?.pending);
-      acc.push(
-        <ModelRouteNotification
-          key={`route-${props.uuid}`}
-          routedTo={props.routedTo}
-          isStreaming={isStreaming}
-        />,
-      );
-      return acc;
-    }
-
-    if (props.type === "toolApprovalRequest") {
-      acc.push(
-        <ToolApprovalRequest
-          key={`tool-approval-${props.requestId}`}
-          requestId={props.requestId}
-          skillName={props.skillName}
-          payload={props.payload}
-          description={props.description}
-          timeoutMs={props.timeoutMs}
-          websocket={websocket}
-        />,
-      );
-      return acc;
-    }
-
-    if (props.type === "clarifyingQuestion") {
-      acc.push(
-        <ClarifyingQuestionCard
-          key={`clarify-${props.requestId}`}
-          requestId={props.requestId}
-          questions={props.questions}
-          allowSkip={props.allowSkip}
-          timeoutMs={props.timeoutMs}
-          websocket={websocket}
-        />,
-      );
-      return acc;
-    }
-
-    if (props.type === "rechartVisualize" && !!props.content) {
-      acc.push(
-        <Suspense
-          key={props.uuid}
-          fallback={
-            <div className="text-theme-text-secondary text-xs italic">
-              {t("chat_window.chart_loading")}
-            </div>
-          }
-        >
-          <Chartable props={props} />
-        </Suspense>,
-      );
-    } else if (props.type === "fileDownloadCard" && !!props.content) {
-      // #55: Auto-open the preview sidebar only for reports just streamed in
-      // by the agent (flagged in utils/chat/agent.js). Reloaded history never
-      // carries this flag, so it won't re-trigger.
-      acc.push(
-        <FileDownloadCard
-          key={props.uuid}
-          props={props}
-          autoPreview={!!props.justGenerated}
-        />,
-      );
-    } else if (isLastBotReply && props.animate) {
-      acc.push(
-        <PromptReply
-          key={`prompt-reply-${props.uuid || index}`}
-          uuid={props.uuid}
-          reply={props.content}
-          pending={props.pending}
-          sources={props.sources}
-          error={props.error}
-          closed={props.closed}
-        />,
-      );
-    } else {
-      acc.push(
-        <HistoricalMessage
-          key={index}
-          uuid={props.uuid}
-          message={props.content}
-          role={props.role}
-          workspace={workspace}
-          sources={props.sources}
-          feedbackScore={props.feedbackScore}
-          chatId={props.chatId}
-          error={props.error}
-          attachments={props.attachments}
-          regenerateMessage={regenerateAssistantMessage}
-          isLastMessage={isLastBotReply}
-          saveEditedMessage={saveEditedMessage}
-          forkThread={forkThread}
-          metrics={props.metrics}
-          outputs={props.outputs}
-          clarifyingQuestions={props.clarifyingQuestions}
-        />,
-      );
-    }
-    return acc;
-  }, []);
-}

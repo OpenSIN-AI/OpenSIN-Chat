@@ -234,8 +234,24 @@ function scheduledJobEndpoints(app) {
         const { name, prompt, tools, schedule, enabled } = reqBody(request);
         const updates = {};
 
-        if (name !== undefined) updates.name = String(name).trim();
-        if (prompt !== undefined) updates.prompt = String(prompt).trim();
+        if (name !== undefined) {
+          const trimmedName = String(name).trim();
+          if (!trimmedName) {
+            return response
+              .status(400)
+              .json({ job: null, error: "Name cannot be empty." });
+          }
+          updates.name = trimmedName.slice(0, 255);
+        }
+        if (prompt !== undefined) {
+          const trimmedPrompt = String(prompt).trim();
+          if (!trimmedPrompt) {
+            return response
+              .status(400)
+              .json({ job: null, error: "Prompt cannot be empty." });
+          }
+          updates.prompt = trimmedPrompt.slice(0, 10000);
+        }
         if (tools !== undefined) updates.tools = tools;
         if (enabled !== undefined) updates.enabled = Boolean(enabled);
         if (schedule !== undefined) {

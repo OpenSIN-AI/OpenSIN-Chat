@@ -2,7 +2,7 @@
 // Docs: index.doc.md
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
 import InviteRow from "./InviteRow";
@@ -48,7 +48,7 @@ export default function AdminInvites(): JSX.Element {
           </div>
           <div className="overflow-x-auto mt-6">
             {isLoading ? (
-              <Skeleton.default
+              <Skeleton
                 height="80vh"
                 width="100%"
                 highlightColor="var(--theme-bg-primary)"

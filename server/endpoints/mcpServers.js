@@ -61,6 +61,11 @@ function mcpServersEndpoints(app) {
     async (request, response) => {
       try {
         const { name } = reqBody(request);
+        if (!name || typeof name !== "string") {
+          return response
+            .status(400)
+            .json({ success: false, error: "Server name is required." });
+        }
         const result = await new MCPCompatibilityLayer().toggleServerStatus(
           name,
         );
@@ -85,6 +90,11 @@ function mcpServersEndpoints(app) {
     async (request, response) => {
       try {
         const { name } = reqBody(request);
+        if (!name || typeof name !== "string") {
+          return response
+            .status(400)
+            .json({ success: false, error: "Server name is required." });
+        }
         const result = await new MCPCompatibilityLayer().deleteServer(name);
         return response.status(200).json({
           success: result.success,
@@ -107,10 +117,20 @@ function mcpServersEndpoints(app) {
     async (request, response) => {
       try {
         const { serverName, toolName, enabled } = reqBody(request);
+        if (!serverName || typeof serverName !== "string") {
+          return response
+            .status(400)
+            .json({ success: false, error: "Server name is required." });
+        }
+        if (!toolName || typeof toolName !== "string") {
+          return response
+            .status(400)
+            .json({ success: false, error: "Tool name is required." });
+        }
         const result = await new MCPCompatibilityLayer().toggleToolSuppression(
           serverName,
           toolName,
-          enabled,
+          Boolean(enabled),
         );
         return response.status(200).json({
           success: result.success,

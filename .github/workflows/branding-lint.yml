@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3a93e3444e15be6668339c0b1f3a0642e
 
       - name: Install ripgrep
         run: sudo apt-get update && sudo apt-get install -y ripgrep

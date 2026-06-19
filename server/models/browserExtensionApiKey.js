@@ -54,7 +54,10 @@ const BrowserExtensionApiKey = {
       return apiKey.user_id ? apiKey : false;
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.error("FAILED TO VALIDATE BROWSER EXTENSION API KEY.", error.message);
+      console.error(
+        "FAILED TO VALIDATE BROWSER EXTENSION API KEY.",
+        error.message,
+      );
       return false;
     }
   },

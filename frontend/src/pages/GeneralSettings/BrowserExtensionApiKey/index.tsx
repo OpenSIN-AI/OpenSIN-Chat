@@ -2,7 +2,7 @@
 // Docs: index.doc.md
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
-import * as Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PlusCircle } from "@phosphor-icons/react/dist/csr/PlusCircle";
 import BrowserExtensionApiKeyRow from "./BrowserExtensionApiKeyRow";
@@ -54,7 +54,7 @@ export default function BrowserExtensionApiKeys(): JSX.Element {
           </div>
           <div className="overflow-x-auto mt-6">
             {isLoading ? (
-              <Skeleton.default
+              <Skeleton
                 height="80vh"
                 width="100%"
                 highlightColor="var(--theme-bg-primary)"
