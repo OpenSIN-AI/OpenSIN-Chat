@@ -29,50 +29,56 @@ export default function WorkspaceAgentConfiguration({
   const formEl = useRef<HTMLFormElement>(null);
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
-    setSaving(true);
     e.preventDefault();
-    const data: {
-      workspace: Record<string, any>;
-      system: Record<string, any>;
-      env: Record<string, any>;
-    } = {
-      workspace: {},
-      system: {},
-      env: {},
-    };
+    setSaving(true);
+    try {
+      const data: {
+        workspace: Record<string, any>;
+        system: Record<string, any>;
+        env: Record<string, any>;
+      } = {
+        workspace: {},
+        system: {},
+        env: {},
+      };
 
-    const form = new FormData(formEl.current!);
-    for (const [key, value] of form.entries()) {
-      if (key.startsWith("system::")) {
-        const [, label] = key.split("system::");
-        data.system[label] = String(value);
-        continue;
+      const form = new FormData(formEl.current!);
+      for (const [key, value] of form.entries()) {
+        if (key.startsWith("system::")) {
+          const [, label] = key.split("system::");
+          data.system[label] = String(value);
+          continue;
+        }
+
+        if (key.startsWith("env::")) {
+          const [, label] = key.split("env::");
+          data.env[label] = String(value);
+          continue;
+        }
+
+        data.workspace[key] = castToType(key, value);
       }
 
-      if (key.startsWith("env::")) {
-        const [, label] = key.split("env::");
-        data.env[label] = String(value);
-        continue;
+      const { workspace: updatedWorkspace, message } = await Workspace.update(
+        workspace.slug,
+        data.workspace,
+      );
+      await Admin.updateSystemPreferences(data.system);
+      await System.updateSystem(data.env);
+
+      if (!!updatedWorkspace) {
+        showToast(t("agentConfig.workspaceUpdated"), "success", {
+          clear: true,
+        });
+        setHasChanges(false);
+      } else {
+        showToast(t("agentConfig.error", { message }), "error", { clear: true });
       }
-
-      data.workspace[key] = castToType(key, value);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
     }
-
-    const { workspace: updatedWorkspace, message } = await Workspace.update(
-      workspace.slug,
-      data.workspace,
-    );
-    await Admin.updateSystemPreferences(data.system);
-    await System.updateSystem(data.env);
-
-    if (!!updatedWorkspace) {
-      showToast(t("agentConfig.workspaceUpdated"), "success", { clear: true });
-    } else {
-      showToast(t("agentConfig.error", { message }), "error", { clear: true });
-    }
-
-    setSaving(false);
-    setHasChanges(false);
   };
 
   if (!workspace || loading) return <LoadingSkeleton />;

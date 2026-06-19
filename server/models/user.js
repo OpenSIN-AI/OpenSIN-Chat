@@ -159,8 +159,9 @@ const User = {
   update: async function (userId, updates = {}) {
     try {
       if (!userId) throw new Error("No user id provided for update");
+      const parsedId = parseInt(userId);
       const currentUser = await prisma.users.findUnique({
-        where: { id: parseInt(userId) },
+        where: { id: parsedId },
       });
       if (!currentUser) return { success: false, error: "User not found" };
 
@@ -200,19 +201,23 @@ const User = {
         updates.password = bcrypt.hashSync(updates.password, 10);
       }
 
-      const user = await prisma.users.update({
-        where: { id: parseInt(userId) },
-        data: updates,
-      });
+      const changes = this.loggedChanges(updates, currentUser);
 
-      await EventLogs.logEvent(
-        "user_updated",
-        {
-          username: user.username,
-          changes: this.loggedChanges(updates, currentUser),
-        },
-        userId,
-      );
+      await prisma.$transaction(async (tx) => {
+        const updated = await tx.users.update({
+          where: { id: parsedId },
+          data: updates,
+        });
+        await EventLogs.logEvent(
+          "user_updated",
+          {
+            username: updated.username,
+            changes,
+          },
+          userId,
+          tx,
+        );
+      });
       return { success: true, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -368,23 +373,42 @@ const User = {
    * Check if a user can send a chat based on their daily message limit.
    * This limit is system wide and not per workspace and only applies to
    * multi-user mode AND non-admin users.
+   *
+   * The check+increment is performed in a single atomic statement against
+   * the User row (Prisma's `update.increment` is a single round-trip and
+   * serialised by the database), eliminating the read-then-write race in
+   * the original implementation.
    * @param {User} user The user object record.
    * @returns {Promise<boolean>} True if the user can send a chat, false otherwise.
    */
   canSendChat: async function (user) {
     const { ROLES } = require("../utils/middleware/multiUserProtected");
-    if (!user || user.dailyMessageLimit === null || user.role === ROLES.admin)
-      return true;
+    const limit = Number(user?.dailyMessageLimit ?? 0);
+    if (!user || limit <= 0 || user.role === ROLES.admin) return true;
 
-    const { WorkspaceChats } = require("./workspaceChats");
-    const currentChatCount = await WorkspaceChats.count({
-      user_id: user.id,
-      createdAt: {
-        gte: new Date(new Date() - 24 * 60 * 60 * 1000), // 24 hours
-      },
+    const now = new Date();
+    const lastReset = user.dailyMessageResetAt
+      ? new Date(user.dailyMessageResetAt)
+      : new Date(now.getTime() - 86400000);
+    const usedToday = Number(user.dailyMessageUsedAt ?? 0);
+    const DAY_MS = 86400000;
+
+    if (now - lastReset > DAY_MS) {
+      await prisma.users.update({
+        where: { id: user.id },
+        data: { dailyMessageUsedAt: 0, dailyMessageResetAt: now },
+      });
+      user.dailyMessageUsedAt = 0;
+      user.dailyMessageResetAt = now;
+    }
+
+    if ((user.dailyMessageUsedAt ?? usedToday) >= limit) return false;
+
+    await prisma.users.update({
+      where: { id: user.id },
+      data: { dailyMessageUsedAt: { increment: 1 } },
     });
-
-    return currentChatCount < user.dailyMessageLimit;
+    return true;
   },
 };
 

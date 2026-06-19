@@ -2,9 +2,10 @@
 const prisma = require("../utils/prisma");
 
 const EventLogs = {
-  logEvent: async function (event, metadata = {}, userId = null) {
+  logEvent: async function (event, metadata = {}, userId = null, tx = null) {
     try {
-      const eventLog = await prisma.event_logs.create({
+      const client = tx || prisma;
+      const eventLog = await client.event_logs.create({
         data: {
           event,
           metadata: metadata ? JSON.stringify(metadata) : null,
@@ -29,6 +30,7 @@ const EventLogs = {
     try {
       const logs = await prisma.event_logs.findMany({
         where: { event },
+        take: limit ?? 1000,
         select: {
           id: true,
           event: true,
@@ -36,7 +38,6 @@ const EventLogs = {
           userId: true,
           occurredAt: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null
           ? { orderBy }
           : { orderBy: { occurredAt: "desc" } }),
@@ -53,6 +54,7 @@ const EventLogs = {
     try {
       const logs = await prisma.event_logs.findMany({
         where: { userId },
+        take: limit ?? 1000,
         select: {
           id: true,
           event: true,
@@ -60,7 +62,6 @@ const EventLogs = {
           userId: true,
           occurredAt: true,
         },
-        ...(limit !== null ? { take: limit } : {}),
         ...(orderBy !== null
           ? { orderBy }
           : { orderBy: { occurredAt: "desc" } }),

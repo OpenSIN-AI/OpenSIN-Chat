@@ -266,13 +266,7 @@ body {
     Droid Sans,
     Helvetica Neue,
     sans-serif;
-  background-color: white;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #0e0f0f;
-  }
+  background-color: var(--theme-bg-primary);
 }
 
 @media (max-width: 600px) {
@@ -341,50 +335,31 @@ a {
 }
 
 
-@media (prefers-color-scheme: light) {
-  .sidebar-items:after {
-    content: " ";
-    position: absolute;
-    left: 0;
-    right: 0px;
-    height: 4em;
-    top: 69vh;
-    z-index: 1;
-    pointer-events: none;
-  }
+.sidebar-items:after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0px;
+  height: 4em;
+  top: 69vh;
+  z-index: 1;
+  pointer-events: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  .sidebar-items:after {
-    content: " ";
-    position: absolute;
-    left: 0;
-    right: 0px;
-    height: 4em;
-    top: 69vh;
-    z-index: 1;
-    pointer-events: none;
-  }
+.fade-up-border {
+  background: linear-gradient(
+    to bottom,
+    rgba(41, 37, 36, 50%),
+    rgb(41 37 36) 90%
+  );
 }
 
-@media (prefers-color-scheme: light) {
-  .fade-up-border {
-    background: linear-gradient(
-      to bottom,
-      rgba(220, 221, 223, 10%),
-      rgb(220, 221, 223) 89%
-    );
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .fade-up-border {
-    background: linear-gradient(
-      to bottom,
-      rgba(41, 37, 36, 50%),
-      rgb(41 37 36) 90%
-    );
-  }
+[data-theme="light"] .fade-up-border {
+  background: linear-gradient(
+    to bottom,
+    rgba(220, 221, 223, 10%),
+    rgb(220, 221, 223) 89%
+  );
 }
 
 /**
@@ -745,7 +720,7 @@ dialog::backdrop {
 .markdown table {
   width: 100%;
   border-collapse: collapse;
-  color: #bdbdbe;
+  color: var(--theme-text-secondary);
   font-size: 13px;
   margin: 30px 0px;
   border-radius: 10px;
@@ -754,21 +729,21 @@ dialog::backdrop {
 }
 
 .markdown table thead {
-  color: #fff;
+  color: var(--theme-text-primary);
   text-transform: uppercase;
   font-weight: bolder;
 }
 
 .markdown hr {
   border: 0;
-  border-top: 1px solid #cdcdcd40;
+  border-top: 1px solid var(--theme-sidebar-border);
   margin: 1rem 0;
 }
 
 .markdown table th,
 .markdown table td {
   padding: 8px 15px;
-  border-bottom: 1px solid #cdcdcd2e;
+  border-bottom: 1px solid var(--theme-sidebar-border);
   text-align: left;
 }
 
@@ -788,12 +763,6 @@ dialog::backdrop {
   }
 }
 
-[data-theme="light"] .markdown table,
-[data-theme="light"] .markdown table th,
-[data-theme="light"] .markdown table td {
-  color: #000;
-}
-
 /* List Styles */
 .markdown ol {
   list-style: decimal-leading-zero;
@@ -806,7 +775,7 @@ dialog::backdrop {
   margin-left: 20px;
   padding-left: 10px;
   position: relative;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
   line-height: 1.4rem;
 }
 
@@ -837,19 +806,19 @@ dialog::backdrop {
 }
 
 .markdown ul li::marker {
-  color: #d0d0d0cf;
+  color: var(--theme-text-secondary);
   padding-top: 10px;
 }
 
-.markdownul li {
+.markdown ul li {
   margin-left: 20px;
 
   padding-left: 10px;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
   line-height: 1.4rem;
 }
 
-.markdownul li a {
+.markdown ul li a {
   text-decoration: underline;
 }
 
@@ -878,7 +847,7 @@ dialog::backdrop {
 
 .markdown strong {
   font-weight: 600;
-  color: #fff;
+  color: var(--theme-text-primary);
 }
 
 .file-row {
@@ -1173,4 +1142,62 @@ textarea {
     "Segoe UI Emoji",
     "Segoe UI Symbol",
     "Noto Color Emoji" !important;
+}
+
+/* Accessibility: respect reduced-motion preference (WCAG 2.1 SC 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles for markdown content and documentation pages */
+@media print {
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .markdown,
+  .docs-markdown {
+    color: #000000 !important;
+  }
+
+  .markdown strong,
+  .docs-markdown h1,
+  .docs-markdown h2,
+  .docs-markdown h3,
+  .docs-markdown h4 {
+    color: #000000 !important;
+  }
+
+  .markdown table,
+  .markdown table th,
+  .markdown table td {
+    color: #000000 !important;
+    border-color: #cccccc !important;
+  }
+
+  .markdown pre,
+  .docs-markdown .docs-code-block {
+    background: #f6f8fa !important;
+    color: #1f2328 !important;
+    border: 1px solid #d0d7de !important;
+  }
+
+  .markdown a {
+    color: #0969da !important;
+  }
+
+  /* Hide interactive elements that don't make sense on paper */
+  .no-print,
+  .show-scrollbar,
+  .no-scroll {
+    display: none !important;
+  }
 }

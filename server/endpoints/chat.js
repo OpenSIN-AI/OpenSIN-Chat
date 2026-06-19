@@ -17,9 +17,7 @@ const { writeResponseChunk } = require("../utils/helpers/chat/responses");
 const { WorkspaceThread } = require("../models/workspaceThread");
 const { User } = require("../models/user");
 const { getModelTag } = require("./utils");
-const {
-  simpleRateLimit,
-} = require("../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 
 /**
  * Start an SSE heartbeat that sends a comment-line keepalive every 15s.

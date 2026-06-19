@@ -13,9 +13,7 @@ const { validWorkspaceSlug } = require("../utils/middleware/validWorkspace");
 const { CollectorApi } = require("../utils/collectorApi");
 const { WorkspaceThread } = require("../models/workspaceThread");
 const { WorkspaceParsedFiles } = require("../models/workspaceParsedFiles");
-const {
-  simpleRateLimit,
-} = require("../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 const fs = require("fs");
 
 function cleanupHotdirFile(request) {
@@ -201,25 +199,31 @@ function workspaceParsedFilesEndpoints(app) {
               user_id: user?.id || null,
             })
           : null;
-        const files = await Promise.all(
-          documents.map(async (doc) => {
-            const metadata = { ...doc };
-            // Strip out pageContent
-            delete metadata.pageContent;
-            const filename = `${originalname}-${doc.id}.json`;
-            const { file, error: dbError } = await WorkspaceParsedFiles.create({
-              filename,
-              workspaceId: workspace.id,
-              userId: user?.id || null,
-              threadId: thread?.id || null,
-              metadata: JSON.stringify(metadata),
-              tokenCountEstimate: doc.token_count_estimate || 0,
-            });
+        const files = [];
+        const BATCH_SIZE = 5;
+        for (let i = 0; i < documents.length; i += BATCH_SIZE) {
+          const batch = documents.slice(i, i + BATCH_SIZE);
+          const batchResults = await Promise.all(
+            batch.map(async (doc) => {
+              const metadata = { ...doc };
+              delete metadata.pageContent;
+              const filename = `${originalname}-${doc.id}.json`;
+              const { file, error: dbError } =
+                await WorkspaceParsedFiles.create({
+                  filename,
+                  workspaceId: workspace.id,
+                  userId: user?.id || null,
+                  threadId: thread?.id || null,
+                  metadata: JSON.stringify(metadata),
+                  tokenCountEstimate: doc.token_count_estimate || 0,
+                });
 
-            if (dbError) throw new Error(dbError);
-            return file;
-          }),
-        );
+              if (dbError) throw new Error(dbError);
+              return file;
+            }),
+          );
+          files.push(...batchResults);
+        }
 
         Collector.log(`Document ${originalname} parsed successfully.`);
         await EventLogs.logEvent(

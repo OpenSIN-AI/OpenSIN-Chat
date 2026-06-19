@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { X } from "@phosphor-icons/react";
 import Admin from "@/models/admin";
 import { MessageLimitInput, RoleHintDisplay } from "../..";
@@ -30,6 +30,14 @@ export default function EditUserModal({
     limit: user.dailyMessageLimit ?? 10,
   });
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setRole(user.role);
+    setMessageLimit({
+      enabled: user.dailyMessageLimit !== null,
+      limit: user.dailyMessageLimit ?? 10,
+    });
+  }, [user.role, user.dailyMessageLimit]);
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     setError(null);

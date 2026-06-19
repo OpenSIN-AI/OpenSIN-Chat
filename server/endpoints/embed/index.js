@@ -10,9 +10,7 @@ const {
   canRespond,
   setConnectionMeta,
 } = require("../../utils/middleware/embedMiddleware");
-const {
-  simpleRateLimit,
-} = require("../../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 const {
   convertToChatHistory,
   writeResponseChunk,

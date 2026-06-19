@@ -740,9 +740,7 @@ function systemEndpoints(app) {
         }
         const passwordCheck = User.checkPasswordComplexity(password);
         if (!passwordCheck.checkedOK) {
-          return response
-            .status(400)
-            .json({ error: passwordCheck.error });
+          return response.status(400).json({ error: passwordCheck.error });
         }
         const { user, error } = await User.create({
           username,
@@ -1471,7 +1469,10 @@ function systemEndpoints(app) {
         }
         const fullUser = await User._get({ id });
         const bcrypt = require("bcryptjs");
-        if (!fullUser || !bcrypt.compareSync(String(currentPassword), fullUser.password)) {
+        if (
+          !fullUser ||
+          !bcrypt.compareSync(String(currentPassword), fullUser.password)
+        ) {
           response.status(403).json({
             success: false,
             error: "Current password is incorrect.",

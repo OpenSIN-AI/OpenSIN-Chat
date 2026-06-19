@@ -38,20 +38,35 @@ class OpenAiEmbedder {
     // Refer to constructor maxConcurrentChunks for more info.
     const embeddingRequests = [];
     let chunksProcessed = 0;
+    const EMBEDDING_TIMEOUT_MS = 60_000; // 60s per batch
     for (const chunk of toChunks(textChunks, this.maxConcurrentChunks)) {
       embeddingRequests.push(
         new Promise((resolve) => {
+          const timer = setTimeout(() => {
+            chunksProcessed += chunk.length;
+            reportEmbeddingProgress(chunksProcessed, textChunks.length);
+            resolve({
+              data: [],
+              error: {
+                type: "timeout",
+                message: `OpenAI embedding request timed out after ${EMBEDDING_TIMEOUT_MS / 1000}s`,
+              },
+            });
+          }, EMBEDDING_TIMEOUT_MS);
+
           this.openai.embeddings
             .create({
               model: this.model,
               input: chunk,
             })
             .then((result) => {
+              clearTimeout(timer);
               chunksProcessed += chunk.length;
               reportEmbeddingProgress(chunksProcessed, textChunks.length);
               resolve({ data: result?.data, error: null });
             })
             .catch((e) => {
+              clearTimeout(timer);
               chunksProcessed += chunk.length;
               reportEmbeddingProgress(chunksProcessed, textChunks.length);
               e.type =

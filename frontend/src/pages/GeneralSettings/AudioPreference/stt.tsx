@@ -75,21 +75,26 @@ export default function SpeechToTextProvider({
 
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const data: any = { SpeechToTextProvider: selectedProvider };
-    const formData = new FormData(form);
-
-    for (const [key, value] of formData.entries()) data[key] = value;
-    const { error } = await System.updateSystem(data);
     setSaving(true);
+    try {
+      const form = e.currentTarget;
+      const data: any = { SpeechToTextProvider: selectedProvider };
+      const formData = new FormData(form);
 
-    if (error) {
-      showToast(t("audioPreference.stt.saveFailed", { error }), "error");
-    } else {
-      showToast(t("audioPreference.stt.saveSuccess"), "success");
+      for (const [key, value] of formData.entries()) data[key] = value;
+      const { error } = await System.updateSystem(data);
+
+      if (error) {
+        showToast(t("audioPreference.stt.saveFailed", { error }), "error");
+      } else {
+        showToast(t("audioPreference.stt.saveSuccess"), "success");
+      }
+      setHasChanges(!!error);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-    setHasChanges(!!error);
   };
 
   const updateProviderChoice = (selection: string) => {

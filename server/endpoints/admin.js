@@ -32,9 +32,7 @@ const {
 const {
   workspaceDeletionProtection,
 } = require("../utils/middleware/workspaceDeletionProtection");
-const {
-  simpleRateLimit,
-} = require("../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 
 function adminEndpoints(app) {
   if (!app) return;
@@ -59,7 +57,11 @@ function adminEndpoints(app) {
     [
       validatedRequest,
       strictMultiUserRoleValid([ROLES.admin, ROLES.manager]),
-      simpleRateLimit({ bucket: "admin-user-new", max: 20, windowMs: 60 * 1000 }),
+      simpleRateLimit({
+        bucket: "admin-user-new",
+        max: 20,
+        windowMs: 60 * 1000,
+      }),
     ],
     async (request, response) => {
       try {

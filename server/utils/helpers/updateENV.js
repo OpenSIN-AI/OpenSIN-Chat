@@ -665,9 +665,26 @@ function isInteger(input = "") {
   return Number(input);
 }
 
+const ALLOWED_URL_SCHEMES = ["http:", "https:"];
+
+function validateUrl(url) {
+  try {
+    const parsed = new URL(url);
+    if (!ALLOWED_URL_SCHEMES.includes(parsed.protocol)) {
+      throw new Error(`URL scheme ${parsed.protocol} not allowed`);
+    }
+    return url;
+  } catch (e) {
+    throw new Error(`Invalid URL: ${e.message}`);
+  }
+}
+
 function isValidURL(input = "") {
   try {
-    new URL(input);
+    const parsed = new URL(input);
+    if (!ALLOWED_URL_SCHEMES.includes(parsed.protocol)) {
+      return `URL scheme ${parsed.protocol} is not allowed. Only http: and https: are permitted.`;
+    }
     return null;
   } catch {
     return "URL is not a valid URL.";
@@ -1164,4 +1181,5 @@ function dumpENV() {
 module.exports = {
   dumpENV,
   updateENV,
+  validateUrl,
 };

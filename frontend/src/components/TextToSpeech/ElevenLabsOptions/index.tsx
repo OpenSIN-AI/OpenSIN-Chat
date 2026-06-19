@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import useProviderModels from "@/hooks/useProviderModels";
 import { useTranslation } from "react-i18next";
 
@@ -9,6 +9,11 @@ export default function ElevenLabsOptions({ settings }: any) {
   const [elevenLabsKey, setElevenLabsKey] = useState(
     settings?.TTSElevenLabsKey,
   );
+
+  useEffect(() => {
+    setInputValue(settings?.TTSElevenLabsKey);
+    setElevenLabsKey(settings?.TTSElevenLabsKey);
+  }, [settings?.TTSElevenLabsKey]);
 
   return (
     <div className="flex gap-x-4">

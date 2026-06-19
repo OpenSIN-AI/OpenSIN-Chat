@@ -22,6 +22,10 @@ export default function MemoryModal({
   const { t } = useTranslation();
   const [content, setContent] = useState(initialContent);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setContent(initialContent);
+  }, [initialContent]);
   const isCreate = mode === "create";
   const [title, submitLabel, description] = useMemo(() => {
     if (isCreate) {

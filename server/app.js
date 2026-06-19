@@ -252,9 +252,7 @@ function buildApp() {
   app.get("/healthz", (_req, res) => res.status(200).json({ status: "ok" }));
   app.get("/readyz", async (_req, res) => {
     if (!prismaClient)
-      return res
-        .status(200)
-        .json({ status: "ready", db: "unchecked" });
+      return res.status(200).json({ status: "ready", db: "unchecked" });
     try {
       await prismaClient.$queryRaw`SELECT 1`;
       res.status(200).json({ status: "ready" });

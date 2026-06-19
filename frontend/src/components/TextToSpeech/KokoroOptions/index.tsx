@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useProviderModels from "@/hooks/useProviderModels";
 import { useTranslation } from "react-i18next";
 
@@ -11,6 +11,15 @@ export default function KokoroTTSOptions({ settings }: any) {
   const [inputEndpoint, setInputEndpoint] = useState(endpoint);
   const [apiKey, setApiKey] = useState(settings?.TTSKokoroKey);
   const [inputApiKey, setInputApiKey] = useState(apiKey);
+
+  useEffect(() => {
+    setEndpoint(settings?.TTSKokoroEndpoint || "http://localhost:8880/v1");
+    setInputEndpoint(
+      settings?.TTSKokoroEndpoint || "http://localhost:8880/v1",
+    );
+    setApiKey(settings?.TTSKokoroKey);
+    setInputApiKey(settings?.TTSKokoroKey);
+  }, [settings?.TTSKokoroEndpoint, settings?.TTSKokoroKey]);
 
   return (
     <div className="w-full flex flex-col gap-y-7">

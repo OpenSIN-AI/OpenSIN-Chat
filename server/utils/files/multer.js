@@ -146,7 +146,7 @@ function handleFileUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 100 * 1024 * 1024 },
+    limits: { fileSize: 100 * 1024 * 1024, files: 1 },
     fileFilter: executableFileFilter,
   }).single("file");
   upload(request, response, function (err) {
@@ -157,6 +157,17 @@ function handleFileUpload(request, response, next) {
           success: false,
           error: `Invalid file upload. ${err.message}`,
         })
+        .end();
+      return;
+    }
+
+    if (request.file && request.file.size === 0) {
+      try {
+        if (request.file.path) fs.rmSync(request.file.path, { force: true });
+      } catch {}
+      response
+        .status(400)
+        .json({ success: false, error: "Empty file not allowed" })
         .end();
       return;
     }
@@ -207,7 +218,7 @@ function handleAPIFileUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 100 * 1024 * 1024 },
+    limits: { fileSize: 100 * 1024 * 1024, files: 1 },
     fileFilter: executableFileFilter,
   }).single("file");
   upload(request, response, function (err) {
@@ -218,6 +229,17 @@ function handleAPIFileUpload(request, response, next) {
           success: false,
           error: `Invalid file upload. ${err.message}`,
         })
+        .end();
+      return;
+    }
+
+    if (request.file && request.file.size === 0) {
+      try {
+        if (request.file.path) fs.rmSync(request.file.path, { force: true });
+      } catch {}
+      response
+        .status(400)
+        .json({ success: false, error: "Empty file not allowed" })
         .end();
       return;
     }
@@ -264,7 +286,7 @@ function handleAssetUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 100 * 1024 * 1024 },
+    limits: { fileSize: 100 * 1024 * 1024, files: 1 },
     fileFilter: imageFileFilter,
   }).single("logo");
   upload(request, response, function (err) {
@@ -275,6 +297,17 @@ function handleAssetUpload(request, response, next) {
           success: false,
           error: `Invalid file upload. ${err.message}`,
         })
+        .end();
+      return;
+    }
+
+    if (request.file && request.file.size === 0) {
+      try {
+        if (request.file.path) fs.rmSync(request.file.path, { force: true });
+      } catch {}
+      response
+        .status(400)
+        .json({ success: false, error: "Empty file not allowed" })
         .end();
       return;
     }
@@ -321,7 +354,7 @@ function handlePfpUpload(request, response, next) {
 
   const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limits: { fileSize: 5 * 1024 * 1024, files: 1 },
     fileFilter: imageFileFilter,
   }).single("file");
   upload(request, response, function (err) {
@@ -332,6 +365,17 @@ function handlePfpUpload(request, response, next) {
           success: false,
           error: `Invalid file upload. ${err.message}`,
         })
+        .end();
+      return;
+    }
+
+    if (request.file && request.file.size === 0) {
+      try {
+        if (request.file.path) fs.rmSync(request.file.path, { force: true });
+      } catch {}
+      response
+        .status(400)
+        .json({ success: false, error: "Empty file not allowed" })
         .end();
       return;
     }

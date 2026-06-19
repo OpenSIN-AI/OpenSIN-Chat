@@ -48,9 +48,7 @@ const { workspaceParsedFilesEndpoints } = require("./workspacesParsedFiles");
 const {
   workspaceDeletionProtection,
 } = require("../utils/middleware/workspaceDeletionProtection");
-const {
-  simpleRateLimit,
-} = require("../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 
 function cleanupHotdirFile(request) {
   cleanupUploadedFile(request);
@@ -324,7 +322,10 @@ function workspaceEndpoints(app) {
       } catch (e) {
         const errorId = crypto.randomUUID();
         console.error(`[endpoint error ${errorId}]`, e);
-        response.status(500).json({ error: "Internal server error", errorId }).end();
+        response
+          .status(500)
+          .json({ error: "Internal server error", errorId })
+          .end();
       }
     },
   );

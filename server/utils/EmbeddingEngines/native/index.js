@@ -259,12 +259,15 @@ class NativeEmbedder {
         });
 
         if (output.length === 0) {
-          pipeline = null;
-          output = null;
-          data = null;
-          if (chunkLen - 1 === idx)
-            await this.#writeToTempfile(tmpFilePath, "]");
-          continue;
+          // If a batch returns empty output, the embedding pipeline has
+          // failed for those chunks. Throwing here prevents silent index
+          // misalignment: without this, the returned embeddings array would
+          // be shorter than the input textChunks array, causing embeddings
+          // to be mapped to the wrong text content in addDocumentToNamespace.
+          throw new Error(
+            `Native embedder returned empty output for chunk group ${idx + 1} of ${chunkLen}. ` +
+              `Document embedding aborted to prevent silent data corruption.`,
+          );
         }
 
         wroteAnyData = true;

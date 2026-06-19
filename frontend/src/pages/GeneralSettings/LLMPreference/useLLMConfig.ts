@@ -54,21 +54,26 @@ export default function useLLMConfig(
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const data: Record<string, any> = { LLMProvider: selectedLLM };
-    const formData = new FormData(form);
-
-    for (const [key, value] of formData.entries()) data[key] = value;
-    const { error } = await System.updateSystem(data);
     setSaving(true);
+    try {
+      const form = e.currentTarget;
+      const data: Record<string, any> = { LLMProvider: selectedLLM };
+      const formData = new FormData(form);
 
-    if (error) {
-      showToast(`Failed to save LLM settings: ${error}`, "error");
-    } else {
-      showToast("LLM preferences saved successfully.", "success");
+      for (const [key, value] of formData.entries()) data[key] = value;
+      const { error } = await System.updateSystem(data);
+
+      if (error) {
+        showToast(`Failed to save LLM settings: ${error}`, "error");
+      } else {
+        showToast("LLM preferences saved successfully.", "success");
+      }
+      setHasChanges(!!error);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-    setHasChanges(!!error);
   };
 
   const updateLLMChoice = (selection: string) => {

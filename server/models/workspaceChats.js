@@ -412,21 +412,28 @@ const WorkspaceChats = {
   },
 
   bulkCreate: async function (chatsData) {
-    // TODO: Replace with createMany when we update prisma to latest version
-    // The version of prisma that we are currently using does not support createMany with SQLite
+    if (!Array.isArray(chatsData) || chatsData.length === 0)
+      return { chats: [], message: null };
     try {
-      const createdChats = [];
-      for (const chatData of chatsData) {
-        const chat = await prisma.workspace_chats.create({
-          data: chatData,
-        });
-        createdChats.push(chat);
+      await prisma.workspace_chats.createMany({ data: chatsData });
+      return { chats: { count: chatsData.length }, message: null };
+    } catch {
+      try {
+        const createdChats = [];
+        const BATCH = 50;
+        for (let i = 0; i < chatsData.length; i += BATCH) {
+          const batch = chatsData.slice(i, i + BATCH);
+          const batchCreated = await prisma.$transaction(
+            batch.map((d) => prisma.workspace_chats.create({ data: d })),
+          );
+          createdChats.push(...batchCreated);
+        }
+        return { chats: createdChats, message: null };
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error.message);
+        return { chats: null, message: error.message };
       }
-      return { chats: createdChats, message: null };
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
-      return { chats: null, message: error.message };
     }
   },
   upsert: async function (

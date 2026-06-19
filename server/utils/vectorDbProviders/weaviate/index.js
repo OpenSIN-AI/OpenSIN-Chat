@@ -342,16 +342,16 @@ class Weaviate extends VectorDatabase {
 
       if (vectors.length > 0) {
         const chunks = [];
-        for (const chunk of toChunks(vectors, 500)) chunks.push(chunk);
 
         this.logger("Inserting vectorized chunks into Weaviate collection.");
-        const { success: additionResult, errors = [] } = await this.addVectors(
-          client,
-          vectors,
-        );
-        if (!additionResult) {
-          this.logger("addVectors failed to insert", errors);
-          throw new Error("Error embedding into Weaviate");
+        for (const chunk of toChunks(vectors, 500)) {
+          chunks.push(chunk);
+          const { success: additionResult, errors = [] } =
+            await this.addVectors(client, chunk);
+          if (!additionResult) {
+            this.logger("addVectors failed to insert", errors);
+            throw new Error("Error embedding into Weaviate");
+          }
         }
         await storeVectorResult(chunks, fullFilePath);
       }
@@ -406,6 +406,14 @@ class Weaviate extends VectorDatabase {
     }
 
     const queryVector = await LLMConnector.embedTextInput(input);
+    if (!queryVector || queryVector.length === 0) {
+      return {
+        contextTexts: [],
+        sources: [],
+        message:
+          "Failed to generate embedding for query. The embedding model may be unavailable or returned an empty vector.",
+      };
+    }
     const { contextTexts, sourceDocuments } = await this.similarityResponse({
       client,
       namespace,

@@ -19,25 +19,30 @@ export default function VectorDatabase({ workspace }: { workspace: any }) {
   const formEl = useRef<HTMLFormElement>(null);
 
   const handleUpdate = async (e: React.FormEvent) => {
-    setSaving(true);
     e.preventDefault();
-    const data: Record<string, any> = {};
-    const form = new FormData(formEl.current!);
-    for (const [key, value] of form.entries())
-      data[key] = castToType(key, value);
-    const { workspace: updatedWorkspace, message } = await Workspace.update(
-      workspace.slug,
-      data,
-    );
-    if (!!updatedWorkspace) {
-      showToast(t("common.workspaceUpdated"), "success", { clear: true });
-    } else {
-      showToast(t("common.error", { error: message }), "error", {
-        clear: true,
-      });
+    setSaving(true);
+    try {
+      const data: Record<string, any> = {};
+      const form = new FormData(formEl.current!);
+      for (const [key, value] of form.entries())
+        data[key] = castToType(key, value);
+      const { workspace: updatedWorkspace, message } = await Workspace.update(
+        workspace.slug,
+        data,
+      );
+      if (!!updatedWorkspace) {
+        showToast(t("common.workspaceUpdated"), "success", { clear: true });
+        setHasChanges(false);
+      } else {
+        showToast(t("common.error", { error: message }), "error", {
+          clear: true,
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-    setHasChanges(false);
   };
 
   if (!workspace) return null;

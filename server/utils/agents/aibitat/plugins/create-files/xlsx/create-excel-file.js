@@ -5,6 +5,7 @@ const {
   validateCSVData,
   detectDelimiter,
   inferCellType,
+  safeCsvCell,
   applyBranding,
   autoFitColumns,
   applyHeaderStyle,
@@ -281,7 +282,7 @@ module.exports.CreateExcelFile = {
                     const typedValue =
                       rowIndex === 0 ? cellValue : inferCellType(cellValue);
 
-                    cell.value = typedValue;
+                    cell.value = safeCsvCell(typedValue);
 
                     if (typedValue instanceof Date) {
                       cell.numFmt = "yyyy-mm-dd";

@@ -44,6 +44,10 @@ export default function AgentLLMItem({
   const { t } = useTranslation();
 
   useEffect(() => {
+    setCurrentSettings(settings);
+  }, [settings]);
+
+  useEffect(() => {
     async function getSettings() {
       if (isOpen) {
         const _settings = await System.keys();

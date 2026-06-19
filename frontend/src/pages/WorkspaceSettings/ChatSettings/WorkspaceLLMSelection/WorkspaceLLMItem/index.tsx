@@ -44,6 +44,10 @@ export default function WorkspaceLLM({
   const [currentSettings, setCurrentSettings] = useState(settings);
 
   useEffect(() => {
+    setCurrentSettings(settings);
+  }, [settings]);
+
+  useEffect(() => {
     async function getSettings() {
       if (isOpen) {
         const _settings = await System.keys();

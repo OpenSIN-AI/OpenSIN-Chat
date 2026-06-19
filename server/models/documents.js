@@ -40,6 +40,7 @@ const Document = {
     if (!workspaceId) return [];
     return await prisma.workspace_documents.findMany({
       where: { workspaceId },
+      take: 1000,
       select: {
         id: true,
         docId: true,
@@ -261,29 +262,30 @@ const Document = {
     const VectorDb = getVectorDbClass();
     if (removals.length === 0) return;
 
+    const resolvedDocs = [];
     for (const path of removals) {
       const document = await this.get({
         docpath: path,
         workspaceId: workspace.id,
       });
       if (!document) continue;
-      await VectorDb.deleteDocumentFromNamespace(
-        workspace.slug,
-        document.docId,
-      );
+      resolvedDocs.push(document);
+    }
 
-      try {
-        await prisma.workspace_documents.delete({
-          where: { id: document.id, workspaceId: workspace.id },
+    resolvedDocs.forEach((document) => {
+      VectorDb.deleteDocumentFromNamespace(workspace.slug, document.docId);
+    });
+
+    await prisma.$transaction(async (tx) => {
+      for (const document of resolvedDocs) {
+        await tx.workspace_documents.delete({
+          where: { id: document.id },
         });
-        await prisma.document_vectors.deleteMany({
+        await tx.document_vectors.deleteMany({
           where: { docId: document.docId },
         });
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error.message);
       }
-    }
+    });
 
     await EventLogs.logEvent(
       "workspace_documents_removed",

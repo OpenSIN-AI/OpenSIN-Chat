@@ -20,6 +20,13 @@ const IDLE_THRESHOLD_MS = Number(
   process.env.MEMORY_IDLE_THRESHOLD_MS ?? 20 * 60 * 1000,
 );
 
+// Maximum concurrent (user, workspace) groups processed at once. Each group
+// makes 2 LLM calls (observer + reflector), so unbounded concurrency can
+// overwhelm the LLM endpoint or exhaust memory. Default 3 is conservative.
+const MAX_CONCURRENT_GROUPS = Number(
+  process.env.MEMORY_EXTRACTION_MAX_CONCURRENT || 3,
+);
+
 // Minimum chats required before processing memories for a user/workspace pair.
 const MIN_CHATS_TO_PROCESS = 5;
 
@@ -45,7 +52,13 @@ const MIN_CHATS_TO_PROCESS = 5;
     const groups = groupByUserWorkspace(allUnprocessed);
     log(`Found ${groups.size} user/workspace pair(s) with unprocessed chats.`);
 
-    await Promise.all([...groups.values()].map(processGroup));
+    // Process groups with bounded concurrency to avoid overwhelming the LLM
+    // endpoint or exhausting memory when many users have unprocessed chats.
+    const groupList = [...groups.values()];
+    for (let i = 0; i < groupList.length; i += MAX_CONCURRENT_GROUPS) {
+      const batch = groupList.slice(i, i + MAX_CONCURRENT_GROUPS);
+      await Promise.all(batch.map(processGroup));
+    }
 
     log("Memory extraction complete.");
   } catch (e) {

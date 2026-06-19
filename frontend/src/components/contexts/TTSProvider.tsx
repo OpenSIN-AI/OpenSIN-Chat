@@ -78,6 +78,9 @@ export function useWatchForAutoPlayAssistantTTSResponse() {
     const pendingTimers: ReturnType<typeof setTimeout>[] = [];
 
     function handleAutoPlayTTSEvent(event: any) {
+      pendingTimers.forEach((t) => clearTimeout(t));
+      pendingTimers.length = 0;
+
       let autoPlayAttempts = 0;
       const { chatId } = event.detail;
 

@@ -7,9 +7,7 @@ const {
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
 const { validatedRequest } = require("../utils/middleware/validatedRequest");
-const {
-  simpleRateLimit,
-} = require("../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 const fs = require("fs");
 const path = require("path");
 

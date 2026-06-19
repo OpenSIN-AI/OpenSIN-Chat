@@ -33,6 +33,12 @@ export default function ChatPromptSettings({
   const [prompt, setPrompt] = useState(initialPrompt);
   const [savedPrompt, setSavedPrompt] = useState(initialPrompt);
 
+  useEffect(() => {
+    const next = getWorkspaceSystemPrompt(workspace);
+    setPrompt(next);
+    setSavedPrompt(next);
+  }, [workspace]);
+
   // UI state
   const [isEditing, setIsEditing] = useState(
     searchParams.get("action") === "focus-system-prompt",

@@ -274,7 +274,7 @@ function Directory({
                   (item, index) =>
                     item.type === "folder" && (
                       <FolderRow
-                        key={index}
+                        key={item.id ?? `${item.name}-${index}`}
                         item={item}
                         totalItems={item.items?.length ?? 0}
                         selected={isSelected(

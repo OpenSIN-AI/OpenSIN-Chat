@@ -84,7 +84,10 @@ class OCRLoader {
     const pdfjs = await import("pdf-parse/lib/pdf.js/v2.0.550/build/pdf.js");
     let buffer = fs.readFileSync(filePath);
 
-    const pdfDocument = await pdfjs.getDocument({ data: buffer });
+    const pdfDocument = await pdfjs.getDocument({
+      data: buffer,
+      isEvalSupported: false,
+    });
 
     const documents = [];
     const meta = await pdfDocument.getMetadata().catch(() => null);

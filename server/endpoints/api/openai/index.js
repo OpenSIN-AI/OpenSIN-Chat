@@ -29,8 +29,11 @@ function apiKeyQuota(request, _response, next) {
 function apiOpenAICompatibleEndpoints(app) {
   if (!app) return;
 
-  app.get("/v1/openai/models", [validApiKey, apiKeyQuota], async (_, response) => {
-    /*
+  app.get(
+    "/v1/openai/models",
+    [validApiKey, apiKeyQuota],
+    async (_, response) => {
+      /*
     #swagger.tags = ['OpenAI Compatible Endpoints']
     #swagger.description = 'Get all available "models" which are workspaces you can use for chatting.'
     #swagger.responses[200] = {
@@ -65,27 +68,28 @@ function apiOpenAICompatibleEndpoints(app) {
       }
     }
     */
-    try {
-      const data = [];
-      const workspaces = await Workspace.where();
-      for (const workspace of workspaces) {
-        data.push({
-          id: workspace.slug,
-          object: "model",
-          created: Math.floor(Number(new Date(workspace.createdAt)) / 1000),
-          owned_by: workspace?.chatProvider || process.env.LLM_PROVIDER,
+      try {
+        const data = [];
+        const workspaces = await Workspace.where();
+        for (const workspace of workspaces) {
+          data.push({
+            id: workspace.slug,
+            object: "model",
+            created: Math.floor(Number(new Date(workspace.createdAt)) / 1000),
+            owned_by: workspace?.chatProvider || process.env.LLM_PROVIDER,
+          });
+        }
+        return response.status(200).json({
+          object: "list",
+          data,
         });
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e.message, e);
+        response.sendStatus(500);
       }
-      return response.status(200).json({
-        object: "list",
-        data,
-      });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e.message, e);
-      response.sendStatus(500);
-    }
-  });
+    },
+  );
 
   app.post(
     "/v1/openai/chat/completions",

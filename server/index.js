@@ -19,7 +19,8 @@ require("./utils/pdfAnalysis/corpus").CorpusPipeline.restorePersisted();
 
 // Memory hygiene runs on boot and every 1 hour (stuck-job detection, orphan
 // detection, stale-job cleanup, upload/checkpoint/report retention).
-require("./utils/pdfAnalysis/retention").startRetentionSchedule();
+const { startRetentionSchedule, stopRetentionSchedule } = require("./utils/pdfAnalysis/retention");
+startRetentionSchedule();
 
 // Terminate OCR workers cleanly on process exit.
 const { shutdownOcr } = require("./utils/pdfAnalysis/ocr");
@@ -43,6 +44,8 @@ BackgroundQueue.start();
 function shutdown(signal) {
   console.log(`[Server] ${signal} received, shutting down...`);
   BackgroundQueue.stop();
+  stopRetentionSchedule();
+  shutdownOcr();
   if (httpServer && typeof httpServer.close === "function") {
     httpServer.close(() => {
       console.log("[Server] HTTP server closed, exiting.");

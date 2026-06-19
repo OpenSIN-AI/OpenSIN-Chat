@@ -743,6 +743,14 @@ class PGVector extends VectorDatabase {
       }
 
       const queryVector = await LLMConnector.embedTextInput(input);
+      if (!queryVector || queryVector.length === 0) {
+        return {
+          contextTexts: [],
+          sources: [],
+          message:
+            "Failed to generate embedding for query. The embedding model may be unavailable or returned an empty vector.",
+        };
+      }
       const result = await this.similarityResponse({
         client: connection,
         namespace,
@@ -762,7 +770,12 @@ class PGVector extends VectorDatabase {
         message: false,
       };
     } catch (err) {
-      return { error: err.message, success: false };
+      this.logger(`performSimilaritySearch error: ${err.message}`);
+      return {
+        contextTexts: [],
+        sources: [],
+        message: err.message,
+      };
     } finally {
       if (connection) await connection.end();
     }

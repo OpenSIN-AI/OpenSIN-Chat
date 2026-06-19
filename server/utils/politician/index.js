@@ -320,6 +320,7 @@ class PoliticianDB {
       return await prisma.politician_mandates.findMany({
         where: { politicianId },
         orderBy: { startDate: "desc" },
+        take: 1000,
       });
     } catch (err) {
       // eslint-disable-next-line no-console

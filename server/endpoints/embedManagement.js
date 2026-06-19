@@ -12,9 +12,7 @@ const { validatedRequest } = require("../utils/middleware/validatedRequest");
 const {
   chatHistoryViewable,
 } = require("../utils/middleware/chatHistoryViewable");
-const {
-  simpleRateLimit,
-} = require("../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 
 function embedManagementEndpoints(app) {
   if (!app) return;

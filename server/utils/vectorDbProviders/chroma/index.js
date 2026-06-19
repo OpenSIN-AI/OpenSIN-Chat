@@ -387,6 +387,14 @@ class Chroma extends VectorDatabase {
     }
 
     const queryVector = await LLMConnector.embedTextInput(input);
+    if (!queryVector || queryVector.length === 0) {
+      return {
+        contextTexts: [],
+        sources: [],
+        message:
+          "Failed to generate embedding for query. The embedding model may be unavailable or returned an empty vector.",
+      };
+    }
     const { contextTexts, sourceDocuments, scores } =
       await this.similarityResponse({
         client,

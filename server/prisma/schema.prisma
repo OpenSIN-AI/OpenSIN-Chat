@@ -79,6 +79,8 @@ model users {
   createdAt                    DateTime                      @default(now())
   lastUpdatedAt                DateTime                      @default(now())
   dailyMessageLimit            Int?
+  dailyMessageUsedAt           Int?                           @default(0)
+  dailyMessageResetAt          DateTime?
   bio                          String?                       @default("")
   web_push_subscription_config String?
   workspace_chats              workspace_chats[]

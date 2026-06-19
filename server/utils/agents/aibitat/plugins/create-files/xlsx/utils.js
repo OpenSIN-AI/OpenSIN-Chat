@@ -1,5 +1,23 @@
 // SPDX-License-Identifier: MIT
 /**
+ * Neutralizes CSV/Excel formula injection (CWE-1236). Strings starting with
+ * `=`, `+`, `-`, or `@` are interpreted as formulas by Excel/LibreOffice/Sheets,
+ * which can lead to DDE attacks or remote data exfiltration. Prefix the value
+ * with a single quote — Excel displays the unquoted text and strips the
+ * apostrophe automatically.
+ * @param {*} value - The cell value to neutralize.
+ * @returns {*} The safe value (original non-strings, or apostrophe-prefixed
+ *   string for formula-triggering inputs).
+ */
+function safeCsvCell(value) {
+  if (typeof value !== "string") return value;
+  if (["=", "+", "-", "@"].includes(value[0])) {
+    return "'" + value;
+  }
+  return value;
+}
+
+/**
  * Parses CSV string into a 2D array of values.
  * Handles quoted fields, embedded commas, and newlines within quotes.
  * @param {string} csvString - The CSV content to parse
@@ -326,6 +344,7 @@ module.exports = {
   validateCSVData,
   detectDelimiter,
   inferCellType,
+  safeCsvCell,
   applyBranding,
   autoFitColumns,
   applyHeaderStyle,

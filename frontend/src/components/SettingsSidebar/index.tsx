@@ -460,7 +460,7 @@ const SidebarOptions = ({ user = null, t }: any) => (
 
 function HoldToReveal({ children, holdForMs = 3_000 }: any) {
   const { t } = useTranslation();
-  let timeout = null;
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [showing, setShowing] = useState(() =>
     safeGetItem(
       "openafd_experimental_feature_preview_unlocked",
@@ -469,8 +469,9 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
 
   useEffect(() => {
     const onPress: any = (e) => {
-      if (!["Control", "Meta"].includes(e.key) || timeout !== null) return;
-      timeout = setTimeout(() => {
+      if (!["Control", "Meta"].includes(e.key) || timeoutRef.current !== null)
+        return;
+      timeoutRef.current = setTimeout(() => {
         setShowing("enabled");
         showToast(t("settingsSidebar.experimentalFeaturesUnlocked"));
         safeSetItem(
@@ -479,7 +480,10 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
         );
         window.removeEventListener("keydown", onPress);
         window.removeEventListener("keyup", onRelease);
-        clearTimeout(timeout);
+        if (timeoutRef.current !== null) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
       }, holdForMs);
     };
     const onRelease: any = (e) => {
@@ -487,10 +491,16 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
       if (showing) {
         window.removeEventListener("keydown", onPress);
         window.removeEventListener("keyup", onRelease);
-        clearTimeout(timeout);
+        if (timeoutRef.current !== null) {
+          clearTimeout(timeoutRef.current);
+          timeoutRef.current = null;
+        }
         return;
       }
-      clearTimeout(timeout);
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     };
 
     if (!showing) {
@@ -500,6 +510,10 @@ function HoldToReveal({ children, holdForMs = 3_000 }: any) {
     return () => {
       window.removeEventListener("keydown", onPress);
       window.removeEventListener("keyup", onRelease);
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
     };
   }, [showing, t]);
 

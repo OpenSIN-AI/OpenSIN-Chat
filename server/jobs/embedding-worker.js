@@ -142,6 +142,19 @@ async function processQueue() {
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err.message);
+      // Clean up orphaned vectors — the document was already added to the
+      // vector DB above, but the workspace_documents record failed to persist.
+      // Without this cleanup, vectors would exist with no DB record pointing
+      // to them, making them unqueryable and impossible to delete later.
+      try {
+        await VectorDb.deleteDocumentFromNamespace(workspaceSlug, docId);
+      } catch (cleanupErr) {
+        // eslint-disable-next-line no-console
+        console.error(
+          "Failed to clean up orphaned vectors:",
+          cleanupErr.message,
+        );
+      }
       emit({
         type: "doc_failed",
         ...docProgress,

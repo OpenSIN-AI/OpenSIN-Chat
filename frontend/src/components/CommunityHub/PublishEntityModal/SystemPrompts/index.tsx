@@ -147,9 +147,9 @@ export default function SystemPrompts({ entity }: any) {
               {t("community_hub.publish.system_prompt.tags_description")}
             </div>
             <div className="flex flex-wrap gap-2 p-2 bg-theme-bg-secondary rounded-lg min-h-[42px]">
-              {tags.map((tag, index) => (
+              {tags.map((tag) => (
                 <span
-                  key={index}
+                  key={tag}
                   className="flex items-center gap-1 px-2 py-1 text-sm text-theme-text-primary bg-white/10 light:bg-black/10 rounded-md"
                 >
                   {tag}

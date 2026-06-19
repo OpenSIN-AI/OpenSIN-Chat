@@ -5,6 +5,14 @@ const { ScheduledJobRun } = require("../models/scheduledJobRun.js");
 const createFilesLib = require("../utils/agents/aibitat/plugins/create-files/lib.js");
 const { safeJsonParse } = require("../utils/http/index.js");
 
+// Files modified within this window are spared from deletion to protect
+// outputs being actively written by running scheduled jobs (whose results
+// haven't been persisted to a completed run record yet). Default 10 minutes
+// covers the default SCHEDULED_JOB_TIMEOUT_MS (5 min) with a safety margin.
+const RECENT_FILE_GRACE_MS = Number(
+  process.env.CLEANUP_GENERATED_FILES_GRACE_MS || 10 * 60 * 1000,
+);
+
 (async () => {
   try {
     const fs = require("fs");
@@ -19,26 +27,47 @@ const { safeJsonParse } = require("../utils/http/index.js");
     const activeFileRefs = await getActiveStorageFilenames();
     const filesToDelete = [];
     for (const filename of files) {
-      const fullPath = path.join(storageDirectory, filename);
-      const stat = fs.statSync(fullPath);
+      try {
+        const fullPath = path.join(storageDirectory, filename);
+        const stat = fs.statSync(fullPath);
 
-      // Skip files/folders that don't match our naming pattern and add to deletion list
-      if (!filename.match(/^[a-z]+-[a-f0-9-]{36}(\.\w+)?$/i)) {
-        filesToDelete.push({ path: fullPath, isDirectory: stat.isDirectory() });
-        continue;
+        // Skip files/folders that don't match our naming pattern and add to deletion list
+        if (!filename.match(/^[a-z]+-[a-f0-9-]{36}(\.\w+)?$/i)) {
+          filesToDelete.push({ path: fullPath, isDirectory: stat.isDirectory() });
+          continue;
+        }
+
+        // If file/folder is not referenced in any active chat, add to deletion list
+        if (!activeFileRefs.has(filename))
+          filesToDelete.push({ path: fullPath, isDirectory: stat.isDirectory() });
+      } catch (statErr) {
+        // File was deleted between readdirSync and statSync — skip it.
+        // This is a normal race condition and must not abort the entire cleanup.
       }
-
-      // If file/folder is not referenced in any active chat, add to deletion list
-      if (!activeFileRefs.has(filename))
-        filesToDelete.push({ path: fullPath, isDirectory: stat.isDirectory() });
     }
 
-    if (filesToDelete.length === 0) return;
+    // Spare files modified within the grace window — a running scheduled job
+    // may have generated them but not yet persisted the result to a completed
+    // run record, so they would appear orphaned even though they're in use.
+    const now = Date.now();
+    const deletable = [];
+    for (const item of filesToDelete) {
+      try {
+        const stat = fs.statSync(item.path);
+        if (now - stat.mtimeMs < RECENT_FILE_GRACE_MS) continue;
+      } catch {
+        // File already gone — skip.
+        continue;
+      }
+      deletable.push(item);
+    }
 
-    log(`Found ${filesToDelete.length} orphaned files/folders to delete.`);
+    if (deletable.length === 0) return;
+
+    log(`Found ${deletable.length} orphaned files/folders to delete.`);
     let deletedCount = 0;
     let failedCount = 0;
-    for (const { path: itemPath, isDirectory } of filesToDelete) {
+    for (const { path: itemPath, isDirectory } of deletable) {
       try {
         if (isDirectory) fs.rmSync(itemPath, { recursive: true });
         else fs.unlinkSync(itemPath);

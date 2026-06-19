@@ -37,25 +37,30 @@ export default function ChatSettings({
   const handleUpdate = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setSaving(true);
-    const data: Record<string, any> = {};
-    const form = new FormData(formEl.current!);
-    for (const [key, value] of form.entries())
-      data[key] = castToType(key, value);
+    try {
+      const data: Record<string, any> = {};
+      const form = new FormData(formEl.current!);
+      for (const [key, value] of form.entries())
+        data[key] = castToType(key, value);
 
-    const { workspace: updatedWorkspace, message } = await Workspace.update(
-      workspace.slug,
-      data,
-    );
-    if (updatedWorkspace) {
-      showToast(t("common.workspaceUpdated"), "success", { clear: true });
-      setHasChanges(false);
-    } else {
-      showToast(t("common.error", { error: message }), "error", {
-        clear: true,
-      });
-      // Keep hasChanges true on error so user can retry
+      const { workspace: updatedWorkspace, message } = await Workspace.update(
+        workspace.slug,
+        data,
+      );
+      if (updatedWorkspace) {
+        showToast(t("common.workspaceUpdated"), "success", { clear: true });
+        setHasChanges(false);
+      } else {
+        showToast(t("common.error", { error: message }), "error", {
+          clear: true,
+        });
+        // Keep hasChanges true on error so user can retry
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
   };
 
   if (!workspace) return null;

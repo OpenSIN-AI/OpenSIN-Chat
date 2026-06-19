@@ -304,7 +304,12 @@ class Milvus extends VectorDatabase {
     if (knownDocuments.length === 0) return;
 
     const vectorIds = knownDocuments.map((doc) => doc.vectorId);
-    const queryIn = vectorIds.map((v) => `'${v}'`).join(",");
+    // Escape single quotes in vector IDs to prevent injection in the
+    // Milvus expression string. Vector IDs are system-generated UUIDs
+    // but defense-in-depth requires escaping.
+    const queryIn = vectorIds
+      .map((v) => `'${String(v).replace(/'/g, "''")}'`)
+      .join(",");
     await client.deleteEntities({
       collection_name: this.normalize(namespace),
       expr: `id in [${queryIn}]`,
@@ -341,6 +346,14 @@ class Milvus extends VectorDatabase {
     }
 
     const queryVector = await LLMConnector.embedTextInput(input);
+    if (!queryVector || queryVector.length === 0) {
+      return {
+        contextTexts: [],
+        sources: [],
+        message:
+          "Failed to generate embedding for query. The embedding model may be unavailable or returned an empty vector.",
+      };
+    }
     const { contextTexts, sourceDocuments } = await this.similarityResponse({
       client,
       namespace,

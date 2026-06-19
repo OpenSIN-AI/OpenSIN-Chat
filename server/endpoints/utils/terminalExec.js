@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
 const { reqBody } = require("../../utils/http");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
-const {
-  simpleRateLimit,
-} = require("../../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 const { execFile } = require("child_process");
 const { promisify } = require("util");
 

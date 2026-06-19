@@ -242,7 +242,7 @@ class PaperlessNgxLoader {
   async parsePdfFromTemp(tempPath) {
     try {
       const buffer = await fs.promises.readFile(tempPath);
-      const data = await pdf(buffer);
+      const data = await pdf(buffer, { isEvalSupported: false });
       return data.text;
     } catch (error) {
       // eslint-disable-next-line no-console

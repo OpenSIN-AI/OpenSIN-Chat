@@ -47,6 +47,7 @@ class BackgroundService {
   #memoryJobs = [
     {
       name: "extract-memories",
+      timeout: "15m",
       interval: process.env.MEMORY_EXTRACTION_INTERVAL || "3hr",
     },
   ];
@@ -56,6 +57,7 @@ class BackgroundService {
     // https://github.com/breejs/bree
     {
       name: "sync-watched-documents",
+      timeout: "10m",
       interval: "1hr",
     },
   ];

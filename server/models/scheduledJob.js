@@ -60,16 +60,29 @@ const ScheduledJob = {
   create: async function ({ name, prompt, tools = null, schedule } = {}) {
     try {
       const nextRunAt = this.computeNextRunAt(schedule);
-      const job = await prisma.scheduled_jobs.create({
-        data: {
-          name: String(name),
-          prompt: String(prompt),
-          tools: tools ? JSON.stringify(tools) : null,
-          schedule: String(schedule),
-          nextRunAt,
-        },
+      return await prisma.$transaction(async (tx) => {
+        const limit = this.MAX_ACTIVE;
+        if (limit != null) {
+          const current = await tx.scheduled_jobs.count({
+            where: { enabled: true },
+          });
+          if (current >= limit) {
+            throw new Error(
+              `Maximum of ${limit} active scheduled jobs reached. Disable another job first.`,
+            );
+          }
+        }
+        const job = await tx.scheduled_jobs.create({
+          data: {
+            name: String(name),
+            prompt: String(prompt),
+            tools: tools ? JSON.stringify(tools) : null,
+            schedule: String(schedule),
+            nextRunAt,
+          },
+        });
+        return { job, error: null };
       });
-      return { job, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Failed to create scheduled job:", error.message);
@@ -90,18 +103,33 @@ const ScheduledJob = {
         }
       }
 
-      // Recompute nextRunAt if schedule changed
       if (updates.schedule) {
         updates.nextRunAt = this.computeNextRunAt(updates.schedule);
       }
 
       updates.updatedAt = new Date();
 
-      const job = await prisma.scheduled_jobs.update({
-        where: { id: Number(id) },
-        data: updates,
+      return await prisma.$transaction(async (tx) => {
+        const limit = this.MAX_ACTIVE;
+        if (updates.enabled === true && limit != null) {
+          const current = await tx.scheduled_jobs.count({
+            where: {
+              enabled: true,
+              NOT: { id: Number(id) },
+            },
+          });
+          if (current >= limit) {
+            throw new Error(
+              `Maximum of ${limit} active scheduled jobs reached. Disable another job first.`,
+            );
+          }
+        }
+        const job = await tx.scheduled_jobs.update({
+          where: { id: Number(id) },
+          data: updates,
+        });
+        return { job, error: null };
       });
-      return { job, error: null };
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Failed to update scheduled job:", error.message);

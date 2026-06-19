@@ -6,9 +6,7 @@ const { reqBody } = require("../utils/http");
 const {
   simpleSSOLoginDisabledMiddleware,
 } = require("../utils/middleware/simpleSSOEnabled");
-const {
-  simpleRateLimit,
-} = require("../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 
 function inviteEndpoints(app) {
   if (!app) return;

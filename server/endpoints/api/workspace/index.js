@@ -436,7 +436,16 @@ function apiWorkspaceEndpoints(app) {
           return;
         }
 
-        const validLimit = Math.max(1, parseInt(limit));
+        const parsedLimit = parseInt(limit, 10);
+        if (
+          !Number.isFinite(parsedLimit) ||
+          parsedLimit < 0 ||
+          parsedLimit > 1000
+        ) {
+          response.status(400).json({ error: "Invalid limit" });
+          return;
+        }
+        const validLimit = Math.max(1, parsedLimit);
         const validOrderBy = ["asc", "desc"].includes(orderBy)
           ? orderBy
           : "asc";

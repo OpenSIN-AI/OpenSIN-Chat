@@ -25,6 +25,12 @@ const HEARTBEAT_TIMEOUT_MS = HEARTBEAT_INTERVAL_MS * 2;
 // Track active connections per-process for DoS protection.
 let activeConnectionCount = 0;
 
+let _wsLock = Promise.resolve();
+async function withWsLock(fn) {
+  _wsLock = _wsLock.then(fn, fn);
+  return _wsLock;
+}
+
 /**
  * Validate the Origin header to prevent Cross-Site WebSocket Hijacking (CSWSH).
  * In browser context the WebSocket API always sends Origin; its absence on a
@@ -138,16 +144,6 @@ function agentWebsocket(app, routePrefix = "") {
     `${routePrefix}/agent-invocation/:uuid`,
     async function (socket, request) {
       // ── Connection-level guards ──────────────────────────────────────────
-      // DoS protection: reject when too many concurrent agent sockets exist.
-      if (activeConnectionCount >= MAX_WS_CONNECTIONS) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          `[agentWebsocket] Rejecting connection: ${activeConnectionCount}/${MAX_WS_CONNECTIONS} slots in use.`,
-        );
-        socket.close(1013, "Maximum concurrent connections reached");
-        return;
-      }
-
       // CSWSH protection: validate Origin header.
       if (!isOriginAllowed(request)) {
         // eslint-disable-next-line no-console
@@ -202,7 +198,9 @@ function agentWebsocket(app, routePrefix = "") {
         isTerminated = true;
         if (heartbeatInterval) clearInterval(heartbeatInterval);
         if (heartbeatTimeout) clearTimeout(heartbeatTimeout);
-        if (activeConnectionCount > 0) activeConnectionCount--;
+        withWsLock(() => {
+          if (activeConnectionCount > 0) activeConnectionCount--;
+        }).catch(() => {});
       };
 
       try {
@@ -220,7 +218,25 @@ function agentWebsocket(app, routePrefix = "") {
           return;
         }
 
-        activeConnectionCount++;
+        let wsRejected = false;
+        await withWsLock(() => {
+          if (activeConnectionCount >= MAX_WS_CONNECTIONS) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              `[agentWebsocket] Rejecting connection: ${activeConnectionCount}/${MAX_WS_CONNECTIONS} slots in use.`,
+            );
+            try {
+              socket.close(1013, "Maximum concurrent connections reached");
+            } catch {
+              /* socket gone */
+            }
+            wsRejected = true;
+            return;
+          }
+          activeConnectionCount++;
+        });
+        if (wsRejected) return;
+
         startHeartbeat();
 
         socket.on("message", (data, isBinary) => {

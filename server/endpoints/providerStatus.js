@@ -4,9 +4,7 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../utils/middleware/multiUserProtected");
-const {
-  simpleRateLimit,
-} = require("../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 const { getProviderKeyStatuses } = require("../utils/providerKeyStatus");
 const {
   probeProvider,
