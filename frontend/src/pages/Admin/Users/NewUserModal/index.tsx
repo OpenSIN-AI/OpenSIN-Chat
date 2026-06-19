@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React, { useState, FormEvent } from "react";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import Admin from "@/models/admin";
 import { userFromStorage } from "@/utils/request";
 import { MessageLimitInput, RoleHintDisplay } from "..";

@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Docs: utils.doc.md
-import {
-  CalendarBlank,
-  CalendarCheck,
-  CalendarPlus,
-  UserCircleGear,
-} from "@phosphor-icons/react";
+import { CalendarBlank } from "@phosphor-icons/react/dist/csr/CalendarBlank";
+import { CalendarCheck } from "@phosphor-icons/react/dist/csr/CalendarCheck";
+import { CalendarPlus } from "@phosphor-icons/react/dist/csr/CalendarPlus";
+import { UserCircleGear } from "@phosphor-icons/react/dist/csr/UserCircleGear";
 export { filterSkillCategories } from "../utils";
 
 type TFunction = (key: string) => string;

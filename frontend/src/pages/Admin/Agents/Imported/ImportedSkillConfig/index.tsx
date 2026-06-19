@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { Gear, Plug } from "@phosphor-icons/react";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+import { Plug } from "@phosphor-icons/react/dist/csr/Plug";
 import { useEffect, useState, useRef } from "react";
 import { sentenceCase } from "text-case";
 import Toggle from "@/components/lib/Toggle";

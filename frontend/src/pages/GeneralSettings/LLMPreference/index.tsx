@@ -21,7 +21,9 @@ export {
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import PreLoader from "@/components/Preloader";
 import LLMItem from "@/components/LLMSelection/LLMItem";
-import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import CTAButton from "@/components/lib/CTAButton";
 import useLLMProviders from "@/hooks/useLLMProviders";
 import ProviderKeyStatusPanel from "@/components/ProviderKeyStatusPanel";

@@ -11,17 +11,15 @@ import React, {
 import Toggle, { SimpleToggleSwitch } from "@/components/lib/Toggle";
 import { Trans, useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
-import {
-  MagnifyingGlass,
-  CircleNotch,
-  Warning,
-  CaretDown,
-  CheckCircle,
-  Info,
-  ArrowSquareOut,
-  XCircle,
-  type Icon,
-} from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
+import { XCircle } from "@phosphor-icons/react/dist/csr/XCircle";
+import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 import OutlookAgent from "@/models/outlookAgent";
 import useOutlookAgent from "@/hooks/useOutlookAgent";
 import { getOutlookSkills, filterSkillCategories } from "./utils";

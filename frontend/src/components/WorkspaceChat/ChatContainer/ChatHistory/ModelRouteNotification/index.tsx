@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { Shuffle } from "@phosphor-icons/react";
+import { Shuffle } from "@phosphor-icons/react/dist/csr/Shuffle";
 import RouterAnimation from "@/media/animations/router-animation.webm";
 import { Trans, useTranslation } from "react-i18next";
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React, { useState } from "react";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import {
   BooleanInput,
   ChatModeSelection,

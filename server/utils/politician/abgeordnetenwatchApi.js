@@ -19,6 +19,7 @@
 
 const ABGEORDNETENWATCH_BASE = "https://www.abgeordnetenwatch.de/api/v2";
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+const CACHE_MAX_ENTRIES = 500;
 
 /**
  * Default parliament_period for the current Bundestag (21. WP, 2021–2025).
@@ -117,8 +118,8 @@ class AbgeordnetenwatchApi {
    * @returns {Promise<any>}
    */
   async #fetchCached(url) {
-    const cached = this.cache.get(url);
-    if (cached && Date.now() - cached.ts < CACHE_TTL_MS) return cached.data;
+    const cached = await this.#cacheGet(url);
+    if (cached !== null) return cached;
 
     const res = await this.#fetch(url);
     if (!res.ok) {
@@ -128,7 +129,27 @@ class AbgeordnetenwatchApi {
     }
     const data = await res.json();
     this.cache.set(url, { data, ts: Date.now() });
+    if (this.cache.size > CACHE_MAX_ENTRIES) {
+      const oldest = this.cache.keys().next().value;
+      if (oldest) this.cache.delete(oldest);
+    }
     return data;
+  }
+
+  /**
+   * Read from the in-memory cache with opportunistic eviction of expired
+   * entries so stale keys do not accumulate on long-running servers.
+   * @param {string} url
+   * @returns {Promise<any>} cached payload, or null if missing/expired.
+   */
+  async #cacheGet(url) {
+    const cached = this.cache.get(url);
+    if (!cached) return null;
+    if (Date.now() - cached.ts > CACHE_TTL_MS) {
+      this.cache.delete(url);
+      return null;
+    }
+    return cached.data;
   }
 
   /**

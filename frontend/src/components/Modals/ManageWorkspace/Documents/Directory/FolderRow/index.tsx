@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import FileRow from "../FileRow";
-import { CaretDown, Folder } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { Folder } from "@phosphor-icons/react/dist/csr/Folder";
 import { middleTruncate } from "@/utils/directories";
 
 export default function FolderRow({

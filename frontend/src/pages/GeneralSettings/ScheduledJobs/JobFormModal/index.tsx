@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
-import { X, WarningCircle } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
 import ScheduledJobs from "@/models/scheduledJobs";
 import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";

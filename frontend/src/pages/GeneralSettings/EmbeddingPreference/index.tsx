@@ -29,7 +29,9 @@ import GenericOpenAiEmbeddingOptions from "@/components/EmbeddingSelection/Gener
 import MistralAiOptions from "@/components/EmbeddingSelection/MistralAiOptions";
 
 import EmbedderItem from "@/components/EmbeddingSelection/EmbedderItem";
-import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import CTAButton from "@/components/lib/CTAButton";

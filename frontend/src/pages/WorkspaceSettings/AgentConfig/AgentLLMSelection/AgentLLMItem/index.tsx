@@ -6,7 +6,8 @@
 import { createPortal } from "react-dom";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
-import { X, Gear } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { useEffect, useState } from "react";

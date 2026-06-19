@@ -5,6 +5,8 @@ const os = require("os");
 const path = require("path");
 const { VALID_LANGUAGE_CODES } = require("./validLangs");
 
+const OCR_MAX_BYTES = 500 * 1024 * 1024;
+
 class OCRLoader {
   /**
    * The language code(s) to use for the OCR.
@@ -82,7 +84,14 @@ class OCRLoader {
     const documentTitle = path.basename(filePath);
     this.log(`Starting OCR of ${documentTitle}`);
     const pdfjs = await import("pdf-parse/lib/pdf.js/v2.0.550/build/pdf.js");
-    let buffer = fs.readFileSync(filePath);
+    const fbStat = await fs.promises.stat(filePath).catch(() => null);
+    if (fbStat && fbStat.size > OCR_MAX_BYTES) {
+      this.log(
+        `Refusing OCR of ${documentTitle}: ${fbStat.size} bytes exceeds ${OCR_MAX_BYTES} byte cap`
+      );
+      return [];
+    }
+    const buffer = await fs.promises.readFile(filePath);
 
     const pdfDocument = await pdfjs.getDocument({
       data: buffer,
@@ -205,7 +214,8 @@ class OCRLoader {
         return documents;
       };
 
-      await Promise.race([timeoutPromise, processPages()]);
+      const pagesPromise = processPages().catch(() => {});
+      await Promise.race([timeoutPromise, pagesPromise]);
     } catch (e) {
       this.log(`Error: ${e.message}`, e.stack);
     } finally {
@@ -239,6 +249,14 @@ class OCRLoader {
       !fs.statSync(filePath).isFile()
     ) {
       this.log(`File ${filePath} does not exist. Skipping OCR.`);
+      return null;
+    }
+
+    const imgStat = fs.statSync(filePath);
+    if (imgStat.size > OCR_MAX_BYTES) {
+      this.log(
+        `Refusing OCR of ${filePath}: ${imgStat.size} bytes exceeds ${OCR_MAX_BYTES} byte cap`
+      );
       return null;
     }
 
@@ -278,6 +296,104 @@ class OCRLoader {
     } catch (e) {
       this.log(`Error: ${e.message}`);
       return null;
+    } finally {
+      if (timeoutHandle) clearTimeout(timeoutHandle);
+      if (worker) await worker.terminate();
+    }
+  }
+
+  /**
+   * OCRs a batch of image files using a single shared tesseract worker.
+   * The worker is reused across all files (one worker instead of one per file),
+   * which materially reduces startup cost (no per-image model load) and avoids
+   * OOM from many simultaneous workers.
+   * @param {string[]} filePaths - The image file paths to OCR.
+   * @param {Object} [options]
+   * @param {number} [options.maxExecutionTime=600000] - Overall timeout in ms.
+   * @returns {Promise<(string|null)[]>} - One entry per file; null on per-file failure.
+   */
+  async ocrImageBatch(filePaths = [], { maxExecutionTime = 600_000 } = {}) {
+    if (!Array.isArray(filePaths) || filePaths.length === 0) return [];
+    let worker = null;
+    let timeoutHandle = null;
+    const results = new Array(filePaths.length).fill(null);
+    try {
+      const valid = [];
+      for (let i = 0; i < filePaths.length; i += 1) {
+        const filePath = filePaths[i];
+        if (
+          !filePath ||
+          !fs.existsSync(filePath) ||
+          !fs.statSync(filePath).isFile()
+        ) {
+          results[i] = null;
+          continue;
+        }
+        try {
+          const st = fs.statSync(filePath);
+          if (st.size > OCR_MAX_BYTES) {
+            this.log(
+              `Refusing batch OCR of ${filePath}: ${st.size} bytes exceeds ${OCR_MAX_BYTES} byte cap`
+            );
+            results[i] = null;
+            continue;
+          }
+        } catch {
+          results[i] = null;
+          continue;
+        }
+        valid.push(i);
+      }
+      if (valid.length === 0) return results;
+
+      this.log(
+        `Starting batch OCR of ${valid.length} images with 1 shared worker.`
+      );
+      const startTime = Date.now();
+      const { createWorker, OEM } = require("tesseract.js");
+      worker = await createWorker(this.language, OEM.LSTM_ONLY, {
+        cachePath: this.cacheDir,
+      });
+
+      const timeoutPromise = new Promise((_, reject) => {
+        timeoutHandle = setTimeout(() => {
+          reject(
+            new Error(
+              `OCR batch took too long to complete (${
+                maxExecutionTime / 1000
+              } seconds)`
+            )
+          );
+        }, maxExecutionTime);
+      });
+
+      const processQueue = async () => {
+        for (const idx of valid) {
+          try {
+            const { data } = await worker.recognize(
+              filePaths[idx],
+              {},
+              "text"
+            );
+            results[idx] = data.text;
+          } catch (e) {
+            this.log(
+              `Batch OCR error on ${filePaths[idx]}: ${e.message}`
+            );
+            results[idx] = null;
+          }
+        }
+      };
+
+      await Promise.race([timeoutPromise, processQueue()]);
+      this.log(`Completed batch OCR.`, {
+        processed: valid.length,
+        executionTime: `${((Date.now() - startTime) / 1000).toFixed(2)}s`,
+      });
+      return results;
+    } catch (e) {
+      this.log(`Batch OCR error: ${e.message}`);
+      return results;
     } finally {
       if (timeoutHandle) clearTimeout(timeoutHandle);
       if (worker) await worker.terminate();
@@ -325,8 +441,18 @@ class PDFSharp {
 
           const name = ops.argsArray[i][0];
           const img = await page.objs.get(name);
+          if (!img || !img.data || typeof img.data.length !== "number") {
+            this.log(`Iteration error: image ${name} has no data buffer`);
+            continue;
+          }
           const { width, height } = img;
           const size = img.data.length;
+          if (!(size > 0) || !(width > 0) || !(height > 0)) {
+            this.log(
+              `Iteration error: image ${name} has invalid dimensions (size=${size}, width=${width}, height=${height})`
+            );
+            continue;
+          }
           const channels = size / width / height;
           const targetDPI = 70;
           const targetWidth = Math.floor(width * (targetDPI / 72));

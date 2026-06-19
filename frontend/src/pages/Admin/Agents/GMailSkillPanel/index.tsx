@@ -11,15 +11,13 @@ import React, {
 import Toggle, { SimpleToggleSwitch } from "@/components/lib/Toggle";
 import { Trans, useTranslation } from "react-i18next";
 import debounce from "lodash.debounce";
-import {
-  MagnifyingGlass,
-  CircleNotch,
-  Warning,
-  CaretDown,
-  CheckCircle,
-  Info,
-  type Icon,
-} from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 import GMailIcon from "./gmail.png";
 import { useGmailAgent } from "@/hooks/useGoogleAgent";
 import { getGmailSkills, filterSkillCategories } from "./utils";

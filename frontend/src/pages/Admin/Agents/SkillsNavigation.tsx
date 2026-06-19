@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: SkillsNavigation.doc.md
-import { Robot } from "@phosphor-icons/react";
+import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
 import AgentSkillSettings from "./AgentSkillSettings";
 import SkillList from "./SkillList";
 import ImportedSkillList from "./Imported/SkillList";
@@ -8,7 +8,10 @@ import { MCPServersList, MCPServerHeader } from "./MCPServers";
 import AgentFlowsList from "./AgentFlows";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
-import { Hammer, Package, Plug, FlowArrow } from "@phosphor-icons/react";
+import { Hammer } from "@phosphor-icons/react/dist/csr/Hammer";
+import { Package } from "@phosphor-icons/react/dist/csr/Package";
+import { Plug } from "@phosphor-icons/react/dist/csr/Plug";
+import { FlowArrow } from "@phosphor-icons/react/dist/csr/FlowArrow";
 import { useTranslation } from "react-i18next";
 
 type SkillsNavigationProps = {

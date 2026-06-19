@@ -60,18 +60,29 @@ markdown.renderer.rules.strong_open = () => '<strong class="text-white">';
 markdown.renderer.rules.strong_close = () => "</strong>";
 markdown.renderer.rules.link_open = (tokens, idx) => {
   const token = tokens[idx];
-  const href = token.attrs.find((attr) => attr[0] === "href");
-  return `<a href="${HTMLEncode(href[1])}" target="_blank" rel="noopener noreferrer">`;
+  const href = token.attrs?.find((attr) => attr[0] === "href")?.[1] ?? "#";
+  // Block dangerous URI schemes (javascript:, data:, vbscript:) — DOMPurify
+  // also strips them, but defence-in-depth prevents them from ever appearing
+  // in the HTML string that downstream consumers might cache or log.
+  const safeHref = /^(https?:|mailto:|tel:|ftp:|\/|#|\.)/i.test(href)
+    ? href
+    : "#";
+  return `<a href="${HTMLEncode(safeHref)}" target="_blank" rel="noopener noreferrer">`;
 };
 
 // Custom renderer for responsive images rendered in markdown
 markdown.renderer.rules.image = function (tokens, idx: any) {
   const token = tokens[idx];
   const srcIndex = token.attrIndex("src");
-  const src = token.attrs[srcIndex][1];
+  const src = srcIndex >= 0 ? token.attrs[srcIndex][1] : "";
   const alt = token.content || "";
 
-  return `<div class="w-full max-w-[800px]"><img src="${HTMLEncode(src)}" alt="${HTMLEncode(alt)}" class="w-full h-auto" /></div>`;
+  // Block dangerous URI schemes in image src — data: SVGs can carry JS.
+  const safeSrc =
+    src && /^(https?:|data:image\/(?!svg)|\/|\.)/i.test(src) ? src : "";
+  if (!safeSrc) return `<div class="w-full max-w-[800px]"></div>`;
+
+  return `<div class="w-full max-w-[800px]"><img src="${HTMLEncode(safeSrc)}" alt="${HTMLEncode(alt)}" loading="lazy" class="w-full h-auto" onerror="this.parentElement.style.display='none'" /></div>`;
 };
 
 markdown.use(markdownItKatexPlugin);

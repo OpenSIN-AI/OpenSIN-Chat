@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { DotsThree } from "@phosphor-icons/react";
+import { DotsThree } from "@phosphor-icons/react/dist/csr/DotsThree";
 import { useTranslation } from "react-i18next";
 
 export default function SlashCommandRow({

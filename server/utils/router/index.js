@@ -28,6 +28,7 @@ class ModelRouterService {
   static DEFAULT_STICKY_MS = 300_000; // 5 minutes
   static LLM_NO_MATCH_COOLDOWN_MS = 30_000; // 30s debounce for "no match" LLM results
   static REGEX_INPUT_CAP = 10_000;
+  static SWEEP_INTERVAL_MS = 120_000; // 2 minutes
 
   constructor() {
     if (ModelRouterService.instance) return ModelRouterService.instance;
@@ -39,6 +40,8 @@ class ModelRouterService {
     this.llmInFlight = new Map();
     this.lastNotifiedRoute = new Map();
     this.LOG_PREFIX = "\x1b[35m[ModelRouterService]\x1b[0m";
+    this._sweepTimer = null;
+    this._startSweep();
   }
 
   /**
@@ -48,6 +51,29 @@ class ModelRouterService {
   static getInstance() {
     if (!ModelRouterService.instance) new ModelRouterService();
     return ModelRouterService.instance;
+  }
+
+  _startSweep() {
+    if (this._sweepTimer) return;
+    this._sweepTimer = setInterval(() => this._sweepExpired(), ModelRouterService.SWEEP_INTERVAL_MS);
+    if (this._sweepTimer.unref) this._sweepTimer.unref();
+  }
+
+  _sweepExpired() {
+    const now = Date.now();
+    const stickyTtl = ModelRouterService.DEFAULT_STICKY_MS;
+    const noMatchTtl = ModelRouterService.LLM_NO_MATCH_COOLDOWN_MS;
+
+    for (const [key, entry] of this.stickyRoutes) {
+      if (now - entry.stickyAt > stickyTtl) this.stickyRoutes.delete(key);
+    }
+    for (const [key, entry] of this.llmCache) {
+      const ttl = entry.result ? stickyTtl : noMatchTtl;
+      if (now - entry.cachedAt > ttl) this.llmCache.delete(key);
+    }
+    for (const [key, entry] of this.lastNotifiedRoute) {
+      if (now - (entry.notifiedAt || 0) > stickyTtl) this.lastNotifiedRoute.delete(key);
+    }
   }
 
   log(text, ...args) {
@@ -277,6 +303,7 @@ class ModelRouterService {
         this.lastNotifiedRoute.set(key, {
           provider: route.provider,
           model: route.model,
+          notifiedAt: Date.now(),
         });
         return false;
       }
@@ -284,6 +311,7 @@ class ModelRouterService {
       this.lastNotifiedRoute.set(key, {
         provider: route.provider,
         model: route.model,
+        notifiedAt: Date.now(),
       });
       return true;
     }
@@ -292,6 +320,7 @@ class ModelRouterService {
     this.lastNotifiedRoute.set(key, {
       provider: route.provider,
       model: route.model,
+      notifiedAt: Date.now(),
     });
     return true;
   }

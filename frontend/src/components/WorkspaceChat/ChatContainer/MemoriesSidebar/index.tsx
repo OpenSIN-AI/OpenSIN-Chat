@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
-import {
-  X,
-  ChatCircleText,
-  Files,
-  FileText,
-  Globe,
-  Database,
-} from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
+import { Files } from "@phosphor-icons/react/dist/csr/Files";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import ChatSidebar from "../ChatSidebar";

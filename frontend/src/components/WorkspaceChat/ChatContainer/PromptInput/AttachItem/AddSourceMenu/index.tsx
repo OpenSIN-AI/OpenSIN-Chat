@@ -8,16 +8,14 @@ import {
   useState,
 } from "react";
 import type { ReactElement } from "react";
-import {
-  UploadSimple,
-  Files,
-  Globe,
-  GithubLogo,
-  CaretRight,
-  CircleNotch,
-  FileText,
-  X,
-} from "@phosphor-icons/react";
+import { UploadSimple } from "@phosphor-icons/react/dist/csr/UploadSimple";
+import { Files } from "@phosphor-icons/react/dist/csr/Files";
+import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
+import { GithubLogo } from "@phosphor-icons/react/dist/csr/GithubLogo";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 import Workspace from "@/models/workspace";
 import useDocuments from "@/hooks/useDocuments";

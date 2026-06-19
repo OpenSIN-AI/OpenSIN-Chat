@@ -2,7 +2,9 @@
 // Docs: index.doc.md
 import { useState, ReactNode, useEffect } from "react";
 import { titleCase } from "text-case";
-import { BookOpenText, ArrowClockwise, Warning } from "@phosphor-icons/react";
+import { BookOpenText } from "@phosphor-icons/react/dist/csr/BookOpenText";
+import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { Tooltip } from "react-tooltip";
 import MCPLogo from "@/media/agents/mcp-logo.svg";
 import MCPServers from "@/models/mcpServers";

@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import { PROVIDER_PRIVACY_MAP } from "./constants";
-import { ArrowSquareOut } from "@phosphor-icons/react";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import { Link } from "react-router-dom";
 import { titleCase, sentenceCase } from "text-case";

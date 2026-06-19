@@ -2,7 +2,9 @@
 import { memo, useState, useEffect, useRef } from "react";
 import { saveAs } from "file-saver";
 import { useTranslation } from "react-i18next";
-import { DownloadSimple, CircleNotch, Eye } from "@phosphor-icons/react";
+import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { humanFileSize } from "@/utils/numbers";
 import StorageFiles from "@/models/files";
 import { useChatSidebar } from "../../ChatSidebar";
@@ -244,6 +246,7 @@ function FileDownloadCard({ props, autoPreview = false }) {
               type="button"
               onClick={handleDownload}
               disabled={downloading}
+              aria-busy={downloading}
               className="flex items-center gap-x-2 px-4 py-2 rounded-lg border border-zinc-600 light:border-theme-sidebar-border hover:bg-zinc-700 light:hover:bg-theme-bg-secondary transition-colors text-white light:text-theme-text-primary text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {downloading ? (

@@ -48,8 +48,9 @@ async function discoverLinks(startUrl, maxDepth = 1, maxLinks = 20) {
 
 async function getPageLinks(url, baseUrl) {
   const browser = await browserPool.acquire();
+  let page = null;
   try {
-    const page = await browser.newPage();
+    page = await browser.newPage();
     await page.goto(url, {
       timeout: PUPPETEER_TIMEOUT_MS,
       waitUntil: "networkidle2",
@@ -62,6 +63,7 @@ async function getPageLinks(url, baseUrl) {
     console.error(`Failed to get page links from ${url}.`, error);
     return [];
   } finally {
+    if (page) await page.close().catch(() => {});
     await browserPool.release(browser);
   }
 }
@@ -97,8 +99,9 @@ async function bulkScrapePages(links, outFolderPath) {
     console.log(`Scraping ${i + 1}/${links.length}: ${link}`);
 
     const browser = await browserPool.acquire();
+    let page = null;
     try {
-      const page = await browser.newPage();
+      page = await browser.newPage();
       await page.goto(link, {
         timeout: PUPPETEER_TIMEOUT_MS,
         waitUntil: "networkidle2",
@@ -142,6 +145,7 @@ async function bulkScrapePages(links, outFolderPath) {
       // eslint-disable-next-line no-console
       console.error(`Failed to scrape ${link}.`, error);
     } finally {
+      if (page) await page.close().catch(() => {});
       await browserPool.release(browser);
     }
   }

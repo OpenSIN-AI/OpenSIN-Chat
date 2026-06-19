@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
-import {
-  CaretDown,
-  CaretRight,
-  CheckCircle,
-  Copy,
-} from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
 import { copyMarkdownAsRichText } from "@/utils/clipboard";
 
 // Generic expand/collapse panel used by the run-detail page to wrap each

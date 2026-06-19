@@ -11,7 +11,7 @@ import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { useTranslation } from "react-i18next";
 import { safeJsonParse } from "@/utils/request";
 import { safeGetItem, safeRemoveItem } from "@/utils/safeStorage";
-import { BookOpen } from "@phosphor-icons/react";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 
 // Pure punctuation and a right-arrow glyph used in the home greeting.
 // These are not translatable; they live in module scope so the linter

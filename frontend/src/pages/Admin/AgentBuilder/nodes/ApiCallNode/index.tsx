@@ -3,7 +3,9 @@
 // Docs: ApiCallNode.doc.md
 /* eslint-disable react-hooks/refs */
 import React, { useRef, useState } from "react";
-import { Plus, X, CaretDown } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { useTranslation } from "react-i18next";
 import type { BlockConfig } from "../../BlockList";
 

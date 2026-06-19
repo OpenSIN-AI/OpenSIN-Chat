@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
-import { At } from "@phosphor-icons/react";
+import { At } from "@phosphor-icons/react/dist/csr/At";
 import { Tooltip } from "react-tooltip";
 
 interface AgentSessionButtonProps {

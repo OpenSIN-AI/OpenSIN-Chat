@@ -28,6 +28,9 @@ const XCHECK_REPORT_DIR = getStoragePath(
   "crosscheck",
 );
 const XCHECK_JOBS_DIR = getStoragePath("pdf-analysis", "jobs-crosscheck");
+const MAX_COMPLETED_JOBS = Number(
+  process.env.PDF_ANALYSIS_MAX_COMPLETED_JOBS || 500,
+);
 
 const REPORT_SYSTEM = `Du bist ein Senior-Verifikationsanalyst. Erstelle aus Kreuz-Verifikations-Ergebnissen einen professionellen Bericht.
 Struktur: # Titel, ## Executive Summary, ## Verifikationsmatrix (Behauptung x Quelle x Urteil), ## Detailbefunde je Behauptung (mit Beleg-Zitaten und URLs), ## Widersprüche & offene Punkte, ## Methodik.
@@ -302,7 +305,9 @@ class CrossCheckPipeline {
   }
 
   /**
-   * Remove terminal-state jobs older than maxAgeHours from the in-memory Map.
+   * Remove terminal-state jobs older than maxAgeHours from the in-memory Map
+   * and enforce a hard cap (MAX_COMPLETED_JOBS, default 500) via FIFO eviction
+   * to prevent unbounded growth on long-running servers.
    * @param {number} maxAgeHours - Default 24.
    * @returns {number} Number of jobs pruned.
    */
@@ -316,6 +321,25 @@ class CrossCheckPipeline {
         : Date.parse(job.createdAt);
       if (ts < cutoff) {
         jobs.delete(id);
+        pruned++;
+      }
+    }
+    const terminal = [...jobs.entries()].filter(([, j]) =>
+      ["completed", "failed"].includes(j.status),
+    );
+    if (terminal.length > MAX_COMPLETED_JOBS) {
+      terminal.sort((a, b) => {
+        const ta = a[1].completedAt
+          ? Date.parse(a[1].completedAt)
+          : Date.parse(a[1].createdAt);
+        const tb = b[1].completedAt
+          ? Date.parse(b[1].completedAt)
+          : Date.parse(b[1].createdAt);
+        return ta - tb;
+      });
+      const evict = terminal.length - MAX_COMPLETED_JOBS;
+      for (let i = 0; i < evict; i++) {
+        jobs.delete(terminal[i][0]);
         pruned++;
       }
     }

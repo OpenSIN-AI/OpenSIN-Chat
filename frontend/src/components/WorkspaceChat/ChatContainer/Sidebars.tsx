@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 import SourcesSidebar from "./SourcesSidebar";
 import MemoriesSidebar from "./MemoriesSidebar";
 import PreviewSidebar from "./PreviewSidebar";
@@ -37,14 +39,22 @@ export default function Sidebars({ workspace }: SidebarsProps) {
           className="w-[var(--panel-width)] h-full flex-shrink-0 relative my-2 rounded-2xl overflow-hidden bg-zinc-900 light:bg-white shadow-lg"
         >
           {activeSidebar === "sources" && (
-            <SourcesSidebar workspace={workspace} />
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <SourcesSidebar workspace={workspace} />
+            </ErrorBoundary>
           )}
           {activeSidebar === "memories" && (
-            <MemoriesSidebar workspace={workspace} />
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <MemoriesSidebar workspace={workspace} />
+            </ErrorBoundary>
           )}
           {activeSidebar === "preview" && <PreviewSidebar />}
           {activeSidebar === "console" && <ConsoleSidebar />}
-          {activeSidebar === "filesystem" && <FilesystemSidebar />}
+          {activeSidebar === "filesystem" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <FilesystemSidebar />
+            </ErrorBoundary>
+          )}
           {activeSidebar === "database" && <DatabaseSidebar />}
           {activeSidebar === "political" && <PoliticalSidebar />}
         </div>

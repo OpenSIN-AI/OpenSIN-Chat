@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import CTAButton from "@/components/lib/CTAButton";
 import CommunityHubImportItemSteps from "../..";
-import { Warning } from "@phosphor-icons/react";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
 
 export default function UnknownItem({

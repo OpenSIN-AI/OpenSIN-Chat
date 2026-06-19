@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CircleNotch, X } from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import ModalWrapper from "@/components/ModalWrapper";
 import ModelRouterAPI from "@/models/modelRouter";
 import showToast from "@/utils/toast";

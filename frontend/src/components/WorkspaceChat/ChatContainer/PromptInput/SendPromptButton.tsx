@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
-import { ArrowUp } from "@phosphor-icons/react";
+import { ArrowUp } from "@phosphor-icons/react/dist/csr/ArrowUp";
 import { Tooltip } from "react-tooltip";
 
 interface SendPromptButtonProps {

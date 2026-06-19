@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useCallback, useEffect } from "react";
-import { Microphone, CircleNotch } from "@phosphor-icons/react";
+import { Microphone } from "@phosphor-icons/react/dist/csr/Microphone";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import { PROMPT_INPUT_EVENT } from "../../../PromptInput";

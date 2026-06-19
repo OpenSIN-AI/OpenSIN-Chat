@@ -3,7 +3,8 @@
 import { useState, ReactNode } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
-import { CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { useTranslation } from "react-i18next";
 import EmbedConfigsView from "./EmbedConfigs";
 import EmbedChatsView from "./EmbedChats";

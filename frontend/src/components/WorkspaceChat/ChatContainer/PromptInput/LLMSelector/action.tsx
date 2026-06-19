@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { Tooltip } from "react-tooltip";
-import { Brain, CheckCircle } from "@phosphor-icons/react";
+import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
 import LLMSelectorModal from "./index";
 import { useTheme } from "@/hooks/useTheme";
 import { useRef, useEffect, useState } from "react";

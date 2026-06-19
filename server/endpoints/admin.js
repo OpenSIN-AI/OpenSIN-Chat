@@ -147,10 +147,23 @@ function adminEndpoints(app) {
         const currUser = await userFromSession(request, response);
         const { id } = request.params;
         const user = await User.get({ id: Number(id) });
+        if (!user) {
+          response.status(404).json({ success: false, error: "User not found." });
+          return;
+        }
 
         const canModify = validCanModify(currUser, user);
         if (!canModify.valid) {
           response.status(200).json({ success: false, error: canModify.error });
+          return;
+        }
+
+        // Prevent deleting the last remaining admin user (system lockout).
+        const adminCheck = await canModifyAdmin(user, { role: "__deleted__" });
+        if (!adminCheck.valid) {
+          response
+            .status(200)
+            .json({ success: false, error: adminCheck.error });
           return;
         }
 
@@ -214,9 +227,9 @@ function adminEndpoints(app) {
             "invite_created",
             {
               inviteCode: invite.code,
-              createdBy: response.locals?.user?.username,
+              createdBy: user?.username,
             },
-            response.locals?.user?.id,
+            user?.id,
           );
         }
         response.status(200).json({ invite, error });
@@ -233,12 +246,13 @@ function adminEndpoints(app) {
     [validatedRequest, strictMultiUserRoleValid([ROLES.admin, ROLES.manager])],
     async (request, response) => {
       try {
+        const user = await userFromSession(request, response);
         const { id } = request.params;
         const { success, error } = await Invite.deactivate(id);
         await EventLogs.logEvent(
           "invite_deleted",
-          { deletedBy: response.locals?.user?.username },
-          response.locals?.user?.id,
+          { deletedBy: user?.username },
+          user?.id,
         );
         response.status(200).json({ success, error });
       } catch (e) {

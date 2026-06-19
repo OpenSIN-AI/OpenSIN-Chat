@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { NavLink } from "react-router-dom";
-import { House, MagnifyingGlass, BookOpen } from "@phosphor-icons/react";
+import { House } from "@phosphor-icons/react/dist/csr/House";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { useTranslation } from "react-i18next";
 import paths from "@/utils/paths";
 

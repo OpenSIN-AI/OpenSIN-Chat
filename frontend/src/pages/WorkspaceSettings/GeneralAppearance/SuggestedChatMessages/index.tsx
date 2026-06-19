@@ -4,7 +4,8 @@ import PreLoader from "@/components/Preloader";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { useState, ChangeEvent } from "react";
-import { Plus, X } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 import useSuggestedMessages from "@/hooks/useSuggestedMessages";
 

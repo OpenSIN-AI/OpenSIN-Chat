@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState, useMemo, useCallback } from "react";
-import { Plus } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { useTranslation } from "react-i18next";
 import { useModal } from "@/hooks/useModal";
 import useSlashCommandPresets from "@/hooks/useSlashCommandPresets";

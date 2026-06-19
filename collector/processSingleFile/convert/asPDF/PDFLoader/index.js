@@ -47,7 +47,11 @@ class PDFLoader {
     let pdf;
     try {
       pdf = await getDocument({
-        data: new Uint8Array(buffer),
+        data: new Uint8Array(
+          buffer.buffer,
+          buffer.byteOffset,
+          buffer.byteLength
+        ),
         useWorkerFetch: false,
         isEvalSupported: false,
         useSystemFonts: true,
@@ -63,39 +67,46 @@ class PDFLoader {
 
     for (let i = 1; i <= pdf.numPages; i += 1) {
       const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
+      let content;
+      try {
+        content = await page.getTextContent();
 
-      if (content.items.length === 0) {
-        continue;
-      }
-
-      let lastY;
-      const textItems = [];
-      for (const item of content.items) {
-        if ("str" in item) {
-          if (lastY === item.transform[5] || !lastY) {
-            textItems.push(item.str);
-          } else {
-            textItems.push(`\n${item.str}`);
-          }
-          lastY = item.transform[5];
+        if (content.items.length === 0) {
+          continue;
         }
-      }
 
-      const text = textItems.join("");
-      documents.push({
-        pageContent: text.trim(),
-        metadata: {
-          source: this.filePath,
-          pdf: {
-            version,
-            info: meta?.info,
-            metadata: meta?.metadata,
-            totalPages: pdf.numPages,
+        let lastY;
+        const textItems = [];
+        for (const item of content.items) {
+          if ("str" in item) {
+            if (lastY === item.transform[5] || !lastY) {
+              textItems.push(item.str);
+            } else {
+              textItems.push(`\n${item.str}`);
+            }
+            lastY = item.transform[5];
+          }
+        }
+
+        const text = textItems.join("");
+        documents.push({
+          pageContent: text.trim(),
+          metadata: {
+            source: this.filePath,
+            pdf: {
+              version,
+              info: meta?.info,
+              metadata: meta?.metadata,
+              totalPages: pdf.numPages,
+            },
+            loc: { pageNumber: i },
           },
-          loc: { pageNumber: i },
-        },
-      });
+        });
+      } finally {
+        try {
+          if (typeof page.cleanup === "function") await page.cleanup();
+        } catch {}
+      }
     }
 
     if (this.splitPages) {

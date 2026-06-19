@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import ConnectorImages from "@/components/DataConnectorOption/media";
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { useTranslation } from "react-i18next";
 import GithubOptions from "./Connectors/Github";
 import GitlabOptions from "./Connectors/Gitlab";

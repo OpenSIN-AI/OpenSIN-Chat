@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
-import { Plus, X } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 
 const NUMERIC_PROPERTIES = [
   "conversationTokenCount",

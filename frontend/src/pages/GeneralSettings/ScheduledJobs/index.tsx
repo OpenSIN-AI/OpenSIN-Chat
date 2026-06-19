@@ -11,7 +11,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import showToast from "@/utils/toast";
 import JobRow from "./components/JobRow";
-import { Bell } from "@phosphor-icons/react";
+import { Bell } from "@phosphor-icons/react/dist/csr/Bell";
 import { Tooltip } from "react-tooltip";
 import useScheduledJobs from "@/hooks/useScheduledJobs";
 

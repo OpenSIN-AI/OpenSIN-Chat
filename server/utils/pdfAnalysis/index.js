@@ -25,6 +25,10 @@ const { validatePdfPath } = require("./security");
 const { verifyFacts } = require("./factVerifier");
 const { reviewAndRepair } = require("./criticAgent");
 
+const MAX_COMPLETED_JOBS = Number(
+  process.env.PDF_ANALYSIS_MAX_COMPLETED_JOBS || 500,
+);
+
 const jobs = new Map();
 
 class PdfAnalysisPipeline {
@@ -318,6 +322,11 @@ class PdfAnalysisPipeline {
    * Remove terminal-state jobs older than maxAgeHours from the in-memory Map
    * to prevent unbounded growth on long-running servers. Disk cleanup is
    * handled separately by jobStore.cleanupStaleJobs.
+   *
+   * Additionally enforces a hard cap (MAX_COMPLETED_JOBS, default 500) on the
+   * number of terminal-state entries kept in memory — if the cap is exceeded,
+   * the oldest completed/failed entries are evicted FIFO regardless of age.
+   *
    * @param {number} maxAgeHours - Jobs older than this are pruned (default 24).
    * @returns {number} Number of jobs pruned.
    */
@@ -331,6 +340,25 @@ class PdfAnalysisPipeline {
         : Date.parse(job.createdAt);
       if (ts < cutoff) {
         jobs.delete(id);
+        pruned++;
+      }
+    }
+    const terminal = [...jobs.entries()].filter(([, j]) =>
+      ["completed", "failed"].includes(j.status),
+    );
+    if (terminal.length > MAX_COMPLETED_JOBS) {
+      terminal.sort((a, b) => {
+        const ta = a[1].completedAt
+          ? Date.parse(a[1].completedAt)
+          : Date.parse(a[1].createdAt);
+        const tb = b[1].completedAt
+          ? Date.parse(b[1].completedAt)
+          : Date.parse(b[1].createdAt);
+        return ta - tb;
+      });
+      const evict = terminal.length - MAX_COMPLETED_JOBS;
+      for (let i = 0; i < evict; i++) {
+        jobs.delete(terminal[i][0]);
         pruned++;
       }
     }

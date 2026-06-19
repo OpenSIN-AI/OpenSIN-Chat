@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: SkillPanel.doc.md
-import { Robot } from "@phosphor-icons/react";
+import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
 import { useTranslation } from "react-i18next";
 import FlowPanel from "./AgentFlows/FlowPanel";
 import ImportedSkillConfig from "./Imported/ImportedSkillConfig";

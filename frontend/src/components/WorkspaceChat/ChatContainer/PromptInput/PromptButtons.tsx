@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { ArrowUp, Sparkle } from "@phosphor-icons/react";
+import { ArrowUp } from "@phosphor-icons/react/dist/csr/ArrowUp";
+import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 

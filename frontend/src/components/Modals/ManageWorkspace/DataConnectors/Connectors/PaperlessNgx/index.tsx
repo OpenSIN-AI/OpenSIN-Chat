@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { Info } from "@phosphor-icons/react";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { useTranslation } from "react-i18next";
 
 export default function PaperlessNgxOptions() {

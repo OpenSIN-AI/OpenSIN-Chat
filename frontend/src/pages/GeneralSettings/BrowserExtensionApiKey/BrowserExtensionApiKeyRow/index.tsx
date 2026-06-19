@@ -3,7 +3,10 @@
 import { useRef, useState } from "react";
 import BrowserExtensionApiKey from "@/models/browserExtensionApiKey";
 import showToast from "@/utils/toast";
-import { Trash, Copy, Check, Plug } from "@phosphor-icons/react";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
+import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
+import { Check } from "@phosphor-icons/react/dist/csr/Check";
+import { Plug } from "@phosphor-icons/react/dist/csr/Plug";
 import { POPUP_BROWSER_EXTENSION_EVENT } from "@/utils/constants";
 import { copyText } from "@/utils/clipboard";
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Onboarding step to select the LLM provider and configure its options.
 // Docs: index.doc.md
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { useState, useRef, useEffect } from "react";
 import OpenAiLogo from "@/media/llmprovider/openai.png";
 import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";

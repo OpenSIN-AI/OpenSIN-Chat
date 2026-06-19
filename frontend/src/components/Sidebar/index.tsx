@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useRef, useState } from "react";
-import { List, Plus, SidebarSimple } from "@phosphor-icons/react";
+import { List } from "@phosphor-icons/react/dist/csr/List";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { SidebarSimple } from "@phosphor-icons/react/dist/csr/SidebarSimple";
 import NewWorkspaceModal, {
   useNewWorkspaceModal,
 } from "../Modals/NewWorkspace";

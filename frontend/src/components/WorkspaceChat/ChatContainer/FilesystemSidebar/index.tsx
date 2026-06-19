@@ -1,24 +1,22 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect, useCallback } from "react";
-import {
-  X,
-  FolderOpen,
-  Folder,
-  FileText,
-  FilePdf,
-  FileImage,
-  FileCode,
-  File,
-  ArrowLeft,
-  ArrowClockwise,
-  CheckCircle,
-  HardDrive,
-  Cpu,
-  Info,
-  Upload,
-  Plus,
-  Trash,
-} from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
+import { Folder } from "@phosphor-icons/react/dist/csr/Folder";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
+import { FileImage } from "@phosphor-icons/react/dist/csr/FileImage";
+import { FileCode } from "@phosphor-icons/react/dist/csr/FileCode";
+import { File } from "@phosphor-icons/react/dist/csr/File";
+import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
+import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { HardDrive } from "@phosphor-icons/react/dist/csr/HardDrive";
+import { Cpu } from "@phosphor-icons/react/dist/csr/Cpu";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { Upload } from "@phosphor-icons/react/dist/csr/Upload";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { useTranslation } from "react-i18next";
 import { useFilesystem } from "@/hooks/useFilesystem";
 import { useFileBrowser } from "@/hooks/useFileBrowser";

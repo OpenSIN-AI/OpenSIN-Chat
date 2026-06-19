@@ -5,15 +5,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
-import {
-  ArrowLeft,
-  ArrowRight,
-  MagnifyingGlass,
-  BookOpen,
-  List,
-  X,
-  GithubLogo,
-} from "@phosphor-icons/react";
+import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
+import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { List } from "@phosphor-icons/react/dist/csr/List";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { GithubLogo } from "@phosphor-icons/react/dist/csr/GithubLogo";
 import paths from "@/utils/paths";
 import DocsMarkdown, { type DocHeading } from "./DocsMarkdown";
 import DocsToc from "./DocsToc";

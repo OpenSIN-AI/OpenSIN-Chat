@@ -13,6 +13,14 @@ const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 const { guardArchiveOrThrow } = require("../../utils/safeUnzip");
 
+function safeCsvCell(str) {
+  if (typeof str !== "string") return str;
+  if (/^[=+\-@]/.test(str)) {
+    if (!/^[-+]?\d+(\.\d+)?$/.test(str)) return "'" + str;
+  }
+  return str;
+}
+
 function convertToCSV(data) {
   return data
     .map((row) =>
@@ -28,9 +36,7 @@ function convertToCSV(data) {
           ) {
             str = `"${str.replace(/"/g, '""')}"`;
           }
-          if (/^[=+\-@]/.test(str) && !/^[-+]?\d/.test(str)) {
-            str = `'${str}`;
-          }
+          str = safeCsvCell(str);
           return str;
         })
         .join(",")

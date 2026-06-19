@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { PencilSimple } from "@phosphor-icons/react";
+import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
 import { useTranslation } from "react-i18next";
 
 function OptionButton({ label, description, index, selected, onClick }: any) {

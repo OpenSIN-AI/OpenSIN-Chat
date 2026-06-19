@@ -2,7 +2,7 @@
 // Docs: ToolCallCard.doc.md
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Wrench } from "@phosphor-icons/react";
+import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
 import hljs from "@/utils/chat/hljs";
 import { safeJsonParse } from "@/utils/request";
 import { useTheme } from "@/hooks/useTheme";

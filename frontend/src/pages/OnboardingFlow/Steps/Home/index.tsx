@@ -2,7 +2,9 @@
 import paths from "@/utils/paths";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Moon, Sun, BookOpen } from "@phosphor-icons/react";
+import { Moon } from "@phosphor-icons/react/dist/csr/Moon";
+import { Sun } from "@phosphor-icons/react/dist/csr/Sun";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { Link } from "react-router-dom";
 import useRedirectToHomeOnOnboardingComplete from "@/hooks/useOnboardingComplete";
 import { useTheme } from "@/hooks/useTheme";

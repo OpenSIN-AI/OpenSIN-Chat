@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { SpeakerHigh, PauseCircle, CircleNotch } from "@phosphor-icons/react";
+import { SpeakerHigh } from "@phosphor-icons/react/dist/csr/SpeakerHigh";
+import { PauseCircle } from "@phosphor-icons/react/dist/csr/PauseCircle";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import PiperTTSClient from "@/utils/piperTTS";
 import messageToSpeech from "@/utils/chat/messageToSpeech";
 

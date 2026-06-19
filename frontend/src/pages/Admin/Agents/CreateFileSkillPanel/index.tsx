@@ -3,15 +3,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import Toggle, { SimpleToggleSwitch } from "@/components/lib/Toggle";
 import { useTranslation } from "react-i18next";
-import {
-  FilePpt,
-  FileXls,
-  FileDoc,
-  FilePdf,
-  FileText,
-  CircleNotch,
-  Icon,
-} from "@phosphor-icons/react";
+import { FilePpt } from "@phosphor-icons/react/dist/csr/FilePpt";
+import { FileXls } from "@phosphor-icons/react/dist/csr/FileXls";
+import { FileDoc } from "@phosphor-icons/react/dist/csr/FileDoc";
+import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 import useCreateFileAgent from "@/hooks/useCreateFileAgent";
 import type { TFunction } from "i18next";
 

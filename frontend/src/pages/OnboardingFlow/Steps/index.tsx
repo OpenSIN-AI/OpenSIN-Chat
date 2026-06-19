@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
+import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";

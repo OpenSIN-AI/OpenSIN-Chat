@@ -2,12 +2,10 @@
 import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import {
-  Plus,
-  CircleNotch,
-  Trash,
-  FolderSimplePlus,
-} from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
+import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import ThreadItem from "./ThreadItem";

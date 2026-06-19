@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { CloudArrowUp } from "@phosphor-icons/react";
+import { CloudArrowUp } from "@phosphor-icons/react/dist/csr/CloudArrowUp";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import showToast from "../../../../../utils/toast";

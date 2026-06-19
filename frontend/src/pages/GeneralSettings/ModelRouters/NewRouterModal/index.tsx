@@ -2,7 +2,8 @@
 // Docs: index.doc.md
 import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { CircleNotch, X } from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import ModelRouter from "@/models/modelRouter";
 import ModalWrapper from "@/components/ModalWrapper";
 import LLMProviderModelPicker from "../LLMProviderModelPicker";

@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import { CaretDown, CaretUp, Plus, CaretLeft } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretUp } from "@phosphor-icons/react/dist/csr/CaretUp";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
 import AnythingInfinityLogo from "@/media/logo/openafd-icon.svg";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";

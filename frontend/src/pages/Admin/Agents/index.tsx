@@ -1,5 +1,10 @@
 // SPDX-License-Identifier: MIT
-import { useMemo, useState } from "react";
+import React, { Suspense, useMemo, useState } from "react";
+const FlowPanel = React.lazy(() => import("./AgentFlows/FlowPanel"));
+const ServerPanel = React.lazy(() => import("./MCPServers/ServerPanel"));
+const ImportedSkillConfig = React.lazy(
+  () => import("./Imported/ImportedSkillConfig"),
+);
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
@@ -241,14 +246,12 @@ function DesktopForm(props: FormProps) {
   const { selectedSkill, selectedFlow, selectedMcpServer } = props;
   let SelectedSkillComponent: any = null;
 
-  // Dynamic imports for conditional skill components
-  /* global require */
   if (selectedFlow) {
-    SelectedSkillComponent = require("./AgentFlows/FlowPanel").default;
+    SelectedSkillComponent = FlowPanel;
   } else if (selectedMcpServer) {
-    SelectedSkillComponent = require("./MCPServers/ServerPanel").default;
+    SelectedSkillComponent = ServerPanel;
   } else if (selectedSkill?.imported) {
-    SelectedSkillComponent = require("./Imported/ImportedSkillConfig").default;
+    SelectedSkillComponent = ImportedSkillConfig;
   } else if (props.configurableSkills[selectedSkill]) {
     SelectedSkillComponent = props.configurableSkills[selectedSkill]?.component;
   } else if (props.appIntegrationSkills[selectedSkill]) {
@@ -271,7 +274,9 @@ function DesktopForm(props: FormProps) {
     >
       <HiddenInputs {...props} />
       <SkillsNavigation {...props} />
-      <SkillPanel {...({ SelectedSkillComponent, ...props } as any)} />
+      <Suspense fallback={<FullScreenLoader />}>
+        <SkillPanel {...({ SelectedSkillComponent, ...props } as any)} />
+      </Suspense>
     </form>
   );
 }

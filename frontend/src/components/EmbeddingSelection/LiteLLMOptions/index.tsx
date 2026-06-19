@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 import useProviderModels from "@/hooks/useProviderModels";
-import { Warning, Info } from "@phosphor-icons/react";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 

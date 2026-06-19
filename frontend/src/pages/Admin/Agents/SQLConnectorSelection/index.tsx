@@ -3,7 +3,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import useAgentSQLConnections from "@/hooks/useAgentSQLConnections";
 import DBConnection from "./DBConnection";
-import { Plus, Database, CircleNotch } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import NewSQLConnection from "./SQLConnectionModal";
 import { useModal } from "@/hooks/useModal";
 import SQLAgentImage from "@/media/agents/sql-agent.png";

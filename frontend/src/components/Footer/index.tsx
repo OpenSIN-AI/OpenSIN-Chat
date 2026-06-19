@@ -1,15 +1,13 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
-import {
-  BookOpen,
-  GithubLogo,
-  Briefcase,
-  Envelope,
-  Globe,
-  HouseLine,
-  Info,
-  LinkSimple,
-} from "@phosphor-icons/react";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { GithubLogo } from "@phosphor-icons/react/dist/csr/GithubLogo";
+import { Briefcase } from "@phosphor-icons/react/dist/csr/Briefcase";
+import { Envelope } from "@phosphor-icons/react/dist/csr/Envelope";
+import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
+import { HouseLine } from "@phosphor-icons/react/dist/csr/HouseLine";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { LinkSimple } from "@phosphor-icons/react/dist/csr/LinkSimple";
 import AccountMenu from "./AccountMenu";
 
 export const MAX_ICONS = 3;

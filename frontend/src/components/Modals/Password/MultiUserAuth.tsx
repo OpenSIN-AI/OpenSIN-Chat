@@ -73,7 +73,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              autoComplete="off"
+              autoComplete="username"
             />
           </div>
           <div className="w-full flex flex-col gap-y-2">
@@ -94,7 +94,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
                   handleRecoveryCodeChange(index, e.target.value)
                 }
                 required
-                autoComplete="off"
+                autoComplete="one-time-code"
               />
             ))}
           </div>

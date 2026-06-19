@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
-import { X, CircleNotch, Warning } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import Workspace from "@/models/workspace";
 import { nFormatter } from "@/utils/numbers";
 import showToast from "@/utils/toast";

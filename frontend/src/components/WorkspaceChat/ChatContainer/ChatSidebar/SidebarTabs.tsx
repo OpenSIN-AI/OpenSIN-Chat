@@ -4,7 +4,9 @@
 // pills never overflow the 360px panel and get hidden behind the icon
 // bar.
 // Docs: SidebarTabs.doc.md
-import { BookOpen, FileText, FolderOpen } from "@phosphor-icons/react";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
 import { useTranslation } from "react-i18next";
 import { useChatSidebar } from ".";
 import { useMemoriesContext, LIMITS } from "../MemoriesSidebar/MemoriesContext";

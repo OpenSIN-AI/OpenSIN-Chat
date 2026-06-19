@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { isMobile } from "react-device-detect";
+import { ErrorBoundary } from "react-error-boundary";
 import DnDFileUploaderWrapper from "./DnDWrapper";
 import { ChatSidebarProvider } from "./ChatSidebar";
 import { ChatTooltips } from "./ChatTooltips";
@@ -10,6 +11,7 @@ import EmptyState from "./EmptyState";
 import MessageList from "./MessageList";
 import Sidebars from "./Sidebars";
 import useChatStream from "./useChatStream";
+import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 
 export default function ChatContainer({
   workspace,
@@ -41,31 +43,35 @@ export default function ChatContainer({
         <div
           className={`flex-1 min-w-0 transition-all duration-500 relative md:rounded-[16px] bg-zinc-900 light:bg-white w-full h-full overflow-hidden border-none light:border-solid light:border light:border-theme-modal-border${isEmpty ? "" : " text-white light:text-slate-900"}`}
         >
-          <DnDFileUploaderWrapper>
-            {isEmpty ? (
-              <EmptyState
-                workspace={workspace}
-                handleSubmit={handleSubmit}
-                sendCommand={sendCommand}
-                loadingResponse={loadingResponse}
-                files={files}
-                t={t}
-              />
-            ) : (
-              <MessageList
-                chatHistoryRef={chatHistoryRef}
-                chatHistory={chatHistory}
-                workspace={workspace}
-                sendCommand={sendCommand}
-                setChatHistory={setChatHistory}
-                regenerateAssistantMessage={regenerateAssistantMessage}
-                websocket={websocket}
-                loadingResponse={loadingResponse}
-                handleSubmit={handleSubmit}
-                files={files}
-              />
-            )}
-          </DnDFileUploaderWrapper>
+          <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+            <DnDFileUploaderWrapper>
+              {isEmpty ? (
+                <EmptyState
+                  workspace={workspace}
+                  handleSubmit={handleSubmit}
+                  sendCommand={sendCommand}
+                  loadingResponse={loadingResponse}
+                  files={files}
+                  t={t}
+                />
+              ) : (
+                <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+                  <MessageList
+                    chatHistoryRef={chatHistoryRef}
+                    chatHistory={chatHistory}
+                    workspace={workspace}
+                    sendCommand={sendCommand}
+                    setChatHistory={setChatHistory}
+                    regenerateAssistantMessage={regenerateAssistantMessage}
+                    websocket={websocket}
+                    loadingResponse={loadingResponse}
+                    handleSubmit={handleSubmit}
+                    files={files}
+                  />
+                </ErrorBoundary>
+              )}
+            </DnDFileUploaderWrapper>
+          </ErrorBoundary>
           <ChatTooltips />
         </div>
         <Sidebars workspace={workspace} />

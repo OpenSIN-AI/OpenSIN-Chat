@@ -2,7 +2,7 @@
 // Docs: AgentClarifyingQuestions.doc.md
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CircleNotch } from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import debounce from "lodash.debounce";
 import Toggle from "@/components/lib/Toggle";
 import Admin from "@/models/admin";

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React, { memo, useLayoutEffect, useRef, useState } from "react";
-import { Info, Warning } from "@phosphor-icons/react";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import Actions from "./Actions";
 import renderMarkdown from "@/utils/chat/markdown";
 import Citations from "../Citation";

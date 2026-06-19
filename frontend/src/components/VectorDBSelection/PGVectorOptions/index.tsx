@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
-import { Info } from "@phosphor-icons/react";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { Tooltip } from "react-tooltip";
 
 export default function PGVectorOptions({ settings }: any) {

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { useTranslation } from "react-i18next";
 
 import AgentAnimation from "@/media/animations/agent-animation.webm";

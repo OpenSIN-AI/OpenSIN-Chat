@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { useLocation } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
-import { SidebarSimple } from "@phosphor-icons/react";
+import { SidebarSimple } from "@phosphor-icons/react/dist/csr/SidebarSimple";
 import { useTranslation } from "react-i18next";
 import paths from "@/utils/paths";
 import { safeGetItem, safeSetItem } from "@/utils/safeStorage";

@@ -2,7 +2,8 @@
 import { useRef } from "react";
 import Admin from "@/models/admin";
 import paths from "@/utils/paths";
-import { LinkSimple, Trash } from "@phosphor-icons/react";
+import { LinkSimple } from "@phosphor-icons/react/dist/csr/LinkSimple";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 
 export default function WorkspaceRow({
   workspace,

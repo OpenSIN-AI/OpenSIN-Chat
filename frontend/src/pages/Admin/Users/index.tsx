@@ -4,7 +4,7 @@ import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { UserPlus } from "@phosphor-icons/react";
+import { UserPlus } from "@phosphor-icons/react/dist/csr/UserPlus";
 import UserRow from "./UserRow";
 import useUser from "@/hooks/useUser";
 import useUsers, { USERS_KEY } from "@/hooks/useUsers";

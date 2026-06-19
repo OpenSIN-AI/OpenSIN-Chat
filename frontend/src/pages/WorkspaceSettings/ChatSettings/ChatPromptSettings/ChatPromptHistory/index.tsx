@@ -2,7 +2,7 @@
 // Docs: index.doc.md
 import { useEffect, useState, forwardRef, Ref } from "react";
 import { useTranslation } from "react-i18next";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import PromptHistory from "@/models/promptHistory";
 import PromptHistoryItem from "./PromptHistoryItem";
 import * as Skeleton from "react-loading-skeleton";

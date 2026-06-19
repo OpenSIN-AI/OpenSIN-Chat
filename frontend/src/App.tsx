@@ -53,7 +53,12 @@ export default function App() {
                     <I18nextProvider i18n={i18n}>
                       <SkipToContentLink />
                       <main id="main-content">
-                        <Outlet />
+                        <ErrorBoundary
+                          FallbackComponent={ErrorBoundaryFallback}
+                          onError={console.error}
+                        >
+                          <Outlet />
+                        </ErrorBoundary>
                       </main>
                       <div aria-live="polite" aria-atomic="false">
                         <ToastContainer />

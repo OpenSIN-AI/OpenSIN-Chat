@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React, { useState } from "react";
-import { CheckCircle, CopySimple, X } from "@phosphor-icons/react";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { CopySimple } from "@phosphor-icons/react/dist/csr/CopySimple";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import showToast from "@/utils/toast";
 import { getStoredTheme } from "@/utils/safeStorage";
 import hljs from "@/utils/chat/hljs";

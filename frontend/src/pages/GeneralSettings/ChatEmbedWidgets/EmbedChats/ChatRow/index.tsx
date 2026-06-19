@@ -2,7 +2,7 @@
 // Docs: index.doc.md
 import React, { Suspense } from "react";
 import { truncate } from "@/utils/strings";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";
 import paths from "@/utils/paths";

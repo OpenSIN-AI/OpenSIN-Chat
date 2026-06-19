@@ -8,7 +8,7 @@ import ContextualSaveBar from "@/components/ContextualSaveBar";
 import showToast from "@/utils/toast";
 import { FullScreenLoader } from "@/components/Preloader";
 import paths from "@/utils/paths";
-import { Info } from "@phosphor-icons/react";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import UserItems from "./UserItems";
 import useCommunityHubSettings from "@/hooks/useCommunityHubSettings";
 import { useTranslation } from "react-i18next";

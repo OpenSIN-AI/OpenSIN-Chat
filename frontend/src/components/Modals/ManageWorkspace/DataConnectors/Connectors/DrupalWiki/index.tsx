@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useTranslation, Trans } from "react-i18next";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
-import { Warning } from "@phosphor-icons/react";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { Tooltip } from "react-tooltip";
 
 export default function DrupalWikiOptions() {

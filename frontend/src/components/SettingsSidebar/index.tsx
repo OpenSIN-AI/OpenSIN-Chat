@@ -2,17 +2,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import paths from "@/utils/paths";
 import useLogo from "@/hooks/useLogo";
-import {
-  House,
-  List,
-  Flask,
-  Gear,
-  UserCircleGear,
-  PencilSimpleLine,
-  Nut,
-  Toolbox,
-  Plugs,
-} from "@phosphor-icons/react";
+import { House } from "@phosphor-icons/react/dist/csr/House";
+import { List } from "@phosphor-icons/react/dist/csr/List";
+import { Flask } from "@phosphor-icons/react/dist/csr/Flask";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+import { UserCircleGear } from "@phosphor-icons/react/dist/csr/UserCircleGear";
+import { PencilSimpleLine } from "@phosphor-icons/react/dist/csr/PencilSimpleLine";
+import { Nut } from "@phosphor-icons/react/dist/csr/Nut";
+import { Toolbox } from "@phosphor-icons/react/dist/csr/Toolbox";
+import { Plugs } from "@phosphor-icons/react/dist/csr/Plugs";
 import AgentIcon from "@/media/animations/agent-static.png";
 import CommunityHubIcon from "@/media/illustrations/community-hub.png";
 import useUser from "@/hooks/useUser";

@@ -102,73 +102,97 @@ export default function handleChat(
     type === "textResponseChunk" ||
     type === "finalizeResponseStream"
   ) {
-    const chatIdx = chatHistory.findIndex((chat) => chat.uuid === uuid);
-    if (chatIdx !== -1) {
-      const existingHistory = { ...chatHistory[chatIdx] };
-      let updatedHistory;
+    // Use functional setState so we always operate on the LATEST chatHistory.
+    // The previous implementation used a stale `_chatHistory` closure variable
+    // that was captured once at the start of `fetchReply` and never updated
+    // between chunks — this caused `findIndex(uuid)` to always return -1,
+    // so every streaming chunk created a NEW message with just the delta
+    // text instead of appending to the existing message. The result was that
+    // only the last chunk's text was visible to the user during SSE streaming.
+    setChatHistory((prev) => {
+      const chatIdx = prev.findIndex((chat) => chat.uuid === uuid);
+      if (chatIdx !== -1) {
+        const existingHistory = { ...prev[chatIdx] };
+        let updatedHistory;
 
-      // If the response is finalized, we can set the loading state to false.
-      // and append the metrics to the history.
-      if (type === "finalizeResponseStream") {
-        updatedHistory = {
-          ...existingHistory,
-          closed: close,
-          animate: !close,
-          pending: false,
-          chatId,
-          metrics,
-        };
+        // If the response is finalized, we can set the loading state to false.
+        // and append the metrics to the history.
+        if (type === "finalizeResponseStream") {
+          updatedHistory = {
+            ...existingHistory,
+            closed: close,
+            animate: !close,
+            pending: false,
+            chatId,
+            metrics,
+          };
 
-        chatHistory[chatIdx - 1] = { ...chatHistory[chatIdx - 1], chatId }; // update prompt with chatID
+          // Update the preceding user prompt with the chatId.
+          // Guard against chatIdx === 0 (no preceding message) to avoid
+          // setting a property at index -1 on the array.
+          if (chatIdx > 0) {
+            prev[chatIdx - 1] = { ...prev[chatIdx - 1], chatId };
+          }
 
-        emitAssistantMessageCompleteEvent(chatId);
-        setLoadingResponse(false);
-      } else {
-        updatedHistory = {
-          ...existingHistory,
-          content: existingHistory.content + textResponse,
-          ...(sources && sources.length > 0 ? { sources } : {}),
-          error,
-          closed: close,
-          animate: !close,
-          pending: false,
-          chatId,
-          metrics,
-        };
+          emitAssistantMessageCompleteEvent(chatId);
+          setLoadingResponse(false);
+        } else {
+          updatedHistory = {
+            ...existingHistory,
+            content: (existingHistory.content || "") + textResponse,
+            ...(sources && sources.length > 0 ? { sources } : {}),
+            error,
+            closed: close,
+            animate: !close,
+            pending: false,
+            chatId,
+            metrics,
+          };
+        }
+        const next = [...prev];
+        next[chatIdx] = updatedHistory;
+        if (chatIdx > 0 && type === "finalizeResponseStream") {
+          next[chatIdx - 1] = { ...prev[chatIdx - 1], chatId };
+        }
+        return next;
       }
-      chatHistory[chatIdx] = updatedHistory;
-    } else {
-      chatHistory.push({
-        uuid,
-        sources,
-        error,
-        content: textResponse,
-        role: "assistant",
-        closed: close,
-        animate: !close,
-        pending: false,
-        chatId,
-        metrics,
-      });
-    }
-    setChatHistory([...chatHistory]);
+      // First chunk for this uuid — create a new assistant message.
+      return [
+        ...prev,
+        {
+          uuid,
+          sources,
+          error,
+          content: textResponse || "",
+          role: "assistant",
+          closed: close,
+          animate: !close,
+          pending: false,
+          chatId,
+          metrics,
+        },
+      ];
+    });
   } else if (type === "agentInitWebsocketConnection") {
     setWebsocket(chatResult.websocketUUID);
   } else if (type === "stopGeneration") {
-    const chatIdx = chatHistory.length - 1;
-    const existingHistory = { ...chatHistory[chatIdx] };
-    const updatedHistory = {
-      ...existingHistory,
-      sources: [],
-      closed: true,
-      error: null,
-      animate: false,
-      pending: false,
-      metrics,
-    };
-    chatHistory[chatIdx] = updatedHistory;
-
-    setChatHistory([...chatHistory]);
+    setChatHistory((prev) => {
+      if (prev.length === 0) return prev;
+      const chatIdx = prev.length - 1;
+      const existingHistory = { ...prev[chatIdx] };
+      const updatedHistory = {
+        ...existingHistory,
+        sources: [],
+        closed: true,
+        error: null,
+        animate: false,
+        pending: false,
+        metrics,
+      };
+      const next = [...prev];
+      next[chatIdx] = updatedHistory;
+      return next;
+    });
     setLoadingResponse(false);
   }
 

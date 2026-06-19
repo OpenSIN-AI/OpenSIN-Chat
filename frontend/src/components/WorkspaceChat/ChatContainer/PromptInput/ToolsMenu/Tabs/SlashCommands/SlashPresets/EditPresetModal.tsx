@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import ModalWrapper from "@/components/ModalWrapper";
 import { CMD_REGEX } from "./constants";
 import { useTranslation } from "react-i18next";

@@ -3,12 +3,25 @@ const { v4 } = require("uuid");
 const { writeToServerDocuments } = require("../utils/files");
 const { tokenizeString } = require("../utils/tokenizer");
 const { default: slugify } = require("slugify");
+const {
+  RecursiveCharacterTextSplitter,
+} = require("@langchain/textsplitters");
+
+const DEFAULT_CHUNK_SIZE = 1_000;
+const DEFAULT_CHUNK_OVERLAP = 100;
 
 // Will remove the last .extension from the input
 // and stringify the input + move to lowercase.
 function stripAndSlug(input) {
   if (!input.includes(".")) return slugify(input, { lower: true });
   return slugify(input.split(".").slice(0, -1).join("-"), { lower: true });
+}
+
+function makeSplitter({ chunkSize = DEFAULT_CHUNK_SIZE, chunkOverlap = DEFAULT_CHUNK_OVERLAP } = {}) {
+  return new RecursiveCharacterTextSplitter({
+    chunkSize,
+    chunkOverlap,
+  });
 }
 
 const METADATA_KEYS = {
@@ -47,7 +60,7 @@ const METADATA_KEYS = {
   },
 };
 
-async function processRawText(textContent, metadata = {}) {
+async function processRawText(textContent, metadata = {}, opts = {}) {
   // eslint-disable-next-line no-console
   console.log(`-- Working Raw Text doc ${metadata.title} --`);
   if (!textContent || textContent.length === 0) {
@@ -58,29 +71,41 @@ async function processRawText(textContent, metadata = {}) {
     };
   }
 
-  const data = {
-    id: v4(),
-    url: METADATA_KEYS.possible.url(metadata),
-    title: METADATA_KEYS.possible.title(metadata),
-    docAuthor: METADATA_KEYS.possible.docAuthor(metadata),
-    description: METADATA_KEYS.possible.description(metadata),
-    docSource: METADATA_KEYS.possible.docSource(metadata),
-    chunkSource: METADATA_KEYS.possible.chunkSource(metadata),
-    published: METADATA_KEYS.possible.published(metadata),
-    wordCount: textContent.split(/\s+/).filter(Boolean).length,
-    pageContent: textContent,
-    token_count_estimate: tokenizeString(textContent),
-  };
-
-  const document = writeToServerDocuments({
-    data,
-    filename: `raw-${stripAndSlug(metadata.title)}-${data.id}`,
+  const splitter = makeSplitter({
+    chunkSize: opts?.chunkSize || DEFAULT_CHUNK_SIZE,
+    chunkOverlap: opts?.chunkOverlap || DEFAULT_CHUNK_OVERLAP,
   });
+  const chunks = await splitter.splitText(textContent);
+  const safeChunks =
+    Array.isArray(chunks) && chunks.length > 0 ? chunks : [textContent];
+
+  const documents = [];
+  for (const chunk of safeChunks) {
+    const data = {
+      id: v4(),
+      url: METADATA_KEYS.possible.url(metadata),
+      title: METADATA_KEYS.possible.title(metadata),
+      docAuthor: METADATA_KEYS.possible.docAuthor(metadata),
+      description: METADATA_KEYS.possible.description(metadata),
+      docSource: METADATA_KEYS.possible.docSource(metadata),
+      chunkSource: METADATA_KEYS.possible.chunkSource(metadata),
+      published: METADATA_KEYS.possible.published(metadata),
+      wordCount: chunk.split(/\s+/).filter(Boolean).length,
+      pageContent: chunk,
+      token_count_estimate: tokenizeString(chunk),
+    };
+
+    const document = writeToServerDocuments({
+      data,
+      filename: `raw-${stripAndSlug(metadata.title)}-${data.id}`,
+    });
+    documents.push(document);
+  }
   // eslint-disable-next-line no-console
   console.log(
     `[SUCCESS]: Raw text and metadata saved & ready for embedding.\n`
   );
-  return { success: true, reason: null, documents: [document] };
+  return { success: true, reason: null, documents };
 }
 
 module.exports = { processRawText };

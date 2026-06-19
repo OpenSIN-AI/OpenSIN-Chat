@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
-import { CaretDown, Check, X, Hammer } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { Check } from "@phosphor-icons/react/dist/csr/Check";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Hammer } from "@phosphor-icons/react/dist/csr/Hammer";
 import AgentSkillWhitelist from "@/models/agentSkillWhitelist";
 import { useTranslation } from "react-i18next";
 import useTimeoutProgress from "@/hooks/useTimeoutProgress";

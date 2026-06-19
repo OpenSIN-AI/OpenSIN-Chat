@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
-import { SkipForward, Check, ArrowRight } from "@phosphor-icons/react";
+import { SkipForward } from "@phosphor-icons/react/dist/csr/SkipForward";
+import { Check } from "@phosphor-icons/react/dist/csr/Check";
+import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { useTranslation } from "react-i18next";
 
 function ProgressIndicator({ answeredCount, total }: any) {

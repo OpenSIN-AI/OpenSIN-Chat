@@ -3,16 +3,14 @@ import { Fragment, useState, useEffect } from "react";
 import { decode as HTMLDecode } from "he";
 import { truncate } from "@/utils/strings";
 import ModalWrapper from "@/components/ModalWrapper";
-import {
-  FileText,
-  Info,
-  ArrowSquareOut,
-  GithubLogo,
-  X,
-  YoutubeLogo,
-  LinkSimple,
-  GitlabLogo,
-} from "@phosphor-icons/react";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
+import { GithubLogo } from "@phosphor-icons/react/dist/csr/GithubLogo";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { YoutubeLogo } from "@phosphor-icons/react/dist/csr/YoutubeLogo";
+import { LinkSimple } from "@phosphor-icons/react/dist/csr/LinkSimple";
+import { GitlabLogo } from "@phosphor-icons/react/dist/csr/GitlabLogo";
 import GmailLogo from "@/pages/Admin/Agents/GMailSkillPanel/gmail.png";
 import GoogleCalendarLogo from "@/pages/Admin/Agents/GoogleCalendarSkillPanel/google-calendar.png";
 import OutlookLogo from "@/pages/Admin/Agents/OutlookSkillPanel/outlook.png";

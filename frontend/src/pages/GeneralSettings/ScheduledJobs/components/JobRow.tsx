@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Docs: JobRow.doc.md
 import { useNavigate } from "react-router-dom";
-import { Play, PencilSimple, X } from "@phosphor-icons/react";
+import { Play } from "@phosphor-icons/react/dist/csr/Play";
+import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import paths from "@/utils/paths";
 import { humanizeCron } from "../utils/cron";
 import { useTranslation } from "react-i18next";

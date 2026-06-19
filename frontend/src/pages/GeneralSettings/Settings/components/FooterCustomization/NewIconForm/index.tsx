@@ -2,7 +2,8 @@
 // Docs: index.doc.md
 import { ICON_COMPONENTS } from "@/components/Footer";
 import React, { useEffect, useRef, useState } from "react";
-import { Plus, X } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 
 const FOOTER_ICON_CLASS = "h-5 w-5";

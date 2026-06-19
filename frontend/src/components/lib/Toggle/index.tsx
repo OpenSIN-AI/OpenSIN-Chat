@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { Info } from "@phosphor-icons/react";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
 
 const TOGGLE_STYLES = {
   sm: "h-[12px] w-[20px] after:h-[8px] after:w-[8px] after:top-[2px] after:left-[2px] peer-checked:after:translate-x-full",

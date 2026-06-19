@@ -4,7 +4,7 @@
 import { useTranslation } from "react-i18next";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { CodeBlock } from "@phosphor-icons/react";
+import { CodeBlock } from "@phosphor-icons/react/dist/csr/CodeBlock";
 import EmbedRow from "./EmbedRow";
 import NewEmbedModal from "./NewEmbedModal";
 import { useModal } from "@/hooks/useModal";

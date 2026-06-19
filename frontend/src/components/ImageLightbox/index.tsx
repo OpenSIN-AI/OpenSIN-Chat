@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { X, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { useTranslation } from "react-i18next";
 
 const OPEN_EVENT = "open-image-lightbox";

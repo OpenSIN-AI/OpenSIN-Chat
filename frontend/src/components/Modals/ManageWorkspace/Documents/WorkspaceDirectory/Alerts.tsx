@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { PushPin, Eye } from "@phosphor-icons/react";
+import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { SEEN_DOC_PIN_ALERT, SEEN_WATCH_ALERT } from "@/utils/constants";
 import paths from "@/utils/paths";
 import { Link } from "react-router-dom";

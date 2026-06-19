@@ -4,13 +4,14 @@
 // fetched. See index.doc.md for the `useEffect` return-value bug history.
 // Docs: index.doc.md
 import React, { useEffect, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import LoadingChat from "./LoadingChat";
 import ChatContainer from "./ChatContainer";
 import paths from "@/utils/paths";
 import ModalWrapper from "../ModalWrapper";
 import { useParams } from "react-router-dom";
 import { DnDFileUploaderProvider } from "./ChatContainer/DnDWrapper";
-import { WarningCircle } from "@phosphor-icons/react";
+import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
 import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
 import {
@@ -20,6 +21,7 @@ import {
 import { PENDING_HOME_MESSAGE } from "@/utils/constants";
 import { copyText } from "@/utils/clipboard";
 import useChatHistory from "@/hooks/useChatHistory";
+import ErrorBoundaryFallback from "@/components/ErrorBoundaryFallback";
 
 export default function WorkspaceChat({ loading, workspace }: any) {
   useWatchForAutoPlayAssistantTTSResponse();
@@ -106,17 +108,19 @@ export default function WorkspaceChat({ loading, workspace }: any) {
 
   return (
     <TTSProvider>
-      <DnDFileUploaderProvider
-        workspace={loaded.workspace}
-        threadSlug={loaded.threadSlug}
-      >
-        <ChatContainer
-          key={loaded.key}
+      <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+        <DnDFileUploaderProvider
           workspace={loaded.workspace}
           threadSlug={loaded.threadSlug}
-          knownHistory={loaded.history}
-        />
-      </DnDFileUploaderProvider>
+        >
+          <ChatContainer
+            key={loaded.key}
+            workspace={loaded.workspace}
+            threadSlug={loaded.threadSlug}
+            knownHistory={loaded.history}
+          />
+        </DnDFileUploaderProvider>
+      </ErrorBoundary>
     </TTSProvider>
   );
 }

@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import { useState, FormEvent } from "react";
-import {
-  CircleNotch,
-  Eye,
-  EyeSlash,
-  TelegramLogo,
-} from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
+import { EyeSlash } from "@phosphor-icons/react/dist/csr/EyeSlash";
+import { TelegramLogo } from "@phosphor-icons/react/dist/csr/TelegramLogo";
 import Telegram from "@/models/telegram";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";

@@ -2,7 +2,8 @@
 // Docs: GeneratedFileCard.doc.md
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CircleNotch, DownloadSimple } from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
 import StorageFiles from "@/models/files";
 import showToast from "@/utils/toast";
 import { humanFileSize } from "@/utils/numbers";

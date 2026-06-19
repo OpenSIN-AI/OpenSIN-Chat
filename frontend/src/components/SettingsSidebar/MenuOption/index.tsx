@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
-import { CaretRight } from "@phosphor-icons/react";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { safeJsonParse } from "@/utils/request";

@@ -345,7 +345,10 @@ class PoliticianDB {
     if (politician.source !== "abgeordnetenwatch") return [];
 
     try {
-      const awId = parseInt(politician.externalId, 10);
+      // externalId is stored as `aw-<numeric-id>` (see abgeordnetenwatchApi.js).
+      // Strip the prefix before parsing to avoid NaN.
+      const numericId = String(politician.externalId).replace(/^aw-/, "");
+      const awId = parseInt(numericId, 10);
       if (isNaN(awId)) return [];
       return await this.abgeordnetenwatch.getVotingRecord(awId);
     } catch (err) {

@@ -30,14 +30,23 @@ module.exports = {
   REPORT_DIR: path.join(STORAGE_ROOT, "pdf-analysis", "reports"),
   FACTS_FILE: path.join(STORAGE_ROOT, "pdf-analysis", "facts.json"),
 
-  // Parallelisierung
-  AGENT_CONCURRENCY: Number(process.env.PDF_ANALYSIS_CONCURRENCY || 6),
-  PAGES_PER_CHUNK: Number(process.env.PDF_ANALYSIS_PAGES_PER_CHUNK || 8),
-  CHUNK_OVERLAP_PAGES: Number(process.env.PDF_ANALYSIS_OVERLAP_PAGES || 1),
+  // Parallelisierung — use intEnv for NaN-safe parsing
+  AGENT_CONCURRENCY: intEnv("PDF_ANALYSIS_CONCURRENCY", 6, { min: 1, max: 64 }),
+  PAGES_PER_CHUNK: intEnv("PDF_ANALYSIS_PAGES_PER_CHUNK", 8, {
+    min: 1,
+    max: 100,
+  }),
+  CHUNK_OVERLAP_PAGES: intEnv("PDF_ANALYSIS_OVERLAP_PAGES", 1, {
+    min: 0,
+    max: 50,
+  }),
 
-  // Job-Limits
-  MAX_ACTIVE_JOBS: Number(process.env.PDF_ANALYSIS_MAX_ACTIVE_JOBS || 2),
-  MAX_PAGES: Number(process.env.PDF_ANALYSIS_MAX_PAGES || 0), // 0 = unbegrenzt
+  // Job-Limits — MAX_PAGES 0 = unbegrenzt, daher min: 0
+  MAX_ACTIVE_JOBS: intEnv("PDF_ANALYSIS_MAX_ACTIVE_JOBS", 2, {
+    min: 1,
+    max: 32,
+  }),
+  MAX_PAGES: intEnv("PDF_ANALYSIS_MAX_PAGES", 0, { min: 0, max: 100000 }),
 
   // Korpus-Pipeline ───────────────────────────────────────
   // Maximal gleichzeitig laufende EINZEL-Analysen innerhalb eines Korpus-Jobs.
@@ -64,13 +73,17 @@ module.exports = {
   }),
 
   // Synthese (hierarchisches Reduce)
-  REDUCE_GROUP_SIZE: Number(process.env.PDF_ANALYSIS_REDUCE_GROUP_SIZE || 20),
+  REDUCE_GROUP_SIZE: intEnv("PDF_ANALYSIS_REDUCE_GROUP_SIZE", 20, {
+    min: 1,
+    max: 200,
+  }),
 
   // LLM
   LLM_TEMPERATURE: Number(process.env.PDF_ANALYSIS_TEMPERATURE || 0),
-  MAX_CHARS_PER_CHUNK: Number(
-    process.env.PDF_ANALYSIS_MAX_CHARS_PER_CHUNK || 24000,
-  ),
+  MAX_CHARS_PER_CHUNK: intEnv("PDF_ANALYSIS_MAX_CHARS_PER_CHUNK", 24000, {
+    min: 1000,
+    max: 1000000,
+  }),
 
   // Fakten
   FACT_MIN_CONFIDENCE: Number(process.env.PDF_ANALYSIS_FACT_MIN_CONF || 0.7),

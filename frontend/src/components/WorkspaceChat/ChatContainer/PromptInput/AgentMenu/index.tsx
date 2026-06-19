@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useRef, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import { At } from "@phosphor-icons/react";
+import { At } from "@phosphor-icons/react/dist/csr/At";
 import { useIsAgentSessionActive } from "@/utils/chat/agent";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";

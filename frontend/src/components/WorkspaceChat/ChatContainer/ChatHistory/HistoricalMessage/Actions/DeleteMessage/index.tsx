@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Trash } from "@phosphor-icons/react";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import Workspace from "@/models/workspace";
 import { useParams } from "react-router-dom";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";

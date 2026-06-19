@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { Warning } from "@phosphor-icons/react";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
 
 export default function ContextualSaveBar({

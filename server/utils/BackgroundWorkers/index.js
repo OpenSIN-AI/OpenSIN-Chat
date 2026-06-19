@@ -417,18 +417,26 @@ class BackgroundService {
 
     try {
       worker.send({ jobId, runId });
-      await new Promise((resolve, reject) => {
-        worker.on("exit", (code, signal) => {
-          // SIGTERM is sent by removeScheduledJob when the job is deleted
-          // mid-run; treat that as a normal exit rather than a worker failure.
-          if (code === 0 || code == null || signal === "SIGTERM") {
-            resolve();
-          } else {
-            reject(new Error(`Worker exited with code ${code}`));
-          }
-        });
-        worker.on("error", reject);
-      });
+      const MAX_RUN_TIMEOUT_MS = Number(
+        process.env.SCHEDULED_JOB_TIMEOUT_MS ?? 60 * 60 * 1000 + 60_000,
+      );
+      await Promise.race([
+        new Promise((resolve, reject) => {
+          worker.once("exit", (code) => {
+            if (code === 0) return resolve();
+            reject(new Error(`exit ${code}`));
+          });
+        }),
+        new Promise((_, reject) =>
+          setTimeout(() => {
+            worker.kill("SIGKILL");
+            this.bree.remove(workerId).catch(() => {});
+            reject(
+              new Error(`scheduled job timeout after ${MAX_RUN_TIMEOUT_MS}ms`),
+            );
+          }, MAX_RUN_TIMEOUT_MS),
+        ),
+      ]);
     } finally {
       const workers = this.#scheduledJobWorkers.get(jobId);
       if (workers) {

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 /* eslint-disable react-hooks/refs */
 import { memo, useRef, useEffect } from "react";
-import { Warning } from "@phosphor-icons/react";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
 import renderMarkdown from "@/utils/chat/markdown";
 import DOMPurify from "@/utils/chat/purify";

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Sparkle } from "@phosphor-icons/react";
+import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import { Tooltip } from "react-tooltip";
 
 /**

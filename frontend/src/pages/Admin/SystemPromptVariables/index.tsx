@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React from "react";
-import { Plus } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import CTAButton from "@/components/lib/CTAButton";

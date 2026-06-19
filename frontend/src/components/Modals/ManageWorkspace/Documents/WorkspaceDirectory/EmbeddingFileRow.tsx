@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
-import {
-  CheckCircle,
-  XCircle,
-  CircleNotch,
-  Clock,
-  X,
-} from "@phosphor-icons/react";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { XCircle } from "@phosphor-icons/react/dist/csr/XCircle";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Clock } from "@phosphor-icons/react/dist/csr/Clock";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { middleTruncate } from "@/utils/directories";
 
 /**

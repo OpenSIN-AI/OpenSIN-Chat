@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Toggle from "@/components/lib/Toggle";
 import useSystemSettings from "@/hooks/useSystemSettings";
-import { Icon } from "@phosphor-icons/react";
+import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 
 const IMAGE_MODELS = [
   "dall-e-3",

@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
-import {
-  ArrowsClockwise,
-  CheckCircle,
-  Info,
-  WarningCircle,
-} from "@phosphor-icons/react";
+import { ArrowsClockwise } from "@phosphor-icons/react/dist/csr/ArrowsClockwise";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
 import useProviderKeyStatus from "@/hooks/useProviderKeyStatus";
 import { useTranslation } from "react-i18next";
 

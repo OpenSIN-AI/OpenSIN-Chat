@@ -3,7 +3,8 @@
 import React, { Suspense } from "react";
 import { truncate } from "@/utils/strings";
 import { useTranslation } from "react-i18next";
-import { X, Trash } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import System from "@/models/system";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useModal } from "@/hooks/useModal";

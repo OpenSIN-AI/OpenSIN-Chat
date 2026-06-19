@@ -10,15 +10,13 @@ import GMailSkillPanel from "./GMailSkillPanel";
 import GoogleCalendarSkillPanel from "./GoogleCalendarSkillPanel";
 import OutlookSkillPanel from "./OutlookSkillPanel";
 import ImageGenerationSkillPanel from "./ImageGenerationSkillPanel";
-import {
-  Brain,
-  File,
-  Browser,
-  ChartBar,
-  FolderOpen,
-  FilePlus,
-  Image,
-} from "@phosphor-icons/react";
+import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
+import { File } from "@phosphor-icons/react/dist/csr/File";
+import { Browser } from "@phosphor-icons/react/dist/csr/Browser";
+import { ChartBar } from "@phosphor-icons/react/dist/csr/ChartBar";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
+import { FilePlus } from "@phosphor-icons/react/dist/csr/FilePlus";
+import { Image } from "@phosphor-icons/react/dist/csr/Image";
 import RAGImage from "@/media/agents/rag-memory.png";
 import SummarizeImage from "@/media/agents/view-summarize.png";
 import ScrapeWebsitesImage from "@/media/agents/scrape-websites.png";
@@ -29,7 +27,7 @@ import GMailIcon from "./GMailSkillPanel/gmail.png";
 import OutlookIcon from "./OutlookSkillPanel/outlook.png";
 import GoogleCalendarIcon from "./GoogleCalendarSkillPanel/google-calendar.png";
 import type { TFunction } from "i18next";
-import type { Icon } from "@phosphor-icons/react";
+import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 
 type SkillDefinition = {
   title: string;

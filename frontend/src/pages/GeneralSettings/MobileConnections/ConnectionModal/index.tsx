@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import ModalWrapper from "@/components/ModalWrapper";
 import BG from "./bg.png";
 import { QRCodeSVG } from "qrcode.react";

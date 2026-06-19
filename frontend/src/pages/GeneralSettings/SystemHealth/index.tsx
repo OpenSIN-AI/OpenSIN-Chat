@@ -6,7 +6,9 @@ import Sidebar from "@/components/SettingsSidebar";
 import ProviderKeyStatusPanel from "@/components/ProviderKeyStatusPanel";
 import ProviderStatus from "@/models/providerStatus";
 import showToast from "@/utils/toast";
-import { Plugs, PlugsConnected, CircleNotch } from "@phosphor-icons/react";
+import { Plugs } from "@phosphor-icons/react/dist/csr/Plugs";
+import { PlugsConnected } from "@phosphor-icons/react/dist/csr/PlugsConnected";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import useProviderKeyStatus from "@/hooks/useProviderKeyStatus";
 import { useTranslation } from "react-i18next";
 

@@ -5,21 +5,19 @@ import React, { useEffect, useState, useRef } from "react";
 import Toggle, { SimpleToggleSwitch } from "@/components/lib/Toggle";
 import { Link } from "react-router-dom";
 import { useTranslation, Trans } from "react-i18next";
-import {
-  Warning,
-  File,
-  Files,
-  PencilSimple,
-  FloppyDisk,
-  FolderPlus,
-  FolderOpen,
-  ArrowsLeftRight,
-  MagnifyingGlass,
-  Info,
-  CircleNotch,
-  Copy,
-  type Icon,
-} from "@phosphor-icons/react";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { File } from "@phosphor-icons/react/dist/csr/File";
+import { Files } from "@phosphor-icons/react/dist/csr/Files";
+import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
+import { FloppyDisk } from "@phosphor-icons/react/dist/csr/FloppyDisk";
+import { FolderPlus } from "@phosphor-icons/react/dist/csr/FolderPlus";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
+import { ArrowsLeftRight } from "@phosphor-icons/react/dist/csr/ArrowsLeftRight";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
+import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 import useFileSystemAgent from "@/hooks/useFileSystemAgent";
 import paths from "@/utils/paths";
 

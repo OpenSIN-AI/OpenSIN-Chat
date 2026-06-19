@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  CaretDown,
-  CaretRight,
-  Check,
-  MagnifyingGlass,
-  Minus,
-  Warning,
-  X,
-} from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
+import { Check } from "@phosphor-icons/react/dist/csr/Check";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { Minus } from "@phosphor-icons/react/dist/csr/Minus";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 import paths from "@/utils/paths";
 

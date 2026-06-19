@@ -4,7 +4,7 @@ import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { EnvelopeSimple } from "@phosphor-icons/react";
+import { EnvelopeSimple } from "@phosphor-icons/react/dist/csr/EnvelopeSimple";
 import InviteRow from "./InviteRow";
 import NewInviteModal from "./NewInviteModal";
 import useInvites, { INVITES_KEY } from "@/hooks/useInvites";

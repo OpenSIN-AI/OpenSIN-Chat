@@ -2,7 +2,7 @@
 // Purpose: Telegram bot connection details section
 // Docs: DetailsSection/index.doc.md
 import { useState } from "react";
-import { CircleNotch } from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import Telegram from "@/models/telegram";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";

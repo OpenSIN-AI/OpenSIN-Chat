@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
-import { X, Copy, Check } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
+import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import Admin from "@/models/admin";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";

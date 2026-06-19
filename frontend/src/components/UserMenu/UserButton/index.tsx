@@ -5,7 +5,7 @@ import useUser from "@/hooks/useUser";
 import useSupportEmail from "@/hooks/useSupportEmail";
 import paths from "@/utils/paths";
 import { userFromStorage } from "@/utils/request";
-import { Person } from "@phosphor-icons/react";
+import { Person } from "@phosphor-icons/react/dist/csr/Person";
 import { useEffect, useRef, useState } from "react";
 import AccountModal from "../AccountModal";
 import {

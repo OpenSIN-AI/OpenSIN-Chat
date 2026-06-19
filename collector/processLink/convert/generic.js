@@ -176,23 +176,80 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
       return response;
     };
 
-    const scrapeWithPool = async () => {
+    const MAX_REDIRECT_DEPTH = 5;
+    const MAX_META_REFRESH_DEPTH = 3;
+    const redirectUrls = new Set();
+    let currentUrl = link;
+    let metaDepth = 0;
+
+    const scrapeWithPool = async (entryLink) => {
       const browser = await browserPool.acquire();
+      let page = null;
       try {
-        const page = await browser.newPage();
+        page = await browser.newPage();
         if (hasHeaders) await page.setExtraHTTPHeaders(overrideHeaders);
 
-        const gotoOptions = {
-          timeout: PUPPETEER_TIMEOUT_MS,
-          waitUntil: "networkidle2",
+        const redirectCount = { value: 0 };
+        await page.setRequestInterception(true);
+        const onRequest = (req) => {
+          if (page && !page.isClosed()) {
+            try {
+              req.continue();
+            } catch {}
+          } else {
+            try {
+              req.abort();
+            } catch {}
+          }
         };
-        const response = await page.goto(link, gotoOptions);
+        page.on("request", onRequest);
+
+        const gotoOptions = {
+          timeout: Math.min(PUPPETEER_TIMEOUT_MS, 30_000),
+          waitUntil: "domcontentloaded",
+        };
+        let response = null;
+        try {
+          response = await page.goto(entryLink, gotoOptions);
+        } catch (navErr) {
+          if (navErr.message?.includes("ERR_TOO_MANY_REDIRECTS")) {
+            throw new Error(`Too many redirects for ${entryLink}`);
+          }
+          throw navErr;
+        }
         const res = await capResponseBytes(response);
         if (!res || !res.ok())
-          throw new Error(`HTTP ${res?.status?.() ?? "?"} on ${link}`);
+          throw new Error(`HTTP ${res?.status?.() ?? "?"} on ${entryLink}`);
 
-        const originalContent = await page.content();
-        const renderedBytes = Buffer.byteLength(originalContent, "utf8");
+        let originalContent = await page.content();
+        let renderedBytes = Buffer.byteLength(originalContent, "utf8");
+
+        while (
+          metaDepth < MAX_META_REFRESH_DEPTH &&
+          renderedBytes <= MAX_RESPONSE_BYTES
+        ) {
+          const meta = extractMetaRefresh(originalContent);
+          if (!meta) break;
+          if (redirectUrls.has(meta)) {
+            // Loop detected — stop here.
+            break;
+          }
+          redirectUrls.add(meta);
+          metaDepth += 1;
+          try {
+            await page.goto(meta, { timeout: 10_000, waitUntil: "load" });
+            originalContent = await page.content();
+            renderedBytes = Buffer.byteLength(originalContent, "utf8");
+          } catch {
+            break;
+          }
+        }
+
+        if (redirectUrls.size > MAX_REDIRECT_DEPTH) {
+          throw new Error(
+            `Redirect chain exceeded ${MAX_REDIRECT_DEPTH} hops for ${link}`
+          );
+        }
         if (renderedBytes > MAX_RESPONSE_BYTES) {
           throw new Error(
             `Rendered page exceeds ${MAX_RESPONSE_BYTES} bytes (got ${renderedBytes})`
@@ -200,6 +257,7 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
         }
         return { pageContent: originalContent };
       } finally {
+        if (page) await page.close().catch(() => {});
         await browserPool.release(browser);
       }
     };
@@ -212,8 +270,8 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
           args: runtimeSettings.get("browserLaunchArgs"),
         },
         gotoOptions: {
-          timeout: PUPPETEER_TIMEOUT_MS,
-          waitUntil: "networkidle2",
+          timeout: Math.min(PUPPETEER_TIMEOUT_MS, 30_000),
+          waitUntil: "domcontentloaded",
         },
         async evaluate(page, _browser) {
           const innerHTML = await page.evaluate(
@@ -240,11 +298,17 @@ async function getPageContent({ link, captureAs = "text", headers = {} }) {
             const page = await browser.newPage();
             await page.setExtraHTTPHeaders(overrideHeaders);
 
-            await page.goto(this.webPath, {
-              timeout: PUPPETEER_TIMEOUT_MS,
-              waitUntil: "networkidle2",
-              ...this.options?.gotoOptions,
-            });
+            try {
+              await page.goto(this.webPath, {
+                timeout: Math.min(PUPPETEER_TIMEOUT_MS, 30_000),
+                waitUntil: "domcontentloaded",
+                ...this.options?.gotoOptions,
+              });
+            } catch (navErr) {
+              if (navErr.message?.includes("ERR_TOO_MANY_REDIRECTS"))
+                throw new Error(`Too many redirects for ${this.webPath}`);
+              throw navErr;
+            }
 
             const bodyHTML = this.options?.evaluate
               ? await this.options.evaluate(page, browser)

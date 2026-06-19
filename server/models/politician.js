@@ -305,12 +305,20 @@ const PoliticianMandate = {
           rawData: m.rawData || null,
         };
 
+        // Detect insert vs update by checking if the record already exists.
+        const existing = await prisma.politician_mandates.findUnique({
+          where: { id },
+        });
         await prisma.politician_mandates.upsert({
           where: { id },
           update: data,
           create: data,
         });
-        updated++;
+        if (existing) {
+          updated++;
+        } else {
+          inserted++;
+        }
       } catch {
         errors++;
       }

@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
 // Docs: AgentSidebarLists.doc.md
-import { Robot, Plug, Package, FlowArrow, Hammer } from "@phosphor-icons/react";
+import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
+import { Plug } from "@phosphor-icons/react/dist/csr/Plug";
+import { Package } from "@phosphor-icons/react/dist/csr/Package";
+import { FlowArrow } from "@phosphor-icons/react/dist/csr/FlowArrow";
+import { Hammer } from "@phosphor-icons/react/dist/csr/Hammer";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import AgentFlowsList from "./AgentFlows";

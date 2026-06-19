@@ -1,19 +1,17 @@
 // SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect } from "react";
-import {
-  X,
-  ArrowSquareOut,
-  DownloadSimple,
-  Bookmark,
-  CaretDown,
-  FilePdf,
-  FileText,
-  Table,
-  ChartLineUp,
-  Image,
-  DotsThree,
-  Eye,
-} from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
+import { DownloadSimple } from "@phosphor-icons/react/dist/csr/DownloadSimple";
+import { Bookmark } from "@phosphor-icons/react/dist/csr/Bookmark";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { Table } from "@phosphor-icons/react/dist/csr/Table";
+import { ChartLineUp } from "@phosphor-icons/react/dist/csr/ChartLineUp";
+import { Image } from "@phosphor-icons/react/dist/csr/Image";
+import { DotsThree } from "@phosphor-icons/react/dist/csr/DotsThree";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
 import { useTranslation } from "react-i18next";
 import DOMPurify from "@/utils/chat/purify";
 import ChatSidebar from "../ChatSidebar";

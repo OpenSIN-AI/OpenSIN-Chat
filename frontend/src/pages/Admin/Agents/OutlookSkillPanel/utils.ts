@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Docs: utils.doc.md
-import {
-  MagnifyingGlass,
-  PaperPlaneTilt,
-  ChartBar,
-  PencilSimple,
-} from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { PaperPlaneTilt } from "@phosphor-icons/react/dist/csr/PaperPlaneTilt";
+import { ChartBar } from "@phosphor-icons/react/dist/csr/ChartBar";
+import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
 export { filterSkillCategories } from "../utils";
 
 type TFunction = (key: string) => string;

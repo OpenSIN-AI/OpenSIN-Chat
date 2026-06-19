@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation } from "react-i18next";
-import { Globe, FileText, Database, Plus } from "@phosphor-icons/react";
+import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 
 /**
  * Determine the display type (icon + label) for a workspace document.

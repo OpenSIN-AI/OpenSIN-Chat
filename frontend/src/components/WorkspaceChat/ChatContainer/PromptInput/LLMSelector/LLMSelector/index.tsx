@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { useTranslation } from "react-i18next";
 
 export default function LLMSelectorSidePanel({

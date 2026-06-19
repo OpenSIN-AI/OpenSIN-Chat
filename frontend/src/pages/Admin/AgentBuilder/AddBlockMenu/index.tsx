@@ -3,7 +3,8 @@
 // Docs: AddBlockMenu/index.doc.md
 import React, { useRef, useEffect, RefObject } from "react";
 import { useTranslation } from "react-i18next";
-import { Plus, CaretDown } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import { BLOCK_TYPES, BLOCK_INFO } from "../BlockList";
 
 interface Block {

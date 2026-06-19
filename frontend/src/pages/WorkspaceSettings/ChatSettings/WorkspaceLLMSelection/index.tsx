@@ -4,7 +4,9 @@ import React, { useEffect, useRef, useState } from "react";
 import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import WorkspaceLLMItem from "./WorkspaceLLMItem";
 import { ALL_LLM_PROVIDERS } from "@/pages/GeneralSettings/LLMPreference/llmProviders";
-import { CaretUpDown, MagnifyingGlass, X } from "@phosphor-icons/react";
+import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import ModelSelector from "@/components/ModelSelector";
 import { useTranslation } from "react-i18next";
 

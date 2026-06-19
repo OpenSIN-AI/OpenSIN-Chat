@@ -4,15 +4,13 @@
  * Docs: RightSidebarIconBar/index.doc.md
  */
 import { Tooltip } from "react-tooltip";
-import {
-  Eye,
-  FolderOpen,
-  Database,
-  Newspaper,
-  BookOpen,
-  Brain,
-  FilePdf,
-} from "@phosphor-icons/react";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
+import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 import { useNavigate } from "react-router-dom";
 import { useChatSidebar } from "../ChatSidebar";
 import { useTranslation } from "react-i18next";

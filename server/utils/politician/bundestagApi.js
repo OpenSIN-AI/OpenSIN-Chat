@@ -121,8 +121,8 @@ class BundestagApi {
    * @returns {Promise<any>}
    */
   async #fetchCached(url, headers) {
-    const cached = this.cache.get(url);
-    if (cached && Date.now() - cached.ts < CACHE_TTL_MS) return cached.data;
+    const cached = await this.#cacheGet(url);
+    if (cached !== null) return cached;
 
     const res = await this.#fetch(url, headers);
     if (!res.ok) {
@@ -133,6 +133,22 @@ class BundestagApi {
     const data = await res.json();
     this.cache.set(url, { data, ts: Date.now() });
     return data;
+  }
+
+  /**
+   * Read from the in-memory cache with opportunistic eviction of expired
+   * entries so stale keys do not accumulate on long-running servers.
+   * @param {string} url
+   * @returns {Promise<any>} cached payload, or null if missing/expired.
+   */
+  async #cacheGet(url) {
+    const cached = this.cache.get(url);
+    if (!cached) return null;
+    if (Date.now() - cached.ts > CACHE_TTL_MS) {
+      this.cache.delete(url);
+      return null;
+    }
+    return cached.data;
   }
 
   /**

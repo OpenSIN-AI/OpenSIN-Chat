@@ -4,14 +4,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
-import {
-  ArrowLeft,
-  ChatText,
-  Brain,
-  Wrench,
-  File,
-  Stop,
-} from "@phosphor-icons/react";
+import { ArrowLeft } from "@phosphor-icons/react/dist/csr/ArrowLeft";
+import { ChatText } from "@phosphor-icons/react/dist/csr/ChatText";
+import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
+import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
+import { File } from "@phosphor-icons/react/dist/csr/File";
+import { Stop } from "@phosphor-icons/react/dist/csr/Stop";
 import ScheduledJobs from "@/models/scheduledJobs";
 import showToast from "@/utils/toast";
 import paths from "@/utils/paths";

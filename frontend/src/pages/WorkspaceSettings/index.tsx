@@ -6,14 +6,12 @@ import Sidebar from "@/components/Sidebar";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { isMobile } from "react-device-detect";
 import { FullScreenLoader } from "@/components/Preloader";
-import {
-  ArrowUUpLeft,
-  ChatText,
-  Database,
-  Robot,
-  User,
-  Wrench,
-} from "@phosphor-icons/react";
+import { ArrowUUpLeft } from "@phosphor-icons/react/dist/csr/ArrowUUpLeft";
+import { ChatText } from "@phosphor-icons/react/dist/csr/ChatText";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
+import { User } from "@phosphor-icons/react/dist/csr/User";
+import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
 import paths from "@/utils/paths";
 import { Link, NavLink, Navigate } from "react-router-dom";
 import GeneralAppearance from "./GeneralAppearance";

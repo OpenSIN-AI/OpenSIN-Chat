@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FolderOpen, Info } from "@phosphor-icons/react";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 

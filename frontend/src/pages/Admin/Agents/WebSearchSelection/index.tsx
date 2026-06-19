@@ -16,12 +16,10 @@ import DuckDuckGoIcon from "./icons/duckduckgo.png";
 import ExaIcon from "./icons/exa.png";
 import PerplexitySearchIcon from "./icons/perplexity.png";
 import VaneIcon from "./icons/vane.png";
-import {
-  CaretUpDown,
-  MagnifyingGlass,
-  X,
-  ListMagnifyingGlass,
-} from "@phosphor-icons/react";
+import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { ListMagnifyingGlass } from "@phosphor-icons/react/dist/csr/ListMagnifyingGlass";
 import Toggle from "@/components/lib/Toggle";
 import SearchProviderItem from "./SearchProviderItem";
 import WebSearchImage from "@/media/agents/scrape-websites.png";

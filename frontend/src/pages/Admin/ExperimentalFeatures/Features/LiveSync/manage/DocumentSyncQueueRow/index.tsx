@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useRef } from "react";
-import { Trash } from "@phosphor-icons/react";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { stripUuidAndJsonFromString } from "@/components/Modals/ManageWorkspace/Documents/Directory/utils";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 import { NavLink } from "react-router-dom";
-import { House, ArrowClockwise, Copy, Check } from "@phosphor-icons/react";
+import { House } from "@phosphor-icons/react/dist/csr/House";
+import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
+import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
+import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import { useState } from "react";
 import type { FallbackProps } from "react-error-boundary";
 import { useTranslation } from "react-i18next";

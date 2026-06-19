@@ -3,7 +3,10 @@ import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
-import { X, Globe, FileText, Database } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
+import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import paths from "@/utils/paths";
 import useThreads from "@/hooks/useThreads";
 import {

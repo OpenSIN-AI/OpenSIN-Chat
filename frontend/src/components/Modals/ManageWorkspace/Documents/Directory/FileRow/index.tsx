@@ -6,7 +6,7 @@ import {
   getFileExtension,
   middleTruncate,
 } from "@/utils/directories";
-import { File } from "@phosphor-icons/react";
+import { File } from "@phosphor-icons/react/dist/csr/File";
 
 export default function FileRow({ item, selected, toggleSelection }: any) {
   const { t } = useTranslation();

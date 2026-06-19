@@ -4,7 +4,7 @@ import { useState } from "react";
 import Sidebar from "@/components/SettingsSidebar";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { QrCode } from "@phosphor-icons/react";
+import { QrCode } from "@phosphor-icons/react/dist/csr/QrCode";
 import { useModal } from "@/hooks/useModal";
 import CTAButton from "@/components/lib/CTAButton";
 import ConnectionModal from "./ConnectionModal";

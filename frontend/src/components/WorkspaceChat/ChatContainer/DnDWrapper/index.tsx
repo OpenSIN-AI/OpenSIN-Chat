@@ -379,10 +379,21 @@ export function DnDFileUploaderProvider({
 
   const handleContinueAnyway = async () => {
     if (!pendingFiles.length) return;
-    const results = (pendingFiles as any).map((file) => ({
-      success: true,
-      document: { id: file.parsedFileId },
-    }));
+    // Fetch the full document metadata (including `location`) for each
+    // pending file so that subsequent removal via handleRemove can properly
+    // call deleteAndUnembedFile. Without `location`, handleRemove silently
+    // skips the backend delete, orphaning the document in the vector store.
+    const docData = await mutateParsedFiles().catch(() => null);
+    const fileMap = new Map(
+      (docData?.files || []).map((f: any) => [f.id, f]),
+    );
+    const results = (pendingFiles as any).map((file) => {
+      const fullDoc = fileMap.get(file.parsedFileId);
+      return {
+        success: true,
+        document: fullDoc ?? { id: file.parsedFileId },
+      };
+    });
 
     const fileUpdates = (pendingFiles as any).map((file, i) => ({
       uid: file.attachment.uid,

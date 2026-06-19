@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React, { useState, useEffect, memo } from "react";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { isMobileOnly } from "react-device-detect";

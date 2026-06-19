@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import PreLoader from "@/components/Preloader";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 
 export function LoadingState({ workspace, loadingMessage }: any) {

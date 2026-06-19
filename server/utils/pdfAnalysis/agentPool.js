@@ -20,6 +20,11 @@ const INCREASE_AFTER_WAVES = Number(
   process.env.PDF_ANALYSIS_AIMD_INCREASE_AFTER || 3,
 );
 const COOLDOWN_MS = Number(process.env.PDF_ANALYSIS_AIMD_COOLDOWN_MS || 5000);
+// Maximum retry attempts per chunk on rate-limit errors before giving up.
+// Without this, a persistent API outage causes an infinite retry loop.
+const MAX_CHUNK_RETRIES = Number(
+  process.env.PDF_ANALYSIS_MAX_CHUNK_RETRIES || 10,
+);
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -91,6 +96,9 @@ async function runPool(chunks, maxConcurrency, workerFn, opts = {}) {
   // AIMD-Zustand
   let concurrency = Math.max(1, maxConcurrency);
   let cleanWaveStreak = 0;
+  // Track per-chunk retry counts to prevent infinite loops on persistent
+  // rate-limit errors.
+  const retryCounts = new Map();
 
   if (onProgress) onProgress(done, chunks.length, concurrency);
 
@@ -140,8 +148,37 @@ async function runPool(chunks, maxConcurrency, workerFn, opts = {}) {
       // (direkt nach dem aktuellen Cursor, damit sie als nächstes drankommen)
       const successfulInWave = wave.filter((c) => !failedIdx.has(c.index));
       cursor += successfulInWave.length;
-      const retry = wave.filter((c) => failedIdx.has(c.index));
+
+      // Per-chunk retry cap: after MAX_CHUNK_RETRIES rate-limit retries,
+      // store the error as a final result to avoid an infinite loop.
+      const retry = [];
+      const exhausted = [];
+      for (const c of wave.filter((c) => failedIdx.has(c.index))) {
+        const count = (retryCounts.get(c.index) || 0) + 1;
+        retryCounts.set(c.index, count);
+        if (count > MAX_CHUNK_RETRIES) {
+          exhausted.push(c);
+        } else {
+          retry.push(c);
+        }
+      }
       pending.splice(cursor, 0, ...retry);
+
+      // Chunks that exceeded the retry cap are stored as final errors.
+      for (const c of exhausted) {
+        const errResult = {
+          chunkIndex: c.index,
+          pageStart: c.pageStart,
+          pageEnd: c.pageEnd,
+          summary: "",
+          findings: [],
+          facts: [],
+          error: `Rate-limit retries exhausted (${MAX_CHUNK_RETRIES} attempts).`,
+        };
+        results[c.index] = errResult;
+        checkpoint.completed[c.index] = errResult;
+        done++;
+      }
 
       // Multiplicative Decrease + Abkühlphase
       concurrency = Math.max(1, Math.floor(concurrency / 2));

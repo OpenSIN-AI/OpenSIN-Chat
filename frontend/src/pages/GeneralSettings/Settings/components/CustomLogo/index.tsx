@@ -4,7 +4,7 @@ import useLogo from "@/hooks/useLogo";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { useRef, useState, ChangeEvent } from "react";
-import { Plus } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { useTranslation } from "react-i18next";
 import useIsDefaultLogo from "@/hooks/useIsDefaultLogo";
 

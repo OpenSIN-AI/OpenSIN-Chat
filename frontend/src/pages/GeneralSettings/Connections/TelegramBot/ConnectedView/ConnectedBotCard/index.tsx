@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { TelegramLogo } from "@phosphor-icons/react";
+import { TelegramLogo } from "@phosphor-icons/react/dist/csr/TelegramLogo";
 import { useTranslation } from "react-i18next";
 
 interface ConnectedBotCardProps {

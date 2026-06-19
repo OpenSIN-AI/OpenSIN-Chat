@@ -12,16 +12,18 @@ import React, {
 import { useTranslation } from "react-i18next";
 const ReactMarkdown = React.lazy(() => import("react-markdown"));
 import remarkGfm from "remark-gfm";
-import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
-import jsPDF from "jspdf";
-import {
-  UploadSimple,
-  FilePdf,
-  FileDoc,
-  FileMd,
-  X,
-  ListBullets,
-} from "@phosphor-icons/react";
+let docxMod = null;
+let jsPDFMod = null;
+const docxReady = () =>
+  docxMod ? Promise.resolve(docxMod) : import("docx").then((m) => (docxMod = m));
+const jsPDFReady = () =>
+  jsPDFMod ? Promise.resolve(jsPDFMod) : import("jspdf").then((m) => (jsPDFMod = m.default ?? m));
+import { UploadSimple } from "@phosphor-icons/react/dist/csr/UploadSimple";
+import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
+import { FileDoc } from "@phosphor-icons/react/dist/csr/FileDoc";
+import { FileMd } from "@phosphor-icons/react/dist/csr/FileMd";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { ListBullets } from "@phosphor-icons/react/dist/csr/ListBullets";
 import Sidebar from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 import { SidebarToggleProvider } from "@/components/Sidebar/SidebarToggle";
@@ -580,8 +582,10 @@ function downloadMarkdown(filename: string, content: string) {
  * Converts basic Markdown headings and paragraphs — bold/italic are preserved.
  */
 async function downloadDocx(filename: string, content: string) {
+  const { Document, Packer, Paragraph, TextRun, HeadingLevel } =
+    await docxReady();
   const lines = content.split("\n");
-  const children: Paragraph[] = [];
+  const children = [];
 
   for (const line of lines) {
     if (!line.trim()) {
@@ -630,8 +634,9 @@ async function downloadDocx(filename: string, content: string) {
  * Download the report as a PDF using jsPDF.
  * Renders the text content line by line with basic heading detection.
  */
-function downloadPdf(filename: string, content: string) {
-  const doc = new jsPDF({ unit: "mm", format: "a4" });
+async function downloadPdf(filename: string, content: string) {
+  const JsPDF = await jsPDFReady();
+  const doc = new JsPDF({ unit: "mm", format: "a4" });
   const pageW = doc.internal.pageSize.getWidth();
   const margin = 18;
   const maxW = pageW - margin * 2;

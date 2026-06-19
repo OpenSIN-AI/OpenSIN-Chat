@@ -6,7 +6,10 @@ import {
   getFileExtension,
   middleTruncate,
 } from "@/utils/directories";
-import { ArrowUUpLeft, Eye, File, PushPin } from "@phosphor-icons/react";
+import { ArrowUUpLeft } from "@phosphor-icons/react/dist/csr/ArrowUUpLeft";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
+import { File } from "@phosphor-icons/react/dist/csr/File";
+import { PushPin } from "@phosphor-icons/react/dist/csr/PushPin";
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import System from "@/models/system";

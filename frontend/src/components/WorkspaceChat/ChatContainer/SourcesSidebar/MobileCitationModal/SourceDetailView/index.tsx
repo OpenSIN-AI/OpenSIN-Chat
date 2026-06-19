@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { Fragment } from "react";
-import { CaretLeft, Info, X } from "@phosphor-icons/react";
+import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { decode as HTMLDecode } from "he";
 import { truncate } from "@/utils/strings";
 import { useTranslation } from "react-i18next";

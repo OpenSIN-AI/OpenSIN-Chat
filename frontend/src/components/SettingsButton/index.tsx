@@ -2,7 +2,8 @@
 import { useTranslation } from "react-i18next";
 import useUser from "@/hooks/useUser";
 import paths from "@/utils/paths";
-import { ArrowUUpLeft, Wrench } from "@phosphor-icons/react";
+import { ArrowUUpLeft } from "@phosphor-icons/react/dist/csr/ArrowUUpLeft";
+import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
 import { Link, useMatch } from "react-router-dom";
 
 export default function SettingsButton() {

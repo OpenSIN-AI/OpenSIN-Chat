@@ -2,13 +2,11 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";
-import {
-  CaretDown,
-  CaretUp,
-  Info,
-  CircleNotch,
-  Warning,
-} from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretUp } from "@phosphor-icons/react/dist/csr/CaretUp";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { Tooltip } from "react-tooltip";
 import useProviderEndpointAutoDiscovery from "@/hooks/useProviderEndpointAutoDiscovery";
 import useProviderModels from "@/hooks/useProviderModels";

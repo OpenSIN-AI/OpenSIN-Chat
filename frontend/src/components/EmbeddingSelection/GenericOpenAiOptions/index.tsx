@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CaretDown, CaretUp, Info } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretUp } from "@phosphor-icons/react/dist/csr/CaretUp";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { Tooltip } from "react-tooltip";
 
 export default function GenericOpenAiEmbeddingOptions({ settings }: any) {

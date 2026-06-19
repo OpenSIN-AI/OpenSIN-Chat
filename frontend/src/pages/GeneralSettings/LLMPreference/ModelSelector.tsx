@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { CaretUpDown } from "@phosphor-icons/react";
+import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
 import ProviderList from "./ProviderList";
 
 export default function ModelSelector({

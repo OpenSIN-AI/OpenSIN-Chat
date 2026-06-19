@@ -8,7 +8,8 @@ import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 
 dayjs.extend(localizedFormat);
-import { BugDroid, AppleLogo } from "@phosphor-icons/react";
+import { BugDroid } from "@phosphor-icons/react/dist/csr/BugDroid";
+import { AppleLogo } from "@phosphor-icons/react/dist/csr/AppleLogo";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";

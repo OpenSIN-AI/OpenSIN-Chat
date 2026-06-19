@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { titleCase } from "text-case";
 import Admin from "@/models/admin";
-import { Trash } from "@phosphor-icons/react";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { useTranslation } from "react-i18next";
 import { copyText } from "@/utils/clipboard";
 

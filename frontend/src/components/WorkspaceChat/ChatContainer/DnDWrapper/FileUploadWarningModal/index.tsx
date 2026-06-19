@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useTranslation, Trans } from "react-i18next";
-import { CircleNotch } from "@phosphor-icons/react";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import ModalWrapper from "@/components/ModalWrapper";
 import pluralize from "pluralize";
 import { numberWithCommas } from "@/utils/numbers";

@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { truncate } from "@/utils/strings";
-import { CheckCircle, XCircle } from "@phosphor-icons/react";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { XCircle } from "@phosphor-icons/react/dist/csr/XCircle";
 import { useDocumentUpload } from "@/hooks/useDocuments";
 import { humanFileSize, milliToHms } from "../../../../../../utils/numbers";
 import PreLoader from "../../../../../Preloader";

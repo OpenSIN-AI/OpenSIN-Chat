@@ -1,18 +1,16 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import {
-  ArrowUpRight,
-  BookOpen,
-  CaretUpDown,
-  ChatCircleText,
-  Desktop,
-  Gear,
-  Moon,
-  SignIn,
-  SignOut,
-  Sun,
-  UserCircle,
-} from "@phosphor-icons/react";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/csr/ArrowUpRight";
+import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
+import { CaretUpDown } from "@phosphor-icons/react/dist/csr/CaretUpDown";
+import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
+import { Desktop } from "@phosphor-icons/react/dist/csr/Desktop";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+import { Moon } from "@phosphor-icons/react/dist/csr/Moon";
+import { SignIn } from "@phosphor-icons/react/dist/csr/SignIn";
+import { SignOut } from "@phosphor-icons/react/dist/csr/SignOut";
+import { Sun } from "@phosphor-icons/react/dist/csr/Sun";
+import { UserCircle } from "@phosphor-icons/react/dist/csr/UserCircle";
 import { Link } from "react-router-dom";
 import { createPortal } from "react-dom";
 import paths from "@/utils/paths";

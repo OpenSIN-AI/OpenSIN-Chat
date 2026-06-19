@@ -2,7 +2,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import LLMItem from "@/components/LLMSelection/LLMItem";
-import { MagnifyingGlass, X } from "@phosphor-icons/react";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 
 export default function ProviderList({
   searchQuery,

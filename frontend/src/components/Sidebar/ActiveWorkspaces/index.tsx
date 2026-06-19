@@ -8,14 +8,12 @@ import ManageWorkspace, {
 } from "../../Modals/ManageWorkspace";
 import paths from "@/utils/paths";
 import { Link, useParams, useNavigate, useMatch } from "react-router-dom";
-import {
-  GearSix,
-  UploadSimple,
-  DotsSixVertical,
-  Plus,
-  ChatCircleText,
-  FolderSimplePlus,
-} from "@phosphor-icons/react";
+import { GearSix } from "@phosphor-icons/react/dist/csr/GearSix";
+import { UploadSimple } from "@phosphor-icons/react/dist/csr/UploadSimple";
+import { DotsSixVertical } from "@phosphor-icons/react/dist/csr/DotsSixVertical";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
+import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
 import useUser from "@/hooks/useUser";
 import useWorkspaces from "@/hooks/useWorkspaces";
 import ThreadContainer from "./ThreadContainer";

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
-import { CaretLeft, CaretRight, X } from "@phosphor-icons/react";
+import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 
 const NAV_BUTTON_CLASS =

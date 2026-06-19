@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import System from "@/models/system";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
-import { ArrowSquareOut } from "@phosphor-icons/react";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Toggle from "@/components/lib/Toggle";

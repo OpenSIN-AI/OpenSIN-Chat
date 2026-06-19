@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Plus, MagnifyingGlass } from "@phosphor-icons/react";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import paths from "@/utils/paths";

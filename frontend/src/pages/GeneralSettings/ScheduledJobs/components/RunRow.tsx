@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Circle, Stop } from "@phosphor-icons/react";
+import { Circle } from "@phosphor-icons/react/dist/csr/Circle";
+import { Stop } from "@phosphor-icons/react/dist/csr/Stop";
 import dayjs from "dayjs";
 import paths from "@/utils/paths";
 import StatusBadge from "./StatusBadge";

@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
-import {
-  Info,
-  CaretDown,
-  CaretUp,
-  CircleNotch,
-  Warning,
-} from "@phosphor-icons/react";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretUp } from "@phosphor-icons/react/dist/csr/CaretUp";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import { useTranslation } from "react-i18next";
 import paths from "@/utils/paths";
 import { LMSTUDIO_COMMON_URLS } from "@/utils/constants";

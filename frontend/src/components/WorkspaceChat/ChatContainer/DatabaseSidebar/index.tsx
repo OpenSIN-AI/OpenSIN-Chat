@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
-import {
-  X,
-  Database,
-  Users,
-  ArrowClockwise,
-  ArrowSquareOut,
-} from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Users } from "@phosphor-icons/react/dist/csr/Users";
+import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
+import { ArrowSquareOut } from "@phosphor-icons/react/dist/csr/ArrowSquareOut";
 import { useTranslation } from "react-i18next";
 import { usePoliticians } from "@/hooks/usePoliticians";
 import ChatSidebar, { useDatabaseSidebar } from "../ChatSidebar";

@@ -13,7 +13,9 @@ import useAgentSkillsState from "./useAgentSkillsState";
 import useSkillSections from "./useSkillSections";
 import SkillRow from "./SkillRow";
 import SkillSection from "./SkillSection";
-import { Wrench, MagnifyingGlass, CircleNotch } from "@phosphor-icons/react";
+import { Wrench } from "@phosphor-icons/react/dist/csr/Wrench";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import { useIsAgentSessionActive } from "@/utils/chat/agent";
 
 const MIN_ITEMS_TO_SHOW_SEARCH: any = 10;

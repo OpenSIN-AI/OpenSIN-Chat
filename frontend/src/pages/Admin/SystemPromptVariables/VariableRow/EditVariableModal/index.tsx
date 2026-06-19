@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React, { useState, FormEvent } from "react";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import System from "@/models/system";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";

@@ -7,19 +7,52 @@ const { writeResponseChunk } = require("../helpers/chat/responses");
 const { Workspace } = require("../../models/workspace");
 
 /**
+ * Tiny TTL cache that tracks its expiry timers so the timer handle can be
+ * cleared on early retrieval — prevents orphaned setTimeout references and
+ * stale entries when the consumer reads the value before TTL elapses.
+ * @returns {{set: (key: string, value: any, ttlMs: number) => void, take: (key: string) => any|undefined}}
+ */
+function createTtlCache() {
+  const cache = new Map();
+  const timers = new Map();
+  return {
+    set(key, value, ttlMs) {
+      if (timers.has(key)) clearTimeout(timers.get(key));
+      cache.set(key, value);
+      timers.set(
+        key,
+        setTimeout(() => {
+          cache.delete(key);
+          timers.delete(key);
+        }, ttlMs),
+      );
+    },
+    take(key) {
+      if (timers.has(key)) {
+        clearTimeout(timers.get(key));
+        timers.delete(key);
+      }
+      const v = cache.get(key);
+      cache.delete(key);
+      return v;
+    },
+  };
+}
+
+/**
  * In-memory cache for attachments associated with agent invocations.
  * Attachments are stored here when grepAgents creates an invocation,
  * then retrieved by AgentHandler when the websocket connects.
- * @type {Map<string, Array>}
  */
-const invocationAttachmentsCache = new Map();
+const invocationAttachmentsCache = createTtlCache();
 
 /**
  * In-memory cache for extra prompt instructions associated with agent invocations.
  * Used to pass the screenshot URL prompt from the HTTP handler to the agent handler.
- * @type {Map<string, string>}
  */
-const invocationUrlPromptCache = new Map();
+const invocationUrlPromptCache = createTtlCache();
+
+const AGENT_INVOCATION_TTL_MS = 5 * 60 * 1000;
 
 /**
  * Store attachments for an invocation UUID
@@ -27,10 +60,8 @@ const invocationUrlPromptCache = new Map();
  * @param {Array} attachments - The attachments array
  */
 function cacheInvocationAttachments(uuid, attachments = []) {
-  if (attachments.length > 0) {
-    invocationAttachmentsCache.set(uuid, attachments);
-    setTimeout(() => invocationAttachmentsCache.delete(uuid), 5 * 60 * 1000);
-  }
+  if (attachments.length > 0)
+    invocationAttachmentsCache.set(uuid, attachments, AGENT_INVOCATION_TTL_MS);
 }
 
 /**
@@ -39,9 +70,7 @@ function cacheInvocationAttachments(uuid, attachments = []) {
  * @returns {Array} The attachments array (empty if none cached)
  */
 function getAndClearInvocationAttachments(uuid) {
-  const attachments = invocationAttachmentsCache.get(uuid) || [];
-  invocationAttachmentsCache.delete(uuid);
-  return attachments;
+  return invocationAttachmentsCache.take(uuid) || [];
 }
 
 /**
@@ -50,10 +79,8 @@ function getAndClearInvocationAttachments(uuid) {
  * @param {string|null} urlPrompt - The prompt instruction to inject into the agent system prompt
  */
 function cacheInvocationUrlPrompt(uuid, urlPrompt = null) {
-  if (urlPrompt) {
-    invocationUrlPromptCache.set(uuid, urlPrompt);
-    setTimeout(() => invocationUrlPromptCache.delete(uuid), 5 * 60 * 1000);
-  }
+  if (urlPrompt)
+    invocationUrlPromptCache.set(uuid, urlPrompt, AGENT_INVOCATION_TTL_MS);
 }
 
 /**
@@ -62,9 +89,7 @@ function cacheInvocationUrlPrompt(uuid, urlPrompt = null) {
  * @returns {string|null} The cached prompt instruction, or null
  */
 function getAndClearInvocationUrlPrompt(uuid) {
-  const urlPrompt = invocationUrlPromptCache.get(uuid) || null;
-  invocationUrlPromptCache.delete(uuid);
-  return urlPrompt;
+  return invocationUrlPromptCache.take(uuid) || null;
 }
 
 async function grepAgents({

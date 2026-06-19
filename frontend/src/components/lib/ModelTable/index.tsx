@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MIT
 import { useRef, useState, useEffect } from "react";
-import {
-  CaretDown,
-  CaretRight,
-  Cpu,
-  Circle,
-  DotsThreeVertical,
-  CloudArrowDown,
-  CircleNotch,
-} from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
+import { Cpu } from "@phosphor-icons/react/dist/csr/Cpu";
+import { Circle } from "@phosphor-icons/react/dist/csr/Circle";
+import { DotsThreeVertical } from "@phosphor-icons/react/dist/csr/DotsThreeVertical";
+import { CloudArrowDown } from "@phosphor-icons/react/dist/csr/CloudArrowDown";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
 import pluralize from "pluralize";
 import { titleCase } from "text-case";
 import { useTranslation } from "react-i18next";

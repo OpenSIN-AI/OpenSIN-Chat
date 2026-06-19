@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useEffect, useRef, useState } from "react";
-import { DotsThreeVertical } from "@phosphor-icons/react";
+import { DotsThreeVertical } from "@phosphor-icons/react/dist/csr/DotsThreeVertical";
 import { useMemoriesContext, LIMITS } from "../MemoriesContext";
 import CardMenu from "./CardMenu";
 import { useTranslation } from "react-i18next";

@@ -3,7 +3,9 @@
 // Docs: ServerPanel.doc.md
 import React, { useState, useEffect, useRef } from "react";
 import showToast from "@/utils/toast";
-import { CaretDown, Gear, Warning } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { Gear } from "@phosphor-icons/react/dist/csr/Gear";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
 import MCPLogo from "@/media/agents/mcp-logo.svg";
 import { titleCase } from "text-case";
 import MCPServers from "@/models/mcpServers";

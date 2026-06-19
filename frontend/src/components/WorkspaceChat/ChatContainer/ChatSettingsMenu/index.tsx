@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT
 import { useState, useRef, useEffect } from "react";
-import {
-  SlidersHorizontal,
-  Eye,
-  FolderOpen,
-  Database,
-  Newspaper,
-} from "@phosphor-icons/react";
+import { SlidersHorizontal } from "@phosphor-icons/react/dist/csr/SlidersHorizontal";
+import { Eye } from "@phosphor-icons/react/dist/csr/Eye";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
 import { useTranslation } from "react-i18next";
 import useLoginMode from "@/hooks/useLoginMode";
 import { useChatSidebar } from "../ChatSidebar";

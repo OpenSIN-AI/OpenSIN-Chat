@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: MIT
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  ArrowClockwise,
-  CircleNotch,
-  MagnifyingGlass,
-} from "@phosphor-icons/react";
+import { ArrowClockwise } from "@phosphor-icons/react/dist/csr/ArrowClockwise";
+import { CircleNotch } from "@phosphor-icons/react/dist/csr/CircleNotch";
+import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 
 export default function ModelTableLayout({
   children,

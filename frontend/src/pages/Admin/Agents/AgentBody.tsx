@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: AgentBody.doc.md
-import { Robot, CaretLeft } from "@phosphor-icons/react";
+import { Robot } from "@phosphor-icons/react/dist/csr/Robot";
+import { CaretLeft } from "@phosphor-icons/react/dist/csr/CaretLeft";
 import { useTranslation } from "react-i18next";
 import AgentSkillSettings from "./AgentSkillSettings";
 import AgentSidebarLists from "./AgentSidebarLists";

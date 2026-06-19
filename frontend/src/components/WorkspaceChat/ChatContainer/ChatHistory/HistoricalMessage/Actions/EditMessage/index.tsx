@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { Info, Pencil } from "@phosphor-icons/react";
+import { Info } from "@phosphor-icons/react/dist/csr/Info";
+import { Pencil } from "@phosphor-icons/react/dist/csr/Pencil";
 import { useRef, useEffect } from "react";
 import Appearance from "@/models/appearance";
 import { useTranslation } from "react-i18next";

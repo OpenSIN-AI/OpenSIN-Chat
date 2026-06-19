@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
-import { Warning, X } from "@phosphor-icons/react";
+import { Warning } from "@phosphor-icons/react/dist/csr/Warning";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { useTranslation } from "react-i18next";
 
 export default function ChangeWarningModal({

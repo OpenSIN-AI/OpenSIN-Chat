@@ -4,15 +4,13 @@ import Workspace from "@/models/workspace";
 import paths from "@/utils/paths";
 import showToast from "@/utils/toast";
 import { invalidateThreads } from "@/hooks/useThreads";
-import {
-  ArrowCounterClockwise,
-  DotsThree,
-  Link as LinkIcon,
-  PencilSimple,
-  Plus,
-  Trash,
-  X,
-} from "@phosphor-icons/react";
+import { ArrowCounterClockwise } from "@phosphor-icons/react/dist/csr/ArrowCounterClockwise";
+import { DotsThree } from "@phosphor-icons/react/dist/csr/DotsThree";
+import { Link as LinkIcon } from "@phosphor-icons/react/dist/csr/Link";
+import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import { memo, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDraggable } from "@dnd-kit/core";

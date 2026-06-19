@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import MarkdownIt from "markdown-it";
 import hljs from "@/utils/chat/hljs";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 import "highlight.js/styles/github-dark.css";
 import DOMPurify from "@/utils/chat/purify";
 

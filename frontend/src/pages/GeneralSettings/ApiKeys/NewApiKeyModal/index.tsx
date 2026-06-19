@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
 import React, { useEffect, useState, FormEvent } from "react";
-import { X, Copy, Check } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Copy } from "@phosphor-icons/react/dist/csr/Copy";
+import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import Admin from "@/models/admin";
 import paths from "@/utils/paths";
 import { userFromStorage } from "@/utils/request";

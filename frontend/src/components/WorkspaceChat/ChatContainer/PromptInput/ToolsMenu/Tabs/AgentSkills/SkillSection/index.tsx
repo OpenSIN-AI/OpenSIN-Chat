@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useRef, useEffect } from "react";
-import { CaretDown } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
 
 export default function SkillSection({
   name,

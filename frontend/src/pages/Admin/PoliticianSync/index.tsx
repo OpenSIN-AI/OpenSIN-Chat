@@ -6,13 +6,11 @@ import { useTranslation } from "react-i18next";
 import { isMobile } from "react-device-detect";
 import SettingsSidebar from "@/components/SettingsSidebar";
 import usePoliticianSync from "@/hooks/usePoliticianSync";
-import {
-  ArrowsClockwise,
-  CheckCircle,
-  WarningCircle,
-  XCircle,
-  TrendUp,
-} from "@phosphor-icons/react";
+import { ArrowsClockwise } from "@phosphor-icons/react/dist/csr/ArrowsClockwise";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
+import { WarningCircle } from "@phosphor-icons/react/dist/csr/WarningCircle";
+import { XCircle } from "@phosphor-icons/react/dist/csr/XCircle";
+import { TrendUp } from "@phosphor-icons/react/dist/csr/TrendUp";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CTAButton from "@/components/lib/CTAButton";

@@ -2,16 +2,14 @@
 import Workspace from "@/models/workspace";
 import showToast from "@/utils/toast";
 import { invalidateThreads } from "@/hooks/useThreads";
-import {
-  CaretDown,
-  CaretRight,
-  ChatCircleText,
-  FolderSimple,
-  FolderSimplePlus,
-  PencilSimple,
-  Plus,
-  Trash,
-} from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
+import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
+import { FolderSimple } from "@phosphor-icons/react/dist/csr/FolderSimple";
+import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
+import { PencilSimple } from "@phosphor-icons/react/dist/csr/PencilSimple";
+import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";

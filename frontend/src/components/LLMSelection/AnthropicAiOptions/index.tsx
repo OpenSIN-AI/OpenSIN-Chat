@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import { CaretDown } from "@phosphor-icons/react/dist/csr/CaretDown";
+import { CaretUp } from "@phosphor-icons/react/dist/csr/CaretUp";
 import useProviderModels from "@/hooks/useProviderModels";
 
 export default function AnthropicAiOptions({ settings }: any) {

@@ -2,7 +2,7 @@
 // Purpose: New workspace creation modal
 // Docs: NewWorkspaceModal/index.doc.md
 import React, { useState, FormEvent } from "react";
-import { X } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
 import Admin from "@/models/admin";
 import { useTranslation } from "react-i18next";
 

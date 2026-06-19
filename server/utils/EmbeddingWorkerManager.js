@@ -10,6 +10,7 @@ const sseConnections = new Map();
 
 /** @type {Map<string, object[]>} Buffered events per workspace for SSE replay */
 const eventHistory = new Map();
+const MAX_EVENT_HISTORY_PER_SLUG = 1000;
 
 /**
  * Write an SSE event payload to all connected clients for a workspace.
@@ -18,7 +19,9 @@ const eventHistory = new Map();
 function emitProgress(slug, event) {
   if (typeof event === "object" && event !== null) {
     if (!eventHistory.has(slug)) eventHistory.set(slug, []);
-    eventHistory.get(slug).push(event);
+    const history = eventHistory.get(slug);
+    history.push(event);
+    if (history.length > MAX_EVENT_HISTORY_PER_SLUG) history.shift();
 
     if (event.type === "all_complete")
       setTimeout(() => eventHistory.delete(slug), 10_000);
@@ -174,6 +177,17 @@ async function embedFiles(slug, files, workspaceId, userId) {
     );
     if (runningWorkers.get(slug)?.worker === worker) {
       runningWorkers.delete(slug);
+    }
+    bg.removeJob(jobId).catch(() => {});
+    eventHistory.delete(slug);
+    if (!workerCompleted) {
+      emitProgress(slug, {
+        type: "all_complete",
+        workspaceSlug: slug,
+        error: `Worker errored: ${err.message}`,
+        embedded: 0,
+        failed: 0,
+      });
     }
   });
 

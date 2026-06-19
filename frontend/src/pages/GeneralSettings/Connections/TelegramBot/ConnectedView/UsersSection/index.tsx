@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import { X, Check } from "@phosphor-icons/react";
+import { X } from "@phosphor-icons/react/dist/csr/X";
+import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import Telegram from "@/models/telegram";
 import showToast from "@/utils/toast";
 import { useTranslation } from "react-i18next";

@@ -17,7 +17,7 @@ import ClarifyingQuestionCard from "./ClarifyingQuestion";
 import FileDownloadCard from "./FileDownloadCard";
 import { useManageWorkspaceModal } from "../../../Modals/ManageWorkspace";
 import ManageWorkspace from "../../../Modals/ManageWorkspace";
-import { ArrowDown } from "@phosphor-icons/react";
+import { ArrowDown } from "@phosphor-icons/react/dist/csr/ArrowDown";
 import debounce from "lodash.debounce";
 // Chartable (recharts + @tremor) wird LAZY geladen, um den
 // ESM-Temporal-Dead-Zone-Race im Vite-Build zu vermeiden:

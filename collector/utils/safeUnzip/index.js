@@ -1,16 +1,34 @@
 // SPDX-License-Identifier: MIT
 // Purpose: Zip-bomb protection helper. Pre-validates an archive before any
 // downstream loader (DocxLoader, EPubLoader, node-xlsx, officeparser) trusts
-// it. Enforces three limits:
+// it. Enforces four limits:
 //   1. total uncompressed bytes after expansion
 //   2. number of entries (file count)
 //   3. per-entry compression ratio (catches zip-slip + zip-bomb patterns)
+//   4. denylist of dangerous entry names (vbaProject.bin, externalLinks/,
+//      embeddings/) that indicate macro-enabled Office documents
 // Docs: collector/utils/safeUnzip/index.js.doc.md
 const fs = require("fs");
 
 const DEFAULT_MAX_TOTAL_BYTES = 500 * 1024 * 1024;
 const DEFAULT_MAX_FILES = 10_000;
 const DEFAULT_MAX_RATIO = 100;
+
+const DANGEROUS_ENTRY_PATTERNS = [
+  /(^|[\/\\])vbaProject\.bin$/i,
+  /(^|[\/\\])vbaData\.xml$/i,
+  /(^|[\/\\])externalLinks([\/\\]|$)/i,
+  /(^|[\/\\])embeddings([\/\\]|$)/i,
+  /(^|[\/\\])activeX([\/\\]|$)/i,
+];
+
+function isDangerousEntryName(fileName = "") {
+  if (!fileName) return false;
+  for (const pat of DANGEROUS_ENTRY_PATTERNS) {
+    if (pat.test(fileName)) return true;
+  }
+  return false;
+}
 
 /**
  * Inspects zip archives for zip-bomb risk WITHOUT decompressing content.
@@ -67,6 +85,15 @@ async function validateWithYauzl(
         const uncompressed = entry.uncompressedSize || 0;
         const compressed = entry.compressedSize || 0;
         total += uncompressed;
+        if (isDangerousEntryName(entry.fileName)) {
+          resolve({
+            safe: false,
+            available: true,
+            reason: `Archive contains disallowed entry ${entry.fileName} (macros / externalLinks / embeddings are not allowed)`,
+          });
+          zip.close();
+          return;
+        }
         if (total > maxTotalBytes) {
           resolve({
             safe: false,
@@ -144,6 +171,14 @@ function validateWithAdmZip(filePath, { maxTotalBytes, maxFiles, maxRatio }) {
     }
     let total = 0;
     for (const entry of entries) {
+      const entryName = entry.entryName || "";
+      if (isDangerousEntryName(entryName)) {
+        return {
+          safe: false,
+          available: true,
+          reason: `Archive contains disallowed entry ${entryName} (macros / externalLinks / embeddings are not allowed)`,
+        };
+      }
       const uncompressed = entry.header?.size || 0;
       const compressed = entry.header?.compressedSize || 0;
       total += uncompressed;
@@ -158,7 +193,7 @@ function validateWithAdmZip(filePath, { maxTotalBytes, maxFiles, maxRatio }) {
         return {
           safe: false,
           available: true,
-          reason: `Entry ${entry.entryName} has compression ratio ${
+          reason: `Entry ${entryName} has compression ratio ${
             uncompressed / compressed
           }:1 (cap ${maxRatio}:1)`,
         };
@@ -243,6 +278,8 @@ async function guardArchiveOrThrow(filePath, filename, options) {
 module.exports = {
   validateArchive,
   guardArchiveOrThrow,
+  isDangerousEntryName,
+  DANGEROUS_ENTRY_PATTERNS,
   DEFAULT_MAX_TOTAL_BYTES,
   DEFAULT_MAX_FILES,
   DEFAULT_MAX_RATIO,

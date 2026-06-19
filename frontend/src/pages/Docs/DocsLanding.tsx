@@ -5,15 +5,13 @@
 // single document.
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {
-  Rocket,
-  Code,
-  Stack,
-  Database,
-  CloudArrowUp,
-  CaretRight,
-  type Icon,
-} from "@phosphor-icons/react";
+import { Rocket } from "@phosphor-icons/react/dist/csr/Rocket";
+import { Code } from "@phosphor-icons/react/dist/csr/Code";
+import { Stack } from "@phosphor-icons/react/dist/csr/Stack";
+import { Database } from "@phosphor-icons/react/dist/csr/Database";
+import { CloudArrowUp } from "@phosphor-icons/react/dist/csr/CloudArrowUp";
+import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
+import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 import paths from "@/utils/paths";
 import {
   CATEGORY_LABELS,

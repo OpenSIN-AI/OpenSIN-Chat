@@ -4,7 +4,7 @@ import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import * as Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { PlusCircle } from "@phosphor-icons/react";
+import { PlusCircle } from "@phosphor-icons/react/dist/csr/PlusCircle";
 import BrowserExtensionApiKeyRow from "./BrowserExtensionApiKeyRow";
 import CTAButton from "@/components/lib/CTAButton";
 import NewBrowserExtensionApiKeyModal from "./NewBrowserExtensionApiKeyModal";

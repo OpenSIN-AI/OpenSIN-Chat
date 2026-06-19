@@ -42,17 +42,24 @@ export function clearPromptInputDraft(storageKey) {
 
 export default function usePromptInputStorage({ promptInput, setPromptInput }) {
   const { threadSlug = null, slug: workspaceSlug } = useParams();
+  // Track the storage key so we can detect route changes (thread/workspace
+  // switch) and restore the correct draft. Without this, navigating between
+  // threads without a full component remount would show the previous thread's
+  // draft indefinitely.
+  const storageKey = threadSlug ?? workspaceSlug;
   useEffect(() => {
     const serializedPromptInputMap =
       safeGetItem(USER_PROMPT_INPUT_MAP) || "{}";
 
     const promptInputMap = safeJsonParse(serializedPromptInputMap, {});
 
-    const userPromptInputValue = promptInputMap[threadSlug ?? workspaceSlug];
+    const userPromptInputValue = promptInputMap[storageKey];
     if (userPromptInputValue) {
       setPromptInput(userPromptInputValue);
     }
-  }, []);
+    // Re-run when the storage key changes (thread/workspace switch).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storageKey]);
 
   const debouncedWriteToStorage = useMemo(
     () =>

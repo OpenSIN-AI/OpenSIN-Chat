@@ -4,7 +4,7 @@
 import { COMPLETE_QUESTIONNAIRE } from "@/utils/constants";
 import paths from "@/utils/paths";
 import { safeSetItem } from "@/utils/safeStorage";
-import { CheckCircle } from "@phosphor-icons/react";
+import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

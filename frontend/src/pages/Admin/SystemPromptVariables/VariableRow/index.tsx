@@ -8,7 +8,7 @@ import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import EditVariableModal from "./EditVariableModal";
 import { truncate } from "@/utils/strings";
-import { Trash } from "@phosphor-icons/react";
+import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 
 type VariableType = "system" | "user" | "workspace" | "static";
 

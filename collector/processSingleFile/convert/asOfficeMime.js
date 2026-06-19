@@ -9,6 +9,15 @@ const {
 const { tokenizeString } = require("../../utils/tokenizer");
 const { default: slugify } = require("slugify");
 const { guardArchiveOrThrow } = require("../../utils/safeUnzip");
+const path = require("path");
+
+const MACRO_ENABLED_EXTENSIONS = new Set([
+  ".docm",
+  ".xlsm",
+  ".pptm",
+  ".dotm",
+  ".xlsb",
+]);
 
 async function asOfficeMime({
   fullFilePath = "",
@@ -18,6 +27,15 @@ async function asOfficeMime({
 }) {
   // eslint-disable-next-line no-console
   console.log(`-- Working ${filename} --`);
+  const ext = path.extname(filename || fullFilePath || "").toLowerCase();
+  if (MACRO_ENABLED_EXTENSIONS.has(ext)) {
+    if (!options.absolutePath) trashFile(fullFilePath);
+    return {
+      success: false,
+      reason: `Refusing ${filename}: macro-enabled Office files (${ext}) are not allowed`,
+      documents: [],
+    };
+  }
   let content = "";
   try {
     await guardArchiveOrThrow(fullFilePath, filename);
