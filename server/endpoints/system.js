@@ -239,6 +239,9 @@ function systemEndpoints(app) {
         }
 
         const { username, password } = reqBody(request);
+        if (!username || !password) {
+          return response.status(400).json({ error: "Username and password are required." });
+        }
         const existingUser = await User._get({ username: String(username) });
 
         if (!existingUser) {
@@ -677,6 +680,12 @@ function systemEndpoints(app) {
         }
 
         const { username, password } = reqBody(request);
+        if (!username || typeof username !== "string" || !username.trim()) {
+          return response.status(400).json({ error: "Username is required." });
+        }
+        if (!password || typeof password !== "string" || password.length < 8) {
+          return response.status(400).json({ error: "Password must be at least 8 characters." });
+        }
         const { user, error } = await User.create({
           username,
           password,

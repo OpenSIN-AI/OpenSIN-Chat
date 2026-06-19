@@ -84,6 +84,9 @@ function memoryEndpoints(app) {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
         const { content, scope = "workspace" } = reqBody(request);
+        if (!content || typeof content !== "string" || !content.trim()) {
+          return response.status(400).json({ error: "Content is required." });
+        }
         const { memory, message } = await Memory.create({
           userId: user?.id,
           workspaceId: scope === "global" ? null : workspace.id,
@@ -113,6 +116,9 @@ function memoryEndpoints(app) {
       try {
         const memoryId = Number(request.params.memoryId);
         const { content } = reqBody(request);
+        if (!content || typeof content !== "string" || !content.trim()) {
+          return response.status(400).json({ error: "Content is required." });
+        }
         const { memory, message } = await Memory.update(memoryId, {
           content: content.trim(),
         });

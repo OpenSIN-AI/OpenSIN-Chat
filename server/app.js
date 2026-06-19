@@ -59,6 +59,10 @@ const { pdfAnalysisEndpoints } = require("./endpoints/pdfAnalysis");
 const { httpLogger } = require("./middleware/httpLogger");
 const { securityHeaders } = require("./utils/middleware/securityHeaders");
 
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled Rejection at:", promise, "reason:", reason);
+});
+
 const FILE_LIMIT = process.env.BODY_LIMIT || "5120MB";
 
 let activeApp = null;
@@ -221,6 +225,13 @@ function buildApp() {
 
   app.use(function (_, response) {
     response.sendStatus(404);
+  });
+
+  app.use(function (err, _req, response, _next) {
+    console.error(err);
+    if (!response.headersSent) {
+      response.status(500).json({ error: "Internal server error" });
+    }
   });
 
   return app;
