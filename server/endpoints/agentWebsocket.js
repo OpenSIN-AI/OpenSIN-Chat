@@ -255,6 +255,7 @@ function agentWebsocket(app, routePrefix = "") {
                 JSON.stringify({
                   type: "wssFailure",
                   content: "Message exceeds maximum allowed size.",
+                  id: crypto.randomUUID(),
                 }),
               );
             } catch {

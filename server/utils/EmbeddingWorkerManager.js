@@ -10,7 +10,27 @@ const sseConnections = new Map();
 
 /** @type {Map<string, object[]>} Buffered events per workspace for SSE replay */
 const eventHistory = new Map();
+
 const MAX_EVENT_HISTORY_PER_SLUG = 1000;
+const MAX_WORKERS = 256;
+
+function _touch(map, slug) {
+  if (!map.has(slug)) return;
+  const value = map.get(slug);
+  map.delete(slug);
+  map.set(slug, value);
+}
+
+function _enforceMaxWorkers() {
+  while (runningWorkers.size >= MAX_WORKERS) {
+    const oldestSlug = runningWorkers.keys().next().value;
+    const oldEntry = runningWorkers.get(oldestSlug);
+    try { oldEntry?.worker?.terminate?.(); } catch { /* worker may be gone */ }
+    runningWorkers.delete(oldestSlug);
+    sseConnections.delete(oldestSlug);
+    eventHistory.delete(oldestSlug);
+  }
+}
 
 /**
  * Write an SSE event payload to all connected clients for a workspace.
@@ -123,12 +143,15 @@ function removeSSEConnection(slug, res) {
  */
 async function embedFiles(slug, files, workspaceId, userId) {
   if (runningWorkers.has(slug)) {
+    _touch(runningWorkers, slug);
     const { worker } = runningWorkers.get(slug);
     try {
       worker.send({ type: "add_files", files });
       return;
     } catch {
       runningWorkers.delete(slug);
+      sseConnections.delete(slug);
+      eventHistory.delete(slug);
     }
   }
 
@@ -141,6 +164,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
   const scriptPath = path.resolve(bg.jobsRoot, "embedding-worker.js");
   const { worker, jobId } = await bg.spawnWorker(scriptPath);
 
+  _enforceMaxWorkers();
   runningWorkers.set(slug, { worker, jobId });
   let workerCompleted = false;
   worker.on("message", (msg) => {
@@ -155,6 +179,8 @@ async function embedFiles(slug, files, workspaceId, userId) {
   worker.on("exit", (code) => {
     if (runningWorkers.get(slug)?.worker === worker) {
       runningWorkers.delete(slug);
+      sseConnections.delete(slug);
+      eventHistory.delete(slug);
     }
     bg.removeJob(jobId).catch(() => {});
 
@@ -177,9 +203,10 @@ async function embedFiles(slug, files, workspaceId, userId) {
     );
     if (runningWorkers.get(slug)?.worker === worker) {
       runningWorkers.delete(slug);
+      sseConnections.delete(slug);
+      eventHistory.delete(slug);
     }
     bg.removeJob(jobId).catch(() => {});
-    eventHistory.delete(slug);
     if (!workerCompleted) {
       emitProgress(slug, {
         type: "all_complete",
@@ -207,6 +234,7 @@ async function embedFiles(slug, files, workspaceId, userId) {
  * @returns {boolean} true if the message was sent to the worker
  */
 function removeQueuedFile(slug, filename) {
+  _touch(runningWorkers, slug);
   const entry = runningWorkers.get(slug);
   if (!entry) return false;
   try {
@@ -244,4 +272,10 @@ module.exports = {
   embedFiles,
   removeQueuedFile,
   isNativeEmbedder,
+  __internals: {
+    runningWorkers,
+    sseConnections,
+    eventHistory,
+    MAX_WORKERS,
+  },
 };

@@ -59,6 +59,24 @@ describe("securityHeaders", () => {
     expect(csp).toContain("frame-ancestors 'none'");
   });
 
+  it("CSP connect-src excludes wildcard googleusercontent and unused openai root", () => {
+    const mw = securityHeaders();
+    const res = mockRes();
+    mw({}, res, jest.fn());
+    const csp = res.headers["Content-Security-Policy"];
+    const connectSrc = csp
+      .split(";")
+      .find((d) => d.trim().startsWith("connect-src"))
+      .trim();
+    expect(connectSrc).not.toContain("*.googleusercontent.com");
+    expect(connectSrc).toContain("https://lh3.googleusercontent.com");
+    expect(connectSrc).toContain("https://lh4.googleusercontent.com");
+    expect(connectSrc).toContain("https://lh5.googleusercontent.com");
+    expect(connectSrc).toContain("https://lh6.googleusercontent.com");
+    const openaiMatches = connectSrc.match(/https:\/\/api\.openai\.com\S*/g) ?? [];
+    expect(openaiMatches).toEqual(["https://api.openai.com/v1"]);
+  });
+
   it("sets HSTS when ENABLE_HSTS=true", () => {
     process.env.ENABLE_HSTS = "true";
     const mw = securityHeaders();

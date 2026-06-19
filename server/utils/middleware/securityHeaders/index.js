@@ -34,7 +34,6 @@ const PERMISSIONS_POLICY = [
 
 const ENFORCED_CSP_CONNECT_SRC = [
   "'self'",
-  "https://api.openai.com",
   "https://api.anthropic.com",
   "https://api.fireworks.ai",
   "https://api.cohere.ai",
@@ -52,7 +51,10 @@ const ENFORCED_CSP_CONNECT_SRC = [
   "https://api.elevenlabs.io",
   "https://*.supabase.co",
   "https://*.amazonaws.com",
-  "https://*.googleusercontent.com",
+  "https://lh3.googleusercontent.com",
+  "https://lh4.googleusercontent.com",
+  "https://lh5.googleusercontent.com",
+  "https://lh6.googleusercontent.com",
 ];
 
 function buildEnforcedCsp(nonce) {
