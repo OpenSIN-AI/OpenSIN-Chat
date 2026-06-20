@@ -133,7 +133,9 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
 
   let cleanTitle = "";
   for (let i = lines.length - 1; i >= 0; i--) {
-    if (isValidTitle(lines[i])) {
+    const valid = isValidTitle(lines[i]);
+    console.log(`[GenerateTitle] thread ${threadId} line ${i}: valid=${valid} len=${lines[i].length} words=${lines[i].split(/\s+/).filter(Boolean).length} text="${lines[i].slice(0, 60)}"`);
+    if (valid) {
       cleanTitle = lines[i];
       break;
     }
