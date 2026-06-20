@@ -143,8 +143,13 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   // am Ende einer einzigen langen Zeile aus (z. B. "... I'll output: AfD
   // Energy Policy"). In dem Fall entfernen wir Prompt-Echo-Texte und
   // Reasoning-Token, nehmen den Wort-Array und suchen vom Ende her nach dem
-  // kürzesten gültigen 3–5-Wort-Suffix.
-  if (!cleanTitle) {
+  // kürzesten gültigen 3–5-Wort-Suffix. Wenn der gesamte Response aus
+  // Prompt-Echo-Zeilen besteht, überspringen wir diesen Fallback und nutzen
+  // die Nutzeranfrage.
+  const hasNonEchoLine = lines.some(
+    (line) => !promptEchoMarkers.some((m) => line.toLowerCase().includes(m.toLowerCase())),
+  );
+  if (!cleanTitle && hasNonEchoLine) {
     let scrubbed = textResponse || "";
     for (const marker of promptEchoMarkers) {
       scrubbed = scrubbed.split(new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("");
@@ -162,9 +167,25 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     const words = scrubbed.split(/\s+/).filter(Boolean);
     // Vom längsten Suffix zum kürzesten: ein Kandidat mit doppelten Wörtern
     // wird verworfen, weil Reasoning-Modelle den Titel gerne wiederholen.
+    // Häufige Reasoning-Anhängsel am Anfang/Ende werden entfernt.
+    const leadingNoise = new Set([
+      "that", "this", "output", "return", "ill", "so", "then", "thus",
+      "therefore", "hence", "answer", "final", "title", "name", "like",
+      "such", "be", "is", "are", "was", "were", "am", "i", "we", "you",
+    ]);
+    const trailingNoise = new Set([
+      "inquiry", "question", "response", "answer", "output", "return",
+      "title", "name", "here", "there", "exactly", "only",
+    ]);
     for (let take = 5; take >= 3; take--) {
-      const candidate = words.slice(-take).join(" ").trim();
-      const candidateWords = candidate.split(/\s+/).filter(Boolean);
+      let candidateWords = words.slice(-take);
+      while (candidateWords.length > 3 && leadingNoise.has(candidateWords[0].toLowerCase())) {
+        candidateWords = candidateWords.slice(1);
+      }
+      while (candidateWords.length > 3 && trailingNoise.has(candidateWords[candidateWords.length - 1].toLowerCase())) {
+        candidateWords = candidateWords.slice(0, -1);
+      }
+      const candidate = candidateWords.join(" ").trim();
       const unique = new Set(candidateWords.map((w) => w.toLowerCase()));
       if (unique.size === candidateWords.length && isValidTitle(candidate)) {
         cleanTitle = candidate;
