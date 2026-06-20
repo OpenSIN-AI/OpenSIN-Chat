@@ -45,6 +45,7 @@ OpenSIN-Chat/
 4. **No direct `main` mutations** — edits go through normal branch/PR workflow unless explicitly told otherwise.
 5. **Keep minimal changes** — preserve existing logic and style.
 6. **Brand guard:** never re-introduce `AnythingLLM` or `Mintplex Labs` strings outside allowed files (see `scripts/check-branding.sh`).
+7. **VERIFY BEFORE YOU CLAIM (SACRED RULE).** An agent MUST NEVER report that something works, claim success, or end a task without first testing it end-to-end and seeing proof with its own eyes. "Testing" means: actually executing the flow, running the request, clicking the button, taking a screenshot, and confirming the expected result appeared. If the agent cannot test it (e.g. no browser available, no SSH access), the agent MUST explicitly say "I could not verify this — please test it yourself" instead of claiming it works. Claiming unverified success is the single most serious violation of trust an agent can commit. This rule overrides all other rules about brevity and conciseness.
 
 ## Active Planning Documents
 
