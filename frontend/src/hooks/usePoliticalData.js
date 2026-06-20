@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT
 import useSWR from "swr";
-import { API_BASE } from "@/utils/constants";
 import { swrFetcher } from "@/utils/swrFetcher";
 
-const DRUCKSACHEN_KEY = `${API_BASE}/utils/bundestag/drucksachen?rows=6`;
-const RSS_KEY = `${API_BASE}/utils/political/rss`;
+const DRUCKSACHEN_KEY = "/utils/bundestag/drucksachen?rows=6";
+const RSS_KEY = "/utils/political/rss";
 
 export function usePoliticalData() {
   const {

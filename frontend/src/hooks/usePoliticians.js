@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 import useSWR from "swr";
-import { API_BASE } from "@/utils/constants";
 import { swrFetcher } from "@/utils/swrFetcher";
 
-const POLITICIANS_KEY = `${API_BASE}/utils/bundestag/politicians?limit=8`;
+const POLITICIANS_KEY = "/utils/bundestag/politicians?limit=8";
 
 export function usePoliticians() {
   const { data, error, isLoading, mutate } = useSWR(

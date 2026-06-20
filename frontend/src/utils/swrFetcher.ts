@@ -39,10 +39,14 @@ export function handleAuthFailure() {
  * @throws {Error & { status?: number, info?: any }} On non-2xx responses.
  */
 export async function swrFetcher(key) {
-  const url =
-    typeof key === "string" && /^https?:\/\//.test(key)
-      ? key
-      : `${API_BASE}${key}`;
+  let url;
+  if (typeof key === "string" && /^https?:\/\//.test(key)) {
+    url = key;
+  } else if (typeof key === "string" && key.startsWith(API_BASE)) {
+    url = key;
+  } else {
+    url = `${API_BASE}${key}`;
+  }
 
   const res = await fetchWithTimeout(url, { headers: baseHeaders() });
   if (!res.ok) {
