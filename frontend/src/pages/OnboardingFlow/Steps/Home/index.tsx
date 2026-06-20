@@ -7,13 +7,13 @@ import { Sun } from "@phosphor-icons/react/dist/csr/Sun";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { Link } from "react-router-dom";
 import useRedirectToHomeOnOnboardingComplete from "@/hooks/useOnboardingComplete";
-import { useTheme } from "@/hooks/useTheme";
+import { useThemeContext } from "@/ThemeContext";
 
 export default function OnboardingHome() {
   const navigate = useNavigate();
   useRedirectToHomeOnOnboardingComplete();
   const { t } = useTranslation();
-  const { isLight, setTheme } = useTheme();
+  const { isLight, setTheme } = useThemeContext();
 
   function toggleTheme() {
     setTheme(isLight ? "dark" : "light");

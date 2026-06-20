@@ -6,6 +6,8 @@ import { TagsInput } from "react-tag-input-component";
 import Embed from "@/models/embed";
 import Toggle from "@/components/lib/Toggle";
 import useWorkspaces from "@/hooks/useWorkspaces";
+import useEmbedConfigs from "@/hooks/useEmbedConfigs";
+import showToast from "@/utils/toast";
 
 const SCRIPT_TAG = "<script>";
 
@@ -34,6 +36,7 @@ export default function NewEmbedModal({
   closeModal: () => void;
 }) {
   const { t } = useTranslation();
+  const { mutate: mutateEmbeds } = useEmbedConfigs();
   const [error, setError] = useState<string | null>(null);
 
   const handleCreate = async (e: FormEvent<HTMLFormElement>) => {
@@ -42,7 +45,11 @@ export default function NewEmbedModal({
     const form = new FormData(e.currentTarget);
     const data = enforceSubmissionSchema(form);
     const { embed, error } = await Embed.newEmbed(data);
-    if (!!embed) window.location.reload();
+    if (!!embed) {
+      showToast(t("newEmbedModal.created"), "success", { clear: true });
+      mutateEmbeds();
+      closeModal();
+    }
     setError(error);
   };
 

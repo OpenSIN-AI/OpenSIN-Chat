@@ -4784,6 +4784,7 @@ const TRANSLATIONS = {
   },
   newEmbedModal: {
     title: "Neue Einbettung erstellen",
+    created: "Embed-Widget erfolgreich erstellt",
     maxChatsPerDay: "Max. Chats pro Tag",
     maxChatsPerDayHint:
       "Begrenzen Sie die Anzahl der Chats, die dieser eingebettete Chat in 24 Stunden verarbeiten kann. Null bedeutet unbegrenzt.",

@@ -14,6 +14,7 @@ import Embed from "@/models/embed";
 import showToast from "@/utils/toast";
 import { safeJsonParse } from "@/utils/request";
 import { useTranslation } from "react-i18next";
+import useEmbedConfigs from "@/hooks/useEmbedConfigs";
 
 type EmbedModel = {
   id: string;
@@ -38,6 +39,7 @@ export default function EditEmbedModal({
   closeModal,
 }: EditEmbedModalProps): JSX.Element {
   const { t } = useTranslation();
+  const { mutate: mutateEmbeds } = useEmbedConfigs();
   const [error, setError] = useState<string | null>(null);
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -50,9 +52,8 @@ export default function EditEmbedModal({
       showToast(t("chatEmbedWidgets.editEmbed.updateSuccess"), "success", {
         clear: true,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 800);
+      mutateEmbeds();
+      closeModal();
     }
     setError(error);
   };

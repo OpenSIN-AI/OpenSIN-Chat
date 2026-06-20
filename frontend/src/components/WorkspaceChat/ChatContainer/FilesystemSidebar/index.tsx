@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { useState, useEffect, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
 import { Folder } from "@phosphor-icons/react/dist/csr/Folder";
@@ -20,6 +21,8 @@ import { Trash } from "@phosphor-icons/react/dist/csr/Trash";
 import { useTranslation } from "react-i18next";
 import { useFilesystem } from "@/hooks/useFilesystem";
 import { useFileBrowser } from "@/hooks/useFileBrowser";
+import { baseHeaders } from "@/utils/request";
+import { API_BASE } from "@/utils/constants";
 import ChatSidebar, { useFilesystemSidebar } from "../ChatSidebar";
 
 const SUPPORTED_EXTENSIONS = [
@@ -87,9 +90,11 @@ function getBreadcrumbs(path) {
   return crumbs;
 }
 
-export default function FilesystemSidebar() {
+export default function FilesystemSidebar({ workspace = null }: any) {
   const { sidebarOpen, closeSidebar } = useFilesystemSidebar();
   const { t } = useTranslation();
+  const { slug: paramSlug } = useParams();
+  const workspaceSlug = workspace?.slug || paramSlug || "opensin-chat";
   const { data: sysInfo, refresh: refreshSysInfo } = useFilesystem();
   const {
     currentPath,
@@ -140,11 +145,14 @@ export default function FilesystemSidebar() {
         selectedDirectory !== null
           ? { directory: selectedDirectory }
           : { files: selectedFiles.map((f) => f.path) };
-      const res = await fetch("/api/workspace/opensin-chat/connect-files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const res = await fetch(
+        `${API_BASE}/workspace/${workspaceSlug}/connect-files`,
+        {
+          method: "POST",
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
       const data = await res.json();
       if (res.ok) {
         setConnectResult({
@@ -167,7 +175,7 @@ export default function FilesystemSidebar() {
     } finally {
       setConnecting(false);
     }
-  }, [selectedFiles, selectedDirectory, clearSelection, t]);
+  }, [selectedFiles, selectedDirectory, clearSelection, t, workspaceSlug]);
 
   const handleDelete = useCallback(
     async (itemPath, itemName) => {
@@ -298,7 +306,8 @@ export default function FilesystemSidebar() {
               />
               <span className="text-xs text-blue-300 truncate flex-1">
                 {t("sidebar.filesystem.currentPath", {
-                  path: selectedDirectory || t("sidebar.filesystem.uploadsRoot"),
+                  path:
+                    selectedDirectory || t("sidebar.filesystem.uploadsRoot"),
                 })}
               </span>
               <button

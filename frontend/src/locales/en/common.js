@@ -4125,6 +4125,8 @@ const TRANSLATIONS = {
     copyAria: "Copy error details",
     copied: "Copied!",
     copyDetails: "Copy Details",
+    reset: "Reset",
+    home: "Home",
   },
   error: {
     serverUnavailable: "Server Unavailable",
@@ -4676,6 +4678,7 @@ const TRANSLATIONS = {
   },
   newEmbedModal: {
     title: "Create new embed",
+    created: "Embed widget created successfully",
     maxChatsPerDay: "Max chats per day",
     maxChatsPerDayHint:
       "Limit the amount of chats this embedded chat can process in a 24 hour period. Zero is unlimited.",

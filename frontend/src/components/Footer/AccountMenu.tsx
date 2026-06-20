@@ -17,7 +17,7 @@ import paths from "@/utils/paths";
 import useUser from "@/hooks/useUser";
 import usePfp from "@/hooks/usePfp";
 import useLoginMode from "@/hooks/useLoginMode";
-import { useTheme } from "@/hooks/useTheme";
+import { useThemeContext } from "@/ThemeContext";
 import { useLanguageOptions } from "@/hooks/useLanguageOptions";
 import { useTranslation } from "react-i18next";
 import AccountModal from "../UserMenu/AccountModal";
@@ -33,7 +33,7 @@ import { safeRemoveItem } from "@/utils/safeStorage";
 const FEEDBACK_URL = `${paths.github()}/issues/new`;
 
 const ITEM_CLASSES =
-  "group flex items-center gap-x-3 w-full text-left px-2.5 py-2 rounded-lg text-sm text-white light:text-slate-700 hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40";
+  "group flex items-center gap-x-3 w-full text-left px-2.5 py-2 rounded-lg text-sm text-white light:text-slate-700 hover:bg-theme-action-menu-item-hover transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400";
 
 const ICON_CLASSES = "h-[18px] w-[18px] shrink-0 opacity-80";
 
@@ -76,7 +76,7 @@ function Avatar({
 
 function ThemeSegment() {
   const { t } = useTranslation();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme } = useThemeContext();
   const options: {
     key: "system" | "light" | "dark";
     label: string;
@@ -207,10 +207,14 @@ export default function AccountMenu({
       setOpen(false);
     }
     function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
     }
     document.addEventListener("mousedown", onPointer);
     document.addEventListener("keydown", onKey);
+    popupRef.current?.focus();
     return () => {
       document.removeEventListener("mousedown", onPointer);
       document.removeEventListener("keydown", onKey);
@@ -268,6 +272,7 @@ export default function AccountMenu({
           <div
             ref={popupRef}
             role="menu"
+            tabIndex={-1}
             style={{
               position: "fixed",
               left: pos.left,

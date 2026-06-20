@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-import { useTheme } from "@/hooks/useTheme";
+import { useThemeContext } from "@/ThemeContext";
 
 export function OnboardingLogoSVG() {
-  const { isLight } = useTheme();
+  const { isLight } = useThemeContext();
   return (
     <svg
       viewBox="0 0 818 514"

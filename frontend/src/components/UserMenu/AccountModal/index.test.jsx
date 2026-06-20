@@ -22,6 +22,14 @@ vi.mock("@/hooks/useTheme", () => ({
     availableThemes: { system: "System", light: "Light", dark: "Dark" },
   }),
 }));
+vi.mock("@/ThemeContext", () => ({
+  useThemeContext: () => ({
+    theme: "dark",
+    setTheme: vi.fn(),
+    availableThemes: { system: "System", light: "Light", dark: "Dark" },
+    isLight: false,
+  }),
+}));
 
 vi.mock("@/hooks/useLanguageOptions", () => ({
   useLanguageOptions: () => ({

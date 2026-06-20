@@ -10,7 +10,7 @@ import { Info } from "@phosphor-icons/react/dist/csr/Info";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import ModalWrapper from "@/components/ModalWrapper";
-import { useTheme } from "@/hooks/useTheme";
+import { useThemeContext } from "@/ThemeContext";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
@@ -284,7 +284,7 @@ function LanguagePreference() {
 }
 
 function ThemePreference() {
-  const { theme, setTheme, availableThemes } = useTheme();
+  const { theme, setTheme, availableThemes } = useThemeContext();
   const { t } = useTranslation();
   return (
     <div>

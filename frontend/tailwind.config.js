@@ -54,6 +54,7 @@ export default {
             chat: 'var(--theme-bg-chat)',
             "chat-input": 'var(--theme-bg-chat-input)',
             "popup-menu": 'var(--theme-popup-menu-bg)',
+            hover: 'var(--theme-bg-hover)',
           },
           text: {
             primary: 'var(--theme-text-primary)',

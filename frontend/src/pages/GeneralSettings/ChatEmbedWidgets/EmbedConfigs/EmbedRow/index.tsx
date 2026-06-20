@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // Docs: index.doc.md
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { DotsThreeOutline } from "@phosphor-icons/react/dist/csr/DotsThreeOutline";
 import showToast from "@/utils/toast";
 import { useModal } from "@/hooks/useModal";
@@ -8,6 +8,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import Embed from "@/models/embed";
 import paths from "@/utils/paths";
 import { nFormatter } from "@/utils/numbers";
+import useEmbedConfigs from "@/hooks/useEmbedConfigs";
 import EditEmbedModal from "./EditEmbedModal";
 import CodeSnippetModal from "./CodeSnippetModal";
 import dayjs from "dayjs";
@@ -37,7 +38,7 @@ type EmbedRowProps = {
 
 export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
   const { t } = useTranslation();
-  const rowRef = useRef<HTMLTableRowElement>(null);
+  const { mutate: mutateEmbeds } = useEmbedConfigs();
   const [enabled, setEnabled] = useState(Number(embed.enabled) === 1);
   const {
     isOpen: isSettingsOpen,
@@ -69,6 +70,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
         { clear: true },
       );
       setEnabled(!enabled);
+      mutateEmbeds();
     }
   };
   const handleDelete = async () => {
@@ -76,7 +78,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
     const { success, error } = await Embed.deleteEmbed(embed.id);
     if (!success) showToast(error, "error", { clear: true });
     if (success) {
-      rowRef?.current?.remove();
+      mutateEmbeds();
       showToast(t("embedConfigs.embedRow.deleted"), "success", { clear: true });
     }
   };
@@ -84,7 +86,6 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
   return (
     <>
       <tr
-        ref={rowRef}
         className="bg-transparent text-white text-opacity-80 text-xs font-medium border-b border-white/10 h-10"
       >
         <th
