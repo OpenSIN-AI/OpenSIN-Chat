@@ -84,6 +84,9 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     temperature: 0.5,
   });
 
+  // TODO: remove debug log after fixing prompt echo
+  console.log(`[GenerateTitle] raw LLM response for thread ${threadId}: "${textResponse}"`);
+
   // Cleanup: Anführungszeichen, Newlines, Markdown, Whitespace.
   let cleanTitle = (textResponse || "")
     .trim()
