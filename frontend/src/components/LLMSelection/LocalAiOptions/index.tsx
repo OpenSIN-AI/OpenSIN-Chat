@@ -179,7 +179,7 @@ function LocalAIModelSelection({
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {basePath?.includes("/v1")
               ? t("localAiLlm.loadingModels")
               : t("localAiLlm.waitingUrl")}
@@ -206,7 +206,6 @@ function LocalAIModelSelection({
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={settings.LocalAiModelPref === model.id}
                 >
                   {model.id}
                 </option>

@@ -4125,8 +4125,10 @@ const TRANSLATIONS = {
     copyAria: "Copy error details",
     copied: "Copied!",
     copyDetails: "Copy Details",
-    reset: "Reset",
-    home: "Home",
+  },
+  error: {
+    serverUnavailable: "Server Unavailable",
+    serverUnavailableDescription: "The server could not be reached. Please check your connection and try again in a moment.",
   },
   audioPreference: {
     stt: {

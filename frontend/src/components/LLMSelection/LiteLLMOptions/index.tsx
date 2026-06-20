@@ -105,7 +105,7 @@ function LiteLLMModelSelection({
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {basePath?.includes("/v1")
               ? t("litellm.loadingModels")
               : t("litellm.waitingForUrl")}
@@ -132,7 +132,6 @@ function LiteLLMModelSelection({
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={settings.LiteLLMModelPref === model.id}
                 >
                   {model.id}
                 </option>

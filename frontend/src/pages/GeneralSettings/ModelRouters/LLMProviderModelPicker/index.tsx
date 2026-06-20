@@ -39,8 +39,8 @@ export default function LLMProviderModelPicker({
 }) {
   const { t } = useTranslation();
   const { settings, refresh: refreshSettings } = useSystemSettings();
-  const [selectedProvider, setSelectedProvider] = useState(defaultProvider);
-  const [selectedModel, setSelectedModel] = useState(defaultModel);
+  const [selectedProvider, setSelectedProvider] = useState(defaultProvider || "");
+  const [selectedModel, setSelectedModel] = useState(defaultModel || "");
   const [models, setModels] = useState<any[]>([]);
   const [loadingModels, setLoadingModels] = useState(false);
   const { isOpen, openModal, closeModal } = useModal();

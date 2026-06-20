@@ -238,7 +238,7 @@ function GitLabBranchSelection({ repo, accessToken }: any) {
           required={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white focus:outline-primary-button active:outline-primary-button outline-none text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {t("connectors.gitlab.branch_loading")}
           </option>
         </select>

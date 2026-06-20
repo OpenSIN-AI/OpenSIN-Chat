@@ -87,7 +87,7 @@ export default function AgentModelSelection({
           disabled={true}
           className="border-none bg-theme-settings-input-bg text-white text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {t("agent.mode.wait")}
           </option>
         </select>
@@ -122,7 +122,6 @@ export default function AgentModelSelection({
                 <option
                   key={model}
                   value={model}
-                  selected={workspace?.agentModel === model}
                 >
                   {model}
                 </option>
@@ -139,7 +138,6 @@ export default function AgentModelSelection({
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={workspace?.agentModel === model.id}
                 >
                   {model.id}
                 </option>
@@ -159,7 +157,6 @@ export default function AgentModelSelection({
                       <option
                         key={model.id}
                         value={model.id}
-                        selected={workspace?.agentModel === model.id}
                       >
                         {model.name || model.id}
                       </option>

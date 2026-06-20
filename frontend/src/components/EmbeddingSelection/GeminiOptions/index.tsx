@@ -52,7 +52,6 @@ export default function GeminiOptions({ settings }: any) {
                     <option
                       key={model.id}
                       value={model.id}
-                      selected={settings?.EmbeddingModelPref === model.id}
                     >
                       {model.name}
                     </option>

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 import React from "react";
+import { useTranslation } from "react-i18next";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { FullScreenLoader } from "@/components/Preloader";
 import Home from "./Home";
@@ -12,9 +13,23 @@ import {
 } from "@/components/Sidebar/SidebarToggle";
 
 export default function Main() {
-  const { loading, requiresAuth, mode } = usePasswordModal();
+  const { t } = useTranslation();
+  const { loading, requiresAuth, mode, apiError } = usePasswordModal();
 
   if (loading) return <FullScreenLoader />;
+  if (apiError)
+    return (
+      <div className="fixed inset-0 bg-zinc-950 light:bg-slate-50 flex flex-col items-center justify-center overflow-hidden p-6">
+        <div className="text-center max-w-md">
+          <p className="text-red-400 text-xl font-semibold mb-2">
+            {t("error.serverUnavailable")}
+          </p>
+          <p className="text-zinc-400 text-sm">
+            {t("error.serverUnavailableDescription")}
+          </p>
+        </div>
+      </div>
+    );
   if (requiresAuth !== false)
     return <>{requiresAuth !== null && <PasswordModal mode={mode} />}</>;
 

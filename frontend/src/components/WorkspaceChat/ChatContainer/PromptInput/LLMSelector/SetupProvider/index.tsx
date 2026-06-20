@@ -38,7 +38,7 @@ export default function SetupProvider({
   }
 
   return createPortal(
-    <ModalWrapper isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
       <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center">
         <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
           <div className="relative p-6 border-b rounded-t border-theme-modal-border">

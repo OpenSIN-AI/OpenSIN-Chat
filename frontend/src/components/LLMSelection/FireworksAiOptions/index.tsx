@@ -50,9 +50,10 @@ function FireworksAiModelSelection({ apiKey, settings }: any) {
         <select
           name="FireworksAiLLMModelPref"
           disabled={true}
+          defaultValue=""
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {t("providerSettings.fireworksAi.loadingModels")}
           </option>
         </select>
@@ -68,6 +69,7 @@ function FireworksAiModelSelection({ apiKey, settings }: any) {
       <select
         name="FireworksAiLLMModelPref"
         required={true}
+        defaultValue={settings?.FireworksAiLLMModelPref ?? ""}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {Object.keys(customModels)
@@ -78,7 +80,6 @@ function FireworksAiModelSelection({ apiKey, settings }: any) {
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={settings?.FireworksAiLLMModelPref === model.id}
                 >
                   {model.name}
                 </option>

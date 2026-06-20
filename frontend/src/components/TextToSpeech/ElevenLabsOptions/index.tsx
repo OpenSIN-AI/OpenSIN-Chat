@@ -69,7 +69,7 @@ function ElevenLabsModelSelection({ apiKey, settings }: any) {
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {t("textToSpeech.elevenLabs.loadingModels")}
           </option>
         </select>
@@ -95,7 +95,6 @@ function ElevenLabsModelSelection({ apiKey, settings }: any) {
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={model.id === settings?.TTSElevenLabsVoiceModel}
                 >
                   {model.name}
                 </option>

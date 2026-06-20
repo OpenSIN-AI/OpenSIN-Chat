@@ -38,7 +38,7 @@ export default function ChatModelSelection({
           disabled={true}
           className="border-none bg-theme-settings-input-bg text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {t("chat.model.waitingForModels")}
           </option>
         </select>
@@ -72,7 +72,6 @@ export default function ChatModelSelection({
                 <option
                   key={model}
                   value={model}
-                  selected={workspace?.chatModel === model}
                 >
                   {model}
                 </option>
@@ -87,7 +86,6 @@ export default function ChatModelSelection({
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={workspace?.chatModel === model.id}
                 >
                   {model.name || model.id}
                 </option>
@@ -106,7 +104,6 @@ export default function ChatModelSelection({
                       <option
                         key={model.id}
                         value={model.id}
-                        selected={workspace?.chatModel === model.id}
                       >
                         {model.name || model.id}
                       </option>

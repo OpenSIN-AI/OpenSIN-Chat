@@ -279,6 +279,7 @@ class FireworksAiLLM {
 
 async function fireworksAiModels(providedApiKey = null) {
   const apiKey = providedApiKey || process.env.FIREWORKS_AI_LLM_API_KEY || null;
+  if (!apiKey) return {};
   const { OpenAI: OpenAIApi } = require("openai");
   const client = new OpenAIApi({
     baseURL:

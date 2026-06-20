@@ -43,7 +43,6 @@ export default function NativeEmbeddingOptions({ settings }: any) {
               <option
                 value="--loading-available-models--"
                 disabled={true}
-                selected={true}
               >
                 {t("providerSettings.nativeEmbedding.loadingModels")}
               </option>
@@ -56,7 +55,6 @@ export default function NativeEmbeddingOptions({ settings }: any) {
                     <option
                       key={model.id}
                       value={model.id}
-                      selected={selectedModel === model.id}
                     >
                       {model.name}
                     </option>

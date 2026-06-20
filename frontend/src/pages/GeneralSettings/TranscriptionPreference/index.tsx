@@ -58,9 +58,8 @@ export default function TranscriptionModelPreference() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
   const systemSettingsHook = useSystemSettings() as any;
-  const { settings: systemSettings, loading: settingsLoading } =
+  const { settings: systemSettings, loading: settingsLoading, refresh } =
     systemSettingsHook;
-  const mutate = systemSettingsHook.mutate;
 
   // Sync local state from SWR when loaded
   useEffect(() => {
@@ -89,7 +88,7 @@ export default function TranscriptionModelPreference() {
     }
     setSaving(false);
     setHasChanges(!!error);
-    if (!error) mutate(); // revalidate SWR cache after mutation
+    if (!error) refresh(); // revalidate SWR cache after mutation
   };
 
   const updateProviderChoice = (selection: string) => {

@@ -167,7 +167,6 @@ export const WorkspaceSelection = ({
           return (
             <option
               key={workspace.id}
-              selected={defaultValue === workspace.id}
               value={workspace.id}
             >
               {workspace.name}

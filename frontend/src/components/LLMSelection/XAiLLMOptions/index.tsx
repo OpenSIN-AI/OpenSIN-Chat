@@ -49,7 +49,7 @@ function XAIModelSelection({ apiKey, settings }: any) {
           disabled={true}
           className="border-none bg-theme-settings-input-bg text-theme-text-primary border-theme-border text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {t("providerSettings.xAi.loadingModels")}
           </option>
         </select>
@@ -77,7 +77,6 @@ function XAIModelSelection({ apiKey, settings }: any) {
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={settings?.XAIModelPref === model.id}
                 >
                   {model.id}
                 </option>

@@ -264,7 +264,7 @@ function LMStudioModelSelection({
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {isLoading
               ? t("lmStudio.loadingModels")
               : !!basePath
@@ -293,7 +293,6 @@ function LMStudioModelSelection({
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={settings.LMStudioModelPref === model.id}
                 >
                   {model.id}
                 </option>

@@ -4224,6 +4224,10 @@ const TRANSLATIONS = {
     reset: "Zurücksetzen",
     home: "Startseite",
   },
+  error: {
+    serverUnavailable: "Server nicht verfügbar",
+    serverUnavailableDescription: "Der Server konnte nicht erreicht werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es in einem Moment erneut.",
+  },
   audioPreference: {
     stt: {
       title: "Sprach-zu-Text-Einstellung",

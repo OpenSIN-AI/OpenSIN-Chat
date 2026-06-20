@@ -59,7 +59,7 @@ export default function MemoryModal({
   }
 
   return (
-    <ModalWrapper isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen} closeModal={onClose}>
       <div className="bg-zinc-900 light:bg-white border border-zinc-800 light:border-slate-300 rounded-lg p-6 w-[400px] flex flex-col gap-5">
         <div className="flex flex-col gap-1">
           <div className="flex items-start justify-between">

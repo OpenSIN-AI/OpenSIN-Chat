@@ -231,7 +231,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {!!basePath
               ? t("ollamaEmbedding.loadingModels")
               : t("ollamaEmbedding.enterUrlFirst")}
@@ -252,6 +252,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
       <select
         name="EmbeddingModelPref"
         required={true}
+        defaultValue={settings?.EmbeddingModelPref}
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {customModels.length > 0 && (
@@ -261,7 +262,6 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={settings.EmbeddingModelPref === model.id}
                 >
                   {model.id}
                 </option>

@@ -32,7 +32,7 @@ export default function PasswordModal({ mode = "single" }: any) {
 }
 
 export function usePasswordModal(notry: any = false) {
-  const { settings, loading: settingsLoading } = useSystemSettings();
+  const { settings, loading: settingsLoading, error: settingsError } = useSystemSettings();
   const { MultiUserMode, RequiresAuth } = settings || {};
 
   const currentToken = safeGetItem(AUTH_TOKEN);
@@ -55,6 +55,13 @@ export function usePasswordModal(notry: any = false) {
   // While settings or token check are in-flight, stay in the loading state.
   if (settingsLoading || (needsTokenCheck && tokenLoading)) {
     return { loading: true, requiresAuth: false, mode: "single" };
+  }
+
+  // If the settings API itself failed (500, 429, network error), surface
+  // an error so the caller can show a friendly message instead of silently
+  // proceeding with empty settings (which would render a broken UI).
+  if (settingsError && !settingsLoading) {
+    return { loading: false, requiresAuth: false, mode: "single", apiError: true };
   }
 
   // Auth is not required in this environment

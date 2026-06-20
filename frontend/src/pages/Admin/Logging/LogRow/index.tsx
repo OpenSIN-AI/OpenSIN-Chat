@@ -54,27 +54,25 @@ export default function LogRow({ log }: LogRowProps): JSX.Element {
           {log.occurredAt}
         </td>
         {hasMetadata && (
-          <div className="mt-1">
+          <td
+            className={`px-2 gap-x-1 flex items-center justify-center transform transition-transform duration-200`}
+          >
             {expanded ? (
-              <td
-                className={`px-2 gap-x-1 flex items-center justify-center transform transition-transform duration-200`}
-              >
+              <>
                 <CaretUp weight="bold" size={20} />
                 <p className="text-xs text-white/50 w-[20px]">
                   {t("logging.logRow.hide")}
                 </p>
-              </td>
+              </>
             ) : (
-              <td
-                className={`px-2 gap-x-1 flex items-center justify-center transform transition-transform duration-200`}
-              >
+              <>
                 <CaretDown weight="bold" size={20} />
                 <p className="text-xs text-white/50 w-[20px]">
                   {t("logging.logRow.show")}
                 </p>
-              </td>
+              </>
             )}
-          </div>
+          </td>
         )}
       </tr>
       <EventMetadata metadata={metadata} expanded={expanded} />

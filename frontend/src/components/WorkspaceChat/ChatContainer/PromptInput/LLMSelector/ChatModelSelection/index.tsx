@@ -22,7 +22,7 @@ export default function ChatModelSelection({
         disabled={true}
         className="bg-zinc-900 light:bg-white text-white light:text-slate-900 text-sm rounded-lg h-8 w-full px-2.5 outline-none border border-zinc-900 light:border-slate-400 cursor-not-allowed"
       >
-        <option disabled={true} selected={true}>
+        <option disabled={true} value="">
           {t("agent.mode.wait")}
         </option>
       </select>
@@ -47,7 +47,6 @@ export default function ChatModelSelection({
               <option
                 key={model}
                 value={model}
-                selected={selectedLLMModel === model}
               >
                 {model}
               </option>
@@ -64,7 +63,6 @@ export default function ChatModelSelection({
               <option
                 key={model.id}
                 value={model.id}
-                selected={selectedLLMModel === model.id}
               >
                 {model.name || model.id}
               </option>
@@ -81,7 +79,6 @@ export default function ChatModelSelection({
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={selectedLLMModel === model.id}
                 >
                   {model.name}
                 </option>

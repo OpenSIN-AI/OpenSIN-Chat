@@ -21,13 +21,14 @@ export const SYSTEM_SETTINGS_KEY = "system/settings";
  * @returns {{ settings: Object, loading: boolean, refresh: () => Promise<any> }}
  */
 export default function useSystemSettings() {
-  const { data, isLoading, mutate } = useSWR(SYSTEM_SETTINGS_KEY, () =>
+  const { data, isLoading, error, mutate } = useSWR(SYSTEM_SETTINGS_KEY, () =>
     System.keys(),
   );
 
   return {
     settings: data || {},
     loading: isLoading,
+    error,
     refresh: mutate,
   };
 }

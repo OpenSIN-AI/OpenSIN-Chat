@@ -81,8 +81,10 @@ async function getCustomModels(provider = "", apiKey = null, basePath = null) {
 
 async function openAiModels(apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
+  const key = apiKey || process.env.OPEN_AI_KEY;
+  if (!key) return { models: [], error: "No API key provided" };
   const openai = new OpenAIApi({
-    apiKey: apiKey || process.env.OPEN_AI_KEY,
+    apiKey: key,
   });
   const allModels = await openai.models
     .list()
@@ -201,8 +203,10 @@ async function openAiSttModels(apiKey = null) {
   ];
 
   const { OpenAI: OpenAIApi } = require("openai");
+  const sttKey = apiKey || process.env.OPEN_AI_KEY;
+  if (!sttKey) return { models: fallback, error: null };
   const openai = new OpenAIApi({
-    apiKey: apiKey || process.env.OPEN_AI_KEY,
+    apiKey: sttKey,
   });
 
   const allModels = await openai.models
@@ -235,6 +239,7 @@ async function anthropicModels(_apiKey = null) {
     _apiKey === true
       ? process.env.ANTHROPIC_API_KEY
       : _apiKey || process.env.ANTHROPIC_API_KEY || null;
+  if (!apiKey) return { models: [], error: "No API key provided" };
   const AnthropicAI = require("@anthropic-ai/sdk");
   const anthropic = new AnthropicAI({ apiKey });
   const models = await anthropic.models
@@ -265,7 +270,7 @@ async function localAIModels(basePath = null, apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
   const openai = new OpenAIApi({
     baseURL: basePath || process.env.LOCAL_AI_BASE_PATH,
-    apiKey: apiKey || process.env.LOCAL_AI_API_KEY || null,
+    apiKey: apiKey || process.env.LOCAL_AI_API_KEY || "no-key-required",
   });
   const models = await openai.models
     .list()
@@ -287,6 +292,7 @@ async function getGroqAiModels(_apiKey = null) {
     _apiKey === true
       ? process.env.GROQ_API_KEY
       : _apiKey || process.env.GROQ_API_KEY || null;
+  if (!apiKey) return { models: [], error: "No API key provided" };
   const openai = new OpenAIApi({
     baseURL: "https://api.groq.com/openai/v1",
     apiKey,
@@ -313,7 +319,7 @@ async function liteLLMModels(basePath = null, apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
   const openai = new OpenAIApi({
     baseURL: basePath || process.env.LITE_LLM_BASE_PATH,
-    apiKey: apiKey || process.env.LITE_LLM_API_KEY || null,
+    apiKey: apiKey || process.env.LITE_LLM_API_KEY || "no-key-required",
   });
   const models = await openai.models
     .list()
@@ -341,7 +347,7 @@ async function getLMStudioModels(basePath = null, _apiKey = null) {
       baseURL: parseLMStudioBasePath(
         basePath || process.env.LMSTUDIO_BASE_PATH,
       ),
-      apiKey: apiKey || null,
+      apiKey: apiKey || "no-key-required",
     });
     const models = await openai.models
       .list()
@@ -414,8 +420,10 @@ async function getFireworksAiModels(apiKey = null) {
 
 async function getMistralModels(apiKey = null) {
   const { OpenAI: OpenAIApi } = require("openai");
+  const key = apiKey || process.env.MISTRAL_API_KEY || null;
+  if (!key) return { models: [], error: "No API key provided" };
   const openai = new OpenAIApi({
-    apiKey: apiKey || process.env.MISTRAL_API_KEY || null,
+    apiKey: key,
     baseURL: "https://api.mistral.ai/v1",
   });
   const models = await openai.models
@@ -440,6 +448,7 @@ async function getXAIModels(_apiKey = null) {
     _apiKey === true
       ? process.env.XAI_LLM_API_KEY
       : _apiKey || process.env.XAI_LLM_API_KEY || null;
+  if (!apiKey) return { models: [], error: "No API key provided" };
   const openai = new OpenAIApi({
     baseURL: "https://api.x.ai/v1",
     apiKey,
@@ -623,7 +632,7 @@ async function getOpencodeZenModels() {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: parseOpencodeZenBasePath(process.env.OPENCODE_ZEN_BASE_PATH),
-      apiKey: process.env.OPENCODE_ZEN_API_KEY || null,
+      apiKey: process.env.OPENCODE_ZEN_API_KEY || "no-key-required",
       // Fail fast so the UI never hangs waiting on a slow/unreachable endpoint.
       timeout: 15 * 1000,
       maxRetries: 1,
@@ -769,7 +778,7 @@ async function getGenericOpenAiModels(basePath = null, apiKey = null) {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: resolvedBasePath,
-      apiKey: apiKey || process.env.GENERIC_OPEN_AI_API_KEY || null,
+      apiKey: apiKey || process.env.GENERIC_OPEN_AI_API_KEY || "no-key-required",
     });
     const models = await openai.models
       .list()

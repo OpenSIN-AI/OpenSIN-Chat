@@ -285,7 +285,7 @@ function OllamaLLMModelSelection({
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {!!basePath ? t("ollama.loadingModels") : t("ollama.enterUrlFirst")}
           </option>
         </select>
@@ -313,7 +313,6 @@ function OllamaLLMModelSelection({
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={settings.OllamaLLMModelPref === model.id}
                 >
                   {model.id}
                 </option>

@@ -126,6 +126,7 @@ export default function useChatStream({
     if (!activeThreadSlug && chatHistory.length === 0) {
       const { thread } = await Workspace.threads.new(workspace.slug);
       if (thread) {
+        setMessageEmit("");
         sessionStorage.setItem(
           PENDING_HOME_MESSAGE,
           JSON.stringify({

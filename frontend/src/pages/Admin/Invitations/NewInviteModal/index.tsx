@@ -224,6 +224,7 @@ function WorkspaceOption({
         name="workspace"
         value={workspace.id}
         checked={selected}
+        onChange={() => toggleSelection(workspace.id)}
         className="hidden"
       />
       <div

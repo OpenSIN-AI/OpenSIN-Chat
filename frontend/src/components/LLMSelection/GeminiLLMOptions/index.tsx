@@ -81,7 +81,7 @@ function GeminiModelSelection({ apiKey, settings }: any) {
           disabled={true}
           className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
         >
-          <option disabled={true} selected={true}>
+          <option disabled={true} value="">
             {t("providerSettings.gemini.loadingModels")}
           </option>
         </select>
@@ -111,7 +111,6 @@ function GeminiModelSelection({ apiKey, settings }: any) {
                 <option
                   key={model.id}
                   value={model.id}
-                  selected={settings?.GeminiLLMModelPref === model.id}
                 >
                   {model.id}
                 </option>
