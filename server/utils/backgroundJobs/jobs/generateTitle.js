@@ -84,32 +84,34 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     temperature: 0.5,
   });
 
-  // TODO: remove debug log after fixing prompt echo
-  console.log(`[GenerateTitle] raw LLM response for thread ${threadId}: "${textResponse}"`);
+  // Reasoning models (z.B. deepseek-v4-pro) liefern oft eine lange
+  // interne Kette vor dem eigentlichen Titel. Wir nehmen die letzte
+  // nicht-leere Zeile als Titelkandidat und ignorieren den Rest.
+  const lastNonEmptyLine = (textResponse || "")
+    .split(/\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .pop();
 
-  // Cleanup: Anführungszeichen, Newlines, Markdown, Whitespace.
-  let cleanTitle = (textResponse || "")
-    .trim()
+  // Cleanup: Anführungszeichen, Markdown, Whitespace.
+  let cleanTitle = (lastNonEmptyLine || "")
     .replace(/^["']|["']$/g, "")
-    .replace(/\n/g, " ")
     .replace(/\s+/g, " ");
 
-  // Falls das Modell die Prompt-Anweisungen wiederholt, auf den ersten Teil
-  // der Nutzeranfrage zurückfallen (max. 5 Wörter, max. 30 Zeichen).
+  // Falls der Titelkandidat leer ist oder offensichtlich die
+  // Prompt-Anweisungen wiederholt, auf den ersten Teil der Nutzeranfrage
+  // zurückfallen (max. 5 Wörter, max. 40 Zeichen).
   const promptEchoMarkers = [
     "max. 5 Wörter",
     "maximum 5 words",
     "Titel für Chat-Verläufe",
-    "thread title",
-    "concise thread title",
-    "title assistant",
     "Return ONLY a concise",
     "Do not explain",
     "Do not include the words",
     "Example:",
-    "AfD Energy Policy Overview",
     "User message:",
     "Provide a 5-word-or-less",
+    "We are asked:",
   ];
   const looksLikePromptEcho = promptEchoMarkers.some((marker) =>
     cleanTitle.toLowerCase().includes(marker.toLowerCase()),
