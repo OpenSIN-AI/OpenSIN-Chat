@@ -76,6 +76,12 @@ describe("getCustomModels for generic-openai", () => {
     expect(result.models.map((m) => m.id)).toContain(
       "accounts/fireworks/models/deepseek-v4-pro",
     );
+    expect(result.models.map((m) => m.id)).toContain(
+      "accounts/fireworks/models/minimax-m3",
+    );
+    expect(result.models.map((m) => m.id)).toContain(
+      "accounts/fireworks/models/kimi-k2p7-code",
+    );
   });
 
   test("returns static Fireworks fallback when OpenAI /models fails", async () => {
@@ -89,6 +95,12 @@ describe("getCustomModels for generic-openai", () => {
     expect(result.models.length).toBeGreaterThan(0);
     expect(result.models.map((m) => m.id)).toContain(
       "accounts/fireworks/models/deepseek-v4-pro",
+    );
+    expect(result.models.map((m) => m.id)).toContain(
+      "accounts/fireworks/models/minimax-m3",
+    );
+    expect(result.models.map((m) => m.id)).toContain(
+      "accounts/fireworks/models/kimi-k2p7-code",
     );
   });
 

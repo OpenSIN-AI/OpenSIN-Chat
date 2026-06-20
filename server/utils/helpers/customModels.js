@@ -662,6 +662,16 @@ const FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS = [
     organization: "Fireworks",
   },
   {
+    id: "accounts/fireworks/models/minimax-m3",
+    name: "MiniMax M3 (Vision)",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/kimi-k2p7-code",
+    name: "Kimi K2.7 Code (Vision)",
+    organization: "Fireworks",
+  },
+  {
     id: "accounts/fireworks/models/llama-v3p1-405b-instruct",
     name: "Llama 3.1 405B Instruct",
     organization: "Fireworks",
