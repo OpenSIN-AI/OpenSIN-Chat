@@ -17,6 +17,7 @@ export function useFileBrowser() {
     try {
       const res = await fetch(
         `${API_BASE}/utils/browse-directory?path=${encodeURIComponent(targetPath || "")}`,
+        { headers: baseHeaders() },
       );
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
