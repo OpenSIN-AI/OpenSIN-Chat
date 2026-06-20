@@ -70,10 +70,10 @@ describe("validatedRequest", () => {
     expect(next).toHaveBeenCalledTimes(1);
   });
 
-  it("returns 503 in production when AUTH_TOKEN is missing (fail-closed)", async () => {
+  it("returns 503 in production only when BOTH AUTH_TOKEN and JWT_SECRET are missing (true fail-closed)", async () => {
     process.env.NODE_ENV = "production";
     delete process.env.AUTH_TOKEN;
-    process.env.JWT_SECRET = "secret";
+    delete process.env.JWT_SECRET;
     const { request, response } = mockReqRes();
     const next = jest.fn();
 
@@ -86,7 +86,25 @@ describe("validatedRequest", () => {
     expect(response.body.id.length).toBeGreaterThan(0);
   });
 
-  it("returns 503 in production when JWT_SECRET is missing (fail-closed)", async () => {
+  it("passes through in production when only AUTH_TOKEN is missing (single-user no-password deployment)", async () => {
+    // Regression guard: the previous behavior was to 503 whenever either env
+    // var was missing. That silently broke single-user deployments that set
+    // JWT_SECRET (for session signing) but intentionally left AUTH_TOKEN unset
+    // so the login endpoint auto-grants a token. See PR / AGENTS.md for the
+    // contract.
+    process.env.NODE_ENV = "production";
+    delete process.env.AUTH_TOKEN;
+    process.env.JWT_SECRET = "secret";
+    const { request, response } = mockReqRes();
+    const next = jest.fn();
+
+    await validatedRequest(request, response, next);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(response.statusCode).toBeNull(); // success path never wrote a status
+  });
+
+  it("passes through in production when only JWT_SECRET is missing (legacy single-user plain AUTH_TOKEN deployment)", async () => {
     process.env.NODE_ENV = "production";
     process.env.AUTH_TOKEN = "my-token";
     delete process.env.JWT_SECRET;
@@ -95,9 +113,8 @@ describe("validatedRequest", () => {
 
     await validatedRequest(request, response, next);
 
-    expect(next).not.toHaveBeenCalled();
-    expect(response.statusCode).toBe(503);
-    expect(response.body.error).toMatch(/misconfigured/i);
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(response.statusCode).toBeNull();
   });
 
   it("falls through to dev escape hatch when AUTH_TOKEN unset in development", async () => {
@@ -181,5 +198,52 @@ describe("validatedRequest", () => {
     expect(next).not.toHaveBeenCalled();
     expect(response.statusCode).toBe(401);
     expect(response.body.error).toContain("Invalid auth for user");
+  });
+
+  it("accepts single-user JWT with AES-GCM base64 payload (no colon)", async () => {
+    jest.resetModules();
+    jest.doMock("../../../models/systemSettings", () => ({
+      SystemSettings: { isMultiUserMode: jest.fn().mockResolvedValue(false) },
+    }));
+    jest.doMock("../../../models/user", () => ({
+      User: { get: jest.fn(), create: jest.fn() },
+    }));
+    jest.doMock("../../../utils/EncryptionManager", () => ({
+      EncryptionManager: jest.fn().mockImplementation(() => ({
+        decrypt: jest.fn(() => "my-token"),
+      })),
+    }));
+    jest.doMock("../../../utils/http", () => ({
+      decodeJWT: jest.fn(() => ({
+        id: 1,
+        p: "cLUzfA0O09vynTcFNU9hJmYfRMxPHiTu4TSHdiGCmIS9AjAntInMatxJZbqf47uxaVNqiuyEQA4BRBUhiGnixyUFJhBJ58nqMO9LWZx0u99P3ZIqGwYAWMzfZg==",
+      })),
+    }));
+    process.env.NODE_ENV = "production";
+    process.env.AUTH_TOKEN = "my-token";
+    process.env.JWT_SECRET = "secret";
+    const { validatedRequest: freshValidated } = require("../../../utils/middleware/validatedRequest");
+    const { request, response } = mockReqRes({ authHeader: "Bearer valid.jwt" });
+    const next = jest.fn();
+
+    await freshValidated(request, response, next);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(response.statusCode).toBeNull();
+  });
+
+  it("rejects single-user JWT whose payload is not valid base64", async () => {
+    process.env.NODE_ENV = "production";
+    process.env.AUTH_TOKEN = "my-token";
+    process.env.JWT_SECRET = "secret";
+    decodeJWT.mockReturnValue({ id: 1, p: "not!base64!with!colons:here" });
+    const { request, response } = mockReqRes({ authHeader: "Bearer valid.jwt" });
+    const next = jest.fn();
+
+    await validatedRequest(request, response, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(401);
+    expect(response.body.error).toContain("expired");
   });
 });

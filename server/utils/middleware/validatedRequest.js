@@ -46,9 +46,23 @@ async function validatedRequest(request, response, next) {
   if (multiUserMode)
     return await validateMultiUserRequest(request, response, next);
 
+  // Production-mode boot contract.
+  //
+  // The 503 "Server is misconfigured" gate fires ONLY when BOTH secret
+  // envvars are missing — i.e. the server cannot validate ANY incoming
+  // JWT and cannot produce one either. That is the only truly unrecoverable
+  // state for an operator.
+  //
+  // It used to fire when EITHER envvar was missing, which silently
+  // broke legitimate single-user-no-password deployments that set
+  // JWT_SECRET (for session signing) but intentionally leave AUTH_TOKEN
+  // unset so the login endpoint auto-grants a token instead of asking
+  // for a password. Those deployments hit the 503 on every page-load
+  // even though the server was healthy.
   if (
     (process.env.NODE_ENV ?? "").toLowerCase() === "production" &&
-    (!process.env.AUTH_TOKEN || !process.env.JWT_SECRET)
+    !process.env.AUTH_TOKEN &&
+    !process.env.JWT_SECRET
   ) {
     const id =
       typeof crypto !== "undefined" && crypto.randomUUID
@@ -120,7 +134,14 @@ async function validatedRequest(request, response, next) {
   const bcrypt = require("bcryptjs");
   const { p } = decodeJWT(token);
 
-  if (p === null || !/\w{32}:\w{32}/.test(p)) {
+  if (p === null || typeof p !== "string" || p.length < 16) {
+    response.status(401).json({
+      error: "Token expired or failed validation.",
+    });
+    return;
+  }
+
+  if (!/^[A-Za-z0-9+/=_-]+$/.test(p)) {
     response.status(401).json({
       error: "Token expired or failed validation.",
     });
