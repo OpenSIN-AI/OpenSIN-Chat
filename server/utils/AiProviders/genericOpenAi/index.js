@@ -178,7 +178,7 @@ class GenericOpenAiLLM {
     };
     return [
       prompt,
-      ...formatChatHistory(chatHistory, this.#generateContent),
+      ...formatChatHistory(chatHistory, (args) => this.#generateContent(args)),
       {
         role: "user",
         content: this.#generateContent({ userPrompt, attachments }),
