@@ -1,4 +1,12 @@
 // SPDX-License-Identifier: MIT
+const mockList = jest.fn();
+
+jest.mock("openai", () => ({
+  OpenAI: jest.fn().mockImplementation(() => ({
+    models: { list: mockList },
+  })),
+}));
+
 const { getCustomModels, SUPPORT_CUSTOM_MODELS } = require("../../../utils/helpers/customModels");
 
 describe("getCustomModels", () => {
@@ -48,5 +56,60 @@ describe("SUPPORT_CUSTOM_MODELS", () => {
   test("has no duplicate providers", () => {
     const unique = [...new Set(SUPPORT_CUSTOM_MODELS)];
     expect(SUPPORT_CUSTOM_MODELS.length).toBe(unique.length);
+  });
+});
+
+describe("getCustomModels for generic-openai", () => {
+  beforeEach(() => {
+    mockList.mockReset();
+  });
+
+  test("returns static Fireworks fallback for SINator router without calling the API", async () => {
+    const result = await getCustomModels(
+      "generic-openai",
+      "test-key",
+      "https://sinatorpool-router.delqhi.com/inference/v1",
+    );
+    expect(mockList).not.toHaveBeenCalled();
+    expect(result.error).toBeNull();
+    expect(result.models.length).toBeGreaterThan(0);
+    expect(result.models.map((m) => m.id)).toContain(
+      "accounts/fireworks/models/deepseek-v4-pro",
+    );
+  });
+
+  test("returns static Fireworks fallback when OpenAI /models fails", async () => {
+    mockList.mockRejectedValue(new Error("403 Your request was blocked"));
+    const result = await getCustomModels(
+      "generic-openai",
+      "test-key",
+      "https://some-other-generic-openai.com/v1",
+    );
+    expect(result.error).toBeNull();
+    expect(result.models.length).toBeGreaterThan(0);
+    expect(result.models.map((m) => m.id)).toContain(
+      "accounts/fireworks/models/deepseek-v4-pro",
+    );
+  });
+
+  test("returns live models when OpenAI /models succeeds", async () => {
+    mockList.mockResolvedValue({
+      data: [
+        { id: "custom-model-1", owned_by: "custom" },
+        { id: "custom-model-2", owned_by: "custom" },
+      ],
+    });
+    const result = await getCustomModels(
+      "generic-openai",
+      "test-key",
+      "https://some-other-generic-openai.com/v1",
+    );
+    expect(result.error).toBeNull();
+    expect(result.models).toHaveLength(2);
+    expect(result.models[0]).toEqual({
+      id: "custom-model-1",
+      name: "custom-model-1",
+      organization: "custom",
+    });
   });
 });

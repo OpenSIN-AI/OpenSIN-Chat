@@ -653,11 +653,112 @@ async function getOpencodeZenModels() {
   }
 }
 
+const SINATOR_ROUTER_HOSTS = ["sinatorpool-router.delqhi.com"];
+
+const FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS = [
+  {
+    id: "accounts/fireworks/models/deepseek-v4-pro",
+    name: "DeepSeek V4 Pro",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/llama-v3p1-405b-instruct",
+    name: "Llama 3.1 405B Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/llama-v3p1-70b-instruct",
+    name: "Llama 3.1 70B Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/llama-v3p1-8b-instruct",
+    name: "Llama 3.1 8B Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/llama-v3p2-90b-vision-instruct",
+    name: "Llama 3.2 90B Vision Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/llama-v3p2-11b-vision-instruct",
+    name: "Llama 3.2 11B Vision Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/llama4-maverick-instruct",
+    name: "Llama 4 Maverick Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/llama4-scout-instruct",
+    name: "Llama 4 Scout Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/qwen2p5-72b-instruct",
+    name: "Qwen2.5 72B Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/qwen2p5-14b-instruct",
+    name: "Qwen2.5 14B Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/qwen2p5-7b-instruct",
+    name: "Qwen2.5 7B Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/qwen3-235b-a22b",
+    name: "Qwen3 235B A22B",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/mixtral-8x22b-instruct",
+    name: "Mixtral 8x22B Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/mixtral-8x7b-instruct",
+    name: "Mixtral 8x7B Instruct",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/deepseek-v3",
+    name: "DeepSeek V3",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/models/deepseek-r1",
+    name: "DeepSeek R1",
+    organization: "Fireworks",
+  },
+];
+
+function isSinatorRouter(basePath = "") {
+  if (!basePath || typeof basePath !== "string") return false;
+  return SINATOR_ROUTER_HOSTS.some((host) =>
+    basePath.toLowerCase().includes(host),
+  );
+}
+
 async function getGenericOpenAiModels(basePath = null, apiKey = null) {
+  const resolvedBasePath = basePath || process.env.GENERIC_OPEN_AI_BASE_PATH;
+
+  // The SINator Fireworks pool router blocks the OpenAI-compatible /models
+  // endpoint with HTTP 403. Return the static fallback list immediately so the
+  // settings UI model dropdown stays populated and the production logs stay
+  // free of non-fatal 403 noise.
+  if (isSinatorRouter(resolvedBasePath))
+    return { models: FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS, error: null };
+
   try {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
-      baseURL: basePath || process.env.GENERIC_OPEN_AI_BASE_PATH,
+      baseURL: resolvedBasePath,
       apiKey: apiKey || process.env.GENERIC_OPEN_AI_API_KEY || null,
     });
     const models = await openai.models
@@ -673,16 +774,18 @@ async function getGenericOpenAiModels(basePath = null, apiKey = null) {
       .catch((e) => {
         // eslint-disable-next-line no-console
         console.error(`GenericOpenAI:listModels`, e.message);
-        return [];
+        return null;
       });
 
-    if (models.length > 0 && !!apiKey)
-      process.env.GENERIC_OPEN_AI_API_KEY = apiKey;
+    if (!models || models.length === 0)
+      return { models: FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS, error: null };
+
+    if (!!apiKey) process.env.GENERIC_OPEN_AI_API_KEY = apiKey;
     return { models, error: null };
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(`GenericOpenAI:getGenericOpenAiModels`, e.message);
-    return { models: [], error: "Could not fetch Generic OpenAI Models" };
+    return { models: FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS, error: null };
   }
 }
 
