@@ -107,6 +107,9 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     "We need to generate",
     "concise title",
     "generate a title",
+    "Analyze the Request",
+    "short, concise title",
+    "extrem kurzen",
   ];
 
   function isValidTitle(line) {
@@ -114,10 +117,17 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     const lower = line.toLowerCase();
     if (promptEchoMarkers.some((marker) => lower.includes(marker.toLowerCase())))
       return false;
+    // Reject reasoning-model artifacts: lines starting with think tokens,
+    // analysis markers, or German reasoning phrases
+    if (/^(?:<|app|analysis|wir müssen|we need|we are|the user|step \d)/i.test(line))
+      return false;
     // Ausschließen von Markdown-Listenzeilen, die aus der Assistentenantwort
     // stammen könnten (z. B. "**4. Einschränkung erneuerbarer Energ").
     if (/^[-*\d]/.test(line) || /^\*+\s*\d/.test(line)) return false;
+    // Reject lines with duplicate word pairs (e.g. "AfD Energy AfD Energy")
     const words = line.trim().split(/\s+/).filter(Boolean);
+    if (words.length === 4 && words[0] === words[2] && words[1] === words[3])
+      return false;
     return words.length >= 1 && words.length <= 5 && line.length <= 40;
   }
 
