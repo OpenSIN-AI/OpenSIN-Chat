@@ -140,6 +140,13 @@ class GenericOpenAiLLM {
       return userPrompt;
     }
 
+    if (this.getModelCapabilities().vision === false) {
+      return (
+        userPrompt +
+        "\n\n[Bild wurde hochgeladen aber nicht analysiert — der aktive Provider unterstützt keine Bilderkennung]"
+      );
+    }
+
     const content = [{ type: "text", text: userPrompt }];
     for (let attachment of attachments) {
       content.push({

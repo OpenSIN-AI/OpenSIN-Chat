@@ -38,7 +38,7 @@ function ThreadItem({
   const optionsContainer = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
   const linkTo = thread.virtual
-    ? "/"
+    ? paths.workspace.chat(workspaceSlug)
     : !thread.slug
       ? paths.workspace.chat(workspaceSlug)
       : paths.workspace.thread(workspaceSlug, thread.slug);

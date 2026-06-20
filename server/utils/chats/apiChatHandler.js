@@ -861,12 +861,51 @@ async function streamChat({
       metrics,
     });
   } else {
-    const stream = await LLMConnector.streamGetChatCompletion(messages, {
-      temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
-      user: user,
-    });
-    completeText = await LLMConnector.handleStream(response, stream, { uuid });
-    metrics = stream.metrics;
+    try {
+      const stream = await LLMConnector.streamGetChatCompletion(messages, {
+        temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
+        user: user,
+      });
+      completeText = await LLMConnector.handleStream(response, stream, {
+        uuid,
+      });
+      metrics = stream.metrics;
+    } catch (error) {
+      const hasImageAttachments = (attachments || []).some((a) =>
+        a?.mime?.toLowerCase().startsWith("image/"),
+      );
+      const isVisionUnsupported =
+        error?.status === 400 ||
+        error?.response?.status === 400 ||
+        (typeof error?.message === "string" &&
+          /image|unsupported/i.test(error.message));
+
+      if (hasImageAttachments && isVisionUnsupported) {
+        const textOnlyMessages = await LLMConnector.compressMessages(
+          {
+            systemPrompt: streamSystemPrompt,
+            userPrompt: message,
+            contextTexts,
+            chatHistory,
+            attachments: [],
+          },
+          rawHistory,
+        );
+        const retryStream =
+          await LLMConnector.streamGetChatCompletion(textOnlyMessages, {
+            temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
+            user: user,
+          });
+        completeText = await LLMConnector.handleStream(response, retryStream, {
+          uuid,
+        });
+        metrics = retryStream.metrics;
+        completeText +=
+          "\n\n[Bilder wurden nicht verarbeitet — der Provider unterstützt keine Bilderkennung]";
+      } else {
+        throw error;
+      }
+    }
   }
 
   if (completeText?.length > 0) {

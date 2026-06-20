@@ -165,7 +165,7 @@ export default function AccountMenu({
   const popupRef = useRef<HTMLDivElement>(null);
 
   const displayName = user?.username || "OpenAfD";
-  const subtitle = user?.email || t("common.demoAccount");
+  const subtitle = user?.email || (import.meta.env.DEV ? t("common.demoAccount") : "");
   const initials = displayName.slice(0, 2).toUpperCase();
   const isLoggedIn = mode !== null;
 
