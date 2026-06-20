@@ -857,14 +857,14 @@
                     "error": null,
                     "documents": [
                       {
-                        "location": "custom-documents/opensin.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "name": "opensin.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/opensin.txt",
-                        "title": "opensin.txt",
+                        "location": "custom-documents/openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
+                        "name": "openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
+                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/openafd.txt",
+                        "title": "openafd.txt",
                         "docAuthor": "Unknown",
                         "description": "Unknown",
                         "docSource": "a text file uploaded by the user.",
-                        "chunkSource": "opensin.txt",
+                        "chunkSource": "openafd.txt",
                         "published": "1/16/2024, 3:07:00 PM",
                         "wordCount": 93,
                         "token_count_estimate": 115
@@ -874,6 +874,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "403": {
             "description": "Forbidden",
@@ -964,14 +967,14 @@
                     "error": null,
                     "documents": [
                       {
-                        "location": "custom-documents/opensin.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "name": "opensin.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
-                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/opensin.txt",
-                        "title": "opensin.txt",
+                        "location": "custom-documents/openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
+                        "name": "openafd.txt-6e8be64c-c162-4b43-9997-b068c0071e8b.json",
+                        "url": "file://Users/tim/Documents/opensin-chat/collector/hotdir/openafd.txt",
+                        "title": "openafd.txt",
                         "docAuthor": "Unknown",
                         "description": "Unknown",
                         "docSource": "a text file uploaded by the user.",
-                        "chunkSource": "opensin.txt",
+                        "chunkSource": "openafd.txt",
                         "published": "1/16/2024, 3:07:00 PM",
                         "wordCount": 93,
                         "token_count_estimate": 115
@@ -981,6 +984,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "403": {
             "description": "Forbidden",
@@ -1077,7 +1083,7 @@
                         "docAuthor": "no author found",
                         "description": "No description found.",
                         "docSource": "URL link uploaded by the user.",
-                        "chunkSource": "https:opensin.ai.html",
+                        "chunkSource": "https:openafd.com.html",
                         "published": "1/16/2024, 3:46:33 PM",
                         "wordCount": 252,
                         "pageContent": "OpenSIN Chat is the best....",
@@ -1120,7 +1126,7 @@
               "schema": {
                 "type": "object",
                 "example": {
-                  "link": "https://opensin.ai",
+                  "link": "https://openafd.com",
                   "addToWorkspaces": "workspace1,workspace2",
                   "scraperHeaders": {
                     "Authorization": "Bearer token123",
@@ -1662,6 +1668,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "403": {
             "description": "Forbidden",
@@ -2265,7 +2274,7 @@
                   "custom-documents/my-pdf.pdf-hash.json"
                 ],
                 "deletes": [
-                  "custom-documents/opensin.txt-hash.json"
+                  "custom-documents/openafd.txt-hash.json"
                 ]
               }
             }
@@ -2357,7 +2366,7 @@
                     "textResponse": "Response to your query",
                     "sources": [
                       {
-                        "title": "opensin.txt",
+                        "title": "openafd.txt",
                         "chunk": "This is a context chunk used in the answer of the prompt by the LLM,"
                       }
                     ],
@@ -2466,7 +2475,7 @@
                       "textResponse": "final chunk of LLM output!",
                       "sources": [
                         {
-                          "title": "opensin.txt",
+                          "title": "openafd.txt",
                           "chunk": "This is a context chunk used in the answer of the prompt by the LLM. This will only return in the final chunk."
                         }
                       ],
@@ -3232,7 +3241,7 @@
                     "textResponse": "Response to your query",
                     "sources": [
                       {
-                        "title": "opensin.txt",
+                        "title": "openafd.txt",
                         "chunk": "This is a context chunk used in the answer of the prompt by the LLM."
                       }
                     ],
@@ -3346,7 +3355,7 @@
                       "textResponse": "final chunk of LLM output!",
                       "sources": [
                         {
-                          "title": "opensin.txt",
+                          "title": "openafd.txt",
                           "chunk": "This is a context chunk used in the answer of the prompt by the LLM. This will only return in the final chunk."
                         }
                       ],
@@ -3570,9 +3579,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }
@@ -3588,12 +3594,6 @@
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "403": {
             "description": "Forbidden",
             "content": {
@@ -3608,9 +3608,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         },
         "requestBody": {
@@ -3671,9 +3668,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         },
         "requestBody": {
@@ -3738,9 +3732,6 @@
                 }
               }
             }
-          },
-          "500": {
-            "description": "Internal Server Error"
           }
         }
       }

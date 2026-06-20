@@ -157,14 +157,32 @@ class MCPHypervisor {
   }
 
   /**
+   * Read the MCP server definitions from disk and parse them. Returns an
+   * empty config when the file is missing or unreadable so callers never
+   * throw a 500 just because the runtime refuses to read a file written
+   * in a more permissive mode than the current security baseline.
+   * @returns {{mcpServers: Record<string, any>}}
+   */
+  #readServerConfigsJson() {
+    try {
+      return safeJsonParse(
+        fs.readFileSync(this.mcpServerJSONPath, "utf8"),
+        { mcpServers: {} },
+      );
+    } catch (error) {
+      this.log(
+        `Failed to read MCP config at ${this.mcpServerJSONPath}: ${error.message}. Treating as empty.`,
+      );
+      return { mcpServers: {} };
+    }
+  }
+
+  /**
    * Get the MCP servers from the JSON file.
    * @returns { { name: string, server: { command: string, args: string[], env: { [key: string]: string } } }[] } The MCP servers.
    */
   get mcpServerConfigs() {
-    const servers = safeJsonParse(
-      fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-      { mcpServers: {} },
-    );
+    const servers = this.#readServerConfigsJson();
     return Object.entries(servers?.mcpServers || {}).map(([name, server]) => ({
       name,
       server,
@@ -177,10 +195,7 @@ class MCPHypervisor {
    * @returns {boolean} - True if the MCP server was removed, false otherwise
    */
   removeMCPServerFromConfig(name) {
-    const servers = safeJsonParse(
-      fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-      { mcpServers: {} },
-    );
+    const servers = this.#readServerConfigsJson();
     if (!servers?.mcpServers?.[name]) return false;
 
     delete servers.mcpServers[name];
@@ -208,10 +223,7 @@ class MCPHypervisor {
    * @returns {{success: boolean, error: string | null, suppressedTools: string[]}}
    */
   updateSuppressedTools(serverName, toolName, enabled) {
-    const servers = safeJsonParse(
-      fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-      { mcpServers: {} },
-    );
+    const servers = this.#readServerConfigsJson();
 
     if (!servers?.mcpServers?.[serverName]) {
       return {

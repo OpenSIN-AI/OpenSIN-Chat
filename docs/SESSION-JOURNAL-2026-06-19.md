@@ -105,6 +105,7 @@ Sweeps identified the following, all fixed in main:
 
 ## 3. Current state at end of session
 
+**PRODUCTION LIVE:** `opensin-app:v1.14.0` running on `sin-supabase` OCI VM at port 38471→3001.
 - Branch: `main`
 - HEAD: `83b781d5`
 - Tag: `v1.14.0` (annotated, pushed to origin)
@@ -112,7 +113,21 @@ Sweeps identified the following, all fixed in main:
 - Frontend tests: **1516/1516** ✓
 - Branding linter: ✓
 - 50 issues all closed, **0 open**
-- Documentation: `docs/RELEASE-NOTES-v1.14.0.md` (296 lines) + `docs/DEPLOY-v1.14.0.md` (154 lines)
+- Documentation: `docs/RELEASE-NOTES-v1.14.0.md` (296 lines) + `docs/DEPLOY-v1.14.0.md` (180 lines)
+
+### 3a. Production deployment verification (LIVE)
+
+| Endpoint | Pre-deploy | Post-deploy | Status |
+|---|---|---|---|
+| `GET /api/healthz` (Cloudflare) | HTTP/2 200 | HTTP/2 200 | ✓ |
+| `GET /api/setup-complete` (local + CF) | `RequiresAuth:false, AuthToken:false` | `RequiresAuth:true, AuthToken:true, JWTSecret:true` | ✓ FIXED |
+| `GET /api/env-dump` anon (CF) | **HTTP/2 200 OK** 🚨 | **HTTP/2 401** 🔒 | ✓ FIXED |
+| `POST /api/request-token` (no creds, CF) | `200 + JWT` 🚨 | **429 Too Many Requests** 🔒 | ✓ rate-limit active |
+| `GET /api/version` (CF) | SPA HTML | JSON `{"version":"dev","online":true,...}` | ✓ reachable |
+| Image — `opensin-app:v0.56.15` (8.96 GB) | running | stopped; retained as rollback | ✓ |
+| Image — `opensin-app:v1.14.0` (3.92 GB) | not built | running on sin-supabase, healthy | ✓ |
+
+(Verification done via `curl https://sinchat.delqhi.com/api/*` and `curl localhost:38471/api/*`.)
 
 ## 4. Files modified (key highlights)
 
