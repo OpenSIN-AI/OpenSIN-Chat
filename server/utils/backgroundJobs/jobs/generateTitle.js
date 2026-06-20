@@ -65,28 +65,60 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   }
 
   const systemPrompt =
-    "Du bist ein Assistent, der extrem kurze, prägnante Titel (max. 5 Wörter) " +
-    "für Chat-Verläufe generiert. Der Titel muss in derselben Sprache wie die " +
-    "Nutzeranfrage sein. Antworte NUR mit dem Titel, ohne Anführungszeichen, " +
-    "ohne Markdown und ohne zusätzliche Erklärungen.";
+    "You are a title assistant. Generate a very short, concise thread title " +
+    "(maximum 5 words) in the same language as the user's message. " +
+    "Respond with ONLY the title. No quotes, no markdown, no explanation, " +
+    "no preamble. Do not repeat these instructions.";
+
+  const userPrompt = `User message: ${prompt}\n\nProvide a 5-word-or-less title for this conversation.`;
 
   const messages = [
     { role: "system", content: systemPrompt },
-    { role: "user", content: `Nutzer: ${prompt}\nAssistent: ${response}` },
+    { role: "user", content: userPrompt },
   ];
 
   const { textResponse } = await LLMConnector.getChatCompletion(messages, {
     temperature: 0.5,
   });
 
-  // Cleanup: Anführungszeichen, Newlines, Markdown, Whitespace — und
-  // Fallback auf defaultName falls die LLM-Antwort leer war.
-  const cleanTitle =
-    (textResponse || "")
-      .trim()
-      .replace(/^["']|["']$/g, "")
-      .replace(/\n/g, " ")
-      .substring(0, 100) || WorkspaceThread.defaultName;
+  // Cleanup: Anführungszeichen, Newlines, Markdown, Whitespace.
+  let cleanTitle = (textResponse || "")
+    .trim()
+    .replace(/^["']|["']$/g, "")
+    .replace(/\n/g, " ")
+    .replace(/\s+/g, " ");
+
+  // Falls das Modell die Prompt-Anweisungen wiederholt, auf den ersten Teil
+  // der Nutzeranfrage zurückfallen (max. 5 Wörter, max. 30 Zeichen).
+  const promptEchoMarkers = [
+    "max. 5 Wörter",
+    "maximum 5 words",
+    "Titel für Chat-Verläufe",
+    "thread title",
+    "concise thread title",
+    "title assistant",
+  ];
+  const looksLikePromptEcho = promptEchoMarkers.some((marker) =>
+    cleanTitle.toLowerCase().includes(marker.toLowerCase()),
+  );
+
+  if (!cleanTitle || looksLikePromptEcho) {
+    cleanTitle = prompt
+      .split(/\s+/)
+      .slice(0, 5)
+      .join(" ");
+  }
+
+  // Harte Längenbegrenzung: max. 5 Wörter und 40 Zeichen, damit die UI den
+  // Titel nicht abschneidet.
+  cleanTitle = cleanTitle
+    .split(/\s+/)
+    .slice(0, 5)
+    .join(" ")
+    .substring(0, 40)
+    .trim();
+
+  if (!cleanTitle) cleanTitle = WorkspaceThread.defaultName;
 
   await WorkspaceThread.update(thread, { name: cleanTitle });
   console.log(`[GenerateTitle] Thread ${threadId} renamed to: "${cleanTitle}"`);
