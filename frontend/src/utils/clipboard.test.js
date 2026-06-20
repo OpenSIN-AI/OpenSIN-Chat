@@ -37,6 +37,6 @@ describe("clipboard", () => {
 
   it("does not throw when navigator.clipboard.write fails", async () => {
     navigator.clipboard.write.mockRejectedValue(new Error("Denied"));
-    await expect(copyMarkdownAsRichText("hello")).resolves.toBeUndefined();
+    await expect(copyMarkdownAsRichText("hello")).resolves.toBe(false);
   });
 });
