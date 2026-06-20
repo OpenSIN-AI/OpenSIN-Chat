@@ -14,7 +14,7 @@ import { Plugs } from "@phosphor-icons/react/dist/csr/Plugs";
 import AgentIcon from "@/media/animations/agent-static.png";
 import CommunityHubIcon from "@/media/illustrations/community-hub.png";
 import useUser from "@/hooks/useUser";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -29,6 +29,7 @@ export default function SettingsSidebar() {
   const { t } = useTranslation();
   const { logo } = useLogo();
   const { user } = useUser();
+  const isMobile = useIsMobileLayout();
   const sidebarRef = useRef(null);
   const [showSidebar, setShowSidebar] = useState(false as any);
   const [showBgOverlay, setShowBgOverlay] = useState(false as any);

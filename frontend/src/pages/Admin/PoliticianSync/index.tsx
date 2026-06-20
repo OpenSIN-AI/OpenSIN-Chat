@@ -15,6 +15,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CTAButton from "@/components/lib/CTAButton";
 import showToast from "@/utils/toast";
+import { baseHeaders } from "@/utils/request";
 
 interface SyncStatus {
   lastSync: string | null;
@@ -108,7 +109,7 @@ export default function PoliticianSyncDashboard(): React.ReactElement {
     try {
       const res = await fetch("/api/politician/sync/trigger", {
         method: "POST",
-        credentials: "include",
+        headers: baseHeaders(),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       showToast(t("politicianSync.syncTriggered"), "success");

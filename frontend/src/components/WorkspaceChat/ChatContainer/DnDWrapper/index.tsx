@@ -529,7 +529,11 @@ export default function DnDFileUploaderWrapper({ children }: any) {
           </div>
         </div>
       </div>
-      <input id="dnd-chat-file-uploader" {...getInputProps()} />
+      <input
+        id="dnd-chat-file-uploader"
+        aria-label={t("chat_window.attach_file")}
+        {...getInputProps()}
+      />
       {children}
     </div>
   );

@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
-import { API_BASE } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
+
+// Browser endpoints live under /pdf-analysis/* and use session auth (validatedRequest).
+// The /api/pdf-analysis/* namespace is reserved for developer API keys only.
+const PDF_ANALYSIS_BASE = "/pdf-analysis";
 
 export interface PdfAnalysisStartParams {
   pdfPath: string;
@@ -40,7 +43,7 @@ const PdfAnalysis = {
   upload: async function (file: File): Promise<PdfAnalysisResult> {
     const formData = new FormData();
     formData.append("file", file);
-    return await fetch(`${API_BASE}/pdf-analysis/upload`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/upload`, {
       method: "POST",
       headers: baseHeaders(),
       body: formData,
@@ -56,7 +59,7 @@ const PdfAnalysis = {
     factCriteria,
     deepScan,
   }: PdfAnalysisStartParams): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/start`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/start`, {
       method: "POST",
       headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -72,7 +75,7 @@ const PdfAnalysis = {
   },
 
   list: async function (): Promise<any[]> {
-    return await fetch(`${API_BASE}/pdf-analysis/list`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/list`, {
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -81,7 +84,7 @@ const PdfAnalysis = {
   },
 
   status: async function (jobId: string): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/${jobId}`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/${jobId}`, {
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -89,7 +92,7 @@ const PdfAnalysis = {
   },
 
   result: async function (jobId: string): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/${jobId}/result`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/${jobId}/result`, {
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -97,7 +100,7 @@ const PdfAnalysis = {
   },
 
   cancel: async function (jobId: string): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/${jobId}`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/${jobId}`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
@@ -114,7 +117,7 @@ const PdfAnalysis = {
     if (q) params.set("q", q);
     if (document) params.set("document", document);
     if (tag) params.set("tag", tag);
-    return await fetch(`${API_BASE}/pdf-analysis/facts?${params}`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/facts?${params}`, {
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -123,7 +126,7 @@ const PdfAnalysis = {
   },
 
   deleteFact: async function (factId: string): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/facts/${factId}`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/facts/${factId}`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
@@ -137,7 +140,7 @@ const PdfAnalysis = {
     sources = [],
     deepWeb = false,
   }: CrossCheckParams): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/crosscheck`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/crosscheck`, {
       method: "POST",
       headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ claims, factIds, sources, deepWeb }),
@@ -147,7 +150,7 @@ const PdfAnalysis = {
   },
 
   listCrossChecks: async function (): Promise<any[]> {
-    return await fetch(`${API_BASE}/pdf-analysis/crosscheck/list`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/crosscheck/list`, {
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -156,7 +159,7 @@ const PdfAnalysis = {
   },
 
   crossCheckResult: async function (jobId: string): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/crosscheck/${jobId}/result`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/crosscheck/${jobId}/result`, {
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -164,7 +167,7 @@ const PdfAnalysis = {
   },
 
   cancelCrossCheck: async function (jobId: string): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/crosscheck/${jobId}`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/crosscheck/${jobId}`, {
       method: "DELETE",
       headers: baseHeaders(),
     })
@@ -179,7 +182,7 @@ const PdfAnalysis = {
     factCriteria,
     deepScan,
   }: CorpusParams): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/corpus`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/corpus`, {
       method: "POST",
       headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -195,7 +198,7 @@ const PdfAnalysis = {
   },
 
   listCorpus: async function (): Promise<any[]> {
-    return await fetch(`${API_BASE}/pdf-analysis/corpus/list`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/corpus/list`, {
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -204,7 +207,7 @@ const PdfAnalysis = {
   },
 
   corpusResult: async function (jobId: string): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/corpus/${jobId}/result`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/corpus/${jobId}/result`, {
       headers: baseHeaders(),
     })
       .then((res) => res.json())
@@ -212,7 +215,7 @@ const PdfAnalysis = {
   },
 
   cancelCorpus: async function (jobId: string): Promise<PdfAnalysisResult> {
-    return await fetch(`${API_BASE}/pdf-analysis/corpus/${jobId}`, {
+    return await fetch(`${PDF_ANALYSIS_BASE}/corpus/${jobId}`, {
       method: "DELETE",
       headers: baseHeaders(),
     })

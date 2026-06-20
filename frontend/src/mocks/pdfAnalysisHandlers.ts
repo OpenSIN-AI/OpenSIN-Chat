@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// DEV-ONLY mock handlers for /api/pdf-analysis/* endpoints.
+// DEV-ONLY mock handlers for /pdf-analysis/* endpoints.
 // These are loaded exclusively when import.meta.env.DEV === true and the
 // localStorage flag `anythingllm_pdf_mock` is set to "true".
 import { http, HttpResponse, delay } from "msw";
@@ -81,7 +81,7 @@ function simulateJobProgress(jobId: string) {
   setTimeout(tick, 800);
 }
 
-const API = "/api";
+const API = "";
 
 export const pdfAnalysisHandlers = [
   // Upload

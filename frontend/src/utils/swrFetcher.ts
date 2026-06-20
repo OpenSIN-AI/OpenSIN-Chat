@@ -1,7 +1,26 @@
 // SPDX-License-Identifier: MIT
 import { API_BASE } from "@/utils/constants";
+import { AUTH_TOKEN, AUTH_USER, AUTH_TIMESTAMP } from "@/utils/constants";
 import { baseHeaders } from "@/utils/request";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
+import { safeRemoveItem } from "@/utils/safeStorage";
+import paths from "@/utils/paths";
+
+let redirectingToLogin = false;
+
+/**
+ * Clears auth-related localStorage keys and redirects to the login page.
+ * Guarded by a module-level flag so that multiple simultaneous 401s
+ * only trigger one redirect.
+ */
+export function handleAuthFailure() {
+  if (redirectingToLogin) return;
+  redirectingToLogin = true;
+  safeRemoveItem(AUTH_USER);
+  safeRemoveItem(AUTH_TOKEN);
+  safeRemoveItem(AUTH_TIMESTAMP);
+  window.location.replace(paths.login());
+}
 
 /**
  * Global SWR fetcher used as the default `fetcher` in `<SWRConfig>`.
@@ -27,6 +46,7 @@ export async function swrFetcher(key) {
 
   const res = await fetchWithTimeout(url, { headers: baseHeaders() });
   if (!res.ok) {
+    if (res.status === 401) handleAuthFailure();
     const error = new Error(
       `Request failed with HTTP ${res.status}`,
     ) as Error & { status: number; info: any };
@@ -44,14 +64,19 @@ export async function swrFetcher(key) {
  * - `revalidateOnFocus` / `revalidateOnReconnect` enable stale-while-revalidate
  *   so the user never stares at stale data after switching tabs.
  * - `errorRetryCount` bounds retries to avoid hammering the backend.
+ * - `onError` intercepts 401 responses and redirects to the login page,
+ *   clearing stale auth tokens so the user is not stuck on a broken session.
  */
 export const swrConfig = {
   fetcher: swrFetcher,
   revalidateOnFocus: true,
   revalidateOnReconnect: true,
-  shouldRetryOnError: true,
+  shouldRetryOnError: (err) => err?.status !== 401,
   errorRetryCount: 3,
   dedupingInterval: 5000,
+  onError: (err) => {
+    if (err?.status === 401) handleAuthFailure();
+  },
 };
 
 export default swrFetcher;

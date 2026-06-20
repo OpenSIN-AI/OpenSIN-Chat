@@ -131,7 +131,7 @@ export default function Sidebar() {
                   ? t("sidebar.hideSidebar")
                   : t("sidebar.showSidebar")
               }
-              className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-white flex-shrink-0"
+              className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-white flex-shrink-0 relative z-10"
             >
               <SidebarSimple
                 size={18}

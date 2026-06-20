@@ -17,6 +17,9 @@
  */
 
 const { validApiKey } = require("../../../utils/middleware/validApiKey");
+const {
+  validatedRequest,
+} = require("../../../utils/middleware/validatedRequest");
 const logger = require("../../../utils/logger")();
 
 const MAX_LIMIT = 200;
@@ -112,7 +115,7 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/stats", [validApiKey], async (_, response) => {
+  app.get("/politician/stats", [validatedRequest], async (_, response) => {
     try {
       const db = getPoliticianDB();
       const vectorStats = await db.vectorStore.stats();
@@ -138,7 +141,7 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/sync/status", [validApiKey], async (_, response) => {
+  app.get("/politician/sync/status", [validatedRequest], async (_, response) => {
     try {
       const db = getPoliticianDB();
       const status = await db.getSyncStatus();
@@ -149,7 +152,7 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.post("/politician/sync/trigger", [validApiKey], async (_, response) => {
+  app.post("/politician/sync/trigger", [validatedRequest], async (_, response) => {
     try {
       const { spawn } = require("child_process");
       const path = require("path");

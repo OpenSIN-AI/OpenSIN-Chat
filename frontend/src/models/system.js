@@ -517,6 +517,7 @@ const System = {
     return await fetch(`${API_BASE}/system/is-default-logo`, {
       method: "GET",
       cache: "no-cache",
+      headers: baseHeaders(),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to get is default logo!");
@@ -840,6 +841,7 @@ const System = {
     const newVersion = await fetch(`${API_BASE}/utils/metrics`, {
       method: "GET",
       cache: "no-cache",
+      headers: baseHeaders(),
     })
       .then((res) => {
         if (!res.ok) throw new Error("Could not fetch app version.");

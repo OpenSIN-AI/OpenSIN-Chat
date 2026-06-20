@@ -25,7 +25,11 @@ interface SystemPromptForm {
 
 export default function DefaultSystemPrompt() {
   const { t } = useTranslation();
-  const { prompt, isLoading: promptLoading } = useDefaultSystemPrompt();
+  const {
+    defaultSystemPrompt,
+    saneDefaultSystemPrompt,
+    isLoading: promptLoading,
+  } = useDefaultSystemPrompt();
   const { variables: availableVariables } = useSystemPromptVariables();
   const [systemPromptForm, setSystemPromptForm] = useState<SystemPromptForm>({
     value: "",
@@ -39,10 +43,10 @@ export default function DefaultSystemPrompt() {
     if (promptLoading) return;
     setSystemPromptForm((prev) => ({
       ...prev,
-      default: prompt.defaultSystemPrompt || "",
-      value: prompt.defaultSystemPrompt || prev.value,
+      default: defaultSystemPrompt || "",
+      value: defaultSystemPrompt || prev.value,
     }));
-  }, [promptLoading, prompt.defaultSystemPrompt]);
+  }, [promptLoading, defaultSystemPrompt]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -69,11 +73,11 @@ export default function DefaultSystemPrompt() {
 
         if (
           !newSystemPrompt ||
-          newSystemPrompt.trim() === prompt.saneDefaultSystemPrompt
+          newSystemPrompt.trim() === saneDefaultSystemPrompt
         ) {
           return setSystemPromptForm((prev) => ({
             ...prev,
-            value: prompt.saneDefaultSystemPrompt,
+            value: saneDefaultSystemPrompt,
           }));
         }
 

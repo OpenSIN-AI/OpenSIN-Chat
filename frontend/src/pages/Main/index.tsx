@@ -3,7 +3,7 @@ import React from "react";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { FullScreenLoader } from "@/components/Preloader";
 import Home from "./Home";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 import {
@@ -27,6 +27,7 @@ export default function Main() {
 
 function MainLayout() {
   const { showSidebar } = useSidebarToggle();
+  const isMobile = useIsMobileLayout();
   const railVisible = !isMobile && !showSidebar;
 
   return (

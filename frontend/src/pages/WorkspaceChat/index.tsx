@@ -9,7 +9,7 @@ import {
 } from "@/components/Sidebar/SidebarToggle";
 import { useParams } from "react-router-dom";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
-import { isMobile } from "react-device-detect";
+import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { FullScreenLoader } from "@/components/Preloader";
 import { LAST_VISITED_WORKSPACE } from "@/utils/constants";
 import { safeSetItem } from "@/utils/safeStorage";
@@ -32,6 +32,7 @@ export default function WorkspaceChat() {
 
 function WorkspaceChatLayout() {
   const { showSidebar } = useSidebarToggle();
+  const isMobile = useIsMobileLayout();
   const railVisible = !isMobile && !showSidebar;
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">

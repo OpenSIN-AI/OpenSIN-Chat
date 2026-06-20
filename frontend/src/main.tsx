@@ -10,7 +10,7 @@
 import "regenerator-runtime/runtime";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import App from "@/App";
 import PrivateRoute, {
   AdminRoute,
@@ -23,12 +23,15 @@ import OnboardingFlow from "@/pages/OnboardingFlow";
 import "@/index.css";
 import "@/i18n";
 import { safeGetItem } from "@/utils/safeStorage";
+import { installAuthInterceptor } from "@/utils/authInterceptor";
+
+installAuthInterceptor();
 
 const isDev = import.meta.env.DEV;
 const REACTWRAP = isDev ? React.Fragment : React.StrictMode;
 
 // DEV-ONLY: Start the MSW mock worker when the PDF mock flag is set.
-// This intercepts /api/pdf-analysis/* requests so the PDF-Analyse page
+// This intercepts /pdf-analysis/* requests so the PDF-Analyse page
 // can be fully tested without a running backend.
 if (
   isDev &&
@@ -99,6 +102,14 @@ const router = createBrowserRouter([
         },
       },
       // Admin routes
+      {
+        path: "/settings",
+        element: <Navigate to="/settings/llm-preference" replace />,
+      },
+      {
+        path: "/politicians",
+        element: <Navigate to="/settings/politician-sync" replace />,
+      },
       {
         path: "/settings/llm-preference",
         lazy: async () => {

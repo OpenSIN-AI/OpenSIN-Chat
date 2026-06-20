@@ -101,24 +101,48 @@ function utilEndpoints(app) {
     },
   );
 
-  // Abgeordnetenwatch proxy — AfD politicians (Issue #57)
+  // Local politician database — AfD politicians (Issue #57)
+  // Falls back to Abgeordnetenwatch proxy only if the local DB is empty.
   app.get(
     "/utils/bundestag/politicians",
     [validatedRequest],
     async (req, response) => {
       try {
-        const params = new URLSearchParams({
-          "party[label]": "AfD",
-          "legislature[label]": "Bundestag",
-          paginationlimit: req.query.limit || "10",
-        });
-        const res = await fetchWithTimeout(
-          `https://www.abgeordnetenwatch.de/api/v2/politicians?${params}`,
-          { headers: { Accept: "application/json" } },
-        );
-        if (!res.ok) throw new Error(`AW ${res.status}`);
-        const json = await res.json();
-        response.status(200).json(json);
+        const { PoliticianDB } = require("../utils/politician");
+        const db = new PoliticianDB();
+        const limit = Math.min(parseInt(req.query.limit || "10", 10), 50);
+        let results = await db.searchPoliticians("", { party: "AfD" });
+        if (!results || results.length === 0) {
+          const params = new URLSearchParams({
+            "party[label]": "AfD",
+            "legislature[label]": "Bundestag",
+            paginationlimit: String(limit),
+          });
+          const res = await fetchWithTimeout(
+            `https://www.abgeordnetenwatch.de/api/v2/politicians?${params}`,
+            { headers: { Accept: "application/json" } },
+          );
+          if (!res.ok) throw new Error(`AW ${res.status}`);
+          const json = await res.json();
+          return response.status(200).json(json);
+        }
+        results = results.slice(0, limit);
+        const data = results.map((p) => ({
+          id: p.id,
+          first_name: p.firstName || null,
+          last_name: p.lastName || null,
+          label: p.fullName || null,
+          party: { label: p.party || null },
+          constituency: p.electoralDistrict
+            ? { label: p.electoralDistrict }
+            : null,
+          electoral_data: p.electoralDistrict
+            ? { constituency: { label: p.electoralDistrict } }
+            : null,
+          abgeordnetenwatch_url: p.profileUrl || null,
+          photo: p.photoUrl || null,
+        }));
+        response.status(200).json({ data });
       } catch (e) {
         const errorId = crypto.randomUUID();
         console.error(`[endpoint error ${errorId}]`, e);

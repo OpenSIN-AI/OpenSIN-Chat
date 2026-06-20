@@ -285,6 +285,9 @@ export default function ActiveWorkspaces() {
                                   data-tooltip-content={t(
                                     "activeWorkspaces.uploadDocuments",
                                   )}
+                                  aria-label={t(
+                                    "activeWorkspaces.uploadDocuments",
+                                  )}
                                   className={`group/upload border-none rounded-md flex items-center justify-center ml-auto p-[2px] ${isActive ? "hover:bg-zinc-500 light:hover:bg-sky-800/30" : "hover:bg-zinc-500 light:hover:bg-slate-400"}`}
                                 >
                                   <UploadSimple

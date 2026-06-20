@@ -62,6 +62,8 @@ export default function TextSizeMenu() {
         ref={buttonRef}
         type="button"
         onClick={() => setShowMenu(!showMenu)}
+        aria-label={t("chat_window.text_size")}
+        aria-expanded={showMenu}
         className={`group border-none cursor-pointer flex items-center justify-center w-[35px] h-[35px] rounded-full transition-all ${
           showMenu
             ? "bg-zinc-700 light:bg-slate-200"
