@@ -85,22 +85,9 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   });
 
   // Reasoning models (z.B. deepseek-v4-pro) liefern oft eine lange
-  // interne Kette vor dem eigentlichen Titel. Wir nehmen die letzte
-  // nicht-leere Zeile als Titelkandidat und ignorieren den Rest.
-  const lastNonEmptyLine = (textResponse || "")
-    .split(/\n/)
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .pop();
-
-  // Cleanup: Anführungszeichen, Markdown, Whitespace.
-  let cleanTitle = (lastNonEmptyLine || "")
-    .replace(/^["']|["']$/g, "")
-    .replace(/\s+/g, " ");
-
-  // Falls der Titelkandidat leer ist oder offensichtlich die
-  // Prompt-Anweisungen wiederholt, auf den ersten Teil der Nutzeranfrage
-  // zurückfallen (max. 5 Wörter, max. 40 Zeichen).
+  // interne Kette vor dem eigentlichen Titel. Wir suchen von hinten nach
+  // der ersten Zeile, die wie ein gültiger Titel aussieht (max. 5 Wörter,
+  // keine Prompt-Echo-Marker), und ignorieren den Rest.
   const promptEchoMarkers = [
     "max. 5 Wörter",
     "maximum 5 words",
@@ -112,20 +99,49 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     "User message:",
     "Provide a 5-word-or-less",
     "We are asked:",
+    "We need to generate",
+    "concise title",
+    "generate a title",
   ];
-  const looksLikePromptEcho = promptEchoMarkers.some((marker) =>
-    cleanTitle.toLowerCase().includes(marker.toLowerCase()),
-  );
 
-  if (!cleanTitle || looksLikePromptEcho) {
+  function isValidTitle(line) {
+    if (!line) return false;
+    const lower = line.toLowerCase();
+    if (promptEchoMarkers.some((marker) => lower.includes(marker.toLowerCase())))
+      return false;
+    const words = line.trim().split(/\s+/).filter(Boolean);
+    return words.length >= 1 && words.length <= 5 && line.length <= 40;
+  }
+
+  const lines = (textResponse || "")
+    .split(/\n/)
+    .map((line) =>
+      line
+        .trim()
+        .replace(/^["']|["']$/g, "")
+        .replace(/\s+/g, " ")
+        .trim(),
+    )
+    .filter(Boolean);
+
+  let cleanTitle = "";
+  for (let i = lines.length - 1; i >= 0; i--) {
+    if (isValidTitle(lines[i])) {
+      cleanTitle = lines[i];
+      break;
+    }
+  }
+
+  // Falls kein gültiger Titel gefunden wurde, auf den ersten Teil der
+  // Nutzeranfrage zurückfallen (max. 5 Wörter, max. 40 Zeichen).
+  if (!cleanTitle) {
     cleanTitle = prompt
       .split(/\s+/)
       .slice(0, 5)
       .join(" ");
   }
 
-  // Harte Längenbegrenzung: max. 5 Wörter und 40 Zeichen, damit die UI den
-  // Titel nicht abschneidet.
+  // Harte Längenbegrenzung: max. 5 Wörter und 40 Zeichen.
   cleanTitle = cleanTitle
     .split(/\s+/)
     .slice(0, 5)

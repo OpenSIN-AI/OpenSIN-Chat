@@ -76,6 +76,27 @@ describe("generateTitleJob", () => {
     );
   });
 
+  test("finds a valid title earlier when the last line is garbage", async () => {
+    mockGetChatCompletion.mockResolvedValue({
+      textResponse:
+        "We need to generate a concise 3-5 word title\nAfD Energy Policy Summary\nWe need to generate a",
+    });
+
+    await generateTitleJob({
+      threadId: 1,
+      workspaceSlug: "default",
+      prompt: "Was ist die Energiepolitik der AfD?",
+      response: "Die AfD setzt sich für bezahlbare Energie ein.",
+    });
+
+    // Last line contains the echo marker, so we should walk back and pick
+    // "AfD Energy Policy Summary".
+    expect(mockUpdate).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 1 }),
+      expect.objectContaining({ name: "AfD Energy Policy Summary" }),
+    );
+  });
+
   test("falls back to truncated user prompt when LLM echoes instructions", async () => {
     mockGetChatCompletion.mockResolvedValue({
       textResponse:
