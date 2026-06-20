@@ -367,93 +367,84 @@ a {
  * Dot Falling
  * ==============================================
  */
-.dot-falling {
-  position: relative;
-  left: -9999px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #eeeeee;
-  color: #5fa4fa;
-  box-shadow: 9999px 0 0 0 #eeeeee;
-  animation: dot-falling 1.5s infinite linear;
-  animation-delay: 0.1s;
+/* Modern bouncing dots loader — replaces the old dot-falling hack */
+.typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+}
+.typing-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.4;
+  animation: typing-bounce 1.4s infinite ease-in-out both;
+}
+.typing-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.typing-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+.typing-dots span:nth-child(3) {
+  animation-delay: 0s;
+}
+@keyframes typing-bounce {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.3;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
 }
 
+/* Legacy dot-falling — kept for backward compat / tests */
+.dot-falling {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  position: static;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  box-shadow: none;
+  animation: none;
+}
+.dot-falling::before,
+.dot-falling::after {
+  display: none;
+}
 .dot-falling::before,
 .dot-falling::after {
   content: "";
   display: inline-block;
-  position: absolute;
-  top: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.4;
+  animation: typing-bounce 1.4s infinite ease-in-out both;
+  position: static;
 }
-
 .dot-falling::before {
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #eeeeee;
-  color: #eeeeee;
-  animation: dot-falling-before 1.5s infinite linear;
+  animation-delay: -0.32s;
+}
+.dot-falling::after {
   animation-delay: 0s;
 }
-
-.dot-falling::after {
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #eeeeee;
-  color: #eeeeee;
-  animation: dot-falling-after 1.5s infinite linear;
-  animation-delay: 0.2s;
-}
-
-@keyframes dot-falling {
-  0% {
-    box-shadow: 9999px -15px 0 0 rgba(152, 128, 255, 0);
-  }
-
-  25%,
-  50%,
-  75% {
-    box-shadow: 9999px 0 0 0 #eeeeee;
-  }
-
-  100% {
-    box-shadow: 9999px 15px 0 0 rgba(152, 128, 255, 0);
-  }
-}
-
-@keyframes dot-falling-before {
-  0% {
-    box-shadow: 9984px -15px 0 0 rgba(152, 128, 255, 0);
-  }
-
-  25%,
-  50%,
-  75% {
-    box-shadow: 9984px 0 0 0 #eeeeee;
-  }
-
-  100% {
-    box-shadow: 9984px 15px 0 0 rgba(152, 128, 255, 0);
-  }
-}
-
-@keyframes dot-falling-after {
-  0% {
-    box-shadow: 10014px -15px 0 0 rgba(152, 128, 255, 0);
-  }
-
-  25%,
-  50%,
-  75% {
-    box-shadow: 10014px 0 0 0 #eeeeee;
-  }
-
-  100% {
-    box-shadow: 10014px 15px 0 0 rgba(152, 128, 255, 0);
-  }
+.dot-falling {
+  animation: typing-bounce 1.4s infinite ease-in-out both;
+  animation-delay: -0.16s;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.4;
 }
 
 .show-scrollbar {

@@ -125,7 +125,7 @@ export default function RenderMetrics({ metrics = {} }: any) {
           ? t("chat_window.metrics_show_on_hover")
           : t("chat_window.metrics_show_when_available")
       }
-      className={`border-none flex md:justify-end items-center gap-x-[8px] -ml-7 ${showMetricsAutomatically ? "opacity-100" : "opacity-0"} md:group-hover:opacity-100 transition-all duration-300`}
+      className={`border-none flex md:justify-end items-center gap-x-[8px] ${showMetricsAutomatically ? "opacity-100" : "opacity-0"} md:group-hover:opacity-100 transition-all duration-300`}
     >
       <p className="cursor-pointer text-xs font-mono text-zinc-400 light:text-slate-500">
         {buildMetricsString(metrics)}
