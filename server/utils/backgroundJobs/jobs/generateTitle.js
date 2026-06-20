@@ -160,9 +160,13 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
       .replace(/[^\w\säöüßÄÖÜ-]/g, " ")
       .trim();
     const words = scrubbed.split(/\s+/).filter(Boolean);
-    for (let take = 3; take <= 5; take++) {
+    // Vom längsten Suffix zum kürzesten: ein Kandidat mit doppelten Wörtern
+    // wird verworfen, weil Reasoning-Modelle den Titel gerne wiederholen.
+    for (let take = 5; take >= 3; take--) {
       const candidate = words.slice(-take).join(" ").trim();
-      if (isValidTitle(candidate)) {
+      const candidateWords = candidate.split(/\s+/).filter(Boolean);
+      const unique = new Set(candidateWords.map((w) => w.toLowerCase()));
+      if (unique.size === candidateWords.length && isValidTitle(candidate)) {
         cleanTitle = candidate;
         break;
       }
