@@ -5,6 +5,7 @@ import {
   useState,
   useMemo,
   useCallback,
+  useEffect,
   forwardRef,
   lazy,
   Suspense,
@@ -298,12 +299,27 @@ export default forwardRef(function (
     setIsAtBottom(atBottom);
   }, []);
 
+  const wasEmptyRef = useRef(true);
+  useEffect(() => {
+    if (wasEmptyRef.current && compiledRows.length > 0) {
+      wasEmptyRef.current = false;
+      requestAnimationFrame(() => {
+        const virtuoso = virtuosoRef.current;
+        if (virtuoso && virtuoso.scrollToIndex) {
+          virtuoso.scrollToIndex({
+            index: compiledRows.length - 1,
+            behavior: "smooth",
+          });
+        }
+      });
+    }
+  }, [compiledRows]);
+
   const renderRow = useCallback(
-    (row: any) => {
+    (row: any, index: number) => {
       switch (row.kind) {
         case "statusGroup": {
-          const hasSubsequentMessages =
-            compiledRows.indexOf(row) < compiledRows.length - 1;
+          const hasSubsequentMessages = index < compiledRows.length - 1;
           return (
             <StatusResponse
               messages={row.messages}
@@ -410,22 +426,23 @@ export default forwardRef(function (
       <ThoughtExpansionProvider>
         <div
           id="chat-history"
-          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full md:h-[83%] pb-[100px] pt-6 md:pt-0 md:pb-20 md:mx-0 flex flex-col items-center justify-start ${showScrollbar ? "show-scrollbar" : "no-scroll"}`}
+          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full relative pb-[100px] pt-6 md:pt-0 md:mx-0 flex flex-col items-center justify-start`}
         >
           <Virtuoso
             ref={virtuosoRef}
             data={compiledRows}
             computeItemKey={computeItemKey}
-            itemContent={(_index, row) => renderRow(row)}
+            itemContent={(index, row) => renderRow(row, index)}
             followOutput={(atBottom: boolean) =>
-              atBottom || isStreaming ? "auto" : false
+              atBottom ? "auto" : false
             }
             initialTopMostItemIndex={
               compiledRows.length > 1 ? compiledRows.length - 1 : 0
             }
             atBottomStateChange={handleScrollState}
             className="h-full w-full overflow-y-scroll"
-            defaultItemHeight={80}
+            defaultItemHeight={120}
+            increaseViewportBy={{ top: 600, bottom: 600 }}
           />
           {showing && (
             <ManageWorkspace
@@ -433,21 +450,21 @@ export default forwardRef(function (
               providedSlug={workspace.slug}
             />
           )}
-        </div>
-        {!isAtBottom && (
-          <div className="absolute bottom-40 right-10 z-50 cursor-pointer animate-pulse">
-            <div className="flex flex-col items-center">
-              <div
-                className="p-1 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 hover:text-white"
-                onClick={() => {
-                  scrollVirtuosoToBottom(!isStreaming);
-                }}
-              >
-                <ArrowDown weight="bold" className="text-white/60 w-5 h-5" />
+          {!isAtBottom && (
+            <div className="absolute bottom-4 right-10 z-50 cursor-pointer animate-pulse">
+              <div className="flex flex-col items-center">
+                <div
+                  className="p-1 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 hover:text-white"
+                  onClick={() => {
+                    scrollVirtuosoToBottom(!isStreaming);
+                  }}
+                >
+                  <ArrowDown weight="bold" className="text-white/60 w-5 h-5" />
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </ThoughtExpansionProvider>
     </MessageActionsProvider>
   );

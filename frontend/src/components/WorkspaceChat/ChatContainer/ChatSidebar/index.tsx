@@ -331,7 +331,10 @@ export default function ChatSidebar({ isOpen, children }: any) {
   if (!isOpen) return null;
 
   return (
-    <div className="relative h-full w-full overflow-hidden flex flex-col">
+    <div
+      className="relative h-full overflow-hidden flex flex-col flex-shrink-0"
+      style={{ width: `${width}px` }}
+    >
       {/* Resize handle on the LEFT edge so user can drag to widen the panel */}
       <div
         onMouseDown={handleResizeStart}

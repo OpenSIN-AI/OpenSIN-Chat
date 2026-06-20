@@ -34,7 +34,7 @@ export default function MessageList({
   files,
 }: MessageListProps) {
   return (
-    <div className="flex flex-col h-full w-full pb-20 md:pb-0">
+    <div className="flex flex-col h-full w-full">
       <div className="contents">
         <MetricsProvider>
           <ChatHistory

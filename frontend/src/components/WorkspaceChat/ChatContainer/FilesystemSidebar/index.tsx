@@ -118,7 +118,7 @@ export default function FilesystemSidebar() {
   const [deletingPath, setDeletingPath] = useState(null);
 
   useEffect(() => {
-    if (sidebarOpen && !currentPath) {
+    if (sidebarOpen && currentPath === null) {
       browse("");
     }
   }, [sidebarOpen, currentPath, browse]);
@@ -127,18 +127,19 @@ export default function FilesystemSidebar() {
 
   const handleSelectDirectory = useCallback(() => {
     if (currentPath !== null) {
-      setSelectedDirectory(currentPath || t("sidebar.filesystem.uploadsRoot"));
+      setSelectedDirectory(currentPath);
     }
-  }, [currentPath, t]);
+  }, [currentPath]);
 
   const handleConnect = useCallback(async () => {
-    if (selectedFiles.length === 0 && !selectedDirectory) return;
+    if (selectedFiles.length === 0 && selectedDirectory === null) return;
     setConnecting(true);
     setConnectResult(null);
     try {
-      const payload = selectedDirectory
-        ? { directory: selectedDirectory }
-        : { files: selectedFiles.map((f) => f.path) };
+      const payload =
+        selectedDirectory !== null
+          ? { directory: selectedDirectory }
+          : { files: selectedFiles.map((f) => f.path) };
       const res = await fetch("/api/workspace/opensin-chat/connect-files", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -148,9 +149,10 @@ export default function FilesystemSidebar() {
       if (res.ok) {
         setConnectResult({
           success: true,
-          message: selectedDirectory
-            ? `Verzeichnis "${selectedDirectory}" verbunden — KI hat Zugriff auf alle Dateien`
-            : `${data.connected || 0} von ${data.total} Datei(en) verbunden`,
+          message:
+            selectedDirectory !== null
+              ? `Verzeichnis "${selectedDirectory || t("sidebar.filesystem.uploadsRoot")}" verbunden — KI hat Zugriff auf alle Dateien`
+              : `${data.connected || 0} von ${data.total} Datei(en) verbunden`,
         });
         clearSelection();
         setSelectedDirectory(null);
@@ -165,7 +167,7 @@ export default function FilesystemSidebar() {
     } finally {
       setConnecting(false);
     }
-  }, [selectedFiles, selectedDirectory, clearSelection]);
+  }, [selectedFiles, selectedDirectory, clearSelection, t]);
 
   const handleDelete = useCallback(
     async (itemPath, itemName) => {
@@ -286,7 +288,7 @@ export default function FilesystemSidebar() {
           </div>
         )}
 
-        {selectedDirectory && (
+        {selectedDirectory !== null && (
           <div className="px-4 py-2 border-b border-zinc-800 light:border-slate-200 bg-blue-950/30">
             <div className="flex items-center gap-2">
               <CheckCircle
@@ -296,7 +298,7 @@ export default function FilesystemSidebar() {
               />
               <span className="text-xs text-blue-300 truncate flex-1">
                 {t("sidebar.filesystem.currentPath", {
-                  path: selectedDirectory,
+                  path: selectedDirectory || t("sidebar.filesystem.uploadsRoot"),
                 })}
               </span>
               <button
@@ -310,7 +312,7 @@ export default function FilesystemSidebar() {
           </div>
         )}
 
-        {!selectedDirectory && (
+        {selectedDirectory === null && (
           <>
             <div className="px-3 py-2 border-b border-zinc-800 light:border-slate-200 shrink-0">
               <p className="text-[11px] text-zinc-400 light:text-slate-500 mb-2">
@@ -665,7 +667,7 @@ export default function FilesystemSidebar() {
           </>
         )}
 
-        {selectedDirectory && (
+        {selectedDirectory !== null && (
           <div className="flex-1 flex flex-col items-center justify-center p-4">
             <FolderOpen
               size={48}
@@ -676,7 +678,7 @@ export default function FilesystemSidebar() {
               {t("sidebar.filesystem.directoryConnected")}
             </p>
             <p className="text-xs text-zinc-400 light:text-slate-500 text-center mb-4 font-mono">
-              {selectedDirectory}
+              {selectedDirectory || t("sidebar.filesystem.uploadsRoot")}
             </p>
             <p className="text-[11px] text-zinc-500 light:text-slate-400 text-center mb-4">
               {t("sidebar.filesystem.directoryAccessDescription")}

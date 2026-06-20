@@ -62,7 +62,7 @@ const PromptReply: any = ({
   if (pending) {
     return (
       <div className="flex justify-start w-full">
-        <div className="py-1.5 pl-0 pr-4 flex flex-col md:max-w-[80%]">
+        <div className="py-1.5 pl-0 pr-4 flex flex-col w-full">
           <div className="mt-2 ml-1 dot-falling light:invert"></div>
         </div>
       </div>

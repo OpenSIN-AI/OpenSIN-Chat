@@ -38,7 +38,7 @@ export function useFileBrowser() {
   const navigateTo = useCallback((targetPath) => browse(targetPath), [browse]);
 
   const navigateUp = useCallback(() => {
-    if (parentPath) browse(parentPath);
+    if (parentPath !== null) browse(parentPath);
   }, [parentPath, browse]);
 
   const createDirectory = useCallback(async (name, dirParentPath) => {

@@ -93,6 +93,8 @@ export default function useChatStream({
       chatEl.style.paddingBottom = `${inputHeight}px`;
     });
     observer.observe(wrapper);
+    const initialHeight = wrapper.offsetHeight;
+    chatEl.style.paddingBottom = `${initialHeight}px`;
     return () => observer.disconnect();
   }, [isEmpty]);
 

@@ -246,7 +246,7 @@ function workspaceEndpoints(app) {
     async (request, response) => {
       try {
         const { slug = null } = request.params;
-        const { files: filePaths } = reqBody(request);
+        const { files: filePaths, directory } = reqBody(request);
         const user = await userFromSession(request, response);
         const currWorkspace = multiUserMode(response)
           ? await Workspace.getWithUser(user, { slug })
@@ -257,7 +257,23 @@ function workspaceEndpoints(app) {
           return;
         }
 
-        if (!filePaths || !Array.isArray(filePaths) || filePaths.length === 0) {
+        // Resolve file paths: either an explicit list or all files in a directory
+        let resolvedFilePaths = filePaths;
+        if ((!resolvedFilePaths || !Array.isArray(resolvedFilePaths) || resolvedFilePaths.length === 0) && directory) {
+          try {
+            const { safeStorageJoin } = require("../utils/paths");
+            const dirPath = safeStorageJoin("uploads", directory);
+            const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
+            resolvedFilePaths = entries
+              .filter((e) => e.isFile() && !e.name.startsWith("."))
+              .map((e) => path.join(dirPath, e.name));
+          } catch (dirErr) {
+            response.status(400).json({ error: `Cannot read directory: ${dirErr.message}` }).end();
+            return;
+          }
+        }
+
+        if (!resolvedFilePaths || !Array.isArray(resolvedFilePaths) || resolvedFilePaths.length === 0) {
           response.status(400).json({ error: "No files provided" }).end();
           return;
         }
@@ -278,7 +294,7 @@ function workspaceEndpoints(app) {
         }
 
         const results = [];
-        for (const filePath of filePaths) {
+        for (const filePath of resolvedFilePaths) {
           try {
             const basename = path.basename(filePath);
             if (!fs.existsSync(filePath)) {

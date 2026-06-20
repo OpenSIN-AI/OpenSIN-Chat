@@ -139,7 +139,7 @@ const HistoricalMessage = ({
       onAnimationEnd={onEndAnimation}
       className={`${isDeleted ? "animate-remove" : ""} flex justify-start w-full group`}
     >
-      <div className="py-1.5 px-4 md:pl-0 flex flex-col w-full">
+      <div className="py-1.5 px-4 flex flex-col md:max-w-[80%] w-full">
         {isEditing ? (
           <EditMessageForm
             role={role}

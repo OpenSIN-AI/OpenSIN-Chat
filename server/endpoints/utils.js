@@ -275,11 +275,11 @@ function utilEndpoints(app) {
         });
 
         response.status(200).json({
-          path: resolvedPath,
+          path: path.relative(uploadsRoot, resolvedPath) || "",
           parent:
             resolvedPath === uploadsRoot
               ? null
-              : path.relative(uploadsRoot, path.dirname(resolvedPath)),
+              : path.relative(uploadsRoot, path.dirname(resolvedPath)) || "",
           items,
         });
       } catch (e) {

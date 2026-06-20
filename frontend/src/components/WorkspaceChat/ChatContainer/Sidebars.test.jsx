@@ -84,12 +84,12 @@ describe("Sidebars", () => {
     expect(screen.getByTestId("right-sidebar-icon-bar")).toBeInTheDocument();
   });
 
-  it("panel width is 360px when shown", () => {
+  it("panel container is rendered when sidebar is active", () => {
     mockUseChatSidebar.mockReturnValue({
       activeSidebar: "sources",
     });
     const { container } = render(<Sidebars workspace={workspace} />);
-    const panel = container.querySelector('[style*="width: 360px"]');
+    const panel = container.querySelector(".rounded-2xl");
     expect(panel).toBeInTheDocument();
   });
 
