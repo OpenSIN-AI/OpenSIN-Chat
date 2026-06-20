@@ -71,7 +71,7 @@ export default function ChatModelSelection({
         </optgroup>
       )}
       {/* For providers like TogetherAi where we partition model by creator entity. */}
-      {!Array.isArray(customModels) && Object.keys(customModels).length > 0 && (
+      {!Array.isArray(customModels) && customModels && Object.keys(customModels).length > 0 && (
         <>
           {Object.entries(customModels).map(([organization, models]) => (
             <optgroup key={organization} label={organization}>

@@ -110,7 +110,7 @@ export default function SystemPromptVariables(): JSX.Element {
                 <tbody>
                   {variables.map((variable: any) => (
                     <VariableRow
-                      key={variable.id}
+                      key={variable.id ?? variable.key}
                       variable={variable}
                       onRefresh={refresh}
                     />

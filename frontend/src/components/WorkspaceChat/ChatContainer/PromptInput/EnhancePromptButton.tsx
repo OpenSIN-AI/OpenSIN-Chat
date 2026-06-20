@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Sparkle } from "@phosphor-icons/react/dist/csr/Sparkle";
 import { Tooltip } from "react-tooltip";
+import { baseHeaders } from "@/utils/request";
 
 /**
  * Enhance Prompt Button — improves the current prompt via the server API.
@@ -28,7 +29,10 @@ export default function EnhancePromptButton({
     try {
       const res = await fetch("/api/utils/enhance-prompt", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...baseHeaders(),
+        },
         body: JSON.stringify({ prompt: text }),
       });
       if (res.ok) {

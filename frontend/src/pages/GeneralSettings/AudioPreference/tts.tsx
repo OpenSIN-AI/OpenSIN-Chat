@@ -143,6 +143,15 @@ export default function TextToSpeechProvider({ settings }: { settings: any }) {
     setFilteredProviders(filtered);
   }, [searchQuery, selectedProvider]);
 
+  useEffect(() => {
+    if (!searchMenuOpen) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setSearchMenuOpen(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [searchMenuOpen]);
+
   const selectedProviderObject = PROVIDERS(t).find(
     (provider) => provider.value === selectedProvider,
   );

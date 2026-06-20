@@ -146,6 +146,15 @@ export default function GeneralEmbeddingPreference() {
     setHasCachedEmbeddings(settings?.HasCachedEmbeddings || false);
   }, [isLoading, settings]);
 
+  useEffect(() => {
+    if (!searchMenuOpen) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setSearchMenuOpen(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [searchMenuOpen]);
+
   function embedderModelChanged(formEl: HTMLFormElement) {
     try {
       const newModel = new FormData(formEl).get("EmbeddingModelPref") ?? null;

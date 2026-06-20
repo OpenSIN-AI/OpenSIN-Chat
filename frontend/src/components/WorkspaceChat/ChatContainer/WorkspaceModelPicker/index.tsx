@@ -71,6 +71,15 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   }, [slug, workspace, systemSettings]);
 
   useEffect(() => {
+    if (!showSelector) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setShowSelector(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [showSelector]);
+
+  useEffect(() => {
     let timer;
     function handleProviderSetup(e) {
       const { provider, settings } = e.detail;

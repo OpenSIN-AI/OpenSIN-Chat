@@ -108,6 +108,15 @@ export default function GeneralLLMPreference() {
     setFilteredLLMs(filtered);
   }, [searchQuery, selectedLLM]);
 
+  useEffect(() => {
+    if (!searchMenuOpen) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setSearchMenuOpen(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [searchMenuOpen]);
+
   const selectedLLMObject = AVAILABLE_LLM_PROVIDERS.find(
     (llm) => llm.value === selectedLLM,
   );

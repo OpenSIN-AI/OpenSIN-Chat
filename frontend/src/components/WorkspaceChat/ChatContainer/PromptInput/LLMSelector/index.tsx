@@ -76,8 +76,8 @@ export default function LLMSelectorModal({
     setSelectedLLMProvider(provider);
     setAvailableProviders(WORKSPACE_LLM_PROVIDERS);
     autoScrollToSelectedLLMProvider(provider, 50);
-    (document.getElementById("llm-search-input") as HTMLInputElement).value =
-      "";
+    const searchInput = document.getElementById("llm-search-input");
+    if (searchInput) (searchInput as HTMLInputElement).value = "";
     setHasChanges(true);
     setMissingCredentials(hasMissingCredentials(settings, provider));
   }
@@ -106,6 +106,7 @@ export default function LLMSelectorModal({
       if (!!message) throw new Error(message);
       window.dispatchEvent(new Event(SAVE_LLM_SELECTOR_EVENT));
     } catch (error) {
+      setHasChanges(true);
       console.error(error);
       showToast(error.message, "error", { clear: true });
     } finally {

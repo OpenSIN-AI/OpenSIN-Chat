@@ -195,6 +195,15 @@ export default function AgentWebSearchSelection({
     setFilteredResults(filtered);
   }, [searchQuery, selectedProvider]);
 
+  useEffect(() => {
+    if (!searchMenuOpen) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setSearchMenuOpen(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [searchMenuOpen]);
+
   const selectedSearchProviderObject =
     SEARCH_PROVIDERS.find((provider) => provider.value === selectedProvider) ??
     SEARCH_PROVIDERS[1];

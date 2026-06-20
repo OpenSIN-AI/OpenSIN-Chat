@@ -208,7 +208,7 @@ export default function useChatStream({
 
     if (writeMode === "prepend") {
       const currentText = document.getElementById(PROMPT_INPUT_ID)?.value ?? "";
-      text = currentText + " " + text;
+      text = text + " " + currentText;
     }
 
     if (writeMode === "append") {

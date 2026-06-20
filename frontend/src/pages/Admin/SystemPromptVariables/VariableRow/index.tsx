@@ -40,7 +40,9 @@ export default function VariableRow({
     if (!variable.id) return;
     if (
       !window.confirm(
-        t("admin.systemPromptVariables.page.deleteConfirm", { key: variable.key }),
+        t("admin.systemPromptVariables.page.deleteConfirm", {
+          key: variable.key,
+        }),
       )
     )
       return false;
@@ -48,9 +50,13 @@ export default function VariableRow({
     try {
       await System.promptVariables.delete(variable.id);
       rowRef?.current?.remove();
-      showToast(t("admin.systemPromptVariables.page.deleteSuccess"), "success", {
-        clear: true,
-      });
+      showToast(
+        t("admin.systemPromptVariables.page.deleteSuccess"),
+        "success",
+        {
+          clear: true,
+        },
+      );
       if (onRefresh) onRefresh();
     } catch (error) {
       console.error("Error deleting variable:", error);

@@ -39,6 +39,7 @@ export default function ChatTemperatureSettings({
         name="openAiTemp"
         type="number"
         min={0.0}
+        max={1.0}
         step={0.1}
         onWheel={(e) => (e.target as HTMLInputElement).blur()}
         defaultValue={workspace?.openAiTemp ?? defaults.temp}
@@ -46,7 +47,12 @@ export default function ChatTemperatureSettings({
         placeholder={String(defaults.temp)}
         required={true}
         autoComplete="off"
-        onChange={() => setHasChanges(true)}
+        onChange={(e) => {
+          const val = parseFloat(e.target.value);
+          if (val > 1.0) e.target.value = "1.0";
+          else if (val < 0.0) e.target.value = "0.0";
+          setHasChanges(true);
+        }}
       />
     </div>
   );

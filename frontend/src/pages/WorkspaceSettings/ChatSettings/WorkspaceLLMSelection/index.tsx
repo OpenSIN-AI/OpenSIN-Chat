@@ -77,6 +77,15 @@ export default function WorkspaceLLMSelection({
     setFilteredLLMs(filtered);
   }, [LLMS, searchQuery, selectedLLM]);
 
+  useEffect(() => {
+    if (!searchMenuOpen) return;
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setSearchMenuOpen(false);
+    }
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [searchMenuOpen]);
+
   const selectedLLMObject = LLMS.find((llm) => llm.value === selectedLLM);
 
   return (
