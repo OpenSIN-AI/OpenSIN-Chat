@@ -141,13 +141,17 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
 
   // Reasoning-Modelle (deepseek-v4-pro) geben den Titel manchmal inline
   // am Ende einer einzigen langen Zeile aus (z. B. "... I'll output: AfD
-  // Energy Policy"). In dem Fall extrahieren wir die letzten 3–5 Wörter aus
-  // dem Text, nachdem wir Prompt-Echo-Zeilen entfernt haben.
+  // Energy Policy"). In dem Fall entfernen wir bekannte Prompt-Echo-Texte
+  // aus dem gesamten Response und nehmen die letzten 3–5 Wörter als Titel.
   if (!cleanTitle) {
-    const nonEchoText = lines
-      .filter((line) => !promptEchoMarkers.some((m) => line.toLowerCase().includes(m.toLowerCase())))
-      .join(" ");
-    const tail = nonEchoText.trim().split(/\s+/).filter(Boolean).slice(-5);
+    let scrubbed = textResponse || "";
+    for (const marker of promptEchoMarkers) {
+      scrubbed = scrubbed.split(new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("");
+    }
+    // Auch die wiederholte User-Prompt-Zeile entfernen, damit sie nicht als
+    // Titel ausgewählt wird.
+    scrubbed = scrubbed.split(new RegExp(prompt.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("");
+    const tail = scrubbed.trim().split(/\s+/).filter(Boolean).slice(-5);
     const candidate = tail.join(" ").replace(/[^\w\säöüßÄÖÜ-]/g, "").trim();
     if (isValidTitle(candidate)) cleanTitle = candidate;
   }
