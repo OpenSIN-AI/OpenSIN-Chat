@@ -141,8 +141,9 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
 
   // Reasoning-Modelle (deepseek-v4-pro) geben den Titel manchmal inline
   // am Ende einer einzigen langen Zeile aus (z. B. "... I'll output: AfD
-  // Energy Policy"). In dem Fall entfernen wir bekannte Prompt-Echo-Texte
-  // aus dem gesamten Response und nehmen die letzten 3–5 Wörter als Titel.
+  // Energy Policy"). In dem Fall entfernen wir Prompt-Echo-Texte und
+  // Reasoning-Token, nehmen den Wort-Array und suchen vom Ende her nach dem
+  // kürzesten gültigen 3–5-Wort-Suffix.
   if (!cleanTitle) {
     let scrubbed = textResponse || "";
     for (const marker of promptEchoMarkers) {
@@ -151,10 +152,21 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     // Auch die wiederholte User-Prompt-Zeile entfernen, damit sie nicht als
     // Titel ausgewählt wird.
     scrubbed = scrubbed.split(new RegExp(prompt.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("");
-    const tail = scrubbed.trim().split(/\s+/).filter(Boolean).slice(-5);
-    const candidate = tail.join(" ").replace(/[^\w\säöüßÄÖÜ-]/g, "").trim();
-    console.log(`[GenerateTitle] inline fallback for thread ${threadId}: scrubbed="${scrubbed.slice(-100)}" candidate="${candidate}" valid=${isValidTitle(candidate)}`);
-    if (isValidTitle(candidate)) cleanTitle = candidate;
+    // Reasoning-Token wie "think" oder "thinking" können ohne Leerzeichen an
+    // Wörter anhaften (z. B. "InquirythinkAfD"). Wir isolieren und entfernen
+    // sie, bevor wir das Wort-Suffix bestimmen.
+    scrubbed = scrubbed
+      .replace(/(thinking|reasoning|analysis|think|reason|step)/gi, " ")
+      .replace(/[^\w\säöüßÄÖÜ-]/g, " ")
+      .trim();
+    const words = scrubbed.split(/\s+/).filter(Boolean);
+    for (let take = 3; take <= 5; take++) {
+      const candidate = words.slice(-take).join(" ").trim();
+      if (isValidTitle(candidate)) {
+        cleanTitle = candidate;
+        break;
+      }
+    }
   }
 
   // Falls kein gültiger Titel gefunden wurde, auf den ersten Teil der
