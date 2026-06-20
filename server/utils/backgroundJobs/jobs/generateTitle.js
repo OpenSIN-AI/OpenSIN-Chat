@@ -86,8 +86,8 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
 
   // DEBUG: remove after verification
   console.log(
-    `[GenerateTitle] raw response for thread ${threadId}:`,
-    JSON.stringify(textResponse),
+    `[GenerateTitle] lines for thread ${threadId}:`,
+    JSON.stringify(lines),
   );
 
   // Reasoning models (z.B. deepseek-v4-pro) liefern oft eine lange
@@ -128,6 +128,12 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
         .trim(),
     )
     .filter(Boolean);
+
+  // DEBUG: remove after verification
+  console.log(
+    `[GenerateTitle] lines for thread ${threadId}:`,
+    JSON.stringify(lines),
+  );
 
   let cleanTitle = "";
   for (let i = lines.length - 1; i >= 0; i--) {
