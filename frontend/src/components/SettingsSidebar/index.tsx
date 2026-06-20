@@ -522,7 +522,7 @@ function AppVersion() {
     <>
       {/* eslint-disable i18next/no-literal-string */}
       <Link
-        to={`https://github.com/Family-Team-Projects/opensin-chat/releases/tag/v${version}`}
+        to={`https://github.com/OpenSIN-AI/OpenSIN-Chat/releases/tag/v${version}`}
         target="_blank"
         rel="noreferrer"
         className="text-theme-text-secondary light:opacity-80 opacity-50 text-xs mx-3"
