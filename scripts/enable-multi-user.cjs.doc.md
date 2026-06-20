@@ -41,8 +41,8 @@ values in the file.
 | Env | Default | Meaning |
 | --- | --- | --- |
 | `OPEN_SIN_CHAT_DB_PATH` | `server/storage/openafd.db` | Path to the SQLite database |
-| `OPEN_SIN_CHAT_USERNAME` | `Simone123` | Username to create or rename the admin to |
-| `OPEN_SIN_CHAT_PASSWORD` | — | Plaintext password to hash and store |
+| `OPEN_SIN_CHAT_USERNAME` | `admin` | Username to create or rename the admin to |
+| `OPEN_SIN_CHAT_PASSWORD` | `Simone123` | Plaintext password to hash and store |
 | `OPEN_SIN_CHAT_HASHED_PASSWORD` | — | Pre-computed bcrypt hash to store |
 | `OPEN_SIN_CHAT_ROLE` | `admin` | Role for the target user |
 | `OPEN_SIN_CHAT_SQLITE3` | `sqlite3` | Path to the sqlite3 binary |
@@ -70,7 +70,7 @@ Then verify:
 curl https://sinchat.delqhi.com/api/setup-complete
 curl -X POST https://sinchat.delqhi.com/api/request-token \
   -H "Content-Type: application/json" \
-  -d '{"username":"Simone123","password":"YourPassword"}'
+  -d '{"username":"admin","password":"Simone123"}'
 ```
 
 ## Reverting

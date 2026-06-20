@@ -19,8 +19,8 @@
 //
 // Env:
 //   OPEN_SIN_CHAT_DB_PATH          (default: server/storage/openafd.db)
-//   OPEN_SIN_CHAT_USERNAME         (default: Simone123)
-//   OPEN_SIN_CHAT_PASSWORD         plaintext password to hash
+//   OPEN_SIN_CHAT_USERNAME         (default: admin)
+//   OPEN_SIN_CHAT_PASSWORD         plaintext password to hash (default: Simone123)
 //   OPEN_SIN_CHAT_HASHED_PASSWORD  pre-computed bcrypt hash to store
 //   OPEN_SIN_CHAT_ROLE             (default: admin)
 //   OPEN_SIN_CHAT_SQLITE3          (default: sqlite3)
@@ -35,7 +35,7 @@ const repoRoot = path.resolve(scriptDir, "..");
 const DB_PATH = process.env.OPEN_SIN_CHAT_DB_PATH
   ? path.resolve(process.env.OPEN_SIN_CHAT_DB_PATH)
   : path.resolve(repoRoot, "server", "storage", "openafd.db");
-const USERNAME = process.env.OPEN_SIN_CHAT_USERNAME || "Simone123";
+const USERNAME = process.env.OPEN_SIN_CHAT_USERNAME || "admin";
 const ROLE = process.env.OPEN_SIN_CHAT_ROLE || "admin";
 const SQLITE3_BIN = process.env.OPEN_SIN_CHAT_SQLITE3 || "sqlite3";
 
@@ -90,12 +90,7 @@ function getHashedPassword() {
     return hash;
   }
 
-  const password = process.env.OPEN_SIN_CHAT_PASSWORD;
-  if (!password) {
-    throw new Error(
-      "Set OPEN_SIN_CHAT_PASSWORD or OPEN_SIN_CHAT_HASHED_PASSWORD."
-    );
-  }
+  const password = process.env.OPEN_SIN_CHAT_PASSWORD || "Simone123";
   validatePassword(password);
   const bcrypt = loadBcrypt();
   return bcrypt.hashSync(password, 10);
