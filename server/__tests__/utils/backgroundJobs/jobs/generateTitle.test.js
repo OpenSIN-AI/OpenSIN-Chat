@@ -76,6 +76,25 @@ describe("generateTitleJob", () => {
     );
   });
 
+  test("extracts title from inline reasoning with literal newline escapes", async () => {
+    mockGetChatCompletion.mockResolvedValue({
+      textResponse:
+        "We are asked: Return ONLY a concise 3-5 word title.\\n\\nThe user asked about AfD energy policy.\\n\\nAfD Energy Policy Summary",
+    });
+
+    await generateTitleJob({
+      threadId: 1,
+      workspaceSlug: "default",
+      prompt: "Was ist die Energiepolitik der AfD?",
+      response: "Die AfD setzt sich für bezahlbare Energie ein.",
+    });
+
+    expect(mockUpdate).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 1 }),
+      expect.objectContaining({ name: "AfD Energy Policy Summary" }),
+    );
+  });
+
   test("finds a valid title earlier when the last line is garbage", async () => {
     mockGetChatCompletion.mockResolvedValue({
       textResponse:

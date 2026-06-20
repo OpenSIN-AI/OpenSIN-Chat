@@ -132,12 +132,6 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     )
     .filter(Boolean);
 
-  // DEBUG: remove after verification
-  console.log(
-    `[GenerateTitle] lines for thread ${threadId}:`,
-    JSON.stringify(lines),
-  );
-
   let cleanTitle = "";
   for (let i = lines.length - 1; i >= 0; i--) {
     if (isValidTitle(lines[i])) {
