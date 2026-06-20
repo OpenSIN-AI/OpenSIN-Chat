@@ -48,7 +48,14 @@ function strictMultiUserRoleValid(allowedRoles = DEFAULT_ROLES) {
       const multiUserMode =
         response.locals?.multiUserMode ??
         (await SystemSettings.isMultiUserMode());
-      if (!multiUserMode) return response.sendStatus(401);
+      // Single-user operators are implicitly admin of their own server.
+      // There is no other user to protect from, so bypass role gating
+      // entirely. Multi-user deployments still receive the strict
+      // admin/manager role check below.
+      if (!multiUserMode) {
+        next();
+        return;
+      }
 
       const user =
         response.locals?.user ?? (await userFromSession(request, response));

@@ -66,9 +66,9 @@ export default function SingleUserAuth() {
     <>
       <form
         onSubmit={handleLogin}
-        className="flex flex-col justify-center items-center"
+        className="flex flex-col justify-center items-center w-full max-w-sm px-4"
       >
-        <div className="flex items-start justify-between pt-7 pb-9">
+        <div className="flex items-start justify-between pt-7 pb-9 w-full">
           <div className="flex items-center flex-col gap-y-[18px] max-w-[300px]">
             <div className="flex gap-x-1">
               <h3 className="text-white light:text-slate-950 text-3xl leading-[28px] font-medium text-center white-space-nowrap block">
@@ -80,7 +80,7 @@ export default function SingleUserAuth() {
             </p>
           </div>
         </div>
-        <div className="w-full px-12">
+        <div className="w-full">
           <div className="w-full flex flex-col gap-y-3">
             <div className="w-full flex flex-col gap-y-2">
               <label
@@ -93,7 +93,7 @@ export default function SingleUserAuth() {
                 id="single-user-password"
                 name="password"
                 type="password"
-                className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
+                className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-full max-w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 required={true}
                 autoComplete="current-password"
               />
@@ -105,7 +105,7 @@ export default function SingleUserAuth() {
             )}
           </div>
         </div>
-        <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
+        <div className="flex items-center mt-9 space-x-2 w-full flex-col gap-y-6">
           <button
             disabled={loading || appNameLoading}
             type="submit"

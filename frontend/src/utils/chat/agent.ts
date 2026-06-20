@@ -24,8 +24,19 @@ const handledEvents = [
 
 export function websocketURI() {
   const wsProtocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-  if (API_BASE === "/api") return `${wsProtocol}//${window.location.host}`;
-  return `${wsProtocol}//${new URL(import.meta.env.VITE_API_BASE).host}`;
+  // Same-origin (relative "/api") → use the page's host + protocol so the
+  // WebSocket never crosses origins (browsers reject cross-origin upgrades
+  // for security and CSP would block the request anyway).
+  const apiBase = import.meta.env.VITE_API_BASE || API_BASE;
+  if (!apiBase || apiBase.startsWith("/")) {
+    return `${wsProtocol}//${window.location.host}`;
+  }
+  try {
+    return `${wsProtocol}//${new URL(apiBase).host}`;
+  } catch {
+    // Fallback if VITE_API_BASE is malformed (e.g. typo during deploy)
+    return `${wsProtocol}//${window.location.host}`;
+  }
 }
 
 export default function handleSocketResponse(socket, event, setChatHistory) {

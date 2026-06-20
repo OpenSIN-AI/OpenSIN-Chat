@@ -139,13 +139,15 @@ describe("strictMultiUserRoleValid", () => {
     expect(next).toHaveBeenCalledTimes(1);
   });
 
-  it("returns 401 when not in multi-user mode", async () => {
+  it("calls next in single-user mode (single-user operator is implicitly admin of their own server)", async () => {
+    // Regression guard: the previous behavior was to 401 single-user requests
+    // outright, which silently broke the admin UI for single-user operators.
+    // See AGENTS.md / PR; single-user mode bypasses role gating because there
+    // is no other user to protect from.
     SystemSettings.isMultiUserMode.mockResolvedValue(false);
     const mw = strictMultiUserRoleValid([ROLES.admin]);
-    const res = mockRes();
     const next = jest.fn();
-    await mw({}, res, next);
-    expect(next).not.toHaveBeenCalled();
-    expect(res.statusCode).toBe(401);
+    await mw({}, mockRes(), next);
+    expect(next).toHaveBeenCalledTimes(1);
   });
 });

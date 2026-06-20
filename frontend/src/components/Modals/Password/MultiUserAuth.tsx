@@ -41,7 +41,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center items-center"
+      className="flex flex-col justify-center items-center w-full max-w-sm px-4"
     >
       <div className="flex items-start justify-between pt-7 pb-9">
         <div className="flex items-center flex-col gap-y-[18px] max-w-[300px]">
@@ -55,7 +55,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
           </p>
         </div>
       </div>
-      <div className="w-full px-12">
+      <div className="w-full">
         <div className="w-full flex flex-col gap-y-3">
           <div className="w-full flex flex-col gap-y-2">
             <label
@@ -69,7 +69,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
               name="username"
               type="text"
               aria-label={t("auth.username")}
-              className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
+              className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-full max-w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -88,7 +88,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
                 aria-label={`${t("login.password-reset.recovery-codes")} ${
                   index + 1
                 }`}
-                className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
+                className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-full max-w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 value={code}
                 onChange={(e) =>
                   handleRecoveryCodeChange(index, e.target.value)
@@ -100,7 +100,7 @@ const RecoveryForm = ({ onSubmit, setShowRecoveryForm }) => {
           </div>
         </div>
       </div>
-      <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
+      <div className="flex items-center mt-9 space-x-2 w-full flex-col gap-y-6">
         <button
           type="submit"
           disabled={loading}
@@ -141,7 +141,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col justify-center items-center"
+      className="flex flex-col justify-center items-center w-full max-w-sm px-4"
     >
       <div className="flex items-start justify-between pt-7 pb-9">
         <div className="flex items-center flex-col gap-y-[18px] max-w-[300px]">
@@ -155,7 +155,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
           </p>
         </div>
       </div>
-      <div className="w-full px-12">
+      <div className="w-full">
         <div className="w-full flex flex-col gap-y-3">
           <div className="w-full flex flex-col gap-y-2">
             <label
@@ -169,7 +169,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
               type="password"
               name="newPassword"
               aria-label={t("auth.newPassword")}
-              className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
+              className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-full max-w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
@@ -188,7 +188,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
               type="password"
               name="confirmPassword"
               aria-label={t("auth.newPassword")}
-              className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
+              className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-full max-w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -197,7 +197,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
           </div>
         </div>
       </div>
-      <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
+      <div className="flex items-center mt-9 space-x-2 w-full flex-col gap-y-6">
         <button
           type="submit"
           disabled={loading}
@@ -340,7 +340,7 @@ export default function MultiUserAuth() {
     <>
       <form
         onSubmit={handleLogin}
-        className="flex flex-col justify-center items-center"
+        className="flex flex-col justify-center items-center w-full max-w-sm px-4"
       >
         <div className="flex items-start justify-between pt-7 pb-9">
           <div className="flex items-center flex-col gap-y-[18px] max-w-[300px]">
@@ -354,7 +354,7 @@ export default function MultiUserAuth() {
             </p>
           </div>
         </div>
-        <div className="w-full px-12">
+        <div className="w-full">
           <div className="w-full flex flex-col gap-y-3">
             <div className="w-full flex flex-col gap-y-2">
               <label
@@ -368,7 +368,7 @@ export default function MultiUserAuth() {
                 name="username"
                 type="text"
                 aria-label={t("auth.username")}
-                className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
+                className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-full max-w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 required={true}
                 autoComplete="username"
               />
@@ -385,7 +385,7 @@ export default function MultiUserAuth() {
                 name="password"
                 type="password"
                 aria-label={t("auth.password")}
-                className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
+                className="border-none bg-zinc-800 light:bg-slate-200 text-zinc-200 light:text-zinc-600 text-sm rounded-lg p-2.5 w-full max-w-[300px] h-[34px] focus:outline-none focus:ring-1 focus:ring-sky-300"
                 required={true}
                 autoComplete="current-password"
               />
@@ -397,7 +397,7 @@ export default function MultiUserAuth() {
             )}
           </div>
         </div>
-        <div className="flex items-center px-12 mt-9 space-x-2 w-full flex-col gap-y-6">
+        <div className="flex items-center mt-9 space-x-2 w-full flex-col gap-y-6">
           <button
             disabled={loading || appNameLoading}
             aria-busy={loading || appNameLoading}

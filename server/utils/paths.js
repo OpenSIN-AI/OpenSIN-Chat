@@ -11,13 +11,53 @@ const path = require("path");
  * Resolve a path inside the server storage directory.
  * Uses STORAGE_DIR when set (Docker), otherwise falls back to the
  * local <repo>/server/storage directory (bare-metal/dev).
+ *
+ * If STORAGE_DIR is set but the directory cannot be created (e.g. the
+ * `.env.example` Docker absolute path leaked into a bare-metal install),
+ * logs a one-time warning and falls back to the local relative path
+ * so dev installs do not crash on startup (`mkdir ENOENT /app/...`).
+ * Production deployments should always set a writable absolute path.
  * @param {...string} subdirs - optional subdirectories/file segments
  * @returns {string} absolute path
  */
 function getStoragePath(...subdirs) {
-  const base = process.env.STORAGE_DIR || path.resolve(__dirname, "../storage");
-  return subdirs.length > 0 ? path.resolve(base, ...subdirs) : base;
+  const fallbackBase = path.resolve(__dirname, "../storage");
+  if (!process.env.STORAGE_DIR) {
+    return subdirs.length > 0
+      ? path.resolve(fallbackBase, ...subdirs)
+      : fallbackBase;
+  }
+  const candidate = process.env.STORAGE_DIR;
+  if (!path.isAbsolute(candidate)) {
+    if (!pathsWarnedAboutFallback) {
+      console.warn(
+        `[paths] STORAGE_DIR="${candidate}" is not absolute — falling back to local <repo>/server/storage. Set STORAGE_DIR to an absolute path in .env.development to silence this warning.`,
+      );
+      pathsWarnedAboutFallback = true;
+    }
+    process.env.STORAGE_DIR = "";
+    return subdirs.length > 0
+      ? path.resolve(fallbackBase, ...subdirs)
+      : fallbackBase;
+  }
+  try {
+    if (!fs.existsSync(candidate)) fs.mkdirSync(candidate, { recursive: true });
+    return subdirs.length > 0 ? path.resolve(candidate, ...subdirs) : candidate;
+  } catch (err) {
+    if (!pathsWarnedAboutFallback) {
+      console.warn(
+        `[paths] STORAGE_DIR="${candidate}" is not writable (${err.code || err.message}) — falling back to local <repo>/server/storage. Set STORAGE_DIR in .env.development to an absolute writable path to silence this warning.`,
+      );
+      pathsWarnedAboutFallback = true;
+    }
+    process.env.STORAGE_DIR = "";
+    return subdirs.length > 0
+      ? path.resolve(fallbackBase, ...subdirs)
+      : fallbackBase;
+  }
 }
+
+let pathsWarnedAboutFallback = false;
 
 /**
  * Resolve a path inside the collector directory (e.g. the hotdir).
