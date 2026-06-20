@@ -84,6 +84,9 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     temperature: 0.5,
   });
 
+  // TEMP debug
+  console.log(`[GenerateTitle] raw response for thread ${threadId}:`, JSON.stringify(textResponse));
+
   // Reasoning models (z.B. deepseek-v4-pro) liefern oft eine lange
   // interne Kette vor dem eigentlichen Titel. Wir suchen von hinten nach
   // der ersten Zeile, die wie ein gültiger Titel aussieht (max. 5 Wörter,
