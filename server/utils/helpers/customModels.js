@@ -691,13 +691,18 @@ const FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS = [
     organization: "Fireworks",
   },
   {
-    id: "accounts/fireworks/models/kimi-k2p5",
-    name: "Kimi K2.5",
+    id: "accounts/fireworks/models/glm-5p2",
+    name: "GLM 5.2",
     organization: "Fireworks",
   },
   {
-    id: "accounts/fireworks/models/kimi-k2p6",
-    name: "Kimi K2.6",
+    id: "accounts/fireworks/models/kimi-k2p7-code",
+    name: "Kimi K2.7 Code",
+    organization: "Fireworks",
+  },
+  {
+    id: "accounts/fireworks/routers/kimi-k2p7-code-fast",
+    name: "Kimi K2.7 Code Fast",
     organization: "Fireworks",
   },
   {
