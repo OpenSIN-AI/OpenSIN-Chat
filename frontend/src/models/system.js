@@ -220,7 +220,15 @@ const System = {
       .then(async (res) => {
         if (!res.ok) {
           const text = await res.text().catch(() => "Request failed");
-          return { newValues: null, error: text };
+          try {
+            const json = JSON.parse(text);
+            return {
+              newValues: null,
+              error: json.error || json.message || text,
+            };
+          } catch {
+            return { newValues: null, error: text };
+          }
         }
         return res.json();
       })
@@ -238,7 +246,15 @@ const System = {
       .then(async (res) => {
         if (!res.ok) {
           const text = await res.text().catch(() => "Request failed");
-          return { success: false, error: text };
+          try {
+            const json = JSON.parse(text);
+            return {
+              success: false,
+              error: json.error || json.message || text,
+            };
+          } catch {
+            return { success: false, error: text };
+          }
         }
         return res.json();
       })

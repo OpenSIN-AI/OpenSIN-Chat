@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import useCustomAppName from "@/hooks/useCustomAppName";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 
 export default function CustomAppName(): JSX.Element {
   const { t } = useTranslation();
@@ -14,6 +16,7 @@ export default function CustomAppName(): JSX.Element {
     useCustomAppName();
   const { settings, loading: settingsLoading } = useSystemSettings();
   const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
   const [customAppName, setCustomAppName] = useState("");
   const [originalAppName, setOriginalAppName] = useState("");
   const [canCustomize, setCanCustomize] = useState(false);
@@ -104,6 +107,7 @@ export default function CustomAppName(): JSX.Element {
           {t("settings.customAppName.save")}
         </button>
       )}
+      <UnsavedChangesDialog blocker={blocker} />
     </form>
   );
 }

@@ -12,6 +12,8 @@ import OpenSINChatIcon from "@/media/logo/openafd-icon.svg";
 import ElevenLabsIcon from "@/media/ttsproviders/elevenlabs.png";
 import PiperTTSIcon from "@/media/ttsproviders/piper.png";
 import GenericOpenAiLogo from "@/media/ttsproviders/generic-openai.png";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 import KokoroIcon from "@/media/ttsproviders/kokoro.png";
 import NvidiaNimLogo from "@/media/llmprovider/nvidia-nim.png";
 import { useTranslation } from "react-i18next";
@@ -88,6 +90,7 @@ export default function TextToSpeechProvider({ settings }: { settings: any }) {
   const { t } = useTranslation();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProviders, setFilteredProviders] = useState<TTSProvider[]>([]);
   const [selectedProvider, setSelectedProvider] = useState(
@@ -264,6 +267,7 @@ export default function TextToSpeechProvider({ settings }: { settings: any }) {
               ?.options(settings)}
         </div>
       </div>
+      <UnsavedChangesDialog blocker={blocker} />
     </form>
   );
 }

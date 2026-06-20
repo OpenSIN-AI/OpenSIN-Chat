@@ -54,7 +54,7 @@ export default function EmbeddingTextSplitterPreference() {
           "text-splitter-chunking-form",
         ) as HTMLFormElement,
       );
-      await Admin.updateSystemPreferences({
+      const { success, error } = await Admin.updateSystemPreferences({
         text_splitter_chunk_size: isNullOrNaN(
           form.get("text_splitter_chunk_size"),
         )
@@ -66,6 +66,14 @@ export default function EmbeddingTextSplitterPreference() {
           ? 1000
           : Number(form.get("text_splitter_chunk_overlap")),
       });
+      if (!success) {
+        showToast(
+          `Failed to save text chunking strategy settings: ${error}`,
+          "error",
+        );
+        closeModal();
+        return;
+      }
       setHasChanges(false);
       closeModal();
       showToast("Text chunking strategy settings saved.", "success");

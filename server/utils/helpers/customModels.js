@@ -721,8 +721,8 @@ const FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS = [
     organization: "Fireworks",
   },
   {
-    id: "accounts/fireworks/models/qwen3p6-plus",
-    name: "Qwen 3.6 Plus",
+    id: "accounts/fireworks/models/qwen3p7-plus",
+    name: "Qwen 3.7 Plus",
     organization: "Fireworks",
   },
 ];
