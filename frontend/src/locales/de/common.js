@@ -566,6 +566,11 @@ const TRANSLATIONS = {
     submit: "Absenden",
     off: "Aus",
     saveChanges: "Änderungen speichern",
+    unsavedChanges: "Ungespeicherte Änderungen",
+    unsavedChangesDescription:
+      "Sie haben ungespeicherte Änderungen. Möchten Sie diese Seite wirklich verlassen?",
+    stayOnPage: "Auf Seite bleiben",
+    discardAndLeave: "Verwerfen & Verlassen",
     logo: "Logo",
     agent: "Agent",
     logoAlt: "{{name}} Logo",

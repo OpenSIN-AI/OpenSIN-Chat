@@ -559,6 +559,11 @@ const TRANSLATIONS = {
     submit: "Submit",
     off: "Off",
     saveChanges: "Save changes",
+    unsavedChanges: "Unsaved Changes",
+    unsavedChangesDescription:
+      "You have unsaved changes. Are you sure you want to leave this page?",
+    stayOnPage: "Stay on Page",
+    discardAndLeave: "Discard & Leave",
     logo: "Logo",
     agent: "Agent",
     logoAlt: "{{name}} logo",

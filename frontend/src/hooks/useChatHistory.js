@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+import { useMemo } from "react";
 import useSWR, { mutate as globalMutate } from "swr";
 import Workspace from "@/models/workspace";
 
@@ -55,7 +56,7 @@ export default function useChatHistory(workspaceSlug, threadSlug = null) {
   );
 
   return {
-    history: data || [],
+    history: useMemo(() => data ?? [], [data]),
     isLoading,
     error,
     refresh: mutate,

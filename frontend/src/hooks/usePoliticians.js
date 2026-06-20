@@ -13,10 +13,14 @@ export function usePoliticians() {
       dedupingInterval: 30000,
     },
   );
+  // The server returns HTTP 200 with an `error` field when the upstream
+  // API (Abgeordnetenwatch) is unavailable. SWR treats 200 as success,
+  // so we need to surface the body-level error to the UI.
+  const bodyError = data?.error || null;
   return {
     politicians: data?.data || [],
     loading: isLoading,
-    error: error?.message || null,
+    error: error?.message || bodyError,
     refresh: () => mutate(),
   };
 }

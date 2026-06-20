@@ -27,6 +27,8 @@ import { X } from "@phosphor-icons/react/dist/csr/X";
 import CTAButton from "@/components/lib/CTAButton";
 import useLLMProviders from "@/hooks/useLLMProviders";
 import ProviderKeyStatusPanel from "@/components/ProviderKeyStatusPanel";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 
 interface LLMProvider {
   name: string;
@@ -49,13 +51,16 @@ export default function GeneralLLMPreference() {
   const { t } = useTranslation();
   const { keys: settings, isLoading: loading } = useLLMProviders();
 
+  const blocker = useUnsavedChanges(hasChanges);
+
   useEffect(() => {
     if (settings?.LLMProvider) setSelectedLLM(settings.LLMProvider);
   }, [settings]);
 
   const handleSubmit = async (e?: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
+    e?.preventDefault();
+    const form = (e?.target ??
+      document.getElementById("llm-preference-form")) as HTMLFormElement;
     const data: any = { LLMProvider: selectedLLM };
     const formData = new FormData(form);
 
@@ -145,6 +150,7 @@ export default function GeneralLLMPreference() {
           t={t}
         />
       )}
+      <UnsavedChangesDialog blocker={blocker} />
     </div>
   );
 }
@@ -208,7 +214,11 @@ function ContentArea({
       }
       className="h-[var(--content-height)] relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll p-4 md:p-0"
     >
-      <form onSubmit={handleSubmit} className="flex w-full">
+      <form
+        onSubmit={handleSubmit}
+        id="llm-preference-form"
+        className="flex w-full"
+      >
         <div className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px] md:py-6 py-16">
           <Header
             hasChanges={hasChanges}

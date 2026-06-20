@@ -686,6 +686,11 @@ const FIREWORKS_GENERIC_OPENAI_FALLBACK_MODELS = [
     organization: "Fireworks",
   },
   {
+    id: "accounts/fireworks/models/minimax-m3",
+    name: "MiniMax M3",
+    organization: "Fireworks",
+  },
+  {
     id: "accounts/fireworks/models/glm-5p1",
     name: "GLM 5.1",
     organization: "Fireworks",

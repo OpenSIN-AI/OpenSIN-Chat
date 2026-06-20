@@ -17,6 +17,8 @@ import BrowserNative from "@/components/SpeechToText/BrowserNative";
 import OpenAiSTTOptions from "@/components/SpeechToText/OpenAiOptions";
 import DeepgramSTTOptions from "@/components/SpeechToText/DeepgramOptions";
 import GenericOpenAiSTTOptions from "@/components/SpeechToText/GenericOpenAiOptions";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 
 interface Provider {
   name: string;
@@ -67,6 +69,7 @@ export default function SpeechToTextProvider({
   const { t } = useTranslation();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProviders, setFilteredProviders] = useState<Provider[]>([]);
   const [selectedProvider, setSelectedProvider] = useState(
@@ -247,6 +250,7 @@ export default function SpeechToTextProvider({
               ?.options(settings)}
         </div>
       </div>
+      <UnsavedChangesDialog blocker={blocker} />
     </form>
   );
 }

@@ -16,6 +16,8 @@ import GenericOpenAiLogo from "@/media/llmprovider/generic-openai.png";
 import MistralAiLogo from "@/media/llmprovider/mistral.jpeg";
 
 import PreLoader from "@/components/Preloader";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 import ChangeWarningModal from "@/components/ChangeWarning";
 import OpenAiOptions from "@/components/EmbeddingSelection/OpenAiOptions";
 import GeminiOptions from "@/components/EmbeddingSelection/GeminiOptions";
@@ -129,6 +131,7 @@ export default function GeneralEmbeddingPreference() {
   const { settings, isLoading } = useEmbeddingPreference();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
   const [hasEmbeddings, setHasEmbeddings] = useState(false);
   const [hasCachedEmbeddings, setHasCachedEmbeddings] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -384,6 +387,7 @@ export default function GeneralEmbeddingPreference() {
           onConfirm={handleSaveSettings}
         />
       </ModalWrapper>
+      <UnsavedChangesDialog blocker={blocker} />
     </div>
   );
 }

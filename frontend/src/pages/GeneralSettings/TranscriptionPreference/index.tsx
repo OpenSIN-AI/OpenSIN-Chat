@@ -16,6 +16,8 @@ import { X } from "@phosphor-icons/react/dist/csr/X";
 import CTAButton from "@/components/lib/CTAButton";
 import { useTranslation } from "react-i18next";
 import useSystemSettings from "@/hooks/useSystemSettings";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 
 interface TranscriptionProvider {
   name: string;
@@ -47,6 +49,7 @@ const PROVIDERS: TranscriptionProvider[] = [
 export default function TranscriptionModelPreference() {
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
   const [settings, setSettings] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,8 +61,11 @@ export default function TranscriptionModelPreference() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const { t } = useTranslation();
   const systemSettingsHook = useSystemSettings() as any;
-  const { settings: systemSettings, loading: settingsLoading, refresh } =
-    systemSettingsHook;
+  const {
+    settings: systemSettings,
+    loading: settingsLoading,
+    refresh,
+  } = systemSettingsHook;
 
   // Sync local state from SWR when loaded
   useEffect(() => {
@@ -277,6 +283,7 @@ export default function TranscriptionModelPreference() {
           </form>
         </div>
       )}
+      <UnsavedChangesDialog blocker={blocker} />
     </div>
   );
 }

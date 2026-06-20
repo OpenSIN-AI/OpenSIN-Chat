@@ -103,6 +103,9 @@ function utilEndpoints(app) {
 
   // Local politician database — AfD politicians (Issue #57)
   // Falls back to Abgeordnetenwatch proxy only if the local DB is empty.
+  // The Abgeordnetenwatch API v2.9.0 no longer supports `paginationlimit` or
+  // bracket-style filter params (e.g. `party[label]=AfD`) — they cause HTTP 500.
+  // Instead we fetch the default page (100 results) and filter client-side.
   app.get(
     "/utils/bundestag/politicians",
     [validatedRequest],
@@ -113,18 +116,29 @@ function utilEndpoints(app) {
         const limit = Math.min(parseInt(req.query.limit || "10", 10), 50);
         let results = await db.searchPoliticians("", { party: "AfD" });
         if (!results || results.length === 0) {
-          const params = new URLSearchParams({
-            "party[label]": "AfD",
-            "legislature[label]": "Bundestag",
-            paginationlimit: String(limit),
-          });
           const res = await fetchWithTimeout(
-            `https://www.abgeordnetenwatch.de/api/v2/politicians?${params}`,
+            `https://www.abgeordnetenwatch.de/api/v2/politicians`,
             { headers: { Accept: "application/json" } },
           );
           if (!res.ok) throw new Error(`AW ${res.status}`);
           const json = await res.json();
-          return response.status(200).json(json);
+          // Filter AfD politicians client-side — the API does not support
+          // server-side party filtering in v2.9.0.
+          const afdPoliticians = (json.data || []).filter(
+            (p) => p.party?.label === "AfD",
+          );
+          const data = afdPoliticians.slice(0, limit).map((p) => ({
+            id: p.id,
+            first_name: p.first_name || null,
+            last_name: p.last_name || null,
+            label: p.label || null,
+            party: p.party || { label: "AfD" },
+            constituency: null,
+            electoral_data: null,
+            abgeordnetenwatch_url: p.abgeordnetenwatch_url || null,
+            photo: null,
+          }));
+          return response.status(200).json({ data });
         }
         results = results.slice(0, limit);
         const data = results.map((p) => ({

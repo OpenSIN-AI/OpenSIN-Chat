@@ -105,14 +105,14 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
         />
       )}
       <div
-        className={`hidden md:block absolute top-2 z-30 transition-all duration-500 ${
+        className={`hidden md:block absolute top-2 z-30 transition-all duration-500 pointer-events-none ${
           sidebarOpen ? "left-3" : "left-11"
         }`}
       >
         <button
           type="button"
           onClick={() => setShowSelector(!showSelector)}
-          className={`group border-none cursor-pointer px-2.5 py-1 flex items-center rounded-full transition-all ${
+          className={`group border-none cursor-pointer px-2.5 py-1 flex items-center rounded-full transition-all pointer-events-auto ${
             showSelector
               ? "bg-zinc-700 light:bg-slate-200"
               : "hover:bg-zinc-700 light:hover:bg-slate-200"
@@ -130,7 +130,7 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
         </button>
 
         {showSelector && (
-          <div className="absolute left-0 top-full mt-1 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-xl shadow-lg w-[620px] overflow-hidden">
+          <div className="absolute left-0 top-full mt-1 bg-zinc-800 light:bg-white border border-zinc-700 light:border-slate-300 rounded-xl shadow-lg w-[620px] overflow-hidden pointer-events-auto">
             <LLMSelectorModal
               key={refreshKey}
               workspaceSlug={slug}

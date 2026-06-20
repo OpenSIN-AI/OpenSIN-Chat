@@ -14,6 +14,8 @@ import PreLoader from "@/components/Preloader";
 import ChangeWarningModal from "@/components/ChangeWarning";
 import ModalWrapper from "@/components/ModalWrapper";
 import VectorDBItem from "@/components/VectorDBSelection/VectorDBItem";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 import useVectorDBs from "@/hooks/useVectorDBs";
 
 import LanceDbLogo from "@/media/vectordbs/lancedb.png";
@@ -126,6 +128,7 @@ const VECTOR_DBS: VectorDB[] = [
 export default function GeneralVectorDatabase() {
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
   const [settings, setSettings] = useState<any>({});
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredVDBs, setFilteredVDBs] = useState<VectorDB[]>([]);
@@ -370,6 +373,7 @@ export default function GeneralVectorDatabase() {
           onConfirm={handleSaveSettings}
         />
       </ModalWrapper>
+      <UnsavedChangesDialog blocker={blocker} />
     </div>
   );
 }

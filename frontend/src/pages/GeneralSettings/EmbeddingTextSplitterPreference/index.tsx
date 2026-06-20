@@ -12,6 +12,8 @@ import { useModal } from "@/hooks/useModal";
 import ModalWrapper from "@/components/ModalWrapper";
 import ChangeWarningModal from "@/components/ChangeWarning";
 import useEmbeddingTextSplitterPreference from "@/hooks/useEmbeddingTextSplitterPreference";
+import { useUnsavedChanges } from "@/hooks/useUnsavedChanges";
+import UnsavedChangesDialog from "@/components/UnsavedChangesDialog";
 
 function isNullOrNaN(value: any) {
   if (value === null) return true;
@@ -22,6 +24,7 @@ export default function EmbeddingTextSplitterPreference() {
   const { settings, isLoading } = useEmbeddingTextSplitterPreference();
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const blocker = useUnsavedChanges(hasChanges);
   const { isOpen, openModal, closeModal } = useModal();
   const { t } = useTranslation();
 
@@ -195,6 +198,7 @@ export default function EmbeddingTextSplitterPreference() {
           onConfirm={handleSaveSettings}
         />
       </ModalWrapper>
+      <UnsavedChangesDialog blocker={blocker} />
     </div>
   );
 }

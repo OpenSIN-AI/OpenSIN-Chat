@@ -426,7 +426,7 @@ export default forwardRef(function (
       <ThoughtExpansionProvider>
         <div
           id="chat-history"
-          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full relative pb-[100px] pt-6 md:pt-0 md:mx-0 flex flex-col items-center justify-start`}
+          className={`markdown text-white/80 light:text-theme-text-primary font-light ${textSizeClass} h-full relative pb-[100px] pt-6 md:pt-10 md:mx-0 flex flex-col items-center justify-start`}
         >
           <Virtuoso
             ref={virtuosoRef}
