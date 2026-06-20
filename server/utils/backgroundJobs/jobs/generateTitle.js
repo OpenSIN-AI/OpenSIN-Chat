@@ -83,6 +83,13 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     temperature: 0.5,
   });
 
+  // Reasoning-Modelle (deepseek-v4-pro) liefern Newlines manchmal als
+  // literale "\n"-Sequenzen im Text. Wir normalisieren auf echte Newlines,
+  // damit die Zeilen-Suche funktioniert.
+  const normalizedText = (textResponse || "")
+    .replace(/\\n/g, "\n")
+    .replace(/\r\n/g, "\n");
+
   // Reasoning models (z.B. deepseek-v4-pro) liefern oft eine lange
   // interne Kette vor dem eigentlichen Titel. Wir suchen von hinten nach
   // der ersten Zeile, die wie ein gültiger Titel aussieht (max. 5 Wörter,
@@ -114,7 +121,7 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     return words.length >= 1 && words.length <= 5 && line.length <= 40;
   }
 
-  const lines = (textResponse || "")
+  const lines = normalizedText
     .split(/\n/)
     .map((line) =>
       line
@@ -150,7 +157,7 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     (line) => !promptEchoMarkers.some((m) => line.toLowerCase().includes(m.toLowerCase())),
   );
   if (!cleanTitle && hasNonEchoLine) {
-    let scrubbed = textResponse || "";
+    let scrubbed = normalizedText;
     for (const marker of promptEchoMarkers) {
       scrubbed = scrubbed.split(new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("");
     }
