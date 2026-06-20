@@ -179,7 +179,7 @@ const router = createBrowserRouter([
             await import("@/pages/Admin/AgentBuilder");
           return {
             element: (
-              <AdminRoute Component={AgentBuilder} hideUserMenu={true} />
+              <AdminRoute Component={AgentBuilder} />
             ),
           };
         },
@@ -191,7 +191,7 @@ const router = createBrowserRouter([
             await import("@/pages/Admin/AgentBuilder");
           return {
             element: (
-              <AdminRoute Component={AgentBuilder} hideUserMenu={true} />
+              <AdminRoute Component={AgentBuilder} />
             ),
           };
         },

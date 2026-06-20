@@ -8,7 +8,6 @@ import { userFromStorage } from "@/utils/request";
 import { safeGetItem, safeRemoveItem } from "@/utils/safeStorage";
 import useSystemSettings from "@/hooks/useSystemSettings";
 import useSWR from "swr";
-import UserMenu from "../UserMenu";
 import { KeyboardShortcutWrapper } from "@/utils/keyboardShortcuts";
 
 const ONBOARDING_STATUS_KEY = "system/onboarding-status";
@@ -132,7 +131,7 @@ function useIsAuthenticated() {
 
 // Allows only admin to access the route and if in single user mode,
 // allows all users to access the route
-export function AdminRoute({ Component, hideUserMenu = false }) {
+export function AdminRoute({ Component }) {
   const { isAuthd, shouldRedirectToOnboarding, multiUserMode } =
     useIsAuthenticated();
   if (isAuthd === null) return <FullScreenLoader />;
@@ -143,17 +142,9 @@ export function AdminRoute({ Component, hideUserMenu = false }) {
 
   const user = userFromStorage();
   return isAuthd && (user?.role === "admin" || !multiUserMode) ? (
-    hideUserMenu ? (
-      <KeyboardShortcutWrapper>
-        <Component />
-      </KeyboardShortcutWrapper>
-    ) : (
-      <KeyboardShortcutWrapper>
-        <UserMenu>
-          <Component />
-        </UserMenu>
-      </KeyboardShortcutWrapper>
-    )
+    <KeyboardShortcutWrapper>
+      <Component />
+    </KeyboardShortcutWrapper>
   ) : (
     <Navigate to={paths.home()} />
   );
@@ -173,9 +164,7 @@ export function ManagerRoute({ Component }) {
   const user = userFromStorage();
   return isAuthd && (user?.role !== "default" || !multiUserMode) ? (
     <KeyboardShortcutWrapper>
-      <UserMenu>
-        <Component />
-      </UserMenu>
+      <Component />
     </KeyboardShortcutWrapper>
   ) : (
     <Navigate to={paths.home()} />
@@ -211,9 +200,7 @@ export default function PrivateRoute({ Component }) {
 
   return isAuthd ? (
     <KeyboardShortcutWrapper>
-      <UserMenu>
-        <Component />
-      </UserMenu>
+      <Component />
     </KeyboardShortcutWrapper>
   ) : (
     <Navigate to={paths.login(true)} />

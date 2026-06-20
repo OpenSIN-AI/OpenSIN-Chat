@@ -952,7 +952,7 @@ function systemEndpoints(app) {
     }
   });
 
-  app.get("/system/support-email", [validatedRequest], async (_, response) => {
+  app.get("/system/support-email", async (_, response) => {
     try {
       const supportEmail =
         (
