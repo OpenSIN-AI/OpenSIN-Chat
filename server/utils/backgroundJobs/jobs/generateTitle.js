@@ -133,12 +133,23 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
 
   let cleanTitle = "";
   for (let i = lines.length - 1; i >= 0; i--) {
-    const valid = isValidTitle(lines[i]);
-    console.log(`[GenerateTitle] thread ${threadId} line ${i}: valid=${valid} len=${lines[i].length} words=${lines[i].split(/\s+/).filter(Boolean).length} text="${lines[i].slice(0, 60)}"`);
-    if (valid) {
+    if (isValidTitle(lines[i])) {
       cleanTitle = lines[i];
       break;
     }
+  }
+
+  // Reasoning-Modelle (deepseek-v4-pro) geben den Titel manchmal inline
+  // am Ende einer einzigen langen Zeile aus (z. B. "... I'll output: AfD
+  // Energy Policy"). In dem Fall extrahieren wir die letzten 3–5 Wörter aus
+  // dem Text, nachdem wir Prompt-Echo-Zeilen entfernt haben.
+  if (!cleanTitle) {
+    const nonEchoText = lines
+      .filter((line) => !promptEchoMarkers.some((m) => line.toLowerCase().includes(m.toLowerCase())))
+      .join(" ");
+    const tail = nonEchoText.trim().split(/\s+/).filter(Boolean).slice(-5);
+    const candidate = tail.join(" ").replace(/[^\w\säöüßÄÖÜ-]/g, "").trim();
+    if (isValidTitle(candidate)) cleanTitle = candidate;
   }
 
   // Falls kein gültiger Titel gefunden wurde, auf den ersten Teil der
