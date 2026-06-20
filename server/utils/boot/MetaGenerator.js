@@ -53,14 +53,14 @@ class MetaGenerator {
       {
         tag: "title",
         props: null,
-        content: "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
+        content: "OpenSIN Chat — Souveräner KI-Arbeitsraum",
       },
 
       {
         tag: "meta",
         props: {
           name: "title",
-          content: "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
+          content: "OpenSIN Chat — Souveräner KI-Arbeitsraum",
         },
       },
       {
@@ -68,7 +68,7 @@ class MetaGenerator {
         props: {
           name: "description",
           content:
-            "Sovereäner KI-Arbeitsraum für patriotische Politik. Chatte mit deinen Dokumenten, automatisiere Recherche, selbst gehostet, ohne Telemetrie.",
+            "Souveräner KI-Arbeitsraum für patriotische Politik. Chatte mit deinen Dokumenten, automatisiere Recherche, selbst gehostet, ohne Telemetrie.",
         },
       },
 
@@ -82,7 +82,7 @@ class MetaGenerator {
         tag: "meta",
         props: {
           property: "og:title",
-          content: "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
+          content: "OpenSIN Chat — Souveräner KI-Arbeitsraum",
         },
       },
       {
@@ -90,7 +90,7 @@ class MetaGenerator {
         props: {
           property: "og:description",
           content:
-            "Sovereäner KI-Arbeitsraum für patriotische Politik. Selbst gehostet, DSGVO-konform, ohne Telemetrie.",
+            "Souveräner KI-Arbeitsraum für patriotische Politik. Selbst gehostet, DSGVO-konform, ohne Telemetrie.",
         },
       },
       {
@@ -114,7 +114,7 @@ class MetaGenerator {
         tag: "meta",
         props: {
           property: "twitter:title",
-          content: "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
+          content: "OpenSIN Chat — Souveräner KI-Arbeitsraum",
         },
       },
       {
@@ -122,7 +122,7 @@ class MetaGenerator {
         props: {
           property: "twitter:description",
           content:
-            "Sovereäner KI-Arbeitsraum für patriotische Politik. Selbst gehostet, DSGVO-konform, ohne Telemetrie.",
+            "Souveräner KI-Arbeitsraum für patriotische Politik. Selbst gehostet, DSGVO-konform, ohne Telemetrie.",
         },
       },
       {
@@ -219,7 +219,7 @@ class MetaGenerator {
           return {
             tag: "title",
             props: null,
-            content: customTitle ?? "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
+            content: customTitle ?? "OpenSIN Chat — Souveräner KI-Arbeitsraum",
           };
         }
         // Override meta title
@@ -229,7 +229,7 @@ class MetaGenerator {
             props: {
               name: "title",
               content:
-                customTitle ?? "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
+                customTitle ?? "OpenSIN Chat — Souveräner KI-Arbeitsraum",
             },
           };
         }
@@ -240,7 +240,7 @@ class MetaGenerator {
             props: {
               property: "og:title",
               content:
-                customTitle ?? "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
+                customTitle ?? "OpenSIN Chat — Souveräner KI-Arbeitsraum",
             },
           };
         }
@@ -251,7 +251,7 @@ class MetaGenerator {
             props: {
               property: "twitter:title",
               content:
-                customTitle ?? "OpenSIN Chat — Sovereigner KI-Arbeitsraum",
+                customTitle ?? "OpenSIN Chat — Souveräner KI-Arbeitsraum",
             },
           };
         }

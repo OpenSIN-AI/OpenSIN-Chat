@@ -4393,8 +4393,8 @@ const TRANSLATIONS = {
     updateSuccess:
       "Site preferences updated! They will reflect on page reload.",
     updateFailed: "Failed to update site preferences: {{error}}",
-    titlePlaceholder: "OpenSIN Chat | Your personal LLM trained on anything",
-    titleDefault: "OpenSIN Chat | Your personal LLM trained on anything",
+    titlePlaceholder: "OpenSIN Chat — Souveräner KI-Arbeitsraum",
+    titleDefault: "OpenSIN Chat — Souveräner KI-Arbeitsraum",
     faviconPlaceholder: "url to your image",
     faviconAlt: "Site favicon",
     save: "Save",
