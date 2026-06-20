@@ -71,9 +71,8 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     "or 'generate' in the output. Example: AfD Energy Policy Overview";
 
   const userPrompt =
-    `User: ${prompt}\n` +
-    `Assistant: ${response}\n` +
-    "Title:";
+    `User message: ${prompt}\n\n` +
+    "Return ONLY a concise 3-5 word title for this message. No explanation, no quotes, no markdown:";
 
   const messages = [
     { role: "system", content: systemPrompt },
@@ -83,12 +82,6 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   const { textResponse } = await LLMConnector.getChatCompletion(messages, {
     temperature: 0.5,
   });
-
-  // DEBUG: remove after verification
-  console.log(
-    `[GenerateTitle] lines for thread ${threadId}:`,
-    JSON.stringify(lines),
-  );
 
   // Reasoning models (z.B. deepseek-v4-pro) liefern oft eine lange
   // interne Kette vor dem eigentlichen Titel. Wir suchen von hinten nach
@@ -114,6 +107,9 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     const lower = line.toLowerCase();
     if (promptEchoMarkers.some((marker) => lower.includes(marker.toLowerCase())))
       return false;
+    // Ausschließen von Markdown-Listenzeilen, die aus der Assistentenantwort
+    // stammen könnten (z. B. "**4. Einschränkung erneuerbarer Energ").
+    if (/^[-*\d]/.test(line) || /^\*+\s*\d/.test(line)) return false;
     const words = line.trim().split(/\s+/).filter(Boolean);
     return words.length >= 1 && words.length <= 5 && line.length <= 40;
   }
