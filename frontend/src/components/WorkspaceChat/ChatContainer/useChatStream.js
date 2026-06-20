@@ -18,6 +18,7 @@ import paths from "@/utils/paths";
 import SpeechRecognition from "react-speech-recognition";
 import { invalidateChatHistory } from "@/hooks/useChatHistory";
 import { invalidateThreads } from "@/hooks/useThreads";
+import { v4 } from "uuid";
 
 /**
  * Encapsulates all WebSocket, chat streaming, and message-sending logic
@@ -324,21 +325,53 @@ export default function useChatStream({
       const attachments = promptMessage?.attachments ?? parseAttachments();
       window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
 
-      await Workspace.multiplexStream({
-        workspaceSlug: workspace.slug,
-        threadSlug: activeThreadSlug,
-        prompt: promptMessage.userMessage,
-        chatHandler: (chatResult) =>
+      let errorAlreadyHandled = false;
+      try {
+        await Workspace.multiplexStream({
+          workspaceSlug: workspace.slug,
+          threadSlug: activeThreadSlug,
+          prompt: promptMessage.userMessage,
+          chatHandler: (chatResult) => {
+            if (chatResult?.type === "abort") errorAlreadyHandled = true;
+            handleChat(
+              chatResult,
+              setLoadingResponse,
+              setChatHistory,
+              remHistory,
+              _chatHistory,
+              setSocketId,
+            );
+          },
+          attachments,
+        });
+      } catch (err) {
+        // The streamChat onerror/onopen handlers already call handleChat
+        // with an abort+error payload, so in most cases the error UI is
+        // already rendered by the time we get here.  But if the rejection
+        // escapes before those callbacks fire (e.g. fetchEventSource
+        // constructor throws, or a non-HTTP transport error), we need to
+        // show a fallback error so the user is not left with a perpetual
+        // loading spinner.
+        if (!errorAlreadyHandled) {
           handleChat(
-            chatResult,
+            {
+              id: v4(),
+              type: "abort",
+              textResponse: null,
+              sources: [],
+              close: true,
+              error:
+                err?.message ||
+                "An unexpected error occurred while contacting the server.",
+            },
             setLoadingResponse,
             setChatHistory,
             remHistory,
             _chatHistory,
             setSocketId,
-          ),
-        attachments,
-      });
+          );
+        }
+      }
       return;
     }
     if (loadingResponse === true) {

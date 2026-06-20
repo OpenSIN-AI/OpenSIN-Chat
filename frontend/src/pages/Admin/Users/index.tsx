@@ -51,7 +51,7 @@ export default function AdminUsers(): JSX.Element {
             <UsersContainer />
           </div>
         </div>
-        <ModalWrapper isOpen={isOpen}>
+        <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
           <NewUserModal
             {...({
               closeModal,

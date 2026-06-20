@@ -88,10 +88,10 @@ export default function ChatRow({
           </button>
         </td>
       </tr>
-      <ModalWrapper isOpen={isPromptOpen}>
+      <ModalWrapper isOpen={isPromptOpen} closeModal={closePromptModal}>
         <TextPreview text={chat.prompt} closeModal={closePromptModal} />
       </ModalWrapper>
-      <ModalWrapper isOpen={isResponseOpen}>
+      <ModalWrapper isOpen={isResponseOpen} closeModal={closeResponseModal}>
         <TextPreview
           text={
             <Suspense fallback={null}>

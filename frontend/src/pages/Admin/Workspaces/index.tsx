@@ -48,7 +48,7 @@ export default function AdminWorkspaces(): JSX.Element {
             <WorkspacesContainer />
           </div>
         </div>
-        <ModalWrapper isOpen={isOpen}>
+        <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
           <NewWorkspaceModal closeModal={closeModal} />
         </ModalWrapper>
       </div>

@@ -234,7 +234,7 @@ function ProviderSetupModal({
   if (!isOpen || !provider) return null;
 
   return (
-    <ModalWrapper isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen} closeModal={onClose}>
       <div className="w-full max-w-2xl bg-zinc-900 light:bg-white rounded-[8px] shadow-lg border border-zinc-700 light:border-slate-300">
         <div className="flex items-center justify-between p-6 border-b border-zinc-700 light:border-slate-300">
           <div className="flex items-center gap-x-3">

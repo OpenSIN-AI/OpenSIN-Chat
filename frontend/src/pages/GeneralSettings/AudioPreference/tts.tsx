@@ -162,7 +162,7 @@ export default function TextToSpeechProvider({ settings }: { settings: any }) {
         </div>
         <div className="w-full justify-end flex">
           {hasChanges && (
-            <CTAButton className="mt-3 mr-0 -mb-14 z-10">
+            <CTAButton type="submit" className="mt-3 mr-0 -mb-14 z-10">
               {saving ? t("common.saving") : t("common.saveChanges")}
             </CTAButton>
           )}

@@ -100,10 +100,10 @@ export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
           </button>
         </td>
       </tr>
-      <ModalWrapper isOpen={isPromptOpen}>
+      <ModalWrapper isOpen={isPromptOpen} closeModal={closePromptModal}>
         <TextPreview text={chat.prompt} closeModal={closePromptModal} />
       </ModalWrapper>
-      <ModalWrapper isOpen={isResponseOpen}>
+      <ModalWrapper isOpen={isResponseOpen} closeModal={closeResponseModal}>
         <TextPreview
           text={
             <Suspense fallback={null}>
@@ -115,7 +115,7 @@ export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
           closeModal={closeResponseModal}
         />
       </ModalWrapper>
-      <ModalWrapper isOpen={isConnectionDetailsModalOpen}>
+      <ModalWrapper isOpen={isConnectionDetailsModalOpen} closeModal={closeConnectionDetailsModal}>
         <TextPreview
           text={
             <ConnectionDetails

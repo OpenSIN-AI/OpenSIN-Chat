@@ -122,7 +122,7 @@ export default function SystemPromptVariables(): JSX.Element {
         </div>
       </div>
 
-      <ModalWrapper isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <AddVariableModal closeModal={closeModal} onRefresh={refresh} />
       </ModalWrapper>
     </div>

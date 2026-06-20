@@ -127,7 +127,7 @@ export default function ScheduledJobsPage() {
         )}
       </div>
 
-      <ModalWrapper isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <JobFormModal
           job={editingJob}
           onClose={closeModal}

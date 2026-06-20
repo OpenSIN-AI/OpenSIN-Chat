@@ -86,7 +86,7 @@ export default function EmbedConfigsView(): React.ReactElement {
           </tbody>
         </table>
       </div>
-      <ModalWrapper isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <NewEmbedModal closeModal={closeModal} />
       </ModalWrapper>
     </div>

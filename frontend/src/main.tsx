@@ -15,7 +15,6 @@ import App from "@/App";
 import PrivateRoute, {
   AdminRoute,
   ManagerRoute,
-  SingleUserRoute,
 } from "@/components/PrivateRoute";
 import Login from "@/pages/Login";
 import SimpleSSOPassthrough from "@/pages/Login/SSO/simple";
@@ -433,7 +432,7 @@ const router = createBrowserRouter([
         lazy: async () => {
           const { default: ScheduledJobs } =
             await import("@/pages/GeneralSettings/ScheduledJobs");
-          return { element: <SingleUserRoute Component={ScheduledJobs} /> };
+          return { element: <AdminRoute Component={ScheduledJobs} /> };
         },
       },
       {
@@ -441,7 +440,7 @@ const router = createBrowserRouter([
         lazy: async () => {
           const { default: ScheduledJobRuns } =
             await import("@/pages/GeneralSettings/ScheduledJobs/RunHistoryPage");
-          return { element: <SingleUserRoute Component={ScheduledJobRuns} /> };
+          return { element: <AdminRoute Component={ScheduledJobRuns} /> };
         },
       },
       {
@@ -450,7 +449,7 @@ const router = createBrowserRouter([
           const { default: ScheduledJobRunDetail } =
             await import("@/pages/GeneralSettings/ScheduledJobs/RunDetailPage");
           return {
-            element: <SingleUserRoute Component={ScheduledJobRunDetail} />,
+            element: <AdminRoute Component={ScheduledJobRunDetail} />,
           };
         },
       },

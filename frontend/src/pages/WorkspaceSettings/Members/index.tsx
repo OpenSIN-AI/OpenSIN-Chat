@@ -63,7 +63,7 @@ export default function Members({ workspace }: { workspace: { id: number } }) {
         </tbody>
       </table>
       <CTAButton onClick={openModal}>{t("members.manageUsers")}</CTAButton>
-      <ModalWrapper isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <AddMemberModal
           closeModal={closeModal}
           users={users}

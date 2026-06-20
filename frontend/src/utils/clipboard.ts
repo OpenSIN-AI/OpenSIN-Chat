@@ -20,8 +20,10 @@ export async function copyMarkdownAsRichText(markdownString) {
     ];
 
     await navigator.clipboard.write(data);
+    return true;
   } catch (error) {
     console.error("Failed to copy markdown as rich text: ", error);
+    return false;
   }
 }
 

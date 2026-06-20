@@ -114,7 +114,7 @@ export default function EmbeddingTextSplitterPreference() {
               </div>
               <div className="w-full justify-end flex">
                 {hasChanges && (
-                  <CTAButton className="mt-3 mr-0 -mb-14 z-10">
+                  <CTAButton type="submit" className="mt-3 mr-0 -mb-14 z-10">
                     {saving ? t("common.saving") : t("common.save")}
                   </CTAButton>
                 )}
@@ -188,7 +188,7 @@ export default function EmbeddingTextSplitterPreference() {
         </div>
       )}
 
-      <ModalWrapper isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <ChangeWarningModal
           warningText="Changing text splitter settings will clear any previously cached documents.\n\nThese new settings will be applied to all documents when embedding them into a workspace."
           onClose={closeModal}

@@ -156,10 +156,10 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
           </button>
         </td>
       </tr>
-      <ModalWrapper isOpen={isSettingsOpen}>
+      <ModalWrapper isOpen={isSettingsOpen} closeModal={closeSettingsModal}>
         <EditEmbedModal embed={embed as any} closeModal={closeSettingsModal} />
       </ModalWrapper>
-      <ModalWrapper isOpen={isSnippetOpen}>
+      <ModalWrapper isOpen={isSnippetOpen} closeModal={closeSnippetModal}>
         <CodeSnippetModal embed={embed as any} closeModal={closeSnippetModal} />
       </ModalWrapper>
     </>

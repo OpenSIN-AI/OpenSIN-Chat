@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 import { THOUGHT_REGEX_COMPLETE } from "@/components/WorkspaceChat/ChatContainer/ChatHistory/ThoughtContainer";
-import { copyMarkdownAsRichText } from "@/utils/clipboard";
+import {
+  copyMarkdownAsRichText,
+  copyText as copyPlainText,
+} from "@/utils/clipboard";
 import { useEffect, useRef, useState } from "react";
 
 export default function useCopyText(delay = 2500) {
@@ -18,7 +21,13 @@ export default function useCopyText(delay = 2500) {
 
     // Filter thinking blocks from the content if they exist
     const nonThinkingContent = content.replace(THOUGHT_REGEX_COMPLETE, "");
-    await copyMarkdownAsRichText(nonThinkingContent);
+    // Try rich-text copy first; fall back to plain text if it fails
+    // (e.g. ClipboardItem unavailable, non-secure context, headless browser).
+    const ok = await copyMarkdownAsRichText(nonThinkingContent);
+    if (!ok) {
+      const fallbackOk = await copyPlainText(nonThinkingContent);
+      if (!fallbackOk) return;
+    }
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setCopied(true);
     timeoutRef.current = setTimeout(() => setCopied(false), delay);

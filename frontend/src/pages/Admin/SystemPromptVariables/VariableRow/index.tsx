@@ -134,7 +134,7 @@ export default function VariableRow({
           )}
         </td>
       </tr>
-      <ModalWrapper isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <EditVariableModal
           variable={variable as any}
           closeModal={closeModal}

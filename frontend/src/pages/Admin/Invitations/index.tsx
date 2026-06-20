@@ -95,7 +95,7 @@ export default function AdminInvites(): JSX.Element {
             )}
           </div>
         </div>
-        <ModalWrapper isOpen={isOpen}>
+        <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
           <NewInviteModal
             closeModal={closeModal}
             onSuccess={() => mutate(INVITES_KEY)}

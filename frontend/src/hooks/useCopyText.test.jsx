@@ -10,7 +10,8 @@ vi.mock(
 );
 
 vi.mock("@/utils/clipboard", () => ({
-  copyMarkdownAsRichText: vi.fn(() => Promise.resolve()),
+  copyMarkdownAsRichText: vi.fn(() => Promise.resolve(true)),
+  copyText: vi.fn(() => Promise.resolve(true)),
 }));
 
 import { copyMarkdownAsRichText } from "@/utils/clipboard";

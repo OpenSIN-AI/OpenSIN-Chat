@@ -115,7 +115,7 @@ export default function BrowserExtensionApiKeys(): JSX.Element {
           </div>
         </div>
       </div>
-      <ModalWrapper isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <NewBrowserExtensionApiKeyModal
           closeModal={closeModal}
           onSuccess={refresh}

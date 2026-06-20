@@ -29,33 +29,40 @@ export default function handleChat(
   const chatHistory = [..._chatHistory];
 
   if (type === "modelRouteNotification") {
-    chatHistory.push({
-      type: "modelRouteNotification",
-      uuid,
-      routedTo,
-      role: "assistant",
-    });
-    setChatHistory([...chatHistory]);
+    setChatHistory((prev) => [
+      ...prev,
+      {
+        type: "modelRouteNotification",
+        uuid,
+        routedTo,
+        role: "assistant",
+      },
+    ]);
     return;
   }
 
   if (type === "abort" || type === "statusResponse") {
     setLoadingResponse(false);
-    setChatHistory([
-      ...remHistory,
-      {
-        type,
-        uuid,
-        content: textResponse,
-        role: "assistant",
-        sources,
-        closed: true,
-        error,
-        animate,
-        pending: false,
-        metrics,
-      },
-    ]);
+    setChatHistory((prev) => {
+      const withoutPending = prev[prev.length - 1]?.pending
+        ? prev.slice(0, -1)
+        : prev;
+      return [
+        ...withoutPending,
+        {
+          type,
+          uuid,
+          content: textResponse,
+          role: "assistant",
+          sources,
+          closed: true,
+          error,
+          animate,
+          pending: false,
+          metrics,
+        },
+      ];
+    });
     chatHistory.push({
       type,
       uuid,
@@ -70,21 +77,26 @@ export default function handleChat(
     });
   } else if (type === "textResponse") {
     setLoadingResponse(false);
-    setChatHistory([
-      ...remHistory,
-      {
-        uuid,
-        content: textResponse,
-        role: "assistant",
-        sources,
-        closed: close,
-        error,
-        animate: !close,
-        pending: false,
-        chatId,
-        metrics,
-      },
-    ]);
+    setChatHistory((prev) => {
+      const withoutPending = prev[prev.length - 1]?.pending
+        ? prev.slice(0, -1)
+        : prev;
+      return [
+        ...withoutPending,
+        {
+          uuid,
+          content: textResponse,
+          role: "assistant",
+          sources,
+          closed: close,
+          error,
+          animate: !close,
+          pending: false,
+          chatId,
+          metrics,
+        },
+      ];
+    });
     chatHistory.push({
       uuid,
       content: textResponse,

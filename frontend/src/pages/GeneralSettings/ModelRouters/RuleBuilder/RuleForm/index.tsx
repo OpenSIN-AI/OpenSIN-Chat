@@ -133,7 +133,7 @@ export default function RuleForm({
   };
 
   return (
-    <ModalWrapper isOpen={isOpen}>
+    <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
       <div className="relative w-full max-w-3xl bg-zinc-900 light:bg-white rounded-[8px] shadow border border-zinc-700 light:border-slate-300">
         <form onSubmit={handleSubmit} className="flex flex-col gap-y-5 p-6">
           <div className="flex flex-col gap-y-1">

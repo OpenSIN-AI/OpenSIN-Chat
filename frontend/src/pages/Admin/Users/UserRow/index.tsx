@@ -101,7 +101,7 @@ export default function UserRow({ currUser, user }: UserRowProps): JSX.Element {
           )}
         </td>
       </tr>
-      <ModalWrapper isOpen={isOpen}>
+      <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
         <EditUserModal
           currentUser={currUser}
           user={user}
