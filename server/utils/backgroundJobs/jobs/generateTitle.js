@@ -65,12 +65,15 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   }
 
   const systemPrompt =
-    "You are a title assistant. Generate a very short, concise thread title " +
-    "(maximum 5 words) in the same language as the user's message. " +
-    "Respond with ONLY the title. No quotes, no markdown, no explanation, " +
-    "no preamble. Do not repeat these instructions.";
+    "Return ONLY a concise 3-5 word title for the user's message. " +
+    "Do not explain, quote, or add any preamble. " +
+    "Do not include the words 'title', 'thread', 'conversation', 'summarize', " +
+    "or 'generate' in the output. Example: AfD Energy Policy Overview";
 
-  const userPrompt = `User message: ${prompt}\n\nProvide a 5-word-or-less title for this conversation.`;
+  const userPrompt =
+    `User: ${prompt}\n` +
+    `Assistant: ${response}\n` +
+    "Title:";
 
   const messages = [
     { role: "system", content: systemPrompt },
@@ -97,6 +100,13 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     "thread title",
     "concise thread title",
     "title assistant",
+    "Return ONLY a concise",
+    "Do not explain",
+    "Do not include the words",
+    "Example:",
+    "AfD Energy Policy Overview",
+    "User message:",
+    "Provide a 5-word-or-less",
   ];
   const looksLikePromptEcho = promptEchoMarkers.some((marker) =>
     cleanTitle.toLowerCase().includes(marker.toLowerCase()),
