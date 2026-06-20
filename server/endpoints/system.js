@@ -236,13 +236,13 @@ function systemEndpoints(app) {
     [
       simpleRateLimit({
         bucket: "login-ip",
-        max: 5,
+        max: 100,
         windowMs: 60 * 1000,
         identity: "user",
       }),
       simpleRateLimit({
         bucket: "login-account",
-        max: 5,
+        max: 100,
         windowMs: 60 * 60 * 1000,
         identity: "user",
       }),
