@@ -135,13 +135,11 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   let cleanTitle = "";
   for (let i = lines.length - 1; i >= 0; i--) {
     const valid = isValidTitle(lines[i]);
-    console.log(`[GenerateTitle] thread ${threadId} line ${i}: valid=${valid} text="${lines[i].slice(0, 80)}"`);
     if (valid) {
       cleanTitle = lines[i];
       break;
     }
   }
-  console.log(`[GenerateTitle] thread ${threadId} backwardSearchResult="${cleanTitle}"`);
 
   // Reasoning-Modelle (deepseek-v4-pro) geben den Titel manchmal inline
   // am Ende einer einzigen langen Zeile aus (z. B. "... I'll output: AfD
@@ -193,7 +191,6 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
       const unique = new Set(candidateWords.map((w) => w.toLowerCase()));
       if (unique.size === candidateWords.length && isValidTitle(candidate)) {
         cleanTitle = candidate;
-        console.log(`[GenerateTitle] thread ${threadId} inlineCandidate=${take}="${candidate}"`);
         break;
       }
     }
