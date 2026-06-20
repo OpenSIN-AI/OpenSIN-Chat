@@ -100,7 +100,7 @@ export default function SystemPromptVariables(): JSX.Element {
                       {t("admin.systemPromptVariables.page.value")}
                     </th>
                     <th scope="col" className="px-4 py-2">
-                      {t("admin.systemPromptVariables.page.description")}
+                      {t("admin.systemPromptVariables.page.descriptionLabel")}
                     </th>
                     <th scope="col" className="px-4 py-2">
                       {t("admin.systemPromptVariables.page.type")}

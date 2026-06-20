@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { swrConfig } from "@/utils/swrFetcher";
 import i18n from "./i18n";
 import { attachLanguageDomSync } from "@/utils/htmlLang";
+import useRouteTitle from "@/hooks/useRouteTitle";
 
 import { PfpProvider } from "./PfpContext";
 import { LogoProvider } from "./LogoContext";
@@ -37,6 +38,7 @@ export default function App() {
   useEffect(() => {
     attachLanguageDomSync();
   }, []);
+  useRouteTitle();
   return (
     <ErrorBoundary
       FallbackComponent={ErrorBoundaryFallback}

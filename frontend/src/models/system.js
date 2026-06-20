@@ -128,9 +128,12 @@ const System = {
       method: "POST",
       body: JSON.stringify({ ...body }),
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Could not validate login.");
-        return res.json();
+      .then(async (res) => {
+        const data = await res.json().catch(() => null);
+        if (!res.ok) {
+          throw new Error(data?.message || "Could not validate login.");
+        }
+        return data;
       })
       .then((res) => res)
       .catch((e) => {
@@ -657,7 +660,7 @@ const System = {
       .then((res) => res.json())
       .catch((e) => {
         console.error(e);
-        return [];
+        return { logs: [], hasPages: false };
       });
   },
   clearEventLogs: async () => {
@@ -684,8 +687,8 @@ const System = {
   },
   exportChats: async (type = "csv", chatType = "workspace") => {
     const url = new URL(`${fullApiUrl()}/system/export-chats`);
-    url.searchParams.append("type", encodeURIComponent(type));
-    url.searchParams.append("chatType", encodeURIComponent(chatType));
+    url.searchParams.append("type", type);
+    url.searchParams.append("chatType", chatType);
     return await fetch(url, {
       method: "GET",
       headers: baseHeaders(),

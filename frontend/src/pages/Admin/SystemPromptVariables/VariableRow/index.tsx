@@ -40,7 +40,7 @@ export default function VariableRow({
     if (!variable.id) return;
     if (
       !window.confirm(
-        t("systemPromptVariables.page.deleteConfirm", { key: variable.key }),
+        t("admin.systemPromptVariables.page.deleteConfirm", { key: variable.key }),
       )
     )
       return false;
@@ -48,13 +48,13 @@ export default function VariableRow({
     try {
       await System.promptVariables.delete(variable.id);
       rowRef?.current?.remove();
-      showToast(t("systemPromptVariables.page.deleteSuccess"), "success", {
+      showToast(t("admin.systemPromptVariables.page.deleteSuccess"), "success", {
         clear: true,
       });
       if (onRefresh) onRefresh();
     } catch (error) {
       console.error("Error deleting variable:", error);
-      showToast(t("systemPromptVariables.page.deleteFailed"), "error", {
+      showToast(t("admin.systemPromptVariables.page.deleteFailed"), "error", {
         clear: true,
       });
     }
@@ -109,8 +109,8 @@ export default function VariableRow({
             className={`rounded-full ${colorTheme.bg} px-2 py-0.5 text-xs leading-5 font-semibold ${colorTheme.text} shadow-sm`}
           >
             {variable?.type
-              ? t(`systemPromptVariables.page.types.${variable.type}`)
-              : t("systemPromptVariables.page.types.static")}
+              ? t(`admin.systemPromptVariables.page.types.${variable.type}`)
+              : t("admin.systemPromptVariables.page.types.static")}
           </span>
         </td>
         <td className="px-4 py-2 flex items-center justify-end gap-x-4">

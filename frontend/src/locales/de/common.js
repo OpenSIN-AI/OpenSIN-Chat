@@ -5,6 +5,18 @@ const TRANSLATIONS = {
     title: "OpenSIN Chat",
     description:
       "OpenSIN Chat — souveräner KI-Arbeitsraum für politische Forschung. Chatte mit deinen Dokumenten, automatisiere Recherche, selbst gehostet, ohne Telemetrie.",
+    titles: {
+      home: "Startseite",
+      login: "Anmeldung",
+      workspace: "Arbeitsbereich",
+      workspaceSettings: "Arbeitsbereich-Einstellungen",
+      settings: "Einstellungen",
+      pdfAnalysis: "PDF-Analyse",
+      docs: "Dokumentation",
+      onboarding: "Einrichtung",
+      notFound: "Seite nicht gefunden",
+      sso: "SSO-Anmeldung",
+    },
   },
   a11y: {
     skipToContent: "Zum Hauptinhalt springen",
@@ -3705,6 +3717,7 @@ const TRANSLATIONS = {
         noVariablesFound: "Keine Variablen gefunden",
         key: "Schlüssel",
         value: "Wert",
+        descriptionLabel: "Beschreibung",
         type: "Typ",
         types: {
           system: "System",

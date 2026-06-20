@@ -48,16 +48,16 @@ export default function LogRow({ log }: LogRowProps): JSX.Element {
       >
         <EventBadge event={log.event} />
         <td className="px-6 border-transparent transform transition-transform duration-200">
-          {log.user.username}
+          {log.user?.username ?? "—"}
         </td>
         <td className="px-6 border-transparent transform transition-transform duration-200">
           {log.occurredAt}
         </td>
-        {hasMetadata && (
-          <td
-            className={`px-2 gap-x-1 flex items-center justify-center transform transition-transform duration-200`}
-          >
-            {expanded ? (
+        <td
+          className={`px-2 gap-x-1 flex items-center justify-center transform transition-transform duration-200`}
+        >
+          {hasMetadata &&
+            (expanded ? (
               <>
                 <CaretUp weight="bold" size={20} />
                 <p className="text-xs text-white/50 w-[20px]">
@@ -71,9 +71,8 @@ export default function LogRow({ log }: LogRowProps): JSX.Element {
                   {t("logging.logRow.show")}
                 </p>
               </>
-            )}
-          </td>
-        )}
+            ))}
+        </td>
       </tr>
       <EventMetadata metadata={metadata} expanded={expanded} />
     </>
@@ -94,12 +93,12 @@ const EventMetadata = ({
   return (
     <tr className="bg-theme-bg-primary">
       <td
-        colSpan={2}
+        colSpan={1}
         className="px-6 py-4 font-medium text-theme-text-primary rounded-l-2xl"
       >
         {t("logging.logRow.eventMetadata")}
       </td>
-      <td colSpan={4} className="px-6 py-4 rounded-r-2xl">
+      <td colSpan={3} className="px-6 py-4 rounded-r-2xl">
         <div className="w-full rounded-lg bg-theme-bg-secondary p-2 text-white shadow-sm border-white/10 border bg-opacity-10">
           <pre className="overflow-scroll">
             {JSON.stringify(metadata, null, 2)}

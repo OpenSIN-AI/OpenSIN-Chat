@@ -4,6 +4,18 @@ const TRANSLATIONS = {
     title: "OpenSIN Chat",
     description:
       "OpenSIN Chat — sovereign AI workspace for political research. Chat with your documents, automate research, self-hosted, no telemetry.",
+    titles: {
+      home: "Home",
+      login: "Login",
+      workspace: "Workspace",
+      workspaceSettings: "Workspace Settings",
+      settings: "Settings",
+      pdfAnalysis: "PDF Analysis",
+      docs: "Documentation",
+      onboarding: "Setup",
+      notFound: "Page Not Found",
+      sso: "SSO Login",
+    },
   },
   a11y: {
     skipToContent: "Skip to main content",
@@ -3615,6 +3627,7 @@ const TRANSLATIONS = {
         noVariablesFound: "No variables found",
         key: "Key",
         value: "Value",
+        descriptionLabel: "Description",
         type: "Type",
         types: {
           system: "System",
