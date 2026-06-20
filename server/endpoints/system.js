@@ -758,7 +758,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500);
+        response.status(500).json({ newValues: null, error: e.message });
       }
     },
   );
@@ -794,7 +794,7 @@ function systemEndpoints(app) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500);
+        response.status(500).json({ success: false, error: e.message });
       }
     },
   );

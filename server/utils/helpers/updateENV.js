@@ -1174,11 +1174,16 @@ function dumpENV() {
     .join("\n");
 
   const envPath = path.join(__dirname, "../../.env");
-  fs.writeFileSync(envPath, envResult, { encoding: "utf8", flag: "w" });
   try {
-    fs.chmodSync(envPath, 0o600);
+    fs.writeFileSync(envPath, envResult, { encoding: "utf8", flag: "w" });
+    try {
+      fs.chmodSync(envPath, 0o600);
+    } catch (e) {
+      console.error(`Failed to chmod ${envPath} to 0o600: ${e.message}`);
+    }
   } catch (e) {
-    console.error(`Failed to chmod ${envPath} to 0o600: ${e.message}`);
+    console.error(`Failed to write .env file: ${e.message}`);
+    return false;
   }
   return true;
 }

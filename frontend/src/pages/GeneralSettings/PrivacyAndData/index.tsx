@@ -62,9 +62,19 @@ function TelemetryLogs({ settings }: TelemetryLogsProps): JSX.Element {
   );
   const { t } = useTranslation();
   async function toggleTelemetry() {
-    await System.updateSystem({
+    const result = await System.updateSystem({
       DisableTelemetry: !telemetry ? "false" : "true",
     });
+    if (result?.error) {
+      showToast(
+        t("privacyAndData.telemetryToggleFailed", {
+          defaultValue: "Failed to update telemetry setting",
+        }),
+        "error",
+        { clear: true },
+      );
+      return;
+    }
     setTelemetry(!telemetry);
     showToast(
       t("privacyAndData.telemetryToggled", {

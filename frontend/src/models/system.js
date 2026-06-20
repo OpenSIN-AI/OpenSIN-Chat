@@ -214,7 +214,13 @@ const System = {
       headers: baseHeaders(),
       body: JSON.stringify(data),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) {
+          const text = await res.text().catch(() => "Request failed");
+          return { newValues: null, error: text };
+        }
+        return res.json();
+      })
       .catch((e) => {
         console.error(e);
         return { newValues: null, error: e.message };
@@ -226,7 +232,13 @@ const System = {
       headers: baseHeaders(),
       body: JSON.stringify(data),
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) {
+          const text = await res.text().catch(() => "Request failed");
+          return { success: false, error: text };
+        }
+        return res.json();
+      })
       .catch((e) => {
         console.error(e);
         return { success: false, error: e.message };
