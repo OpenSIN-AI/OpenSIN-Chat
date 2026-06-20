@@ -20,6 +20,14 @@ const { User } = require("../models/user");
 const { getModelTag } = require("./utils");
 const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 
+// Hard cap on a single chat message. Without this a user can paste 50000+
+// chars which costs the LLM provider real money, can stall the SSE parser,
+// and breaks downstream chat-history pagination that assumes a sane upper
+// bound. The frontend cap (PROMPT_INPUT_MAX_LENGTH) is enforced in
+// TextArea.tsx, but the server must police this independently because the
+// limit can be bypassed with raw curl or any other non-browser client.
+const CHAT_MESSAGE_MAX_LENGTH = 32_000;
+
 /**
  * Start an SSE heartbeat that sends a comment-line keepalive every 15s.
  * Returns a stop function that clears the interval.
@@ -71,6 +79,18 @@ function chatEndpoints(app) {
             sources: [],
             close: true,
             error: "Message is empty.",
+          });
+          return;
+        }
+
+        if (message.length > CHAT_MESSAGE_MAX_LENGTH) {
+          response.status(413).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Message too long. The maximum permitted length is ${CHAT_MESSAGE_MAX_LENGTH} characters.`,
           });
           return;
         }
@@ -173,6 +193,18 @@ function chatEndpoints(app) {
             sources: [],
             close: true,
             error: "Message is empty.",
+          });
+          return;
+        }
+
+        if (message.length > CHAT_MESSAGE_MAX_LENGTH) {
+          response.status(413).json({
+            id: uuidv4(),
+            type: "abort",
+            textResponse: null,
+            sources: [],
+            close: true,
+            error: `Message too long. The maximum permitted length is ${CHAT_MESSAGE_MAX_LENGTH} characters.`,
           });
           return;
         }

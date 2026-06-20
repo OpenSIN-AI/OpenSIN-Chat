@@ -105,4 +105,13 @@ describe("TextArea", () => {
     const textarea = screen.getByRole("textbox");
     expect(textarea.value).toBe("current prompt");
   });
+
+  it("enforces a maxLength cap so 50000-char pastes are clipped by the browser", () => {
+    renderTextArea();
+    const textarea = screen.getByRole("textbox");
+    expect(textarea).toHaveAttribute("maxLength");
+    const cap = parseInt(textarea.getAttribute("maxLength"), 10);
+    expect(cap).toBeGreaterThan(0);
+    expect(cap).toBeLessThanOrEqual(50_000);
+  });
 });

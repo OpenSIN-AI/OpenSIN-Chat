@@ -96,7 +96,7 @@ function MultiUserMode() {
       onChange={() => setHasChanges(true)}
       className="flex flex-col w-full px-1 md:pl-6 md:pr-[50px]"
     >
-      <div className="w-full flex flex-col gap-y-1 w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
+      <div className="w-full flex flex-col gap-y-1 pb-6 border-white light:border-theme-sidebar-border border-b-2 border-opacity-10">
         <div className="w-full flex flex-col gap-y-1">
           <div className="items-center flex gap-x-4">
             <p className="text-base font-bold text-white mt-6">

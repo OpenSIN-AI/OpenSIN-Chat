@@ -113,6 +113,21 @@ describe("workspaceEndpoints", () => {
       const res = await app.call("post", "/workspace/new", { body: {} });
       expect(res.statusCode).toBe(500);
     });
+
+    it("rejects whitespace-only names with a friendly message", async () => {
+      // Workspace.new is mocked; ensure the endpoint forwards the rejection
+      // message back to the caller instead of crashing.
+      Workspace.new.mockResolvedValue({
+        workspace: null,
+        message: "name cannot be null",
+      });
+      const res = await app.call("post", "/workspace/new", {
+        body: { name: "   " },
+      });
+      expect(res.statusCode).toBe(200);
+      expect(res.body.message).toMatch(/name cannot be null/);
+      expect(res.body.workspace).toBeNull();
+    });
   });
 
   describe("POST /workspace/:slug/update", () => {

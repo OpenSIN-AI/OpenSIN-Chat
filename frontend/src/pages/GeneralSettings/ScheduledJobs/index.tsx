@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/SettingsSidebar";
 import { isMobile } from "react-device-detect";
 import ScheduledJobs from "@/models/scheduledJobs";
-import { subscribeToPushNotifications } from "@/hooks/useWebPushNotifications";
 import useWebPushNotifications from "@/hooks/useWebPushNotifications";
 import JobFormModal from "./JobFormModal";
 import ModalWrapper from "@/components/ModalWrapper";

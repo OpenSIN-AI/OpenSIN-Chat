@@ -20,12 +20,30 @@ const TOKEN_CACHE_FILE = path.join(os.tmpdir(), "opensin-chat-e2e-token.txt");
  * JWT. Username "admin" with an empty password matches the default dev/prod
  * single-user configuration.
  *
+ * In production the AUTH_TOKEN is set, so the caller must pass the live
+ * password via the OPENSIN_PASSWORD env var. Without that env, this helper
+ * falls back to an empty password (matching the no-auth dev config).
+ *
  * Checks a temp-file token cache first to avoid hitting the production rate
  * limiter when multiple test files call login() in quick succession. The
  * cache is written by _token-cache.js::sharedLogin on the first successful
  * login and is valid for ~30 days (JWT exp).
  */
 export async function login(request) {
+  const password = process.env.OPENSIN_PASSWORD || "";
+
+  // Determine the absolute base URL — Playwright's request fixture uses
+  // playwright.config's baseURL (defaulting to localhost:38471), which is
+  // NOT the production server when we run against sinchat.delqhi.com. Honor
+  // APP_URL when set.
+  const base =
+    process.env.APP_URL ||
+    (typeof request !== "undefined" && request.context
+      ? request.context().baseURL?.()
+      : null) ||
+    "http://localhost:38471";
+  const url = `${base.replace(/\/$/, "")}/api/request-token`;
+
   // Try cached token first (shared across test files via temp file)
   try {
     if (fs.existsSync(TOKEN_CACHE_FILE)) {
@@ -36,12 +54,37 @@ export async function login(request) {
     // ignore read errors
   }
 
-  const response = await request.post("/api/request-token", {
-    data: { username: "admin", password: "" },
+  const response = await request.post(url, {
+    headers: { "Content-Type": "application/json" },
+    data: `{ "username": "admin", "password": ${JSON.stringify(password)} }`,
   });
   expect(response.ok()).toBeTruthy();
-  const { token } = await response.json();
-  expect(token).toBeTruthy();
+  const body = await response.json();
+  expect(body.valid).toBe(true);
+  expect(body.token).toBeTruthy();
+  const token = body.token;
+  // Sanity-check: token must look like a JWT with the encrypted password or
+  // a non-empty user id. If we see `p:null` we hit the dev fallback branch
+  // that returns a JWT the server treats as unauthenticated.
+  try {
+    const decoded = JSON.parse(
+      Buffer.from(token.split(".")[1], "base64").toString(),
+    );
+    if (decoded.p === null && !decoded.id) {
+      throw new Error(
+        `Login response is a dev-branch JWT (no password / no user id). ` +
+          `POST ${url} returned {valid:true,token:<p:null>}. ` +
+          `The server likely hit the no-AUTH_TOKEN fallback branch. ` +
+          `Set OPENSIN_PASSWORD and ensure request Content-Type is JSON.`,
+      );
+    }
+  } catch (err) {
+    if (err instanceof Error && err.name === "SyntaxError") {
+      // not a JWT — let downstream fail
+    } else {
+      throw err;
+    }
+  }
 
   // Cache the token for subsequent calls
   try {

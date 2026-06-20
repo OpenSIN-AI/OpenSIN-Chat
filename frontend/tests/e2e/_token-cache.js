@@ -17,8 +17,21 @@ const TOKEN_CACHE = path.join(os.tmpdir(), "opensin-chat-e2e-token.txt");
 /**
  * Login and cache the token, or return the cached token if it exists.
  * Retries with exponential backoff if the rate limiter returns 429.
+ *
+ * Uses the OPENSIN_PASSWORD env var (defaulting to empty password for the
+ * no-auth dev configuration).
  */
 export async function sharedLogin(request) {
+  const password = process.env.OPENSIN_PASSWORD || "";
+
+  const base =
+    process.env.APP_URL ||
+    (typeof request !== "undefined" && request.context
+      ? request.context().baseURL?.()
+      : null) ||
+    "http://localhost:38471";
+  const url = `${base.replace(/\/$/, "")}/api/request-token`;
+
   // Try to read cached token first
   try {
     if (fs.existsSync(TOKEN_CACHE)) {
@@ -35,8 +48,8 @@ export async function sharedLogin(request) {
   const baseDelay = 5000; // 5s initial delay
 
   for (let attempt = 0; attempt < maxRetries; attempt++) {
-    const response = await request.post("/api/request-token", {
-      data: { username: "admin", password: "" },
+    const response = await request.post(url, {
+      data: { username: "admin", password },
     });
 
     if (response.ok()) {

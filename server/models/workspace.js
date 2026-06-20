@@ -194,6 +194,11 @@ const Workspace = {
    * @returns {Promise<{workspace: Object | null, message: string | null}>} A promise that resolves to an object containing the created workspace and an error message if applicable.
    */
   new: async function (name = null, creatorId = null, additionalFields = {}) {
+    // Treat "name", "  ", "  \t\n  " etc. as absent — without this normalisation
+    // the bare `if (!name)` test below would happily accept whitespace strings
+    // and produce an empty slug, which later collides on every retry. Trim first,
+    // then fall back to a UUID so users always get a usable workspace.
+    if (typeof name === "string") name = name.trim();
     if (!name) return { workspace: null, message: "name cannot be null" };
     var slug = this.slugify(name, { lower: true });
     slug = slug || uuidv4();

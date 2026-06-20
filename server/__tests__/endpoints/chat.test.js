@@ -111,6 +111,28 @@ describe("chatEndpoints", () => {
       expect(res.statusCode).toBe(400);
     });
 
+    it("returns 413 when message exceeds the chat size cap", async () => {
+      const huge = "x".repeat(50_000);
+      const res = await app.call("post", "/workspace/ws/stream-chat", {
+        body: { message: huge },
+        locals: WS_LOCALS,
+      });
+      expect(res.statusCode).toBe(413);
+      expect(res.body.error).toMatch(/too long/i);
+      // The expensive LLM call must NOT be made for oversize payloads.
+      expect(streamChatWithWorkspace).not.toHaveBeenCalled();
+    });
+
+    it("accepts messages just under the cap", async () => {
+      const max = "x".repeat(32_000);
+      const res = await app.call("post", "/workspace/ws/stream-chat", {
+        body: { message: max },
+        locals: WS_LOCALS,
+      });
+      expect(res.ended).toBe(true);
+      expect(streamChatWithWorkspace).toHaveBeenCalled();
+    });
+
     it("sets SSE headers", async () => {
       await app.call("post", "/workspace/ws/stream-chat", {
         body: { message: "hello" },
@@ -182,6 +204,20 @@ describe("chatEndpoints", () => {
         },
       );
       expect(res.statusCode).toBe(400);
+    });
+
+    it("returns 413 when thread message exceeds the chat size cap", async () => {
+      const huge = "x".repeat(50_000);
+      const res = await app.call(
+        "post",
+        "/workspace/ws/thread/t1/stream-chat",
+        {
+          body: { message: huge },
+          locals: THREAD_LOCALS,
+        },
+      );
+      expect(res.statusCode).toBe(413);
+      expect(streamChatWithWorkspace).not.toHaveBeenCalled();
     });
 
     it("auto-renames thread", async () => {

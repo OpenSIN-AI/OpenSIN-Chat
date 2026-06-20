@@ -322,12 +322,39 @@ function buildApp() {
     response.sendStatus(404);
   });
 
+  // Express body-parser throws SyntaxError when the client posts malformed
+  // JSON and PayloadTooLargeError for bodies that exceed the configured size
+  // limit. Both of those are CLIENT mistakes, not server-side bugs — surface
+  // them as 400/413 with a UUID-tagged message instead of a generic 500 which
+  // hides the root cause from operators (the previous behaviour caused
+  // countless "server error" alerts on user typos). Unknown errors still
+  // fall through to the 500 branch below so we never swallow real faults.
   app.use(function (err, _req, response, _next) {
-    const id = crypto.randomUUID();
-    console.error(`[errorHandler] id=${id}`, err);
-    if (!response.headersSent) {
-      response.status(500).json({ error: "Internal server error", id });
+    if (!response.headersSent && err) {
+      const id = crypto.randomUUID();
+
+      if (err.type === "entity.parse.failed" || err instanceof SyntaxError) {
+        console.warn(`[errorHandler] id=${id} bad JSON: ${err.message}`);
+        return response.status(400).json({
+          error: "Malformed JSON body. Please check your request payload.",
+          id,
+        });
+      }
+
+      if (err.type === "entity.too.large") {
+        console.warn(
+          `[errorHandler] id=${id} payload-too-large: ${err.message}`,
+        );
+        return response.status(413).json({
+          error: "Request body exceeds the permitted size limit.",
+          id,
+        });
+      }
+
+      console.error(`[errorHandler] id=${id}`, err);
+      return response.status(500).json({ error: "Internal server error", id });
     }
+    return _next?.(err);
   });
 
   return app;
