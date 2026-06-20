@@ -11,6 +11,7 @@ import { Link, useParams, useNavigate, useMatch } from "react-router-dom";
 import { GearSix } from "@phosphor-icons/react/dist/csr/GearSix";
 import { UploadSimple } from "@phosphor-icons/react/dist/csr/UploadSimple";
 import { DotsSixVertical } from "@phosphor-icons/react/dist/csr/DotsSixVertical";
+import { FolderOpen } from "@phosphor-icons/react/dist/csr/FolderOpen";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
 import { FolderSimplePlus } from "@phosphor-icons/react/dist/csr/FolderSimplePlus";
@@ -241,7 +242,7 @@ export default function ActiveWorkspaces() {
                           <div className="flex flex-row justify-between w-full items-center">
                             <div
                               {...provided.dragHandleProps}
-                              className="cursor-grab mr-[3px]"
+                              className="cursor-grab mr-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-150"
                             >
                               <DotsSixVertical
                                 size={20}
@@ -249,6 +250,11 @@ export default function ActiveWorkspaces() {
                                 weight="bold"
                               />
                             </div>
+                            <FolderOpen
+                              size={16}
+                              weight="fill"
+                              className={`shrink-0 mr-[2px] ${isActive ? "text-white light:text-blue-800" : "text-white/60 light:text-slate-500"}`}
+                            />
                             <div
                               data-tooltip-id="workspace-name"
                               data-tooltip-content={workspace.name}
