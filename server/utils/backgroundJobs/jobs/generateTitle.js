@@ -153,6 +153,7 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     scrubbed = scrubbed.split(new RegExp(prompt.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("");
     const tail = scrubbed.trim().split(/\s+/).filter(Boolean).slice(-5);
     const candidate = tail.join(" ").replace(/[^\w\säöüßÄÖÜ-]/g, "").trim();
+    console.log(`[GenerateTitle] inline fallback for thread ${threadId}: scrubbed="${scrubbed.slice(-100)}" candidate="${candidate}" valid=${isValidTitle(candidate)}`);
     if (isValidTitle(candidate)) cleanTitle = candidate;
   }
 
