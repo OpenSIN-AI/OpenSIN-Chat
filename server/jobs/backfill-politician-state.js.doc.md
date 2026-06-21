@@ -21,19 +21,28 @@ information that the Abgeordnetenwatch sync historically failed to store:
 node server/jobs/backfill-politician-state.js
 node server/jobs/backfill-politician-state.js --dry-run
 node server/jobs/backfill-politician-state.js --limit=100
+node server/jobs/backfill-politician-state.js --no-aw  # skip Abgeordnetenwatch cross-reference
 ```
 
 ## Algorithm
 
-1. Iterate over all `politicians` rows in batches of 100.
-2. Parse the top-level `rawData` JSON (normalized Abgeordnetenwatch object).
-3. Extract the original candidacy-mandate JSON from `normalized.rawData`.
-4. Derive `state`:
-   - Prefer the `Landesliste <state>` label from `electoral_data.electoral_list.label`.
-   - Fall back to the official 2021 Wahlkreis number → state mapping from
-     `electoral_data.constituency.label`.
-5. Extract `profileUrl` from `politician.abgeordnetenwatch_url`.
-6. Update the row only if a value changed and the source is `abgeordnetenwatch`.
+1. Load all current Abgeordnetenwatch politicians into a lookup table keyed by
+   normalized `fullName|party`. This is used to cross-reference Bundestag (DIP)
+   records, which do not carry state or a public profile URL.
+2. Iterate over all `politicians` rows in batches of 100.
+3. For `abgeordnetenwatch` records:
+   - Parse the top-level `rawData` JSON (normalized Abgeordnetenwatch object).
+   - Extract the original candidacy-mandate JSON from `normalized.rawData`.
+   - Derive `state`:
+     - Prefer the `Landesliste <state>` label from `electoral_data.electoral_list.label`.
+     - Fall back to the official 2021 Wahlkreis number → state mapping from
+       `electoral_data.constituency.label`.
+   - Extract `profileUrl` from `politician.abgeordnetenwatch_url`.
+4. For `bundestag` records:
+   - Find the matching Abgeordnetenwatch record by `fullName|party`.
+   - Extract `state` and `profileUrl` from the matched Abgeordnetenwatch raw
+     mandate using the same logic.
+5. Update the row only if a value changed.
 
 ## State mapping source
 

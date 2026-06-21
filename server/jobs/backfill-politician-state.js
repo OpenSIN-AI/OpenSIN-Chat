@@ -1,20 +1,22 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: MIT
 /**
- * Backfill script: repair politician state and profileUrl from raw Abgeordnetenwatch data.
+ * Backfill script: repair politician state and profileUrl.
  *
  * Usage:
  *   node server/jobs/backfill-politician-state.js
  *   node server/jobs/backfill-politician-state.js --dry-run     # count only, no updates
  *   node server/jobs/backfill-politician-state.js --limit=100   # only touch 100 records
+ *   node server/jobs/backfill-politician-state.js --no-aw        # skip Abgeordnetenwatch cross-reference
  *
  * Purpose: One-time repair job. The Abgeordnetenwatch sync historically stored
- *          politicianApiUrl as profileUrl and left state null. This script extracts
- *          the public profile URL and the German state (Bundesland) from the raw
- *          candidacy-mandate JSON and writes them back to the politicians table.
+ *          politicianApiUrl as profileUrl and left state null. For Bundestag
+ *          (DIP) records, the DIP API does not expose state or a public profile
+ *          URL, so we cross-reference with Abgeordnetenwatch by name + party.
  */
 
 const { PrismaClient } = require("@prisma/client");
+const { AbgeordnetenwatchApi } = require("../utils/politician/abgeordnetenwatchApi");
 
 const prisma = new PrismaClient();
 
@@ -88,16 +90,44 @@ function extractProfileUrlFromAwRawData(rawData) {
   }
 }
 
+function normalizeName(name) {
+  return (name || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function matchKey(p) {
+  return `${normalizeName(p.fullName)}|${p.party || ""}`;
+}
+
+async function loadAwLookup() {
+  try {
+    const api = new AbgeordnetenwatchApi();
+    const politicians = await api.fetchAllPoliticians({ enrich: false });
+    const byKey = new Map();
+    for (const p of politicians) {
+      const key = matchKey(p);
+      if (!byKey.has(key)) byKey.set(key, p);
+    }
+    console.log(`[backfill] Loaded ${byKey.size} Abgeordnetenwatch records for cross-reference`);
+    return byKey;
+  } catch (err) {
+    console.error(`[backfill] Failed to load Abgeordnetenwatch data: ${err.message}`);
+    return new Map();
+  }
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes("--dry-run");
+  const noAw = args.includes("--no-aw");
   const limitArg = args.find((a) => a.startsWith("--limit="));
   const limit = limitArg ? parseInt(limitArg.split("=")[1], 10) : null;
 
   const total = await prisma.politicians.count();
-  console.log(`[backfill] Total politicians in SQLite: ${total}`);
+  console.log(`[backfill] Total politicians: ${total}`);
   if (limit) console.log(`[backfill] Limit: ${limit}`);
   if (dryRun) console.log("[backfill] Dry run — no updates will be performed.");
+
+  const awLookup = noAw ? new Map() : await loadAwLookup();
 
   const BATCH_SIZE = 100;
   let processed = 0;
@@ -118,6 +148,8 @@ async function main() {
         state: true,
         profileUrl: true,
         rawData: true,
+        fullName: true,
+        party: true,
       },
     });
 
@@ -125,19 +157,25 @@ async function main() {
       if (limit && processed >= limit) break;
       processed++;
 
-      // Only Abgeordnetenwatch records carry the Landesliste shape we know how to parse.
-      if (politician.source !== "abgeordnetenwatch") {
-        continue;
-      }
+      let state = null;
+      let profileUrl = null;
 
       try {
-        const normalized = politician.rawData
-          ? JSON.parse(politician.rawData)
-          : null;
-        const originalMandate = normalized?.rawData || null;
-
-        const state = extractStateFromAwRawData(originalMandate);
-        const profileUrl = extractProfileUrlFromAwRawData(originalMandate);
+        if (politician.source === "abgeordnetenwatch") {
+          const normalized = politician.rawData
+            ? JSON.parse(politician.rawData)
+            : null;
+          const originalMandate = normalized?.rawData || null;
+          state = extractStateFromAwRawData(originalMandate);
+          profileUrl = extractProfileUrlFromAwRawData(originalMandate);
+        } else if (politician.source === "bundestag" && awLookup.size > 0) {
+          const awMatch = awLookup.get(matchKey(politician));
+          if (awMatch) {
+            const originalMandate = awMatch.rawData || null;
+            state = extractStateFromAwRawData(originalMandate);
+            profileUrl = extractProfileUrlFromAwRawData(originalMandate);
+          }
+        }
 
         const needsUpdate =
           (state && politician.state !== state) ||
