@@ -112,6 +112,28 @@ function extractStateFromBundestagRawData(rawData) {
   }
 }
 
+/**
+ * Extract the party/faction from a Bundestag (DIP) raw record.
+ * DIP person records store the faction in `person_roles[].fraktion`. The
+ * sync-politician-data fallback historically did not copy this to the `party`
+ * column, so the backfill also repairs `party` for Bundestag records.
+ * @param {string|Object} rawData
+ * @returns {string|null}
+ */
+function extractPartyFromBundestagRawData(rawData) {
+  try {
+    const data = typeof rawData === "string" ? JSON.parse(rawData) : rawData;
+    const roles = data?.person_roles;
+    if (!Array.isArray(roles)) return null;
+    for (const role of roles) {
+      if (role?.fraktion) return role.fraktion.trim();
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 function normalizeName(name) {
   return (name || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
@@ -181,6 +203,7 @@ async function main() {
 
       let state = null;
       let profileUrl = null;
+      let party = null;
 
       try {
         if (politician.source === "abgeordnetenwatch") {
@@ -191,29 +214,41 @@ async function main() {
           state = extractStateFromAwRawData(originalMandate);
           profileUrl = extractProfileUrlFromAwRawData(originalMandate);
         } else if (politician.source === "bundestag") {
-          // First try to extract state directly from the DIP raw record (some
-          // roles carry a bundesland field). Then cross-reference with
-          // Abgeordnetenwatch for a public profile URL and a more precise state.
+          // First try to extract party and state directly from the DIP raw record.
+          // The sync-politician-data fallback historically stored the raw DIP
+          // person object but left party/state null, so we repair all three.
+          const extractedParty = extractPartyFromBundestagRawData(
+            politician.rawData,
+          );
           state = extractStateFromBundestagRawData(politician.rawData);
           if (awLookup.size > 0) {
-            const awMatch = awLookup.get(matchKey(politician));
+            const key = matchKey({
+              ...politician,
+              party: extractedParty || politician.party,
+            });
+            const awMatch = awLookup.get(key);
             if (awMatch) {
               const originalMandate = awMatch.rawData || null;
               state = state || extractStateFromAwRawData(originalMandate);
               profileUrl = extractProfileUrlFromAwRawData(originalMandate);
             }
           }
+          // Repair the party column too, but only if it is currently empty.
+          if (!politician.party && extractedParty) {
+            party = extractedParty;
+          }
         }
 
         const needsUpdate =
           (state && politician.state !== state) ||
-          (profileUrl && politician.profileUrl !== profileUrl);
+          (profileUrl && politician.profileUrl !== profileUrl) ||
+          (party && politician.party !== party);
 
         if (!needsUpdate) continue;
 
         if (dryRun) {
           console.log(
-            `[backfill] Would update ${politician.id}: state=${state ?? politician.state}, profileUrl=${profileUrl ?? politician.profileUrl}`,
+            `[backfill] Would update ${politician.id}: party=${party ?? politician.party}, state=${state ?? politician.state}, profileUrl=${profileUrl ?? politician.profileUrl}`,
           );
           updated++;
           continue;
@@ -222,6 +257,7 @@ async function main() {
         await prisma.politicians.update({
           where: { id: politician.id },
           data: {
+            ...(party && { party }),
             ...(state && { state }),
             ...(profileUrl && { profileUrl }),
           },
