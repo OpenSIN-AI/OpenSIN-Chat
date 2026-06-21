@@ -9,6 +9,7 @@ import { Check } from "@phosphor-icons/react/dist/csr/Check";
 import { Plug } from "@phosphor-icons/react/dist/csr/Plug";
 import { POPUP_BROWSER_EXTENSION_EVENT } from "@/utils/constants";
 import { copyText } from "@/utils/clipboard";
+import { useTranslation } from "react-i18next";
 
 type ApiKey = {
   id: string;
@@ -29,25 +30,24 @@ export default function BrowserExtensionApiKeyRow({
   connectionString,
   isMultiUser,
 }: BrowserExtensionApiKeyRowProps): JSX.Element {
+  const { t } = useTranslation();
   const rowRef = useRef<HTMLTableRowElement>(null);
   const [copied, setCopied] = useState(false);
 
   const handleRevoke = async () => {
     if (
-      !window.confirm(
-        `Are you sure you want to revoke this browser extension API key?\nAfter you do this it will no longer be useable.\n\nThis action is irreversible.`,
-      )
+      !window.confirm(t("browserExtensionApiKey.revokeConfirm"))
     )
       return false;
 
     const result = await BrowserExtensionApiKey.revoke(apiKey.id);
     if (result.success) {
       removeApiKey(apiKey.id);
-      showToast("Browser Extension API Key permanently revoked", "info", {
+      showToast(t("browserExtensionApiKey.revoked"), "info", {
         clear: true,
       });
     } else {
-      showToast("Failed to revoke API Key", "error", {
+      showToast(t("browserExtensionApiKey.revokeFailed"), "error", {
         clear: true,
       });
     }
@@ -56,7 +56,7 @@ export default function BrowserExtensionApiKeyRow({
   const handleCopy = () => {
     copyText(connectionString).then((ok) => {
       if (!ok) return;
-      showToast("Connection string copied to clipboard", "success", {
+      showToast(t("browserExtensionApiKey.copiedToClipboard"), "success", {
         clear: true,
       });
       setCopied(true);
@@ -71,7 +71,7 @@ export default function BrowserExtensionApiKeyRow({
       { type: POPUP_BROWSER_EXTENSION_EVENT, apiKey: connectionString },
       "*",
     );
-    showToast("Attempting to connect to browser extension...", "info", {
+    showToast(t("browserExtensionApiKey.connectingToExtension"), "info", {
       clear: true,
     });
   };
@@ -113,10 +113,7 @@ export default function BrowserExtensionApiKeyRow({
       </td>
       {isMultiUser && (
         <td className="px-6 py-2">
-          {
-            // eslint-disable-next-line i18next/no-literal-string
-            apiKey.user ? apiKey.user.username : "N/A"
-          }
+          {apiKey.user ? apiKey.user.username : t("browserExtensionApiKey.notAvailable")}
         </td>
       )}
       <td className="px-6 py-2">

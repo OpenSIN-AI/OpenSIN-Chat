@@ -49,8 +49,9 @@ export default function NewEmbedModal({
       showToast(t("newEmbedModal.created"), "success", { clear: true });
       mutateEmbeds();
       closeModal();
+    } else {
+      setError(error);
     }
-    setError(error);
   };
 
   return (

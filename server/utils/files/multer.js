@@ -21,6 +21,7 @@ const supabaseStorage = require("../storage/supabase");
 const fileUploadStorage = multer.diskStorage({
   destination: function (_, __, cb) {
     const uploadOutput = getCollectorPath("hotdir");
+    fs.mkdirSync(uploadOutput, { recursive: true });
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {
@@ -38,6 +39,7 @@ const fileUploadStorage = multer.diskStorage({
 const fileAPIUploadStorage = multer.diskStorage({
   destination: function (_, __, cb) {
     const uploadOutput = getCollectorPath("hotdir");
+    fs.mkdirSync(uploadOutput, { recursive: true });
     cb(null, uploadOutput);
   },
   filename: function (_, file, cb) {

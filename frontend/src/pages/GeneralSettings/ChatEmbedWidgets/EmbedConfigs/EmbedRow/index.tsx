@@ -52,7 +52,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
   } = useModal();
 
   const handleSuspend = async () => {
-    if (!window.confirm(t("embedConfigs.embedRow.disableConfirm")))
+    if (enabled && !window.confirm(t("embedConfigs.embedRow.disableConfirm")))
       return false;
 
     const { success, error } = await Embed.updateEmbed(embed.id, {
@@ -113,7 +113,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
         >
           {
             // If the embed was created more than a day ago, show the date, otherwise show the time ago
-            dayjs(embed.createdAt).diff(dayjs(), "day") > 0
+            dayjs().diff(dayjs(embed.createdAt), "day") > 0
               ? dayjs(embed.createdAt).format("MMM D, YYYY") // eslint-disable-line i18next/no-literal-string
               : dayjs(embed.createdAt).fromNow()
           }

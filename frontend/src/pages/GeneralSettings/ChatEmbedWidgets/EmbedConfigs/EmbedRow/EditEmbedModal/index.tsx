@@ -54,8 +54,9 @@ export default function EditEmbedModal({
       });
       mutateEmbeds();
       closeModal();
+    } else {
+      setError(error);
     }
-    setError(error);
   };
 
   return (

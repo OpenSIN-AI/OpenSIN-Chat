@@ -396,7 +396,7 @@ export function DnDFileUploaderProvider({
     const fileUpdates = (pendingFiles as any).map((file, i) => ({
       uid: file.attachment.uid,
       updates: {
-        status: results[i].success ? "success" : "failed",
+        status: results[i].success ? "added_context" : "failed",
         error: results[i].error ?? null,
         document: results[i].document,
       },

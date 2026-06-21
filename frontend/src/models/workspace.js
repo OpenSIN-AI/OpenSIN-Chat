@@ -346,7 +346,10 @@ const Workspace = {
     const response = await fetch(`${API_BASE}/workspace/${slug}/upload-link`, {
       method: "POST",
       body: JSON.stringify({ link }),
-      headers: baseHeaders(),
+      headers: {
+        ...baseHeaders(),
+        "Content-Type": "application/json",
+      },
     });
 
     let data;

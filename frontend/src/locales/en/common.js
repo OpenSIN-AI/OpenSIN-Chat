@@ -117,6 +117,49 @@ const TRANSLATIONS = {
   transcriptionSelection: {
     model: "Model Selection",
   },
+  genericOpenAi: {
+    baseUrl: "Base URL",
+    baseUrlPlaceholder: "eg: https://proxy.openai.com",
+    apiKey: "API Key",
+    apiKeyPlaceholder: "Generic service API Key",
+    modelContextWindow: "Model context window",
+    contextWindowPlaceholder: "Content window limit (eg: 4096)",
+    maxTokens: "Max Tokens",
+    maxTokensPlaceholder: "Max tokens per request (eg: 1024)",
+    selectedModel: "Selected Model",
+    loadingModels: "-- loading available models --",
+    modelPlaceholder: "Model id used for chat requests",
+    loadedModels: "Your loaded models",
+  },
+  anthropic: {
+    apiKey: "Anthropic API Key",
+    modelSelection: "Chat Model Selection",
+    loadingModels: "-- loading available models --",
+    advancedSettings: "advanced settings",
+    promptCaching: "Prompt Caching",
+    noCaching: "No caching",
+    fiveMinutes: "5 minutes",
+    oneHour: "1 hour",
+  },
+  litellm: {
+    baseUrl: "Base URL",
+    baseUrlPlaceholder: "http://127.0.0.1:4000",
+    modelSelection: "Chat Model Selection",
+    loadingModels: "-- loading available models --",
+    waitingForUrl: "-- waiting for URL --",
+    modelContextWindow: "Model context window",
+    tokenLimitPlaceholder: "8192",
+    apiKey: "API Key",
+    apiKeyOptional: "optional",
+    apiKeyPlaceholder: "sk-mysecretkey",
+    loadedModels: "Your loaded models",
+  },
+  voyageAi: {
+    apiKey: "API Key",
+    modelPreference: "Model Preference",
+    availableModels: "Available embedding models",
+    apiKeyPlaceholder: "Voyage AI API Key",
+  },
   providerSettings: {
     openai: {
       apiKey: "API Key",
@@ -3891,6 +3934,13 @@ const TRANSLATIONS = {
     createdAt: "Created At",
     actions: "Actions",
     noApiKeysFound: "No API keys found",
+    revokeConfirm:
+      "Are you sure you want to revoke this browser extension API key?\nAfter you do this it will no longer be useable.\n\nThis action is irreversible.",
+    revoked: "Browser Extension API Key permanently revoked",
+    revokeFailed: "Failed to revoke API Key",
+    copiedToClipboard: "Connection string copied to clipboard",
+    connectingToExtension: "Attempting to connect to browser extension...",
+    notAvailable: "N/A",
     newKey: {
       title: "New Browser Extension API Key",
       error: "Error: {{error}}",
@@ -4211,7 +4261,7 @@ const TRANSLATIONS = {
   embedConfigs: {
     embedRow: {
       disableConfirm:
-        "Are you sure you want to disabled this embed?\nOnce disabled the embed will no longer respond to any chat requests.",
+        "Are you sure you want to disable this embed?\nOnce disabled the embed will no longer respond to any chat requests.",
       toggleStatus: "Embed {{status}}.",
       disabled: "has been disabled",
       active: "is active",

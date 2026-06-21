@@ -18,7 +18,7 @@ const Embed: any = {
   newEmbed: async (data: any) => {
     return await fetch(`${API_BASE}/embeds/new`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
@@ -30,7 +30,7 @@ const Embed: any = {
   updateEmbed: async (embedId: any, data: any) => {
     return await fetch(`${API_BASE}/embed/update/${embedId}`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())
@@ -56,7 +56,7 @@ const Embed: any = {
   chats: async (offset: any = 0) => {
     return await fetch(`${API_BASE}/embed/chats`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ offset }),
     })
       .then((res) => res.json())
