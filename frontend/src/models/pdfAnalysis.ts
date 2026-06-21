@@ -39,6 +39,16 @@ export interface CorpusParams {
   deepScan: boolean;
 }
 
+function safeJson(res: Response): any {
+  return res.text().then((text) => {
+    try {
+      return JSON.parse(text);
+    } catch {
+      return { error: res.ok ? text.substring(0, 200) : `HTTP ${res.status}` };
+    }
+  });
+}
+
 const PdfAnalysis = {
   upload: async function (file: File): Promise<PdfAnalysisResult> {
     const formData = new FormData();
@@ -47,8 +57,9 @@ const PdfAnalysis = {
       method: "POST",
       headers: baseHeaders(),
       body: formData,
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
@@ -69,16 +80,18 @@ const PdfAnalysis = {
         factCriteria,
         deepScan,
       }),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
   list: async function (): Promise<any[]> {
     return await fetch(`${PDF_ANALYSIS_BASE}/list`, {
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .then((res) => res.jobs || [])
       .catch(() => []);
   },
@@ -86,16 +99,18 @@ const PdfAnalysis = {
   status: async function (jobId: string): Promise<PdfAnalysisResult> {
     return await fetch(`${PDF_ANALYSIS_BASE}/${jobId}`, {
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
   result: async function (jobId: string): Promise<PdfAnalysisResult> {
     return await fetch(`${PDF_ANALYSIS_BASE}/${jobId}/result`, {
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
@@ -103,8 +118,9 @@ const PdfAnalysis = {
     return await fetch(`${PDF_ANALYSIS_BASE}/${jobId}`, {
       method: "DELETE",
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
@@ -119,8 +135,9 @@ const PdfAnalysis = {
     if (tag) params.set("tag", tag);
     return await fetch(`${PDF_ANALYSIS_BASE}/facts?${params}`, {
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .then((res) => res.facts || [])
       .catch(() => []);
   },
@@ -129,8 +146,9 @@ const PdfAnalysis = {
     return await fetch(`${PDF_ANALYSIS_BASE}/facts/${factId}`, {
       method: "DELETE",
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
@@ -144,16 +162,18 @@ const PdfAnalysis = {
       method: "POST",
       headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ claims, factIds, sources, deepWeb }),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
   listCrossChecks: async function (): Promise<any[]> {
     return await fetch(`${PDF_ANALYSIS_BASE}/crosscheck/list`, {
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .then((res) => res.jobs || [])
       .catch(() => []);
   },
@@ -161,8 +181,9 @@ const PdfAnalysis = {
   crossCheckResult: async function (jobId: string): Promise<PdfAnalysisResult> {
     return await fetch(`${PDF_ANALYSIS_BASE}/crosscheck/${jobId}/result`, {
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
@@ -170,8 +191,9 @@ const PdfAnalysis = {
     return await fetch(`${PDF_ANALYSIS_BASE}/crosscheck/${jobId}`, {
       method: "DELETE",
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
@@ -192,16 +214,18 @@ const PdfAnalysis = {
         factCriteria,
         deepScan,
       }),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
   listCorpus: async function (): Promise<any[]> {
     return await fetch(`${PDF_ANALYSIS_BASE}/corpus/list`, {
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .then((res) => res.jobs || [])
       .catch(() => []);
   },
@@ -209,8 +233,9 @@ const PdfAnalysis = {
   corpusResult: async function (jobId: string): Promise<PdfAnalysisResult> {
     return await fetch(`${PDF_ANALYSIS_BASE}/corpus/${jobId}/result`, {
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 
@@ -218,8 +243,9 @@ const PdfAnalysis = {
     return await fetch(`${PDF_ANALYSIS_BASE}/corpus/${jobId}`, {
       method: "DELETE",
       headers: baseHeaders(),
+      credentials: "include",
     })
-      .then((res) => res.json())
+      .then(safeJson)
       .catch((e) => ({ error: e.message }));
   },
 };

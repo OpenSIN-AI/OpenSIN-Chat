@@ -205,7 +205,7 @@ function buildApp() {
   scheduledJobEndpoints(apiRouter);
   outlookAgentEndpoints(apiRouter);
   googleAgentSkillEndpoints(apiRouter);
-  pdfAnalysisEndpoints(apiRouter);
+  pdfAnalysisEndpoints(app);
   memoryEndpoints(apiRouter);
   providerStatusEndpoints(apiRouter);
   webPushEndpoints(apiRouter);

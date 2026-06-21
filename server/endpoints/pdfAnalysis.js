@@ -43,12 +43,21 @@ const upload = multer({
   },
 });
 
+function uploadSingle(req, res, next) {
+  upload.single("file")(req, res, (err) => {
+    if (err) {
+      return res.status(400).json({ error: err.message });
+    }
+    next();
+  });
+}
+
 function pdfAnalysisEndpoints(app) {
   if (!app) return;
 
   app.post(
     "/pdf-analysis/upload",
-    [validatedRequest, upload.single("file")],
+    [validatedRequest, uploadSingle],
     (request, response) => {
       if (!request.file)
         return response

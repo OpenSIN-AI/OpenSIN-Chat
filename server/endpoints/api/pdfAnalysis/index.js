@@ -42,13 +42,22 @@ const upload = multer({
   },
 });
 
+function uploadSingle(req, res, next) {
+  upload.single("file")(req, res, (err) => {
+    if (err) {
+      return res.status(400).json({ error: err.message });
+    }
+    next();
+  });
+}
+
 function apiPdfAnalysisEndpoints(app) {
   if (!app) return;
 
   // PDF hochladen — liefert pdfPath für /start zurück
   app.post(
     "/pdf-analysis/upload",
-    [validApiKey, upload.single("file")],
+    [validApiKey, uploadSingle],
     (request, response) => {
       if (!request.file)
         return response

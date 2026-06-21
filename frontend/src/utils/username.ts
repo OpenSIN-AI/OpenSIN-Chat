@@ -13,8 +13,11 @@ export const USERNAME_MIN_LENGTH = 2;
 export const USERNAME_MAX_LENGTH = 32;
 
 /**
- * HTML5 pattern attribute for username inputs (without ^ and $)
- * Note: hyphen is placed at the start of the character class to avoid
- * Chrome /v flag (Unicode Sets mode) "Invalid character in character class" error.
+ * HTML5 pattern attribute for username inputs (without ^ and $).
+ * The hyphen MUST be escaped as `\-` because Chrome compiles HTML5 pattern
+ * attributes with the `/v` flag (Unicode Sets mode), where an unescaped `-`
+ * at the start of a character class is NOT a literal and throws
+ * "Invalid character in character class".  `@`, `.`, and `_` are fine as
+ * literals — only `-` needs escaping.
  */
-export const USERNAME_PATTERN = "[a-z][-a-z0-9._@]*";
+export const USERNAME_PATTERN = "[a-z][a-z0-9._@\\-]*";

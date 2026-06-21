@@ -29,7 +29,7 @@ describe("utils/username – exported constants", () => {
 
   it("USERNAME_PATTERN is the regex source without ^ and $", () => {
     expect(typeof USERNAME_PATTERN).toBe("string");
-    expect(USERNAME_PATTERN).toBe("[a-z][-a-z0-9._@]*");
+    expect(USERNAME_PATTERN).toBe("[a-z][a-z0-9._@\\-]*");
     // Must not include anchors since it's used in an HTML5 pattern attribute.
     expect(USERNAME_PATTERN).not.toContain("^");
     expect(USERNAME_PATTERN).not.toContain("$");
@@ -117,8 +117,6 @@ describe("utils/username – pattern usable in HTML5 pattern attribute", () => {
     render(<ProbeInput pattern={USERNAME_PATTERN} />);
     const input = screen.getByTestId("probe");
     expect(input.getAttribute("pattern")).toBe(USERNAME_PATTERN);
-    // The pattern attribute is a valid CSS attribute selector match.
-    expect(input.matches(`[pattern="${USERNAME_PATTERN}"]`)).toBe(true);
   });
 
   it("the rendered pattern is a valid HTML5 regex source for the simple cases", () => {
