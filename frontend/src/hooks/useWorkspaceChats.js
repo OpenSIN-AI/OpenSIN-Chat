@@ -52,7 +52,7 @@ export default function useWorkspaceChats(slug) {
 
   return {
     workspace: data?.workspace || null,
-    suggestedMessages: data?.suggestedMessages || [],
+    suggestedMessages: useMemo(() => data?.suggestedMessages ?? [], [data]),
     showAgentCommand: data?.showAgentCommand || false,
     isLoading,
     error,
