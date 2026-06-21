@@ -305,6 +305,7 @@ class GenericOpenAiLLM {
     return new Promise(async (resolve) => {
       let fullText = "";
       let reasoningText = "";
+      let allReasoningText = ""; // preserved for saved history even after streaming
       let reasoningMode = true; // Assume reasoning model by default
       let reasoningBlockOpen = false;
 
@@ -316,7 +317,7 @@ class GenericOpenAiLLM {
         stream?.endMeasurement(usage);
         clientAbortedHandler(
           resolve,
-          reasoningText ? `imd${reasoningText}thinking${fullText}` : fullText,
+          allReasoningText ? `<think>${allReasoningText}</think>${fullText}` : fullText,
         );
       };
       response.on("close", handleAbort);
@@ -343,15 +344,46 @@ class GenericOpenAiLLM {
           }
 
           // Reasoning models will always return the reasoning text before the token text.
-          // We keep it internally but don't send it to the frontend to avoid cluttering the UI.
+          // Stream reasoning to frontend wrapped in imd...thinking tags so the
+          // ThoughtContainer can display it live. Also accumulate for saved history.
           if (reasoningToken) {
             reasoningText += reasoningToken;
+            allReasoningText += reasoningToken;
+            if (!reasoningBlockOpen) {
+              reasoningBlockOpen = true;
+              writeResponseChunk(response, {
+                uuid,
+                sources: [],
+                type: "textResponseChunk",
+                textResponse: "<think>",
+                close: false,
+                error: false,
+              });
+            }
+            writeResponseChunk(response, {
+              uuid,
+              sources: [],
+              type: "textResponseChunk",
+              textResponse: reasoningToken,
+              close: false,
+              error: false,
+            });
+            if (!hasUsageMetrics) usage.completion_tokens++;
             continue;
           }
 
-          // Reasoning text is kept internally but never sent to frontend.
-          // When reasoning ends and token text begins, just reset reasoningText.
+          // When reasoning ends and token text begins, close the imd tag
+          // and reset reasoningText (it's already been streamed).
           if (!!reasoningText && !reasoningToken && token) {
+            reasoningBlockOpen = false;
+            writeResponseChunk(response, {
+              uuid,
+              sources: [],
+              type: "textResponseChunk",
+              textResponse: "</think>",
+              close: false,
+              error: false,
+            });
             reasoningText = "";
           }
 
@@ -407,8 +439,8 @@ class GenericOpenAiLLM {
             // imd...thinking block for the ThoughtContainer to display.
             // Matches the non-streaming #parseReasoningFromResponse format.
             resolve(
-              reasoningText
-                ? `<think>${reasoningText}</think>${fullText}`
+              allReasoningText
+                ? `<think>${allReasoningText}</think>${fullText}`
                 : fullText,
             );
             break; // Break streaming when a valid finish_reason is first encountered
