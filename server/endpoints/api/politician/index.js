@@ -312,6 +312,29 @@ function apiPoliticianEndpoints(app) {
             : new Date().toISOString(),
         };
 
+        // Idempotency: remove any existing politician document for this workspace
+        // so clicking "add to source" twice does not create duplicates.
+        const politicianChunkSource = metadata.chunkSource;
+        const existingDocs = await Document.forWorkspace(workspace.id);
+        const existingPaths = existingDocs
+          .filter((doc) => {
+            try {
+              const meta = JSON.parse(doc.metadata || "{}");
+              return meta.chunkSource === politicianChunkSource;
+            } catch {
+              return false;
+            }
+          })
+          .map((doc) => doc.docpath)
+          .filter(Boolean);
+        if (existingPaths.length > 0) {
+          await Document.removeDocuments(
+            workspace,
+            existingPaths,
+            user?.id || response.locals?.user?.id,
+          );
+        }
+
         const Collector = new CollectorApi();
         const { success, reason, documents } = await Collector.processRawText(
           textContent,

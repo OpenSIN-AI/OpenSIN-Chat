@@ -42,6 +42,8 @@ jest.mock("../../../utils/collectorApi", () => ({
 jest.mock("../../../models/documents", () => ({
   Document: {
     addDocuments: jest.fn(),
+    forWorkspace: jest.fn(),
+    removeDocuments: jest.fn(),
   },
 }));
 
@@ -244,6 +246,8 @@ describe("Politician REST endpoints", () => {
       });
       mockDB.getSpeeches.mockResolvedValue([]);
       Workspace.get.mockResolvedValue({ id: 42, slug: "test-ws" });
+      Document.forWorkspace.mockResolvedValue([]);
+      Document.removeDocuments.mockResolvedValue(true);
       mockCollectorInstance.processRawText.mockResolvedValue({
         success: true,
         documents: [{ location: "custom-documents/politician-1.json" }],
@@ -261,6 +265,7 @@ describe("Politician REST endpoints", () => {
 
       expect(res.statusCode).toBe(200);
       expect(res.body.success).toBe(true);
+      expect(Document.forWorkspace).toHaveBeenCalledWith(42);
       expect(mockCollectorInstance.processRawText).toHaveBeenCalledWith(
         expect.stringContaining("Max Mustermann"),
         expect.objectContaining({
@@ -275,6 +280,47 @@ describe("Politician REST endpoints", () => {
       );
     });
 
+    it("replaces an existing politician document to stay idempotent", async () => {
+      mockDB.getPolitician.mockResolvedValue({
+        id: "1",
+        fullName: "Max Mustermann",
+        party: "AfD",
+        state: "Berlin",
+      });
+      mockDB.getSpeeches.mockResolvedValue([]);
+      Workspace.get.mockResolvedValue({ id: 42, slug: "test-ws" });
+      Document.forWorkspace.mockResolvedValue([
+        {
+          id: 101,
+          docpath: "custom-documents/politician-1-old.json",
+          metadata: JSON.stringify({ chunkSource: "politician-1" }),
+        },
+      ]);
+      Document.removeDocuments.mockResolvedValue(true);
+      mockCollectorInstance.processRawText.mockResolvedValue({
+        success: true,
+        documents: [{ location: "custom-documents/politician-1.json" }],
+      });
+      Document.addDocuments.mockResolvedValue({
+        failedToEmbed: [],
+        errors: [],
+      });
+
+      const { call } = buildApp();
+      const res = await call("post", "/politician/1/add-to-workspace", {
+        body: { workspaceSlug: "test-ws" },
+        locals: { user: { id: 1 } },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(Document.removeDocuments).toHaveBeenCalledWith(
+        { id: 42, slug: "test-ws" },
+        ["custom-documents/politician-1-old.json"],
+        1,
+      );
+      expect(Document.addDocuments).toHaveBeenCalled();
+    });
+
     it("returns 500 when document processing fails", async () => {
       mockDB.getPolitician.mockResolvedValue({
         id: "1",
@@ -282,6 +328,8 @@ describe("Politician REST endpoints", () => {
       });
       mockDB.getSpeeches.mockResolvedValue([]);
       Workspace.get.mockResolvedValue({ id: 42, slug: "test-ws" });
+      Document.forWorkspace.mockResolvedValue([]);
+      Document.removeDocuments.mockResolvedValue(true);
       mockCollectorInstance.processRawText.mockResolvedValue({
         success: false,
         reason: "Collector offline",
