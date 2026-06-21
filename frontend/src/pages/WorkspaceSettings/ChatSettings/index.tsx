@@ -6,6 +6,8 @@ import showToast from "@/utils/toast";
 import { castToType } from "@/utils/types";
 import { useRef, useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
+import { mutate } from "swr";
+import { WORKSPACES_KEY } from "@/hooks/useWorkspaces";
 import ChatHistorySettings from "./ChatHistorySettings";
 import ChatPromptSettings from "./ChatPromptSettings";
 import ChatTemperatureSettings from "./ChatTemperatureSettings";
@@ -50,6 +52,7 @@ export default function ChatSettings({
       if (updatedWorkspace) {
         showToast(t("common.workspaceUpdated"), "success", { clear: true });
         setHasChanges(false);
+        mutate(WORKSPACES_KEY);
       } else {
         showToast(t("common.error", { error: message }), "error", {
           clear: true,
