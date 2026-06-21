@@ -35,7 +35,7 @@ const prisma = new PrismaClient(prismaClientConfig);
 // Note: PRAGMA journal_mode returns a row, so we use $queryRawUnsafe not $executeRawUnsafe.
 if (!process.env.DATABASE_URL?.startsWith("postgresql://")) {
   prisma.$queryRawUnsafe("PRAGMA journal_mode=WAL").catch(() => {});
-  prisma.$queryRawUnsafe("PRAGMA busy_timeout=5000").catch(() => {});
+  prisma.$queryRawUnsafe("PRAGMA busy_timeout=15000").catch(() => {});
 }
 
 module.exports = prisma;
