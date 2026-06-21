@@ -120,6 +120,7 @@ export default function useChatStream({
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (loadingResponse) return false;
     const currentMessage =
       document.getElementById(PROMPT_INPUT_ID)?.value || "";
     if (!currentMessage || !currentMessage.trim()) return false;

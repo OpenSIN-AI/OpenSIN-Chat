@@ -10,7 +10,6 @@ import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
-import { Terminal } from "@phosphor-icons/react/dist/csr/Terminal";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
 import { useNavigate } from "react-router-dom";
 import { useChatSidebar } from "../ChatSidebar";
@@ -63,12 +62,6 @@ export default function RightSidebarIconBar() {
       icon: Brain,
       label: t("right_sidebar.icon_memories", "Memories"),
       action: () => toggleSidebar("memories"),
-    },
-    {
-      id: "console",
-      icon: Terminal,
-      label: t("right_sidebar.icon_console", "Console & Terminal"),
-      action: () => toggleSidebar("console"),
     },
   ];
 

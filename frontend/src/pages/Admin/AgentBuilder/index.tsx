@@ -152,7 +152,7 @@ export default function AgentBuilder(): JSX.Element {
 
   const addBlock = (type: string) => {
     const newBlock: Block = {
-      id: `block_${blocks.length}`,
+      id: `block_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       type,
       config: { ...BLOCK_INFO[type as keyof typeof BLOCK_INFO]?.defaultConfig },
       isExpanded: true,

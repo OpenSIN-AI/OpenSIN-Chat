@@ -109,6 +109,7 @@ export default function usePromptState({
   function handleSubmit(e) {
     // Ignore submits from portaled modals (slash command preset forms)
     if (e.target !== e.currentTarget) return;
+    if (isStreaming || isDisabled) return;
     setFocused(false);
     setShowTools(false);
     submit(e);

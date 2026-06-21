@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT
-const { logBootDiagnostics } = require("../../../utils/boot/logBootDiagnostics");
-
 jest.mock("../../../utils/paths", () => ({
   pathsHealth: jest.fn(),
 }));
@@ -11,29 +9,55 @@ jest.mock("../../../utils/providerKeyStatus", () => ({
 
 const { pathsHealth } = require("../../../utils/paths");
 const { getProviderKeyStatuses } = require("../../../utils/providerKeyStatus");
+const { logBootDiagnostics } = require("../../../utils/boot/logBootDiagnostics");
 
 describe("logBootDiagnostics", () => {
-  let originalLog, originalWarn, originalError;
   let logMock, warnMock, errorMock;
+  let originalDescriptors;
 
   beforeEach(() => {
-    pathsHealth.mockReset();
-    getProviderKeyStatuses.mockReset();
-    originalLog = console.log;
-    originalWarn = console.warn;
-    originalError = console.error;
+    pathsHealth.mockClear();
+    getProviderKeyStatuses.mockClear();
+
+    // Save original descriptors
+    originalDescriptors = {
+      log: Object.getOwnPropertyDescriptor(console, "log"),
+      warn: Object.getOwnPropertyDescriptor(console, "warn"),
+      error: Object.getOwnPropertyDescriptor(console, "error"),
+    };
+
     logMock = jest.fn();
     warnMock = jest.fn();
     errorMock = jest.fn();
-    console.log = logMock;
-    console.warn = warnMock;
-    console.error = errorMock;
+
+    // Force override using defineProperty (handles non-writable props)
+    Object.defineProperty(console, "log", {
+      value: logMock,
+      writable: true,
+      configurable: true,
+    });
+    Object.defineProperty(console, "warn", {
+      value: warnMock,
+      writable: true,
+      configurable: true,
+    });
+    Object.defineProperty(console, "error", {
+      value: errorMock,
+      writable: true,
+      configurable: true,
+    });
   });
 
   afterEach(() => {
-    console.log = originalLog;
-    console.warn = originalWarn;
-    console.error = originalError;
+    if (originalDescriptors.log) {
+      Object.defineProperty(console, "log", originalDescriptors.log);
+    }
+    if (originalDescriptors.warn) {
+      Object.defineProperty(console, "warn", originalDescriptors.warn);
+    }
+    if (originalDescriptors.error) {
+      Object.defineProperty(console, "error", originalDescriptors.error);
+    }
   });
 
   it("logs storage path info when everything is healthy", () => {
@@ -130,8 +154,7 @@ describe("logBootDiagnostics", () => {
 
     logBootDiagnostics();
 
-    const warnCalls = warnMock.mock.calls;
-    expect(warnCalls).toHaveLength(0);
+    expect(warnMock).not.toHaveBeenCalled();
   });
 
   it("catches and logs errors without throwing", () => {
