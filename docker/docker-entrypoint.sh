@@ -59,6 +59,10 @@ trap shutdown SIGTERM SIGINT
   cd /app/server/ &&
     # Disable Prisma CLI telemetry (https://www.prisma.io/docs/orm/tools/prisma-cli#how-to-opt-out-of-data-collection)
     export CHECKPOINT_DISABLE=1 &&
+    # Set DATABASE_URL for SQLite if not already set (needed by schema.prisma env())
+    if [ -z "$DATABASE_URL" ]; then
+      export DATABASE_URL="file:../storage/openafd.db?busy_timeout=15000"
+    fi &&
     npx prisma generate --schema=./prisma/schema.prisma &&
     npx prisma migrate deploy --schema=./prisma/schema.prisma &&
     node /app/server/index.js

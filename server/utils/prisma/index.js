@@ -21,21 +21,28 @@ function buildPostgresUrl(base) {
   return `${base}${sep}connection_limit=${connLimit}&pool_timeout=${poolTimeout}&statement_timeout=${stmtTimeout}`;
 }
 
+// SQLite: enable WAL mode and set busy_timeout to prevent connection timeouts.
+// Prisma's SQLite driver uses a connection pool (default 5) but without WAL mode,
+// concurrent reads can block writes and cause "Timed out during query execution".
+// busy_timeout is per-connection, so we set it via the connection URL query parameter
+// to ensure ALL connections in the pool get it, not just the first one.
 if (process.env.DATABASE_URL?.startsWith("postgresql://")) {
   prismaClientConfig.datasources = {
     db: { url: buildPostgresUrl(process.env.DATABASE_URL) },
   };
+} else {
+  const sqliteUrl = process.env.DATABASE_URL || "file:../storage/openafd.db";
+  if (!sqliteUrl.includes("busy_timeout=")) {
+    const sep = sqliteUrl.includes("?") ? "&" : "?";
+    process.env.DATABASE_URL = `${sqliteUrl}${sep}busy_timeout=15000`;
+  }
+  prismaClientConfig.datasources = { db: { url: process.env.DATABASE_URL } };
 }
 
 const prisma = new PrismaClient(prismaClientConfig);
 
-// SQLite: enable WAL mode and set busy_timeout to prevent connection timeouts.
-// Prisma's SQLite driver uses a connection pool (default 5) but without WAL mode,
-// concurrent reads can block writes and cause "Timed out during query execution".
-// Note: PRAGMA journal_mode returns a row, so we use $queryRawUnsafe not $executeRawUnsafe.
 if (!process.env.DATABASE_URL?.startsWith("postgresql://")) {
   prisma.$queryRawUnsafe("PRAGMA journal_mode=WAL").catch(() => {});
-  prisma.$queryRawUnsafe("PRAGMA busy_timeout=15000").catch(() => {});
 }
 
 module.exports = prisma;
