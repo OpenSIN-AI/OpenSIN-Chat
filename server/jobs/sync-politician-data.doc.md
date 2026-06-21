@@ -34,6 +34,7 @@ Every 6 hours via Bree (configured in the worker setup).
 - `server/utils/politician/abgeordnetenwatchApi.js` — Abgeordnetenwatch API client
 - `server/utils/politician/plenarScraper.js` — Plenarprotokolle parser
 - `server/utils/politician/syncFallback.js` — retry/fallback helpers
+- `server/utils/politician/extractors.js` — shared `state`/`party`/`profileUrl` extractors
 
 ## Caveats
 

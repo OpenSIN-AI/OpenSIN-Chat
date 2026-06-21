@@ -22,6 +22,11 @@ const BUNDESTAG_API_BASE = `${BUNDESTAG_BASE_URL}/SiteGlobals/Functions/Abgeordn
 const DIP_API_BASE = "https://search.dip.bundestag.de/api/v1";
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 
+const {
+  extractStateFromBundestagRawData,
+  extractPartyFromBundestagRawData,
+} = require("./extractors");
+
 const MAX_RETRIES = Number(process.env.POLITICIAN_API_MAX_RETRIES ?? 3);
 const RETRY_DELAY_MS = Number(
   process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000,
@@ -306,6 +311,9 @@ class BundestagApi {
     const first = doc.vorname || "";
     const last = doc.nachname || "";
     const id = doc.id ? String(doc.id) : null;
+    const rawData = JSON.stringify(doc);
+    const party = extractPartyFromBundestagRawData(rawData);
+    const state = extractStateFromBundestagRawData(rawData);
     return {
       id,
       source: "bundestag",
@@ -314,8 +322,8 @@ class BundestagApi {
       firstName: first,
       lastName: last,
       fullName: `${first} ${last}`.trim() || "",
-      party: doc.fraktion || null,
-      faction: doc.fraktion || null,
+      party,
+      faction: party,
       gender: null,
       birthDate: null,
       birthPlace: null,
@@ -326,11 +334,18 @@ class BundestagApi {
       email: null,
       electoralDistrict: doc.wahlkreis || null,
       electoralList: null,
-      state: doc.bundesland || null,
-      bio: null,
-      websiteUrl: null,
-      socialMedia: {},
-      rawData: JSON.stringify(doc),
+      state,
+      bio: doc.vitaLang || doc.vitaKurz || null,
+      websiteUrl: doc.homepage || null,
+      socialMedia: {
+        twitter: doc.twitter || null,
+        facebook: doc.facebook || null,
+        linkedin: doc.linkedin || null,
+        instagram: doc.instagram || null,
+        youtube: doc.youtube || null,
+        tiktok: doc.tiktok || null,
+      },
+      rawData,
     };
   }
 

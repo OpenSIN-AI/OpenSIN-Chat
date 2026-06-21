@@ -36,7 +36,14 @@ describe("BundestagApi", () => {
           ok: true,
           json: async () => ({
             documents: [
-              { id: "11004183", vorname: "Alice", nachname: "Weidel", fraktion: "AfD" },
+              {
+                id: "11004183",
+                vorname: "Alice",
+                nachname: "Weidel",
+                person_roles: [
+                  { fraktion: "AfD", bundesland: "Baden-Württemberg" },
+                ],
+              },
             ],
             cursor: null,
           }),
@@ -48,6 +55,9 @@ describe("BundestagApi", () => {
       expect(members[0].lastName).toBe("Weidel");
       expect(members[0].externalId).toBe("11004183");
       expect(members[0].source).toBe("bundestag");
+      expect(members[0].party).toBe("AfD");
+      expect(members[0].faction).toBe("AfD");
+      expect(members[0].state).toBe("Baden-Württemberg");
       global.fetch.mockRestore();
     });
 

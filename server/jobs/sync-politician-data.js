@@ -33,6 +33,12 @@ const {
   nextRetryAt,
   withFallback,
 } = require("../utils/politician/syncFallback");
+const {
+  extractStateFromAwRawData,
+  extractProfileUrlFromAwRawData,
+  extractStateFromBundestagRawData,
+  extractPartyFromBundestagRawData,
+} = require("../utils/politician/extractors");
 
 const prisma = new PrismaClient();
 const bundestag = new BundestagApi();
@@ -244,83 +250,6 @@ function awParty(pol) {
 }
 
 /**
- * Map a Bundestag Wahlkreis number to its German state (Bundesland).
- * Based on the official 2021 Wahlkreiseinteilung by Bundeswahlleiterin.
- * @param {number|string} number
- * @returns {string|null}
- */
-function constituencyNumberToState(number) {
-  const n = parseInt(number, 10);
-  if (Number.isNaN(n)) return null;
-  if (n >= 1 && n <= 11) return "Schleswig-Holstein";
-  if (n >= 12 && n <= 17) return "Mecklenburg-Vorpommern";
-  if (n >= 18 && n <= 23) return "Hamburg";
-  if (n >= 24 && n <= 53) return "Niedersachsen";
-  if (n >= 54 && n <= 55) return "Bremen";
-  if (n >= 56 && n <= 65) return "Brandenburg";
-  if (n >= 66 && n <= 74) return "Sachsen-Anhalt";
-  if (n >= 75 && n <= 86) return "Berlin";
-  if (n >= 87 && n <= 150) return "Nordrhein-Westfalen";
-  if (n >= 151 && n <= 166) return "Sachsen";
-  if (n >= 167 && n <= 188) return "Hessen";
-  if (n >= 189 && n <= 196) return "Thüringen";
-  if (n >= 197 && n <= 211) return "Rheinland-Pfalz";
-  if (n >= 212 && n <= 257) return "Bayern";
-  if (n >= 258 && n <= 295) return "Baden-Württemberg";
-  if (n >= 296 && n <= 299) return "Saarland";
-  return null;
-}
-
-/**
- * Extract the constituency number from an Abgeordnetenwatch constituency label,
- * e.g. "235 - Weiden (Bundestag 2021 - 2025)" -> 235.
- * @param {string} label
- * @returns {number|null}
- */
-function extractConstituencyNumber(label) {
-  if (!label) return null;
-  const match = String(label).match(/^\s*(\d+)/);
-  return match ? parseInt(match[1], 10) : null;
-}
-
-/**
- * Extract the German state (Bundesland) from an Abgeordnetenwatch raw mandate.
- * Prefers the electoral_list label (e.g. "Landesliste Bayern ..."), falls back
- * to the constituency number -> state mapping.
- * @param {string|Object} rawData
- * @returns {string|null}
- */
-function extractStateFromAwRawData(rawData) {
-  try {
-    const data = typeof rawData === "string" ? JSON.parse(rawData) : rawData;
-    const listLabel = data?.electoral_data?.electoral_list?.label || "";
-    const listMatch = listLabel.match(/Landesliste\s+(.+?)\s*\(/i);
-    if (listMatch) return listMatch[1].trim();
-    const constituencyLabel = data?.electoral_data?.constituency?.label || "";
-    const number = extractConstituencyNumber(constituencyLabel);
-    return number ? constituencyNumberToState(number) : null;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Extract the human-readable Abgeordnetenwatch profile URL from the raw
- * candidacy-mandate object. The API stores the API URL in `politicianApiUrl`,
- * but the public profile page is at `politician.abgeordnetenwatch_url`.
- * @param {string|Object} rawData
- * @returns {string|null}
- */
-function extractProfileUrlFromAwRawData(rawData) {
-  try {
-    const data = typeof rawData === "string" ? JSON.parse(rawData) : rawData;
-    return data?.politician?.abgeordnetenwatch_url || null;
-  } catch {
-    return null;
-  }
-}
-
-/**
  * Normalize an Abgeordnetenwatch politician (21. WP candidacies-mandates shape)
  * into the Bundestag-member upsert shape so it can be used as a cross-source
  * fallback for Phase 1. Carries the verified new fields (`first_name`,
@@ -475,14 +404,22 @@ async function syncAbgeordnetenwatch() {
       async () => {
         const members = await bundestag.fetchAllMembers();
         // Shape Bundestag members like AW politicians for the upsert below.
+        // Preserve the raw API response so the upsert can derive state and
+        // public profileUrl from the source-specific structure.
         return members.map((m) => ({
           id: m.externalId || m.id,
           externalId: m.externalId || m.id,
           firstName: m.firstName,
           lastName: m.lastName,
+          fullName: m.fullName,
           party: m.party,
+          faction: m.faction,
           gender: m.gender,
           birthDate: m.birthDate,
+          state: m.state,
+          profileUrl: m.profileUrl,
+          electoralDistrict: m.electoralDistrict,
+          rawData: m.rawData,
           __fromBundestag: true,
         }));
       },
@@ -522,6 +459,21 @@ async function syncAbgeordnetenwatch() {
 
         if (!existing) {
           const originalMandate = pol.rawData || null;
+          const isBundestag = recordSource === "bundestag";
+          const state = isBundestag
+            ? extractStateFromBundestagRawData(originalMandate)
+            : extractStateFromAwRawData(originalMandate);
+          const profileUrl = isBundestag
+            ? pol.profileUrl || null
+            : extractProfileUrlFromAwRawData(originalMandate) ||
+              pol.politicianApiUrl ||
+              pol.abgeordnetenwatch_url ||
+              null;
+          const party = isBundestag
+            ? extractPartyFromBundestagRawData(originalMandate) ||
+              pol.party ||
+              null
+            : awParty(pol);
           await withRetry(() =>
             prisma.politicians.create({
               data: {
@@ -531,16 +483,13 @@ async function syncAbgeordnetenwatch() {
                 firstName,
                 lastName,
                 fullName: `${firstName} ${lastName}`.trim(),
-                party: awParty(pol),
+                party,
                 gender: pol.gender || pol.sex || null,
                 birthDate,
-                electoralDistrict: pol.constituency || null,
-                profileUrl:
-                  extractProfileUrlFromAwRawData(originalMandate) ||
-                  pol.politicianApiUrl ||
-                  pol.abgeordnetenwatch_url ||
-                  null,
-                state: extractStateFromAwRawData(originalMandate),
+                electoralDistrict:
+                  pol.constituency || pol.electoralDistrict || null,
+                profileUrl,
+                state,
                 rawData: JSON.stringify(pol),
               },
             }),
