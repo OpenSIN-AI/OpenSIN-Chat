@@ -90,7 +90,7 @@ export function PdfFileInput({
         <UploadSimple size={14} aria-hidden="true" />
         {label}
       </button>
-      <span className="text-sm text-theme-text-secondary truncate max-w-[260px]">
+      <span className="text-sm text-theme-text-secondary truncate max-w-full flex-1 min-w-0">
         {fileNames.length === 0
           ? placeholder
           : fileNames.length === 1
@@ -101,14 +101,14 @@ export function PdfFileInput({
   );
 }
 
-export function PdfAnalysisPanel() {
+export function PdfAnalysisPanel({ isSidebar = false }: { isSidebar?: boolean }) {
   const { t } = useTranslation();
   const [tab, setTab] = useState("jobs");
   const [crossCheckFactIds, setCrossCheckFactIds] = useState<string[]>([]);
 
   return (
     <section
-      className="flex-1 overflow-y-auto p-6"
+      className={`flex-1 overflow-y-auto ${isSidebar ? "p-4" : "p-6"}`}
       aria-label={t("pdfAnalysis.panel.title")}
     >
       <header className="flex flex-col gap-2 mb-6">
@@ -119,28 +119,29 @@ export function PdfAnalysisPanel() {
           {t("pdfAnalysis.panel.description")}
         </p>
         <nav
-          className="flex gap-2 mt-2"
+          className={`flex gap-2 mt-2 ${isSidebar ? "flex-wrap" : ""}`}
           aria-label={t("pdfAnalysis.panel.tabJobs")}
         >
-          <TabButton active={tab === "jobs"} onClick={() => setTab("jobs")}>
+          <TabButton active={tab === "jobs"} onClick={() => setTab("jobs")} compact={isSidebar}>
             {t("pdfAnalysis.panel.tabJobs")}
           </TabButton>
-          <TabButton active={tab === "facts"} onClick={() => setTab("facts")}>
+          <TabButton active={tab === "facts"} onClick={() => setTab("facts")} compact={isSidebar}>
             {t("pdfAnalysis.panel.tabFacts")}
           </TabButton>
           <TabButton
             active={tab === "crosscheck"}
             onClick={() => setTab("crosscheck")}
+            compact={isSidebar}
           >
             {t("pdfAnalysis.panel.tabCrossCheck")}
           </TabButton>
-          <TabButton active={tab === "corpus"} onClick={() => setTab("corpus")}>
+          <TabButton active={tab === "corpus"} onClick={() => setTab("corpus")} compact={isSidebar}>
             {t("pdfAnalysis.panel.tabCorpus")}
           </TabButton>
         </nav>
       </header>
       {tab === "jobs" ? (
-        <JobsPanel />
+        <JobsPanel isSidebar={isSidebar} />
       ) : tab === "facts" ? (
         <FactsPanel
           onCrossCheck={(factId) => {
@@ -176,14 +177,15 @@ interface TabButtonProps {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  compact?: boolean;
 }
 
-export function TabButton({ active, onClick, children }: TabButtonProps) {
+export function TabButton({ active, onClick, children, compact = false }: TabButtonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`px-4 py-1.5 rounded-md text-sm border ${
+      className={`${compact ? "px-3" : "px-4"} py-1.5 rounded-md text-sm border ${
         active
           ? "bg-theme-bg-secondary text-theme-text-primary border-theme-sidebar-border"
           : "bg-transparent text-theme-text-secondary border-transparent hover:text-theme-text-primary"
@@ -213,7 +215,7 @@ interface PdfJob {
   [key: string]: any;
 }
 
-export function JobsPanel() {
+export function JobsPanel({ isSidebar = false }: { isSidebar?: boolean }) {
   const { t } = useTranslation();
   const [jobs, setJobs] = useState<PdfJob[]>([]);
   const [selectedJob, setSelectedJob] = useState<PdfJob | null>(null);
@@ -230,7 +232,7 @@ export function JobsPanel() {
 
   return (
     <div className="flex flex-col gap-6">
-      <StartForm onStarted={refresh} />
+      <StartForm onStarted={refresh} isSidebar={isSidebar} />
       <section
         aria-label={t("pdfAnalysis.panel.jobsSection")}
         className="flex flex-col gap-3"
@@ -261,9 +263,10 @@ export function JobsPanel() {
 
 interface StartFormProps {
   onStarted: () => void;
+  isSidebar?: boolean;
 }
 
-function StartForm({ onStarted }: StartFormProps) {
+function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
   const { t } = useTranslation();
   const fileRef = useRef<HTMLInputElement>(null);
   const [task, setTask] = useState("");
@@ -337,7 +340,7 @@ function StartForm({ onStarted }: StartFormProps) {
         />
       </label>
 
-      <div className="flex flex-col md:flex-row gap-3">
+      <div className={`flex flex-col gap-3 ${isSidebar ? "" : "md:flex-row"}`}>
         <label className="flex-1 flex flex-col gap-1 text-sm text-theme-text-secondary">
           {t("pdfAnalysis.panel.reportType")}
           <input
@@ -358,14 +361,14 @@ function StartForm({ onStarted }: StartFormProps) {
         </label>
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-theme-text-secondary">
+      <label className={`flex gap-2 text-sm text-theme-text-secondary ${isSidebar ? "items-start" : "items-center"}`}>
         <input
           type="checkbox"
           checked={deepScan}
           onChange={(e) => setDeepScan(e.target.checked)}
-          className="accent-current"
+          className={`accent-current ${isSidebar ? "mt-0.5" : ""}`}
         />
-        {t("pdfAnalysis.panel.deepScan")}
+        <span className={isSidebar ? "leading-snug" : ""}>{t("pdfAnalysis.panel.deepScan")}</span>
       </label>
 
       {error && (

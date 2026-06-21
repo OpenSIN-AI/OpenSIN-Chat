@@ -265,18 +265,23 @@ export function usePoliticalSidebar() {
  * @param {boolean} props.isOpen
  * @param {React.ReactNode} props.children
  */
-export default function ChatSidebar({ isOpen, children }: any) {
+export default function ChatSidebar({
+  isOpen,
+  children,
+  minWidth = 240,
+  maxWidth = 800,
+}: any) {
   const { t } = useTranslation();
   const [width, setWidth] = useState(() => {
-    if (typeof window === "undefined") return 366;
+    if (typeof window === "undefined") return Math.max(366, minWidth);
     try {
       const stored = window.localStorage.getItem("openafd-right-sidebar-width");
       if (stored) {
         const n = Number(stored);
-        if (!isNaN(n) && n >= 240 && n <= 800) return n;
+        if (!isNaN(n) && n >= minWidth && n <= maxWidth) return n;
       }
     } catch {}
-    return 366;
+    return Math.max(366, minWidth);
   });
   const isResizingRef = useRef(false);
   const resizeStartXRef = useRef(0);
@@ -299,8 +304,8 @@ export default function ChatSidebar({ isOpen, children }: any) {
       // Resize from left edge of right sidebar → drag left = wider, drag right = narrower
       const delta = resizeStartXRef.current - e.clientX;
       const newWidth = Math.min(
-        800,
-        Math.max(240, resizeStartWidthRef.current + delta),
+        maxWidth,
+        Math.max(minWidth, resizeStartWidthRef.current + delta),
       );
       setWidth(newWidth);
     }
@@ -316,7 +321,7 @@ export default function ChatSidebar({ isOpen, children }: any) {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [minWidth, maxWidth]);
 
   function handleResizeStart(e: React.MouseEvent) {
     e.preventDefault();
@@ -327,6 +332,13 @@ export default function ChatSidebar({ isOpen, children }: any) {
     document.body.style.cursor = "col-resize";
     document.body.style.userSelect = "none";
   }
+
+  // When opening, ensure the panel is at least minWidth (e.g. PDF analysis needs
+  // more space than the default 366px).
+  useEffect(() => {
+    if (!isOpen) return;
+    setWidth((w) => Math.max(w, minWidth));
+  }, [isOpen, minWidth]);
 
   if (!isOpen) return null;
 
