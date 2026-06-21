@@ -41,6 +41,10 @@ vi.mock("./PoliticalSidebar", () => ({
   default: (props) => <div data-testid="political-sidebar" {...props} />,
 }));
 
+vi.mock("./PdfAnalysisSidebar", () => ({
+  default: (props) => <div data-testid="pdf-analysis-sidebar" {...props} />,
+}));
+
 vi.mock("./RightSidebarIconBar", () => ({
   default: () => <div data-testid="right-sidebar-icon-bar" />,
 }));
@@ -73,6 +77,7 @@ describe("Sidebars", () => {
     expect(screen.queryByTestId("filesystem-sidebar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("database-sidebar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("political-sidebar")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("pdf-analysis-sidebar")).not.toBeInTheDocument();
     expect(screen.getByTestId("right-sidebar-icon-bar")).toBeInTheDocument();
   });
 
@@ -101,6 +106,7 @@ describe("Sidebars", () => {
     ["filesystem", "filesystem-sidebar"],
     ["database", "database-sidebar"],
     ["political", "political-sidebar"],
+    ["pdf-analysis", "pdf-analysis-sidebar"],
   ])("renders %s panel when activeSidebar is '%s'", (name, testid) => {
     mockUseChatSidebar.mockReturnValue({
       activeSidebar: name,
