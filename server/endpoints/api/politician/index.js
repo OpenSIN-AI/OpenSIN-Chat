@@ -16,7 +16,6 @@
  *   GET /politician/speech-search — semantic search speeches (supports ?source=)
  */
 
-const { validApiKey } = require("../../../utils/middleware/validApiKey");
 const {
   validatedRequest,
 } = require("../../../utils/middleware/validatedRequest");
@@ -48,7 +47,7 @@ function clampInt(value, fallback, min, max) {
 function apiPoliticianEndpoints(app) {
   if (!app) return;
 
-  app.get("/politician/search", [validApiKey], async (request, response) => {
+  app.get("/politician/search", [validatedRequest], async (request, response) => {
     try {
       const { q, party, state, faction, source } = request.query;
       const filters = {};
@@ -70,7 +69,7 @@ function apiPoliticianEndpoints(app) {
 
   app.get(
     "/politician/speech-search",
-    [validApiKey],
+    [validatedRequest],
     async (request, response) => {
       try {
         const { q, party, topN, source } = request.query;
@@ -93,7 +92,7 @@ function apiPoliticianEndpoints(app) {
     },
   );
 
-  app.get("/politician/parties", [validApiKey], async (_, response) => {
+  app.get("/politician/parties", [validatedRequest], async (_, response) => {
     try {
       const db = getPoliticianDB();
       const parties = await db.getParties();
@@ -104,7 +103,7 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/states", [validApiKey], async (_, response) => {
+  app.get("/politician/states", [validatedRequest], async (_, response) => {
     try {
       const db = getPoliticianDB();
       const states = await db.getStates();
@@ -130,7 +129,7 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/sources", [validApiKey], async (_, response) => {
+  app.get("/politician/sources", [validatedRequest], async (_, response) => {
     try {
       const db = getPoliticianDB();
       const sources = await db.getSources();
@@ -175,7 +174,7 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/:id", [validApiKey], async (request, response) => {
+  app.get("/politician/:id", [validatedRequest], async (request, response) => {
     try {
       const { id } = request.params;
       const db = getPoliticianDB();
@@ -189,7 +188,7 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/:id/votes", [validApiKey], async (request, response) => {
+  app.get("/politician/:id/votes", [validatedRequest], async (request, response) => {
     try {
       const { id } = request.params;
       const { limit, offset } = request.query;
@@ -212,7 +211,7 @@ function apiPoliticianEndpoints(app) {
 
   app.get(
     "/politician/:id/speeches",
-    [validApiKey],
+    [validatedRequest],
     async (request, response) => {
       try {
         const { id } = request.params;
@@ -238,7 +237,7 @@ function apiPoliticianEndpoints(app) {
 
   app.get(
     "/politician/:id/mandates",
-    [validApiKey],
+    [validatedRequest],
     async (request, response) => {
       try {
         const { id } = request.params;
