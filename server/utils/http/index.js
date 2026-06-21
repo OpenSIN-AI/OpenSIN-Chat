@@ -46,8 +46,7 @@ function reqBody(request) {
   if (typeof request.body === "string") {
     try {
       return JSON.parse(request.body);
-    } catch (e) {
-      console.debug("reqBody: JSON.parse failed:", e.message);
+    } catch {
       return {};
     }
   }
@@ -141,23 +140,23 @@ function safeJsonParse(jsonString, fallback = null) {
 
   try {
     return JSON.parse(jsonString);
-  } catch (e) {
-    console.debug("safeJsonParse: JSON.parse failed:", e.message);
+  } catch {
+    // expected for markdown-wrapped JSON; fall through to repair/extract
   }
 
   if (jsonString.startsWith("[") || jsonString.startsWith("{")) {
     try {
       const repairedJson = jsonrepair(jsonString);
       return JSON.parse(repairedJson);
-    } catch (e) {
-      console.debug("safeJsonParse: jsonrepair failed:", e.message);
+    } catch {
+      // repair failed; fall through to extract
     }
   }
 
   try {
     return extractJsonFromString(jsonString)?.[0] || fallback;
-  } catch (e) {
-    console.debug("safeJsonParse: extract failed:", e.message);
+  } catch {
+    // all parse strategies exhausted
   }
 
   return fallback;
@@ -168,8 +167,8 @@ function isValidUrl(urlString = "") {
     const url = new URL(urlString);
     if (!["http:", "https:"].includes(url.protocol)) return false;
     return true;
-  } catch (e) {
-    console.debug("isValidUrl: invalid URL:", urlString, e.message);
+  } catch {
+    // invalid URL — return false below
   }
   return false;
 }

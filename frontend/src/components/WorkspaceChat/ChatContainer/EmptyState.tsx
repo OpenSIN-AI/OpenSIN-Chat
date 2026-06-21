@@ -27,7 +27,7 @@ export default function EmptyState({
   return (
     <div className="flex flex-col h-full w-full items-center justify-start overflow-y-auto pt-[10%]">
       <div className="flex flex-col items-center w-full max-w-[750px]">
-        <h1 className="text-white text-xl md:text-2xl mb-11 text-center">
+        <h1 className="text-white light:text-theme-text-primary text-xl md:text-2xl mb-11 text-center">
           {t("main-page.greeting")}
         </h1>
         <PromptInput

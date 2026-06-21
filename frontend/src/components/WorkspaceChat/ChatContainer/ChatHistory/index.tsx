@@ -454,12 +454,12 @@ export default forwardRef(function (
             <div className="absolute bottom-4 right-10 z-50 cursor-pointer animate-pulse">
               <div className="flex flex-col items-center">
                 <div
-                  className="p-1 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 hover:text-white"
+                  className="p-1 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 hover:text-white light:border-theme-border-primary light:bg-theme-bg-primary light:hover:bg-theme-bg-secondary"
                   onClick={() => {
                     scrollVirtuosoToBottom(!isStreaming);
                   }}
                 >
-                  <ArrowDown weight="bold" className="text-white/60 w-5 h-5" />
+                  <ArrowDown weight="bold" className="text-white/60 light:text-theme-text-secondary w-5 h-5" />
                 </div>
               </div>
             </div>
