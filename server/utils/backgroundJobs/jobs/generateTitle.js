@@ -110,6 +110,7 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     "Analyze the Request",
     "short, concise title",
     "extrem kurzen",
+    "User message:",
   ];
 
   function isValidTitle(line) {
@@ -119,7 +120,7 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
       return false;
     // Reject reasoning-model artifacts: lines starting with think tokens,
     // analysis markers, or German reasoning phrases
-    if (/^(?:<|app|analysis|wir müssen|we need|we are|the user|step \d)/i.test(line))
+    if (/^(?:<|app|analysis|wir müssen|we need|we are|the user|step \d|user message)/i.test(line))
       return false;
     // Ausschließen von Markdown-Listenzeilen, die aus der Assistentenantwort
     // stammen könnten (z. B. "**4. Einschränkung erneuerbarer Energ").
