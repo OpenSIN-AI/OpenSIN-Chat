@@ -1886,6 +1886,7 @@ const TRANSLATIONS = {
       "Einbettbare Chat-Widgets sind öffentlich zugängliche Chat-Schnittstellen, die an einen einzelnen Workspace gebunden sind. Diese ermöglichen es Ihnen, Workspaces zu erstellen, die Sie dann weltweit veröffentlichen können.",
     create: "Einbettung erstellen",
     table: {
+      name: "Name",
       workspace: "Workspace",
       chats: "Gesendete Chats",
       active: "Aktive Domains",
@@ -3870,6 +3871,7 @@ const TRANSLATIONS = {
     history: "Verlauf",
     editEmbed: {
       title: "Embed #{{id}} aktualisieren",
+      titleNamed: "Embed aktualisieren: {{name}}",
       updateSuccess: "Embed erfolgreich aktualisiert.",
       maxChatsPerDay: "Max. Chats pro Tag",
       maxChatsPerDayHint:
@@ -4372,6 +4374,8 @@ const TRANSLATIONS = {
   },
   embedConfigs: {
     embedRow: {
+      preview: "Vorschau",
+      unnamed: "Unbenannt",
       disableConfirm:
         "Sind Sie sicher, dass Sie diese Einbettung deaktivieren möchten?\nEinmal deaktiviert, wird die Einbettung nicht mehr auf Chat-Anfragen antworten.",
       toggleStatus: "Einbettung {{status}}.",
@@ -4867,6 +4871,9 @@ const TRANSLATIONS = {
   newEmbedModal: {
     title: "Neue Einbettung erstellen",
     created: "Embed-Widget erfolgreich erstellt",
+    name: "Widget-Name",
+    nameHint: "Geben Sie diesem Embed-Widget einen beschreibenden Namen zur Identifikation.",
+    namePlaceholder: "Mein Help-Desk-Widget",
     maxChatsPerDay: "Max. Chats pro Tag",
     maxChatsPerDayHint:
       "Begrenzen Sie die Anzahl der Chats, die dieser eingebettete Chat in 24 Stunden verarbeiten kann. Null bedeutet unbegrenzt.",

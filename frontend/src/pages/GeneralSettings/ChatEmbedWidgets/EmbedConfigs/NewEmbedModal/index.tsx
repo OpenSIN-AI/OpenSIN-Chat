@@ -19,6 +19,7 @@ export function enforceSubmissionSchema(form: FormData) {
     if (value === "on") data[key] = true;
   }
 
+  if (!data.hasOwnProperty("name")) data.name = null;
   if (!data.hasOwnProperty("allowlist_domains")) data.allowlist_domains = null;
   if (!data.hasOwnProperty("allow_model_override"))
     data.allow_model_override = false;
@@ -58,7 +59,7 @@ export default function NewEmbedModal({
     <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
               {t("newEmbedModal.title")}
             </h3>
           </div>
@@ -67,12 +68,13 @@ export default function NewEmbedModal({
             type="button"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={24} weight="bold" className="text-white" />
+            <X size={24} weight="bold" className="text-theme-text-primary" />
           </button>
         </div>
         <div className="px-7 py-6">
           <form onSubmit={handleCreate}>
             <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
+              <NameInput />
               <WorkspaceSelection />
               <ChatModeSelection />
               <PermittedDomains />
@@ -113,7 +115,7 @@ export default function NewEmbedModal({
                   {t("newEmbedModal.error")}: {error}
                 </p>
               )}
-              <p className="text-white text-opacity-60 text-xs md:text-sm">
+              <p className="text-theme-text-secondary text-xs md:text-sm">
                 {t("newEmbedModal.afterCreateHintBefore")}
                 <code className="light:bg-stone-300 bg-stone-900 text-white mx-1 px-1 rounded-sm">
                   {SCRIPT_TAG}
@@ -125,13 +127,13 @@ export default function NewEmbedModal({
               <button
                 onClick={closeModal}
                 type="button"
-                className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
+                className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
               >
                 {t("newEmbedModal.cancel")}
               </button>
               <button
                 type="submit"
-                className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
+                className="transition-all duration-300 bg-primary-button text-slate-900 hover:opacity-60 px-4 py-2 rounded-lg text-sm"
               >
                 {t("newEmbedModal.createEmbed")}
               </button>
@@ -155,7 +157,7 @@ export const WorkspaceSelection = ({
       <div className="flex flex-col mb-2">
         <label
           htmlFor="workspace_id"
-          className="block  text-sm font-medium text-white"
+          className="block text-sm font-medium text-theme-text-primary"
         >
           {t("newEmbedModal.workspace")}
         </label>
@@ -184,6 +186,37 @@ export const WorkspaceSelection = ({
   );
 };
 
+export const NameInput = ({
+  defaultValue = "",
+}: {
+  defaultValue?: string;
+}) => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <div className="flex flex-col mb-2">
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-theme-text-primary"
+        >
+          {t("newEmbedModal.name")}
+        </label>
+        <p className="text-theme-text-secondary text-xs">
+          {t("newEmbedModal.nameHint")}
+        </p>
+      </div>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        defaultValue={defaultValue}
+        placeholder={t("newEmbedModal.namePlaceholder")}
+        className="min-w-[15rem] rounded-lg bg-theme-settings-input-bg px-4 py-2 text-sm text-white placeholder:text-theme-settings-input-placeholder focus:ring-blue-500 focus:border-blue-500"
+      />
+    </div>
+  );
+};
+
 export const ChatModeSelection = ({
   defaultValue = null,
 }: {
@@ -196,7 +229,7 @@ export const ChatModeSelection = ({
     <div>
       <div className="flex flex-col mb-2">
         <label
-          className="block text-sm font-medium text-white"
+          className="block text-sm font-medium text-theme-text-primary"
           htmlFor="chat_mode"
         >
           {t("newEmbedModal.allowedChatMethod")}
@@ -313,7 +346,7 @@ export const PermittedDomains = ({
       <div className="flex flex-col mb-2">
         <label
           htmlFor="allowlist_domains"
-          className="block text-sm font-medium text-white"
+          className="block text-sm font-medium text-theme-text-primary"
         >
           {t("newEmbedModal.restrictDomains")}
         </label>
@@ -353,7 +386,7 @@ export const NumberInput = ({
   return (
     <div>
       <div className="flex flex-col mb-2">
-        <label htmlFor={name} className="block text-sm font-medium text-white">
+        <label htmlFor={name} className="block text-sm font-medium text-theme-text-primary">
           {title}
         </label>
         <p className="text-theme-text-secondary text-xs">{hint}</p>

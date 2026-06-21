@@ -24,6 +24,13 @@ const WorkspaceChats = {
           include,
         },
       });
+      // Update thread's lastUpdatedAt so the thread list sorts correctly.
+      if (threadId) {
+        await prisma.workspace_threads.update({
+          where: { id: Number(threadId) },
+          data: { lastUpdatedAt: new Date() },
+        }).catch(() => {});
+      }
       return { chat, message: null };
     } catch (error) {
       // eslint-disable-next-line no-console

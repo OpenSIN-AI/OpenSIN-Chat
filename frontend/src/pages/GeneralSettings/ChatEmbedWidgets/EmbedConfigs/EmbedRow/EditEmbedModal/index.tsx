@@ -5,6 +5,7 @@ import { X } from "@phosphor-icons/react/dist/csr/X";
 import {
   BooleanInput,
   ChatModeSelection,
+  NameInput,
   NumberInput,
   PermittedDomains,
   WorkspaceSelection,
@@ -18,6 +19,7 @@ import useEmbedConfigs from "@/hooks/useEmbedConfigs";
 
 type EmbedModel = {
   id: string;
+  name?: string;
   workspace: { id: string };
   chat_mode: string;
   allowlist_domains: string;
@@ -63,8 +65,10 @@ export default function EditEmbedModal({
     <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
         <div className="relative p-6 border-b rounded-t border-theme-modal-border">
           <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-              {t("chatEmbedWidgets.editEmbed.title", { id: embed.id })}
+            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
+              {embed.name
+                ? t("chatEmbedWidgets.editEmbed.titleNamed", { name: embed.name })
+                : t("chatEmbedWidgets.editEmbed.title", { id: embed.id })}
             </h3>
           </div>
           <button
@@ -72,12 +76,13 @@ export default function EditEmbedModal({
             type="button"
             className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <X size={24} weight="bold" className="text-white" />
+            <X size={24} weight="bold" className="text-theme-text-primary" />
           </button>
         </div>
         <div className="px-7 py-6">
           <form onSubmit={handleUpdate}>
             <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
+              <NameInput defaultValue={embed.name || ""} />
               <WorkspaceSelection defaultValue={embed.workspace.id} />
               <ChatModeSelection defaultValue={embed.chat_mode} />
               <PermittedDomains
@@ -129,7 +134,7 @@ export default function EditEmbedModal({
                   {t("chatEmbedWidgets.editEmbed.error", { error })}
                 </p>
               )}
-              <p className="text-white text-opacity-60 text-xs md:text-sm">
+              <p className="text-theme-text-secondary text-xs md:text-sm">
                 {t("chatEmbedWidgets.editEmbed.scriptTagNotice")}
               </p>
             </div>
@@ -137,13 +142,13 @@ export default function EditEmbedModal({
               <button
                 onClick={closeModal}
                 type="button"
-                className="transition-all duration-300 text-white hover:bg-zinc-700 px-4 py-2 rounded-lg text-sm"
+                className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
               >
                 {t("chatEmbedWidgets.editEmbed.cancel")}
               </button>
               <button
                 type="submit"
-                className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm"
+                className="transition-all duration-300 bg-primary-button text-slate-900 hover:opacity-60 px-4 py-2 rounded-lg text-sm"
               >
                 {t("chatEmbedWidgets.editEmbed.updateEmbed")}
               </button>

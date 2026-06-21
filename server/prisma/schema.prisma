@@ -297,6 +297,7 @@ model embed_configs {
   id                         Int           @id @default(autoincrement())
   uuid                       String        @unique
   enabled                    Boolean       @default(false)
+  name                       String?
   chat_mode                  String        @default("query")
   allowlist_domains          String?
   allow_model_override       Boolean       @default(false)

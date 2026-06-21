@@ -108,6 +108,19 @@ export function initKeyboardShortcuts() {
 
     const action = LISTENERS[shortcutKey];
     if (action) {
+      const target = event.target as HTMLElement;
+      const isTyping =
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable);
+
+      if (isTyping) {
+        const allowWhileTyping = shortcutKey === "meta+shift+?" || shortcutKey === "f1";
+        if (!allowWhileTyping) return;
+      }
+
       event.preventDefault();
       action();
     }

@@ -2461,6 +2461,7 @@ const TRANSLATIONS = {
       "Embeddable chat widgets are public facing chat interfaces that are tied to a single workspace. These allow you to build workspaces that then you can publish to the world.",
     create: "Create embed",
     table: {
+      name: "Name",
       workspace: "Workspace",
       chats: "Sent Chats",
       active: "Active Domains",
@@ -3778,6 +3779,7 @@ const TRANSLATIONS = {
     history: "History",
     editEmbed: {
       title: "Update embed #{{id}}",
+      titleNamed: "Update embed: {{name}}",
       updateSuccess: "Embed updated successfully.",
       maxChatsPerDay: "Max chats per day",
       maxChatsPerDayHint:
@@ -4274,6 +4276,8 @@ const TRANSLATIONS = {
   },
   embedConfigs: {
     embedRow: {
+      preview: "Preview",
+      unnamed: "Unnamed",
       disableConfirm:
         "Are you sure you want to disable this embed?\nOnce disabled the embed will no longer respond to any chat requests.",
       toggleStatus: "Embed {{status}}.",
@@ -4761,6 +4765,9 @@ const TRANSLATIONS = {
   newEmbedModal: {
     title: "Create new embed",
     created: "Embed widget created successfully",
+    name: "Widget Name",
+    nameHint: "Give this embed widget a descriptive name to identify it.",
+    namePlaceholder: "My Help Desk Widget",
     maxChatsPerDay: "Max chats per day",
     maxChatsPerDayHint:
       "Limit the amount of chats this embedded chat can process in a 24 hour period. Zero is unlimited.",

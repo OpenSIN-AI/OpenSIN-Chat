@@ -4,11 +4,13 @@ import { castToType } from "@/utils/types";
 import showToast from "@/utils/toast";
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { mutate } from "swr";
 import WorkspaceName from "./WorkspaceName";
 import SuggestedChatMessages from "./SuggestedChatMessages";
 import DeleteWorkspace from "./DeleteWorkspace";
 import CTAButton from "@/components/lib/CTAButton";
 import useWorkspaceBySlug from "@/hooks/useWorkspaceBySlug";
+import { WORKSPACES_KEY } from "@/hooks/useWorkspaces";
 
 export default function GeneralInfo({
   slug,
@@ -39,6 +41,7 @@ export default function GeneralInfo({
         showToast(t("common.workspaceUpdated"), "success", { clear: true });
         setHasChanges(false);
         refresh();
+        mutate(WORKSPACES_KEY);
       } else {
         showToast(t("common.error", { error: message }), "error", {
           clear: true,

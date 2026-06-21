@@ -25,6 +25,8 @@ type Workspace = {
 
 type EmbedItem = {
   id: string;
+  uuid: string;
+  name?: string;
   enabled: number | boolean;
   workspace: Workspace;
   _count: { embed_chats: number };
@@ -86,8 +88,18 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
   return (
     <>
       <tr
-        className="bg-transparent text-white text-opacity-80 text-xs font-medium border-b border-white/10 h-10"
+        className="bg-transparent text-theme-text-primary text-xs font-medium border-b border-white/10 light:border-slate-200 h-10"
       >
+        <th
+          scope="row"
+          className="px-6 whitespace-nowrap font-medium"
+        >
+          {embed.name || (
+            <span className="text-theme-text-secondary italic">
+              {t("embedConfigs.embedRow.unnamed")}
+            </span>
+          )}
+        </th>
         <th
           scope="row"
           className="px-6 whitespace-nowrap flex item-center gap-x-1"
@@ -96,7 +108,7 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
             href={paths.workspace.chat(embed.workspace.slug)}
             target="_blank"
             rel="noreferrer"
-            className="text-white flex items-center hover:underline"
+            className="text-theme-text-primary flex items-center hover:underline"
           >
             {embed.workspace.name}
           </a>
@@ -119,6 +131,16 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
           }
         </th>
         <td className="px-6 flex items-center gap-x-6 h-full mt-1">
+          <a
+            href={`${import.meta.env.DEV ? "http://localhost:3000" : window.location.origin}/embed/${embed.uuid}`}
+            target="_blank"
+            rel="noreferrer"
+            className="group text-xs font-medium text-theme-text-secondary px-2 py-1 rounded-lg hover:bg-theme-button-code-hover-bg"
+          >
+            <span className="group-hover:text-theme-button-code-hover-text">
+              {t("embedConfigs.embedRow.preview")}
+            </span>
+          </a>
           <button
             type="button"
             onClick={openSnippetModal}

@@ -13,6 +13,7 @@ const EmbedConfig = {
   writable: [
     // Used for generic updates so we can validate keys in request body
     "enabled",
+    "name",
     "allowlist_domains",
     "allow_model_override",
     "allow_temperature_override",
@@ -30,6 +31,7 @@ const EmbedConfig = {
         data: {
           uuid: v4(),
           enabled: true,
+          name: validatedCreationData(data?.name, "name"),
           chat_mode: validatedCreationData(data?.chat_mode, "chat_mode"),
           allowlist_domains: validatedCreationData(
             data?.allowlist_domains,
@@ -215,6 +217,12 @@ const NUMBER_KEYS = [
 
 // Helper to validate a data object strictly into the proper format
 function validatedCreationData(value, field) {
+  if (field === "name") {
+    if (!value || typeof value !== "string") return null;
+    const trimmed = value.trim();
+    return trimmed || null;
+  }
+
   if (field === "chat_mode") {
     if (!value || !VALID_CHAT_MODE.includes(value)) return "query";
     return value;

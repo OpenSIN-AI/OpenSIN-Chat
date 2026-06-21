@@ -73,18 +73,15 @@ function workspaceThreadEndpoints(app) {
         const user = await userFromSession(request, response);
         const workspace = response.locals.workspace;
 
-        // ==========================================
-        // <-- ÄNDERUNG: Sortierung der Threads
-        // ==========================================
-        // Wir übergeben als 3. Parameter das "orderBy" Objekt.
-        // "desc" (descending) sorgt dafür, dass neue Threads oben andocken.
+        // Sort by lastUpdatedAt desc so recently active threads appear first.
+        // Threads without lastUpdatedAt fall back to createdAt via the DB default.
         const threads = await WorkspaceThread.where(
           {
             workspace_id: workspace.id,
             user_id: user?.id || null,
           },
           null, // limit
-          { createdAt: "desc" }, // <-- ÄNDERUNG: Neueste Threads zuerst!
+          { lastUpdatedAt: "desc" }, // recently active threads first
         );
 
         const folders = await WorkspaceThreadFolder.where({

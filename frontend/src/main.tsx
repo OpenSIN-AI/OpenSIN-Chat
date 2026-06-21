@@ -461,6 +461,14 @@ const router = createBrowserRouter([
           return { element: <AdminRoute Component={PdfAnalysisPage} /> };
         },
       },
+      // Embed widget preview (public, no auth required)
+      {
+        path: "/embed/:uuid",
+        lazy: async () => {
+          const { default: EmbedPreview } = await import("@/pages/EmbedPreview");
+          return { element: <EmbedPreview /> };
+        },
+      },
       // Catch-all route for 404s
       {
         path: "*",
