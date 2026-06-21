@@ -932,6 +932,24 @@ does not extend the close button beyond the viewport. */
   background-color: #cccccc;
 }
 
+/* Light mode: dark scrollbar on light background */
+[data-theme="light"] .white-scrollbar {
+  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(241, 245, 249, 1);
+}
+[data-theme="light"] .white-scrollbar::-webkit-scrollbar {
+  background-color: rgba(241, 245, 249, 1);
+}
+[data-theme="light"] .white-scrollbar::-webkit-scrollbar-track {
+  background-color: rgba(241, 245, 249, 1);
+}
+[data-theme="light"] .white-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(241, 245, 249, 1);
+}
+[data-theme="light"] .white-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 /* Scoped to the scheduled jobs tool call card — the default white-scrollbar
    is tuned for dark surfaces and looks harsh over light backgrounds. */
 .tool-call-scrollbar {
