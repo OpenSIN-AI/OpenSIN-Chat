@@ -135,12 +135,13 @@ function WidgetList({
   selectedView,
   handleClick,
 }: WidgetListProps): JSX.Element {
+  const { t } = useTranslation();
   const views: Record<string, { title: string }> = {
     configs: {
-      title: "Widgets",
+      title: t("chatEmbedWidgets.widgets"),
     },
     chats: {
-      title: "History",
+      title: t("chatEmbedWidgets.history"),
     },
   };
 

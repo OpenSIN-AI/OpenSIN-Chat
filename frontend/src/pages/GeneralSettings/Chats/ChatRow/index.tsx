@@ -33,6 +33,7 @@ export default function ChatRow({
   chat,
   onDelete,
 }: ChatRowProps): React.JSX.Element {
+  const { t } = useTranslation();
   const {
     isOpen: isPromptOpen,
     openModal: openPromptModal,
@@ -46,9 +47,7 @@ export default function ChatRow({
 
   const handleDelete = async () => {
     if (
-      !window.confirm(
-        `Are you sure you want to delete this chat?\n\nThis action is irreversible.`,
-      )
+      !window.confirm(t("recorded.deleteConfirm"))
     )
       return false;
     await System.deleteChat(chat.id);

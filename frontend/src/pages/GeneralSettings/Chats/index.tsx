@@ -75,22 +75,20 @@ export default function WorkspaceChats() {
         exportOptions[exportType];
       const blob = new Blob([chats], { type: mimeType });
       saveAs(blob, `${filenameFunc()}.${fileExtension}`);
-      showToast(`Chats exported successfully as ${name}.`, "success");
+      showToast(t("recorded.exportSuccess", { name }), "success");
     } else {
-      showToast("Failed to export chats.", "error");
+      showToast(t("recorded.exportFailed"), "error");
     }
   };
 
   const handleClearAllChats = async () => {
     if (
-      !window.confirm(
-        `Are you sure you want to clear all chats?\n\nThis action is irreversible.`,
-      )
+      !window.confirm(t("recorded.clearConfirm"))
     )
       return false;
     await System.deleteChat(-1);
     setChats([]);
-    showToast("Cleared all chats.", "success");
+    showToast(t("recorded.clearedAll"), "success");
   };
 
   const toggleMenu = () => {
@@ -129,7 +127,7 @@ export default function WorkspaceChats() {
         setChats([]);
         setCanNext(false);
         showToast(
-          `Failed to load chats: ${err?.message || String(err)}`,
+          t("recorded.loadFailed", { error: err?.message || String(err) }),
           "error",
         );
       } finally {

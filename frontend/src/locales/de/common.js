@@ -1621,6 +1621,16 @@ const TRANSLATIONS = {
     description:
       "Dies sind alle aufgezeichneten Chats und Nachrichten, die von Benutzern gesendet wurden, geordnet nach ihrem Erstellungsdatum.",
     export: "Exportieren",
+    exportSuccess: "Chats erfolgreich als {{name}} exportiert.",
+    exportFailed: "Chat-Export fehlgeschlagen.",
+    clearConfirm:
+      "Sind Sie sicher, dass Sie alle Chats löschen möchten?\n\nDiese Aktion ist irreversibel.",
+    clearedAll: "Alle Chats gelöscht.",
+    deleteConfirm:
+      "Sind Sie sicher, dass Sie diesen Chat löschen möchten?\n\nDiese Aktion ist irreversibel.",
+    deleteFailed: "Chat-Löschung fehlgeschlagen.",
+    deleted: "Chat gelöscht.",
+    loadFailed: "Chats konnten nicht geladen werden: {{error}}",
     table: {
       id: "Id",
       by: "Gesendet von",
@@ -3854,6 +3864,10 @@ const TRANSLATIONS = {
     },
   },
   chatEmbedWidgets: {
+    title: "Embed-Widgets",
+    back: "Zurück",
+    widgets: "Widgets",
+    history: "Verlauf",
     editEmbed: {
       title: "Embed #{{id}} aktualisieren",
       updateSuccess: "Embed erfolgreich aktualisiert.",

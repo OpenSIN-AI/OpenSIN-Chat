@@ -32,13 +32,10 @@ const prisma = new PrismaClient(prismaClientConfig);
 // SQLite: enable WAL mode and set busy_timeout to prevent connection timeouts.
 // Prisma's SQLite driver uses a connection pool (default 5) but without WAL mode,
 // concurrent reads can block writes and cause "Timed out during query execution".
+// Note: PRAGMA journal_mode returns a row, so we use $queryRawUnsafe not $executeRawUnsafe.
 if (!process.env.DATABASE_URL?.startsWith("postgresql://")) {
-  prisma
-    .$executeRawUnsafe("PRAGMA journal_mode=WAL")
-    .catch(() => {});
-  prisma
-    .$executeRawUnsafe("PRAGMA busy_timeout=5000")
-    .catch(() => {});
+  prisma.$queryRawUnsafe("PRAGMA journal_mode=WAL").catch(() => {});
+  prisma.$queryRawUnsafe("PRAGMA busy_timeout=5000").catch(() => {});
 }
 
 module.exports = prisma;

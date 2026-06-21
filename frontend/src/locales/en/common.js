@@ -2023,6 +2023,16 @@ const TRANSLATIONS = {
     description:
       "These are all the recorded chats and messages that have been sent by users ordered by their creation date.",
     export: "Export",
+    exportSuccess: "Chats exported successfully as {{name}}.",
+    exportFailed: "Failed to export chats.",
+    clearConfirm:
+      "Are you sure you want to clear all chats?\n\nThis action is irreversible.",
+    clearedAll: "Cleared all chats.",
+    deleteConfirm:
+      "Are you sure you want to delete this chat?\n\nThis action is irreversible.",
+    deleteFailed: "Failed to delete chat.",
+    deleted: "Chat deleted.",
+    loadFailed: "Failed to load chats: {{error}}",
     table: {
       id: "ID",
       by: "Sent By",
@@ -3762,6 +3772,10 @@ const TRANSLATIONS = {
     },
   },
   chatEmbedWidgets: {
+    title: "Embed Widgets",
+    back: "Back",
+    widgets: "Widgets",
+    history: "History",
     editEmbed: {
       title: "Update embed #{{id}}",
       updateSuccess: "Embed updated successfully.",
