@@ -23,26 +23,31 @@ function buildPostgresUrl(base) {
 
 // SQLite: enable WAL mode and set busy_timeout to prevent connection timeouts.
 // Prisma's SQLite driver (modernc.org/sqlite) uses a connection pool (default 5).
-// busy_timeout is per-connection, so we use the _pragma DSN parameter to set it
-// on EVERY connection in the pool. The modernc.org/sqlite driver supports
-// ?_pragma=busy_timeout(15000) in the connection URL.
-// Format: file:path?_pragma=busy_timeout(15000)&_pragma=journal_mode(WAL)
-if (process.env.DATABASE_URL?.startsWith("postgresql://")) {
+// WAL mode is database-level (persistent), so setting it once is sufficient.
+// busy_timeout is per-connection. The _pragma DSN parameter doesn't work for
+// busy_timeout in modernc.org/sqlite, so we limit the pool to 1 connection
+// and set busy_timeout on it. SQLite is single-writer anyway (WAL allows
+// concurrent readers but Prisma serializes queries), so connection_limit=1
+// has minimal performance impact while eliminating pool-related timeouts.
+const isPostgres = process.env.DATABASE_URL?.startsWith("postgresql://");
+
+if (isPostgres) {
   prismaClientConfig.datasources = {
     db: { url: buildPostgresUrl(process.env.DATABASE_URL) },
   };
 } else {
   const sqliteUrl = process.env.DATABASE_URL || "file:../storage/openafd.db";
   const base = sqliteUrl.split("?")[0];
-  process.env.DATABASE_URL = `${base}?_pragma=busy_timeout(15000)`;
+  // connection_limit=1 ensures our PRAGMA busy_timeout applies to the only connection.
+  process.env.DATABASE_URL = `${base}?connection_limit=1`;
   prismaClientConfig.datasources = { db: { url: process.env.DATABASE_URL } };
 }
 
 const prisma = new PrismaClient(prismaClientConfig);
 
-// WAL mode is database-level (persistent), so setting it once is sufficient.
-if (!process.env.DATABASE_URL?.startsWith("postgresql://")) {
+if (!isPostgres) {
   prisma.$queryRawUnsafe("PRAGMA journal_mode=WAL").catch(() => {});
+  prisma.$queryRawUnsafe("PRAGMA busy_timeout=15000").catch(() => {});
 }
 
 module.exports = prisma;
