@@ -63,8 +63,9 @@ const THOUGHT_KEYWORDS = [
   "think",
   "thought_chain",
   "arg_value",
+  "imd",
 ];
-const CLOSING_TAGS = [...THOUGHT_KEYWORDS, "response", "answer", "arg_value"];
+const CLOSING_TAGS = [...THOUGHT_KEYWORDS, "response", "answer"];
 export const THOUGHT_REGEX_OPEN = new RegExp(
   (THOUGHT_KEYWORDS as any)
     .map((keyword) => `<${keyword}\\s*(?:[^>]*?)?\\s*>`)
