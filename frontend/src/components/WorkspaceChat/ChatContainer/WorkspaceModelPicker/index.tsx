@@ -18,6 +18,37 @@ import {
 import { SIDEBAR_TOGGLE_EVENT } from "@/components/Sidebar/SidebarToggle";
 import { safeGetItem } from "@/utils/safeStorage";
 
+/**
+ * Convert a raw model ID (e.g. "accounts/fireworks/models/minimax-m3")
+ * to a friendly display name (e.g. "MiniMax M3").
+ * Falls back to the raw ID if no friendly name can be derived.
+ */
+function prettifyModelName(rawModel: string): string {
+  if (!rawModel) return "";
+  // Try to extract the short name from the last path segment
+  const parts = rawModel.split("/");
+  const lastPart = parts[parts.length - 1];
+  if (!lastPart) return rawModel;
+  // Convert kebab-case to Title Case (e.g. "minimax-m3" -> "MiniMax M3")
+  return lastPart
+    .split("-")
+    .map((word) => {
+      // Keep well-known acronyms uppercase
+      const upper = ["m2", "m3", "m4", "v4", "v5", "llm", "gpt", "api", "ai", "pro", "oss"];
+      const lower = word.toLowerCase();
+      if (upper.some((u) => lower === u)) return word.toUpperCase();
+      // Special-case: "minimax" -> "MiniMax", "deepseek" -> "DeepSeek"
+      if (lower === "minimax") return "MiniMax";
+      if (lower === "deepseek") return "DeepSeek";
+      if (lower === "qwen") return "Qwen";
+      if (lower === "kimi") return "Kimi";
+      if (lower === "glm") return "GLM";
+      // Default: capitalize first letter
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+}
+
 export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   const { t } = useTranslation();
   const { slug: urlSlug } = useParams();
@@ -54,7 +85,9 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
   useEffect(() => {
     if (!workspace || !systemSettings) return;
     if (effectiveProvider !== "openafd-router") {
-      setModelName(workspace.chatModel ?? systemSettings.LLMModel ?? "");
+      const rawModel = workspace.chatModel ?? systemSettings.LLMModel ?? "";
+      // Convert raw model ID (e.g. "accounts/fireworks/models/minimax-m3") to a friendly name
+      setModelName(prettifyModelName(rawModel));
     } else if (router) {
       setModelName(router.name);
     } else if (!routerId) {
