@@ -117,7 +117,8 @@ export function initKeyboardShortcuts() {
           target.isContentEditable);
 
       if (isTyping) {
-        const allowWhileTyping = shortcutKey === "meta+shift+?" || shortcutKey === "f1";
+        const allowWhileTyping =
+          shortcutKey === "meta+shift+?" || shortcutKey === "f1";
         if (!allowWhileTyping) return;
       }
 

@@ -63,98 +63,96 @@ export default function EditEmbedModal({
 
   return (
     <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
-        <div className="relative p-6 border-b rounded-t border-theme-modal-border">
-          <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
-              {embed.name
-                ? t("chatEmbedWidgets.editEmbed.titleNamed", { name: embed.name })
-                : t("chatEmbedWidgets.editEmbed.title", { id: embed.id })}
-            </h3>
-          </div>
-          <button
-            onClick={closeModal}
-            type="button"
-            className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
-          >
-            <X size={24} weight="bold" className="text-theme-text-primary" />
-          </button>
+      <div className="relative p-6 border-b rounded-t border-theme-modal-border">
+        <div className="w-full flex gap-x-2 items-center">
+          <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
+            {embed.name
+              ? t("chatEmbedWidgets.editEmbed.titleNamed", { name: embed.name })
+              : t("chatEmbedWidgets.editEmbed.title", { id: embed.id })}
+          </h3>
         </div>
-        <div className="px-7 py-6">
-          <form onSubmit={handleUpdate}>
-            <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
-              <NameInput defaultValue={embed.name || ""} />
-              <WorkspaceSelection defaultValue={embed.workspace.id} />
-              <ChatModeSelection defaultValue={embed.chat_mode} />
-              <PermittedDomains
-                defaultValue={
-                  safeJsonParse(embed.allowlist_domains, null) || []
-                }
-              />
-              <NumberInput
-                name="max_chats_per_day"
-                title={t("chatEmbedWidgets.editEmbed.maxChatsPerDay")}
-                hint={t("chatEmbedWidgets.editEmbed.maxChatsPerDayHint")}
-                defaultValue={embed.max_chats_per_day}
-              />
-              <NumberInput
-                name="max_chats_per_session"
-                title={t("chatEmbedWidgets.editEmbed.maxChatsPerSession")}
-                hint={t("chatEmbedWidgets.editEmbed.maxChatsPerSessionHint")}
-                defaultValue={embed.max_chats_per_session}
-              />
-              <NumberInput
-                name="message_limit"
-                title={t("chatEmbedWidgets.editEmbed.messageHistoryLimit")}
-                hint={t("chatEmbedWidgets.editEmbed.messageHistoryLimitHint")}
-                defaultValue={embed.message_limit}
-              />
-              <BooleanInput
-                name="allow_model_override"
-                title={t("chatEmbedWidgets.editEmbed.enableDynamicModel")}
-                hint={t("chatEmbedWidgets.editEmbed.enableDynamicModelHint")}
-                defaultValue={embed.allow_model_override}
-              />
-              <BooleanInput
-                name="allow_temperature_override"
-                title={t("chatEmbedWidgets.editEmbed.enableDynamicTemperature")}
-                hint={t(
-                  "chatEmbedWidgets.editEmbed.enableDynamicTemperatureHint",
-                )}
-                defaultValue={embed.allow_temperature_override}
-              />
-              <BooleanInput
-                name="allow_prompt_override"
-                title={t("chatEmbedWidgets.editEmbed.enablePromptOverride")}
-                hint={t("chatEmbedWidgets.editEmbed.enablePromptOverrideHint")}
-                defaultValue={embed.allow_prompt_override}
-              />
-
-              {error && (
-                <p className="text-red-400 text-sm">
-                  {t("chatEmbedWidgets.editEmbed.error", { error })}
-                </p>
-              )}
-              <p className="text-theme-text-secondary text-xs md:text-sm">
-                {t("chatEmbedWidgets.editEmbed.scriptTagNotice")}
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
-              <button
-                onClick={closeModal}
-                type="button"
-                className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
-              >
-                {t("chatEmbedWidgets.editEmbed.cancel")}
-              </button>
-              <button
-                type="submit"
-                className="transition-all duration-300 bg-primary-button text-slate-900 hover:opacity-60 px-4 py-2 rounded-lg text-sm"
-              >
-                {t("chatEmbedWidgets.editEmbed.updateEmbed")}
-              </button>
-            </div>
-          </form>
-        </div>
+        <button
+          onClick={closeModal}
+          type="button"
+          className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+        >
+          <X size={24} weight="bold" className="text-theme-text-primary" />
+        </button>
       </div>
+      <div className="px-7 py-6">
+        <form onSubmit={handleUpdate}>
+          <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
+            <NameInput defaultValue={embed.name || ""} />
+            <WorkspaceSelection defaultValue={embed.workspace.id} />
+            <ChatModeSelection defaultValue={embed.chat_mode} />
+            <PermittedDomains
+              defaultValue={safeJsonParse(embed.allowlist_domains, null) || []}
+            />
+            <NumberInput
+              name="max_chats_per_day"
+              title={t("chatEmbedWidgets.editEmbed.maxChatsPerDay")}
+              hint={t("chatEmbedWidgets.editEmbed.maxChatsPerDayHint")}
+              defaultValue={embed.max_chats_per_day}
+            />
+            <NumberInput
+              name="max_chats_per_session"
+              title={t("chatEmbedWidgets.editEmbed.maxChatsPerSession")}
+              hint={t("chatEmbedWidgets.editEmbed.maxChatsPerSessionHint")}
+              defaultValue={embed.max_chats_per_session}
+            />
+            <NumberInput
+              name="message_limit"
+              title={t("chatEmbedWidgets.editEmbed.messageHistoryLimit")}
+              hint={t("chatEmbedWidgets.editEmbed.messageHistoryLimitHint")}
+              defaultValue={embed.message_limit}
+            />
+            <BooleanInput
+              name="allow_model_override"
+              title={t("chatEmbedWidgets.editEmbed.enableDynamicModel")}
+              hint={t("chatEmbedWidgets.editEmbed.enableDynamicModelHint")}
+              defaultValue={embed.allow_model_override}
+            />
+            <BooleanInput
+              name="allow_temperature_override"
+              title={t("chatEmbedWidgets.editEmbed.enableDynamicTemperature")}
+              hint={t(
+                "chatEmbedWidgets.editEmbed.enableDynamicTemperatureHint",
+              )}
+              defaultValue={embed.allow_temperature_override}
+            />
+            <BooleanInput
+              name="allow_prompt_override"
+              title={t("chatEmbedWidgets.editEmbed.enablePromptOverride")}
+              hint={t("chatEmbedWidgets.editEmbed.enablePromptOverrideHint")}
+              defaultValue={embed.allow_prompt_override}
+            />
+
+            {error && (
+              <p className="text-red-400 text-sm">
+                {t("chatEmbedWidgets.editEmbed.error", { error })}
+              </p>
+            )}
+            <p className="text-theme-text-secondary text-xs md:text-sm">
+              {t("chatEmbedWidgets.editEmbed.scriptTagNotice")}
+            </p>
+          </div>
+          <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
+            <button
+              onClick={closeModal}
+              type="button"
+              className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
+            >
+              {t("chatEmbedWidgets.editEmbed.cancel")}
+            </button>
+            <button
+              type="submit"
+              className="transition-all duration-300 bg-primary-button text-slate-900 hover:opacity-60 px-4 py-2 rounded-lg text-sm"
+            >
+              {t("chatEmbedWidgets.editEmbed.updateEmbed")}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

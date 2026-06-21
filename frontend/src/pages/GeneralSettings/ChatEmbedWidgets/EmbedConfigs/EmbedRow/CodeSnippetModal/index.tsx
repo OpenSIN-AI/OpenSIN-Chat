@@ -29,36 +29,36 @@ export default function CodeSnippetModal({
   const { t } = useTranslation();
   return (
     <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
-        <div className="relative p-6 border-b rounded-t border-theme-modal-border">
-          <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
-              {t("codeSnippetModal.title")}
-            </h3>
-          </div>
+      <div className="relative p-6 border-b rounded-t border-theme-modal-border">
+        <div className="w-full flex gap-x-2 items-center">
+          <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
+            {t("codeSnippetModal.title")}
+          </h3>
+        </div>
+        <button
+          onClick={closeModal}
+          type="button"
+          className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+        >
+          <X size={24} weight="bold" className="text-theme-text-primary" />
+        </button>
+      </div>
+      <div className="px-7 py-6">
+        <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
+          <ScriptTag embed={embed} />
+        </div>
+        <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
           <button
             onClick={closeModal}
             type="button"
-            className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+            className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
           >
-            <X size={24} weight="bold" className="text-theme-text-primary" />
+            {t("codeSnippetModal.close")}
           </button>
-        </div>
-        <div className="px-7 py-6">
-          <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
-            <ScriptTag embed={embed} />
-          </div>
-          <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
-            <button
-              onClick={closeModal}
-              type="button"
-              className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
-            >
-              {t("codeSnippetModal.close")}
-            </button>
-            <div hidden={true} />
-          </div>
+          <div hidden={true} />
         </div>
       </div>
+    </div>
   );
 }
 

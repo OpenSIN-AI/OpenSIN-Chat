@@ -234,7 +234,10 @@ function workspaceEndpoints(app) {
         cleanupHotdirFile(request);
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500);
+        response
+          .status(500)
+          .json({ success: false, error: e.message || "Upload failed" })
+          .end();
       }
     },
   );
@@ -1297,7 +1300,10 @@ function workspaceEndpoints(app) {
         cleanupHotdirFile(request);
         // eslint-disable-next-line no-console
         console.error(e.message, e);
-        response.sendStatus(500);
+        response
+          .status(500)
+          .json({ success: false, error: e.message || "Upload failed" })
+          .end();
       }
     },
   );

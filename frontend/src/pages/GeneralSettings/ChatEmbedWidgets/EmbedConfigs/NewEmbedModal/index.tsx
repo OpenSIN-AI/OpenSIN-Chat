@@ -57,90 +57,90 @@ export default function NewEmbedModal({
 
   return (
     <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
-        <div className="relative p-6 border-b rounded-t border-theme-modal-border">
-          <div className="w-full flex gap-x-2 items-center">
-            <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
-              {t("newEmbedModal.title")}
-            </h3>
-          </div>
-          <button
-            onClick={closeModal}
-            type="button"
-            className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
-          >
-            <X size={24} weight="bold" className="text-theme-text-primary" />
-          </button>
+      <div className="relative p-6 border-b rounded-t border-theme-modal-border">
+        <div className="w-full flex gap-x-2 items-center">
+          <h3 className="text-xl font-semibold text-theme-text-primary overflow-hidden overflow-ellipsis whitespace-nowrap">
+            {t("newEmbedModal.title")}
+          </h3>
         </div>
-        <div className="px-7 py-6">
-          <form onSubmit={handleCreate}>
-            <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
-              <NameInput />
-              <WorkspaceSelection />
-              <ChatModeSelection />
-              <PermittedDomains />
-              <NumberInput
-                name="max_chats_per_day"
-                title={t("newEmbedModal.maxChatsPerDay")}
-                hint={t("newEmbedModal.maxChatsPerDayHint")}
-              />
-              <NumberInput
-                name="max_chats_per_session"
-                title={t("newEmbedModal.maxChatsPerSession")}
-                hint={t("newEmbedModal.maxChatsPerSessionHint")}
-              />
-              <NumberInput
-                name="message_limit"
-                title={t("newEmbedModal.messageHistoryLimit")}
-                hint={t("newEmbedModal.messageHistoryLimitHint")}
-                defaultValue={20}
-              />
-              <BooleanInput
-                name="allow_model_override"
-                title={t("newEmbedModal.enableDynamicModel")}
-                hint={t("newEmbedModal.enableDynamicModelHint")}
-              />
-              <BooleanInput
-                name="allow_temperature_override"
-                title={t("newEmbedModal.enableDynamicTemperature")}
-                hint={t("newEmbedModal.enableDynamicTemperatureHint")}
-              />
-              <BooleanInput
-                name="allow_prompt_override"
-                title={t("newEmbedModal.enablePromptOverride")}
-                hint={t("newEmbedModal.enablePromptOverrideHint")}
-              />
-
-              {error && (
-                <p className="text-red-400 text-sm">
-                  {t("newEmbedModal.error")}: {error}
-                </p>
-              )}
-              <p className="text-theme-text-secondary text-xs md:text-sm">
-                {t("newEmbedModal.afterCreateHintBefore")}
-                <code className="light:bg-stone-300 bg-stone-900 text-white mx-1 px-1 rounded-sm">
-                  {SCRIPT_TAG}
-                </code>
-                {t("newEmbedModal.afterCreateHintAfter")}
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
-              <button
-                onClick={closeModal}
-                type="button"
-                className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
-              >
-                {t("newEmbedModal.cancel")}
-              </button>
-              <button
-                type="submit"
-                className="transition-all duration-300 bg-primary-button text-slate-900 hover:opacity-60 px-4 py-2 rounded-lg text-sm"
-              >
-                {t("newEmbedModal.createEmbed")}
-              </button>
-            </div>
-          </form>
-        </div>
+        <button
+          onClick={closeModal}
+          type="button"
+          className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
+        >
+          <X size={24} weight="bold" className="text-theme-text-primary" />
+        </button>
       </div>
+      <div className="px-7 py-6">
+        <form onSubmit={handleCreate}>
+          <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
+            <NameInput />
+            <WorkspaceSelection />
+            <ChatModeSelection />
+            <PermittedDomains />
+            <NumberInput
+              name="max_chats_per_day"
+              title={t("newEmbedModal.maxChatsPerDay")}
+              hint={t("newEmbedModal.maxChatsPerDayHint")}
+            />
+            <NumberInput
+              name="max_chats_per_session"
+              title={t("newEmbedModal.maxChatsPerSession")}
+              hint={t("newEmbedModal.maxChatsPerSessionHint")}
+            />
+            <NumberInput
+              name="message_limit"
+              title={t("newEmbedModal.messageHistoryLimit")}
+              hint={t("newEmbedModal.messageHistoryLimitHint")}
+              defaultValue={20}
+            />
+            <BooleanInput
+              name="allow_model_override"
+              title={t("newEmbedModal.enableDynamicModel")}
+              hint={t("newEmbedModal.enableDynamicModelHint")}
+            />
+            <BooleanInput
+              name="allow_temperature_override"
+              title={t("newEmbedModal.enableDynamicTemperature")}
+              hint={t("newEmbedModal.enableDynamicTemperatureHint")}
+            />
+            <BooleanInput
+              name="allow_prompt_override"
+              title={t("newEmbedModal.enablePromptOverride")}
+              hint={t("newEmbedModal.enablePromptOverrideHint")}
+            />
+
+            {error && (
+              <p className="text-red-400 text-sm">
+                {t("newEmbedModal.error")}: {error}
+              </p>
+            )}
+            <p className="text-theme-text-secondary text-xs md:text-sm">
+              {t("newEmbedModal.afterCreateHintBefore")}
+              <code className="light:bg-stone-300 bg-stone-900 text-white mx-1 px-1 rounded-sm">
+                {SCRIPT_TAG}
+              </code>
+              {t("newEmbedModal.afterCreateHintAfter")}
+            </p>
+          </div>
+          <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border">
+            <button
+              onClick={closeModal}
+              type="button"
+              className="transition-all duration-300 text-theme-text-primary hover:bg-theme-modal-border px-4 py-2 rounded-lg text-sm"
+            >
+              {t("newEmbedModal.cancel")}
+            </button>
+            <button
+              type="submit"
+              className="transition-all duration-300 bg-primary-button text-slate-900 hover:opacity-60 px-4 py-2 rounded-lg text-sm"
+            >
+              {t("newEmbedModal.createEmbed")}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 
@@ -173,10 +173,7 @@ export const WorkspaceSelection = ({
       >
         {workspaces.map((workspace: any) => {
           return (
-            <option
-              key={workspace.id}
-              value={workspace.id}
-            >
+            <option key={workspace.id} value={workspace.id}>
               {workspace.name}
             </option>
           );
@@ -186,11 +183,7 @@ export const WorkspaceSelection = ({
   );
 };
 
-export const NameInput = ({
-  defaultValue = "",
-}: {
-  defaultValue?: string;
-}) => {
+export const NameInput = ({ defaultValue = "" }: { defaultValue?: string }) => {
   const { t } = useTranslation();
   return (
     <div>
@@ -386,7 +379,10 @@ export const NumberInput = ({
   return (
     <div>
       <div className="flex flex-col mb-2">
-        <label htmlFor={name} className="block text-sm font-medium text-theme-text-primary">
+        <label
+          htmlFor={name}
+          className="block text-sm font-medium text-theme-text-primary"
+        >
           {title}
         </label>
         <p className="text-theme-text-secondary text-xs">{hint}</p>

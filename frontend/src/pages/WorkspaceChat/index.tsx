@@ -7,7 +7,7 @@ import {
   SidebarToggleProvider,
   useSidebarToggle,
 } from "@/components/Sidebar/SidebarToggle";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { useIsMobileLayout } from "@/hooks/useIsMobileLayout";
 import { FullScreenLoader } from "@/components/Preloader";
@@ -56,10 +56,8 @@ function ShowWorkspaceChat() {
     isLoading,
   } = useWorkspaceChats(slug);
   const [workspace, setWorkspace] = useState<any>(null);
-  // Tracks which workspace `workspace` belongs to. While a new workspace's
-  // data is in flight, we keep the previous workspace's chat mounted
-  // (Slack/Linear-style transition) instead of flashing a skeleton.
   const [loadedSlug, setLoadedSlug] = useState<string | null>(null);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     if (isLoading) return;
@@ -67,9 +65,11 @@ function ShowWorkspaceChat() {
     if (!rawWorkspace) {
       setWorkspace(null);
       setLoadedSlug(slug);
+      setNotFound(true);
       return;
     }
 
+    setNotFound(false);
     setWorkspace({
       ...rawWorkspace,
       suggestedMessages,
@@ -84,6 +84,10 @@ function ShowWorkspaceChat() {
       }),
     );
   }, [slug, isLoading, rawWorkspace, suggestedMessages, showAgentCommand]);
+
+  if (notFound && !isLoading) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <WorkspaceChatContainer

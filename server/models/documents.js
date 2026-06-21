@@ -187,11 +187,19 @@ const Document = {
         userId,
       };
 
-      const { vectorized, error } = await VectorDb.addDocumentToNamespace(
-        workspace.slug,
-        { ...data, docId },
-        path,
-      );
+      let vectorized = false;
+      let error = null;
+      try {
+        ({ vectorized, error } = await VectorDb.addDocumentToNamespace(
+          workspace.slug,
+          { ...data, docId },
+          path,
+        ));
+      } catch (vecErr) {
+        // eslint-disable-next-line no-console
+        console.error("Vectorization threw:", vecErr.message);
+        error = vecErr.message || "Vectorization error";
+      }
 
       if (!vectorized) {
         // eslint-disable-next-line no-console
@@ -219,6 +227,8 @@ const Document = {
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error.message);
+        failedToEmbed.push(metadata?.title || newDoc.filename);
+        errors.add(error.message || "Failed to save document record");
         emitProgress(workspace.slug, {
           type: "doc_failed",
           ...docProgress,

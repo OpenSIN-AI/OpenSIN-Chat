@@ -87,13 +87,8 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
 
   return (
     <>
-      <tr
-        className="bg-transparent text-theme-text-primary text-xs font-medium border-b border-white/10 light:border-slate-200 h-10"
-      >
-        <th
-          scope="row"
-          className="px-6 whitespace-nowrap font-medium"
-        >
+      <tr className="bg-transparent text-theme-text-primary text-xs font-medium border-b border-white/10 light:border-slate-200 h-10">
+        <th scope="row" className="px-6 whitespace-nowrap font-medium">
           {embed.name || (
             <span className="text-theme-text-secondary italic">
               {t("embedConfigs.embedRow.unnamed")}
