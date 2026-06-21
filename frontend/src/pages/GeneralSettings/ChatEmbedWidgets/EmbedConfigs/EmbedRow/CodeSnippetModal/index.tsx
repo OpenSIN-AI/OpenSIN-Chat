@@ -5,7 +5,7 @@ import { CheckCircle } from "@phosphor-icons/react/dist/csr/CheckCircle";
 import { CopySimple } from "@phosphor-icons/react/dist/csr/CopySimple";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import showToast from "@/utils/toast";
-import { getStoredTheme } from "@/utils/safeStorage";
+import { resolveDarkMode } from "@/hooks/useTheme";
 import hljs from "@/utils/chat/hljs";
 import DOMPurify from "@/utils/chat/purify";
 import "@/utils/chat/themes/github-dark.css";
@@ -95,7 +95,7 @@ const ScriptTag = ({ embed }: ScriptTagProps): JSX.Element => {
     ? "http://localhost:3001"
     : window.location.origin;
   const snippet = createScriptTagSnippet(embed, scriptHost, serverHost);
-  const theme = getStoredTheme() === "light" ? "github" : "github-dark";
+  const theme = resolveDarkMode() ? "github-dark" : "github";
 
   const handleClick = () => {
     copyText(snippet).then((ok) => {

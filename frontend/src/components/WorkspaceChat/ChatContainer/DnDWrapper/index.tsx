@@ -223,11 +223,13 @@ export function DnDFileUploaderProvider({
 
       const formData = new FormData();
       formData.append("file", attachment.file, attachment.file.name);
-      formData.append("threadSlug", threadSlug || null);
+      if (threadSlug) formData.append("threadSlug", threadSlug);
       promises.push(
         Workspace.parseFile(workspace.slug, formData).then(
           async ({ response, data }: any) => {
             if (!response.ok) {
+              const errorMsg = data?.error ?? t("attachments.fileNotEmbedded");
+              showToast(errorMsg, "error");
               const updates = {
                 status: "failed",
                 error: data?.error ?? null,

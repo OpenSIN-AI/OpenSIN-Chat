@@ -174,10 +174,22 @@ export default function EmbedRow({ embed }: EmbedRowProps): JSX.Element {
           </button>
         </td>
       </tr>
-      <ModalWrapper isOpen={isSettingsOpen} closeModal={closeSettingsModal}>
+      <ModalWrapper
+        isOpen={isSettingsOpen}
+        closeModal={closeSettingsModal}
+        ariaLabel={
+          embed.name
+            ? t("chatEmbedWidgets.editEmbed.titleNamed", { name: embed.name })
+            : t("chatEmbedWidgets.editEmbed.title", { id: embed.id })
+        }
+      >
         <EditEmbedModal embed={embed as any} closeModal={closeSettingsModal} />
       </ModalWrapper>
-      <ModalWrapper isOpen={isSnippetOpen} closeModal={closeSnippetModal}>
+      <ModalWrapper
+        isOpen={isSnippetOpen}
+        closeModal={closeSnippetModal}
+        ariaLabel={t("codeSnippetModal.title")}
+      >
         <CodeSnippetModal embed={embed as any} closeModal={closeSnippetModal} />
       </ModalWrapper>
     </>

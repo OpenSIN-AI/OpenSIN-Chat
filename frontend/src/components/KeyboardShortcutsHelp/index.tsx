@@ -13,6 +13,7 @@ export default function KeyboardShortcutsHelp() {
   const { t } = useTranslation();
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const toggle = () => setIsOpen((prev) => !prev);
@@ -24,6 +25,11 @@ export default function KeyboardShortcutsHelp() {
 
   useEffect(() => {
     if (!isOpen) return;
+    previousActiveElement.current =
+      (document.activeElement as HTMLElement) ?? null;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
         e.preventDefault();
@@ -48,7 +54,11 @@ export default function KeyboardShortcutsHelp() {
     }
     document.addEventListener("keydown", onKeyDown);
     closeButtonRef.current?.focus();
-    return () => document.removeEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+      previousActiveElement.current?.focus?.();
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -58,10 +68,12 @@ export default function KeyboardShortcutsHelp() {
       aria-modal="true"
       aria-label={t("keyboard-shortcuts.title")}
       className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center"
+      onClick={() => setIsOpen(false)}
     >
       <div
         ref={dialogRef}
         className="relative bg-theme-bg-secondary rounded-lg p-6 max-w-2xl w-full mx-4"
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-theme-text-primary">

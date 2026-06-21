@@ -434,6 +434,7 @@ function NewThreadButton({ workspace, mutate }) {
     }
     mutate();
     navigate(paths.workspace.thread(workspace.slug, thread.slug));
+    setLoading(false);
   };
 
   return (

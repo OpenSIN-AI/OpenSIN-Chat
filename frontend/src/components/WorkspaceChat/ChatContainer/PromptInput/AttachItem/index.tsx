@@ -6,6 +6,7 @@ import { useRef, useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useParams } from "react-router-dom";
 import Workspace from "@/models/workspace";
+import showToast from "@/utils/toast";
 import {
   ATTACHMENTS_PROCESSED_EVENT,
   REMOVE_ATTACHMENT_EVENT,
@@ -81,10 +82,16 @@ export default function AttachItem({
 
   /**
    * Triggers the hidden local file uploader (DnD input).
+   * Shows a warning toast if the document processor is offline.
    * @returns {void}
    */
   function triggerLocalUpload() {
-    document?.getElementById("dnd-chat-file-uploader")?.click();
+    const input = document?.getElementById("dnd-chat-file-uploader");
+    if (input?.disabled) {
+      showToast(t("dndWrapper.processorOffline"), "error");
+      return;
+    }
+    input?.click();
   }
 
   useEffect(() => {

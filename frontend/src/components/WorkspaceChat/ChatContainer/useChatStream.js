@@ -297,12 +297,12 @@ export default function useChatStream({
 
       if (!!websocket) {
         if (!promptMessage || !promptMessage?.userMessage) return false;
-        const attachments = promptMessage?.attachments ?? parseAttachments();
-        window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
         // Guard against sending on a non-OPEN socket — the server-side
         // heartbeat or reconnection may have closed it. If the socket
         // isn't ready, fall through to the SSE streaming path instead.
         if (websocket.readyState === WebSocket.OPEN) {
+          const attachments = promptMessage?.attachments ?? parseAttachments();
+          window.dispatchEvent(new CustomEvent(CLEAR_ATTACHMENTS_EVENT));
           websocket.send(
             JSON.stringify({
               type: "awaitingFeedback",

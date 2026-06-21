@@ -7,14 +7,14 @@ import hljs from "./hljs";
 import "./themes/github-dark.css";
 import "./themes/github.css";
 import { v4 } from "uuid";
-import { getStoredTheme } from "@/utils/safeStorage";
+import { resolveDarkMode } from "@/hooks/useTheme";
 
 const markdown = markdownIt({
   html: Appearance.get("renderHTML") ?? false,
   typographer: true,
   highlight: function (code: any, lang: any) {
     const uuid = v4();
-    const theme = getStoredTheme() === "light" ? "github" : "github-dark";
+    const theme = resolveDarkMode() ? "github-dark" : "github";
 
     if (lang && hljs.getLanguage(lang)) {
       try {

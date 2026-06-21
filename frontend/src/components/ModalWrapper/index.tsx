@@ -30,6 +30,7 @@ export default function ModalWrapper({
   isOpen,
   noPortal = false,
   closeModal,
+  ariaLabel,
 }: any) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const previousActiveElement = useRef<HTMLElement | null>(null);
@@ -112,6 +113,7 @@ export default function ModalWrapper({
       onClick={closeModal ? closeModal : undefined}
       role="dialog"
       aria-modal="true"
+      aria-label={ariaLabel || undefined}
       tabIndex={-1}
     >
       {modalContent}

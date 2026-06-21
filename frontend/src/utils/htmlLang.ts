@@ -1,9 +1,15 @@
 // SPDX-License-Identifier: MIT
 import i18next from "../i18n";
 
+const RTL_LANGUAGES = ["ar", "he", "fa", "ur", "dv", "yi"];
+
 export function syncHtmlLang(lng) {
   const normalized = (lng || i18next.language || "en").split("-")[0];
   document.documentElement.setAttribute("lang", normalized);
+  document.documentElement.setAttribute(
+    "dir",
+    RTL_LANGUAGES.includes(normalized) ? "rtl" : "ltr",
+  );
 }
 
 export function syncDocumentTitle() {

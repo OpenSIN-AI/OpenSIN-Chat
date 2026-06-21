@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 import { toast, type ToastOptions } from "react-toastify";
 import { getStoredTheme } from "@/utils/safeStorage";
+import { resolveDarkMode } from "@/hooks/useTheme";
 
 // Additional Configs (opts)
 // You can also pass valid ReactToast params to override the defaults.
@@ -10,7 +11,7 @@ const showToast: any = (
   type: any = "default",
   opts: { clear?: boolean; [key: string]: any } = {},
 ) => {
-  const theme = getStoredTheme() || "default";
+  const stored = getStoredTheme();
   const { clear, ...restOpts } = opts;
   const options: ToastOptions = {
     position: "bottom-center",
@@ -20,7 +21,12 @@ const showToast: any = (
     pauseOnHover: true,
     draggable: true,
     limit: 3,
-    theme: theme === "default" ? "dark" : "light",
+    theme:
+      stored === "default" || stored === null
+        ? "dark"
+        : resolveDarkMode()
+          ? "dark"
+          : "light",
     ...restOpts,
   };
 

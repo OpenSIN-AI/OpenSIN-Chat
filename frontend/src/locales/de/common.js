@@ -583,6 +583,8 @@ const TRANSLATIONS = {
     filesEmbedded_one: "{{count}} Datei erfolgreich eingebettet",
     filesEmbedded_other: "{{count}} Dateien erfolgreich eingebettet",
     dragAndDropIcon: "Drag-and-Drop-Symbol",
+    processorOffline: "Dokumentenprozessor ist offline. Bitte versuchen Sie es später erneut.",
+    embedFailed: "Einbetten der Datei(en) fehlgeschlagen.",
   },
   common: {
     "workspaces-name": "Namen der Workspaces",
@@ -879,6 +881,11 @@ const TRANSLATIONS = {
     },
   },
   chat: {
+    aria: {
+      chatHistory: "Chat-Verlauf",
+      streamingResponse: "KI antwortet…",
+      errorMessage: "Ein Fehler ist aufgetreten",
+    },
     llm: {
       title: "Workspace-LLM-Anbieter",
       description:

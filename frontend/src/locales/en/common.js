@@ -576,6 +576,8 @@ const TRANSLATIONS = {
     filesEmbedded_one: "{{count}} file embedded successfully",
     filesEmbedded_other: "{{count}} files embedded successfully",
     dragAndDropIcon: "Drag and drop icon",
+    processorOffline: "Document processor is offline. Please try again later.",
+    embedFailed: "Failed to embed file(s).",
   },
   common: {
     "workspaces-name": "Workspace Name",
@@ -1312,6 +1314,11 @@ const TRANSLATIONS = {
     },
   },
   chat: {
+    aria: {
+      chatHistory: "Chat history",
+      streamingResponse: "AI is responding…",
+      errorMessage: "An error occurred",
+    },
     llm: {
       title: "Workspace LLM Provider",
       description:

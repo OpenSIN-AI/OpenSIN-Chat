@@ -24,6 +24,9 @@ const {
 } = require("../utils/politician/abgeordnetenwatchApi");
 const { PlenarScraper } = require("../utils/politician/plenarScraper");
 const {
+  PoliticianVectorStore,
+} = require("../utils/politician/vectorStore");
+const {
   SYNC_PHASES,
   MAX_RETRIES,
   shouldRetry,
@@ -35,6 +38,7 @@ const prisma = new PrismaClient();
 const bundestag = new BundestagApi();
 const abgeordnetenwatch = new AbgeordnetenwatchApi();
 const plenar = new PlenarScraper();
+const vectorStore = new PoliticianVectorStore();
 
 // ── Configuration ─────────────────────────────────────────────────────────────
 
@@ -580,6 +584,25 @@ async function syncBundestagSpeeches() {
                 },
               }),
             );
+
+            // Index speech into vector store for semantic search
+            try {
+              await vectorStore.indexSpeech({
+                speechId: dedupeKey,
+                politicianId,
+                politicianName: speech.speakerName,
+                party: speech.speakerParty,
+                text: speech.text,
+                date: speech.date,
+                title: speech.top,
+              });
+            } catch (vecErr) {
+              // Vector indexing failure is non-fatal — speech is already in SQLite
+              console.error(
+                `[sync-politician-data] Vector indexing failed for ${dedupeKey}: ${vecErr.message}`,
+              );
+            }
+
             processed++;
           } catch {
             failed++;
