@@ -76,6 +76,11 @@ ALLOWED_FILES=(
   #    The filename + minified body legitimately contain "AnythingLLM" —
   #    renaming the asset would break every existing embed on the web.
   "frontend/public/embed/anythingllm-chat-widget.min.js"
+  #    Newer OpenSIN-branded embed is also a transitional vendored copy of the
+  #    upstream widget; its minified body still contains legacy AnythingLLM/
+  #    Mintplex strings. Cleaning it is tracked separately; for now it is
+  #    treated the same as the legacy asset above.
+  "frontend/public/embed/opensin-chat-widget.min.js"
 
   # ── Upstream-sync tooling ───────────────────────────────
   #    docs/UPSTREAM-SYNC.md + scripts/upstream-sync/* explain and execute
@@ -186,6 +191,7 @@ ALLOWED_FILES=(
   "server/PDF_ANALYSIS.md"
   "server/app.doc.md"
   "scripts/skill-oci-oracle-cloud-SKILL.md"
+  "RESEARCH.md"                        # research comparison doc referencing the upstream AnythingLLM/Mintplex origin for context
 
   # ── In-app documentation pages (upstream context) ───
   #    frontend/src/pages/Docs/content/ mirrors docs/ for the in-app docs viewer.
