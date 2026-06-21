@@ -90,6 +90,28 @@ function extractProfileUrlFromAwRawData(rawData) {
   }
 }
 
+/**
+ * Extract the German state (Bundesland) from a Bundestag (DIP) raw record.
+ * Some DIP person records contain a `person_roles` array with a `bundesland`
+ * field (e.g. Ministerpräsidenten, Staatssekretäre). We prefer the most recent
+ * role with a `bundesland` value.
+ * @param {string|Object} rawData
+ * @returns {string|null}
+ */
+function extractStateFromBundestagRawData(rawData) {
+  try {
+    const data = typeof rawData === "string" ? JSON.parse(rawData) : rawData;
+    const roles = data?.person_roles;
+    if (!Array.isArray(roles)) return null;
+    for (const role of roles) {
+      if (role?.bundesland) return role.bundesland.trim();
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 function normalizeName(name) {
   return (name || "").toLowerCase().replace(/\s+/g, " ").trim();
 }
@@ -168,12 +190,18 @@ async function main() {
           const originalMandate = normalized?.rawData || null;
           state = extractStateFromAwRawData(originalMandate);
           profileUrl = extractProfileUrlFromAwRawData(originalMandate);
-        } else if (politician.source === "bundestag" && awLookup.size > 0) {
-          const awMatch = awLookup.get(matchKey(politician));
-          if (awMatch) {
-            const originalMandate = awMatch.rawData || null;
-            state = extractStateFromAwRawData(originalMandate);
-            profileUrl = extractProfileUrlFromAwRawData(originalMandate);
+        } else if (politician.source === "bundestag") {
+          // First try to extract state directly from the DIP raw record (some
+          // roles carry a bundesland field). Then cross-reference with
+          // Abgeordnetenwatch for a public profile URL and a more precise state.
+          state = extractStateFromBundestagRawData(politician.rawData);
+          if (awLookup.size > 0) {
+            const awMatch = awLookup.get(matchKey(politician));
+            if (awMatch) {
+              const originalMandate = awMatch.rawData || null;
+              state = state || extractStateFromAwRawData(originalMandate);
+              profileUrl = extractProfileUrlFromAwRawData(originalMandate);
+            }
           }
         }
 
