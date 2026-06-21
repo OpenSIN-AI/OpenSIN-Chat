@@ -18,6 +18,13 @@ fi
 
 # Ensure PDF analysis storage directory exists (healthcheck expects it)
 mkdir -p "${STORAGE_DIR:-/app/server/storage}/pdf-analysis"
+mkdir -p "${STORAGE_DIR:-/app/server/storage}/plugins"
+
+# Fix ownership of files that may have been created as root during docker build
+# or by a previous container run with different UID (issue: EPERM on chmod)
+if [ -f "${STORAGE_DIR:-/app/server/storage}/plugins/openafd_mcp_servers.json" ]; then
+    chown "$(id -u):$(id -g)" "${STORAGE_DIR:-/app/server/storage}/plugins/openafd_mcp_servers.json" 2>/dev/null || true
+fi
 
 # Defense-in-depth runtime guard for issue #114: the native embedder crashes
 # with a cryptic Node module error when /app/server/utils/paths.js is missing.
