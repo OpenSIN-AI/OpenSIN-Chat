@@ -314,7 +314,10 @@ class GenericOpenAiLLM {
       // to preserve previously generated content.
       const handleAbort = () => {
         stream?.endMeasurement(usage);
-        clientAbortedHandler(resolve, fullText);
+        clientAbortedHandler(
+          resolve,
+          reasoningText ? `imd${reasoningText}thinking${fullText}` : fullText,
+        );
       };
       response.on("close", handleAbort);
 
@@ -400,7 +403,14 @@ class GenericOpenAiLLM {
 
             response.removeListener("close", handleAbort);
             stream?.endMeasurement(usage);
-            resolve(fullText);
+            // Include reasoning in fullText so saved chat history has the
+            // imd...thinking block for the ThoughtContainer to display.
+            // Matches the non-streaming #parseReasoningFromResponse format.
+            resolve(
+              reasoningText
+                ? `<think>${reasoningText}</think>${fullText}`
+                : fullText,
+            );
             break; // Break streaming when a valid finish_reason is first encountered
           }
         }
