@@ -53,7 +53,11 @@ export default function Sidebars({ workspace }: SidebarsProps) {
               <FilesystemSidebar workspace={workspace} />
             </ErrorBoundary>
           )}
-          {activeSidebar === "database" && <DatabaseSidebar />}
+          {activeSidebar === "database" && (
+            <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+              <DatabaseSidebar workspace={workspace} />
+            </ErrorBoundary>
+          )}
           {activeSidebar === "political" && <PoliticalSidebar />}
         </div>
       )}

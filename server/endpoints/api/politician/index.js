@@ -19,6 +19,15 @@
 const {
   validatedRequest,
 } = require("../../../utils/middleware/validatedRequest");
+const {
+  flexUserRoleValid,
+  ROLES,
+} = require("../../../utils/middleware/multiUserProtected");
+const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
+const { reqBody, userFromSession, multiUserMode } = require("../../../utils/http");
+const { Workspace } = require("../../../models/workspace");
+const { Document } = require("../../../models/documents");
+const { CollectorApi } = require("../../../utils/collectorApi");
 const logger = require("../../../utils/logger")();
 
 const MAX_LIMIT = 200;
@@ -250,6 +259,166 @@ function apiPoliticianEndpoints(app) {
       }
     },
   );
+
+  app.post(
+    "/politician/:id/add-to-workspace",
+    [
+      validatedRequest,
+      flexUserRoleValid([ROLES.admin, ROLES.manager]),
+      simpleRateLimit({
+        bucket: "politician-add-to-workspace",
+        max: 20,
+        windowMs: 60 * 1000,
+      }),
+    ],
+    async (request, response) => {
+      try {
+        const { id } = request.params;
+        const { workspaceSlug } = reqBody(request);
+        if (!workspaceSlug) {
+          return response
+            .status(400)
+            .json({ error: "workspaceSlug is required" });
+        }
+
+        const db = getPoliticianDB();
+        const politician = await db.getPolitician(id);
+        if (!politician) {
+          return response.status(404).json({ error: "Politician not found" });
+        }
+
+        const user = await userFromSession(request, response);
+        const workspace = multiUserMode(response)
+          ? await Workspace.getWithUser(user, { slug: workspaceSlug })
+          : await Workspace.get({ slug: workspaceSlug });
+        if (!workspace) {
+          return response.status(404).json({ error: "Workspace not found" });
+        }
+
+        // Include a subset of speeches so the source is actually useful for chat RAG.
+        const speeches = await db.getSpeeches(id, { limit: 25 });
+        const textContent = buildPoliticianSourceText(politician, speeches);
+        const metadata = {
+          title: `Politiker: ${politician.fullName || politician.id}`,
+          docAuthor: "OpenSIN-Chat Politiker-Datenbank",
+          description: [politician.party, politician.state, politician.electoralDistrict]
+            .filter(Boolean)
+            .join(" — ") || "Politikerprofil",
+          docSource: "Abgeordnetenwatch / Bundestag",
+          chunkSource: `politician-${id}`,
+          url: politician.profileUrl || "",
+          published: politician.lastSyncedAt
+            ? new Date(politician.lastSyncedAt).toISOString()
+            : new Date().toISOString(),
+        };
+
+        const Collector = new CollectorApi();
+        const { success, reason, documents } = await Collector.processRawText(
+          textContent,
+          metadata,
+        );
+        if (!success || !documents?.length) {
+          logger.error(`[politician] processRawText failed: ${reason}`);
+          return response.status(500).json({
+            success: false,
+            error: reason || "Failed to process politician text",
+          });
+        }
+
+        const { failedToEmbed = [], errors = [] } = await Document.addDocuments(
+          workspace,
+          documents.map((d) => d.location),
+          response.locals?.user?.id,
+        );
+
+        if (failedToEmbed.length > 0) {
+          return response.status(500).json({
+            success: false,
+            error: errors?.[0] ?? "Failed to embed politician document",
+          });
+        }
+
+        response.status(200).json({
+          success: true,
+          documentPaths: documents.map((d) => d.location),
+          politicianId: id,
+          workspaceSlug: workspace.slug,
+        });
+      } catch (err) {
+        logger.error(`[politician] add-to-workspace error: ${err.message}`, err);
+        response.status(500).json({ error: "Internal Server Error" });
+      }
+    },
+  );
+}
+
+/**
+ * Build a single plain-text document from a politician profile and their speeches.
+ * @param {Object} politician
+ * @param {Array<{speechTitle:string, speechText:string, speechDate:Date}>} speeches
+ * @returns {string}
+ */
+function buildPoliticianSourceText(politician, speeches = []) {
+  const lines = [];
+  const name = politician.fullName || `${politician.firstName} ${politician.lastName}`.trim() || politician.id;
+  lines.push(`# ${name}`);
+  lines.push("");
+
+  const meta = [
+    politician.party ? `Partei: ${politician.party}` : null,
+    politician.faction && politician.faction !== politician.party
+      ? `Fraktion: ${politician.faction}`
+      : null,
+    politician.state ? `Bundesland: ${politician.state}` : null,
+    politician.electoralDistrict ? `Wahlkreis: ${politician.electoralDistrict}` : null,
+    politician.electoralList ? `Landesliste: ${politician.electoralList}` : null,
+    politician.profession ? `Beruf: ${politician.profession}` : null,
+    politician.birthDate ? `Geburtsdatum: ${new Date(politician.birthDate).toISOString().split("T")[0]}` : null,
+    politician.birthPlace ? `Geburtsort: ${politician.birthPlace}` : null,
+  ].filter(Boolean);
+
+  if (meta.length) {
+    lines.push("## Profil");
+    lines.push("");
+    lines.push(...meta);
+    lines.push("");
+  }
+
+  const links = [
+    politician.profileUrl ? `Abgeordnetenwatch-Profil: ${politician.profileUrl}` : null,
+    politician.websiteUrl ? `Webseite: ${politician.websiteUrl}` : null,
+    politician.email ? `E-Mail: ${politician.email}` : null,
+  ].filter(Boolean);
+
+  if (links.length) {
+    lines.push("## Links");
+    lines.push("");
+    lines.push(...links);
+    lines.push("");
+  }
+
+  if (politician.bio) {
+    lines.push("## Biografie");
+    lines.push("");
+    lines.push(politician.bio);
+    lines.push("");
+  }
+
+  if (speeches.length) {
+    lines.push(`## Reden (${speeches.length})`);
+    lines.push("");
+    for (const speech of speeches) {
+      const date = speech.speechDate
+        ? new Date(speech.speechDate).toISOString().split("T")[0]
+        : "unbekannt";
+      lines.push(`### ${speech.speechTitle || "Rede"} (${date})`);
+      lines.push("");
+      lines.push(speech.speechText || "(Kein Text verfügbar)");
+      lines.push("");
+    }
+  }
+
+  return lines.join("\n");
 }
 
 module.exports = { apiPoliticianEndpoints };

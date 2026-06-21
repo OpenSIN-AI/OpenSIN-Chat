@@ -135,4 +135,50 @@
 
 ---
 
-*Generated: 2026-06-12 | Last update: 2026-06-17 | All priorities resolved (P1 cancelled, P2–P5 complete)*
+---
+
+## Priorität 6: Politiker-Datenbank Sidebar — Suche, Filter, Quellen (AKTIV)
+
+**Status:** In Arbeit — aus User-Anfrage zur "Abgeordnete"-Icon-Bar (rechtes Panel). Das Panel zeigt aktuell 8 statische AfD-Abgeordnete ohne Interaktion.
+
+**Warum:** Die Liste sieht wie eine Auswahl aus, ist aber statisch und nicht veränderbar. Für einen AfD-Politiker-Nutzer muss die Datenbank durchsuchbar, filterbar und als Quelle für den Chat nutzbar sein.
+
+### Ziele
+
+1. **Datenqualität korrigieren:**
+   - `state` (Bundesland) aus `rawData.electoral_data.electoral_list.label` extrahieren (z. B. "Landesliste Bayern" → "Bayern")
+   - `profileUrl` auf die menschenlesbare Abgeordnetenwatch-URL setzen (`politician.abgeordnetenwatch_url`), nicht die API-URL
+   - Backfill für alle 733 bestehenden Politiker-Records
+
+2. **Backend-API erweitern:**
+   - `POST /api/politician/:id/add-to-workspace` (oder `POST /workspace/:slug/politician/:id/embed`) implementieren
+   - Lädt Politiker-Profil + Reden, baut Text-Dokument, embedded über `CollectorApi.processRawText` + `Document.addDocuments`
+   - Nutzt bestehenden `/politician/search`, `/politician/parties`, `/politician/states` Endpoints für Suche/Filter
+
+3. **Frontend Sidebar (`DatabaseSidebar`) erweitern:**
+   - Suchfeld (Name)
+   - Partei-Filter (Dropdown/Pills, Default: "AfD")
+   - Bundesland-Filter (Dropdown, nach Backfill befüllt)
+   - Auswahl-Checkboxen pro Politiker + "Alle auswählen"
+   - Pro Politiker: externes Profil-Icon + "Zur Quelle hinzufügen"-Icon
+   - Bulk-Action: "Ausgewählte als Quelle hinzufügen"
+   - Workspace-Prop von `Sidebars.tsx` durchreichen
+
+4. **Verifikation:**
+   - `yarn build` durchlaufen
+   - Server-Tests: `yarn test:server`
+   - Frontend-Tests: `yarn test` (relevante Komponenten)
+   - Manuell: Sidebar öffnen, Filter testen, "Zur Quelle hinzufügen" klicken, Quellen-Panel prüfen
+
+### Akzeptanzkriterien
+
+- [ ] `GET /api/politician/search?q=Weidel&party=AfD` gibt Alice Weidel zurück
+- [ ] `GET /api/politician/states` enthält mindestens 5 Bundesländer nach Backfill
+- [ ] `POST /api/politician/:id/add-to-workspace` erzeugt ein Dokument im Workspace und startet Embedding
+- [ ] Frontend-Sidebar zeigt Suchfeld, Partei-Filter und Bundesland-Filter
+- [ ] Einzel- und Bulk-"Zur Quelle hinzufügen" funktioniert ohne Fehler
+- [ ] Keine neuen Tests failen
+
+---
+
+*Generated: 2026-06-12 | Last update: 2026-06-21 | P6 in progress*

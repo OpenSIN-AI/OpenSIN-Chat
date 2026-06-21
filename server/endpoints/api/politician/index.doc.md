@@ -20,6 +20,7 @@ All require `Authorization: Bearer <api-key>` header.
 - `GET /api/politician/:id/votes?limit=&offset=` — voting record
 - `GET /api/politician/:id/speeches?limit=&offset=&source=` — speeches
 - `GET /api/politician/:id/mandates` — mandate history
+- `POST /api/politician/:id/add-to-workspace` — embed politician profile + speeches as a document in the current workspace (body: `{ workspaceSlug }`)
 
 ## Config values & limits
 

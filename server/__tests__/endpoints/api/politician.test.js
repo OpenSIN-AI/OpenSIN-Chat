@@ -26,6 +26,32 @@ jest.mock("../../../utils/politician", () => ({
   PoliticianDB: jest.fn(() => mockDB),
 }));
 
+jest.mock("../../../utils/http", () => ({
+  reqBody: (req) => req.body || {},
+  userFromSession: jest.fn(() => ({ id: 1 })),
+  multiUserMode: jest.fn(() => false),
+}));
+
+const mockCollectorInstance = {
+  processRawText: jest.fn(),
+};
+jest.mock("../../../utils/collectorApi", () => ({
+  CollectorApi: jest.fn(() => mockCollectorInstance),
+}));
+
+jest.mock("../../../models/documents", () => ({
+  Document: {
+    addDocuments: jest.fn(),
+  },
+}));
+
+jest.mock("../../../models/workspace", () => ({
+  Workspace: {
+    get: jest.fn(),
+    getWithUser: jest.fn(),
+  },
+}));
+
 const { createMockApp } = require("../../helpers/mockExpressApp");
 const { apiPoliticianEndpoints } = require("../../../endpoints/api/politician");
 
@@ -176,6 +202,98 @@ describe("Politician REST endpoints", () => {
       const res = await call("get", "/politician/sources");
       expect(res.statusCode).toBe(200);
       expect(res.body.sources).toHaveLength(1);
+    });
+  });
+
+  describe("POST /politician/:id/add-to-workspace", () => {
+    const { Document } = require("../../../models/documents");
+    const { Workspace } = require("../../../models/workspace");
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      mockCollectorInstance.processRawText.mockReset();
+    });
+
+    it("returns 404 when the politician is unknown", async () => {
+      mockDB.getPolitician.mockResolvedValue(null);
+      const { call } = buildApp();
+      const res = await call("post", "/politician/x/add-to-workspace", {
+        body: { workspaceSlug: "test-ws" },
+      });
+      expect(res.statusCode).toBe(404);
+    });
+
+    it("returns 404 when the workspace is unknown", async () => {
+      mockDB.getPolitician.mockResolvedValue({ id: "1", fullName: "Max" });
+      Workspace.get.mockResolvedValue(null);
+      const { call } = buildApp();
+      const res = await call("post", "/politician/1/add-to-workspace", {
+        body: { workspaceSlug: "missing-ws" },
+      });
+      expect(res.statusCode).toBe(404);
+    });
+
+    it("processes and embeds the politician document", async () => {
+      mockDB.getPolitician.mockResolvedValue({
+        id: "1",
+        fullName: "Max Mustermann",
+        party: "AfD",
+        state: "Berlin",
+        profileUrl: "https://example.com/profile",
+        lastSyncedAt: new Date("2026-06-21"),
+      });
+      mockDB.getSpeeches.mockResolvedValue([]);
+      Workspace.get.mockResolvedValue({ id: 42, slug: "test-ws" });
+      mockCollectorInstance.processRawText.mockResolvedValue({
+        success: true,
+        documents: [{ location: "custom-documents/politician-1.json" }],
+      });
+      Document.addDocuments.mockResolvedValue({
+        failedToEmbed: [],
+        errors: [],
+      });
+
+      const { call } = buildApp();
+      const res = await call("post", "/politician/1/add-to-workspace", {
+        body: { workspaceSlug: "test-ws" },
+        locals: { user: { id: 1 } },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(mockCollectorInstance.processRawText).toHaveBeenCalledWith(
+        expect.stringContaining("Max Mustermann"),
+        expect.objectContaining({
+          title: "Politiker: Max Mustermann",
+          docSource: "Abgeordnetenwatch / Bundestag",
+        }),
+      );
+      expect(Document.addDocuments).toHaveBeenCalledWith(
+        { id: 42, slug: "test-ws" },
+        ["custom-documents/politician-1.json"],
+        1,
+      );
+    });
+
+    it("returns 500 when document processing fails", async () => {
+      mockDB.getPolitician.mockResolvedValue({
+        id: "1",
+        fullName: "Max Mustermann",
+      });
+      mockDB.getSpeeches.mockResolvedValue([]);
+      Workspace.get.mockResolvedValue({ id: 42, slug: "test-ws" });
+      mockCollectorInstance.processRawText.mockResolvedValue({
+        success: false,
+        reason: "Collector offline",
+      });
+
+      const { call } = buildApp();
+      const res = await call("post", "/politician/1/add-to-workspace", {
+        body: { workspaceSlug: "test-ws" },
+      });
+
+      expect(res.statusCode).toBe(500);
+      expect(res.body.success).toBe(false);
     });
   });
 });
