@@ -96,8 +96,33 @@ class GenericOpenAiLLM {
     return "streamGetChatCompletion" in this;
   }
 
+  // Per-model context window limits for Fireworks serverless models.
+  // Falls back to GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT env var, then 4096.
+  // This prevents sending overlong prompts to models with smaller context windows.
+  static #MODEL_CONTEXT_LIMITS = {
+    "accounts/fireworks/models/deepseek-v4-pro": 128000,
+    "accounts/fireworks/models/deepseek-v4-flash": 128000,
+    "accounts/fireworks/models/minimax-m2p5": 1000000,
+    "accounts/fireworks/models/minimax-m2p7": 1000000,
+    "accounts/fireworks/models/minimax-m3": 1000000,
+    "accounts/fireworks/models/glm-5p1": 128000,
+    "accounts/fireworks/models/glm-5p2": 128000,
+    "accounts/fireworks/models/kimi-k2p7-code": 128000,
+    "accounts/fireworks/routers/kimi-k2p7-code-fast": 128000,
+    "accounts/fireworks/models/gpt-oss-120b": 128000,
+    "accounts/fireworks/models/gpt-oss-20b": 128000,
+    "accounts/fireworks/models/qwen3p7-plus": 128000,
+  };
+
+  static #contextLimitFor(modelName) {
+    if (modelName && GenericOpenAiLLM.#MODEL_CONTEXT_LIMITS[modelName])
+      return GenericOpenAiLLM.#MODEL_CONTEXT_LIMITS[modelName];
+    const env = Number(process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT);
+    return env > 0 ? env : 4096;
+  }
+
   static promptWindowLimit(_modelName) {
-    const limit = process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT || 4096;
+    const limit = GenericOpenAiLLM.#contextLimitFor(_modelName);
     if (!limit || isNaN(Number(limit)))
       throw new Error("No token context limit was set.");
     return Number(limit);
@@ -106,7 +131,7 @@ class GenericOpenAiLLM {
   // Ensure the user set a value for the token limit
   // and if undefined - assume 4096 window.
   promptWindowLimit() {
-    const limit = process.env.GENERIC_OPEN_AI_MODEL_TOKEN_LIMIT || 4096;
+    const limit = GenericOpenAiLLM.#contextLimitFor(this.model);
     if (!limit || isNaN(Number(limit)))
       throw new Error("No token context limit was set.");
     return Number(limit);
