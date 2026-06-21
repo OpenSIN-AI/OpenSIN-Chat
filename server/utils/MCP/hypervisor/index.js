@@ -141,7 +141,13 @@ class MCPHypervisor {
           this.log(
             `Fixing permissions on ${this.mcpServerJSONPath} from ${(stat.mode & 0o777).toString(8)} to 0600`,
           );
-          fs.chmodSync(this.mcpServerJSONPath, 0o600);
+          try {
+            fs.chmodSync(this.mcpServerJSONPath, 0o600);
+          } catch (ce) {
+            this.log(
+              `Failed to chmod ${this.mcpServerJSONPath} to 0o600: ${ce.message}`,
+            );
+          }
         }
       } catch (e) {
         if (e.code !== "ENOENT") throw e;
