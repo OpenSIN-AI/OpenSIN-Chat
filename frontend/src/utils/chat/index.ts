@@ -142,9 +142,8 @@ export default function handleChat(
           // Update the preceding user prompt with the chatId.
           // Guard against chatIdx === 0 (no preceding message) to avoid
           // setting a property at index -1 on the array.
-          if (chatIdx > 0) {
-            prev[chatIdx - 1] = { ...prev[chatIdx - 1], chatId };
-          }
+          // NOTE: Do NOT mutate `prev` directly — React may reuse the array.
+          // The update is applied to `next` below instead.
 
           emitAssistantMessageCompleteEvent(chatId);
           setLoadingResponse(false);

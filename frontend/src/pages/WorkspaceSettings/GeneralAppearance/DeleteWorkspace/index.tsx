@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { mutate } from "swr";
 import Workspace from "@/models/workspace";
+import { WORKSPACES_KEY } from "@/hooks/useWorkspaces";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 import showToast from "@/utils/toast";
@@ -14,6 +16,7 @@ export default function DeleteWorkspace({
   visible?: boolean;
 }) {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [deleting, setDeleting] = useState(false);
   const { t } = useTranslation();
 
@@ -35,10 +38,11 @@ export default function DeleteWorkspace({
       return;
     }
 
+    mutate(WORKSPACES_KEY);
     if (workspace.slug === slug) {
-      window.location.href = paths.home();
+      navigate(paths.home(), { replace: true });
     } else {
-      window.location.reload();
+      navigate(paths.workspace.chat(slug || ""), { replace: true });
     }
   };
 

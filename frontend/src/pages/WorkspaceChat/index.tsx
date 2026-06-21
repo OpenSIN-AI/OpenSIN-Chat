@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 import React, { useEffect, useState } from "react";
 import { default as WorkspaceChatContainer } from "@/components/WorkspaceChat";
-import Sidebar from "@/components/Sidebar";
+import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import LeftSidebarIconBar from "@/components/WorkspaceChat/ChatContainer/LeftSidebarIconBar";
 import {
   SidebarToggleProvider,
@@ -37,7 +37,7 @@ function WorkspaceChatLayout() {
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
       {!isMobile && <LeftSidebarIconBar />}
-      {!isMobile && <Sidebar />}
+      {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
       <div
         className={`flex-1 min-w-0 transition-all duration-500 ${railVisible ? "md:ml-[52px]" : ""}`}
       >

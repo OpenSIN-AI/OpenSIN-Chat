@@ -12,6 +12,7 @@ import AgentSessionButton from "./AgentSessionButton";
 import ToolsButton from "./ToolsButton";
 import SendPromptButton from "./SendPromptButton";
 import EnhancePromptButton from "./EnhancePromptButton";
+import TextSizeButton from "./TextSizeMenu";
 
 export const PROMPT_INPUT_ID = "primary-prompt-input";
 import { PROMPT_INPUT_EVENT, MAX_EDIT_STACK_SIZE } from "./usePromptState";
@@ -133,6 +134,7 @@ export default function PromptInput({
                   />
                 </div>
                 <div className="flex gap-x-2 items-center">
+                  <TextSizeButton />
                   <SpeechToText sendCommand={sendCommand} />
                   <EnhancePromptButton
                     promptInput={promptInput}

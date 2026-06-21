@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 import React, { useRef, useState } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
+import { mutate } from "swr";
 import Workspace from "@/models/workspace";
+import { WORKSPACES_KEY } from "@/hooks/useWorkspaces";
 import paths from "@/utils/paths";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +27,8 @@ export default function NewWorkspaceModal({ hideModal = noop }: any) {
     try {
       const { workspace, message } = await Workspace.new(data);
       if (!!workspace) {
+        hideModal();
+        mutate(WORKSPACES_KEY);
         navigate(paths.workspace.chat(workspace.slug));
       }
       setError(message);

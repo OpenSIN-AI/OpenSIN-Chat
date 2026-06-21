@@ -141,7 +141,6 @@ export default function useWebSocket({
         // Any incoming message means the connection is alive.
         clearTimeout(heartbeatTimeout);
 
-        setLoadingResponse(true);
         try {
           handleSocketResponse(ws, event, setChatHistory);
         } catch {
@@ -150,8 +149,12 @@ export default function useWebSocket({
           setAgentSessionActive(false);
           window.dispatchEvent(new CustomEvent(AGENT_SESSION_END));
           ws.close();
+        } finally {
+          // Ensure loading is always reset, even if handleSocketResponse threw.
+          // Previously this was outside the try/catch, so a throw would leave
+          // loadingResponse stuck at true with a perpetual loading spinner.
+          setLoadingResponse(false);
         }
-        setLoadingResponse(false);
       });
 
       ws.addEventListener("close", (_event) => {

@@ -2,7 +2,7 @@
 // Docs: index.doc.md
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Sidebar from "@/components/Sidebar";
+import Sidebar, { SidebarMobileHeader } from "@/components/Sidebar";
 import PasswordModal, { usePasswordModal } from "@/components/Modals/Password";
 import { isMobile } from "react-device-detect";
 import { FullScreenLoader } from "@/components/Preloader";
@@ -102,7 +102,7 @@ function ShowWorkspaceChat(): JSX.Element | null {
   }
   return (
     <div className="w-screen h-screen overflow-hidden bg-zinc-950 light:bg-slate-50 flex">
-      {!isMobile && <Sidebar />}
+      {!isMobile ? <Sidebar /> : <SidebarMobileHeader />}
       <div
         style={{ "--content-height": isMobile ? "100%" : "calc(100% - 32px)" }}
         className="h-[var(--content-height)] transition-all duration-500 relative md:ml-[2px] md:mr-[16px] md:my-[16px] md:rounded-[16px] bg-theme-bg-secondary w-full overflow-y-scroll"

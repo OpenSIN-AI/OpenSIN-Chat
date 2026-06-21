@@ -16,11 +16,9 @@ export default function KeyboardShortcutsHelp() {
 
   useEffect(() => {
     const toggle = () => setIsOpen((prev) => !prev);
-    const close = () => setIsOpen(false);
     window.addEventListener(KEYBOARD_SHORTCUTS_HELP_EVENT, toggle);
     return () => {
       window.removeEventListener(KEYBOARD_SHORTCUTS_HELP_EVENT, toggle);
-      window.removeEventListener(KEYBOARD_SHORTCUTS_HELP_EVENT, close);
     };
   }, []);
 

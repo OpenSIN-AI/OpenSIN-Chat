@@ -13,6 +13,7 @@ import SetupProvider from "../PromptInput/LLMSelector/SetupProvider";
 import {
   SAVE_LLM_SELECTOR_EVENT,
   PROVIDER_SETUP_EVENT,
+  TOGGLE_LLM_SELECTOR_EVENT,
 } from "../PromptInput/LLMSelector/action";
 import { SIDEBAR_TOGGLE_EVENT } from "@/components/Sidebar/SidebarToggle";
 import { safeGetItem } from "@/utils/safeStorage";
@@ -69,6 +70,15 @@ export default function WorkspaceModelPicker({ workspaceSlug = null }) {
     return () =>
       window.removeEventListener(SAVE_LLM_SELECTOR_EVENT, handleSave);
   }, [slug, workspace, systemSettings]);
+
+  useEffect(() => {
+    function handleToggle() {
+      setShowSelector((prev) => !prev);
+    }
+    window.addEventListener(TOGGLE_LLM_SELECTOR_EVENT, handleToggle);
+    return () =>
+      window.removeEventListener(TOGGLE_LLM_SELECTOR_EVENT, handleToggle);
+  }, []);
 
   useEffect(() => {
     if (!showSelector) return;

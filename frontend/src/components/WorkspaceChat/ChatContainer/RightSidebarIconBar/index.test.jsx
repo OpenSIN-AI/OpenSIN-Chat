@@ -34,10 +34,10 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all icon buttons (6 panels + PDF-analysis nav)", () => {
+  it("renders all icon buttons (7 panels + PDF-analysis nav)", () => {
     const { container } = renderBar();
     const buttons = container.querySelectorAll("button");
-    expect(buttons.length).toBe(7);
+    expect(buttons.length).toBe(8);
   });
 
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {
@@ -56,6 +56,15 @@ describe("RightSidebarIconBar", () => {
     );
     fireEvent.click(dbButton);
     expect(mockToggleSidebar).toHaveBeenCalledWith("database");
+  });
+
+  it("calls toggleSidebar with 'console' when console icon clicked", () => {
+    const { container } = renderBar();
+    const consoleButton = container.querySelector(
+      'button[aria-label="Console & Terminal"]',
+    );
+    fireEvent.click(consoleButton);
+    expect(mockToggleSidebar).toHaveBeenCalledWith("console");
   });
 
   it("has an accessible label on every button (a11y)", () => {

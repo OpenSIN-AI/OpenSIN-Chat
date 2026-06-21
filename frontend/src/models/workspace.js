@@ -144,6 +144,33 @@ const Workspace = {
   streamChat: async function ({ slug }, message, handleChat, attachments = []) {
     const ctrl = new AbortController();
 
+    // Stall-detection: if no data is received for STALL_TIMEOUT_MS, abort
+    // the connection and show an error so the user is not stuck with a
+    // perpetual loading spinner. The server sends a heartbeat every 15s,
+    // so 45s gives ample buffer before declaring the connection stale.
+    const STALL_TIMEOUT_MS = 45_000;
+    let stallTimer = null;
+    let stallHandled = false;
+    function resetStallTimer() {
+      if (stallTimer) clearTimeout(stallTimer);
+      stallTimer = setTimeout(() => {
+        if (stallHandled) return;
+        stallHandled = true;
+        handleChat({
+          id: v4(),
+          type: "abort",
+          textResponse: null,
+          sources: [],
+          close: true,
+          error:
+            "Connection appears to be stale. Please try sending your message again.",
+        });
+        ctrl.abort();
+      }, STALL_TIMEOUT_MS);
+    }
+    // Start the timer when streaming begins.
+    resetStallTimer();
+
     // Listen for the ABORT_STREAM_EVENT key to be emitted by the client
     // to early abort the streaming response. On abort we send a special `stopGeneration`
     // event to be handled which resets the UI for us to be able to send another message.
@@ -153,6 +180,7 @@ const Workspace = {
       if (detail && detail.workspaceSlug && detail.workspaceSlug !== slug) {
         return;
       }
+      if (stallTimer) clearTimeout(stallTimer);
       ctrl.abort();
       handleChat({ id: v4(), type: "stopGeneration" });
     };
@@ -168,11 +196,23 @@ const Workspace = {
         async onopen(response) {
           if (response.ok) {
             return; // everything's good
-          } else if (
-            response.status >= 400 &&
-            response.status < 500 &&
-            response.status !== 429
-          ) {
+          } else if (response.status === 429) {
+            if (stallTimer) clearTimeout(stallTimer);
+            const retryAfter = response.headers.get("Retry-After");
+            handleChat({
+              id: v4(),
+              type: "abort",
+              textResponse: null,
+              sources: [],
+              close: true,
+              error: retryAfter
+                ? `You are sending messages too quickly. Please try again in ${retryAfter} seconds.`
+                : "You are sending messages too quickly. Please try again shortly.",
+            });
+            ctrl.abort();
+            throw new Error("Rate limited.");
+          } else if (response.status >= 400 && response.status < 500) {
+            if (stallTimer) clearTimeout(stallTimer);
             handleChat({
               id: v4(),
               type: "abort",
@@ -184,6 +224,7 @@ const Workspace = {
             ctrl.abort();
             throw new Error("Invalid Status code response.");
           } else {
+            if (stallTimer) clearTimeout(stallTimer);
             handleChat({
               id: v4(),
               type: "abort",
@@ -197,10 +238,13 @@ const Workspace = {
           }
         },
         async onmessage(msg) {
+          // Reset stall timer on each message (includes server heartbeat comments).
+          resetStallTimer();
           const chatResult = safeJsonParse(msg.data, null);
           if (chatResult) handleChat(chatResult);
         },
         onerror(err) {
+          if (stallTimer) clearTimeout(stallTimer);
           handleChat({
             id: v4(),
             type: "abort",
@@ -214,6 +258,7 @@ const Workspace = {
         },
       });
     } finally {
+      if (stallTimer) clearTimeout(stallTimer);
       window.removeEventListener(ABORT_STREAM_EVENT, handleAbort);
     }
   },

@@ -522,7 +522,7 @@ const System = {
     })
       .then((res) => {
         if (res.ok && res.status !== 204) return res.blob();
-        throw new Error("Failed to fetch pfp.");
+        return null;
       })
       .then((blob) => (blob ? URL.createObjectURL(blob) : null))
       .catch(() => {

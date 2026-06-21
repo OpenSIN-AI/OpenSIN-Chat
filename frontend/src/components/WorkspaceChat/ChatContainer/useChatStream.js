@@ -122,7 +122,7 @@ export default function useChatStream({
     event.preventDefault();
     const currentMessage =
       document.getElementById(PROMPT_INPUT_ID)?.value || "";
-    if (!currentMessage) return false;
+    if (!currentMessage || !currentMessage.trim()) return false;
 
     clearPromptInputDraft(activeThreadSlug ?? workspace.slug);
 
@@ -216,7 +216,7 @@ export default function useChatStream({
       text = currentText + text;
     }
 
-    if (!text || text === "") return false;
+    if (!text || text.trim() === "") return false;
 
     if (!activeThreadSlug && chatHistory.length === 0 && history.length === 0) {
       const { thread } = await Workspace.threads.new(workspace.slug);
