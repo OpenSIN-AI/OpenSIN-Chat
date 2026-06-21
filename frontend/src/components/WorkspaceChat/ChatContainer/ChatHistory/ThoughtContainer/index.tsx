@@ -125,7 +125,7 @@ export function ThoughtBrainButton({ messageId, content }: any) {
           ? t("thoughtContainer.hideThoughts")
           : t("thoughtContainer.showThoughts")
       }
-      className={`flex-shrink-0 mt-[3px] p-1 rounded-md border-none cursor-pointer transition-colors ${
+      className={`flex-shrink-0 mt-2 p-1 rounded-md border-none cursor-pointer transition-colors ${
         expanded
           ? "bg-zinc-700 light:bg-slate-200"
           : "bg-transparent hover:bg-zinc-800 light:hover:bg-slate-100"

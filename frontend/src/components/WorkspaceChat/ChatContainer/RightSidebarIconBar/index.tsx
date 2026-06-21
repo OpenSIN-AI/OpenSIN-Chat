@@ -11,10 +11,8 @@ import { Newspaper } from "@phosphor-icons/react/dist/csr/Newspaper";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { Brain } from "@phosphor-icons/react/dist/csr/Brain";
 import { FilePdf } from "@phosphor-icons/react/dist/csr/FilePdf";
-import { useNavigate } from "react-router-dom";
 import { useChatSidebar } from "../ChatSidebar";
 import { useTranslation } from "react-i18next";
-import paths from "@/utils/paths";
 
 /**
  * The v0-style icon bar displayed to the right of the main chat area.
@@ -24,7 +22,6 @@ import paths from "@/utils/paths";
 export default function RightSidebarIconBar() {
   const { t } = useTranslation();
   const { activeSidebar, toggleSidebar } = useChatSidebar();
-  const navigate = useNavigate();
 
   const icons = [
     {
@@ -63,6 +60,12 @@ export default function RightSidebarIconBar() {
       label: t("right_sidebar.icon_memories", "Memories"),
       action: () => toggleSidebar("memories"),
     },
+    {
+      id: "pdf-analysis",
+      icon: FilePdf,
+      label: t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
+      action: () => toggleSidebar("pdf-analysis"),
+    },
   ];
 
   return (
@@ -95,30 +98,6 @@ export default function RightSidebarIconBar() {
           </div>
         );
       })}
-
-      {/* Separator + navigation to the dedicated PDF analysis page */}
-      <div className="w-6 my-1 border-t border-zinc-700 light:border-slate-200" />
-      <div className="flex flex-col items-center">
-        <button
-          type="button"
-          onClick={() => navigate(paths.pdfAnalysis())}
-          data-tooltip-id="rsib-pdf-analysis"
-          data-tooltip-content={t(
-            "right_sidebar.icon_pdf_analysis",
-            "PDF-Analyse",
-          )}
-          aria-label={t("right_sidebar.icon_pdf_analysis", "PDF-Analyse")}
-          className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all text-zinc-400 light:text-slate-500 hover:bg-zinc-800 light:hover:bg-slate-100 hover:text-white light:hover:text-slate-900"
-        >
-          <FilePdf size={18} weight="regular" />
-        </button>
-        <Tooltip
-          id="rsib-pdf-analysis"
-          place="left"
-          delayShow={300}
-          className="tooltip !text-xs z-99"
-        />
-      </div>
     </div>
   );
 }

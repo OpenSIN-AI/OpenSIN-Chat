@@ -6,18 +6,19 @@
 
 ## What this file does
 
-Renders the 44px-wide vertical icon rail on the right edge of the chat workspace. It contains the seven panel icons (preview, filesystem, database, political, sources, memories, console). Clicking an icon toggles the corresponding panel via `toggleSidebar` from the `ChatSidebar` context.
+Renders the 44px-wide vertical icon rail on the right edge of the chat workspace. It contains the panel icons (preview, filesystem, database, political, sources, memories, pdf-analysis). Clicking an icon toggles the corresponding panel via `toggleSidebar` from the `ChatSidebar` context.
 
 ## Files that touch it
 
-- [`Sidebars.jsx`](../Sidebars.jsx): imports and renders the icon rail next to the active panel.
+- [`Sidebars.tsx`](../Sidebars.tsx): imports and renders the icon rail next to the active panel.
 - [`ChatSidebar/index.tsx`](../ChatSidebar/index.tsx): provides `activeSidebar` and `toggleSidebar` via React context.
 - [`RightSidebarIconBar/index.test.jsx`](index.test.jsx): unit tests for the icon rail.
+- [`PdfAnalysisSidebar/index.tsx`](../PdfAnalysisSidebar/index.tsx): panel rendered by the pdf-analysis icon toggle.
 
 ## Important config values
 
 - Rail width: `w-[44px]` (Tailwind).
-- Icon count: 7 (matches the panel types in `Sidebars.jsx`).
+- Icon count: 6 (matches the panel types in `Sidebars.tsx`).
 - Tooltips: `react-tooltip` with 300ms delay, placed left.
 
 ## Why certain decisions were made

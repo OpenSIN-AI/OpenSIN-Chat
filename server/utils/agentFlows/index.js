@@ -115,7 +115,8 @@ class AgentFlows {
       const supportedFlowTypes = Object.values(FLOW_TYPES).map(
         (definition) => definition.type,
       );
-      const supportsAllBlocks = config.steps.every((step) =>
+      const steps = config.steps || [];
+      const supportsAllBlocks = steps.every((step) =>
         supportedFlowTypes.includes(step.type),
       );
       if (!supportsAllBlocks)

@@ -81,6 +81,36 @@ const FLOW_TYPES = {
       },
     },
   },
+  WEBSITE: {
+    type: "website",
+    description: "Navigate to a URL and interact with the page",
+    parameters: {
+      url: { type: "string", description: "The URL to navigate to" },
+      selector: { type: "string", description: "CSS selector for the element" },
+      action: { type: "string", description: "Action to perform (read, click, type)" },
+      value: { type: "string", description: "Value for type action" },
+      resultVariable: { type: "string", description: "Variable to store the result" },
+    },
+  },
+  FILE: {
+    type: "file",
+    description: "Read or write to a file",
+    parameters: {
+      path: { type: "string", description: "The file path" },
+      operation: { type: "string", description: "Operation to perform (read, write)" },
+      content: { type: "string", description: "Content to write" },
+      resultVariable: { type: "string", description: "Variable to store the result" },
+    },
+  },
+  CODE: {
+    type: "code",
+    description: "Execute code snippets",
+    parameters: {
+      language: { type: "string", description: "Programming language" },
+      code: { type: "string", description: "Code to execute" },
+      resultVariable: { type: "string", description: "Variable to store the result" },
+    },
+  },
 };
 
 module.exports.FLOW_TYPES = FLOW_TYPES;

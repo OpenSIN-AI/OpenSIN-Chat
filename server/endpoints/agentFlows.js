@@ -34,11 +34,18 @@ function agentFlowEndpoints(app) {
           });
         }
 
+        if (!Array.isArray(config.steps)) {
+          return response.status(400).json({
+            success: false,
+            error: "Config must include a steps array",
+          });
+        }
+
         const flow = AgentFlows.saveFlow(name, config, uuid);
         if (!flow || !flow.success)
           return response
             .status(200)
-            .json({ flow: null, error: flow.error || "Failed to save flow" });
+            .json({ success: false, flow: null, error: flow.error || "Failed to save flow" });
 
         if (!uuid) {
           await Telemetry.sendTelemetry("agent_flow_created", {

@@ -40,6 +40,7 @@ function FileUploadProgressComponent({
   };
 
   const mountedRef = useRef(true);
+  const uploadTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   useEffect(() => {
     mountedRef.current = true;
     let fadeTimeoutId: ReturnType<typeof setTimeout>;
@@ -56,6 +57,7 @@ function FileUploadProgressComponent({
         }
         setTimerMs(Number(new Date()) - start);
       }, 100);
+      uploadTimerRef.current = timer;
 
       // Chunk streaming not working in production so we just sit and wait
       try {
@@ -96,6 +98,7 @@ function FileUploadProgressComponent({
     return () => {
       mountedRef.current = false;
       clearTimeout(fadeTimeoutId);
+      if (uploadTimerRef.current) clearInterval(uploadTimerRef.current);
     };
   }, []);
 

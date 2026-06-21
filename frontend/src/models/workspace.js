@@ -245,16 +245,23 @@ const Workspace = {
         },
         onerror(err) {
           if (stallTimer) clearTimeout(stallTimer);
+          const isNetworkError =
+            err?.message?.includes("Failed to fetch") ||
+            err?.message?.includes("NetworkError") ||
+            err?.message?.includes("network") ||
+            !navigator.onLine;
           handleChat({
             id: v4(),
             type: "abort",
             textResponse: null,
             sources: [],
             close: true,
-            error: `An error occurred while streaming response. ${err.message}`,
+            error: isNetworkError
+              ? "Connection lost. You appear to be offline. Please check your network and try again."
+              : `An error occurred while streaming response. ${err?.message || "Unknown error"}`,
           });
           ctrl.abort();
-          throw new Error();
+          throw new Error(isNetworkError ? "Network error" : "Stream error");
         },
       });
     } finally {

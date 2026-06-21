@@ -34,10 +34,19 @@ describe("RightSidebarIconBar", () => {
     vi.clearAllMocks();
   });
 
-  it("renders all icon buttons (6 panels + PDF-analysis nav)", () => {
+  it("renders all icon buttons (6 panels + PDF-analysis panel)", () => {
     const { container } = renderBar();
     const buttons = container.querySelectorAll("button");
     expect(buttons.length).toBe(7);
+  });
+
+  it("calls toggleSidebar with 'pdf-analysis' when PDF-analysis icon clicked", () => {
+    const { container } = renderBar();
+    const pdfButton = container.querySelector(
+      'button[aria-label="PDF Analysis"]',
+    );
+    fireEvent.click(pdfButton);
+    expect(mockToggleSidebar).toHaveBeenCalledWith("pdf-analysis");
   });
 
   it("calls toggleSidebar with 'preview' when preview icon clicked", () => {

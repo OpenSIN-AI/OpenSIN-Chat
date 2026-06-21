@@ -157,16 +157,17 @@ export default function AgentBuilder(): JSX.Element {
       config: { ...BLOCK_INFO[type as keyof typeof BLOCK_INFO]?.defaultConfig },
       isExpanded: true,
     };
-    // Insert the new block before the finish block
-    const newBlocks = [...blocks];
-    newBlocks.splice(newBlocks.length - 1, 0, newBlock);
-    setBlocks(newBlocks);
+    setBlocks((prev) => {
+      const newBlocks = [...prev];
+      newBlocks.splice(newBlocks.length - 1, 0, newBlock);
+      return newBlocks;
+    });
     setShowBlockMenu(false);
   };
 
   const updateBlockConfig = (blockId: string, config: Partial<BlockConfig>) => {
-    setBlocks(
-      blocks.map((block) =>
+    setBlocks((prev) =>
+      prev.map((block) =>
         block.id === blockId
           ? { ...block, config: { ...block.config, ...config } }
           : block,
@@ -176,7 +177,7 @@ export default function AgentBuilder(): JSX.Element {
 
   const removeBlock = (blockId: string) => {
     if (blockId === "start") return;
-    setBlocks(blocks.filter((block) => block.id !== blockId));
+    setBlocks((prev) => prev.filter((block) => block.id !== blockId));
     if (selectedBlock === blockId) {
       setSelectedBlock("start");
     }
@@ -254,8 +255,8 @@ export default function AgentBuilder(): JSX.Element {
   };
 
   const toggleBlockExpansion = (blockId: string) => {
-    setBlocks(
-      blocks.map((block) =>
+    setBlocks((prev) =>
+      prev.map((block) =>
         block.id === blockId
           ? { ...block, isExpanded: !block.isExpanded }
           : block,
@@ -324,10 +325,12 @@ export default function AgentBuilder(): JSX.Element {
   };
 
   const moveBlock = (fromIndex: number, toIndex: number) => {
-    const newBlocks = [...blocks];
-    const [movedBlock] = newBlocks.splice(fromIndex, 1);
-    newBlocks.splice(toIndex, 0, movedBlock);
-    setBlocks(newBlocks);
+    setBlocks((prev) => {
+      const newBlocks = [...prev];
+      const [movedBlock] = newBlocks.splice(fromIndex, 1);
+      newBlocks.splice(toIndex, 0, movedBlock);
+      return newBlocks;
+    });
   };
 
   const handlePublishFlow = () => {

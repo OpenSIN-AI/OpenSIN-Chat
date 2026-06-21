@@ -60,7 +60,7 @@ interface PdfFileInputProps {
  * text with a fully localised DE button + filename display.
  * The hidden native input still receives the file so form submission works normally.
  */
-function PdfFileInput({
+export function PdfFileInput({
   inputRef,
   multiple = false,
   label,
@@ -101,73 +101,70 @@ function PdfFileInput({
   );
 }
 
-export default function PdfAnalysisPage() {
+export function PdfAnalysisPanel() {
   const { t } = useTranslation();
   const [tab, setTab] = useState("jobs");
   const [crossCheckFactIds, setCrossCheckFactIds] = useState<string[]>([]);
 
+  return (
+    <section
+      className="flex-1 overflow-y-auto p-6"
+      aria-label={t("pdfAnalysis.panel.title")}
+    >
+      <header className="flex flex-col gap-2 mb-6">
+        <h1 className="text-xl font-semibold text-theme-text-primary text-balance">
+          {t("pdfAnalysis.panel.title")}
+        </h1>
+        <p className="text-sm text-theme-text-secondary leading-relaxed">
+          {t("pdfAnalysis.panel.description")}
+        </p>
+        <nav
+          className="flex gap-2 mt-2"
+          aria-label={t("pdfAnalysis.panel.tabJobs")}
+        >
+          <TabButton active={tab === "jobs"} onClick={() => setTab("jobs")}>
+            {t("pdfAnalysis.panel.tabJobs")}
+          </TabButton>
+          <TabButton active={tab === "facts"} onClick={() => setTab("facts")}>
+            {t("pdfAnalysis.panel.tabFacts")}
+          </TabButton>
+          <TabButton
+            active={tab === "crosscheck"}
+            onClick={() => setTab("crosscheck")}
+          >
+            {t("pdfAnalysis.panel.tabCrossCheck")}
+          </TabButton>
+          <TabButton active={tab === "corpus"} onClick={() => setTab("corpus")}>
+            {t("pdfAnalysis.panel.tabCorpus")}
+          </TabButton>
+        </nav>
+      </header>
+      {tab === "jobs" ? (
+        <JobsPanel />
+      ) : tab === "facts" ? (
+        <FactsPanel
+          onCrossCheck={(factId) => {
+            setCrossCheckFactIds([factId]);
+            setTab("crosscheck");
+          }}
+        />
+      ) : tab === "crosscheck" ? (
+        <CrossCheckPanel prefillFactIds={crossCheckFactIds} />
+      ) : (
+        <CorpusPanel />
+      )}
+    </section>
+  );
+}
+
+export default function PdfAnalysisPage() {
   return (
     <SidebarToggleProvider>
       <ChatSidebarProvider>
         <div className="w-screen h-screen overflow-hidden bg-theme-bg-container flex">
           <LeftSidebarIconBar />
           <Sidebar />
-          <section
-            className="flex-1 overflow-y-auto p-6"
-            aria-label={t("pdfAnalysis.panel.title")}
-          >
-            <header className="flex flex-col gap-2 mb-6">
-              <h1 className="text-xl font-semibold text-theme-text-primary text-balance">
-                {t("pdfAnalysis.panel.title")}
-              </h1>
-              <p className="text-sm text-theme-text-secondary leading-relaxed">
-                {t("pdfAnalysis.panel.description")}
-              </p>
-              <nav
-                className="flex gap-2 mt-2"
-                aria-label={t("pdfAnalysis.panel.tabJobs")}
-              >
-                <TabButton
-                  active={tab === "jobs"}
-                  onClick={() => setTab("jobs")}
-                >
-                  {t("pdfAnalysis.panel.tabJobs")}
-                </TabButton>
-                <TabButton
-                  active={tab === "facts"}
-                  onClick={() => setTab("facts")}
-                >
-                  {t("pdfAnalysis.panel.tabFacts")}
-                </TabButton>
-                <TabButton
-                  active={tab === "crosscheck"}
-                  onClick={() => setTab("crosscheck")}
-                >
-                  {t("pdfAnalysis.panel.tabCrossCheck")}
-                </TabButton>
-                <TabButton
-                  active={tab === "corpus"}
-                  onClick={() => setTab("corpus")}
-                >
-                  {t("pdfAnalysis.panel.tabCorpus")}
-                </TabButton>
-              </nav>
-            </header>
-            {tab === "jobs" ? (
-              <JobsPanel />
-            ) : tab === "facts" ? (
-              <FactsPanel
-                onCrossCheck={(factId) => {
-                  setCrossCheckFactIds([factId]);
-                  setTab("crosscheck");
-                }}
-              />
-            ) : tab === "crosscheck" ? (
-              <CrossCheckPanel prefillFactIds={crossCheckFactIds} />
-            ) : (
-              <CorpusPanel />
-            )}
-          </section>
+          <PdfAnalysisPanel />
           <Sidebars workspace={null} />
         </div>
       </ChatSidebarProvider>
@@ -181,7 +178,7 @@ interface TabButtonProps {
   children: React.ReactNode;
 }
 
-function TabButton({ active, onClick, children }: TabButtonProps) {
+export function TabButton({ active, onClick, children }: TabButtonProps) {
   return (
     <button
       type="button"
@@ -216,7 +213,7 @@ interface PdfJob {
   [key: string]: any;
 }
 
-function JobsPanel() {
+export function JobsPanel() {
   const { t } = useTranslation();
   const [jobs, setJobs] = useState<PdfJob[]>([]);
   const [selectedJob, setSelectedJob] = useState<PdfJob | null>(null);
@@ -1056,7 +1053,7 @@ interface FactsPanelProps {
   onCrossCheck?: (factId: string) => void;
 }
 
-function FactsPanel({ onCrossCheck }: FactsPanelProps) {
+export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
   const { t } = useTranslation();
   const [q, setQ] = useState("");
   const [documentFilter, setDocumentFilter] = useState("");

@@ -219,6 +219,8 @@ export default function useChatStream({
 
     if (!text || text.trim() === "") return false;
 
+    if (loadingResponse) return false;
+
     if (!activeThreadSlug && chatHistory.length === 0 && history.length === 0) {
       const { thread } = await Workspace.threads.new(workspace.slug);
       if (thread) {
