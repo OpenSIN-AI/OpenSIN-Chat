@@ -351,6 +351,26 @@ function buildApp() {
         });
       }
 
+      // Multer errors: file type rejected, file too large, etc.
+      if (err.code === "LIMIT_FILE_SIZE") {
+        console.warn(
+          `[errorHandler] id=${id} file-too-large: ${err.message}`,
+        );
+        return response.status(413).json({
+          error: "File exceeds the permitted size limit.",
+          id,
+        });
+      }
+      if (err.message === "File type not allowed") {
+        console.warn(
+          `[errorHandler] id=${id} file-type-rejected: ${err.message}`,
+        );
+        return response.status(415).json({
+          error: "File type not allowed.",
+          id,
+        });
+      }
+
       console.error(`[errorHandler] id=${id}`, err);
       return response.status(500).json({ error: "Internal server error", id });
     }

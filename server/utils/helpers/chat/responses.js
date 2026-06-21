@@ -308,7 +308,14 @@ function convertToPromptHistory(history = []) {
     // If the agent saved one or more clarifying-question surveys on this
     // record, append them to the assistant content so future LLM turns
     // (agent or normal chat) can recall what the user answered.
-    let assistantContent = data.text;
+    // Strip imd...thinking tags from the assistant content sent to the LLM
+    // as chat history. Reasoning tokens are for the user's benefit (brain icon)
+    // and should never be fed back to the model — they waste context and can
+    // confuse the conversation.
+    let assistantContent = data.text?.replace(
+      /<think\s*(?:[^>]*?)?>[\s\S]*?<\/think\s*(?:[^>]*?)?>/gi,
+      "",
+    ) ?? data.text;
     if (data?.clarifyingQuestions?.length > 0) {
       const surveyBlocks = data.clarifyingQuestions
         .map(formatClarifyingSurveyForPrompt)
