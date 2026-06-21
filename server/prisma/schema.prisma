@@ -246,6 +246,7 @@ model workspace_chats {
   @@index([user_id])
   @@index([thread_id])
   @@index([workspaceId, thread_id])
+  @@index([memoryProcessed])
 }
 
 model workspace_agent_invocations {
