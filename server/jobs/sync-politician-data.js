@@ -15,6 +15,9 @@
  *   1. Bundestag members (fetchAllMembers → upsert)
  *   2. Abgeordnetenwatch politicians (fetchAllPoliticians → create-if-missing)
  *   3. Plenarprotokolle speeches for current + previous electoral term
+ *   4. Abgeordnetenwatch mandates (fetchAllMandates → upsert, Issue #255)
+ *   5. Abgeordnetenwatch votes (per-mandate → upsert, Issue #255)
+ *   6. Abgeordnetenwatch committees + memberships (per-committee → upsert, Issue #255)
  */
 
 const { PrismaClient } = require("@prisma/client");
@@ -23,9 +26,7 @@ const {
   AbgeordnetenwatchApi,
 } = require("../utils/politician/abgeordnetenwatchApi");
 const { PlenarScraper } = require("../utils/politician/plenarScraper");
-const {
-  PoliticianVectorStore,
-} = require("../utils/politician/vectorStore");
+const { PoliticianVectorStore } = require("../utils/politician/vectorStore");
 const {
   SYNC_PHASES,
   MAX_RETRIES,
@@ -39,6 +40,12 @@ const {
   extractStateFromBundestagRawData,
   extractPartyFromBundestagRawData,
 } = require("../utils/politician/extractors");
+const {
+  PoliticianMandate,
+  PoliticianVote,
+  PoliticianCommittee,
+  PoliticianCommitteeMembership,
+} = require("../models/politician");
 
 const prisma = new PrismaClient();
 const bundestag = new BundestagApi();
@@ -661,6 +668,215 @@ async function syncBundestagSpeeches() {
   });
 }
 
+// ── Abgeordnetenwatch detail phases (Issue #255) ───────────────────────────────
+
+/**
+ * Strip the parenthetical legislature from a fraction label.
+ * "CDU/CSU (Bundestag 2021 - 2025)" -> "CDU/CSU".
+ * @param {string|null} label
+ * @returns {string|null}
+ */
+function cleanFractionLabel(label) {
+  if (!label) return null;
+  return label.replace(/\s*\(.*?\)\s*$/, "").trim() || null;
+}
+
+/**
+ * Resolve a local politician id from an Abgeordnetenwatch politician id.
+ * AW records are stored with `externalId = aw-<id>`.
+ * @param {number} awPoliticianId
+ * @returns {Promise<string|null>}
+ */
+async function resolvePoliticianIdByAwId(awPoliticianId) {
+  const politician = await prisma.politicians.findUnique({
+    where: { externalId: `aw-${awPoliticianId}` },
+    select: { id: true },
+  });
+  return politician?.id || null;
+}
+
+/**
+ * Resolve a local politician id from an Abgeordnetenwatch mandate id.
+ * The mandates phase creates rows with `id = aw-mandate-<id>`.
+ * @param {number} awMandateId
+ * @returns {Promise<string|null>}
+ */
+async function resolvePoliticianIdByAwMandateId(awMandateId) {
+  const mandate = await prisma.politician_mandates.findUnique({
+    where: { id: `aw-mandate-${awMandateId}` },
+    select: { politicianId: true },
+  });
+  return mandate?.politicianId || null;
+}
+
+// ── Phase 4: Abgeordnetenwatch mandates ─────────────────────────────────────────
+
+async function syncMandates() {
+  return withSyncLog("mandates", async () => {
+    const rawMandates = await abgeordnetenwatch.fetchAllMandates();
+    const mandates = [];
+    let skipped = 0;
+
+    for (const m of rawMandates) {
+      const awPolId = m.politician?.id;
+      if (!awPolId) {
+        skipped++;
+        continue;
+      }
+
+      const politicianId = await resolvePoliticianIdByAwId(awPolId);
+      if (!politicianId) {
+        skipped++;
+        continue;
+      }
+
+      const fractionLabel = m.fraction_membership?.[0]?.fraction?.label || null;
+      const party = cleanFractionLabel(fractionLabel);
+
+      mandates.push({
+        id: `aw-mandate-${m.id}`,
+        politicianId,
+        type: m.type === "candidacy" ? "candidacy" : "bundestag",
+        position: fractionLabel,
+        party,
+        faction: party,
+        electoralDistrict: m.electoral_data?.constituency?.label || null,
+        state: extractStateFromAwRawData(m),
+        startDate: m.start_date || null,
+        endDate: m.end_date || null,
+        info: m.info || null,
+        rawData: JSON.stringify(m),
+      });
+    }
+
+    const result = await PoliticianMandate.bulkUpsert(mandates);
+    return {
+      total: rawMandates.length,
+      processed: result.inserted + result.updated,
+      failed: result.errors + skipped,
+    };
+  });
+}
+
+// ── Phase 5: Abgeordnetenwatch votes ────────────────────────────────────────────
+
+async function syncVotes() {
+  return withSyncLog("votes", async () => {
+    const mandates = await abgeordnetenwatch.fetchAllMandates();
+    const votes = [];
+    let failedMandates = 0;
+    let skippedMandates = 0;
+
+    for (const m of mandates) {
+      const politicianId = await resolvePoliticianIdByAwMandateId(m.id);
+      if (!politicianId) {
+        skippedMandates++;
+        continue;
+      }
+
+      try {
+        const rawVotes = await abgeordnetenwatch.getVotesByMandate(m.id);
+        for (const v of rawVotes) {
+          votes.push({
+            id: `aw-vote-${v.id}`,
+            politicianId,
+            session: CURRENT_WAHLPERIODE,
+            voteId: String(v.id),
+            voteTitle: v.poll?.label || null,
+            voteDescription: v.label || null,
+            voteResult: v.vote || null,
+            voteDate: null,
+            documentUrl: v.poll?.abgeordnetenwatch_url || null,
+            plenaryProtocolUrl: null,
+            rawData: JSON.stringify(v),
+          });
+        }
+      } catch (err) {
+        failedMandates++;
+        console.error(
+          `[sync-politician-data] votes for mandate ${m.id} failed: ${err.message}`,
+        );
+      }
+    }
+
+    const result = await PoliticianVote.bulkUpsert(votes);
+    return {
+      total: mandates.length,
+      processed: result.inserted + result.updated,
+      failed: result.errors + failedMandates + skippedMandates,
+    };
+  });
+}
+
+// ── Phase 6: Abgeordnetenwatch committees ─────────────────────────────────────
+
+async function syncCommittees() {
+  return withSyncLog("committees", async () => {
+    const rawCommittees = await abgeordnetenwatch.fetchAllCommittees();
+    const committees = rawCommittees.map((c) => ({
+      id: `aw-committee-${c.id}`,
+      name: c.label || `Committee ${c.id}`,
+      fullName: c.label || null,
+      type: c.field_committee_type?.label || null,
+      description: null,
+    }));
+
+    const committeeResult = await PoliticianCommittee.bulkUpsert(committees);
+
+    let failedCommittees = 0;
+    let skippedMemberships = 0;
+    const memberships = [];
+
+    for (const c of rawCommittees) {
+      try {
+        const rawMemberships =
+          await abgeordnetenwatch.getCommitteeMembershipsByCommittee(c.id);
+        for (const m of rawMemberships) {
+          const awMandateId = m.candidacy_mandate?.id;
+          const politicianId = awMandateId
+            ? await resolvePoliticianIdByAwMandateId(awMandateId)
+            : null;
+          if (!politicianId) {
+            skippedMemberships++;
+            continue;
+          }
+
+          memberships.push({
+            id: `aw-cm-${m.id}`,
+            politicianId,
+            committeeId: `aw-committee-${c.id}`,
+            role: m.committee_role || null,
+            startDate: null,
+            endDate: null,
+          });
+        }
+      } catch (err) {
+        failedCommittees++;
+        console.error(
+          `[sync-politician-data] committee ${c.id} memberships failed: ${err.message}`,
+        );
+      }
+    }
+
+    const membershipResult =
+      await PoliticianCommitteeMembership.bulkUpsert(memberships);
+
+    return {
+      total: rawCommittees.length,
+      processed:
+        committeeResult.inserted +
+        committeeResult.updated +
+        membershipResult.inserted +
+        membershipResult.updated,
+      failed:
+        committeeResult.errors +
+        membershipResult.errors +
+        failedCommittees +
+        skippedMemberships,
+    };
+  });
+}
+
 // ── Entrypoint ────────────────────────────────────────────────────────────────
 
 /**
@@ -694,7 +910,7 @@ async function main() {
       `[sync-politician-data] retrying due phases: ${[...duePhases].join(", ")}`,
     );
 
-  // Run all three phases independently — a failure in one does not block others
+  // Run all six phases independently — a failure in one does not block others
   // and each updates the retry queue via runPhase.
   results.members = await runPhase(SYNC_PHASES.members, syncBundestagMembers);
   results.abgeordnetenwatch = await runPhase(
@@ -705,6 +921,9 @@ async function main() {
     SYNC_PHASES.speeches,
     syncBundestagSpeeches,
   );
+  results.mandates = await runPhase(SYNC_PHASES.mandates, syncMandates);
+  results.votes = await runPhase(SYNC_PHASES.votes, syncVotes);
+  results.committees = await runPhase(SYNC_PHASES.committees, syncCommittees);
 
   const overallStatus = Object.values(results).some(
     (r) => r.status === "failed",

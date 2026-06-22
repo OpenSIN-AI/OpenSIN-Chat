@@ -330,6 +330,7 @@ function agentWebsocket(app, routePrefix = "") {
         // logged server-side with the id above.
         const content =
           e?.message?.includes("No valid provider") ||
+          e?.message?.includes("No LLM provider") ||
           e?.message?.includes("API key") ||
           e?.message?.includes("base path")
             ? "Agent setup failed: please check the workspace provider and API key configuration."

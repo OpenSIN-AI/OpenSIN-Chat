@@ -323,7 +323,7 @@ function TruncatableContent({ children }: any) {
       <div className="relative">
         <div
           ref={contentRef}
-          className={showTruncation ? "max-h-[250px] overflow-hidden" : ""}
+          className={`text-white light:text-slate-900 ${showTruncation ? "max-h-[250px] overflow-hidden" : ""}`}
         >
           {children}
         </div>

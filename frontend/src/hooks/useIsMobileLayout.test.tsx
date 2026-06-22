@@ -114,4 +114,14 @@ describe("useIsMobileLayout", () => {
     const { result } = renderHook(() => useIsMobileLayout());
     expect(result.current).toBe(true);
   });
+
+  it("returns true on a narrow desktop-emulator viewport (issue #259 regression)", () => {
+    Object.defineProperty(window, "innerWidth", {
+      writable: true,
+      configurable: true,
+      value: 390,
+    });
+    const { result } = renderHook(() => useIsMobileLayout());
+    expect(result.current).toBe(true);
+  });
 });

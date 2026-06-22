@@ -96,6 +96,15 @@ export const DOC_ENTRIES: DocEntry[] = [
     source: "docs/adr/ADR-001-persistent-job-queue.md",
   },
   {
+    slug: "pdf-analysis",
+    title: "PDF-Analyse-Pipeline",
+    description:
+      "70+ Schritt KI-Pipeline für PDF-Analyse: OCR, Vision, Fact-Verifikation, Cross-Check, Corpus-Vergleich.",
+    category: "architecture",
+    file: "pdf-analysis.md",
+    source: "docs/PDF-ANALYSIS.md",
+  },
+  {
     slug: "data-sources",
     title: "Datenquellen & Politiker-Sync",
     description:
@@ -202,6 +211,7 @@ const FILE_TO_SLUG: Record<string, string> = {
   "ssh-remote-tunnel.md": "ssh-remote-tunnel",
   "supabase-self-hosted.md": "supabase-self-hosted",
   "ADR-001-persistent-job-queue.md": "adr-001-persistent-job-queue",
+  "PDF-ANALYSIS.md": "pdf-analysis",
 };
 
 /**

@@ -8,8 +8,8 @@
 
 Exports two components:
 
-- `PdfAnalysisPage` — standalone full-page view rendered at `/pdf-analysis`.
-- `PdfAnalysisPanel` — the same UI packaged as a panel that can be embedded in the right sidebar (`PdfAnalysisSidebar`).
+- `PdfAnalysisPage` — standalone full-page view rendered at `/pdf-analysis`. Kept for deep linking and direct access.
+- `PdfAnalysisPanel` — the same UI packaged as a panel that can be embedded in the right sidebar (`PdfAnalysisSidebar`). This is the default chat/workspace entry point (issue #257).
 
 Manages four tabs:
 

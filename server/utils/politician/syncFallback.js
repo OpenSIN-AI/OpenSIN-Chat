@@ -32,12 +32,15 @@ const MAX_RETRIES = RETRY_SCHEDULE_MS.length;
 /**
  * The sync phases the job runs, in execution order. Used as stable keys for
  * the retry queue and the status dashboard.
- * @type {{members: string, abgeordnetenwatch: string, speeches: string}}
+ * @type {{members: string, abgeordnetenwatch: string, speeches: string, mandates: string, votes: string, committees: string}}
  */
 const SYNC_PHASES = {
   members: "members",
   abgeordnetenwatch: "abgeordnetenwatch",
   speeches: "speeches",
+  mandates: "mandates",
+  votes: "votes",
+  committees: "committees",
 };
 
 /**

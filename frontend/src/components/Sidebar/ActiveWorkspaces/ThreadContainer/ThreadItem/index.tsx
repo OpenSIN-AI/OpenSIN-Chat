@@ -1,3 +1,5 @@
+// Purpose: Renders a single thread row in the left sidebar with a distinguishable display name.
+// Docs: ThreadItem.doc.md
 // SPDX-License-Identifier: MIT
 import useScrollActiveItemIntoView from "@/hooks/useScrollActiveItemIntoView";
 import Workspace from "@/models/workspace";
@@ -21,7 +23,8 @@ import { copyText } from "@/utils/clipboard";
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
 const DEFAULT_THREAD_NAMES = ["Thread", "New Thread"];
 
-function threadDisplayName(thread: any): string {
+export function threadDisplayName(thread: any): string {
+  if (!thread?.name) return "";
   if (!DEFAULT_THREAD_NAMES.includes(thread.name)) return thread.name;
   const dateRaw = thread.lastUpdatedAt || thread.createdAt;
   if (!dateRaw) return thread.name;

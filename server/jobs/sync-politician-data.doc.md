@@ -13,6 +13,9 @@ Politician data changes over time (new members, party switches, committee assign
 1. **Phase 1 — Bundestag members**: fetches via `BundestagApi.fetchAllMembers()` and upserts into `politicians`. Falls back to Abgeordnetenwatch base data normalized to the Bundestag shape.
 2. **Phase 2 — Abgeordnetenwatch**: fetches via `AbgeordnetenwatchApi.fetchAllPoliticians()` and creates records only when not already present. Falls back to Bundestag members.
 3. **Phase 3 — Plenarprotokolle speeches**: fetches the next batch of sittings via `PlenarScraper`, matches speakers to politicians, and upserts into `politician_speeches`.
+4. **Phase 4 — Abgeordnetenwatch mandates**: fetches all `candidacies-mandates` for the parliament period and upserts into `politician_mandates` with stable `aw-mandate-<id>` keys (Issue #255).
+5. **Phase 5 — Abgeordnetenwatch votes**: fetches votes per mandate and upserts into `politician_votes` with stable `aw-vote-<id>` keys (Issue #255).
+6. **Phase 6 — Abgeordnetenwatch committees**: fetches committees and their memberships for the parliament period and upserts into `politician_committees` + `politician_committee_memberships` (Issue #255).
 
 Each phase runs independently and writes its own `politician_sync_log` entry. Failures are enqueued in `politician_sync_retry` with exponential back-off.
 
@@ -35,6 +38,7 @@ Every 6 hours via Bree (configured in the worker setup).
 - `server/utils/politician/plenarScraper.js` — Plenarprotokolle parser
 - `server/utils/politician/syncFallback.js` — retry/fallback helpers
 - `server/utils/politician/extractors.js` — shared `state`/`party`/`profileUrl` extractors
+- `server/models/politician.js` — `PoliticianMandate`, `PoliticianVote`, `PoliticianCommittee`, `PoliticianCommitteeMembership` helpers
 
 ## Caveats
 

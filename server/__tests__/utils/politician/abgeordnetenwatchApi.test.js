@@ -58,6 +58,49 @@ describe("AbgeordnetenwatchApi (21. WP / parliament_period=132)", () => {
     });
   });
 
+  describe("detail sync helpers (Issue #255)", () => {
+    it("fetchAllMandates targets candidacies-mandates with current_on=all", async () => {
+      const spy = jest
+        .spyOn(global, "fetch")
+        .mockResolvedValue({ ok: true, json: async () => page([], 0) });
+      await api.fetchAllMandates();
+      const calledUrl = spy.mock.calls[0][0];
+      expect(calledUrl).toContain("/candidacies-mandates");
+      expect(calledUrl).toContain("parliament_period=132");
+      expect(calledUrl).toContain("current_on=all");
+    });
+
+    it("getVotesByMandate targets the votes endpoint with a mandate filter", async () => {
+      const spy = jest
+        .spyOn(global, "fetch")
+        .mockResolvedValue({ ok: true, json: async () => page([], 0) });
+      await api.getVotesByMandate(12345);
+      const calledUrl = spy.mock.calls[0][0];
+      expect(calledUrl).toContain("/votes");
+      expect(calledUrl).toContain("mandate=12345");
+    });
+
+    it("fetchAllCommittees targets the committees endpoint with field_legislature", async () => {
+      const spy = jest
+        .spyOn(global, "fetch")
+        .mockResolvedValue({ ok: true, json: async () => page([], 0) });
+      await api.fetchAllCommittees();
+      const calledUrl = spy.mock.calls[0][0];
+      expect(calledUrl).toContain("/committees");
+      expect(calledUrl).toContain("field_legislature=132");
+    });
+
+    it("getCommitteeMembershipsByCommittee targets committee-memberships with a committee filter", async () => {
+      const spy = jest
+        .spyOn(global, "fetch")
+        .mockResolvedValue({ ok: true, json: async () => page([], 0) });
+      await api.getCommitteeMembershipsByCommittee(5647);
+      const calledUrl = spy.mock.calls[0][0];
+      expect(calledUrl).toContain("/committee-memberships");
+      expect(calledUrl).toContain("committee=5647");
+    });
+  });
+
   describe("range-based pagination (#fetchAllRanged)", () => {
     it("concatenates mandates across paginated responses", async () => {
       const responses = [

@@ -166,7 +166,7 @@ const Politician = {
   },
 };
 
-/** @type {{ bulkInsert: Function, where: Function }} */
+/** @type {{ bulkInsert: Function, bulkUpsert: Function, where: Function }} */
 const PoliticianVote = {
   bulkInsert: async function (votes = []) {
     if (votes.length === 0) return { count: 0 };
@@ -216,6 +216,34 @@ const PoliticianVote = {
     } catch {
       return [];
     }
+  },
+
+  bulkUpsert: async function (votes = []) {
+    if (votes.length === 0) return { inserted: 0, updated: 0, errors: 0 };
+    let inserted = 0;
+    let updated = 0;
+    let errors = 0;
+
+    for (const v of votes) {
+      try {
+        const existing = await prisma.politician_votes.findUnique({
+          where: { id: v.id },
+        });
+        await prisma.politician_votes.upsert({
+          where: { id: v.id },
+          update: v,
+          create: v,
+        });
+        if (existing) {
+          updated++;
+        } else {
+          inserted++;
+        }
+      } catch {
+        errors++;
+      }
+    }
+    return { inserted, updated, errors };
   },
 };
 
@@ -355,9 +383,74 @@ const PoliticianMandate = {
   },
 };
 
+/** @type {{ bulkUpsert: Function }} */
+const PoliticianCommittee = {
+  bulkUpsert: async function (committees = []) {
+    if (committees.length === 0) return { inserted: 0, updated: 0, errors: 0 };
+    let inserted = 0;
+    let updated = 0;
+    let errors = 0;
+
+    for (const c of committees) {
+      try {
+        const existing = await prisma.politician_committees.findUnique({
+          where: { id: c.id },
+        });
+        await prisma.politician_committees.upsert({
+          where: { id: c.id },
+          update: c,
+          create: c,
+        });
+        if (existing) {
+          updated++;
+        } else {
+          inserted++;
+        }
+      } catch {
+        errors++;
+      }
+    }
+    return { inserted, updated, errors };
+  },
+};
+
+/** @type {{ bulkUpsert: Function }} */
+const PoliticianCommitteeMembership = {
+  bulkUpsert: async function (memberships = []) {
+    if (memberships.length === 0) return { inserted: 0, updated: 0, errors: 0 };
+    let inserted = 0;
+    let updated = 0;
+    let errors = 0;
+
+    for (const m of memberships) {
+      try {
+        const existing =
+          await prisma.politician_committee_memberships.findUnique({
+            where: { id: m.id },
+          });
+        await prisma.politician_committee_memberships.upsert({
+          where: { id: m.id },
+          update: m,
+          create: m,
+        });
+        if (existing) {
+          updated++;
+        } else {
+          inserted++;
+        }
+      } catch {
+        errors++;
+      }
+    }
+    return { inserted, updated, errors };
+  },
+};
+
 module.exports = {
   Politician,
   PoliticianVote,
   PoliticianSpeech,
   PoliticianMandate,
+  PoliticianCommittee,
+  PoliticianCommitteeMembership,
 };

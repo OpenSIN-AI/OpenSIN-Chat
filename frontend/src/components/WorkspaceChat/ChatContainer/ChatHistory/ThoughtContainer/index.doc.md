@@ -47,7 +47,8 @@ Exports:
   be reused in both streaming (`PromptReply`) and historical
   (`HistoricalMessage`) contexts.
 - The icon uses `scale-[115%]` on the animated video so the 16px asset visibly
-  fills the 18px square button area.
+  fills the 18px square button area. The button is `inline-flex items-center
+  justify-center` so the scaled video and static image stay vertically centered.
 - In light mode the icon is inverted and dimmed (`light:invert light:opacity-50`)
   so it remains visible against the light bubble background.
 

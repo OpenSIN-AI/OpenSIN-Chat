@@ -79,11 +79,14 @@ describe("syncFallback: defaultIsEmpty", () => {
 });
 
 describe("syncFallback: SYNC_PHASES", () => {
-  test("exposes the three sync phases", () => {
+  test("exposes the six sync phases", () => {
     expect(SYNC_PHASES).toEqual({
       members: "members",
       abgeordnetenwatch: "abgeordnetenwatch",
       speeches: "speeches",
+      mandates: "mandates",
+      votes: "votes",
+      committees: "committees",
     });
   });
 });

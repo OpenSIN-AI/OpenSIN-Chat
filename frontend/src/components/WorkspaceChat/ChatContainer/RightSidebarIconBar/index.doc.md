@@ -8,6 +8,10 @@
 
 Renders the 44px-wide vertical icon rail on the right edge of the chat workspace. It contains the panel icons (preview, filesystem, database, political, sources, memories, pdf-analysis). Clicking an icon toggles the corresponding panel via `toggleSidebar` from the `ChatSidebar` context.
 
+## Routing behavior
+
+- Clicking the **PDF Analysis** icon toggles the `pdf-analysis` right sidebar panel via `toggleSidebar`. It does **not** navigate to the standalone `/pdf-analysis` page (issue #257). The `/pdf-analysis` route is preserved for deep linking and direct access, but the default chat/workspace entry point is the right sidebar panel.
+
 ## Temporary changes
 
 - The **Sources / Quellen** icon is currently disabled (issue #274). It remains visible but is rendered with `opacity-50 cursor-not-allowed`, receives no `onClick` handler, and is marked `disabled` and `aria-disabled`. This prevents accidental clicks while the Sources panel is being reworked.

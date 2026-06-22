@@ -16,11 +16,15 @@ mandates, and politician profiles for the **21. Wahlperiode** (Bundestag
   new fields.
 - `searchPoliticians(query)` — name search
 - `getPolitician(id)` — single politician by AW ID
-- `getVotingRecord(politicianId)` — paginated votes
-- `getCommittees(politicianId)` — committee memberships
-- `getMandates(politicianId)` — mandate history
+- `getVotingRecord(politicianId)` — paginated votes per politician (legacy)
+- `getCommittees(politicianId)` — committee memberships (legacy)
+- `getMandates(politicianId)` — mandate history per politician
+- `fetchAllMandates()` — all candidacy/mandate records for the parliament period (Issue #255)
+- `getVotesByMandate(mandateId)` — votes for a single mandate (Issue #255)
 - `fetchAllVotes()` — all votes for the parliament period (paginated)
 - `getVoteDetail(voteId)` — single vote with full details
+- `fetchAllCommittees()` — all committees for the parliament period (Issue #255)
+- `getCommitteeMembershipsByCommittee(committeeId)` — committee memberships for a committee (Issue #255)
 
 ## Verified fields (21. WP, #84)
 

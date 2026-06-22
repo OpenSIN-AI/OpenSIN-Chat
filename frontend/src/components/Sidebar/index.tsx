@@ -126,7 +126,7 @@ export default function Sidebar() {
       <nav
         aria-label={t("sidebar.mainNavigation")}
         style={{ width: showSidebar ? `${sidebarWidth}px` : "0px" }}
-        className="relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-50"
+        className="relative transition-all duration-500 flex-shrink-0 z-40 bg-zinc-950 light:bg-slate-50 hidden md:flex"
       >
         <div className="overflow-hidden h-full">
           <div className="flex shrink-0 w-full items-center justify-between gap-x-2 my-[18px] px-[16px]">

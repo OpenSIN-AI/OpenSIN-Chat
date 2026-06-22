@@ -24,7 +24,7 @@ start a new cross-check job and monitor running or completed jobs.
 - All action buttons carry `whitespace-nowrap` so their text stays on one line.
 - Long fact IDs and source values use `truncate` so they show an ellipsis instead of
   overflowing the input field.
-- The panel is wrapped by `PdfAnalysisSidebar` which opens at 520px and refuses to go
+- The panel is wrapped by `PdfAnalysisSidebar` which opens at 460px and refuses to go
   below 420px, giving the form enough horizontal room.
 
 ## Files that touch it

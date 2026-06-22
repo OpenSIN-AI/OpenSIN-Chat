@@ -15,6 +15,14 @@ from Plenarprotokolle.
    politician records that do not yet exist.
 3. **Plenarprotokolle speeches** (`syncBundestagSpeeches`) — fetches speeches
    from the DIP API and indexes them into the vector store.
+4. **Abgeordnetenwatch mandates** (`syncMandates`) — fetches all
+   `candidacies-mandates` for the period and upserts into `politician_mandates`
+   (Issue #255).
+5. **Abgeordnetenwatch votes** (`syncVotes`) — fetches votes per mandate and
+   upserts into `politician_votes` (Issue #255).
+6. **Abgeordnetenwatch committees** (`syncCommittees`) — fetches committees and
+   memberships and upserts into `politician_committees` +
+   `politician_committee_memberships` (Issue #255).
 
 ## Recent changes
 

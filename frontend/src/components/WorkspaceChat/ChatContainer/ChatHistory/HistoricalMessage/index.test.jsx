@@ -145,6 +145,17 @@ describe("HistoricalMessage", () => {
     expect(screen.getByText("Hello from user")).toBeInTheDocument();
   });
 
+  it("applies visible foreground and background colors to the user message bubble", () => {
+    const { container } = render(<HistoricalMessage {...baseUserProps} />, {
+      wrapper: Wrapper,
+    });
+    const bubble = container.querySelector(".bg-zinc-700");
+    expect(bubble).toBeInTheDocument();
+    expect(bubble?.className).toContain("text-white");
+    expect(bubble?.className).toContain("light:text-slate-900");
+    expect(bubble?.className).toContain("light:bg-slate-200");
+  });
+
   it("renders the actions bar for both user and assistant messages", () => {
     render(<HistoricalMessage {...baseAssistantProps} />, { wrapper: Wrapper });
     expect(screen.getByTestId("actions-bar")).toBeInTheDocument();

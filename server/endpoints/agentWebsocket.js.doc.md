@@ -29,9 +29,11 @@ Docs: `server/utils/agents/index.js`, `frontend/src/hooks/useWebSocket.ts`,
 The generic `wssFailure` content of `"Internal error"` has been replaced with a
 helpful setup message when the error indicates a missing or misconfigured provider
 or API key (`"Agent setup failed: please check the workspace provider and API key
-configuration."`). The original exception and a unique error id are still logged
-server-side so operators can diagnose the real problem without leaking secrets to
-connected clients.
+configuration."`). The heuristic matches both the legacy `"No valid provider"`
+message and the newer `"No LLM provider is configured..."` error thrown by
+`resolveProviderConnector()`. The original exception and a unique error id are still
+logged server-side so operators can diagnose the real problem without leaking
+secrets to connected clients.
 
 ## Exports
 

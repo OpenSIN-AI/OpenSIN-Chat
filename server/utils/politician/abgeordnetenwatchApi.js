@@ -444,7 +444,56 @@ class AbgeordnetenwatchApi {
   async getMandates(politicianId) {
     this.log(`Fetching mandates for politician ${politicianId}...`);
     return this.#fetchAllRanged(
-      `${this.baseUrl}/candidacies-mandates?politician=${politicianId}`,
+      `${this.baseUrl}/candidacies-mandates?politician=${politicianId}&parliament_period=${this.parliamentPeriod}&current_on=all`,
+    );
+  }
+
+  /**
+   * Fetch all candidacy/mandate records for the configured parliament period.
+   * Unlike `fetchAllPoliticians`, this does not de-duplicate by politician.
+   * @returns {Promise<any[]>}
+   */
+  async fetchAllMandates() {
+    this.log(
+      `Fetching all mandates for parliament_period=${this.parliamentPeriod}...`,
+    );
+    return this.#fetchAllRanged(
+      `${this.baseUrl}/candidacies-mandates?parliament_period=${this.parliamentPeriod}&current_on=all`,
+    );
+  }
+
+  /**
+   * Fetch votes for a single mandate.
+   * @param {number} mandateId
+   * @returns {Promise<any[]>}
+   */
+  async getVotesByMandate(mandateId) {
+    this.log(`Fetching votes for mandate ${mandateId}...`);
+    return this.#fetchAllRanged(`${this.baseUrl}/votes?mandate=${mandateId}`);
+  }
+
+  /**
+   * Fetch all committees for the configured parliament period.
+   * @returns {Promise<any[]>}
+   */
+  async fetchAllCommittees() {
+    this.log(
+      `Fetching all committees for parliament_period=${this.parliamentPeriod}...`,
+    );
+    return this.#fetchAllRanged(
+      `${this.baseUrl}/committees?field_legislature=${this.parliamentPeriod}`,
+    );
+  }
+
+  /**
+   * Fetch all committee memberships for a committee.
+   * @param {number} committeeId
+   * @returns {Promise<any[]>}
+   */
+  async getCommitteeMembershipsByCommittee(committeeId) {
+    this.log(`Fetching committee memberships for committee ${committeeId}...`);
+    return this.#fetchAllRanged(
+      `${this.baseUrl}/committee-memberships?committee=${committeeId}`,
     );
   }
 

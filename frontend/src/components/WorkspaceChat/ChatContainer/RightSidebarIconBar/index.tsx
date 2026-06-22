@@ -65,6 +65,9 @@ export default function RightSidebarIconBar() {
       id: "pdf-analysis",
       icon: FilePdf,
       label: t("right_sidebar.icon_pdf_analysis", "PDF-Analyse"),
+      // Opens the PDF analysis panel in the right sidebar instead of navigating
+      // to the standalone /pdf-analysis page (issue #257). The page route is
+      // kept for deep linking.
       action: () => toggleSidebar("pdf-analysis"),
     },
   ];

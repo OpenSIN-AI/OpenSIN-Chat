@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Viewport-based mobile-layout detector for page layouts.
+// Docs: useIsMobileLayout.doc.md
 import { useState, useEffect } from "react";
 
 /**

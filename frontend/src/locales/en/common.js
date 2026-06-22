@@ -1004,7 +1004,7 @@ const TRANSLATIONS = {
         "Upload a PDF and let agents analyze, verify, and turn it into searchable facts.",
       tabJobs: "Analyses",
       tabFacts: "Fact Store",
-      tabCrossCheck: "Cross-check",
+      tabCrossCheck: "Cross-Check",
       tabCorpus: "Corpus Comparison",
       newAnalysis: "New analysis",
       pdfFile: "PDF file",
