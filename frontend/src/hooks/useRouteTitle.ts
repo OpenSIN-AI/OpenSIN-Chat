@@ -5,12 +5,14 @@ import { useTranslation } from "react-i18next";
 
 const APP_NAME = "OpenSIN Chat";
 
-function resolveTitleKey(pathname: string): string {
+function resolveTitleKey(pathname: string): string | null {
   if (pathname === "/") return "page.titles.home";
   if (pathname.startsWith("/login")) return "page.titles.login";
   if (pathname.startsWith("/sso/")) return "page.titles.sso";
   if (pathname.startsWith("/onboarding")) return "page.titles.onboarding";
-  if (pathname.startsWith("/docs")) return "page.titles.docs";
+  // /docs/:slug pages manage their own titles in Docs/index.tsx.
+  if (pathname === "/docs") return "page.titles.docs";
+  if (pathname.startsWith("/docs/")) return null;
   if (pathname.startsWith("/pdf-analysis")) return "page.titles.pdfAnalysis";
   if (pathname.match(/^\/workspace\/[^/]+\/settings\//))
     return "page.titles.workspaceSettings";
@@ -25,6 +27,7 @@ export default function useRouteTitle() {
 
   useEffect(() => {
     const key = resolveTitleKey(location.pathname);
+    if (!key) return;
     const pageName = t(key);
     const appName = t("page.title") || APP_NAME;
     if (key === "page.titles.home" || pageName === appName) {

@@ -3,8 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { List } from "@phosphor-icons/react/dist/csr/List";
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { SidebarSimple } from "@phosphor-icons/react/dist/csr/SidebarSimple";
-import { Sun } from "@phosphor-icons/react/dist/csr/Sun";
-import { Moon } from "@phosphor-icons/react/dist/csr/Moon";
+import ThemeToggle from "@/components/ThemeToggle";
 import NewWorkspaceModal, {
   useNewWorkspaceModal,
 } from "../Modals/NewWorkspace";
@@ -21,36 +20,11 @@ import { useSidebarToggle } from "./SidebarToggle";
 import SearchBox from "./SearchBox";
 import { Tooltip } from "react-tooltip";
 import { createPortal } from "react-dom";
-import { useThemeContext } from "@/ThemeContext";
 
 const SIDEBAR_MIN_WIDTH = 220;
 const SIDEBAR_MAX_WIDTH = 480;
 const SIDEBAR_DEFAULT_WIDTH = 292;
 const SIDEBAR_WIDTH_STORAGE_KEY = "openafd-sidebar-width";
-
-function ThemeToggle() {
-  const { t } = useTranslation();
-  const ctx = useThemeContext();
-  if (!ctx) return null;
-  const { theme, setTheme, isLight } = ctx;
-  const next =
-    theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
-  const label =
-    t("common.theme") +
-    " — " +
-    t(`common.theme${next.charAt(0).toUpperCase() + next.slice(1)}`);
-  return (
-    <button
-      type="button"
-      onClick={() => setTheme(next)}
-      aria-label={label}
-      title={label}
-      className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-zinc-700 light:hover:bg-slate-200 text-white flex-shrink-0 relative z-10"
-    >
-      {isLight ? <Moon size={18} /> : <Sun size={18} />}
-    </button>
-  );
-}
 
 export default function Sidebar() {
   const { user } = useUser();

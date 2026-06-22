@@ -7,8 +7,8 @@
 ## What this file does
 
 - Provides `Sidebar` (desktop) with resizable width, logo, search, workspace list, and footer.
-- Provides `SidebarMobileHeader` (mobile) fixed top bar with hamburger, logo, and theme toggle.
-- Defines a local `ThemeToggle` component that cycles through light/dark/system using `useThemeContext`.
+- Provides `SidebarMobileHeader` (mobile) fixed top bar with hamburger, logo, and workspace controls.
+- Imports the reusable `ThemeToggle` component from `@/components/ThemeToggle` to render the desktop theme control.
 - The desktop `Sidebar` is hidden below the `md` breakpoint (`768px`) via `hidden md:flex` so it can never squeeze the chat area on mobile, even if a parent page renders it unconditionally.
 
 ## Files that touch it
@@ -17,6 +17,7 @@
 - `pages/PdfAnalysis/index.tsx`: renders `Sidebar` unconditionally; it relies on the `hidden md:flex` guard for mobile viewports.
 - `components/WorkspaceChat/ChatContainer/ChatHeader.tsx`: imports `SidebarMobileHeader` for mobile chat layout.
 - `ThemeContext.tsx`: supplies theme state and setter to `ThemeToggle`.
+- `ThemeToggle.tsx`: the reusable theme toggle button rendered in the desktop sidebar.
 - `Sidebar/index.test.jsx`: unit tests for the desktop sidebar.
 
 ## Important config values
@@ -26,7 +27,7 @@
 
 ## Why certain decisions were made
 
-- The theme toggle is placed in the desktop sidebar header and in the mobile header so it remains visible even when the sidebar is collapsed or on small screens.
+- The theme toggle is placed in the desktop sidebar header so it remains visible even when the sidebar is collapsed.
 - `ThemeToggle` cycles through `light` -> `dark` -> `system` to match the existing appearance preference.
 
 ## Usage
@@ -38,5 +39,5 @@
 
 ## Known caveats
 
-- The local `ThemeToggle` is not exported; it is reused inside both Sidebar and SidebarMobileHeader.
+- The `ThemeToggle` component is imported and used in the desktop `Sidebar` header. It is not currently rendered in `SidebarMobileHeader`.
 - Without a `ThemeProvider`, `ThemeToggle` renders nothing to avoid runtime errors.

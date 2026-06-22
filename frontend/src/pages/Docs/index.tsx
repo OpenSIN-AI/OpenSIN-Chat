@@ -10,9 +10,11 @@ import { ArrowRight } from "@phosphor-icons/react/dist/csr/ArrowRight";
 import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass";
 import { BookOpen } from "@phosphor-icons/react/dist/csr/BookOpen";
 import { List } from "@phosphor-icons/react/dist/csr/List";
+import { TextAlignLeft } from "@phosphor-icons/react/dist/csr/TextAlignLeft";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { GithubLogo } from "@phosphor-icons/react/dist/csr/GithubLogo";
 import paths from "@/utils/paths";
+import ThemeToggle from "@/components/ThemeToggle";
 import DocsMarkdown, { type DocHeading } from "./DocsMarkdown";
 import DocsToc from "./DocsToc";
 import DocsLanding from "./DocsLanding";
@@ -174,9 +176,11 @@ export default function Docs() {
   const { slug } = useParams();
   const [query, setQuery] = useState("");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileTocOpen, setMobileTocOpen] = useState(false);
   const [headings, setHeadings] = useState<DocHeading[]>([]);
   const [mainEl, setMainEl] = useState<HTMLElement | null>(null);
   const mobileNavRef = useRef<HTMLDivElement>(null);
+  const mobileTocRef = useRef<HTMLDivElement>(null);
   const entry = slug ? getDocBySlug(slug) : null;
   const content = entry ? getDocContent(entry.file) : null;
 
@@ -184,9 +188,8 @@ export default function Docs() {
     setHeadings(next);
   }, []);
 
-  // Reset outline + scroll position when navigating between docs.
+  // Scroll the main content area to the top when navigating between docs.
   useEffect(() => {
-    setHeadings([]);
     mainEl?.scrollTo({ top: 0 });
   }, [slug, mainEl]);
 
@@ -231,6 +234,22 @@ export default function Docs() {
     };
   }, [mobileNavOpen]);
 
+  // Close mobile TOC with Escape and lock body scroll while open.
+  useEffect(() => {
+    if (!mobileTocOpen) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileTocOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    mobileTocRef.current?.focus();
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [mobileTocOpen]);
+
   const showToc = Boolean(slug && entry && content);
 
   return (
@@ -259,13 +278,16 @@ export default function Docs() {
             <span className="font-semibold">{t("common.developerDocs")}</span>
           </Link>
         </div>
-        <Link
-          to={paths.home()}
-          className="flex items-center gap-2 text-sm text-theme-text-secondary hover:text-theme-text-primary transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" aria-hidden="true" />
-          <span className="hidden sm:inline">{t("common.backToApp")}</span>
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle className="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-theme-sidebar-item-hover text-theme-text-primary flex-shrink-0" />
+          <Link
+            to={paths.home()}
+            className="flex items-center gap-2 text-sm text-theme-text-secondary hover:text-theme-text-primary transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+            <span className="hidden sm:inline">{t("common.backToApp")}</span>
+          </Link>
+        </div>
       </header>
 
       <div className="flex flex-1 min-h-0">
@@ -327,7 +349,7 @@ export default function Docs() {
               </Link>
             </div>
           ) : (
-            <article className="mx-auto max-w-3xl xl:mx-0">
+            <article className="mx-auto max-w-3xl lg:mx-0">
               <div className="flex items-center justify-between gap-4 mb-2">
                 <p className="text-xs font-semibold uppercase tracking-wide text-theme-text-secondary">
                   {CATEGORY_LABELS[entry.category]}
@@ -350,11 +372,61 @@ export default function Docs() {
 
         {/* Right-hand table of contents */}
         {showToc && (
-          <aside className="hidden xl:block w-64 shrink-0 border-l border-theme-sidebar-border p-6 overflow-y-auto">
+          <aside className="hidden lg:block w-60 xl:w-64 shrink-0 border-l border-theme-sidebar-border p-6 overflow-y-auto">
             <div className="sticky top-0">
               <DocsToc headings={headings} scrollRoot={mainEl} />
             </div>
           </aside>
+        )}
+
+        {/* Mobile TOC floating button */}
+        {showToc && (
+          <button
+            type="button"
+            onClick={() => setMobileTocOpen((v) => !v)}
+            className="lg:hidden fixed bottom-6 right-6 z-30 p-3 rounded-full bg-primary-button text-white shadow-lg hover:opacity-90 transition-opacity"
+            aria-label={t("common.docsOnThisPage")}
+            aria-expanded={mobileTocOpen}
+          >
+            {mobileTocOpen ? (
+              <X className="w-5 h-5" aria-hidden="true" />
+            ) : (
+              <TextAlignLeft className="w-5 h-5" aria-hidden="true" />
+            )}
+          </button>
+        )}
+
+        {/* Mobile TOC drawer */}
+        {mobileTocOpen && (
+          <div className="lg:hidden fixed inset-0 z-50 flex items-end justify-center sm:items-center">
+            <div
+              className="absolute inset-0 bg-black/50"
+              onClick={() => setMobileTocOpen(false)}
+              aria-hidden="true"
+            />
+            <aside
+              ref={mobileTocRef}
+              tabIndex={-1}
+              aria-modal="true"
+              role="dialog"
+              aria-label={t("common.docsOnThisPage")}
+              className="relative z-50 w-full max-w-sm max-h-[70vh] sm:max-h-[60vh] bg-theme-bg-primary border-t sm:border border-theme-sidebar-border sm:rounded-lg p-4 pt-11 overflow-y-auto outline-none"
+            >
+              <button
+                type="button"
+                onClick={() => setMobileTocOpen(false)}
+                className="absolute top-3 right-4 p-1 rounded-md hover:bg-theme-sidebar-item-hover"
+                aria-label={t("common.close")}
+              >
+                <X className="w-4 h-4" aria-hidden="true" />
+              </button>
+              <DocsToc
+                headings={headings}
+                scrollRoot={mainEl}
+                onNavigate={() => setMobileTocOpen(false)}
+              />
+            </aside>
+          </div>
         )}
       </div>
     </div>

@@ -10,9 +10,11 @@ import type { DocHeading } from "./DocsMarkdown";
 export default function DocsToc({
   headings,
   scrollRoot,
+  onNavigate,
 }: {
   headings: DocHeading[];
   scrollRoot: HTMLElement | null;
+  onNavigate?: () => void;
 }) {
   const { t } = useTranslation();
   const [activeId, setActiveId] = useState<string>("");
@@ -55,6 +57,7 @@ export default function DocsToc({
       setActiveId(id);
       window.history.replaceState(null, "", `#${id}`);
     }
+    onNavigate?.();
   };
 
   if (headings.length < 2) return null;

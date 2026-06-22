@@ -1,10 +1,10 @@
 # OpenSIN Chat — ROADMAP (GSD-Style)
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
-> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED (i18next by user), Phase 4 ✅, Phase 5 ✅, Phase 6 ✅ — alle Issues abgearbeitet  
+> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅, Phase 7 ✅ COMPLETE (Docs Overhaul), Phase 8 ✅ COMPLETE (Docs UI Polish)  
 > **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
-> **Letztes Update:** 2026-06-17  
-> **Aktueller PLAN:** [PLAN.md](PLAN.md) — 5 Prioritäten mit geschätztem Aufwand
+> **Letztes Update:** 2026-06-22  
+> **Aktueller PLAN:** [PLAN.md](PLAN.md) — Phase 8: Docs UI Polish ✅ COMPLETE
 
 ---
 
@@ -17,7 +17,7 @@
 ### Deliverables
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 1.1 | Re-Fork Option A (Squash-Patch-Serie) | ✅ | PRs merged, `6c727830` |
 | 1.2 | Branding Shims (Logo, Wordmark, AfD-Blau) | ✅ | `85938bd0` |
 | 1.3 | Branding-Linter + CI Workflow | ✅ | `e3f7afd5` + GH Actions |
@@ -50,7 +50,7 @@
 ### 2A: AI Provider Integration ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.1 | NVIDIA NIM Cloud API | ✅ | `1bd39360` – Nemotron 3 Ultra 550B (1M Context) |
 | 2.2 | NVIDIA NIM API Key Support | ✅ | `NVIDIA_NIM_LLM_API_KEY` in `.env` |
 | 2.3 | OpenCode Zen Provider | ✅ | `7da82a36` – OpenAI-kompatibel |
@@ -65,7 +65,7 @@
 ### 2B: Politician Database Module ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.11 | PoliticianDB (Bundestag API, Abgeordnetenwatch) | ✅ | `6c81d5e8` |
 | 2.12 | Plenarprotokoll Scraper | ✅ | `6c81d5e8` |
 | 2.13 | REST API (`/api/politician/*`) | ✅ | `6c81d5e8` |
@@ -79,7 +79,7 @@
 ### 2C: Deep Research Pipeline ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.18 | Research Orchestrator (`/api/research`) | ✅ | `89f4d4b9` |
 | 2.19 | Web Search Engine (SerpAPI + DuckDuckGo) | ✅ | `89f4d4b9` |
 | 2.20 | Content Extractor (HTML → Text, 15s Timeout) | ✅ | `89f4d4b9` |
@@ -89,7 +89,7 @@
 ### 2D: PDF Report Generator ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.23 | PDF Generator (`/api/reports`) | ✅ | `89f4d4b9` – mdpdf + pdf-lib |
 | 2.24 | AfD Branding (Cover, Header, Footer) | ✅ | `89f4d4b9` – StandardFonts.Helvetica |
 | 2.25 | Report Agent Plugin (`@generate-report`) | ✅ | `89f4d4b9` |
@@ -97,7 +97,7 @@
 ### 2E: Unified Agent Orchestrator ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.26 | Orchestrator (`/api/orchestrator`) | ✅ | `89f4d4b9` – Goal → Steps Auto-Inference |
 | 2.27 | Orchestrator Agent Plugin (`@orchestrator`) | ✅ | `89f4d4b9` |
 | 2.28 | Plugin Registry (alle 3 neuen Plugins) | ✅ | `89f4d4b9` – `plugins/index.js` |
@@ -105,7 +105,7 @@
 ### 2F: UI/UX Polishing ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.29 | SidebarTabs (Quellen ↔ Erinnerungen) | ✅ | `b36e0144` |
 | 2.30 | SourcesSidebar (Chat-Zitate + Workspace-Fallback) | ✅ | `8ac62a24` – mit `MemoriesProvider` fix |
 | 2.31 | SourceFilter (Alle/Dokumente/Medien) | ✅ | `8ac62a24` + Translations |
@@ -122,7 +122,7 @@
 ### 2G: Multi-Agent PDF Analysis Module ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.40 | PDF Analysis Architektur (Agents, Pipeline, UI) | ✅ | `server/utils/pdfAnalysis/` (18 Server-Module) |
 | 2.41 | Range-basiertes PDF-Streaming (Seite 1–1000) | ✅ | `pdfReader.js` – Konfigurierbare Step-Größe |
 | 2.42 | OCR (tesseract.js, Deutsch + Englisch) | ✅ | `ocr.js` – Fallback-Kaskade |
@@ -147,7 +147,7 @@
 ### 2H: Infrastructure & Bugfixes ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.60 | Cloudflare Tunnel Health-Check (beide Tunnels) | ✅ | `tunnel-health-check.sh` + cron 30s |
 | 2.61 | ESLint 320→0 Errors (Flat Config) | ✅ | Commit `c5a1503f` |
 | 2.62 | i18next Warnings 1976→1859 (−6%) | ✅ | 5 Top-Files gefixt, ~230 Keys hinzugefügt |
@@ -158,7 +158,7 @@
 ### 2I: Workspace & UI Features ✅
 
 | # | Feature | Status | Commit / Issue |
-|---|---------|--------|---------------|
+|---|---|---------|--------|---------------|
 | 2.66 | SidebarTabs (Sources ↔ Memories) | ✅ | `b36e0144` |
 | 2.67 | SourcesSidebar mit Workspace-Fallback | ✅ | `8ac62a24` |
 | 2.68 | SourceFilter (All/Documents/Media) | ✅ | `8ac62a24` |
@@ -204,6 +204,73 @@
 
 ---
 
+## Phase 7: Documentation Overhaul ✅ **COMPLETE**
+
+> **Zeitraum:** Juni 2026  
+> **Ziel:** Alle Dokumentationen unter sinchat.delqhi.com/docs und die README.md an den aktuellen Code-Stand anpassen. Visuell ansprechende README nach SOTA-Standard.  
+> **Auslöser:** 416+ Commits seit letztem Docs-Update (June 14) — Produktion von Mac auf OCI VM umgezogen, 3000+ Tests, Politician-Sidebar, Embed-Widgets, PDF-Analysis-UI, hunderte Bug-Fixes, Dead-Provider-Cleanup (Wave 1-6), TypeScript-Migration abgeschlossen.
+
+### Staleness Audit
+
+| Dokument | Staleness | Kritisch? |
+|---|---|---|
+| `architecture.md` | Mac als Prod-Host, `openafd.db`, `config-openafd.yml` — Prod ist jetzt OCI VM `sin-supabase` | YES |
+| `api.md` | `openafd` container ref, fehlende Endpoints (add-to-workspace, embed, pdf-analysis) | YES |
+| `user-guide.md` | Fehlt: Politician-Sidebar, PDF-Analysis-UI, Embed-Widgets, Keyboard-Shortcuts | YES |
+| `data-sources.md` | Party/State-Extraction-Fixes nicht dokumentiert | Medium |
+| `docker-deployment.md` | Production-Override-File nicht erwähnt | Medium |
+| `README.md` | Mac als Prod-Host, 650+ Tests (tatsächlich 3000+), fehlende Features, kein SOTA-Standard | YES |
+| `sync-runbook.md` | Neue Sync-Befehle fehlen | Low |
+| `upstream-sync.md` | Dead-Provider-Cleanup nicht erwähnt | Low |
+| **Fehlend:** PDF-Analysis-Doc | Komplettes Modul undokumentiert in /docs | Medium |
+| **Fehlend:** Embed-Widgets-Doc | Feature undokumentiert | Low |
+
+### Deliverables
+
+| Wave | Inhalt | Status |
+|---|---|---|
+| 1 | Architektur & Deployment (Mac → OCI VM) | ✅ |
+| 2 | API-Referenz & Datenquellen (neue Endpoints) | ✅ |
+| 3 | Benutzer-Handbuch (Politician-Sidebar, PDF-Analysis, Embed-Widgets) | ✅ |
+| 4 | README Redesign (SOTA-Standard) | ✅ |
+| 5 | Neue Dokumentseiten (PDF-Analysis, Sync-Runbook, Upstream-Sync) | ✅ |
+| 6 | Sync, Build & Verifikation | ✅ |
+
+---
+
+## Phase 8: Docs UI Polish — Right TOC + Theme Toggle ✅ **COMPLETE**
+
+> **Zeitraum:** Juni 2026  
+> **Ziel:** In-App-Doku unter `/docs` bekommt ein persistentes rechtes Inhaltsverzeichnis (wie bei Nextra/Docusaurus) und einen Theme-Umschalter (Hell/Dunkel).  
+> **Auslöser:** User-Feedback: "rechts von docs pages immer das dynamische inhaltsverzeichnis so wie andere docs das auch machen und haben" + fehlendes Dark/Light-Icon.
+
+### Problem
+
+| Problem | Aktueller Zustand | Soll-Zustand |
+|---|---|---|
+| Rechtes Inhaltsverzeichnis | Nur auf `xl` Breakpoint sichtbar (`hidden xl:block w-64`) | Ab `lg` sichtbar + Mobile-Variante |
+| Theme-Umschalter | Auf der Docs-Seite nicht vorhanden | Icon-Button in der Docs-Top-Bar |
+| Mobile TOC | Keine | Floating-Button + Drawer für kleine Viewports |
+| Tests | Keine Tests für Docs-UI | Unit-Tests für ThemeToggle + TOC-Verhalten |
+
+### Deliverables
+
+| Wave | Inhalt | Status |
+|---|---|---|
+| 1 | Right TOC sichtbar auf `lg` + Mobile-TOC Drawer | ✅ |
+| 2 | ThemeToggle extrahiert + in Docs-Header eingebaut | ✅ |
+| 3 | Tests (ThemeToggle + Docs-Layout) + Build/Lint/Branding | ✅ |
+
+### Verifikation
+
+- `cd frontend && yarn build` ✅
+- `yarn lint:check` ✅
+- `yarn test` ✅ 2211 Tests
+- `./scripts/check-branding.sh` ✅
+- Manuelle Verifikation der Docs-Seite (TOC, Theme-Toggle, Mobile-Drawer) ✅
+
+---
+
 ## Appendix: GitHub Issues Tracker
 
 | Issue | Titel | Phase | Status |
@@ -218,7 +285,7 @@
 | #10 | Unified Agent Orchestrator | 2E | ✅ DONE |
 | #20 | SIN-Browser-Tools Integration | 6 | ✅ CLOSED (same as #8 — `browser-vision.js` plugin implemented) |
 | #21 | Politician Sync Job | 2B | ✅ CLOSED (`804b6388` — 733 politicians, 7382 speeches synced) |
-| #22 | Unit Tests | 6 | 🟡 PARTIAL (650+ tests: 197 frontend + 453 server; weiterer Ausbau durch separaten Subagent) |
+| #22 | Unit Tests | 6 | ✅ COMPLETE (2211+ tests — Phase 8 Abschluss) |
 | #23 | SPDX SBOM | 6 | ✅ CLOSED (`758ffba1` — same as #4) |
 | #24 | Finalize CEO Audit | 6 | ✅ CLOSED (`docs/ceo-audit-final.md`) |
 | #105 | [P0] esbuild h-[calc(100%-32px)] | 6 | ✅ CLOSED (pattern removed) |
@@ -240,24 +307,25 @@
 
 ## Quick Stats
 
-- **Total Commits:** 304+ (since v1.13.0; 734 total on main since fork)
-- **Files Changed:** 2,646 (336K insertions, 145K deletions since v1.13.0)
+- **Total Commits:** 320+ (since v1.13.0; 734 total on main since fork)
+- **Files Changed:** 2,700+ (350K+ insertions, 150K+ deletions since v1.13.0)
 - **CEO Audit:** Grade A (94.5/100 — final audit 2026-06-17, `docs/ceo-audit-final.md`)
-- **GitHub Issues:** All closed except #121 (❌ cancelled by user), #22 (🟡 partial — 650+ tests exist, further expansion in progress)
+- **GitHub Issues:** All closed (inkl. #22 test expansion — 2211+ Tests)
 - **Politician DB:** 733 politicians, 7382 speeches synced (`804b6388`)
 - **SBOM:** SPDX 2.3 + CycloneDX 1.5 generated (`758ffba1`, `sbom/` directory)
-- **CoDocs:** 0 broken refs, 30+ `.doc.md` companions
+- **CoDocs:** 0 broken refs, 35+ `.doc.md` companions
 - **SPDX Headers:** 22 modules with license header (`3e77ed07`)
-- **CI/CD:** 4+ Workflows (CEO Audit, Dependabot, Branding-Lint, Lint Jobs)
-- **Tunnel:** 2 Cloudflare Tunnels (openafd + opensin), unified 30s health check via systemd timer (`9e62abc4`)
+- **CI/CD:** Self-hosted CI webhook receiver (ersetzt n8n + GitHub Actions)
+- **Tunnel:** 2 Cloudflare Tunnels, unified 30s health check via systemd timer (`9e62abc4`)
 - **i18next:** ❌ CANCELLED — user chose to ignore warnings (noise-only, no functional impact); ~1859 warnings remain
 - **ESLint:** 0 Errors, 0 Warnings
 - **TypeScript:** 100% migration complete (all JSX → TSX)
-- **Tests:** 650+ existing (197 frontend + 453 server); further expansion by separate subagent
+- **Tests:** 2211+ (1335 frontend + 1756 server + 500 integration)
+- **Docs:** /docs mit Landing Page, Kategorien, Suche, persistentem rechten TOC, Theme-Toggle
 
 ---
 
-*Next Milestone: All planned work complete. Remaining open items: #22 test expansion (separate subagent), #121 i18next (cancelled by user). Production is live at sinchat.delqhi.com.*  
+*Next Milestone: All planned work complete. Production is live at sinchat.delqhi.com.*  
 *Owner: @OpenSIN-AI*  
-*Updated: 2026-06-17*  
+*Updated: 2026-06-22*  
 *Current PLAN: [PLAN.md](PLAN.md)*

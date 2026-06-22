@@ -30,7 +30,10 @@ export function syncDocumentTitle() {
 
 export function attachLanguageDomSync() {
   syncHtmlLang(i18next.language);
-  syncDocumentTitle();
   i18next.on("languageChanged", syncHtmlLang);
-  i18next.on("languageChanged", syncDocumentTitle);
+  // syncDocumentTitle is intentionally NOT called here and NOT re-run on
+  // languageChanged: route-specific titles (e.g. /docs/:slug) are managed by
+  // their own useEffect hooks, and the global default title is already set in
+  // index.html. Calling syncDocumentTitle would race with and overwrite those
+  // route-specific title effects.
 }

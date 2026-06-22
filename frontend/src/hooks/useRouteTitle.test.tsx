@@ -61,10 +61,10 @@ describe("useRouteTitle", () => {
     expect(document.title).toBe("Onboarding — OpenSIN Chat");
   });
 
-  it("sets title for docs route", () => {
+  it("does not set title for docs sub-route (managed by Docs page)", () => {
     useLocation.mockReturnValue({ pathname: "/docs/api" });
     renderHook(() => useRouteTitle());
-    expect(document.title).toBe("Documentation — OpenSIN Chat");
+    expect(document.title).toBe("");
   });
 
   it("sets title for pdf-analysis route", () => {
