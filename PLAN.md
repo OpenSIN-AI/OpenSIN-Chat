@@ -157,7 +157,8 @@
 - [x] `yarn lint:check` exit 0
 - [x] `yarn test` no new failures
 - [x] `check-branding.sh` exit 0
-- [ ] Deployed to production
+- [x] `.dockerignore` explicitly includes `docs/*.md`
+- [x] Deployed to production
 
 ---
 
@@ -176,6 +177,8 @@
 | `.github/ISSUE_TEMPLATE/feature.yml` | New feature request template |
 | `.github/ISSUE_TEMPLATE/config.yml` | New issue template config |
 | `CODEOWNERS` | New code owners file |
+| `.dockerignore` | Added `!docs/*.md` for top-level docs |
+| `.dockerignore.doc.md` | Updated docs exclusion description |
 
 ---
 
@@ -187,8 +190,8 @@
 | `cd frontend && yarn lint:check` | ✅ |
 | `cd frontend && yarn test` | ✅ 1636 tests |
 | `./scripts/check-branding.sh` | ✅ |
-| Deploy to production | 🚧 pending |
+| Deploy to production | ✅ commit `e6b9e3a4` |
 
 ---
 
-*Generated: 2026-06-22 | Phase 9: Security & Operations Hardening | 3 Waves, 7 Tasks | 🚧 IN PROGRESS*
+*Generated: 2026-06-22 | Phase 9: Security & Operations Hardening | 3 Waves, 7 Tasks | ✅ COMPLETE*
