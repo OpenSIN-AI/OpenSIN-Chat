@@ -9,8 +9,9 @@ import { useModal } from "@/hooks/useModal";
 import RecoveryCodeModal from "@/components/Modals/DisplayRecoveryCodeModal";
 import { useTranslation } from "react-i18next";
 import useCustomAppName from "@/hooks/useCustomAppName";
+import useSystemSettings from "@/hooks/useSystemSettings";
 
-export default function SingleUserAuth() {
+export default function SingleUserAuth({ autoLogin = false }: { autoLogin?: boolean }) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState(null);
@@ -19,12 +20,42 @@ export default function SingleUserAuth() {
   const [token, setToken] = useState(null);
 
   const { appName, isLoading: appNameLoading } = useCustomAppName();
+  const { settings } = useSystemSettings();
+  const requiresAuth = settings?.RequiresAuth ?? true;
 
   const {
     isOpen: isRecoveryCodeModalOpen,
     openModal: openRecoveryCodeModal,
     closeModal: closeRecoveryCodeModal,
   } = useModal();
+
+  // Auto-login for single-user no-password mode: the server auto-grants a
+  // session token when AUTH_TOKEN is not set, so we request it immediately and
+  // store it so subsequent authenticated calls (e.g. API key management) work.
+  useEffect(() => {
+    if (!autoLogin || requiresAuth) return;
+    let cancelled = false;
+    setLoading(true);
+    System.requestToken({})
+      .then(({ valid, token, message }) => {
+        if (cancelled) return;
+        if (valid && token) {
+          safeSetItem(AUTH_TOKEN, token);
+          window.location.href = paths.home();
+        } else {
+          setError(message || "Auto-login failed.");
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        if (cancelled) return;
+        setError(e.message || "Auto-login failed.");
+        setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [autoLogin, requiresAuth]);
 
   const handleLogin = async (e) => {
     setError(null);

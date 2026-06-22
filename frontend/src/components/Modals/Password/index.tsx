@@ -26,7 +26,13 @@ export default function PasswordModal({ mode = "single" }: any) {
         alt={t("common.logo")}
         className={`max-h-[80px] object-contain ${isCustomLogo ? "rounded-lg" : ""}`}
       />
-      {mode === "single" ? <SingleUserAuth /> : <MultiUserAuth />}
+      {mode === "single" ? (
+        <SingleUserAuth />
+      ) : mode === "single-auto" ? (
+        <SingleUserAuth autoLogin={true} />
+      ) : (
+        <MultiUserAuth />
+      )}
     </div>
   );
 }
@@ -74,8 +80,11 @@ export function usePasswordModal(notry: any = false) {
   }
 
   // Auth is not required in this environment
+  // Single-user no-password mode: we still need to render the single-user auth
+  // modal so it can auto-request a session token and store it. The token is
+  // required for authenticated system endpoints like API key management.
   if (!MultiUserMode && !RequiresAuth) {
-    return { loading: false, requiresAuth: false, mode: "single" };
+    return { loading: false, requiresAuth: true, mode: "single-auto" };
   }
 
   // Skip the check (valid cached timestamp / notry guard)

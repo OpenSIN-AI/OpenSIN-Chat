@@ -14,6 +14,7 @@ jest.mock("../../../utils/http", () => ({
 }));
 
 const { ApiKey } = require("../../../models/apiKeys");
+const { SystemSettings } = require("../../../models/systemSettings");
 const { User } = require("../../../models/user");
 const { decodeJWT } = require("../../../utils/http");
 const {
@@ -45,6 +46,7 @@ describe("requireApiKeyOrSession", () => {
     jest.clearAllMocks();
     process.env.NODE_ENV = "production";
     delete process.env.INTEGRATION_TEST;
+    SystemSettings.isMultiUserMode.mockResolvedValue(false);
   });
 
   it("returns 401 when no Authorization header is provided", async () => {
@@ -88,6 +90,20 @@ describe("requireApiKeyOrSession", () => {
       username: "test",
       role: "admin",
     });
+  });
+
+  it("allows single-user no-password session token with p: null", async () => {
+    const { request, response } = mockReqRes({
+      authHeader: "Bearer single-user-token",
+    });
+    const next = jest.fn();
+    ApiKey.get.mockResolvedValue(null);
+    decodeJWT.mockReturnValue({ p: null });
+
+    await requireApiKeyOrSession(request, response, next);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(response.locals.user).toBeUndefined();
   });
 
   it("returns 401 when bearer is neither a valid API key nor a valid session token", async () => {
