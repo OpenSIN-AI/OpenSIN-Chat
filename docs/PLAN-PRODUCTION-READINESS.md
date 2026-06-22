@@ -50,15 +50,15 @@ a CI coverage gate so the score can never silently regress again.
 
 ### E2 — Politician Data & Vector Search
 > Plan: [`PLAN-DATA-SYNC.md`](./PLAN-DATA-SYNC.md)
-The single biggest functional blocker: the politician DB is empty and there is
-no vector store in SQLite. This epic makes the political features actually
-return data in production.
+Politician DB is populated (733 politicians, 7382 speeches synced as of `804b6388`).
+SQLite falls back to FTS text search; PostgreSQL + pgvector remains the production
+vector-search target.
 
-- Run + verify the first politician sync job
-- PostgreSQL + pgvector production database
-- Activate `PoliticianVectorStore` (semantic speech search)
-- Bundestag 21. WP migration + Abgeordnetenwatch API v2 fields
-- Full-text search over speeches / protocols
+- ✅ Run + verify the first politician sync job
+- 🚧 PostgreSQL + pgvector production database
+- 🚧 Activate `PoliticianVectorStore` (semantic speech search)
+- 🚧 Bundestag 21. WP migration + Abgeordnetenwatch API v2 fields
+- ✅ Full-text search over speeches / protocols (SQLite FTS fallback)
 
 ### E3 — Resilience & External-API Hardening
 > Extends the timeout/abort/retry work already merged on `main`.
@@ -70,12 +70,12 @@ degradable. Relates to issue #52.
 - Short-TTL cache layer for external responses (stale-while-revalidate)
 - Circuit-breaker + cached-fallback when an upstream is down
 
-### E4 — Requested Endpoints
+### E4 — Requested Endpoints ✅
 > Plan: inline below + issues #53, #54.
 Two product endpoints already requested by the team.
 
-- `POST /api/enhance-prompt` — LLM prompt rewriter (#53)
-- `POST /api/terminal/exec` — sandboxed command execution (#54, security-gated)
+- ✅ `POST /api/enhance-prompt` — LLM prompt rewriter (#53) — backend shipped
+- ✅ `POST /api/terminal/exec` — sandboxed command execution (#54) — backend shipped, **UI pending**
 
 ### E5 — Scale & Deployment
 > Plan: [`PLAN-SCALE-DEPLOY.md`](./PLAN-SCALE-DEPLOY.md)
@@ -93,11 +93,11 @@ Address the INFO-level findings before they become MEDIUM.
 - Refactor oversized files (`endpoints/system.js` 1615 LOC, `helpers/updateENV.js` 1521 LOC)
 - Pin critical top-level deps (`langchain`, `openai`) to avoid silent minor drift
 
-### E7 — Governance & Repo Hygiene
+### E7 — Governance & Repo Hygiene ✅
 Make the repo self-serve for contributors.
 
-- `.github/ISSUE_TEMPLATE/` (bug + feature + audit-finding)
-- `CODEOWNERS`
+- ✅ `.github/ISSUE_TEMPLATE/` (bug + feature + audit-finding)
+- ✅ `CODEOWNERS`
 - Keep `ROADMAP.md` / `BACKLOG.md` / this file in sync each sprint
 
 ### E8 — Post-MVP Product Bets (already planned)
@@ -123,11 +123,11 @@ Tracked in existing plan docs; not blocking production.
 ## Definition of Done (product-level)
 
 - [ ] CEO Audit Testing axis ≥ 90 (overall ≥ 97)
-- [ ] Politician DB populated + semantic search returns results in prod
+- [ ] Politician DB populated + semantic search returns results in prod (DB populated ✅, pgvector pending)
 - [ ] All external-API callers time-bounded + degrade gracefully
 - [ ] One-command production deploy (Docker or Helm) documented + tested
-- [ ] Issue templates + CODEOWNERS in place
-- [ ] ROADMAP / BACKLOG / this file reconciled
+- [x] Issue templates + CODEOWNERS in place
+- [x] ROADMAP / BACKLOG / this file reconciled
 
 ---
 

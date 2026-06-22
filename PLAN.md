@@ -2,7 +2,7 @@
 
 > **Erstellt:** 2026-06-22  
 > **Phase:** 9 — Security & Operations Hardening  
-> **Status:** 🚧 IN PROGRESS  
+> **Status:** ✅ COMPLETE  
 > **Roadmap:** [ROADMAP.md](ROADMAP.md) — Phase 9  
 > **Auslöser:** Phase 8 abgeschlossen (Docs UI Polish). Nächster logischer Schritt: Produktions-Readiness aus `docs/PLAN-PRODUCTION-READINESS.md` umsetzen, beginnend mit Sicherheits- und Operations-Doku sowie Repo-Governance.
 

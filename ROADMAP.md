@@ -1,10 +1,10 @@
 # OpenSIN Chat — ROADMAP (GSD-Style)
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
-> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅, Phase 7 ✅ COMPLETE (Docs Overhaul), Phase 8 ✅ COMPLETE (Docs UI Polish), Phase 9 ✅ COMPLETE (Security & Operations Hardening)  
+> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅, Phase 7 ✅ COMPLETE (Docs Overhaul), Phase 8 ✅ COMPLETE (Docs UI Polish), Phase 9 ✅ COMPLETE (Security & Operations Hardening), Phase 10 🚧 PLANNED (Production Readiness — Next Epics)  
 > **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
 > **Letztes Update:** 2026-06-22  
-> **Aktueller PLAN:** [PLAN.md](PLAN.md) — Phase 9: Security & Operations Hardening ✅ COMPLETE
+> **Aktueller PLAN:** [docs/PLAN-PRODUCTION-READINESS.md](docs/PLAN-PRODUCTION-READINESS.md) — Phase 10: Production Readiness — Next Epics 🚧 PLANNED
 
 ---
 
@@ -305,6 +305,28 @@
 
 ---
 
+## Phase 10: Production Readiness — Next Epics 🚧 **PLANNED**
+
+> **Zeitraum:** TBD  
+> **Ziel:** Remaining epics from `docs/PLAN-PRODUCTION-READINESS.md` umsetzen: E1 Testing & Quality Gates, E2 Politician Data & Vector Search, E3 Resilience & External-API Hardening, E4 Terminal Endpoint UI, E6 Code Quality & Dependency Hygiene.  
+> **Auslöser:** Phase 9 abgeschlossen. CEO Plan empfiehlt Sequenz: E1 → E2 → E3 → E4 (UI) → E5/E6.
+
+### Deliverables
+
+| Wave | Inhalt | Status |
+|---|---|---|
+| 1 | E1 Testing & Quality Gates (Test-Score ≥ 90) | 🚧 |
+| 2 | E2 Politician Data & Vector Search (pgvector) | 🚧 |
+| 3 | E3 Resilience & External-API Hardening | 🚧 |
+| 4 | E4 Terminal Endpoint UI (`/api/terminal/exec`) | 🚧 |
+| 5 | E6 Code Quality & Dependency Hygiene | 🚧 |
+
+### Verifikation
+
+- TBD — tracked in `docs/PLAN-PRODUCTION-READINESS.md`.
+
+---
+
 ## Appendix: GitHub Issues Tracker
 
 | Issue | Titel | Phase | Status |
@@ -359,7 +381,7 @@
 
 ---
 
-*Next Milestone: All planned work complete. Production is live at sinchat.delqhi.com.*  
+*Next Milestone: Phase 10 — Production Readiness epics (testing, data, resilience, terminal UI, dependency hygiene).*  
 *Owner: @OpenSIN-AI*  
 *Updated: 2026-06-22*  
-*Current PLAN: [PLAN.md](PLAN.md)*
+*Current PLAN: [docs/PLAN-PRODUCTION-READINESS.md](docs/PLAN-PRODUCTION-READINESS.md)*
