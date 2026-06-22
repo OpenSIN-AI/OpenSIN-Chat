@@ -104,17 +104,51 @@ function stripLeadingReasoningLines(text) {
 }
 
 /**
- * Strip leading paragraphs that consist solely of reasoning markers. If the
- * first paragraph is not reasoning, the whole text is preserved, so multi-
- * paragraph enhanced prompts are not truncated.
+ * Strip leading paragraphs that consist solely of reasoning markers, or whose
+ * body is dominated by reasoning markers. If the first paragraph is not
+ * reasoning, the whole text is preserved, so multi-paragraph enhanced prompts
+ * are not truncated.
  * @param {string} text
  * @returns {string}
  */
 function stripLeadingReasoningParagraphs(text) {
   const paragraphs = text.split(/\n\n+/).filter((p) => p.trim());
   let start = 0;
-  while (start < paragraphs.length && isReasoningPrefix(paragraphs[start])) {
-    start++;
+  while (start < paragraphs.length) {
+    const paragraph = paragraphs[start];
+    if (isReasoningPrefix(paragraph)) {
+      start++;
+      continue;
+    }
+    // If the paragraph still contains reasoning markers after the first
+    // sentence was stripped, it is likely a leftover reasoning block, not the
+    // answer. This preserves same-paragraph answers ("What are the key...").
+    const reasoningMarkers = [
+      /\bI need to\b/i,
+      /\bI should\b/i,
+      /\bI will\b/i,
+      /\bI'll\b/i,
+      /\bLet me\b/i,
+      /\bI want to\b/i,
+      /\bI think\b/i,
+      /\bActually\b/i,
+      /\bWait\b/i,
+      /\bHmm\b/i,
+      /\bOkay\b/i,
+      /\bAlright\b/i,
+      /\bTo do this\b/i,
+      /\bHere is\b/i,
+      /\bHere are\b/i,
+    ];
+    const markerCount = reasoningMarkers.reduce(
+      (count, rx) => count + (rx.test(paragraph) ? 1 : 0),
+      0,
+    );
+    if (markerCount >= 2) {
+      start++;
+      continue;
+    }
+    break;
   }
   const result = paragraphs.slice(start).join("\n\n").trim();
   return result;
@@ -130,9 +164,14 @@ function stripLeadingReasoningParagraphs(text) {
  */
 function extractEnhancedPrompt(text, fallback) {
   if (typeof text !== "string" || !text.trim()) return fallback;
-  let cleaned = stripReasoningTags(text);
+  let cleaned = stripReasoningTags(text).trim();
+  // Catch the common single-paragraph case where reasoning and answer share a
+  // paragraph ("The user wants me to ... Here is the prompt: ...").
   cleaned = stripFirstSentenceIfReasoning(cleaned);
-  cleaned = stripLeadingReasoningLines(cleaned);
+  // Strip leading paragraphs that are reasoning blocks (multi-paragraph
+  // chain-of-thought). This runs after sentence stripping so a paragraph that
+  // contains only reasoning markers is removed, while a paragraph that is the
+  // actual answer is kept.
   cleaned = stripLeadingReasoningParagraphs(cleaned);
   // Remove surrounding quotes / smart quotes the model may have added.
   cleaned = cleaned.replace(/^[“”"']+|[“”"']+$/g, "").trim();
