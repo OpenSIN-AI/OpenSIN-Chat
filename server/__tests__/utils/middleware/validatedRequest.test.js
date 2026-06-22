@@ -86,12 +86,23 @@ describe("validatedRequest", () => {
     expect(response.body.id.length).toBeGreaterThan(0);
   });
 
-  it("passes through in production when only AUTH_TOKEN is missing (single-user no-password deployment)", async () => {
-    // Regression guard: the previous behavior was to 503 whenever either env
-    // var was missing. That silently broke single-user deployments that set
-    // JWT_SECRET (for session signing) but intentionally left AUTH_TOKEN unset
-    // so the login endpoint auto-grants a token. See PR / AGENTS.md for the
-    // contract.
+  it("requires a valid session token in production when only AUTH_TOKEN is missing (single-user no-password deployment)", async () => {
+    process.env.NODE_ENV = "production";
+    delete process.env.AUTH_TOKEN;
+    process.env.JWT_SECRET = "secret";
+    const { request, response } = mockReqRes({ authHeader: "Bearer valid-token" });
+    const next = jest.fn();
+    decodeJWT.mockReturnValue({ id: 42 });
+    User.get.mockResolvedValue({ id: 42, username: "test", role: "admin" });
+
+    await validatedRequest(request, response, next);
+
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(response.statusCode).toBeNull();
+    expect(response.locals.user).toEqual({ id: 42, username: "test", role: "admin" });
+  });
+
+  it("rejects requests without a session token in production single-user no-password mode", async () => {
     process.env.NODE_ENV = "production";
     delete process.env.AUTH_TOKEN;
     process.env.JWT_SECRET = "secret";
@@ -100,11 +111,12 @@ describe("validatedRequest", () => {
 
     await validatedRequest(request, response, next);
 
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(response.statusCode).toBeNull(); // success path never wrote a status
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(401);
+    expect(response.body.error).toMatch(/No auth token found/i);
   });
 
-  it("passes through in production when only JWT_SECRET is missing (legacy single-user plain AUTH_TOKEN deployment)", async () => {
+  it("rejects in production when JWT_SECRET is missing (AUTH_TOKEN deployments need it for token validation)", async () => {
     process.env.NODE_ENV = "production";
     process.env.AUTH_TOKEN = "my-token";
     delete process.env.JWT_SECRET;
@@ -113,8 +125,9 @@ describe("validatedRequest", () => {
 
     await validatedRequest(request, response, next);
 
-    expect(next).toHaveBeenCalledTimes(1);
-    expect(response.statusCode).toBeNull();
+    expect(next).not.toHaveBeenCalled();
+    expect(response.statusCode).toBe(401);
+    expect(response.body.error).toMatch(/not configured for authentication/i);
   });
 
   it("falls through to dev escape hatch when AUTH_TOKEN unset in development", async () => {

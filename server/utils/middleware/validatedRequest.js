@@ -78,13 +78,7 @@ async function validatedRequest(request, response, next) {
   }
 
   // When in development or test mode passthrough auth token for ease of development.
-  // Or if the user simply did not set an Auth token or JWT Secret
-  if (
-    process.env.NODE_ENV === "development" ||
-    process.env.NODE_ENV === "test" ||
-    !process.env.AUTH_TOKEN ||
-    !process.env.JWT_SECRET
-  ) {
+  if (process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test") {
     // In test mode, provide a real user context so integration tests can
     // exercise endpoints that call userFromSession without a full auth flow.
     // Creating/looking up a stable test user ensures foreign-key constraints
@@ -112,6 +106,42 @@ async function validatedRequest(request, response, next) {
     }
     next();
     return;
+  }
+
+  // Single-user mode (no AUTH_TOKEN). If JWT_SECRET is configured, we must
+  // still validate the session token so system endpoints are not public.
+  if (!process.env.AUTH_TOKEN && process.env.JWT_SECRET) {
+    const auth = request.header("Authorization");
+    const token = auth ? auth.split(" ")[1] : null;
+    if (!token) {
+      return response.status(401).json({
+        error: "No auth token found.",
+      });
+    }
+
+    const valid = decodeJWT(token);
+    if (!valid || !valid.id) {
+      return response.status(401).json({
+        error: "Invalid auth token.",
+      });
+    }
+
+    const user = await User.get({ id: valid.id });
+    if (!user) {
+      return response.status(401).json({
+        error: "Invalid auth for user.",
+      });
+    }
+
+    response.locals.user = user;
+    return next();
+  }
+
+  // If neither AUTH_TOKEN nor JWT_SECRET is set, we cannot validate anything.
+  if (!process.env.AUTH_TOKEN || !process.env.JWT_SECRET) {
+    return response.status(401).json({
+      error: "Server is not configured for authentication.",
+    });
   }
 
   if (!process.env.AUTH_TOKEN) {
