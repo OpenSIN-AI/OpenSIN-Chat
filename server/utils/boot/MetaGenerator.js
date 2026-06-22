@@ -442,8 +442,9 @@ class MetaGenerator {
     const isCritical = (p) => {
       if (p === "/index.css") return true;
       if (p === "/vendor.css") return true;
-      if (isDocs && p === "/Docs.css") return true;
-      if (isDocs && p === "/vendor-highlight.css") return true;
+      // Docs pages need all markdown/rendering styles synchronously; async
+      // preload tags with inline onload handlers violate our nonce-based CSP.
+      if (isDocs && (p === "/Docs.css" || p === "/vendor-highlight.css" || p === "/vendor-katex.css" || p === "/markdown.css")) return true;
       return false;
     };
 
@@ -473,7 +474,7 @@ class MetaGenerator {
     const preloadTags = this.#buildPreloadTags(filteredJs);
     const cssTags = this.#buildCssTags(css, routePath);
     const rootContent = prerenderedBody
-      ? prerenderedBody
+      ? `<div id="root" class="h-screen">${prerenderedBody}</div>`
       : '<div id="root" class="h-screen"></div>';
     response
       .status(code)

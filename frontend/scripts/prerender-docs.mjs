@@ -484,7 +484,11 @@ function renderPage(entry) {
 <div class="flex flex-col h-screen w-screen bg-theme-bg-primary text-theme-text-primary overflow-hidden">
   <header class="flex items-center justify-between gap-4 px-4 md:px-6 h-14 border-b border-theme-sidebar-border shrink-0">
     <div class="flex items-center gap-3">
+      <button type="button" aria-label="Navigation" class="lg:hidden flex items-center justify-center w-8 h-8 rounded-lg border-none bg-transparent hover:bg-theme-sidebar-item-hover text-theme-text-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
       <a href="/docs" class="flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-theme-text-primary"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
         <span class="font-semibold">Entwickler-Dokumentation</span>
       </a>
     </div>
@@ -492,6 +496,9 @@ function renderPage(entry) {
       <a href="/" class="flex items-center gap-2 text-sm text-theme-text-secondary hover:text-theme-text-primary transition-colors">
         <span class="hidden sm:inline">Zurück zur App</span>
       </a>
+      <button type="button" aria-label="Theme" class="flex items-center justify-center w-8 h-8 rounded-lg border-none cursor-pointer transition-all bg-transparent hover:bg-theme-sidebar-item-hover text-theme-text-primary flex-shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>
+      </button>
     </div>
   </header>
   <div class="flex flex-1 min-h-0">
