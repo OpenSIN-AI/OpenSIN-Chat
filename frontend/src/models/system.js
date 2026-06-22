@@ -690,6 +690,35 @@ const System = {
         return { success: false, error: e.message };
       });
   },
+  execTerminalCommand: async function ({ command, cwd = "/app" }) {
+    return await fetch(`${API_BASE}/terminal/exec`, {
+      method: "POST",
+      headers: baseHeaders(),
+      body: JSON.stringify({ command, cwd }),
+    })
+      .then(async (res) => {
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          return {
+            ...data,
+            status: res.status,
+            error:
+              data.error ||
+              `Terminal execution failed with status ${res.status}`,
+          };
+        }
+        return {
+          stdout: data.stdout || "",
+          stderr: data.stderr || "",
+          exitCode: data.exitCode ?? 0,
+          status: res.status,
+        };
+      })
+      .catch((e) => {
+        console.error(e);
+        return { stdout: "", stderr: "", exitCode: -1, error: e.message };
+      });
+  },
   deleteChat: async (chatId) => {
     return await fetch(`${API_BASE}/system/workspace-chats/${chatId}`, {
       method: "DELETE",

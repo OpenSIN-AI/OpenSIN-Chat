@@ -414,6 +414,12 @@ const SidebarOptions = ({ user = null, t }: any) => (
               roles: ["admin"],
             },
             {
+              btnText: t("settings.terminal"),
+              href: paths.settings.terminal(),
+              flex: true,
+              roles: ["admin"],
+            },
+            {
               btnText: t("settings.system-prompt-variables"),
               href: paths.settings.systemPromptVariables(),
               flex: true,

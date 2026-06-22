@@ -216,6 +216,9 @@ export default {
     politicianSync: () => {
       return "/settings/politician-sync";
     },
+    terminal: () => {
+      return "/settings/terminal";
+    },
   },
   pdfAnalysis: () => {
     return "/pdf-analysis";

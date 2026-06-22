@@ -1204,6 +1204,7 @@ const TRANSLATIONS = {
     security: "Security",
     "event-logs": "Event Logs",
     "scheduled-jobs": "Scheduled Jobs",
+    terminal: "Terminal",
     privacy: "Privacy & Data",
     "ai-providers": "AI Providers",
     "agent-skills": "Agent Skills",
@@ -4186,6 +4187,22 @@ const TRANSLATIONS = {
     terminal_placeholder: "Enter command...",
     terminal_unavailable:
       "Terminal unavailable. Make sure the server provides the /api/terminal/exec endpoint.",
+  },
+  terminal: {
+    title: "Terminal",
+    description: "Execute server-side commands directly from the admin UI.",
+    warning:
+      "Warning: this is an admin-only feature. The server must enable terminal execution via ENABLE_TERMINAL_EXEC=true.",
+    commandLabel: "Command",
+    commandPlaceholder: "Enter a command...",
+    cwdLabel: "Working directory",
+    execute: "Execute",
+    executing: "Executing...",
+    output: "Output",
+    exitCode: "Exit code",
+    noOutput: "(no output)",
+    missingCommand: "Please enter a command.",
+    disabled: "Terminal execution is disabled on this server.",
   },
   agentSidebarLists: {
     agentSkills: "Agent Skills",

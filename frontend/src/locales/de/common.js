@@ -771,6 +771,7 @@ const TRANSLATIONS = {
     embeds: "Chat-Einbettung",
     security: "Sicherheit",
     "event-logs": "Ereignisprotokolle",
+    terminal: "Terminal",
     privacy: "Datenschutz & Datenverarbeitung",
     "ai-providers": "KI-Anbieter",
     "agent-skills": "Agentenfähigkeiten",
@@ -4283,7 +4284,23 @@ const TRANSLATIONS = {
     tab_terminal: "Terminal",
     terminal_placeholder: "Befehl eingeben...",
     terminal_unavailable:
-      "Terminal nicht verfügbar. Stellen Sie sicher, dass der Server den /api/terminal/exec-Endpunkt bereitstellt.",
+      "Terminal nicht verfügbar. Stelle sicher, dass der Server den /api/terminal/exec Endpoint bereitstellt.",
+  },
+  terminal: {
+    title: "Terminal",
+    description: "Führe Server-Befehle direkt über die Admin-Oberfläche aus.",
+    warning:
+      "Warnung: Dies ist eine Admin-Funktion. Der Server muss Terminal-Ausführung über ENABLE_TERMINAL_EXEC=true aktivieren.",
+    commandLabel: "Befehl",
+    commandPlaceholder: "Befehl eingeben...",
+    cwdLabel: "Arbeitsverzeichnis",
+    execute: "Ausführen",
+    executing: "Wird ausgeführt...",
+    output: "Ausgabe",
+    exitCode: "Exit-Code",
+    noOutput: "(keine Ausgabe)",
+    missingCommand: "Bitte gib einen Befehl ein.",
+    disabled: "Terminal-Ausführung ist auf diesem Server deaktiviert.",
   },
   agentSidebarLists: {
     agentSkills: "Agenten-Fähigkeiten",

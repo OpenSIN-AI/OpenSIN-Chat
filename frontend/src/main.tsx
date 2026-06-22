@@ -323,6 +323,16 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: "/settings/terminal",
+        lazy: async () => {
+          const { default: AdminTerminal } =
+            await import("@/pages/Admin/Terminal");
+          return {
+            element: <AdminRoute Component={AdminTerminal} />,
+          };
+        },
+      },
+      {
         path: "/settings/browser-extension",
         lazy: async () => {
           const { default: GeneralBrowserExtension } =
