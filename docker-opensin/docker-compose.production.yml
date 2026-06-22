@@ -1,12 +1,14 @@
 # Production override for the OCI VM (sin-supabase).
 # Applied on top of docker-compose.yml via:
 #   docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+#
+# The host port is controlled via COMPOSE_PORT in docker-opensin/.env
+# (set to 38471 on sin-supabase). This override only sets the container name
+# and resource limits to avoid duplicate port mappings.
 name: opensin-chat
 services:
   opensin-chat:
     container_name: opensin-app
-    ports:
-      - "38471:3001"
     deploy:
       resources:
         limits:

@@ -33,7 +33,13 @@ cd docker-opensin
 docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
 ```
 
-Der Base-Port und der Container-Name sind per Env-Var überschreibbar:
+Der Base-Port und der Container-Name sind per Env-Var überschreibbar. Auf
+`sin-supabase` muss `docker-opensin/.env` diese Werte enthalten:
+
+```bash
+COMPOSE_PORT=38471
+COMPOSE_CONTAINER_NAME=opensin-app
+```
 
 | Variable | Standard | Produktion |
 |---|---|---|

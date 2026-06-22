@@ -24,6 +24,17 @@ git checkout -f "origin/${BRANCH}" -- . ':!server/storage' ':!server/storage-ope
 
 cd "${COMPOSE_DIR}"
 
+# Ensure production port and container name are set in .env so the base
+# docker-compose.yml uses the correct values and no duplicate ports appear.
+if ! grep -qE '^COMPOSE_PORT=' .env; then
+  echo 'COMPOSE_PORT=38471' >> .env
+  echo '[deploy] Added COMPOSE_PORT=38471 to .env'
+fi
+if ! grep -qE '^COMPOSE_CONTAINER_NAME=' .env; then
+  echo 'COMPOSE_CONTAINER_NAME=opensin-app' >> .env
+  echo '[deploy] Added COMPOSE_CONTAINER_NAME=opensin-app to .env'
+fi
+
 echo "[deploy] Building production image (no cache)..."
 docker compose -f docker-compose.yml -f docker-compose.production.yml build --no-cache
 
