@@ -30,6 +30,8 @@ const DIP_PUBLIC_API_KEY =
   process.env.DIP_API_KEY ||
   DIP_PUBLIC_DEMO_KEY;
 
+const { ResilientHttpClient } = require("../helpers/resilientHttpClient");
+
 const MAX_RETRIES = Number(process.env.POLITICIAN_API_MAX_RETRIES ?? 3);
 const RETRY_DELAY_MS = Number(
   process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000,
@@ -50,11 +52,15 @@ const RETRY_DELAY_MS = Number(
 
 class PlenarScraper {
   constructor() {
-    this.maxRetries = 3;
-    this.retryDelayMs = 1000;
-    this.rateLimitDelayMs = 1000;
-    this.fetchTimeoutMs = 30000;
-    this.lastRequestTime = 0;
+    this.http = new ResilientHttpClient({
+      timeoutMs: 30_000,
+      maxRetries: MAX_RETRIES,
+      retryDelayMs: RETRY_DELAY_MS,
+      rateLimitDelayMs: 1000,
+      circuitBreakerThreshold: 5,
+      circuitBreakerCooldownMs: 60_000,
+      cacheTtlMs: 0, // plenar protocols are large; disable caching
+    });
   }
 
   log(text, ...args) {
@@ -62,49 +68,21 @@ class PlenarScraper {
     console.log(`\x1b[32m[PlenarScraper]\x1b[0m ${text}`, ...args);
   }
 
+  clearCache() {
+    this.http.reset();
+  }
+
   /**
-   * Rate-limited fetch with exponential backoff + Retry-After support.
+   * Fetch via the shared resilient HTTP client.
    * @param {string} url
    * @param {Object} [opts]
    * @returns {Promise<Response>}
    */
   async #fetch(url, opts = {}) {
-    const now = Date.now();
-    const elapsed = now - this.lastRequestTime;
-    if (elapsed < this.rateLimitDelayMs)
-      await new Promise((r) => setTimeout(r, this.rateLimitDelayMs - elapsed));
-
-    this.lastRequestTime = Date.now();
-
-    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-      const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), this.fetchTimeoutMs);
-      try {
-        const res = await fetch(url, {
-          headers: { "User-Agent": "OpenSIN-Chat/1.0" },
-          signal: ctrl.signal,
-          ...opts,
-        });
-        clearTimeout(t);
-        if (!res.ok) {
-          if (res.status < 500 && res.status !== 429) return res;
-          if (res.status === 429) {
-            const retryAfter = res.headers.get("Retry-After");
-            const wait = retryAfter ? Number(retryAfter) * 1000 : 0;
-            if (wait) await new Promise((r) => setTimeout(r, wait));
-          }
-        }
-        return res;
-      } catch (err) {
-        clearTimeout(t);
-        if (err.name === "AbortError") throw err;
-        if (attempt === MAX_RETRIES) throw err;
-        const delay =
-          RETRY_DELAY_MS * Math.pow(2, attempt) + Math.random() * 1000;
-        await new Promise((r) => setTimeout(r, delay));
-      }
-    }
-    throw new Error("Unreachable: retry loop exited");
+    return this.http.fetch(url, {
+      headers: { "User-Agent": "OpenSIN-Chat/1.0" },
+      ...opts,
+    });
   }
 
   /**

@@ -61,15 +61,19 @@ production.
 - 🚧 Bundestag 21. WP migration + Abgeordnetenwatch API v2 fields
 - ✅ Full-text search over speeches / protocols (SQLite FTS fallback)
 
-### E3 — Resilience & External-API Hardening
+### E3 — Resilience & External-API Hardening ✅
+> Plan: [`PLAN-RESILIENCE.md`](./PLAN-RESILIENCE.md)
 > Extends the timeout/abort/retry work already merged on `main`.
 Make every outbound call to a third-party API (Bundestag DIP,
 Abgeordnetenwatch, AfD RSS, web search) uniformly time-bounded, cached, and
 degradable. Relates to issue #52.
 
-- Shared server-side `fetchWithTimeout` everywhere (done for 3 proxies)
-- Short-TTL cache layer for external responses (stale-while-revalidate)
-- Circuit-breaker + cached-fallback when an upstream is down
+- ✅ Shared server-side `fetchWithTimeout` everywhere (done for 3 proxies)
+- ✅ Shared `ResilientHttpClient` with timeout, retry, rate limit, circuit breaker
+- ✅ Short-TTL cache layer for external responses (stale-while-revalidate)
+- ✅ Circuit-breaker + cached-fallback when an upstream is down
+- ✅ Politician sync API callers (Bundestag, Abgeordnetenwatch, PlenarScraper) migrated
+- 🚧 Remaining external callers (web search, RSS, AfD feeds) — future work
 
 ### E4 — Requested Endpoints ✅
 > Plan: inline below + issues #53, #54.

@@ -21,6 +21,8 @@ const ABGEORDNETENWATCH_BASE = "https://www.abgeordnetenwatch.de/api/v2";
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 const CACHE_MAX_ENTRIES = 500;
 
+const { ResilientHttpClient } = require("../helpers/resilientHttpClient");
+
 const MAX_RETRIES = Number(process.env.POLITICIAN_API_MAX_RETRIES ?? 3);
 const RETRY_DELAY_MS = Number(
   process.env.POLITICIAN_API_RETRY_DELAY_MS ?? 1000,
@@ -69,12 +71,16 @@ class AbgeordnetenwatchApi {
   constructor(opts = {}) {
     this.baseUrl = ABGEORDNETENWATCH_BASE;
     this.parliamentPeriod = opts.parliamentPeriod || DEFAULT_PARLIAMENT_PERIOD;
-    this.maxRetries = 3;
-    this.retryDelayMs = 1000;
-    this.rateLimitDelayMs = 500;
-    this.fetchTimeoutMs = 30000;
-    this.lastRequestTime = 0;
-    this.cache = new Map();
+    this.http = new ResilientHttpClient({
+      timeoutMs: 30_000,
+      maxRetries: MAX_RETRIES,
+      retryDelayMs: RETRY_DELAY_MS,
+      rateLimitDelayMs: 500,
+      circuitBreakerThreshold: 5,
+      circuitBreakerCooldownMs: 60_000,
+      cacheTtlMs: CACHE_TTL_MS,
+      cacheMaxEntries: CACHE_MAX_ENTRIES,
+    });
   }
 
   log(text, ...args) {
@@ -83,46 +89,12 @@ class AbgeordnetenwatchApi {
   }
 
   /**
-   * Rate-limited fetch with exponential backoff + Retry-After support.
+   * Fetch via the shared resilient HTTP client.
    * @param {string} url
    * @returns {Promise<Response>}
    */
   async #fetch(url) {
-    const now = Date.now();
-    const elapsed = now - this.lastRequestTime;
-    if (elapsed < this.rateLimitDelayMs)
-      await new Promise((r) => setTimeout(r, this.rateLimitDelayMs - elapsed));
-
-    this.lastRequestTime = Date.now();
-
-    for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
-      const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), this.fetchTimeoutMs);
-      try {
-        const res = await fetch(url, {
-          headers: { Accept: "application/json" },
-          signal: ctrl.signal,
-        });
-        clearTimeout(t);
-        if (!res.ok) {
-          if (res.status < 500 && res.status !== 429) return res;
-          if (res.status === 429) {
-            const retryAfter = res.headers.get("Retry-After");
-            const wait = retryAfter ? Number(retryAfter) * 1000 : 0;
-            if (wait) await new Promise((r) => setTimeout(r, wait));
-          }
-        }
-        return res;
-      } catch (err) {
-        clearTimeout(t);
-        if (err.name === "AbortError") throw err;
-        if (attempt === MAX_RETRIES) throw err;
-        const delay =
-          RETRY_DELAY_MS * Math.pow(2, attempt) + Math.random() * 1000;
-        await new Promise((r) => setTimeout(r, delay));
-      }
-    }
-    throw new Error("Unreachable: retry loop exited");
+    return this.http.fetch(url, { headers: { Accept: "application/json" } });
   }
 
   /**
@@ -131,38 +103,13 @@ class AbgeordnetenwatchApi {
    * @returns {Promise<any>}
    */
   async #fetchCached(url) {
-    const cached = await this.#cacheGet(url);
-    if (cached !== null) return cached;
-
     const res = await this.#fetch(url);
     if (!res.ok) {
       this.log(`HTTP ${res.status} for ${url}`);
       res.text?.().catch(() => {});
       return null;
     }
-    const data = await res.json();
-    this.cache.set(url, { data, ts: Date.now() });
-    if (this.cache.size > CACHE_MAX_ENTRIES) {
-      const oldest = this.cache.keys().next().value;
-      if (oldest) this.cache.delete(oldest);
-    }
-    return data;
-  }
-
-  /**
-   * Read from the in-memory cache with opportunistic eviction of expired
-   * entries so stale keys do not accumulate on long-running servers.
-   * @param {string} url
-   * @returns {Promise<any>} cached payload, or null if missing/expired.
-   */
-  async #cacheGet(url) {
-    const cached = this.cache.get(url);
-    if (!cached) return null;
-    if (Date.now() - cached.ts > CACHE_TTL_MS) {
-      this.cache.delete(url);
-      return null;
-    }
-    return cached.data;
+    return res.json();
   }
 
   /**
@@ -519,7 +466,7 @@ class AbgeordnetenwatchApi {
 
   /** Clear the in-memory cache. */
   clearCache() {
-    this.cache.clear();
+    this.http.reset();
   }
 }
 

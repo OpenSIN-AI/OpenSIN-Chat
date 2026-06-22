@@ -15,6 +15,14 @@ module.exports = {
     "!**/__tests__/**",
   ],
   coverageDirectory: "coverage",
+  coverageThreshold: {
+    global: {
+      statements: 21,
+      branches: 15,
+      functions: 18,
+      lines: 21,
+    },
+  },
   verbose: true,
   testTimeout: 10000,
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],

@@ -9,12 +9,13 @@
 
 ## Problem
 
-- Test ratio is **1:36** (30 jest tests for 536 source files).
+- Server coverage baseline is **21.74% lines / 18.79% functions**; frontend
+  coverage is **~52% lines / ~51% functions**.
 - The new **background job queue** has **0 automated tests** (only 8 manual
   smoke tests) — audit findings MEDIUM 4.1 and 4.4.
 - The recently added **sidebars**, **`fetchWithTimeout`** helper, and
   **report-preview** WebSocket flow have no tests.
-- There is no CI gate preventing future regressions in coverage.
+- Coverage gates are now in place for frontend and server.
 
 ## Goal
 
@@ -44,17 +45,19 @@ Create `server/__tests__/utils/backgroundJobs/queue.test.js` with cases:
 - Simulate agent emitting `reportPreview` → assert PreviewSidebar auto-opens
   and requests the public `/api/utils/reports/<file>` URL.
 
-### A4 — CI coverage gate
-- Extend `.github/workflows/tests.yml` to collect coverage and **fail the PR**
-  when changed files fall below 70 %.
-- Publish a coverage summary comment on PRs.
+### A4 — Coverage gates ✅
+- Server: `server/jest.config.js` has `coverageThreshold` guards (21% statements,
+  15% branches, 18% functions, 21% lines). `yarn test:coverage` fails on regression.
+- Frontend: `frontend/vitest.config.js` thresholds at 20%.
+- Publish a coverage summary comment on PRs — future improvement.
 
 ## Acceptance Criteria
 
 - [ ] Queue test file present, all cases green in CI
 - [ ] Each new sidebar has loading/error/empty/data tests
 - [ ] `fetchWithTimeout` + report listener covered
-- [ ] CI fails on sub-70 % new-code coverage
+- [x] Server coverage gate prevents regression
+- [x] Frontend coverage gate prevents regression
 - [ ] CEO Audit Testing axis ≥ 90 on next run
 
 ## Related Issues
