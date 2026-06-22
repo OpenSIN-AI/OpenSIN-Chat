@@ -40,9 +40,10 @@ It exports three helpers:
 - **Production static branch:** The frontend catch-all (`MetaGenerator`) and
   static file serving are skipped in both `development` and `test` to avoid
   shadowing the API routes.
-- **WebSocket setup:** `express-ws` is initialized in non-test, non-HTTPS mode
-  before `agentWebsocket(app, "/api")`. In HTTPS mode, `bootSSL` handles the
-  WebSocket server attachment.
+- **WebSocket setup:** `express-ws` is initialized in non-test mode before
+  `agentWebsocket(app, "/api")` so the `.ws` route is always registered. In HTTPS
+  mode, `bootSSL` re-initializes `express-ws` with the actual HTTPS server so
+  WebSocket upgrades are handled by the listening server.
 
 ## Usage
 

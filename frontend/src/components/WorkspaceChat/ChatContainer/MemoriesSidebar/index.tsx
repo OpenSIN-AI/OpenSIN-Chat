@@ -2,10 +2,7 @@
 import { useState } from "react";
 import { X } from "@phosphor-icons/react/dist/csr/X";
 import { ChatCircleText } from "@phosphor-icons/react/dist/csr/ChatCircleText";
-import { Files } from "@phosphor-icons/react/dist/csr/Files";
-import { FileText } from "@phosphor-icons/react/dist/csr/FileText";
 import { Globe } from "@phosphor-icons/react/dist/csr/Globe";
-import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import ChatSidebar from "../ChatSidebar";
@@ -19,31 +16,26 @@ import { safeJsonParse } from "@/utils/request";
 
 export { useMemoriesSidebar } from "../ChatSidebar";
 
-// ── Helper: determine source icon for workspace docs ──────────────────────────
-function getDocType(doc: any) {
+// ── Helpers: identify URL sources and extract their address ───────────────────
+function isUrlDoc(doc: any) {
   const metadata = safeJsonParse(doc.metadata, {});
   const docpath = doc.docpath || "";
   const filename = doc.filename || "";
-  if (
-    metadata?.url ||
-    metadata?.sourceUrl ||
+  return (
+    !!metadata?.url ||
+    !!metadata?.sourceUrl ||
     docpath.includes("link") ||
     filename.startsWith("http")
-  )
-    return { icon: Globe, type: "url" };
-  if (
-    docpath.includes("api") ||
-    docpath.includes("db") ||
-    metadata?.connectionString
-  )
-    return { icon: Database, type: "db" };
-  return { icon: FileText, type: "document" };
+  );
 }
 
-function docTypeLabel(t, type) {
-  if (type === "url") return t("chat_window.source_type_url");
-  if (type === "db") return t("chat_window.source_type_database");
-  return t("chat_window.source_type_document");
+function getUrlFromDoc(doc: any) {
+  const metadata = safeJsonParse(doc.metadata, {});
+  const filename = doc.filename || "";
+  if (metadata?.url) return metadata.url;
+  if (metadata?.sourceUrl) return metadata.sourceUrl;
+  if (filename.startsWith("http")) return filename;
+  return doc.docpath || "";
 }
 
 // ── Chats tab ─────────────────────────────────────────────────────────────────
@@ -119,15 +111,15 @@ function WorkspaceChatsTab({ workspace, onClose }: any) {
   );
 }
 
-// ── Files tab ─────────────────────────────────────────────────────────────────
-function WorkspaceFilesTab({ workspace }: any) {
+// ── URLs tab ──────────────────────────────────────────────────────────────────
+function WorkspaceUrlsTab({ workspace }: any) {
   const { t } = useTranslation();
-  const docs: any[] = workspace?.documents || [];
+  const docs: any[] = (workspace?.documents || []).filter(isUrlDoc);
 
   if (docs.length === 0) {
     return (
       <p className="text-sm text-zinc-400 light:text-slate-500 text-center py-6">
-        {t("chat_window.no_workspace_sources", "Keine Dateien im Workspace.")}
+        {t("chat_window.no_urls", "Noch keine URLs hinzugefügt.")}
       </p>
     );
   }
@@ -136,24 +128,31 @@ function WorkspaceFilesTab({ workspace }: any) {
     <div className="flex flex-col gap-2 overflow-y-auto no-scroll">
       {docs.map((doc: any, idx: number) => {
         const metadata = safeJsonParse(doc.metadata, {});
-        const { icon: Icon, type } = getDocType(doc);
-        const label = docTypeLabel(t, type);
+        const url = getUrlFromDoc(doc);
+        const title = metadata?.title || doc.filename || doc.docId || url;
+        const isHttpUrl = typeof url === "string" && url.startsWith("http");
         return (
           <div key={doc.docId || idx} className="flex flex-col gap-[2px]">
             <div className="flex gap-2 items-start">
               <div className="w-4 h-4 rounded-full bg-zinc-700 light:bg-slate-200 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Icon size={10} className="text-white light:text-slate-700" />
+                <Globe size={10} className="text-white light:text-slate-700" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white light:text-slate-900 truncate leading-[15px]">
-                  {metadata?.title || doc.filename || doc.docId}
+                  {title}
                 </p>
-                <p className="text-[10px] text-zinc-400 light:text-slate-500 leading-[14px]">
-                  {label}
-                </p>
-                {metadata?.wordCount && (
-                  <p className="text-[10px] text-zinc-500 light:text-slate-400 leading-[14px]">
-                    {t("common.words", { count: metadata.wordCount })}
+                {isHttpUrl ? (
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] text-zinc-400 light:text-slate-500 leading-[14px] truncate block hover:underline"
+                  >
+                    {url}
+                  </a>
+                ) : (
+                  <p className="text-[10px] text-zinc-400 light:text-slate-500 leading-[14px] truncate">
+                    {url}
                   </p>
                 )}
               </div>
@@ -228,7 +227,7 @@ function MemoryModalWrapper() {
 function SidebarHeaderWithTabs({ workspace }: any) {
   const { t } = useTranslation();
   const { closeSidebar, enabled, activeMemories } = useMemoriesContext();
-  const [activeTab, setActiveTab] = useState<"memories" | "chats" | "files">(
+  const [activeTab, setActiveTab] = useState<"memories" | "chats" | "urls">(
     "memories",
   );
 
@@ -248,7 +247,7 @@ function SidebarHeaderWithTabs({ workspace }: any) {
         </button>
       </div>
 
-      {/* Tab switcher: Memories / Chats / Dateien */}
+      {/* Tab switcher: Memories / Chats / URLs */}
       <div className="flex items-center gap-1 shrink-0">
         <button
           type="button"
@@ -275,15 +274,15 @@ function SidebarHeaderWithTabs({ workspace }: any) {
         </button>
         <button
           type="button"
-          onClick={() => setActiveTab("files")}
+          onClick={() => setActiveTab("urls")}
           className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
-            activeTab === "files"
+            activeTab === "urls"
               ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
               : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
           }`}
         >
-          <Files size={12} weight="bold" />
-          <span>{t("chat_window.files_tab", "Dateien")}</span>
+          <Globe size={12} weight="bold" />
+          <span>{t("chat_window.urls_tab", "URLs")}</span>
         </button>
       </div>
 
@@ -304,7 +303,7 @@ function SidebarHeaderWithTabs({ workspace }: any) {
         {activeTab === "chats" && (
           <WorkspaceChatsTab workspace={workspace} onClose={closeSidebar} />
         )}
-        {activeTab === "files" && <WorkspaceFilesTab workspace={workspace} />}
+        {activeTab === "urls" && <WorkspaceUrlsTab workspace={workspace} />}
       </div>
     </div>
   );

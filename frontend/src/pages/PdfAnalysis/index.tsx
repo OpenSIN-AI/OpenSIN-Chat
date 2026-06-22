@@ -1106,25 +1106,25 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
           e.preventDefault();
           search();
         }}
-        className="flex flex-col md:flex-row gap-3 p-4 rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border"
+        className="flex flex-col gap-3 p-4 rounded-lg bg-theme-bg-secondary border border-theme-sidebar-border"
       >
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder={t("pdfAnalysis.panel.searchPlaceholder")}
           aria-label={t("pdfAnalysis.panel.searchAria")}
-          className="flex-1 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
+          className="w-full rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60 truncate min-w-0"
         />
         <input
           value={documentFilter}
           onChange={(e) => setDocumentFilter(e.target.value)}
           placeholder={t("pdfAnalysis.panel.documentFilterPlaceholder")}
           aria-label={t("pdfAnalysis.panel.documentFilterAria")}
-          className="md:w-64 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
+          className="w-full rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60 truncate min-w-0"
         />
         <button
           type="submit"
-          className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
+          className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
         >
           {t("pdfAnalysis.panel.search")}
         </button>
@@ -1156,8 +1156,8 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                   {`"${fact.quote}"`}
                 </blockquote>
               )}
-              <div className="flex flex-wrap items-center gap-2 mt-1">
-                <span className="text-xs text-theme-text-secondary">
+              <div className="flex flex-wrap items-center gap-2 mt-2 min-w-0">
+                <span className="text-xs text-theme-text-secondary truncate min-w-0 max-w-full">
                   {t("pdfAnalysis.panel.sourceLabel", {
                     docName: fact.source.documentName,
                     page: fact.source.page,
@@ -1214,33 +1214,35 @@ export function FactsPanel({ onCrossCheck }: FactsPanelProps) {
                         : t("pdfAnalysis.panel.crossCheckInconclusive")}
                   </span>
                 )}
-                <button
-                  type="button"
-                  onClick={() => onCrossCheck?.(fact.id)}
-                  className="ml-auto text-xs px-2 py-0.5 rounded-md text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
-                  aria-label={t("pdfAnalysis.panel.checkSourcesAria", {
-                    text: fact.detail.slice(0, 40),
-                  })}
-                >
-                  {t("pdfAnalysis.panel.checkSources")}
-                </button>
-                <button
-                  type="button"
-                  onClick={async () => {
-                    try {
-                      await PdfAnalysis.deleteFact(fact.id);
-                      search();
-                    } catch (e) {
-                      console.error(e);
-                    }
-                  }}
-                  className="text-xs text-red-400 hover:opacity-80"
-                  aria-label={t("pdfAnalysis.panel.deleteFactAria", {
-                    text: fact.detail.slice(0, 40),
-                  })}
-                >
-                  {t("pdfAnalysis.panel.delete")}
-                </button>
+                <div className="flex items-center gap-2 ml-auto shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => onCrossCheck?.(fact.id)}
+                    className="text-xs px-2 py-0.5 rounded-md text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
+                    aria-label={t("pdfAnalysis.panel.checkSourcesAria", {
+                      text: fact.detail.slice(0, 40),
+                    })}
+                  >
+                    {t("pdfAnalysis.panel.checkSources")}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      try {
+                        await PdfAnalysis.deleteFact(fact.id);
+                        search();
+                      } catch (e) {
+                        console.error(e);
+                      }
+                    }}
+                    className="text-xs px-2 py-0.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80 whitespace-nowrap"
+                    aria-label={t("pdfAnalysis.panel.deleteFactAria", {
+                      text: fact.detail.slice(0, 40),
+                    })}
+                  >
+                    {t("pdfAnalysis.panel.delete")}
+                  </button>
+                </div>
               </div>
             </li>
           ))}

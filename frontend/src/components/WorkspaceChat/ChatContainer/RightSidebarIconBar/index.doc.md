@@ -8,6 +8,10 @@
 
 Renders the 44px-wide vertical icon rail on the right edge of the chat workspace. It contains the panel icons (preview, filesystem, database, political, sources, memories, pdf-analysis). Clicking an icon toggles the corresponding panel via `toggleSidebar` from the `ChatSidebar` context.
 
+## Temporary changes
+
+- The **Sources / Quellen** icon is currently disabled (issue #274). It remains visible but is rendered with `opacity-50 cursor-not-allowed`, receives no `onClick` handler, and is marked `disabled` and `aria-disabled`. This prevents accidental clicks while the Sources panel is being reworked.
+
 ## Files that touch it
 
 - [`Sidebars.tsx`](../Sidebars.tsx): imports and renders the icon rail next to the active panel.
@@ -18,8 +22,8 @@ Renders the 44px-wide vertical icon rail on the right edge of the chat workspace
 ## Important config values
 
 - Rail width: `w-[44px]` (Tailwind).
-- Icon count: 6 (matches the panel types in `Sidebars.tsx`).
-- Tooltips: `react-tooltip` with 300ms delay, placed left.
+- Icon count: 7 (preview, filesystem, database, political, sources, memories, pdf-analysis). The Sources icon is disabled but still rendered.
+- Tooltips: `react-tooltip` with 300ms delay, placed left, attached to the wrapper `div` so they also work for the disabled Sources icon.
 
 ## Why certain decisions were made
 

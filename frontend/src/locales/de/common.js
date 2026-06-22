@@ -476,6 +476,8 @@ const TRANSLATIONS = {
     no_chats: "Noch keine Chats vorhanden.",
     chats_tab: "Chats",
     files_tab: "Dateien",
+    urls_tab: "URLs",
+    no_urls: "Noch keine URLs hinzugefügt.",
     default_thread: "Standard",
     source_type_url: "URL",
     source_type_database: "Datenbank",

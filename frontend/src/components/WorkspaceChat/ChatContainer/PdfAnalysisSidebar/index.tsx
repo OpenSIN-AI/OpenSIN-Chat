@@ -10,7 +10,7 @@ export default function PdfAnalysisSidebar() {
   const { activeSidebar } = useChatSidebar();
   const sidebarOpen = activeSidebar === "pdf-analysis";
   return (
-    <ChatSidebar isOpen={sidebarOpen} minWidth={360} defaultWidth={420}>
+    <ChatSidebar isOpen={sidebarOpen} minWidth={420} defaultWidth={520}>
       <div className="w-full h-full bg-theme-bg-container flex flex-col overflow-hidden">
         <PdfAnalysisPanel isSidebar />
       </div>

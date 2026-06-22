@@ -8,6 +8,24 @@ import {
   AGENT_SESSION_START,
 } from "@/utils/chat/agent";
 import { CLEAR_ATTACHMENTS_EVENT } from "@/components/WorkspaceChat/ChatContainer/DnDWrapper";
+import { AUTH_TOKEN } from "@/utils/constants";
+import { safeGetItem } from "@/utils/safeStorage";
+
+/**
+ * Build the WebSocket URL for an agent invocation, including the user's
+ * auth token as a query parameter so the backend can validate the upgrade.
+ * Browser WebSocket clients cannot send custom headers, so the token is the
+ * only way to authenticate the WebSocket connection.
+ */
+function agentWebsocketUrl(socketId: string | null) {
+  if (!socketId) return null;
+  const base = `${websocketURI()}/api/agent-invocation/${socketId}`;
+  const token = safeGetItem(AUTH_TOKEN);
+  if (!token) return base;
+  const url = new URL(base);
+  url.searchParams.set("token", token);
+  return url.toString();
+}
 
 // ── Reconnection parameters ─────────────────────────────────────────────────
 const MAX_RECONNECT_ATTEMPTS = 3;
@@ -195,9 +213,7 @@ export default function useWebSocket({
           reconnectTimer = setTimeout(() => {
             if (!isMounted) return;
             // Attempt reconnection by creating a new WebSocket to the same UUID.
-            const newWs = new WebSocket(
-              `${websocketURI()}/api/agent-invocation/${socketId}`,
-            );
+            const newWs = new WebSocket(agentWebsocketUrl(socketId)!);
             newWs.supportsAgentStreaming = false;
             setWebsocket(newWs);
             attachListeners(newWs);
@@ -268,9 +284,7 @@ export default function useWebSocket({
         intentionalCloseRef.current = false;
         reconnectAttemptsRef.current = 0;
 
-        socket = new WebSocket(
-          `${websocketURI()}/api/agent-invocation/${socketId}`,
-        );
+        socket = new WebSocket(agentWebsocketUrl(socketId)!);
         socket.supportsAgentStreaming = false;
 
         window.addEventListener(ABORT_STREAM_EVENT, handleAbortStream);

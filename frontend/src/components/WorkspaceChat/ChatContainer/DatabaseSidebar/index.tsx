@@ -131,7 +131,7 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
     politicians.length > 0 && selected.size === politicians.length;
 
   return (
-    <ChatSidebar isOpen={sidebarOpen}>
+    <ChatSidebar isOpen={sidebarOpen} minWidth={420}>
       <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
         {/* Header */}
         <div className="flex items-center gap-2 px-4 pt-4 pb-3 shrink-0 border-b border-zinc-800 light:border-slate-200">

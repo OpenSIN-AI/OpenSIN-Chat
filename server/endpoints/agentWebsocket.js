@@ -324,12 +324,22 @@ function agentWebsocket(app, routePrefix = "") {
         // eslint-disable-next-line no-console
         console.error(`[wss error id=${id}]`, e);
         cleanup();
+        // Surface a clear, non-secret setup message so the frontend does not
+        // show the generic "Internal error" on every agent chat attempt when the
+        // provider/API key is missing or misconfigured. The full error is still
+        // logged server-side with the id above.
+        const content =
+          e?.message?.includes("No valid provider") ||
+          e?.message?.includes("API key") ||
+          e?.message?.includes("base path")
+            ? "Agent setup failed: please check the workspace provider and API key configuration."
+            : "Internal error";
         try {
           if (socket)
             socket.send(
               JSON.stringify({
                 type: "wssFailure",
-                content: "Internal error",
+                content,
                 id,
               }),
             );

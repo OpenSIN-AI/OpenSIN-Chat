@@ -231,7 +231,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }: CrossCheckFormProps) {
           value={factIdsText}
           onChange={(e) => setFactIdsText(e.target.value)}
           placeholder={t("pdfAnalysis.crossCheck.factIdsPlaceholder")}
-          className="rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
+          className="w-full rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60 truncate min-w-0"
         />
       </label>
 
@@ -240,12 +240,12 @@ function CrossCheckForm({ prefillFactIds, onStarted }: CrossCheckFormProps) {
           {t("pdfAnalysis.crossCheck.sourcesLegend")}
         </legend>
         {sources.map((source, index) => (
-          <div key={index} className="flex flex-col md:flex-row gap-2">
+          <div key={index} className="flex flex-col gap-2">
             <select
               value={source.type}
               onChange={(e) => updateSource(index, { type: e.target.value })}
               aria-label={t("pdfAnalysis.crossCheck.sourceTypeAriaLabel")}
-              className="md:w-48 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary"
+              className="w-full rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary"
             >
               {SOURCE_TYPES.map((value) => (
                 <option key={value} value={value}>
@@ -264,12 +264,12 @@ function CrossCheckForm({ prefillFactIds, onStarted }: CrossCheckFormProps) {
                     : t("pdfAnalysis.crossCheck.sourceValueUrlPlaceholder")
               }
               aria-label={t("pdfAnalysis.crossCheck.sourceValueAriaLabel")}
-              className="flex-1 rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60"
+              className="w-full rounded-md bg-theme-bg-container border border-theme-sidebar-border p-2 text-sm text-theme-text-primary placeholder:text-theme-text-secondary/60 truncate min-w-0"
             />
             <button
               type="button"
               onClick={() => removeSource(index)}
-              className="text-xs px-3 py-2 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
+              className="self-start text-xs px-3 py-2 rounded-md text-red-400 border border-red-400/40 hover:opacity-80 whitespace-nowrap"
               aria-label={t("pdfAnalysis.crossCheck.removeSourceAriaLabel")}
             >
               {t("pdfAnalysis.crossCheck.removeSource")}
@@ -279,7 +279,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }: CrossCheckFormProps) {
         <button
           type="button"
           onClick={addSource}
-          className="self-start text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
+          className="self-start text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
         >
           {t("pdfAnalysis.crossCheck.addSource")}
         </button>
@@ -305,7 +305,7 @@ function CrossCheckForm({ prefillFactIds, onStarted }: CrossCheckFormProps) {
         <button
           type="submit"
           disabled={busy}
-          className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-50"
+          className="px-4 py-2 rounded-md text-sm font-medium bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 disabled:opacity-50 whitespace-nowrap"
         >
           {busy
             ? t("pdfAnalysis.crossCheck.submitBusy")
@@ -394,7 +394,7 @@ function CrossCheckRow({ job, onShowReport, onCancelled }: CrossCheckRowProps) {
           <button
             type="button"
             onClick={onShowReport}
-            className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80"
+            className="text-xs px-3 py-1.5 rounded-md bg-theme-bg-container text-theme-text-primary border border-theme-sidebar-border hover:opacity-80 whitespace-nowrap"
           >
             {t("pdfAnalysis.crossCheck.showReport")}
           </button>
@@ -410,7 +410,7 @@ function CrossCheckRow({ job, onShowReport, onCancelled }: CrossCheckRowProps) {
                 console.error(e);
               }
             }}
-            className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80"
+            className="text-xs px-3 py-1.5 rounded-md text-red-400 border border-red-400/40 hover:opacity-80 whitespace-nowrap"
           >
             {t("pdfAnalysis.crossCheck.cancel")}
           </button>

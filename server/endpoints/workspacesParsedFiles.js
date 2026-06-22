@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: MIT
+// Purpose: Endpoints for parsed workspace files (chat uploads) and their
+//          mirror into the server uploads directory for the FilesystemSidebar.
+// Docs: server/endpoints/workspacesParsedFiles.js.doc.md
 const crypto = require("crypto");
 const { reqBody, multiUserMode, userFromSession } = require("../utils/http");
 const { handleFileUpload } = require("../utils/files/multer");
@@ -15,6 +18,8 @@ const { WorkspaceThread } = require("../models/workspaceThread");
 const { WorkspaceParsedFiles } = require("../models/workspaceParsedFiles");
 const { simpleRateLimit } = require("../utils/middleware/simpleRateLimit");
 const fs = require("fs");
+const path = require("path");
+const { ensureStorageDir } = require("../utils/paths");
 
 function cleanupHotdirFile(request) {
   try {
@@ -22,6 +27,28 @@ function cleanupHotdirFile(request) {
     if (filePath && fs.existsSync(filePath)) fs.rmSync(filePath);
   } catch {
     // Best-effort cleanup
+  }
+}
+
+/**
+ * Best-effort copy of a successfully parsed chat upload into the server's
+ * uploads directory so it surfaces in the FilesystemSidebar (Issue #271).
+ * Only runs for local disk uploads (request.file.path exists). Supabase
+ * uploads are skipped because the sidebar reads from local storage.
+ * @param {import("express").Request} request
+ */
+async function copyToUploads(request) {
+  try {
+    const filePath = request.file?.path;
+    const filename = request.file?.filename;
+    if (!filePath || !filename) return;
+    const uploadsDir = ensureStorageDir("uploads");
+    const destPath = path.join(uploadsDir, filename);
+    await fs.promises.copyFile(filePath, destPath);
+  } catch (e) {
+    // Non-fatal: visibility in the sidebar is optional; the parse itself succeeded.
+    // eslint-disable-next-line no-console
+    console.error("[copyToUploads] best-effort copy failed:", e.message);
   }
 }
 
@@ -224,6 +251,9 @@ function workspaceParsedFilesEndpoints(app) {
           );
           files.push(...batchResults);
         }
+
+        // Mirror the local upload into the FilesystemSidebar uploads root.
+        await copyToUploads(request);
 
         Collector.log(`Document ${originalname} parsed successfully.`);
         await EventLogs.logEvent(

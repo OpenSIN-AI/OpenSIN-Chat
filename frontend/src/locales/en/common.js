@@ -439,6 +439,8 @@ const TRANSLATIONS = {
     no_chats: "No chats yet.",
     chats_tab: "Chats",
     files_tab: "Files",
+    urls_tab: "URLs",
+    no_urls: "No URLs added yet.",
     default_thread: "Default",
     source_type_url: "URL",
     source_type_database: "Database",

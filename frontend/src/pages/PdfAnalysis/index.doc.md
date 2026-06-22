@@ -31,6 +31,8 @@ Also exports a `TabButton` helper used for the four tab switches.
 - `isSidebar` prop: switches padding and layout from full-page (`p-6`) to sidebar (`p-4`) mode.
 - Tab button styling mirrors the right sidebar `MemoriesSidebar` pill tabs (`rounded-full`, `h-7`, `text-xs`, `bg-zinc-700` active state).
 - `PdfFileInput` uses `whitespace-nowrap shrink-0` so the file-picker label never wraps in narrow sidebar layouts.
+- `FactsPanel` keeps source text and action buttons from colliding by truncating long document names and wrapping the buttons in a non-shrinking group.
+- `CrossCheckPanel` renders each source row as a vertical stack (`flex-col`) so German labels like "Entfernen" never truncate, and fact-ID inputs use `truncate` to show long IDs with ellipsis.
 
 ## Why certain decisions were made
 

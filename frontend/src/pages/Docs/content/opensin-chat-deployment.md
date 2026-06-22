@@ -2,101 +2,101 @@
 
 **Ziel:** Getrenntes Deployment für OpenSIN-Chat, **unabhängig** vom laufenden `openafd` (sinchat.delqhi.com).
 
+**Wichtig:** Produktion läuft auf der OCI VM `sin-supabase` (`92.5.60.87`), **nicht** mehr auf dem lokalen Mac. Der Mac-Port 43939 ist nur noch für lokale Entwicklung/Tests.
+
 ---
 
 ## Architektur
 
-| Komponente | openafd (Original) | OpenSIN-Chat (Neu) |
+| Komponente | openafd (Original) | OpenSIN-Chat (Produktion) |
 |------------|-------------------|-------------------|
-| **Container** | `openafd` | `opensin-chat` |
+| **Host** | lokaler Mac | OCI VM `sin-supabase` (`92.5.60.87`) |
+| **Container** | `openafd` | `opensin-app` |
 | **Interner Port** | 3001 | 3001 |
-| **Externer Port (Host)** | 3001 | **43939** |
+| **Externer Port (Host)** | 3001 | **38471** |
 | **Domain** | sinchat.delqhi.com | **sinchat.delqhi.com** |
 | **Cloudflare Tunnel ID** | `32ab3b80-94b4-4911-aff1-fae5a3eae3c6` | `aa6a4715-1a4d-4cf9-a17e-ad27c53fee93` |
-| **Tunnel Config** | `~/.cloudflared/config-openafd.yml` | `~/.cloudflared/config-opensin.yml` |
+| **Tunnel Config** | `~/.cloudflared/config-openafd.yml` | `~/.cloudflared/config-opensin.yml` (auf `sin-supabase`) |
 | **Storage** | `../server/storage` | `../server/storage-opensin` |
-| **Launchd Label** | `com.sin-solver.cloudflared.plist` | `com.opensin.tunnel.plist` |
 | **Health Endpoint** | `https://sinchat.delqhi.com/api/ping` | `https://sinchat.delqhi.com/api/ping` |
 
 ---
 
 ## Docker Compose
 
-**Datei:** `/Users/jeremy/dev/OpenSIN-Chat/docker-opensin/docker-compose.yml`
+**Base:** `docker-opensin/docker-compose.yml` — lokale Entwicklung (Port 43939, Container `opensin-chat`).
 
-```yaml
-name: opensin-chat
-networks:
-  opensin-chat:
-    driver: bridge
-services:
-  opensin-chat:
-    container_name: opensin-chat
-    restart: always
-    build:
-      context: ../.
-      dockerfile: ./docker/Dockerfile
-      args:
-        ARG_UID: ${UID:-1000}
-        ARG_GID: ${GID:-1000}
-    cap_add:
-      - SYS_ADMIN
-    volumes:
-      - "./.env:/app/server/.env"
-      - "../server/storage-opensin:/app/server/storage"
-      - "../collector/hotdir/:/app/collector/hotdir"
-      - "../collector/outputs/:/app/collector/outputs"
-    user: "${UID:-1000}:${GID:-1000}"
-    ports:
-      - "43939:3001"
-    env_file:
-      - .env
-    environment:
-      - STORAGE_DIR=/app/server/storage
-    networks:
-      - opensin-chat
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+**Produktion:** `docker-opensin/docker-compose.production.yml` — OCI VM (Port 38471, Container `opensin-app`, mehr CPU/RAM). Beide Dateien zusammen:
+
+```bash
+cd docker-opensin
+docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
 ```
+
+Der Base-Port und der Container-Name sind per Env-Var überschreibbar. Auf
+`sin-supabase` muss `docker-opensin/.env` diese Werte enthalten:
+
+```bash
+COMPOSE_PORT=38471
+COMPOSE_CONTAINER_NAME=opensin-app
+```
+
+| Variable | Standard | Produktion |
+|---|---|---|
+| `COMPOSE_PORT` | `43939` | `38471` |
+| `COMPOSE_CONTAINER_NAME` | `opensin-chat` | `opensin-app` |
 
 ---
 
 ## Cloudflare Tunnel
 
-**Config:** `~/.cloudflared/config-opensin.yml`
+**Config auf `sin-supabase`:** `~/.cloudflared/config-opensin.yml`
 ```yaml
 tunnel: aa6a4715-1a4d-4cf9-a17e-ad27c53fee93
-credentials-file: /Users/jeremy/.cloudflared/aa6a4715-1a4d-4cf9-a17e-ad27c53fee93.json
+credentials-file: ~/.cloudflared/aa6a4715-1a4d-4cf9-a17e-ad27c53fee93.json
 ingress:
   - hostname: sinchat.delqhi.com
-    service: http://localhost:43939
+    service: http://localhost:38471
   - service: http_status:404
 ```
 
-**Tunnel erstellen:**
+> **Hinweis:** Der Tunnel-Connector läuft auf der OCI VM (`sin-supabase`), nicht auf dem Mac. Die Mac-Konfiguration (`com.opensin.tunnel.plist`) ist veraltet und sollte entladen werden, falls sie noch aktiv ist.
+
+**Tunnel-Status prüfen (vom Mac):**
 ```bash
-cloudflared tunnel create opensin-chat
-cloudflared tunnel route dns opensin-chat sinchat.delqhi.com
+ssh sin-supabase 'docker ps | grep opensin && curl -sS http://localhost:38471/api/ping'
 ```
 
-**Manuell starten:**
+**Manuell auf `sin-supabase` starten (nur im Notfall):**
 ```bash
+ssh sin-supabase
 nohup cloudflared tunnel --config ~/.cloudflared/config-opensin.yml run opensin-chat > /tmp/cloudflared-opensin.log 2>&1 &
-```
-
-**Launchd (Auto-Start):**
-```bash
-# Plist: ~/Library/LaunchAgents/com.opensin.tunnel.plist
-launchctl load ~/Library/LaunchAgents/com.opensin.tunnel.plist
-launchctl list | grep opensin
 ```
 
 ---
 
 ## Befehle (Cheat Sheet)
 
+### Produktion (`sin-supabase`)
+
 ```bash
-# Build & Start
+# One-Shot Deploy (vom Mac aus)
+ssh sin-supabase 'bash -s' < /Users/jeremy/dev/OpenSIN-Chat/scripts/deploy-production.sh
+
+# Oder manuell auf der VM
+cd ~/OpenSIN-Chat/docker-opensin
+git pull origin main
+docker compose -f docker-compose.yml -f docker-compose.production.yml build --no-cache
+docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+
+# Status
+docker ps | grep opensin
+curl -sS http://localhost:38471/api/ping
+```
+
+### Lokale Entwicklung (Mac)
+
+```bash
 cd /Users/jeremy/dev/OpenSIN-Chat/docker-opensin
 docker compose build --no-cache
 docker compose up -d
@@ -105,17 +105,25 @@ docker compose up -d
 docker ps | grep opensin
 curl -sS http://localhost:43939/api/ping
 
-# Live test
-curl -sS https://sinchat.delqhi.com/api/ping
-curl -sS https://sinchat.delqhi.com/ | head -5
-
-# Logs
-docker logs opensin-chat -f
-tail -f /tmp/cloudflared-opensin.log
-
 # Stop
 docker compose down
-launchctl unload ~/Library/LaunchAgents/com.opensin.tunnel.plist
+```
+
+### Live-Test
+
+```bash
+curl -sS https://sinchat.delqhi.com/api/ping
+curl -sS https://sinchat.delqhi.com/ | head -5
+```
+
+### Logs
+
+```bash
+# Produktion (auf sin-supabase)
+ssh sin-supabase 'docker logs opensin-app -f'
+
+# Lokal (Mac)
+docker logs opensin-chat -f
 ```
 
 ---
@@ -126,16 +134,17 @@ launchctl unload ~/Library/LaunchAgents/com.opensin.tunnel.plist
 2. **NIEMALS** Port 3001 auf dem Host für OpenSIN-Chat nutzen — der gehört `openafd`.
 3. **NIEMALS** `../server/storage` für OpenSIN-Chat mounten — nutzt `../server/storage-opensin`.
 4. **Immer** `--no-cache` beim Build (sonst altes Frontend-Bundle).
-5. **Vor jedem Deploy:** `lsof -i :43939` prüfen — kein anderer Prozess darf den Port blockieren.
-6. **`restart: always` MUSS** in `docker-compose.yml` gesetzt sein. Fehlt es, bleibt Container nach OrbStack-Restart tot → 502. Live fixen: `docker update --restart always opensin-chat`.
+5. **Vor jedem lokalen Deploy:** `lsof -i :43939` prüfen — kein anderer Prozess darf den Port blockieren.
+6. **Produktion nutzt immer das Override:** `docker compose -f docker-compose.yml -f docker-compose.production.yml ...` auf `sin-supabase`.
+7. **Mac-Cloudflared Tunnel muss auf `sin-supabase` laufen.** Falls die alte Mac-Plist noch aktiv ist: `launchctl unload ~/Library/LaunchAgents/com.opensin.tunnel.plist`.
 
 ---
 
 ## Verifizierung
 
 ```bash
-# Lokal
-curl -sS http://localhost:43939/api/ping
+# Produktion (auf sin-supabase)
+ssh sin-supabase 'curl -sS http://localhost:38471/api/ping'
 # → {"online":true}
 
 # Live
@@ -152,16 +161,16 @@ curl -sS https://sinchat.delqhi.com/ | grep -o "OpenSIN Chat"
 
 | Problem | Lösung |
 |---------|--------|
-| 502 Bad Gateway (beide Domains) | Container tot weil kein `restart: always`. Fix: `docker update --restart always <container>` + `docker start <container>` |
-| Container nicht healthy / crashed | `docker logs opensin-chat` prüfen; DB fehlt Tabelle → DB von openafd kopieren (`cp storage/openafd.db storage-opensin/openafd.db`) |
-| Tunnel nicht erreichbar | `ps aux \| grep cloudflared \| grep opensin` → restart launchd |
-| DNS nicht auflösbar | `cloudflared tunnel route dns opensin-chat sinchat.delqhi.com` |
-| Build fails (ssh) | Dockerfile hat `git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"` im collector-stage |
+| 502 Bad Gateway | Container tot weil kein `restart: always`. Fix: `docker update --restart always opensin-app && docker start opensin-app` (auf `sin-supabase`). |
+| Container nicht healthy / crashed | `ssh sin-supabase 'docker logs opensin-app'` prüfen; DB fehlt Tabelle → DB von openafd kopieren. |
+| Tunnel nicht erreichbar | Cloudflared läuft auf `sin-supabase`: `ssh sin-supabase 'pgrep -a cloudflared'` und ggf. neustarten. |
+| DNS nicht auflösbar | `cloudflared tunnel route dns opensin-chat sinchat.delqhi.com` (auf `sin-supabase`). |
+| Build fails (ssh) | Dockerfile hat `git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"` im collector-stage. |
 
 ---
 
 ## Nächste Schritte
 
-- [ ] Auto-Deploy Script für OpenSIN-Chat (analog `scripts/auto-deploy.sh`) erstellen
-- [ ] Separate `.env` für OpenSIN-Chat falls andere API-Keys nötig
+- [x] Produktions-Deploy-Script (`scripts/deploy-production.sh`) erstellt
+- [ ] Auto-Deploy für `sin-supabase` (cron/systemd) einrichten
 - [ ] Monitoring / Alerting für beide Instanzen trennen

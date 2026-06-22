@@ -522,6 +522,12 @@ async function resolveProviderConnector({
 }) {
   const effectiveProvider = workspace?.chatProvider || process.env.LLM_PROVIDER;
 
+  if (!effectiveProvider) {
+    throw new Error(
+      "No LLM provider is configured for this workspace. Set a workspace chat model or LLM_PROVIDER in the server environment.",
+    );
+  }
+
   if (effectiveProvider !== "openafd-router") {
     return {
       connector: getLLMProvider({

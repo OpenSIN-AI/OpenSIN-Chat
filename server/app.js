@@ -188,8 +188,9 @@ function buildApp() {
   documentEndpoints(apiRouter);
 
   // Load WebSocket support before registering the agent WebSocket route.
-  // In HTTPS mode this is handled by bootSSL; in test mode it is not needed.
-  if (process.env.NODE_ENV !== "test" && process.env.ENABLE_HTTPS !== "true") {
+  // In HTTPS mode bootSSL will re-initialize express-ws with the actual HTTPS
+  // server; doing it here ensures app.ws is available when agentWebsocket runs.
+  if (process.env.NODE_ENV !== "test") {
     require("@mintplex-labs/express-ws").default(app);
   }
 
@@ -353,9 +354,7 @@ function buildApp() {
 
       // Multer errors: file type rejected, file too large, etc.
       if (err.code === "LIMIT_FILE_SIZE") {
-        console.warn(
-          `[errorHandler] id=${id} file-too-large: ${err.message}`,
-        );
+        console.warn(`[errorHandler] id=${id} file-too-large: ${err.message}`);
         return response.status(413).json({
           error: "File exceeds the permitted size limit.",
           id,
