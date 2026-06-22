@@ -60,4 +60,6 @@ chrome-linux.zip
 # Documentation only
 *.md
 !README.md
-docs
+# Allow docs/ tree for frontend sync:docs prebuild hook
+!docs
+!docs/**/*.md
