@@ -4,7 +4,7 @@ jest.mock("../../../models/systemSettings", () => ({
 }));
 
 const { SystemSettings } = require("../../../models/systemSettings");
-const { WebSearchEngine } = require("../../../utils/research/webSearchEngine");
+const { WebSearchEngine, resetAll } = require("../../../utils/research/webSearchEngine");
 
 function setProvider(provider, apiKey = null) {
   SystemSettings.get.mockImplementation(async ({ label }) => {
@@ -23,6 +23,7 @@ describe("WebSearchEngine.search", () => {
   afterEach(() => {
     jest.clearAllMocks();
     if (global.fetch && global.fetch.mockRestore) global.fetch.mockRestore();
+    resetAll();
   });
 
   it("maps SerpAPI organic_results into the normalized shape", async () => {

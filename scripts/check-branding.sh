@@ -57,7 +57,8 @@ ALLOWED_FILES=(
 
   # ── Functional backward-compat: AnythingLLM env vars preserved
   #    so existing user .env files / docker setups keep working.
-  "server/utils/helpers/updateENV.js"  # known-env-var whitelist
+  "server/utils/helpers/updateENV.js"  # known-env-var whitelist (thin shim)
+  "server/utils/helpers/updateENV/dumpENV.js"  # known-env-var whitelist (split from updateENV.js)
   "server/utils/boot/patchSdkTimeouts.js"  # reads ANYTHINGLLM_FETCH_TIMEOUT / ANYTHINGLLM_MAX_RETRIES
   "server/utils/collectorApi/index.js"  # reads ANYTHINGLLM_CHROMIUM_ARGS
 

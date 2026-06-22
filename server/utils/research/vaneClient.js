@@ -5,9 +5,12 @@
  * Docs: vaneClient.doc.md
  * Purpose: Provides (a) raw web search results and (b) full cited answers
  * for the OpenSIN Deep-Research-Pipeline without merging Vane's codebase.
+ * Resilience: fetchWithTimeout on all HTTP calls.
  *
  * Vane: https://github.com/ItzCrazyKns/Vane
  */
+
+const { fetchWithTimeout } = require("../helpers/fetchWithTimeout");
 
 const VANE_API_URL = process.env.VANE_API_URL || "http://vane:8300";
 const PROVIDER_CACHE_TTL_MS = 5 * 60_000;
@@ -22,9 +25,11 @@ class VaneClient {
   /** Check if the Vane sidecar is reachable. */
   static async isAvailable() {
     try {
-      const res = await fetch(`${VANE_API_URL}/api/providers`, {
-        signal: AbortSignal.timeout(3_000),
-      });
+      const res = await fetchWithTimeout(
+        `${VANE_API_URL}/api/providers`,
+        {},
+        3_000,
+      );
       return res.ok;
     } catch {
       return false;
@@ -60,9 +65,11 @@ class VaneClient {
       now - VaneClient.#providerCache.fetchedAt > PROVIDER_CACHE_TTL_MS
     ) {
       try {
-        const res = await fetch(`${VANE_API_URL}/api/providers`, {
-          signal: AbortSignal.timeout(5_000),
-        });
+        const res = await fetchWithTimeout(
+          `${VANE_API_URL}/api/providers`,
+          {},
+          5_000,
+        );
         if (!res.ok) return null;
         const data = await res.json();
         VaneClient.#providerCache = { data, fetchedAt: now };
@@ -110,22 +117,25 @@ class VaneClient {
     if (!models) return null;
 
     try {
-      const res = await fetch(`${VANE_API_URL}/api/search`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chatModel: models.chatModel,
-          embeddingModel: models.embeddingModel,
-          optimizationMode: opts.optimizationMode || "balanced",
-          sources: opts.sources || ["web"],
-          query,
-          systemInstructions:
-            opts.systemInstructions ||
-            "Antworte auf Deutsch. Zitiere alle Quellen mit [n]-Verweisen.",
-          stream: false,
-        }),
-        signal: AbortSignal.timeout(120_000),
-      });
+      const res = await fetchWithTimeout(
+        `${VANE_API_URL}/api/search`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chatModel: models.chatModel,
+            embeddingModel: models.embeddingModel,
+            optimizationMode: opts.optimizationMode || "balanced",
+            sources: opts.sources || ["web"],
+            query,
+            systemInstructions:
+              opts.systemInstructions ||
+              "Antworte auf Deutsch. Zitiere alle Quellen mit [n]-Verweisen.",
+            stream: false,
+          }),
+        },
+        120_000,
+      );
       if (!res.ok) {
         VaneClient.log(`Search failed: HTTP ${res.status}`);
         return null;

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-const { ContentExtractor } = require("../../../utils/research/contentExtractor");
+const { ContentExtractor, resetAll } = require("../../../utils/research/contentExtractor");
 
 function mockFetchResponse({ ok = true, contentType = "text/html", body = "" }) {
   const encoder = new TextEncoder();
@@ -36,6 +36,7 @@ function mockFetchOnce({ ok = true, contentType = "text/html", body = "" }) {
 describe("ContentExtractor.extract", () => {
   afterEach(() => {
     if (global.fetch.mockRestore) global.fetch.mockRestore();
+    resetAll();
   });
 
   it("strips scripts, styles, nav, footer, header and tags from HTML", async () => {

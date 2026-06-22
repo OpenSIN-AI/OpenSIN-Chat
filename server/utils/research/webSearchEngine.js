@@ -8,9 +8,25 @@
  *
  * Docs: webSearchEngine.doc.md
  * Purpose: Reuses the existing OpenSIN search infrastructure for the research pipeline.
+ * Resilience: fetchWithTimeout on all HTTP calls, circuit breakers on SerpAPI/DuckDuckGo,
+ *             short-TTL SWR cache on search results.
  */
 
 const { SystemSettings } = require("../../models/systemSettings");
+const { fetchWithTimeout } = require("../helpers/fetchWithTimeout");
+const { createCircuitBreaker } = require("./circuitBreaker");
+const { withCache, clearCache } = require("./cache");
+
+const serpApiBreaker = createCircuitBreaker("serpapi");
+const duckDuckGoBreaker = createCircuitBreaker("duckduckgo");
+const searxngBreaker = createCircuitBreaker("searxng");
+
+function resetAll() {
+  serpApiBreaker.reset();
+  duckDuckGoBreaker.reset();
+  searxngBreaker.reset();
+  clearCache();
+}
 
 class WebSearchEngine {
   /**
@@ -65,17 +81,21 @@ class WebSearchEngine {
     const baseUrl = process.env.AGENT_SEARXNG_API_URL;
     if (!baseUrl) return [];
     try {
-      const url = `${baseUrl.replace(/\/$/, "")}/search?q=${encodeURIComponent(query)}&format=json&language=de`;
-      const res = await fetch(url, { signal: AbortSignal.timeout(15_000) });
-      if (!res.ok) return [];
-      const data = await res.json();
-      return (data.results || [])
-        .map((r) => ({
-          title: r.title || "",
-          link: r.url || "",
-          snippet: r.content || "",
-        }))
-        .slice(0, 10);
+      return await withCache(`searxng:${query}`, () =>
+        searxngBreaker.call(async () => {
+          const url = `${baseUrl.replace(/\/$/, "")}/search?q=${encodeURIComponent(query)}&format=json&language=de`;
+          const res = await fetchWithTimeout(url, {}, 15_000);
+          if (!res.ok) throw new Error(`SearxNG HTTP ${res.status}`);
+          const data = await res.json();
+          return (data.results || [])
+            .map((r) => ({
+              title: r.title || "",
+              link: r.url || "",
+              snippet: r.content || "",
+            }))
+            .slice(0, 10);
+        }),
+      );
     } catch (err) {
       console.error(`[WebSearchEngine] SearxNG error: ${err.message}`);
       return [];
@@ -87,17 +107,19 @@ class WebSearchEngine {
     const apiKey = process.env.AGENT_SERPAPI_API_KEY;
     if (!apiKey) return [];
     try {
-      const url = `https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${encodeURIComponent(apiKey)}&hl=de&gl=de&num=10`;
-      const res = await fetch(url, {
-        signal: AbortSignal.timeout(15_000),
-      });
-      if (!res.ok) return [];
-      const data = await res.json();
-      return (data.organic_results || []).map((r) => ({
-        title: r.title || "",
-        link: r.link || "",
-        snippet: r.snippet || "",
-      }));
+      return await withCache(`serpapi:${query}`, () =>
+        serpApiBreaker.call(async () => {
+          const url = `https://serpapi.com/search.json?q=${encodeURIComponent(query)}&api_key=${encodeURIComponent(apiKey)}&hl=de&gl=de&num=10`;
+          const res = await fetchWithTimeout(url, {}, 15_000);
+          if (!res.ok) throw new Error(`SerpAPI HTTP ${res.status}`);
+          const data = await res.json();
+          return (data.organic_results || []).map((r) => ({
+            title: r.title || "",
+            link: r.link || "",
+            snippet: r.snippet || "",
+          }));
+        }),
+      );
     } catch (err) {
       console.error(`[WebSearchEngine] SerpAPI error: ${err.message}`);
       return [];
@@ -106,30 +128,32 @@ class WebSearchEngine {
 
   static async #duckDuckGo(query) {
     try {
-      const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`;
-      const res = await fetch(url, {
-        signal: AbortSignal.timeout(10_000),
-      });
-      if (!res.ok) return [];
-      const data = await res.json();
-      const results = [];
-      if (data.AbstractURL) {
-        results.push({
-          title: data.AbstractText?.substring(0, 100) || query,
-          link: data.AbstractURL,
-          snippet: data.AbstractText || "",
-        });
-      }
-      (data.RelatedTopics || []).forEach((t) => {
-        if (t.FirstURL && t.Text) {
-          results.push({
-            title: t.Text.substring(0, 100),
-            link: t.FirstURL,
-            snippet: t.Text,
+      return await withCache(`ddg:${query}`, () =>
+        duckDuckGoBreaker.call(async () => {
+          const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`;
+          const res = await fetchWithTimeout(url, {}, 10_000);
+          if (!res.ok) throw new Error(`DuckDuckGo HTTP ${res.status}`);
+          const data = await res.json();
+          const results = [];
+          if (data.AbstractURL) {
+            results.push({
+              title: data.AbstractText?.substring(0, 100) || query,
+              link: data.AbstractURL,
+              snippet: data.AbstractText || "",
+            });
+          }
+          (data.RelatedTopics || []).forEach((t) => {
+            if (t.FirstURL && t.Text) {
+              results.push({
+                title: t.Text.substring(0, 100),
+                link: t.FirstURL,
+                snippet: t.Text,
+              });
+            }
           });
-        }
-      });
-      return results.slice(0, 10);
+          return results.slice(0, 10);
+        }),
+      );
     } catch (err) {
       console.error(`[WebSearchEngine] DuckDuckGo error: ${err.message}`);
       return [];
@@ -137,4 +161,4 @@ class WebSearchEngine {
   }
 }
 
-module.exports = { WebSearchEngine };
+module.exports = { WebSearchEngine, resetAll };

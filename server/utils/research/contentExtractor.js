@@ -6,11 +6,15 @@
  * Purpose: Extract readable content from URLs for the research pipeline.
  * Uses fetch + basic HTML-to-text conversion.
  * SSRF-hardened: validates URL scheme, blocks private IPs, limits redirects and response size.
+ * Resilience: fetchWithTimeout on HTTP calls, circuit breaker on fetch, SWR cache on results.
  */
 
 const { URL } = require("url");
 const { isIP } = require("net");
 const dns = require("dns").promises;
+const { fetchWithTimeout } = require("../helpers/fetchWithTimeout");
+const { createCircuitBreaker } = require("./circuitBreaker");
+const { withCache, clearCache } = require("./cache");
 
 const env = typeof process !== "undefined" ? process.env : {};
 
@@ -18,6 +22,13 @@ const ALLOW_PRIVATE = env.RESEARCH_ALLOW_PRIVATE_NETWORKS === "true";
 const STRICT_SSRF = env.RESEARCH_STRICT_SSRF === "true";
 const MAX_REDIRECTS = 3;
 const MAX_RESPONSE_BYTES = 2 * 1024 * 1024; // 2 MB
+
+const extractorBreaker = createCircuitBreaker("content-extractor");
+
+function resetAll() {
+  extractorBreaker.reset();
+  clearCache();
+}
 
 // RFC 1918 + loopback + link-local + CGNAT + carrier-grade NAT ranges
 const PRIVATE_RANGES = [
@@ -76,6 +87,17 @@ class ContentExtractor {
    * @returns {Promise<string|null>}
    */
   static async extract(url, redirectCount = 0) {
+    if (redirectCount === 0) {
+      return withCache(
+        `extract:${url}`,
+        () => ContentExtractor.#doExtract(url, 0),
+        60_000,
+      );
+    }
+    return ContentExtractor.#doExtract(url, redirectCount);
+  }
+
+  static async #doExtract(url, redirectCount) {
     if (redirectCount > MAX_REDIRECTS) return null;
 
     const parsed = parseUrl(url);
@@ -103,14 +125,19 @@ class ContentExtractor {
     }
 
     try {
-      const res = await fetch(parsed.href, {
-        headers: {
-          "User-Agent": "OpenSIN-Chat/1.0 (Research Pipeline)",
-          Accept: "text/html,text/plain,application/json",
-        },
-        signal: AbortSignal.timeout(15000),
-        redirect: "manual",
-      });
+      const res = await extractorBreaker.call(() =>
+        fetchWithTimeout(
+          parsed.href,
+          {
+            headers: {
+              "User-Agent": "OpenSIN-Chat/1.0 (Research Pipeline)",
+              Accept: "text/html,text/plain,application/json",
+            },
+            redirect: "manual",
+          },
+          15000,
+        ),
+      );
 
       // Follow redirects manually with hop limit
       if (res.status >= 300 && res.status < 400) {
@@ -235,4 +262,4 @@ class ContentExtractor {
   }
 }
 
-module.exports = { ContentExtractor };
+module.exports = { ContentExtractor, resetAll };
