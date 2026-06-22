@@ -72,10 +72,7 @@ function MistralModelSelection({ apiKey, settings }: any) {
           <optgroup label={t("providerSettings.mistral.availableModels")}>
             {(customModels as any).map((model) => {
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.id}
                 </option>
               );

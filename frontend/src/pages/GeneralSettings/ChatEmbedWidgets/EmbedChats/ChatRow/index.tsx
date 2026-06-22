@@ -115,7 +115,10 @@ export default function ChatRow({ chat, onDelete }: ChatRowProps): JSX.Element {
           closeModal={closeResponseModal}
         />
       </ModalWrapper>
-      <ModalWrapper isOpen={isConnectionDetailsModalOpen} closeModal={closeConnectionDetailsModal}>
+      <ModalWrapper
+        isOpen={isConnectionDetailsModalOpen}
+        closeModal={closeConnectionDetailsModal}
+      >
         <TextPreview
           text={
             <ConnectionDetails

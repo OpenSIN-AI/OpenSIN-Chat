@@ -108,10 +108,7 @@ function GeminiModelSelection({ apiKey, settings }: any) {
           .map((organization) => (
             <optgroup key={organization} label={organization}>
               {groupedModels[organization].map((model) => (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.id}
                 </option>
               ))}

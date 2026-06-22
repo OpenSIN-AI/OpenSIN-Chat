@@ -72,21 +72,9 @@ export default function AnthropicAiOptions({ settings }: any) {
               name="AnthropicCacheControl"
               className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
             >
-              <option
-                value="none"
-              >
-                {t("anthropic.noCaching")}
-              </option>
-              <option
-                value="5m"
-              >
-                {t("anthropic.fiveMinutes")}
-              </option>
-              <option
-                value="1h"
-              >
-                {t("anthropic.oneHour")}
-              </option>
+              <option value="none">{t("anthropic.noCaching")}</option>
+              <option value="5m">{t("anthropic.fiveMinutes")}</option>
+              <option value="1h">{t("anthropic.oneHour")}</option>
             </select>
           </div>
         </div>
@@ -128,10 +116,7 @@ function AnthropicModelSelection({ apiKey, settings }: any) {
         className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
       >
         {(customModels as any).map((model) => (
-          <option
-            key={model.id}
-            value={model.id}
-          >
+          <option key={model.id} value={model.id}>
             {model.name}
           </option>
         ))}

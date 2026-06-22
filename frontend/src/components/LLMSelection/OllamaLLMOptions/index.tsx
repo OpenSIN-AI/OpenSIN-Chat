@@ -310,10 +310,7 @@ function OllamaLLMModelSelection({
           <optgroup label={t("ollama.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.id}
                 </option>
               );

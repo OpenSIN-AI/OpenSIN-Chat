@@ -82,10 +82,7 @@ export default function WorkspaceChats() {
   };
 
   const handleClearAllChats = async () => {
-    if (
-      !window.confirm(t("recorded.clearConfirm"))
-    )
-      return false;
+    if (!window.confirm(t("recorded.clearConfirm"))) return false;
     await System.deleteChat(-1);
     setChats([]);
     showToast(t("recorded.clearedAll"), "success");

@@ -119,10 +119,7 @@ export default function AgentModelSelection({
             {defaultModels.map((model: string) => {
               if (!supportedModel(provider, model)) return null;
               return (
-                <option
-                  key={model}
-                  value={model}
-                >
+                <option key={model} value={model}>
                   {model}
                 </option>
               );
@@ -135,10 +132,7 @@ export default function AgentModelSelection({
               if (!supportedModel(provider, model.id)) return null;
 
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.id}
                 </option>
               );
@@ -154,10 +148,7 @@ export default function AgentModelSelection({
                   {(models as any[]).map((model) => {
                     if (!supportedModel(provider, model.id)) return null;
                     return (
-                      <option
-                        key={model.id}
-                        value={model.id}
-                      >
+                      <option key={model.id} value={model.id}>
                         {model.name || model.id}
                       </option>
                     );

@@ -274,225 +274,223 @@ export default function SQLConnectionModal({
   return createPortal(
     <ModalWrapper isOpen={isOpen} closeModal={closeModal}>
       <div className="relative w-full max-w-2xl bg-theme-bg-secondary rounded-lg shadow border-2 border-theme-modal-border">
-          <div className="relative p-6 border-b rounded-t border-theme-modal-border">
-            <div className="w-full flex gap-x-2 items-center">
-              <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {isEditMode
-                  ? t("sqlConnection.editTitle")
-                  : t("sqlConnection.newTitle")}
-              </h3>
-            </div>
-            <button
-              onClick={handleClose}
-              type="button"
-              className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
-            >
-              <X size={24} weight="bold" className="text-white" />
-            </button>
+        <div className="relative p-6 border-b rounded-t border-theme-modal-border">
+          <div className="w-full flex gap-x-2 items-center">
+            <h3 className="text-xl font-semibold text-white overflow-hidden overflow-ellipsis whitespace-nowrap">
+              {isEditMode
+                ? t("sqlConnection.editTitle")
+                : t("sqlConnection.newTitle")}
+            </h3>
           </div>
-          <form
-            id="sql-connection-form"
-            onChange={onFormChange}
-            onSubmit={handleUpdate}
+          <button
+            onClick={handleClose}
+            type="button"
+            className="absolute top-4 right-4 transition-all duration-300 bg-transparent rounded-lg text-sm p-1 inline-flex items-center hover:bg-theme-modal-border hover:border-theme-modal-border hover:border-opacity-50 border-transparent border"
           >
-            <div className="px-7 py-6">
-              <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
-                <p className="text-sm text-white/60">
-                  {isEditMode
-                    ? t("sqlConnection.descriptionEdit")
-                    : t("sqlConnection.descriptionNew")}
-                </p>
-                <div className="flex flex-col w-full">
-                  <div className="border border-red-800 bg-zinc-800 light:bg-red-200/50 p-4 rounded-lg flex items-center gap-x-2 text-sm text-red-400 light:text-red-500">
-                    <WarningOctagon size={28} className="shrink-0" />
-                    <p>
-                      <b>{t("sqlConnection.warningLabel")}</b>{" "}
-                      {t("sqlConnection.warningText")}{" "}
-                      <i>{t("sqlConnection.warningInstructed")}</i>{" "}
-                      {t("sqlConnection.warningToOnlyPerform")}{" "}
-                      <b>{t("sqlConnection.warningDoesNotPrevent")}</b>{" "}
-                      {t("sqlConnection.warningDoesNotPrevent2")}{" "}
-                      <b>{t("sqlConnection.warningReadOnly")}</b>{" "}
-                      {t("sqlConnection.warningReadOnly2")}
-                    </p>
-                  </div>
-
-                  <label className="block mb-2 text-sm font-medium text-white mt-4">
-                    {t("sqlConnection.selectEngine")}
-                  </label>
-                  <div className="grid md:grid-cols-4 gap-4 grid-cols-2">
-                    <DBEngine
-                      provider="postgresql"
-                      active={engine === "postgresql"}
-                      onClick={() => setEngine("postgresql")}
-                    />
-                    <DBEngine
-                      provider="mysql"
-                      active={engine === "mysql"}
-                      onClick={() => setEngine("mysql")}
-                    />
-                    <DBEngine
-                      provider="sql-server"
-                      active={engine === "sql-server"}
-                      onClick={() => setEngine("sql-server")}
-                    />
-                  </div>
+            <X size={24} weight="bold" className="text-white" />
+          </button>
+        </div>
+        <form
+          id="sql-connection-form"
+          onChange={onFormChange}
+          onSubmit={handleUpdate}
+        >
+          <div className="px-7 py-6">
+            <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2">
+              <p className="text-sm text-white/60">
+                {isEditMode
+                  ? t("sqlConnection.descriptionEdit")
+                  : t("sqlConnection.descriptionNew")}
+              </p>
+              <div className="flex flex-col w-full">
+                <div className="border border-red-800 bg-zinc-800 light:bg-red-200/50 p-4 rounded-lg flex items-center gap-x-2 text-sm text-red-400 light:text-red-500">
+                  <WarningOctagon size={28} className="shrink-0" />
+                  <p>
+                    <b>{t("sqlConnection.warningLabel")}</b>{" "}
+                    {t("sqlConnection.warningText")}{" "}
+                    <i>{t("sqlConnection.warningInstructed")}</i>{" "}
+                    {t("sqlConnection.warningToOnlyPerform")}{" "}
+                    <b>{t("sqlConnection.warningDoesNotPrevent")}</b>{" "}
+                    {t("sqlConnection.warningDoesNotPrevent2")}{" "}
+                    <b>{t("sqlConnection.warningReadOnly")}</b>{" "}
+                    {t("sqlConnection.warningReadOnly2")}
+                  </p>
                 </div>
 
-                <div className="flex flex-col w-full">
-                  <label className="block mb-2 text-sm font-medium text-white">
-                    {t("sqlConnection.connectionName")}
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                    placeholder={t("sqlConnection.connectionNamePlaceholder")}
-                    required={true}
-                    autoComplete="off"
-                    spellCheck={false}
-                    defaultValue={config.name || ""}
+                <label className="block mb-2 text-sm font-medium text-white mt-4">
+                  {t("sqlConnection.selectEngine")}
+                </label>
+                <div className="grid md:grid-cols-4 gap-4 grid-cols-2">
+                  <DBEngine
+                    provider="postgresql"
+                    active={engine === "postgresql"}
+                    onClick={() => setEngine("postgresql")}
+                  />
+                  <DBEngine
+                    provider="mysql"
+                    active={engine === "mysql"}
+                    onClick={() => setEngine("mysql")}
+                  />
+                  <DBEngine
+                    provider="sql-server"
+                    active={engine === "sql-server"}
+                    onClick={() => setEngine("sql-server")}
                   />
                 </div>
+              </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="flex flex-col">
-                    <label className="block mb-2 text-sm font-medium text-white">
-                      {t("sqlConnection.databaseUser")}
-                    </label>
-                    <input
-                      type="text"
-                      name="username"
-                      className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder={t("sqlConnection.databaseUserPlaceholder")}
-                      required={true}
-                      autoComplete="off"
-                      spellCheck={false}
-                      defaultValue={config.username || ""}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="block mb-2 text-sm font-medium text-white">
-                      {t("sqlConnection.databasePassword")}
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder={t(
-                        "sqlConnection.databasePasswordPlaceholder",
-                      )}
-                      required={true}
-                      autoComplete="off"
-                      spellCheck={false}
-                      defaultValue={config.password || ""}
-                    />
-                  </div>
-                </div>
+              <div className="flex flex-col w-full">
+                <label className="block mb-2 text-sm font-medium text-white">
+                  {t("sqlConnection.connectionName")}
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("sqlConnection.connectionNamePlaceholder")}
+                  required={true}
+                  autoComplete="off"
+                  spellCheck={false}
+                  defaultValue={config.name || ""}
+                />
+              </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                  <div className="sm:col-span-2">
-                    <label className="block mb-2 text-sm font-medium text-white">
-                      {t("sqlConnection.serverEndpoint")}
-                    </label>
-                    <input
-                      type="text"
-                      name="host"
-                      className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder={t("sqlConnection.serverEndpointPlaceholder")}
-                      required={true}
-                      autoComplete="off"
-                      spellCheck={false}
-                      defaultValue={config.host || ""}
-                    />
-                  </div>
-                  <div>
-                    <label className="block mb-2 text-sm font-medium text-white">
-                      {t("sqlConnection.port")}
-                    </label>
-                    <input
-                      type="text"
-                      name="port"
-                      className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder={t("sqlConnection.portPlaceholder")}
-                      required={false}
-                      autoComplete="off"
-                      spellCheck={false}
-                      defaultValue={config.port || ""}
-                    />
-                  </div>
-                </div>
-
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="flex flex-col">
                   <label className="block mb-2 text-sm font-medium text-white">
-                    {t("sqlConnection.database")}
+                    {t("sqlConnection.databaseUser")}
                   </label>
                   <input
                     type="text"
-                    name="database"
+                    name="username"
                     className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                    placeholder={t("sqlConnection.databasePlaceholder")}
+                    placeholder={t("sqlConnection.databaseUserPlaceholder")}
                     required={true}
                     autoComplete="off"
                     spellCheck={false}
-                    defaultValue={config.database || ""}
+                    defaultValue={config.username || ""}
                   />
                 </div>
-
-                {engine === "postgresql" && (
-                  <div className="flex flex-col">
-                    <label className="block mb-2 text-sm font-medium text-white">
-                      {t("sqlConnection.schemaOptional")}
-                    </label>
-                    <input
-                      type="text"
-                      name="schema"
-                      className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
-                      placeholder={t("sqlConnection.schemaPlaceholder")}
-                      required={false}
-                      autoComplete="off"
-                      spellCheck={false}
-                      defaultValue={config.schema || ""}
-                    />
-                  </div>
-                )}
-
-                {engine === "sql-server" && (
-                  <Toggle
-                    name="encrypt"
-                    value="true"
-                    size="md"
-                    label={t("sqlConnection.enableEncryption")}
-                    enabled={config.encrypt}
+                <div className="flex flex-col">
+                  <label className="block mb-2 text-sm font-medium text-white">
+                    {t("sqlConnection.databasePassword")}
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    placeholder={t("sqlConnection.databasePasswordPlaceholder")}
+                    required={true}
+                    autoComplete="off"
+                    spellCheck={false}
+                    defaultValue={config.password || ""}
                   />
-                )}
-
-                <p className="text-theme-text-secondary text-sm">
-                  {t(assembleConnectionString({ engine, ...config }) || "")}
-                </p>
+                </div>
               </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div className="sm:col-span-2">
+                  <label className="block mb-2 text-sm font-medium text-white">
+                    {t("sqlConnection.serverEndpoint")}
+                  </label>
+                  <input
+                    type="text"
+                    name="host"
+                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    placeholder={t("sqlConnection.serverEndpointPlaceholder")}
+                    required={true}
+                    autoComplete="off"
+                    spellCheck={false}
+                    defaultValue={config.host || ""}
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-white">
+                    {t("sqlConnection.port")}
+                  </label>
+                  <input
+                    type="text"
+                    name="port"
+                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    placeholder={t("sqlConnection.portPlaceholder")}
+                    required={false}
+                    autoComplete="off"
+                    spellCheck={false}
+                    defaultValue={config.port || ""}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <label className="block mb-2 text-sm font-medium text-white">
+                  {t("sqlConnection.database")}
+                </label>
+                <input
+                  type="text"
+                  name="database"
+                  className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                  placeholder={t("sqlConnection.databasePlaceholder")}
+                  required={true}
+                  autoComplete="off"
+                  spellCheck={false}
+                  defaultValue={config.database || ""}
+                />
+              </div>
+
+              {engine === "postgresql" && (
+                <div className="flex flex-col">
+                  <label className="block mb-2 text-sm font-medium text-white">
+                    {t("sqlConnection.schemaOptional")}
+                  </label>
+                  <input
+                    type="text"
+                    name="schema"
+                    className="border-none bg-theme-settings-input-bg w-full text-white placeholder:text-theme-settings-input-placeholder text-sm rounded-lg focus:outline-primary-button active:outline-primary-button outline-none block w-full p-2.5"
+                    placeholder={t("sqlConnection.schemaPlaceholder")}
+                    required={false}
+                    autoComplete="off"
+                    spellCheck={false}
+                    defaultValue={config.schema || ""}
+                  />
+                </div>
+              )}
+
+              {engine === "sql-server" && (
+                <Toggle
+                  name="encrypt"
+                  value="true"
+                  size="md"
+                  label={t("sqlConnection.enableEncryption")}
+                  enabled={config.encrypt}
+                />
+              )}
+
+              <p className="text-theme-text-secondary text-sm">
+                {t(assembleConnectionString({ engine, ...config }) || "")}
+              </p>
             </div>
-            <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border px-7 pb-6">
-              <button
-                type="button"
-                onClick={handleClose}
-                className="transition-all duration-300 text-white hover:bg-zinc-700 light:hover:bg-theme-bg-primary px-4 py-2 rounded-lg text-sm"
-              >
-                {t("sqlConnection.cancel")}
-              </button>
-              <button
-                type="submit"
-                form="sql-connection-form"
-                disabled={isValidating}
-                className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm disabled:opacity-50"
-              >
-                {isValidating
-                  ? t("sqlConnection.validating")
-                  : t("sqlConnection.saveConnection")}
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+          <div className="flex justify-between items-center mt-6 pt-6 border-t border-theme-modal-border px-7 pb-6">
+            <button
+              type="button"
+              onClick={handleClose}
+              className="transition-all duration-300 text-white hover:bg-zinc-700 light:hover:bg-theme-bg-primary px-4 py-2 rounded-lg text-sm"
+            >
+              {t("sqlConnection.cancel")}
+            </button>
+            <button
+              type="submit"
+              form="sql-connection-form"
+              disabled={isValidating}
+              className="transition-all duration-300 bg-white text-black hover:opacity-60 px-4 py-2 rounded-lg text-sm disabled:opacity-50"
+            >
+              {isValidating
+                ? t("sqlConnection.validating")
+                : t("sqlConnection.saveConnection")}
+            </button>
+          </div>
+        </form>
+      </div>
     </ModalWrapper>,
     document.getElementById("workspace-agent-settings-container"),
   );

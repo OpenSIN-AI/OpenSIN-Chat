@@ -46,10 +46,7 @@ export default function ChatRow({
   } = useModal();
 
   const handleDelete = async () => {
-    if (
-      !window.confirm(t("recorded.deleteConfirm"))
-    )
-      return false;
+    if (!window.confirm(t("recorded.deleteConfirm"))) return false;
     await System.deleteChat(chat.id);
     onDelete(chat.id);
   };

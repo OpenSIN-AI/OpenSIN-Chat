@@ -436,9 +436,7 @@ export default forwardRef(function (
             data={compiledRows}
             computeItemKey={computeItemKey}
             itemContent={(index, row) => renderRow(row, index)}
-            followOutput={(atBottom: boolean) =>
-              atBottom ? "auto" : false
-            }
+            followOutput={(atBottom: boolean) => (atBottom ? "auto" : false)}
             initialTopMostItemIndex={
               compiledRows.length > 1 ? compiledRows.length - 1 : 0
             }
@@ -462,7 +460,10 @@ export default forwardRef(function (
                     scrollVirtuosoToBottom(!isStreaming);
                   }}
                 >
-                  <ArrowDown weight="bold" className="text-white/60 light:text-theme-text-secondary w-5 h-5" />
+                  <ArrowDown
+                    weight="bold"
+                    className="text-white/60 light:text-theme-text-secondary w-5 h-5"
+                  />
                 </div>
               </div>
             </div>

@@ -113,10 +113,7 @@ function NvidiaNimModelSelection({ settings, basePath }: any) {
           const name =
             typeof model === "string" ? model : model.name || model.id;
           return (
-            <option
-              key={id}
-              value={id}
-            >
+            <option key={id} value={id}>
               {name}
             </option>
           );

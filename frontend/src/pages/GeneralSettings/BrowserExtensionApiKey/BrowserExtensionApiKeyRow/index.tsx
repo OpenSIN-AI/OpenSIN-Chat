@@ -35,9 +35,7 @@ export default function BrowserExtensionApiKeyRow({
   const [copied, setCopied] = useState(false);
 
   const handleRevoke = async () => {
-    if (
-      !window.confirm(t("browserExtensionApiKey.revokeConfirm"))
-    )
+    if (!window.confirm(t("browserExtensionApiKey.revokeConfirm")))
       return false;
 
     const result = await BrowserExtensionApiKey.revoke(apiKey.id);
@@ -113,7 +111,9 @@ export default function BrowserExtensionApiKeyRow({
       </td>
       {isMultiUser && (
         <td className="px-6 py-2">
-          {apiKey.user ? apiKey.user.username : t("browserExtensionApiKey.notAvailable")}
+          {apiKey.user
+            ? apiKey.user.username
+            : t("browserExtensionApiKey.notAvailable")}
         </td>
       )}
       <td className="px-6 py-2">

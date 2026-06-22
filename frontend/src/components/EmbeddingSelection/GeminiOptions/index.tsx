@@ -49,10 +49,7 @@ export default function GeminiOptions({ settings }: any) {
               >
                 {(DEFAULT_MODELS as any).map((model) => {
                   return (
-                    <option
-                      key={model.id}
-                      value={model.id}
-                    >
+                    <option key={model.id} value={model.id}>
                       {model.name}
                     </option>
                   );

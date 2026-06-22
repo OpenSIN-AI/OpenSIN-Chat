@@ -658,7 +658,6 @@ const TRANSLATIONS = {
     users: "Users",
     url: "URL",
     unverified: "Unverified",
-    unsavedChanges: "Unsaved Changes",
     stopDemo: "Stop demo",
     settings: "Settings",
     selectExperimentalFeature: "Select an experimental feature",
@@ -1002,9 +1001,9 @@ const TRANSLATIONS = {
       description:
         "Upload a PDF and let agents analyze, verify, and turn it into searchable facts.",
       tabJobs: "Analyses",
-      tabFacts: "Fact store",
+      tabFacts: "Fact Store",
       tabCrossCheck: "Cross-check",
-      tabCorpus: "Corpus comparison",
+      tabCorpus: "Corpus Comparison",
       newAnalysis: "New analysis",
       pdfFile: "PDF file",
       chooseFile: "Choose file",
@@ -3812,8 +3811,6 @@ const TRANSLATIONS = {
       cancel: "Cancel",
       updateEmbed: "Update embed",
     },
-    title: "Chat Embed",
-    back: "Back",
   },
   slashPresets: {
     editPreset: {
@@ -4221,7 +4218,8 @@ const TRANSLATIONS = {
   },
   error: {
     serverUnavailable: "Server Unavailable",
-    serverUnavailableDescription: "The server could not be reached. Please check your connection and try again in a moment.",
+    serverUnavailableDescription:
+      "The server could not be reached. Please check your connection and try again in a moment.",
   },
   audioPreference: {
     stt: {

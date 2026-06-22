@@ -40,10 +40,7 @@ export default function NativeEmbeddingOptions({ settings }: any) {
             }
           >
             {loading ? (
-              <option
-                value="--loading-available-models--"
-                disabled={true}
-              >
+              <option value="--loading-available-models--" disabled={true}>
                 {t("providerSettings.nativeEmbedding.loadingModels")}
               </option>
             ) : (
@@ -52,10 +49,7 @@ export default function NativeEmbeddingOptions({ settings }: any) {
               >
                 {(availableModels as any).map((model) => {
                   return (
-                    <option
-                      key={model.id}
-                      value={model.id}
-                    >
+                    <option key={model.id} value={model.id}>
                       {model.name}
                     </option>
                   );

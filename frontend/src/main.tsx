@@ -10,7 +10,11 @@
 import "regenerator-runtime/runtime";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import App from "@/App";
 import PrivateRoute, {
   AdminRoute,
@@ -188,9 +192,7 @@ const router = createBrowserRouter([
           const { default: AgentBuilder } =
             await import("@/pages/Admin/AgentBuilder");
           return {
-            element: (
-              <AdminRoute Component={AgentBuilder} />
-            ),
+            element: <AdminRoute Component={AgentBuilder} />,
           };
         },
       },
@@ -200,9 +202,7 @@ const router = createBrowserRouter([
           const { default: AgentBuilder } =
             await import("@/pages/Admin/AgentBuilder");
           return {
-            element: (
-              <AdminRoute Component={AgentBuilder} />
-            ),
+            element: <AdminRoute Component={AgentBuilder} />,
           };
         },
       },
@@ -465,7 +465,8 @@ const router = createBrowserRouter([
       {
         path: "/embed/:uuid",
         lazy: async () => {
-          const { default: EmbedPreview } = await import("@/pages/EmbedPreview");
+          const { default: EmbedPreview } =
+            await import("@/pages/EmbedPreview");
           return { element: <EmbedPreview /> };
         },
       },

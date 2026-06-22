@@ -69,10 +69,7 @@ export default function ChatModelSelection({
           <optgroup label={t("chat.model.generalModels")}>
             {defaultModels.map((model: string) => {
               return (
-                <option
-                  key={model}
-                  value={model}
-                >
+                <option key={model} value={model}>
                   {model}
                 </option>
               );
@@ -83,10 +80,7 @@ export default function ChatModelSelection({
           <optgroup label={t("chat.model.discoveredModels")}>
             {customModels.map((model: any) => {
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.name || model.id}
                 </option>
               );
@@ -101,10 +95,7 @@ export default function ChatModelSelection({
                 ([organization, models]) => (
                   <optgroup key={organization} label={organization}>
                     {models.map((model: any) => (
-                      <option
-                        key={model.id}
-                        value={model.id}
-                      >
+                      <option key={model.id} value={model.id}>
                         {model.name || model.id}
                       </option>
                     ))}

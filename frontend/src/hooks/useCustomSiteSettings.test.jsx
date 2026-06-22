@@ -81,7 +81,9 @@ describe("useCustomSiteSettings", () => {
   });
 
   it("exposes error on fetch failure", async () => {
-    Admin.systemPreferencesByFields.mockRejectedValue(new Error("Network error"));
+    Admin.systemPreferencesByFields.mockRejectedValue(
+      new Error("Network error"),
+    );
 
     const { result } = renderHook(() => useCustomSiteSettings(), { wrapper });
 

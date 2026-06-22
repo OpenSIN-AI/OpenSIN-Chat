@@ -259,10 +259,7 @@ function LocalAIModelSelection({
           <optgroup label={t("localAiEmbedding.yourLoadedModels")}>
             {models.map((model) => {
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.id}
                 </option>
               );

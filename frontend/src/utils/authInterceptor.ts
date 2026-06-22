@@ -39,7 +39,11 @@ export function installAuthInterceptor(): void {
             : input instanceof Request
               ? input.url
               : "";
-      if (url.includes("/api/") || url.startsWith("/api/") || url.includes("/pdf-analysis/")) {
+      if (
+        url.includes("/api/") ||
+        url.startsWith("/api/") ||
+        url.includes("/pdf-analysis/")
+      ) {
         handleAuthFailure();
       }
     }

@@ -259,10 +259,7 @@ function OllamaEmbeddingModelSelection({ settings, basePath = null }: any) {
           <optgroup label={t("ollamaEmbedding.yourLoadedModels")}>
             {(customModels as any).map((model) => {
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.id}
                 </option>
               );

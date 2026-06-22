@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook, act, waitFor } from "@testing-library/react";
+import { renderHook, act } from "@testing-library/react";
 
 vi.mock("@/utils/constants", () => ({
   API_BASE: "http://localhost:3001/api",
@@ -197,9 +197,7 @@ describe("useFileBrowser", () => {
   });
 
   it("createFile defaults content to empty string", async () => {
-    global.fetch.mockResolvedValueOnce(
-      mockFetchResponse({ success: true }),
-    );
+    global.fetch.mockResolvedValueOnce(mockFetchResponse({ success: true }));
 
     const { result } = renderHook(() => useFileBrowser());
 
@@ -212,9 +210,7 @@ describe("useFileBrowser", () => {
   });
 
   it("deletes an item", async () => {
-    global.fetch.mockResolvedValueOnce(
-      mockFetchResponse({ success: true }),
-    );
+    global.fetch.mockResolvedValueOnce(mockFetchResponse({ success: true }));
 
     const { result } = renderHook(() => useFileBrowser());
 

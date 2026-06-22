@@ -710,6 +710,11 @@ const Workspace = {
       workspace?.chatProvider ??
       process.env.LLM_PROVIDER;
 
+    // No provider configured - cannot determine native tool calling support.
+    // Returning false prevents the unhandled "Unknown provider: undefined" crash
+    // in automatic chat mode when a workspace has no LLM provider selected.
+    if (!provider) return false;
+
     // Model router delegates to a resolved provider at chat time.
     // Check the router's fallback provider for tool calling support
     // as a reasonable proxy for the router's capabilities.

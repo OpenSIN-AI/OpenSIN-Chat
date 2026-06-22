@@ -34,10 +34,20 @@ vi.mock("@/utils/paths", () => ({
 const setTheme = vi.fn();
 let currentTheme = "dark";
 vi.mock("@/hooks/useTheme", () => ({
-  useTheme: () => ({ theme: currentTheme, setTheme, availableThemes: { system: "System", light: "Light", dark: "Dark" }, isLight: currentTheme === "light" }),
+  useTheme: () => ({
+    theme: currentTheme,
+    setTheme,
+    availableThemes: { system: "System", light: "Light", dark: "Dark" },
+    isLight: currentTheme === "light",
+  }),
 }));
 vi.mock("@/ThemeContext", () => ({
-  useThemeContext: () => ({ theme: currentTheme, setTheme, availableThemes: { system: "System", light: "Light", dark: "Dark" }, isLight: currentTheme === "light" }),
+  useThemeContext: () => ({
+    theme: currentTheme,
+    setTheme,
+    availableThemes: { system: "System", light: "Light", dark: "Dark" },
+    isLight: currentTheme === "light",
+  }),
 }));
 
 const changeLanguage = vi.fn();

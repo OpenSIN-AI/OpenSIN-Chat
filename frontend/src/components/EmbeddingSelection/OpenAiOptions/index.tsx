@@ -29,7 +29,9 @@ export default function OpenAiOptions({ settings }: any) {
           <select
             name="EmbeddingModelPref"
             required={true}
-            defaultValue={settings?.EmbeddingModelPref || "text-embedding-ada-002"}
+            defaultValue={
+              settings?.EmbeddingModelPref || "text-embedding-ada-002"
+            }
             className="border-none bg-theme-settings-input-bg border-gray-500 text-white text-sm rounded-lg block w-full p-2.5"
           >
             <optgroup
@@ -42,10 +44,7 @@ export default function OpenAiOptions({ settings }: any) {
                 "text-embedding-3-large",
               ].map((model) => {
                 return (
-                  <option
-                    key={model}
-                    value={model}
-                  >
+                  <option key={model} value={model}>
                     {model}
                   </option>
                 );

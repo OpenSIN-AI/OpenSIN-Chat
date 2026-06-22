@@ -583,7 +583,8 @@ const TRANSLATIONS = {
     filesEmbedded_one: "{{count}} Datei erfolgreich eingebettet",
     filesEmbedded_other: "{{count}} Dateien erfolgreich eingebettet",
     dragAndDropIcon: "Drag-and-Drop-Symbol",
-    processorOffline: "Dokumentenprozessor ist offline. Bitte versuchen Sie es später erneut.",
+    processorOffline:
+      "Dokumentenprozessor ist offline. Bitte versuchen Sie es später erneut.",
     embedFailed: "Einbetten der Datei(en) fehlgeschlagen.",
   },
   common: {
@@ -665,7 +666,6 @@ const TRANSLATIONS = {
     users: "Benutzer",
     url: "URL",
     unverified: "Nicht verifiziert",
-    unsavedChanges: "Ungespeicherte Änderungen",
     stopDemo: "Demo stoppen",
     settings: "Einstellungen",
     selectExperimentalFeature: "Experimentelle Funktion auswählen",
@@ -3904,8 +3904,6 @@ const TRANSLATIONS = {
       cancel: "Abbrechen",
       updateEmbed: "Embed aktualisieren",
     },
-    title: "Chat-Einbettung",
-    back: "Zurück",
   },
   slashPresets: {
     editPreset: {
@@ -4054,7 +4052,8 @@ const TRANSLATIONS = {
     revoked: "Browser-Erweiterungs-API-Schlüssel dauerhaft widerrufen",
     revokeFailed: "Widerruf des API-Schlüssels fehlgeschlagen",
     copiedToClipboard: "Verbindungszeichenfolge in die Zwischenablage kopiert",
-    connectingToExtension: "Verbindung zur Browser-Erweiterung wird hergestellt...",
+    connectingToExtension:
+      "Verbindung zur Browser-Erweiterung wird hergestellt...",
     notAvailable: "k.A.",
     newKey: {
       title: "Neuer Browser-Erweiterungs-API-Schlüssel",
@@ -4317,7 +4316,8 @@ const TRANSLATIONS = {
   },
   error: {
     serverUnavailable: "Server nicht verfügbar",
-    serverUnavailableDescription: "Der Server konnte nicht erreicht werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es in einem Moment erneut.",
+    serverUnavailableDescription:
+      "Der Server konnte nicht erreicht werden. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es in einem Moment erneut.",
   },
   audioPreference: {
     stt: {
@@ -4879,7 +4879,8 @@ const TRANSLATIONS = {
     title: "Neue Einbettung erstellen",
     created: "Embed-Widget erfolgreich erstellt",
     name: "Widget-Name",
-    nameHint: "Geben Sie diesem Embed-Widget einen beschreibenden Namen zur Identifikation.",
+    nameHint:
+      "Geben Sie diesem Embed-Widget einen beschreibenden Namen zur Identifikation.",
     namePlaceholder: "Mein Help-Desk-Widget",
     maxChatsPerDay: "Max. Chats pro Tag",
     maxChatsPerDayHint:

@@ -43,10 +43,7 @@ describe("useUnsavedChanges", () => {
   it("adds beforeunload listener when hasChanges is true", () => {
     const addSpy = vi.spyOn(window, "addEventListener");
     renderHook(() => useUnsavedChanges(true));
-    expect(addSpy).toHaveBeenCalledWith(
-      "beforeunload",
-      expect.any(Function),
-    );
+    expect(addSpy).toHaveBeenCalledWith("beforeunload", expect.any(Function));
     addSpy.mockRestore();
   });
 

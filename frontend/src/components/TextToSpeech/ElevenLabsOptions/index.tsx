@@ -92,10 +92,7 @@ function ElevenLabsModelSelection({ apiKey, settings }: any) {
           .map((organization) => (
             <optgroup key={organization} label={organization}>
               {groupedModels[organization].map((model: any) => (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.name}
                 </option>
               ))}

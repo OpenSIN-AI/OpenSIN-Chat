@@ -10,9 +10,7 @@ vi.mock("@/models/system", () => ({
 }));
 
 import System from "@/models/system";
-import useSystemSettings, {
-  SYSTEM_SETTINGS_KEY,
-} from "./useSystemSettings";
+import useSystemSettings, { SYSTEM_SETTINGS_KEY } from "./useSystemSettings";
 
 function wrapper({ children }) {
   return (

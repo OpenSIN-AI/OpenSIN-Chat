@@ -44,10 +44,7 @@ export default function ChatModelSelection({
         <optgroup label={t("chat_window.workspace_llm_manager.general_models")}>
           {(defaultModels as any).map((model) => {
             return (
-              <option
-                key={model}
-                value={model}
-              >
+              <option key={model} value={model}>
                 {model}
               </option>
             );
@@ -60,10 +57,7 @@ export default function ChatModelSelection({
         >
           {(customModels as any).map((model) => {
             return (
-              <option
-                key={model.id}
-                value={model.id}
-              >
+              <option key={model.id} value={model.id}>
                 {model.name || model.id}
               </option>
             );
@@ -71,22 +65,21 @@ export default function ChatModelSelection({
         </optgroup>
       )}
       {/* For providers like TogetherAi where we partition model by creator entity. */}
-      {!Array.isArray(customModels) && customModels && Object.keys(customModels).length > 0 && (
-        <>
-          {Object.entries(customModels).map(([organization, models]) => (
-            <optgroup key={organization} label={organization}>
-              {(models as any).map((model) => (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
-                  {model.name}
-                </option>
-              ))}
-            </optgroup>
-          ))}
-        </>
-      )}
+      {!Array.isArray(customModels) &&
+        customModels &&
+        Object.keys(customModels).length > 0 && (
+          <>
+            {Object.entries(customModels).map(([organization, models]) => (
+              <optgroup key={organization} label={organization}>
+                {(models as any).map((model) => (
+                  <option key={model.id} value={model.id}>
+                    {model.name}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </>
+        )}
     </select>
   );
 }

@@ -173,10 +173,7 @@ function GenericOpenAiModelSelection({
           <optgroup label={t("genericOpenAi.loadedModels")}>
             {(customModels as any).map((model) => {
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.id}
                 </option>
               );

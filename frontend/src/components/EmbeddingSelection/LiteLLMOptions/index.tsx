@@ -150,10 +150,7 @@ function LiteLLMModelSelection({
           <optgroup label={t("liteLLM.modelSelection.yourLoadedModels")}>
             {models.map((model) => {
               return (
-                <option
-                  key={model.id}
-                  value={model.id}
-                >
+                <option key={model.id} value={model.id}>
                   {model.id}
                 </option>
               );

@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 const truncate = require("truncate");
 
 const WorkspaceThread = {
-  defaultName: "Thread",
+  defaultName: "New Thread",
   writable: ["name"],
 
   /**

@@ -77,7 +77,9 @@ describe("Sidebars", () => {
     expect(screen.queryByTestId("filesystem-sidebar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("database-sidebar")).not.toBeInTheDocument();
     expect(screen.queryByTestId("political-sidebar")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("pdf-analysis-sidebar")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("pdf-analysis-sidebar"),
+    ).not.toBeInTheDocument();
     expect(screen.getByTestId("right-sidebar-icon-bar")).toBeInTheDocument();
   });
 

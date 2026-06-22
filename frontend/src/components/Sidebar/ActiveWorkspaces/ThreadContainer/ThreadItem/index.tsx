@@ -19,6 +19,24 @@ import { useTranslation } from "react-i18next";
 import { copyText } from "@/utils/clipboard";
 
 const THREAD_CALLOUT_DETAIL_WIDTH: any = 26;
+const DEFAULT_THREAD_NAMES = ["Thread", "New Thread"];
+
+function threadDisplayName(thread: any): string {
+  if (!DEFAULT_THREAD_NAMES.includes(thread.name)) return thread.name;
+  const dateRaw = thread.lastUpdatedAt || thread.createdAt;
+  if (!dateRaw) return thread.name;
+  const d = new Date(dateRaw);
+  const date = d.toLocaleDateString(undefined, {
+    day: "2-digit",
+    month: "2-digit",
+  });
+  const time = d.toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return `${thread.name} · ${date} ${time}`;
+}
+
 function ThreadItem({
   idx,
   activeIdx,
@@ -37,6 +55,7 @@ function ThreadItem({
   const workspaceSlug = workspace?.slug ?? urlSlug;
   const optionsContainer = useRef(null);
   const [showOptions, setShowOptions] = useState(false);
+  const displayName = threadDisplayName(thread);
   const linkTo = thread.virtual
     ? paths.workspace.chat(workspaceSlug)
     : !thread.slug
@@ -126,7 +145,7 @@ function ThreadItem({
             ref={ref}
             to={linkTo}
             data-tooltip-id="workspace-thread-name"
-            data-tooltip-content={thread.name}
+            data-tooltip-content={displayName}
             className="w-full pl-2 py-1 overflow-hidden"
             aria-current={isActive ? "page" : undefined}
           >
@@ -137,7 +156,7 @@ function ThreadItem({
                   : "text-theme-text-primary font-medium light:text-slate-800"
               }`}
             >
-              {thread.name}
+              {displayName}
             </p>
           </Link>
         )}

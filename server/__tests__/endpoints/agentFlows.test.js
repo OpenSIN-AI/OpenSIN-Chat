@@ -54,7 +54,7 @@ describe("agentFlowEndpoints", () => {
     it("saves a flow", async () => {
       AgentFlows.saveFlow.mockReturnValue({ success: true, uuid: "abc" });
       const res = await app.call("post", "/agent-flows/save", {
-        body: { name: "flow1", config: { blocks: [] } },
+        body: { name: "flow1", config: { steps: [] } },
       });
       expect(res.statusCode).toBe(200);
       expect(res.body.success).toBe(true);
@@ -77,7 +77,7 @@ describe("agentFlowEndpoints", () => {
     it("returns error when saveFlow fails", async () => {
       AgentFlows.saveFlow.mockReturnValue({ success: false, error: "bad" });
       const res = await app.call("post", "/agent-flows/save", {
-        body: { name: "flow1", config: {} },
+        body: { name: "flow1", config: { steps: [] } },
       });
       expect(res.body.error).toBe("bad");
     });
@@ -85,7 +85,7 @@ describe("agentFlowEndpoints", () => {
     it("sends telemetry on new flow (no uuid)", async () => {
       AgentFlows.saveFlow.mockReturnValue({ success: true, uuid: "new" });
       await app.call("post", "/agent-flows/save", {
-        body: { name: "flow1", config: { blocks: [1, 2] } },
+        body: { name: "flow1", config: { steps: [1, 2] } },
       });
       expect(Telemetry.sendTelemetry).toHaveBeenCalledWith("agent_flow_created", { blockCount: 2 });
     });
@@ -93,7 +93,7 @@ describe("agentFlowEndpoints", () => {
     it("skips telemetry on update (with uuid)", async () => {
       AgentFlows.saveFlow.mockReturnValue({ success: true });
       await app.call("post", "/agent-flows/save", {
-        body: { name: "flow1", config: {}, uuid: "existing" },
+        body: { name: "flow1", config: { steps: [] }, uuid: "existing" },
       });
       expect(Telemetry.sendTelemetry).not.toHaveBeenCalled();
     });
@@ -101,7 +101,7 @@ describe("agentFlowEndpoints", () => {
     it("returns 500 on exception", async () => {
       AgentFlows.saveFlow.mockImplementation(() => { throw new Error("boom"); });
       const res = await app.call("post", "/agent-flows/save", {
-        body: { name: "f", config: {} },
+        body: { name: "f", config: { steps: [] } },
       });
       expect(res.statusCode).toBe(500);
     });

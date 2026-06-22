@@ -34,7 +34,19 @@ function prettifyModelName(rawModel: string): string {
     .split("-")
     .map((word) => {
       // Keep well-known acronyms uppercase
-      const upper = ["m2", "m3", "m4", "v4", "v5", "llm", "gpt", "api", "ai", "pro", "oss"];
+      const upper = [
+        "m2",
+        "m3",
+        "m4",
+        "v4",
+        "v5",
+        "llm",
+        "gpt",
+        "api",
+        "ai",
+        "pro",
+        "oss",
+      ];
       const lower = word.toLowerCase();
       if (upper.some((u) => lower === u)) return word.toUpperCase();
       // Special-case: "minimax" -> "MiniMax", "deepseek" -> "DeepSeek"

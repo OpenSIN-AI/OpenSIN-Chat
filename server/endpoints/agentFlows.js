@@ -43,13 +43,15 @@ function agentFlowEndpoints(app) {
 
         const flow = AgentFlows.saveFlow(name, config, uuid);
         if (!flow || !flow.success)
-          return response
-            .status(200)
-            .json({ success: false, flow: null, error: flow.error || "Failed to save flow" });
+          return response.status(200).json({
+            success: false,
+            flow: null,
+            error: flow.error || "Failed to save flow",
+          });
 
         if (!uuid) {
           await Telemetry.sendTelemetry("agent_flow_created", {
-            blockCount: config.blocks?.length || 0,
+            blockCount: config.steps?.length || 0,
           });
         }
 
