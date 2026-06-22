@@ -18,9 +18,11 @@ export default function ThemeToggle({ className }: ThemeToggleProps) {
 
   if (!ctx) return null;
 
-  const { theme, setTheme, isLight } = ctx;
-  const next =
-    theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
+  const { setTheme, isLight } = ctx;
+  // Toggle directly between the resolved states: light ↔ dark.
+  // System preference is only consulted on initial load; the toggle is a
+  // manual override that always produces an immediate visual change.
+  const next = isLight ? "dark" : "light";
   const label =
     t("common.theme") +
     " — " +

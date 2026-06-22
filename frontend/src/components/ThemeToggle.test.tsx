@@ -59,13 +59,13 @@ describe("ThemeToggle", () => {
     expect(button.querySelector("svg")).toBeInTheDocument();
   });
 
-  it("cycles light → dark → system → light on click", () => {
-    let theme: "light" | "dark" | "system" = "light";
+  it("toggles between light and dark on click", () => {
+    let isLight = true;
     vi.mocked(useThemeContext).mockImplementation(() =>
-      createMockContext(theme, theme === "light"),
+      createMockContext(isLight ? "light" : "dark", isLight),
     );
-    mockSetTheme.mockImplementation((next: "light" | "dark" | "system") => {
-      theme = next;
+    mockSetTheme.mockImplementation((next: "light" | "dark") => {
+      isLight = next === "light";
     });
 
     const { rerender } = render(<ThemeToggle />);
@@ -75,11 +75,11 @@ describe("ThemeToggle", () => {
 
     rerender(<ThemeToggle />);
     fireEvent.click(screen.getByRole("button"));
-    expect(mockSetTheme).toHaveBeenCalledWith("system");
+    expect(mockSetTheme).toHaveBeenCalledWith("light");
 
     rerender(<ThemeToggle />);
     fireEvent.click(screen.getByRole("button"));
-    expect(mockSetTheme).toHaveBeenCalledWith("light");
+    expect(mockSetTheme).toHaveBeenCalledWith("dark");
   });
 
   it("aria-label and title reflect the next theme", () => {

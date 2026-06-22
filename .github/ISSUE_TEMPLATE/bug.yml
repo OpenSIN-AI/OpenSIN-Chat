@@ -1,71 +1,71 @@
 name: Bug Report
- description: Report a defect or unexpected behavior in OpenSIN Chat.
- title: "[BUG] "
- labels: ["bug", "triage"]
- body:
-   - type: markdown
-     attributes:
-       value: |
-         Thanks for taking the time to report a bug. Please fill out the sections below so we can reproduce and fix it quickly.
-   - type: input
-     id: version
-     attributes:
-       label: OpenSIN Chat version or commit
-       description: e.g. `v1.14.0` or `afe895d1`
-       placeholder: v1.14.0
-     validations:
-       required: true
-   - type: dropdown
-     id: environment
-     attributes:
-       label: Deployment environment
-       options:
-         - Docker (self-hosted)
-         - Docker Compose (docker-opensin)
-         - Bare-metal / Development
-         - OCI VM / Cloud
-         - Other
-     validations:
-       required: true
-   - type: textarea
-     id: reproduce
-     attributes:
-       label: Steps to reproduce
-       description: Numbered steps that consistently trigger the bug.
-       placeholder: |
-         1. Go to '...'
-         2. Click on '...'
-         3. See error
-     validations:
-       required: true
-   - type: textarea
-     id: expected
-     attributes:
-       label: Expected behavior
-       description: What did you expect to happen?
-     validations:
-       required: true
-   - type: textarea
-     id: actual
-     attributes:
-       label: Actual behavior
-       description: What happened instead? Include error messages or screenshots.
-     validations:
-       required: true
-   - type: textarea
-     id: logs
-     attributes:
-       label: Logs or console output
-       description: Paste relevant logs (redact secrets and API keys).
-       render: shell
-   - type: checkboxes
-     id: checks
-     attributes:
-       label: Pre-checks
-       options:
-         - label: I searched existing issues and this is not a duplicate.
-           required: true
-         - label: I checked the [Operations Runbook](https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/docs/OPERATIONS.md) if the service is unreachable.
-           required: false
-         - label: I redacted secrets, API keys, and passwords from logs.
-           required: true
+description: Report a defect or unexpected behavior in OpenSIN Chat.
+title: "[BUG] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please fill out the sections below so we can reproduce and fix it quickly.
+  - type: input
+    id: version
+    attributes:
+      label: OpenSIN Chat version or commit
+      description: e.g. `v1.14.0` or `afe895d1`
+      placeholder: v1.14.0
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Deployment environment
+      options:
+        - Docker (self-hosted)
+        - Docker Compose (docker-opensin)
+        - Bare-metal / Development
+        - OCI VM / Cloud
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps that consistently trigger the bug.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Include error messages or screenshots.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or console output
+      description: Paste relevant logs (redact secrets and API keys).
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-checks
+      options:
+        - label: I searched existing issues and this is not a duplicate.
+          required: true
+        - label: I checked the [Operations Runbook](https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/docs/OPERATIONS.md) if the service is unreachable.
+          required: false
+        - label: I redacted secrets, API keys, and passwords from logs.
+          required: true

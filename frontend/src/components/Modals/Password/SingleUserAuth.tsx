@@ -11,7 +11,11 @@ import { useTranslation } from "react-i18next";
 import useCustomAppName from "@/hooks/useCustomAppName";
 import useSystemSettings from "@/hooks/useSystemSettings";
 
-export default function SingleUserAuth({ autoLogin = false }: { autoLogin?: boolean }) {
+export default function SingleUserAuth({
+  autoLogin = false,
+}: {
+  autoLogin?: boolean;
+}) {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState(null);
