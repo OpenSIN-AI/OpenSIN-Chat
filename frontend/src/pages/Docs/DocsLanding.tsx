@@ -10,6 +10,7 @@ import { Code } from "@phosphor-icons/react/dist/csr/Code";
 import { Stack } from "@phosphor-icons/react/dist/csr/Stack";
 import { Database } from "@phosphor-icons/react/dist/csr/Database";
 import { CloudArrowUp } from "@phosphor-icons/react/dist/csr/CloudArrowUp";
+import { Shield } from "@phosphor-icons/react/dist/csr/Shield";
 import { CaretRight } from "@phosphor-icons/react/dist/csr/CaretRight";
 import type { Icon } from "@phosphor-icons/react/dist/lib/types";
 import paths from "@/utils/paths";
@@ -19,12 +20,13 @@ import {
   type DocCategory,
 } from "./docsManifest";
 
-const CATEGORY_ICONS: Record<DocCategory, Icon> = {
+export const CATEGORY_ICONS: Record<DocCategory, Icon> = {
   "getting-started": Rocket,
   api: Code,
   architecture: Stack,
   "data-sources": Database,
   deployment: CloudArrowUp,
+  operations: Shield,
 };
 
 export default function DocsLanding() {

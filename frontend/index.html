@@ -30,6 +30,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="/manifest.json" />
+
+    <!-- Preload brand font to avoid the render-blocking CSS chain. -->
+    <link rel="preload" href="/fonts/PlusJakartaSans.ttf" as="font" type="font/ttf" crossorigin />
   </head>
 
   <body>

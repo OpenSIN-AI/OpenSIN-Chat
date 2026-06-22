@@ -150,6 +150,18 @@ class MetaGenerator {
         },
       },
       { tag: "link", props: { rel: "manifest", href: "/manifest.json" } },
+
+      // Preload brand font to avoid the render-blocking CSS chain.
+      {
+        tag: "link",
+        props: {
+          rel: "preload",
+          href: "/fonts/PlusJakartaSans.ttf",
+          as: "font",
+          type: "font/ttf",
+          crossorigin: "anonymous",
+        },
+      },
     ];
   }
 
@@ -322,6 +334,85 @@ class MetaGenerator {
    * @param {string[]} js
    * @returns {string}
    */
+  /**
+   * @param {string} path
+   * @returns {boolean}
+   */
+  #isDocsRoute(path) {
+    return path === "/docs" || path.startsWith("/docs/");
+  }
+
+  /**
+   * Reduce the global Vite preload list to only the chunks that matter for the
+   * current route. Preloads are hints, not execution order; the module graph
+   * still guarantees correct evaluation. This drops the request burst from
+   * ~140 modulepreloads to a handful, which is the main driver for the 139 JS
+   * requests reported by Lighthouse.
+   *
+   * @param {string[]} js
+   * @param {string} routePath
+   * @returns {string[]}
+   */
+  #filterPreloadList(js, routePath) {
+    if (!js.length) return js;
+
+    const basename = (p) =>
+      p.replace(/^\/assets\//, "").replace(/-[A-Za-z0-9]+\.(js|css)$/, "");
+
+    // Always keep the runtime and the main vendor chunk (React + core libs).
+    const isCritical = (p) =>
+      /\/rolldown-runtime-/.test(p) || /\/vendor-[A-Za-z0-9]+\.js$/.test(p);
+
+    if (!this.#isDocsRoute(routePath)) {
+      return js.filter(isCritical);
+    }
+
+    // Docs route: also preload the chunks that are needed for the first paint.
+    const docsPatterns = [
+      "Docs",
+      "vendor-markdown",
+      "vendor-highlight",
+      "markdown",
+      "hljs",
+      "purify",
+      "paths",
+      "system",
+      "constants",
+      "IconBase",
+      "BookOpen",
+      "ArrowLeft",
+      "ArrowRight",
+      "List",
+      "MagnifyingGlass",
+      "TextAlignLeft",
+      "X",
+      "GithubLogo",
+      "CaretRight",
+      "Code",
+      "Rocket",
+      "Stack",
+      "Database",
+      "CloudArrowUp",
+      "ThemeToggle",
+      "clipboard",
+      "Sun",
+    ];
+
+    return js.filter(
+      (p) =>
+        isCritical(p) ||
+        docsPatterns.some((pattern) => basename(p).startsWith(pattern)),
+    );
+  }
+
+  /**
+   * Build the `<link rel="modulepreload" …>` tag list. vendor-react is
+   * always emitted first so React is initialized before any UI chunk that
+   * depends on it (TanStack Query, Floating UI, etc.) is evaluated.
+   *
+   * @param {string[]} js
+   * @returns {string}
+   */
   #buildPreloadTags(js) {
     if (!js.length) return "";
 
@@ -337,14 +428,53 @@ class MetaGenerator {
   }
 
   /**
+   * Emit stylesheet tags. Critical styles are render-blocking; non-critical
+   * vendor styles are loaded asynchronously so they no longer block first paint.
    *
+   * @param {string[]} css
+   * @param {string} routePath
+   * @returns {string}
+   */
+  #buildCssTags(css, routePath) {
+    if (!css.length) return "";
+
+    const isDocs = this.#isDocsRoute(routePath);
+    const isCritical = (p) => {
+      if (p === "/index.css") return true;
+      if (p === "/vendor.css") return true;
+      if (isDocs && p === "/Docs.css") return true;
+      if (isDocs && p === "/vendor-highlight.css") return true;
+      return false;
+    };
+
+    return css
+      .map((p) => {
+        if (isCritical(p)) {
+          return `<link rel="stylesheet" href="${p}">`;
+        }
+        // Async load non-critical CSS. The onload switch keeps the file in the
+        // stylesheet list while removing the print media attribute.
+        return `<link rel="preload" href="${p}" as="style" onload="this.onload=null;this.rel='stylesheet'">`;
+      })
+      .join("\n            ");
+  }
+
+  /**
+   * @param {import('express').Request} request
    * @param {import('express').Response} response
    * @param {number} code
+   * @param {string|null} prerenderedBody
    */
-  async generate(response, code = 200) {
+  async generate(request, response, code = 200, prerenderedBody = null) {
     if (this.#customConfig === null) await this.#fetchConfg();
+    const routePath = request?.path || "/";
     const { js, css } = await this.#readVitePreloadList();
-    const preloadTags = this.#buildPreloadTags(js);
+    const filteredJs = this.#filterPreloadList(js, routePath);
+    const preloadTags = this.#buildPreloadTags(filteredJs);
+    const cssTags = this.#buildCssTags(css, routePath);
+    const rootContent = prerenderedBody
+      ? prerenderedBody
+      : '<div id="root" class="h-screen"></div>';
     response
       .status(code)
       .setHeader("Cache-Control", "no-cache, no-store, must-revalidate").send(`
@@ -357,10 +487,10 @@ class MetaGenerator {
             ${preloadTags}
             <script type="module" crossorigin src="/index.js"></script>
             <link rel="stylesheet" href="/index.css">
-            ${css.map((p) => `<link rel="stylesheet" href="${p}">`).join("\n            ")}
+            ${cssTags}
           </head>
           <body>
-            <div id="root" class="h-screen"></div>
+            ${rootContent}
           </body>
         </html>`);
   }

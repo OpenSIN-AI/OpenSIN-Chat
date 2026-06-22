@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: MIT
-jest.mock("../../../utils/middleware/validatedRequest", () => ({
-  validatedRequest: (_req, _res, next) => next(),
+// Purpose: Unit tests for POST /api/enhance-prompt
+// Docs: server/__tests__/endpoints/api/enhancePrompt.test.js
+
+jest.mock("../../../utils/middleware/validApiKey", () => ({
+  validApiKey: (_req, _res, next) => next(),
+  validAdminApiKey: (_req, _res, next) => next(),
 }));
 jest.mock("../../../utils/middleware/simpleRateLimit", () => ({
   simpleRateLimit: () => (_req, _res, next) => next(),
@@ -70,6 +74,86 @@ describe("Enhance Prompt endpoint", () => {
       });
       expect(res.statusCode).toBe(400);
       expect(res.body.error).toMatch(/context/);
+    });
+
+    it("rejects a string body that cannot be parsed as JSON with 400", async () => {
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: "application/x-www-form-urlencoded text",
+      });
+      expect(res.statusCode).toBe(400);
+      expect(res.body.error).toMatch(/prompt is required/);
+    });
+
+    it("ignores extra JSON fields", async () => {
+      const mockGetChatCompletion = jest.fn().mockResolvedValue("Enhanced");
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "test", extra: "ignore", foo: "bar" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe("Enhanced");
+      expect(res.body.originalPrompt).toBe("test");
+    });
+
+    it("accepts HTML-like prompt content without crashing", async () => {
+      const mockGetChatCompletion = jest
+        .fn()
+        .mockResolvedValue("Enhanced HTML prompt");
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "test <b>html</b>" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe("Enhanced HTML prompt");
+    });
+
+    it("accepts shell-like prompt content without crashing", async () => {
+      const mockGetChatCompletion = jest.fn().mockResolvedValue("Enhanced shell prompt");
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "$(whoami)" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe("Enhanced shell prompt");
+    });
+
+    it("accepts 'environment variables' prompt content without crashing", async () => {
+      const mockGetChatCompletion = jest.fn().mockResolvedValue("Enhanced env prompt");
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "environment variables" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe("Enhanced env prompt");
     });
   });
 
@@ -153,7 +237,7 @@ describe("Enhance Prompt endpoint", () => {
 
       expect(res.statusCode).toBe(200);
       expect(res.body.enhancedPrompt).toBe("test");
-      expect(res.body.note).toMatch(/empty response/);
+      expect(res.body.note).toMatch(/empty or unparseable response/);
     });
 
     it("returns 500 when LLM throws", async () => {
@@ -173,6 +257,92 @@ describe("Enhance Prompt endpoint", () => {
 
       expect(res.statusCode).toBe(500);
       expect(res.body.error).toBe("Internal Server Error");
+    });
+
+    it("strips plain-text reasoning prefix from the LLM response", async () => {
+      const mockGetChatCompletion = jest.fn().mockResolvedValue(
+        "The user wants me to enhance the prompt.\n\nWhat are the key differences between the parties?",
+      );
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "parties" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe(
+        "What are the key differences between the parties?",
+      );
+      expect(res.body.enhancedPrompt).not.toMatch(/The user wants me to/);
+    });
+
+    it("strips reasoning in the same paragraph as the answer", async () => {
+      const mockGetChatCompletion = jest.fn().mockResolvedValue(
+        "The user wants me to enhance the prompt. What are the key differences between the parties?",
+      );
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "parties" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe(
+        "What are the key differences between the parties?",
+      );
+      expect(res.body.enhancedPrompt).not.toMatch(/The user wants me to/);
+    });
+
+    it("strips <thinking> reasoning tags from the LLM response", async () => {
+      const mockGetChatCompletion = jest.fn().mockResolvedValue(
+        "<thinking>The user wants me to enhance this.</thinking>\nWhat are the key differences between the parties?",
+      );
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "parties" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe(
+        "What are the key differences between the parties?",
+      );
+      expect(res.body.enhancedPrompt).not.toMatch(/thinking/);
+    });
+
+    it("falls back to the original prompt when the response is only reasoning", async () => {
+      const mockGetChatCompletion = jest.fn().mockResolvedValue(
+        "The user wants me to enhance the prompt.",
+      );
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "parties" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe("parties");
+      expect(res.body.note).toMatch(/empty or unparseable response/);
     });
   });
 

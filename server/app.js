@@ -16,6 +16,7 @@ require("./utils/boot/ensureJwtSecret")();
 require("./utils/boot/ensureJwtSecret").ensureEncryptionSecrets();
 const { logBootDiagnostics } = require("./utils/boot/logBootDiagnostics");
 const crypto = require("crypto");
+const fs = require("fs");
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -287,8 +288,28 @@ function buildApp() {
       }
     });
 
-    app.use("/", function (_, response) {
-      IndexPage.generate(response);
+    /**
+     * Serve the static prerendered HTML for docs pages when available. This
+     * bypasses the JS boot delay for the initial docs paint and lets the
+     * React app hydrate the same markup.
+     */
+    function getDocsPrerender(pathname) {
+      if (pathname === "/docs" || pathname.startsWith("/docs/")) {
+        const slug = pathname.replace("/docs", "").replace(/^\//, "");
+        const fileName = slug ? `${slug}.html` : "user-guide.html";
+        const filePath = path.resolve(__dirname, "public", "docs", fileName);
+        try {
+          if (fs.existsSync(filePath)) return fs.readFileSync(filePath, "utf8");
+        } catch {
+          /* fall back to empty root */
+        }
+      }
+      return null;
+    }
+
+    app.use("/", function (request, response) {
+      const prerendered = getDocsPrerender(request.path);
+      IndexPage.generate(request, response, 200, prerendered);
     });
   } else {
     apiRouter.post("/v/:command", async (request, response) => {

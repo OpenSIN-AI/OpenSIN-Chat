@@ -8,6 +8,7 @@ import {
   CATEGORY_ORDER,
   CATEGORY_LABELS,
 } from "./docsManifest";
+import { CATEGORY_ICONS } from "./DocsLanding";
 
 describe("docsManifest", () => {
   it("includes security and operations entries", () => {
@@ -47,5 +48,11 @@ describe("docsManifest", () => {
       url: "/docs/operations",
       external: false,
     });
+  });
+
+  it("has a rendered icon for every doc category", () => {
+    for (const category of CATEGORY_ORDER) {
+      expect(CATEGORY_ICONS[category]).toBeDefined();
+    }
   });
 });
