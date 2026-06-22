@@ -17,7 +17,8 @@ export type DocCategory =
   | "api"
   | "architecture"
   | "deployment"
-  | "data-sources";
+  | "data-sources"
+  | "operations";
 
 export type DocEntry = {
   /** URL slug used at /docs/:slug */
@@ -40,6 +41,7 @@ export const CATEGORY_LABELS: Record<DocCategory, string> = {
   architecture: "Architektur",
   deployment: "Deployment & Betrieb",
   "data-sources": "Datenquellen & Sync",
+  operations: "Sicherheit & Betrieb",
 };
 
 // Order in which categories appear in the navigation.
@@ -49,6 +51,7 @@ export const CATEGORY_ORDER: DocCategory[] = [
   "architecture",
   "data-sources",
   "deployment",
+  "operations",
 ];
 
 export const DOC_ENTRIES: DocEntry[] = [
@@ -177,6 +180,24 @@ export const DOC_ENTRIES: DocEntry[] = [
     file: "supabase-self-hosted.md",
     source: "docs/supabase-self-hosted.md",
   },
+  {
+    slug: "security",
+    title: "Sicherheits-Handbuch",
+    description:
+      "Auth-Modi, Secrets-Management, Netzwerk-Sicherheit, DSGVO-Defaults und API-Sicherheit.",
+    category: "operations",
+    file: "security.md",
+    source: "docs/SECURITY.md",
+  },
+  {
+    slug: "operations",
+    title: "Operations-Runbook",
+    description:
+      "Täglicher Betrieb, Deployments, Backups, Monitoring, Troubleshooting und Incident-Eskalation.",
+    category: "operations",
+    file: "operations.md",
+    source: "docs/OPERATIONS.md",
+  },
 ];
 
 /** Resolve the raw markdown content for a given content filename. */
@@ -212,6 +233,8 @@ const FILE_TO_SLUG: Record<string, string> = {
   "supabase-self-hosted.md": "supabase-self-hosted",
   "ADR-001-persistent-job-queue.md": "adr-001-persistent-job-queue",
   "PDF-ANALYSIS.md": "pdf-analysis",
+  "SECURITY.md": "security",
+  "OPERATIONS.md": "operations",
 };
 
 /**

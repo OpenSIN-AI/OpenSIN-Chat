@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: MIT
+# OpenSIN Chat — CODEOWNERS
+# Update owners as the team grows. Teams must be created under github.com/OpenSIN-AI.
+
+# Global fallback
+* @OpenSIN-AI
+
+# Backend / API
+server/ @OpenSIN-AI
+server/utils/agents/ @OpenSIN-AI
+server/utils/politician/ @OpenSIN-AI
+server/utils/research/ @OpenSIN-AI
+server/utils/reports/ @OpenSIN-AI
+server/utils/pdfAnalysis/ @OpenSIN-AI
+
+# Frontend
+frontend/ @OpenSIN-AI
+frontend/src/pages/Docs/ @OpenSIN-AI
+
+# Infrastructure & Deployment
+docker/ @OpenSIN-AI
+docker-opensin/ @OpenSIN-AI
+cloud-deployments/ @OpenSIN-AI
+scripts/deploy-production.sh @OpenSIN-AI
+scripts/oci-vm-bootstrap/ @OpenSIN-AI
+
+# Documentation
+docs/ @OpenSIN-AI
+*.md @OpenSIN-AI
+
+# Repository & CI configuration
+.github/ @OpenSIN-AI
+AGENTS.md @OpenSIN-AI
+ROADMAP.md @OpenSIN-AI
+PLAN.md @OpenSIN-AI

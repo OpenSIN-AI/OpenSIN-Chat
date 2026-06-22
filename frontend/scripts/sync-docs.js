@@ -33,6 +33,8 @@ const CURATED_FILES = [
   { src: "ssh-remote-tunnel.md", dst: "ssh-remote-tunnel.md" },
   { src: "supabase-self-hosted.md", dst: "supabase-self-hosted.md" },
   { src: "PDF-ANALYSIS.md", dst: "pdf-analysis.md" },
+  { src: "SECURITY.md", dst: "security.md" },
+  { src: "OPERATIONS.md", dst: "operations.md" },
 ];
 
 const ADR_FILES = [

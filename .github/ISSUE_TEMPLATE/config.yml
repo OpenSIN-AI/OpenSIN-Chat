@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Vulnerability
+    url: https://github.com/OpenSIN-AI/OpenSIN-Chat/security/advisories/new
+    about: Please report security vulnerabilities privately, not via public issues.
+  - name: Documentation
+    url: https://sinchat.delqhi.com/docs
+    about: OpenSIN Chat in-app documentation.
+  - name: Operations Runbook
+    url: https://github.com/OpenSIN-AI/OpenSIN-Chat/blob/main/docs/OPERATIONS.md
+    about: If the service is down, start here.

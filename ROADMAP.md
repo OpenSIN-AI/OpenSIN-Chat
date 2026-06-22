@@ -1,10 +1,10 @@
 # OpenSIN Chat — ROADMAP (GSD-Style)
 
 > **GSD-Phasen:** Get Shit Done — jede Phase ist ein abgeschlossenes Deliverable.  
-> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅, Phase 7 ✅ COMPLETE (Docs Overhaul), Phase 8 ✅ COMPLETE (Docs UI Polish)  
+> **Aktueller Stand:** Phase 1 ✅, Phase 2 ✅, Phase 3 ❌ CANCELLED, Phase 4 ✅, Phase 5 ✅, Phase 6 ✅, Phase 7 ✅ COMPLETE (Docs Overhaul), Phase 8 ✅ COMPLETE (Docs UI Polish), Phase 9 🚧 IN PROGRESS (Security & Operations Hardening)  
 > **Repo:** [OpenSIN-AI/OpenSIN-Chat](https://github.com/OpenSIN-AI/OpenSIN-Chat)  
 > **Letztes Update:** 2026-06-22  
-> **Aktueller PLAN:** [PLAN.md](PLAN.md) — Phase 8: Docs UI Polish ✅ COMPLETE
+> **Aktueller PLAN:** [PLAN.md](PLAN.md) — Phase 9: Security & Operations Hardening 🚧 IN PROGRESS
 
 ---
 
@@ -268,6 +268,38 @@
 - `yarn test` ✅ 2211 Tests
 - `./scripts/check-branding.sh` ✅
 - Manuelle Verifikation der Docs-Seite (TOC, Theme-Toggle, Mobile-Drawer) ✅
+
+---
+
+## Phase 9: Security & Operations Hardening 🚧 **IN PROGRESS**
+
+> **Zeitraum:** Juni 2026  
+> **Ziel:** Security- und Operations-Dokumentation in die In-App-Doku integrieren und Repo-Governance für Contributors etablieren.  
+> **Auslöser:** Phase 8 abgeschlossen; nächster Schritt aus `docs/PLAN-PRODUCTION-READINESS.md` (E7 Governance + E3 Resilience-Vorbereitung).
+
+### Problem
+
+| Problem | Aktueller Zustand | Soll-Zustand |
+|---|---|---|
+| Security-Handbuch | Nur Root-`SECURITY.md` für Vulnerability-Reporting | Zusätzliches operatives Handbuch in `/docs/security` |
+| Operations-Runbook | Verstreut über mehrere Dokumente | Konsolidiertes `/docs/operations` |
+| GitHub Governance | Keine Issue-Templates, kein CODEOWNERS | Templates + CODEOWNERS vorhanden |
+| Docs-Manifest-Tests | Keine direkten Tests | `docsManifest.test.ts` für neue Einträge |
+
+### Deliverables
+
+| Wave | Inhalt | Status |
+|---|---|---|
+| 1 | `docs/SECURITY.md` + `docs/OPERATIONS.md` + In-App-Integration | ✅ |
+| 2 | GitHub Issue Templates + `CODEOWNERS` | 🚧 |
+| 3 | Tests + Build/Lint/Branding + Deploy | 🚧 |
+
+### Verifikation
+
+- `cd frontend && yarn build` ✅
+- `cd frontend && yarn lint:check` ✅
+- `cd frontend && yarn test` ✅ 1636 tests
+- `./scripts/check-branding.sh` ✅
 
 ---
 

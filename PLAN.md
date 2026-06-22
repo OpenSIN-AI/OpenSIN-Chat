@@ -1,10 +1,10 @@
-# OpenSIN Chat — PLAN: Phase 8 — Docs UI Polish
+# OpenSIN Chat — PLAN: Phase 9 — Security & Operations Hardening
 
 > **Erstellt:** 2026-06-22  
-> **Phase:** 8 — Docs UI Polish  
-> **Status:** ✅ COMPLETE  
-> **Roadmap:** [ROADMAP.md](ROADMAP.md) — Phase 8  
-> **Auslöser:** User-Feedback: Rechtes Inhaltsverzeichnis (TOC) auf der Docs-Seite ist nur auf sehr breiten Bildschirmen (`xl`) sichtbar; Dark/Light-Icon fehlt komplett. Ziel: TOC wie bei Nextra/Docusaurus und Theme-Toggle im Header.
+> **Phase:** 9 — Security & Operations Hardening  
+> **Status:** 🚧 IN PROGRESS  
+> **Roadmap:** [ROADMAP.md](ROADMAP.md) — Phase 9  
+> **Auslöser:** Phase 8 abgeschlossen (Docs UI Polish). Nächster logischer Schritt: Produktions-Readiness aus `docs/PLAN-PRODUCTION-READINESS.md` umsetzen, beginnend mit Sicherheits- und Operations-Doku sowie Repo-Governance.
 
 ---
 
@@ -12,161 +12,152 @@
 
 | # | Problem | Aktueller Zustand | Soll-Zustand | Schwere |
 |---|---|---|---|---|
-| P1 | Rechtes Inhaltsverzeichnis | Nur `hidden xl:block` sichtbar | Ab `lg` sichtbar + Mobile-Variante | Medium |
-| P2 | Theme-Umschalter | Nicht in der Docs-Top-Bar vorhanden | Icon-Button in der Docs-Top-Bar | Medium |
-| P3 | Mobile TOC | Keine dedizierte Mobile-TOC | Floating-Button + Drawer für kleine Viewports | Low |
-| P4 | Tests | Keine Tests für Docs-UI | Unit-Tests für ThemeToggle + TOC-Verhalten | Medium |
+| P1 | Security-Handbuch | Root `SECURITY.md` existiert, aber keine in-App Security-Seite für Betreiber | `docs/SECURITY.md` + In-App `/docs/security` | Medium |
+| P2 | Operations-Runbook | Verstreut über `INCIDENT-RESPONSE.md`, `OPENSIN-CHAT-DEPLOYMENT.md`, `AUTO-DEPLOY.md` | Konsolidiertes In-App `/docs/operations` | Medium |
+| P3 | GitHub Governance | Keine Issue-Templates, kein CODEOWNERS | `.github/ISSUE_TEMPLATE/` + `CODEOWNERS` | Low |
+| P4 | Tests für Docs-Manifest | Keine direkten Tests für `docsManifest.ts` | Unit-Tests für neue Einträge | Low |
 
 ---
 
-## Waves (Executed)
+## Waves (Executing)
 
-### Wave 1: Right TOC — Always Visible on lg+ ✅
+### Wave 1: Security & Operations Docs ✅
 
-#### Task 1.1: Update `frontend/src/pages/Docs/index.tsx` TOC visibility
+#### Task 1.1: Create `docs/SECURITY.md`
 
 **files_modified:**
-- `frontend/src/pages/Docs/index.tsx`
+- `docs/SECURITY.md` (new)
+- `docs/SECURITY.md.doc.md` (new)
 
 **action:**
-- Rechte TOC-Spalte von `hidden xl:block w-64` zu `hidden lg:block w-60 xl:w-64` geändert.
-- Haupt-Content-Layout angepasst: `max-w-3xl xl:mx-0` → `mx-auto max-w-3xl lg:mx-0`.
-- Kein horizontaler Scrollbar auf `lg` durch Breiten-Layout.
+- Operational security guide in German for operators.
+- Covers: security model, auth modes, secrets management, Cloudflare tunnel security, DSGVO defaults, document isolation, API security, deployment checklist.
+- Links to root `SECURITY.md` for vulnerability reporting.
 
 **acceptance_criteria:** ✅
-- Auf `lg` Breakpoint ist das rechte TOC-Panel sichtbar.
-- Auf `md` und kleiner ist das TOC-Panel korrekt verborgen.
-- `DocsToc` erhält weiterhin `headings` und `scrollRoot`.
+- `docs/SECURITY.md` exists and passes branding check.
+- CoDocs companion exists.
 
 ---
 
-#### Task 1.2: Mobile TOC (Floating Button / Drawer) ✅
+#### Task 1.2: Create `docs/OPERATIONS.md`
 
 **files_modified:**
-- `frontend/src/pages/Docs/index.tsx`
-- `frontend/src/pages/Docs/DocsToc.tsx` (optional `onNavigate` prop)
+- `docs/OPERATIONS.md` (new)
+- `docs/OPERATIONS.md.doc.md` (new)
 
 **action:**
-- Floating-Button `bottom-6 right-6` hinzugefügt, sichtbar unter `lg` (`lg:hidden`).
-- Mobile TOC Drawer mit Slide-up-Panel, Backdrop, Escape-Schließen.
-- `DocsToc` bekommt optionalen `onNavigate` Prop, der nach Klick auf einen Eintrag den Drawer schließt.
+- Day-to-day operations runbook in German.
+- Covers: health checks, production deploy, quick frontend update, backup strategy, container restart, common troubleshooting, monitoring, upstream security patches, incident escalation.
+- Links to `INCIDENT-RESPONSE.md`, `OPENSIN-CHAT-DEPLOYMENT.md`, `SECURITY.md`.
 
 **acceptance_criteria:** ✅
-- Auf Viewports < `lg` ist der Floating-TOC-Button sichtbar.
-- Klick öffnet Drawer; Klick auf Eintrag scrollt + schließt Drawer.
-- Escape schließt Drawer.
+- `docs/OPERATIONS.md` exists and passes branding check.
+- CoDocs companion exists.
 
 ---
 
-### Wave 2: Theme Toggle in Docs Header ✅
-
-#### Task 2.1: Extract reusable `ThemeToggle` component
+#### Task 1.3: Wire into In-App Docs
 
 **files_modified:**
-- `frontend/src/components/ThemeToggle.tsx` (new)
-- `frontend/src/components/Sidebar/index.tsx`
-- `frontend/src/components/Sidebar/index.doc.md`
-- `frontend/src/components/ThemeToggle.tsx.doc.md` (new)
+- `frontend/scripts/sync-docs.js`
+- `frontend/src/pages/Docs/docsManifest.ts`
 
 **action:**
-- Lokaler `ThemeToggle` aus `Sidebar/index.tsx` extrahiert.
-- Neue `ThemeToggle.tsx` erstellt mit `useThemeContext`, optional `className` Prop, light→dark→system Rotation.
-- Sidebar importiert und verwendet den neuen `ThemeToggle`.
-- CoDocs-Companion für `ThemeToggle` erstellt.
+- Added `SECURITY.md` and `OPERATIONS.md` to curated sync list.
+- Added new `operations` category in `docsManifest.ts`.
+- Added entries for `/docs/security` and `/docs/operations`.
+- Added `FILE_TO_SLUG` mapping for markdown link resolution.
 
 **acceptance_criteria:** ✅
-- `ThemeToggle.tsx` existiert und ist wiederverwendbar.
-- Sidebar funktioniert weiterhin.
-- `.doc.md` Companion vorhanden.
+- Docs sync copies both files.
+- Both pages appear in sidebar under "Sicherheit & Betrieb".
+- Internal markdown links resolve to `/docs/security` and `/docs/operations`.
 
 ---
 
-#### Task 2.2: Add ThemeToggle to Docs top bar
+### Wave 2: Repository Governance
+
+#### Task 2.1: GitHub Issue Templates
 
 **files_modified:**
-- `frontend/src/pages/Docs/index.tsx`
+- `.github/ISSUE_TEMPLATE/bug.yml` (new)
+- `.github/ISSUE_TEMPLATE/feature.yml` (new)
+- `.github/ISSUE_TEMPLATE/config.yml` (new)
 
 **action:**
-- `ThemeToggle` aus `@/components/ThemeToggle` importiert.
-- In den Docs-Header platziert (rechte Seite, neben "Zurück zur App").
-- Theme-aware Styling angewendet.
+- Bug report template: environment, reproduction steps, expected vs actual, logs, severity.
+- Feature request template: motivation, proposed solution, alternatives, acceptance criteria.
+- Config: disable blank issues, link to security policy and documentation.
 
-**acceptance_criteria:** ✅
-- Docs-Header zeigt Theme-Toggle-Button.
-- Klick wechselt das Theme.
-- Icon wechselt zwischen Sun/Moon.
-- Button ist zugänglich (`aria-label`).
+**acceptance_criteria:**
+- Templates render correctly in GitHub.
+- Config links to `SECURITY.md` and `/docs`.
 
 ---
 
-### Wave 3: Tests & Verification ✅
-
-#### Task 3.1: Add unit tests for ThemeToggle
+#### Task 2.2: CODEOWNERS
 
 **files_modified:**
-- `frontend/src/components/ThemeToggle.test.tsx` (new)
+- `CODEOWNERS` (new)
 
 **action:**
-- 6 Tests für `ThemeToggle` erstellt: null context, Moon/Sun icons, theme cycling, aria-label/title, className prop.
+- Define code owners for critical paths:
+  - `server/` — backend owner
+  - `frontend/` — frontend owner
+  - `docker/` / `docker-opensin/` — DevOps owner
+  - `docs/` — docs owner
+  - `scripts/deploy-production.sh` — infrastructure owner
+  - `.github/` — repo admin
 
-**acceptance_criteria:** ✅
-- `ThemeToggle.test.tsx` läuft grün.
-- `yarn test ThemeToggle` exit 0.
+**acceptance_criteria:**
+- `CODEOWNERS` file exists and is valid.
+- PRs to critical paths require owner review.
 
 ---
 
-#### Task 3.2: Add tests for Docs TOC visibility
+### Wave 3: Tests & Verification
+
+#### Task 3.1: Add `docsManifest` tests
 
 **files_modified:**
-- `frontend/src/pages/Docs/index.test.tsx` (new)
+- `frontend/src/pages/Docs/docsManifest.test.ts` (new)
 
 **action:**
-- 8 Tests für Docs-Page: ThemeToggle in Header, Back-to-App, responsive TOC classes, mobile drawer open/close, heading propagation.
+- Tests for new entries: security and operations.
+- Tests category mapping, labels, content loading, link resolution.
 
 **acceptance_criteria:** ✅
-- `Docs/index.test.tsx` läuft grün.
-- `yarn test Docs/index` exit 0.
+- `docsManifest.test.ts` runs green.
 
 ---
 
-#### Task 3.3: Build, Lint, Branding verification
+#### Task 3.2: Build, Lint, Tests, Branding
 
 **action:**
 - `cd frontend && yarn build` ✅
-- `yarn lint:check` ✅
-- `yarn test` ✅ 2211 Tests
+- `cd frontend && yarn lint:check` ✅
+- `cd frontend && yarn test` ✅ 1636 tests
 - `./scripts/check-branding.sh` ✅
-- Manuelle Verifikation: TOC sichtbar, Theme-Toggle funktioniert, Mobile-Drawer funktioniert.
 
-**acceptance_criteria:** ✅
-- Alle Checks grün.
+**acceptance_criteria:**
+- All checks green.
 
 ---
 
-## Definition of Done (All Checked)
+## Definition of Done
 
-- [x] Rechtes TOC ist ab `lg` sichtbar (nicht nur `xl`)
-- [x] Mobile TOC-Variante (Floating-Button + Drawer) ist implementiert
-- [x] Theme-Toggle ist in der Docs-Top-Bar sichtbar und funktioniert
-- [x] `ThemeToggle` ist in `frontend/src/components/ThemeToggle.tsx` extrahiert und wiederverwendbar
-- [x] `Sidebar/index.tsx` verwendet den extrahierten `ThemeToggle`
-- [x] `ThemeToggle` hat eine `.doc.md`-Companion-Datei
-- [x] Unit-Tests für `ThemeToggle` existieren und laufen grün
-- [x] Unit-Tests für Docs-Page-Layout/TOC existieren und laufen grün
+- [x] `docs/SECURITY.md` exists and is synced to in-app docs
+- [x] `docs/OPERATIONS.md` exists and is synced to in-app docs
+- [x] `docsManifest.ts` has `operations` category with both entries
+- [x] `docsManifest.test.ts` tests the new entries
+- [x] GitHub issue templates exist
+- [x] `CODEOWNERS` exists
 - [x] `yarn build` exit 0
 - [x] `yarn lint:check` exit 0
-- [x] `yarn test` keine neuen Failures
+- [x] `yarn test` no new failures
 - [x] `check-branding.sh` exit 0
-- [x] Manuelle Verifikation der Docs-Seite erfolgreich
-
----
-
-## Must-Haves (Verified)
-
-1. **TOC immer sichtbar auf Desktop** ✅
-2. **Theme Toggle vorhanden** ✅
-3. **Keine Regression** ✅
-4. **Wiederverwendbarkeit** ✅
+- [ ] Deployed to production
 
 ---
 
@@ -174,17 +165,17 @@
 
 | File | Change |
 |---|---|
-| `frontend/src/components/ThemeToggle.tsx` | New reusable component |
-| `frontend/src/components/ThemeToggle.tsx.doc.md` | CoDocs companion |
-| `frontend/src/components/ThemeToggle.test.tsx` | New unit tests |
-| `frontend/src/components/Sidebar/index.tsx` | Uses external `ThemeToggle` |
-| `frontend/src/components/Sidebar/index.doc.md` | Updated to reflect ThemeToggle extraction |
-| `frontend/src/pages/Docs/index.tsx` | TOC lg visibility, mobile TOC drawer, ThemeToggle in header |
-| `frontend/src/pages/Docs/DocsToc.tsx` | Added optional `onNavigate` prop |
-| `frontend/src/pages/Docs/index.test.tsx` | New unit tests |
-| `frontend/src/hooks/useRouteTitle.ts` | Skip title override for `/docs/:slug` |
-| `frontend/src/hooks/useRouteTitle.test.tsx` | Updated test for docs-sub-route skip |
-| `frontend/src/utils/htmlLang.ts` | Removed `syncDocumentTitle()` from `attachLanguageDomSync()` |
+| `docs/SECURITY.md` | New operational security guide |
+| `docs/SECURITY.md.doc.md` | CoDocs companion |
+| `docs/OPERATIONS.md` | New operations runbook |
+| `docs/OPERATIONS.md.doc.md` | CoDocs companion |
+| `frontend/scripts/sync-docs.js` | Added security and operations to curated list |
+| `frontend/src/pages/Docs/docsManifest.ts` | Added `operations` category + entries |
+| `frontend/src/pages/Docs/docsManifest.test.ts` | New tests for manifest entries |
+| `.github/ISSUE_TEMPLATE/bug.yml` | New bug report template |
+| `.github/ISSUE_TEMPLATE/feature.yml` | New feature request template |
+| `.github/ISSUE_TEMPLATE/config.yml` | New issue template config |
+| `CODEOWNERS` | New code owners file |
 
 ---
 
@@ -193,11 +184,11 @@
 | Check | Result |
 |---|---|
 | `cd frontend && yarn build` | ✅ |
-| `yarn lint:check` | ✅ |
-| `yarn test` | ✅ 2211 tests |
+| `cd frontend && yarn lint:check` | ✅ |
+| `cd frontend && yarn test` | ✅ 1636 tests |
 | `./scripts/check-branding.sh` | ✅ |
-| Manuelle Docs-Seite-Verifikation | ✅ |
+| Deploy to production | 🚧 pending |
 
 ---
 
-*Generated: 2026-06-22 | Phase 8: Docs UI Polish | 3 Waves, 8 Tasks | ✅ COMPLETE*
+*Generated: 2026-06-22 | Phase 9: Security & Operations Hardening | 3 Waves, 7 Tasks | 🚧 IN PROGRESS*
