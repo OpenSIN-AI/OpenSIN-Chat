@@ -7,6 +7,9 @@ const { getCustomModels } = require("../../utils/helpers/customModels");
 const { reqBody } = require("../../utils/http");
 const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const {
+  requireApiKeyOrSession,
+} = require("../../utils/middleware/requireApiKeyOrSession");
+const {
   flexUserRoleValid,
   ROLES,
 } = require("../../utils/middleware/multiUserProtected");
@@ -15,12 +18,11 @@ const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 function apiKeyEndpoints(app) {
   if (!app) return;
 
-  app.get("/system/api-keys", [validatedRequest], async (_, response) => {
+  app.get("/system/api-keys", [requireApiKeyOrSession], async (_, response) => {
     try {
       if (response.locals.multiUserMode) {
         return response.sendStatus(401);
       }
-
       const apiKeys = await ApiKey.where({});
       return response.status(200).json({
         apiKeys,
@@ -39,7 +41,7 @@ function apiKeyEndpoints(app) {
   app.post(
     "/system/generate-api-key",
     [
-      validatedRequest,
+      requireApiKeyOrSession,
       simpleRateLimit({
         bucket: "system-generate-api-key",
         max: 5,
@@ -51,7 +53,6 @@ function apiKeyEndpoints(app) {
         if (response.locals.multiUserMode) {
           return response.sendStatus(401);
         }
-
         const { name = null } = reqBody(request);
         const { apiKey, error } = await ApiKey.create(null, name);
         await EventLogs.logEvent(
@@ -78,10 +79,12 @@ function apiKeyEndpoints(app) {
   // and should be consolidated to be a single endpoint with flexible role protection.
   app.delete(
     "/system/api-key/:id",
-    [validatedRequest],
+    [requireApiKeyOrSession],
     async (request, response) => {
       try {
-        if (response.locals.multiUserMode) return response.sendStatus(401);
+        if (response.locals.multiUserMode) {
+          return response.sendStatus(401);
+        }
         const { id } = request.params;
         if (!id || isNaN(Number(id))) return response.sendStatus(400);
 
