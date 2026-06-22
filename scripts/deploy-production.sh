@@ -27,8 +27,12 @@ cd "${COMPOSE_DIR}"
 echo "[deploy] Building production image (no cache)..."
 docker compose -f docker-compose.yml -f docker-compose.production.yml build --no-cache
 
+echo "[deploy] Cleaning up any old production container..."
+docker compose -f docker-compose.yml -f docker-compose.production.yml down 2>/dev/null || true
+docker rm -f opensin-app 2>/dev/null || true
+
 echo "[deploy] Starting/restarting production container..."
-docker compose -f docker-compose.yml -f docker-compose.production.yml up -d --force-recreate --remove-orphans
+docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
 
 echo "[deploy] Container status:"
 docker compose -f docker-compose.yml -f docker-compose.production.yml ps
