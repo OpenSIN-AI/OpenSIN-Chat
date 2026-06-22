@@ -18,9 +18,9 @@ set -euo pipefail
 # Wurzel des Repos. Standard: zwei Ebenen über diesem Skript (scripts/..).
 REPO_DIR="${OPENAFD_REPO_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 BRANCH="${OPENAFD_BRANCH:-main}"
-COMPOSE_FILE="${OPENAFD_COMPOSE_FILE:-docker/docker-compose.yml}"
-HEALTH_URL="${OPENAFD_HEALTH_URL:-http://localhost:3001/api/ping}"
-LOCK_FILE="${OPENAFD_LOCK_FILE:-/tmp/openafd-auto-deploy.lock}"
+COMPOSE_FILE="${OPENAFD_COMPOSE_FILE:-docker-opensin/docker-compose.yml}"
+HEALTH_URL="${OPENAFD_HEALTH_URL:-http://localhost:43939/api/ping}"
+LOCK_FILE="${OPENAFD_LOCK_FILE:-/tmp/opensin-chat-auto-deploy.lock}"
 LOG_FILE="${OPENAFD_LOG_FILE:-$REPO_DIR/logs/auto-deploy.log}"
 
 # docker compose vs. docker-compose automatisch erkennen

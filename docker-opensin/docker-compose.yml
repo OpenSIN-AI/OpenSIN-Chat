@@ -6,7 +6,7 @@ networks:
 
 services:
   opensin-chat:
-    container_name: opensin-chat
+    container_name: ${COMPOSE_CONTAINER_NAME:-opensin-chat}
     restart: always
     build:
       context: ../.
@@ -24,7 +24,7 @@ services:
       - "../collector/outputs/:/app/collector/outputs"
     user: "${UID:-1000}:${GID:-1000}"
     ports:
-      - "43939:3001"
+      - "${COMPOSE_PORT:-43939}:3001"
     env_file:
       - .env
     environment:

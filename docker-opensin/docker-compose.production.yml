@@ -1,0 +1,14 @@
+# Production override for the OCI VM (sin-supabase).
+# Applied on top of docker-compose.yml via:
+#   docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+name: opensin-chat
+services:
+  opensin-chat:
+    container_name: opensin-app
+    ports:
+      - "38471:3001"
+    deploy:
+      resources:
+        limits:
+          memory: 4g
+          cpus: '4'

@@ -1,19 +1,23 @@
 # Auto-Deploy (Lokaler Polling-Cron auf dem Mac)
 
-Dieses Setup sorgt dafür, dass die Live-Site `sinchat.delqhi.com` **automatisch**
-aktualisiert wird, sobald etwas auf den `main`-Branch gepusht wird. Es löst das
-Problem, dass online ein veraltetes Docker-Image lief, obwohl der richtige Code
-längst in git war.
+> **Status:** Dieses Dokument beschreibt den **lokalen Mac**-Auto-Deploy. Die
+> Produktions-Site `sinchat.delqhi.com` läuft seit der Migration auf der OCI VM
+> `sin-supabase`. Für Produktions-Deploys siehe `docs/OPENSIN-CHAT-DEPLOYMENT.md`
+> und `scripts/deploy-production.sh`. Ein Auto-Deploy für `sin-supabase` ist
+> noch einzurichten.
+
+Dieses Setup sorgt dafür, dass die **lokale** OpenSIN-Chat-Instanz automatisch
+aktualisiert wird, sobald etwas auf den `main`-Branch gepusht wird.
 
 ## Wie es funktioniert
 
-Der Mac, der den Container hostet, prüft per cron (oder launchd) in einem festen
-Intervall, ob es neue Commits auf `origin/main` gibt. Falls ja:
+Der Mac prüft per cron (oder launchd) in einem festen Intervall, ob es neue
+Commits auf `origin/main` gibt. Falls ja:
 
 1. `git reset --hard origin/main` (Code aktualisieren)
 2. `docker compose build --no-cache` (Image **frisch** bauen — wichtig fürs Frontend-Bundle)
 3. `docker compose up -d` (Container neu starten)
-4. Healthcheck gegen `http://localhost:3001/api/ping`
+4. Healthcheck gegen `http://localhost:43939/api/ping`
 
 Das Skript dazu: [`scripts/auto-deploy.sh`](../scripts/auto-deploy.sh).
 
@@ -82,15 +86,15 @@ Datei `~/Library/LaunchAgents/com.opensin.autodeploy.plist` anlegen:
 Laden:
 
 ```bash
-launchctl load ~/Library/LaunchAgents/com.openafd.autodeploy.plist
+launchctl load ~/Library/LaunchAgents/com.opensin.autodeploy.plist
 # Status prüfen:
-launchctl list | grep openafd
+launchctl list | grep opensin
 ```
 
 Entladen (zum Stoppen):
 
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.openafd.autodeploy.plist
+launchctl unload ~/Library/LaunchAgents/com.opensin.autodeploy.plist
 ```
 
 ## Konfiguration (Umgebungsvariablen)
@@ -101,8 +105,8 @@ Das Skript funktioniert ohne Anpassung, lässt sich aber über Env-Vars steuern:
 |---|---|---|
 | `OPENAFD_REPO_DIR` | Auto (Skript-Pfad) | Repo-Wurzel |
 | `OPENAFD_BRANCH` | `main` | Branch, der deployt wird |
-| `OPENAFD_COMPOSE_FILE` | `docker/docker-compose.yml` | compose-Datei |
-| `OPENAFD_HEALTH_URL` | `http://localhost:3001/api/ping` | Healthcheck-URL |
+| `OPENAFD_COMPOSE_FILE` | `docker-opensin/docker-compose.yml` | compose-Datei |
+| `OPENAFD_HEALTH_URL` | `http://localhost:43939/api/ping` | Healthcheck-URL |
 | `OPENAFD_LOG_FILE` | `<repo>/logs/auto-deploy.log` | Logdatei |
 
 ## Troubleshooting
@@ -112,7 +116,7 @@ Das Skript funktioniert ohne Anpassung, lässt sich aber über Env-Vars steuern:
   (nicht Docker/OrbStack), wurde ein manuelles `node index.js` aus `/server/`
   gestartet. Töten mit `kill <PID>`, dann Docker und Cloudflared neustarten.
   Danach Browser Hard-Reload (`Cmd+Shift+R`).
-- **502 Bad Gateway auf sinchat.delqhi.com?** Container vermutlich tot weil `restart: always` fehlt. Prüfen: `docker ps | grep openafd`. Fix: `docker update --restart always openafd && docker start openafd`. Danach `restart: always` in `docker-compose.yml` setzen.
+- **502 Bad Gateway auf sinchat.delqhi.com?** Produktion läuft auf `sin-supabase` — siehe `docs/OPENSIN-CHAT-DEPLOYMENT.md`. Lokal: prüfen ob `restart: always` fehlt (`docker ps | grep opensin-chat`). Fix: `docker update --restart always opensin-chat && docker start opensin-chat`.
 - **`docker: command not found` im cron-Log?** `PATH` im launchd-plist bzw. cron
   ergänzen (Docker Desktop liegt oft unter `/usr/local/bin`).
 - **Build dauert lange / blockiert?** Der `flock`-Lock verhindert überlappende
