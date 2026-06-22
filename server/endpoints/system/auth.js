@@ -120,6 +120,12 @@ function authEndpoints(app) {
         max: 100,
         windowMs: 60 * 60 * 1000,
         identity: "user",
+        skipIf: (request) => {
+          // Single-user no-password mode sends an empty body; account-based
+          // rate limiting is meaningless there and would rate-limit the owner.
+          const body = reqBody(request);
+          return !body || typeof body.username !== "string";
+        },
       }),
     ],
     async (request, response) => {

@@ -145,4 +145,18 @@ describe("simpleRateLimit", () => {
     });
     expect(keys).toEqual(["login:ip:1.2.3.4", "login:account:admin"]);
   });
+
+  it("skips rate limiting when skipIf returns true", () => {
+    const mw = simpleRateLimit({
+      bucket: "t6",
+      max: 1,
+      windowMs: 60000,
+      skipIf: () => true,
+    });
+    const req = { ip: "1.2.3.4" };
+    const next = jest.fn();
+
+    for (let i = 0; i < 10; i++) mw(req, mockRes(), next);
+    expect(next).toHaveBeenCalledTimes(10);
+  });
 });

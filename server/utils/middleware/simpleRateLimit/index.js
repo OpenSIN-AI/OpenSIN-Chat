@@ -93,7 +93,7 @@ function bumpInMemory(keys, max, windowMs) {
   return { blocked, resetAt, bumpedCount };
 }
 
-function simpleRateLimit({ bucket, max, windowMs, identity = "ip" }) {
+function simpleRateLimit({ bucket, max, windowMs, identity = "ip", skipIf = null }) {
   if (!bucket) throw new Error("simpleRateLimit: bucket is required");
 
   if (
@@ -109,6 +109,7 @@ function simpleRateLimit({ bucket, max, windowMs, identity = "ip" }) {
   return async function rateLimitMiddleware(request, response, next) {
     if (String(process.env.DISABLE_RATE_LIMITS).toLowerCase() === "true")
       return next();
+    if (typeof skipIf === "function" && skipIf(request)) return next();
 
     const keys = bucketKeys({ request, bucket, identity });
     const now = Date.now();
