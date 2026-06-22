@@ -361,6 +361,32 @@ async function streamChatWithWorkspace(
       user: user,
       signal: abortController?.signal,
     });
+
+    // Guard against connectors that return a null/undefined stream when the
+    // provider request fails (e.g. NVIDIA NIM 401 invalid API key). Without
+    // this guard the subsequent handleStream() and stream.metrics accesses
+    // throw "Cannot read properties of null" and the endpoint falls back to
+    // the generic "Internal error" message. Issue #262.
+    if (!stream) {
+      const providerName =
+        LLMConnector.className ||
+        LLMConnector.constructor?.name ||
+        "LLM provider";
+      // eslint-disable-next-line no-console
+      console.error(
+        `\x1b[31m[STREAM FAILED]\x1b[0m ${providerName} returned a null stream. The provider is likely misconfigured or the API key is invalid.`,
+      );
+      writeResponseChunk(response, {
+        uuid,
+        sources,
+        type: "abort",
+        textResponse: null,
+        close: true,
+        error: `${providerName} failed to start the chat stream. Please verify the provider configuration and API key in System Settings.`,
+      });
+      return;
+    }
+
     completeText = await LLMConnector.handleStream(response, stream, {
       uuid,
       sources,

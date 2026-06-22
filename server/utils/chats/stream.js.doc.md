@@ -25,14 +25,20 @@ Docs: `server/endpoints/chat.js`, `server/utils/helpers/index.js`,
   default-named threads.
 - Emits final SSE chunks and closes the response gracefully.
 
-## Important recent change
+## Important recent changes
 
 `resolveLLMConnector()` was introduced as a thin wrapper around
 `resolveProviderConnector()`. It catches provider-resolution errors (e.g. the
 new `"No LLM provider is configured..."` throw) and returns them as the
 `error` field instead of letting them propagate to the endpoint's generic
-`"Internal error"` catch block. This is the code path that resolves issue
-#262 for regular REST chat messages.
+`"Internal error"` catch block.
+
+The streaming branch also guards against connectors that return `null` when
+the provider request fails (e.g. NVIDIA NIM returning a 401 because the API
+key is invalid). It emits an SSE `abort` chunk with a clear, actionable
+error message instead of letting the downstream `handleStream()` and
+`stream.metrics` accesses throw `Cannot read properties of null`. These
+two paths together resolve issue #262 for regular REST chat messages.
 
 ## Exports
 
@@ -72,9 +78,12 @@ await streamChatWithWorkspace(
 
 ## Caveats
 
-- This function does not have its own internal try/catch around the LLM call.
-  Unexpected failures (e.g. provider API errors, network issues) propagate to the
-caller, which should return a generic client-safe error.
+- The streaming branch guards against a `null`/`undefined` stream returned by a
+  connector, but it does not wrap `handleStream()` in a try/catch. Other
+  unexpected failures (e.g. network issues mid-stream) still propagate to the
+  caller, which should return a generic client-safe error.
 - The `resolveLLMConnector()` wrapper intentionally swallows *only* provider
   resolution errors. Connector misconfiguration (missing API key, invalid base
-  URL) is still reported by the individual provider during the actual LLM call.
+  URL) is reported by the individual provider during the LLM call; a `null`
+  stream now surfaces a clear SSE `abort` message instead of the generic
+  "Internal error".
