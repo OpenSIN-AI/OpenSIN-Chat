@@ -48,15 +48,16 @@ a CI coverage gate so the score can never silently regress again.
 - E2E happy-path: agent → report → preview iframe
 - CI coverage gate (fail PR if new code < 70 %)
 
-### E2 — Politician Data & Vector Search
+### E2 — Politician Data & Vector Search ✅
 > Plan: [`PLAN-DATA-SYNC.md`](./PLAN-DATA-SYNC.md)
-Politician DB is populated (733 politicians, 7382 speeches synced as of `804b6388`).
-SQLite falls back to FTS text search; PostgreSQL + pgvector remains the production
-vector-search target.
+Politician DB is populated (733 politicians, 733 mandates, 343 speeches, 24 816
+votes, 49 committees, 751 committee memberships). SQLite falls back to FTS text
+search; PostgreSQL + pgvector is wired and semantic search returns results in
+production.
 
 - ✅ Run + verify the first politician sync job
-- 🚧 PostgreSQL + pgvector production database
-- 🚧 Activate `PoliticianVectorStore` (semantic speech search)
+- ✅ PostgreSQL + pgvector production database
+- ✅ Activate `PoliticianVectorStore` (semantic speech search)
 - 🚧 Bundestag 21. WP migration + Abgeordnetenwatch API v2 fields
 - ✅ Full-text search over speeches / protocols (SQLite FTS fallback)
 
@@ -75,7 +76,8 @@ degradable. Relates to issue #52.
 Two product endpoints already requested by the team.
 
 - ✅ `POST /api/enhance-prompt` — LLM prompt rewriter (#53) — backend shipped
-- ✅ `POST /api/terminal/exec` — sandboxed command execution (#54) — backend shipped, **UI pending**
+- ✅ `POST /api/terminal/exec` — sandboxed command execution (#54) — backend shipped
+- ✅ `/settings/terminal` admin UI — shipped (requires `ENABLE_TERMINAL_EXEC=true`)
 
 ### E5 — Scale & Deployment
 > Plan: [`PLAN-SCALE-DEPLOY.md`](./PLAN-SCALE-DEPLOY.md)
@@ -123,7 +125,7 @@ Tracked in existing plan docs; not blocking production.
 ## Definition of Done (product-level)
 
 - [ ] CEO Audit Testing axis ≥ 90 (overall ≥ 97)
-- [ ] Politician DB populated + semantic search returns results in prod (DB populated ✅, pgvector pending)
+- [x] Politician DB populated + semantic search returns results in prod
 - [ ] All external-API callers time-bounded + degrade gracefully
 - [ ] One-command production deploy (Docker or Helm) documented + tested
 - [x] Issue templates + CODEOWNERS in place
