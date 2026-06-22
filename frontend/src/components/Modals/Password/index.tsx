@@ -83,7 +83,12 @@ export function usePasswordModal(notry: any = false) {
   // Single-user no-password mode: we still need to render the single-user auth
   // modal so it can auto-request a session token and store it. The token is
   // required for authenticated system endpoints like API key management.
+  // But if we already have a valid token, skip auto-login to avoid infinite
+  // redirect loops (requestToken → redirect → reload → requestToken → …).
   if (!MultiUserMode && !RequiresAuth) {
+    if (currentToken) {
+      return { loading: false, requiresAuth: false, mode: "single" };
+    }
     return { loading: false, requiresAuth: true, mode: "single-auto" };
   }
 

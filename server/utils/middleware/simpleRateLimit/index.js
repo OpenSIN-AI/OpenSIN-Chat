@@ -93,7 +93,13 @@ function bumpInMemory(keys, max, windowMs) {
   return { blocked, resetAt, bumpedCount };
 }
 
-function simpleRateLimit({ bucket, max, windowMs, identity = "ip", skipIf = null }) {
+function simpleRateLimit({
+  bucket,
+  max,
+  windowMs,
+  identity = "ip",
+  skipIf = null,
+}) {
   if (!bucket) throw new Error("simpleRateLimit: bucket is required");
 
   if (
@@ -124,7 +130,7 @@ function simpleRateLimit({ bucket, max, windowMs, identity = "ip", skipIf = null
             try {
               const pttl = await redisTtl(k);
               if (typeof pttl === "number" && pttl > 0) keyReset = now + pttl;
-            } catch (_) {}
+            } catch {}
             return { v, keyReset };
           }),
         );

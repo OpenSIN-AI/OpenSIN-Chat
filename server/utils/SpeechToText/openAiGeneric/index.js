@@ -61,6 +61,7 @@ class GenericOpenAiSTT {
       console.error(`GenericOpenAiSTT:transcribe failed: ${e?.message || e}`);
       throw new Error(
         `STT transcription failed: ${e?.message || "Unknown error"}`,
+        { cause: e },
       );
     }
   }

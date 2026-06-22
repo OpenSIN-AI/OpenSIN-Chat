@@ -444,7 +444,14 @@ class MetaGenerator {
       if (p === "/vendor.css") return true;
       // Docs pages need all markdown/rendering styles synchronously; async
       // preload tags with inline onload handlers violate our nonce-based CSP.
-      if (isDocs && (p === "/Docs.css" || p === "/vendor-highlight.css" || p === "/vendor-katex.css" || p === "/markdown.css")) return true;
+      if (
+        isDocs &&
+        (p === "/Docs.css" ||
+          p === "/vendor-highlight.css" ||
+          p === "/vendor-katex.css" ||
+          p === "/markdown.css")
+      )
+        return true;
       return false;
     };
 

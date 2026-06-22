@@ -891,11 +891,13 @@ async function streamChat({
           },
           rawHistory,
         );
-        const retryStream =
-          await LLMConnector.streamGetChatCompletion(textOnlyMessages, {
+        const retryStream = await LLMConnector.streamGetChatCompletion(
+          textOnlyMessages,
+          {
             temperature: workspace?.openAiTemp ?? LLMConnector.defaultTemp,
             user: user,
-          });
+          },
+        );
         completeText = await LLMConnector.handleStream(response, retryStream, {
           uuid,
         });

@@ -23,16 +23,12 @@
 
 const { exec } = require("child_process");
 const path = require("path");
-const {
-  validatedRequest,
-} = require("../../utils/middleware/validatedRequest");
+const { validatedRequest } = require("../../utils/middleware/validatedRequest");
 const {
   flexUserRoleValid,
   ROLES,
 } = require("../../utils/middleware/multiUserProtected");
-const {
-  simpleRateLimit,
-} = require("../../utils/middleware/simpleRateLimit");
+const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 const { reqBody } = require("../../utils/http");
 const logger = require("../../utils/logger")();
 
@@ -100,11 +96,7 @@ function apiTerminalExecEndpoints(app) {
 
   app.post(
     "/terminal/exec",
-    [
-      validatedRequest,
-      flexUserRoleValid([ROLES.admin]),
-      execRateLimit,
-    ],
+    [validatedRequest, flexUserRoleValid([ROLES.admin]), execRateLimit],
     async (request, response) => {
       try {
         if (!isTerminalExecEnabled()) {
@@ -117,18 +109,18 @@ function apiTerminalExecEndpoints(app) {
         const { command, cwd } = reqBody(request);
 
         if (typeof command !== "string" || !command.trim())
-          return response
-            .status(400)
-            .json({ error: "command is required and must be a non-empty string" });
+          return response.status(400).json({
+            error: "command is required and must be a non-empty string",
+          });
         if (command.length > MAX_COMMAND_LENGTH)
-          return response
-            .status(400)
-            .json({ error: `command must be ${MAX_COMMAND_LENGTH} characters or fewer` });
+          return response.status(400).json({
+            error: `command must be ${MAX_COMMAND_LENGTH} characters or fewer`,
+          });
         if (cwd !== undefined && cwd !== null) {
           if (typeof cwd !== "string" || cwd.length > MAX_CWD_LENGTH)
-            return response
-              .status(400)
-              .json({ error: "cwd must be a string of 500 characters or fewer" });
+            return response.status(400).json({
+              error: "cwd must be a string of 500 characters or fewer",
+            });
         }
 
         if (isDangerous(command))
@@ -162,7 +154,7 @@ function apiTerminalExecEndpoints(app) {
                 return resolve();
               }
 
-              const exitCode = err ? err.code ?? 1 : 0;
+              const exitCode = err ? (err.code ?? 1) : 0;
               response.status(200).json({
                 stdout: stdout ? stdout.toString() : "",
                 stderr: stderr ? stderr.toString() : "",

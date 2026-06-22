@@ -417,6 +417,7 @@ async function vectorCacheKey(filename) {
 function sanitizeFileName(fileName) {
   if (!fileName) return fileName;
   return fileName.replace(
+    // eslint-disable-next-line no-control-regex
     /[\x00-\x1F<>:"/\\|?*\u201C\u201D\u201E\u201F\u2018\u2019\u201A\u201B\u202E\u200E\u200F\u200B-\u200D]/g,
     "",
   );

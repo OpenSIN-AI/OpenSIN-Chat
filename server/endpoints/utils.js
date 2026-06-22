@@ -96,7 +96,9 @@ function utilEndpoints(app) {
       } catch (e) {
         const errorId = crypto.randomUUID();
         console.error(`[endpoint error ${errorId}]`, e);
-        response.status(200).json({ documents: [], error: "Upstream unavailable", errorId });
+        response
+          .status(200)
+          .json({ documents: [], error: "Upstream unavailable", errorId });
       }
     },
   );
@@ -160,7 +162,9 @@ function utilEndpoints(app) {
       } catch (e) {
         const errorId = crypto.randomUUID();
         console.error(`[endpoint error ${errorId}]`, e);
-        response.status(200).json({ data: [], error: "Upstream unavailable", errorId });
+        response
+          .status(200)
+          .json({ data: [], error: "Upstream unavailable", errorId });
       }
     },
   );
@@ -214,7 +218,9 @@ function utilEndpoints(app) {
     } catch (e) {
       const errorId = crypto.randomUUID();
       console.error(`[endpoint error ${errorId}]`, e);
-      response.status(200).json({ items: [], error: "Upstream unavailable", errorId });
+      response
+        .status(200)
+        .json({ items: [], error: "Upstream unavailable", errorId });
     }
   });
 

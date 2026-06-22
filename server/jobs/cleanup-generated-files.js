@@ -46,7 +46,7 @@ const RECENT_FILE_GRACE_MS = Number(
             path: fullPath,
             isDirectory: stat.isDirectory(),
           });
-      } catch (statErr) {
+      } catch {
         // File was deleted between readdirSync and statSync — skip it.
         // This is a normal race condition and must not abort the entire cleanup.
       }

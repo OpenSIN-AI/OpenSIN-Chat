@@ -116,11 +116,17 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   function isValidTitle(line) {
     if (!line) return false;
     const lower = line.toLowerCase();
-    if (promptEchoMarkers.some((marker) => lower.includes(marker.toLowerCase())))
+    if (
+      promptEchoMarkers.some((marker) => lower.includes(marker.toLowerCase()))
+    )
       return false;
     // Reject reasoning-model artifacts: lines starting with think tokens,
     // analysis markers, or German reasoning phrases
-    if (/^(?:<|app|analysis|wir müssen|we need|we are|the user|step \d|user message)/i.test(line))
+    if (
+      /^(?:<|app|analysis|wir müssen|we need|we are|the user|step \d|user message)/i.test(
+        line,
+      )
+    )
       return false;
     // Ausschließen von Markdown-Listenzeilen, die aus der Assistentenantwort
     // stammen könnten (z. B. "**4. Einschränkung erneuerbarer Energ").
@@ -160,16 +166,23 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   // Prompt-Echo-Zeilen besteht, überspringen wir diesen Fallback und nutzen
   // die Nutzeranfrage.
   const hasNonEchoLine = lines.some(
-    (line) => !promptEchoMarkers.some((m) => line.toLowerCase().includes(m.toLowerCase())),
+    (line) =>
+      !promptEchoMarkers.some((m) =>
+        line.toLowerCase().includes(m.toLowerCase()),
+      ),
   );
   if (!cleanTitle && hasNonEchoLine) {
     let scrubbed = normalizedText;
     for (const marker of promptEchoMarkers) {
-      scrubbed = scrubbed.split(new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("");
+      scrubbed = scrubbed
+        .split(new RegExp(marker.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"))
+        .join("");
     }
     // Auch die wiederholte User-Prompt-Zeile entfernen, damit sie nicht als
     // Titel ausgewählt wird.
-    scrubbed = scrubbed.split(new RegExp(prompt.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi")).join("");
+    scrubbed = scrubbed
+      .split(new RegExp(prompt.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"))
+      .join("");
     // Reasoning-Token wie "think" oder "thinking" können ohne Leerzeichen an
     // Wörter anhaften (z. B. "InquirythinkAfD"). Wir isolieren und entfernen
     // sie, bevor wir das Wort-Suffix bestimmen.
@@ -182,20 +195,60 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
     // wird verworfen, weil Reasoning-Modelle den Titel gerne wiederholen.
     // Häufige Reasoning-Anhängsel am Anfang/Ende werden entfernt.
     const leadingNoise = new Set([
-      "that", "this", "output", "return", "ill", "so", "then", "thus",
-      "therefore", "hence", "answer", "final", "title", "name", "like",
-      "such", "be", "is", "are", "was", "were", "am", "i", "we", "you",
+      "that",
+      "this",
+      "output",
+      "return",
+      "ill",
+      "so",
+      "then",
+      "thus",
+      "therefore",
+      "hence",
+      "answer",
+      "final",
+      "title",
+      "name",
+      "like",
+      "such",
+      "be",
+      "is",
+      "are",
+      "was",
+      "were",
+      "am",
+      "i",
+      "we",
+      "you",
     ]);
     const trailingNoise = new Set([
-      "inquiry", "question", "response", "answer", "output", "return",
-      "title", "name", "here", "there", "exactly", "only",
+      "inquiry",
+      "question",
+      "response",
+      "answer",
+      "output",
+      "return",
+      "title",
+      "name",
+      "here",
+      "there",
+      "exactly",
+      "only",
     ]);
     for (let take = 5; take >= 3; take--) {
       let candidateWords = words.slice(-take);
-      while (candidateWords.length > 3 && leadingNoise.has(candidateWords[0].toLowerCase())) {
+      while (
+        candidateWords.length > 3 &&
+        leadingNoise.has(candidateWords[0].toLowerCase())
+      ) {
         candidateWords = candidateWords.slice(1);
       }
-      while (candidateWords.length > 3 && trailingNoise.has(candidateWords[candidateWords.length - 1].toLowerCase())) {
+      while (
+        candidateWords.length > 3 &&
+        trailingNoise.has(
+          candidateWords[candidateWords.length - 1].toLowerCase(),
+        )
+      ) {
         candidateWords = candidateWords.slice(0, -1);
       }
       const candidate = candidateWords.join(" ").trim();
@@ -210,10 +263,7 @@ async function generateTitleJob({ threadId, workspaceSlug, prompt, response }) {
   // Falls kein gültiger Titel gefunden wurde, auf den ersten Teil der
   // Nutzeranfrage zurückfallen (max. 5 Wörter, max. 40 Zeichen).
   if (!cleanTitle) {
-    cleanTitle = prompt
-      .split(/\s+/)
-      .slice(0, 5)
-      .join(" ");
+    cleanTitle = prompt.split(/\s+/).slice(0, 5).join(" ");
   }
 
   // Harte Längenbegrenzung: max. 5 Wörter und 40 Zeichen.

@@ -17,9 +17,7 @@ const {
   isMultiUserSetup,
 } = require("../../utils/middleware/multiUserProtected");
 const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
-const {
-  getAuthTokenHash,
-} = require("../../utils/middleware/validatedRequest");
+const { getAuthTokenHash } = require("../../utils/middleware/validatedRequest");
 const {
   simpleSSOEnabled,
   simpleSSOLoginDisabled,
@@ -328,12 +326,7 @@ function authEndpoints(app) {
             });
             return;
           }
-          if (
-            !bcrypt.compareSync(
-              password,
-              getAuthTokenHash(),
-            )
-          ) {
+          if (!bcrypt.compareSync(password, getAuthTokenHash())) {
             await EventLogs.logEvent(
               "failed_login_invalid_password",
               singleRequestMeta,

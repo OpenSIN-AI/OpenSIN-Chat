@@ -30,6 +30,7 @@ class OpenAiSTT {
       console.error(`OpenAiSTT:transcribe failed: ${e?.message || e}`);
       throw new Error(
         `OpenAI transcription failed: ${e?.message || "Unknown error"}`,
+        { cause: e },
       );
     }
   }

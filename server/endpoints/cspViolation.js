@@ -27,24 +27,25 @@ function cspViolationEndpoint(app) {
       reportParser,
     ],
     async (request, response) => {
-    const id = crypto.randomUUID();
-    const raw = request.body;
-    let body = {};
+      const id = crypto.randomUUID();
+      const raw = request.body;
+      let body = {};
 
-    if (raw && typeof raw === "string" && raw.length) {
-      try {
-        body = JSON.parse(raw);
-      } catch {
-        body = { raw };
+      if (raw && typeof raw === "string" && raw.length) {
+        try {
+          body = JSON.parse(raw);
+        } catch {
+          body = { raw };
+        }
+      } else if (raw && typeof raw === "object") {
+        body = raw;
       }
-    } else if (raw && typeof raw === "object") {
-      body = raw;
-    }
 
-    const truncated = JSON.stringify(body).slice(0, 500);
-    console.warn(`[csp-violation id=${id}]`, truncated);
-    response.status(204).end();
-  });
+      const truncated = JSON.stringify(body).slice(0, 500);
+      console.warn(`[csp-violation id=${id}]`, truncated);
+      response.status(204).end();
+    },
+  );
 }
 
 module.exports = cspViolationEndpoint;

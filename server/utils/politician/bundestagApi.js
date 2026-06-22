@@ -362,11 +362,6 @@ class BundestagApi {
     const all = await this.fetchAllMembers();
     return all.find((m) => m.externalId === externalId) || null;
   }
-
-  /** Clear the in-memory cache. */
-  clearCache() {
-    this.http.reset();
-  }
 }
 
 module.exports = { BundestagApi };

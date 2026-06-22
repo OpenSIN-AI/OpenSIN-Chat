@@ -188,7 +188,7 @@ const Document = {
       };
 
       let vectorized = false;
-      let error = null;
+      let error;
       try {
         ({ vectorized, error } = await VectorDb.addDocumentToNamespace(
           workspace.slug,

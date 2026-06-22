@@ -23,8 +23,14 @@ const {
   flexUserRoleValid,
   ROLES,
 } = require("../../../utils/middleware/multiUserProtected");
-const { simpleRateLimit } = require("../../../utils/middleware/simpleRateLimit");
-const { reqBody, userFromSession, multiUserMode } = require("../../../utils/http");
+const {
+  simpleRateLimit,
+} = require("../../../utils/middleware/simpleRateLimit");
+const {
+  reqBody,
+  userFromSession,
+  multiUserMode,
+} = require("../../../utils/http");
 const { Workspace } = require("../../../models/workspace");
 const { Document } = require("../../../models/documents");
 const { CollectorApi } = require("../../../utils/collectorApi");
@@ -56,25 +62,29 @@ function clampInt(value, fallback, min, max) {
 function apiPoliticianEndpoints(app) {
   if (!app) return;
 
-  app.get("/politician/search", [validatedRequest], async (request, response) => {
-    try {
-      const { q, party, state, faction, source } = request.query;
-      const filters = {};
-      if (party) filters.party = party;
-      if (state) filters.state = state;
-      if (faction) filters.faction = faction;
-      if (source) filters.source = source;
+  app.get(
+    "/politician/search",
+    [validatedRequest],
+    async (request, response) => {
+      try {
+        const { q, party, state, faction, source } = request.query;
+        const filters = {};
+        if (party) filters.party = party;
+        if (state) filters.state = state;
+        if (faction) filters.faction = faction;
+        if (source) filters.source = source;
 
-      const db = getPoliticianDB();
-      const results = await db.searchPoliticians(q || "", filters);
-      response
-        .status(200)
-        .json({ politicians: results, total: results.length });
-    } catch (err) {
-      logger.error(`[politician] ${err.message}`, err);
-      response.status(500).json({ error: "Internal Server Error" });
-    }
-  });
+        const db = getPoliticianDB();
+        const results = await db.searchPoliticians(q || "", filters);
+        response
+          .status(200)
+          .json({ politicians: results, total: results.length });
+      } catch (err) {
+        logger.error(`[politician] ${err.message}`, err);
+        response.status(500).json({ error: "Internal Server Error" });
+      }
+    },
+  );
 
   app.get(
     "/politician/speech-search",
@@ -149,39 +159,49 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/sync/status", [validatedRequest], async (_, response) => {
-    try {
-      const db = getPoliticianDB();
-      const status = await db.getSyncStatus();
-      response.status(200).json(status);
-    } catch (err) {
-      logger.error(`[politician] ${err.message}`, err);
-      response.status(500).json({ error: "Internal Server Error" });
-    }
-  });
+  app.get(
+    "/politician/sync/status",
+    [validatedRequest],
+    async (_, response) => {
+      try {
+        const db = getPoliticianDB();
+        const status = await db.getSyncStatus();
+        response.status(200).json(status);
+      } catch (err) {
+        logger.error(`[politician] ${err.message}`, err);
+        response.status(500).json({ error: "Internal Server Error" });
+      }
+    },
+  );
 
-  app.post("/politician/sync/trigger", [validatedRequest, flexUserRoleValid([ROLES.admin])], async (_, response) => {
-    try {
-      const { spawn } = require("child_process");
-      const path = require("path");
-      const jobPath = path.resolve(
-        __dirname,
-        "../../../jobs/sync-politician-data.js",
-      );
+  app.post(
+    "/politician/sync/trigger",
+    [validatedRequest, flexUserRoleValid([ROLES.admin])],
+    async (_, response) => {
+      try {
+        const { spawn } = require("child_process");
+        const path = require("path");
+        const jobPath = path.resolve(
+          __dirname,
+          "../../../jobs/sync-politician-data.js",
+        );
 
-      const child = spawn("node", [jobPath], {
-        detached: true,
-        stdio: "ignore",
-      });
-      child.unref();
+        const child = spawn("node", [jobPath], {
+          detached: true,
+          stdio: "ignore",
+        });
+        child.unref();
 
-      logger.info("[politician] Manual sync triggered via API");
-      response.status(202).json({ message: "Sync triggered", pid: child.pid });
-    } catch (err) {
-      logger.error(`[politician] ${err.message}`, err);
-      response.status(500).json({ error: "Internal Server Error" });
-    }
-  });
+        logger.info("[politician] Manual sync triggered via API");
+        response
+          .status(202)
+          .json({ message: "Sync triggered", pid: child.pid });
+      } catch (err) {
+        logger.error(`[politician] ${err.message}`, err);
+        response.status(500).json({ error: "Internal Server Error" });
+      }
+    },
+  );
 
   app.get("/politician/:id", [validatedRequest], async (request, response) => {
     try {
@@ -197,26 +217,30 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.get("/politician/:id/votes", [validatedRequest], async (request, response) => {
-    try {
-      const { id } = request.params;
-      const { limit, offset } = request.query;
+  app.get(
+    "/politician/:id/votes",
+    [validatedRequest],
+    async (request, response) => {
+      try {
+        const { id } = request.params;
+        const { limit, offset } = request.query;
 
-      const db = getPoliticianDB();
-      const politician = await db.getPolitician(id);
-      if (!politician)
-        return response.status(404).json({ error: "Politician not found" });
+        const db = getPoliticianDB();
+        const politician = await db.getPolitician(id);
+        if (!politician)
+          return response.status(404).json({ error: "Politician not found" });
 
-      const votes = await db.getVotingRecord(id, {
-        limit: clampInt(limit, 50, 1, MAX_LIMIT),
-        offset: clampInt(offset, 0, 0, Number.MAX_SAFE_INTEGER),
-      });
-      response.status(200).json({ votes, total: votes.length });
-    } catch (err) {
-      logger.error(`[politician] ${err.message}`, err);
-      response.status(500).json({ error: "Internal Server Error" });
-    }
-  });
+        const votes = await db.getVotingRecord(id, {
+          limit: clampInt(limit, 50, 1, MAX_LIMIT),
+          offset: clampInt(offset, 0, 0, Number.MAX_SAFE_INTEGER),
+        });
+        response.status(200).json({ votes, total: votes.length });
+      } catch (err) {
+        logger.error(`[politician] ${err.message}`, err);
+        response.status(500).json({ error: "Internal Server Error" });
+      }
+    },
+  );
 
   app.get(
     "/politician/:id/speeches",
@@ -301,9 +325,10 @@ function apiPoliticianEndpoints(app) {
         const metadata = {
           title: `Politiker: ${politician.fullName || politician.id}`,
           docAuthor: "OpenSIN-Chat Politiker-Datenbank",
-          description: [politician.party, politician.state, politician.electoralDistrict]
-            .filter(Boolean)
-            .join(" — ") || "Politikerprofil",
+          description:
+            [politician.party, politician.state, politician.electoralDistrict]
+              .filter(Boolean)
+              .join(" — ") || "Politikerprofil",
           docSource: "Abgeordnetenwatch / Bundestag",
           chunkSource: `politician-${id}`,
           url: politician.profileUrl || "",
@@ -368,7 +393,10 @@ function apiPoliticianEndpoints(app) {
           workspaceSlug: workspace.slug,
         });
       } catch (err) {
-        logger.error(`[politician] add-to-workspace error: ${err.message}`, err);
+        logger.error(
+          `[politician] add-to-workspace error: ${err.message}`,
+          err,
+        );
         response.status(500).json({ error: "Internal Server Error" });
       }
     },
@@ -383,7 +411,10 @@ function apiPoliticianEndpoints(app) {
  */
 function buildPoliticianSourceText(politician, speeches = []) {
   const lines = [];
-  const name = politician.fullName || `${politician.firstName} ${politician.lastName}`.trim() || politician.id;
+  const name =
+    politician.fullName ||
+    `${politician.firstName} ${politician.lastName}`.trim() ||
+    politician.id;
   lines.push(`# ${name}`);
   lines.push("");
 
@@ -393,10 +424,16 @@ function buildPoliticianSourceText(politician, speeches = []) {
       ? `Fraktion: ${politician.faction}`
       : null,
     politician.state ? `Bundesland: ${politician.state}` : null,
-    politician.electoralDistrict ? `Wahlkreis: ${politician.electoralDistrict}` : null,
-    politician.electoralList ? `Landesliste: ${politician.electoralList}` : null,
+    politician.electoralDistrict
+      ? `Wahlkreis: ${politician.electoralDistrict}`
+      : null,
+    politician.electoralList
+      ? `Landesliste: ${politician.electoralList}`
+      : null,
     politician.profession ? `Beruf: ${politician.profession}` : null,
-    politician.birthDate ? `Geburtsdatum: ${new Date(politician.birthDate).toISOString().split("T")[0]}` : null,
+    politician.birthDate
+      ? `Geburtsdatum: ${new Date(politician.birthDate).toISOString().split("T")[0]}`
+      : null,
     politician.birthPlace ? `Geburtsort: ${politician.birthPlace}` : null,
   ].filter(Boolean);
 
@@ -408,7 +445,9 @@ function buildPoliticianSourceText(politician, speeches = []) {
   }
 
   const links = [
-    politician.profileUrl ? `Abgeordnetenwatch-Profil: ${politician.profileUrl}` : null,
+    politician.profileUrl
+      ? `Abgeordnetenwatch-Profil: ${politician.profileUrl}`
+      : null,
     politician.websiteUrl ? `Webseite: ${politician.websiteUrl}` : null,
     politician.email ? `E-Mail: ${politician.email}` : null,
   ].filter(Boolean);

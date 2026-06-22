@@ -94,24 +94,6 @@ function stripFirstSentenceIfReasoning(text) {
 }
 
 /**
- * Strip leading lines that are empty or consist solely of reasoning markers.
- * @param {string} text
- * @returns {string}
- */
-function stripLeadingReasoningLines(text) {
-  const lines = text.split("\n");
-  let start = 0;
-  while (
-    start < lines.length &&
-    (lines[start].trim() === "" || isReasoningPrefix(lines[start]))
-  ) {
-    start++;
-  }
-  const result = lines.slice(start).join("\n").trim();
-  return result;
-}
-
-/**
  * Strip leading paragraphs that consist solely of reasoning markers, or whose
  * body is dominated by reasoning markers. If the first paragraph is not
  * reasoning, the whole text is preserved, so multi-paragraph enhanced prompts
@@ -174,7 +156,9 @@ function extractEnhancedPrompt(text, fallback) {
   if (typeof text !== "string" || !text.trim()) return fallback;
 
   // If the model followed the tag instruction, extract only the wrapped prompt.
-  const tagMatch = text.match(/<enhanced_prompt>([\s\S]*?)<\/enhanced_prompt>/i);
+  const tagMatch = text.match(
+    /<enhanced_prompt>([\s\S]*?)<\/enhanced_prompt>/i,
+  );
   if (tagMatch && tagMatch[1].trim()) {
     return tagMatch[1].trim();
   }

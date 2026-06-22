@@ -122,9 +122,7 @@ async function acquire() {
       if (settled) return;
       _state.pending = _state.pending.filter((p) => p !== entry);
       entry.reject(
-        new Error(
-          `BrowserPool acquire timed out after ${ACQUIRE_TIMEOUT_MS}ms`,
-        ),
+        new Error(`BrowserPool acquire timed out after ${ACQUIRE_TIMEOUT_MS}ms`)
       );
     }, ACQUIRE_TIMEOUT_MS);
     if (typeof timeoutHandle.unref === "function") timeoutHandle.unref();

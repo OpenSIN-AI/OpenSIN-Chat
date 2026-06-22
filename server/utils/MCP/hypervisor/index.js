@@ -53,7 +53,7 @@ function isAllowedLauncher(command) {
   if (!command || typeof command !== "string") return false;
   const normalized = command.replace(/\\/g, "/");
   if (!path.isAbsolute(normalized)) return false;
-  let real = normalized;
+  let real;
   try {
     real = fs.realpathSync(normalized);
   } catch {
@@ -171,10 +171,9 @@ class MCPHypervisor {
    */
   #readServerConfigsJson() {
     try {
-      return safeJsonParse(
-        fs.readFileSync(this.mcpServerJSONPath, "utf8"),
-        { mcpServers: {} },
-      );
+      return safeJsonParse(fs.readFileSync(this.mcpServerJSONPath, "utf8"), {
+        mcpServers: {},
+      });
     } catch (error) {
       this.log(
         `Failed to read MCP config at ${this.mcpServerJSONPath}: ${error.message}. Treating as empty.`,
@@ -572,12 +571,7 @@ class MCPHypervisor {
     this.#validateServerDefinitionByType(name, server, serverType);
     this.log(`Attempting to start MCP server: ${name}`);
     const mcp = new Client({ name: name, version: "1.0.0" });
-    let transport;
-    try {
-      transport = await this.#setupServerTransport(server, serverType);
-    } catch (e) {
-      throw e;
-    }
+    const transport = await this.#setupServerTransport(server, serverType);
 
     // Add connection event listeners
     transport.onclose = () => {
