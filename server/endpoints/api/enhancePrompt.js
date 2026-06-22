@@ -26,7 +26,15 @@ const enhanceRateLimit = simpleRateLimit({
   windowMs: 60 * 1000,
 });
 
-const SYSTEM_INSTRUCTION = `You are a prompt enhancement assistant. Rewrite the user's prompt to make it clearer, more specific, and more effective for retrieval-augmented generation. Preserve the original intent. Respond with ONLY the improved prompt — no preamble, no explanation.`;
+const SYSTEM_INSTRUCTION = `You are a prompt enhancement assistant. Rewrite the user's prompt to make it clearer, more specific, and more effective for retrieval-augmented generation. Preserve the original intent.
+
+Rules:
+1. Do NOT include any reasoning, explanation, preamble, or chain-of-thought.
+2. Do NOT say "The user wants me to..." or "I need to..." or "Let me...".
+3. Output ONLY the improved prompt, wrapped in <enhanced_prompt> tags like this:
+<enhanced_prompt>
+... improved prompt here ...
+</enhanced_prompt>`;
 
 /**
  * Chain-of-thought / reasoning prefixes that some LLMs emit before the final
@@ -164,6 +172,13 @@ function stripLeadingReasoningParagraphs(text) {
  */
 function extractEnhancedPrompt(text, fallback) {
   if (typeof text !== "string" || !text.trim()) return fallback;
+
+  // If the model followed the tag instruction, extract only the wrapped prompt.
+  const tagMatch = text.match(/<enhanced_prompt>([\s\S]*?)<\/enhanced_prompt>/i);
+  if (tagMatch && tagMatch[1].trim()) {
+    return tagMatch[1].trim();
+  }
+
   let cleaned = stripReasoningTags(text).trim();
   // Catch the common single-paragraph case where reasoning and answer share a
   // paragraph ("The user wants me to ... Here is the prompt: ...").

@@ -303,6 +303,29 @@ describe("Enhance Prompt endpoint", () => {
       expect(res.body.enhancedPrompt).not.toMatch(/The user wants me to/);
     });
 
+    it("extracts the prompt from <enhanced_prompt> tags when the model follows the format", async () => {
+      const mockGetChatCompletion = jest.fn().mockResolvedValue(
+        "Some reasoning here.\n\n<enhanced_prompt>\nWhat are the key differences between the parties?\n</enhanced_prompt>",
+      );
+      jest.doMock("../../../utils/helpers", () => ({
+        getLLMProvider: () => ({
+          getChatCompletion: mockGetChatCompletion,
+        }),
+      }));
+
+      const { call } = buildApp();
+      const res = await call("post", "/enhance-prompt", {
+        body: { prompt: "parties" },
+      });
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.enhancedPrompt).toBe(
+        "What are the key differences between the parties?",
+      );
+      expect(res.body.enhancedPrompt).not.toMatch(/reasoning/);
+      expect(res.body.enhancedPrompt).not.toMatch(/<enhanced_prompt>/);
+    });
+
     it("strips <thinking> reasoning tags from the LLM response", async () => {
       const mockGetChatCompletion = jest.fn().mockResolvedValue(
         "<thinking>The user wants me to enhance this.</thinking>\nWhat are the key differences between the parties?",
