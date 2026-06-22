@@ -70,7 +70,7 @@ async function requireApiKeyOrSession(request, response, next) {
   // In multi-user mode it carries a user id; in single-user no-password mode
   // it carries { p: null }.
   const valid = decodeJWT(bearer);
-  if (!valid || (valid.p === undefined && valid.id === undefined)) {
+  if (!valid || (valid.p === null && valid.id === null)) {
     return response.status(401).json({
       error: "No valid API key or session token found.",
     });

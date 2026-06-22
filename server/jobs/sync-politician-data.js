@@ -42,6 +42,7 @@ const {
 } = require("../utils/politician/extractors");
 const {
   PoliticianMandate,
+  PoliticianSpeech,
   PoliticianVote,
   PoliticianCommittee,
   PoliticianCommitteeMembership,
@@ -643,6 +644,7 @@ async function syncBundestagSpeeches() {
                 date: speech.date,
                 title: speech.top,
               });
+              await PoliticianSpeech.markVectorized(dedupeKey);
             } catch (vecErr) {
               // Vector indexing failure is non-fatal — speech is already in SQLite
               console.error(

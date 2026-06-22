@@ -237,7 +237,7 @@ class BundestagApi {
       profileUrl:
         raw.profilUrl ||
         (raw.id
-          ? `${BUNDESTAG_BASE_URL}/abgeordnete/biografien18/${raw.id}`
+          ? `${BUNDESTAG_BASE_URL}/abgeordnete/biografien${this.wahlperiode}/${raw.id}`
           : null),
       email: raw.email || null,
       electoralDistrict: raw.wahlkreis || null,

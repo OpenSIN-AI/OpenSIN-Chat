@@ -18,6 +18,9 @@ const {
 } = require("../../utils/middleware/multiUserProtected");
 const { simpleRateLimit } = require("../../utils/middleware/simpleRateLimit");
 const {
+  getAuthTokenHash,
+} = require("../../utils/middleware/validatedRequest");
+const {
   simpleSSOEnabled,
   simpleSSOLoginDisabled,
 } = require("../../utils/middleware/simpleSSOEnabled");
@@ -328,7 +331,7 @@ function authEndpoints(app) {
           if (
             !bcrypt.compareSync(
               password,
-              bcrypt.hashSync(process.env.AUTH_TOKEN, 10),
+              getAuthTokenHash(),
             )
           ) {
             await EventLogs.logEvent(

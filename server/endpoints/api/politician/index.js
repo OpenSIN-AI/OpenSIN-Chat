@@ -160,7 +160,7 @@ function apiPoliticianEndpoints(app) {
     }
   });
 
-  app.post("/politician/sync/trigger", [validatedRequest], async (_, response) => {
+  app.post("/politician/sync/trigger", [validatedRequest, flexUserRoleValid([ROLES.admin])], async (_, response) => {
     try {
       const { spawn } = require("child_process");
       const path = require("path");

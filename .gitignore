@@ -48,3 +48,4 @@ server/storage-opensin/
 collector/hotdir/
 collector/outputs/
 !**/.gitkeep
+server/coverage/

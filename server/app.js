@@ -307,6 +307,9 @@ function buildApp() {
       return null;
     }
 
+    // Return 404 JSON for unmatched /api/* paths instead of serving HTML
+    apiRouter.use((req, res) => res.status(404).json({ error: "Not found" }));
+
     app.use("/", function (request, response) {
       const prerendered = getDocsPrerender(request.path);
       IndexPage.generate(request, response, 200, prerendered);

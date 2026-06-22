@@ -120,7 +120,9 @@ const System = {
       .then((res) => res.ok)
       .catch(() => false);
 
-    window.localStorage.setItem(AUTH_TIMESTAMP, Number(new Date()));
+    if (valid) {
+      window.localStorage.setItem(AUTH_TIMESTAMP, Number(new Date()));
+    }
     return valid;
   },
   requestToken: async function (body) {
@@ -160,7 +162,7 @@ const System = {
   recoverAccount: async function (username, recoveryCodes) {
     return await fetchWithTimeout(`${API_BASE}/system/recover-account`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ username, recoveryCodes }),
     })
       .then(async (res) => {
@@ -178,7 +180,7 @@ const System = {
   resetPassword: async function (token, newPassword, confirmPassword) {
     return await fetchWithTimeout(`${API_BASE}/system/reset-password`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify({ token, newPassword, confirmPassword }),
     })
       .then(async (res) => {
@@ -215,7 +217,7 @@ const System = {
   updateSystem: async (data) => {
     return await fetch(`${API_BASE}/system/update-env`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then(async (res) => {
@@ -241,7 +243,7 @@ const System = {
   updateSystemPassword: async (data) => {
     return await fetch(`${API_BASE}/system/update-password`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then(async (res) => {
@@ -267,7 +269,7 @@ const System = {
   setupMultiUser: async (data) => {
     return await fetch(`${API_BASE}/system/enable-multi-user`, {
       method: "POST",
-      headers: baseHeaders(),
+      headers: { ...baseHeaders(), "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((res) => res.json())

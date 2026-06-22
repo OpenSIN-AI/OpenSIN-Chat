@@ -18,6 +18,7 @@ jest.mock("../../utils/http", () => ({
 jest.mock("../../utils/middleware/validatedRequest", () => ({
   validatedRequest: (_req, _res, next) => next(),
   invalidateAuthTokenHash: jest.fn(),
+  getAuthTokenHash: jest.fn(() => "$2a$10$mockhash"),
 }));
 const mockFlexUserRoleValid = jest.fn(() => (_req, _res, next) => next());
 const mockIsMultiUserSetup = jest.fn(() => (_req, _res, next) => next());
