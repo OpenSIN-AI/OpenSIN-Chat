@@ -106,6 +106,18 @@ function authEndpoints(app) {
     },
   );
 
+  // In single-user no-password mode (no AUTH_TOKEN env var) the server
+  // auto-grants a token with no credentials to check — rate limiting only
+  // causes lockouts for the legitimate owner.  Skip both buckets in that case.
+  const skipForSingleUserNoPassword = (request) => {
+    if (process.env.AUTH_TOKEN) return false;
+    const body = reqBody(request);
+    return (
+      !body ||
+      (typeof body.username !== "string" && typeof body.password !== "string")
+    );
+  };
+
   app.post(
     "/request-token",
     [
@@ -114,18 +126,14 @@ function authEndpoints(app) {
         max: 100,
         windowMs: 60 * 1000,
         identity: "user",
+        skipIf: skipForSingleUserNoPassword,
       }),
       simpleRateLimit({
         bucket: "login-account",
         max: 100,
         windowMs: 60 * 60 * 1000,
         identity: "user",
-        skipIf: (request) => {
-          // Single-user no-password mode sends an empty body; account-based
-          // rate limiting is meaningless there and would rate-limit the owner.
-          const body = reqBody(request);
-          return !body || typeof body.username !== "string";
-        },
+        skipIf: skipForSingleUserNoPassword,
       }),
     ],
     async (request, response) => {
