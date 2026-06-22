@@ -11,8 +11,9 @@ panel inside the chat workspace. The icon bar toggle is handled by the shared
 ```tsx
 import PdfAnalysisSidebar from "./PdfAnalysisSidebar";
 
-// Inside a ChatSidebarProvider, typically via Sidebars.tsx:
-<PdfAnalysisSidebar />
+function App() {
+  return <PdfAnalysisSidebar />;
+}
 ```
 
 ## Notes
@@ -20,4 +21,5 @@ import PdfAnalysisSidebar from "./PdfAnalysisSidebar";
 - The panel reuses `PdfAnalysisPanel` exported from `pages/PdfAnalysis/index.tsx` so
   the same UI is shown in both the standalone page and the sidebar.
 - Wrapped in `ChatSidebar` so it shares the persisted resizable width with the
-  other right sidebar panels.
+  other right sidebar panels. Defaults to 520px but allows narrowing to 360px,
+  since the PDF UI needs more horizontal space than the other sidebars.

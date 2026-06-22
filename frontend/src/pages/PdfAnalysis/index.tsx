@@ -85,7 +85,7 @@ export function PdfFileInput({
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-theme-sidebar-border bg-theme-bg-container text-sm text-theme-text-primary hover:opacity-80 cursor-pointer"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-theme-sidebar-border bg-theme-bg-container text-sm text-theme-text-primary hover:opacity-80 cursor-pointer whitespace-nowrap shrink-0"
       >
         <UploadSimple size={14} aria-hidden="true" />
         {label}
@@ -101,7 +101,11 @@ export function PdfFileInput({
   );
 }
 
-export function PdfAnalysisPanel({ isSidebar = false }: { isSidebar?: boolean }) {
+export function PdfAnalysisPanel({
+  isSidebar = false,
+}: {
+  isSidebar?: boolean;
+}) {
   const { t } = useTranslation();
   const [tab, setTab] = useState("jobs");
   const [crossCheckFactIds, setCrossCheckFactIds] = useState<string[]>([]);
@@ -119,23 +123,22 @@ export function PdfAnalysisPanel({ isSidebar = false }: { isSidebar?: boolean })
           {t("pdfAnalysis.panel.description")}
         </p>
         <nav
-          className={`flex gap-2 mt-2 ${isSidebar ? "flex-wrap" : ""}`}
+          className={`flex items-center gap-1 shrink-0 mt-2 ${isSidebar ? "flex-wrap" : ""}`}
           aria-label={t("pdfAnalysis.panel.tabJobs")}
         >
-          <TabButton active={tab === "jobs"} onClick={() => setTab("jobs")} compact={isSidebar}>
+          <TabButton active={tab === "jobs"} onClick={() => setTab("jobs")}>
             {t("pdfAnalysis.panel.tabJobs")}
           </TabButton>
-          <TabButton active={tab === "facts"} onClick={() => setTab("facts")} compact={isSidebar}>
+          <TabButton active={tab === "facts"} onClick={() => setTab("facts")}>
             {t("pdfAnalysis.panel.tabFacts")}
           </TabButton>
           <TabButton
             active={tab === "crosscheck"}
             onClick={() => setTab("crosscheck")}
-            compact={isSidebar}
           >
             {t("pdfAnalysis.panel.tabCrossCheck")}
           </TabButton>
-          <TabButton active={tab === "corpus"} onClick={() => setTab("corpus")} compact={isSidebar}>
+          <TabButton active={tab === "corpus"} onClick={() => setTab("corpus")}>
             {t("pdfAnalysis.panel.tabCorpus")}
           </TabButton>
         </nav>
@@ -177,18 +180,17 @@ interface TabButtonProps {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
-  compact?: boolean;
 }
 
-export function TabButton({ active, onClick, children, compact = false }: TabButtonProps) {
+export function TabButton({ active, onClick, children }: TabButtonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`${compact ? "px-3" : "px-4"} py-1.5 rounded-md text-sm border ${
+      className={`flex items-center gap-1.5 h-7 px-3 rounded-full border-none cursor-pointer text-xs font-medium transition-colors ${
         active
-          ? "bg-theme-bg-secondary text-theme-text-primary border-theme-sidebar-border"
-          : "bg-transparent text-theme-text-secondary border-transparent hover:text-theme-text-primary"
+          ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+          : "bg-transparent hover:bg-zinc-800/50 light:hover:bg-slate-100 text-zinc-400 light:text-slate-500"
       }`}
     >
       {children}
@@ -361,14 +363,18 @@ function StartForm({ onStarted, isSidebar = false }: StartFormProps) {
         </label>
       </div>
 
-      <label className={`flex gap-2 text-sm text-theme-text-secondary ${isSidebar ? "items-start" : "items-center"}`}>
+      <label
+        className={`flex gap-2 text-sm text-theme-text-secondary ${isSidebar ? "items-start" : "items-center"}`}
+      >
         <input
           type="checkbox"
           checked={deepScan}
           onChange={(e) => setDeepScan(e.target.checked)}
           className={`accent-current ${isSidebar ? "mt-0.5" : ""}`}
         />
-        <span className={isSidebar ? "leading-snug" : ""}>{t("pdfAnalysis.panel.deepScan")}</span>
+        <span className={isSidebar ? "leading-snug" : ""}>
+          {t("pdfAnalysis.panel.deepScan")}
+        </span>
       </label>
 
       {error && (

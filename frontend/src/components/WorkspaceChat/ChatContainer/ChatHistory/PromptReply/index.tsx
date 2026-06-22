@@ -62,8 +62,8 @@ const PromptReply: any = ({
   if (pending) {
     return (
       <div className="flex justify-start w-full">
-        <div className="py-1.5 px-4 flex flex-col w-full">
-          <div className="mt-2 dot-falling light:invert"></div>
+        <div className="py-1.5 px-4 flex items-center w-full">
+          <div className="dot-falling light:invert"></div>
         </div>
       </div>
     );
@@ -147,9 +147,13 @@ function RenderAssistantChatContent({ message, messageId }: any) {
           content=""
           messageId={messageId}
         />
-        <div className="flex items-start gap-x-1.5">
-          <ThoughtBrainButton messageId={messageId} content={message} />
-          <div className="mt-3 dot-falling light:invert" />
+        <div className="flex items-center gap-x-1.5">
+          <ThoughtBrainButton
+            messageId={messageId}
+            content={message}
+            className="mt-0"
+          />
+          <div className="dot-falling light:invert" />
         </div>
       </div>
     );

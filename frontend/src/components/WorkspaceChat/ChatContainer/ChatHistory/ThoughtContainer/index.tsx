@@ -98,7 +98,11 @@ function contentIsNotEmpty(content: any = "") {
  * Small brain icon button that sits to the LEFT of the AI message.
  * Clicking it toggles the thought chain panel.
  */
-export function ThoughtBrainButton({ messageId, content }: any) {
+export function ThoughtBrainButton({
+  messageId,
+  content,
+  className = "",
+}: any) {
   const { expanded, setExpanded } = useThoughtExpansion(messageId);
   const { t } = useTranslation();
 
@@ -129,7 +133,7 @@ export function ThoughtBrainButton({ messageId, content }: any) {
         expanded
           ? "bg-zinc-700 light:bg-slate-200"
           : "bg-transparent hover:bg-zinc-800 light:hover:bg-slate-100"
-      }`}
+      } ${className}`}
     >
       {isThinking ? (
         <video

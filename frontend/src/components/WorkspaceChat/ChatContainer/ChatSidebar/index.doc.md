@@ -10,10 +10,10 @@ Provides a React context (`ChatSidebarContext`) that manages which right sidebar
 
 ## Files that touch it
 
-- [`Sidebars.jsx`](../Sidebars.jsx): consumes `activeSidebar` to decide which panel to render.
+- [`Sidebars.tsx`](../Sidebars.tsx): consumes `activeSidebar` to decide which panel to render.
 - [`RightSidebarIconBar/index.tsx`](../RightSidebarIconBar/index.tsx): uses `activeSidebar` and `toggleSidebar` to highlight and toggle panels.
 - Every `*Sidebar` panel component: uses the specialized hooks exported from this file.
-- [`ChatSidebar/index.test.jsx`](index.test.tsx): tests the provider context and specialized hooks.
+- [`ChatSidebar/index.test.jsx`](index.test.jsx): tests the provider context and specialized hooks.
 
 ## Important config values
 
@@ -21,7 +21,8 @@ Provides a React context (`ChatSidebarContext`) that manages which right sidebar
 - `DOCUMENT_SOURCE_PREFIXES`: `paperless-ngx://`, `obsidian://`, `confluence://`, `drupalwiki://`, `github://`, `gitlab://`.
 - `MEDIA_SOURCE_PREFIXES`: `youtube://`.
 - `LOG_EVENT = "openafd:log"`: custom event name for console log entries.
-- Default panel width (in `ChatSidebar` component): 366px, clamped to 240–800px, persisted under `openafd-right-sidebar-width`.
+- Default panel width (in `ChatSidebar` component): 366px by default (or `defaultWidth`), clamped to `minWidth`–`maxWidth`, persisted under `openafd-right-sidebar-width`.
+- The resize handle is a 12px-wide strip on the left edge with a visible blue grip line so users can find and drag it.
 
 ## Why certain decisions were made
 

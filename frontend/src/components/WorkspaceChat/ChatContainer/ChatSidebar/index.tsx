@@ -270,10 +270,11 @@ export default function ChatSidebar({
   children,
   minWidth = 240,
   maxWidth = 800,
+  defaultWidth = Math.max(366, minWidth),
 }: any) {
   const { t } = useTranslation();
   const [width, setWidth] = useState(() => {
-    if (typeof window === "undefined") return Math.max(366, minWidth);
+    if (typeof window === "undefined") return defaultWidth;
     try {
       const stored = window.localStorage.getItem("openafd-right-sidebar-width");
       if (stored) {
@@ -281,7 +282,7 @@ export default function ChatSidebar({
         if (!isNaN(n) && n >= minWidth && n <= maxWidth) return n;
       }
     } catch {}
-    return Math.max(366, minWidth);
+    return defaultWidth;
   });
   const isResizingRef = useRef(false);
   const resizeStartXRef = useRef(0);
@@ -354,9 +355,9 @@ export default function ChatSidebar({
         aria-orientation="vertical"
         aria-label={t("common.resizeRightSidebar")}
         title={t("common.dragToResizeWidth")}
-        className="absolute top-0 left-0 h-full w-[6px] cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/20 transition-colors"
+        className="absolute top-0 left-0 h-full w-3 cursor-col-resize z-50 group flex items-center justify-center hover:bg-blue-500/30 transition-colors"
       >
-        <div className="w-[2px] h-12 bg-transparent group-hover:bg-blue-400 rounded-full transition-colors" />
+        <div className="w-1 h-16 bg-blue-400/50 group-hover:bg-blue-400 rounded-full transition-colors" />
       </div>
       {children}
     </div>
