@@ -28,7 +28,7 @@ echo "[deploy] Building production image (no cache)..."
 docker compose -f docker-compose.yml -f docker-compose.production.yml build --no-cache
 
 echo "[deploy] Starting/restarting production container..."
-docker compose -f docker-compose.yml -f docker-compose.production.yml up -d
+docker compose -f docker-compose.yml -f docker-compose.production.yml up -d --force-recreate --remove-orphans
 
 echo "[deploy] Container status:"
 docker compose -f docker-compose.yml -f docker-compose.production.yml ps
