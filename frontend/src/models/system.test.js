@@ -97,6 +97,21 @@ describe("System", () => {
     });
   });
 
+  describe("requestToken", () => {
+    it("sends JSON with Content-Type header", async () => {
+      global.fetch = vi.fn().mockResolvedValue(jsonResponse({ valid: true }));
+      await System.requestToken({ username: "admin", password: "pass" });
+      expect(global.fetch).toHaveBeenCalledWith(
+        "/api/request-token",
+        expect.objectContaining({
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: "admin", password: "pass" }),
+        }),
+      );
+    });
+  });
+
   describe("keys", () => {
     it("returns results on success", async () => {
       const data = { results: { LLMProvider: "openai" } };

@@ -126,6 +126,7 @@ const System = {
   requestToken: async function (body) {
     return await fetchWithTimeout(`${API_BASE}/request-token`, {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...body }),
     })
       .then(async (res) => {
