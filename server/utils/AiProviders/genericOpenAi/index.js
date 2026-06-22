@@ -342,7 +342,9 @@ class GenericOpenAiLLM {
         stream?.endMeasurement(usage);
         clientAbortedHandler(
           resolve,
-          allReasoningText ? `<think>${allReasoningText}</think>${fullText}` : fullText,
+          allReasoningText
+            ? `<think>${allReasoningText}</think>${fullText}`
+            : fullText,
         );
       };
       response.on("close", handleAbort);

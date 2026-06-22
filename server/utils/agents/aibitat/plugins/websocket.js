@@ -171,9 +171,7 @@ const websocket = {
                 delete socket.handleToolApproval;
                 clearTimeout(timeoutId);
                 reject(
-                  reason instanceof Error
-                    ? reason
-                    : new Error(String(reason)),
+                  reason instanceof Error ? reason : new Error(String(reason)),
                 );
               },
             };

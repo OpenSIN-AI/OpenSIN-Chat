@@ -16,7 +16,9 @@
  */
 
 const { PrismaClient } = require("@prisma/client");
-const { AbgeordnetenwatchApi } = require("../utils/politician/abgeordnetenwatchApi");
+const {
+  AbgeordnetenwatchApi,
+} = require("../utils/politician/abgeordnetenwatchApi");
 const {
   extractStateFromAwRawData,
   extractProfileUrlFromAwRawData,
@@ -43,10 +45,14 @@ async function loadAwLookup() {
       const key = matchKey(p);
       if (!byKey.has(key)) byKey.set(key, p);
     }
-    console.log(`[backfill] Loaded ${byKey.size} Abgeordnetenwatch records for cross-reference`);
+    console.log(
+      `[backfill] Loaded ${byKey.size} Abgeordnetenwatch records for cross-reference`,
+    );
     return byKey;
   } catch (err) {
-    console.error(`[backfill] Failed to load Abgeordnetenwatch data: ${err.message}`);
+    console.error(
+      `[backfill] Failed to load Abgeordnetenwatch data: ${err.message}`,
+    );
     return new Map();
   }
 }

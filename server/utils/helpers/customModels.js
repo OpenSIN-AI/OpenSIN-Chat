@@ -748,7 +748,8 @@ async function getGenericOpenAiModels(basePath = null, apiKey = null) {
     const { OpenAI: OpenAIApi } = require("openai");
     const openai = new OpenAIApi({
       baseURL: resolvedBasePath,
-      apiKey: apiKey || process.env.GENERIC_OPEN_AI_API_KEY || "no-key-required",
+      apiKey:
+        apiKey || process.env.GENERIC_OPEN_AI_API_KEY || "no-key-required",
     });
     const models = await openai.models
       .list()

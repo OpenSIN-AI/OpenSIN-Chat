@@ -37,7 +37,9 @@ async function main() {
 
   // Check vector store status before
   const statsBefore = await vectorStore.stats();
-  console.log(`[backfill] Vector store before: exists=${statsBefore.exists}, count=${statsBefore.count}`);
+  console.log(
+    `[backfill] Vector store before: exists=${statsBefore.exists}, count=${statsBefore.count}`,
+  );
 
   // Process in batches of 50 to avoid memory issues
   const BATCH_SIZE = 50;
@@ -89,33 +91,41 @@ async function main() {
         } else {
           failed++;
           if (failed <= 5)
-            console.error(`[backfill] Failed: ${result.error} (speech ${speech.id})`);
+            console.error(
+              `[backfill] Failed: ${result.error} (speech ${speech.id})`,
+            );
         }
       } catch (err) {
         failed++;
         if (failed <= 5)
-          console.error(`[backfill] Error indexing speech ${speech.id}: ${err.message}`);
+          console.error(
+            `[backfill] Error indexing speech ${speech.id}: ${err.message}`,
+          );
       }
     }
 
     // Progress report every 500 speeches
     if (indexed % 500 < BATCH_SIZE) {
       const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
-      const rate = (indexed / (Date.now() - startTime) * 1000).toFixed(1);
+      const rate = ((indexed / (Date.now() - startTime)) * 1000).toFixed(1);
       console.log(
         `[backfill] Progress: indexed=${indexed} failed=${failed} skipped=${skipped} ` +
-        `elapsed=${elapsed}s rate=${rate}/s`,
+          `elapsed=${elapsed}s rate=${rate}/s`,
       );
     }
   }
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
   console.log(`\n[backfill] Done in ${elapsed}s`);
-  console.log(`[backfill] Indexed: ${indexed}, Failed: ${failed}, Skipped: ${skipped}`);
+  console.log(
+    `[backfill] Indexed: ${indexed}, Failed: ${failed}, Skipped: ${skipped}`,
+  );
 
   // Check vector store status after
   const statsAfter = await vectorStore.stats();
-  console.log(`[backfill] Vector store after: exists=${statsAfter.exists}, count=${statsAfter.count}`);
+  console.log(
+    `[backfill] Vector store after: exists=${statsAfter.exists}, count=${statsAfter.count}`,
+  );
 
   await prisma.$disconnect();
 }

@@ -262,21 +262,35 @@ function workspaceEndpoints(app) {
 
         // Resolve file paths: either an explicit list or all files in a directory
         let resolvedFilePaths = filePaths;
-        if ((!resolvedFilePaths || !Array.isArray(resolvedFilePaths) || resolvedFilePaths.length === 0) && directory) {
+        if (
+          (!resolvedFilePaths ||
+            !Array.isArray(resolvedFilePaths) ||
+            resolvedFilePaths.length === 0) &&
+          directory
+        ) {
           try {
             const { safeStorageJoin } = require("../utils/paths");
             const dirPath = safeStorageJoin("uploads", directory);
-            const entries = await fs.promises.readdir(dirPath, { withFileTypes: true });
+            const entries = await fs.promises.readdir(dirPath, {
+              withFileTypes: true,
+            });
             resolvedFilePaths = entries
               .filter((e) => e.isFile() && !e.name.startsWith("."))
               .map((e) => path.join(dirPath, e.name));
           } catch (dirErr) {
-            response.status(400).json({ error: `Cannot read directory: ${dirErr.message}` }).end();
+            response
+              .status(400)
+              .json({ error: `Cannot read directory: ${dirErr.message}` })
+              .end();
             return;
           }
         }
 
-        if (!resolvedFilePaths || !Array.isArray(resolvedFilePaths) || resolvedFilePaths.length === 0) {
+        if (
+          !resolvedFilePaths ||
+          !Array.isArray(resolvedFilePaths) ||
+          resolvedFilePaths.length === 0
+        ) {
           response.status(400).json({ error: "No files provided" }).end();
           return;
         }

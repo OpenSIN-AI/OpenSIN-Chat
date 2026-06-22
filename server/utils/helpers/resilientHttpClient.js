@@ -118,7 +118,10 @@ class ResilientHttpClient {
           this.circuitBreaker.recordSuccess();
           // Cache the response. Real Response objects are cloned; plain mocks
           // (used in tests) are stored as-is so caching tests still work.
-          this.#setCache(cacheKey, typeof res.clone === "function" ? res.clone() : res);
+          this.#setCache(
+            cacheKey,
+            typeof res.clone === "function" ? res.clone() : res,
+          );
           return res;
         }
       } catch (err) {
