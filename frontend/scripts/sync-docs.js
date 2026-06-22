@@ -32,6 +32,7 @@ const CURATED_FILES = [
   { src: "vercel-deploy-fix.md", dst: "vercel-deploy-fix.md" },
   { src: "ssh-remote-tunnel.md", dst: "ssh-remote-tunnel.md" },
   { src: "supabase-self-hosted.md", dst: "supabase-self-hosted.md" },
+  { src: "PDF-ANALYSIS.md", dst: "pdf-analysis.md" },
 ];
 
 const ADR_FILES = [

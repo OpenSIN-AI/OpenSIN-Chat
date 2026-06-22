@@ -164,6 +164,7 @@ RUN --mount=type=cache,target=/yarn-cache \
     YARN_CACHE_FOLDER=/yarn-cache \
     yarn install --frozen-lockfile --network-timeout 100000
 COPY ./frontend/ ./
+COPY ./docs/ /app/docs/
 RUN yarn build
 WORKDIR /app
 
