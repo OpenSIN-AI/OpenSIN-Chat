@@ -14,7 +14,13 @@ cd "${REPO_DIR}"
 
 echo "[deploy] Fetching latest ${BRANCH}..."
 git fetch origin "${BRANCH}"
-git reset --hard "origin/${BRANCH}"
+
+# We use checkout with pathspec exclusion instead of reset --hard because
+# server/storage and server/storage-opensin are live runtime volumes mounted into
+# the container. Their files are owned by the container UID, so git cannot
+# overwrite them. Code updates must not touch those directories.
+echo "[deploy] Checking out code updates (excluding runtime storage volumes)..."
+git checkout -f "origin/${BRANCH}" -- . ':!server/storage' ':!server/storage-opensin'
 
 cd "${COMPOSE_DIR}"
 
