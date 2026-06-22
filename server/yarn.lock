@@ -6381,7 +6381,7 @@ kuler@^2.0.0:
   resolved "https://registry.npmjs.org/kuler/-/kuler-2.0.0.tgz"
   integrity sha512-Xq9nH7KlWZmXAtodXDDRE7vs6DU1gTU8zYDHDiWLSip45Egwq3plLHzPn27NgvzL2r1LMPC1vdqh98sQxtqj4A==
 
-langchain@^1.4.5:
+langchain@1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/langchain/-/langchain-1.4.5.tgz#b6a88927bd46631bd2518087a0411a2110c3d63d"
   integrity sha512-P625jmIg91XwZoll6H3tyOLux1wQPjSptdGdiDdSrZVyUmeWKwzJu0+mmJjluNRCQVgzqCZzy1RWkz9p+vb+3A==
