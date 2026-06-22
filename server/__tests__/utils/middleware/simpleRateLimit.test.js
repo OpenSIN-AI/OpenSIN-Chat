@@ -119,4 +119,30 @@ describe("simpleRateLimit", () => {
   it("throws when no bucket name is provided", () => {
     expect(() => simpleRateLimit({ max: 1, windowMs: 1000 })).toThrow();
   });
+
+  it("uses only IP key for user identity when no username is provided", () => {
+    const {
+      _getBucketKeys,
+    } = require("../../../utils/middleware/simpleRateLimit");
+    const req = { ip: "1.2.3.4", body: {} };
+    const keys = _getBucketKeys({
+      request: req,
+      bucket: "login",
+      identity: "user",
+    });
+    expect(keys).toEqual(["login:ip:1.2.3.4"]);
+  });
+
+  it("uses both IP and account keys for user identity when username is provided", () => {
+    const {
+      _getBucketKeys,
+    } = require("../../../utils/middleware/simpleRateLimit");
+    const req = { ip: "1.2.3.4", body: { username: "admin" } };
+    const keys = _getBucketKeys({
+      request: req,
+      bucket: "login",
+      identity: "user",
+    });
+    expect(keys).toEqual(["login:ip:1.2.3.4", "login:account:admin"]);
+  });
 });

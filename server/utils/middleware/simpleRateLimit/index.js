@@ -65,8 +65,11 @@ function bucketKeys({ request, bucket, identity }) {
   const username = (
     typeof request.body?.username === "string" ? request.body.username : ""
   ).trim();
-  const safeUser =
-    username.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 64) || "anonymous";
+  // In single-user no-password mode there is no username. Account-based rate
+  // limiting is meaningless there and would rate-limit the legitimate owner,
+  // so we only rate-limit by IP in that case.
+  if (!username) return [`${bucket}:ip:${ip}`];
+  const safeUser = username.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 64);
   return [`${bucket}:ip:${ip}`, `${bucket}:account:${safeUser}`];
 }
 
