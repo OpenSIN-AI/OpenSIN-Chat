@@ -9,6 +9,7 @@ import { MagnifyingGlass } from "@phosphor-icons/react/dist/csr/MagnifyingGlass"
 import { Plus } from "@phosphor-icons/react/dist/csr/Plus";
 import { CheckSquare } from "@phosphor-icons/react/dist/csr/CheckSquare";
 import { Square } from "@phosphor-icons/react/dist/csr/Square";
+import { Microphone } from "@phosphor-icons/react/dist/csr/Microphone";
 import { useTranslation } from "react-i18next";
 import useSWR from "swr";
 import { usePoliticians } from "@/hooks/usePoliticians";
@@ -52,6 +53,13 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [adding, setAdding] = useState<Set<string>>(new Set());
   const [addError, setAddError] = useState<string | null>(null);
+
+  // Speech search state
+  const [speechQuery, setSpeechQuery] = useState("");
+  const [speechResults, setSpeechResults] = useState<any[]>([]);
+  const [speechLoading, setSpeechLoading] = useState(false);
+  const [speechError, setSpeechError] = useState<string | null>(null);
+  const [showSpeechSearch, setShowSpeechSearch] = useState(false);
 
   const workspaceSlug = workspace?.slug;
 
@@ -130,6 +138,21 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
   const allSelected =
     politicians.length > 0 && selected.size === politicians.length;
 
+  const searchSpeeches = useCallback(async () => {
+    if (!speechQuery.trim()) return;
+    setSpeechLoading(true);
+    setSpeechError(null);
+    try {
+      const { results, error } = await Politician.searchSpeeches(speechQuery, { limit: 10 });
+      if (error) setSpeechError(error);
+      else setSpeechResults(results);
+    } catch (e) {
+      setSpeechError(e instanceof Error ? e.message : "Search failed");
+    } finally {
+      setSpeechLoading(false);
+    }
+  }, [speechQuery]);
+
   return (
     <ChatSidebar isOpen={sidebarOpen} minWidth={420}>
       <div className="w-full h-full bg-zinc-900 light:bg-white light:border-l light:border-slate-300 flex flex-col overflow-hidden">
@@ -164,52 +187,112 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
 
         {/* Filters */}
         <div className="px-4 py-3 flex flex-col gap-2 border-b border-zinc-800 light:border-slate-200">
-          <div className="relative">
-            <MagnifyingGlass
-              size={14}
-              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400"
-            />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t("sidebar.database.search", "Name suchen...")}
-              aria-label={t("sidebar.database.search", "Name suchen...")}
-              className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
-            />
-          </div>
-          <div className="flex gap-2">
-            <select
-              value={party}
-              onChange={(e) => setParty(e.target.value)}
-              className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 cursor-pointer"
-              aria-label={t("sidebar.database.partyFilter", "Partei")}
+          {/* Tab toggle: Politician search vs Speech search */}
+          <div className="flex gap-1 mb-1">
+            <button
+              type="button"
+              onClick={() => setShowSpeechSearch(false)}
+              className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border-none cursor-pointer transition-colors ${
+                !showSpeechSearch
+                  ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                  : "bg-transparent text-zinc-500 light:text-slate-400 hover:text-zinc-300"
+              }`}
             >
-              <option value="">
-                {t("sidebar.database.allParties", "Alle Parteien")}
-              </option>
-              {parties.map((p) => (
-                <option key={p} value={p}>
-                  {p}
-                </option>
-              ))}
-            </select>
-            <select
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-              className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 cursor-pointer"
-              aria-label={t("sidebar.database.stateFilter", "Bundesland")}
+              <Users size={12} />
+              {t("sidebar.database.tabPoliticians", "Politiker")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowSpeechSearch(true)}
+              className={`flex-1 flex items-center justify-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium border-none cursor-pointer transition-colors ${
+                showSpeechSearch
+                  ? "bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900"
+                  : "bg-transparent text-zinc-500 light:text-slate-400 hover:text-zinc-300"
+              }`}
             >
-              <option value="">
-                {t("sidebar.database.allStates", "Alle Bundesländer")}
-              </option>
-              {states.map((s) => (
-                <option key={s} value={s}>
-                  {s}
-                </option>
-              ))}
-            </select>
+              <Microphone size={12} />
+              {t("sidebar.database.tabSpeeches", "Reden-Suche")}
+            </button>
           </div>
+
+          {showSpeechSearch ? (
+            /* Speech search input */
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <MagnifyingGlass
+                  size={14}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400"
+                />
+                <input
+                  type="search"
+                  value={speechQuery}
+                  onChange={(e) => setSpeechQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && searchSpeeches()}
+                  placeholder={t("sidebar.database.speechSearch", "Thema suchen (z.B. Klima)...")}
+                  aria-label={t("sidebar.database.speechSearch", "Thema suchen...")}
+                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={searchSpeeches}
+                disabled={speechLoading || !speechQuery.trim()}
+                className="px-3 py-1.5 rounded-md bg-blue-600 hover:bg-blue-500 disabled:opacity-40 text-white text-xs font-medium border-none cursor-pointer transition-colors"
+              >
+                {speechLoading ? "..." : t("common.search", "Suchen")}
+              </button>
+            </div>
+          ) : (
+            /* Politician search filters */
+            <>
+              <div className="relative">
+                <MagnifyingGlass
+                  size={14}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-500 light:text-slate-400"
+                />
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder={t("sidebar.database.search", "Name suchen...")}
+                  aria-label={t("sidebar.database.search", "Name suchen...")}
+                  className="w-full border border-zinc-700 light:border-slate-300 rounded-md pl-8 pr-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 placeholder:text-zinc-500 light:placeholder:text-slate-400"
+                />
+              </div>
+              <div className="flex gap-2">
+                <select
+                  value={party}
+                  onChange={(e) => setParty(e.target.value)}
+                  className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 cursor-pointer"
+                  aria-label={t("sidebar.database.partyFilter", "Partei")}
+                >
+                  <option value="">
+                    {t("sidebar.database.allParties", "Alle Parteien")}
+                  </option>
+                  {parties.map((p) => (
+                    <option key={p} value={p}>
+                      {p}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  className="flex-1 border border-zinc-700 light:border-slate-300 rounded-md px-2 py-1.5 text-sm text-white light:text-slate-900 bg-zinc-950 light:bg-white outline-none focus:border-blue-500 cursor-pointer"
+                  aria-label={t("sidebar.database.stateFilter", "Bundesland")}
+                >
+                  <option value="">
+                    {t("sidebar.database.allStates", "Alle Bundesländer")}
+                  </option>
+                  {states.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Bulk action bar */}
@@ -266,9 +349,79 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-4 no-scroll flex flex-col gap-2">
-          <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
-            {t("sidebar.database.source", "Quelle: Abgeordnetenwatch API")}
-          </p>
+          {showSpeechSearch ? (
+            /* Speech search results */
+            <>
+              <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
+                {t("sidebar.database.speechResults", "Reden-Suchergebnisse")}
+              </p>
+
+              {speechLoading && (
+                <div className="flex flex-col gap-2">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="p-3 rounded-xl bg-zinc-800 light:bg-slate-100 animate-pulse space-y-2"
+                    >
+                      <div className="h-3 w-24 rounded bg-zinc-700 light:bg-slate-200" />
+                      <div className="h-2 w-full rounded bg-zinc-700 light:bg-slate-200" />
+                      <div className="h-2 w-3/4 rounded bg-zinc-700 light:bg-slate-200" />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {speechError && (
+                <div className="p-3 rounded-lg bg-red-950/40 border border-red-800/50 text-xs text-red-400">
+                  {speechError}
+                </div>
+              )}
+
+              {!speechLoading && !speechError && speechResults.length === 0 && speechQuery && (
+                <p className="text-xs text-zinc-500 italic">
+                  {t("sidebar.database.noSpeeches", "Keine Reden gefunden.")}
+                </p>
+              )}
+
+              {!speechLoading && !speechError && speechResults.length === 0 && !speechQuery && (
+                <p className="text-xs text-zinc-500 italic">
+                  {t("sidebar.database.speechHint", "Suche nach einem Thema, um passende Bundestagsreden zu finden.")}
+                </p>
+              )}
+
+              {speechResults.map((s, i) => (
+                <div
+                  key={s.id || i}
+                  className="p-3 rounded-xl bg-zinc-800 light:bg-slate-50 border border-zinc-700 light:border-slate-200"
+                >
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <Microphone size={12} className="text-zinc-400 flex-shrink-0" />
+                    <p className="text-xs font-medium text-white light:text-slate-900 truncate">
+                      {s.politicianName || s.politician_name || "—"}
+                    </p>
+                    {s.party && (
+                      <span className="text-[10px] text-zinc-500 light:text-slate-400">
+                        ({s.party})
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-zinc-300 light:text-slate-600 leading-snug line-clamp-3">
+                    {s.text || s.speechText || s.excerpt || "—"}
+                  </p>
+                  {s.date && (
+                    <p className="text-[10px] text-zinc-500 light:text-slate-400 mt-1">
+                      {s.date}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </>
+          ) : (
+            /* Politician list */
+            <>
+              <p className="text-[10px] uppercase tracking-widest text-zinc-500 light:text-slate-400 mb-1">
+                {t("sidebar.database.source", "Quelle: Abgeordnetenwatch API")}
+              </p>
 
           {loading && politicians.length === 0 && (
             <div className="flex flex-col gap-2">
@@ -410,6 +563,8 @@ export default function DatabaseSidebar({ workspace }: DatabaseSidebarProps) {
               )}
             </p>
           </div>
+            </>
+          )}
         </div>
       </div>
     </ChatSidebar>

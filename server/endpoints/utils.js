@@ -90,15 +90,23 @@ function utilEndpoints(app) {
           `https://search.dip.bundestag.de/api/v1/drucksache?${params}`,
           { headers: { Accept: "application/json" } },
         );
-        if (!res.ok) throw new Error(`DIP ${res.status}`);
+        if (!res.ok) {
+          const msg =
+            res.status === 401
+              ? "DIP API-Schlüssel erforderlich"
+              : `DIP ${res.status}`;
+          throw new Error(msg);
+        }
         const json = await res.json();
         response.status(200).json(json);
       } catch (e) {
         const errorId = crypto.randomUUID();
         console.error(`[endpoint error ${errorId}]`, e);
-        response
-          .status(200)
-          .json({ documents: [], error: "Upstream unavailable", errorId });
+        response.status(200).json({
+          documents: [],
+          error: e.message || "Upstream unavailable",
+          errorId,
+        });
       }
     },
   );

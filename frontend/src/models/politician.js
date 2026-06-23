@@ -14,10 +14,10 @@ const Politician = {
   addToWorkspace: async function (politicianId, workspaceSlug) {
     try {
       const res = await fetch(
-        `${API_BASE}/api/politician/${politicianId}/add-to-workspace`,
+        `${API_BASE}/politician/${politicianId}/add-to-workspace`,
         {
           method: "POST",
-          headers: baseHeaders(),
+          headers: { ...baseHeaders(), "Content-Type": "application/json" },
           body: JSON.stringify({ workspaceSlug }),
         },
       );
@@ -31,6 +31,93 @@ const Politician = {
       return { success: true, data };
     } catch (e) {
       return { success: false, error: e.message };
+    }
+  },
+
+  /**
+   * Get a single politician's full profile (mandates, committees, stats).
+   * @param {string} politicianId
+   * @returns {Promise<object|null>}
+   */
+  getById: async function (politicianId) {
+    try {
+      const res = await fetch(`${API_BASE}/politician/${politicianId}`, {
+        headers: baseHeaders(),
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  },
+
+  /**
+   * Get a politician's voting record.
+   * @param {string} politicianId
+   * @param {object} [opts] — { limit, offset }
+   * @returns {Promise<object|null>}
+   */
+  getVotes: async function (politicianId, opts = {}) {
+    try {
+      const params = new URLSearchParams();
+      if (opts.limit) params.set("limit", String(opts.limit));
+      if (opts.offset) params.set("offset", String(opts.offset));
+      const qs = params.toString();
+      const res = await fetch(
+        `${API_BASE}/politician/${politicianId}/votes${qs ? `?${qs}` : ""}`,
+        { headers: baseHeaders() },
+      );
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  },
+
+  /**
+   * Get a politician's speeches.
+   * @param {string} politicianId
+   * @param {object} [opts] — { limit, offset }
+   * @returns {Promise<object|null>}
+   */
+  getSpeeches: async function (politicianId, opts = {}) {
+    try {
+      const params = new URLSearchParams();
+      if (opts.limit) params.set("limit", String(opts.limit));
+      if (opts.offset) params.set("offset", String(opts.offset));
+      const qs = params.toString();
+      const res = await fetch(
+        `${API_BASE}/politician/${politicianId}/speeches${qs ? `?${qs}` : ""}`,
+        { headers: baseHeaders() },
+      );
+      if (!res.ok) return null;
+      return await res.json();
+    } catch {
+      return null;
+    }
+  },
+
+  /**
+   * Semantic search over politician speeches (vector search via PGVector).
+   * @param {string} query — search text (e.g. "Klimapolitik")
+   * @param {object} [opts] — { party, source, limit }
+   * @returns {Promise<{results: object[], error?: string}>}
+   */
+  searchSpeeches: async function (query, opts = {}) {
+    try {
+      const params = new URLSearchParams({ query });
+      if (opts.party) params.set("party", opts.party);
+      if (opts.source) params.set("source", opts.source);
+      if (opts.limit) params.set("limit", String(opts.limit));
+      const res = await fetch(
+        `${API_BASE}/politician/speech-search?${params}`,
+        { headers: baseHeaders() },
+      );
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) return { results: [], error: data.error || `HTTP ${res.status}` };
+      return { results: data.results || data.speeches || [], error: data.error };
+    } catch (e) {
+      return { results: [], error: e.message };
     }
   },
 };

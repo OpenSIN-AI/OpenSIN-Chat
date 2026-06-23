@@ -34,7 +34,7 @@ describe("Politician model", () => {
 
     const [url, opts] = global.fetch.mock.calls[0];
     expect(url).toBe(
-      "http://localhost:3001/api/api/politician/pol-123/add-to-workspace",
+      "http://localhost:3001/api/politician/pol-123/add-to-workspace",
     );
     expect(opts.method).toBe("POST");
     expect(JSON.parse(opts.body)).toEqual({ workspaceSlug: "my-workspace" });
