@@ -89,7 +89,14 @@ const RENDER_CACHE_MAX = 256;
 
 function doRender(text: string): string {
   const cleanedText = text.replace(/\n{3,}/g, "\n\n");
-  return markdown.render(cleanedText);
+  let html = markdown.render(cleanedText);
+  // Strip empty KaTeX paragraphs that the katex plugin produces when
+  // the text contains lone $ signs (e.g. "$100") — these render as
+  // empty <p> tags with empty katex spans, creating large whitespace gaps.
+  html = html.replace(/<p>\s*<span class="katex-display"><span class="katex">[\s\S]*?<\/span><\/span><\/span><\/p>/g, "");
+  // Strip truly empty <p> tags (no text content at all)
+  html = html.replace(/<p>\s*<\/p>/g, "");
+  return html;
 }
 
 export default function renderMarkdown(text = "") {

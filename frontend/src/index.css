@@ -834,6 +834,16 @@ dialog::backdrop {
   margin: 0.25rem 0;
 }
 
+/* Hide empty paragraphs (e.g. from KaTeX rendering empty math blocks) */
+.markdown p:empty {
+  display: none;
+}
+
+/* Hide paragraphs that only contain empty KaTeX math blocks */
+.markdown p:not(:has(:not(.katex):not(.katex-display):not(.katex-html):not(.katex-mathml):not(.strut):not(.base)):not(:empty)) {
+  display: none;
+}
+
 .markdown > p > a,
 .markdown p a {
   text-decoration: underline;
