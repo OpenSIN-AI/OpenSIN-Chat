@@ -70,15 +70,25 @@ export default function useChatStream({
    * user never typed anything.  We skip the replacement and reset the flag
    * so the next successful response syncs normally.
    */
-  useEffect(() => {
-    if (!loadingResponse) {
-      if (lastResponseWasError.current) {
-        lastResponseWasError.current = false;
-        return;
-      }
-      setChatHistory(knownHistory);
-    }
-  }, [knownHistory]);
+   useEffect(() => {
+     if (!loadingResponse) {
+       if (lastResponseWasError.current) {
+         lastResponseWasError.current = false;
+         return;
+       }
+       // Only replace chat history if the SWR refetch returned data that is
+       // at least as long as what we already have.  The SWR invalidation fires
+       // immediately after streaming completes, but the server may not have
+       // finished persisting the new messages yet.  In that case knownHistory
+       // would be stale (missing the user message + AI response) and replacing
+       // the current state would wipe the just-streamed content from the UI.
+       const currentLen = _chatHistory?.current?.length ?? 0;
+       const knownLen = knownHistory?.length ?? 0;
+       if (knownLen >= currentLen) {
+         setChatHistory(knownHistory);
+       }
+     }
+   }, [knownHistory]);
 
   /**
    * Invalidate the SWR chat history cache after streaming completes.
