@@ -112,7 +112,7 @@ export default function PromptInput({
                   adjustTextArea={adjustTextArea}
                 />
               </div>
-              <div className="flex justify-between items-center pt-3.5 pb-3">
+              <div className="flex justify-between items-center pt-2 pb-2">
                 <div className="flex items-center gap-x-0.25">
                   <div className="flex items-center gap-x-1">
                     <AttachItem

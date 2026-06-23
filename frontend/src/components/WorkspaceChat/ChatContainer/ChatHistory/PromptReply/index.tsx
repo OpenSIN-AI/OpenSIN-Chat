@@ -89,7 +89,7 @@ const PromptReply: any = ({
 
   return (
     <div key={uuid} className="flex justify-start w-full">
-      <div className="py-1.5 pl-0 pr-4 flex flex-col w-full">
+      <div className="py-1 pl-0 pr-4 flex flex-col w-full">
         <RenderAssistantChatContent
           key={`${uuid}-prompt-reply-content`}
           message={reply}
@@ -141,7 +141,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
 
   if (thinking)
     return (
-      <div className="flex flex-col gap-y-1">
+      <div className="flex flex-col gap-y-0.5">
         <ThoughtChainComponent
           ref={thoughtChainRef}
           content=""
@@ -159,7 +159,7 @@ function RenderAssistantChatContent({ message, messageId }: any) {
     );
 
   return (
-    <div className="flex flex-col gap-y-1">
+    <div className="flex flex-col gap-y-0.5">
       {thoughtChainContent && (
         <ThoughtChainComponent
           ref={thoughtChainRef}

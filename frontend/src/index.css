@@ -332,7 +332,7 @@ a {
     transform: scale(1);
     max-height: 100%;
     overflow: visible;
-    padding-top: 1rem;
+    padding-top: 0.25rem;
   }
 }
 
@@ -620,7 +620,7 @@ dialog::backdrop {
 }
 
 .user-reply > div:first-of-type {
-  border: 2px solid white;
+  border: none;
 }
 
 .reply > *:last-child::after {
@@ -770,26 +770,26 @@ dialog::backdrop {
 /* List Styles */
 .markdown ol {
   list-style: decimal-leading-zero;
-  padding-left: 0px;
-  padding-top: 10px;
-  margin: 10px;
+  padding-left: 1.5rem;
+  padding-top: 4px;
+  margin: 4px 0;
 }
 
 .markdown ol li {
-  margin-left: 20px;
-  padding-left: 10px;
+  padding-left: 4px;
   position: relative;
   transition: color 0.3s ease, background-color 0.3s ease;
-  line-height: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 4px;
 }
 
 .markdown ol li::marker {
-  padding-top: 10px;
+  padding-top: 0;
 }
 
 .markdown ol li p {
-  margin: 0.5rem;
-  padding-top: 10px;
+  margin: 0;
+  padding-top: 0;
 }
 
 .markdown ol li a {
@@ -801,25 +801,23 @@ dialog::backdrop {
 }
 
 .markdown ul {
-  list-style: revert-layer;
-  /* color: #cfcfcfcf; */
-  padding-left: 0px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin: 10px;
+  list-style: disc;
+  padding-left: 1.5rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin: 4px 0;
 }
 
 .markdown ul li::marker {
   color: var(--theme-text-secondary);
-  padding-top: 10px;
+  padding-top: 0;
 }
 
 .markdown ul li {
-  margin-left: 20px;
-
-  padding-left: 10px;
+  padding-left: 4px;
   transition: color 0.3s ease, background-color 0.3s ease;
-  line-height: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 4px;
 }
 
 .markdown ul li a {
@@ -827,13 +825,13 @@ dialog::backdrop {
 }
 
 .markdown ul li > ul {
-  padding-left: 20px;
-  margin: 0px;
+  padding-left: 1.5rem;
+  margin: 2px 0;
 }
 
 .markdown p {
   font-weight: 400;
-  margin: 0.35rem;
+  margin: 0.25rem 0;
 }
 
 .markdown > p > a,

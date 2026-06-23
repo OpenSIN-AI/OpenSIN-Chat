@@ -105,8 +105,8 @@ const HistoricalMessage = ({
         onAnimationEnd={onEndAnimation}
         className={`${isDeleted ? "animate-remove" : ""} flex justify-end w-full group`}
       >
-        <div className="py-1.5 px-4 flex flex-col items-end">
-          <div className="bg-zinc-700 light:bg-slate-200 text-white light:text-slate-900 rounded-[20px] rounded-br-none px-4 py-2 max-w-[600px] [&_p]:m-0 shadow-sm">
+        <div className="py-1 px-4 flex flex-col items-end">
+          <div className="bg-blue-600 light:bg-blue-500 text-white light:text-white rounded-2xl rounded-br-md px-3.5 py-1.5 max-w-[600px] [&_p]:m-0 shadow-sm">
             <TruncatableContent>
               <RenderChatContent
                 role={role}
@@ -139,7 +139,7 @@ const HistoricalMessage = ({
       onAnimationEnd={onEndAnimation}
       className={`${isDeleted ? "animate-remove" : ""} flex justify-start w-full group`}
     >
-      <div className="py-1.5 px-4 flex flex-col md:max-w-[80%] w-full">
+      <div className="py-1 px-4 flex flex-col md:max-w-[80%] w-full">
         {isEditing ? (
           <EditMessageForm
             role={role}
@@ -354,7 +354,7 @@ const RenderChatContent = memo(
     if (role !== "assistant")
       return (
         <span
-          className="flex flex-col gap-y-1 text-white light:text-slate-900"
+          className="flex flex-col gap-y-0.5 text-white light:text-slate-900"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(renderMarkdown(message)),
           }}
@@ -385,7 +385,7 @@ const RenderChatContent = memo(
     return (
       <>
         <span
-          className="flex flex-col gap-y-1 text-white light:text-slate-900"
+          className="flex flex-col gap-y-0.5 text-white light:text-slate-900"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(renderMarkdown(msgToRender)),
           }}
