@@ -414,21 +414,54 @@ class GenericOpenAiLLM {
           }
 
           if (token) {
-            // Filter out reasoning tags from token text
+            // Filter out reasoning tags from token text.
+            //
+            // Some OpenAI-compatible reasoning models (e.g. MiniMax M3,
+            // DeepSeek on Fireworks) stream their chain-of-thought INLINE as
+            // `<think>...</think>` inside the content delta instead of using the
+            // dedicated `reasoning_content` field. We must strip those segments
+            // while preserving any answer text that shares the same token.
+            //
+            // The previous implementation only flipped `reasoningBlockOpen` to
+            // false inside the `<think>`-detection branch. When the closing
+            // `</think>` arrived in its own token (the common streaming case),
+            // that branch was skipped, `reasoningBlockOpen` was never reset, and
+            // every subsequent answer token was dropped — leaving the assistant
+            // message blank. This walks the token character-accurately so the
+            // block always closes and the real answer survives.
             let filteredToken = token;
             if (reasoningMode) {
-              // Strip <think> tags and their content
-              filteredToken = token.replace(/<\/?think\s*(?:[^>]*?)?>/gi, "");
-              // If we're inside a reasoning block, skip the token entirely
-              if (
-                token.includes("<think>") ||
-                (reasoningBlockOpen && !token.includes("</think>"))
-              ) {
-                if (token.includes("<think>")) reasoningBlockOpen = true;
-                if (token.includes("</think>")) reasoningBlockOpen = false;
-                continue;
+              let working = token;
+              let emitted = "";
+              while (working.length > 0) {
+                if (reasoningBlockOpen) {
+                  const closeIdx = working.indexOf("</think>");
+                  if (closeIdx === -1) {
+                    // Whole remaining chunk is still reasoning — drop it.
+                    working = "";
+                    break;
+                  }
+                  // Reasoning ends here; continue scanning the trailing answer.
+                  working = working.slice(closeIdx + "</think>".length);
+                  reasoningBlockOpen = false;
+                  continue;
+                }
+
+                const openIdx = working.indexOf("<think>");
+                if (openIdx === -1) {
+                  // No (more) reasoning in this token — keep it as answer text.
+                  emitted += working;
+                  working = "";
+                  break;
+                }
+                // Text before `<think>` is answer content; everything after the
+                // tag is reasoning until we find the matching close.
+                emitted += working.slice(0, openIdx);
+                working = working.slice(openIdx + "<think>".length);
+                reasoningBlockOpen = true;
               }
-              if (reasoningBlockOpen) continue;
+              filteredToken = emitted;
+              if (!filteredToken) continue;
             }
 
             fullText += filteredToken;

@@ -16,6 +16,30 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * Entfernt Chain-of-Thought-/Reasoning-Blöcke aus einer LLM-Antwort.
+ *
+ * Reasoning-Modelle (z.B. MiniMax M3, DeepSeek) liefern ihr "Denken" entweder
+ * im `reasoning_content`-Feld (vom Provider als `<think>...</think>` vorangestellt)
+ * oder inline im Antworttext. In Berichten/Zusammenfassungen darf dieses
+ * Denken NIE erscheinen — es ist kein belegbarer Inhalt und verfälscht den
+ * Report. Wir strippen daher vollständige sowie abgeschnittene (unbalancierte)
+ * `<think>`-Blöcke, bevor der Text weiterverarbeitet wird.
+ * @param {*} text
+ * @returns {*}
+ */
+function stripReasoning(text) {
+  if (typeof text !== "string") return text;
+  let out = text.replace(
+    /<think\s*(?:[^>]*?)?>[\s\S]*?<\/think\s*(?:[^>]*?)?>/gi,
+    "",
+  );
+  // Hängender, nie geschlossener <think>-Block (Reasoning lief über das
+  // Token-Limit hinaus) — alles ab dem öffnenden Tag verwerfen.
+  out = out.replace(/<think\s*(?:[^>]*?)?>[\s\S]*$/gi, "");
+  return out.trim();
+}
+
 function isRetryable(error) {
   const msg = String(error?.message || error).toLowerCase();
   return (
@@ -45,8 +69,9 @@ async function chat(systemPrompt, userPrompt, { temperature } = {}) {
       );
       if (result === null || result === undefined)
         throw new Error("LLM lieferte keine Antwort.");
-      if (typeof result === "string") return result;
-      if (typeof result.textResponse === "string") return result.textResponse;
+      if (typeof result === "string") return stripReasoning(result);
+      if (typeof result.textResponse === "string")
+        return stripReasoning(result.textResponse);
       return String(result);
     } catch (e) {
       lastError = e;
